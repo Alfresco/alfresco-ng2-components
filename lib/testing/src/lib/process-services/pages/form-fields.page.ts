@@ -143,7 +143,7 @@ export class FormFieldsPage {
     async setValueInInputById(fieldId, value): Promise<void> {
         const input: any = element(by.id(fieldId));
         await BrowserVisibility.waitUntilElementIsVisible(input);
-        BrowserActions.clearSendKeys(input, value);
+        await BrowserActions.clearSendKeys(input, value);
     }
 
     async isCompleteFormButtonDisabled(): Promise<string> {

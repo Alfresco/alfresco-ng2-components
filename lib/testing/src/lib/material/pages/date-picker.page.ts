@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, promise } from 'protractor';
+import { element, by, promise } from 'protractor';
 import { DateUtil } from '../../core/utils/date-util';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -34,27 +34,23 @@ export class DatePickerPage {
     async checkDatesAfterDateAreDisabled(date): Promise<void> {
         const afterDate = DateUtil.formatDate('DD-MM-YY', date, 1);
         const afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`));
-        browser.controlFlow().execute(async () => {
-            if (await afterCalendar.isPresent()) {
-                const aria = await afterCalendar.getAttribute('aria-disabled');
-                await expect(aria).toBe('true');
-            }
-            const isEnabled = await this.nextMonthButton.isEnabled();
-            await expect(isEnabled).toBe(false);
-        });
+        if (await afterCalendar.isPresent()) {
+            const aria = await afterCalendar.getAttribute('aria-disabled');
+            await expect(aria).toBe('true');
+        }
+        const isEnabled = await this.nextMonthButton.isEnabled();
+        await expect(isEnabled).toBe(false);
     }
 
     async checkDatesBeforeDateAreDisabled(date): Promise<void> {
         const beforeDate = DateUtil.formatDate('DD-MM-YY', date, -1);
         const beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`));
-        browser.controlFlow().execute(async () => {
-            if (await beforeCalendar.isPresent()) {
-                const aria = await beforeCalendar.getAttribute('aria-disabled');
-                await expect(aria).toBe('true');
-            }
-            const isEnabled = await this.previousMonthButton.isEnabled();
-            await expect(isEnabled).toBe(false);
-        });
+        if (await beforeCalendar.isPresent()) {
+            const aria = await beforeCalendar.getAttribute('aria-disabled');
+            await expect(aria).toBe('true');
+        }
+        const isEnabled = await this.previousMonthButton.isEnabled();
+        await expect(isEnabled).toBe(false);
     }
 
     async selectTodayDate(): Promise<void> {

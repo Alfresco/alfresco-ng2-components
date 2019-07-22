@@ -59,7 +59,7 @@ describe('Task Header cloud component',  () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [await identityService.ROLES.APS_USER]);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
@@ -102,71 +102,71 @@ describe('Task Header cloud component',  () => {
 
     beforeEach( async() => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
-        appListCloudComponent.goToApp(simpleApp);
+        await appListCloudComponent.checkApsContainer();
+        await appListCloudComponent.goToApp(simpleApp);
     });
 
     it('[C291943] Should display task details for assigned task', async () => {
-        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
-        expect(taskHeaderCloudPage.getId()).toEqual(basicCreatedTask.entry.id);
-        expect(taskHeaderCloudPage.getDescription())
+        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
+        expect(await taskHeaderCloudPage.getId()).toEqual(basicCreatedTask.entry.id);
+        expect(await taskHeaderCloudPage.getDescription())
             .toEqual(basicCreatedTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : basicCreatedTask.entry.description);
-        expect(taskHeaderCloudPage.getStatus()).toEqual(basicCreatedTask.entry.status);
-        expect(taskHeaderCloudPage.getPriority()).toEqual(basicCreatedTask.entry.priority === 0 ? '' : basicCreatedTask.entry.priority.toString());
-        expect(taskHeaderCloudPage.getCategory()).toEqual(!basicCreatedTask.entry.category ?
+        expect(await taskHeaderCloudPage.getStatus()).toEqual(basicCreatedTask.entry.status);
+        expect(await taskHeaderCloudPage.getPriority()).toEqual(basicCreatedTask.entry.priority === 0 ? '' : basicCreatedTask.entry.priority.toString());
+        expect(await taskHeaderCloudPage.getCategory()).toEqual(!basicCreatedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : basicCreatedTask.entry.category);
-        expect(taskHeaderCloudPage.getDueDate()).toEqual(basicCreatedTask.entry.dueDate === null ?
+        expect(await taskHeaderCloudPage.getDueDate()).toEqual(basicCreatedTask.entry.dueDate === null ?
             CONSTANTS.TASK_DETAILS.NO_DATE : basicCreatedDate);
-        expect(taskHeaderCloudPage.getEndDate()).toEqual('');
-        expect(taskHeaderCloudPage.getCreated()).toEqual(basicCreatedDate);
-        expect(taskHeaderCloudPage.getAssignee()).toEqual(basicCreatedTask.entry.assignee === null ? '' : basicCreatedTask.entry.assignee);
-        expect(taskHeaderCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        expect(taskHeaderCloudPage.getParentTaskId())
+        expect(await taskHeaderCloudPage.getEndDate()).toEqual('');
+        expect(await taskHeaderCloudPage.getCreated()).toEqual(basicCreatedDate);
+        expect(await taskHeaderCloudPage.getAssignee()).toEqual(basicCreatedTask.entry.assignee === null ? '' : basicCreatedTask.entry.assignee);
+        expect(await taskHeaderCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskHeaderCloudPage.getParentTaskId())
             .toEqual(basicCreatedTask.entry.parentTaskId === null ? '' : basicCreatedTask.entry.parentTaskId);
     });
 
     it('[C291944] Should display task details for completed task', async () => {
-        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
-        expect(taskHeaderCloudPage.getId()).toEqual(completedTask.entry.id);
-        expect(taskHeaderCloudPage.getDescription())
+        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
+        expect(await taskHeaderCloudPage.getId()).toEqual(completedTask.entry.id);
+        expect(await taskHeaderCloudPage.getDescription())
             .toEqual(completedTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.entry.description);
-        expect(taskHeaderCloudPage.getStatus()).toEqual(completedTask.entry.status);
-        expect(taskHeaderCloudPage.getPriority()).toEqual(completedTask.entry.priority === '0' ? '' : completedTask.entry.priority.toString());
-        expect(taskHeaderCloudPage.getCategory()).toEqual(!completedTask.entry.category ?
+        expect(await taskHeaderCloudPage.getStatus()).toEqual(completedTask.entry.status);
+        expect(await taskHeaderCloudPage.getPriority()).toEqual(completedTask.entry.priority === '0' ? '' : completedTask.entry.priority.toString());
+        expect(await taskHeaderCloudPage.getCategory()).toEqual(!completedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.entry.category);
-        expect(taskHeaderCloudPage.getDueDate()).toEqual(completedTask.entry.dueDate === null ?
+        expect(await taskHeaderCloudPage.getDueDate()).toEqual(completedTask.entry.dueDate === null ?
             CONSTANTS.TASK_DETAILS.NO_DATE : completedCreatedDate);
-        expect(taskHeaderCloudPage.getEndDate()).toEqual(completedEndDate);
-        expect(taskHeaderCloudPage.getCreated()).toEqual(completedCreatedDate);
-        expect(taskHeaderCloudPage.getAssignee()).toEqual(completedTask.entry.assignee === null ? '' : completedTask.entry.assignee);
-        expect(taskHeaderCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        expect(taskHeaderCloudPage.getParentTaskId())
+        expect(await taskHeaderCloudPage.getEndDate()).toEqual(completedEndDate);
+        expect(await taskHeaderCloudPage.getCreated()).toEqual(completedCreatedDate);
+        expect(await taskHeaderCloudPage.getAssignee()).toEqual(completedTask.entry.assignee === null ? '' : completedTask.entry.assignee);
+        expect(await taskHeaderCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskHeaderCloudPage.getParentTaskId())
             .toEqual(completedTask.entry.parentTaskId === null ? '' : completedTask.entry.parentTaskId);
     });
 
     it('[C291945] Should Parent Name and Parent Id not be empty in task details for sub task', async () => {
-        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(subTask.entry.name);
-        expect(taskHeaderCloudPage.getId()).toEqual(subTask.entry.id);
-        expect(taskHeaderCloudPage.getDescription())
+        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow(subTask.entry.name);
+        expect(await taskHeaderCloudPage.getId()).toEqual(subTask.entry.id);
+        expect(await taskHeaderCloudPage.getDescription())
             .toEqual(subTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : subTask.entry.description);
-        expect(taskHeaderCloudPage.getStatus()).toEqual(subTask.entry.status);
-        expect(taskHeaderCloudPage.getPriority()).toEqual(subTask.entry.priority === 0 ? '' : subTask.entry.priority.toString());
-        expect(taskHeaderCloudPage.getCategory()).toEqual(!subTask.entry.category ?
+        expect(await taskHeaderCloudPage.getStatus()).toEqual(subTask.entry.status);
+        expect(await taskHeaderCloudPage.getPriority()).toEqual(subTask.entry.priority === 0 ? '' : subTask.entry.priority.toString());
+        expect(await taskHeaderCloudPage.getCategory()).toEqual(!subTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : subTask.entry.category);
-        expect(taskHeaderCloudPage.getDueDate()).toEqual(subTask.entry.dueDate === null ?
+        expect(await taskHeaderCloudPage.getDueDate()).toEqual(subTask.entry.dueDate === null ?
             CONSTANTS.TASK_DETAILS.NO_DATE : subTaskCreatedDate);
-        expect(taskHeaderCloudPage.getEndDate()).toEqual('');
-        expect(taskHeaderCloudPage.getCreated()).toEqual(subTaskCreatedDate);
-        expect(taskHeaderCloudPage.getAssignee()).toEqual(subTask.entry.assignee === null ? '' : subTask.entry.assignee);
-        expect(taskHeaderCloudPage.getParentName()).toEqual(basicCreatedTask.entry.name);
-        expect(taskHeaderCloudPage.getParentTaskId())
+        expect(await taskHeaderCloudPage.getEndDate()).toEqual('');
+        expect(await taskHeaderCloudPage.getCreated()).toEqual(subTaskCreatedDate);
+        expect(await taskHeaderCloudPage.getAssignee()).toEqual(subTask.entry.assignee === null ? '' : subTask.entry.assignee);
+        expect(await taskHeaderCloudPage.getParentName()).toEqual(basicCreatedTask.entry.name);
+        expect(await taskHeaderCloudPage.getParentTaskId())
             .toEqual(subTask.entry.parentTaskId === null ? '' : subTask.entry.parentTaskId);
     });
 
@@ -178,17 +178,17 @@ describe('Task Header cloud component',  () => {
                 '"defaultLocale": "uk"' +
                 '}');
             await navigationBarPage.navigateToProcessServicesCloudPage();
-            appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(simpleApp);
+            await appListCloudComponent.checkApsContainer();
+            await appListCloudComponent.goToApp(simpleApp);
         });
 
         it('[C311280] Should pick up the default date format from the app configuration', async () => {
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
-            taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-            expect(taskHeaderCloudPage.getCreated()).toEqual(defaultDate);
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
+            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+            expect(await taskHeaderCloudPage.getCreated()).toEqual(defaultDate);
         });
     });
 });

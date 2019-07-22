@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, Locator } from 'protractor';
+import { element, by, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { FormFields } from '../formFields';
 

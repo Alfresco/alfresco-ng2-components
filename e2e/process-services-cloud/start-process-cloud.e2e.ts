@@ -51,7 +51,7 @@ describe('Start Process',  () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [await identityService.ROLES.APS_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await settingsPage.setProviderBpmSso(
@@ -61,7 +61,7 @@ describe('Start Process',  () => {
         loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
         await navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
+        await appListCloudComponent.checkApsContainer();
         done();
     });
 
@@ -71,16 +71,16 @@ describe('Start Process',  () => {
         done();
     });
 
-    afterEach((done) => {
+    afterEach(async (done) => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
+        await appListCloudComponent.checkApsContainer();
         done();
     });
 
     it('[C291857] Should be possible to cancel a process', async () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
+        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        await appListCloudComponent.goToApp(simpleApp);
+        await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(await startProcessPage.processNameInput);
         await startProcessPage.blur(await startProcessPage.processNameInput);
         await startProcessPage.checkValidationErrorIsDisplayed(requiredError);
@@ -89,9 +89,9 @@ describe('Start Process',  () => {
     });
 
     it('[C291842] Should be displayed an error message if process name exceed 255 characters', async () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
+        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        await appListCloudComponent.goToApp(simpleApp);
+        await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.enterProcessName(processName255Characters);
         expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
 
@@ -102,25 +102,25 @@ describe('Start Process',  () => {
     });
 
     it('[C291860] Should be able to start a process', async () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
+        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        await appListCloudComponent.goToApp(simpleApp);
+        await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(await startProcessPage.processNameInput);
         await startProcessPage.enterProcessName(processName);
         expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
         await startProcessPage.clickStartProcessButton();
-        processCloudDemoPage.clickOnProcessFilters();
+        await processCloudDemoPage.clickOnProcessFilters();
 
-        processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-        expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
+        await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+        expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
 
     });
 
     it('[C309875] Should display the processId when Process Definition has process name missing', async () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
+        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        await appListCloudComponent.goToApp(simpleApp);
+        await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(await startProcessPage.processNameInput);
         await startProcessPage.enterProcessName(processName);
         await startProcessPage.selectFromProcessDropdown(processDefinitionWithoutName);

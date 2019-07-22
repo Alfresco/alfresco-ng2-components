@@ -107,7 +107,6 @@ describe('New Process Filters', () => {
 
         filterId = customProcessFilter.id;
 
-
         await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.new_icon);
@@ -128,9 +127,9 @@ describe('New Process Filters', () => {
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
         });
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+         await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
-        await processFiltersPage.checkFilterIsDisplayed(processFilter.edited);
+         await processFiltersPage.checkFilterIsDisplayed(processFilter.edited);
     });
 
     it('[C286451] Should display changes on a process filter when this filter icon is edited', async () => {

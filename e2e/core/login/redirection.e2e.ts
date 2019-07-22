@@ -147,15 +147,14 @@ describe('Login component - Redirect', () => {
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
-        browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-        });
+        const currentUrl = await browser.getCurrentUrl();
+        expect(currentUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
 
         await contentServicesPage.waitForTableBody();
 
         await navigationBarPage.clickLogoutButton();
 
-        logoutPage.checkLogoutSectionIsDisplayed();
+        await logoutPage.checkLogoutSectionIsDisplayed();
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
         await loginPage.waitForElements();

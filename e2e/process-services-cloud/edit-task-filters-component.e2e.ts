@@ -16,15 +16,24 @@
  */
 
 import { browser } from 'protractor';
-import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, SettingsPage, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
+import {
+    AppListCloudPage,
+    StringUtil,
+    ApiService,
+    LoginSSOPage,
+    TasksService,
+    SettingsPage,
+    IdentityService,
+    GroupIdentityService
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 
 import resources = require('../util/resources');
 
-describe('Edit task filters cloud',  () => {
+describe('Edit task filters cloud', () => {
 
-    describe('Edit Task Filters',  () => {
+    describe('Edit Task Filters', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -37,14 +46,15 @@ describe('Edit task filters cloud',  () => {
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
-        const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
+        const completedTaskName = StringUtil.generateRandomString(),
+            assignedTaskName = StringUtil.generateRandomString();
 
         beforeAll(async (done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
             tasksService = new TasksService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [await identityService.ROLES.APS_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
@@ -61,174 +71,223 @@ describe('Edit task filters cloud',  () => {
             done();
         });
 
-        afterAll(async(done) => {
+        afterAll(async (done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
             done();
         });
 
-        beforeEach( async() => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
-            appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(simpleApp);
+            await appListCloudComponent.checkApsContainer();
+            await appListCloudComponent.goToApp(simpleApp);
         });
 
-        afterEach((done) => {
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        afterEach(async (done) => {
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             done();
         });
 
         it('[C291785] All the filters property should be set up accordingly with the Query Param', async () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getStatusFilterDropDownValue()).toEqual('ASSIGNED');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getStatusFilterDropDownValue()).toEqual('ASSIGNED');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual('DESC');
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
 
-            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getStatusFilterDropDownValue()).toEqual('COMPLETED');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getStatusFilterDropDownValue()).toEqual('COMPLETED');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual('DESC');
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
         });
 
         it('[C306896] Delete Save and Save as actions should be displayed when clicking on custom filter header', async () => {
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveButtonIsDisplayed().checkSaveAsButtonIsDisplayed()
-                .checkDeleteButtonIsDisplayed();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            const editTaskFilterCloudComponent = await tasksCloudDemoPage.editTaskFilterCloudComponent();
+
+            await editTaskFilterCloudComponent.checkSaveButtonIsDisplayed();
+            await editTaskFilterCloudComponent.checkSaveAsButtonIsDisplayed();
+            await editTaskFilterCloudComponent.checkDeleteButtonIsDisplayed();
+
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
         });
 
         it('[C291795] New filter is added when clicking Save As button', async () => {
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New').clickOnSaveButton();
+            const editTaskFilterCloudComponent = await tasksCloudDemoPage.editTaskFilterCloudComponent();
+            await editTaskFilterCloudComponent.clickCustomiseFilterHeader();
+            await editTaskFilterCloudComponent.setSortFilterDropDown('Id');
 
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
-            tasksCloudDemoPage.customTaskFilter('custom-new').clickTaskFilter();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
+            await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
+
+            const editTaskFilterDialog = await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog();
+            await editTaskFilterDialog.setFilterName('New');
+            await editTaskFilterDialog.clickOnSaveButton();
+
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
+            await tasksCloudDemoPage.customTaskFilter('custom-new').clickTaskFilter();
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
         });
 
         it('[C291796] Two filters with same name can be created when clicking the Save As button', async () => {
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New').clickOnSaveButton();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Priority');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New').clickOnSaveButton();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Priority');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
-            tasksCloudDemoPage.customTaskFilter('custom-new').clickTaskFilter();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
+            const editTaskFilterCloudComponent = await tasksCloudDemoPage.editTaskFilterCloudComponent();
+            await editTaskFilterCloudComponent.clickCustomiseFilterHeader();
+            await editTaskFilterCloudComponent.setSortFilterDropDown('Id');
+
+            await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
+
+            const editTaskFilterDialog = editTaskFilterCloudComponent.editTaskFilterDialog();
+            editTaskFilterDialog.setFilterName('New');
+            editTaskFilterDialog.clickOnSaveButton();
+
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Priority');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnSaveButton();
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Priority');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
+            await tasksCloudDemoPage.customTaskFilter('custom-new').clickTaskFilter();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
         });
 
         it('[C291797] A filter is overrided when clicking on save button', async () => {
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New').clickOnSaveButton();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Name');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveButton();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+
+            const editTaskFilterCloudComponent = await tasksCloudDemoPage.editTaskFilterCloudComponent();
+            await editTaskFilterCloudComponent.clickCustomiseFilterHeader();
+            await editTaskFilterCloudComponent.setSortFilterDropDown('Id');
+
+            await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
+
+            const editTaskFilterDialog = await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog();
+            await editTaskFilterDialog.setFilterName('New');
+            await editTaskFilterDialog.clickOnSaveButton();
+
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Name');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveButton();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
         });
 
         it('[C291798] A filter is deleted when clicking on delete button', async () => {
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New').clickOnSaveButton();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            tasksCloudDemoPage.customTaskFilter('New').checkTaskFilterNotDisplayed();
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+
+            const editTaskFilterCloudComponent = await tasksCloudDemoPage.editTaskFilterCloudComponent();
+            await editTaskFilterCloudComponent.clickCustomiseFilterHeader();
+            await editTaskFilterCloudComponent.setSortFilterDropDown('Id');
+
+            await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
+
+            const editTaskFilterDialog = await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog();
+            await editTaskFilterDialog.setFilterName('New');
+            await editTaskFilterDialog.clickOnSaveButton();
+
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            await tasksCloudDemoPage.customTaskFilter('New').checkTaskFilterNotDisplayed();
         });
 
         it('[C291800] Task filter should not be created when task filter dialog is closed', async () => {
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Priority');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Priority');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('My Tasks');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('Cancel');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('Cancel');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnCancelButton();
-            tasksCloudDemoPage.customTaskFilter('Cancel').checkTaskFilterNotDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toEqual('My Tasks');
-            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+
+            const editTaskFilterCloudComponent = await tasksCloudDemoPage.editTaskFilterCloudComponent();
+            await editTaskFilterCloudComponent.clickCustomiseFilterHeader();
+            await editTaskFilterCloudComponent.setSortFilterDropDown('Priority');
+
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Priority');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('My Tasks');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('Cancel');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('Cancel');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnCancelButton();
+            await tasksCloudDemoPage.customTaskFilter('Cancel').checkTaskFilterNotDisplayed();
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toEqual('My Tasks');
+            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
         });
 
         it('[C291801] Save button of task filter dialog should be disabled when task name is empty', async () => {
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('My Tasks');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clearFilterName();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkSaveButtonIsEnabled()).toEqual(false);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkCancelButtonIsEnabled()).toEqual(true);
-            tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnCancelButton();
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+
+            const editTaskFilterCloudComponent = await tasksCloudDemoPage.editTaskFilterCloudComponent();
+            await editTaskFilterCloudComponent.clickCustomiseFilterHeader();
+            await editTaskFilterCloudComponent.setSortFilterDropDown('Id');
+
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('My Tasks');
+
+            const tasksCloud = await tasksCloudDemoPage.editTaskFilterCloudComponent();
+            await tasksCloud.editTaskFilterDialog().clearFilterName();
+
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkSaveButtonIsEnabled()).toEqual(false);
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkCancelButtonIsEnabled()).toEqual(true);
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnCancelButton();
         });
 
         it('[C291799] Task filter dialog is displayed when clicking on Save As button', async () => {
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkSaveButtonIsEnabled()).toEqual(true);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkCancelButtonIsEnabled()).toEqual(true);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getTitle()).toEqual('Save filter as');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('My Tasks');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnCancelButton();
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            const tasksCloud = await tasksCloudDemoPage.editTaskFilterCloudComponent();
+            await tasksCloud.clickCustomiseFilterHeader();
+            await tasksCloud.setSortFilterDropDown('Id');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkSaveButtonIsEnabled()).toEqual(true);
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkCancelButtonIsEnabled()).toEqual(true);
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getTitle()).toEqual('Save filter as');
+            expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('My Tasks');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnCancelButton();
         });
 
     });

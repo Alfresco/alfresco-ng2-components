@@ -144,8 +144,9 @@ describe('Search Filters', () => {
     it('[C277146] Should Show more/less buttons be hidden when inactive', async () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
-        const searchCheckListPage = searchFiltersPage.creatorCheckListFiltersPage().checkShowLessButtonIsNotDisplayed();
+        const searchCheckListPage = searchFiltersPage.creatorCheckListFiltersPage();
 
+        await searchCheckListPage.checkShowLessButtonIsNotDisplayed();
         await searchCheckListPage.checkShowMoreButtonIsDisplayed();
         await searchCheckListPage.clickShowMoreButtonUntilIsNotDisplayed();
         await searchCheckListPage.checkShowLessButtonIsDisplayed();
@@ -193,9 +194,8 @@ describe('Search Filters', () => {
 
         await searchResults.tableIsLoaded();
 
-        await searchFiltersPage.creatorCheckListFiltersPage();
-        await searchCheckListPage.searchInFilter('dminis');
-        await searchCheckListPage.checkCheckListOptionIsDisplayed('Administrator');
+        await searchFiltersPage.creatorCheckListFiltersPage().searchInFilter('dminis');
+        await searchFiltersPage.creatorCheckListFiltersPage().checkCheckListOptionIsDisplayed('Administrator');
     });
 
     it('[C291980] Should group search facets under specified labels', async () => {

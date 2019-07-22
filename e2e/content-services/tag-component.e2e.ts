@@ -191,7 +191,7 @@ describe('Tag component', () => {
         await tagPage.insertNodeId(pdfFileModel.id);
         await tagPage.addTag(tagList[2]);
 
-        await  browser.driver.sleep(5000); // wait CS return tags
+        await browser.driver.sleep(5000); // wait CS return tags
 
         await tagPage.checkTagListIsOrderedAscending();
         await tagPage.checkTagListByNodeIdIsOrderedAscending();

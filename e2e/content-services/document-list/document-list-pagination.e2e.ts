@@ -288,7 +288,8 @@ describe('Document List - Pagination',  () => {
         await contentServicesPage.waitForTableBody();
         expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        await contentServicesPage.createNewFolder(folderTwoModel.name).checkContentIsDisplayed(folderTwoModel.name);
+        await contentServicesPage.createNewFolder(folderTwoModel.name);
+        await contentServicesPage.checkContentIsDisplayed(folderTwoModel.name);
         await contentServicesPage.doubleClickRow(folderTwoModel.name);
         await contentServicesPage.checkPaginationIsNotDisplayed();
     });

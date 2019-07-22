@@ -84,7 +84,7 @@ export class TaskListCloudComponentPage {
         return this.dataTable.selectRow(column.id, taskId);
     }
 
-    getRow(taskName): Promise<ElementFinder> {
+    getRow(taskName): ElementFinder {
         return this.dataTable.getCellElementByValue(column.name, taskName);
     }
 

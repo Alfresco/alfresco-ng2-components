@@ -90,13 +90,13 @@ export class PaginationPage {
         const deferred = protractor.promise.defer();
         await BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const initialList = [];
-        element.all(this.pageDropDownOptions).each(function(currentOption) {
-            currentOption.getText().then(function(text) {
+        element.all(this.pageDropDownOptions).each(async (currentOption) => {
+            await currentOption.getText().then(function (text) {
                 if (text !== '') {
                     initialList.push(text);
                 }
             });
-        }).then(function() {
+        }).then(function () {
             deferred.fulfill(initialList);
         });
         return deferred.promise;
@@ -120,7 +120,7 @@ export class PaginationPage {
 
     async getTotalNumberOfFiles(): Promise<any> {
         await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
-        const numberOfFiles = this.totalFiles.getText().then(function(totalNumber) {
+        const numberOfFiles = this.totalFiles.getText().then(function (totalNumber) {
             const totalNumberOfFiles = totalNumber.split('of ')[1];
             return totalNumberOfFiles;
         });

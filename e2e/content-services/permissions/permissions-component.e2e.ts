@@ -22,7 +22,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import { StringUtil, BrowserActions, NotificationHistoryPage, LoginPage, UploadActions } from '@alfresco/adf-testing';
-import { browser, ElementArrayFinder } from 'protractor';
+import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folderModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
@@ -166,8 +166,8 @@ describe('Permissions Component', () => {
 
     afterAll(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await folders.forEach(function (folder) {
-            uploadActions.deleteFileOrFolder(folder.entry.id);
+        await folders.forEach(async (folder) => {
+            await uploadActions.deleteFileOrFolder(folder.entry.id);
 
         });
 
@@ -268,17 +268,17 @@ describe('Permissions Component', () => {
             await contentServicesPage.checkContentIsDisplayed(fileModel.name);
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
 
-            contentList.rightClickOnRow(fileModel.name);
+            await contentList.rightClickOnRow(fileModel.name);
 
             await contentServicesPage.pressContextMenuActionNamed('Permission');
 
-            permissionsPage.checkAddPermissionButtonIsDisplayed();
-            permissionsPage.clickAddPermissionButton();
-            permissionsPage.checkAddPermissionDialogIsDisplayed();
-            permissionsPage.checkSearchUserInputIsDisplayed();
+            await permissionsPage.checkAddPermissionButtonIsDisplayed();
+            await permissionsPage.clickAddPermissionButton();
+            await permissionsPage.checkAddPermissionDialogIsDisplayed();
+            await permissionsPage.checkSearchUserInputIsDisplayed();
             await permissionsPage.searchUserOrGroup(filePermissionUser.getId());
-            permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
-            permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
+            await permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
+            await permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
 
             done();
 
@@ -302,7 +302,7 @@ describe('Permissions Component', () => {
 
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
 
-            const roleDropdownOptions: ElementArrayFinder = await permissionsPage.getRoleDropdownOptions();
+            const roleDropdownOptions = await permissionsPage.getRoleDropdownOptions();
 
             expect(roleDropdownOptions.count()).toBe(5);
             expect(roleDropdownOptions.get(0).getText()).toBe('Contributor');
@@ -413,7 +413,7 @@ describe('Permissions Component', () => {
 
             await notificationPage.checkNotifyContains('You don\'t have access to do this.');
 
-            await contentServicesPage.uploadFile(testFileModel.location)
+            await contentServicesPage.uploadFile(testFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
             await uploadDialog.fileIsUploaded(testFileModel.name);
@@ -441,7 +441,6 @@ describe('Permissions Component', () => {
 
             await BrowserActions.closeMenuAndDialogs();
 
-
             await contentList.checkActionMenuIsNotDisplayed();
 
             await contentServicesPage.metadataContent('RoleEditor' + fileModel.name);
@@ -460,10 +459,9 @@ describe('Permissions Component', () => {
 
             await metadataViewPage.clickCloseButton();
 
-            await contentServicesPageawait.uploadFile(fileModel.location);
+            await contentServicesPage.uploadFile(fileModel.location);
 
             await notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
-
 
         });
 
@@ -486,7 +484,6 @@ describe('Permissions Component', () => {
 
             await BrowserActions.closeMenuAndDialogs();
 
-
             await contentList.checkActionMenuIsNotDisplayed();
 
             await contentServicesPage.metadataContent('RoleCollaborator' + fileModel.name);
@@ -505,7 +502,7 @@ describe('Permissions Component', () => {
 
             await metadataViewPage.clickCloseButton();
 
-            await contentServicesPage.uploadFile(testFileModel.location)
+            await contentServicesPage.uploadFile(testFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
             await uploadDialog.fileIsUploaded(testFileModel.name);
@@ -548,7 +545,7 @@ describe('Permissions Component', () => {
             await contentServicesPage.checkContentIsDisplayed(pngFileModel.name);
 
             await uploadDialog.fileIsUploaded(pngFileModel.name);
-            await uploadDialog.clickOnCloseButton()
+            await uploadDialog.clickOnCloseButton();
             await uploadDialog.dialogIsNotDisplayed();
 
             await contentServicesPage.checkContentIsDisplayed('RoleCoordinator' + fileModel.name);

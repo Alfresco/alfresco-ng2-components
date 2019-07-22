@@ -96,7 +96,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async checkAppNamesAreUnique(): Promise<boolean> {
-        const appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span'));
+        const appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span')).first();
         const appTextList: any = await BrowserActions.getText(appNameList);
         const uniqueArray = appTextList.filter((appName) => {
             const sameAppNameArray = appTextList.filter((eachApp) => eachApp === appName);
@@ -128,9 +128,9 @@ export class EditProcessFilterCloudComponentPage {
     async setProperty(property, option): Promise<void> {
         const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(locator);
-        locator.clear();
-        locator.sendKeys(option);
-        locator.sendKeys(protractor.Key.ENTER);
+        await locator.clear();
+        await locator.sendKeys(option);
+        await locator.sendKeys(protractor.Key.ENTER);
     }
 
     async checkSaveButtonIsDisplayed(): Promise<void> {

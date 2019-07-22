@@ -139,7 +139,6 @@ describe('Task Details component', () => {
 
         const taskForm = await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
 
-
         formModel = new FormModel(taskForm);
 
         expect(await taskPage.taskDetails().getFormName()).toEqual(formModel.getName());
@@ -260,7 +259,6 @@ describe('Task Details component', () => {
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
-
 
         const dialog = await taskPage.clickOnAddChecklistButton();
         await dialog.addName(checklistName);

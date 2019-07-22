@@ -89,16 +89,16 @@ describe('Document List Component',  () => {
                 }
             });
 
-        browser.driver.sleep(10000);
+        await browser.driver.sleep(10000);
         done();
     });
 
     afterAll(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
-        uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
-        uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
-        uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
+        await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
+        await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
+        await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
+        await uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
         done();
     });
 
@@ -114,10 +114,10 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Move');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
-            contentNodeSelector.clickContentNodeSelectorResult(folderName);
-            contentNodeSelector.clickMoveCopyButton();
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
+            await contentNodeSelector.clickContentNodeSelectorResult(folderName);
+            await contentNodeSelector.clickMoveCopyButton();
             await notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
 
@@ -126,10 +126,10 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContentIsDisplayed(sourceFolder.entry.name);
             await contentServicesPage.getDocumentList().rightClickOnRow(sourceFolder.entry.name);
             await contentServicesPage.pressContextMenuActionNamed('Move');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.typeIntoNodeSelectorSearchField(destinationFolder.entry.name);
-            contentNodeSelector.clickContentNodeSelectorResult(destinationFolder.entry.name);
-            contentNodeSelector.clickMoveCopyButton();
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.typeIntoNodeSelectorSearchField(destinationFolder.entry.name);
+            await contentNodeSelector.clickContentNodeSelectorResult(destinationFolder.entry.name);
+            await contentNodeSelector.clickMoveCopyButton();
             await contentServicesPage.checkContentIsNotDisplayed(sourceFolder.entry.name);
             await contentServicesPage.doubleClickRow(destinationFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(sourceFolder.entry.name);
@@ -143,10 +143,10 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContentIsDisplayed(duplicateFolderName.entry.name);
             await contentServicesPage.getDocumentList().rightClickOnRow(duplicateFolderName.entry.name);
             await contentServicesPage.pressContextMenuActionNamed('Move');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.typeIntoNodeSelectorSearchField(sourceFolder.entry.name);
-            contentNodeSelector.clickContentNodeSelectorResult(sourceFolder.entry.name);
-            contentNodeSelector.clickMoveCopyButton();
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.typeIntoNodeSelectorSearchField(sourceFolder.entry.name);
+            await contentNodeSelector.clickContentNodeSelectorResult(sourceFolder.entry.name);
+            await contentNodeSelector.clickMoveCopyButton();
             await notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
 
@@ -154,10 +154,10 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Copy');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
-            contentNodeSelector.clickContentNodeSelectorResult(folderName);
-            contentNodeSelector.clickMoveCopyButton();
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
+            await contentNodeSelector.clickContentNodeSelectorResult(folderName);
+            await contentNodeSelector.clickMoveCopyButton();
             await notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
 
@@ -165,10 +165,10 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContentIsDisplayed(duplicateFolderName.entry.name);
             await contentServicesPage.getDocumentList().rightClickOnRow(duplicateFolderName.entry.name);
             await contentServicesPage.pressContextMenuActionNamed('Copy');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.typeIntoNodeSelectorSearchField(sourceFolder.entry.name);
-            contentNodeSelector.clickContentNodeSelectorResult(sourceFolder.entry.name);
-            contentNodeSelector.clickMoveCopyButton();
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.typeIntoNodeSelectorSearchField(sourceFolder.entry.name);
+            await contentNodeSelector.clickContentNodeSelectorResult(sourceFolder.entry.name);
+            await contentNodeSelector.clickMoveCopyButton();
             await notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
 
@@ -176,11 +176,10 @@ describe('Document List Component',  () => {
 
     describe('Document List actionns - Move, Copy on no permission folder',  () => {
 
-        beforeAll((done) => {
+        beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + sourceFolder.entry.id);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-            done();
         });
 
         it('[C260133] Move - no permission folder', async () => {
@@ -198,15 +197,15 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContextActionIsVisible('Copy');
             expect(await contentServicesPage.checkContentActionIsEnabled('Copy')).toBe(true);
             await contentServicesPage.pressContextMenuActionNamed('Copy');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);
-            contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisabled(subFolder.entry.name);
-            contentNodeSelector.clickContentNodeSelectorResult(subFolder.entry.name);
-            contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected(subFolder.entry.name);
-            expect(contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
-            contentNodeSelector.contentListPage().dataTablePage().doubleClickRowByContent(subFolder.entry.name);
-            contentNodeSelector.contentListPage().dataTablePage().waitTillContentLoaded();
-            contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder2.entry.name);
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);
+            await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisabled(subFolder.entry.name);
+            await contentNodeSelector.clickContentNodeSelectorResult(subFolder.entry.name);
+            await contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected(subFolder.entry.name);
+            expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
+            await contentNodeSelector.contentListPage().dataTablePage().doubleClickRowByContent(subFolder.entry.name);
+            await contentNodeSelector.contentListPage().dataTablePage().waitTillContentLoaded();
+            await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder2.entry.name);
         });
 
     });

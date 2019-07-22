@@ -74,13 +74,9 @@ describe('Trashcan - Pagination', () => {
 
         const folderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
 
-        const emptyFiles = await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
-        await emptyFiles.list.entries.forEach(async (node) => {
-            await this.alfrescoJsApi.node.deleteNode(node.entry.id).then(() => {
-            }, () => {
-                this.alfrescoJsApi.node.deleteNode(node.entry.id);
-            });
-        });
+        await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
+
+        await this.alfrescoJsApi.node.deleteNode(folderUploadedModel.entry.id);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navigationBarPage.clickTrashcanButton();

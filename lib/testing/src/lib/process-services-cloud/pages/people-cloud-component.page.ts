@@ -26,7 +26,7 @@ export class PeopleCloudComponentPage {
 
     async clearAssignee(): Promise<void> {
         await BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
-        this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
+        await this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
     }
 
     async searchAssigneeAndSelect(name): Promise<void> {
@@ -73,7 +73,7 @@ export class PeopleCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
     }
 
-    async agetAssigneeFieldContent(): Promise<string> {
+    async getAssigneeFieldContent(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
         await browser.sleep(1000);
         return this.assigneeField.getAttribute('value');

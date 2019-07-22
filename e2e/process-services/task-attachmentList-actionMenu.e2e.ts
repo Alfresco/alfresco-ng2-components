@@ -193,9 +193,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await attachmentListPage.checkFileIsAttached(pngFile.name);
 
-        browser.controlFlow().execute(async () => {
-            await this.alfrescoJsApi.activiti.contentApi.deleteContent(relatedContentId);
-        });
+        await this.alfrescoJsApi.activiti.contentApi.deleteContent(relatedContentId);
 
         await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 

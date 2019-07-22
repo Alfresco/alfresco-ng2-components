@@ -64,7 +64,7 @@ describe('Task Audit', () => {
 
         this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskTaskApp });
 
-        appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 

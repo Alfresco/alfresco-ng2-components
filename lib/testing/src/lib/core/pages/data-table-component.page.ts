@@ -128,8 +128,8 @@ export class DataTableComponentPage {
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
         await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
-        column.each(function (currentElement) {
-            currentElement.getText().then(function (text) {
+        column.each(async (currentElement) => {
+            await currentElement.getText().then(function (text) {
                 if (text.length !== 0) {
                     initialList.push(text.toLowerCase());
                 }
@@ -206,19 +206,19 @@ export class DataTableComponentPage {
     async sortByColumn(sortOrder: string, titleColumn: string): Promise<any> {
         const locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(element(locator));
-        return element(locator).getAttribute('class').then(function (result) {
+        return element(locator).getAttribute('class').then(async (result) => {
             if (sortOrder.toLocaleLowerCase() === 'asc') {
                 if (!result.includes('sorted-asc')) {
                     if (result.includes('sorted-desc') || result.includes('sortable')) {
-                        element(locator).click();
+                        await element(locator).click();
                     }
                 }
             } else {
                 if (result.includes('sorted-asc')) {
-                    element(locator).click();
+                    await element(locator).click();
                 } else if (result.includes('sortable')) {
-                    element(locator).click();
-                    element(locator).click();
+                    await element(locator).click();
+                    await element(locator).click();
                 }
             }
 

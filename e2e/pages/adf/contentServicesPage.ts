@@ -559,7 +559,7 @@ export class ContentServicesPage {
     }
 
     getAttributeValueForElement(elementName, propertyName): Promise<string> {
-        const elementSize: ElementFinder = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`));
+        const elementSize = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`));
         return BrowserActions.getText(elementSize);
     }
 

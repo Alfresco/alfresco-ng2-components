@@ -55,7 +55,7 @@ describe('Process list cloud',  () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [await identityService.ROLES.APS_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
@@ -89,30 +89,30 @@ describe('Process list cloud',  () => {
             await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(jsonFile));
 
             await navigationBarPage.navigateToProcessServicesCloudPage();
-            appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(candidateBaseApp);
-            processCloudDemoPage.clickOnProcessFilters();
-            processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
-            processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-            processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
-            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
+            await appListCloudComponent.checkApsContainer();
+            await appListCloudComponent.goToApp(candidateBaseApp);
+            await processCloudDemoPage.clickOnProcessFilters();
+            await processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
+            await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+            expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+            await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
+            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
             done();
         });
 
         it('[C291997] Should be able to change the default columns', async () => {
 
-            expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfColumns()).toBe(10);
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('id');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('name');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('status');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('startDate');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('appName');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('businessKey');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('initiator');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('lastModified');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('processDefinitionId');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('processDefinitionKey');
+            expect(await processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfColumns()).toBe(10);
+            await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('id');
+            await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('name');
+            await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('status');
+            await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('startDate');
+            await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('appName');
+            await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('businessKey');
+            await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('initiator');
+            await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('lastModified');
+            await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('processDefinitionId');
+            await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('processDefinitionKey');
 
         });
 

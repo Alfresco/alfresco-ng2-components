@@ -87,9 +87,9 @@ describe('Favorite directive',  () => {
         await contentServicesPage.clickOnFavoriteButton();
         await contentServicesPage.checkIsMarkedFavorite();
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavoritesSourceType();
-        customSourcesPage.checkRowIsDisplayed(testFile.entry.name);
+        await customSourcesPage.navigateToCustomSources();
+        await customSourcesPage.selectFavoritesSourceType();
+        await customSourcesPage.checkRowIsDisplayed(testFile.entry.name);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
@@ -98,9 +98,9 @@ describe('Favorite directive',  () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
         await contentServicesPage.clickOnFavoriteButton();
         await contentServicesPage.checkIsNotMarkedFavorite();
-        customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavoritesSourceType();
-        customSourcesPage.checkRowIsNotDisplayed(testFile.entry.name);
+        await customSourcesPage.navigateToCustomSources();
+        await customSourcesPage.selectFavoritesSourceType();
+        await customSourcesPage.checkRowIsNotDisplayed(testFile.entry.name);
     });
 
     it('[C260249] Should be able to mark a folder as favorite', async () => {
@@ -109,9 +109,9 @@ describe('Favorite directive',  () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
         await contentServicesPage.clickOnFavoriteButton();
         await contentServicesPage.checkIsMarkedFavorite();
-        customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavoritesSourceType();
-        customSourcesPage.checkRowIsDisplayed(testFolder1.entry.name);
+        await customSourcesPage.navigateToCustomSources();
+        await customSourcesPage.selectFavoritesSourceType();
+        await customSourcesPage.checkRowIsDisplayed(testFolder1.entry.name);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
@@ -120,9 +120,9 @@ describe('Favorite directive',  () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
         await contentServicesPage.clickOnFavoriteButton();
         await contentServicesPage.checkIsNotMarkedFavorite();
-        customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavoritesSourceType();
-        customSourcesPage.checkRowIsNotDisplayed(testFolder1.entry.name);
+        await customSourcesPage.navigateToCustomSources();
+        await customSourcesPage.selectFavoritesSourceType();
+        await customSourcesPage.checkRowIsNotDisplayed(testFolder1.entry.name);
     });
 
     it('[C260251] Should retain the restored file as favorite', async () => {
@@ -134,9 +134,9 @@ describe('Favorite directive',  () => {
         contentListPage.rightClickOnRow(testFile.entry.name);
         await contentServicesPage.pressContextMenuActionNamed('Delete');
         await contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
-        customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavoritesSourceType();
-        customSourcesPage.checkRowIsNotDisplayed(testFile.entry.name);
+        await customSourcesPage.navigateToCustomSources();
+        await customSourcesPage.selectFavoritesSourceType();
+        await customSourcesPage.checkRowIsNotDisplayed(testFile.entry.name);
 
         await navigationBarPage.clickTrashcanButton();
         await trashcanPage.waitForTableBody();
@@ -152,9 +152,9 @@ describe('Favorite directive',  () => {
         await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
         await contentServicesPage.checkIsMarkedFavorite();
-        customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavoritesSourceType();
-        customSourcesPage.checkRowIsDisplayed(testFile.entry.name);
+        await customSourcesPage.navigateToCustomSources();
+        await customSourcesPage.selectFavoritesSourceType();
+        await customSourcesPage.checkRowIsDisplayed(testFile.entry.name);
     });
 
     it('[C260252] Should retain the moved file as favorite', async () => {
@@ -166,10 +166,10 @@ describe('Favorite directive',  () => {
 
         await contentServicesPage.getDocumentList().rightClickOnRow(testFile.entry.name);
         await contentServicesPage.pressContextMenuActionNamed('Move');
-        contentNodeSelector.checkDialogIsDisplayed();
-        contentNodeSelector.typeIntoNodeSelectorSearchField(testFolder1.entry.name);
-        contentNodeSelector.clickContentNodeSelectorResult(testFolder1.entry.name);
-        contentNodeSelector.clickMoveCopyButton();
+        await contentNodeSelector.checkDialogIsDisplayed();
+        await contentNodeSelector.typeIntoNodeSelectorSearchField(testFolder1.entry.name);
+        await contentNodeSelector.clickContentNodeSelectorResult(testFolder1.entry.name);
+        await contentNodeSelector.clickMoveCopyButton();
         await contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
         await contentServicesPage.doubleClickRow(testFolder1.entry.name);
         await contentServicesPage.checkContentIsDisplayed(testFile.entry.name);

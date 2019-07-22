@@ -80,7 +80,7 @@ describe('Document List Component - Properties',  () => {
             const dragAndDropArea = await contentServicesPage.getRowByName(subFolder.entry.name);
 
             const dragAndDrop = new DropActions();
-            dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
+            await dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
 
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
             await contentServicesPage.doubleClickRow(subFolder.entry.name);
@@ -96,7 +96,7 @@ describe('Document List Component - Properties',  () => {
             const dragAndDropArea = await contentServicesPage.getRowByName(subFolder.entry.name);
 
             const dragAndDrop = new DropActions();
-            dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
+            await dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
 
             await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
             await contentServicesPage.doubleClickRow(subFolder.entry.name);

@@ -82,7 +82,7 @@ describe('Document List Component',  () => {
         });
 
         beforeEach(async () => {
-            navBar.clickHomeButton();
+            await navBar.clickHomeButton();
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.clickGridViewButton();
             await contentServicesPage.checkCardViewContainerIsDisplayed();
@@ -122,13 +122,15 @@ describe('Document List Component',  () => {
 
             expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.DISPLAY_NAME)).toBe(docxFile.name);
             expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`81.05 KB`);
-            expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY))
+                .toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
             expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.DISPLAY_NAME)).toBe(testFile.name);
             expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.SIZE)).toBe(`14 Bytes`);
-            expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED_BY))
+                .toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
             expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
         });

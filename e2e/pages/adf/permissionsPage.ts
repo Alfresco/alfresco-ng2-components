@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, ElementArrayFinder } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
@@ -35,7 +35,6 @@ export class PermissionsPage {
     addButton: ElementFinder = element(by.id('add-permission-dialog-confirm-button'));
     permissionInheritedButton: ElementFinder = element.all(by.css("div[class='adf-inherit_permission_button'] button")).first();
     noPermissions: ElementFinder = element(by.css('div[id="adf-no-permissions-template"]'));
-    roleDropdownOptions: ElementArrayFinder = element.all(by.css('.mat-option-text'));
     assignPermissionError: ElementFinder = element(by.css('simple-snack-bar'));
     deletePermissionButton: ElementFinder = element(by.css(`button[data-automation-id='adf-delete-permission-button']`));
     permissionDisplayContainer: ElementFinder = element(by.css(`div[id='adf-permission-display-container']`));
@@ -120,9 +119,9 @@ export class PermissionsPage {
         return BrowserActions.click(row.element(by.id('adf-select-role-permission')));
     }
 
-    async getRoleDropdownOptions(): Promise<ElementArrayFinder> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.roleDropdownOptions.first());
-        return this.roleDropdownOptions;
+    async getRoleDropdownOptions(): Promise<any> {
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('.mat-option-text')).first());
+        return element.all(by.css('.mat-option-text'));
     }
 
     async selectOption(name): Promise<void> {

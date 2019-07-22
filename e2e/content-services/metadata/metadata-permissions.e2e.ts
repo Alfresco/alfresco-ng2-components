@@ -107,8 +107,7 @@ describe('permissions', () => {
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
-        await mawait
-        etadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsNotDisplayed();
     });
 

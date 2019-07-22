@@ -229,7 +229,7 @@ export class MetadataViewPage {
     }
 
     getMetadataGroupTitle(groupName: string): promise.Promise<string> {
-        const group: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
+        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
         return BrowserActions.getText(group);
     }
 

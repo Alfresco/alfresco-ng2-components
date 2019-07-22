@@ -35,7 +35,7 @@ describe('Comment component for Processes', () => {
     const navigationBarPage = new NavigationBarPage();
 
     const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let user, tenantId, appId, processInstanceId, comment, addedComment;
+    let user, tenantId, appId, processInstanceId, addedComment;
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -92,11 +92,7 @@ describe('Comment component for Processes', () => {
     });
 
     it('[C260465] Should not be able to view process comment on included task', async () => {
-        browser.controlFlow().execute(async () => {
-            comment = { message: 'GOODBYE' };
-
-            await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment(comment, processInstanceId);
-        });
+        await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment({ message: 'GOODBYE' }, processInstanceId);
 
         await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 

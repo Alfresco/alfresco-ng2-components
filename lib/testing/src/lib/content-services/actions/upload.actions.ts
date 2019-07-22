@@ -19,6 +19,7 @@ import { browser } from 'protractor';
 import * as path from 'path';
 import * as fs from 'fs';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
 
 export class UploadActions {
     alfrescoJsApi: AlfrescoApi = null;
@@ -44,7 +45,7 @@ export class UploadActions {
         );
     }
 
-    async createEmptyFiles(emptyFileNames: string[], parentFolderId) {
+    async createEmptyFiles(emptyFileNames: string[], parentFolderId): Promise<NodeEntry> {
         const filesRequest = [];
 
         for (let i = 0; i < emptyFileNames.length; i++) {
@@ -54,16 +55,14 @@ export class UploadActions {
             filesRequest.push(jsonItem);
         }
 
-        return this.alfrescoJsApi.nodes.addNode(parentFolderId, filesRequest, {}, {
-            filedata: ''
-        });
+        return this.alfrescoJsApi.nodes.addNode(parentFolderId, <any> filesRequest, {});
     }
 
-    async createFolder(folderName, parentFolderId) {
+    async createFolder(folderName, parentFolderId): Promise<NodeEntry> {
         return this.alfrescoJsApi.node.addNode(parentFolderId, {
             name: folderName,
             nodeType: 'cm:folder'
-        }, {}, {});
+        }, {});
     }
 
     async deleteFileOrFolder(nodeId) {

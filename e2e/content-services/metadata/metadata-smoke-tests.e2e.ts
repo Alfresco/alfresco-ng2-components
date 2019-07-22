@@ -146,7 +146,7 @@ describe('Metadata component', () => {
         it('[C270952] Should be possible to open/close properties using info icon', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
-            await metadataViewPage.clickOnPropertiesTab()
+            await metadataViewPage.clickOnPropertiesTab();
             await metadataViewPage.informationButtonIsDisplayed();
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsNotDisplayed();

@@ -121,11 +121,13 @@ describe('Upload - User permission',  () => {
         });
 
         it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', async () => {
-            await contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
+            await contentServicesPage.uploadFile(emptyFile.location);
+            await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             await uploadDialog.fileIsUploaded(emptyFile.name);
 
-            await uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
 
             await navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 

@@ -200,18 +200,16 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.clickApplyButton();
         await searchResults.sortBySize('DESC');
 
-        browser.controlFlow().execute(async () => {
-            const results = await dataTable.geCellElementDetail('Size');
-            for (const currentResult of results) {
-                try {
-                    const currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() !== '') {
-                        await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
-                    }
-                } catch (e) {
+        const results = await dataTable.geCellElementDetail('Size');
+        for (const currentResult of results) {
+            try {
+                const currentSize = await currentResult.getAttribute('title');
+                if (currentSize && currentSize.trim() !== '') {
+                    await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
                 }
+            } catch (e) {
             }
-        });
+        }
 
         await searchFilters.checkNameFilterIsDisplayed();
         await searchFilters.checkNameFilterIsExpanded();
@@ -229,8 +227,8 @@ describe('Search Number Range Filter', () => {
             }
         }
 
-        const resultsDisaply = await dataTable.geCellElementDetail('Display name');
-        for (const currentResult of resultsDisaply) {
+        const resultsDisplay = await dataTable.geCellElementDetail('Display name');
+        for (const currentResult of resultsDisplay) {
             try {
                 const name = await currentResult.getAttribute('title');
                 if (name && name.trim() !== '') {
@@ -270,19 +268,16 @@ describe('Search Number Range Filter', () => {
         await searchResults.tableIsLoaded();
         await searchResults.sortBySize('DESC');
 
-        browser.controlFlow().execute(async () => {
-            const results = await dataTable.geCellElementDetail('Size');
-            for (const currentResult of results) {
-                try {
-                    const currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() !== '') {
-                        await expect(currentSize === '0').toBe(true);
-                    }
-                } catch (e) {
+        const results = await dataTable.geCellElementDetail('Size');
+        for (const currentResult of results) {
+            try {
+                const currentSize = await currentResult.getAttribute('title');
+                if (currentSize && currentSize.trim() !== '') {
+                    await expect(currentSize === '0').toBe(true);
                 }
+            } catch (e) {
             }
-        });
-
+        }
     });
 
     it('[C277092] Should disable apply button when from field value equal/is bigger than to field value', async () => {

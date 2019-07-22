@@ -94,35 +94,35 @@ export class SettingsPage {
     }
 
     async setProviderEcmBpm() {
-        this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
+        await this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        this.clickApply();
+        await this.clickApply();
         return this;
     }
 
     async setProviderBpm() {
-        this.setProvider(this.bpm.option, this.bpm.text);
+        await this.setProvider(this.bpm.option, this.bpm.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        this.clickApply();
+        await this.clickApply();
         return this;
     }
 
     async setProviderEcm() {
-        this.setProvider(this.ecm.option, this.ecm.text);
+        await this.setProvider(this.ecm.option, this.ecm.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         expect(this.bpmText.isPresent()).toBeFalsy();
-        this.clickApply();
+        await this.clickApply();
         return this;
     }
 
     async setProviderOauth() {
-        this.goToSettingsPage();
-        this.setProvider(this.oauth.option, this.oauth.text);
+        await this.goToSettingsPage();
+        await this.setProvider(this.oauth.option, this.oauth.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         expect(this.authHostText.isPresent()).toBeTruthy();
-        this.clickApply();
+        await this.clickApply();
         return this;
     }
 
@@ -136,49 +136,49 @@ export class SettingsPage {
 
     async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUr: string = '/logout') {
         await this.goToSettingsPage();
-        this.setProvider(this.ecm.option, this.ecm.text);
+        await this.setProvider(this.ecm.option, this.ecm.text);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.bpmText);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        this.clickSsoRadioButton();
-        this.setContentServicesURL(contentServiceURL);
-        this.setAuthHost(authHost);
-        this.setIdentityHost(identityHost);
-        this.setSilentLogin(silentLogin);
-        this.setImplicitFlow(implicitFlow);
-        this.setLogoutUrl(logoutUr);
-        this.clickApply();
+        await this.clickSsoRadioButton();
+        await this.setContentServicesURL(contentServiceURL);
+        await this.setAuthHost(authHost);
+        await this.setIdentityHost(identityHost);
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
+        await this.setLogoutUrl(logoutUr);
+        await this.clickApply();
         await browser.sleep(1000);
     }
 
     async setProviderBpmSso(processServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true) {
         await this.goToSettingsPage();
-        this.setProvider(this.bpm.option, this.bpm.text);
+        await this.setProvider(this.bpm.option, this.bpm.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.ecmText);
-        this.clickSsoRadioButton();
-        this.setClientId();
-        this.setProcessServicesURL(processServiceURL);
-        this.setAuthHost(authHost);
-        this.setIdentityHost(identityHost);
-        this.setSilentLogin(silentLogin);
-        this.setImplicitFlow(implicitFlow);
+        await this.clickSsoRadioButton();
+        await this.setClientId();
+        await this.setProcessServicesURL(processServiceURL);
+        await this.setAuthHost(authHost);
+        await this.setIdentityHost(identityHost);
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
         await this.clickApply();
         await browser.sleep(1000);
     }
 
     async setProviderEcmBpmSso(contentServicesURL: string, processServiceURL, authHost, identityHost, clientId: string, silentLogin = true, implicitFlow = true) {
         await this.goToSettingsPage();
-        this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
+        await this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        this.clickSsoRadioButton();
-        this.setClientId(clientId);
-        this.setContentServicesURL(contentServicesURL);
-        this.setProcessServicesURL(processServiceURL);
-        this.setAuthHost(authHost);
-        this.setIdentityHost(identityHost);
-        this.setSilentLogin(silentLogin);
-        this.setImplicitFlow(implicitFlow);
+        await this.clickSsoRadioButton();
+        await this.setClientId(clientId);
+        await this.setContentServicesURL(contentServicesURL);
+        await this.setProcessServicesURL(processServiceURL);
+        await this.setAuthHost(authHost);
+        await this.setIdentityHost(identityHost);
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
         await this.clickApply();
         await browser.sleep(1000);
     }
@@ -207,16 +207,16 @@ export class SettingsPage {
 
     async clearContentServicesURL() {
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        this.ecmText.clear();
-        this.ecmText.sendKeys('a');
-        this.ecmText.sendKeys(protractor.Key.BACK_SPACE);
+        await this.ecmText.clear();
+        await this.ecmText.sendKeys('a');
+        await this.ecmText.sendKeys(protractor.Key.BACK_SPACE);
     }
 
     async clearProcessServicesURL() {
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        this.bpmText.clear();
-        this.bpmText.sendKeys('a');
-        this.bpmText.sendKeys(protractor.Key.BACK_SPACE);
+        await this.bpmText.clear();
+        await this.bpmText.sendKeys('a');
+        await this.bpmText.sendKeys(protractor.Key.BACK_SPACE);
     }
 
     async setAuthHost(authHostURL) {
@@ -274,7 +274,7 @@ export class SettingsPage {
     }
 
     async checkProviderOptions() {
-        BrowserActions.click(this.providerDropdown);
+        await BrowserActions.click(this.providerDropdown);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmAndBpm.option);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecm.option);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpm.option);

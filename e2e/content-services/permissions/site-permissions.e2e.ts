@@ -255,7 +255,7 @@ describe('Permissions Component', () => {
 
             await notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
 
-            await contentServicesPage.uploadFile(testFileModel.location)
+            await contentServicesPage.uploadFile(testFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
             await uploadDialog.fileIsUploaded(testFileModel.name);
@@ -282,7 +282,6 @@ describe('Permissions Component', () => {
             await contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
 
             await BrowserActions.closeMenuAndDialogs();
-
 
             await contentList.checkActionMenuIsNotDisplayed();
 
@@ -322,7 +321,6 @@ describe('Permissions Component', () => {
             await contentServicesPage.metadataContent('Site' + fileModel.name);
 
             await metadataViewPage.editIconIsDisplayed();
-
 
             await metadataViewPage.editIconClick();
 

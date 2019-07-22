@@ -76,24 +76,22 @@ describe('Search Date Range Filter', () => {
 
     it('[C277104] Should be able to set dates using date pickers', async () => {
         await dateRangeFilter.checkFromDateToggleIsDisplayed();
-        const datePicker = await dateRangeFilter.openFromDatePicker();
-        await datePicker.selectTodayDate();
+        const fromDatePicker = await dateRangeFilter.openFromDatePicker();
+        await fromDatePicker.selectTodayDate();
         await expect(await dateRangeFilter.getFromDate()).toEqual(await dateRangeFilter.getFromCalendarSelectedDate());
     });
 
     it('[C277105] Should be able to type a date', async () => {
         const date = '01-May-18';
         await dateRangeFilter.putFromDate(date);
-        browser.controlFlow().execute(async () => {
-            await expect(await dateRangeFilter.getFromCalendarSelectedDate()).toEqual(await dateRangeFilter.getFromDate());
-        });
+        await expect(await dateRangeFilter.getFromCalendarSelectedDate()).toEqual(await dateRangeFilter.getFromDate());
     });
 
     it('[C277119] FROM and TO dates should depend on each other', async () => {
         await dateRangeFilter.checkFromDateToggleIsDisplayed();
-        const datePicker = await dateRangeFilter.openFromDatePicker();
-        await datePicker.checkDatesAfterDateAreDisabled(new Date());
-        await datePicker.closeDatePicker();
+        const fromDatePicker = await dateRangeFilter.openFromDatePicker();
+        await fromDatePicker.checkDatesAfterDateAreDisabled(new Date());
+        await fromDatePicker.closeDatePicker();
 
         await dateRangeFilter.checkToDateToggleIsDisplayed();
         let datePickerTo = await dateRangeFilter.openToDatePicker();
@@ -114,9 +112,9 @@ describe('Search Date Range Filter', () => {
 
     it('[C277107] Should be able to apply a date range', async () => {
         await dateRangeFilter.checkFromDateToggleIsDisplayed();
-        const datePickerTofday = await dateRangeFilter.openFromDatePicker();
-        await datePickerTofday.selectTodayDate();
-        await datePickerTofday.checkDatePickerIsNotDisplayed();
+        const datePickerToday = await dateRangeFilter.openFromDatePicker();
+        await datePickerToday.selectTodayDate();
+        await datePickerToday.checkDatePickerIsNotDisplayed();
         let fromDate = await dateRangeFilter.getFromDate();
         fromDate = DateUtil.formatDate('DD-MM-YY', DateUtil.parse(fromDate, 'DD-MMM-YY'));
 

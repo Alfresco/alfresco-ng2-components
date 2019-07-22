@@ -106,7 +106,8 @@ describe('Version component actions',  () => {
 
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
-        await versionManagePage.clickActionButton('1.1').checkActionsArePresent('1.1');
+        await versionManagePage.clickActionButton('1.1');
+        await versionManagePage.checkActionsArePresent('1.1');
 
         await versionManagePage.closeActionsMenu();
     });

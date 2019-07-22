@@ -143,7 +143,6 @@ describe('Process Filters Test', () => {
         const defaultFiltersNumber = 3;
         let deployedApp, processFilterUrl;
 
-
         const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
 
         deployedApp = appDefinitions.data.find((currentApp) => {

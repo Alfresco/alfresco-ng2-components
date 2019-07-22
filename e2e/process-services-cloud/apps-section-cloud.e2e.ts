@@ -38,7 +38,7 @@ describe('Applications list',  () => {
     beforeAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER, identityService.ROLES.APS_DEVOPS_USER]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [await identityService.ROLES.APS_USER, await identityService.ROLES.APS_DEVOPS_USER]);
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
@@ -65,22 +65,22 @@ describe('Applications list',  () => {
 
     it('[C310373] Should all the app with running state be displayed on dashboard when alfresco-deployed-apps is not used in config file', async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudPage.checkApsContainer();
+        await appListCloudPage.checkApsContainer();
 
-        appListCloudPage.getNameOfTheApplications().then((list) => {
+        await appListCloudPage.getNameOfTheApplications().then((list) => {
             expect(JSON.stringify(list) === JSON.stringify(appNames)).toEqual(true);
         });
     });
 
     it('[C289910] Should the app be displayed on dashboard when is deployed on APS', async () => {
-        browser.refresh();
+        await browser.refresh();
         await navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudPage.checkApsContainer();
+        await appListCloudPage.checkApsContainer();
 
-        appListCloudPage.checkAppIsDisplayed(simpleApp);
-        appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name);
-        appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.SUB_PROCESS_APP.name);
+        await appListCloudPage.checkAppIsDisplayed(simpleApp);
+        await appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name);
+        await appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.SUB_PROCESS_APP.name);
 
-        expect(appListCloudPage.countAllApps()).toEqual(3);
+        expect(await appListCloudPage.countAllApps()).toEqual(3);
     });
 });

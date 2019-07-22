@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, browser, protractor, ElementFinder, Locator } from 'protractor';
+import { by, protractor, ElementFinder, Locator } from 'protractor';
 import { DatePickerPage } from '../../../material/pages/date-picker.page';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
@@ -44,7 +44,7 @@ export class DateRangeFilterPage {
     async putFromDate(date): Promise<void> {
         await this.checkFromFieldIsDisplayed();
         await BrowserActions.clearSendKeys(this.filter.element(this.fromField), date);
-        this.filter.element(this.fromField).sendKeys(protractor.Key.ENTER);
+        await this.filter.element(this.fromField).sendKeys(protractor.Key.ENTER);
     }
 
     async getFromCalendarSelectedDate(): Promise<string> {
@@ -56,7 +56,7 @@ export class DateRangeFilterPage {
 
     async openFromDatePicker(): Promise<DatePickerPage> {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromDateToggle));
-        this.filter.element(this.fromDateToggle).click();
+        await  this.filter.element(this.fromDateToggle).click();
         const datePicker = new DatePickerPage();
         await datePicker.checkDatePickerIsDisplayed();
         return datePicker;
@@ -64,7 +64,7 @@ export class DateRangeFilterPage {
 
     async openToDatePicker(): Promise<DatePickerPage> {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toDateToggle));
-        this.filter.element(this.toDateToggle).click();
+        await this.filter.element(this.toDateToggle).click();
         const datePicker = new DatePickerPage();
         await datePicker.checkDatePickerIsDisplayed();
         return datePicker;
@@ -72,15 +72,13 @@ export class DateRangeFilterPage {
 
     async clickFromField(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromField));
-        this.filter.element(this.fromField).click();
+        await this.filter.element(this.fromField).click();
     }
 
     async checkFromErrorMessageIsDisplayed(msg: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorMessage));
-        browser.controlFlow().execute(async () => {
-            const text = await BrowserActions.getText(this.filter.element(this.fromErrorMessage));
-            await expect(text).toEqual(msg);
-        });
+        const text = await BrowserActions.getText(this.filter.element(this.fromErrorMessage));
+        await expect(text).toEqual(msg);
     }
 
     async checkFromErrorMessageIsNotDisplayed(): Promise<void> {
@@ -101,22 +99,20 @@ export class DateRangeFilterPage {
 
     async putToDate(date): Promise<void> {
         await this.checkToFieldIsDisplayed();
-        this.filter.element(this.toField).clear();
-        this.filter.element(this.toField).sendKeys(date);
-        this.filter.element(this.toField).sendKeys(protractor.Key.ENTER);
+        await this.filter.element(this.toField).clear();
+        await this.filter.element(this.toField).sendKeys(date);
+        await this.filter.element(this.toField).sendKeys(protractor.Key.ENTER);
     }
 
     async clickToField(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toField));
-        this.filter.element(this.toField).click();
+        await this.filter.element(this.toField).click();
     }
 
     async checkToErrorMessageIsDisplayed(msg): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorMessage));
-        browser.controlFlow().execute(async () => {
-            const text = await BrowserActions.getText(this.filter.element(this.toErrorMessage));
-            await expect(text).toEqual(msg);
-        });
+        const text = await BrowserActions.getText(this.filter.element(this.toErrorMessage));
+        await expect(text).toEqual(msg);
     }
 
     async checkToFieldIsDisplayed(): Promise<void> {
@@ -129,7 +125,7 @@ export class DateRangeFilterPage {
 
     async clickApplyButton(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.applyButton));
-        this.filter.element(this.applyButton).click();
+        await this.filter.element(this.applyButton).click();
     }
 
     async checkApplyButtonIsDisplayed(): Promise<void> {

@@ -25,7 +25,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import moment from 'moment-es6';
 
-describe('Document List Component',  () => {
+describe('Document List Component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -59,7 +59,7 @@ describe('Document List Component',  () => {
         done();
     });
 
-    describe('Custom Column',  () => {
+    describe('Custom Column', () => {
 
         let folderName;
         const pdfFileModel = new FileModel({
@@ -159,7 +159,7 @@ describe('Document List Component',  () => {
         });
     });
 
-    describe('Column Sorting',  () => {
+    describe('Column Sorting', () => {
 
         const fakeFileA = new FileModel({
             name: 'A',
@@ -329,7 +329,7 @@ describe('Document List Component',  () => {
         done();
     });
 
-    describe('Once uploaded 20 folders',  () => {
+    describe('Once uploaded 20 folders', () => {
 
         let folderCreated;
 
@@ -350,8 +350,8 @@ describe('Document List Component',  () => {
         });
 
         afterAll(async (done) => {
-            Promise.all(folderCreated.map((folder) =>
-                uploadActions.deleteFileOrFolder(folder.entry.id)
+            Promise.all(folderCreated.map(async (folder) =>
+                await uploadActions.deleteFileOrFolder(folder.entry.id)
             )).then(() => {
                 done();
             });
@@ -366,7 +366,7 @@ describe('Document List Component',  () => {
 
     });
 
-    describe('Column Template',  () => {
+    describe('Column Template', () => {
 
         const file0BytesModel = new FileModel({
             name: resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -384,16 +384,16 @@ describe('Document List Component',  () => {
             file = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            await contentServicesPage.goToDocumentList()
-                .waitForTableBody();
+            await contentServicesPage.goToDocumentList();
+            await contentServicesPage.waitForTableBody();
             done();
         });
 
         it('[C291843] Should be able to navigate using nodes hyperlink when activated', async () => {
-            await contentServicesPage.clickHyperlinkNavigationToggle()
-                .checkFileHyperlinkIsEnabled(file.entry.name)
-                .clickFileHyperlink(file.entry.name);
-            viewer.checkFileIsLoaded();
+            await contentServicesPage.clickHyperlinkNavigationToggle();
+            await contentServicesPage.checkFileHyperlinkIsEnabled(file.entry.name);
+            await contentServicesPage.clickFileHyperlink(file.entry.name);
+            await viewer.checkFileIsLoaded();
         });
     });
 });

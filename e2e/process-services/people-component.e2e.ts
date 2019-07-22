@@ -121,7 +121,6 @@ describe('People component', () => {
         expect(await taskPage.taskDetails().getInvolvePeopleHeader()).toEqual('Add people and groups');
         expect(await taskPage.taskDetails().getInvolvePeoplePlaceholder()).toEqual('Search user');
 
-
         await taskDetails.checkAddPeopleButtonIsEnabled();
         await taskDetails.checkCancelButtonIsEnabled();
         await taskDetails.clickCancelInvolvePeopleButton();
@@ -183,7 +182,6 @@ describe('People component', () => {
     it('[C261031] Should be able to involve multiple users to a task', async () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
         await taskPage.tasksListPage().selectRow(tasks[2]);
-
 
         const taskDetails = await taskPage.taskDetails();
         await taskPage.taskDetails().clickInvolvePeopleButton();

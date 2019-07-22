@@ -59,6 +59,11 @@ export class EditTaskFilterDialogPage {
         await BrowserActions.clearSendKeys(this.filterNameInput, filterName);
     }
 
+    async clearFilterName() {
+        BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
+        await BrowserActions.clearSendKeys(this.filterNameInput, '');
+    }
+
     getTitle(): Promise<string> {
         return BrowserActions.getText(this.title);
     }

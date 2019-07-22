@@ -92,6 +92,11 @@ export class StartProcessCloudPage {
         await locator.sendKeys(Key.TAB);
     }
 
+    async clearField(locator) {
+        await BrowserVisibility.waitUntilElementIsVisible(locator);
+        await BrowserActions.clearSendKeys(locator, '');
+    }
+
     formFields(): FormFields {
         return new FormFields();
     }

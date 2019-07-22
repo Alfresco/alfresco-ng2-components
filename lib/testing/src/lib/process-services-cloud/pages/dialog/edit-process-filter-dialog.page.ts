@@ -57,11 +57,17 @@ export class EditProcessFilterDialogPage {
     }
 
     async setFilterName(filterName): Promise<void> {
-        BrowserActions.clearSendKeys(this.filterNameInput, filterName);
+        await BrowserActions.clearSendKeys(this.filterNameInput, filterName);
     }
 
     async getTitle(): Promise<string> {
         return BrowserActions.getText(this.title);
+    }
+
+    async clearFilterName() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
+        await this.filterNameInput.click();
+        await BrowserActions.clearSendKeys(this.filterNameInput, '');
     }
 
 }

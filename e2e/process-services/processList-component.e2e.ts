@@ -180,13 +180,13 @@ describe('Process List Test', () => {
     it('[C282010] Should be able to sort by creation date', async () => {
         await processListDemoPage.selectSorting('asc');
 
-        await processListDemoPage.getDisplayedProcessesNames().then((sortedProcessList) => {
-            expect(JSON.stringify(processList) === JSON.stringify(sortedProcessList)).toBe(true);
-        });
+        const sortedProcessListNamesAsc = await processListDemoPage.getDisplayedProcessesNames();
+
+        expect(JSON.stringify(processList) === JSON.stringify(sortedProcessListNamesAsc)).toBe(true);
 
         await processListDemoPage.selectSorting('desc');
 
-        const sortedProcessList = await processListDemoPage.getDisplayedProcessesNames();
-        expect(JSON.stringify(processList.reverse()) === JSON.stringify(sortedProcessList)).toBe(true);
+        const sortedProcessListNamesDesc = await processListDemoPage.getDisplayedProcessesNames();
+        expect(JSON.stringify(processList.reverse()) === JSON.stringify(sortedProcessListNamesDesc)).toBe(true);
     });
 });

@@ -95,7 +95,7 @@ describe('Upload component - Excluded Files', () => {
     });
 
     it('[C260122] Should not allow upload default excluded files using Upload button', async () => {
-        await contentServicesPage.uploadFile(iniExcludedFile.location)
+        await contentServicesPage.uploadFile(iniExcludedFile.location);
         await contentServicesPage.checkContentIsNotDisplayed(iniExcludedFile.name);
     });
 

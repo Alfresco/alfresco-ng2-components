@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../formFields';
-import { element, by, protractor } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DateWidget {

@@ -58,8 +58,8 @@ describe('Document List Component',  () => {
 
         afterAll(async (done) => {
             await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
-            navBar.openLanguageMenu();
-            navBar.chooseLanguage('English');
+            await navBar.openLanguageMenu();
+            await navBar.chooseLanguage('English');
             done();
         });
 
@@ -77,8 +77,8 @@ describe('Document List Component',  () => {
         });
 
         it('[C279925] Should display translated message when accessing a file without permissions if language is changed', async () => {
-            navBar.openLanguageMenu();
-            navBar.chooseLanguage('Italiano');
+            await navBar.openLanguageMenu();
+            await navBar.chooseLanguage('Italiano');
             await browser.sleep(2000);
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(await errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');

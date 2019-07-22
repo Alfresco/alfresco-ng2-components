@@ -41,7 +41,7 @@ export class AppListCloudPage {
     }
 
     async getNameOfTheApplications(): Promise<string> {
-        return await BrowserActions.getText(this.nameOfAllApps);
+        return await BrowserActions.getArrayText(this.nameOfAllApps);
     }
 
     async checkAppIsNotDisplayed(applicationName): Promise<void> {
