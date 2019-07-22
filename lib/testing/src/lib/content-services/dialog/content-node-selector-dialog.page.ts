@@ -37,7 +37,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async checkDialogIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.dialog);
     }
 
     async getDialogHeaderText(): Promise<string> {

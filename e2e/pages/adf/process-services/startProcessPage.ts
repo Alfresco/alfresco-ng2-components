@@ -40,7 +40,7 @@ export class StartProcessPage {
     }
 
     async checkNoProcessDefinitionOptionIsDisplayed() {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.processDefinitionOptionsPanel);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.processDefinitionOptionsPanel);
     }
 
     async getDefaultName(): Promise<string> {
@@ -75,7 +75,7 @@ export class StartProcessPage {
 
     async checkOptionIsNotDisplayed(name): Promise<void> {
         const selectProcessDropdown: ElementFinder = element(by.cssContainingText('.mat-option-text', name));
-        await BrowserVisibility.waitUntilElementIsNotOnPage(selectProcessDropdown);
+        await BrowserVisibility.waitUntilElementIsNotVisible(selectProcessDropdown);
     }
 
     async selectOption(name): Promise<void> {
@@ -124,17 +124,17 @@ export class StartProcessPage {
         return processPlaceholder;
     }
 
-    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error')  : Promise<void> {
+    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error'): Promise<void> {
         const errorElement: ElementFinder = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }
 
-    async blur(locator)  : Promise<void> {
+    async blur(locator): Promise<void> {
         await BrowserActions.click(locator);
         await locator.sendKeys(Key.TAB);
     }
 
-    async clearField(locator)  : Promise<void> {
+    async clearField(locator): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {

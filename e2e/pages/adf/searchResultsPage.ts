@@ -53,7 +53,7 @@ export class SearchResultsPage {
     }
 
     async checkNoResultMessageIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.noResultsMessage);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.noResultsMessage);
     }
 
     async navigateToFolder(content): Promise<void> {

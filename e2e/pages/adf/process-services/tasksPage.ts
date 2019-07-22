@@ -97,7 +97,7 @@ export class TasksPage {
     }
 
     async checkChecklistIsNotDisplayed(checklist): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(element(this.checklistContainer).element(by.cssContainingText('span', checklist)));
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(this.checklistContainer).element(by.cssContainingText('span', checklist)));
     }
 
     async checkTaskTitle(taskName): Promise<void> {
@@ -111,7 +111,7 @@ export class TasksPage {
     }
 
     async completeTaskNoFormNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.completeButtonNoForm);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.completeButtonNoForm);
     }
 
     async checkChecklistDialogIsDisplayed(): Promise<void> {
@@ -119,7 +119,7 @@ export class TasksPage {
     }
 
     async checkChecklistDialogIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.checklistDialog);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.checklistDialog);
     }
 
     async checkNoChecklistIsDisplayed(): Promise<void> {
@@ -140,7 +140,7 @@ export class TasksPage {
     async checkChecklistsRemoveButtonIsNotDisplayed(checklist): Promise<void> {
         const ele = await this.getRowsName(checklist);
         const row = ele.element(this.rowByRowName);
-        await BrowserVisibility.waitUntilElementIsNotOnPage(row.element(by.css('mat-icon')));
+        await BrowserVisibility.waitUntilElementIsNotVisible(row.element(by.css('mat-icon')));
     }
 
     clickSortByNameAsc(): Promise<any> {

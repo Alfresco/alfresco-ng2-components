@@ -57,7 +57,7 @@ export class SearchDialog {
     }
 
     async checkNoResultMessageIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.noResultMessage);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.noResultMessage);
     }
 
     async enterText(text): Promise<void> {

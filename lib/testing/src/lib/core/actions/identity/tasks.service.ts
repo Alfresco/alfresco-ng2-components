@@ -31,8 +31,8 @@ export class TasksService {
             const method = 'POST';
 
             const queryParams = {}, postBody = {
-                'name': taskName,
-                'payloadType': 'CreateTaskPayload',
+                name: taskName,
+                payloadType: 'CreateTaskPayload',
                 ...options
             };
 
@@ -49,9 +49,9 @@ export class TasksService {
             const method = 'POST';
 
             const queryParams = {}, postBody = {
-                'name': taskName,
-                'payloadType': 'CreateTaskPayload',
-                'formKey': formKey,
+                name: taskName,
+                payloadType: 'CreateTaskPayload',
+                formKey: formKey,
                 ...options
             };
 
@@ -67,7 +67,7 @@ export class TasksService {
             const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
             const method = 'POST';
 
-            const queryParams = {}, postBody = { 'payloadType': 'CompleteTaskPayload' };
+            const queryParams = {}, postBody = { payloadType: 'CompleteTaskPayload' };
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
@@ -147,7 +147,7 @@ export class TasksService {
             const method = 'POST';
 
             const queryParams = {},
-                postBody = { 'name': name, 'parentTaskId': parentTaskId, 'payloadType': 'CreateTaskPayload' };
+                postBody = { name: name, parentTaskId: parentTaskId, payloadType: 'CreateTaskPayload' };
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {

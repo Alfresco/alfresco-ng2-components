@@ -27,7 +27,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
 import { TrashcanPage } from '../../pages/adf/trashcanPage';
 
-describe('Favorite directive',  () =>{
+describe('Favorite directive',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -42,8 +42,8 @@ describe('Favorite directive',  () =>{
         hostEcm: browser.params.testConfig.adf.url
     });
     const pdfFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);

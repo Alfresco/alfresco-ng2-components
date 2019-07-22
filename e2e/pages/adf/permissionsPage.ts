@@ -120,8 +120,9 @@ export class PermissionsPage {
         return BrowserActions.click(row.element(by.id('adf-select-role-permission')));
     }
 
-    async getRoleDropdownOptions(): Promise<void> {
+    async getRoleDropdownOptions(): Promise<ElementArrayFinder> {
         await BrowserVisibility.waitUntilElementIsVisible(this.roleDropdownOptions.first());
+        return this.roleDropdownOptions;
     }
 
     async selectOption(name): Promise<void> {

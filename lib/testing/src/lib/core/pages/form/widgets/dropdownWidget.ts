@@ -40,7 +40,7 @@ export class DropdownWidget {
         await BrowserActions.click(dropdown);
     }
 
-    async checkDropdownIsDisplayed(locator: string = '#dropdown')  : Promise<void> {
+    async checkDropdownIsDisplayed(locator: string = '#dropdown'): Promise<void> {
         const dropdown = element(by.css(`${locator}`));
         await BrowserVisibility.waitUntilElementIsVisible(dropdown);
     }

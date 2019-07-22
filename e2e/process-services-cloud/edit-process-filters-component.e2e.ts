@@ -70,7 +70,7 @@ describe('Edit process filters cloud',  () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
         });
 
-        afterEach(() => {
+        afterEach(async () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
         });
 

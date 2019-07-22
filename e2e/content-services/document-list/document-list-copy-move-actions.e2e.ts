@@ -27,7 +27,7 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import resources = require('../../util/resources');
-import {AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 
 describe('Document List Component',  () => {
@@ -49,13 +49,13 @@ describe('Document List Component',  () => {
     let folderName, sameNameFolder;
 
     const pdfFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
     const testFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
     beforeAll(async (done) => {

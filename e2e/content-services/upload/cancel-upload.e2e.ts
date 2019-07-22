@@ -28,9 +28,9 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 describe('Upload component', async () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialog();
     const uploadToggles = new UploadToggles();
@@ -60,7 +60,7 @@ describe('Upload component', async () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
+        await  contentServicesPage.goToDocumentList();
 
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
 
@@ -69,41 +69,44 @@ describe('Upload component', async () => {
         done();
     });
 
-    beforeEach(() => {
-        contentServicesPage.goToDocumentList();
+    beforeEach(async () => {
+        await  contentServicesPage.goToDocumentList();
     });
 
     it('[C272792] Should be possible to cancel upload of a big file using row cancel icon', async () => {
         browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 3000)');
 
-        contentServicesPage.uploadFile(largeFile.location);
+        await contentServicesPage.uploadFile(largeFile.location);
 
-        expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
+        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+        await contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
     });
 
     it('[C287790] Should be possible to cancel upload of a big file through the cancel uploads button', async () => {
-        browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
+        await browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
             'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)');
 
-        contentServicesPage.uploadFile(largeFile.location);
+        await contentServicesPage.uploadFile(largeFile.location);
 
-        expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
+        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+        await contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
     });
 
     it('[C272793] Should be able to cancel multiple files upload', async () => {
-        browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
+        await  browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
             'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)');
 
-        uploadToggles.enableMultipleFileUpload();
-        contentServicesPage.uploadMultipleFile([pngFileModel.location, largeFile.location]);
-        expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name).checkContentIsNotDisplayed(largeFile.name);
-        uploadToggles.disableMultipleFileUpload();
+        await uploadToggles.enableMultipleFileUpload();
+        await contentServicesPage.uploadMultipleFile([pngFileModel.location, largeFile.location]);
+        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+        await contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name).checkContentIsNotDisplayed(largeFile.name);
+        await uploadToggles.disableMultipleFileUpload();
     });
 
 });

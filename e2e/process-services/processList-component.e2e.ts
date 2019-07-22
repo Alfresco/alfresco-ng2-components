@@ -100,7 +100,7 @@ describe('Process List Test',  () => {
         done();
     });
 
-    beforeEach((done) => {
+    beforeEach(async(done) => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/process-list');
         done();
     });

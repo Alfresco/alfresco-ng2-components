@@ -30,7 +30,7 @@ export class ApplicationsService {
             const path = '/deployment-service/v1/applications';
             const method = 'GET';
 
-            const queryParams = { 'status': status }, postBody = {};
+            const queryParams = { status: status }, postBody = {};
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {

@@ -56,7 +56,7 @@ export class DataTablePage {
 
     async insertFilter(filterText): Promise<void> {
         const inputFilter: ElementFinder = element(by.css(`#adf-datatable-filter-input`));
-        await BrowserActions.clearSendKeys(inputFilter, filterText)
+        await BrowserActions.clearSendKeys(inputFilter, filterText);
     }
 
     async addRow(): Promise<void> {
@@ -72,7 +72,7 @@ export class DataTablePage {
 
     async replaceColumns(): Promise<void> {
         await BrowserActions.click(this.replaceColumnsElement);
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.createdOnColumn);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.createdOnColumn);
     }
 
     async clickMultiSelect(): Promise<void> {
@@ -86,11 +86,11 @@ export class DataTablePage {
     async checkRowIsNotSelected(rowNumber): Promise<void> {
         const isRowSelected = this.dataTable.getCellElementByValue(this.columns.id, rowNumber)
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]`));
-        await BrowserVisibility.waitUntilElementIsNotOnPage(isRowSelected);
+        await BrowserVisibility.waitUntilElementIsNotVisible(isRowSelected);
     }
 
     async checkNoRowIsSelected(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.selectedRowNumber);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.selectedRowNumber);
     }
 
     async checkAllRows(): Promise<void> {
@@ -102,7 +102,7 @@ export class DataTablePage {
     }
 
     async checkRowIsNotChecked(rowNumber): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.getRowCheckbox(rowNumber));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.getRowCheckbox(rowNumber));
     }
 
     async getNumberOfSelectedRows(): Promise<number> {

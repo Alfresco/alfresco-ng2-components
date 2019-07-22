@@ -100,7 +100,7 @@ export class TaskDetailsPage {
     }
 
     async noFormIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.formContent);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.formContent);
     }
 
     async clickCancelAttachForm(): Promise<void> {
@@ -120,7 +120,7 @@ export class TaskDetailsPage {
     }
 
     async checkAttachFormButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.attachFormButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.attachFormButton);
     }
 
     async clickAttachFormButton(): Promise<void> {
@@ -273,7 +273,7 @@ export class TaskDetailsPage {
     }
 
     async taskInfoDrawerIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.taskDetailsInfoDrawer);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.taskDetailsInfoDrawer);
     }
 
     async checkNoPeopleIsInvolved(): Promise<void> {
@@ -304,7 +304,7 @@ export class TaskDetailsPage {
     }
 
     async noUserIsDisplayedInSearchInvolvePeople(user): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(element(by.cssContainingText('div[class*="people-full-name"]', user)));
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('div[class*="people-full-name"]', user)));
     }
 
     getInvolvedPeopleTitle(): Promise<string> {

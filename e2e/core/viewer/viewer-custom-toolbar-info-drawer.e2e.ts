@@ -65,7 +65,7 @@ describe('Viewer',  () => {
         contentServicesPage.doubleClickRow(txtFileUploaded.entry.name);
     });
 
-    afterEach(() => {
+    afterEach(async () => {
         viewerPage.clickCloseButton();
     });
 

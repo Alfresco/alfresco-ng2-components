@@ -110,7 +110,7 @@ describe('People Groups Cloud Component',  () => {
             peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
         });
 
-        afterEach(() => {
+        afterEach(async () => {
             browser.refresh();
         });
 

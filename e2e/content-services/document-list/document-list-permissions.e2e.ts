@@ -31,7 +31,7 @@ describe('Document List Component',  () => {
     let privateSite;
     let acsUser = null;
 
-    beforeAll(() => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url

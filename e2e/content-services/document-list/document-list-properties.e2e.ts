@@ -40,8 +40,8 @@ describe('Document List Component - Properties',  () => {
     let acsUser = null;
 
     const pngFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     describe('Allow drop files property',  () => {

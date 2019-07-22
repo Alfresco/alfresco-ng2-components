@@ -42,12 +42,12 @@ export class StartProcessCloudPage {
     }
 
     async checkNoProcessDefinitionOptionIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.processDefinitionOptionsPanel);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.processDefinitionOptionsPanel);
     }
 
     async enterProcessName(name): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
-        await BrowserActions.clearSendKeys(this.processNameInput, name)
+        await BrowserActions.clearSendKeys(this.processNameInput, name);
     }
 
     async selectFromProcessDropdown(name): Promise<void> {

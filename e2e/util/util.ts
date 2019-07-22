@@ -51,7 +51,7 @@ export class Util {
         if (0 === subset.length) {
             return false;
         }
-        return subset.every(function (value) {
+        return subset.every(function(value) {
             return (superset.indexOf(value) >= 0);
         });
     }
@@ -62,7 +62,6 @@ export class Util {
 
     static async switchToWindowHandler(windowNumber) {
         await browser.driver.getAllWindowHandles().then((handles) => {
-            browser.waitForAngularEnabled();
             browser.driver.switchTo().window(handles[windowNumber]);
         });
     }
@@ -75,9 +74,9 @@ export class Util {
      */
     static fileExists(filePath, retries) {
         let tries = 0;
-        return new Promise(function (resolve, reject) {
+        return new Promise(function(resolve, reject) {
             const checkExist = setInterval(() => {
-                fs.stat(filePath, function (error, stats) {
+                fs.stat(filePath, function(error, stats) {
                     tries++;
 
                     if (error && tries === retries) {

@@ -65,7 +65,7 @@ export class ProcessServicesPage {
 
     async checkAppIsNotDisplayed(applicationName): Promise<void> {
         const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
-        await BrowserVisibility.waitUntilElementIsNotOnPage(app);
+        await BrowserVisibility.waitUntilElementIsNotVisible(app);
     }
 
     async checkAppIsDisplayed(applicationName): Promise<void> {

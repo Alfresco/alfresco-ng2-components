@@ -92,12 +92,12 @@ export class TagPage {
 
     checkTagIsNotDisplayedInTagList(tagName): Promise<void> {
         const tag: ElementFinder = element(by.cssContainingText('div[id*="tag_name"]', tagName));
-        return BrowserVisibility.waitUntilElementIsNotOnPage(tag);
+        return BrowserVisibility.waitUntilElementIsNotVisible(tag);
     }
 
     checkTagIsNotDisplayedInTagListByNodeId(tagName): Promise<void> {
         const tag: ElementFinder = element(by.cssContainingText('span[id*="tag_name"]', tagName));
-        return BrowserVisibility.waitUntilElementIsNotOnPage(tag);
+        return BrowserVisibility.waitUntilElementIsNotVisible(tag);
     }
 
     checkTagIsDisplayedInTagListByNodeId(tagName): Promise<void> {
@@ -106,11 +106,11 @@ export class TagPage {
     }
 
     async checkTagListIsEmpty(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.tagListRow);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.tagListRow);
     }
 
     async checkTagListByNodeIdIsEmpty(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.tagListByNodeIdRow);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.tagListByNodeIdRow);
     }
 
     async checkTagIsDisplayedInTagListContentServices(tagName): Promise<void> {
@@ -139,11 +139,11 @@ export class TagPage {
         const tagList: ElementArrayFinder = element.all(locator);
         await BrowserVisibility.waitUntilElementIsVisible(tagList.first());
         const initialList = [];
-        tagList.each(function (currentElement) {
-            currentElement.getText().then(function (text) {
+        tagList.each(function(currentElement) {
+            currentElement.getText().then(function(text) {
                 initialList.push(text);
             });
-        }).then(function () {
+        }).then(function() {
             let sortedList = initialList;
             sortedList = sortedList.sort();
             if (sortOrder === false) {

@@ -37,7 +37,7 @@ describe('CardView Component',  () => {
         done();
     });
 
-    afterEach(() => {
+    afterEach(async () => {
         cardViewPageComponent.clickOnResetButton();
     });
 

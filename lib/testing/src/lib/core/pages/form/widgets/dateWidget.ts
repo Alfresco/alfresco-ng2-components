@@ -64,6 +64,6 @@ export class DateWidget {
     async removeFromDatetimeWidget(fieldId): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
         await BrowserVisibility.waitUntilElementIsVisible(widget);
-        await BrowserActions.clearSendKeys(element(by.id(fieldId)),'');
+        await BrowserActions.clearSendKeys(element(by.id(fieldId)), '');
     }
 }

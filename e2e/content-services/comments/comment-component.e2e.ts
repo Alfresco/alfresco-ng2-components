@@ -27,20 +27,20 @@ import resources = require('../../util/resources');
 import CONSTANTS = require('../../util/constants');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Comment Component',  () => {
+describe('Comment Component', () => {
 
-    const loginPage = new LoginPage();
-    const contentServicesPage = new ContentServicesPage();
-    const viewerPage = new ViewerPage();
-    const commentsPage = new CommentsPage();
-    const navigationBar = new NavigationBarPage();
-    const acsUser = new AcsUserModel();
+    const loginPage: LoginPage = new LoginPage();
+    const contentServicesPage: ContentServicesPage = new ContentServicesPage();
+    const viewerPage: ViewerPage = new ViewerPage();
+    const commentsPage: CommentsPage = new CommentsPage();
+    const navigationBar: NavigationBarPage = new NavigationBarPage();
+    const acsUser: AcsUserModel = new AcsUserModel();
 
     let userFullName, nodeId;
 
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -80,8 +80,8 @@ describe('Comment Component',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBar.clickContentServicesButton();
-        contentServicesPage.waitForTableBody();
+        await navigationBar.clickContentServicesButton();
+        await contentServicesPage.waitForTableBody();
 
         done();
     });
@@ -99,78 +99,78 @@ describe('Comment Component',  () => {
     it('[C276947] Should be able to add a comment on ACS and view on ADF', async () => {
         await this.alfrescoJsApi.core.commentsApi.addComment(nodeId, { content: comments.test });
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.checkImgViewerIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
 
-        commentsPage.checkCommentsTabIsSelected();
-        commentsPage.checkCommentInputIsDisplayed();
+        await commentsPage.checkCommentsTabIsSelected();
+        await commentsPage.checkCommentInputIsDisplayed();
 
-        expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(commentsPage.getMessage(0)).toEqual(comments.test);
-        expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        expect(await commentsPage.getMessage(0)).toEqual(comments.test);
+        expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
 
     });
 
     it('[C276948] Should be able to add a comment on a file', async () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.checkImgViewerIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickOnCommentsTab();
+        await  viewerPage.viewFile(pngFileModel.name);
+        await  viewerPage.checkImgViewerIsDisplayed();
+        await  viewerPage.clickInfoButton();
+        await  viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.clickOnCommentsTab();
 
-        commentsPage.addComment(comments.first);
-        commentsPage.checkUserIconIsDisplayed(0);
+        await  commentsPage.addComment(comments.first);
+        await  commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(commentsPage.getMessage(0)).toEqual(comments.first);
-        expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        expect(await commentsPage.getMessage(0)).toEqual(comments.first);
+        expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
     it('[C280021] Should be able to add a multiline comment on a file', async () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.checkImgViewerIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickOnCommentsTab();
+        await  viewerPage.viewFile(pngFileModel.name);
+        await  viewerPage.checkImgViewerIsDisplayed();
+        await  viewerPage.clickInfoButton();
+        await  viewerPage.checkInfoSideBarIsDisplayed();
+        await  viewerPage.clickOnCommentsTab();
 
-        commentsPage.addComment(comments.multiline);
-        commentsPage.checkUserIconIsDisplayed(0);
+        await  commentsPage.addComment(comments.multiline);
+        await  commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(commentsPage.getMessage(0)).toEqual(comments.multiline);
-        expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        expect(await commentsPage.getMessage(0)).toEqual(comments.multiline);
+        expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
 
-        commentsPage.addComment(comments.second);
-        commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.addComment(comments.second);
+        await  commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (2)');
-        expect(commentsPage.getMessage(0)).toEqual(comments.second);
-        expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (2)');
+        expect(await commentsPage.getMessage(0)).toEqual(comments.second);
+        expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
     it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', async () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.checkImgViewerIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickOnCommentsTab();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.clickOnCommentsTab();
 
-        commentsPage.addComment(comments.codeType);
-        commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.addComment(comments.codeType);
+        await commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(commentsPage.getMessage(0)).toEqual('First name: Last name:');
-        expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        expect(await commentsPage.getMessage(0)).toEqual('First name: Last name:');
+        expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
-    describe('Consumer Permissions',  () => {
+    describe('Consumer Permissions', () => {
         let site, pngUploadedFile;
 
         beforeAll(async (done) => {
@@ -188,31 +188,31 @@ describe('Comment Component',  () => {
 
             pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            navigationBar.clickContentServicesButton();
+            await  navigationBar.clickContentServicesButton();
 
             done();
         });
 
-        afterAll((done) => {
-            uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
+        afterAll(async (done) => {
+            await uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
 
             done();
         });
 
         it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', async () => {
-            navigationBar.goToSite(site);
-            contentServicesPage.checkAcsContainer();
+            await navigationBar.goToSite(site);
+            await contentServicesPage.checkAcsContainer();
 
-            viewerPage.viewFile(pngUploadedFile.entry.name);
-            viewerPage.checkImgViewerIsDisplayed();
-            viewerPage.checkInfoButtonIsDisplayed();
-            viewerPage.clickInfoButton();
-            viewerPage.checkInfoSideBarIsDisplayed();
+            await viewerPage.viewFile(pngUploadedFile.entry.name);
+            await viewerPage.checkImgViewerIsDisplayed();
+            await viewerPage.checkInfoButtonIsDisplayed();
+            await viewerPage.clickInfoButton();
+            await viewerPage.checkInfoSideBarIsDisplayed();
 
-            commentsPage.checkCommentsTabIsSelected();
-            commentsPage.checkCommentInputIsNotDisplayed();
+            await commentsPage.checkCommentsTabIsSelected();
+            await commentsPage.checkCommentInputIsNotDisplayed();
         });
     });
 });

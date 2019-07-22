@@ -58,7 +58,6 @@ export class SettingsPage {
     validationMessage: ElementFinder = element(by.cssContainingText('mat-error', 'This field is required'));
 
     async goToSettingsPage(): Promise<void> {
-        await browser.waitForAngularEnabled(true);
         await browser.driver.get(this.settingsURL);
         await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
     }
@@ -138,7 +137,7 @@ export class SettingsPage {
     async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUr: string = '/logout') {
         await this.goToSettingsPage();
         this.setProvider(this.ecm.option, this.ecm.text);
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.bpmText);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.bpmText);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         this.clickSsoRadioButton();
         this.setContentServicesURL(contentServiceURL);
@@ -155,7 +154,7 @@ export class SettingsPage {
         await this.goToSettingsPage();
         this.setProvider(this.bpm.option, this.bpm.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.ecmText);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.ecmText);
         this.clickSsoRadioButton();
         this.setClientId();
         this.setProcessServicesURL(processServiceURL);

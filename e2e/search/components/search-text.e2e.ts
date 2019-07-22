@@ -83,7 +83,7 @@ describe('Search component - Text widget',  () => {
 
         let jsonFile;
 
-        beforeAll(() => {
+        beforeAll(async () => {
             jsonFile = SearchConfiguration.getConfiguration();
         });
 

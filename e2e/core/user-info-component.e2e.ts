@@ -142,7 +142,7 @@ describe('User Info component',  () => {
 
     it('[C260117] Should display UserInfo with profile image uploaded in ACS', async () => {
         await PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
-        await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-',  async()=> {
+        await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-',  async() => {
         });
 
         await loginPage.loginToContentServicesUsingUserModel(contentUserModel);

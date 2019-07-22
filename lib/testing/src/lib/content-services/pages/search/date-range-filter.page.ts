@@ -60,7 +60,7 @@ export class DateRangeFilterPage {
         this.filter.element(this.fromDateToggle).click();
         const datePicker = new DatePickerPage();
         await datePicker.checkDatePickerIsDisplayed();
-        return datePicker
+        return datePicker;
     }
 
     async openToDatePicker(): Promise<void> {

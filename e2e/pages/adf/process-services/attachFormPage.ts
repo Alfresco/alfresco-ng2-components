@@ -70,7 +70,7 @@ export class AttachFormPage {
         await BrowserActions.click(this.cancelButton);
     }
 
-    async checkAttachFormButtonIsDisabled() : Promise<void> {
+    async checkAttachFormButtonIsDisabled(): Promise<void> {
         await  BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="adf-no-form-attach-form-button"][disabled]')));
     }
 }

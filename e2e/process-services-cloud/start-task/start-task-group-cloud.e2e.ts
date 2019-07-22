@@ -96,7 +96,7 @@ describe('Start Task - Group Cloud Component',  () => {
         startTask.checkFormIsDisplayed();
     });
 
-    afterEach(() => {
+    afterEach(async () => {
         navigationBarPage.clickLogoutButton();
     });
 

@@ -19,13 +19,13 @@ import { DataTableComponentPage } from '@alfresco/adf-testing';
 
 export class ProcessDetailsCloudDemoPage {
 
-    dataTable :DataTableComponentPage = new DataTableComponentPage();
+    dataTable: DataTableComponentPage = new DataTableComponentPage();
 
-    async checkTaskIsDisplayed(taskName: string) : Promise<void> {
+    async checkTaskIsDisplayed(taskName: string): Promise<void> {
         await this.dataTable.checkContentIsDisplayed('Name', taskName);
     }
 
-    async selectProcessTaskByName(taskName: string) : Promise<void> {
+    async selectProcessTaskByName(taskName: string): Promise<void> {
         await this.dataTable.selectRow('Name', taskName);
     }
 }

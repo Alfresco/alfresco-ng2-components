@@ -31,7 +31,7 @@ describe('Login component - SSO',  () => {
 
     describe('Login component - SSO implicit Flow',  () => {
 
-        afterEach(() => {
+        afterEach(async () => {
             navigationBarPage.clickLogoutButton();
             browser.executeScript('window.sessionStorage.clear();');
             browser.executeScript('window.localStorage.clear();');
@@ -55,7 +55,7 @@ describe('Login component - SSO',  () => {
 
     describe('SSO Login Error for login component',  () => {
 
-        afterEach(() => {
+        afterEach(async () => {
             browser.executeScript('window.sessionStorage.clear();');
             browser.executeScript('window.localStorage.clear();');
         });

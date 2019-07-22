@@ -39,7 +39,7 @@ export class TaskFiltersPage {
 
     async checkTaskFilterHasNoIcon(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.taskIcon));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.taskIcon));
     }
 
     async clickTaskFilter(): Promise<void> {

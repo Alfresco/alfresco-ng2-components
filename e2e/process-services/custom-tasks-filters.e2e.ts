@@ -146,7 +146,7 @@ describe('Start Task - Custom App',  () => {
             paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C286367] 20 Items per page',  async()=> {
+        it('[C286367] 20 Items per page',  async() => {
             taskListSinglePage.typeItemsPerPage(itemsPerPage.twentyValue);
             taskListSinglePage.taskList().getDataTable().waitForTableBody();
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
@@ -159,7 +159,7 @@ describe('Start Task - Custom App',  () => {
             paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C286365] 5 Items per page',  async()=> {
+        it('[C286365] 5 Items per page',  async() => {
             taskListSinglePage.typeItemsPerPage(itemsPerPage.fiveValue);
             taskListSinglePage.taskList().getDataTable().waitForTableBody();
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
@@ -201,7 +201,7 @@ describe('Start Task - Custom App',  () => {
             });
         });
 
-        it('[C286364] 10 Items per page',  async()=> {
+        it('[C286364] 10 Items per page',  async() => {
             currentPage = 1;
             taskListSinglePage.typeItemsPerPage(itemsPerPage.tenValue);
             taskListSinglePage.taskList().getDataTable().waitForTableBody();
@@ -222,7 +222,7 @@ describe('Start Task - Custom App',  () => {
             });
         });
 
-        it('[C286363] 15 Items per page',  async()=> {
+        it('[C286363] 15 Items per page',  async() => {
             currentPage = 1;
             taskListSinglePage.typeItemsPerPage(itemsPerPage.fifteenValue);
             taskListSinglePage.taskList().getDataTable().waitForTableBody();
@@ -243,19 +243,19 @@ describe('Start Task - Custom App',  () => {
             });
         });
 
-        it('[C286366] Pagination is not displayed when no task is displayed',  async()=> {
+        it('[C286366] Pagination is not displayed when no task is displayed',  async() => {
             taskListSinglePage.typeAppId(secondAppRuntime.id);
             expect(taskListSinglePage.getAppId()).toEqual(secondAppRuntime.id.toString());
 
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286406] Invalid values for items per page',  async()=> {
+        it('[C286406] Invalid values for items per page',  async() => {
             taskListSinglePage.typeItemsPerPage('0').clickAppId();
             expect(taskListSinglePage.getItemsPerPageFieldErrorMessage()).toEqual('Value must be greater than or equal to 1');
         });
 
-        it('[C286404] Navigate using page field',  async()=> {
+        it('[C286404] Navigate using page field',  async() => {
             currentPage = 1;
             taskListSinglePage.typeItemsPerPage(itemsPerPage.fiveValue);
             taskListSinglePage.typePage(currentPage);
@@ -302,7 +302,7 @@ describe('Start Task - Custom App',  () => {
             });
         });
 
-        it('[C286405] Type invalid values to page field',  async()=> {
+        it('[C286405] Type invalid values to page field',  async() => {
             taskListSinglePage.typePage('0').clickAppId();
             expect(taskListSinglePage.getPageFieldErrorMessage()).toEqual('Value must be greater than or equal to 1');
 
@@ -311,52 +311,52 @@ describe('Start Task - Custom App',  () => {
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286413] Task is displayed when typing into dueAfter field a date before the tasks due date',  async()=> {
+        it('[C286413] Task is displayed when typing into dueAfter field a date before the tasks due date',  async() => {
             taskListSinglePage.typeDueAfter(beforeDate);
             taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[0]);
             expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
         });
 
-        it('[C286414] Task is not displayed when typing into dueAfter field a date after the task due date',  async()=> {
+        it('[C286414] Task is not displayed when typing into dueAfter field a date after the task due date',  async() => {
             taskListSinglePage.typeDueAfter(afterDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286415] Task is not displayed when typing into dueAfter field the same date as tasks due date',  async()=> {
+        it('[C286415] Task is not displayed when typing into dueAfter field the same date as tasks due date',  async() => {
             taskListSinglePage.typeDueAfter(currentDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286424] Task is not displayed when typing into dueBefore field a date before the tasks due date',  async()=> {
+        it('[C286424] Task is not displayed when typing into dueBefore field a date before the tasks due date',  async() => {
             taskListSinglePage.typeDueBefore(beforeDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286425] Task is displayed when typing into dueBefore field a date after the task due date',  async()=> {
+        it('[C286425] Task is displayed when typing into dueBefore field a date after the task due date',  async() => {
             taskListSinglePage.typeDueBefore(afterDate);
             taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[0]);
             expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
         });
 
-        it('[C286426] Task is not displayed when typing into dueBefore field the same date as tasks due date',  async()=> {
+        it('[C286426] Task is not displayed when typing into dueBefore field the same date as tasks due date',  async() => {
             taskListSinglePage.typeDueBefore(currentDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286428] Task is not displayed when typing into dueAfter field a date before the task due date and into dueBefore a date before task due date',  async()=> {
+        it('[C286428] Task is not displayed when typing into dueAfter field a date before the task due date and into dueBefore a date before task due date',  async() => {
             taskListSinglePage.typeDueBefore(beforeDate);
             taskListSinglePage.typeDueAfter(beforeDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286427] Task is displayed when typing into dueAfter field a date before the tasks due date and into dueBefore a date after',  async()=> {
+        it('[C286427] Task is displayed when typing into dueAfter field a date before the tasks due date and into dueBefore a date after',  async() => {
             taskListSinglePage.typeDueBefore(afterDate);
             taskListSinglePage.typeDueAfter(beforeDate);
             taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[0]);
             expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
         });
 
-        it('[C286429] Task is not displayed when typing into dueAfter field a date after the tasks due date and into dueBefore a date after',  async()=> {
+        it('[C286429] Task is not displayed when typing into dueAfter field a date after the tasks due date and into dueBefore a date after',  async() => {
             taskListSinglePage.typeDueBefore(afterDate);
             taskListSinglePage.typeDueAfter(afterDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();

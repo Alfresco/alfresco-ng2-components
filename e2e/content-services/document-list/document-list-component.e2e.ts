@@ -63,20 +63,20 @@ describe('Document List Component',  () => {
 
         let folderName;
         const pdfFileModel = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+            name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            location: resources.Files.ADF_DOCUMENTS.PDF.file_location
         });
         const docxFileModel = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
+            name: resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+            location: resources.Files.ADF_DOCUMENTS.DOCX.file_location
         });
         const timeAgoFileModel = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
         const mediumFileModel = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+            name: resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+            location: resources.Files.ADF_DOCUMENTS.PDF_B.file_location
         });
 
         let pdfUploadedNode, docxUploadedNode, timeAgoUploadedNode, mediumDateUploadedNode;
@@ -162,18 +162,18 @@ describe('Document List Component',  () => {
     describe('Column Sorting',  () => {
 
         const fakeFileA = new FileModel({
-            'name': 'A',
-            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: 'A',
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
         const fakeFileB = new FileModel({
-            'name': 'B',
-            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: 'B',
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
         const fakeFileC = new FileModel({
-            'name': 'C',
-            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: 'C',
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
         let fileANode, fileBNode, fileCNode;
@@ -253,8 +253,8 @@ describe('Document List Component',  () => {
 
     it('[C272775] Should be able to upload a file in new folder', async (done) => {
         const testFile = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
         acsUser = new AcsUserModel();
         /* cspell:disable-next-line */
@@ -307,12 +307,12 @@ describe('Document List Component',  () => {
 
     it('[C269086] Should display Islocked field for files', async (done) => {
         const testFileA = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
         const testFileB = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+            name: resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+            location: resources.Files.ADF_DOCUMENTS.PDF_B.file_location
         });
         acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -369,8 +369,8 @@ describe('Document List Component',  () => {
     describe('Column Template',  () => {
 
         const file0BytesModel = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+            name: resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
         });
 
         let file;

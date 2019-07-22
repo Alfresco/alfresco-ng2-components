@@ -40,7 +40,7 @@ export class GroupIdentityService {
         const path = '/groups';
         const method = 'POST';
         const queryParams = {}, postBody = {
-            'name': groupName + 'TestGroup'
+            name: groupName + 'TestGroup'
         };
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
@@ -57,7 +57,7 @@ export class GroupIdentityService {
     async getGroupInfoByGroupName(groupName): Promise<any> {
         const path = `/groups`;
         const method = 'GET';
-        const queryParams = { 'search': groupName }, postBody = {};
+        const queryParams = { search: groupName }, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0];
@@ -67,7 +67,7 @@ export class GroupIdentityService {
         const path = `/groups/${groupId}/role-mappings/realm`;
         const method = 'POST';
         const queryParams = {},
-            postBody = [{ 'id': roleId, 'name': roleName }];
+            postBody = [{ id: roleId, name: roleName }];
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
@@ -84,11 +84,11 @@ export class GroupIdentityService {
         const path = `/groups/${groupId}/role-mappings/clients/${clientId}`;
         const method = 'POST', queryParams = {},
             postBody = [{
-                'id': roleId,
-                'name': roleName,
-                'composite': false,
-                'clientRole': true,
-                'containerId': clientId
+                id: roleId,
+                name: roleName,
+                composite: false,
+                clientRole: true,
+                containerId: clientId
             }];
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;

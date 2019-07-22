@@ -142,7 +142,7 @@ export class ViewerPage {
 
     async enterPassword(password): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.passwordInput);
-        await BrowserActions.clearSendKeys(this.passwordInput, password)
+        await BrowserActions.clearSendKeys(this.passwordInput, password);
     }
 
     async checkFileIsLoaded(fileName?: string): Promise<void> {
@@ -155,7 +155,7 @@ export class ViewerPage {
     }
 
     async checkImgViewerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsOnPage(this.imgViewer);
+        await BrowserVisibility.waitUntilElementIsVisible(this.imgViewer);
     }
 
     async checkPasswordErrorIsDisplayed(): Promise<void> {
@@ -334,11 +334,11 @@ export class ViewerPage {
     }
 
     async checkLeftSideBarButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.leftSideBarButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.leftSideBarButton);
     }
 
     async checkLeftSideBarButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsOnPage(this.leftSideBarButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.leftSideBarButton);
     }
 
     async clickInfoButton(): Promise<void> {
@@ -363,7 +363,7 @@ export class ViewerPage {
     }
 
     async checkLeftSideBarIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.leftSideBar);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.leftSideBar);
     }
 
     async clickPasswordSubmit(): Promise<void> {

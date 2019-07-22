@@ -60,13 +60,13 @@ export class ProcessFiltersPage {
 
     async clickCreateProcessButton(): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserVisibility.waitUntilElementIsOnPage(this.accordionMenu);
+        await BrowserVisibility.waitUntilElementIsVisible(this.accordionMenu);
         await BrowserVisibility.waitUntilElementIsVisible(this.processesPage);
         await BrowserActions.click(this.createProcessButton);
     }
 
     async clickNewProcessDropdown(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsOnPage(this.buttonWindow);
+        await BrowserVisibility.waitUntilElementIsVisible(this.buttonWindow);
         await BrowserActions.click(this.newProcessButton);
     }
 
@@ -114,7 +114,7 @@ export class ProcessFiltersPage {
     async checkFilterHasNoIcon(name): Promise<void> {
         const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
-        await BrowserVisibility.waitUntilElementIsNotOnPage(filterName.element(this.processIcon));
+        await BrowserVisibility.waitUntilElementIsNotVisible(filterName.element(this.processIcon));
     }
 
     async getFilterIcon(name): Promise<string> {

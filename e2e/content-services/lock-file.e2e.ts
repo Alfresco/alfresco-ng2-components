@@ -41,13 +41,13 @@ describe('Lock File',  () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const pngFileToLock = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG_B.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
     let nodeId, site, documentLibrary, lockedFileNodeId;

@@ -91,14 +91,14 @@ describe('Version component actions',  () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
         versionManagePage.closeActionsMenu();
-        BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
     });
 
     it('[C280004] Should not be possible restore the version if there is only one version', async () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
         versionManagePage.closeActionsMenu();
-        BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });
 
     it('[C280005] Should be showed all the default action when you have more then one version', async () => {

@@ -37,9 +37,9 @@ export class UploadActions {
             parentFolderId,
             null,
             {
-                'name': fileName,
-                'nodeType': 'cm:content',
-                'renditions': 'doclib'
+                name: fileName,
+                nodeType: 'cm:content',
+                renditions: 'doclib'
             }
         );
     }
@@ -61,8 +61,8 @@ export class UploadActions {
 
     async createFolder(folderName, parentFolderId) {
         return this.alfrescoJsApi.node.addNode(parentFolderId, {
-            'name': folderName,
-            'nodeType': 'cm:folder'
+            name: folderName,
+            nodeType: 'cm:folder'
         }, {}, {});
     }
 

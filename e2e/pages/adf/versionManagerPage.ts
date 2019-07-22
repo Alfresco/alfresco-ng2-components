@@ -187,6 +187,6 @@ export class VersionManagePage {
 
     async closeVersionDialog(): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.uploadNewVersionContainer);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.uploadNewVersionContainer);
     }
 }

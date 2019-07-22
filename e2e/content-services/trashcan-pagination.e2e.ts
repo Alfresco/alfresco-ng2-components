@@ -54,7 +54,7 @@ describe('Trashcan - Pagination',  () => {
     const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
-    const newFolderModel = new FolderModel({ 'name': 'newFolder' });
+    const newFolderModel = new FolderModel({ name: 'newFolder' });
     const nrOfFiles = 20;
 
     beforeAll(async (done) => {

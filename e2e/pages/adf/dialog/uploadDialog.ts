@@ -55,7 +55,7 @@ export class UploadDialog {
     }
 
     async dialogIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.dialog);
     }
 
     async getRowsName(content): Promise<ElementFinder> {
@@ -101,7 +101,7 @@ export class UploadDialog {
     async removeUploadedFile(content): Promise<void> {
         const row = await this.getRowByRowName(content);
         await BrowserVisibility.waitUntilElementIsVisible(row.element(this.uploadedStatusIcon));
-        let elementRow = await this.getRowByRowName(content);
+        const elementRow = await this.getRowByRowName(content);
         elementRow.element(this.uploadedStatusIcon).click();
     }
 
@@ -117,7 +117,7 @@ export class UploadDialog {
 
     async getConfirmationDialogDescriptionText(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.canUploadConfirmationDescription);
-        return this.canUploadConfirmationDescription.getText()
+        return this.canUploadConfirmationDescription.getText();
     }
 
     async clickOnConfirmationDialogYesButton(): Promise<void> {

@@ -49,18 +49,18 @@ describe('Document List Component',  () => {
         let funnyUser;
 
         const pdfFile = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+            name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            location: resources.Files.ADF_DOCUMENTS.PDF.file_location
         });
 
         const testFile = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
         const docxFile = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
+            name: resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+            location: resources.Files.ADF_DOCUMENTS.DOCX.file_location
         });
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         let filePdfNode, fileTestNode, fileDocxNode, folderNode, filePDFSubNode;

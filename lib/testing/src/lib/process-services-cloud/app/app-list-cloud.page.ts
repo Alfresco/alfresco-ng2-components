@@ -46,7 +46,7 @@ export class AppListCloudPage {
 
     async checkAppIsNotDisplayed(applicationName): Promise<void> {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        await BrowserVisibility.waitUntilElementIsNotOnPage(app);
+        await BrowserVisibility.waitUntilElementIsNotVisible(app);
     }
 
     async checkAppIsDisplayed(applicationName): Promise<void> {

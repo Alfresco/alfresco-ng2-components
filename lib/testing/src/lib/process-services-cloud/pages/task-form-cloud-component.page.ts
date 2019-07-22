@@ -39,7 +39,7 @@ export class TaskFormCloudComponent {
     }
 
     async checkCompleteButtonIsNotDisplayed() {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.completeButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.completeButton);
     }
 
     async clickCompleteButton(): Promise<void> {

@@ -8,6 +8,7 @@
     "rxjs-tslint-rules"
   ],
   "rules": {
+    "no-floating-promises": true,
     "adf-license-banner": [
       true,
       "e2e/**/*.ts",

@@ -25,7 +25,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FileModel } from '../../models/ACS/fileModel';
 import resources = require('../../util/resources');
 
-describe('Edit folder directive',  () =>{
+describe('Edit folder directive', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -40,8 +40,8 @@ describe('Edit folder directive',  () =>{
     });
 
     const pdfFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);
@@ -85,158 +85,159 @@ describe('Edit folder directive',  () =>{
     });
 
     beforeEach(async (done) => {
-        navigationBarPage.clickHomeButton();
-        navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+        await navigationBarPage.clickHomeButton();
+        await navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         done();
     });
 
     it('[C260161] Update folder - Cancel button', async () => {
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
-        contentServicesPage.clickOnEditFolder();
-        editFolderDialog.checkFolderDialogIsDisplayed();
-        expect(editFolderDialog.getDialogTitle()).toBe('Edit folder');
-        expect(editFolderDialog.getFolderName()).toBe(editFolder.entry.name);
-        editFolderDialog.checkCreateUpdateBtnIsEnabled();
-        editFolderDialog.checkCancelBtnIsEnabled();
-        editFolderDialog.clickOnCancelButton();
-        editFolderDialog.checkFolderDialogIsNotDisplayed();
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        await contentServicesPage.clickOnEditFolder();
+        await editFolderDialog.checkFolderDialogIsDisplayed();
+        expect(await editFolderDialog.getDialogTitle()).toBe('Edit folder');
+        expect(await editFolderDialog.getFolderName()).toBe(editFolder.entry.name);
+        await editFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await editFolderDialog.checkCancelBtnIsEnabled();
+        await editFolderDialog.clickOnCancelButton();
+        await editFolderDialog.checkFolderDialogIsNotDisplayed();
     });
 
     it('[C260162] Update folder - Introducing letters', async () => {
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
-        expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
-        contentServicesPage.clickOnEditFolder();
-        editFolderDialog.checkFolderDialogIsDisplayed();
-        editFolderDialog.checkCreateUpdateBtnIsEnabled();
-        editFolderDialog.addFolderName(editFolder.entry.name + 'a');
-        editFolderDialog.checkCreateUpdateBtnIsEnabled();
-        editFolderDialog.clickOnCancelButton();
-        editFolderDialog.checkFolderDialogIsNotDisplayed();
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
+        await contentServicesPage.clickOnEditFolder();
+        await editFolderDialog.checkFolderDialogIsDisplayed();
+        await editFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await editFolderDialog.addFolderName(editFolder.entry.name + 'a');
+        await editFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await editFolderDialog.clickOnCancelButton();
+        await  editFolderDialog.checkFolderDialogIsNotDisplayed();
+        await  contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
     });
 
     it('[C260163] Update folder name with an existing one', async () => {
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
-        expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
-        contentServicesPage.clickOnEditFolder();
-        editFolderDialog.checkFolderDialogIsDisplayed();
-        editFolderDialog.checkCreateUpdateBtnIsEnabled();
-        editFolderDialog.addFolderName(anotherFolder.entry.name);
-        editFolderDialog.checkCreateUpdateBtnIsEnabled();
-        editFolderDialog.clickOnCreateUpdateButton();
-        editFolderDialog.checkFolderDialogIsDisplayed();
-        notificationHistoryPage.checkNotifyContains('There\'s already a folder with this name. Try a different name.');
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
+        await contentServicesPage.clickOnEditFolder();
+        await editFolderDialog.checkFolderDialogIsDisplayed();
+        await editFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await editFolderDialog.addFolderName(anotherFolder.entry.name);
+        await editFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await editFolderDialog.clickOnCreateUpdateButton();
+        await editFolderDialog.checkFolderDialogIsDisplayed();
+        await notificationHistoryPage.checkNotifyContains('There\'s already a folder with this name. Try a different name.');
     });
 
     it('[C260164] Edit Folder - Unsupported characters', async () => {
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
-        contentServicesPage.clickOnEditFolder();
-        editFolderDialog.checkFolderDialogIsDisplayed();
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        await contentServicesPage.clickOnEditFolder();
+        await editFolderDialog.checkFolderDialogIsDisplayed();
 
-        editFolderDialog.addFolderName('a*"<>\\/?:|');
-        expect(editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain these characters * " < > \\ / ? : |');
-        editFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await editFolderDialog.addFolderName('a*"<>\\/?:|');
+        expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain these characters * " < > \\ / ? : |');
+        await editFolderDialog.checkCreateUpdateBtnIsDisabled();
 
-        editFolderDialog.addFolderName('a.a');
-        editFolderDialog.checkValidationMessageIsNotDisplayed();
-        editFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await editFolderDialog.addFolderName('a.a');
+        await editFolderDialog.checkValidationMessageIsNotDisplayed();
+        await editFolderDialog.checkCreateUpdateBtnIsEnabled();
 
-        editFolderDialog.addFolderName('a.');
-        expect(editFolderDialog.getValidationMessage()).toBe('Folder name can\'t end with a period .');
-        editFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await editFolderDialog.addFolderName('a.');
+        expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t end with a period .');
+        await  editFolderDialog.checkCreateUpdateBtnIsDisabled();
 
-        editFolderDialog.getFolderNameField().clear();
-        editFolderDialog.getFolderNameField().sendKeys(protractor.Key.SPACE);
-        expect(editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain only spaces');
-        editFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await  editFolderDialog.getFolderNameField().clear();
+        await editFolderDialog.getFolderNameField().sendKeys(protractor.Key.SPACE);
+        expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain only spaces');
+        await editFolderDialog.checkCreateUpdateBtnIsDisabled();
 
-        editFolderDialog.addFolderName(editFolder.entry.name);
-        editFolderDialog.addFolderDescription('a*"<>\\/?:|');
-        editFolderDialog.checkValidationMessageIsNotDisplayed();
-        editFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await editFolderDialog.addFolderName(editFolder.entry.name);
+        await editFolderDialog.addFolderDescription('a*"<>\\/?:|');
+        await editFolderDialog.checkValidationMessageIsNotDisplayed();
+        await editFolderDialog.checkCreateUpdateBtnIsEnabled();
 
-        editFolderDialog.addFolderDescription('a.');
-        editFolderDialog.checkValidationMessageIsNotDisplayed();
-        editFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await editFolderDialog.addFolderDescription('a.');
+        await editFolderDialog.checkValidationMessageIsNotDisplayed();
+        await editFolderDialog.checkCreateUpdateBtnIsEnabled();
 
-        editFolderDialog.addFolderDescription('a.a');
-        editFolderDialog.checkValidationMessageIsNotDisplayed();
-        editFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await editFolderDialog.addFolderDescription('a.a');
+        await editFolderDialog.checkValidationMessageIsNotDisplayed();
+        await editFolderDialog.checkCreateUpdateBtnIsEnabled();
 
-        editFolderDialog.getFolderDescriptionField().sendKeys(protractor.Key.SPACE);
-        editFolderDialog.checkValidationMessageIsNotDisplayed();
-        editFolderDialog.checkCreateUpdateBtnIsEnabled();
-        editFolderDialog.clickOnCancelButton();
-        editFolderDialog.checkFolderDialogIsNotDisplayed();
+        await editFolderDialog.getFolderDescriptionField().sendKeys(protractor.Key.SPACE);
+        await editFolderDialog.checkValidationMessageIsNotDisplayed();
+        await editFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await editFolderDialog.clickOnCancelButton();
+        await editFolderDialog.checkFolderDialogIsNotDisplayed();
 
     });
 
     it('[C260166] Enable/Disable edit folder icon - when file selected', async () => {
-        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
-        expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', filePdfNode.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', filePdfNode.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', filePdfNode.entry.name);
-        expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
+        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
+        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', filePdfNode.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', filePdfNode.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', filePdfNode.entry.name);
+        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
 
     });
 
     it('[C260166] Enable/Disable edit folder icon - when multiple folders selected', async () => {
-        contentServicesPage.clickMultiSelectToggle();
-        contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getDocumentList().dataTablePage().checkAllRowsButtonIsDisplayed().checkAllRows();
-        contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsChecked('Display name', editFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsChecked('Display name', anotherFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', filePdfNode.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotChecked('Display name', filePdfNode.entry.name);
-        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(2);
-        expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
+        await contentServicesPage.clickMultiSelectToggle();
+        await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+        await contentServicesPage.getDocumentList().dataTablePage().checkAllRowsButtonIsDisplayed();
+        await contentServicesPage.getDocumentList().dataTablePage().checkAllRows();
+        await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsChecked('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsChecked('Display name', anotherFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', filePdfNode.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotChecked('Display name', filePdfNode.entry.name);
+        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(2);
+        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
     });
 
     it('[C260166] Enable/Disable edit folder icon - when single folder selected', async () => {
-        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
-        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
-        expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
+        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
+        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
     });
 
     it('[C260165] Update folder name with non-existing one', async () => {
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
-        contentServicesPage.clickOnEditFolder();
-        editFolderDialog.checkFolderDialogIsDisplayed();
-        editFolderDialog.addFolderName(updateFolderName);
-        editFolderDialog.checkCreateUpdateBtnIsEnabled();
-        editFolderDialog.clickOnCreateUpdateButton();
-        editFolderDialog.checkFolderDialogIsNotDisplayed();
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', updateFolderName);
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        await contentServicesPage.clickOnEditFolder();
+        await editFolderDialog.checkFolderDialogIsDisplayed();
+        await editFolderDialog.addFolderName(updateFolderName);
+        await editFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await editFolderDialog.clickOnCreateUpdateButton();
+        await editFolderDialog.checkFolderDialogIsNotDisplayed();
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', updateFolderName);
     });
 
-    describe('Edit Folder - no permission',  () => {
+    describe('Edit Folder - no permission', () => {
 
         beforeEach(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + editFolder.entry.id);
-            contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+            await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + editFolder.entry.id);
+            await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
             done();
         });
 
         it('[C260167] Edit folder without permission', async () => {
-            contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', subFolder.entry.name);
-            contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', subFolder.entry.name);
-            contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', subFolder.entry.name);
-            expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
+            await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', subFolder.entry.name);
+            await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', subFolder.entry.name);
+            await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', subFolder.entry.name);
+            expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
         });
 
     });

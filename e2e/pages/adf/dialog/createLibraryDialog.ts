@@ -43,7 +43,7 @@ export class CreateLibraryDialog {
     }
 
     async waitForDialogToClose(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.libraryDialog);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.libraryDialog);
     }
 
     isDialogOpen(): promise.Promise<any> {

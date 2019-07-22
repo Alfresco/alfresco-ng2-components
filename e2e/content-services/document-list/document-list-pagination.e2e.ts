@@ -24,7 +24,7 @@ import { Util } from '../../util/util';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Document List - Pagination',  () =>{
+describe('Document List - Pagination',  () => {
     const pagination = {
         base: 'newFile',
         secondSetBase: 'secondSet',
@@ -49,14 +49,14 @@ describe('Document List - Pagination',  () =>{
     const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
-    const newFolderModel = new FolderModel({ 'name': 'newFolder' });
+    const newFolderModel = new FolderModel({ name: 'newFolder' });
     let fileNames = [];
     const nrOfFiles = 20;
     let currentPage = 1;
     let secondSetOfFiles = [];
     const secondSetNumber = 25;
-    const folderTwoModel = new FolderModel({ 'name': 'folderTwo' });
-    const folderThreeModel = new FolderModel({ 'name': 'folderThree' });
+    const folderTwoModel = new FolderModel({ name: 'folderTwo' });
+    const folderThreeModel = new FolderModel({ name: 'folderThree' });
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
@@ -85,7 +85,7 @@ describe('Document List - Pagination',  () =>{
         done();
     });
 
-    beforeEach((done) => {
+    beforeEach(async(done) => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -99,7 +99,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfFiles + ' of ' + nrOfFiles);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames)).toEqual(true);
         });
         paginationPage.checkNextPageButtonIsDisabled();
@@ -116,7 +116,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfFiles + ' of ' + nrOfFiles);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames)).toEqual(true);
         });
         paginationPage.checkNextPageButtonIsDisabled();
@@ -142,7 +142,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
         });
         paginationPage.clickOnNextPage();
@@ -152,7 +152,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(5, 10))).toEqual(true);
         });
         paginationPage.clickOnNextPage();
@@ -162,7 +162,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(10, 15))).toEqual(true);
         });
         paginationPage.clickOnNextPage();
@@ -172,7 +172,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
         });
 
@@ -195,7 +195,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfFiles);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(0, 10))).toEqual(true);
         });
         paginationPage.clickOnNextPage();
@@ -205,7 +205,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfFiles);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(10, 20))).toEqual(true);
         });
 
@@ -229,7 +229,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * currentPage + ' of ' + nrOfFiles);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(0, 15))).toEqual(true);
         });
         currentPage++;
@@ -239,7 +239,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfFiles + ' of ' + nrOfFiles);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles - itemsPerPage.fifteenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
         });
 
@@ -305,7 +305,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * currentPage + ' of ' + secondSetNumber);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(0, 15))).toEqual(true);
         });
 
@@ -316,7 +316,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + secondSetNumber + ' of ' + secondSetNumber);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.fifteenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(15, 25))).toEqual(true);
         });
 
@@ -327,7 +327,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.twentyValue * currentPage + ' of ' + secondSetNumber);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.twentyValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(0, 20))).toEqual(true);
         });
 
@@ -338,7 +338,7 @@ describe('Document List - Pagination',  () =>{
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 21-' + secondSetNumber + ' of ' + secondSetNumber);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.twentyValue);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
+        contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(20, 25))).toEqual(true);
         });
     });

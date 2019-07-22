@@ -21,7 +21,7 @@ import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } f
 export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
-        await BrowserActions.click(elementFinder);
+        await elementFinder.click();
     }
 
     static async getUrl(url: string): Promise<any> {
@@ -33,7 +33,7 @@ export class BrowserActions {
         await browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
 
-    static async getText(elementFinder: ElementFinder | ElementArrayFinder): Promise<string> {
+    static async getText(elementFinder: ElementFinder): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         return elementFinder.getText();
     }

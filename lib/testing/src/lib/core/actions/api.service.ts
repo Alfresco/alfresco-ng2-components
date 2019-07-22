@@ -26,13 +26,13 @@ export class ApiService {
 
     constructor(clientId: string, host: string, hostSso: string, provider: string) {
         this.config = {
-            provider: provider,
+            provider,
             hostBpm: host,
             hostEcm: host,
             authType: 'OAUTH',
             oauth2: {
                 host: hostSso,
-                clientId: clientId,
+                clientId,
                 scope: 'openid',
                 secret: '',
                 implicitFlow: false,
@@ -57,7 +57,7 @@ export class ApiService {
         const accepts = ['application/json'];
 
         const headerParams = {
-            'Authorization': 'bearer ' + this.apiService.oauth2Auth.token
+            Authorization: 'bearer ' + this.apiService.oauth2Auth.token
         };
 
         return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
@@ -74,7 +74,7 @@ export class ApiService {
         const accepts = ['application/json'];
 
         const headerParams = {
-            'Authorization': 'bearer ' + this.apiService.oauth2Auth.token
+            Authorization: 'bearer ' + this.apiService.oauth2Auth.token
         };
 
         return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,

@@ -186,7 +186,7 @@ describe('Search Date Range Filter',  () => {
 
         let jsonFile;
 
-        beforeAll(() => {
+        beforeAll(async () => {
             jsonFile = SearchConfiguration.getConfiguration();
         });
 

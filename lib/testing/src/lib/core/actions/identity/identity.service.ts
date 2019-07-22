@@ -57,13 +57,13 @@ export class IdentityService {
 
     async createIdentityUserAndSyncECMBPM(user: UserModel): Promise<void> {
         if (this.api.config.provider === 'ECM' || this.api.config.provider === 'ALL') {
-            const createUser: PersonBodyCreate = <PersonBodyCreate> {
+            const createUser: PersonBodyCreate = {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 password: user.password,
                 email: user.email,
                 id: user.email
-            };
+            } as PersonBodyCreate;
             await this.api.apiService.core.peopleApi.addPerson(createUser);
         }
 
@@ -92,11 +92,11 @@ export class IdentityService {
             const method = 'POST';
 
             const queryParams = {}, postBody = {
-                'username': user.username,
-                'firstName': user.firstName,
-                'lastName': user.lastName,
-                'enabled': true,
-                'email': user.email
+                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                enabled: true,
+                email: user.email
             };
 
             return this.api.performIdentityOperation(path, method, queryParams, postBody);
@@ -116,7 +116,7 @@ export class IdentityService {
     async getUserInfoByUsername(username): Promise<any> {
         const path = `/users`;
         const method = 'GET';
-        const queryParams = { 'username': username }, postBody = {};
+        const queryParams = { username: username }, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0];
@@ -126,7 +126,7 @@ export class IdentityService {
         const path = `/users/${id}/reset-password`;
         const method = 'PUT';
         const queryParams = {},
-            postBody = { 'type': 'password', 'value': password, 'temporary': false };
+            postBody = { type: 'password', value: password, temporary: false };
 
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
@@ -136,7 +136,7 @@ export class IdentityService {
             const path = `/users/${userId}/groups/${groupId}`;
             const method = 'PUT';
             const queryParams = {},
-                postBody = { 'realm': 'alfresco', 'userId': userId, 'groupId': groupId };
+                postBody = { realm: 'alfresco', userId: userId, groupId: groupId };
 
             return this.api.performIdentityOperation(path, method, queryParams, postBody);
         } catch (error) {
@@ -149,7 +149,7 @@ export class IdentityService {
         const path = `/users/${userId}/role-mappings/realm`;
         const method = 'POST';
         const queryParams = {},
-            postBody = [{ 'id': roleId, 'name': roleName }];
+            postBody = [{ id: roleId, name: roleName }];
 
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
@@ -158,11 +158,11 @@ export class IdentityService {
         const path = `/users/${userId}/role-mappings/clients/${clientId}`;
         const method = 'DELETE', queryParams = {},
             postBody = [{
-                'id': roleId,
-                'name': roleName,
-                'composite': false,
-                'clientRole': true,
-                'containerId': clientId
+                id: roleId,
+                name: roleName,
+                composite: false,
+                clientRole: true,
+                containerId: clientId
             }];
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }

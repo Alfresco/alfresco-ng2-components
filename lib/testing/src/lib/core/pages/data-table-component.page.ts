@@ -59,7 +59,7 @@ export class DataTableComponentPage {
 
     async uncheckAllRows(): Promise<void> {
         await BrowserActions.click(this.selectAll);
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.selectAll.element(by.css('input[aria-checked="true"]')));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.selectAll.element(by.css('input[aria-checked="true"]')));
     }
 
     async clickCheckbox(columnName, columnValue): Promise<void> {
@@ -68,7 +68,7 @@ export class DataTableComponentPage {
     }
 
     async checkRowIsNotChecked(columnName, columnValue): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.getRowCheckbox(columnName, columnValue).element(by.css('input[aria-checked="true"]')));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.getRowCheckbox(columnName, columnValue).element(by.css('input[aria-checked="true"]')));
     }
 
     async checkRowIsChecked(columnName, columnValue): Promise<void> {
@@ -81,7 +81,7 @@ export class DataTableComponentPage {
     }
 
     async checkNoRowIsSelected(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.selectedRowNumber);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.selectedRowNumber);
     }
 
     getNumberOfSelectedRows(): wdpromise.Promise<number> {
@@ -106,7 +106,7 @@ export class DataTableComponentPage {
 
     async checkRowIsNotSelected(columnName, columnValue): Promise<void> {
         const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
-        await BrowserVisibility.waitUntilElementIsNotOnPage(selectedRow);
+        await BrowserVisibility.waitUntilElementIsNotVisible(selectedRow);
     }
 
     async getColumnValueForRow(identifyingColumn, identifyingValue, columnName): Promise<string> {
@@ -128,13 +128,13 @@ export class DataTableComponentPage {
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
         await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
-        column.each(function (currentElement) {
-            currentElement.getText().then(function (text) {
+        column.each(function(currentElement) {
+            currentElement.getText().then(function(text) {
                 if (text.length !== 0) {
                     initialList.push(text.toLowerCase());
                 }
             });
-        }).then(function () {
+        }).then(function() {
             let sortedList = [...initialList];
             sortedList = sortedList.sort();
             if (sortOrder.toLocaleLowerCase() === 'desc') {
@@ -205,7 +205,7 @@ export class DataTableComponentPage {
     async sortByColumn(sortOrder: string, titleColumn: string): Promise<any> {
         const locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(element(locator));
-        return element(locator).getAttribute('class').then(function (result) {
+        return element(locator).getAttribute('class').then(function(result) {
             if (sortOrder.toLocaleLowerCase() === 'asc') {
                 if (!result.includes('sorted-asc')) {
                     if (result.includes('sorted-desc') || result.includes('sortable')) {
@@ -232,7 +232,7 @@ export class DataTableComponentPage {
 
     async checkContentIsNotDisplayed(columnName, columnValue): Promise<void> {
         const row = this.getCellElementByValue(columnName, columnValue);
-        await BrowserVisibility.waitUntilElementIsNotOnPage(row);
+        await BrowserVisibility.waitUntilElementIsNotVisible(row);
     }
 
     getRow(columnName, columnValue): ElementFinder {
@@ -258,7 +258,7 @@ export class DataTableComponentPage {
     }
 
     async checkSpinnerIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.spinner);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.spinner);
     }
 
     async tableIsLoaded(): Promise<void> {

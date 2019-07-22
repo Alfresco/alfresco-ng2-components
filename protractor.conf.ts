@@ -303,7 +303,7 @@ exports.config = {
      */
     seleniumAddress: SELENIUM_SERVER,
 
-    SELENIUM_PROMISE_MANAGER: SELENIUM_PROMISE_MANAGER,
+    SELENIUM_PROMISE_MANAGER: false,
 
     plugins: [{
         package: 'jasmine2-protractor-utils',
@@ -327,7 +327,9 @@ exports.config = {
         retry.onCleanUp(results);
     },
 
-    onPrepare() {
+    onPrepare: async () => {
+        await browser.waitForAngularEnabled(false);
+
         browserLogErrorPrint();
 
         retry.onPrepare();

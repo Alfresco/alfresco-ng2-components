@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ExpectedConditions as EC, ElementFinder, protractor } from 'protractor';
-import { ElementArrayFinder } from 'protractor/built/element';
+import { browser, by, element, ElementFinder, protractor } from 'protractor';
 
 const until = protractor.ExpectedConditions;
 const DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 40000;
@@ -26,29 +25,15 @@ export class BrowserVisibility {
     /*
      * Wait for element is visible
      */
-    static async waitUntilElementIsVisible(elementToCheck: ElementFinder | ElementArrayFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = ''): Promise<any> {
-        let isDisplayed = false;
-        return browser.wait(() => {
-            browser.waitForAngularEnabled();
-
-            elementToCheck.isDisplayed().then(
-                () => {
-                    isDisplayed = true;
-                },
-                () => {
-                    isDisplayed = false;
-                }
-            );
-            return isDisplayed;
-        }, waitTimeout, 'Element is not visible ' + elementToCheck.locator() + ' ' + message);
+    static async waitUntilElementIsVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = ''): Promise<any> {
+        return browser.wait(until.visibilityOf(elementToCheck), waitTimeout, 'Element is not visible ' + elementToCheck.locator());
     }
 
     /*
      * Wait for element to be clickable
      */
     static async waitUntilElementIsClickable(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(EC.elementToBeClickable(elementToCheck),
-            waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
+        return browser.wait(until.elementToBeClickable(elementToCheck), waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
     }
 
     /*
@@ -62,41 +47,17 @@ export class BrowserVisibility {
      * Wait for element to not be visible
      */
     static async waitUntilElementIsNotVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        let isPresent = false;
-        return browser.wait(() => {
-            browser.waitForAngularEnabled();
-
-            elementToCheck.isPresent().then(
-                (present) => {
-                    isPresent = !present;
-                }
-            );
-            return isPresent;
-        }, waitTimeout, 'Element is Visible and it should not' + elementToCheck.locator());
+        return browser.wait(until.invisibilityOf(elementToCheck), waitTimeout, 'Element is Visible and it should not' + elementToCheck.locator());
     }
 
     /*
      * Wait for element to have value
      */
     static async waitUntilElementHasValue(elementToCheck: ElementFinder, elementValue, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        await browser.waitForAngularEnabled();
-
         return browser.wait(until.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, 'Element doesn\'t have a value ' + elementToCheck.locator());
     }
 
-    static async waitUntilElementIsOnPage(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(browser.wait(until.visibilityOf(elementToCheck)), waitTimeout);
-    }
-
-    /*
-     * Wait for element to not be visible
-     */
-    static async waitUntilElementIsNotOnPage(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(until.invisibilityOf(elementToCheck), waitTimeout, 'Element is visible on the page ' + elementToCheck.locator());
-    }
-
     static async waitUntilElementIsPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        await browser.waitForAngularEnabled();
         return browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
     }
 

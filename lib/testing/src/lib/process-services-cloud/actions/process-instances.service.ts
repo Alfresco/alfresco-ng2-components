@@ -31,8 +31,8 @@ export class ProcessInstancesService {
             const method = 'POST';
 
             const queryParams = {}, postBody = {
-                'processDefinitionKey': processDefKey,
-                'payloadType': 'StartProcessPayload',
+                processDefinitionKey: processDefKey,
+                payloadType: 'StartProcessPayload',
                 ...options
             };
 

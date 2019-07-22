@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { check } from '../../util/material';
 
-describe('Aspect oriented config',  () => {
+describe('Aspect oriented config', () => {
 
     const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();
@@ -43,8 +43,8 @@ describe('Aspect oriented config',  () => {
     const acsUser = new AcsUserModel();
 
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
     let uploadActions;
 
@@ -81,14 +81,14 @@ describe('Aspect oriented config',  () => {
 
         aspects.entry.aspectNames.push(defaultModel.concat(':', defaultEmptyPropertiesAspect));
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, {'aspectNames': aspects.entry.aspectNames});
+        await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, { aspectNames: aspects.entry.aspectNames });
 
         done();
     });
 
     afterEach(async (done) => {
-        viewerPage.clickCloseButton();
-        contentServicesPage.checkAcsContainer();
+        await viewerPage.clickCloseButton();
+        await contentServicesPage.checkAcsContainer();
         done();
     });
 
@@ -116,21 +116,21 @@ describe('Aspect oriented config',  () => {
 
         navigationBarPage.clickContentServicesButton();
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
-        metadataViewPage.informationButtonIsDisplayed();
-        metadataViewPage.clickOnInformationButton();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.informationButtonIsDisplayed();
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.clickMetadataGroup('IMAGE');
-        metadataViewPage.checkPropertyIsVisible('properties.exif:pixelXDimension', 'textitem');
-        metadataViewPage.checkPropertyIsVisible('properties.exif:pixelYDimension', 'textitem');
-        metadataViewPage.checkPropertyIsNotVisible('properties.exif:isoSpeedRatings', 'textitem');
+        await metadataViewPage.clickMetadataGroup('IMAGE');
+        await metadataViewPage.checkPropertyIsVisible('properties.exif:pixelXDimension', 'textitem');
+        await metadataViewPage.checkPropertyIsVisible('properties.exif:pixelYDimension', 'textitem');
+        await metadataViewPage.checkPropertyIsNotVisible('properties.exif:isoSpeedRatings', 'textitem');
 
-        metadataViewPage.editIconClick();
+        await metadataViewPage.editIconClick();
 
-        metadataViewPage.checkPropertyIsVisible('properties.exif:isoSpeedRatings', 'textitem');
+        await metadataViewPage.checkPropertyIsVisible('properties.exif:isoSpeedRatings', 'textitem');
     });
 
     it('[C260185] Should ignore not existing aspect when present in the configuration', async () => {
@@ -147,35 +147,35 @@ describe('Aspect oriented config',  () => {
 
         navigationBarPage.clickContentServicesButton();
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
-        metadataViewPage.informationButtonIsDisplayed();
-        metadataViewPage.clickOnInformationButton();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.informationButtonIsDisplayed();
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
-        metadataViewPage.checkMetadataGroupIsPresent('properties');
-        metadataViewPage.checkMetadataGroupIsPresent('Versionable');
-        metadataViewPage.checkMetadataGroupIsNotPresent('exists');
+        await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
+        await metadataViewPage.checkMetadataGroupIsPresent('properties');
+        await metadataViewPage.checkMetadataGroupIsPresent('Versionable');
+        await metadataViewPage.checkMetadataGroupIsNotPresent('exists');
     });
 
     it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided', async () => {
 
         await LocalStorageUtil.setConfigField('content-metadata', '{}');
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
-        metadataViewPage.informationButtonIsDisplayed();
-        metadataViewPage.clickOnInformationButton();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.informationButtonIsDisplayed();
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
-        metadataViewPage.checkMetadataGroupIsPresent('properties');
-        metadataViewPage.checkMetadataGroupIsPresent('Versionable');
+        await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
+        await metadataViewPage.checkMetadataGroupIsPresent('properties');
+        await metadataViewPage.checkMetadataGroupIsPresent('Versionable');
     });
 
     it('[C260182] Should show all the aspects if the default configuration contains the star symbol', async () => {
@@ -186,19 +186,19 @@ describe('Aspect oriented config',  () => {
             }
         }));
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+        await
+            await metadataViewPage.informationButtonIsDisplayed();
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.informationButtonIsDisplayed();
-        metadataViewPage.clickOnInformationButton();
-
-        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
-        metadataViewPage.checkMetadataGroupIsPresent('properties');
-        metadataViewPage.checkMetadataGroupIsPresent('Versionable');
+        await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
+        await metadataViewPage.checkMetadataGroupIsPresent('properties');
+        await metadataViewPage.checkMetadataGroupIsPresent('Versionable');
     });
 
     it('[C268899] Should be possible use a Translation key as Title of a metadata group', async () => {
@@ -228,21 +228,21 @@ describe('Aspect oriented config',  () => {
             '  }' +
             '}');
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
 
-        metadataViewPage.informationButtonIsDisplayed();
-        metadataViewPage.clickOnInformationButton();
+        await metadataViewPage.informationButtonIsDisplayed();
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkMetadataGroupIsPresent('GROUP-TITLE1-TRANSLATION-KEY');
-        metadataViewPage.checkMetadataGroupIsPresent('GROUP-TITLE2-TRANSLATION-KEY');
+        await metadataViewPage.checkMetadataGroupIsPresent('GROUP-TITLE1-TRANSLATION-KEY');
+        await metadataViewPage.checkMetadataGroupIsPresent('GROUP-TITLE2-TRANSLATION-KEY');
 
-        expect(metadataViewPage.getMetadataGroupTitle('GROUP-TITLE1-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION ONE');
-        expect(metadataViewPage.getMetadataGroupTitle('GROUP-TITLE2-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION TWO');
+        expect(await metadataViewPage.getMetadataGroupTitle('GROUP-TITLE1-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION ONE');
+        expect(await metadataViewPage.getMetadataGroupTitle('GROUP-TITLE2-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION TWO');
 
     });
 
@@ -257,23 +257,22 @@ describe('Aspect oriented config',  () => {
             '    }' +
             '}');
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
 
         check(metadataViewPage.presetSwitch);
 
-        metadataViewPage.enterPresetText('custom-preset');
+        await metadataViewPage.enterPresetText('custom-preset');
 
-        metadataViewPage.informationButtonIsDisplayed();
-        metadataViewPage.clickOnInformationButton();
+        await metadataViewPage.informationButtonIsDisplayed();
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkMetadataGroupIsPresent('properties');
-        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
-        metadataViewPage.checkMetadataGroupIsPresent('Versionable');
+        await metadataViewPage.checkMetadataGroupIsPresent('properties');
+        await metadataViewPage.checkMetadataGroupIsPresent('Versionable');
     });
 
     it('[C299186] The aspect without properties is not displayed', async () => {
@@ -286,22 +285,22 @@ describe('Aspect oriented config',  () => {
             '    }' +
             '}');
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
 
-        metadataViewPage.informationButtonIsDisplayed();
-        metadataViewPage.clickOnInformationButton();
+        await metadataViewPage.informationButtonIsDisplayed();
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkMetadataGroupIsNotPresent(emptyAspectName);
+        await metadataViewPage.checkMetadataGroupIsNotPresent(emptyAspectName);
     });
 
     it('[C299187] The aspect with empty properties is displayed when edit', async () => {
 
-        await LocalStorageUtil.setConfigField('content-metadata', '{' +
+        await  LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + defaultModel +
             '       ": { "' + defaultModel + ':' + defaultEmptyPropertiesAspect +
             '            ":"*"' +
@@ -309,20 +308,20 @@ describe('Aspect oriented config',  () => {
             '    }' +
             '}');
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
 
-        metadataViewPage.informationButtonIsDisplayed();
-        metadataViewPage.clickOnInformationButton();
+        await metadataViewPage.informationButtonIsDisplayed();
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkMetadataGroupIsNotPresent(aspectName);
+        await metadataViewPage.checkMetadataGroupIsNotPresent(aspectName);
 
-        metadataViewPage.editIconClick();
+        await metadataViewPage.editIconClick();
 
-        metadataViewPage.checkMetadataGroupIsPresent(aspectName);
+        await metadataViewPage.checkMetadataGroupIsPresent(aspectName);
     });
 });

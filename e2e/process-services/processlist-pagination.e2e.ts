@@ -28,7 +28,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Process List - Pagination', ()=> {
+describe('Process List - Pagination', () => {
 
     const itemsPerPage = {
         five: '5',
@@ -79,16 +79,16 @@ describe('Process List - Pagination', ()=> {
         done();
     });
 
-    describe('Empty processes', ()=> {
+    describe('Empty processes', () => {
 
-        it('[C280015] Should show empty content message an no pagination when no process are present',  async()=> {
+        it('[C280015] Should show empty content message an no pagination when no process are present',  async() => {
             navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
             processFiltersPage.checkNoContentMessage();
             paginationPage.checkPaginationIsNotDisplayed();
         });
     });
 
-    describe('With processes Pagination', ()=>{
+    describe('With processes Pagination', () => {
 
         beforeAll(async (done) => {
             const apps = new AppsActions();
@@ -112,7 +112,7 @@ describe('Process List - Pagination', ()=> {
             done();
         });
 
-        it('[C261042] Should display default pagination',  async()=> {
+        it('[C261042] Should display default pagination',  async() => {
             page = 1;
             totalPages = 1;
             processFiltersPage.clickRunningFilterButton();
@@ -129,7 +129,7 @@ describe('Process List - Pagination', ()=> {
             paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C261043] Should be possible to Items per page to 15',  async()=> {
+        it('[C261043] Should be possible to Items per page to 15',  async() => {
             page = 1;
             totalPages = 2;
             processFiltersPage.clickRunningFilterButton();
@@ -170,7 +170,7 @@ describe('Process List - Pagination', ()=> {
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         });
 
-        it('[C261044] Should be possible to Items per page to 10',  async()=> {
+        it('[C261044] Should be possible to Items per page to 10',  async() => {
             page = 1;
             totalPages = 2;
             processFiltersPage.clickRunningFilterButton();
@@ -211,7 +211,7 @@ describe('Process List - Pagination', ()=> {
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         });
 
-        it('[C261047] Should be possible to Items per page to 20',  async()=> {
+        it('[C261047] Should be possible to Items per page to 20',  async() => {
             page = 1;
             totalPages = 1;
             processFiltersPage.clickRunningFilterButton();
@@ -239,7 +239,7 @@ describe('Process List - Pagination', ()=> {
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         });
 
-        it('[C261045] Should be possible to Items per page to 5',  async()=> {
+        it('[C261045] Should be possible to Items per page to 5',  async() => {
             let showing;
             page = 1;
             totalPages = 4;
@@ -313,7 +313,7 @@ describe('Process List - Pagination', ()=> {
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         });
 
-        it('[C261049] Should be possible to open page number dropdown',  async()=> {
+        it('[C261049] Should be possible to open page number dropdown',  async() => {
             let showing;
             page = 1;
             totalPages = 2;
@@ -366,7 +366,7 @@ describe('Process List - Pagination', ()=> {
             paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C261048] Should be possible to sort processes by name',  async()=> {
+        it('[C261048] Should be possible to sort processes by name',  async() => {
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -385,7 +385,7 @@ describe('Process List - Pagination', ()=> {
             processFiltersPage.checkProcessesSortedByNameDesc();
         });
 
-        it('[C286260] Should keep sorting when changing \'Items per page\'',  async()=> {
+        it('[C286260] Should keep sorting when changing \'Items per page\'',  async() => {
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();

@@ -41,7 +41,7 @@ export class ProcessFiltersCloudComponentPage {
 
     async checkProcessFilterHasNoIcon(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.filterIcon));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.filterIcon));
     }
 
     async clickProcessFilter(): Promise<void> {

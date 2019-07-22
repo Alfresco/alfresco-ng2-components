@@ -36,8 +36,8 @@ describe('Tag component',  () => {
         hostEcm: browser.params.testConfig.adf.url
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
-    const pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
-    const deleteFile = new FileModel({ 'name': StringUtil.generateRandomString() });
+    const pdfFileModel = new FileModel({ name: resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const deleteFile = new FileModel({ name: StringUtil.generateRandomString() });
     const sameTag = StringUtil.generateRandomString().toLowerCase();
 
     const tagList = [

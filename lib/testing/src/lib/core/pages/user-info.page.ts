@@ -46,7 +46,7 @@ export class UserInfoPage {
     }
 
     async dialogIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.dialog);
     }
 
     async clickUserProfile(): Promise<void> {
@@ -135,15 +135,15 @@ export class UserInfoPage {
     }
 
     async initialImageNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.initialImage);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.initialImage);
     }
 
     async ACSProfileImageNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.acsImage);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.acsImage);
     }
 
     async APSProfileImageNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.apsImage);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.apsImage);
     }
 
 }

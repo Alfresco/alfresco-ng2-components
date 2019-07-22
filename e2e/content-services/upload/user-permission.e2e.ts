@@ -56,7 +56,7 @@ describe('Upload - User permission',  () => {
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
-    beforeAll(() => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
@@ -173,23 +173,23 @@ describe('Upload - User permission',  () => {
 
             navigationBarPage.clickLoginButton();
             await loginPage.loginToContentServicesUsingUserModel(acsUserTwo);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
-            contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
+            await contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
 
-            contentServicesPage.uploadFile(pngFile.location);
+            await contentServicesPage.uploadFile(pngFile.location);
 
-            contentServicesPage.checkContentIsDisplayed(pngFile.name);
+            await contentServicesPage.checkContentIsDisplayed(pngFile.name);
 
-            navigationBarPage.clickLoginButton();
+            await navigationBarPage.clickLoginButton();
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
-            contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
+            await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
 
-            contentServicesPage.uploadFile(pdfFile.location);
+            await contentServicesPage.uploadFile(pdfFile.location);
 
-            contentServicesPage.checkContentIsDisplayed(pdfFile.name);
+            await contentServicesPage.checkContentIsDisplayed(pdfFile.name);
         });
     });
 

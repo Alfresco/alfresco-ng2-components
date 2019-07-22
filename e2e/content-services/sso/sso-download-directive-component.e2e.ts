@@ -18,7 +18,15 @@
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ApiService, LoginSSOPage, UploadActions, IdentityService, SettingsPage, StringUtil, UserModel } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    LoginSSOPage,
+    UploadActions,
+    IdentityService,
+    SettingsPage,
+    StringUtil,
+    UserModel
+} from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/fileModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import resources = require('../../util/resources');
@@ -26,7 +34,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import * as path from 'path';
 import { Util } from '../../util/util';
 
-describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true',  () => {
+describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 
     const settingsPage = new SettingsPage();
     const navigationBarPage = new NavigationBarPage();
@@ -71,7 +79,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     const acsUser = new UserModel();
     let identityService: IdentityService;
 
-    describe('SSO in ADF using ACS and AIS, implicit flow set',  () => {
+    describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
 
         beforeAll(async (done) => {
             const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
@@ -90,18 +98,18 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             silentLogin = false;
             implicitFlow = true;
-            settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 browser.params.testConfig.adf.hostSso,
                 browser.params.testConfig.adf.hostIdentity,
                 silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
 
-            loginSsoPage.clickOnSSOButton();
-            loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
+            await loginSsoPage.clickOnSSOButton();
+            await loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
 
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.checkAcsContainer();
-            contentListPage.doubleClickRow(folderName);
-            contentListPage.waitForTableBody();
+            await navigationBarPage.clickContentServicesButton();
+            await contentServicesPage.checkAcsContainer();
+            await contentListPage.doubleClickRow(folderName);
+            await contentListPage.waitForTableBody();
             done();
         });
 
@@ -113,62 +121,60 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             } catch (error) {
             }
             await this.alfrescoJsApi.logout();
-            browser.executeScript('window.sessionStorage.clear();');
-            browser.executeScript('window.localStorage.clear();');
+            await browser.executeScript('window.sessionStorage.clear();');
+            await  browser.executeScript('window.localStorage.clear();');
             done();
         });
 
         afterEach(async (done) => {
-            browser.refresh();
-            contentListPage.waitForTableBody();
+            await browser.refresh();
+            await contentListPage.waitForTableBody();
             done();
         });
 
         it('[C291936] Should be able to download a file', async (done) => {
-            contentListPage.selectRow(pngFileModel.name);
-            contentServicesPage.clickDownloadButton();
+            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.clickDownloadButton();
             expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
             done();
         });
 
         it('[C291938] Should be able to open a document', async (done) => {
-            contentServicesPage.doubleClickRow(firstPdfFileModel.name);
-            viewerPage.checkFileIsLoaded();
-            viewerPage.checkFileNameIsDisplayed(firstPdfFileModel.name);
-            viewerPage.clickCloseButton();
-            contentListPage.waitForTableBody();
+            await contentServicesPage.doubleClickRow(firstPdfFileModel.name);
+            await viewerPage.checkFileIsLoaded();
+            await viewerPage.checkFileNameIsDisplayed(firstPdfFileModel.name);
+            await viewerPage.clickCloseButton();
+            await contentListPage.waitForTableBody();
             done();
         });
 
         it('[C291942] Should be able to open an image', async (done) => {
-            viewerPage.viewFile(pngFileModel.name);
-            viewerPage.checkImgViewerIsDisplayed();
-            viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
-            viewerPage.clickCloseButton();
-            contentListPage.waitForTableBody();
+            await viewerPage.viewFile(pngFileModel.name);
+            await viewerPage.checkImgViewerIsDisplayed();
+            await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+            await viewerPage.clickCloseButton();
+            await contentListPage.waitForTableBody();
             done();
         });
 
-        it('[C291941] Should be able to download multiple files', async (done) => {
-            contentServicesPage.clickMultiSelectToggle();
-            contentServicesPage.checkAcsContainer();
-            contentListPage.dataTablePage().checkAllRows();
-            contentListPage.dataTablePage().checkRowIsChecked('Display name', pngFileModel.name);
-            contentListPage.dataTablePage().checkRowIsChecked('Display name', firstPdfFileModel.name);
-            contentServicesPage.clickDownloadButton();
-            expect(Util.fileExists(downloadedMultipleFiles, 30)).toBe(true);
-            done();
+        it('[C291941] Should be able to download multiple files', async () => {
+            await contentServicesPage.clickMultiSelectToggle();
+            await contentServicesPage.checkAcsContainer();
+            await contentListPage.dataTablePage().checkAllRows();
+            await contentListPage.dataTablePage().checkRowIsChecked('Display name', pngFileModel.name);
+            await contentListPage.dataTablePage().checkRowIsChecked('Display name', firstPdfFileModel.name);
+            await contentServicesPage.clickDownloadButton();
+            expect(await Util.fileExists(downloadedMultipleFiles, 30)).toBe(true);
         });
 
-        it('[C291940] Should be able to view thumbnails when enabled', async (done) => {
-            contentServicesPage.enableThumbnails();
-            contentServicesPage.checkAcsContainer();
-            contentListPage.waitForTableBody();
+        it('[C291940] Should be able to view thumbnails when enabled', async () => {
+            await contentServicesPage.enableThumbnails();
+            await contentServicesPage.checkAcsContainer();
+            await contentListPage.waitForTableBody();
             const filePdfIconUrl = await contentServicesPage.getRowIconImageUrl(firstPdfFileModel.name);
-            expect(filePdfIconUrl).toContain(`/versions/1/nodes/${pdfUploadedFile.entry.id}/renditions`);
+            expect(await filePdfIconUrl).toContain(`/versions/1/nodes/${pdfUploadedFile.entry.id}/renditions`);
             const filePngIconUrl = await contentServicesPage.getRowIconImageUrl(pngFileModel.name);
-            expect(filePngIconUrl).toContain(`/versions/1/nodes/${pngUploadedFile.entry.id}/renditions`);
-            done();
+            expect(await filePngIconUrl).toContain(`/versions/1/nodes/${pngUploadedFile.entry.id}/renditions`);
         });
     });
 });

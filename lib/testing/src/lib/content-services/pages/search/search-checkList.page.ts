@@ -42,7 +42,7 @@ export class SearchCheckListPage {
     }
 
     async checkChipIsNotDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
     }
 
     async removeFilterOption(option: string): Promise<void> {

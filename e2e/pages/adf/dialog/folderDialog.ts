@@ -82,4 +82,12 @@ export class FolderDialog {
         return this.folderDescriptionField;
     }
 
+    async checkCreateUpdateBtnIsEnabled(): Promise<void> {
+        await this.createUpdateButton.isEnabled();
+    }
+
+    async checkCancelBtnIsEnabled(): Promise<void> {
+        await  this.cancelButton.isEnabled();
+    }
+
 }

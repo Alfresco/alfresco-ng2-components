@@ -56,12 +56,12 @@ describe('Document List Component - Actions',  () => {
         const nrOfFiles = 5;
 
         const pdfFileModel = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+            name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            location: resources.Files.ADF_DOCUMENTS.PDF.file_location
         });
         const testFileModel = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
         const files = {
@@ -89,7 +89,7 @@ describe('Document List Component - Actions',  () => {
             done();
         });
 
-        beforeEach((done) => {
+        beforeEach(async(done) => {
             navigationBarPage.clickContentServicesButton();
             done();
         });
@@ -232,12 +232,12 @@ describe('Document List Component - Actions',  () => {
 
     describe('Folder Actions - Copy and Move',  () => {
 
-        const folderModel1 = new FolderModel({'name': StringUtil.generateRandomString()});
-        const folderModel2 = new FolderModel({'name': StringUtil.generateRandomString()});
-        const folderModel3 = new FolderModel({'name': StringUtil.generateRandomString()});
-        const folderModel4 = new FolderModel({'name': StringUtil.generateRandomString()});
-        const folderModel5 = new FolderModel({'name': StringUtil.generateRandomString()});
-        const folderModel6 = new FolderModel({'name': StringUtil.generateRandomString()});
+        const folderModel1 = new FolderModel({name: StringUtil.generateRandomString()});
+        const folderModel2 = new FolderModel({name: StringUtil.generateRandomString()});
+        const folderModel3 = new FolderModel({name: StringUtil.generateRandomString()});
+        const folderModel4 = new FolderModel({name: StringUtil.generateRandomString()});
+        const folderModel5 = new FolderModel({name: StringUtil.generateRandomString()});
+        const folderModel6 = new FolderModel({name: StringUtil.generateRandomString()});
 
         let folder1, folder2, folder3, folder4, folder5, folder6;
 
@@ -271,7 +271,7 @@ describe('Document List Component - Actions',  () => {
 
         afterAll(async (done) => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await folders.forEach(function (folder) {
+            await folders.forEach(function(folder) {
                 uploadActions.deleteFileOrFolder(folder.entry.id);
             });
             done();

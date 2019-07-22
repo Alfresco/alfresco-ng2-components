@@ -100,7 +100,7 @@ export class FormFieldsPage {
     }
 
     async noFormIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotOnPage(this.formContent);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.formContent);
     }
 
     async checkFormIsDisplayed(): Promise<void> {

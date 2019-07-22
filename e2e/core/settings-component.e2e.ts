@@ -39,7 +39,7 @@ describe('Settings component',  () => {
     });
 
     describe('Should be able to change Urls in the Settings',  () => {
-        beforeEach((done) => {
+        beforeEach(async(done) => {
             settingsPage.goToSettingsPage();
             done();
         });
@@ -110,7 +110,7 @@ describe('Settings component',  () => {
             done();
         });
 
-        beforeEach((done) => {
+        beforeEach(async(done) => {
             loginPage.goToLoginPage();
             loginPage.clickSettingsIcon();
             settingsPage.checkProviderDropdownIsDisplayed();
@@ -180,8 +180,8 @@ describe('Settings component',  () => {
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
 
-            let backButton = await settingsPage.getBackButton();
-            let applyButton = await settingsPage.getApplyButton();
+            const backButton = await settingsPage.getBackButton();
+            const applyButton = await settingsPage.getApplyButton();
             expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf.url);
             expect(backButton.isEnabled()).toBe(true);
             expect(applyButton.isEnabled()).toBe(true);
@@ -214,8 +214,8 @@ describe('Settings component',  () => {
             expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf.url);
             expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf.url);
 
-            let backButton = await settingsPage.getBackButton();
-            let applyButton = await settingsPage.getApplyButton();
+            const backButton = await settingsPage.getBackButton();
+            const applyButton = await settingsPage.getApplyButton();
             expect(backButton.isEnabled()).toBe(true);
             expect(applyButton.isEnabled()).toBe(true);
             settingsPage.clickBackButton();

@@ -22,7 +22,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
-import { browser } from 'protractor';
+import { browser, ElementArrayFinder } from 'protractor';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import CONSTANTS = require('../../util/constants');
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
@@ -53,18 +53,18 @@ describe('Permissions Component', () => {
     let publicSite, privateSite, folderName;
 
     const fileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        name: resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     const testFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     let siteFolder, privateSiteFile;
@@ -167,31 +167,33 @@ describe('Permissions Component', () => {
         });
 
         it('[C277002] Should display the Role Site dropdown', async () => {
-            contentServicesPage.checkContentIsDisplayed(folderName);
+            await contentServicesPage.checkContentIsDisplayed(folderName);
 
-            contentList.rightClickOnRow(folderName);
+            await contentList.rightClickOnRow(folderName);
 
-            contentServicesPage.pressContextMenuActionNamed('Permission');
+            await contentServicesPage.pressContextMenuActionNamed('Permission');
 
-            permissionsPage.checkPermissionInheritedButtonIsDisplayed();
-            permissionsPage.checkAddPermissionButtonIsDisplayed();
-            permissionsPage.clickAddPermissionButton();
-            permissionsPage.checkAddPermissionDialogIsDisplayed();
-            permissionsPage.checkSearchUserInputIsDisplayed();
+            await permissionsPage.checkPermissionInheritedButtonIsDisplayed();
+            await permissionsPage.checkAddPermissionButtonIsDisplayed();
+            await permissionsPage.clickAddPermissionButton();
+            await permissionsPage.checkAddPermissionDialogIsDisplayed();
+            await permissionsPage.checkSearchUserInputIsDisplayed();
 
-            permissionsPage.searchUserOrGroup(consumerUser.getId());
-            permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
-            permissionsPage.checkUserOrGroupIsAdded(consumerUser.getId());
+            await permissionsPage.searchUserOrGroup(consumerUser.getId());
+            await permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
+            await permissionsPage.checkUserOrGroupIsAdded(consumerUser.getId());
 
-            expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('SiteCollaborator');
+            expect(await permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('SiteCollaborator');
 
-            permissionsPage.clickRoleDropdownByUserOrGroupName(consumerUser.getId());
+            await permissionsPage.clickRoleDropdownByUserOrGroupName(consumerUser.getId());
 
-            expect(permissionsPage.getRoleDropdownOptions().count()).toBe(4);
-            expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);
-            expect(permissionsPage.getRoleDropdownOptions().get(1).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONSUMER);
-            expect(permissionsPage.getRoleDropdownOptions().get(2).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
-            expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
+            const roleDropdownOptions: ElementArrayFinder = await permissionsPage.getRoleDropdownOptions();
+
+            expect(roleDropdownOptions.count()).toBe(4);
+            expect(roleDropdownOptions.get(0).getText()).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);
+            expect(roleDropdownOptions.get(1).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONSUMER);
+            expect(roleDropdownOptions.get(2).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
+            expect(roleDropdownOptions.get(3).getText()).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
         });
 
     });
@@ -202,61 +204,63 @@ describe('Permissions Component', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(siteConsumerUser);
 
-            navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
+            await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
 
-            contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
+            await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
-            contentList.doubleClickRow('Site' + fileModel.name);
+            await contentList.doubleClickRow('Site' + fileModel.name);
 
-            viewerPage.checkFileIsLoaded();
-            viewerPage.clickCloseButton();
+            await viewerPage.checkFileIsLoaded();
+            await viewerPage.clickCloseButton();
 
-            contentList.waitForTableBody();
+            await contentList.waitForTableBody();
 
-            contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
+            await contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
 
-            BrowserActions.closeMenuAndDialogs();
+            await BrowserActions.closeMenuAndDialogs();
 
-            contentList.checkActionMenuIsNotDisplayed();
+            await contentList.checkActionMenuIsNotDisplayed();
 
-            contentServicesPage.metadataContent('Site' + fileModel.name);
+            await contentServicesPage.metadataContent('Site' + fileModel.name);
 
-            notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
+            await notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
 
-            contentServicesPage.uploadFile(fileModel.location);
+            await contentServicesPage.uploadFile(fileModel.location);
 
-            notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
 
         });
 
         it('[C276997] Role SiteContributor', async () => {
             await loginPage.loginToContentServicesUsingUserModel(contributorUser);
 
-            navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
+            await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
 
-            contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
+            await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
-            contentList.doubleClickRow('Site' + fileModel.name);
+            await contentList.doubleClickRow('Site' + fileModel.name);
 
-            viewerPage.checkFileIsLoaded();
-            viewerPage.clickCloseButton();
+            await viewerPage.checkFileIsLoaded();
+            await viewerPage.clickCloseButton();
 
-            contentList.waitForTableBody();
+            await contentList.waitForTableBody();
 
-            contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
+            await contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
 
-            BrowserActions.closeMenuAndDialogs();
+            await BrowserActions.closeMenuAndDialogs();
 
-            contentList.checkActionMenuIsNotDisplayed();
+            await contentList.checkActionMenuIsNotDisplayed();
 
-            contentServicesPage.metadataContent('Site' + fileModel.name);
+            await contentServicesPage.metadataContent('Site' + fileModel.name);
 
-            notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
+            await notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
 
-            contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
+            await contentServicesPage.uploadFile(testFileModel.location)
+            await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
-            uploadDialog.fileIsUploaded(testFileModel.name);
-            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+            await uploadDialog.fileIsUploaded(testFileModel.name);
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
 
         });
 
@@ -264,86 +268,83 @@ describe('Permissions Component', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
 
-            navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
+            await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
 
-            contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
+            await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
-            contentList.doubleClickRow('Site' + fileModel.name);
+            await contentList.doubleClickRow('Site' + fileModel.name);
 
-            viewerPage.checkFileIsLoaded();
-            viewerPage.clickCloseButton();
+            await viewerPage.checkFileIsLoaded();
+            await viewerPage.clickCloseButton();
 
-            contentList.waitForTableBody();
+            await contentList.waitForTableBody();
 
-            contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
+            await contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
 
-            BrowserActions.closeMenuAndDialogs();
+            await BrowserActions.closeMenuAndDialogs();
 
-            browser.controlFlow().execute(async () => {
 
-                contentList.checkActionMenuIsNotDisplayed();
+            await contentList.checkActionMenuIsNotDisplayed();
 
-                contentServicesPage.metadataContent('Site' + fileModel.name);
+            await contentServicesPage.metadataContent('Site' + fileModel.name);
 
-                metadataViewPage.editIconIsDisplayed();
-                await metadataViewPage.editIconClick();
+            await metadataViewPage.editIconIsDisplayed();
+            await metadataViewPage.editIconClick();
 
-                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-                metadataViewPage.clickEditPropertyIcons('properties.cm:title');
+            await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
+            await metadataViewPage.clickEditPropertyIcons('properties.cm:title');
 
-                metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
-                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
+            await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
+            await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
 
-                expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
-                metadataViewPage.clickCloseButton();
+            expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
+            await metadataViewPage.clickCloseButton();
 
-                contentServicesPage.uploadFile(pngFileModel.location).checkContentIsDisplayed(pngFileModel.name);
+            await contentServicesPage.uploadFile(pngFileModel.location);
+            await contentServicesPage.checkContentIsDisplayed(pngFileModel.name);
 
-                uploadDialog.fileIsUploaded(pngFileModel.name);
-                uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
-            });
-
+            await uploadDialog.fileIsUploaded(pngFileModel.name);
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
         });
 
         it('[C277006] Role SiteManager', async () => {
             await loginPage.loginToContentServicesUsingUserModel(managerUser);
-            navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
-            contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
+            await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
+            await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
-            contentList.doubleClickRow('Site' + fileModel.name);
+            await contentList.doubleClickRow('Site' + fileModel.name);
 
-            viewerPage.checkFileIsLoaded();
-            viewerPage.clickCloseButton();
+            await viewerPage.checkFileIsLoaded();
+            await viewerPage.clickCloseButton();
 
-            contentList.waitForTableBody();
-            contentServicesPage.metadataContent('Site' + fileModel.name);
+            await contentList.waitForTableBody();
+            await contentServicesPage.metadataContent('Site' + fileModel.name);
 
-            metadataViewPage.editIconIsDisplayed();
+            await metadataViewPage.editIconIsDisplayed();
 
-            browser.controlFlow().execute(async () => {
 
-                await metadataViewPage.editIconClick();
+            await metadataViewPage.editIconClick();
 
-                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
-                metadataViewPage.clickEditPropertyIcons('properties.cm:description');
-                metadataViewPage.enterDescriptionText('newDescription');
+            await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
+            await metadataViewPage.clickEditPropertyIcons('properties.cm:description');
+            await metadataViewPage.enterDescriptionText('newDescription');
 
-                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
+            await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
 
-                expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
+            expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
 
-                metadataViewPage.clickCloseButton();
-                contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
+            await metadataViewPage.clickCloseButton();
+            await contentServicesPage.uploadFile(testFileModel.location);
+            await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
-                uploadDialog.fileIsUploaded(testFileModel.name);
-                uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+            await uploadDialog.fileIsUploaded(testFileModel.name);
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
 
-                contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
-                contentServicesPage.deleteContent('Site' + fileModel.name);
-                contentServicesPage.checkContentIsNotDisplayed('Site' + fileModel.name);
-            });
-
+            await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
+            await contentServicesPage.deleteContent('Site' + fileModel.name);
+            await contentServicesPage.checkContentIsNotDisplayed('Site' + fileModel.name);
         });
 
     });
