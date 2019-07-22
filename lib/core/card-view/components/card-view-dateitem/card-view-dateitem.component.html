@@ -13,6 +13,15 @@
                 (click)="showDatePicker()">
                 <span [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key" *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
             </span>
+
+            <mat-icon *ngIf="valueDate"
+                class="adf-date-reset-icon"
+                (click)="onDateClear()"
+                [attr.title]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
+                [attr.data-automation-id]="'datepicker-date-clear-' + property.key">
+                clear
+            </mat-icon>
+
             <mat-datetimepicker-toggle
                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                 [attr.data-automation-id]="'datepickertoggle-' + property.key"

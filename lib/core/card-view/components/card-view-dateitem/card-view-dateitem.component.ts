@@ -111,4 +111,10 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
         }
     }
 
+    onDateClear() {
+        this.valueDate = null;
+        this.cardViewUpdateService.update(this.property, '');
+        this.property.value = '';
+    }
+
 }

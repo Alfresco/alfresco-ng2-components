@@ -1,6 +1,17 @@
 @mixin adf-card-view-dateitem-theme($theme) {
 
     .adf {
+        &-date-reset-icon {
+            margin-left: 260px;
+            line-height: 10px;
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            position: relative;
+            top: 4px;
+            padding-left: 8px;
+            opacity: 0.3;
+        }
         &-invisible-date-input {
             height: 2px;
             width: 0;

@@ -184,6 +184,7 @@
         "EDIT": "Edit",
         "SAVE": "Save",
         "CANCEL": "Cancel",
+        "CLEAR": "Clear",
         "TOGGLE": "Toggle value"
       }
     }
