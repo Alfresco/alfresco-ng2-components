@@ -21,6 +21,7 @@ import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } f
 export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         await elementFinder.click();
     }
 
