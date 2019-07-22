@@ -54,7 +54,7 @@ function _commitPerform(args: CommitArgs, logger: logging.Logger): string {
 
 function _replacePerform(args: CommitArgs, sha: string, logger: logging.Logger) {
     logger.info(`Replace commit ${sha} in package...`);
-    const sedRule = `s/\"commit\": \".*\"/\"commit\": \"${sha}\"/g`
+    const sedRule = `s/\"commit\": \".*\"/\"commit\": \"${sha}\"/g`;
     _exec('sed', [`-i`, `${sedRule}`, `${args.pathPackage}/package.json`], {}, logger);
 }
 
