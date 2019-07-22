@@ -73,7 +73,7 @@ describe('Viewer',  () => {
 
             uploadedPpt = await uploadActions.uploadFolder(pptFolderInfo.location, pptFolderUploaded.entry.id);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
 
             done();

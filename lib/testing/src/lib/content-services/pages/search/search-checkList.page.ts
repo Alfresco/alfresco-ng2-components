@@ -50,10 +50,11 @@ export class SearchCheckListPage {
         await BrowserActions.click(cancelChipButton);
     }
 
-    async filterBy(option: string): Promise<void> {
+    async filterBy(option: string): Promise<SearchCheckListPage> {
         await this.checkSearchFilterInputIsDisplayed();
         await this.searchInFilter(option);
         await this.clickCheckListOption(option);
+        return this;
     }
 
     async checkSearchFilterInputIsDisplayed(): Promise<void> {

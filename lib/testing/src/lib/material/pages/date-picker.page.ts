@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { element, by, browser, promise } from 'protractor';
 import { DateUtil } from '../../core/utils/date-util';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -27,7 +27,7 @@ export class DatePickerPage {
     nextMonthButton: ElementFinder = element(by.css('button[class*="mat-calendar-next-button"]'));
     previousMonthButton: ElementFinder = element(by.css('button[class*="mat-calendar-previous-button"]'));
 
-    getSelectedDate() {
+    getSelectedDate(): promise.Promise<string> {
         return element(by.css('td[class*="mat-calendar-body-active"]')).getAttribute('aria-label');
     }
 

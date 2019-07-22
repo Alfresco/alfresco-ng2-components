@@ -31,7 +31,7 @@ describe('CardView Component',  () => {
     const metadataViewPage = new MetadataViewPage();
 
     beforeAll(async (done) => {
-        loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         navigationBarPage.clickCardViewButton();
 
         done();

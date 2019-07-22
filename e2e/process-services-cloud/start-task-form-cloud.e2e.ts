@@ -324,7 +324,7 @@ describe('Start Task Form',  () => {
             taskFormCloudComponent.clickClaimButton();
 
             const localFileWidget = widget.attachFileWidgetCloud('Attachlocalfile');
-            browser.sleep(5000);
+            await browser.sleep(5000);
             localFileWidget.attachLocalFile(pdfFile.location);
             localFileWidget.checkFileIsAttached(pdfFile.name);
             localFileWidget.removeFile(pdfFile.name);

@@ -27,7 +27,7 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
 
-describe('Search Number Range Filter',  () => {
+describe('Search Number Range Filter', () => {
 
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
@@ -62,11 +62,11 @@ describe('Search Number Range Filter',  () => {
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
         await browser.driver.sleep(15000);
 
-        loginPage.loginToContentServices(acsUser.id, acsUser.password);
+        await loginPage.loginToContentServices(acsUser.id, acsUser.password);
 
-        searchDialog.checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter('*');
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter('*');
 
         done();
     });
@@ -80,10 +80,10 @@ describe('Search Number Range Filter',  () => {
         done();
     });
 
-    beforeEach(() => {
-        searchFilters.checkSizeSliderFilterIsDisplayed()
-            .clickSizeSliderFilterHeader()
-            .checkSizeSliderFilterIsExpanded();
+    beforeEach(async () => {
+        await searchFilters.checkSizeSliderFilterIsDisplayed();
+        await searchFilters.clickSizeSliderFilterHeader();
+        await searchFilters.checkSizeSliderFilterIsExpanded();
     });
 
     afterEach(async (done) => {
@@ -92,66 +92,64 @@ describe('Search Number Range Filter',  () => {
     });
 
     it('[C276970] Should be able to expand/collapse Search Size Slider', async () => {
-        searchFilters.checkSizeSliderFilterIsExpanded()
-            .clickSizeSliderFilterHeader();
-        sizeSliderFilter.checkSliderIsDisplayed()
-            .checkClearButtonIsDisplayed()
-            .checkClearButtonIsEnabled();
-        searchFilters.checkSizeSliderFilterIsCollapsed();
+        await searchFilters.checkSizeSliderFilterIsExpanded();
+        await searchFilters.clickSizeSliderFilterHeader();
+        await sizeSliderFilter.checkSliderIsDisplayed();
+        await sizeSliderFilter.checkClearButtonIsDisplayed();
+        await sizeSliderFilter.checkClearButtonIsEnabled();
+        await searchFilters.checkSizeSliderFilterIsCollapsed();
     });
 
     it('[C276972] Should be keep value when Search Size Slider is collapsed', async () => {
         const size = 5;
-        sizeSliderFilter.checkSliderIsDisplayed().setValue(size);
-        searchFilters.clickSizeSliderFilterHeader()
-            .checkSizeSliderFilterIsCollapsed()
-            .clickSizeSliderFilterHeader()
-            .checkSizeSliderFilterIsExpanded()
-            .checkSizeSliderFilterIsDisplayed();
-        expect(sizeSliderFilter.getValue()).toEqual(`${size}`);
+        await sizeSliderFilter.checkSliderIsDisplayed();
+        await sizeSliderFilter.setValue(size);
+        await searchFilters.clickSizeSliderFilterHeader();
+        await searchFilters.checkSizeSliderFilterIsCollapsed();
+        await searchFilters.clickSizeSliderFilterHeader();
+        await searchFilters.checkSizeSliderFilterIsExpanded();
+        await searchFilters.checkSizeSliderFilterIsDisplayed();
+        expect(await sizeSliderFilter.getValue()).toEqual(`${size}`);
     });
 
     it('[C276981] Should be able to clear value in Search Size Slider', async () => {
         const size = 5;
-        sizeSliderFilter.checkSliderIsDisplayed().setValue(size);
-        searchResults.sortBySize('DESC')
-            .tableIsLoaded();
+        await sizeSliderFilter.checkSliderIsDisplayed();
+        await sizeSliderFilter.setValue(size);
+        await searchResults.sortBySize('DESC');
+        await  searchResults.tableIsLoaded();
 
-        browser.controlFlow().execute(async () => {
-            const results = await dataTable.geCellElementDetail('Size');
-            for (const currentResult of results) {
-                try {
-                    const currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() !== '') {
-                        await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
-                    }
-                } catch (e) {
+        const results = await dataTable.geCellElementDetail('Size');
+        for (const currentResult of results) {
+            try {
+                const currentSize = await currentResult.getAttribute('title');
+                if (currentSize && currentSize.trim() !== '') {
+                    await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
                 }
+            } catch (e) {
             }
-        });
+        }
 
-        sizeSliderFilter.checkSliderIsDisplayed()
-            .clickClearButton();
+        await sizeSliderFilter.checkSliderIsDisplayed();
+        await sizeSliderFilter.clickClearButton();
 
-        searchResults.sortBySize('DESC')
-            .tableIsLoaded();
+        await searchResults.sortBySize('DESC');
+        await searchResults.tableIsLoaded();
 
-        browser.controlFlow().execute(async () => {
-            const results = await dataTable.geCellElementDetail('Size');
-            for (const currentResult of results) {
-                try {
+        const resultsSize = await dataTable.geCellElementDetail('Size');
+        for (const currentResult of resultsSize) {
+            try {
 
-                    const currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() !== '') {
-                        await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
-                    }
-                } catch (e) {
+                const currentSize = await currentResult.getAttribute('title');
+                if (currentSize && currentSize.trim() !== '') {
+                    await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
                 }
+            } catch (e) {
             }
-        });
+        }
     });
 
-    describe('Configuration change',  () => {
+    describe('Configuration change', () => {
         let jsonFile;
 
         beforeEach(() => {
@@ -159,87 +157,88 @@ describe('Search Number Range Filter',  () => {
         });
 
         it('[C276983] Should be able to disable thumb label in Search Size Slider', async () => {
-            navigationBar.clickContentServicesButton();
+            await navigationBar.clickContentServicesButton();
 
             jsonFile.categories[2].component.settings.thumbLabel = false;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.checkSearchIconIsVisible()
-                .clickOnSearchIcon()
-                .enterTextAndPressEnter('*');
+            await searchDialog.checkSearchIconIsVisible();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.enterTextAndPressEnter('*');
 
-            searchFilters.checkSizeSliderFilterIsDisplayed()
-                .clickSizeSliderFilterHeader()
-                .checkSizeSliderFilterIsExpanded();
+            await searchFilters.checkSizeSliderFilterIsDisplayed();
+            await searchFilters.clickSizeSliderFilterHeader();
+            await searchFilters.checkSizeSliderFilterIsExpanded();
 
-            sizeSliderFilter.checkSliderWithThumbLabelIsNotDisplayed();
+            await sizeSliderFilter.checkSliderWithThumbLabelIsNotDisplayed();
         });
 
         it('[C276985] Should be able to set min value for Search Size Slider', async () => {
-            navigationBar.clickContentServicesButton();
+            await navigationBar.clickContentServicesButton();
 
             const minSize = 3;
             jsonFile.categories[2].component.settings.min = minSize;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.checkSearchIconIsVisible()
-                .clickOnSearchIcon()
-                .enterTextAndPressEnter('*');
+            await searchDialog.checkSearchIconIsVisible();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.enterTextAndPressEnter('*');
 
-            searchFilters.checkSizeSliderFilterIsDisplayed()
-                .clickSizeSliderFilterHeader()
-                .checkSizeSliderFilterIsExpanded();
+            await searchFilters.checkSizeSliderFilterIsDisplayed();
+            await searchFilters.clickSizeSliderFilterHeader();
+            await searchFilters.checkSizeSliderFilterIsExpanded();
 
-            sizeSliderFilter.checkSliderIsDisplayed();
+            await sizeSliderFilter.checkSliderIsDisplayed();
 
-            expect(sizeSliderFilter.getMinValue()).toEqual(`${minSize}`);
+            expect(await sizeSliderFilter.getMinValue()).toEqual(`${minSize}`);
         });
 
         it('[C276986] Should be able to set max value for Search Size Slider', async () => {
-            navigationBar.clickContentServicesButton();
+            await navigationBar.clickContentServicesButton();
 
             const maxSize = 50;
             jsonFile.categories[2].component.settings.max = maxSize;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.checkSearchIconIsVisible()
-                .clickOnSearchIcon()
-                .enterTextAndPressEnter('*');
+            await searchDialog.checkSearchIconIsVisible();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.enterTextAndPressEnter('*');
 
-            searchFilters.checkSizeSliderFilterIsDisplayed()
-                .clickSizeSliderFilterHeader()
-                .checkSizeSliderFilterIsExpanded();
+            await searchFilters.checkSizeSliderFilterIsDisplayed();
+            await searchFilters.clickSizeSliderFilterHeader();
+            await searchFilters.checkSizeSliderFilterIsExpanded();
 
-            sizeSliderFilter.checkSliderIsDisplayed();
+            await sizeSliderFilter.checkSliderIsDisplayed();
 
-            expect(sizeSliderFilter.getMaxValue()).toEqual(`${maxSize}`);
+            expect(await sizeSliderFilter.getMaxValue()).toEqual(`${maxSize}`);
         });
 
         it('[C276987] Should be able to set steps for Search Size Slider', async () => {
-            navigationBar.clickContentServicesButton();
+            await navigationBar.clickContentServicesButton();
 
             const step = 10;
             jsonFile.categories[2].component.settings.step = step;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.checkSearchIconIsVisible()
-                .clickOnSearchIcon()
-                .enterTextAndPressEnter('*');
+            await searchDialog.checkSearchIconIsVisible();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.enterTextAndPressEnter('*');
 
-            searchFilters.checkSizeSliderFilterIsDisplayed()
-                .clickSizeSliderFilterHeader()
-                .checkSizeSliderFilterIsExpanded();
+            await searchFilters.checkSizeSliderFilterIsDisplayed();
+            await searchFilters.clickSizeSliderFilterHeader();
+            await searchFilters.checkSizeSliderFilterIsExpanded();
 
             const randomValue = 5;
-            sizeSliderFilter.checkSliderIsDisplayed()
-                .setValue(randomValue);
-            expect(sizeSliderFilter.getValue()).toEqual(`0`);
-            sizeSliderFilter.setValue(step);
-            expect(sizeSliderFilter.getValue()).toEqual(`${step}`);
+            await sizeSliderFilter.checkSliderIsDisplayed();
+            await sizeSliderFilter.setValue(randomValue);
+
+            expect(await sizeSliderFilter.getValue()).toEqual(`0`);
+            await sizeSliderFilter.setValue(step);
+            expect(await sizeSliderFilter.getValue()).toEqual(`${step}`);
         });
     });
 });

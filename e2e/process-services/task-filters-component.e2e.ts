@@ -290,7 +290,7 @@ describe('Task',  () => {
 
             browser.refresh();
             processServiceTabBarPage.clickSettingsButton();
-            browser.sleep(500);
+            await browser.sleep(500);
             appSettingsToggles.enableTaskFiltersIcon();
             processServiceTabBarPage.clickTasksButton();
 
@@ -385,7 +385,7 @@ describe('Task',  () => {
             browser.refresh();
             processServiceTabBarPage.clickSettingsButton();
 
-            browser.sleep(500);
+            await browser.sleep(500);
 
             appSettingsToggles.enableTaskFiltersIcon();
             processServiceTabBarPage.clickTasksButton();

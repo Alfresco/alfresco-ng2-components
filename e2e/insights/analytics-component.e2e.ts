@@ -62,13 +62,13 @@ describe('Analytics Smoke Test',  () => {
     });
 
     it('[C260346] Should be able to change title of a report', async () => {
-        navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
-        processServicesPage.goToApp('Task App');
-        processServiceTabBarPage.clickReportsButton();
-        analyticsPage.checkNoReportMessage();
-        analyticsPage.getReport('Process definition heat map');
-        analyticsPage.changeReportTitle(reportTitle);
-        expect(analyticsPage.getReportTitle()).toEqual(reportTitle);
+        await navigationBarPage.navigateToProcessServicesPage();
+        await processServicesPage.checkApsContainer();
+        await processServicesPage.goToApp('Task App');
+        await processServiceTabBarPage.clickReportsButton();
+        await analyticsPage.checkNoReportMessage();
+        await analyticsPage.getReport('Process definition heat map');
+        await analyticsPage.changeReportTitle(reportTitle);
+        expect(await analyticsPage.getReportTitle()).toEqual(reportTitle);
     });
 });

@@ -57,7 +57,7 @@ describe('Share file',  () => {
 
         nodeId = pngUploadedFile.entry.id;
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.clickContentServicesButton();
 

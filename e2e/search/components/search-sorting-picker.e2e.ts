@@ -15,7 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil, BrowserActions, SearchSortingPickerPage, UploadActions } from '@alfresco/adf-testing';
+import {
+    LoginPage,
+    LocalStorageUtil,
+    BrowserActions,
+    SearchSortingPickerPage,
+    UploadActions
+} from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -28,7 +34,7 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
 
-describe('Search Sorting Picker',  () => {
+describe('Search Sorting Picker', () => {
 
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
@@ -52,9 +58,9 @@ describe('Search Sorting Picker',  () => {
 
     let pngA, pngD;
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const search = '_png_file.png';
     let jsonFile;
@@ -70,7 +76,7 @@ describe('Search Sorting Picker',  () => {
         pngD = await uploadActions.uploadFile(pngDModel.location, pngDModel.name, '-my-');
         await browser.driver.sleep(12000);
 
-        loginPage.loginToContentServices(acsUser.id, acsUser.password);
+        await loginPage.loginToContentServices(acsUser.id, acsUser.password);
 
         done();
     });
@@ -82,9 +88,9 @@ describe('Search Sorting Picker',  () => {
     });
 
     beforeEach(async (done) => {
-        searchDialog.checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search);
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(search);
         done();
     });
 
@@ -93,16 +99,16 @@ describe('Search Sorting Picker',  () => {
         done();
     });
 
-    it(`[C277269] Should see the "sort by" option when search results are displayed in search results page`, () => {
-        searchSortingPicker.checkSortingSelectorIsDisplayed();
+    it(`[C277269] Should see the "sort by" option when search results are displayed in search results page`, async () => {
+        await searchSortingPicker.checkSortingSelectorIsDisplayed();
     });
 
-    it(`[C277270] Should see the icon for ASC and DESC sort when search results are displayed in the search results page`, () => {
-        searchSortingPicker.checkOrderArrowIsDisplayed();
+    it(`[C277270] Should see the icon for ASC and DESC sort when search results are displayed in the search results page`, async () => {
+        await searchSortingPicker.checkOrderArrowIsDisplayed();
     });
 
     it('[C277271] Should be able to add a custom search sorter in the "sort by" option', async () => {
-        navigationBar.clickContentServicesButton();
+        await navigationBar.clickContentServicesButton();
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
             'key': 'Modifier',
@@ -113,34 +119,34 @@ describe('Search Sorting Picker',  () => {
         });
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        searchDialog.checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search);
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(search);
 
-        searchSortingPicker.checkSortingSelectorIsDisplayed()
-            .clickSortingSelector()
-            .checkOptionsDropdownIsDisplayed()
-            .checkOptionIsDisplayed('Modifier');
+        await searchSortingPicker.checkSortingSelectorIsDisplayed();
+        await searchSortingPicker.clickSortingSelector();
+        await searchSortingPicker.checkOptionsDropdownIsDisplayed();
+        await searchSortingPicker.checkOptionIsDisplayed('Modifier');
     });
 
     it('[C277272] Should be able to exclude a standard search sorter from the sorting option', async () => {
-        navigationBar.clickContentServicesButton();
+        await navigationBar.clickContentServicesButton();
         jsonFile = SearchConfiguration.getConfiguration();
         const removedOption = jsonFile.sorting.options.splice(0, 1);
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        searchDialog.checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search);
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(search);
 
-        searchSortingPicker.checkSortingSelectorIsDisplayed()
-            .clickSortingSelector()
-            .checkOptionsDropdownIsDisplayed()
-            .checkOptionIsNotDisplayed(removedOption[0].label);
+        await searchSortingPicker.checkSortingSelectorIsDisplayed();
+        await searchSortingPicker.clickSortingSelector();
+        await searchSortingPicker.checkOptionsDropdownIsDisplayed();
+        await searchSortingPicker.checkOptionIsNotDisplayed(removedOption[0].label);
     });
 
     it('[C277273] Should be able to set a default order for a search sorting option', async () => {
-        navigationBar.clickContentServicesButton();
+        await navigationBar.clickContentServicesButton();
 
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options[0].ascending = false;
@@ -154,50 +160,46 @@ describe('Search Sorting Picker',  () => {
 
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        searchDialog.checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search);
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(search);
 
-        searchSortingPicker.checkSortingSelectorIsDisplayed()
-            .clickSortingSelector()
-            .checkOptionIsDisplayed('Name')
-            .clickSortingOption('Name');
+        await searchSortingPicker.checkSortingSelectorIsDisplayed();
+        await searchSortingPicker.clickSortingSelector();
+        await searchSortingPicker.checkOptionIsDisplayed('Name');
+        await searchSortingPicker.clickSortingOption('Name');
         expect(searchSortingPicker.checkOrderArrowIsDownward()).toBe(true);
     });
 
     it('[C277280] Should be able to sort the search results by "Name" ASC', async () => {
-        searchFilters.checkSearchFiltersIsDisplayed();
-        searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
-        searchResults.sortByName('ASC');
+        await searchFilters.checkSearchFiltersIsDisplayed();
+        await searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
+        await searchResults.sortByName('ASC');
 
-        expect(searchResults.checkListIsOrderedByNameAsc()).toBe(true);
+        expect(await searchResults.checkListIsOrderedByNameAsc()).toBe(true);
     });
 
     it('[C277281] Should be able to sort the search results by "Name" DESC', async () => {
-        searchFilters.checkSearchFiltersIsDisplayed();
-        searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
-        searchResults.sortByName('DESC');
-        expect(searchResults.checkListIsOrderedByNameDesc()).toBe(true);
+        await searchFilters.checkSearchFiltersIsDisplayed();
+        await searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
+        await searchResults.sortByName('DESC');
+        expect(await searchResults.checkListIsOrderedByNameDesc()).toBe(true);
     });
 
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', async () => {
-        searchResults.sortByCreated('ASC');
-        browser.controlFlow().execute(async () => {
-            const results = await searchResults.dataTable.geCellElementDetail('Created');
-            expect(contentServices.checkElementsDateSortedAsc(results)).toBe(true);
-        });
+        await searchResults.sortByCreated('ASC');
+        const results = await searchResults.dataTable.geCellElementDetail('Created');
+        expect(await contentServices.checkElementsDateSortedAsc(results)).toBe(true);
     });
 
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', async () => {
-        searchResults.sortByCreated('DESC');
-        browser.controlFlow().execute(async () => {
-            const results = await searchResults.dataTable.geCellElementDetail('Created');
-            expect(contentServices.checkElementsDateSortedDesc(results)).toBe(true);
-        });
+        await searchResults.sortByCreated('DESC');
+        const results = await searchResults.dataTable.geCellElementDetail('Created');
+        expect(await contentServices.checkElementsDateSortedDesc(results)).toBe(true);
     });
 
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async () => {
-        navigationBar.clickContentServicesButton();
+        await navigationBar.clickContentServicesButton();
 
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
@@ -209,24 +211,22 @@ describe('Search Sorting Picker',  () => {
         });
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        searchDialog.checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search);
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(search);
 
-        searchSortingPicker.checkSortingSelectorIsDisplayed()
-            .sortBy('ASC', 'Modified Date');
+        await searchSortingPicker.checkSortingSelectorIsDisplayed();
+        await searchSortingPicker.sortBy('ASC', 'Modified Date');
 
-        browser.controlFlow().execute(async () => {
-            const idList = await contentServices.getElementsDisplayedId();
-            const numberOfElements = await contentServices.numberOfResultsDisplayed();
+        const idList = await contentServices.getElementsDisplayedId();
+        const numberOfElements = await contentServices.numberOfResultsDisplayed();
 
-            const nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
-            const modifiedDateList = [];
-            for (let i = 0; i < nodeList.length; i++) {
-                modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
-            }
-            expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
-        });
+        const nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
+        const modifiedDateList = [];
+        for (let i = 0; i < nodeList.length; i++) {
+            modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
+        }
+        expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
     });
 
 });

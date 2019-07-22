@@ -57,7 +57,7 @@ describe('Tree View Component',  () => {
         thirdTreeFolder = await this.alfrescoJsApi.nodes.addNode(secondTreeFolder.entry.id, { name: nodeNames.thirdFolder, nodeType: 'cm:folder' });
         await this.alfrescoJsApi.nodes.addNode(thirdTreeFolder.entry.id, { name: nodeNames.document, nodeType: 'cm:content' });
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.clickTreeViewButton();
 

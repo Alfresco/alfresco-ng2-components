@@ -87,7 +87,7 @@ describe('Permissions Component', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(managerUser);
         await this.alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
 
-        browser.sleep(15000);
+        await browser.sleep(15000);
 
         const publicSiteName = `PUBLIC_TEST_SITE_${StringUtil.generateRandomString(5)}`;
 

@@ -301,7 +301,7 @@ describe('People Groups Cloud Component',  () => {
 
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"firstName":"${apsUser.firstName}","lastName":"${apsUser.lastName},"` +
                 `{"firstName":"${activitiUser.firstName}","lastName":"${activitiUser.lastName}",{"firstName":"${noRoleUser.firstName}","lastName":"${noRoleUser.lastName}"]`);
-            browser.sleep(200);
+            await browser.sleep(200);
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe('');
 
         });

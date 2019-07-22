@@ -129,7 +129,7 @@ describe('Upload - User permission',  () => {
 
             navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
-            browser.sleep(3000);
+            await browser.sleep(3000);
 
             contentServicesPage.uploadFile(emptyFile.location);
 

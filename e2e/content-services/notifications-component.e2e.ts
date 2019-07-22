@@ -88,7 +88,7 @@ describe('Notifications Component',  () => {
         notificationHistoryPage.enterDurationField(1000);
         notificationHistoryPage.clickNotificationButton();
         notificationHistoryPage.checkNotificationSnackBarIsDisplayed();
-        browser.sleep(1500);
+        await browser.sleep(1500);
         notificationHistoryPage.checkNotificationSnackBarIsNotDisplayed();
     });
 

@@ -47,10 +47,9 @@ export class DateRangeFilterPage {
         this.filter.element(this.fromField).sendKeys(protractor.Key.ENTER);
     }
 
-    async getFromCalendarSelectedDate(): Promise<DatePickerPage> {
-        const selectedDate = await this.openFromDatePicker();
-        selectedDate.getSelectedDate();
-        const datePicker = new DatePickerPage();
+    async getFromCalendarSelectedDate(): Promise<string> {
+        const datePicker = await this.openFromDatePicker();
+        const selectedDate = await datePicker.getSelectedDate();
         await datePicker.closeDatePicker();
         return selectedDate;
     }
@@ -63,10 +62,12 @@ export class DateRangeFilterPage {
         return datePicker;
     }
 
-    async openToDatePicker(): Promise<void> {
+    async openToDatePicker(): Promise<DatePickerPage> {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toDateToggle));
         this.filter.element(this.toDateToggle).click();
-        return new DatePickerPage().checkDatePickerIsDisplayed();
+        const datePicker = new DatePickerPage();
+        await datePicker.checkDatePickerIsDisplayed();
+        return datePicker;
     }
 
     async clickFromField(): Promise<void> {

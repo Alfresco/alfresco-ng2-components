@@ -262,7 +262,7 @@ describe('Permissions Component', () => {
 
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
 
-            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
+            await loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
 
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkContentIsDisplayed(fileModel.name);

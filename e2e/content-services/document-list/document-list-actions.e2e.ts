@@ -260,7 +260,7 @@ describe('Document List Component - Actions',  () => {
         });
 
         beforeEach(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
+            await loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.waitForTableBody();
             paginationPage.selectItemsPerPage('5');

@@ -72,7 +72,7 @@ describe('Document List Component - Properties',  () => {
         });
 
         it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', async () => {
-            navigationBar.clickContentServicesButton();
+            await navigationBar.clickContentServicesButton();
             contentServicesPage.doubleClickRow(parentFolder.entry.name);
 
             contentServicesPage.disableDropFilesInAFolder();
@@ -88,7 +88,7 @@ describe('Document List Component - Properties',  () => {
         });
 
         it('[C91319] Should allow upload content on a folder row if allowDropFiles is true', async () => {
-            navigationBar.clickContentServicesButton();
+            await navigationBar.clickContentServicesButton();
             contentServicesPage.doubleClickRow(parentFolder.entry.name);
 
             contentServicesPage.enableDropFilesInAFolder();

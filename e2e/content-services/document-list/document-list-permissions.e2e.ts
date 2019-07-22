@@ -72,14 +72,14 @@ describe('Document List Component',  () => {
         it('[C279924] Should display custom message when accessing a file without permissions', async () => {
             contentServicesPage.goToDocumentList();
             contentServicesPage.enableCustomPermissionMessage();
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorCode()).toBe('403');
         });
 
         it('[C279925] Should display translated message when accessing a file without permissions if language is changed', async () => {
             navBar.openLanguageMenu();
             navBar.chooseLanguage('Italiano');
-            browser.sleep(2000);
+            await browser.sleep(2000);
             BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
         });

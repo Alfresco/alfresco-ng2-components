@@ -190,7 +190,7 @@ describe('Comment Component', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            await  navigationBar.clickContentServicesButton();
+            await  await navigationBar.clickContentServicesButton();
 
             done();
         });

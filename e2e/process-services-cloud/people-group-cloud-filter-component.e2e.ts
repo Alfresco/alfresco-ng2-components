@@ -121,7 +121,7 @@ describe('People Groups Cloud Component',  () => {
             peopleCloudComponent.searchAssignee(`${activitiUser.firstName}`);
             peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            browser.sleep(100);
+            await browser.sleep(100);
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
         });
 

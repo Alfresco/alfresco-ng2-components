@@ -80,7 +80,7 @@ describe('Document List - Pagination',  () => {
 
         await uploadActions.createEmptyFiles(secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
@@ -123,13 +123,13 @@ describe('Document List - Pagination',  () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
 
         navigationBarPage.clickLogoutButton();
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         navigationBarPage.clickLogoutButton();
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260069] Should be able to set Items per page to 5', async () => {
@@ -181,7 +181,7 @@ describe('Document List - Pagination',  () => {
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         navigationBarPage.clickLogoutButton();
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260067] Should be able to set Items per page to 10', async () => {
@@ -213,7 +213,7 @@ describe('Document List - Pagination',  () => {
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         navigationBarPage.clickLogoutButton();
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         currentPage = 1;
     });
 

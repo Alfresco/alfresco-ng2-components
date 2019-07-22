@@ -74,22 +74,22 @@ describe('Search Component - Multi-Select Facet',  () => {
 
             await browser.driver.sleep(15000);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            searchDialog.checkSearchIconIsVisible();
-            searchDialog.clickOnSearchIcon();
-            searchDialog.enterTextAndPressEnter(`${randomName}`);
+            await searchDialog.checkSearchIconIsVisible();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.enterTextAndPressEnter(`${randomName}`);
 
             userOption = `${acsUser.firstName} ${acsUser.lastName}`;
 
-            searchFiltersPage.checkSearchFiltersIsDisplayed();
-            searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
+            await searchFiltersPage.checkSearchFiltersIsDisplayed();
+            await searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
 
             done();
         });
 
         afterAll(async (done) => {
-            Promise.all([
+            await Promise.all([
                 uploadActions.deleteFileOrFolder(jpgFile.entry.id),
                 uploadActions.deleteFileOrFolder(jpgFileSite.entry.id),
                 uploadActions.deleteFileOrFolder(txtFile.entry.id),
@@ -102,29 +102,29 @@ describe('Search Component - Multi-Select Facet',  () => {
         });
 
         it('[C280054] Should be able to select multiple items from a search facet filter', async () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            searchDialog.checkSearchIconIsVisible();
-            searchDialog.clickOnSearchIcon();
-            searchDialog.enterTextAndPressEnter(`${randomName}`);
+            await searchDialog.checkSearchIconIsVisible();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.enterTextAndPressEnter(`${randomName}`);
 
             userOption = `${acsUser.firstName} ${acsUser.lastName}`;
 
-            searchFiltersPage.checkSearchFiltersIsDisplayed();
-            searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
-            searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
+            await searchFiltersPage.checkSearchFiltersIsDisplayed();
+            await searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
+            await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
-            searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
-            searchResultsPage.checkContentIsDisplayed(txtFileSite.entry.name);
+            await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
+            await searchResultsPage.checkContentIsDisplayed(txtFileSite.entry.name);
 
-            searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
+            await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
 
-            expect(searchResultsPage.numberOfResultsDisplayed()).toBe(4);
-            searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
-            searchResultsPage.checkContentIsDisplayed(txtFileSite.entry.name);
-            searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
-            searchResultsPage.checkContentIsDisplayed(jpgFileSite.entry.name);
+            expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(4);
+            await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
+            await searchResultsPage.checkContentIsDisplayed(txtFileSite.entry.name);
+            await searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
+            await searchResultsPage.checkContentIsDisplayed(jpgFileSite.entry.name);
         });
     });
 
@@ -169,25 +169,25 @@ describe('Search Component - Multi-Select Facet',  () => {
 
             await browser.driver.sleep(15000);
 
-            loginPage.loginToContentServicesUsingUserModel(userUploadingImg);
+            await loginPage.loginToContentServicesUsingUserModel(userUploadingImg);
 
-            searchDialog.checkSearchIconIsVisible();
-            searchDialog.clickOnSearchIcon();
-            searchDialog.enterTextAndPressEnter(`*${randomName}*`);
+            await searchDialog.checkSearchIconIsVisible();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.enterTextAndPressEnter(`*${randomName}*`);
 
-            searchFiltersPage.checkSearchFiltersIsDisplayed();
-            searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingTxt.firstName} ${userUploadingTxt.lastName}`);
-            searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingImg.firstName} ${userUploadingImg.lastName}`);
+            await searchFiltersPage.checkSearchFiltersIsDisplayed();
+            await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingTxt.firstName} ${userUploadingTxt.lastName}`);
+            await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingImg.firstName} ${userUploadingImg.lastName}`);
 
-            searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
-            searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
+            await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
+            await searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
 
-            searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
-            searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
+            await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
+            await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
 
-            expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
-            searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
-            searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
+            expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(2);
+            await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
+            await searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
         });
     });
 
@@ -216,13 +216,13 @@ describe('Search Component - Multi-Select Facet',  () => {
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
             await browser.driver.sleep(15000);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            searchDialog.checkSearchIconIsVisible();
-            searchDialog.clickOnSearchIcon();
-            searchDialog.enterTextAndPressEnter(`*${randomName}*`);
+            await searchDialog.checkSearchIconIsVisible();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.enterTextAndPressEnter(`*${randomName}*`);
 
-            searchFiltersPage.checkSearchFiltersIsDisplayed();
+            await searchFiltersPage.checkSearchFiltersIsDisplayed();
 
             done();
         });
@@ -234,18 +234,18 @@ describe('Search Component - Multi-Select Facet',  () => {
         });
 
         it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            searchDialog.checkSearchIconIsVisible();
-            searchDialog.clickOnSearchIcon();
-            searchDialog.enterTextAndPressEnter(`*${randomName}*`);
+            await searchDialog.checkSearchIconIsVisible();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.enterTextAndPressEnter(`*${randomName}*`);
 
-            searchFiltersPage.checkSearchFiltersIsDisplayed();
-            searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
-            searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
+            await searchFiltersPage.checkSearchFiltersIsDisplayed();
+            await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
+            await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
 
-            expect(searchResultsPage.numberOfResultsDisplayed()).toBe(1);
-            searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
+            expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(1);
+            await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
         });
     });
 });
