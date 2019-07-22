@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, ElementFinder, Locator, promise } from 'protractor';
+import { browser, by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 
@@ -30,15 +30,15 @@ export class SearchSliderPage {
         this.filter = filter;
     }
 
-    async getMaxValue(): promise.Promise<string> {
+    async getMaxValue() {
         return this.filter.element(this.slider).getAttribute('aria-valuemax');
     }
 
-    getMinValue(): promise.Promise<string> {
+    getMinValue() {
         return this.filter.element(this.slider).getAttribute('aria-valuemin');
     }
 
-    getValue(): promise.Promise<string> {
+    getValue() {
         return this.filter.element(this.slider).getAttribute('aria-valuenow');
     }
 
