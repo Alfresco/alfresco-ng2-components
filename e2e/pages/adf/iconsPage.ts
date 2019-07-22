@@ -16,14 +16,15 @@
  */
 
 import { by, element } from 'protractor';
+import { ElementFinder } from 'protractor/built/element';
 
 export class IconsPage {
 
-    locateCustomIcon(name) {
+    locateCustomIcon(name): ElementFinder {
         return element(by.css(`adf-icon[value='${name}'] svg`));
     }
 
-    locateLigatureIcon(name) {
+    locateLigatureIcon(name): ElementFinder {
         return element(by.css(`adf-icon[value='${name}'] .material-icons`));
     }
 }

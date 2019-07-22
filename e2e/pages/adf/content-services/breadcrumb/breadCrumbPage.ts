@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions } from '@alfresco/adf-testing';
 
 export class BreadCrumbPage {
 
-    breadCrumb = element(by.css(`adf-breadcrumb nav[data-automation-id='breadcrumb']`));
+    breadCrumb: ElementFinder = element(by.css(`adf-breadcrumb nav[data-automation-id='breadcrumb']`));
 
-    chooseBreadCrumb(breadCrumbItem) {
+    async chooseBreadCrumb(breadCrumbItem): Promise<void> {
         const path = this.breadCrumb.element(by.css(`a[data-automation-id='breadcrumb_${breadCrumbItem}']`));
-        BrowserActions.click(path);
+        await BrowserActions.click(path);
     }
 
 }

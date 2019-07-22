@@ -17,28 +17,28 @@
 
 import { ConfigEditorPage } from '../../configEditorPage';
 import { BrowserActions } from '@alfresco/adf-testing';
-import { by, element, browser } from 'protractor';
+import { by, element, browser, ElementFinder } from 'protractor';
 
 export class FormCloudDemoPage {
 
-    formCloudEditor = element.all(by.css('.mat-tab-list .mat-tab-label')).get(1);
-    formCloudRender = element.all(by.css('.mat-tab-list .mat-tab-label')).get(0);
+    formCloudEditor: ElementFinder = element.all(by.css('.mat-tab-list .mat-tab-label')).get(1);
+    formCloudRender: ElementFinder = element.all(by.css('.mat-tab-list .mat-tab-label')).get(0);
 
     configEditorPage = new ConfigEditorPage();
 
-    goToEditor() {
-        BrowserActions.click(this.formCloudEditor);
+    async goToEditor(): Promise<void> {
+        await BrowserActions.click(this.formCloudEditor);
     }
 
-    goToRenderedForm() {
-        BrowserActions.click(this.formCloudRender);
+    async goToRenderedForm(): Promise<void> {
+        await BrowserActions.click(this.formCloudRender);
     }
 
-    setConfigToEditor(text) {
-        this.goToEditor();
-        browser.sleep(2000);
-        this.configEditorPage.enterBulkConfiguration(text);
-        this.goToRenderedForm();
-        browser.sleep(2000);
+    async setConfigToEditor(text): Promise<void> {
+        await this.goToEditor();
+        await browser.sleep(2000);
+        await this.configEditorPage.enterBulkConfiguration(text);
+        await this.goToRenderedForm();
+        await browser.sleep(2000);
     }
 }

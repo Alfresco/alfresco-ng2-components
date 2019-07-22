@@ -30,13 +30,12 @@ export class InfinitePaginationPage {
         this.loadMoreButton = this.rootElement.element(by.css('button[data-automation-id="adf-infinite-pagination-button"]'));
     }
 
-    clickLoadMoreButton() {
-        BrowserActions.click(this.loadMoreButton);
-        return this;
+    async clickLoadMoreButton(): Promise<void> {
+        await BrowserActions.click(this.loadMoreButton);
     }
 
-    checkLoadMoreButtonIsNotDisplayed() {
-        return BrowserVisibility.waitUntilElementIsNotOnPage(this.loadMoreButton);
+    async checkLoadMoreButtonIsNotDisplayed(): Promise<void> {
+        await  BrowserVisibility.waitUntilElementIsNotOnPage(this.loadMoreButton);
     }
 
 }

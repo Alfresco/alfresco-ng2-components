@@ -15,143 +15,140 @@
  * limitations under the License.
  */
 
-import { by, element, browser, protractor } from 'protractor';
+import { by, element, browser, protractor, ElementFinder, promise, ElementArrayFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class CreateLibraryDialog {
-    libraryDialog = element(by.css('[role="dialog"]'));
-    libraryTitle = element(by.css('.adf-library-dialog>h2'));
-    libraryNameField = element(by.css('input[formcontrolname="title"]'));
-    libraryIdField = element(by.css('input[formcontrolname="id"]'));
-    libraryDescriptionField = element(by.css('textarea[formcontrolname="description"]'));
-    publicRadioButton = element(by.css('[data-automation-id="PUBLIC"]>label'));
-    privateRadioButton = element(by.css('[data-automation-id="PRIVATE"]>label'));
-    moderatedRadioButton = element(by.css('[data-automation-id="MODERATED"]>label'));
-    cancelButton = element(by.css('button[data-automation-id="cancel-library-id"]'));
-    createButton = element(by.css('button[data-automation-id="create-library-id"]'));
-    errorMessage = element(by.css('.mat-dialog-content .mat-error'));
-    errorMessages = element.all(by.css('.mat-dialog-content .mat-error'));
-    libraryNameHint = element(by.css('adf-library-dialog .mat-hint'));
+    libraryDialog: ElementFinder = element(by.css('[role="dialog"]'));
+    libraryTitle: ElementFinder = element(by.css('.adf-library-dialog>h2'));
+    libraryNameField: ElementFinder = element(by.css('input[formcontrolname="title"]'));
+    libraryIdField: ElementFinder = element(by.css('input[formcontrolname="id"]'));
+    libraryDescriptionField: ElementFinder = element(by.css('textarea[formcontrolname="description"]'));
+    publicRadioButton: ElementFinder = element(by.css('[data-automation-id="PUBLIC"]>label'));
+    privateRadioButton: ElementFinder = element(by.css('[data-automation-id="PRIVATE"]>label'));
+    moderatedRadioButton: ElementFinder = element(by.css('[data-automation-id="MODERATED"]>label'));
+    cancelButton: ElementFinder = element(by.css('button[data-automation-id="cancel-library-id"]'));
+    createButton: ElementFinder = element(by.css('button[data-automation-id="create-library-id"]'));
+    errorMessage: ElementFinder = element(by.css('.mat-dialog-content .mat-error'));
+    errorMessages: ElementArrayFinder = element.all(by.css('.mat-dialog-content .mat-error'));
+    libraryNameHint: ElementFinder = element(by.css('adf-library-dialog .mat-hint'));
 
-    getSelectedRadio() {
-        const radio = element(by.css('.mat-radio-button[class*="checked"]'));
+    getSelectedRadio(): Promise<string> {
+        const radio: ElementFinder = element(by.css('.mat-radio-button[class*="checked"]'));
         return BrowserActions.getText(radio);
     }
 
-    waitForDialogToOpen() {
-        BrowserVisibility.waitUntilElementIsPresent(this.libraryDialog);
-        return this;
+    async waitForDialogToOpen(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.libraryDialog);
     }
 
-    waitForDialogToClose() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.libraryDialog);
-        return this;
+    async waitForDialogToClose(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.libraryDialog);
     }
 
-    isDialogOpen() {
+    isDialogOpen(): promise.Promise<any> {
         return browser.isElementPresent(this.libraryDialog);
     }
 
-    getTitle() {
+    getTitle(): Promise<string> {
         return BrowserActions.getText(this.libraryTitle);
     }
 
-    getLibraryIdText() {
+    getLibraryIdText(): promise.Promise<string> {
         return this.libraryIdField.getAttribute('value');
     }
 
-    isErrorMessageDisplayed() {
+    isErrorMessageDisplayed(): promise.Promise<boolean> {
         return this.errorMessage.isDisplayed();
     }
 
-    getErrorMessage() {
+    getErrorMessage(): Promise<string> {
         return BrowserActions.getText(this.errorMessage);
     }
 
-    getErrorMessages(position) {
+    getErrorMessages(position): Promise<string> {
         return BrowserActions.getText(this.errorMessages.get(position));
     }
 
-    waitForLibraryNameHint() {
-        BrowserVisibility.waitUntilElementIsVisible(this.libraryNameHint);
-        return this;
+    async waitForLibraryNameHint(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.libraryNameHint);
     }
 
-    getLibraryNameHint() {
+    getLibraryNameHint(): Promise<string> {
         return BrowserActions.getText(this.libraryNameHint);
     }
 
-    isNameDisplayed() {
+    isNameDisplayed(): promise.Promise<boolean> {
         return this.libraryNameField.isDisplayed();
     }
 
-    isLibraryIdDisplayed() {
+    isLibraryIdDisplayed(): promise.Promise<boolean> {
         return this.libraryIdField.isDisplayed();
     }
 
-    isDescriptionDisplayed() {
+    isDescriptionDisplayed(): promise.Promise<boolean> {
         return this.libraryDescriptionField.isDisplayed();
     }
 
-    isPublicDisplayed() {
+    isPublicDisplayed(): promise.Promise<boolean> {
         return this.publicRadioButton.isDisplayed();
     }
 
-    isModeratedDisplayed() {
+    isModeratedDisplayed(): promise.Promise<boolean> {
         return this.moderatedRadioButton.isDisplayed();
     }
 
-    isPrivateDisplayed() {
+    isPrivateDisplayed(): promise.Promise<boolean> {
         return this.privateRadioButton.isDisplayed();
     }
 
-    isCreateEnabled() {
+    isCreateEnabled(): promise.Promise<boolean> {
         return this.createButton.isEnabled();
     }
 
-    isCancelEnabled() {
+    isCancelEnabled(): promise.Promise<boolean> {
         return this.cancelButton.isEnabled();
     }
 
-    clickCreate() {
-        BrowserActions.click(this.createButton);
+    async clickCreate(): Promise<void> {
+        await BrowserActions.click(this.createButton);
     }
 
-    clickCancel() {
-        BrowserActions.click(this.cancelButton);
+    async clickCancel(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 
-    typeLibraryName(libraryName: string) {
-        BrowserActions.clearSendKeys(this.libraryNameField, libraryName);
+    async typeLibraryName(libraryName: string): Promise<void> {
+        await BrowserActions.clearSendKeys(this.libraryNameField, libraryName);
     }
 
-    typeLibraryId(libraryId) {
-        BrowserActions.clearSendKeys(this.libraryIdField, libraryId);
+    async typeLibraryId(libraryId): Promise<void> {
+        await BrowserActions.clearSendKeys(this.libraryIdField, libraryId);
     }
 
-    typeLibraryDescription(libraryDescription) {
-        BrowserActions.clearSendKeys(this.libraryDescriptionField, libraryDescription);
+    async typeLibraryDescription(libraryDescription): Promise<void> {
+        await BrowserActions.clearSendKeys(this.libraryDescriptionField, libraryDescription);
     }
 
-    clearLibraryName() {
-        this.libraryNameField.clear();
-        this.libraryNameField.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
+    async clearLibraryName(): Promise<void> {
+        await this.libraryNameField.clear();
+        await this.libraryNameField.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
     }
 
-    clearLibraryId() {
-        this.libraryIdField.clear();
-        this.libraryIdField.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
+    async clearLibraryId(): Promise<void> {
+        await this.libraryIdField.clear();
+        await this.libraryIdField.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
     }
 
-    selectPublic() {
-        BrowserActions.click(this.publicRadioButton);
+    async selectPublic(): Promise<void> {
+        await BrowserActions.click(this.publicRadioButton);
     }
 
-    selectPrivate() {
-        BrowserActions.click(this.privateRadioButton);
+    async selectPrivate(): Promise<void> {
+        await BrowserActions.click(this.privateRadioButton);
     }
 
-    selectModerated() {
-        BrowserActions.click(this.moderatedRadioButton);
+    async selectModerated(): Promise<void> {
+        await BrowserActions.click(this.moderatedRadioButton);
     }
 }

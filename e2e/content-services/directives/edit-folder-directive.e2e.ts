@@ -87,13 +87,13 @@ describe('Edit folder directive', function () {
     beforeEach(async (done) => {
         navigationBarPage.clickHomeButton();
         navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
+        contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         done();
     });
 
     it('[C260161] Update folder - Cancel button', async () => {
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
         contentServicesPage.clickOnEditFolder();
         editFolderDialog.checkFolderDialogIsDisplayed();
         expect(editFolderDialog.getDialogTitle()).toBe('Edit folder');
@@ -105,9 +105,9 @@ describe('Edit folder directive', function () {
     });
 
     it('[C260162] Update folder - Introducing letters', async () => {
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
         expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
         contentServicesPage.clickOnEditFolder();
         editFolderDialog.checkFolderDialogIsDisplayed();
@@ -120,9 +120,9 @@ describe('Edit folder directive', function () {
     });
 
     it('[C260163] Update folder name with an existing one', async () => {
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
         expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
         contentServicesPage.clickOnEditFolder();
         editFolderDialog.checkFolderDialogIsDisplayed();
@@ -135,9 +135,9 @@ describe('Edit folder directive', function () {
     });
 
     it('[C260164] Edit Folder - Unsupported characters', async () => {
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
         contentServicesPage.clickOnEditFolder();
         editFolderDialog.checkFolderDialogIsDisplayed();
 
@@ -182,38 +182,38 @@ describe('Edit folder directive', function () {
     it('[C260166] Enable/Disable edit folder icon - when file selected', async () => {
         expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
         expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', filePdfNode.entry.name);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', filePdfNode.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', filePdfNode.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', filePdfNode.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', filePdfNode.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', filePdfNode.entry.name);
         expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
 
     });
 
     it('[C260166] Enable/Disable edit folder icon - when multiple folders selected', async () => {
         contentServicesPage.clickMultiSelectToggle();
-        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getContentList().dataTablePage().checkAllRowsButtonIsDisplayed().checkAllRows();
-        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getContentList().dataTablePage().checkRowIsChecked('Display name', editFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsChecked('Display name', anotherFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', filePdfNode.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsNotChecked('Display name', filePdfNode.entry.name);
-        expect(contentServicesPage.getContentList().dataTablePage().getNumberOfSelectedRows()).toBe(2);
+        contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+        contentServicesPage.getDocumentList().dataTablePage().checkAllRowsButtonIsDisplayed().checkAllRows();
+        contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+        contentServicesPage.getDocumentList().dataTablePage().checkRowIsChecked('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkRowIsChecked('Display name', anotherFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', filePdfNode.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotChecked('Display name', filePdfNode.entry.name);
+        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(2);
         expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
     });
 
     it('[C260166] Enable/Disable edit folder icon - when single folder selected', async () => {
         expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
-        expect(contentServicesPage.getContentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
+        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
         expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
     });
 
     it('[C260165] Update folder name with non-existing one', async () => {
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
         contentServicesPage.clickOnEditFolder();
         editFolderDialog.checkFolderDialogIsDisplayed();
         editFolderDialog.addFolderName(updateFolderName);
@@ -228,14 +228,14 @@ describe('Edit folder directive', function () {
         beforeEach(async (done) => {
             loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
             BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + editFolder.entry.id);
-            contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
+            contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
             done();
         });
 
         it('[C260167] Edit folder without permission', async () => {
-            contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', subFolder.entry.name);
-            contentServicesPage.getContentList().dataTablePage().selectRow('Display name', subFolder.entry.name);
-            contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', subFolder.entry.name);
+            contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', subFolder.entry.name);
+            contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', subFolder.entry.name);
+            contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', subFolder.entry.name);
             expect(contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
         });
 

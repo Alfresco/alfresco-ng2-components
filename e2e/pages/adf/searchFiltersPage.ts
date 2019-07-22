@@ -15,280 +15,230 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder, promise } from 'protractor';
 import { BrowserVisibility, SearchCategoriesPage } from '@alfresco/adf-testing';
+import { SearchCheckListPage } from '../../../lib/testing/src/lib/content-services/pages/search/search-checkList.page';
+import { SearchTextPage } from '../../../lib/testing/src/lib/content-services/pages/search/search-text.page';
+import { NumberRangeFilterPage } from '../../../lib/testing/src/lib/content-services/pages/search/number-range-filter.page';
+import { DateRangeFilterPage } from '../../../lib/testing/src/lib/content-services/pages/search/date-range-filter.page';
+import { SearchSliderPage } from '../../../lib/testing/src/lib/content-services/pages/search/search-slider.page';
+import { SearchRadioPage } from '@alfresco/adf-testing/lib/content-services/pages/search/search-radio.page';
 
 export class SearchFiltersPage {
 
-    searchCategoriesPage = new SearchCategoriesPage();
+    searchCategoriesPage: SearchCategoriesPage = new SearchCategoriesPage();
 
-    searchFilters = element(by.css('adf-search-filter'));
-    fileTypeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"]'));
-    creatorFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATOR"]'));
-    fileSizeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]'));
-    nameFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Name"]'));
-    checkListFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
-    createdDateRangeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Created Date (range)"]'));
-    typeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type"]'));
-    sizeRangeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size (range)"]'));
-    sizeSliderFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size"]'));
-    facetQueriesDefaultGroup = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_QUERIES.MY_FACET_QUERIES"],' +
+    searchFilters: ElementFinder = element(by.css('adf-search-filter'));
+    fileTypeFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"]'));
+    creatorFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATOR"]'));
+    fileSizeFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]'));
+    nameFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Name"]'));
+    checkListFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
+    createdDateRangeFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Created Date (range)"]'));
+    typeFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type"]'));
+    sizeRangeFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size (range)"]'));
+    sizeSliderFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size"]'));
+    facetQueriesDefaultGroup: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_QUERIES.MY_FACET_QUERIES"],' +
         'mat-expansion-panel[data-automation-id="expansion-panel-My facet queries"]'));
-    facetQueriesTypeGroup = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type facet queries"]'));
-    facetQueriesSizeGroup = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Size facet queries"]'));
-    facetIntervalsByCreated = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-The Created"]'));
-    facetIntervalsByModified = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-TheModified"]'));
+    facetQueriesTypeGroup: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type facet queries"]'));
+    facetQueriesSizeGroup: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Size facet queries"]'));
+    facetIntervalsByCreated: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-The Created"]'));
+    facetIntervalsByModified: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-TheModified"]'));
 
-    checkSearchFiltersIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchFilters);
+    async checkSearchFiltersIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchFilters);
     }
 
-    sizeRangeFilterPage() {
-        return this.searchCategoriesPage.numberRangeFilter(this.sizeRangeFilter);
+    sizeRangeFilterPage(): NumberRangeFilterPage {
+        return SearchCategoriesPage.numberRangeFilter(this.sizeRangeFilter);
     }
 
-    createdDateRangeFilterPage() {
-        return this.searchCategoriesPage.dateRangeFilter(this.createdDateRangeFilter);
+    createdDateRangeFilterPage(): DateRangeFilterPage {
+        return SearchCategoriesPage.dateRangeFilter(this.createdDateRangeFilter);
     }
 
-    textFiltersPage() {
-        return this.searchCategoriesPage.textFiltersPage(this.nameFilter);
+    textFiltersPage(): SearchTextPage {
+        return SearchCategoriesPage.textFiltersPage(this.nameFilter);
     }
 
-    checkListFiltersPage() {
-        return this.searchCategoriesPage.checkListFiltersPage(this.checkListFilter);
+    checkListFiltersPage(): SearchCheckListPage {
+        return SearchCategoriesPage.checkListFiltersPage(this.checkListFilter);
     }
 
-    creatorCheckListFiltersPage() {
-        return this.searchCategoriesPage.checkListFiltersPage(this.creatorFilter);
+    creatorCheckListFiltersPage(): SearchCheckListPage {
+        return SearchCategoriesPage.checkListFiltersPage(this.creatorFilter);
     }
 
-    fileTypeCheckListFiltersPage() {
-        return this.searchCategoriesPage.checkListFiltersPage(this.fileTypeFilter);
+    fileTypeCheckListFiltersPage(): SearchCheckListPage {
+        return SearchCategoriesPage.checkListFiltersPage(this.fileTypeFilter);
     }
 
-    checkCustomFacetFieldLabelIsDisplayed(fieldLabel) {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`mat-expansion-panel[data-automation-id="expansion-panel-${fieldLabel}"]`)));
+    typeFiltersPage(): SearchRadioPage {
+        return SearchCategoriesPage.radioFiltersPage(this.typeFilter);
     }
 
-    sizeSliderFilterPage() {
-        return this.searchCategoriesPage.sliderFilter(this.sizeSliderFilter);
+    async checkCustomFacetFieldLabelIsDisplayed(fieldLabel): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`mat-expansion-panel[data-automation-id="expansion-panel-${fieldLabel}"]`)));
     }
 
-    checkFileTypeFilterIsDisplayed() {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.fileTypeFilter);
-        return this;
+    sizeSliderFilterPage(): SearchSliderPage {
+        return SearchCategoriesPage.sliderFilter(this.sizeSliderFilter);
     }
 
-    checkCreatorFilterIsDisplayed() {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.creatorFilter);
-        return this;
-    }
-
-    checkCheckListFilterIsDisplayed() {
+    async checkCheckListFilterIsDisplayed(): Promise<void> {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.checkListFilter);
-        return this;
     }
 
-    checkNameFilterIsExpanded() {
+    async checkNameFilterIsExpanded(): Promise<void> {
         this.searchCategoriesPage.checkFilterIsExpanded(this.nameFilter);
-        return this;
     }
 
-    checkNameFilterIsDisplayed() {
+    async checkNameFilterIsDisplayed(): Promise<void> {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.nameFilter);
-        return this;
     }
 
-    checkDefaultFacetQueryGroupIsDisplayed() {
+    async checkDefaultFacetQueryGroupIsDisplayed(): Promise<void> {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesDefaultGroup);
-        return this;
     }
 
-    checkTypeFacetQueryGroupIsDisplayed() {
+    async checkTypeFacetQueryGroupIsDisplayed(): Promise<void> {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesTypeGroup);
-        return this;
     }
 
-    checkSizeFacetQueryGroupIsDisplayed() {
+    async checkSizeFacetQueryGroupIsDisplayed(): Promise<void> {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesSizeGroup);
-        return this;
     }
 
-    checkFacetIntervalsByCreatedIsDisplayed() {
+    async checkFacetIntervalsByCreatedIsDisplayed(): Promise<void> {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.facetIntervalsByCreated);
-        return this;
     }
 
-    checkFacetIntervalsByModifiedIsDisplayed() {
+    async checkFacetIntervalsByModifiedIsDisplayed(): Promise<void> {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.facetIntervalsByModified);
-        return this;
     }
 
-    isTypeFacetQueryGroupPresent() {
+    isTypeFacetQueryGroupPresent(): promise.Promise<boolean> {
         return this.facetQueriesTypeGroup.isPresent();
     }
 
-    isSizeFacetQueryGroupPresent() {
+    isSizeFacetQueryGroupPresent(): promise.Promise<boolean> {
         return this.facetQueriesSizeGroup.isPresent();
     }
 
-    clickCheckListFilter() {
-        this.searchCategoriesPage.clickFilter(this.checkListFilter);
-        return this;
+    async clickCheckListFilter(): Promise<void> {
+        await  this.searchCategoriesPage.clickFilter(this.checkListFilter);
     }
 
-    clickFileTypeListFilter() {
-        this.searchCategoriesPage.clickFilter(this.fileTypeFilter);
-        return this;
+    async clickFileTypeListFilter(): Promise<void> {
+        await this.searchCategoriesPage.clickFilter(this.fileTypeFilter);
     }
 
-    clickFileSizeFilterHeader() {
-        this.searchCategoriesPage.clickFilterHeader(this.fileSizeFilter);
-        return this;
+    async clickFileSizeFilterHeader(): Promise<void> {
+        await this.searchCategoriesPage.clickFilterHeader(this.fileSizeFilter);
     }
 
-    checkFileSizeFilterIsCollapsed() {
-        this.searchCategoriesPage.checkFilterIsCollapsed(this.fileSizeFilter);
-        return this;
+    async checkFileSizeFilterIsCollapsed(): Promise<void> {
+        await this.searchCategoriesPage.checkFilterIsCollapsed(this.fileSizeFilter);
     }
 
-    clickFileTypeFilterHeader() {
-        this.searchCategoriesPage.clickFilterHeader(this.fileTypeFilter);
-        return this;
+    async checkFileTypeFilterIsCollapsed(): Promise<void> {
+        await this.searchCategoriesPage.checkFilterIsCollapsed(this.fileTypeFilter);
     }
 
-    checkFileTypeFilterIsCollapsed() {
-        this.searchCategoriesPage.checkFilterIsCollapsed(this.fileTypeFilter);
-        return this;
+    async checkCheckListFilterIsCollapsed(): Promise<void> {
+        await  this.searchCategoriesPage.checkFilterIsCollapsed(this.checkListFilter);
     }
 
-    checkCheckListFilterIsCollapsed() {
-        this.searchCategoriesPage.checkFilterIsCollapsed(this.checkListFilter);
+    async checkCheckListFilterIsExpanded(): Promise<void> {
+        await this.searchCategoriesPage.checkFilterIsExpanded(this.checkListFilter);
     }
 
-    checkCheckListFilterIsExpanded() {
-        this.searchCategoriesPage.checkFilterIsExpanded(this.checkListFilter);
-        return this;
-    }
-
-    checkCreatedRangeFilterIsDisplayed() {
+    async checkCreatedRangeFilterIsDisplayed(): Promise<void> {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
-        return this;
     }
 
-    clickCreatedRangeFilterHeader() {
-        this.searchCategoriesPage.clickFilterHeader(this.createdDateRangeFilter);
-        return this;
+    async clickCreatedRangeFilterHeader(): Promise<void> {
+        await this.searchCategoriesPage.clickFilterHeader(this.createdDateRangeFilter);
     }
 
-    checkCreatedRangeFilterIsExpanded() {
-        this.searchCategoriesPage.checkFilterIsExpanded(this.createdDateRangeFilter);
-        return this;
+    async checkCreatedRangeFilterIsExpanded(): Promise<void> {
+        await this.searchCategoriesPage.checkFilterIsExpanded(this.createdDateRangeFilter);
     }
 
-    typeFiltersPage() {
-        return this.searchCategoriesPage.radioFiltersPage(this.typeFilter);
+    async checkTypeFilterIsDisplayed(): Promise<void> {
+        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.typeFilter);
     }
 
-    checkTypeFilterIsDisplayed() {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.typeFilter);
-        return this;
+    async checkTypeFilterIsCollapsed(): Promise<void> {
+        await this.searchCategoriesPage.checkFilterIsCollapsed(this.typeFilter);
     }
 
-    clickTypeFilter() {
-        this.searchCategoriesPage.clickFilter(this.typeFilter);
-        return this;
+    async clickTypeFilterHeader(): Promise<void> {
+        await this.searchCategoriesPage.clickFilterHeader(this.typeFilter);
     }
 
-    checkTypeFilterIsCollapsed() {
-        this.searchCategoriesPage.checkFilterIsCollapsed(this.typeFilter);
-        return this;
+    async checkSizeRangeFilterIsDisplayed(): Promise<void> {
+        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
     }
 
-    clickTypeFilterHeader() {
-        this.searchCategoriesPage.clickFilterHeader(this.typeFilter);
-        return this;
+    async clickSizeRangeFilterHeader(): Promise<void> {
+        await this.searchCategoriesPage.clickFilterHeader(this.sizeRangeFilter);
     }
 
-    checkSizeRangeFilterIsDisplayed() {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
-        return this;
+    async checkSizeRangeFilterIsExpanded(): Promise<void> {
+        await  this.searchCategoriesPage.checkFilterIsExpanded(this.sizeRangeFilter);
     }
 
-    clickSizeRangeFilterHeader() {
-        this.searchCategoriesPage.clickFilterHeader(this.sizeRangeFilter);
-        return this;
+    async checkSizeRangeFilterIsCollapsed(): Promise<void> {
+        await this.searchCategoriesPage.checkFilterIsCollapsed(this.sizeRangeFilter);
     }
 
-    checkSizeRangeFilterIsExpanded() {
-        this.searchCategoriesPage.checkFilterIsExpanded(this.sizeRangeFilter);
-        return this;
+    async checkSizeSliderFilterIsDisplayed(): Promise<void> {
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.sizeSliderFilter);
     }
 
-    checkSizeRangeFilterIsCollapsed() {
-        this.searchCategoriesPage.checkFilterIsCollapsed(this.sizeRangeFilter);
-        return this;
+    async clickSizeSliderFilterHeader(): Promise<void> {
+        await  this.searchCategoriesPage.clickFilterHeader(this.sizeSliderFilter);
     }
 
-    checkSizeSliderFilterIsDisplayed() {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.sizeSliderFilter);
-        return this;
+    async checkSizeSliderFilterIsExpanded(): Promise<void> {
+        await this.searchCategoriesPage.checkFilterIsExpanded(this.sizeSliderFilter);
     }
 
-    clickSizeSliderFilterHeader() {
-        this.searchCategoriesPage.clickFilterHeader(this.sizeSliderFilter);
-        return this;
+    async checkSizeSliderFilterIsCollapsed(): Promise<void> {
+        await this.searchCategoriesPage.checkFilterIsCollapsed(this.sizeSliderFilter);
     }
 
-    checkSizeSliderFilterIsExpanded() {
-        this.searchCategoriesPage.checkFilterIsExpanded(this.sizeSliderFilter);
-        return this;
-    }
-
-    checkSizeSliderFilterIsCollapsed() {
-        this.searchCategoriesPage.checkFilterIsCollapsed(this.sizeSliderFilter);
-        return this;
-    }
-
-    checkFacetIntervalsByCreatedIsExpanded() {
+    async checkFacetIntervalsByCreatedIsExpanded(): Promise<void> {
         this.searchCategoriesPage.checkFilterIsExpanded(this.facetIntervalsByCreated);
-        return this;
     }
 
-    checkFacetIntervalsByCreatedIsCollapsed() {
-        this.searchCategoriesPage.checkFilterIsCollapsed(this.facetIntervalsByCreated);
-        return this;
+    async checkFacetIntervalsByCreatedIsCollapsed(): Promise<void> {
+        await  this.searchCategoriesPage.checkFilterIsCollapsed(this.facetIntervalsByCreated);
     }
 
-    clickFacetIntervalsByCreatedFilterHeader() {
-        this.searchCategoriesPage.clickFilterHeader(this.facetIntervalsByCreated);
-        return this;
+    async clickFacetIntervalsByCreatedFilterHeader(): Promise<void> {
+        await this.searchCategoriesPage.clickFilterHeader(this.facetIntervalsByCreated);
     }
 
-    checkFacetIntervalsByModifiedIsExpanded() {
-        this.searchCategoriesPage.checkFilterIsExpanded(this.facetIntervalsByModified);
-        return this;
+    async checkFacetIntervalsByModifiedIsExpanded(): Promise<void> {
+        await this.searchCategoriesPage.checkFilterIsExpanded(this.facetIntervalsByModified);
     }
 
-    checkFacetIntervalsByModifiedIsCollapsed() {
-        this.searchCategoriesPage.checkFilterIsCollapsed(this.facetIntervalsByModified);
-        return this;
+    async checkFacetIntervalsByModifiedIsCollapsed(): Promise<void> {
+        await this.searchCategoriesPage.checkFilterIsCollapsed(this.facetIntervalsByModified);
     }
 
-    clickFacetIntervalsByModifiedFilterHeader() {
-        this.searchCategoriesPage.clickFilterHeader(this.facetIntervalsByModified);
-        return this;
+    async clickFacetIntervalsByModifiedFilterHeader(): Promise<void> {
+        await this.searchCategoriesPage.clickFilterHeader(this.facetIntervalsByModified);
     }
 
-    checkFileTypeFacetLabelIsDisplayed(fileType: string | RegExp) {
-        BrowserVisibility.waitUntilElementIsVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
-        return this;
+    async checkFileTypeFacetLabelIsDisplayed(fileType: string | RegExp): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
     }
 
-    checkFileTypeFacetLabelIsNotDisplayed(fileType: string | RegExp) {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
-        return this;
+    async checkFileTypeFacetLabelIsNotDisplayed(fileType: string | RegExp): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
     }
 
 }

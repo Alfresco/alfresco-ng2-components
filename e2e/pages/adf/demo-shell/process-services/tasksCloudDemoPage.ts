@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { element, by, browser, ElementFinder, ElementArrayFinder, promise } from 'protractor';
 import {
     FormControllersPage,
     TaskFiltersCloudComponentPage,
@@ -27,132 +27,114 @@ import {
 
 export class TasksCloudDemoPage {
 
-    myTasks = element(by.css('span[data-automation-id="my-tasks-filter"]'));
-    completedTasks = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
-    activeFilter = element(by.css("mat-list-item[class*='active'] span"));
+    myTasks: ElementFinder = element(by.css('span[data-automation-id="my-tasks-filter"]'));
+    completedTasks: ElementFinder = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
+    activeFilter: ElementFinder = element(by.css("mat-list-item[class*='active'] span"));
 
-    defaultActiveFilter = element.all(by.css('.adf-filters__entry')).first();
+    defaultActiveFilter: ElementFinder = element.all(by.css('.adf-filters__entry')).first();
 
-    createButton = element(by.css('button[data-automation-id="create-button"'));
-    newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
-    settingsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
-    appButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'App')).first();
-    modeDropDownArrow = element(by.css('mat-form-field[data-automation-id="selectionMode"] div[class*="arrow-wrapper"]'));
-    modeSelector = element(by.css("div[class*='mat-select-panel']"));
-    displayTaskDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
-    displayProcessDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="processDetailsRedirection"]'));
-    multiSelectionToggle = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
-    testingModeToggle = element(by.css('mat-slide-toggle[data-automation-id="testingMode"]'));
-    selectedRows = element(by.xpath("//div[text()=' Selected rows: ']"));
-    noOfSelectedRows = element.all(by.xpath("//div[text()=' Selected rows: ']//li"));
+    createButton: ElementFinder = element(by.css('button[data-automation-id="create-button"'));
+    newTaskButton: ElementFinder = element(by.css('button[data-automation-id="btn-start-task"]'));
+    settingsButton: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
+    appButton: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'App')).first();
+    modeDropDownArrow: ElementFinder = element(by.css('mat-form-field[data-automation-id="selectionMode"] div[class*="arrow-wrapper"]'));
+    modeSelector: ElementFinder = element(by.css("div[class*='mat-select-panel']"));
+    displayTaskDetailsToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
+    displayProcessDetailsToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="processDetailsRedirection"]'));
+    multiSelectionToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
+    testingModeToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="testingMode"]'));
+    selectedRows: ElementFinder = element(by.xpath("//div[text()=' Selected rows: ']"));
+    noOfSelectedRows: ElementArrayFinder = element.all(by.xpath("//div[text()=' Selected rows: ']//li"));
 
-    formControllersPage = new FormControllersPage();
+    formControllersPage: FormControllersPage = new FormControllersPage();
 
-    editTaskFilterCloud = new EditTaskFilterCloudComponentPage();
+    editTaskFilterCloud: EditTaskFilterCloudComponentPage = new EditTaskFilterCloudComponentPage();
 
-    disableDisplayTaskDetails() {
-        this.formControllersPage.disableToggle(this.displayTaskDetailsToggle);
-        return this;
+    async disableDisplayTaskDetails(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.displayTaskDetailsToggle);
     }
 
-    disableDisplayProcessDetails() {
-        this.formControllersPage.disableToggle(this.displayProcessDetailsToggle);
-        return this;
+    async disableDisplayProcessDetails(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.displayProcessDetailsToggle);
     }
 
-    enableMultiSelection() {
-        this.formControllersPage.enableToggle(this.multiSelectionToggle);
-        return this;
+    async enableMultiSelection(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.multiSelectionToggle);
     }
 
-    enableTestingMode() {
-        this.formControllersPage.enableToggle(this.testingModeToggle);
-        return this;
+    async enableTestingMode(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.testingModeToggle);
     }
 
-    taskFiltersCloudComponent(filter) {
-        return new TaskFiltersCloudComponentPage(filter);
-    }
-
-    taskListCloudComponent() {
+    taskListCloudComponent(): TaskListCloudComponentPage {
         return new TaskListCloudComponentPage();
     }
 
-    editTaskFilterCloudComponent() {
+    editTaskFilterCloudComponent(): EditTaskFilterCloudComponentPage {
         return this.editTaskFilterCloud;
     }
 
-    myTasksFilter() {
+    myTasksFilter(): TaskFiltersCloudComponentPage {
         return new TaskFiltersCloudComponentPage(this.myTasks);
     }
 
-    completedTasksFilter() {
+    completedTasksFilter(): TaskFiltersCloudComponentPage {
         return new TaskFiltersCloudComponentPage(this.completedTasks);
     }
 
-    getActiveFilterName() {
+    getActiveFilterName(): Promise<string> {
         return BrowserActions.getText(this.activeFilter);
     }
 
-    customTaskFilter(filterName) {
+    customTaskFilter(filterName): TaskFiltersCloudComponentPage {
         return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
     }
 
-    openNewTaskForm() {
-        BrowserActions.click(this.createButton);
-        BrowserActions.click(this.newTaskButton);
-        return this;
+    async openNewTaskForm(): Promise<void> {
+        await BrowserActions.click(this.createButton);
+        await BrowserActions.click(this.newTaskButton);
     }
 
-    clickOnCreateButton() {
-        BrowserActions.click(this.createButton);
-        return this;
-    }
-
-    firstFilterIsActive() {
+    firstFilterIsActive(): promise.Promise<boolean> {
         return this.defaultActiveFilter.getAttribute('class').then((value) => value.includes('adf-active'));
     }
 
-    clickSettingsButton() {
-        BrowserActions.click(this.settingsButton);
-        browser.driver.sleep(400);
-        BrowserVisibility.waitUntilElementIsVisible(this.multiSelectionToggle);
-        BrowserVisibility.waitUntilElementIsVisible(this.modeDropDownArrow);
-        BrowserVisibility.waitUntilElementIsClickable(this.modeDropDownArrow);
-        return this;
+    async clickSettingsButton(): Promise<void> {
+        await BrowserActions.click(this.settingsButton);
+        await browser.driver.sleep(400);
+        await BrowserVisibility.waitUntilElementIsVisible(this.multiSelectionToggle);
+        await BrowserVisibility.waitUntilElementIsVisible(this.modeDropDownArrow);
+        await BrowserVisibility.waitUntilElementIsClickable(this.modeDropDownArrow);
     }
 
-    clickAppButton() {
-        BrowserActions.click(this.appButton);
-        return this;
+    async clickAppButton(): Promise<void> {
+        await BrowserActions.click(this.appButton);
     }
 
-    selectSelectionMode(mode) {
-        this.clickOnSelectionModeDropDownArrow();
+    async selectSelectionMode(mode): Promise<void> {
+        await this.clickOnSelectionModeDropDownArrow();
 
-        const modeElement = element.all(by.cssContainingText('mat-option span', mode)).first();
-        BrowserActions.click(modeElement);
-        return this;
+        const modeElement: ElementFinder = element.all(by.cssContainingText('mat-option span', mode)).first();
+        await BrowserActions.click(modeElement);
     }
 
-    clickOnSelectionModeDropDownArrow() {
-        BrowserActions.click(this.modeDropDownArrow);
-        BrowserVisibility.waitUntilElementIsVisible(this.modeSelector);
+    async clickOnSelectionModeDropDownArrow(): Promise<void> {
+        await BrowserActions.click(this.modeDropDownArrow);
+        await BrowserVisibility.waitUntilElementIsVisible(this.modeSelector);
     }
 
-    checkSelectedRowsIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.selectedRows);
-        return this;
+    async checkSelectedRowsIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectedRows);
     }
 
-    getNoOfSelectedRows() {
-        this.checkSelectedRowsIsDisplayed();
+    async getNoOfSelectedRows(): Promise<number> {
+        await this.checkSelectedRowsIsDisplayed();
         return this.noOfSelectedRows.count();
     }
 
-    getSelectedTaskRowText(rowNo: string) {
-        this.checkSelectedRowsIsDisplayed();
-        const row = element(by.xpath(`//div[text()=' Selected rows: ']//li[${rowNo}]`));
+    async getSelectedTaskRowText(rowNo: string): Promise<string> {
+        await this.checkSelectedRowsIsDisplayed();
+        const row: ElementFinder = element(by.xpath(`//div[text()=' Selected rows: ']//li[${rowNo}]`));
         return row.getText();
     }
 }

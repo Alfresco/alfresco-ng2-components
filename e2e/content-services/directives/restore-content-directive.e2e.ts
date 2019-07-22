@@ -125,7 +125,7 @@ describe('Restore content directive', function () {
             trashcanPage.clickRestore();
             trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
             navigationBarPage.clickContentServicesButton();
-            contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
+            contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
             contentServicesPage.checkContentIsDisplayed(folderName);
 
             notificationHistoryPage.checkNotifyContains('Can\'t restore, ' + folderName + ' item already exists');
@@ -169,7 +169,7 @@ describe('Restore content directive', function () {
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
         contentServicesPage.checkContentIsDisplayed(folderWithContent.entry.name);
-        contentServicesPage.getContentList().dataTablePage().doubleClickRow('Display name', folderWithContent.entry.name);
+        contentServicesPage.getDocumentList().dataTablePage().doubleClickRow('Display name', folderWithContent.entry.name);
         contentServicesPage.checkContentIsDisplayed(subFile.entry.name);
         notificationHistoryPage.checkNotifyContains(folderWithContent.entry.name + ' item restored');
     });
