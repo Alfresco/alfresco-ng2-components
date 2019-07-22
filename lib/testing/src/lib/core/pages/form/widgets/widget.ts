@@ -19,7 +19,6 @@ import { MultilineTextWidget } from './multilineTextWidget';
 import { HeaderWidget } from './headerWidget';
 import { DisplayTextWidget } from './displayTextWidget';
 import { AttachFileWidget } from './attachFileWidget';
-import { DisplayValueWidget } from './displayValueWidget';
 import { RadioButtonsWidget } from './radioButtonsWidget';
 import { HyperlinkWidget } from './hyperlinkWidget';
 import { DropdownWidget } from './dropdownWidget';
@@ -58,7 +57,7 @@ export class Widget {
     }
 
     displayValueWidget() {
-        return new DisplayValueWidget();
+        return new TextWidget();
     }
 
     radioWidget() {
