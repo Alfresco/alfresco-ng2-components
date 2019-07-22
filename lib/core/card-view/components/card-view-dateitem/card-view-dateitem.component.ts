@@ -71,7 +71,10 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
+            .subscribe(locale => {
+                this.dateAdapter.setLocale(locale);
+                this.property.locale = locale;
+            });
 
         (<MomentDateAdapter> this.dateAdapter).overrideDisplayFormat = 'MMM DD';
 

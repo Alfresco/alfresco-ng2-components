@@ -36,7 +36,7 @@ export class CardViewDateItemModel extends CardViewBaseItemModel implements Card
         }
 
         if (cardViewDateItemProperties.locale) {
-            this.format = cardViewDateItemProperties.locale;
+            this.locale = cardViewDateItemProperties.locale;
         }
 
     }

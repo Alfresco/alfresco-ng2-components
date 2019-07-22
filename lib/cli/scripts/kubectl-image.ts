@@ -27,6 +27,7 @@ export interface KubeArgs {
     token?: string;
     clusterEnv?: string;
     clusterUrl?: string;
+    serviceName?: string;
     dockerRepo?: string;
     deployName?: string;
 }
@@ -78,7 +79,7 @@ function _useContext(args: KubeArgs, logger: logging.Logger) {
 
 function _setImage(args: KubeArgs, logger: logging.Logger) {
     logger.info('Perform set image...');
-    const response = _exec('kubectl', [`set`, `image`, `deployment/${args.deployName}`, `alfresco-adf-app=${args.dockerRepo}:${args.tag}`], {}, logger);
+    const response = _exec('kubectl', [`set`, `image`, `deployment/${args.deployName}`, `${args.serviceName}=${args.dockerRepo}:${args.tag}`], {}, logger);
     logger.info(response);
 }
 

@@ -73,7 +73,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
                 this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT);
             }
         }
-        this.displayDate = moment(this.field.value);
+        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
     }
 
     ngOnDestroy() {

@@ -156,6 +156,12 @@ export class DataTableComponentPage {
     getTooltip(columnName, columnValue): wdpromise.Promise<string> {
         return this.getCellElementByValue(columnName, columnValue).getAttribute('title');
     }
+  
+    async rightClickOnRowByIndex(index: number) : Promise<void> {
+        const row = this.getRowByIndex(index);
+        await BrowserActions.rightClick(row);
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
+    }
 
     getFileHyperlink(filename): ElementFinder {
         return element(by.cssContainingText('adf-name-column[class*="adf-datatable-link"] span', filename));
