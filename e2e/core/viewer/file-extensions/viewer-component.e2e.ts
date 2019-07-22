@@ -76,7 +76,7 @@ describe('Viewer',  () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await navigationBarPage.goToSite(site);
-        contentServicesPage.checkAcsContainer();
+        await contentServicesPage.checkAcsContainer();
 
         await viewerPage.viewFile(pngFileUploaded.entry.name);
 
@@ -107,11 +107,11 @@ describe('Viewer',  () => {
         });
 
         it('[C280012] Should be possible to open any other Document supported extension', async () => {
-            contentServicesPage.doubleClickRow('other');
+            await contentServicesPage.doubleClickRow('other');
 
-            uploadedOthers.forEach((currentFile) => {
+            uploadedOthers.forEach(async(currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }

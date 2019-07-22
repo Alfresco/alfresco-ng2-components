@@ -33,11 +33,11 @@ export class BreadCrumbDropdownPage {
     }
 
     async clickParentFolder(): Promise<void> {
-        await  BrowserActions.click(this.parentFolder);
+        await BrowserActions.click(this.parentFolder);
     }
 
     async checkBreadCrumbDropdownIsDisplayed(): Promise<void> {
-        await  await BrowserVisibility. waitUntilElementIsVisible(this.breadCrumbDropdown);
+        await BrowserVisibility. waitUntilElementIsVisible(this.breadCrumbDropdown);
     }
 
     async getTextOfCurrentFolder(): Promise<string> {

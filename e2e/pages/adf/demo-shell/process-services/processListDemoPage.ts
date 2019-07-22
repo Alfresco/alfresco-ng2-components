@@ -55,7 +55,7 @@ export class ProcessListDemoPage {
     }
 
     async clickResetButton(): Promise<void> {
-        await  BrowserActions.click(this.resetButton);
+        await BrowserActions.click(this.resetButton);
 
     }
 
@@ -65,7 +65,7 @@ export class ProcessListDemoPage {
     }
 
     async checkNoProcessFoundIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.emptyProcessContent);
+        await BrowserVisibility.waitUntilElementIsVisible(this.emptyProcessContent);
     }
 
     async checkProcessIsNotDisplayed(processName): Promise<void> {

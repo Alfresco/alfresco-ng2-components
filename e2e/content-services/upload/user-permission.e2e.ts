@@ -101,7 +101,7 @@ describe('Upload - User permission',  () => {
     describe('Consumer permissions',  () => {
 
         beforeEach(async (done) => {
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
             done();
         });
@@ -109,31 +109,31 @@ describe('Upload - User permission',  () => {
         it('[C291921] Should display tooltip for uploading files without permissions', async () => {
             await navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
-            contentServicesPage.checkDragAndDropDIsDisplayed();
+            await contentServicesPage.checkDragAndDropDIsDisplayed();
 
-            contentServicesPage.dragAndDropFile(emptyFile.location);
+            await contentServicesPage.dragAndDropFile(emptyFile.location);
 
-            uploadDialog.fileIsError(emptyFile.name);
+            await uploadDialog.fileIsError(emptyFile.name);
 
-            uploadDialog.displayTooltip();
+            await uploadDialog.displayTooltip();
 
-            expect(uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
+            expect(await uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
         });
 
         it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', async () => {
-            contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
+            await contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
 
-            uploadDialog.fileIsUploaded(emptyFile.name);
+            await uploadDialog.fileIsUploaded(emptyFile.name);
 
-            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+            await uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
             await navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
             await browser.sleep(3000);
 
-            contentServicesPage.uploadFile(emptyFile.location);
+            await contentServicesPage.uploadFile(emptyFile.location);
 
-            notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
     });
@@ -143,15 +143,15 @@ describe('Upload - User permission',  () => {
         beforeEach(async (done) => {
             await navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
 
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
             done();
         });
 
         it('[C279917] Should be allowed to upload a file in a folder with manager permissions', async () => {
-            contentServicesPage.uploadFile(emptyFile.location);
+            await contentServicesPage.uploadFile(emptyFile.location);
 
-            uploadDialog.fileIsUploaded(emptyFile.name);
+            await uploadDialog.fileIsUploaded(emptyFile.name);
         });
 
     });
@@ -159,17 +159,17 @@ describe('Upload - User permission',  () => {
     describe('multiple users',  () => {
 
         beforeEach(async (done) => {
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
             done();
         });
 
         it('[C260175] Should two different user upload files in the proper User Home', async () => {
-            contentServicesPage.uploadFile(emptyFile.location);
+            await contentServicesPage.uploadFile(emptyFile.location);
 
-            uploadDialog.fileIsUploaded(emptyFile.name);
+            await uploadDialog.fileIsUploaded(emptyFile.name);
 
-            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
+            await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             await navigationBarPage.clickLoginButton();
             await loginPage.loginToContentServicesUsingUserModel(acsUserTwo);

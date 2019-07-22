@@ -27,16 +27,16 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-describe('Viewer',  () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
     const acsUser = new AcsUserModel();
@@ -83,10 +83,9 @@ describe('Viewer',  () => {
         done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(wordFileUploaded.entry.id);
-        done();
     });
 
     beforeEach(async () => {
@@ -104,24 +103,22 @@ describe('Viewer',  () => {
 
     it('[C260106] Should be able to open a Word file shared via API', async () => {
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.waitForTableBody();
 
-        contentList.selectRow(wordFileInfo.name);
-        contentServicesPage.clickShareButton();
-        shareDialog.checkDialogIsDisplayed();
-        shareDialog.clickShareLinkButton();
-        browser.controlFlow().execute(async () => {
-            const sharedLink = await shareDialog.getShareLink();
+        await contentList.selectRow(wordFileInfo.name);
+        await contentServicesPage.clickShareButton();
+        await shareDialog.checkDialogIsDisplayed();
+        await shareDialog.clickShareLinkButton();
+        const sharedLink = await shareDialog.getShareLink();
 
-            await BrowserActions.getUrl(sharedLink);
-            await viewerPage.checkFileIsLoaded();
-            await viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
+        await BrowserActions.getUrl(sharedLink);
+        await viewerPage.checkFileIsLoaded();
+        await viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
 
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url);
-            await navigationBarPage.clickLogoutButton();
-            await BrowserActions.getUrl(sharedLink);
-            await viewerPage.checkFileIsLoaded();
-            await viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
-        });
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
+        await navigationBarPage.clickLogoutButton();
+        await BrowserActions.getUrl(sharedLink);
+        await viewerPage.checkFileIsLoaded();
+        await viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
     });
 });

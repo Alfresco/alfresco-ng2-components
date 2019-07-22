@@ -28,7 +28,7 @@ export class SocialPage {
     }
 
     async writeCustomNodeId(nodeId: string): Promise<void> {
-        await  BrowserActions.clearSendKeys(this.nodeIdField, nodeId);
+        await BrowserActions.clearSendKeys(this.nodeIdField, nodeId);
     }
 
 }

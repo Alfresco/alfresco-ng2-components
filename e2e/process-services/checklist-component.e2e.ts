@@ -184,7 +184,7 @@ describe('Checklist component', () => {
         await taskPage.tasksListPage().selectRow(tasks[4]);
 
         await (await taskPage.clickOnAddChecklistButton()).addName(hierarchyChecklist[0]);
-        await  checklistDialog.clickCreateChecklistButton();
+        await checklistDialog.clickCreateChecklistButton();
         await (await taskPage.clickOnAddChecklistButton()).addName(hierarchyChecklist[1]);
         await checklistDialog.clickCreateChecklistButton();
 

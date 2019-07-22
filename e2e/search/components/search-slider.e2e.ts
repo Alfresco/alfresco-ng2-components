@@ -117,7 +117,7 @@ describe('Search Number Range Filter', () => {
         await sizeSliderFilter.checkSliderIsDisplayed();
         await sizeSliderFilter.setValue(size);
         await searchResults.sortBySize('DESC');
-        await  searchResults.tableIsLoaded();
+        await searchResults.tableIsLoaded();
 
         const results = await dataTable.geCellElementDetail('Size');
         for (const currentResult of results) {

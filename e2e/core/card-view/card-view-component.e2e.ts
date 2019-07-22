@@ -24,7 +24,7 @@ import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { CardViewComponentPage } from '../../pages/adf/cardViewComponentPage';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
-describe('CardView Component',  () => {
+describe('CardView Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const cardViewPageComponent = new CardViewComponentPage();
@@ -38,243 +38,230 @@ describe('CardView Component',  () => {
     });
 
     afterEach(async () => {
-        cardViewPageComponent.clickOnResetButton();
+        await cardViewPageComponent.clickOnResetButton();
     });
 
-    describe('key-value pair ',  () => {
+    describe('key-value pair ', () => {
 
         it('[C279938] Should the label be present', async () => {
             const label = element(by.css('div[data-automation-id="card-key-value-pairs-label-key-value-pairs"]'));
 
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            await BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279898] Should be possible edit key-value pair properties', async () => {
-            cardViewPageComponent.clickOnAddButton();
-            cardViewPageComponent.setName('testName');
-            cardViewPageComponent.setValue('testValue');
-            cardViewPageComponent.clickOnAddButton();
-            cardViewPageComponent.waitForOutput();
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Key-Value Pairs Item] - [{"name":"testName","value":"testValue"}]');
+            await cardViewPageComponent.clickOnAddButton();
+            await cardViewPageComponent.setName('testName');
+            await cardViewPageComponent.setValue('testValue');
+            await cardViewPageComponent.clickOnAddButton();
+            await cardViewPageComponent.waitForOutput();
+            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Key-Value Pairs Item] - [{"name":"testName","value":"testValue"}]');
 
-            cardViewPageComponent.deletePairsValues();
+            await cardViewPageComponent.deletePairsValues();
 
-            expect(cardViewPageComponent.getOutputText(1)).toBe('[CardView Key-Value Pairs Item] - []');
+            expect(await cardViewPageComponent.getOutputText(1)).toBe('[CardView Key-Value Pairs Item] - []');
         });
     });
 
-    describe('SelectBox',  () => {
+    describe('SelectBox', () => {
 
         it('[C279939] Should the label be present', async () => {
             const label = element(by.css('div[data-automation-id="card-select-label-select"]'));
 
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            await BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279899] Should be possible edit selectBox item', async () => {
-            cardViewPageComponent.clickSelectBox();
-            cardViewPageComponent.selectValueFromComboBox(1);
+            await cardViewPageComponent.clickSelectBox();
+            await cardViewPageComponent.selectValueFromComboBox(1);
 
-            expect(cardViewPageComponent.getOutputText(0))
+            expect(await cardViewPageComponent.getOutputText(0))
                 .toBe('[CardView Select Item] - two');
         });
     });
 
-    describe('Text',  () => {
+    describe('Text', () => {
 
         it('[C279937] Should the label be present', async () => {
             const label = element(by.css('div[data-automation-id="card-textitem-label-name"]'));
 
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            await BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279943] Should be present a default value', async () => {
-            expect(cardViewPageComponent.getTextFieldText()).toBe('Spock');
+            expect(await cardViewPageComponent.getTextFieldText()).toBe('Spock');
         });
 
         it('[C279934] Should be possible edit text item', async () => {
-            cardViewPageComponent
-                .clickOnTextField()
-                .enterTextField('example')
-                .clickOnTextSaveIcon();
+            await cardViewPageComponent.clickOnTextField();
+            await cardViewPageComponent.enterTextField('example');
+            await cardViewPageComponent.clickOnTextSaveIcon();
 
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Text Item] - example');
+            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Text Item] - example');
         });
 
         it('[C279944] Should be possible undo text item modify when click on the clear button', async () => {
-            cardViewPageComponent
-                .clickOnTextField()
-                .enterTextField('example')
-                .clickOnTextClearIcon();
+            await cardViewPageComponent.clickOnTextField();
+            await cardViewPageComponent.enterTextField('example');
+            await cardViewPageComponent.clickOnTextClearIcon();
 
-            expect(cardViewPageComponent.getTextFieldText()).toBe('Spock');
+            expect(await cardViewPageComponent.getTextFieldText()).toBe('Spock');
         });
     });
 
-    describe('Int',  () => {
+    describe('Int', () => {
 
         it('[C279940] Should the label be present', async () => {
             const label = element(by.css('div[data-automation-id="card-textitem-label-int"]'));
 
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            await BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279945] Should be present a default value', async () => {
-            expect(cardViewPageComponent.getIntFieldText()).toBe('213');
+            expect(await cardViewPageComponent.getIntFieldText()).toBe('213');
         });
 
         it('[C279946] Should be possible edit int item', async () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('99999')
-                .clickOnIntSaveIcon();
+            await cardViewPageComponent.clickOnIntField();
+            await cardViewPageComponent.enterIntField('99999');
+            await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Int Item] - 99999');
+            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Int Item] - 99999');
         });
 
         it('[C279947] Should not be possible add string value to the int item', async () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('string value')
-                .clickOnIntSaveIcon();
+            await cardViewPageComponent.clickOnIntField();
+            await cardViewPageComponent.enterIntField('string value');
+            await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
         it('[C279948] Should not be possible add float value to the int item', async () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('0.22')
-                .clickOnIntSaveIcon();
+            await cardViewPageComponent.clickOnIntField();
+            await cardViewPageComponent.enterIntField('0.22');
+            await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
         it('[C279949] Should not be possible have an empty value', async () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField(' ')
-                .clickOnIntSaveIcon();
+            await cardViewPageComponent.clickOnIntField();
+            await cardViewPageComponent.enterIntField(' ');
+            await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
         it('[C279950] Should return an error when the value is > 2147483647', async () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('214748367')
-                .clickOnIntSaveIcon();
+            await cardViewPageComponent.clickOnIntField();
+            await cardViewPageComponent.enterIntField('214748367');
+            await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Int Item] - 214748367');
+            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Int Item] - 214748367');
 
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('2147483648')
-                .clickOnIntSaveIcon();
+            await cardViewPageComponent.clickOnIntField();
+            await cardViewPageComponent.enterIntField('2147483648');
+            await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
         it('[C279951] Should be possible undo item modify when click on the clear button', async () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('999')
-                .clickOnIntClearIcon();
+            await cardViewPageComponent.clickOnIntField();
+            await cardViewPageComponent.enterIntField('999');
+            await cardViewPageComponent.clickOnIntClearIcon();
 
-            expect(cardViewPageComponent.getIntFieldText()).toBe('213');
+            expect(await cardViewPageComponent.getIntFieldText()).toBe('213');
         });
     });
 
-    describe('Float',  () => {
+    describe('Float', () => {
 
         it('[C279941] Should the label be present', async () => {
             const label = element(by.css('div[data-automation-id="card-textitem-label-float"]'));
 
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            await BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279952] Should be present a default value', async () => {
-            expect(cardViewPageComponent.getFloatFieldText()).toBe('9.9');
+            expect(await cardViewPageComponent.getFloatFieldText()).toBe('9.9');
         });
 
         it('[C279953] Should be possible edit float item', async () => {
-            cardViewPageComponent
-                .clickOnFloatField()
-                .enterFloatField('77.33')
-                .clickOnFloatSaveIcon();
+            await cardViewPageComponent.clickOnFloatField();
+            await cardViewPageComponent.enterFloatField('77.33');
+            await cardViewPageComponent.clickOnFloatSaveIcon();
 
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Float Item] - 77.33');
+            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Float Item] - 77.33');
         });
 
         it('[C279954] Should not be possible add string value to the float item', async () => {
-            cardViewPageComponent
-                .clickOnFloatField()
-                .enterFloatField('string value')
-                .clickOnFloatSaveIcon();
+            await cardViewPageComponent.clickOnFloatField();
+            await cardViewPageComponent.enterFloatField('string value');
+            await cardViewPageComponent.clickOnFloatSaveIcon();
 
-            expect(cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
+            expect(await cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
         });
 
         it('[C279955] Should be possible undo item item modify when click on the clear button', async () => {
-            cardViewPageComponent
-                .clickOnFloatField()
-                .enterFloatField('77.33')
-                .clickOnFloatClearIcon();
+            await cardViewPageComponent.clickOnFloatField();
+            await cardViewPageComponent.enterFloatField('77.33');
+            await cardViewPageComponent.clickOnFloatClearIcon();
 
-            expect(cardViewPageComponent.getFloatFieldText()).toBe('9.9');
+            expect(await cardViewPageComponent.getFloatFieldText()).toBe('9.9');
         });
 
         it('[C279956] Should not be possible have an empty value', async () => {
-            cardViewPageComponent
-                .clickOnFloatField()
-                .enterFloatField(' ')
-                .clickOnFloatSaveIcon();
+            await cardViewPageComponent.clickOnFloatField();
+            await cardViewPageComponent.enterFloatField(' ');
+            await cardViewPageComponent.clickOnFloatSaveIcon();
 
-            expect(cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
+            expect(await cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
         });
 
     });
 
-    describe('Boolean',  () => {
+    describe('Boolean', () => {
 
         it('[C279942] Should the label be present', async () => {
             const label = element(by.css('div[data-automation-id="card-boolean-label-boolean"]'));
 
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            await BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279957] Should be possible edit the checkbox value when click on it', async () => {
-            cardViewPageComponent.checkboxClick();
+            await cardViewPageComponent.checkboxClick();
 
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Boolean Item] - false');
+            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Boolean Item] - false');
 
-            cardViewPageComponent.checkboxClick();
+            await cardViewPageComponent.checkboxClick();
 
-            expect(cardViewPageComponent.getOutputText(1)).toBe('[CardView Boolean Item] - true');
+            expect(await cardViewPageComponent.getOutputText(1)).toBe('[CardView Boolean Item] - true');
         });
     });
 
-    describe('Date and DateTime',  () => {
+    describe('Date and DateTime', () => {
 
         it('[C279961] Should the label be present', async () => {
             const labelDate = element(by.css('div[data-automation-id="card-dateitem-label-date"]'));
 
-            BrowserVisibility.waitUntilElementIsPresent(labelDate);
+            await BrowserVisibility.waitUntilElementIsPresent(labelDate);
 
             const labelDatetime = element(by.css('div[data-automation-id="card-dateitem-label-datetime"]'));
 
-            BrowserVisibility.waitUntilElementIsPresent(labelDatetime);
+            await BrowserVisibility.waitUntilElementIsPresent(labelDatetime);
         });
 
         it('[C279962] Should be present a default value', async () => {
-            expect(metadataViewPage.getPropertyText('date', 'date')).toEqual('12/24/83');
-            expect(metadataViewPage.getPropertyText('datetime', 'datetime')).toEqual('Dec 24, 1983, 10:00');
+            expect(await metadataViewPage.getPropertyText('date', 'date')).toEqual('12/24/83');
+            expect(await metadataViewPage.getPropertyText('datetime', 'datetime')).toEqual('Dec 24, 1983, 10:00');
         });
 
     });
 
     it('[C279936] Should not be possible edit any parameter when editable property is false', async () => {
-        cardViewPageComponent.disableEdit();
+        await cardViewPageComponent.disableEdit();
 
         const editIconText = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-name"]'));
         const editIconInt = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-int"]'));
@@ -282,10 +269,10 @@ describe('CardView Component',  () => {
         const editIconKey = element(by.css('mat-icon[data-automation-id="card-key-value-pairs-button-key-value-pairs"]'));
         const editIconData = element(by.css('mat-datetimepicker-toggle'));
 
-        BrowserVisibility.waitUntilElementIsNotVisible(editIconText);
-        BrowserVisibility.waitUntilElementIsNotVisible(editIconInt);
-        BrowserVisibility.waitUntilElementIsNotVisible(editIconFloat);
-        BrowserVisibility.waitUntilElementIsNotVisible(editIconKey);
-        BrowserVisibility.waitUntilElementIsNotVisible(editIconData);
+        await BrowserVisibility.waitUntilElementIsNotVisible(editIconText);
+        await BrowserVisibility.waitUntilElementIsNotVisible(editIconInt);
+        await BrowserVisibility.waitUntilElementIsNotVisible(editIconFloat);
+        await BrowserVisibility.waitUntilElementIsNotVisible(editIconKey);
+        await BrowserVisibility.waitUntilElementIsNotVisible(editIconData);
     });
 });

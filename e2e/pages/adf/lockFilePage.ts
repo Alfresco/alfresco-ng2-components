@@ -27,15 +27,15 @@ export class LockFilePage {
     allowOwnerCheckbox: ElementFinder = element(by.cssContainingText('mat-checkbox[class*="adf-lock-file-name"] span', ' Allow the owner to modify this file '));
 
     async checkLockFileCheckboxIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.lockFileCheckboxText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.lockFileCheckboxText);
     }
 
     async checkCancelButtonIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
 
     async checkSaveButtonIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
     }
 
     async clickCancelButton(): Promise<void> {

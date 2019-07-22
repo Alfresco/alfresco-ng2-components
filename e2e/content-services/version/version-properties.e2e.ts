@@ -66,67 +66,67 @@ describe('Version Properties',  () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.waitForTableBody();
-        contentServicesPage.versionManagerContent(txtFileModel.name);
+        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.versionManagerContent(txtFileModel.name);
 
         done();
     });
 
     it('[C272817] Should NOT be present the download action when allowDownload property is false', async () => {
-        versionManagePage.disableDownload();
+        await versionManagePage.disableDownload();
 
-        versionManagePage.clickActionButton('1.0');
+        await versionManagePage.clickActionButton('1.0');
 
         BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
 
-        versionManagePage.closeDisabledActionsMenu();
+        await versionManagePage.closeDisabledActionsMenu();
     });
 
     it('[C279992] Should be present the download action when allowDownload property is true', async () => {
-        versionManagePage.enableDownload();
+        await versionManagePage.enableDownload();
 
-        versionManagePage.clickActionButton('1.0');
+        await versionManagePage.clickActionButton('1.0');
 
         BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
 
-        versionManagePage.closeActionsMenu();
+        await versionManagePage.closeActionsMenu();
     });
 
     it('[C269085] Should show/hide comments when showComments true/false', async () => {
-        versionManagePage.enableComments();
+        await versionManagePage.enableComments();
 
-        BrowserActions.click(versionManagePage.showNewVersionButton);
+        BrowserActions.click(await versionManagePage.showNewVersionButton);
 
-        versionManagePage.enterCommentText('Example comment text');
-        versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
+        await versionManagePage.enterCommentText('Example comment text');
+        await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
-        versionManagePage.checkFileVersionExist('1.1');
-        expect(versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
+        await versionManagePage.checkFileVersionExist('1.1');
+        expect(await versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
 
-        versionManagePage.disableComments();
+        await versionManagePage.disableComments();
 
         BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-item-comment-1.1"]`)));
     });
 
     it('[C277277] Should show/hide actions menu when readOnly is true/false', async () => {
-        versionManagePage.disableReadOnly();
+        await versionManagePage.disableReadOnly();
 
         BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
 
-        versionManagePage.enableReadOnly();
+        await versionManagePage.enableReadOnly();
 
         BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
     });
 
     it('[C279994] Should show/hide upload new version button when readOnly is true/false', async () => {
-        versionManagePage.disableReadOnly();
+        await versionManagePage.disableReadOnly();
 
-        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
+        BrowserVisibility.waitUntilElementIsVisible(await versionManagePage.showNewVersionButton);
 
-        versionManagePage.enableReadOnly();
+        await versionManagePage.enableReadOnly();
 
-        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.showNewVersionButton);
-        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(await versionManagePage.showNewVersionButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(await versionManagePage.uploadNewVersionButton);
     });
 
 });

@@ -95,7 +95,7 @@ describe('Start Task - Task App', () => {
 
     it('[C268910] Should a standalone task be displayed in completed tasks when completing it', async () => {
         const task = await taskPage.createNewTask();
-        await  task.addName(tasks[1]);
+        await task.addName(tasks[1]);
         await task.clickStartButton();
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
         await taskPage.formFields().noFormIsDisplayed();

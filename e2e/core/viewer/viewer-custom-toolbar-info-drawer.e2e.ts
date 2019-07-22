@@ -24,15 +24,15 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer',  () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const acsUser = new AcsUserModel();
     let txtFileUploaded;
@@ -60,9 +60,9 @@ describe('Viewer',  () => {
         done();
     });
 
-    beforeEach(() => {
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.doubleClickRow(txtFileUploaded.entry.name);
+    beforeEach(async () => {
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.doubleClickRow(txtFileUploaded.entry.name);
     });
 
     afterEach(async () => {

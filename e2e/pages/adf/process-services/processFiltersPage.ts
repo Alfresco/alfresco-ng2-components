@@ -108,7 +108,7 @@ export class ProcessFiltersPage {
 
     async checkFilterIsDisplayed(name): Promise<void> {
         const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
-        await  BrowserVisibility.waitUntilElementIsVisible(filterName);
+        await BrowserVisibility.waitUntilElementIsVisible(filterName);
     }
 
     async checkFilterHasNoIcon(name): Promise<void> {
@@ -126,7 +126,7 @@ export class ProcessFiltersPage {
 
     async checkFilterIsNotDisplayed(name): Promise<void> {
         const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
-        await  BrowserVisibility.waitUntilElementIsNotVisible(filterName);
+        await BrowserVisibility.waitUntilElementIsNotVisible(filterName);
     }
 
     checkProcessesSortedByNameAsc() {

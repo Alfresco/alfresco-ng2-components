@@ -72,72 +72,72 @@ describe('User Info component',  () => {
     it('[C260111] Should display UserInfo when Process Services and Content Services are enabled', async () => {
         await loginPage.loginToAllUsingUserModel(contentUserModel);
 
-        userInfoPage.clickUserProfile();
+        await userInfoPage.clickUserProfile();
 
-        expect(userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
-        expect(userInfoPage.getContentJobTitle()).toEqual('N/A');
+        expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
+        expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
 
-        userInfoPage.checkInitialImage();
-        userInfoPage.APSProfileImageNotDisplayed();
-        userInfoPage.ACSProfileImageNotDisplayed();
-        userInfoPage.clickOnContentServicesTab();
+        await userInfoPage.checkInitialImage();
+        await userInfoPage.APSProfileImageNotDisplayed();
+        await userInfoPage.ACSProfileImageNotDisplayed();
+        await userInfoPage.clickOnContentServicesTab();
 
-        expect(userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
-        expect(userInfoPage.getContentJobTitle()).toEqual('N/A');
+        expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
+        expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
 
-        userInfoPage.checkInitialImage();
-        userInfoPage.APSProfileImageNotDisplayed();
-        userInfoPage.ACSProfileImageNotDisplayed();
-        userInfoPage.clickOnProcessServicesTab();
-        userInfoPage.checkProcessServicesTabIsSelected();
+        await userInfoPage.checkInitialImage();
+        await userInfoPage.APSProfileImageNotDisplayed();
+        await userInfoPage.ACSProfileImageNotDisplayed();
+        await userInfoPage.clickOnProcessServicesTab();
+        await userInfoPage.checkProcessServicesTabIsSelected();
 
-        expect(userInfoPage.getProcessHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(userInfoPage.getProcessTitle()).toEqual(contentUserModel.firstName + ' ' + processUserModel.lastName);
-        expect(userInfoPage.getProcessEmail()).toEqual(contentUserModel.email);
+        expect(await userInfoPage.getProcessHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        expect(await userInfoPage.getProcessTitle()).toEqual(contentUserModel.firstName + ' ' + processUserModel.lastName);
+        expect(await userInfoPage.getProcessEmail()).toEqual(contentUserModel.email);
 
-        userInfoPage.checkInitialImage();
-        userInfoPage.APSProfileImageNotDisplayed();
-        userInfoPage.ACSProfileImageNotDisplayed();
-        userInfoPage.closeUserProfile();
+        await userInfoPage.checkInitialImage();
+        await userInfoPage.APSProfileImageNotDisplayed();
+        await userInfoPage.ACSProfileImageNotDisplayed();
+        await userInfoPage.closeUserProfile();
     });
 
     it('[C260113] Should display UserInfo when Content Services is enabled and Process Services is disabled', async () => {
         await loginPage.loginToContentServicesUsingUserModel(contentUserModel);
 
-        userInfoPage.clickUserProfile();
-        userInfoPage.dialogIsDisplayed();
+        await userInfoPage.clickUserProfile();
+        await userInfoPage.dialogIsDisplayed();
 
-        expect(userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
-        expect(userInfoPage.getContentJobTitle()).toEqual('N/A');
+        expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
+        expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
 
-        userInfoPage.checkInitialImage();
-        userInfoPage.APSProfileImageNotDisplayed();
-        userInfoPage.ACSProfileImageNotDisplayed();
-        userInfoPage.closeUserProfile();
-        userInfoPage.dialogIsNotDisplayed();
+        await userInfoPage.checkInitialImage();
+        await userInfoPage.APSProfileImageNotDisplayed();
+        await userInfoPage.ACSProfileImageNotDisplayed();
+        await userInfoPage.closeUserProfile();
+        await userInfoPage.dialogIsNotDisplayed();
     });
 
     it('[C260115] Should display UserInfo when Process Services is enabled and Content Services is disabled', async () => {
         await loginPage.loginToProcessServicesUsingUserModel(contentUserModel);
 
-        userInfoPage.clickUserProfile();
+        await userInfoPage.clickUserProfile();
 
-        userInfoPage.dialogIsDisplayed();
+        await userInfoPage.dialogIsDisplayed();
 
-        expect(userInfoPage.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
-        expect(userInfoPage.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
-        expect(userInfoPage.getProcessEmail()).toEqual(processUserModel.email);
+        expect(await userInfoPage.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
+        expect(await userInfoPage.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
+        expect(await userInfoPage.getProcessEmail()).toEqual(processUserModel.email);
 
-        userInfoPage.checkInitialImage();
-        userInfoPage.APSProfileImageNotDisplayed();
-        userInfoPage.ACSProfileImageNotDisplayed();
-        userInfoPage.closeUserProfile();
+        await userInfoPage.checkInitialImage();
+        await userInfoPage.APSProfileImageNotDisplayed();
+        await userInfoPage.ACSProfileImageNotDisplayed();
+        await userInfoPage.closeUserProfile();
     });
 
     it('[C260117] Should display UserInfo with profile image uploaded in ACS', async () => {
@@ -147,11 +147,11 @@ describe('User Info component',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(contentUserModel);
 
-        userInfoPage.clickUserProfile();
+        await userInfoPage.clickUserProfile();
 
-        userInfoPage.checkACSProfileImage();
-        userInfoPage.APSProfileImageNotDisplayed();
-        userInfoPage.closeUserProfile();
+        await userInfoPage.checkACSProfileImage();
+        await userInfoPage.APSProfileImageNotDisplayed();
+        await userInfoPage.closeUserProfile();
     });
 
     it('[C260118] Should display UserInfo with profile image uploaded in APS', async () => {
@@ -161,12 +161,12 @@ describe('User Info component',  () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(contentUserModel);
 
-        userInfoPage.clickUserProfile();
+        await userInfoPage.clickUserProfile();
 
-        userInfoPage.checkAPSProfileImage();
-        userInfoPage.ACSProfileImageNotDisplayed();
-        userInfoPage.initialImageNotDisplayed();
-        userInfoPage.closeUserProfile();
+        await userInfoPage.checkAPSProfileImage();
+        await userInfoPage.ACSProfileImageNotDisplayed();
+        await userInfoPage.initialImageNotDisplayed();
+        await userInfoPage.closeUserProfile();
     });
 
     it('[C260120] Should not display profile image in UserInfo when deleted in ACS', async () => {
@@ -174,11 +174,11 @@ describe('User Info component',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(contentUserModel);
 
-        userInfoPage.clickUserProfile();
+        await userInfoPage.clickUserProfile();
 
-        userInfoPage.checkInitialImage();
-        userInfoPage.APSProfileImageNotDisplayed();
-        userInfoPage.ACSProfileImageNotDisplayed();
-        userInfoPage.closeUserProfile();
+        await userInfoPage.checkInitialImage();
+        await userInfoPage.APSProfileImageNotDisplayed();
+        await userInfoPage.ACSProfileImageNotDisplayed();
+        await userInfoPage.closeUserProfile();
     });
 });

@@ -17,21 +17,20 @@
 
 import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
 
-describe('Login component - Remember Me',  () => {
+describe('Login component - Remember Me', () => {
 
     const settingsPage = new SettingsPage();
     const loginPage = new LoginPage();
 
-    beforeAll((done) => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcmBpm();
-        done();
+    beforeAll(async () => {
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
     });
 
     it('[C260501] Should Remember me checkbox not be present in the login if the property showRememberMe is false', async () => {
-        loginPage.checkRememberIsDisplayed();
-        loginPage.disableRememberMe();
-        loginPage.checkRememberIsNotDisplayed();
+        await loginPage.checkRememberIsDisplayed();
+        await loginPage.disableRememberMe();
+        await loginPage.checkRememberIsNotDisplayed();
     });
 });

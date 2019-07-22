@@ -88,7 +88,7 @@ describe('Metadata component', () => {
 
         beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            await  await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
 
             await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
@@ -282,7 +282,7 @@ describe('Metadata component', () => {
 
             await metadataViewPage.clickEditPropertyIcons('name');
             await metadataViewPage.enterPropertyText('name', 'newnameFolder');
-            await             expect(await metadataViewPage.getPropertyText('name')).toEqual('newnameFolder');
+            expect(await metadataViewPage.getPropertyText('name')).toEqual('newnameFolder');
 
             await metadataViewPage.clickEditPropertyIcons('name');
             await metadataViewPage.enterPropertyText('name', folderName);

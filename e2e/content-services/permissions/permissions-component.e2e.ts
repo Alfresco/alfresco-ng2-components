@@ -264,13 +264,13 @@ describe('Permissions Component', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
 
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.checkContentIsDisplayed(fileModel.name);
-            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
+            await contentServicesPage.goToDocumentList();
+            await contentServicesPage.checkContentIsDisplayed(fileModel.name);
+            await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
 
             contentList.rightClickOnRow(fileModel.name);
 
-            contentServicesPage.pressContextMenuActionNamed('Permission');
+            await contentServicesPage.pressContextMenuActionNamed('Permission');
 
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
@@ -444,25 +444,25 @@ describe('Permissions Component', () => {
 
             await contentList.checkActionMenuIsNotDisplayed();
 
-            await  contentServicesPage.metadataContent('RoleEditor' + fileModel.name);
+            await contentServicesPage.metadataContent('RoleEditor' + fileModel.name);
 
-            await  metadataViewPage.editIconIsDisplayed();
+            await metadataViewPage.editIconIsDisplayed();
 
             await metadataViewPage.editIconClick();
 
-            await   metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-            await   metadataViewPage.clickEditPropertyIcons('properties.cm:title');
-            await   metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle1');
+            await  metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
+            await  metadataViewPage.clickEditPropertyIcons('properties.cm:title');
+            await  metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle1');
 
             await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
 
             expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle1');
 
-            await  metadataViewPage.clickCloseButton();
+            await metadataViewPage.clickCloseButton();
 
-            await  contentServicesPageawait.uploadFile(fileModel.location);
+            await contentServicesPageawait.uploadFile(fileModel.location);
 
-            await  notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            await notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
 
 
         });

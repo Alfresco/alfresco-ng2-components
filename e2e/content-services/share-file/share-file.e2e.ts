@@ -80,13 +80,13 @@ describe('Share file',  () => {
         });
 
         afterEach(async () => {
-            await  BrowserActions.closeMenuAndDialogs();
+            await BrowserActions.closeMenuAndDialogs();
         });
 
         it('[C286549] Should check automatically toggle button in Share dialog', async () => {
-            await  contentServicesPage.clickShareButton();
-            await  shareDialog.checkDialogIsDisplayed();
-            await  shareDialog.shareToggleButtonIsChecked();
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.shareToggleButtonIsChecked();
         });
 
         it('[C286544] Should display notification when clicking URL copy button', async () => {

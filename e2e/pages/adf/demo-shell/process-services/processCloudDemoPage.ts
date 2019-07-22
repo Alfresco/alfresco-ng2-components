@@ -73,7 +73,7 @@ export class ProcessCloudDemoPage {
     }
 
     async clickOnProcessFilters(): Promise<void> {
-        await  BrowserActions.click(this.processFilters);
+        await BrowserActions.click(this.processFilters);
     }
 
     async openNewProcessForm(): Promise<void> {

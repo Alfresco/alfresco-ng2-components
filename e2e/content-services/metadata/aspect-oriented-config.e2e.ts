@@ -300,7 +300,7 @@ describe('Aspect oriented config', () => {
 
     it('[C299187] The aspect with empty properties is displayed when edit', async () => {
 
-        await  LocalStorageUtil.setConfigField('content-metadata', '{' +
+        await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + defaultModel +
             '       ": { "' + defaultModel + ':' + defaultEmptyPropertiesAspect +
             '            ":"*"' +

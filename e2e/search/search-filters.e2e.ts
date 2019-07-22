@@ -222,7 +222,7 @@ describe('Search Filters', () => {
     });
 
     it('[C297509] Should display search intervals under specified labels from config', async () => {
-        await  await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         await searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed();
         await searchFiltersPage.checkFacetIntervalsByCreatedIsExpanded();

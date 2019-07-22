@@ -122,7 +122,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             }
             await this.alfrescoJsApi.logout();
             await browser.executeScript('window.sessionStorage.clear();');
-            await  browser.executeScript('window.localStorage.clear();');
+            await browser.executeScript('window.localStorage.clear();');
             done();
         });
 

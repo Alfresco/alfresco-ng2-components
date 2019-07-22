@@ -63,8 +63,8 @@ describe('Create library directive', () => {
     });
 
     beforeEach(async (done) => {
-        await  contentServicesPage.goToDocumentList();
-        await  contentServicesPage.openCreateLibraryDialog();
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.openCreateLibraryDialog();
         done();
     });
 
@@ -214,8 +214,8 @@ describe('Create library directive', () => {
         const name = '    ';
         const libraryId = StringUtil.generateRandomString();
 
-        await  createLibraryDialog.typeLibraryName(name);
-        await  createLibraryDialog.typeLibraryId(libraryId);
+        await createLibraryDialog.typeLibraryName(name);
+        await createLibraryDialog.typeLibraryId(libraryId);
 
         expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
         expect(await createLibraryDialog.getErrorMessage()).toMatch("Library name can't contain only spaces");

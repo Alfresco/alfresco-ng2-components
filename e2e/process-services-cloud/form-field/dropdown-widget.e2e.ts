@@ -114,7 +114,7 @@ describe('Form Field Component - Dropdown Widget',  () => {
         taskFormCloudComponent.checkCompleteButtonIsDisplayed().clickCompleteButton();
         expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(task.entry.name);
-        notificationHistoryPage.checkNotifyContains('Task has been saved successfully');
+        await notificationHistoryPage.checkNotifyContains('Task has been saved successfully');
 
         tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);

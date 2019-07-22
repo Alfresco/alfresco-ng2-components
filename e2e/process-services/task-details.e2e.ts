@@ -77,7 +77,7 @@ describe('Task Details component', () => {
     it('[C260506] Should display task details for standalone task - Task App', async () => {
         await (await processServices.goToTaskApp()).clickTasksButton();
 
-        await  taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         const task = await taskPage.createNewTask();
         await task.addName(tasks[1]);
         await task.addDescription('Description');
@@ -233,7 +233,7 @@ describe('Task Details component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
         await taskPage.tasksListPage().selectRow(checklistName);
 
-        const allTasks = await  this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -271,7 +271,7 @@ describe('Task Details component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
         await taskPage.tasksListPage().selectRow(checklistName);
 
-        const allTasks = await   this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await  this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -303,7 +303,7 @@ describe('Task Details component', () => {
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow(taskName);
 
-        const getTaskResponse = await  this.alfrescoJsApi.activiti.taskApi.getTask(taskId.id);
+        const getTaskResponse = await this.alfrescoJsApi.activiti.taskApi.getTask(taskId.id);
 
         const taskModel = new TaskModel(getTaskResponse);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());

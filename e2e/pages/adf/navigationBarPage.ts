@@ -66,7 +66,7 @@ export class NavigationBarPage {
     }
 
     async navigateToDragAndDropDatatable(): Promise<void> {
-        await  this.clickMenuButton('Datatable');
+        await this.clickMenuButton('Datatable');
         await BrowserActions.click(this.dataTableDragAndDropButton);
     }
 
@@ -79,11 +79,11 @@ export class NavigationBarPage {
     }
 
     async clickHomeButton(): Promise<void> {
-        await  this.clickMenuButton('Home');
+        await this.clickMenuButton('Home');
     }
 
     async clickConfigEditorButton(): Promise<void> {
-        await  this.clickMenuButton('Configuration Editor');
+        await this.clickMenuButton('Configuration Editor');
     }
 
     async navigateToProcessServicesPage(): Promise<ProcessServicesPage> {
@@ -114,7 +114,7 @@ export class NavigationBarPage {
     }
 
     async clickTrashcanButton(): Promise<void> {
-        await  this.clickMenuButton('Trashcan');
+        await this.clickMenuButton('Trashcan');
     }
 
     async clickOverlayViewerButton(): Promise<void> {
@@ -143,7 +143,7 @@ export class NavigationBarPage {
     }
 
     openContentServicesFolder(folderId): Promise<void> {
-        return await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + folderId);
+        return BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + folderId);
     }
 
     async chooseLanguage(language): Promise<void> {
@@ -157,36 +157,36 @@ export class NavigationBarPage {
     }
 
     async clickHeaderDataButton(): Promise<void> {
-        await  this.clickMenuButton('Header Data');
+        await this.clickMenuButton('Header Data');
     }
 
     async clickAboutButton(): Promise<void> {
-        await   this.clickMenuButton('About');
+        await  this.clickMenuButton('About');
     }
 
     async clickTreeViewButton(): Promise<void> {
-        await    this.clickMenuButton('Tree View');
+        await this.clickMenuButton('Tree View');
     }
 
     async navigateToIconsPage(): Promise<void> {
-        await    this.clickMenuButton('Icons');
+        await this.clickMenuButton('Icons');
     }
 
     async navigateToCustomSources(): Promise<void> {
-        await    this.clickMenuButton('Custom Sources');
+        await this.clickMenuButton('Custom Sources');
     }
 
     async checkMenuButtonIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.menuButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.menuButton);
     }
 
     async checkMenuButtonIsNotDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsNotVisible(this.menuButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.menuButton);
     }
 
     async checkToolbarColor(color): Promise<void> {
         const toolbarColor: ElementFinder = element(by.css(`mat-toolbar[class*="mat-${color}"]`));
-        await  BrowserVisibility.waitUntilElementIsVisible(toolbarColor);
+        await BrowserVisibility.waitUntilElementIsVisible(toolbarColor);
     }
 
     async clickAppLogo(logoTitle): Promise<void> {
@@ -215,11 +215,11 @@ export class NavigationBarPage {
     }
 
     async openViewer(nodeId): Promise<void> {
-        await  await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
     }
 
     async goToSite(site): Promise<void> {
-        await  await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files/${site.entry.guid}/display/list`);
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files/${site.entry.guid}/display/list`);
     }
 
     async scrollTo(el: ElementFinder): Promise<void> {

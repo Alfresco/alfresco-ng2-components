@@ -72,10 +72,9 @@ describe('Viewer',  () => {
         done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(jsFileUploaded.entry.id);
-        done();
     });
 
     describe('Viewer extension', () => {
@@ -87,9 +86,9 @@ describe('Viewer',  () => {
 
             await navigationBarPage.clickContentServicesButton();
 
-            await  contentServicesPage.waitForTableBody();
+            await contentServicesPage.waitForTableBody();
             await contentServicesPage.checkContentIsDisplayed(jsFileInfo.name);
-            await  contentServicesPage.doubleClickRow(jsFileInfo.name);
+            await contentServicesPage.doubleClickRow(jsFileInfo.name);
 
             await viewerPage.checkCodeViewerIsDisplayed();
         });

@@ -19,7 +19,7 @@ import { LoginSSOPage, SettingsPage, LoginPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
-describe('Login component - SSO',  () => {
+describe('Login component - SSO', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
@@ -29,93 +29,76 @@ describe('Login component - SSO',  () => {
     const silentLogin = false;
     let implicitFlow;
 
-    describe('Login component - SSO implicit Flow',  () => {
+    describe('Login component - SSO implicit Flow', () => {
 
         afterEach(async () => {
             await navigationBarPage.clickLogoutButton();
-            browser.executeScript('window.sessionStorage.clear();');
-            browser.executeScript('window.localStorage.clear();');
+            await browser.executeScript('window.sessionStorage.clear();');
+            await browser.executeScript('window.localStorage.clear();');
         });
 
         it('[C261050] Should be possible login with SSO', async () => {
-            settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 browser.params.testConfig.adf.hostSso,
                 browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await loginSSOPage.clickOnSSOButton();
+            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         });
 
         it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', async () => {
-            settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 browser.params.testConfig.adf.hostSso,
                 browser.params.testConfig.adf.hostIdentity, true, true, browser.params.config.oauth2.clientId);
-            loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         });
     });
 
-    describe('SSO Login Error for login component',  () => {
+    describe('SSO Login Error for login component', () => {
 
         afterEach(async () => {
-            browser.executeScript('window.sessionStorage.clear();');
-            browser.executeScript('window.localStorage.clear();');
+            await browser.executeScript('window.sessionStorage.clear();');
+            await browser.executeScript('window.localStorage.clear();');
         });
 
         it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', async () => {
-            settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 'http://aps22/auth/realms/alfresco',
                 browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.checkLoginErrorIsDisplayed();
+            await loginSSOPage.clickOnSSOButton();
+            await loginSSOPage.checkLoginErrorIsDisplayed();
             expect(loginSSOPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
         });
     });
 
-    describe('Login component - SSO Grant type password (implicit flow false)',  () => {
+    describe('Login component - SSO Grant type password (implicit flow false)', () => {
 
         it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', async () => {
-            implicitFlow = false;
-            settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 browser.params.testConfig.adf.hostSso,
                 browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
 
-            loginPage.waitForElements();
+            await loginPage.waitForElements();
 
-            settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 browser.params.testConfig.adf.hostSso,
                 browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
-            browser.ignoreSynchronization = true;
 
-            loginPage.enterUsername(browser.params.testConfig.adf.adminEmail);
-            loginPage.enterPassword(browser.params.testConfig.adf.adminPassword);
-            loginPage.clickSignInButton();
-
-            let isDisplayed = false;
-
-            browser.wait(() => {
-                loginPage.header.isDisplayed().then(
-                    () => {
-                        isDisplayed = true;
-                    },
-                    () => {
-                        isDisplayed = false;
-                    }
-                );
-                return isDisplayed;
-            }, browser.params.testConfig.main.timeout, 'Element is not visible ' + loginPage.header.locator());
+            await loginPage.enterUsername(browser.params.testConfig.adf.adminEmail);
+            await loginPage.enterPassword(browser.params.testConfig.adf.adminPassword);
+            await loginPage.clickSignInButton();
         });
     });
 
     it('[C280665] Should be possible change the logout redirect URL', async () => {
-        settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+        await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.adf.hostSso,
             browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId, '/login');
-        loginSSOPage.clickOnSSOButton();
-        loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await  loginSSOPage.clickOnSSOButton();
+        await  loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await navigationBarPage.clickLogoutButton();
 
-        browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/login');
-        });
+        const actualUrl = await browser.getCurrentUrl();
 
+        expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/login');
     });
 });

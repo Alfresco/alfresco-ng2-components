@@ -298,7 +298,7 @@ describe('Task', () => {
 
             taskFilterId = result.id;
 
-            await  browser.refresh();
+            await browser.refresh();
             await processServiceTabBarPage.clickSettingsButton();
             await browser.sleep(500);
             await appSettingsToggles.enableTaskFiltersIcon();
@@ -307,7 +307,7 @@ describe('Task', () => {
             await taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').checkTaskFilterIsDisplayed();
             expect(await taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').getTaskFilterIcon()).toEqual('cloud');
 
-            await  this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
+            await this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
         });
 
         it('[C286449] Should display task filter icons only when showIcon property is set on true', async () => {
@@ -375,7 +375,7 @@ describe('Task', () => {
 
             const result2 = this.alfrescoJsApi.activiti.userFiltersApi.updateUserTaskFilter(taskFilterId, newFilter2);
 
-            await  browser.refresh();
+            await browser.refresh();
             await processServiceTabBarPage.clickSettingsButton();
 
             await browser.sleep(500);

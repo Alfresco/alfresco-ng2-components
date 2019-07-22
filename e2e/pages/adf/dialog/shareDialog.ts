@@ -41,7 +41,7 @@ export class ShareDialog {
     confirmationRemoveButton: ElementFinder = element(by.id('adf-confirm-accept'));
 
     async checkDialogIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.dialogTitle);
+        await BrowserVisibility.waitUntilElementIsVisible(this.dialogTitle);
     }
 
     async clickUnShareFile() {
@@ -57,7 +57,7 @@ export class ShareDialog {
     }
 
     async checkShareLinkIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.shareLink);
+        await BrowserVisibility.waitUntilElementIsVisible(this.shareLink);
     }
 
     async getShareLink(): Promise<string> {
@@ -66,12 +66,12 @@ export class ShareDialog {
     }
 
     async clickCloseButton(): Promise<void> {
-        await  BrowserActions.click(this.closeButton);
+        await BrowserActions.click(this.closeButton);
 
     }
 
     async clickShareLinkButton(): Promise<void> {
-        await  BrowserActions.click(this.copySharedLinkButton);
+        await BrowserActions.click(this.copySharedLinkButton);
     }
 
     async shareToggleButtonIsChecked(): Promise<void> {
@@ -129,6 +129,6 @@ export class ShareDialog {
     }
 
     async confirmationDialogIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.confirmationDialog);
+        await BrowserVisibility.waitUntilElementIsVisible(this.confirmationDialog);
     }
 }

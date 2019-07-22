@@ -86,7 +86,7 @@ export class SearchFiltersPage {
     }
 
     async checkCheckListFilterIsDisplayed(): Promise<void> {
-        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.checkListFilter);
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.checkListFilter);
     }
 
     async checkNameFilterIsExpanded(): Promise<void> {
@@ -94,19 +94,19 @@ export class SearchFiltersPage {
     }
 
     async checkNameFilterIsDisplayed(): Promise<void> {
-        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.nameFilter);
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.nameFilter);
     }
 
     async checkDefaultFacetQueryGroupIsDisplayed(): Promise<void> {
-        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesDefaultGroup);
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesDefaultGroup);
     }
 
     async checkTypeFacetQueryGroupIsDisplayed(): Promise<void> {
-        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesTypeGroup);
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesTypeGroup);
     }
 
     async checkSizeFacetQueryGroupIsDisplayed(): Promise<void> {
-        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesSizeGroup);
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesSizeGroup);
     }
 
     async checkFacetIntervalsByCreatedIsDisplayed(): Promise<void> {
@@ -126,7 +126,7 @@ export class SearchFiltersPage {
     }
 
     async clickCheckListFilter(): Promise<void> {
-        await  this.searchCategoriesPage.clickFilter(this.checkListFilter);
+        await this.searchCategoriesPage.clickFilter(this.checkListFilter);
     }
 
     async clickFileTypeListFilter(): Promise<void> {
@@ -146,7 +146,7 @@ export class SearchFiltersPage {
     }
 
     async checkCheckListFilterIsCollapsed(): Promise<void> {
-        await  this.searchCategoriesPage.checkFilterIsCollapsed(this.checkListFilter);
+        await this.searchCategoriesPage.checkFilterIsCollapsed(this.checkListFilter);
     }
 
     async checkCheckListFilterIsExpanded(): Promise<void> {
@@ -166,7 +166,7 @@ export class SearchFiltersPage {
     }
 
     async checkTypeFilterIsDisplayed(): Promise<void> {
-        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.typeFilter);
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.typeFilter);
     }
 
     async checkTypeFilterIsCollapsed(): Promise<void> {
@@ -178,7 +178,7 @@ export class SearchFiltersPage {
     }
 
     async checkSizeRangeFilterIsDisplayed(): Promise<void> {
-        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
     }
 
     async clickSizeRangeFilterHeader(): Promise<void> {
@@ -186,7 +186,7 @@ export class SearchFiltersPage {
     }
 
     async checkSizeRangeFilterIsExpanded(): Promise<void> {
-        await  this.searchCategoriesPage.checkFilterIsExpanded(this.sizeRangeFilter);
+        await this.searchCategoriesPage.checkFilterIsExpanded(this.sizeRangeFilter);
     }
 
     async checkSizeRangeFilterIsCollapsed(): Promise<void> {
@@ -198,7 +198,7 @@ export class SearchFiltersPage {
     }
 
     async clickSizeSliderFilterHeader(): Promise<void> {
-        await  this.searchCategoriesPage.clickFilterHeader(this.sizeSliderFilter);
+        await this.searchCategoriesPage.clickFilterHeader(this.sizeSliderFilter);
     }
 
     async checkSizeSliderFilterIsExpanded(): Promise<void> {
@@ -214,7 +214,7 @@ export class SearchFiltersPage {
     }
 
     async checkFacetIntervalsByCreatedIsCollapsed(): Promise<void> {
-        await  this.searchCategoriesPage.checkFilterIsCollapsed(this.facetIntervalsByCreated);
+        await this.searchCategoriesPage.checkFilterIsCollapsed(this.facetIntervalsByCreated);
     }
 
     async clickFacetIntervalsByCreatedFilterHeader(): Promise<void> {

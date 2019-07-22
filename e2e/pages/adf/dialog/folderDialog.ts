@@ -87,7 +87,7 @@ export class FolderDialog {
     }
 
     async checkCancelBtnIsEnabled(): Promise<void> {
-        await  this.cancelButton.isEnabled();
+        await this.cancelButton.isEnabled();
     }
 
 }

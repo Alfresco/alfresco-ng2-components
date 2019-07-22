@@ -25,15 +25,15 @@ import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-describe('Viewer',  () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
@@ -63,7 +63,7 @@ describe('Viewer',  () => {
         done();
     });
 
-    describe('PowerPoint Folder Uploaded',  () => {
+    describe('PowerPoint Folder Uploaded', () => {
 
         let uploadedPpt;
         let pptFolderUploaded;
@@ -74,7 +74,7 @@ describe('Viewer',  () => {
             uploadedPpt = await uploadActions.uploadFolder(pptFolderInfo.location, pptFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
             done();
         });
@@ -85,11 +85,11 @@ describe('Viewer',  () => {
         });
 
         it('[C280009] Should be possible to open any PowerPoint file', async () => {
-            contentServicesPage.doubleClickRow('ppt');
+            await contentServicesPage.doubleClickRow('ppt');
 
-            uploadedPpt.forEach((currentFile) => {
+            uploadedPpt.forEach(async (currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }

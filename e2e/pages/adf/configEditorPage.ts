@@ -42,6 +42,6 @@ export class ConfigEditorPage {
         await this.clickClearButton();
         await BrowserVisibility.waitUntilElementIsVisible(this.textField);
         await browser.executeScript('this.monaco.editor.getModels()[0].setValue(`' + JSON.stringify(text) + '`)');
-        await  this.clickSaveButton();
+        await this.clickSaveButton();
     }
 }

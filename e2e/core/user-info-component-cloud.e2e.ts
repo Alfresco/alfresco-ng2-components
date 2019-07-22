@@ -36,7 +36,7 @@ describe('User Info - SSO',  () => {
         identityUser = await identityService.createIdentityUser();
 
         silentLogin = false;
-        settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+        await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.adf.hostSso,
             browser.params.testConfig.adf.hostIdentity, silentLogin, true, browser.params.config.oauth2.clientId);
 
@@ -54,12 +54,12 @@ describe('User Info - SSO',  () => {
     });
 
     it('[C290066] Should display UserInfo when login using SSO', async () => {
-        userInfoPage.clickUserProfile();
-        expect(userInfoPage.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
-        expect(userInfoPage.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
-        expect(userInfoPage.getSsoEmail()).toEqual(identityUser.email);
-        userInfoPage.closeUserProfile();
-        userInfoPage.dialogIsNotDisplayed();
+        await userInfoPage.clickUserProfile();
+        expect(await userInfoPage.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        expect(await userInfoPage.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        expect(await userInfoPage.getSsoEmail()).toEqual(identityUser.email);
+        await userInfoPage.closeUserProfile();
+        await userInfoPage.dialogIsNotDisplayed();
     });
 
 });

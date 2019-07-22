@@ -91,14 +91,14 @@ describe('Comment component for Processes', () => {
 
         const taskId = newTask.id;
 
-        await  this.alfrescoJsApi.activiti.taskActionsApi.completeTask(taskId);
+        await this.alfrescoJsApi.activiti.taskActionsApi.completeTask(taskId);
 
         await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow(taskName.completed_task);
 
-        await  commentsPage.checkCommentInputIsNotDisplayed();
+        await commentsPage.checkCommentInputIsNotDisplayed();
     });
 
     it('[C212864] Should be able to add multiple comments on a single task using different users', async () => {

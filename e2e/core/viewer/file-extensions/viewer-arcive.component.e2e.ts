@@ -26,7 +26,7 @@ import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer',  () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
@@ -64,7 +64,7 @@ describe('Viewer',  () => {
         done();
     });
 
-    describe('Archive Folder Uploaded',  () => {
+    describe('Archive Folder Uploaded', () => {
         let uploadedArchives;
         let archiveFolderUploaded;
 
@@ -74,7 +74,7 @@ describe('Viewer',  () => {
             uploadedArchives = await uploadActions.uploadFolder(archiveFolderInfo.location, archiveFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
             done();
         });
@@ -85,11 +85,11 @@ describe('Viewer',  () => {
         });
 
         it('[C260517] Should be possible to open any Archive file', async () => {
-            contentServicesPage.doubleClickRow('archive');
+            await contentServicesPage.doubleClickRow('archive');
 
-            uploadedArchives.forEach((currentFile) => {
+            uploadedArchives.forEach(async (currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }

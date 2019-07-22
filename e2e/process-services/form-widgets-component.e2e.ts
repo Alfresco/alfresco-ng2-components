@@ -64,20 +64,20 @@ describe('Form widgets', () => {
 
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-            await  (await  new NavigationBarPage().navigateToProcessServicesPage()).goToApp(appModel.name);
+            await (await new NavigationBarPage().navigateToProcessServicesPage()).goToApp(appModel.name);
 
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             const task = await taskPage.createNewTask();
             await task.addName(newTask);
             await task.addDescription('Description');
             await task.addForm(app.formName);
-            await  task.clickStartButton();
+            await task.clickStartButton();
 
             await taskPage.tasksListPage().checkContentIsDisplayed(newTask);
             await taskPage.formFields().checkFormIsDisplayed();
             expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
-            const response = await  await taskPage.taskDetails().getId();
+            const response = await taskPage.taskDetails().getId();
 
             const formDefinition = await alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response);
             formInstance.setFields(formDefinition.fields);
@@ -248,7 +248,7 @@ describe('Form widgets', () => {
             expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
             await taskPage.formFields().setValueInInputById('label', 'value 1');
-            await  taskPage.formFields().completeForm();
+            await taskPage.formFields().completeForm();
             /* cspell:disable-next-line */
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
 

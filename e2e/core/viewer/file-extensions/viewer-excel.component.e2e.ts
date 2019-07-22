@@ -72,7 +72,7 @@ describe('Viewer',  () => {
             uploadedExcels = await uploadActions.uploadFolder(excelFolderInfo.location, excelFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
             done();
         });
@@ -83,11 +83,11 @@ describe('Viewer',  () => {
         });
 
         it('[C280008] Should be possible to open any Excel file', async () => {
-            contentServicesPage.doubleClickRow('excel');
+            await contentServicesPage.doubleClickRow('excel');
 
-            uploadedExcels.forEach((currentFile) => {
+            uploadedExcels.forEach(async(currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkFileIsLoaded(currentFile.entry.name);
                     await viewerPage.clickCloseButton();
                 }

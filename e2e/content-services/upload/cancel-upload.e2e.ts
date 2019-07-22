@@ -60,7 +60,7 @@ describe('Upload component', async () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        await  contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
 
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
 
@@ -70,11 +70,11 @@ describe('Upload component', async () => {
     });
 
     beforeEach(async () => {
-        await  contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
     });
 
     it('[C272792] Should be possible to cancel upload of a big file using row cancel icon', async () => {
-        browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 3000)');
+        await browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 3000)');
 
         await contentServicesPage.uploadFile(largeFile.location);
 
@@ -97,7 +97,7 @@ describe('Upload component', async () => {
     });
 
     it('[C272793] Should be able to cancel multiple files upload', async () => {
-        await  browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
+        await browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
             'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)');
 
         await uploadToggles.enableMultipleFileUpload();
@@ -105,7 +105,8 @@ describe('Upload component', async () => {
         expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
-        await contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name).checkContentIsNotDisplayed(largeFile.name);
+        await contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name);
+        await contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
         await uploadToggles.disableMultipleFileUpload();
     });
 

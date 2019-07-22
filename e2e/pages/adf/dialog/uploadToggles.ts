@@ -63,29 +63,29 @@ export class UploadToggles {
     }
 
     async enableExtensionFilter(): Promise<void> {
-        await  browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
-        await  this.formControllersPage.enableToggle(this.extensionFilterToggle);
+        await browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
+        await this.formControllersPage.enableToggle(this.extensionFilterToggle);
     }
 
     async disableExtensionFilter(): Promise<void> {
-        await  browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
-        await  this.formControllersPage.disableToggle(this.extensionFilterToggle);
+        await browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
+        await this.formControllersPage.disableToggle(this.extensionFilterToggle);
     }
 
     async enableMaxSize(): Promise<void> {
-        await  this.formControllersPage.enableToggle(this.maxSizeToggle);
+        await this.formControllersPage.enableToggle(this.maxSizeToggle);
     }
 
     async disableMaxSize(): Promise<void> {
-        await  this.formControllersPage.disableToggle(this.maxSizeToggle);
+        await this.formControllersPage.disableToggle(this.maxSizeToggle);
     }
 
     async enableVersioning(): Promise<void> {
-        await  this.formControllersPage.enableToggle(this.versioningToggle);
+        await this.formControllersPage.enableToggle(this.versioningToggle);
     }
 
     async disableVersioning(): Promise<void> {
-        await   this.formControllersPage.disableToggle(this.versioningToggle);
+        await  this.formControllersPage.disableToggle(this.versioningToggle);
     }
 
     async clickCheckboxDisableUpload(): Promise<void> {
@@ -94,7 +94,7 @@ export class UploadToggles {
 
     async addExtension(extension): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.extensionAcceptedField);
-        await  this.extensionAcceptedField.sendKeys(',' + extension);
+        await this.extensionAcceptedField.sendKeys(',' + extension);
     }
 
     async addMaxSize(size): Promise<void> {

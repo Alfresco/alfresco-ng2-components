@@ -115,14 +115,14 @@ describe('Comment Component', () => {
     });
 
     it('[C276948] Should be able to add a comment on a file', async () => {
-        await  await viewerPage.viewFile(pngFileModel.name);
-        await  await viewerPage.checkImgViewerIsDisplayed();
-        await  await viewerPage.clickInfoButton();
-        await  await viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
         await viewerPage.clickOnCommentsTab();
 
-        await  commentsPage.addComment(comments.first);
-        await  commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.addComment(comments.first);
+        await commentsPage.checkUserIconIsDisplayed(0);
 
         expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         expect(await commentsPage.getMessage(0)).toEqual(comments.first);
@@ -131,14 +131,14 @@ describe('Comment Component', () => {
     });
 
     it('[C280021] Should be able to add a multiline comment on a file', async () => {
-        await  await viewerPage.viewFile(pngFileModel.name);
-        await  await viewerPage.checkImgViewerIsDisplayed();
-        await  await viewerPage.clickInfoButton();
-        await  await viewerPage.checkInfoSideBarIsDisplayed();
-        await  await viewerPage.clickOnCommentsTab();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.clickOnCommentsTab();
 
-        await  commentsPage.addComment(comments.multiline);
-        await  commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.addComment(comments.multiline);
+        await commentsPage.checkUserIconIsDisplayed(0);
 
         expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         expect(await commentsPage.getMessage(0)).toEqual(comments.multiline);
@@ -146,7 +146,7 @@ describe('Comment Component', () => {
         expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
 
         await commentsPage.addComment(comments.second);
-        await  commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.checkUserIconIsDisplayed(0);
 
         expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (2)');
         expect(await commentsPage.getMessage(0)).toEqual(comments.second);
@@ -190,7 +190,7 @@ describe('Comment Component', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            await  await navigationBar.clickContentServicesButton();
+            await navigationBar.clickContentServicesButton();
 
             done();
         });

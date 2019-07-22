@@ -64,9 +64,9 @@ describe('Viewer - properties',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
 
-        contentServicesPage.checkAcsContainer();
+        await contentServicesPage.checkAcsContainer();
 
         await viewerPage.viewFile(pngFile.name);
 

@@ -97,22 +97,22 @@ describe('Document List Component - Actions',  () => {
         describe('File Actions',  () => {
 
             it('[C213257] Should be able to copy a file', async () => {
-                contentServicesPage.checkContentIsDisplayed(pdfUploadedNode.entry.name);
-                contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-                contentServicesPage.pressContextMenuActionNamed('Copy');
+                await contentServicesPage.checkContentIsDisplayed(pdfUploadedNode.entry.name);
+                await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+                await contentServicesPage.pressContextMenuActionNamed('Copy');
                 contentNodeSelector.checkDialogIsDisplayed();
                 contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
                 contentNodeSelector.clickContentNodeSelectorResult(folderName);
                 contentNodeSelector.clickMoveCopyButton();
-                contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
-                contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+                await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             });
 
             it('[C260131] Copy - Destination picker search', async () => {
-                contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-                contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-                contentServicesPage.pressContextMenuActionNamed('Copy');
+                await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+                await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+                await contentServicesPage.pressContextMenuActionNamed('Copy');
                 contentNodeSelector.checkDialogIsDisplayed();
                 contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
                 contentNodeSelector.contentListPage().dataTablePage().checkCellByHighlightContent(folderName);
@@ -121,23 +121,23 @@ describe('Document List Component - Actions',  () => {
             });
 
             it('[C297491] Should be able to move a file', async () => {
-                contentServicesPage.checkContentIsDisplayed(testFileModel.name);
+                await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
-                contentServicesPage.getDocumentList().rightClickOnRow(testFileModel.name);
-                contentServicesPage.pressContextMenuActionNamed('Move');
+                await contentServicesPage.getDocumentList().rightClickOnRow(testFileModel.name);
+                await contentServicesPage.pressContextMenuActionNamed('Move');
                 contentNodeSelector.checkDialogIsDisplayed();
                 contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
                 contentNodeSelector.clickContentNodeSelectorResult(folderName);
                 contentNodeSelector.clickMoveCopyButton();
-                contentServicesPage.checkContentIsNotDisplayed(testFileModel.name);
-                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
-                contentServicesPage.checkContentIsDisplayed(testFileModel.name);
+                await contentServicesPage.checkContentIsNotDisplayed(testFileModel.name);
+                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
             });
 
             it('[C260127] Move - Destination picker search', async () => {
-                contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-                contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-                contentServicesPage.pressContextMenuActionNamed('Move');
+                await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+                await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+                await contentServicesPage.pressContextMenuActionNamed('Move');
                 contentNodeSelector.checkDialogIsDisplayed();
                 contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
                 contentNodeSelector.contentListPage().dataTablePage().checkCellByHighlightContent(folderName);
@@ -146,53 +146,53 @@ describe('Document List Component - Actions',  () => {
             });
 
             it('[C280561] Should be able to delete a file via dropdown menu', async () => {
-                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
-                contentServicesPage.checkContentIsDisplayed(fileNames[0]);
-                contentServicesPage.deleteContent(fileNames[0]);
-                contentServicesPage.checkContentIsNotDisplayed(fileNames[0]);
+                await contentServicesPage.checkContentIsDisplayed(fileNames[0]);
+                await contentServicesPage.deleteContent(fileNames[0]);
+                await contentServicesPage.checkContentIsNotDisplayed(fileNames[0]);
             });
 
             it('[C280562] Only one file is deleted when multiple files are selected using dropdown menu', async () => {
-                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
                 contentListPage.selectRow(fileNames[1]);
                 contentListPage.selectRow(fileNames[2]);
-                contentServicesPage.deleteContent(fileNames[1]);
-                contentServicesPage.checkContentIsNotDisplayed(fileNames[1]);
-                contentServicesPage.checkContentIsDisplayed(fileNames[2]);
+                await contentServicesPage.deleteContent(fileNames[1]);
+                await contentServicesPage.checkContentIsNotDisplayed(fileNames[1]);
+                await contentServicesPage.checkContentIsDisplayed(fileNames[2]);
             });
 
             it('[C280565] Should be able to delete a file using context menu', async () => {
-                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
                 contentListPage.rightClickOnRow(fileNames[2]);
-                contentServicesPage.pressContextMenuActionNamed('Delete');
-                contentServicesPage.checkContentIsNotDisplayed(fileNames[2]);
+                await contentServicesPage.pressContextMenuActionNamed('Delete');
+                await contentServicesPage.checkContentIsNotDisplayed(fileNames[2]);
             });
 
             it('[C280567] Only one file is deleted when multiple files are selected using context menu', async () => {
-                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
                 contentListPage.selectRow(fileNames[3]);
                 contentListPage.selectRow(fileNames[4]);
                 contentListPage.rightClickOnRow(fileNames[3]);
-                contentServicesPage.pressContextMenuActionNamed('Delete');
-                contentServicesPage.checkContentIsNotDisplayed(fileNames[3]);
-                contentServicesPage.checkContentIsDisplayed(fileNames[4]);
+                await contentServicesPage.pressContextMenuActionNamed('Delete');
+                await contentServicesPage.checkContentIsNotDisplayed(fileNames[3]);
+                await contentServicesPage.checkContentIsDisplayed(fileNames[4]);
             });
 
             it('[C280566] Should be able to open context menu with right click', async () => {
-                contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-                contentServicesPage.checkContextActionIsVisible('Download');
-                contentServicesPage.checkContextActionIsVisible('Copy');
-                contentServicesPage.checkContextActionIsVisible('Move');
-                contentServicesPage.checkContextActionIsVisible('Delete');
-                contentServicesPage.checkContextActionIsVisible('Info');
-                contentServicesPage.checkContextActionIsVisible('Manage versions');
-                contentServicesPage.checkContextActionIsVisible('Permission');
-                contentServicesPage.checkContextActionIsVisible('Lock');
-                contentServicesPage.closeActionContext();
+                await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+                await contentServicesPage.checkContextActionIsVisible('Download');
+                await contentServicesPage.checkContextActionIsVisible('Copy');
+                await contentServicesPage.checkContextActionIsVisible('Move');
+                await contentServicesPage.checkContextActionIsVisible('Delete');
+                await contentServicesPage.checkContextActionIsVisible('Info');
+                await contentServicesPage.checkContextActionIsVisible('Manage versions');
+                await contentServicesPage.checkContextActionIsVisible('Permission');
+                await contentServicesPage.checkContextActionIsVisible('Lock');
+                await contentServicesPage.closeActionContext();
             });
 
         });
@@ -200,31 +200,31 @@ describe('Document List Component - Actions',  () => {
         describe('Folder Actions',  () => {
 
             it('[C260138] Should be able to copy a folder', async () => {
-                contentServicesPage.copyContent(folderName);
+                await contentServicesPage.copyContent(folderName);
                 contentNodeSelector.checkDialogIsDisplayed();
                 contentNodeSelector.typeIntoNodeSelectorSearchField(secondUploadedFolder.entry.name);
                 contentNodeSelector.clickContentNodeSelectorResult(secondUploadedFolder.entry.name);
                 contentNodeSelector.clickMoveCopyButton();
-                contentServicesPage.checkContentIsDisplayed(folderName);
-                contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
-                contentServicesPage.checkContentIsDisplayed(folderName);
+                await contentServicesPage.checkContentIsDisplayed(folderName);
+                await contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
+                await contentServicesPage.checkContentIsDisplayed(folderName);
             });
 
             it('[C260123] Should be able to delete a folder using context menu', async () => {
-                contentServicesPage.deleteContent(folderName);
-                contentServicesPage.checkContentIsNotDisplayed(folderName);
+                await contentServicesPage.deleteContent(folderName);
+                await contentServicesPage.checkContentIsNotDisplayed(folderName);
             });
 
             it('[C280568] Should be able to open context menu with right click', async () => {
-                contentServicesPage.checkContentIsDisplayed(secondUploadedFolder.entry.name);
+                await contentServicesPage.checkContentIsDisplayed(secondUploadedFolder.entry.name);
 
                 contentListPage.rightClickOnRow(secondUploadedFolder.entry.name);
-                contentServicesPage.checkContextActionIsVisible('Download');
-                contentServicesPage.checkContextActionIsVisible('Copy');
-                contentServicesPage.checkContextActionIsVisible('Move');
-                contentServicesPage.checkContextActionIsVisible('Delete');
-                contentServicesPage.checkContextActionIsVisible('Info');
-                contentServicesPage.checkContextActionIsVisible('Permission');
+                await contentServicesPage.checkContextActionIsVisible('Download');
+                await contentServicesPage.checkContextActionIsVisible('Copy');
+                await contentServicesPage.checkContextActionIsVisible('Move');
+                await contentServicesPage.checkContextActionIsVisible('Delete');
+                await contentServicesPage.checkContextActionIsVisible('Info');
+                await contentServicesPage.checkContextActionIsVisible('Permission');
             });
 
         });
@@ -261,10 +261,10 @@ describe('Document List Component - Actions',  () => {
 
         beforeEach(async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.waitForTableBody();
+            await contentServicesPage.goToDocumentList();
+            await contentServicesPage.waitForTableBody();
             await paginationPage.selectItemsPerPage('5');
-            contentServicesPage.checkAcsContainer();
+            await contentServicesPage.checkAcsContainer();
             contentListPage.waitForTableBody();
             done();
         });
@@ -282,8 +282,8 @@ describe('Document List Component - Actions',  () => {
             expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
             expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             contentListPage.rightClickOnRow('A' + folderModel1.name);
-            contentServicesPage.checkContextActionIsVisible('Move');
-            contentServicesPage.pressContextMenuActionNamed('Move');
+            await contentServicesPage.checkContextActionIsVisible('Move');
+            await contentServicesPage.pressContextMenuActionNamed('Move');
             contentNodeSelector.checkDialogIsDisplayed();
             expect(contentNodeSelector.getDialogHeaderText()).toBe('Move \'' + 'A' + folderModel1.name + '\' to...');
             contentNodeSelector.checkSearchInputIsDisplayed();
@@ -293,40 +293,40 @@ describe('Document List Component - Actions',  () => {
             contentNodeSelector.checkMoveCopyButtonIsDisplayed();
             expect(contentNodeSelector.getMoveCopyButtonText()).toBe('MOVE');
             expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
-            infinitePaginationPage.clickLoadMoreButton();
+            await infinitePaginationPage.clickLoadMoreButton();
             expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
-            infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+            await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
             contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
             contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
             contentNodeSelector.clickCancelButton();
             contentNodeSelector.checkDialogIsNotDisplayed();
-            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
             contentListPage.rightClickOnRow('A' + folderModel1.name);
-            contentServicesPage.checkContextActionIsVisible('Move');
-            contentServicesPage.pressContextMenuActionNamed('Move');
+            await contentServicesPage.checkContextActionIsVisible('Move');
+            await contentServicesPage.pressContextMenuActionNamed('Move');
             contentNodeSelector.checkDialogIsDisplayed();
-            infinitePaginationPage.clickLoadMoreButton();
+            await infinitePaginationPage.clickLoadMoreButton();
             contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
             contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
             contentNodeSelector.clickMoveCopyButton();
-            contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
-            contentServicesPage.doubleClickRow('F' + folderModel6.name);
-            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+            await contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
+            await contentServicesPage.doubleClickRow('F' + folderModel6.name);
+            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
             contentListPage.rightClickOnRow('A' + folderModel1.name);
-            contentServicesPage.checkContextActionIsVisible('Move');
-            contentServicesPage.pressContextMenuActionNamed('Move');
+            await contentServicesPage.checkContextActionIsVisible('Move');
+            await contentServicesPage.pressContextMenuActionNamed('Move');
             contentNodeSelector.checkDialogIsDisplayed();
             breadCrumbDropdownPage.clickParentFolder();
             breadCrumbDropdownPage.checkBreadCrumbDropdownIsDisplayed();
             breadCrumbDropdownPage.choosePath(contentServicesUser.id);
             contentNodeSelector.clickMoveCopyButton();
-            contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
+            await contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
 
             breadCrumbPage.chooseBreadCrumb(contentServicesUser.id);
-            contentServicesPage.waitForTableBody();
-            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+            await contentServicesPage.waitForTableBody();
+            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
         });
 
@@ -335,8 +335,8 @@ describe('Document List Component - Actions',  () => {
             expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
             expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             contentListPage.rightClickOnRow('A' + folderModel1.name);
-            contentServicesPage.checkContextActionIsVisible('Copy');
-            contentServicesPage.pressContextMenuActionNamed('Copy');
+            await contentServicesPage.checkContextActionIsVisible('Copy');
+            await contentServicesPage.pressContextMenuActionNamed('Copy');
             contentNodeSelector.checkDialogIsDisplayed();
             expect(contentNodeSelector.getDialogHeaderText()).toBe('Copy \'' + 'A' + folderModel1.name + '\' to...');
             contentNodeSelector.checkSearchInputIsDisplayed();
@@ -346,28 +346,28 @@ describe('Document List Component - Actions',  () => {
             contentNodeSelector.checkMoveCopyButtonIsDisplayed();
             expect(contentNodeSelector.getMoveCopyButtonText()).toBe('COPY');
             expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
-            infinitePaginationPage.clickLoadMoreButton();
+            await infinitePaginationPage.clickLoadMoreButton();
             expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
-            infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+            await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
             contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
             contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
             contentNodeSelector.clickCancelButton();
             contentNodeSelector.checkDialogIsNotDisplayed();
-            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
             contentListPage.rightClickOnRow('A' + folderModel1.name);
-            contentServicesPage.checkContextActionIsVisible('Copy');
-            contentServicesPage.pressContextMenuActionNamed('Copy');
+            await contentServicesPage.checkContextActionIsVisible('Copy');
+            await contentServicesPage.pressContextMenuActionNamed('Copy');
             contentNodeSelector.checkDialogIsDisplayed();
-            infinitePaginationPage.clickLoadMoreButton();
+            await infinitePaginationPage.clickLoadMoreButton();
             contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
             contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
             contentNodeSelector.clickMoveCopyButton();
-            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
             await paginationPage.clickOnNextPage();
             contentListPage.waitForTableBody();
-            contentServicesPage.doubleClickRow('F' + folderModel6.name);
-            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+            await contentServicesPage.doubleClickRow('F' + folderModel6.name);
+            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
         });
 

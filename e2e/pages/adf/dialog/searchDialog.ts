@@ -69,7 +69,7 @@ export class SearchDialog {
     async enterTextAndPressEnter(text): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
         await BrowserActions.clickExecuteScript('adf-search-control input');
-        await  this.searchBar.sendKeys(text);
+        await this.searchBar.sendKeys(text);
         await this.searchBar.sendKeys(protractor.Key.ENTER);
     }
 

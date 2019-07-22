@@ -76,7 +76,7 @@ describe('Info Drawer',  () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await navigationBarPage.goToSite(site);
-        contentServicesPage.checkAcsContainer();
+        await contentServicesPage.checkAcsContainer();
     });
 
     it('[C277251] Should display the icon when the icon property is defined', async () => {

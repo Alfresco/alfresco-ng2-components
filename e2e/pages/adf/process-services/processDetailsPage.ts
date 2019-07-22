@@ -136,15 +136,15 @@ export class ProcessDetailsPage {
     }
 
     async clickOnActiveTask(): Promise<void> {
-        await  BrowserActions.click(this.activeTask);
+        await BrowserActions.click(this.activeTask);
     }
 
     async clickOnStartForm(): Promise<void> {
-        await  BrowserActions.click(this.startForm);
+        await BrowserActions.click(this.startForm);
     }
 
     async clickOnCompletedTask(): Promise<void> {
-        await  BrowserActions.click(this.completedTask);
+        await BrowserActions.click(this.completedTask);
     }
 
     async checkActiveTaskTitleIsDisplayed(): Promise<void> {

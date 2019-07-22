@@ -110,15 +110,15 @@ describe('Document List Component',  () => {
 
         beforeEach(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
         });
 
         it('[C260108] Should display tooltip for file\'s name', async () => {
-            expect(contentServicesPage.getDocumentList().getTooltip(pdfFile.name)).toEqual(pdfFile.name);
+            expect(await contentServicesPage.getDocumentList().getTooltip(pdfFile.name)).toEqual(pdfFile.name);
         });
 
         it('[C260109] Should display tooltip for folder\'s name', async () => {
-            expect(contentServicesPage.getDocumentList().getTooltip(folderName)).toEqual(folderName);
+            expect(await contentServicesPage.getDocumentList().getTooltip(folderName)).toEqual(folderName);
         });
 
         it('[C260119] Should have a specific thumbnail for folders', async (done) => {
@@ -146,8 +146,8 @@ describe('Document List Component',  () => {
         });
 
         it('[C274701] Should be able to enable thumbnails', async (done) => {
-            contentServicesPage.enableThumbnails();
-            contentServicesPage.checkAcsContainer();
+            await contentServicesPage.enableThumbnails();
+            await contentServicesPage.checkAcsContainer();
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
             expect(fileIconUrl).toContain(`/versions/1/nodes/${filePdfNode.entry.id}/renditions`);
             done();

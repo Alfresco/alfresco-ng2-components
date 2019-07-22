@@ -92,9 +92,10 @@ export class ContentServicesPage {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 
-    async checkContextActionIsVisible(actionName): Promise<void> {
+    async checkContextActionIsVisible(actionName): Promise<ElementFinder> {
         const actionButton: ElementFinder = element(by.css(`button[data-automation-id="context-${actionName}"`));
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
+        return actionButton;
     }
 
     async checkContentActionIsEnabled(actionName): Promise<boolean> {
@@ -127,25 +128,25 @@ export class ContentServicesPage {
     }
 
     async deleteContent(content): Promise<void> {
-        await  this.contentList.clickOnActionMenu(content);
-        await  this.waitForContentOptions();
+        await this.contentList.clickOnActionMenu(content);
+        await this.waitForContentOptions();
         await BrowserActions.click(this.deleteContentElement);
     }
 
     async metadataContent(content): Promise<void> {
-        await  this.contentList.clickOnActionMenu(content);
-        await  this.waitForContentOptions();
+        await this.contentList.clickOnActionMenu(content);
+        await this.waitForContentOptions();
         await BrowserActions.click(this.metadataAction);
     }
 
     async versionManagerContent(content): Promise<void> {
-        await  this.contentList.clickOnActionMenu(content);
-        await  this.waitForContentOptions();
+        await this.contentList.clickOnActionMenu(content);
+        await this.waitForContentOptions();
         await BrowserActions.click(this.versionManagerAction);
     }
 
     async copyContent(content): Promise<void> {
-        await  this.contentList.clickOnActionMenu(content);
+        await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.copyContentElement);
     }
 
@@ -226,17 +227,17 @@ export class ContentServicesPage {
     }
 
     async expandRecentFiles(): Promise<void> {
-        await  this.checkRecentFileToBeShowed();
-        await  this.checkRecentFileToBeClosed();
+        await this.checkRecentFileToBeShowed();
+        await this.checkRecentFileToBeClosed();
         await BrowserActions.click(this.recentFilesClosed);
-        await   this.checkRecentFileToBeOpened();
+        await  this.checkRecentFileToBeOpened();
     }
 
     async closeRecentFiles(): Promise<void> {
-        await   this.checkRecentFileToBeShowed();
-        await  this.checkRecentFileToBeOpened();
+        await  this.checkRecentFileToBeShowed();
+        await this.checkRecentFileToBeOpened();
         await BrowserActions.click(this.recentFilesExpanded);
-        await  this.checkRecentFileToBeClosed();
+        await this.checkRecentFileToBeClosed();
     }
 
     async checkRecentFileToBeClosed(): Promise<void> {
@@ -277,7 +278,7 @@ export class ContentServicesPage {
         return this.currentFolder.getText();
     }
 
-    getAllRowsNameColumn(): Promise<string> {
+    getAllRowsNameColumn(): Promise<any> {
         return this.contentList.getAllRowsColumnValues(this.columns.name);
     }
 
@@ -315,7 +316,7 @@ export class ContentServicesPage {
     }
 
     async sortAndCheckListIsOrderedByAuthor(sortOrder: string): Promise<any> {
-        await  this.sortByAuthor(sortOrder);
+        await this.sortByAuthor(sortOrder);
         return this.checkListIsSortedByAuthorColumn(sortOrder);
     }
 
@@ -325,7 +326,7 @@ export class ContentServicesPage {
     }
 
     async doubleClickRow(nodeName): Promise<void> {
-        await  this.contentList.doubleClickRow(nodeName);
+        await this.contentList.doubleClickRow(nodeName);
     }
 
     async clickOnCreateNewFolder(): Promise<void> {
@@ -358,10 +359,10 @@ export class ContentServicesPage {
     }
 
     async createNewFolder(folder): Promise<void> {
-        await  this.clickOnCreateNewFolder();
+        await this.clickOnCreateNewFolder();
         await this.createFolderDialog.addFolderName(folder);
         await browser.sleep(200);
-        await  this.createFolderDialog.clickOnCreateUpdateButton();
+        await this.createFolderDialog.clickOnCreateUpdateButton();
     }
 
     async checkContentIsDisplayed(content): Promise<void> {

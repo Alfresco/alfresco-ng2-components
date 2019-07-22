@@ -31,8 +31,8 @@ export class StartTaskDialog {
 
     async addName(userName): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.name);
-        await  this.name.clear();
-        await  this.name.sendKeys(userName);
+        await this.name.clear();
+        await this.name.sendKeys(userName);
     }
 
     async addDescription(userDescription): Promise<void> {

@@ -102,7 +102,7 @@ export class ViewerPage {
     unknownFormat: ElementFinder = element(by.css(`adf-viewer-unknown-format .adf-viewer__unknown-format-view`));
 
     async checkCodeViewerIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
+        await BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
     }
 
     async viewFile(fileName): Promise<void> {
@@ -151,7 +151,7 @@ export class ViewerPage {
 
     async clickClosePasswordDialog(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.passwordDialogClose);
-        await  this.passwordDialogClose.click();
+        await this.passwordDialogClose.click();
     }
 
     async checkImgViewerIsDisplayed(): Promise<void> {
@@ -455,7 +455,7 @@ export class ViewerPage {
     }
 
     async disableGoBack(): Promise<void> {
-        await  this.formControllersPage.disableToggle(this.goBackSwitch);
+        await this.formControllersPage.disableToggle(this.goBackSwitch);
     }
 
     async enableGoBack(): Promise<void> {
@@ -471,7 +471,7 @@ export class ViewerPage {
     }
 
     async disableToolbarOptions(): Promise<void> {
-        await  this.formControllersPage.disableToggle(this.openWithSwitch);
+        await this.formControllersPage.disableToggle(this.openWithSwitch);
     }
 
     async enableToolbarOptions() {
@@ -495,12 +495,12 @@ export class ViewerPage {
     }
 
     async enableShowTabWithIcon(): Promise<void> {
-        await  browser.executeScript('arguments[0].scrollIntoView()', this.showTabWithIconSwitch);
-        await  this.formControllersPage.enableToggle(this.showTabWithIconSwitch);
+        await browser.executeScript('arguments[0].scrollIntoView()', this.showTabWithIconSwitch);
+        await this.formControllersPage.enableToggle(this.showTabWithIconSwitch);
     }
 
     async enableShowTabWithIconAndLabel(): Promise<void> {
-        await  this.formControllersPage.enableToggle(this.showTabWithIconAndLabelSwitch);
+        await this.formControllersPage.enableToggle(this.showTabWithIconAndLabelSwitch);
     }
 
     async checkDownloadButtonDisplayed(): Promise<void> {
@@ -512,7 +512,7 @@ export class ViewerPage {
     }
 
     async disablePrint(): Promise<void> {
-        await  this.formControllersPage.disableToggle(this.printSwitch);
+        await this.formControllersPage.disableToggle(this.printSwitch);
     }
 
     async enablePrint(): Promise<void> {
@@ -533,7 +533,7 @@ export class ViewerPage {
 
     async disableAllowLeftSidebar(): Promise<void> {
         await browser.executeScript('arguments[0].scrollIntoView()', this.allowLeftSidebarSwitch);
-        await  this.formControllersPage.disableToggle(this.allowLeftSidebarSwitch);
+        await this.formControllersPage.disableToggle(this.allowLeftSidebarSwitch);
     }
 
     async checkMoreActionsDisplayed(): Promise<void> {
@@ -553,11 +553,11 @@ export class ViewerPage {
     }
 
     async enableMoreActions(): Promise<void> {
-        await  this.formControllersPage.enableToggle(this.moreActionsSwitch);
+        await this.formControllersPage.enableToggle(this.moreActionsSwitch);
     }
 
     async enableMoreActionsMenu(): Promise<void> {
-        await  this.formControllersPage.enableToggle(this.moreActionsMenuSwitch);
+        await this.formControllersPage.enableToggle(this.moreActionsMenuSwitch);
     }
 
     async disableCustomToolbar(): Promise<void> {
@@ -566,7 +566,7 @@ export class ViewerPage {
     }
 
     async enableCustomToolbar(): Promise<void> {
-        await  browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
+        await browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
         await this.formControllersPage.enableToggle(this.customToolbarToggle);
     }
 
@@ -575,11 +575,11 @@ export class ViewerPage {
     }
 
     async disableCustomName(): Promise<void> {
-        await  this.formControllersPage.disableToggle(this.customNameSwitch);
+        await this.formControllersPage.disableToggle(this.customNameSwitch);
     }
 
     async enableCustomName(): Promise<void> {
-        await   this.formControllersPage.enableToggle(this.customNameSwitch);
+        await  this.formControllersPage.enableToggle(this.customNameSwitch);
     }
 
     async clickToggleRightSidebar(): Promise<void> {
@@ -597,7 +597,7 @@ export class ViewerPage {
     }
 
     async disableOverlay(): Promise<void> {
-        await   this.formControllersPage.disableToggle(element(by.id('adf-viewer-overlay')));
+        await  this.formControllersPage.disableToggle(element(by.id('adf-viewer-overlay')));
     }
 
     async checkOverlayViewerIsDisplayed(): Promise<void> {
@@ -630,7 +630,7 @@ export class ViewerPage {
     }
 
     async checkUnknownFormatIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.unknownFormat);
+        await BrowserVisibility.waitUntilElementIsVisible(this.unknownFormat);
     }
 
     async getUnknownFormatMessage(): Promise<string> {

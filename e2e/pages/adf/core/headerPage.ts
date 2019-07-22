@@ -34,7 +34,7 @@ export class HeaderPage {
     sideBarPositionLeft: ElementFinder = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
 
     async checkShowMenuCheckBoxIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
+        await BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
     }
 
     async checkChooseHeaderColourIsDisplayed(): Promise<void> {
@@ -120,11 +120,11 @@ export class HeaderPage {
     }
 
     async checkSidebarPositionStart(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
+        await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
     }
 
     async checkSidebarPositionEnd(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
+        await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
     }
 
 }

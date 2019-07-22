@@ -71,6 +71,6 @@ export class AttachFormPage {
     }
 
     async checkAttachFormButtonIsDisabled(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="adf-no-form-attach-form-button"][disabled]')));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="adf-no-form-attach-form-button"][disabled]')));
     }
 }

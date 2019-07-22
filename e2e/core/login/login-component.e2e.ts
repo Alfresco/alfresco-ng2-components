@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 import { Util } from '../../util/util';
 
-describe('Login component',  () => {
+describe('Login component', () => {
 
     const settingsPage = new SettingsPage();
     const processServicesPage = new ProcessServicesPage();
@@ -73,213 +73,213 @@ describe('Login component',  () => {
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {
         await loginPage.loginToContentServicesUsingUserModel(userA);
-        userInfoPage.clickUserProfile();
-        expect(userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
-        expect(userInfoPage.getContentEmail()).toEqual(userA.email);
+        await userInfoPage.clickUserProfile();
+        expect(await userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
+        expect(await userInfoPage.getContentEmail()).toEqual(userA.email);
 
         await loginPage.loginToContentServicesUsingUserModel(userB);
-        userInfoPage.clickUserProfile();
-        expect(userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
-        expect(userInfoPage.getContentEmail()).toEqual(userB.email);
+        await userInfoPage.clickUserProfile();
+        expect(await userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
+        expect(await userInfoPage.getContentEmail()).toEqual(userB.email);
     });
 
     it('[C299206] Should redirect the user without the right access role on a forbidden page', async () => {
         await loginPage.loginToContentServicesUsingUserModel(userA);
         await navigationBarPage.navigateToProcessServicesCloudPage();
-        expect(errorPage.getErrorCode()).toBe('403');
-        expect(errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
-        expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
+        expect(await errorPage.getErrorCode()).toBe('403');
+        expect(await errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
+        expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
 
     it('[C260036] Should require username', async () => {
-        loginPage.goToLoginPage();
-        loginPage.checkUsernameInactive();
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
-        loginPage.enterUsername('A');
-        expect(loginPage.getUsernameTooltip()).toEqual(errorMessages.username);
-        loginPage.clearUsername();
-        expect(loginPage.getUsernameTooltip()).toEqual(errorMessages.required);
-        loginPage.checkUsernameHighlighted();
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.goToLoginPage();
+        await loginPage.checkUsernameInactive();
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.enterUsername('A');
+        expect(await loginPage.getUsernameTooltip()).toEqual(errorMessages.username);
+        await loginPage.clearUsername();
+        expect(await loginPage.getUsernameTooltip()).toEqual(errorMessages.required);
+        await loginPage.checkUsernameHighlighted();
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
     });
 
     it('[C260043] Should require password', async () => {
-        loginPage.goToLoginPage();
-        loginPage.checkPasswordInactive();
-        loginPage.checkUsernameInactive();
-        loginPage.enterPassword('A');
-        loginPage.checkPasswordTooltipIsNotVisible();
-        loginPage.clearPassword();
-        expect(loginPage.getPasswordTooltip()).toEqual(errorMessages.password);
-        loginPage.checkPasswordHighlighted();
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.goToLoginPage();
+        await loginPage.checkPasswordInactive();
+        await loginPage.checkUsernameInactive();
+        await loginPage.enterPassword('A');
+        await loginPage.checkPasswordTooltipIsNotVisible();
+        await loginPage.clearPassword();
+        expect(await loginPage.getPasswordTooltip()).toEqual(errorMessages.password);
+        await loginPage.checkPasswordHighlighted();
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
     });
 
     it('[C260044] Username should be at least 2 characters long', async () => {
-        loginPage.goToLoginPage();
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
-        loginPage.enterUsername('A');
-        expect(loginPage.getUsernameTooltip()).toEqual(errorMessages.username);
-        loginPage.enterUsername('AB');
-        loginPage.checkUsernameTooltipIsNotVisible();
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
-        loginPage.clearUsername();
+        await loginPage.goToLoginPage();
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.enterUsername('A');
+        expect(await loginPage.getUsernameTooltip()).toEqual(errorMessages.username);
+        await loginPage.enterUsername('AB');
+        await loginPage.checkUsernameTooltipIsNotVisible();
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.clearUsername();
     });
 
     it('[C260045] Should enable login button after entering a valid username and a password', async () => {
-        loginPage.goToLoginPage();
-        loginPage.enterUsername(adminUserModel.id);
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
-        loginPage.enterPassword('a');
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(true);
-        loginPage.clearUsername();
-        loginPage.clearPassword();
+        await loginPage.goToLoginPage();
+        await loginPage.enterUsername(adminUserModel.id);
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.enterPassword('a');
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
+        await loginPage.clearUsername();
+        await loginPage.clearPassword();
     });
 
     it('[C260046] Should NOT be possible to login with an invalid username/password', async () => {
-        loginPage.goToLoginPage();
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
-        loginPage.enterUsername('test');
-        loginPage.enterPassword('test');
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(true);
-        loginPage.clickSignInButton();
-        expect(loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
-        loginPage.clearUsername();
-        loginPage.clearPassword();
+        await loginPage.goToLoginPage();
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.enterUsername('test');
+        await loginPage.enterPassword('test');
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
+        await loginPage.clickSignInButton();
+        expect(await loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
+        await loginPage.clearUsername();
+        await loginPage.clearPassword();
     });
 
     it('[C260047] Password should be crypted', async () => {
-        loginPage.goToLoginPage();
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
-        loginPage.enterPassword('test');
-        loginPage.showPassword();
-        loginPage.getShownPassword().then(async (tooltip) => {
+        await loginPage.goToLoginPage();
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.enterPassword('test');
+        await loginPage.showPassword();
+        await loginPage.getShownPassword().then(async (tooltip) => {
             await expect(tooltip).toEqual('test');
         });
-        loginPage.hidePassword();
-        loginPage.checkPasswordIsHidden();
-        loginPage.clearPassword();
+        await loginPage.hidePassword();
+        await loginPage.checkPasswordIsHidden();
+        await loginPage.clearPassword();
     });
 
     it('[C260048] Should be possible to enable/disable login footer', async () => {
-        loginPage.goToLoginPage();
-        loginPage.enableFooter();
-        loginPage.checkRememberIsDisplayed();
-        loginPage.checkNeedHelpIsDisplayed();
-        loginPage.checkRegisterDisplayed();
-        loginPage.disableFooter();
-        loginPage.checkRememberIsNotDisplayed();
-        loginPage.checkNeedHelpIsNotDisplayed();
-        loginPage.checkRegisterIsNotDisplayed();
+        await loginPage.goToLoginPage();
+        await loginPage.enableFooter();
+        await loginPage.checkRememberIsDisplayed();
+        await loginPage.checkNeedHelpIsDisplayed();
+        await loginPage.checkRegisterDisplayed();
+        await loginPage.disableFooter();
+        await loginPage.checkRememberIsNotDisplayed();
+        await loginPage.checkNeedHelpIsNotDisplayed();
+        await loginPage.checkRegisterIsNotDisplayed();
     });
 
     it('[C260049] Should be possible to login to Process Services with Content Services disabled', async () => {
-        loginPage.goToLoginPage();
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderBpm();
-        loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.goToLoginPage();
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderBpm();
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
         await navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
+        await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
-        loginPage.waitForElements();
+        await loginPage.waitForElements();
     });
 
     it('[C260050] Should be possible to login to Content Services with Process Services disabled', async () => {
-        loginPage.goToLoginPage();
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcm();
-        loginPage.login(browser.params.testConfig.adf.adminUser, browser.params.testConfig.adf.adminPassword);
+        await loginPage.goToLoginPage();
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcm();
+        await loginPage.login(browser.params.testConfig.adf.adminUser, browser.params.testConfig.adf.adminPassword);
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.checkAcsContainer();
+        await contentServicesPage.checkAcsContainer();
     });
 
     it('[C260051] Should be able to login to both Content Services and Process Services', async () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcmBpm();
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcmBpm();
-        loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
         await navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
+        await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.checkAcsContainer();
+        await contentServicesPage.checkAcsContainer();
         await navigationBarPage.clickLoginButton();
-        loginPage.waitForElements();
+        await loginPage.waitForElements();
     });
 
     it('[C277754] Should the user be redirect to the login page when the Content Service session expire', async () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcmBpm();
-        loginPage.login(adminUserModel.id, adminUserModel.password);
-        browser.executeScript('window.localStorage.removeItem("ticket-ECM");');
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await browser.executeScript('window.localStorage.removeItem("ticket-ECM");');
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
-        loginPage.waitForElements();
+        await loginPage.waitForElements();
     });
 
     it('[C279932] Should successRoute property change the landing page when the user Login', async () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcmBpm();
-        loginPage.enableSuccessRouteSwitch();
-        loginPage.enterSuccessRoute('activiti');
-        loginPage.login(adminUserModel.id, adminUserModel.password);
-        processServicesPage.checkApsContainer();
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
+        await loginPage.enableSuccessRouteSwitch();
+        await loginPage.enterSuccessRoute('activiti');
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await processServicesPage.checkApsContainer();
     });
 
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', async () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcmBpm();
-        loginPage.login(adminUserModel.id, adminUserModel.password);
-        browser.executeScript('window.localStorage.removeItem("ticket-BPM");');
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await browser.executeScript('window.localStorage.removeItem("ticket-BPM");');
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
-        loginPage.waitForElements();
+        await loginPage.waitForElements();
     });
 
     it('[C279930] Should a user still be logged-in when open a new tab', async () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcmBpm();
-        loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
 
-        Util.openNewTabInBrowser();
+        await Util.openNewTabInBrowser();
 
-        browser.getAllWindowHandles().then((handles) => {
+        await browser.getAllWindowHandles().then((handles) => {
 
-            browser.switchTo().window(handles[1]).then(() => {
+            browser.switchTo().window(handles[1]).then(async () => {
                 await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
-                processServicesPage.checkApsContainer();
+                await processServicesPage.checkApsContainer();
                 await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
-                contentServicesPage.checkAcsContainer();
+                await contentServicesPage.checkAcsContainer();
             });
         });
     });
 
     it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', async () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcmBpm();
-        loginPage.enableLogoSwitch();
-        loginPage.enterLogo('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
-        loginPage.checkLoginImgURL();
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
+        await loginPage.enableLogoSwitch();
+        await loginPage.enterLogo('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
+        await loginPage.checkLoginImgURL();
     });
 
     it('[C291854] Should be possible login in valid credentials', async () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url);
-        loginPage.waitForElements();
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
-        loginPage.enterUsername(invalidUsername);
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
-        loginPage.enterPassword(invalidPassword);
-        expect(loginPage.getSignInButtonIsEnabled()).toBe(true);
-        loginPage.clickSignInButton();
-        expect(loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
-        loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.waitForElements();
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.enterUsername(invalidUsername);
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
+        await loginPage.enterPassword(invalidPassword);
+        expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
+        await loginPage.clickSignInButton();
+        expect(await loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
     });
 
 });

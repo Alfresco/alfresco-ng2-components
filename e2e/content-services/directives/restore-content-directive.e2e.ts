@@ -91,7 +91,7 @@ describe('Restore content directive', () => {
     });
 
     beforeEach(async (done) => {
-        await  await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
         done();
     });
@@ -99,11 +99,11 @@ describe('Restore content directive', () => {
     describe('Restore same name folders', () => {
 
         beforeAll(async (done) => {
-            await  await navigationBarPage.clickContentServicesButton();
-            await  contentServicesPage.waitForTableBody();
-            await  contentServicesPage.checkContentIsDisplayed(folderName);
+            await navigationBarPage.clickContentServicesButton();
+            await contentServicesPage.waitForTableBody();
+            await contentServicesPage.checkContentIsDisplayed(folderName);
             await contentServicesPage.deleteContent(folderName);
-            await  contentServicesPage.checkContentIsNotDisplayed(folderName);
+            await contentServicesPage.checkContentIsNotDisplayed(folderName);
             await navigationBarPage.clickTrashcanButton();
             await trashcanPage.waitForTableBody();
             await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
@@ -125,7 +125,7 @@ describe('Restore content directive', () => {
             await trashcanPage.getDocumentList().dataTablePage().checkAllRows();
             await trashcanPage.clickRestore();
             await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
-            await  await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
             await contentServicesPage.checkContentIsDisplayed(folderName);
 
@@ -202,15 +202,15 @@ describe('Restore content directive', () => {
         await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderWithFolder.entry.name);
         await trashcanPage.clickRestore();
 
-        await  await navigationBarPage.clickContentServicesButton();
-        await  contentServicesPage.waitForTableBody();
-        await  contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
-        await  contentServicesPage.doubleClickRow(folderWithFolder.entry.name);
-        await  contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
-        await  notificationHistoryPage.clickNotificationButton();
-        await  notificationHistoryPage.checkNotificationIsPresent('Can\'t restore ' + subFolder.entry.name + ' item, the original location no longer exists');
+        await navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
+        await contentServicesPage.doubleClickRow(folderWithFolder.entry.name);
+        await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
+        await notificationHistoryPage.clickNotificationButton();
+        await notificationHistoryPage.checkNotificationIsPresent('Can\'t restore ' + subFolder.entry.name + ' item, the original location no longer exists');
         await notificationHistoryPage.checkNotificationIsPresent('Restore successful');
-        await  notificationHistoryPage.clickMarkAsRead();
+        await notificationHistoryPage.clickMarkAsRead();
     });
 
     it('[C260241] Should display restore icon both for file and folder', async () => {
@@ -288,8 +288,8 @@ describe('Restore content directive', () => {
             mainFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
 
             await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.waitForTableBody();
+            await contentServicesPage.goToDocumentList();
+            await contentServicesPage.waitForTableBody();
             done();
         });
 
@@ -302,31 +302,31 @@ describe('Restore content directive', () => {
         });
 
         it('[C216431] Should restore hierarchy of folders', async () => {
-            contentServicesPage.deleteContent(parentFolder.entry.name);
-            contentServicesPage.deleteContent(mainFolder.entry.name);
-            contentServicesPage.deleteContent(mainFile.entry.name);
+            await contentServicesPage.deleteContent(parentFolder.entry.name);
+            await contentServicesPage.deleteContent(mainFolder.entry.name);
+            await contentServicesPage.deleteContent(mainFile.entry.name);
 
             await navigationBarPage.clickTrashcanButton();
-            trashcanPage.waitForTableBody();
-            trashcanPage.checkRestoreButtonIsNotDisplayed();
-            trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(parentFolder.entry.name);
-            trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(parentFolder.entry.name);
-            trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(mainFolder.entry.name);
-            trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(mainFolder.entry.name);
-            trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(mainFile.entry.name);
-            trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(mainFile.entry.name);
-            trashcanPage.clickRestore();
+            await trashcanPage.waitForTableBody();
+            await trashcanPage.checkRestoreButtonIsNotDisplayed();
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(parentFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(parentFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(mainFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(mainFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(mainFile.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(mainFile.entry.name);
+            await trashcanPage.clickRestore();
 
             await navigationBarPage.clickContentServicesButton();
-            contentServicesPage.waitForTableBody();
-            contentServicesPage.checkContentIsDisplayed(parentFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(mainFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(mainFile.entry.name);
-            contentServicesPage.doubleClickRow(parentFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(folderWithin.entry.name);
-            contentServicesPage.doubleClickRow(folderWithin.entry.name);
-            contentServicesPage.checkContentIsDisplayed(pdfFile.entry.name);
-            contentServicesPage.checkContentIsDisplayed(pngFile.entry.name);
+            await contentServicesPage.waitForTableBody();
+            await contentServicesPage.checkContentIsDisplayed(parentFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(mainFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(mainFile.entry.name);
+            await contentServicesPage.doubleClickRow(parentFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(folderWithin.entry.name);
+            await contentServicesPage.doubleClickRow(folderWithin.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(pdfFile.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(pngFile.entry.name);
         });
     });
 

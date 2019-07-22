@@ -123,26 +123,26 @@ describe('Document List Component',  () => {
         });
 
         it('[C279926] Should only display the user\'s files and folders', async () => {
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.checkContentIsDisplayed(folderName);
-            contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-            contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
-            expect(contentServicesPage.getDocumentListRowNumber()).toBe(4);
+            await contentServicesPage.goToDocumentList();
+            await contentServicesPage.checkContentIsDisplayed(folderName);
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+            await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+            expect(await contentServicesPage.getDocumentListRowNumber()).toBe(4);
         });
 
         it('[C279927] Should display default columns', async () => {
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.checkColumnNameHeader();
-            contentServicesPage.checkColumnSizeHeader();
-            contentServicesPage.checkColumnCreatedByHeader();
-            contentServicesPage.checkColumnCreatedHeader();
+            await contentServicesPage.goToDocumentList();
+            await contentServicesPage.checkColumnNameHeader();
+            await contentServicesPage.checkColumnSizeHeader();
+            await contentServicesPage.checkColumnCreatedByHeader();
+            await contentServicesPage.checkColumnCreatedHeader();
         });
 
         it('[C279928] Should be able to display date with timeAgo', async (done) => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             timeAgoUploadedNode = await uploadActions.uploadFile(timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
-            contentServicesPage.goToDocumentList();
-            const dateValue = contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
+            await contentServicesPage.goToDocumentList();
+            const dateValue = await contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
             expect(dateValue).toMatch(/(ago|few)/);
             done();
         });
@@ -151,9 +151,9 @@ describe('Document List Component',  () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(mediumFileModel.location, mediumFileModel.name, '-my-');
             const createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.enableMediumTimeFormat();
-            const dateValue = contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
+            await contentServicesPage.goToDocumentList();
+            await contentServicesPage.enableMediumTimeFormat();
+            const dateValue = await contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
             expect(dateValue).toContain(createdDate);
             done();
         });
@@ -192,7 +192,7 @@ describe('Document List Component',  () => {
             fileCNode = await uploadActions.uploadFile(fakeFileC.location, fakeFileC.name, '-my-');
 
             await loginPage.loginToContentServicesUsingUserModel(user);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
             done();
         });
@@ -212,27 +212,27 @@ describe('Document List Component',  () => {
         });
 
         it('[C260112] Should be able to sort by name (Ascending)', async () => {
-            expect(contentServicesPage.sortAndCheckListIsOrderedByName('asc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByName('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272770] Should be able to sort by name (Descending)', async () => {
-            expect(contentServicesPage.sortAndCheckListIsOrderedByName('desc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByName('desc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272771] Should be able to sort by author (Ascending)', async () => {
-            expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272772] Should be able to sort by author (Descending)', async () => {
-            expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272773] Should be able to sort by date (Ascending)', async () => {
-            expect(contentServicesPage.sortAndCheckListIsOrderedByCreated('asc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByCreated('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272774] Should be able to sort by date (Descending)', async () => {
-            expect(contentServicesPage.sortAndCheckListIsOrderedByCreated('desc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByCreated('desc')).toBe(true, 'List is not sorted.');
         });
     });
 
@@ -243,11 +243,11 @@ describe('Document List Component',  () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.createNewFolder(folderName);
-        contentServicesPage.doubleClickRow(folderName);
-        contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
-        contentServicesPage.checkEmptyFolderImageUrlToContain('/assets/images/empty_doc_lib.svg');
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.createNewFolder(folderName);
+        await contentServicesPage.doubleClickRow(folderName);
+        await contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
+        await contentServicesPage.checkEmptyFolderImageUrlToContain('/assets/images/empty_doc_lib.svg');
         done();
     });
 
@@ -264,11 +264,11 @@ describe('Document List Component',  () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.checkContentIsDisplayed(uploadedFolder.entry.name);
-        contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
-        contentServicesPage.uploadFile(testFile.location);
-        contentServicesPage.checkContentIsDisplayed(testFile.name);
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.checkContentIsDisplayed(uploadedFolder.entry.name);
+        await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+        await contentServicesPage.uploadFile(testFile.location);
+        await contentServicesPage.checkContentIsDisplayed(testFile.name);
         done();
     });
 
@@ -277,13 +277,13 @@ describe('Document List Component',  () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.clickOnContentServices();
-        contentServicesPage.checkRecentFileToBeShowed();
+        await contentServicesPage.clickOnContentServices();
+        await contentServicesPage.checkRecentFileToBeShowed();
         const icon = await contentServicesPage.getRecentFileIcon();
         expect(icon).toBe('history');
-        contentServicesPage.expandRecentFiles();
-        contentServicesPage.checkEmptyRecentFileIsDisplayed();
-        contentServicesPage.closeRecentFiles();
+        await contentServicesPage.expandRecentFiles();
+        await contentServicesPage.checkEmptyRecentFileIsDisplayed();
+        await contentServicesPage.closeRecentFiles();
         done();
     });
 
@@ -297,11 +297,11 @@ describe('Document List Component',  () => {
         uploadedFolder = await uploadActions.createFolder(folderNameA, '-my-');
         uploadedFolderExtra = await uploadActions.createFolder(folderNameB, '-my-');
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.checkContentIsDisplayed(folderNameA);
-        contentServicesPage.checkContentIsDisplayed(folderNameB);
-        contentServicesPage.checkLockIsDisplayedForElement(folderNameA);
-        contentServicesPage.checkLockIsDisplayedForElement(folderNameB);
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.checkContentIsDisplayed(folderNameA);
+        await contentServicesPage.checkContentIsDisplayed(folderNameB);
+        await contentServicesPage.checkLockIsDisplayedForElement(folderNameA);
+        await contentServicesPage.checkLockIsDisplayedForElement(folderNameB);
         done();
     });
 
@@ -321,11 +321,11 @@ describe('Document List Component',  () => {
         testFileNode = await uploadActions.uploadFile(testFileA.location, testFileA.name, '-my-');
         pdfBFileNode = await uploadActions.uploadFile(testFileB.location, testFileB.name, '-my-');
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.checkContentIsDisplayed(testFileA.name);
-        contentServicesPage.checkContentIsDisplayed(testFileB.name);
-        contentServicesPage.checkLockIsDisplayedForElement(testFileA.name);
-        contentServicesPage.checkLockIsDisplayedForElement(testFileB.name);
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.checkContentIsDisplayed(testFileA.name);
+        await contentServicesPage.checkContentIsDisplayed(testFileB.name);
+        await contentServicesPage.checkLockIsDisplayedForElement(testFileA.name);
+        await contentServicesPage.checkLockIsDisplayedForElement(testFileB.name);
         done();
     });
 
@@ -359,8 +359,8 @@ describe('Document List Component',  () => {
 
         it('[C277093] Should sort files with Items per page set to default', async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.checkListIsSortedByNameColumn('asc');
+            await contentServicesPage.goToDocumentList();
+            await contentServicesPage.checkListIsSortedByNameColumn('asc');
             done();
         });
 
@@ -384,13 +384,13 @@ describe('Document List Component',  () => {
             file = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList()
+            await contentServicesPage.goToDocumentList()
                 .waitForTableBody();
             done();
         });
 
         it('[C291843] Should be able to navigate using nodes hyperlink when activated', async () => {
-            contentServicesPage.clickHyperlinkNavigationToggle()
+            await contentServicesPage.clickHyperlinkNavigationToggle()
                 .checkFileHyperlinkIsEnabled(file.entry.name)
                 .clickFileHyperlink(file.entry.name);
             viewer.checkFileIsLoaded();

@@ -115,8 +115,8 @@ describe('Edit folder directive', () => {
         await editFolderDialog.addFolderName(editFolder.entry.name + 'a');
         await editFolderDialog.checkCreateUpdateBtnIsEnabled();
         await editFolderDialog.clickOnCancelButton();
-        await  editFolderDialog.checkFolderDialogIsNotDisplayed();
-        await  contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
+        await editFolderDialog.checkFolderDialogIsNotDisplayed();
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
     });
 
     it('[C260163] Update folder name with an existing one', async () => {
@@ -151,9 +151,9 @@ describe('Edit folder directive', () => {
 
         await editFolderDialog.addFolderName('a.');
         expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t end with a period .');
-        await  editFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await editFolderDialog.checkCreateUpdateBtnIsDisabled();
 
-        await  editFolderDialog.getFolderNameField().clear();
+        await editFolderDialog.getFolderNameField().clear();
         await editFolderDialog.getFolderNameField().sendKeys(protractor.Key.SPACE);
         expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain only spaces');
         await editFolderDialog.checkCreateUpdateBtnIsDisabled();

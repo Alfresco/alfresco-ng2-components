@@ -31,11 +31,11 @@ export class AppSettingsToggles {
     }
 
     async disableShowHeader(): Promise<void> {
-        await  this.formControllersPage.disableToggle(this.showDetailsHeaderToggle);
+        await this.formControllersPage.disableToggle(this.showDetailsHeaderToggle);
     }
 
     async enableTaskFiltersIcon(): Promise<void> {
-        await   this.formControllersPage.enableToggle(this.showTaskFilterIconsToggle);
+        await  this.formControllersPage.enableToggle(this.showTaskFilterIconsToggle);
     }
 
     async enableProcessFiltersIcon(): Promise<void> {

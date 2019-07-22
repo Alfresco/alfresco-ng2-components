@@ -23,6 +23,6 @@ export class MonacoExtensionPage {
     monacoPlugin: ElementFinder = element(by.cssContainingText('mat-row > mat-cell', 'monaco plugin'));
 
     async checkMonacoPluginIsDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsVisible(this.monacoPlugin);
+        await BrowserVisibility.waitUntilElementIsVisible(this.monacoPlugin);
     }
 }

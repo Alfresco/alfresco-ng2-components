@@ -78,7 +78,7 @@ describe('Task List Pagination - Sorting', () => {
     });
 
     it('[C260308] Should be possible to sort tasks by name', async () => {
-        await  (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
+        await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await paginationPage.selectItemsPerPage(itemsPerPage.twenty);

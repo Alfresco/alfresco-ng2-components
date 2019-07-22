@@ -78,7 +78,7 @@ export class DocumentListPage {
         return new DataTableComponentPage(this.rootElement);
     }
 
-    getAllRowsColumnValues(column): Promise<string> {
+    getAllRowsColumnValues(column): Promise<any> {
         return this.dataTable.getAllRowsColumnValues(column);
     }
 

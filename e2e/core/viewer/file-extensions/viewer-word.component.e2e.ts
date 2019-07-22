@@ -25,7 +25,7 @@ import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer',  () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
@@ -62,7 +62,7 @@ describe('Viewer',  () => {
         done();
     });
 
-    describe('Word Folder Uploaded',  () => {
+    describe('Word Folder Uploaded', () => {
 
         let uploadedWords;
         let wordFolderUploaded;
@@ -73,7 +73,7 @@ describe('Viewer',  () => {
             uploadedWords = await uploadActions.uploadFolder(wordFolderInfo.location, wordFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
             done();
         });
@@ -84,11 +84,11 @@ describe('Viewer',  () => {
         });
 
         it('[C280011] Should be possible to open any Word file', async () => {
-            contentServicesPage.doubleClickRow('word');
+            await contentServicesPage.doubleClickRow('word');
 
-            uploadedWords.forEach((currentFile) => {
+            uploadedWords.forEach(async (currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }

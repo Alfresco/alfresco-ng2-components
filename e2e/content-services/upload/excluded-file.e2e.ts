@@ -67,7 +67,7 @@ describe('Upload component - Excluded Files', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
 
         done();
     });

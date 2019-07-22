@@ -81,88 +81,88 @@ describe('Version component actions',  () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.waitForTableBody();
-        contentServicesPage.versionManagerContent(txtFileModel.name);
+        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.versionManagerContent(txtFileModel.name);
 
         done();
     });
 
     it('[C280003] Should not be possible delete a file version if there is only one version', async () => {
-        versionManagePage.clickActionButton('1.0');
+        await versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
-        versionManagePage.closeActionsMenu();
-        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
+        await versionManagePage.closeActionsMenu();
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
     });
 
     it('[C280004] Should not be possible restore the version if there is only one version', async () => {
-        versionManagePage.clickActionButton('1.0');
+        await versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
-        versionManagePage.closeActionsMenu();
-        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
+        await versionManagePage.closeActionsMenu();
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });
 
     it('[C280005] Should be showed all the default action when you have more then one version', async () => {
-        versionManagePage.showNewVersionButton.click();
+        await versionManagePage.showNewVersionButton.click();
 
-        versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
+        await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
-        versionManagePage.clickActionButton('1.1').checkActionsArePresent('1.1');
+        await versionManagePage.clickActionButton('1.1').checkActionsArePresent('1.1');
 
-        versionManagePage.closeActionsMenu();
+        await versionManagePage.closeActionsMenu();
     });
 
     it('[C269081] Should be possible download all the version of a file', async () => {
-        versionManagePage.downloadFileVersion('1.0');
+        await versionManagePage.downloadFileVersion('1.0');
 
-        expect(Util.fileExists(path.join(__dirname, 'downloads', txtFileModel.name), 20)).toBe(true);
+        expect(await Util.fileExists(path.join(__dirname, 'downloads', txtFileModel.name), 20)).toBe(true);
 
-        versionManagePage.downloadFileVersion('1.1');
+        await versionManagePage.downloadFileVersion('1.1');
 
-        expect(Util.fileExists(path.join(__dirname, 'downloads', fileModelVersionTwo.name), 20)).toBe(true);
+        expect(await Util.fileExists(path.join(__dirname, 'downloads', fileModelVersionTwo.name), 20)).toBe(true);
     });
 
     it('[C272819] Should be possible delete a version when click on delete version action', async () => {
-        versionManagePage.deleteFileVersion('1.1');
+        await versionManagePage.deleteFileVersion('1.1');
 
-        versionManagePage.clickAcceptConfirm();
+        await versionManagePage.clickAcceptConfirm();
 
-        versionManagePage.checkFileVersionNotExist('1.1');
-        versionManagePage.checkFileVersionExist('1.0');
+        await versionManagePage.checkFileVersionNotExist('1.1');
+        await versionManagePage.checkFileVersionExist('1.0');
     });
 
     it('[C280006] Should be possible prevent a version to be deleted when click on No on the confirm dialog', async () => {
-        versionManagePage.showNewVersionButton.click();
+        await versionManagePage.showNewVersionButton.click();
 
-        versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
+        await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
-        versionManagePage.checkFileVersionExist('1.1');
+        await versionManagePage.checkFileVersionExist('1.1');
 
-        versionManagePage.deleteFileVersion('1.1');
+        await versionManagePage.deleteFileVersion('1.1');
 
-        versionManagePage.clickCancelConfirm();
+        await versionManagePage.clickCancelConfirm();
 
-        versionManagePage.checkFileVersionExist('1.1');
-        versionManagePage.checkFileVersionExist('1.0');
-        versionManagePage.closeVersionDialog();
+        await versionManagePage.checkFileVersionExist('1.1');
+        await versionManagePage.checkFileVersionExist('1.0');
+        await versionManagePage.closeVersionDialog();
     });
 
     it('[C280007] Should be possible to restore an old version of your file and the document list updated', async () => {
-        contentServicesPage.versionManagerContent(fileModelVersionTwo.name);
-        versionManagePage.restoreFileVersion('1.0');
-        versionManagePage.checkFileVersionExist('2.0');
-        versionManagePage.closeVersionDialog();
-        contentServicesPage.waitForTableBody();
-        contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
+        await contentServicesPage.versionManagerContent(fileModelVersionTwo.name);
+        await versionManagePage.restoreFileVersion('1.0');
+        await versionManagePage.checkFileVersionExist('2.0');
+        await versionManagePage.closeVersionDialog();
+        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
     });
 
     it('[C307033] Should be possible to cancel the upload of a new version', async () => {
         await browser.refresh();
-        contentServicesPage.versionManagerContent(txtFileModel.name);
+        await contentServicesPage.versionManagerContent(txtFileModel.name);
         browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 1000)');
 
-        versionManagePage.showNewVersionButton.click();
-        versionManagePage.uploadNewVersionFile(bigFileToCancel.location);
-        versionManagePage.closeVersionDialog();
+        await versionManagePage.showNewVersionButton.click();
+        await versionManagePage.uploadNewVersionFile(bigFileToCancel.location);
+        await versionManagePage.closeVersionDialog();
 
         await expect(new UploadDialog().getTitleText()).toEqual('Upload canceled');
 
@@ -170,7 +170,7 @@ describe('Version component actions',  () => {
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
-        contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
+        await contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
     });
 
 });

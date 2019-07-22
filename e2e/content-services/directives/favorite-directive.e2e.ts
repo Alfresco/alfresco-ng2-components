@@ -61,7 +61,7 @@ describe('Favorite directive',  () => {
         testFile = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
         done();
     });
 
@@ -76,145 +76,145 @@ describe('Favorite directive',  () => {
 
     beforeEach(async (done) => {
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+        await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         done();
     });
 
     it('[C260247] Should be able to mark a file as favorite', async () => {
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.clickOnFavoriteButton();
-        contentServicesPage.checkIsMarkedFavorite();
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
+        await contentServicesPage.clickOnFavoriteButton();
+        await contentServicesPage.checkIsMarkedFavorite();
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
         customSourcesPage.navigateToCustomSources();
         customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsDisplayed(testFile.entry.name);
 
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.clickOnFavoriteButton();
-        contentServicesPage.checkIsNotMarkedFavorite();
+        await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
+        await contentServicesPage.clickOnFavoriteButton();
+        await contentServicesPage.checkIsNotMarkedFavorite();
         customSourcesPage.navigateToCustomSources();
         customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsNotDisplayed(testFile.entry.name);
     });
 
     it('[C260249] Should be able to mark a folder as favorite', async () => {
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder1.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFolder1.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
-        contentServicesPage.clickOnFavoriteButton();
-        contentServicesPage.checkIsMarkedFavorite();
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder1.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFolder1.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
+        await contentServicesPage.clickOnFavoriteButton();
+        await contentServicesPage.checkIsMarkedFavorite();
         customSourcesPage.navigateToCustomSources();
         customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsDisplayed(testFolder1.entry.name);
 
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder1.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFolder1.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
-        contentServicesPage.clickOnFavoriteButton();
-        contentServicesPage.checkIsNotMarkedFavorite();
+        await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder1.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFolder1.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
+        await contentServicesPage.clickOnFavoriteButton();
+        await contentServicesPage.checkIsNotMarkedFavorite();
         customSourcesPage.navigateToCustomSources();
         customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsNotDisplayed(testFolder1.entry.name);
     });
 
     it('[C260251] Should retain the restored file as favorite', async () => {
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.clickOnFavoriteButton();
-        contentServicesPage.checkIsMarkedFavorite();
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
+        await contentServicesPage.clickOnFavoriteButton();
+        await contentServicesPage.checkIsMarkedFavorite();
         contentListPage.rightClickOnRow(testFile.entry.name);
-        contentServicesPage.pressContextMenuActionNamed('Delete');
-        contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
+        await contentServicesPage.pressContextMenuActionNamed('Delete');
+        await contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
         customSourcesPage.navigateToCustomSources();
         customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsNotDisplayed(testFile.entry.name);
 
         await navigationBarPage.clickTrashcanButton();
-        trashcanPage.waitForTableBody();
-        expect(trashcanPage.numberOfResultsDisplayed()).toBe(1);
-        trashcanPage.getDocumentList().dataTablePage().clickRowByContent(testFile.entry.name);
-        trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(testFile.entry.name);
-        trashcanPage.clickRestore();
-        trashcanPage.checkTrashcanIsEmpty();
+        await trashcanPage.waitForTableBody();
+        expect(await trashcanPage.numberOfResultsDisplayed()).toBe(1);
+        await trashcanPage.getDocumentList().dataTablePage().clickRowByContent(testFile.entry.name);
+        await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(testFile.entry.name);
+        await trashcanPage.clickRestore();
+        await trashcanPage.checkTrashcanIsEmpty();
 
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.checkIsMarkedFavorite();
+        await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
+        await contentServicesPage.checkIsMarkedFavorite();
         customSourcesPage.navigateToCustomSources();
         customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsDisplayed(testFile.entry.name);
     });
 
     it('[C260252] Should retain the moved file as favorite', async () => {
-        contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.clickOnFavoriteButton();
-        contentServicesPage.checkIsMarkedFavorite();
+        await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
+        await contentServicesPage.clickOnFavoriteButton();
+        await contentServicesPage.checkIsMarkedFavorite();
 
-        contentServicesPage.getDocumentList().rightClickOnRow(testFile.entry.name);
-        contentServicesPage.pressContextMenuActionNamed('Move');
+        await contentServicesPage.getDocumentList().rightClickOnRow(testFile.entry.name);
+        await contentServicesPage.pressContextMenuActionNamed('Move');
         contentNodeSelector.checkDialogIsDisplayed();
         contentNodeSelector.typeIntoNodeSelectorSearchField(testFolder1.entry.name);
         contentNodeSelector.clickContentNodeSelectorResult(testFolder1.entry.name);
         contentNodeSelector.clickMoveCopyButton();
-        contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
-        contentServicesPage.doubleClickRow(testFolder1.entry.name);
-        contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
+        await contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
+        await contentServicesPage.doubleClickRow(testFolder1.entry.name);
+        await contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
 
-        contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.checkIsMarkedFavorite();
+        await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
+        await contentServicesPage.checkIsMarkedFavorite();
     });
 
     it('[C217216] Should be able to mark and unmark multiple folders as favorite', async () => {
-        contentServicesPage.clickMultiSelectToggle();
-        contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder1.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder2.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder2.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
-        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(3);
-        contentServicesPage.clickOnFavoriteButton();
-        contentServicesPage.checkIsMarkedFavorite();
+        await contentServicesPage.clickMultiSelectToggle();
+        await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+        await contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder1.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder2.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder2.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
+        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(3);
+        await contentServicesPage.clickOnFavoriteButton();
+        await contentServicesPage.checkIsMarkedFavorite();
 
-        contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', testFolder3.entry.name);
-        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(2);
+        await contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', testFolder3.entry.name);
+        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(2);
 
-        contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder4.entry.name);
-        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(3);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder2.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder4.entry.name);
-        contentServicesPage.clickOnFavoriteButton();
-        contentServicesPage.checkIsMarkedFavorite();
+        await contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder4.entry.name);
+        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(3);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder2.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder4.entry.name);
+        await contentServicesPage.clickOnFavoriteButton();
+        await contentServicesPage.checkIsMarkedFavorite();
 
-        contentServicesPage.clickOnFavoriteButton();
-        contentServicesPage.checkIsNotMarkedFavorite();
-        contentServicesPage.getDocumentList().dataTablePage().checkAllRows();
-        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBeGreaterThanOrEqual(4);
-        contentServicesPage.getDocumentList().dataTablePage().uncheckAllRows();
-        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
+        await contentServicesPage.clickOnFavoriteButton();
+        await contentServicesPage.checkIsNotMarkedFavorite();
+        await contentServicesPage.getDocumentList().dataTablePage().checkAllRows();
+        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBeGreaterThanOrEqual(4);
+        await contentServicesPage.getDocumentList().dataTablePage().uncheckAllRows();
+        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
 
-        contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
-        contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
-        expect(contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
-        contentServicesPage.checkIsMarkedFavorite();
+        await contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
+        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
+        await contentServicesPage.checkIsMarkedFavorite();
 
     });
 });

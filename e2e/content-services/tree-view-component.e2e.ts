@@ -76,60 +76,60 @@ describe('Tree View Component',  () => {
     });
 
     it('[C289972] Should be able to show folders and sub-folders of a node as a tree view', async () => {
-        treeViewPage.checkTreeViewTitleIsDisplayed();
+        await treeViewPage.checkTreeViewTitleIsDisplayed();
 
-        expect(treeViewPage.getNodeId()).toEqual(nodeNames.parentFolder);
+        expect(await treeViewPage.getNodeId()).toEqual(nodeNames.parentFolder);
 
-        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.folder);
-        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.secondFolder);
+        await treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.folder);
+        await treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.secondFolder);
 
-        treeViewPage.clickNode(nodeNames.secondFolder);
+        await treeViewPage.clickNode(nodeNames.secondFolder);
 
-        treeViewPage.checkClickedNodeName(nodeNames.secondFolder);
-        treeViewPage.checkNodeIsDisplayedAsOpen(nodeNames.secondFolder);
-        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
+        await treeViewPage.checkClickedNodeName(nodeNames.secondFolder);
+        await treeViewPage.checkNodeIsDisplayedAsOpen(nodeNames.secondFolder);
+        await treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
 
-        treeViewPage.clickNode(nodeNames.thirdFolder);
+        await treeViewPage.clickNode(nodeNames.thirdFolder);
 
-        treeViewPage.checkClickedNodeName(nodeNames.thirdFolder);
-        treeViewPage.checkNodeIsDisplayedAsOpen(nodeNames.thirdFolder);
+        await treeViewPage.checkClickedNodeName(nodeNames.thirdFolder);
+        await treeViewPage.checkNodeIsDisplayedAsOpen(nodeNames.thirdFolder);
 
-        treeViewPage.clickNode(nodeNames.secondFolder);
+        await treeViewPage.clickNode(nodeNames.secondFolder);
 
-        treeViewPage.checkClickedNodeName(nodeNames.secondFolder);
-        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.secondFolder);
-        treeViewPage.checkNodeIsNotDisplayed(nodeNames.thirdFolder);
+        await treeViewPage.checkClickedNodeName(nodeNames.secondFolder);
+        await treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.secondFolder);
+        await treeViewPage.checkNodeIsNotDisplayed(nodeNames.thirdFolder);
     });
 
     it('[C289973] Should be able to change the default nodeId', async () => {
-        treeViewPage.clearNodeIdInput();
+        await treeViewPage.clearNodeIdInput();
 
-        treeViewPage.checkNoNodeIdMessageIsDisplayed();
-        treeViewPage.addNodeId(secondTreeFolder.entry.id);
+        await treeViewPage.checkNoNodeIdMessageIsDisplayed();
+        await treeViewPage.addNodeId(secondTreeFolder.entry.id);
 
-        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
+        await treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
 
-        treeViewPage.addNodeId('ThisIdDoesNotExist');
-        treeViewPage.checkErrorMessageIsDisplayed();
+        await treeViewPage.addNodeId('ThisIdDoesNotExist');
+        await treeViewPage.checkErrorMessageIsDisplayed();
 
-        treeViewPage.addNodeId(nodeNames.parentFolder);
+        await treeViewPage.addNodeId(nodeNames.parentFolder);
 
-        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.folder);
-        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.secondFolder);
+        await treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.folder);
+        await treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.secondFolder);
 
-        treeViewPage.clickNode(nodeNames.secondFolder);
+        await treeViewPage.clickNode(nodeNames.secondFolder);
 
-        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
+        await treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
     });
 
     it('[C290071] Should not be able to display files', async () => {
-        treeViewPage.addNodeId(secondTreeFolder.entry.id);
+        await treeViewPage.addNodeId(secondTreeFolder.entry.id);
 
-        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
+        await treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
 
-        treeViewPage.clickNode(nodeNames.thirdFolder);
+        await treeViewPage.clickNode(nodeNames.thirdFolder);
 
-        expect(treeViewPage.getTotalNodes()).toEqual(1);
+        expect(await treeViewPage.getTotalNodes()).toEqual(1);
     });
 
 });

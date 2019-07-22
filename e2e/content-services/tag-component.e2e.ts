@@ -24,7 +24,7 @@ import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-describe('Tag component',  () => {
+describe('Tag component', () => {
 
     const loginPage = new LoginPage();
     const tagPage = new TagPage();
@@ -92,108 +92,110 @@ describe('Tag component',  () => {
     it('[C260374] Should NOT be possible to add a new tag without Node ID', async () => {
         await navigationBarPage.clickTagButton();
 
-        expect(tagPage.getNodeId()).toEqual('');
-        expect(tagPage.getNewTagPlaceholder()).toEqual('New Tag');
+        expect(await tagPage.getNodeId()).toEqual('');
+        expect(await tagPage.getNewTagPlaceholder()).toEqual('New Tag');
+        expect(await tagPage.addTagButtonIsEnabled()).toEqual(false);
+        await tagPage.checkTagListIsEmpty();
+        await tagPage.checkTagListByNodeIdIsEmpty();
+        await tagPage.addNewTagInput('a');
+
         expect(tagPage.addTagButtonIsEnabled()).toEqual(false);
-        tagPage.checkTagListIsEmpty();
-        tagPage.checkTagListByNodeIdIsEmpty();
-        expect(tagPage.addNewTagInput('a').addTagButtonIsEnabled()).toEqual(false);
-        expect(tagPage.getNewTagInput()).toEqual('a');
+        expect(await tagPage.getNewTagInput()).toEqual('a');
     });
 
     it('[C268151] Should be possible to add a new tag to a Node', async () => {
-        tagPage.insertNodeId(pdfFileModel.id);
-        tagPage.addTag(tagList[0]);
+        await tagPage.insertNodeId(pdfFileModel.id);
+        await tagPage.addTag(tagList[0]);
 
-        tagPage.checkTagIsDisplayedInTagList(tagList[0]);
-        tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[0]);
+        await tagPage.checkTagIsDisplayedInTagList(tagList[0]);
+        await tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[0]);
     });
 
     it('[C260377] Should NOT be possible to add a tag that already exists', async () => {
-        tagPage.insertNodeId(pdfFileModel.id);
-        tagPage.addTag(sameTag);
-        tagPage.checkTagIsDisplayedInTagList(sameTag);
-        tagPage.addTag(sameTag);
-        expect(tagPage.getErrorMessage()).toEqual('Tag already exists');
+        await tagPage.insertNodeId(pdfFileModel.id);
+        await tagPage.addTag(sameTag);
+        await tagPage.checkTagIsDisplayedInTagList(sameTag);
+        await tagPage.addTag(sameTag);
+        expect(await tagPage.getErrorMessage()).toEqual('Tag already exists');
     });
 
     it('[C91326] Should be possible to create a tag with different characters', async () => {
-        tagPage.insertNodeId(pdfFileModel.id);
+        await tagPage.insertNodeId(pdfFileModel.id);
 
-        tagPage.addTag(uppercaseTag + digitsTag + nonLatinTag);
+        await tagPage.addTag(uppercaseTag + digitsTag + nonLatinTag);
 
-        browser.driver.sleep(5000); // wait CS return tags
+        await browser.driver.sleep(5000); // wait CS return tags
 
-        tagPage.checkTagIsDisplayedInTagList(uppercaseTag.toLowerCase() + digitsTag + nonLatinTag);
-        tagPage.checkTagIsDisplayedInTagListByNodeId(uppercaseTag.toLowerCase() + digitsTag + nonLatinTag);
+        await tagPage.checkTagIsDisplayedInTagList(uppercaseTag.toLowerCase() + digitsTag + nonLatinTag);
+        await tagPage.checkTagIsDisplayedInTagListByNodeId(uppercaseTag.toLowerCase() + digitsTag + nonLatinTag);
 
-        tagPage.checkTagIsNotDisplayedInTagList(uppercaseTag + digitsTag + nonLatinTag);
+        await tagPage.checkTagIsNotDisplayedInTagList(uppercaseTag + digitsTag + nonLatinTag);
     });
 
     it('[C260375] Should be possible to delete a tag', async () => {
         const deleteTag = StringUtil.generateRandomString().toUpperCase();
 
-        tagPage.insertNodeId(deleteFile.id);
+        await tagPage.insertNodeId(deleteFile.id);
 
-        tagPage.addTag(deleteTag);
+        await tagPage.addTag(deleteTag);
 
-        tagPage.checkTagIsDisplayedInTagList(deleteTag.toLowerCase());
-        tagPage.checkTagIsDisplayedInTagListByNodeId(deleteTag.toLowerCase());
+        await tagPage.checkTagIsDisplayedInTagList(deleteTag.toLowerCase());
+        await tagPage.checkTagIsDisplayedInTagListByNodeId(deleteTag.toLowerCase());
 
-        tagPage.deleteTagFromTagListByNodeId(deleteTag.toLowerCase());
+        await tagPage.deleteTagFromTagListByNodeId(deleteTag.toLowerCase());
 
-        tagPage.checkTagIsNotDisplayedInTagList(deleteTag.toLowerCase());
-        tagPage.checkTagIsNotDisplayedInTagListByNodeId(deleteTag.toLowerCase());
+        await tagPage.checkTagIsNotDisplayedInTagList(deleteTag.toLowerCase());
+        await tagPage.checkTagIsNotDisplayedInTagListByNodeId(deleteTag.toLowerCase());
 
-        tagPage.insertNodeId(deleteFile.id);
+        await tagPage.insertNodeId(deleteFile.id);
 
-        tagPage.addTag(deleteTag);
+        await tagPage.addTag(deleteTag);
 
-        tagPage.checkTagIsDisplayedInTagList(deleteTag.toLowerCase());
-        tagPage.checkTagIsDisplayedInTagListByNodeId(deleteTag.toLowerCase());
+        await tagPage.checkTagIsDisplayedInTagList(deleteTag.toLowerCase());
+        await tagPage.checkTagIsDisplayedInTagListByNodeId(deleteTag.toLowerCase());
 
-        tagPage.deleteTagFromTagList(deleteTag.toLowerCase());
+        await tagPage.deleteTagFromTagList(deleteTag.toLowerCase());
 
-        tagPage.checkTagIsNotDisplayedInTagList(deleteTag.toLowerCase());
-        tagPage.checkTagIsNotDisplayedInTagListByNodeId(deleteTag.toLowerCase());
+        await tagPage.checkTagIsNotDisplayedInTagList(deleteTag.toLowerCase());
+        await tagPage.checkTagIsNotDisplayedInTagListByNodeId(deleteTag.toLowerCase());
     });
 
     it('[C286290] Should be able to hide the delete option from a tag component', async () => {
-        tagPage.insertNodeId(pdfFileModel.id);
-        tagPage.addTag(tagList[3]);
+        await tagPage.insertNodeId(pdfFileModel.id);
+        await tagPage.addTag(tagList[3]);
 
-        tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[3]);
-        tagPage.checkDeleteTagFromTagListByNodeIdIsDisplayed(tagList[3]);
+        await tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[3]);
+        await tagPage.checkDeleteTagFromTagListByNodeIdIsDisplayed(tagList[3]);
 
-        tagPage.clickShowDeleteButtonSwitch();
+        await tagPage.clickShowDeleteButtonSwitch();
 
-        tagPage.checkDeleteTagFromTagListByNodeIdIsNotDisplayed(tagList[3]);
+        await tagPage.checkDeleteTagFromTagListByNodeIdIsNotDisplayed(tagList[3]);
     });
 
     it('[C286472] Should be able to click Show more/less button on List Tags Content Services', async () => {
-        tagPage.insertNodeId(pdfFileModel.id);
+        await tagPage.insertNodeId(pdfFileModel.id);
 
-        tagPage.checkShowMoreButtonIsDisplayed();
-        tagPage.checkShowLessButtonIsNotDisplayed();
+        await tagPage.checkShowMoreButtonIsDisplayed();
+        await tagPage.checkShowLessButtonIsNotDisplayed();
 
-        expect(tagPage.checkTagsOnList()).toEqual(10);
+        expect(await tagPage.checkTagsOnList()).toEqual(10);
 
-        tagPage.clickShowMoreButton();
-        tagPage.checkShowLessButtonIsDisplayed();
+        await tagPage.clickShowMoreButton();
+        await tagPage.checkShowLessButtonIsDisplayed();
 
-        tagPage.clickShowLessButton();
-        tagPage.checkShowLessButtonIsNotDisplayed();
+        await tagPage.clickShowLessButton();
+        await tagPage.checkShowLessButtonIsNotDisplayed();
     });
 
     it('[C260378] Should be possible to add multiple tags', async () => {
-        tagPage.insertNodeId(pdfFileModel.id);
-        tagPage.addTag(tagList[2]);
+        await tagPage.insertNodeId(pdfFileModel.id);
+        await tagPage.addTag(tagList[2]);
 
-        browser.driver.sleep(5000); // wait CS return tags
+        await  browser.driver.sleep(5000); // wait CS return tags
 
-        tagPage.checkTagListIsOrderedAscending();
-        tagPage.checkTagListByNodeIdIsOrderedAscending();
-        tagPage.checkTagListContentServicesIsOrderedAscending();
+        await tagPage.checkTagListIsOrderedAscending();
+        await tagPage.checkTagListByNodeIdIsOrderedAscending();
+        await tagPage.checkTagListContentServicesIsOrderedAscending();
     });
 
 });

@@ -35,7 +35,7 @@ export class InfinitePaginationPage {
     }
 
     async checkLoadMoreButtonIsNotDisplayed(): Promise<void> {
-        await  BrowserVisibility.waitUntilElementIsNotVisible(this.loadMoreButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.loadMoreButton);
     }
 
 }

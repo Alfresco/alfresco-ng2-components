@@ -86,20 +86,20 @@ describe('Document List - Pagination',  () => {
     });
 
     beforeEach(async(done) => {
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         done();
     });
 
     it('[C260062] Should use default pagination settings', async () => {
-        contentServicesPage.doubleClickRow(newFolderModel.name);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.doubleClickRow(newFolderModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfFiles + ' of ' + nrOfFiles);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames)).toEqual(true);
         });
         await paginationPage.checkNextPageButtonIsDisabled();
@@ -107,16 +107,16 @@ describe('Document List - Pagination',  () => {
     });
 
     it('[C274713] Should be able to set Items per page to 20', async () => {
-        contentServicesPage.doubleClickRow(newFolderModel.name);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.doubleClickRow(newFolderModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfFiles + ' of ' + nrOfFiles);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames)).toEqual(true);
         });
         await paginationPage.checkNextPageButtonIsDisabled();
@@ -124,61 +124,61 @@ describe('Document List - Pagination',  () => {
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         await navigationBarPage.clickLogoutButton();
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260069] Should be able to set Items per page to 5', async () => {
-        contentServicesPage.doubleClickRow(newFolderModel.name);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.doubleClickRow(newFolderModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         await paginationPage.selectItemsPerPage(itemsPerPage.five);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
         });
         await paginationPage.clickOnNextPage();
         currentPage++;
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(5, 10))).toEqual(true);
         });
         await paginationPage.clickOnNextPage();
         currentPage++;
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(10, 15))).toEqual(true);
         });
         await paginationPage.clickOnNextPage();
         currentPage++;
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
         });
 
         browser.refresh();
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await navigationBarPage.clickLogoutButton();
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -186,31 +186,31 @@ describe('Document List - Pagination',  () => {
 
     it('[C260067] Should be able to set Items per page to 10', async () => {
         currentPage = 1;
-        contentServicesPage.doubleClickRow(newFolderModel.name);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.doubleClickRow(newFolderModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         await paginationPage.selectItemsPerPage(itemsPerPage.ten);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfFiles);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(0, 10))).toEqual(true);
         });
         await paginationPage.clickOnNextPage();
         currentPage++;
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfFiles);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(10, 20))).toEqual(true);
         });
 
         browser.refresh();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         await navigationBarPage.clickLogoutButton();
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -219,126 +219,126 @@ describe('Document List - Pagination',  () => {
 
     it('[C260065] Should be able to set Items per page to 15', async () => {
         currentPage = 1;
-        contentServicesPage.doubleClickRow(newFolderModel.name);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
+        await contentServicesPage.doubleClickRow(newFolderModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+        expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * currentPage + ' of ' + nrOfFiles);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(0, 15))).toEqual(true);
         });
         currentPage++;
         await paginationPage.clickOnNextPage();
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfFiles + ' of ' + nrOfFiles);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles - itemsPerPage.fifteenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles - itemsPerPage.fifteenValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
         });
 
         browser.refresh();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
     it('[C91320] Pagination should preserve sorting', async () => {
-        contentServicesPage.doubleClickRow(newFolderModel.name);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
+        await contentServicesPage.doubleClickRow(newFolderModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+        expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
 
-        expect(contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('ASC', 'Display name'));
+        expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('ASC', 'Display name'));
 
-        contentServicesPage.sortByName('DESC');
-        expect(contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
+        await contentServicesPage.sortByName('DESC');
+        expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         await paginationPage.selectItemsPerPage(itemsPerPage.five);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
-        expect(contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+        expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         await paginationPage.clickOnNextPage();
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
-        expect(contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+        expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         await paginationPage.selectItemsPerPage(itemsPerPage.ten);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
-        expect(contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+        expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
     });
 
     it('[C260107] Should not display pagination bar when a folder is empty', async () => {
         await paginationPage.selectItemsPerPage(itemsPerPage.five);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        contentServicesPage.doubleClickRow(newFolderModel.name);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
+        await contentServicesPage.doubleClickRow(newFolderModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+        expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        contentServicesPage.createNewFolder(folderTwoModel.name).checkContentIsDisplayed(folderTwoModel.name);
-        contentServicesPage.doubleClickRow(folderTwoModel.name);
-        contentServicesPage.checkPaginationIsNotDisplayed();
+        await contentServicesPage.createNewFolder(folderTwoModel.name).checkContentIsDisplayed(folderTwoModel.name);
+        await contentServicesPage.doubleClickRow(folderTwoModel.name);
+        await contentServicesPage.checkPaginationIsNotDisplayed();
     });
 
     it('[C260071] Should be able to change pagination when having 25 files', async () => {
         currentPage = 1;
-        contentServicesPage.doubleClickRow(folderThreeModel.name);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(folderThreeModel.name);
+        await contentServicesPage.doubleClickRow(folderThreeModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+        expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(folderThreeModel.name);
         await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * currentPage + ' of ' + secondSetNumber);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(0, 15))).toEqual(true);
         });
 
         currentPage++;
         await paginationPage.clickOnNextPage();
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + secondSetNumber + ' of ' + secondSetNumber);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.fifteenValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.fifteenValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(15, 25))).toEqual(true);
         });
 
         currentPage = 1;
         await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.twentyValue * currentPage + ' of ' + secondSetNumber);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.twentyValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.twentyValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(0, 20))).toEqual(true);
         });
 
         currentPage++;
         await paginationPage.clickOnNextPage();
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 21-' + secondSetNumber + ' of ' + secondSetNumber);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.twentyValue);
-        contentServicesPage.getAllRowsNameColumn().then(function(list) {
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.twentyValue);
+        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
             expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(20, 25))).toEqual(true);
         });
     });

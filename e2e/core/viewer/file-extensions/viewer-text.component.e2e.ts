@@ -25,15 +25,15 @@ import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer',  () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
     const acsUser = new AcsUserModel();
@@ -62,7 +62,7 @@ describe('Viewer',  () => {
         done();
     });
 
-    describe('Text Folder Uploaded',  () => {
+    describe('Text Folder Uploaded', () => {
 
         let uploadedTexts;
         let textFolderUploaded;
@@ -73,7 +73,7 @@ describe('Viewer',  () => {
             uploadedTexts = await uploadActions.uploadFolder(textFolderInfo.location, textFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
             done();
         });
@@ -84,11 +84,11 @@ describe('Viewer',  () => {
         });
 
         it('[C280010] Should be possible to open any Text file', async () => {
-            contentServicesPage.doubleClickRow('text');
+            await contentServicesPage.doubleClickRow('text');
 
-            uploadedTexts.forEach((currentFile) => {
+            uploadedTexts.forEach(async (currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }

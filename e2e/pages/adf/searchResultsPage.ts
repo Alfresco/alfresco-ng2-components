@@ -73,7 +73,7 @@ export class SearchResultsPage {
     }
 
     async sortByCreated(sortOrder: string): Promise<void> {
-        await  this.searchSortingPicker.sortBy(sortOrder, 'Created');
+        await this.searchSortingPicker.sortBy(sortOrder, 'Created');
     }
 
     async sortBySize(sortOrder: string): Promise<void> {

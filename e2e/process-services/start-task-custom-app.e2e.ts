@@ -169,7 +169,7 @@ describe('Start Task - Custom App', () => {
         const task = await taskPage.createNewTask();
         await task.addForm(app.formName);
         await task.addName(tasks[4]);
-        await  task.clickStartButton();
+        await task.clickStartButton();
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
 

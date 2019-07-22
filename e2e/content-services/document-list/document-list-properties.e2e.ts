@@ -73,34 +73,34 @@ describe('Document List Component - Properties',  () => {
 
         it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', async () => {
             await navigationBar.clickContentServicesButton();
-            contentServicesPage.doubleClickRow(parentFolder.entry.name);
+            await contentServicesPage.doubleClickRow(parentFolder.entry.name);
 
-            contentServicesPage.disableDropFilesInAFolder();
+            await contentServicesPage.disableDropFilesInAFolder();
 
-            const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
+            const dragAndDropArea = await contentServicesPage.getRowByName(subFolder.entry.name);
 
             const dragAndDrop = new DropActions();
             dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
 
-            contentServicesPage.checkContentIsDisplayed(pngFile.name);
-            contentServicesPage.doubleClickRow(subFolder.entry.name);
-            contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
+            await contentServicesPage.checkContentIsDisplayed(pngFile.name);
+            await contentServicesPage.doubleClickRow(subFolder.entry.name);
+            await contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
         });
 
         it('[C91319] Should allow upload content on a folder row if allowDropFiles is true', async () => {
             await navigationBar.clickContentServicesButton();
-            contentServicesPage.doubleClickRow(parentFolder.entry.name);
+            await contentServicesPage.doubleClickRow(parentFolder.entry.name);
 
-            contentServicesPage.enableDropFilesInAFolder();
+            await contentServicesPage.enableDropFilesInAFolder();
 
-            const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
+            const dragAndDropArea = await contentServicesPage.getRowByName(subFolder.entry.name);
 
             const dragAndDrop = new DropActions();
             dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
 
-            contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
-            contentServicesPage.doubleClickRow(subFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(pngFile.name);
+            await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
+            await contentServicesPage.doubleClickRow(subFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(pngFile.name);
         });
     });
 });

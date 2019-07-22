@@ -94,7 +94,7 @@ describe('Version component actions',  () => {
 
     it('[C260083] Download files - Different size values', async () => {
         await contentListPage.selectRow(txtFileModel.name);
-        await  contentServicesPage.clickDownloadButton();
+        await contentServicesPage.clickDownloadButton();
         await FileBrowserUtil.isFileDownloaded(txtFileModel.name);
         await BrowserVisibility.waitUntilDialogIsClose();
 

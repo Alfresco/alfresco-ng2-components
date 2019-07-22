@@ -205,7 +205,7 @@ describe('Search component - Search Bar', () => {
         await searchDialog.resultTableContainsRow(firstFolderModel.name);
         await searchDialog.clickOnSpecificRow(firstFolderModel.name);
 
-        expect(contentServicesPage.currentFolderName()).toEqual(firstFolderModel.name);
+        expect(await contentServicesPage.currentFolderName()).toEqual(firstFolderModel.name);
 
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
@@ -238,10 +238,10 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C260258] Should be able to find an existent file in search results', async () => {
-        await  searchDialog.checkSearchIconIsVisible();
-        await  searchDialog.clickOnSearchIcon();
-        await  searchDialog.checkSearchBarIsVisible();
-        await  searchDialog.enterTextAndPressEnter(firstFileModel.name);
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.checkSearchBarIsVisible();
+        await searchDialog.enterTextAndPressEnter(firstFileModel.name);
 
         await searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });

@@ -84,72 +84,72 @@ describe('Enable infinite scrolling',  () => {
 
     beforeEach(async (done) => {
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.checkAcsContainer();
+        await contentServicesPage.checkAcsContainer();
         done();
     });
 
     it('[C260484] Should be possible to enable infinite scrolling', async () => {
-        contentServicesPage.doubleClickRow(folderModel.name);
-        contentServicesPage.enableInfiniteScrolling();
-        infinitePaginationPage.clickLoadMoreButton();
+        await contentServicesPage.doubleClickRow(folderModel.name);
+        await contentServicesPage.enableInfiniteScrolling();
+        await infinitePaginationPage.clickLoadMoreButton();
         for (let i = 0; i < nrOfFiles; i++) {
-            contentServicesPage.checkContentIsDisplayed(fileNames[i]);
+            await contentServicesPage.checkContentIsDisplayed(fileNames[i]);
         }
     });
 
     it('[C268165] Delete folder when infinite scrolling is enabled', async () => {
-        contentServicesPage.doubleClickRow(deleteUploaded.entry.name);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
-        contentServicesPage.enableInfiniteScrolling();
-        infinitePaginationPage.clickLoadMoreButton();
+        await contentServicesPage.doubleClickRow(deleteUploaded.entry.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.enableInfiniteScrolling();
+        await infinitePaginationPage.clickLoadMoreButton();
         for (let i = 0; i < nrOfDeletedFiles; i++) {
-            contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
+            await contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
         }
-        expect(contentServicesPage.getDocumentList().dataTablePage().numberOfRows()).toEqual(nrOfDeletedFiles);
+        expect(await contentServicesPage.getDocumentList().dataTablePage().numberOfRows()).toEqual(nrOfDeletedFiles);
 
-        contentServicesPage.deleteContent(deleteFileNames[nrOfDeletedFiles - 1]);
-        contentServicesPage.checkContentIsNotDisplayed(deleteFileNames[nrOfDeletedFiles - 1]);
+        await contentServicesPage.deleteContent(deleteFileNames[nrOfDeletedFiles - 1]);
+        await contentServicesPage.checkContentIsNotDisplayed(deleteFileNames[nrOfDeletedFiles - 1]);
 
         for (let i = 0; i < nrOfDeletedFiles - 1; i++) {
-            contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
+            await contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
         }
     });
 
     it('[C299201] Should use default pagination settings for infinite pagination', async () => {
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.doubleClickRow(folderModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.doubleClickRow(folderModel.name);
 
-        contentServicesPage.enableInfiniteScrolling();
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(pageSize);
-        infinitePaginationPage.clickLoadMoreButton();
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
+        await contentServicesPage.enableInfiniteScrolling();
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(pageSize);
+        await infinitePaginationPage.clickLoadMoreButton();
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
 
-        infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+        await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
     });
 
     it('[C299202] Should not display load more button when all the files are already displayed', async () => {
-        LocalStorageUtil.setUserPreference('paginationSize', '30');
+        await LocalStorageUtil.setUserPreference('paginationSize', '30');
 
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.checkAcsContainer();
+        await contentServicesPage.checkAcsContainer();
 
-        contentServicesPage.doubleClickRow(folderModel.name);
+        await contentServicesPage.doubleClickRow(folderModel.name);
 
-        contentServicesPage.enableInfiniteScrolling();
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
+        await contentServicesPage.enableInfiniteScrolling();
+        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
 
-        infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+        await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
     });
 
     it('[C299203] Should not display load more button when a folder is empty', async () => {
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.checkAcsContainer();
+        await contentServicesPage.checkAcsContainer();
 
-        contentServicesPage.doubleClickRow(emptyFolderModel.entry.name);
+        await contentServicesPage.doubleClickRow(emptyFolderModel.entry.name);
 
-        infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+        await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
     });
 
 });

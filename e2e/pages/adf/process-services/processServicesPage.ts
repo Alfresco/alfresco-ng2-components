@@ -70,7 +70,7 @@ export class ProcessServicesPage {
 
     async checkAppIsDisplayed(applicationName): Promise<void> {
         const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
-        await  BrowserVisibility.waitUntilElementIsVisible(app);
+        await BrowserVisibility.waitUntilElementIsVisible(app);
     }
 
 }

@@ -61,12 +61,12 @@ describe('Create folder directive', () => {
 
     it('[C260154] Should not create the folder if cancel button is clicked', async () => {
         const folderName = 'cancelFolder';
-        await  contentServicesPage.clickOnCreateNewFolder();
+        await contentServicesPage.clickOnCreateNewFolder();
 
-        await  createFolderDialog.addFolderName(folderName);
-        await  createFolderDialog.clickOnCancelButton();
+        await createFolderDialog.addFolderName(folderName);
+        await createFolderDialog.clickOnCancelButton();
 
-        await  contentServicesPage.checkContentIsNotDisplayed(folderName);
+        await contentServicesPage.checkContentIsNotDisplayed(folderName);
     });
 
     it('[C260155] Should enable the Create button only when a folder name is present', async () => {
@@ -77,69 +77,69 @@ describe('Create folder directive', () => {
 
         await createFolderDialog.addFolderName(folderName);
 
-        await  createFolderDialog.checkCreateUpdateBtnIsEnabled();
+        await createFolderDialog.checkCreateUpdateBtnIsEnabled();
     });
 
     it('[C260156] Should not be possible create two folder with the same name', async () => {
         const folderName = 'duplicate';
-        await  contentServicesPage.createNewFolder(folderName);
+        await contentServicesPage.createNewFolder(folderName);
 
-        await  contentServicesPage.checkContentIsDisplayed(folderName);
+        await contentServicesPage.checkContentIsDisplayed(folderName);
 
-        await  contentServicesPage.createNewFolder(folderName);
+        await contentServicesPage.createNewFolder(folderName);
 
-        await  notificationHistoryPage.checkNotifyContains('There\'s already a folder with this name. Try a different name.');
+        await notificationHistoryPage.checkNotifyContains('There\'s already a folder with this name. Try a different name.');
     });
 
     it('[C260157] Should be possible create a folder under a folder with the same name', async () => {
         const folderName = 'sameSubFolder';
 
-        await   contentServicesPage.createNewFolder(folderName);
-        await   contentServicesPage.checkContentIsDisplayed(folderName);
+        await contentServicesPage.createNewFolder(folderName);
+        await contentServicesPage.checkContentIsDisplayed(folderName);
 
-        await  contentServicesPage.doubleClickRow(folderName);
+        await contentServicesPage.doubleClickRow(folderName);
 
-        await  contentServicesPage.createNewFolder(folderName);
-        await  contentServicesPage.checkContentIsDisplayed(folderName);
+        await contentServicesPage.createNewFolder(folderName);
+        await contentServicesPage.checkContentIsDisplayed(folderName);
     });
 
     it('[C260158] Should be possible add a folder description when create a new folder', async () => {
         const folderName = 'folderDescription';
         const description = 'this is the description';
 
-        await  contentServicesPage.clickOnCreateNewFolder();
+        await contentServicesPage.clickOnCreateNewFolder();
 
         await createFolderDialog.addFolderName(folderName);
         await createFolderDialog.addFolderDescription(description);
 
         await createFolderDialog.clickOnCreateUpdateButton();
 
-        await  contentServicesPage.checkContentIsDisplayed(folderName);
+        await contentServicesPage.checkContentIsDisplayed(folderName);
 
-        await  contentServicesPage.metadataContent(folderName);
+        await contentServicesPage.metadataContent(folderName);
 
         expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('this is the description');
     });
 
     it('[C260159] Should not be possible create a folder with banned character', async () => {
-        await   browser.refresh();
-        await   contentServicesPage.clickOnCreateNewFolder();
+        await  browser.refresh();
+        await contentServicesPage.clickOnCreateNewFolder();
 
-        await   createFolderDialog.addFolderName('*');
-        await   createFolderDialog.checkCreateUpdateBtnIsDisabled();
-        await   createFolderDialog.addFolderName('<');
-        await   createFolderDialog.checkCreateUpdateBtnIsDisabled();
-        await  createFolderDialog.addFolderName('>');
+        await  createFolderDialog.addFolderName('*');
         await  createFolderDialog.checkCreateUpdateBtnIsDisabled();
-        await  createFolderDialog.addFolderName('\\');
+        await  createFolderDialog.addFolderName('<');
         await  createFolderDialog.checkCreateUpdateBtnIsDisabled();
-        await  createFolderDialog.addFolderName('/');
-        await  createFolderDialog.checkCreateUpdateBtnIsDisabled();
-        await  createFolderDialog.addFolderName('?');
-        await  createFolderDialog.checkCreateUpdateBtnIsDisabled();
-        await  createFolderDialog.addFolderName(':');
-        await  createFolderDialog.checkCreateUpdateBtnIsDisabled();
-        await  createFolderDialog.addFolderName('|');
-        await  createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await createFolderDialog.addFolderName('>');
+        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await createFolderDialog.addFolderName('\\');
+        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await createFolderDialog.addFolderName('/');
+        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await createFolderDialog.addFolderName('?');
+        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await createFolderDialog.addFolderName(':');
+        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await createFolderDialog.addFolderName('|');
+        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
     });
 });

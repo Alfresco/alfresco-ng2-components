@@ -105,7 +105,7 @@ describe('Content Services Viewer',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
 
         done();
     });
@@ -124,7 +124,7 @@ describe('Content Services Viewer',  () => {
     });
 
     it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', async () => {
-        contentServicesPage.checkAcsContainer();
+        await contentServicesPage.checkAcsContainer();
 
         await viewerPage.viewFile(pdfFile.name);
         await viewerPage.checkZoomInButtonIsDisplayed();
@@ -408,6 +408,6 @@ describe('Content Services Viewer',  () => {
         await viewerPage.viewFile(protectedFile.name);
         await viewerPage.checkPasswordDialogIsDisplayed();
         await viewerPage.clickClosePasswordDialog();
-        contentServicesPage.checkContentIsDisplayed(protectedFile.name);
+        await contentServicesPage.checkContentIsDisplayed(protectedFile.name);
     });
 });

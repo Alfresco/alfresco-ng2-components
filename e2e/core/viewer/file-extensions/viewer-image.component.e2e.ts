@@ -82,7 +82,7 @@ describe('Viewer',  () => {
             uploadedImgRenditionFolderInfo = await uploadActions.uploadFolder(imgRenditionFolderInfo.location, imgFolderRenditionUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
             done();
         });
@@ -93,21 +93,21 @@ describe('Viewer',  () => {
         });
 
         it('[C279966] Should be possible to open any Image supported extension', async () => {
-            contentServicesPage.doubleClickRow('images');
+            await contentServicesPage.doubleClickRow('images');
 
-            uploadedImages.forEach((currentFile) => {
+            uploadedImages.forEach(async(currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkImgViewerIsDisplayed();
                     await viewerPage.clickCloseButton();
                 }
             });
 
-            contentServicesPage.doubleClickRow('images-rendition');
+            await contentServicesPage.doubleClickRow('images-rendition');
 
-            uploadedImgRenditionFolderInfo.forEach((currentFile) => {
+            uploadedImgRenditionFolderInfo.forEach(async(currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }

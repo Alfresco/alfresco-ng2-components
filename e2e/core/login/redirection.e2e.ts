@@ -63,57 +63,57 @@ describe('Login component - Redirect', () => {
     });
 
     it('[C213838] Should after login in CS be redirect to Login page when try to access to PS', async () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcm();
-        loginPage.login(user.id, user.password);
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcm();
+        await loginPage.login(user.id, user.password);
 
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.checkAcsContainer();
+        await contentServicesPage.checkAcsContainer();
 
         await navigationBarPage.navigateToProcessServicesPage();
 
-        loginPage.waitForElements();
+        await loginPage.waitForElements();
     });
 
     it('[C260085] Should after login in PS be redirect to Login page when try to access to CS', async () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderBpm();
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderBpm();
 
-        loginPage.enableSuccessRouteSwitch();
-        loginPage.enterSuccessRoute('activiti');
+        await loginPage.enableSuccessRouteSwitch();
+        await loginPage.enterSuccessRoute('activiti');
 
-        loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
+        await processServicesPage.checkApsContainer();
 
         await navigationBarPage.clickContentServicesButton();
 
-        loginPage.waitForElements();
+        await loginPage.waitForElements();
     });
 
     it('[C260081] Should after login in BOTH not be redirect to Login page when try to access to CS or PS', async () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
 
-        settingsPage.setProviderEcmBpm();
+        await settingsPage.setProviderEcmBpm();
 
-        loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
+        await processServicesPage.checkApsContainer();
 
         await navigationBarPage.clickContentServicesButton();
-        contentServicesPage.checkAcsContainer();
+        await contentServicesPage.checkAcsContainer();
     });
 
     it('[C260088] Should be re-redirect to the request URL after login when try to access to a protect URL ', async () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcm();
-        loginPage.login(user.id, user.password);
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcm();
+        await loginPage.login(user.id, user.password);
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
@@ -121,7 +121,7 @@ describe('Login component - Redirect', () => {
             expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
         });
 
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.waitForTableBody();
 
         await navigationBarPage.clickLogoutButton();
 
@@ -129,9 +129,9 @@ describe('Login component - Redirect', () => {
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
-        loginPage.waitForElements();
+        await loginPage.waitForElements();
 
-        loginPage.login(user.id, user.password);
+        await loginPage.login(user.id, user.password);
 
         browser.getCurrentUrl().then((actualUrl) => {
             expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
@@ -140,10 +140,10 @@ describe('Login component - Redirect', () => {
     });
 
     it('[C299161] Should redirect user to requested URL after reloading login page', async () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcm();
-        loginPage.login(user.id, user.password);
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcm();
+        await loginPage.login(user.id, user.password);
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
@@ -151,26 +151,25 @@ describe('Login component - Redirect', () => {
             expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
         });
 
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.waitForTableBody();
 
         await navigationBarPage.clickLogoutButton();
 
         logoutPage.checkLogoutSectionIsDisplayed();
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
-        loginPage.waitForElements();
-        browser.refresh();
-        loginPage.waitForElements();
+        await loginPage.waitForElements();
+        await browser.refresh();
+        await loginPage.waitForElements();
 
-        loginPage.enterUsername(user.id);
-        loginPage.enterPassword(user.password);
-        loginPage.clickSignInButton();
+        await loginPage.enterUsername(user.id);
+        await loginPage.enterPassword(user.password);
+        await loginPage.clickSignInButton();
 
         await navigationBarPage.checkMenuButtonIsDisplayed();
 
-        browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-        });
+        const actualUrl = await browser.getCurrentUrl();
+        expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
 
     });
 });
