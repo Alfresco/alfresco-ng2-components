@@ -156,8 +156,8 @@ export class DataTableComponentPage {
     getTooltip(columnName, columnValue): wdpromise.Promise<string> {
         return this.getCellElementByValue(columnName, columnValue).getAttribute('title');
     }
-  
-    async rightClickOnRowByIndex(index: number) : Promise<void> {
+
+    async rightClickOnRowByIndex(index: number): Promise<void> {
         const row = this.getRowByIndex(index);
         await BrowserActions.rightClick(row);
         await BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
