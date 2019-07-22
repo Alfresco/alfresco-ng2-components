@@ -27,7 +27,7 @@ import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../..//pages/adf/navigationBarPage';
 
-describe('Viewer', () => {
+describe('Viewer',  () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
@@ -85,7 +85,7 @@ describe('Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    describe('Other Folder Uploaded', () => {
+    describe('Other Folder Uploaded',  () => {
 
         let uploadedOthers;
         let otherFolderUploaded;
@@ -96,7 +96,7 @@ describe('Viewer', () => {
             uploadedOthers = await uploadActions.uploadFolder(otherFolderInfo.location, otherFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
             done();
         });
@@ -106,7 +106,7 @@ describe('Viewer', () => {
             done();
         });
 
-        it('[C280012] Should be possible to open any other Document supported extension', () => {
+        it('[C280012] Should be possible to open any other Document supported extension', async () => {
             contentServicesPage.doubleClickRow('other');
 
             uploadedOthers.forEach((currentFile) => {

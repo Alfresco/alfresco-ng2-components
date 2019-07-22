@@ -26,7 +26,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import * as path from 'path';
 import { Util } from '../../util/util';
 
-describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
+describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true',  () => {
 
     const settingsPage = new SettingsPage();
     const navigationBarPage = new NavigationBarPage();
@@ -71,7 +71,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     const acsUser = new UserModel();
     let identityService: IdentityService;
 
-    describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
+    describe('SSO in ADF using ACS and AIS, implicit flow set',  () => {
 
         beforeAll(async (done) => {
             const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');

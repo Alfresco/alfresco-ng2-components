@@ -29,7 +29,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
-describe('Task Filters Sorting', () => {
+describe('Task Filters Sorting',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -99,7 +99,7 @@ describe('Task Filters Sorting', () => {
 
     });
 
-    it('[C277254] Should display tasks under new filter from newest to oldest when they are completed', () => {
+    it('[C277254] Should display tasks under new filter from newest to oldest when they are completed', async () => {
         browser.controlFlow().execute(async () => {
             const newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Newest first';
@@ -122,7 +122,7 @@ describe('Task Filters Sorting', () => {
 
     });
 
-    it('[C277255] Should display tasks under new filter from oldest to newest when they are completed', () => {
+    it('[C277255] Should display tasks under new filter from oldest to newest when they are completed', async () => {
         browser.controlFlow().execute(async () => {
             const newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Newest last';
@@ -144,7 +144,7 @@ describe('Task Filters Sorting', () => {
         expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[2].name);
     });
 
-    it('[C277256] Should display tasks under new filter from closest due date to farthest when they are completed', () => {
+    it('[C277256] Should display tasks under new filter from closest due date to farthest when they are completed', async () => {
         browser.controlFlow().execute(async () => {
             const newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Due first';
@@ -166,7 +166,7 @@ describe('Task Filters Sorting', () => {
         expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[0].name);
     });
 
-    it('[C277257] Should display tasks under new filter from farthest due date to closest when they are completed', () => {
+    it('[C277257] Should display tasks under new filter from farthest due date to closest when they are completed', async () => {
         browser.controlFlow().execute(async () => {
             const newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Due last';
@@ -188,7 +188,7 @@ describe('Task Filters Sorting', () => {
         expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[2].name);
     });
 
-    it('[C277258] Should display tasks under new filter from newest to oldest when they are open  ', () => {
+    it('[C277258] Should display tasks under new filter from newest to oldest when they are open  ', async () => {
         browser.controlFlow().execute(async () => {
             const newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Newest first Open';
@@ -210,7 +210,7 @@ describe('Task Filters Sorting', () => {
         expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[3].name);
     });
 
-    it('[C277259] Should display tasks under new filter from oldest to newest when they are open', () => {
+    it('[C277259] Should display tasks under new filter from oldest to newest when they are open', async () => {
         browser.controlFlow().execute(async () => {
             const newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Newest last Open';
@@ -232,7 +232,7 @@ describe('Task Filters Sorting', () => {
         expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[5].name);
     });
 
-    it('[C277260] Should display tasks under new filter from closest due date to farthest when they are open', () => {
+    it('[C277260] Should display tasks under new filter from closest due date to farthest when they are open', async () => {
         browser.controlFlow().execute(async () => {
             const newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Due first Open';
@@ -254,7 +254,7 @@ describe('Task Filters Sorting', () => {
         expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[3].name);
     });
 
-    it('[C277261] Should display tasks under new filter from farthest due date to closest when they are open', () => {
+    it('[C277261] Should display tasks under new filter from farthest due date to closest when they are open', async () => {
         browser.controlFlow().execute(async () => {
             const newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Due last Open';

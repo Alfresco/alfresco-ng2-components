@@ -20,7 +20,7 @@ import { browser } from 'protractor';
 import { UserInfoPage } from '@alfresco/adf-testing';
 import { IdentityService, ApiService } from '@alfresco/adf-testing';
 
-describe('User Info - SSO', () => {
+describe('User Info - SSO',  () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
@@ -53,7 +53,7 @@ describe('User Info - SSO', () => {
         }
     });
 
-    it('[C290066] Should display UserInfo when login using SSO', () => {
+    it('[C290066] Should display UserInfo when login using SSO', async () => {
         userInfoPage.clickUserProfile();
         expect(userInfoPage.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
         expect(userInfoPage.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);

@@ -29,7 +29,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Task List Pagination', () => {
+describe('Task List Pagination',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -81,7 +81,7 @@ describe('Task List Pagination', () => {
         done();
     });
 
-    it('[C260301] Should display default pagination', () => {
+    it('[C260301] Should display default pagination', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
@@ -93,7 +93,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
     });
 
-    it('[C260304] Should be possible to set Items per page to 5', () => {
+    it('[C260304] Should be possible to set Items per page to 5', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.five);
@@ -121,7 +121,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
     });
 
-    it('[C260303] Should be possible to set Items per page to 10', () => {
+    it('[C260303] Should be possible to set Items per page to 10', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
@@ -138,7 +138,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
     });
 
-    it('[C260302] Should be possible to set Items per page to 15', () => {
+    it('[C260302] Should be possible to set Items per page to 15', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
@@ -155,7 +155,7 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
-    it('[C261006] Should be possible to navigate to a page with page number dropdown', () => {
+    it('[C261006] Should be possible to navigate to a page with page number dropdown', async () => {
         currentPage = 1;
         totalPages = 2;
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp();

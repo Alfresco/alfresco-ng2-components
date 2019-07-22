@@ -23,7 +23,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Universal Icon component', function () {
+describe('Universal Icon component',  ()=> {
 
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
@@ -48,7 +48,7 @@ describe('Universal Icon component', function () {
         done();
     });
 
-    it('[C291872] Should display the icons on the page', () => {
+    it('[C291872] Should display the icons on the page', async () => {
 
         expect(iconsPage.locateLigatureIcon('folder').isDisplayed()).toBe(true, 'Ligature icon is not displayed');
 

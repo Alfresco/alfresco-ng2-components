@@ -28,7 +28,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
-describe('Process List - Pagination when adding processes', () => {
+describe('Process List - Pagination when adding processes',  () => {
 
     const itemsPerPage = {
         fifteen: '15',

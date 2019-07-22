@@ -76,12 +76,12 @@ describe('Radio Buttons Widget', () => {
         done();
     });
 
-    it('[C277316] Should display empty radio buttons when no preselection is configured', () => {
+    it('[C277316] Should display empty radio buttons when no preselection is configured', async () => {
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         widget.radioWidget().isSelectionClean(app.FIELD.radio_buttons_id);
     });
 
-    it('[C274704] Should be able to set visibility properties for Radio Button widget', () => {
+    it('[C274704] Should be able to set visibility properties for Radio Button widget', async () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.radio_buttons_id);
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 

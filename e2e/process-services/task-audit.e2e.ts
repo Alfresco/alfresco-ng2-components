@@ -33,7 +33,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import path = require('path');
 import { Util } from '../util/util';
 
-describe('Task Audit', () => {
+describe('Task Audit',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -77,7 +77,7 @@ describe('Task Audit', () => {
         done();
     });
 
-    it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', () => {
+    it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', async () => {
         processServices.goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkContentIsDisplayed(taskTaskApp);
@@ -86,7 +86,7 @@ describe('Task Audit', () => {
         expect(Util.fileExists(auditLogFile, 10)).toBe(true);
     });
 
-    it('[C260389] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone completed task', () => {
+    it('[C260389] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone completed task', async () => {
         processServices.goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkContentIsDisplayed(taskTaskApp);
@@ -100,7 +100,7 @@ describe('Task Audit', () => {
         expect(Util.fileExists(auditLogFile, 20)).toBe(true);
     });
 
-    it('[C263944] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone completed task', () => {
+    it('[C263944] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone completed task', async () => {
         processServices.goToTaskApp().clickTasksButton();
 
         taskPage.createNewTask().addName(taskCompleteCustomApp).clickStartButton();
@@ -117,7 +117,7 @@ describe('Task Audit', () => {
         expect(Util.fileExists(auditLogFile, 20)).toBe(true);
     });
 
-    it('[C263943] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone running task', () => {
+    it('[C263943] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone running task', async () => {
         processServices.goToApp(appModel.name).clickTasksButton();
 
         taskPage.createNewTask().addName(taskCustomApp).clickStartButton();

@@ -21,9 +21,9 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import resources = require('../util/resources');
 
-describe('Task filters cloud', () => {
+describe('Task filters cloud',  () => {
 
-    describe('Task Filters', () => {
+    describe('Task Filters',  () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -68,7 +68,7 @@ describe('Task filters cloud', () => {
             appListCloudComponent.goToApp(simpleApp);
         });
 
-        it('[C290011] Should display default filters when an app is deployed', () => {
+        it('[C290011] Should display default filters when an app is deployed', async () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             tasksCloudDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
         });
@@ -106,7 +106,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask);
         });
 
-        it('[C291792] Should select the first task filter from the list as default', () => {
+        it('[C291792] Should select the first task filter from the list as default', async () => {
 
             expect(tasksCloudDemoPage.firstFilterIsActive()).toBe(true);
         });

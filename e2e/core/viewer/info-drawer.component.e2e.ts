@@ -26,7 +26,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Info Drawer', () => {
+describe('Info Drawer',  () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
@@ -79,7 +79,7 @@ describe('Info Drawer', () => {
         contentServicesPage.checkAcsContainer();
     });
 
-    it('[C277251] Should display the icon when the icon property is defined', () => {
+    it('[C277251] Should display the icon when the icon property is defined', async () => {
         viewerPage.viewFile(pngFileUploaded.entry.name);
         viewerPage.clickLeftSidebarButton();
         viewerPage.enableShowTabWithIcon();
@@ -89,7 +89,7 @@ describe('Info Drawer', () => {
         expect(viewerPage.getTabIconById(2)).toBe('comment');
     });
 
-    it('[C277252] Should display the label when the label property is defined', () => {
+    it('[C277252] Should display the label when the label property is defined', async () => {
         viewerPage.viewFile(pngFileUploaded.entry.name);
         viewerPage.clickLeftSidebarButton();
         viewerPage.enableShowTabWithIcon();

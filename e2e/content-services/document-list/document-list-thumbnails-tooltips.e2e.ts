@@ -23,7 +23,7 @@ import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 
-describe('Document List Component', () => {
+describe('Document List Component',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -57,7 +57,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    describe('Thumbnails and tooltips', () => {
+    describe('Thumbnails and tooltips',  () => {
 
         const pdfFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -113,11 +113,11 @@ describe('Document List Component', () => {
             contentServicesPage.goToDocumentList();
         });
 
-        it('[C260108] Should display tooltip for file\'s name', () => {
+        it('[C260108] Should display tooltip for file\'s name', async () => {
             expect(contentServicesPage.getDocumentList().getTooltip(pdfFile.name)).toEqual(pdfFile.name);
         });
 
-        it('[C260109] Should display tooltip for folder\'s name', () => {
+        it('[C260109] Should display tooltip for folder\'s name', async () => {
             expect(contentServicesPage.getDocumentList().getTooltip(folderName)).toEqual(folderName);
         });
 

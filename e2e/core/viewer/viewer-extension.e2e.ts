@@ -27,16 +27,16 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer', () => {
+describe('Viewer',  () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
     const acsUser = new AcsUserModel();
@@ -80,18 +80,18 @@ describe('Viewer', () => {
 
     describe('Viewer extension', () => {
 
-        it('[C297698] Should be able to add an extension for code editor viewer', () => {
-            navigationBarPage.clickAboutButton();
+        it('[C297698] Should be able to add an extension for code editor viewer', async () => {
+            await navigationBarPage.clickAboutButton();
 
-            monacoExtensionPage.checkMonacoPluginIsDisplayed();
+            await monacoExtensionPage.checkMonacoPluginIsDisplayed();
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
-            contentServicesPage.waitForTableBody();
-            contentServicesPage.checkContentIsDisplayed(jsFileInfo.name);
-            contentServicesPage.doubleClickRow(jsFileInfo.name);
+            await  contentServicesPage.waitForTableBody();
+            await contentServicesPage.checkContentIsDisplayed(jsFileInfo.name);
+            await  contentServicesPage.doubleClickRow(jsFileInfo.name);
 
-            viewerPage.checkCodeViewerIsDisplayed();
+            await viewerPage.checkCodeViewerIsDisplayed();
         });
     });
 });

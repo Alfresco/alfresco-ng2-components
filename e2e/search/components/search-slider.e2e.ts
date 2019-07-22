@@ -27,7 +27,7 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
 
-describe('Search Number Range Filter', () => {
+describe('Search Number Range Filter',  () => {
 
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
@@ -91,7 +91,7 @@ describe('Search Number Range Filter', () => {
         done();
     });
 
-    it('[C276970] Should be able to expand/collapse Search Size Slider', () => {
+    it('[C276970] Should be able to expand/collapse Search Size Slider', async () => {
         searchFilters.checkSizeSliderFilterIsExpanded()
             .clickSizeSliderFilterHeader();
         sizeSliderFilter.checkSliderIsDisplayed()
@@ -100,7 +100,7 @@ describe('Search Number Range Filter', () => {
         searchFilters.checkSizeSliderFilterIsCollapsed();
     });
 
-    it('[C276972] Should be keep value when Search Size Slider is collapsed', () => {
+    it('[C276972] Should be keep value when Search Size Slider is collapsed', async () => {
         const size = 5;
         sizeSliderFilter.checkSliderIsDisplayed().setValue(size);
         searchFilters.clickSizeSliderFilterHeader()
@@ -111,7 +111,7 @@ describe('Search Number Range Filter', () => {
         expect(sizeSliderFilter.getValue()).toEqual(`${size}`);
     });
 
-    it('[C276981] Should be able to clear value in Search Size Slider', () => {
+    it('[C276981] Should be able to clear value in Search Size Slider', async () => {
         const size = 5;
         sizeSliderFilter.checkSliderIsDisplayed().setValue(size);
         searchResults.sortBySize('DESC')
@@ -151,7 +151,7 @@ describe('Search Number Range Filter', () => {
         });
     });
 
-    describe('Configuration change', () => {
+    describe('Configuration change',  () => {
         let jsonFile;
 
         beforeEach(() => {

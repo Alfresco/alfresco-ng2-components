@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Attach Folder widget', () => {
+describe('Attach Folder widget',  () => {
     const loginPage = new LoginPage();
     let processUserModel;
     const taskPage = new TasksPage();
@@ -73,7 +73,7 @@ describe('Attach Folder widget', () => {
         done();
     });
 
-    it('[C276745] Should be possible to set visibility properties for Attach Folder Widget', () => {
+    it('[C276745] Should be possible to set visibility properties for Attach Folder Widget', async () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.upload_button_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.upload_button_id);

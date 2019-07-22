@@ -27,7 +27,7 @@ import resources = require('../../util/resources');
 import CONSTANTS = require('../../util/constants');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Comment Component', () => {
+describe('Comment Component',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -114,7 +114,7 @@ describe('Comment Component', () => {
 
     });
 
-    it('[C276948] Should be able to add a comment on a file', () => {
+    it('[C276948] Should be able to add a comment on a file', async () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.checkImgViewerIsDisplayed();
         viewerPage.clickInfoButton();
@@ -130,7 +130,7 @@ describe('Comment Component', () => {
         expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
-    it('[C280021] Should be able to add a multiline comment on a file', () => {
+    it('[C280021] Should be able to add a multiline comment on a file', async () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.checkImgViewerIsDisplayed();
         viewerPage.clickInfoButton();
@@ -154,7 +154,7 @@ describe('Comment Component', () => {
         expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
-    it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', () => {
+    it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', async () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.checkImgViewerIsDisplayed();
         viewerPage.clickInfoButton();
@@ -170,7 +170,7 @@ describe('Comment Component', () => {
         expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
-    describe('Consumer Permissions', () => {
+    describe('Consumer Permissions',  () => {
         let site, pngUploadedFile;
 
         beforeAll(async (done) => {
@@ -201,7 +201,7 @@ describe('Comment Component', () => {
             done();
         });
 
-        it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', () => {
+        it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', async () => {
             navigationBar.goToSite(site);
             contentServicesPage.checkAcsContainer();
 

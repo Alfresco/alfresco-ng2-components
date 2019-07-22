@@ -48,7 +48,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { BreadCrumbDropdownPage } from '../pages/adf/content-services/breadcrumb/breadCrumbDropdownPage';
 
-describe('Start Task Form', () => {
+describe('Start Task Form',  () => {
 
     const loginSSOPage = new LoginSSOPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
@@ -182,7 +182,7 @@ describe('Start Task Form', () => {
         done();
     });
 
-    describe('StandaloneTask with form', () => {
+    describe('StandaloneTask with form',  () => {
 
         beforeEach(() => {
             navigationBarPage.navigateToProcessServicesCloudPage();
@@ -192,7 +192,7 @@ describe('Start Task Form', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         });
 
-        it('[C307976] Should be able to start and save a task with a form', () => {
+        it('[C307976] Should be able to start and save a task with a form', async () => {
             tasksCloudDemoPage.openNewTaskForm();
             startTask.checkFormIsDisplayed();
             startTask.addName(standaloneTaskName);
@@ -224,7 +224,7 @@ describe('Start Task Form', () => {
             taskFormCloudComponent.checkCompleteButtonIsDisplayed();
         });
 
-        it('[C311428] Should display the Standalone forms based on the flag set', () => {
+        it('[C311428] Should display the Standalone forms based on the flag set', async () => {
             tasksCloudDemoPage.openNewTaskForm();
             startTask.checkFormIsDisplayed();
             startTask.checkFormDefinitionIsNotDisplayed('UploadFileForm');
@@ -234,7 +234,7 @@ describe('Start Task Form', () => {
 
     });
 
-    describe('Start a process with a start event form', () => {
+    describe('Start a process with a start event form',  () => {
 
         beforeEach(() => {
             navigationBarPage.navigateToProcessServicesCloudPage();
@@ -303,7 +303,7 @@ describe('Start Task Form', () => {
 
     });
 
-    describe('Attach content to process-cloud task form using upload widget', async () => {
+    describe('Attach content to process-cloud task form using upload widget',  () => {
 
         beforeEach(async (done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();

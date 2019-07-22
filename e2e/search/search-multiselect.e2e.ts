@@ -26,7 +26,7 @@ import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 
-describe('Search Component - Multi-Select Facet', () => {
+describe('Search Component - Multi-Select Facet',  () => {
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
     const searchResultsPage = new SearchResultsPage();
@@ -38,7 +38,7 @@ describe('Search Component - Multi-Select Facet', () => {
     const searchFiltersPage = new SearchFiltersPage();
     let site, userOption;
 
-    describe('', () => {
+    describe('',  () => {
         let jpgFile, jpgFileSite, txtFile, txtFileSite;
         const acsUser = new AcsUserModel();
 
@@ -101,7 +101,7 @@ describe('Search Component - Multi-Select Facet', () => {
             done();
         });
 
-        it('[C280054] Should be able to select multiple items from a search facet filter', () => {
+        it('[C280054] Should be able to select multiple items from a search facet filter', async () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             searchDialog.checkSearchIconIsVisible();
@@ -128,7 +128,7 @@ describe('Search Component - Multi-Select Facet', () => {
         });
     });
 
-    describe('', () => {
+    describe('',  () => {
         let jpgFile, txtFile;
         const userUploadingTxt = new AcsUserModel();
         const userUploadingImg = new AcsUserModel();
@@ -191,7 +191,7 @@ describe('Search Component - Multi-Select Facet', () => {
         });
     });
 
-    describe('', () => {
+    describe('',  () => {
         let txtFile;
         const acsUser = new AcsUserModel();
 
@@ -233,7 +233,7 @@ describe('Search Component - Multi-Select Facet', () => {
             done();
         });
 
-        it('[C280058] Should update filter facets items number when another filter facet item is selected', () => {
+        it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             searchDialog.checkSearchIconIsVisible();

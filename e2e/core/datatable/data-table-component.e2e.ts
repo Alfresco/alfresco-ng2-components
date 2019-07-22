@@ -71,7 +71,7 @@ describe('Datatable component', () => {
             done();
         });
 
-        it('[C91314] Should be possible add new row to the table', () => {
+        it('[C91314] Should be possible add new row to the table', async () => {
             dataTableComponent.numberOfRows().then((result) => {
                 dataTablePage.addRow();
                 expect(dataTableComponent.numberOfRows()).toEqual(result + 1);
@@ -80,15 +80,15 @@ describe('Datatable component', () => {
             });
         });
 
-        it('[C260039] Should be possible replace rows', () => {
+        it('[C260039] Should be possible replace rows', async () => {
             dataTablePage.replaceRows(1);
         });
 
-        it('[C260041] Should be possible replace columns', () => {
+        it('[C260041] Should be possible replace columns', async () => {
             dataTablePage.replaceColumns();
         });
 
-        it('[C277314] Should filter the table rows when the input filter is passed', () => {
+        it('[C277314] Should filter the table rows when the input filter is passed', async () => {
             dataTablePage.replaceRows(1);
             dataTablePage.replaceColumns();
             expect(dataTableComponent.numberOfRows()).toEqual(4);
@@ -106,28 +106,28 @@ describe('Datatable component', () => {
             done();
         });
 
-        it('[C307037] A tooltip is displayed when mouseOver a column with copyContent set to true', () => {
+        it('[C307037] A tooltip is displayed when mouseOver a column with copyContent set to true', async () => {
             dataTablePage.mouseOverIdColumn('1');
             expect(dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             dataTablePage.mouseOverNameColumn('Name 2');
             dataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
         });
 
-        it('[C307045] No tooltip is displayed when hover over a column with copyContent set to false', () => {
+        it('[C307045] No tooltip is displayed when hover over a column with copyContent set to false', async () => {
             dataTablePage.mouseOverNameColumn('Name 2');
             dataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
             dataTablePage.clickOnNameColumn('Name 2');
             notificationHistoryPage.checkNotifyNotContains('Name 2');
         });
 
-        it('[C307046] No tooltip is displayed when hover over a column that has default value for copyContent property', () => {
+        it('[C307046] No tooltip is displayed when hover over a column that has default value for copyContent property', async () => {
             dataTablePage.mouseOverCreatedByColumn('Created One');
             dataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
             dataTablePage.clickOnCreatedByColumn('Created One');
             notificationHistoryPage.checkNotifyNotContains('Created One');
         });
 
-        it('[C307040] A column value with copyContent set to true is copied when clicking on it', () => {
+        it('[C307040] A column value with copyContent set to true is copied when clicking on it', async () => {
             dataTablePage.mouseOverIdColumn('1');
             expect(dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             dataTablePage.clickOnIdColumn('1');
@@ -138,28 +138,28 @@ describe('Datatable component', () => {
             expect(dataTablePage.getClipboardInputText()).toEqual('2');
         });
 
-        it('[C307072] A tooltip is displayed when mouseOver a column with copyContent set to true', () => {
+        it('[C307072] A tooltip is displayed when mouseOver a column with copyContent set to true', async () => {
             copyContentDataTablePage.mouseOverIdColumn('1');
             expect(copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             copyContentDataTablePage.mouseOverNameColumn('First');
             copyContentDataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
         });
 
-        it('[C307074] No tooltip is displayed when hover over a column with copyContent set to false', () => {
+        it('[C307074] No tooltip is displayed when hover over a column with copyContent set to false', async () => {
             copyContentDataTablePage.mouseOverNameColumn('Second');
             copyContentDataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
             copyContentDataTablePage.clickOnNameColumn('Second');
             notificationHistoryPage.checkNotifyNotContains('Second');
         });
 
-        it('[C307075] No tooltip is displayed when hover over a column that has default value for copyContent property', () => {
+        it('[C307075] No tooltip is displayed when hover over a column that has default value for copyContent property', async () => {
             copyContentDataTablePage.mouseOverCreatedByColumn('Created one');
             copyContentDataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
             copyContentDataTablePage.clickOnCreatedByColumn('Created one');
             notificationHistoryPage.checkNotifyNotContains('Created One');
         });
 
-        it('[C307073] A column value with copyContent set to true is copied when clicking on it', () => {
+        it('[C307073] A column value with copyContent set to true is copied when clicking on it', async () => {
             copyContentDataTablePage.mouseOverIdColumn('1');
             expect(copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             copyContentDataTablePage.clickOnIdColumn('1');
@@ -170,22 +170,22 @@ describe('Datatable component', () => {
             expect(copyContentDataTablePage.getClipboardInputText()).toEqual('2');
         });
 
-        it('[C307100] A column value of type text and with copyContent set to true is copied when clicking on it', () => {
-            dataTablePage.mouseOverIdColumn('1');
+        it('[C307100] A column value of type text and with copyContent set to true is copied when clicking on it', async () => {
+            await dataTablePage.mouseOverIdColumn('1');
             expect(dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
-            dataTablePage.clickOnIdColumn('1');
+            await dataTablePage.clickOnIdColumn('1');
             notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
-            dataTablePage.pasteClipboard();
+            await dataTablePage.pasteClipboard();
             expect(dataTablePage.getClipboardInputText()).toEqual('1');
         });
 
-        it('[C307101] A column value of type json and with copyContent set to true is copied when clicking on it', () => {
+        it('[C307101] A column value of type json and with copyContent set to true is copied when clicking on it', async () => {
             const jsonValue = `{   "id": 4 }`;
-            copyContentDataTablePage.mouseOverJsonColumn(2);
+            await copyContentDataTablePage.mouseOverJsonColumn(2);
             expect(copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
-            copyContentDataTablePage.clickOnJsonColumn(2);
+            await copyContentDataTablePage.clickOnJsonColumn(2);
             notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
-            copyContentDataTablePage.pasteClipboard();
+            await copyContentDataTablePage.pasteClipboard();
             expect(copyContentDataTablePage.getClipboardInputText()).toContain(jsonValue);
         });
     });
@@ -193,17 +193,17 @@ describe('Datatable component', () => {
     describe('Datatable component - Drag and Drop', () => {
 
         beforeAll(async (done) => {
-            navigationBarPage.navigateToDragAndDropDatatable();
+            await navigationBarPage.navigateToDragAndDropDatatable();
             done();
         });
 
-        it('[C307984] Should trigger the event handling header-drop and cell-drop', () => {
+        it('[C307984] Should trigger the event handling header-drop and cell-drop', async () => {
             const dragAndDropHeader = dragAndDropDataTablePage.getDropTargetIdColumnHeader();
-            dragAndDrop.dropFile(dragAndDropHeader, pngFile.location);
+            await dragAndDrop.dropFile(dragAndDropHeader, pngFile.location);
             notificationHistoryPage.checkNotifyContains('Dropped data on [ id ] header');
 
             const dragAndDropCell = dragAndDropDataTablePage.getDropTargetIdColumnCell(1);
-            dragAndDrop.dropFile(dragAndDropCell, pngFile.location);
+            await dragAndDrop.dropFile(dragAndDropCell, pngFile.location);
             notificationHistoryPage.checkNotifyContains('Dropped data on [ id ] cell');
         });
     });

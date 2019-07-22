@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Checkbox Widget', () => {
+describe('Checkbox Widget',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -74,7 +74,7 @@ describe('Checkbox Widget', () => {
         done();
     });
 
-    it('[C268554] Should be able to set general settings for Checkbox widget ', () => {
+    it('[C268554] Should be able to set general settings for Checkbox widget ', async () => {
         taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
         expect(widget.checkboxWidget().getCheckboxLabel()).toContain(app.FIELD.checkbox_label);
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
@@ -82,7 +82,7 @@ describe('Checkbox Widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C272812] Should be able to set visibility settings for Checkbox widget', () => {
+    it('[C272812] Should be able to set visibility settings for Checkbox widget', async () => {
         widget.checkboxWidget().isCheckboxHidden(app.FIELD.checkbox_field_id);
         taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
         widget.checkboxWidget().isCheckboxDisplayed(app.FIELD.checkbox_field_id);

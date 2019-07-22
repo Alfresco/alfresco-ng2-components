@@ -29,7 +29,7 @@ import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-describe('Permissions Component', function () {
+describe('Permissions Component', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -156,7 +156,7 @@ describe('Permissions Component', function () {
         done();
     });
 
-    describe('Role Site Dropdown', function () {
+    describe('Role Site Dropdown', () => {
 
         beforeAll(async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
@@ -196,7 +196,7 @@ describe('Permissions Component', function () {
 
     });
 
-    describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', function () {
+    describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', () => {
 
         it('[C276994] Role SiteConsumer', async () => {
 

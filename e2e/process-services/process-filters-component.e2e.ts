@@ -32,7 +32,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
-describe('Process Filters Test', () => {
+describe('Process Filters Test',  () => {
 
     const loginPage = new LoginPage();
     const processListPage = new ProcessListPage();
@@ -83,7 +83,7 @@ describe('Process Filters Test', () => {
         processServicesPage.checkApsContainer();
     });
 
-    it('[C260387] Should the running process be displayed when clicking on Running filter', () => {
+    it('[C260387] Should the running process be displayed when clicking on Running filter', async () => {
         processServicesPage.goToApp(app.title);
         processServiceTabBarPage.clickProcessButton();
         processListPage.checkProcessListIsDisplayed();
@@ -115,7 +115,7 @@ describe('Process Filters Test', () => {
         processDetailsPage.checkProcessDetailsCard();
     });
 
-    it('[C280063] Should both the new created process and a completed one to be displayed when clicking on All filter', () => {
+    it('[C280063] Should both the new created process and a completed one to be displayed when clicking on All filter', async () => {
         processServicesPage.goToApp(app.title);
         processServiceTabBarPage.clickProcessButton();
         processListPage.checkProcessListIsDisplayed();
@@ -127,7 +127,7 @@ describe('Process Filters Test', () => {
         processDetailsPage.checkProcessDetailsCard();
     });
 
-    it('[C280064] Should the completed process be displayed when clicking on Completed filter', () => {
+    it('[C280064] Should the completed process be displayed when clicking on Completed filter', async () => {
         processServicesPage.goToApp(app.title);
         processServiceTabBarPage.clickProcessButton();
         processListPage.checkProcessListIsDisplayed();

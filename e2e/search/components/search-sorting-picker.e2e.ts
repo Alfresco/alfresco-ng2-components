@@ -28,7 +28,7 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
 
-describe('Search Sorting Picker', () => {
+describe('Search Sorting Picker',  () => {
 
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
@@ -165,7 +165,7 @@ describe('Search Sorting Picker', () => {
         expect(searchSortingPicker.checkOrderArrowIsDownward()).toBe(true);
     });
 
-    it('[C277280] Should be able to sort the search results by "Name" ASC', () => {
+    it('[C277280] Should be able to sort the search results by "Name" ASC', async () => {
         searchFilters.checkSearchFiltersIsDisplayed();
         searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
         searchResults.sortByName('ASC');
@@ -173,14 +173,14 @@ describe('Search Sorting Picker', () => {
         expect(searchResults.checkListIsOrderedByNameAsc()).toBe(true);
     });
 
-    it('[C277281] Should be able to sort the search results by "Name" DESC', () => {
+    it('[C277281] Should be able to sort the search results by "Name" DESC', async () => {
         searchFilters.checkSearchFiltersIsDisplayed();
         searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
         searchResults.sortByName('DESC');
         expect(searchResults.checkListIsOrderedByNameDesc()).toBe(true);
     });
 
-    it('[C277286] Should be able to sort the search results by "Created Date" ASC', () => {
+    it('[C277286] Should be able to sort the search results by "Created Date" ASC', async () => {
         searchResults.sortByCreated('ASC');
         browser.controlFlow().execute(async () => {
             const results = await searchResults.dataTable.geCellElementDetail('Created');
@@ -188,7 +188,7 @@ describe('Search Sorting Picker', () => {
         });
     });
 
-    it('[C277287] Should be able to sort the search results by "Created Date" DESC', () => {
+    it('[C277287] Should be able to sort the search results by "Created Date" DESC', async () => {
         searchResults.sortByCreated('DESC');
         browser.controlFlow().execute(async () => {
             const results = await searchResults.dataTable.geCellElementDetail('Created');

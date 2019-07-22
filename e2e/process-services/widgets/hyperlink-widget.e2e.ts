@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Hyperlink widget', () => {
+describe('Hyperlink widget',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -74,7 +74,7 @@ describe('Hyperlink widget', () => {
         done();
     });
 
-    it('[C276728] Should be able to set visibility properties for Hyperlink widget', () => {
+    it('[C276728] Should be able to set visibility properties for Hyperlink widget', async () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.hyperlink_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.hyperlink_id);

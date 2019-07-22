@@ -32,9 +32,9 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
-describe('Task', () => {
+describe('Task',  () => {
 
-    describe('Filters', () => {
+    describe('Filters',  () => {
 
         const loginPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
@@ -95,14 +95,14 @@ describe('Task', () => {
             done();
         });
 
-        it('[C279967] Should display default filters when an app is deployed', () => {
+        it('[C279967] Should display default filters when an app is deployed', async () => {
             taskFiltersDemoPage.involvedTasksFilter().checkTaskFilterIsDisplayed();
             taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             taskFiltersDemoPage.queuedTasksFilter().checkTaskFilterIsDisplayed();
             taskFiltersDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
         });
 
-        it('[C260330] Should display Task Filter List when app is in Task Tab', () => {
+        it('[C260330] Should display Task Filter List when app is in Task Tab', async () => {
             tasksPage.createNewTask().addName('Test').clickStartButton();
             taskFiltersDemoPage.myTasksFilter().clickTaskFilter();
             tasksListPage.checkContentIsDisplayed('Test');
@@ -125,7 +125,7 @@ describe('Task', () => {
             expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
         });
 
-        it('[C260348] Should display task in Complete Tasks List when task is completed', () => {
+        it('[C260348] Should display task in Complete Tasks List when task is completed', async () => {
             expect(taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed()).toBeDefined();
             expect(taskFiltersDemoPage.queuedTasksFilter().checkTaskFilterIsDisplayed()).toBeDefined();
             expect(taskFiltersDemoPage.involvedTasksFilter().checkTaskFilterIsDisplayed()).toBeDefined();
@@ -158,7 +158,7 @@ describe('Task', () => {
             expect(taskDetailsPage.getEmptyTaskDetailsMessage()).toBe('No task details found');
         });
 
-        it('[C260349] Should sort task by name when Name sorting is clicked', () => {
+        it('[C260349] Should sort task by name when Name sorting is clicked', async () => {
             tasksPage.createNewTask().addName('Test1').clickStartButton();
             taskDetailsPage.clickCompleteTask();
             tasksPage.createNewTask().addName('Test2').clickStartButton();
@@ -189,7 +189,7 @@ describe('Task', () => {
             tasksListPage.checkContentIsDisplayed('Test4');
         });
 
-        it('[C277264] Should display task filter results when task filter is selected', () => {
+        it('[C277264] Should display task filter results when task filter is selected', async () => {
             tasksPage.createNewTask().addName('Test').clickStartButton();
 
             taskFiltersDemoPage.myTasksFilter().clickTaskFilter();
@@ -198,7 +198,7 @@ describe('Task', () => {
         });
     });
 
-    describe('Custom Filters', () => {
+    describe('Custom Filters',  () => {
 
         const loginPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
@@ -250,7 +250,7 @@ describe('Task', () => {
             processServicesPage.goToApp(app.title);
         });
 
-        it('[C260350] Should display a new filter when a filter is added', () => {
+        it('[C260350] Should display a new filter when a filter is added', async () => {
             browser.controlFlow().execute(async () => {
                 const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter';
@@ -274,7 +274,7 @@ describe('Task', () => {
             });
         });
 
-        it('[C286447] Should display the task filter icon when a custom filter is added', () => {
+        it('[C286447] Should display the task filter icon when a custom filter is added', async () => {
             browser.controlFlow().execute(async () => {
                 const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter with icon';
@@ -303,7 +303,7 @@ describe('Task', () => {
             });
         });
 
-        it('[C286449] Should display task filter icons only when showIcon property is set on true', () => {
+        it('[C286449] Should display task filter icons only when showIcon property is set on true', async () => {
             taskFiltersDemoPage.myTasksFilter().checkTaskFilterHasNoIcon();
 
             processServiceTabBarPage.clickSettingsButton();
@@ -314,7 +314,7 @@ describe('Task', () => {
             expect(taskFiltersDemoPage.myTasksFilter().getTaskFilterIcon()).toEqual('inbox');
         });
 
-        it('[C260353] Should display changes on a filter when this filter is edited', () => {
+        it('[C260353] Should display changes on a filter when this filter is edited', async () => {
             browser.controlFlow().execute(async () => {
                 const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter';
@@ -353,7 +353,7 @@ describe('Task', () => {
             });
         });
 
-        it('[C286448] Should display changes on a task filter when this filter icon is edited', () => {
+        it('[C286448] Should display changes on a task filter when this filter icon is edited', async () => {
             browser.controlFlow().execute(async () => {
                 const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'Task Filter Edited icon';
@@ -394,7 +394,7 @@ describe('Task', () => {
             expect(taskFiltersDemoPage.customTaskFilter('Task Filter Edited icon').getTaskFilterIcon()).toEqual('cloud');
         });
 
-        it('[C260354] Should not display task filter when this filter is deleted', () => {
+        it('[C260354] Should not display task filter when this filter is deleted', async () => {
             browser.controlFlow().execute(async () => {
                 const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter';

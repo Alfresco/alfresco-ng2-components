@@ -26,9 +26,9 @@ import { ProcessDefinitionsService, ApiService } from '@alfresco/adf-testing';
 import { ProcessInstancesService } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('Process list cloud', () => {
+describe('Process list cloud',  () => {
 
-    describe('Process List - selection', () => {
+    describe('Process List - selection',  () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -94,7 +94,7 @@ describe('Process list cloud', () => {
             tasksCloudDemoPage.clickAppButton();
         });
 
-        it('[C297469] Should NOT be able to select a process when settings are set to None', () => {
+        it('[C297469] Should NOT be able to select a process when settings are set to None', async () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('None');
             tasksCloudDemoPage.clickAppButton();
             processCloudDemoPage.isProcessFiltersListVisible();
@@ -104,7 +104,7 @@ describe('Process list cloud', () => {
             processCloudDemoPage.processListCloudComponent().getDataTable().checkNoRowIsSelected();
         });
 
-        it('[C297468] Should be able to select only one process when settings are set to Single', () => {
+        it('[C297468] Should be able to select only one process when settings are set to Single', async () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Single');
             tasksCloudDemoPage.clickAppButton();
             processCloudDemoPage.isProcessFiltersListVisible();
@@ -118,7 +118,7 @@ describe('Process list cloud', () => {
             expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
         });
 
-        it('[C297470] Should be able to select multiple processes using keyboard', () => {
+        it('[C297470] Should be able to select multiple processes using keyboard', async () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Multiple');
             tasksCloudDemoPage.clickAppButton();
             processCloudDemoPage.isProcessFiltersListVisible();
@@ -133,7 +133,7 @@ describe('Process list cloud', () => {
             expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(2);
         });
 
-        it('[C297465] Should be able to select multiple processes using checkboxes', () => {
+        it('[C297465] Should be able to select multiple processes using checkboxes', async () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickAppButton();
             processCloudDemoPage.isProcessFiltersListVisible();
@@ -149,7 +149,7 @@ describe('Process list cloud', () => {
             processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);
         });
 
-        it('[C299125] Should be possible to select all the rows when multiselect is true', () => {
+        it('[C299125] Should be possible to select all the rows when multiselect is true', async () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickAppButton();
             processCloudDemoPage.isProcessFiltersListVisible();

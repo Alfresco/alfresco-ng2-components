@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Document Template widget', () => {
+describe('Document Template widget',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -74,7 +74,7 @@ describe('Document Template widget', () => {
         done();
     });
 
-    it('[C260406] should check that the template contains assigned file ', () => {
+    it('[C260406] should check that the template contains assigned file ', async () => {
         expect(widget.containerWidget().getFieldText(app.form_fields.container_id))
             .toEqual(app.attached_file);
     });

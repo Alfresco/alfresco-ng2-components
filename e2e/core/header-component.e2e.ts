@@ -23,7 +23,7 @@ import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Header Component', () => {
+describe('Header Component',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -78,7 +78,7 @@ describe('Header Component', () => {
         done();
     });
 
-    it('[C280002] Should be able to view Header component', () => {
+    it('[C280002] Should be able to view Header component', async () => {
         headerPage.checkShowMenuCheckBoxIsDisplayed();
         headerPage.checkChooseHeaderColourIsDisplayed();
         headerPage.checkHexColorInputIsDisplayed();
@@ -88,14 +88,14 @@ describe('Header Component', () => {
         headerPage.checkLogoTooltipInputIsDisplayed();
     });
 
-    it('[C279996] Should be able to show/hide menu button', () => {
+    it('[C279996] Should be able to show/hide menu button', async () => {
         headerPage.clickShowMenuButton();
         navigationBarPage.checkMenuButtonIsNotDisplayed();
         headerPage.clickShowMenuButton();
         navigationBarPage.checkMenuButtonIsDisplayed();
     });
 
-    it('[C279999] Should be able to change the colour between primary, accent and warn', () => {
+    it('[C279999] Should be able to change the colour between primary, accent and warn', async () => {
         headerPage.changeHeaderColor(names.color_accent);
         navigationBarPage.checkToolbarColor(names.color_accent);
         headerPage.changeHeaderColor(names.color_primary);
@@ -104,41 +104,41 @@ describe('Header Component', () => {
         navigationBarPage.checkToolbarColor(names.color_warn);
     });
 
-    it('[C280552] Should be able to change the colour of the header by typing a hex code', () => {
+    it('[C280552] Should be able to change the colour of the header by typing a hex code', async () => {
         headerPage.addHexCodeColor(names.color_custom);
         navigationBarPage.checkToolbarColor(names.color_custom);
     });
 
-    it('[C279997] Should be able to change the title of the app', () => {
+    it('[C279997] Should be able to change the title of the app', async () => {
         headerPage.checkAppTitle(names.app_title_default);
         headerPage.addTitle(names.app_title_custom);
         headerPage.checkAppTitle(names.app_title_custom);
     });
 
-    it('[C279998] Should be able to change the default logo of the app', () => {
+    it('[C279998] Should be able to change the default logo of the app', async () => {
         headerPage.checkIconIsDisplayed(names.urlPath_default);
         headerPage.addIcon(names.urlPath_custom);
         headerPage.checkIconIsDisplayed(names.urlPath_custom);
     });
 
-    it('[C280553] Should be able to set a hyperlink to the logo', () => {
+    it('[C280553] Should be able to set a hyperlink to the logo', async () => {
         headerPage.addLogoHyperlink(names.urlPath_logo_link);
         navigationBarPage.clickAppLogo(names.logo_title);
         settingsPage.checkProviderDropdownIsDisplayed();
     });
 
-    it('[C286517] Should be able to set a hyperlink to the logo text', () => {
+    it('[C286517] Should be able to set a hyperlink to the logo text', async () => {
         headerPage.addLogoHyperlink(names.urlPath_logo_link);
         navigationBarPage.clickAppLogoText();
         settingsPage.checkProviderDropdownIsDisplayed();
     });
 
-    it('[C280554] Should be able to customise the tooltip-text of the logo', () => {
+    it('[C280554] Should be able to customise the tooltip-text of the logo', async () => {
         headerPage.addLogoTooltip(names.logo_tooltip);
         navigationBarPage.checkLogoTooltip(names.logo_tooltip);
     });
 
-    it('[C286297] Should be able to change the position of the sidebar menu', () => {
+    it('[C286297] Should be able to change the position of the sidebar menu', async () => {
         headerPage.sideBarPositionEnd();
         headerPage.checkSidebarPositionEnd();
         headerPage.sideBarPositionStart();

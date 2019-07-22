@@ -29,7 +29,7 @@ import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 
-describe('Permissions Component', function () {
+describe('Permissions Component',  ()=> {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -204,7 +204,7 @@ describe('Permissions Component', function () {
             done();
         });
 
-        it('[C268974] Inherit Permission', () => {
+        it('[C268974] Inherit Permission', async () => {
             permissionsPage.checkPermissionInheritedButtonIsDisplayed();
             expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
             permissionsPage.checkPermissionsDatatableIsDisplayed();
@@ -217,7 +217,7 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C286272] Should be able to see results when searching for a user', () => {
+        it('[C286272] Should be able to see results when searching for a user', async () => {
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
@@ -227,7 +227,7 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C276979] Should be able to give permissions to a group of people', () => {
+        it('[C276979] Should be able to give permissions to a group of people', async () => {
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
@@ -238,7 +238,7 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C277100] Should display EVERYONE group in the search result set', () => {
+        it('[C277100] Should display EVERYONE group in the search result set', async () => {
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
@@ -296,7 +296,7 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', () => {
+        it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', async () => {
 
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
 
@@ -330,7 +330,7 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', () => {
+        it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', async () => {
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
 
             permissionsPage.clickAddPermissionButton();
@@ -343,7 +343,7 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C276982] Should be able to remove User or Group from the locally set permissions', () => {
+        it('[C276982] Should be able to remove User or Group from the locally set permissions', async () => {
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
 
             permissionsPage.clickDeletePermissionButton();
@@ -353,7 +353,7 @@ describe('Permissions Component', function () {
 
     });
 
-    describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor, No Permissions', () => {
+    describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor, No Permissions',  () => {
 
         it('[C276993] Role Consumer', async () => {
 

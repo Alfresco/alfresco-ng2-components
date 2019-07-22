@@ -26,7 +26,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-describe('Version component', () => {
+describe('Version component',  () => {
 
     let txtUploadedFile;
     const loginPage = new LoginPage();
@@ -88,7 +88,7 @@ describe('Version component', () => {
         done();
     });
 
-    it('[C272768] Should be visible the first file version when you upload a file', () => {
+    it('[C272768] Should be visible the first file version when you upload a file', async () => {
         versionManagePage.checkUploadNewVersionsButtonIsDisplayed();
 
         versionManagePage.checkFileVersionExist('1.0');
@@ -96,7 +96,7 @@ describe('Version component', () => {
         expect(versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
     });
 
-    it('[C279995] Should show/hide the new upload file options when click on add New version/cancel button', () => {
+    it('[C279995] Should show/hide the new upload file options when click on add New version/cancel button', async () => {
         versionManagePage.showNewVersionButton.click();
 
         browser.driver.sleep(300);
@@ -122,7 +122,7 @@ describe('Version component', () => {
         BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
     });
 
-    it('[C260244] Should show the version history when select a file with multiple version', () => {
+    it('[C260244] Should show the version history when select a file with multiple version', async () => {
         versionManagePage.showNewVersionButton.click();
         versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
@@ -135,7 +135,7 @@ describe('Version component', () => {
         expect(versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
     });
 
-    it('[C269084] Should be possible add a comment when add a new version', () => {
+    it('[C269084] Should be possible add a comment when add a new version', async () => {
         versionManagePage.showNewVersionButton.click();
         versionManagePage.enterCommentText('Example comment text');
         versionManagePage.uploadNewVersionFile(fileModelVersionThree.location);
@@ -146,7 +146,7 @@ describe('Version component', () => {
         expect(versionManagePage.getFileVersionComment('1.2')).toEqual('Example comment text');
     });
 
-    it('[C275719] Should be possible preview the file when you add a new version', () => {
+    it('[C275719] Should be possible preview the file when you add a new version', async () => {
         versionManagePage.showNewVersionButton.click();
         versionManagePage.clickMajorChange();
 

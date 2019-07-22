@@ -26,7 +26,7 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Share file', () => {
+describe('Share file',  () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -73,7 +73,7 @@ describe('Share file', () => {
         done();
     });
 
-    describe('Shared link dialog', () => {
+    describe('Shared link dialog',  () => {
 
         beforeAll(() => {
             contentListPage.selectRow(pngFileModel.name);
@@ -83,26 +83,26 @@ describe('Share file', () => {
             BrowserActions.closeMenuAndDialogs();
         });
 
-        it('[C286549] Should check automatically toggle button in Share dialog', () => {
+        it('[C286549] Should check automatically toggle button in Share dialog', async () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.shareToggleButtonIsChecked();
         });
 
-        it('[C286544] Should display notification when clicking URL copy button', () => {
+        it('[C286544] Should display notification when clicking URL copy button', async () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();
             notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
         });
 
-        it('[C286543] Should be possible to close Share dialog', () => {
+        it('[C286543] Should be possible to close Share dialog', async () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.checkShareLinkIsDisplayed();
         });
 
-        it('[C286578] Should disable today option in expiration day calendar', () => {
+        it('[C286578] Should disable today option in expiration day calendar', async () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickDateTimePickerButton();
@@ -126,7 +126,7 @@ describe('Share file', () => {
             BrowserActions.closeMenuAndDialogs();
         });
 
-        it('[C286578] Should disable today option in expiration day calendar', () => {
+        it('[C286578] Should disable today option in expiration day calendar', async () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickDateTimePickerButton();
@@ -150,7 +150,7 @@ describe('Share file', () => {
         });
     });
 
-    describe('Shared link preview', () => {
+    describe('Shared link preview',  () => {
         afterEach((done) => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             navigationBarPage.clickContentServicesButton();

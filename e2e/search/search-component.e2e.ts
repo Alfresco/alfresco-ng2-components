@@ -29,7 +29,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { SearchConfiguration } from './search.config';
 
-describe('Search component - Search Bar', () => {
+describe('Search component - Search Bar',  () => {
 
     const search = {
         inactive: {
@@ -124,7 +124,7 @@ describe('Search component - Search Bar', () => {
         done();
     });
 
-    it('[C272798] Search bar should be visible', () => {
+    it('[C272798] Search bar should be visible', async () => {
         searchDialog
             .checkSearchBarIsNotVisible()
             .checkSearchIconIsVisible();
@@ -141,14 +141,14 @@ describe('Search component - Search Bar', () => {
             .checkSearchIconIsVisible();
     });
 
-    it('[C272799] Should be possible to hide search bar after input', () => {
+    it('[C272799] Should be possible to hide search bar after input', async () => {
         searchDialog
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
             .enterText(firstFolderModel.shortName);
     });
 
-    it('[C260255] Should display message when searching for an inexistent file', () => {
+    it('[C260255] Should display message when searching for an inexistent file', async () => {
         searchDialog
             .checkSearchBarIsNotVisible()
             .clickOnSearchIcon()
@@ -157,7 +157,7 @@ describe('Search component - Search Bar', () => {
             .checkNoResultMessageIsDisplayed();
     });
 
-    it('[C260256] Should display file/folder in search suggestion when typing first characters', () => {
+    it('[C260256] Should display file/folder in search suggestion when typing first characters', async () => {
         searchDialog
             .clickOnSearchIcon()
             .checkSearchBarIsVisible()
@@ -180,7 +180,7 @@ describe('Search component - Search Bar', () => {
         expect(searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
 
-    it('[C272800] Should display file/folder in search suggestion when typing name', () => {
+    it('[C272800] Should display file/folder in search suggestion when typing name', async () => {
         searchDialog
             .clickOnSearchIcon()
             .checkSearchBarIsVisible()
@@ -226,7 +226,7 @@ describe('Search component - Search Bar', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C272801] Should display message when searching for non-existent folder', () => {
+    it('[C272801] Should display message when searching for non-existent folder', async () => {
         searchDialog
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -236,7 +236,7 @@ describe('Search component - Search Bar', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C272802] Should be able to find an existent folder in search results', () => {
+    it('[C272802] Should be able to find an existent folder in search results', async () => {
         searchDialog
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -246,7 +246,7 @@ describe('Search component - Search Bar', () => {
         searchResultPage.checkContentIsDisplayed(firstFolderModel.name);
     });
 
-    it('[C260258] Should be able to find an existent file in search results', () => {
+    it('[C260258] Should be able to find an existent file in search results', async () => {
         searchDialog
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -256,7 +256,7 @@ describe('Search component - Search Bar', () => {
         searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });
 
-    it('[C91321] Should be able to use down arrow key when navigating throw suggestions', () => {
+    it('[C91321] Should be able to use down arrow key when navigating throw suggestions', async () => {
         searchDialog
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -268,14 +268,14 @@ describe('Search component - Search Bar', () => {
         expect(contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 
-    it('[C290137] Should be able to search by \'%\'', () => {
+    it('[C290137] Should be able to search by \'%\'', async () => {
         searchDialog
             .clickOnSearchIcon()
             .enterTextAndPressEnter('%');
         searchResultPage.tableIsLoaded();
     });
 
-    describe('Highlight', () => {
+    describe('Highlight',  () => {
 
         const navigationBar = new NavigationBarPage();
 
@@ -293,7 +293,7 @@ describe('Search component - Search Bar', () => {
                 .enterTextAndPressEnter(term);
         });
 
-        it('[C299212] Should be able to configure the highlight option for search results', () => {
+        it('[C299212] Should be able to configure the highlight option for search results', async () => {
             searchResultPage.getNodeHighlight(fileHighlightUploaded.entry.name).getText().then((text) => {
                 expect(text.includes(`¿${term}?`)).toBe(true);
                 expect(text.includes(`(${term})`)).toBe(true);

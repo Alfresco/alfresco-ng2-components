@@ -24,7 +24,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-describe('Document List Component', () => {
+describe('Document List Component',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -36,7 +36,7 @@ describe('Document List Component', () => {
     let acsUser = null;
     const navBar = new NavigationBarPage();
 
-    describe('Gallery View', () => {
+    describe('Gallery View',  () => {
 
         const cardProperties = {
             DISPLAY_NAME: 'Display name',
@@ -88,11 +88,11 @@ describe('Document List Component', () => {
             contentServicesPage.checkCardViewContainerIsDisplayed();
         });
 
-        it('[C280016] Should be able to choose Gallery View', () => {
+        it('[C280016] Should be able to choose Gallery View', async () => {
             expect(contentServicesPage.getCardElementShowedInPage()).toBe(4);
         });
 
-        it('[C280023] Gallery Card should show details', () => {
+        it('[C280023] Gallery Card should show details', async () => {
             expect(contentServicesPage.getDocumentCardIconForElement(folderName)).toContain('/assets/images/ft_ic_folder.svg');
             expect(contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
             expect(contentServicesPage.getDocumentCardIconForElement(docxFile.name)).toContain('/assets/images/ft_ic_ms_word.svg');
@@ -103,7 +103,7 @@ describe('Document List Component', () => {
             contentServicesPage.checkMenuIsShowedForElementIndex(3);
         });
 
-        it('[C280069] Gallery Card should show attributes', () => {
+        it('[C280069] Gallery Card should show attributes', async () => {
             contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.DISPLAY_NAME);
             contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.SIZE);
             contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.CREATED_BY);
@@ -133,36 +133,36 @@ describe('Document List Component', () => {
             expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
         });
 
-        it('[C280129] Should keep Gallery View when accessing a folder', () => {
+        it('[C280129] Should keep Gallery View when accessing a folder', async () => {
             contentServicesPage.navigateToCardFolder(folderName);
 
             expect(contentServicesPage.getCardElementShowedInPage()).toBe(1);
             expect(contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
         });
 
-        it('[C280130] Should be able to go back to List View', () => {
+        it('[C280130] Should be able to go back to List View', async () => {
             contentServicesPage.clickGridViewButton();
             contentServicesPage.checkAcsContainer();
             contentServicesPage.doubleClickRow(folderName);
             contentServicesPage.checkRowIsDisplayed(pdfFile.name);
         });
 
-        it('[C261993] Should be able to sort Gallery Cards by display name', () => {
+        it('[C261993] Should be able to sort Gallery Cards by display name', async () => {
             contentServicesPage.selectGridSortingFromDropdown(cardProperties.DISPLAY_NAME);
             contentServicesPage.checkListIsSortedByNameColumn('asc');
         });
 
-        it('[C261994] Should be able to sort Gallery Cards by size', () => {
+        it('[C261994] Should be able to sort Gallery Cards by size', async () => {
             contentServicesPage.selectGridSortingFromDropdown(cardProperties.SIZE);
             contentServicesPage.checkListIsSortedBySizeColumn('asc');
         });
 
-        it('[C261995] Should be able to sort Gallery Cards by author', () => {
+        it('[C261995] Should be able to sort Gallery Cards by author', async () => {
             contentServicesPage.selectGridSortingFromDropdown(cardProperties.CREATED_BY);
             contentServicesPage.checkListIsSortedByAuthorColumn('asc');
         });
 
-        it('[C261996] Should be able to sort Gallery Cards by created date', () => {
+        it('[C261996] Should be able to sort Gallery Cards by created date', async () => {
             contentServicesPage.selectGridSortingFromDropdown(cardProperties.CREATED);
             contentServicesPage.checkListIsSortedByCreatedColumn('asc');
         });

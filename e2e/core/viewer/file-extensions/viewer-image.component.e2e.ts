@@ -25,7 +25,7 @@ import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer', () => {
+describe('Viewer',  () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
@@ -67,7 +67,7 @@ describe('Viewer', () => {
         done();
     });
 
-    describe('Image Folder Uploaded', () => {
+    describe('Image Folder Uploaded',  () => {
 
         let uploadedImages, uploadedImgRenditionFolderInfo;
         let imgFolderUploaded, imgFolderRenditionUploaded;
@@ -92,7 +92,7 @@ describe('Viewer', () => {
             done();
         });
 
-        it('[C279966] Should be possible to open any Image supported extension', () => {
+        it('[C279966] Should be possible to open any Image supported extension', async () => {
             contentServicesPage.doubleClickRow('images');
 
             uploadedImages.forEach((currentFile) => {

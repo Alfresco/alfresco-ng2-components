@@ -32,7 +32,7 @@ import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { browser } from 'protractor';
 
-describe('Task Details component', () => {
+describe('Task Details component',  () => {
 
     const processServices = new ProcessServicesPage();
     let processUserModel, appModel;

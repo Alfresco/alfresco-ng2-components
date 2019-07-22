@@ -36,7 +36,7 @@ import { UsersActions } from '../actions/users.actions';
 
 import CONSTANTS = require('../util/constants');
 
-describe('Start Task - Custom App', () => {
+describe('Start Task - Custom App',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -83,7 +83,7 @@ describe('Start Task - Custom App', () => {
         done();
     });
 
-    it('[C263942] Should be possible to modify a task', () => {
+    it('[C263942] Should be possible to modify a task', async () => {
         navigationBarPage.navigateToProcessServicesPage()
             .goToApp(appModel.name)
             .clickTasksButton();
@@ -134,7 +134,7 @@ describe('Start Task - Custom App', () => {
             });
     });
 
-    it('[C263947] Should be able to start a task without form', () => {
+    it('[C263947] Should be able to start a task without form', async () => {
         navigationBarPage.navigateToProcessServicesPage()
             .goToApp(appModel.name)
             .clickTasksButton();
@@ -159,7 +159,7 @@ describe('Start Task - Custom App', () => {
         expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
-    it('[C263948] Should be possible to cancel a task', () => {
+    it('[C263948] Should be possible to cancel a task', async () => {
         navigationBarPage.navigateToProcessServicesPage()
             .goToApp(appModel.name)
             .clickTasksButton();
@@ -180,7 +180,7 @@ describe('Start Task - Custom App', () => {
         expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
-    it('[C263949] Should be possible to save filled form', () => {
+    it('[C263949] Should be possible to save filled form', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage()
             .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -218,7 +218,7 @@ describe('Start Task - Custom App', () => {
             .checkFieldValue(by.id, formTextField, formFieldValue);
     });
 
-    it('[C263951] Should be possible to assign a user', () => {
+    it('[C263951] Should be possible to assign a user', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage
             .filtersPage()
@@ -251,7 +251,7 @@ describe('Start Task - Custom App', () => {
         expect(taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
     });
 
-    it('Attach a file', () => {
+    it('Attach a file', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage
@@ -263,7 +263,7 @@ describe('Start Task - Custom App', () => {
         attachmentListPage.checkFileIsAttached(pngFile.name);
     });
 
-    it('[C263945] Should Information box be hidden when showHeaderContent property is set on false on custom app', () => {
+    it('[C263945] Should Information box be hidden when showHeaderContent property is set on false on custom app', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(showHeaderTask).clickStartButton();

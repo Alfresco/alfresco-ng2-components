@@ -30,7 +30,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { DropActions } from '../../actions/drop.actions';
 
-describe('Upload component - Excluded Files', () => {
+describe('Upload component - Excluded Files',  () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialog();
@@ -78,7 +78,7 @@ describe('Upload component - Excluded Files', () => {
         done();
     });
 
-    it('[C279914] Should not allow upload default excluded files using D&D', () => {
+    it('[C279914] Should not allow upload default excluded files using D&D', async () => {
         contentServicesPage.checkDragAndDropDIsDisplayed();
 
         const dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
@@ -94,7 +94,7 @@ describe('Upload component - Excluded Files', () => {
         contentServicesPage.checkContentIsNotDisplayed(iniExcludedFile.name);
     });
 
-    it('[C260122] Should not allow upload default excluded files using Upload button', () => {
+    it('[C260122] Should not allow upload default excluded files using Upload button', async () => {
         contentServicesPage
             .uploadFile(iniExcludedFile.location)
             .checkContentIsNotDisplayed(iniExcludedFile.name);

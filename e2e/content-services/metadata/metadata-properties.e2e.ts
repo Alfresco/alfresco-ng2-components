@@ -27,7 +27,7 @@ import { check, uncheck } from '../../util/material';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 
-describe('CardView Component - properties', () => {
+describe('CardView Component - properties',  () => {
 
     const METADATA = {
         DATA_FORMAT: 'mmm dd yyyy',
@@ -84,7 +84,7 @@ describe('CardView Component - properties', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C246516] Should show/hide the empty metadata when the property displayEmpty is true/false', () => {
+    it('[C246516] Should show/hide the empty metadata when the property displayEmpty is true/false', async () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -106,7 +106,7 @@ describe('CardView Component - properties', () => {
         metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
     });
 
-    it('[C260179] Should not be possible edit the basic property when readOnly is true', () => {
+    it('[C260179] Should not be possible edit the basic property when readOnly is true', async () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -118,7 +118,7 @@ describe('CardView Component - properties', () => {
         metadataViewPage.editIconIsNotDisplayed();
     });
 
-    it('[C268965] Should multi property allow expand multi accordion at the same time when set', () => {
+    it('[C268965] Should multi property allow expand multi accordion at the same time when set', async () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -148,7 +148,7 @@ describe('CardView Component - properties', () => {
 
     });
 
-    it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', () => {
+    it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', async () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -166,7 +166,7 @@ describe('CardView Component - properties', () => {
         metadataViewPage.checkMetadataGroupIsExpand('properties');
     });
 
-    it('[C280560] Should show/hide the more properties button when displayDefaultProperties is true/false', () => {
+    it('[C280560] Should show/hide the more properties button when displayDefaultProperties is true/false', async () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -179,7 +179,7 @@ describe('CardView Component - properties', () => {
         metadataViewPage.informationButtonIsNotDisplayed();
     });
 
-    it('[C307975] Should be able to choose which aspect to show expanded in the info-drawer', () => {
+    it('[C307975] Should be able to choose which aspect to show expanded in the info-drawer', async () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();

@@ -25,7 +25,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { DropActions } from '../../actions/drop.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 
-describe('Document List Component - Properties', () => {
+describe('Document List Component - Properties',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -44,7 +44,7 @@ describe('Document List Component - Properties', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    describe('Allow drop files property', async () => {
+    describe('Allow drop files property',  () => {
 
         beforeEach(async (done) => {
             acsUser = new AcsUserModel();
@@ -71,7 +71,7 @@ describe('Document List Component - Properties', () => {
             done();
         });
 
-        it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', () => {
+        it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', async () => {
             navigationBar.clickContentServicesButton();
             contentServicesPage.doubleClickRow(parentFolder.entry.name);
 
@@ -87,7 +87,7 @@ describe('Document List Component - Properties', () => {
             contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
         });
 
-        it('[C91319] Should allow upload content on a folder row if allowDropFiles is true', () => {
+        it('[C91319] Should allow upload content on a folder row if allowDropFiles is true', async () => {
             navigationBar.clickContentServicesButton();
             contentServicesPage.doubleClickRow(parentFolder.entry.name);
 

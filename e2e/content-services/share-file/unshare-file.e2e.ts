@@ -26,7 +26,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-describe('Unshare file', () => {
+describe('Unshare file',  () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -106,13 +106,13 @@ describe('Unshare file', () => {
         done();
     });
 
-    describe('with permission', () => {
+    describe('with permission',  () => {
         afterAll(async (done) => {
             await uploadActions.deleteFileOrFolder(nodeId);
             done();
         });
 
-        it('[C286550] Should display unshare confirmation dialog', () => {
+        it('[C286550] Should display unshare confirmation dialog', async () => {
             contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
@@ -120,7 +120,7 @@ describe('Unshare file', () => {
             shareDialog.confirmationDialogIsDisplayed();
         });
 
-        it('[C286551] Should be able to cancel unshare action', () => {
+        it('[C286551] Should be able to cancel unshare action', async () => {
             contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
@@ -154,14 +154,14 @@ describe('Unshare file', () => {
         });
     });
 
-    describe('without permission', () => {
+    describe('without permission',  () => {
         afterAll(async (done) => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.sitesApi.deleteSite(siteName, { permanent: true });
             done();
         });
 
-        it('[C286555] Should NOT be able to unshare file without permission', () => {
+        it('[C286555] Should NOT be able to unshare file without permission', async () => {
             navBar.goToSite(testSite);
             contentListPage.doubleClickRow('documentLibrary');
             contentListPage.selectRow(nodeBody.name);

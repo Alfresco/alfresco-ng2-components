@@ -25,7 +25,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import moment from 'moment-es6';
 
-describe('Document List Component', () => {
+describe('Document List Component',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -59,7 +59,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    describe('Custom Column', () => {
+    describe('Custom Column',  () => {
 
         let folderName;
         const pdfFileModel = new FileModel({
@@ -122,7 +122,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C279926] Should only display the user\'s files and folders', () => {
+        it('[C279926] Should only display the user\'s files and folders', async () => {
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkContentIsDisplayed(folderName);
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
@@ -130,7 +130,7 @@ describe('Document List Component', () => {
             expect(contentServicesPage.getDocumentListRowNumber()).toBe(4);
         });
 
-        it('[C279927] Should display default columns', () => {
+        it('[C279927] Should display default columns', async () => {
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkColumnNameHeader();
             contentServicesPage.checkColumnSizeHeader();
@@ -159,7 +159,7 @@ describe('Document List Component', () => {
         });
     });
 
-    describe('Column Sorting', () => {
+    describe('Column Sorting',  () => {
 
         const fakeFileA = new FileModel({
             'name': 'A',
@@ -211,27 +211,27 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C260112] Should be able to sort by name (Ascending)', () => {
+        it('[C260112] Should be able to sort by name (Ascending)', async () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByName('asc')).toBe(true, 'List is not sorted.');
         });
 
-        it('[C272770] Should be able to sort by name (Descending)', () => {
+        it('[C272770] Should be able to sort by name (Descending)', async () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByName('desc')).toBe(true, 'List is not sorted.');
         });
 
-        it('[C272771] Should be able to sort by author (Ascending)', () => {
+        it('[C272771] Should be able to sort by author (Ascending)', async () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc')).toBe(true, 'List is not sorted.');
         });
 
-        it('[C272772] Should be able to sort by author (Descending)', () => {
+        it('[C272772] Should be able to sort by author (Descending)', async () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc')).toBe(true, 'List is not sorted.');
         });
 
-        it('[C272773] Should be able to sort by date (Ascending)', () => {
+        it('[C272773] Should be able to sort by date (Ascending)', async () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByCreated('asc')).toBe(true, 'List is not sorted.');
         });
 
-        it('[C272774] Should be able to sort by date (Descending)', () => {
+        it('[C272774] Should be able to sort by date (Descending)', async () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByCreated('desc')).toBe(true, 'List is not sorted.');
         });
     });
@@ -329,7 +329,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    describe('Once uploaded 20 folders', () => {
+    describe('Once uploaded 20 folders',  () => {
 
         let folderCreated;
 
@@ -366,7 +366,7 @@ describe('Document List Component', () => {
 
     });
 
-    describe('Column Template', () => {
+    describe('Column Template',  () => {
 
         const file0BytesModel = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -389,7 +389,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C291843] Should be able to navigate using nodes hyperlink when activated', () => {
+        it('[C291843] Should be able to navigate using nodes hyperlink when activated', async () => {
             contentServicesPage.clickHyperlinkNavigationToggle()
                 .checkFileHyperlinkIsEnabled(file.entry.name)
                 .clickFileHyperlink(file.entry.name);

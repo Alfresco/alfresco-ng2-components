@@ -24,7 +24,7 @@ import {
 } from '@alfresco/adf-testing';
 import resources = require('../../util/resources');
 
-describe('Start Task - Group Cloud Component', () => {
+describe('Start Task - Group Cloud Component',  () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -100,7 +100,7 @@ describe('Start Task - Group Cloud Component', () => {
         navigationBarPage.clickLogoutButton();
     });
 
-    it('[C291954] Should be able to select/delete an group for a standalone task', () => {
+    it('[C291954] Should be able to select/delete an group for a standalone task', async () => {
         peopleCloudComponent.clearAssignee();
 
         groupCloud.searchGroups(testGroup.name);
@@ -136,7 +136,7 @@ describe('Start Task - Group Cloud Component', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(oneGroupTaskName);
     });
 
-    it('[C291955] Should be able to select multiple groups when the selection mode=multiple', () => {
+    it('[C291955] Should be able to select multiple groups when the selection mode=multiple', async () => {
         peopleCloudComponent.clearAssignee();
 
         groupCloud.searchGroups(testGroup.name);
@@ -169,7 +169,7 @@ describe('Start Task - Group Cloud Component', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(bothGroupsTaskName);
     });
 
-    it('[C291993] Should NOT be able to find a group already selected', () => {
+    it('[C291993] Should NOT be able to find a group already selected', async () => {
         groupCloud.searchGroups(testGroup.name);
         groupCloud.checkGroupIsDisplayed(testGroup.name);
         groupCloud.selectGroupFromList(testGroup.name);

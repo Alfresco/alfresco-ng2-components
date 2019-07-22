@@ -25,7 +25,7 @@ import { LoginSSOPage, AppListCloudPage, TaskHeaderCloudPage, TasksService } fro
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import resources = require('../util/resources');
 
-describe('Task Header cloud component', () => {
+describe('Task Header cloud component',  () => {
     const basicCreatedTaskName = StringUtil.generateRandomString();
     const completedTaskName = StringUtil.generateRandomString();
     let basicCreatedTask;
@@ -106,7 +106,7 @@ describe('Task Header cloud component', () => {
         appListCloudComponent.goToApp(simpleApp);
     });
 
-    it('[C291943] Should display task details for assigned task', () => {
+    it('[C291943] Should display task details for assigned task', async () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
@@ -127,7 +127,7 @@ describe('Task Header cloud component', () => {
             .toEqual(basicCreatedTask.entry.parentTaskId === null ? '' : basicCreatedTask.entry.parentTaskId);
     });
 
-    it('[C291944] Should display task details for completed task', () => {
+    it('[C291944] Should display task details for completed task', async () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
@@ -149,7 +149,7 @@ describe('Task Header cloud component', () => {
             .toEqual(completedTask.entry.parentTaskId === null ? '' : completedTask.entry.parentTaskId);
     });
 
-    it('[C291945] Should Parent Name and Parent Id not be empty in task details for sub task', () => {
+    it('[C291945] Should Parent Name and Parent Id not be empty in task details for sub task', async () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(subTask.entry.name);
@@ -170,7 +170,7 @@ describe('Task Header cloud component', () => {
             .toEqual(subTask.entry.parentTaskId === null ? '' : subTask.entry.parentTaskId);
     });
 
-    describe('Default Date format', () => {
+    describe('Default Date format',  () => {
         beforeEach(async () => {
             await LocalStorageUtil.setConfigField('dateValues', '{' +
                 '"defaultDateFormat": "shortDate",' +
@@ -182,7 +182,7 @@ describe('Task Header cloud component', () => {
             appListCloudComponent.goToApp(simpleApp);
         });
 
-        it('[C311280] Should pick up the default date format from the app configuration', () => {
+        it('[C311280] Should pick up the default date format from the app configuration', async () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);

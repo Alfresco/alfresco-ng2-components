@@ -30,7 +30,7 @@ import dateFormat = require('dateformat');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-describe('Metadata component', () => {
+describe('Metadata component',  () => {
 
     const METADATA = {
         DATA_FORMAT: 'mmm d, yyyy',
@@ -84,7 +84,7 @@ describe('Metadata component', () => {
         done();
     });
 
-    describe('Viewer Metadata', () => {
+    describe('Viewer Metadata',  () => {
 
         beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -111,7 +111,7 @@ describe('Metadata component', () => {
             contentServicesPage.waitForTableBody();
         });
 
-        it('[C245652] Should be possible to display a file\'s properties', () => {
+        it('[C245652] Should be possible to display a file\'s properties', async () => {
             viewerPage.clickInfoButton();
             viewerPage.checkInfoSideBarIsDisplayed();
             metadataViewPage.clickOnPropertiesTab();
@@ -133,7 +133,7 @@ describe('Metadata component', () => {
             expect(metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_UP);
         });
 
-        it('[C272769] Should be possible to display more details when clicking on More Information button', () => {
+        it('[C272769] Should be possible to display more details when clicking on More Information button', async () => {
             viewerPage.clickInfoButton();
             viewerPage.checkInfoSideBarIsDisplayed();
             metadataViewPage.clickOnPropertiesTab();
@@ -143,7 +143,7 @@ describe('Metadata component', () => {
             expect(metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_DOWN);
         });
 
-        it('[C270952] Should be possible to open/close properties using info icon', () => {
+        it('[C270952] Should be possible to open/close properties using info icon', async () => {
             viewerPage.clickInfoButton();
             viewerPage.checkInfoSideBarIsDisplayed();
             metadataViewPage.clickOnPropertiesTab().informationButtonIsDisplayed();
@@ -157,7 +157,7 @@ describe('Metadata component', () => {
             expect(metadataViewPage.getEditIconTooltip()).toEqual(METADATA.EDIT_BUTTON_TOOLTIP);
         });
 
-        it('[C245654] Should be possible edit the basic Metadata Info of a Document', () => {
+        it('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
             viewerPage.clickInfoButton();
             viewerPage.checkInfoSideBarIsDisplayed();
             metadataViewPage.clickOnPropertiesTab();
@@ -217,7 +217,7 @@ describe('Metadata component', () => {
             expect(metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
         });
 
-        it('[C260181] Should be possible edit all the metadata aspect', () => {
+        it('[C260181] Should be possible edit all the metadata aspect', async () => {
             viewerPage.clickInfoButton();
             viewerPage.checkInfoSideBarIsDisplayed();
             metadataViewPage.clickOnPropertiesTab();
@@ -249,7 +249,7 @@ describe('Metadata component', () => {
 
     });
 
-    describe('Folder metadata', () => {
+    describe('Folder metadata',  () => {
 
         beforeAll(async (done) => {
             await uploadActions.createFolder(folderName, '-my-');
@@ -261,7 +261,7 @@ describe('Metadata component', () => {
             done();
         });
 
-        it('[C261157] Should be possible use the metadata component When the node is a Folder', () => {
+        it('[C261157] Should be possible use the metadata component When the node is a Folder', async () => {
             contentServicesPage.metadataContent(folderName);
 
             expect(metadataViewPage.getPropertyText('name')).toEqual(folderName);
@@ -269,7 +269,7 @@ describe('Metadata component', () => {
             BrowserActions.closeMenuAndDialogs();
         });
 
-        it('[C261158] Should be possible edit the metadata When the node is a Folder', () => {
+        it('[C261158] Should be possible edit the metadata When the node is a Folder', async () => {
             contentServicesPage.metadataContent(folderName);
 
             metadataViewPage.editIconClick();

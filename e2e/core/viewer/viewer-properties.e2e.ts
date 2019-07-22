@@ -25,7 +25,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer - properties', () => {
+describe('Viewer - properties',  () => {
 
     const acsUser = new AcsUserModel();
     const viewerPage = new ViewerPage();
@@ -82,42 +82,42 @@ describe('Viewer - properties', () => {
         done();
     });
 
-    it('[C260066] Should Show/Hide viewer toolbar when showToolbar is true/false', () => {
+    it('[C260066] Should Show/Hide viewer toolbar when showToolbar is true/false', async () => {
         viewerPage.checkToolbarIsDisplayed();
         viewerPage.disableToolbar();
         viewerPage.checkToolbarIsNotDisplayed();
         viewerPage.enableToolbar();
     });
 
-    it('[C260076] Should Show/Hide back button when allowGoBack is true/false', () => {
+    it('[C260076] Should Show/Hide back button when allowGoBack is true/false', async () => {
         viewerPage.checkGoBackIsDisplayed();
         viewerPage.disableGoBack();
         viewerPage.checkGoBackIsNotDisplayed();
         viewerPage.enableGoBack();
     });
 
-    it('[C260077] Should Show toolbar options dropdown when adf-viewer-open-with directive is used', () => {
+    it('[C260077] Should Show toolbar options dropdown when adf-viewer-open-with directive is used', async () => {
         viewerPage.checkToolbarOptionsIsNotDisplayed();
         viewerPage.enableToolbarOptions();
         viewerPage.checkToolbarOptionsIsDisplayed();
         viewerPage.disableToolbarOptions();
     });
 
-    it('[C260079] Should Show/Hide download button when allowDownload is true/false', () => {
+    it('[C260079] Should Show/Hide download button when allowDownload is true/false', async () => {
         viewerPage.checkDownloadButtonDisplayed();
         viewerPage.disableDownload();
         viewerPage.checkDownloadButtonIsNotDisplayed();
         viewerPage.enableDownload();
     });
 
-    it('[C260082] Should Show/Hide print button when allowPrint is true/false', () => {
+    it('[C260082] Should Show/Hide print button when allowPrint is true/false', async () => {
         viewerPage.checkPrintButtonIsDisplayed();
         viewerPage.disablePrint();
         viewerPage.checkPrintButtonIsNotDisplayed();
         viewerPage.enablePrint();
     });
 
-    it('[C260092] Should show adf-viewer-toolbar-actions directive buttons when adf-viewer-toolbar-actions is used', () => {
+    it('[C260092] Should show adf-viewer-toolbar-actions directive buttons when adf-viewer-toolbar-actions is used', async () => {
         viewerPage.checkMoreActionsDisplayed();
 
         viewerPage.disableMoreActions();
@@ -127,7 +127,7 @@ describe('Viewer - properties', () => {
         viewerPage.enableMoreActions();
     });
 
-    it('[C260074] Should show a custom file name when displayName property is used', () => {
+    it('[C260074] Should show a custom file name when displayName property is used', async () => {
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
 
         viewerPage.enableCustomName();
@@ -138,7 +138,7 @@ describe('Viewer - properties', () => {
         viewerPage.disableCustomName();
     });
 
-    it('[C260090] Should showSidebar allow right info-drawer to be shown', () => {
+    it('[C260090] Should showSidebar allow right info-drawer to be shown', async () => {
         viewerPage.clickToggleRightSidebar();
         viewerPage.checkInfoSideBarIsDisplayed();
 
@@ -146,14 +146,14 @@ describe('Viewer - properties', () => {
         viewerPage.checkInfoSideBarIsNotDisplayed();
     });
 
-    it('[C286442] Should showLeftSidebar allow left info-drawer to be shown', () => {
+    it('[C286442] Should showLeftSidebar allow left info-drawer to be shown', async () => {
         viewerPage.clickToggleLeftSidebar();
         viewerPage.checkLeftSideBarIsNotDisplayed();
         viewerPage.clickLeftSidebarButton();
         viewerPage.checkLeftSideBarIsDisplayed();
     });
 
-    it('[C260089] Should Show/Hide info-drawer if allowSidebar true/false', () => {
+    it('[C260089] Should Show/Hide info-drawer if allowSidebar true/false', async () => {
         viewerPage.clickInfoButton();
 
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -165,7 +165,7 @@ describe('Viewer - properties', () => {
         viewerPage.checkInfoSideBarIsNotDisplayed();
     });
 
-    it('[C286596] Should Show/Hide left info-drawer if allowLeftSidebar true/false', () => {
+    it('[C286596] Should Show/Hide left info-drawer if allowLeftSidebar true/false', async () => {
         viewerPage.checkLeftSideBarIsDisplayed();
         viewerPage.checkLeftSideBarButtonIsDisplayed();
 
@@ -175,7 +175,7 @@ describe('Viewer - properties', () => {
         viewerPage.checkLeftSideBarIsNotDisplayed();
     });
 
-    it('[C260100] Should be possible to disable Overlay viewer', () => {
+    it('[C260100] Should be possible to disable Overlay viewer', async () => {
         viewerPage.clickCloseButton();
         navigationBarPage.scrollTo(navigationBarPage.overlayViewerButton);
         navigationBarPage.clickOverlayViewerButton();

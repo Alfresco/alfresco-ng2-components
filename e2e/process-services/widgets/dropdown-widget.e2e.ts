@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Dropdown widget', () => {
+describe('Dropdown widget',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -74,7 +74,7 @@ describe('Dropdown widget', () => {
         done();
     });
 
-    it('[C269051] Should be possible to set general and options properties for Dropdown widget ', () => {
+    it('[C269051] Should be possible to set general and options properties for Dropdown widget ', async () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
         widget.dropdown().selectOption('Happy');
@@ -90,7 +90,7 @@ describe('Dropdown widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C269052] Should be possible to set visibility properties for Dropdown widget', () => {
+    it('[C269052] Should be possible to set visibility properties for Dropdown widget', async () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.dropdown_visible);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.dropdown_visible);

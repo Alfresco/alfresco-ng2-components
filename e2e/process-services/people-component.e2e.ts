@@ -32,7 +32,7 @@ import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
 import path = require('path');
 
-describe('People component', () => {
+describe('People component',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -87,7 +87,7 @@ describe('People component', () => {
         done();
     });
 
-    it('[C279989] Should no people be involved when no user is typed', () => {
+    it('[C279989] Should no people be involved when no user is typed', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         taskPage.tasksListPage().selectRow(tasks[0]);
 
@@ -96,7 +96,7 @@ describe('People component', () => {
         taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
-    it('[C279990] Should no people be involved when clicking on Cancel button', () => {
+    it('[C279990] Should no people be involved when clicking on Cancel button', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         taskPage.tasksListPage().selectRow(tasks[0]);
 
@@ -108,7 +108,7 @@ describe('People component', () => {
         taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
-    it('[C261029] Should People dialog be displayed when clicking on add people button', () => {
+    it('[C261029] Should People dialog be displayed when clicking on add people button', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         taskPage.tasksListPage().selectRow(tasks[0]);
 
@@ -119,7 +119,7 @@ describe('People component', () => {
         taskPage.taskDetails().clickCancelInvolvePeopleButton();
     });
 
-    it('[C279991] Should not be able to involve a user when is the creator of the task', () => {
+    it('[C279991] Should not be able to involve a user when is the creator of the task', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         taskPage.tasksListPage().selectRow(tasks[0]);
 
@@ -130,7 +130,7 @@ describe('People component', () => {
         taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
-    it('[C261030] Should involved user be removed when clicking on remove button', () => {
+    it('[C261030] Should involved user be removed when clicking on remove button', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         taskPage.tasksListPage().selectRow(tasks[0]);
 
@@ -168,7 +168,7 @@ describe('People component', () => {
         taskPage.completeTaskNoFormNotDisplayed();
     });
 
-    it('[C261031] Should be able to involve multiple users to a task', () => {
+    it('[C261031] Should be able to involve multiple users to a task', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
         taskPage.tasksListPage().selectRow(tasks[2]);
 

@@ -37,7 +37,7 @@ import { StringUtil } from '@alfresco/adf-testing';
 import fs = require('fs');
 import path = require('path');
 
-describe('Start Task - Task App', () => {
+describe('Start Task - Task App',  () => {
 
     const loginPage = new LoginPage();
     const attachmentListPage = new AttachmentListPage();
@@ -97,7 +97,7 @@ describe('Start Task - Task App', () => {
         done();
     });
 
-    it('[C260383] Should be possible to modify a task', () => {
+    it('[C260383] Should be possible to modify a task', async () => {
         taskPage.createNewTask().addName(tasks[0])
             .addForm(app.formName).clickStartButton();
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
@@ -115,14 +115,14 @@ describe('Start Task - Task App', () => {
         taskPage.taskDetails().selectDetailsTab();
     });
 
-    it('[C260422] Should be possible to cancel a task', () => {
+    it('[C260422] Should be possible to cancel a task', async () => {
         taskPage.createNewTask().addName(tasks[3])
             .checkStartButtonIsEnabled().clickCancelButton();
         taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
         expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
-    it('[C260423] Should be possible to save filled form', () => {
+    it('[C260423] Should be possible to save filled form', async () => {
         taskPage.createNewTask()
             .addForm(app.formName).addName(tasks[4]).clickStartButton();
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
@@ -135,7 +135,7 @@ describe('Start Task - Task App', () => {
         taskPage.formFields().saveForm().checkFieldValue(by.id, formTextField, formFieldValue);
     });
 
-    it('[C260425] Should be possible to assign a user', () => {
+    it('[C260425] Should be possible to assign a user', async () => {
         taskPage.createNewTask()
             .addName(tasks[5])
             .addAssignee(assigneeUserModel.firstName)
@@ -150,13 +150,13 @@ describe('Start Task - Task App', () => {
         expect(taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
     });
 
-    it('Attach a file', () => {
+    it('Attach a file', async () => {
         taskPage.createNewTask().addName(tasks[6]).clickStartButton();
         attachmentListPage.clickAttachFileButton(jpgFile.location);
         attachmentListPage.checkFileIsAttached(jpgFile.name);
     });
 
-    it('[C260420] Should Information box be hidden when showHeaderContent property is set on false', () => {
+    it('[C260420] Should Information box be hidden when showHeaderContent property is set on false', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(showHeaderTask);
 
         processServiceTabBarPage.clickSettingsButton();
@@ -172,7 +172,7 @@ describe('Start Task - Task App', () => {
         taskPage.taskDetails().taskInfoDrawerIsDisplayed();
     });
 
-    it('[C291780] Should be displayed an error message if task name exceed 255 characters', () => {
+    it('[C291780] Should be displayed an error message if task name exceed 255 characters', async () => {
         const startDialog = taskPage.createNewTask().addName(taskName255Characters).checkStartButtonIsEnabled();
         startDialog.addName(taskNameBiggerThen255Characters)
             .blur(startDialog.name)

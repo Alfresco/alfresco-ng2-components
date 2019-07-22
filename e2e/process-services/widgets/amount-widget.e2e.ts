@@ -25,7 +25,7 @@ import CONSTANTS = require('../../util/constants');
 import resources = require('../../util/resources');
 import { browser } from 'protractor';
 
-describe('Amount Widget', () => {
+describe('Amount Widget',  () => {
 
     const loginPage = new LoginPage();
 
@@ -76,7 +76,7 @@ describe('Amount Widget', () => {
         done();
     });
 
-    it('[C274703] Should be possible to set general, advance and visibility properties for Amount Widget', () => {
+    it('[C274703] Should be possible to set general, advance and visibility properties for Amount Widget', async () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.amount_input_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.amount_input_id);

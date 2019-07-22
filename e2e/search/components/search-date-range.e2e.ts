@@ -26,7 +26,7 @@ import { SearchConfiguration } from '../search.config';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-describe('Search Date Range Filter', () => {
+describe('Search Date Range Filter',  () => {
 
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
@@ -64,7 +64,7 @@ describe('Search Date Range Filter', () => {
         done();
     });
 
-    it('[C277106] Should display default values for Date Range widget', () => {
+    it('[C277106] Should display default values for Date Range widget', async () => {
         dateRangeFilter.checkFromFieldIsDisplayed()
             .checkFromDateToggleIsDisplayed()
             .checkToFieldIsDisplayed()
@@ -74,7 +74,7 @@ describe('Search Date Range Filter', () => {
             .checkClearButtonIsDisplayed();
     });
 
-    it('[C277104] Should be able to set dates using date pickers', () => {
+    it('[C277104] Should be able to set dates using date pickers', async () => {
         dateRangeFilter.checkFromDateToggleIsDisplayed().openFromDatePicker()
             .selectTodayDate();
         browser.controlFlow().execute(async () => {
@@ -82,7 +82,7 @@ describe('Search Date Range Filter', () => {
         });
     });
 
-    it('[C277105] Should be able to type a date', () => {
+    it('[C277105] Should be able to type a date', async () => {
         const date = '01-May-18';
         dateRangeFilter.putFromDate(date);
         browser.controlFlow().execute(async () => {
@@ -90,7 +90,7 @@ describe('Search Date Range Filter', () => {
         });
     });
 
-    it('[C277119] FROM and TO dates should depend on each other', () => {
+    it('[C277119] FROM and TO dates should depend on each other', async () => {
         dateRangeFilter.checkFromDateToggleIsDisplayed().openFromDatePicker()
             .checkDatesAfterDateAreDisabled(new Date())
             .closeDatePicker();
@@ -108,7 +108,7 @@ describe('Search Date Range Filter', () => {
             .checkDatesAfterDateAreDisabled(new Date());
     });
 
-    it('[C277107] Should be able to apply a date range', () => {
+    it('[C277107] Should be able to apply a date range', async () => {
         let fromDate, toDate;
         dateRangeFilter.checkFromDateToggleIsDisplayed().openFromDatePicker()
             .selectTodayDate()
@@ -146,7 +146,7 @@ describe('Search Date Range Filter', () => {
         });
     });
 
-    it('[C277108] Should display a warning message when user doesn\'t set the date range at all', () => {
+    it('[C277108] Should display a warning message when user doesn\'t set the date range at all', async () => {
         dateRangeFilter.checkFromFieldIsDisplayed()
             .clickFromField()
             .clickToField()
@@ -155,7 +155,7 @@ describe('Search Date Range Filter', () => {
             .checkToErrorMessageIsDisplayed('Required value');
     });
 
-    it('[C277114] Should display warning message if user doesn\'t set the date range properly', () => {
+    it('[C277114] Should display warning message if user doesn\'t set the date range properly', async () => {
         const toDate = '01-May-18';
         const fromDate = '16-May-18';
 
@@ -167,13 +167,13 @@ describe('Search Date Range Filter', () => {
             .checkToErrorMessageIsDisplayed('No days selected.');
     });
 
-    it('[C277115] Should display warning message if user types a date later than today\'s date', () => {
+    it('[C277115] Should display warning message if user types a date later than today\'s date', async () => {
         dateRangeFilter.checkFromFieldIsDisplayed()
             .putFromDate(DateUtil.formatDate('DD-MMM-YY', new Date(), 1))
             .checkFromErrorMessageIsDisplayed('The date is beyond the maximum date.');
     });
 
-    it('[C277108] Should display a warning message when user doesn\'t set the date range at all', () => {
+    it('[C277108] Should display a warning message when user doesn\'t set the date range at all', async () => {
         dateRangeFilter.checkFromFieldIsDisplayed()
             .putFromDate('Wrong Format')
             .clickToField()
@@ -182,7 +182,7 @@ describe('Search Date Range Filter', () => {
             .checkFromErrorMessageIsNotDisplayed();
     });
 
-    describe('configuration change', () => {
+    describe('configuration change',  () => {
 
         let jsonFile;
 

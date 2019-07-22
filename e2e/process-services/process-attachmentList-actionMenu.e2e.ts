@@ -33,7 +33,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { FileModel } from '../models/ACS/fileModel';
 import { browser } from 'protractor';
 
-describe('Attachment list action menu for processes', () => {
+describe('Attachment list action menu for processes',  () => {
 
     const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
@@ -95,7 +95,7 @@ describe('Attachment list action menu for processes', () => {
         done();
     });
 
-    it('[C260228] Should be able to access options of a file attached to an active process', () => {
+    it('[C260228] Should be able to access options of a file attached to an active process', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickProcessButton();
 
         processFiltersPage.selectFromProcessList(processName.active);
@@ -129,7 +129,7 @@ describe('Attachment list action menu for processes', () => {
         attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
-    it('[C279886] Should be able to access options of a file attached to a completed process', () => {
+    it('[C279886] Should be able to access options of a file attached to a completed process', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
@@ -162,7 +162,7 @@ describe('Attachment list action menu for processes', () => {
         attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
-    it('[C277296] Should allow upload file when clicking on \'add\' icon', () => {
+    it('[C277296] Should allow upload file when clicking on \'add\' icon', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
@@ -174,7 +174,7 @@ describe('Attachment list action menu for processes', () => {
         attachmentListPage.checkFileIsAttached(pngFile.name);
     });
 
-    it('[C260235] Should empty list component be displayed when no file is attached', () => {
+    it('[C260235] Should empty list component be displayed when no file is attached', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();

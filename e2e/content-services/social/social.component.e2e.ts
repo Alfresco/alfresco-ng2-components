@@ -24,7 +24,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SocialPage } from '../../pages/adf/demo-shell/socialPage';
 import { browser } from 'protractor';
 
-describe('Social component', () => {
+describe('Social component',  () => {
 
     const loginPage = new LoginPage();
     const likePage = new LikePage();
@@ -89,14 +89,14 @@ describe('Social component', () => {
         done();
     });
 
-    describe('User interaction on their own components', () => {
+    describe('User interaction on their own components',  () => {
 
         beforeEach(async () => {
             await loginPage.loginToContentServicesUsingUserModel(componentOwner);
             await navigationBarPage.clickSocialButton();
         });
 
-        it('[C203006] Should be able to like and unlike their components but not rate them,', () => {
+        it('[C203006] Should be able to like and unlike their components but not rate them,', async () => {
             socialPage.writeCustomNodeId(emptyFile.entry.id);
             expect(socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
             likePage.clickLike();
@@ -115,14 +115,14 @@ describe('Social component', () => {
 
     });
 
-    describe('User interaction on components that belong to other users', () => {
+    describe('User interaction on components that belong to other users',  () => {
 
         beforeEach(async () => {
             await loginPage.loginToContentServicesUsingUserModel(componentVisitor);
             await navigationBarPage.clickSocialButton();
         });
 
-        it('[C260324] Should be able to like and unlike a component', () => {
+        it('[C260324] Should be able to like and unlike a component', async () => {
             socialPage.writeCustomNodeId(emptyFile.entry.id);
             expect(socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
             expect(likePage.getLikeCounter()).toEqual('0');
@@ -137,7 +137,7 @@ describe('Social component', () => {
             expect(likePage.getUnLikedIconColor()).toBe(greyLikeColor);
         });
 
-        it('[C310198] Should be able to rate and unRate a component', () => {
+        it('[C310198] Should be able to rate and unRate a component', async () => {
             socialPage.writeCustomNodeId(emptyFile.entry.id);
             expect(socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
             expect(ratePage.getRatingCounter()).toBe('0');
@@ -152,7 +152,7 @@ describe('Social component', () => {
 
     });
 
-    describe('Multiple Users interaction', () => {
+    describe('Multiple Users interaction',  () => {
 
         beforeEach(async () => {
             await loginPage.loginToContentServicesUsingUserModel(componentVisitor);

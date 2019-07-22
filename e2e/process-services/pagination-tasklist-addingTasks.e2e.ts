@@ -29,7 +29,7 @@ import { UsersActions } from '../actions/users.actions';
 import resources = require('../util/resources');
 import { browser } from 'protractor';
 
-describe('Items per page set to 15 and adding of tasks', () => {
+describe('Items per page set to 15 and adding of tasks',  () => {
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
@@ -75,7 +75,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
         done();
     });
 
-    it('[C260306] Items per page set to 15 and adding of tasks', () => {
+    it('[C260306] Items per page set to 15 and adding of tasks', async () => {
         new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);

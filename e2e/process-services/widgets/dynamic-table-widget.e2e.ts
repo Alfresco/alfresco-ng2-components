@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Dynamic Table widget ', () => {
+describe('Dynamic Table widget ',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -35,7 +35,7 @@ describe('Dynamic Table widget ', () => {
     let appModel;
     let deployedApp, process;
 
-    describe('with Date Time Widget App', () => {
+    describe('with Date Time Widget App',  () => {
         const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
         beforeAll(async (done) => {
@@ -76,13 +76,13 @@ describe('Dynamic Table widget ', () => {
             done();
         });
 
-        it('[C276729] Should be possible to set visibility properties for Dynamic Table', () => {
+        it('[C276729] Should be possible to set visibility properties for Dynamic Table', async () => {
             taskPage.formFields().checkWidgetIsHidden(app.FIELD.dynamic_table_age_id);
             widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
             taskPage.formFields().checkWidgetIsVisible(app.FIELD.dynamic_table_age_id);
         });
 
-        it('[C279349] Should be able to have a Date Time widget in a Dynamic Table widget', () => {
+        it('[C279349] Should be able to have a Date Time widget in a Dynamic Table widget', async () => {
             widget.dynamicTable().clickAddButton();
             widget.dateTimeWidget().openDatepicker(app.FIELD.dateTime_input_id);
             widget.dateTimeWidget().selectDay('10');
@@ -95,7 +95,7 @@ describe('Dynamic Table widget ', () => {
         });
     });
 
-    describe('with People Widget App', () => {
+    describe('with People Widget App',  () => {
 
         const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
 
@@ -137,7 +137,7 @@ describe('Dynamic Table widget ', () => {
             done();
         });
 
-        it('[C260407] Should be able to add/delete/update row in Dynamic Table widget', () => {
+        it('[C260407] Should be able to add/delete/update row in Dynamic Table widget', async () => {
 
             widget.dynamicTable().clickAddRow();
             widget.dynamicTable().setDatatableInput('User1');

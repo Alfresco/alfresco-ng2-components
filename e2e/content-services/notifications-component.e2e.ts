@@ -21,7 +21,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NotificationPage } from '../pages/adf/notificationPage';
 import { browser } from 'protractor';
 
-describe('Notifications Component', () => {
+describe('Notifications Component',  () => {
 
     const loginPage = new LoginPage();
     const notificationHistoryPage = new NotificationPage();
@@ -55,19 +55,19 @@ describe('Notifications Component', () => {
         notificationHistoryPage.enterDurationField(3000);
     });
 
-    it('[C279977] Should show notification when the message is not empty and button is clicked', () => {
+    it('[C279977] Should show notification when the message is not empty and button is clicked', async () => {
         notificationHistoryPage.enterMessageField('Notification test');
         notificationHistoryPage.clickNotificationButton();
         notificationHistoryPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
     });
 
-    it('[C279979] Should not show notification when the message is empty and button is clicked', () => {
+    it('[C279979] Should not show notification when the message is empty and button is clicked', async () => {
         notificationHistoryPage.clearMessage();
         notificationHistoryPage.clickNotificationButton();
         notificationHistoryPage.checkNotificationSnackBarIsNotDisplayed();
     });
 
-    it('[C279978] Should show notification with action when the message is not empty and button is clicked', () => {
+    it('[C279978] Should show notification with action when the message is not empty and button is clicked', async () => {
         notificationHistoryPage.enterMessageField('Notification test');
         notificationHistoryPage.clickActionToggle();
         notificationHistoryPage.clickNotificationButton();
@@ -77,13 +77,13 @@ describe('Notifications Component', () => {
         notificationHistoryPage.clickActionToggle();
     });
 
-    it('[C279981] Should show notification with action when the message is not empty and custom configuration button is clicked', () => {
+    it('[C279981] Should show notification with action when the message is not empty and custom configuration button is clicked', async () => {
         notificationHistoryPage.enterMessageField('Notification test');
         notificationHistoryPage.clickNotificationButton();
         notificationHistoryPage.checkNotificationSnackBarIsDisplayed();
     });
 
-    it('[C279987] Should show custom notification during a limited time when a duration is added', () => {
+    it('[C279987] Should show custom notification during a limited time when a duration is added', async () => {
         notificationHistoryPage.enterMessageField('Notification test');
         notificationHistoryPage.enterDurationField(1000);
         notificationHistoryPage.clickNotificationButton();
@@ -92,7 +92,7 @@ describe('Notifications Component', () => {
         notificationHistoryPage.checkNotificationSnackBarIsNotDisplayed();
     });
 
-    it('[C280000] Should show notification with action when the message is not empty and custom button is clicked', () => {
+    it('[C280000] Should show notification with action when the message is not empty and custom button is clicked', async () => {
         notificationHistoryPage.enterMessageField('Notification test');
         notificationHistoryPage.clickActionToggle();
         notificationHistoryPage.clickNotificationButton();
@@ -104,7 +104,7 @@ describe('Notifications Component', () => {
         notificationHistoryPage.clickActionToggle();
     });
 
-    it('[C280001] Should meet configuration when a custom notification is set', () => {
+    it('[C280001] Should meet configuration when a custom notification is set', async () => {
         notificationHistoryPage.enterMessageField('Notification test');
         notificationHistoryPage.enterDurationField(1000);
         notificationHistoryPage.selectHorizontalPosition('Right');

@@ -20,7 +20,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-describe('Error Component', () => {
+describe('Error Component',  () => {
 
     const acsUser = new AcsUserModel();
     const loginPage = new LoginPage();
@@ -40,14 +40,14 @@ describe('Error Component', () => {
 
     });
 
-    it('[C277302] Should display the error 403 when access to unauthorized page - My Change', () => {
+    it('[C277302] Should display the error 403 when access to unauthorized page - My Change', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/403');
         expect(errorPage.getErrorCode()).toBe('403');
         expect(errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
         expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
 
-    it('[C280563] Should back home button navigate to the home page', () => {
+    it('[C280563] Should back home button navigate to the home page', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/404');
 
         errorPage.clickBackButton();
@@ -55,7 +55,7 @@ describe('Error Component', () => {
         expect(browser.getCurrentUrl()).toBe(browser.params.testConfig.adf.url + '/');
     });
 
-    it('[C280564] Should secondary button by default redirect to report-issue URL', () => {
+    it('[C280564] Should secondary button by default redirect to report-issue URL', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/403');
 
         errorPage.clickSecondButton();
@@ -63,14 +63,14 @@ describe('Error Component', () => {
         expect(browser.getCurrentUrl()).toBe(browser.params.testConfig.adf.url + '/report-issue');
     });
 
-    it('[C277304] Should display the error 404 when access to not found page', () => {
+    it('[C277304] Should display the error 404 when access to not found page', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/404');
         expect(errorPage.getErrorCode()).toBe('404');
         expect(errorPage.getErrorTitle()).toBe('An error occurred.');
         expect(errorPage.getErrorDescription()).toBe('We couldn’t find the page you were looking for.');
     });
 
-    it('[C307029] Should display Unknown message when error is undefined', () => {
+    it('[C307029] Should display Unknown message when error is undefined', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/501');
         expect(errorPage.getErrorCode()).toBe('UNKNOWN');
         expect(errorPage.getErrorTitle()).toBe('We hit a problem.');

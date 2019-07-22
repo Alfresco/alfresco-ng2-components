@@ -32,7 +32,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { AppsRuntimeActions } from '../actions/APS/appsRuntime.actions';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Start Task - Custom App', () => {
+describe('Start Task - Custom App',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -125,14 +125,14 @@ describe('Start Task - Custom App', () => {
         done();
     });
 
-    describe('', () => {
+    describe('',  () => {
 
         beforeEach(async () => {
             navigationBarPage.clickTaskListButton();
             taskListSinglePage.clickResetButton();
         });
 
-        it('[C286362] Default pagination settings on task list', () => {
+        it('[C286362] Default pagination settings on task list', async () => {
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
             expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
             expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(nrOfTasks);
@@ -146,7 +146,7 @@ describe('Start Task - Custom App', () => {
             paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C286367] 20 Items per page', function () {
+        it('[C286367] 20 Items per page',  async()=> {
             taskListSinglePage.typeItemsPerPage(itemsPerPage.twentyValue);
             taskListSinglePage.taskList().getDataTable().waitForTableBody();
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
@@ -159,7 +159,7 @@ describe('Start Task - Custom App', () => {
             paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C286365] 5 Items per page', function () {
+        it('[C286365] 5 Items per page',  async()=> {
             taskListSinglePage.typeItemsPerPage(itemsPerPage.fiveValue);
             taskListSinglePage.taskList().getDataTable().waitForTableBody();
             expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
@@ -201,7 +201,7 @@ describe('Start Task - Custom App', () => {
             });
         });
 
-        it('[C286364] 10 Items per page', function () {
+        it('[C286364] 10 Items per page',  async()=> {
             currentPage = 1;
             taskListSinglePage.typeItemsPerPage(itemsPerPage.tenValue);
             taskListSinglePage.taskList().getDataTable().waitForTableBody();
@@ -222,7 +222,7 @@ describe('Start Task - Custom App', () => {
             });
         });
 
-        it('[C286363] 15 Items per page', function () {
+        it('[C286363] 15 Items per page',  async()=> {
             currentPage = 1;
             taskListSinglePage.typeItemsPerPage(itemsPerPage.fifteenValue);
             taskListSinglePage.taskList().getDataTable().waitForTableBody();
@@ -243,19 +243,19 @@ describe('Start Task - Custom App', () => {
             });
         });
 
-        it('[C286366] Pagination is not displayed when no task is displayed', function () {
+        it('[C286366] Pagination is not displayed when no task is displayed',  async()=> {
             taskListSinglePage.typeAppId(secondAppRuntime.id);
             expect(taskListSinglePage.getAppId()).toEqual(secondAppRuntime.id.toString());
 
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286406] Invalid values for items per page', function () {
+        it('[C286406] Invalid values for items per page',  async()=> {
             taskListSinglePage.typeItemsPerPage('0').clickAppId();
             expect(taskListSinglePage.getItemsPerPageFieldErrorMessage()).toEqual('Value must be greater than or equal to 1');
         });
 
-        it('[C286404] Navigate using page field', function () {
+        it('[C286404] Navigate using page field',  async()=> {
             currentPage = 1;
             taskListSinglePage.typeItemsPerPage(itemsPerPage.fiveValue);
             taskListSinglePage.typePage(currentPage);
@@ -302,7 +302,7 @@ describe('Start Task - Custom App', () => {
             });
         });
 
-        it('[C286405] Type invalid values to page field', function () {
+        it('[C286405] Type invalid values to page field',  async()=> {
             taskListSinglePage.typePage('0').clickAppId();
             expect(taskListSinglePage.getPageFieldErrorMessage()).toEqual('Value must be greater than or equal to 1');
 
@@ -311,58 +311,58 @@ describe('Start Task - Custom App', () => {
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286413] Task is displayed when typing into dueAfter field a date before the tasks due date', function () {
+        it('[C286413] Task is displayed when typing into dueAfter field a date before the tasks due date',  async()=> {
             taskListSinglePage.typeDueAfter(beforeDate);
             taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[0]);
             expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
         });
 
-        it('[C286414] Task is not displayed when typing into dueAfter field a date after the task due date', function () {
+        it('[C286414] Task is not displayed when typing into dueAfter field a date after the task due date',  async()=> {
             taskListSinglePage.typeDueAfter(afterDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286415] Task is not displayed when typing into dueAfter field the same date as tasks due date', function () {
+        it('[C286415] Task is not displayed when typing into dueAfter field the same date as tasks due date',  async()=> {
             taskListSinglePage.typeDueAfter(currentDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286424] Task is not displayed when typing into dueBefore field a date before the tasks due date', function () {
+        it('[C286424] Task is not displayed when typing into dueBefore field a date before the tasks due date',  async()=> {
             taskListSinglePage.typeDueBefore(beforeDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286425] Task is displayed when typing into dueBefore field a date after the task due date', function () {
+        it('[C286425] Task is displayed when typing into dueBefore field a date after the task due date',  async()=> {
             taskListSinglePage.typeDueBefore(afterDate);
             taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[0]);
             expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
         });
 
-        it('[C286426] Task is not displayed when typing into dueBefore field the same date as tasks due date', function () {
+        it('[C286426] Task is not displayed when typing into dueBefore field the same date as tasks due date',  async()=> {
             taskListSinglePage.typeDueBefore(currentDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286428] Task is not displayed when typing into dueAfter field a date before the task due date and into dueBefore a date before task due date', function () {
+        it('[C286428] Task is not displayed when typing into dueAfter field a date before the task due date and into dueBefore a date before task due date',  async()=> {
             taskListSinglePage.typeDueBefore(beforeDate);
             taskListSinglePage.typeDueAfter(beforeDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C286427] Task is displayed when typing into dueAfter field a date before the tasks due date and into dueBefore a date after', function () {
+        it('[C286427] Task is displayed when typing into dueAfter field a date before the tasks due date and into dueBefore a date after',  async()=> {
             taskListSinglePage.typeDueBefore(afterDate);
             taskListSinglePage.typeDueAfter(beforeDate);
             taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[0]);
             expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
         });
 
-        it('[C286429] Task is not displayed when typing into dueAfter field a date after the tasks due date and into dueBefore a date after', function () {
+        it('[C286429] Task is not displayed when typing into dueAfter field a date after the tasks due date and into dueBefore a date after',  async()=> {
             taskListSinglePage.typeDueBefore(afterDate);
             taskListSinglePage.typeDueAfter(afterDate);
             taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 
-        it('[C280515] Should be able to see only the tasks of a specific app when typing the apps id in the appId field', () => {
+        it('[C280515] Should be able to see only the tasks of a specific app when typing the apps id in the appId field', async () => {
             taskListSinglePage.typeAppId(appRuntime.id);
             expect(taskListSinglePage.getAppId()).toEqual(appRuntime.id.toString());
 
@@ -371,14 +371,14 @@ describe('Start Task - Custom App', () => {
             taskListSinglePage.taskList().checkContentIsNotDisplayed(paginationTasksName[13]);
         });
 
-        it('[C280569] Should be able to see No tasks found when typing an invalid appId', () => {
+        it('[C280569] Should be able to see No tasks found when typing an invalid appId', async () => {
             taskListSinglePage.typeAppId(invalidAppId);
             expect(taskListSinglePage.getAppId()).toEqual(invalidAppId.toString());
 
             expect(taskListSinglePage.taskList().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        it('[C280570] Should be able to see only the tasks with specific name when typing the name in the task name field', () => {
+        it('[C280570] Should be able to see only the tasks with specific name when typing the name in the task name field', async () => {
             taskListSinglePage.typeTaskName(paginationTasksName[13]);
             expect(taskListSinglePage.getTaskName()).toEqual(paginationTasksName[13]);
 
@@ -388,14 +388,14 @@ describe('Start Task - Custom App', () => {
             });
         });
 
-        it('[C280571] Should be able to see No tasks found when typing a task name that does not exist', () => {
+        it('[C280571] Should be able to see No tasks found when typing a task name that does not exist', async () => {
             taskListSinglePage.typeTaskName(invalidName);
             expect(taskListSinglePage.getTaskName()).toEqual(invalidName);
 
             expect(taskListSinglePage.taskList().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        it('[C280629] Should be able to see only the task with specific taskId when typing it in the task Id field', () => {
+        it('[C280629] Should be able to see only the task with specific taskId when typing it in the task Id field', async () => {
             taskListSinglePage.typeTaskId(taskWithDueDate.id);
             expect(taskListSinglePage.getTaskId()).toEqual(taskWithDueDate.id);
 
@@ -403,14 +403,14 @@ describe('Start Task - Custom App', () => {
             expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
         });
 
-        it('[C280630] Should be able to see No tasks found when typing an invalid taskId', () => {
+        it('[C280630] Should be able to see No tasks found when typing an invalid taskId', async () => {
             taskListSinglePage.typeTaskId(invalidTaskId);
             expect(taskListSinglePage.getTaskId()).toEqual(invalidTaskId);
 
             expect(taskListSinglePage.taskList().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        it('[C286589] Should be able to see only completed tasks when choosing Completed from state drop down', () => {
+        it('[C286589] Should be able to see only completed tasks when choosing Completed from state drop down', async () => {
             taskListSinglePage.selectState('Completed');
 
             taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[0].name);
@@ -419,7 +419,7 @@ describe('Start Task - Custom App', () => {
             expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(3);
         });
 
-        it('[C286597] Should be able to see only running tasks when choosing Active from state drop down', () => {
+        it('[C286597] Should be able to see only running tasks when choosing Active from state drop down', async () => {
             taskListSinglePage.selectState('Active');
 
             taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[0].name);
@@ -431,7 +431,7 @@ describe('Start Task - Custom App', () => {
             expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(20);
         });
 
-        it('[C286598] Should be able to see all tasks when choosing All from state drop down', () => {
+        it('[C286598] Should be able to see all tasks when choosing All from state drop down', async () => {
             taskListSinglePage.selectState('All');
 
             taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[0].name);
@@ -444,7 +444,7 @@ describe('Start Task - Custom App', () => {
         });
     });
 
-    it('[C286622] Should be able to see only tasks that are part of a specific process when processDefinitionId is set', () => {
+    it('[C286622] Should be able to see only tasks that are part of a specific process when processDefinitionId is set', async () => {
         const processDefinitionIds = [processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId,
             processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId];
 
@@ -459,7 +459,7 @@ describe('Start Task - Custom App', () => {
         });
     });
 
-    it('[C286623] Should be able to see No tasks found when typing an invalid processDefinitionId', () => {
+    it('[C286623] Should be able to see No tasks found when typing an invalid processDefinitionId', async () => {
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 
@@ -468,7 +468,7 @@ describe('Start Task - Custom App', () => {
         expect(taskListSinglePage.taskList().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
     });
 
-    it('[C286622] Should be able to see only tasks that are part of a specific process when processInstanceId is set', () => {
+    it('[C286622] Should be able to see only tasks that are part of a specific process when processInstanceId is set', async () => {
         const processInstanceIds = [processDefinitionId.id];
 
         navigationBarPage.clickTaskListButton();
@@ -483,7 +483,7 @@ describe('Start Task - Custom App', () => {
         });
     });
 
-    it('[C286623] Should be able to see No tasks found when typing an invalid processInstanceId', () => {
+    it('[C286623] Should be able to see No tasks found when typing an invalid processInstanceId', async () => {
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 

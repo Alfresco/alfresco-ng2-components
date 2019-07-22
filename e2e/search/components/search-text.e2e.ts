@@ -30,7 +30,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { SearchConfiguration } from '../search.config';
 
-describe('Search component - Text widget', () => {
+describe('Search component - Text widget',  () => {
 
     const navigationBarPage = new NavigationBarPage();
     const searchFiltersPage = new SearchFiltersPage();
@@ -71,7 +71,7 @@ describe('Search component - Text widget', () => {
         done();
     });
 
-    it('[C289329] Placeholder should be displayed in the widget when the input string is empty', () => {
+    it('[C289329] Placeholder should be displayed in the widget when the input string is empty', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
         searchResultPage.tableIsLoaded();
 
@@ -79,7 +79,7 @@ describe('Search component - Text widget', () => {
         expect(searchFiltersPage.textFiltersPage().getNamePlaceholder()).toEqual('Enter the name');
     });
 
-    describe('configuration change', () => {
+    describe('configuration change',  () => {
 
         let jsonFile;
 

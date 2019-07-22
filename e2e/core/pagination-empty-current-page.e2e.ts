@@ -31,7 +31,7 @@ import { Util } from '../util/util';
 import resources = require('../util/resources');
 import { browser } from 'protractor';
 
-describe('Pagination - returns to previous page when current is empty', () => {
+describe('Pagination - returns to previous page when current is empty',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -101,7 +101,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         done();
     });
 
-    it('[C274710] Should redirect to previous page when current is emptied', () => {
+    it('[C274710] Should redirect to previous page when current is emptied', async () => {
         contentServicesPage.doubleClickRow(folderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -141,7 +141,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
     });
 
-    it('[C297494] Should display content when navigating to a non-empty folder not in the first page', () => {
+    it('[C297494] Should display content when navigating to a non-empty folder not in the first page', async () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(parentFolderModel.name);
         contentServicesPage.checkAcsContainer();

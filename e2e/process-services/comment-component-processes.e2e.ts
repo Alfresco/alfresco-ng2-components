@@ -27,7 +27,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 
-describe('Comment component for Processes', () => {
+describe('Comment component for Processes',  () => {
 
     const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
@@ -75,7 +75,7 @@ describe('Comment component for Processes', () => {
         done();
     });
 
-    it('[C260464] Should be able to add a comment on APS and check on ADF', () => {
+    it('[C260464] Should be able to add a comment on APS and check on ADF', async () => {
         browser.controlFlow().execute(async() => {
             comment = {message: 'HELLO'};
 
@@ -99,7 +99,7 @@ describe('Comment component for Processes', () => {
         });
     });
 
-    it('[C260465] Should not be able to view process comment on included task', () => {
+    it('[C260465] Should not be able to view process comment on included task', async () => {
         browser.controlFlow().execute(async() => {
             comment = {message: 'GOODBYE'};
 
@@ -121,7 +121,7 @@ describe('Comment component for Processes', () => {
         });
     });
 
-    it('[C260466] Should be able to display comments from Task on the related Process', () => {
+    it('[C260466] Should be able to display comments from Task on the related Process', async () => {
         browser.controlFlow().execute(async() => {
             const taskQuery = await this.alfrescoJsApi.activiti.taskApi.listTasks({processInstanceId: processInstanceId});
 

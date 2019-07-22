@@ -23,7 +23,7 @@ import { ProcessServicesPage } from '../pages/adf/process-services/processServic
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { browser } from 'protractor';
 
-describe('Settings component', () => {
+describe('Settings component',  () => {
 
     const loginPage = new LoginPage();
     const settingsPage = new SettingsPage();
@@ -38,18 +38,18 @@ describe('Settings component', () => {
         'password': browser.params.testConfig.adf.adminPassword
     });
 
-    describe('Should be able to change Urls in the Settings', () => {
+    describe('Should be able to change Urls in the Settings',  () => {
         beforeEach((done) => {
             settingsPage.goToSettingsPage();
             done();
         });
 
-        it('[C245641] Should navigate User from Settings page to Login screen', () => {
+        it('[C245641] Should navigate User from Settings page to Login screen', async () => {
             settingsPage.clickBackButton();
             loginPage.waitForElements();
         });
 
-        it('[C291948] Should save ALL Settings changes when User clicks Apply button', () => {
+        it('[C291948] Should save ALL Settings changes when User clicks Apply button', async () => {
             loginPage.goToLoginPage();
             loginPage.clickSettingsIcon();
             settingsPage.setProviderEcmBpm();
@@ -61,7 +61,7 @@ describe('Settings component', () => {
 
         });
 
-        it('[C291949] Should have field validation for Content Services Url', () => {
+        it('[C291949] Should have field validation for Content Services Url', async () => {
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
             settingsPage.clearContentServicesURL();
             settingsPage.ecmText.sendKeys(protractor.Key.TAB);
@@ -69,7 +69,7 @@ describe('Settings component', () => {
             settingsPage.checkApplyButtonIsDisabled();
         });
 
-        it('[C291950] Should have field validation for Process Services Url', () => {
+        it('[C291950] Should have field validation for Process Services Url', async () => {
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
             settingsPage.clearProcessServicesURL();
             settingsPage.bpmText.sendKeys(protractor.Key.TAB);
@@ -77,7 +77,7 @@ describe('Settings component', () => {
             settingsPage.checkApplyButtonIsDisabled();
         });
 
-        it('[C291951] Should not be able to sign in with invalid Content Services Url', () => {
+        it('[C291951] Should not be able to sign in with invalid Content Services Url', async () => {
             settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
             settingsPage.setContentServicesURL('http://localhost:7070');
             settingsPage.clickApply();
@@ -88,7 +88,7 @@ describe('Settings component', () => {
             expect(loginPage.getLoginError()).toMatch(loginError);
         });
 
-        it('[C291952] Should not be able to sign in with invalid Process Services Url', () => {
+        it('[C291952] Should not be able to sign in with invalid Process Services Url', async () => {
             settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
             settingsPage.setProcessServicesURL('http://localhost:7070');
             settingsPage.clickApply();
@@ -100,7 +100,7 @@ describe('Settings component', () => {
         });
     });
 
-    describe('Settings Component - Basic Authentication', () => {
+    describe('Settings Component - Basic Authentication',  () => {
         beforeAll((done) => {
             settingsPage.goToSettingsPage();
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');

@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('People widget', () => {
+describe('People widget',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -74,7 +74,7 @@ describe('People widget', () => {
         done();
     });
 
-    it('[C260435] Should select user from People Widget', () => {
+    it('[C260435] Should select user from People Widget', async () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
@@ -86,7 +86,7 @@ describe('People widget', () => {
         widget.peopleWidget().selectUserFromDropDown(admin);
     });
 
-    it('[C274707] Should be possible to set visibility properties for People Widget', () => {
+    it('[C274707] Should be possible to set visibility properties for People Widget', async () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);

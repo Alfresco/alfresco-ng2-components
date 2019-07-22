@@ -36,7 +36,7 @@ import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { FileModel } from '../models/ACS/fileModel';
 
-describe('Attachment list action menu for tasks', () => {
+describe('Attachment list action menu for tasks',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -89,7 +89,7 @@ describe('Attachment list action menu for tasks', () => {
         done();
     });
 
-    it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', () => {
+    it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -116,7 +116,7 @@ describe('Attachment list action menu for tasks', () => {
         attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
-    it('[C260236] Should be able to View /Download /Remove from Attachment List on a completed task', () => {
+    it('[C260236] Should be able to View /Download /Remove from Attachment List on a completed task', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -145,7 +145,7 @@ describe('Attachment list action menu for tasks', () => {
         attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
-    it('[C260225] Should be able to upload a file in the Attachment list on Task App', () => {
+    it('[C260225] Should be able to upload a file in the Attachment list on Task App', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -155,7 +155,7 @@ describe('Attachment list action menu for tasks', () => {
         attachmentListPage.checkFileIsAttached(pngFile.name);
     });
 
-    it('[C279884] Should be able to view the empty attachment list for tasks', () => {
+    it('[C279884] Should be able to view the empty attachment list for tasks', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -169,7 +169,7 @@ describe('Attachment list action menu for tasks', () => {
         attachmentListPage.checkEmptyAttachmentList();
     });
 
-    it('[C260234] Should be able to attache a file on a task on APS and check on ADF', () => {
+    it('[C260234] Should be able to attache a file on a task on APS and check on ADF', async () => {
         browser.controlFlow().execute(async() => {
             const newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: 'SHARE KNOWLEDGE'});
 

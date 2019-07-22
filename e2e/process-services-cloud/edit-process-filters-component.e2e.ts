@@ -23,9 +23,9 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('Edit process filters cloud', () => {
+describe('Edit process filters cloud',  () => {
 
-    describe('Edit process Filters', () => {
+    describe('Edit process Filters',  () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -74,7 +74,7 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
         });
 
-        it('[C291804] Delete Save and Save as actions should be displayed when clicking on custom filter header', () => {
+        it('[C291804] Delete Save and Save as actions should be displayed when clicking on custom filter header', async () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
@@ -86,7 +86,7 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
         });
 
-        it('[C291805] New process filter is added when clicking Save As button', () => {
+        it('[C291805] New process filter is added when clicking Save As button', async () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
             processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
@@ -108,7 +108,7 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
         });
 
-        it('[C291806] Two process filters with same name can be created when clicking the Save As button', () => {
+        it('[C291806] Two process filters with same name can be created when clicking the Save As button', async () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
             processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
@@ -130,7 +130,7 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
         });
 
-        it('[C291807] A process filter is overrided when clicking on save button', () => {
+        it('[C291807] A process filter is overrided when clicking on save button', async () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
             processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
@@ -149,7 +149,7 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
         });
 
-        it('[C291808] A process filter is deleted when clicking on delete button', () => {
+        it('[C291808] A process filter is deleted when clicking on delete button', async () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
             processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
@@ -164,7 +164,7 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.customProcessFilter('New').checkProcessFilterNotDisplayed();
         });
 
-        it('[C291810] Process filter should not be created when process filter dialog is closed', () => {
+        it('[C291810] Process filter should not be created when process filter dialog is closed', async () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
             processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
@@ -184,7 +184,7 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
         });
 
-        it('[C291811] Save button of process filter dialog should be disabled when process name is empty', () => {
+        it('[C291811] Save button of process filter dialog should be disabled when process name is empty', async () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
             processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
@@ -202,7 +202,7 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveButton();
         });
 
-        it('[C291809] Process filter dialog is displayed when clicking on Save As button', () => {
+        it('[C291809] Process filter dialog is displayed when clicking on Save As button', async () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
             processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Name');

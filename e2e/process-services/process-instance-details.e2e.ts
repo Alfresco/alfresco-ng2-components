@@ -29,7 +29,7 @@ import { ProcessListPage } from '../pages/adf/process-services/processListPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import dateFormat = require('dateformat');
 
-describe('Process Instance Details', () => {
+describe('Process Instance Details',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -83,7 +83,7 @@ describe('Process Instance Details', () => {
         done();
     });
 
-    it('[C307031] Should display the created date in the default format', () => {
+    it('[C307031] Should display the created date in the default format', async () => {
         processDetailsPage.checkDetailsAreDisplayed();
         expect(processDetailsPage.getCreated()).toEqual(dateFormat(process.started, PROCESS_DATE_FORMAT));
     });

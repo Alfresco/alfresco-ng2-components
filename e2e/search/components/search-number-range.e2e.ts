@@ -27,7 +27,7 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
 
-describe('Search Number Range Filter', () => {
+describe('Search Number Range Filter',  () => {
 
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
@@ -95,7 +95,7 @@ describe('Search Number Range Filter', () => {
         done();
     });
 
-    it('[C276921] Should display default values for Number Range widget', () => {
+    it('[C276921] Should display default values for Number Range widget', async () => {
         sizeRangeFilter.checkFromFieldIsDisplayed()
             .checkToFieldIsDisplayed()
             .checkApplyButtonIsDisplayed()
@@ -104,7 +104,7 @@ describe('Search Number Range Filter', () => {
         expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
     });
 
-    it('[C276922] Should be keep value when Number Range widget is collapsed', () => {
+    it('[C276922] Should be keep value when Number Range widget is collapsed', async () => {
         const size = 5;
         sizeRangeFilter.putFromNumber(size);
         sizeRangeFilter.putToNumber(size);
@@ -116,7 +116,7 @@ describe('Search Number Range Filter', () => {
         expect(sizeRangeFilter.getToNumber()).toEqual(`${size}`);
     });
 
-    it('[C276924] Should display error message when input had an invalid format', () => {
+    it('[C276924] Should display error message when input had an invalid format', async () => {
         sizeRangeFilter.checkFromFieldIsDisplayed()
             .putFromNumber('a').putToNumber('A')
             .checkFromErrorInvalidIsDisplayed().checkToErrorInvalidIsDisplayed();
@@ -149,7 +149,7 @@ describe('Search Number Range Filter', () => {
         expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
     });
 
-    it('[C276943] Should be able to put a big value in To field', () => {
+    it('[C276943] Should be able to put a big value in To field', async () => {
         const toSize = 999999999;
         const fromSize = 0;
         sizeRangeFilter.checkToFieldIsDisplayed()
@@ -176,7 +176,7 @@ describe('Search Number Range Filter', () => {
         });
     });
 
-    it('[C276944] Should be able to filter by name when size range filter is applied', () => {
+    it('[C276944] Should be able to filter by name when size range filter is applied', async () => {
         const nameFilter = searchFilters.textFiltersPage();
         const toSize = 40;
         const fromSize = 0;
@@ -238,7 +238,7 @@ describe('Search Number Range Filter', () => {
         });
     });
 
-    it('[C276951] Should not display folders when Size range is applied', () => {
+    it('[C276951] Should not display folders when Size range is applied', async () => {
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(99999999)
             .putFromNumber(0);
@@ -257,7 +257,7 @@ describe('Search Number Range Filter', () => {
         searchResults.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C276952] Should only display empty files when size range is set from 0 to 1', () => {
+    it('[C276952] Should only display empty files when size range is set from 0 to 1', async () => {
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(1)
             .putFromNumber(0);
@@ -282,7 +282,7 @@ describe('Search Number Range Filter', () => {
 
     });
 
-    it('[C277092] Should disable apply button when from field value equal/is bigger than to field value', () => {
+    it('[C277092] Should disable apply button when from field value equal/is bigger than to field value', async () => {
         sizeRangeFilter.checkFromFieldIsDisplayed()
             .putFromNumber(10);
         expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
@@ -294,7 +294,7 @@ describe('Search Number Range Filter', () => {
         expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
     });
 
-    it('[C289930] Should be able to clear values in number range fields', () => {
+    it('[C289930] Should be able to clear values in number range fields', async () => {
         sizeRangeFilter.checkFromFieldIsDisplayed().checkClearButtonIsDisplayed().checkNoErrorMessageIsDisplayed()
             .clickClearButton().checkNoErrorMessageIsDisplayed()
             .putFromNumber(0).putToNumber(1).clickClearButton();
@@ -339,7 +339,7 @@ describe('Search Number Range Filter', () => {
         });
     });
 
-    it('[C277137] Number Range should be inclusive', () => {
+    it('[C277137] Number Range should be inclusive', async () => {
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(2)
             .putFromNumber(1);
@@ -381,7 +381,7 @@ describe('Search Number Range Filter', () => {
         searchResults.checkContentIsNotDisplayed(file2BytesModel.name);
     });
 
-    describe('Configuration change', () => {
+    describe('Configuration change',  () => {
         let jsonFile;
 
         beforeEach(() => {

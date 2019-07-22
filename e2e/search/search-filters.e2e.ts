@@ -28,7 +28,7 @@ import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
 import { BrowserActions } from '../../lib/testing/src/lib/core/utils/browser-actions';
 
-describe('Search Filters', () => {
+describe('Search Filters',  () => {
 
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
@@ -122,7 +122,7 @@ describe('Search Filters', () => {
         done();
     });
 
-    it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', () => {
+    it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', async () => {
         searchDialog.enterTextAndPressEnter(fileUploaded.entry.name);
 
         searchFiltersPage.checkSearchFiltersIsDisplayed();
@@ -134,7 +134,7 @@ describe('Search Filters', () => {
             .checkChipIsNotDisplayed(userOption);
     });
 
-    it('[C277146] Should Show more/less buttons be hidden when inactive', () => {
+    it('[C277146] Should Show more/less buttons be hidden when inactive', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.creatorCheckListFiltersPage().checkShowLessButtonIsNotDisplayed()
@@ -144,7 +144,7 @@ describe('Search Filters', () => {
             .clickShowLessButtonUntilIsNotDisplayed();
     });
 
-    it('[C286556] Search categories should preserve their collapsed/expanded state after the search', () => {
+    it('[C286556] Search categories should preserve their collapsed/expanded state after the search', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.clickFileTypeListFilter()
@@ -158,7 +158,7 @@ describe('Search Filters', () => {
             .checkFileSizeFilterIsCollapsed();
     });
 
-    it('[C287796] Should be able to display the correct bucket number after selecting a filter', () => {
+    it('[C287796] Should be able to display the correct bucket number after selecting a filter', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
@@ -192,7 +192,7 @@ describe('Search Filters', () => {
             .checkCheckListOptionIsDisplayed('Administrator');
     });
 
-    it('[C291980] Should group search facets under specified labels', () => {
+    it('[C291980] Should group search facets under specified labels', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed()
@@ -215,7 +215,7 @@ describe('Search Filters', () => {
         expect(searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
     });
 
-    it('[C297509] Should display search intervals under specified labels from config', () => {
+    it('[C297509] Should display search intervals under specified labels from config', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed()
@@ -232,7 +232,7 @@ describe('Search Filters', () => {
             .checkFacetIntervalsByModifiedIsExpanded();
     });
 
-    it('[C299200] Should reset the filters facet with search query', () => {
+    it('[C299200] Should reset the filters facet with search query', async () => {
         searchDialog.enterTextAndPressEnter(fileTypeTxt1.entry.name);
 
         searchFiltersPage.checkSearchFiltersIsDisplayed();

@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 import { Util } from '../../util/util';
 
-describe('Login component', () => {
+describe('Login component',  () => {
 
     const settingsPage = new SettingsPage();
     const processServicesPage = new ProcessServicesPage();
@@ -91,7 +91,7 @@ describe('Login component', () => {
         expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
 
-    it('[C260036] Should require username', () => {
+    it('[C260036] Should require username', async () => {
         loginPage.goToLoginPage();
         loginPage.checkUsernameInactive();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
@@ -103,7 +103,7 @@ describe('Login component', () => {
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
     });
 
-    it('[C260043] Should require password', () => {
+    it('[C260043] Should require password', async () => {
         loginPage.goToLoginPage();
         loginPage.checkPasswordInactive();
         loginPage.checkUsernameInactive();
@@ -115,7 +115,7 @@ describe('Login component', () => {
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
     });
 
-    it('[C260044] Username should be at least 2 characters long', () => {
+    it('[C260044] Username should be at least 2 characters long', async () => {
         loginPage.goToLoginPage();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterUsername('A');
@@ -126,7 +126,7 @@ describe('Login component', () => {
         loginPage.clearUsername();
     });
 
-    it('[C260045] Should enable login button after entering a valid username and a password', () => {
+    it('[C260045] Should enable login button after entering a valid username and a password', async () => {
         loginPage.goToLoginPage();
         loginPage.enterUsername(adminUserModel.id);
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
@@ -136,7 +136,7 @@ describe('Login component', () => {
         loginPage.clearPassword();
     });
 
-    it('[C260046] Should NOT be possible to login with an invalid username/password', () => {
+    it('[C260046] Should NOT be possible to login with an invalid username/password', async () => {
         loginPage.goToLoginPage();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterUsername('test');
@@ -148,7 +148,7 @@ describe('Login component', () => {
         loginPage.clearPassword();
     });
 
-    it('[C260047] Password should be crypted', () => {
+    it('[C260047] Password should be crypted', async () => {
         loginPage.goToLoginPage();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterPassword('test');
@@ -161,7 +161,7 @@ describe('Login component', () => {
         loginPage.clearPassword();
     });
 
-    it('[C260048] Should be possible to enable/disable login footer', () => {
+    it('[C260048] Should be possible to enable/disable login footer', async () => {
         loginPage.goToLoginPage();
         loginPage.enableFooter();
         loginPage.checkRememberIsDisplayed();
@@ -173,7 +173,7 @@ describe('Login component', () => {
         loginPage.checkRegisterIsNotDisplayed();
     });
 
-    it('[C260049] Should be possible to login to Process Services with Content Services disabled', () => {
+    it('[C260049] Should be possible to login to Process Services with Content Services disabled', async () => {
         loginPage.goToLoginPage();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.clickSettingsIcon();
@@ -185,7 +185,7 @@ describe('Login component', () => {
         loginPage.waitForElements();
     });
 
-    it('[C260050] Should be possible to login to Content Services with Process Services disabled', () => {
+    it('[C260050] Should be possible to login to Content Services with Process Services disabled', async () => {
         loginPage.goToLoginPage();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.clickSettingsIcon();
@@ -195,7 +195,7 @@ describe('Login component', () => {
         contentServicesPage.checkAcsContainer();
     });
 
-    it('[C260051] Should be able to login to both Content Services and Process Services', () => {
+    it('[C260051] Should be able to login to both Content Services and Process Services', async () => {
         loginPage.goToLoginPage();
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
@@ -211,7 +211,7 @@ describe('Login component', () => {
         loginPage.waitForElements();
     });
 
-    it('[C277754] Should the user be redirect to the login page when the Content Service session expire', () => {
+    it('[C277754] Should the user be redirect to the login page when the Content Service session expire', async () => {
         loginPage.goToLoginPage();
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
@@ -221,7 +221,7 @@ describe('Login component', () => {
         loginPage.waitForElements();
     });
 
-    it('[C279932] Should successRoute property change the landing page when the user Login', () => {
+    it('[C279932] Should successRoute property change the landing page when the user Login', async () => {
         loginPage.goToLoginPage();
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
@@ -231,7 +231,7 @@ describe('Login component', () => {
         processServicesPage.checkApsContainer();
     });
 
-    it('[C279931] Should the user be redirect to the login page when the Process Service session expire', () => {
+    it('[C279931] Should the user be redirect to the login page when the Process Service session expire', async () => {
         loginPage.goToLoginPage();
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
@@ -241,7 +241,7 @@ describe('Login component', () => {
         loginPage.waitForElements();
     });
 
-    it('[C279930] Should a user still be logged-in when open a new tab', () => {
+    it('[C279930] Should a user still be logged-in when open a new tab', async () => {
         loginPage.goToLoginPage();
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
@@ -260,7 +260,7 @@ describe('Login component', () => {
         });
     });
 
-    it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', () => {
+    it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', async () => {
         loginPage.goToLoginPage();
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
@@ -269,7 +269,7 @@ describe('Login component', () => {
         loginPage.checkLoginImgURL();
     });
 
-    it('[C291854] Should be possible login in valid credentials', () => {
+    it('[C291854] Should be possible login in valid credentials', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url);
         loginPage.waitForElements();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);

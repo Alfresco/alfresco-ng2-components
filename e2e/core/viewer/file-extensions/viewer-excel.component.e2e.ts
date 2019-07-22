@@ -25,7 +25,7 @@ import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer', () => {
+describe('Viewer',  () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
@@ -61,7 +61,7 @@ describe('Viewer', () => {
 
         done();
     });
-    describe('Excel Folder Uploaded', () => {
+    describe('Excel Folder Uploaded',  () => {
 
         let uploadedExcels;
         let excelFolderUploaded;
@@ -82,7 +82,7 @@ describe('Viewer', () => {
             done();
         });
 
-        it('[C280008] Should be possible to open any Excel file', () => {
+        it('[C280008] Should be possible to open any Excel file', async () => {
             contentServicesPage.doubleClickRow('excel');
 
             uploadedExcels.forEach((currentFile) => {

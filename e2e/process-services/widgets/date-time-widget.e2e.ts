@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Date and time widget', () => {
+describe('Date and time widget',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -74,7 +74,7 @@ describe('Date and time widget', () => {
         done();
     });
 
-    it('[C268818] Should be able to set general settings for Date Time widget', () => {
+    it('[C268818] Should be able to set general settings for Date Time widget', async () => {
         expect(widget.dateTimeWidget().getDateTimeLabel(app.FIELD.date_time_input)).toContain('Date');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
@@ -87,7 +87,7 @@ describe('Date and time widget', () => {
         expect(widget.dateTimeWidget().getPlaceholder(app.FIELD.date_time_between_input)).toBe('Choose anything...');
     });
 
-    it('[C268819] Should be able to set advanced settings for Date Time widget ', () => {
+    it('[C268819] Should be able to set advanced settings for Date Time widget ', async () => {
         widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
         widget.dateTimeWidget().closeDataTimeWidget();
         widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-17 07:30 PM');

@@ -27,7 +27,7 @@ import { TrashcanPage } from '../../pages/adf/trashcanPage';
 import { LoginPage, NotificationHistoryPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
 
-describe('Restore content directive', function () {
+describe('Restore content directive',  () =>{
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -95,7 +95,7 @@ describe('Restore content directive', function () {
         done();
     });
 
-    describe('Restore same name folders', function () {
+    describe('Restore same name folders',  () =>{
 
         beforeAll(async (done) => {
             navigationBarPage.clickContentServicesButton();
@@ -239,7 +239,7 @@ describe('Restore content directive', function () {
         trashcanPage.checkRestoreButtonIsDisplayed();
     });
 
-    describe('Restore deleted library', () => {
+    describe('Restore deleted library',  () => {
 
     beforeAll(async (done) => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -272,7 +272,7 @@ describe('Restore content directive', function () {
     });
 });
 
-    describe('Restore with folder hierarchies', () => {
+    describe('Restore with folder hierarchies',  () => {
 
     let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
 

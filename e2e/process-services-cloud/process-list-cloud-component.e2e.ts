@@ -31,9 +31,9 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
 import resources = require('../util/resources');
 
-describe('Process list cloud', () => {
+describe('Process list cloud',  () => {
 
-    describe('Process List', () => {
+    describe('Process List',  () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();

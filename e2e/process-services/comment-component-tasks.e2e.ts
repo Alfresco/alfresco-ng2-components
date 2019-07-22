@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 
-describe('Comment component for Processes', () => {
+describe('Comment component for Processes',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -86,7 +86,7 @@ describe('Comment component for Processes', () => {
         done();
     });
 
-    it('[C260237] Should not be able to add a comment on a completed task', () => {
+    it('[C260237] Should not be able to add a comment on a completed task', async () => {
         browser.controlFlow().execute(async () => {
             const newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskName.completed_task });
 
@@ -103,7 +103,7 @@ describe('Comment component for Processes', () => {
         commentsPage.checkCommentInputIsNotDisplayed();
     });
 
-    it('[C212864] Should be able to add multiple comments on a single task using different users', () => {
+    it('[C212864] Should be able to add multiple comments on a single task using different users', async () => {
         browser.controlFlow().execute(async () => {
             const newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskName.multiple_users });
 

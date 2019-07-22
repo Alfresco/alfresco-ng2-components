@@ -28,7 +28,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 
-describe('Sorting for process filters', () => {
+describe('Sorting for process filters',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();

@@ -25,7 +25,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-describe('Version Properties', () => {
+describe('Version Properties',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -72,7 +72,7 @@ describe('Version Properties', () => {
         done();
     });
 
-    it('[C272817] Should NOT be present the download action when allowDownload property is false', () => {
+    it('[C272817] Should NOT be present the download action when allowDownload property is false', async () => {
         versionManagePage.disableDownload();
 
         versionManagePage.clickActionButton('1.0');
@@ -82,7 +82,7 @@ describe('Version Properties', () => {
         versionManagePage.closeDisabledActionsMenu();
     });
 
-    it('[C279992] Should be present the download action when allowDownload property is true', () => {
+    it('[C279992] Should be present the download action when allowDownload property is true', async () => {
         versionManagePage.enableDownload();
 
         versionManagePage.clickActionButton('1.0');
@@ -92,7 +92,7 @@ describe('Version Properties', () => {
         versionManagePage.closeActionsMenu();
     });
 
-    it('[C269085] Should show/hide comments when showComments true/false', () => {
+    it('[C269085] Should show/hide comments when showComments true/false', async () => {
         versionManagePage.enableComments();
 
         BrowserActions.click(versionManagePage.showNewVersionButton);
@@ -108,7 +108,7 @@ describe('Version Properties', () => {
         BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-item-comment-1.1"]`)));
     });
 
-    it('[C277277] Should show/hide actions menu when readOnly is true/false', () => {
+    it('[C277277] Should show/hide actions menu when readOnly is true/false', async () => {
         versionManagePage.disableReadOnly();
 
         BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
@@ -118,7 +118,7 @@ describe('Version Properties', () => {
         BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
     });
 
-    it('[C279994] Should show/hide upload new version button when readOnly is true/false', () => {
+    it('[C279994] Should show/hide upload new version button when readOnly is true/false', async () => {
         versionManagePage.disableReadOnly();
 
         BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);

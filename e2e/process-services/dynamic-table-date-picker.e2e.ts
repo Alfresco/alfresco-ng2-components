@@ -27,7 +27,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Dynamic Table', () => {
+describe('Dynamic Table',  () => {
 
     const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
@@ -63,7 +63,7 @@ describe('Dynamic Table', () => {
         done();
     });
 
-    describe('Date Picker', () => {
+    describe('Date Picker',  () => {
         const app = resources.Files.DYNAMIC_TABLE_APP;
 
         const randomText = {
@@ -105,14 +105,14 @@ describe('Dynamic Table', () => {
             processFiltersPage.clickNewProcessDropdown();
         });
 
-        it('[C286277] Should have a datepicker and a mask for DateTime field', () => {
+        it('[C286277] Should have a datepicker and a mask for DateTime field', async () => {
             widget.dynamicTable().clickAddButton();
             widget.dynamicTable().clickColumnDateTime();
 
             expect(widget.dynamicTable().addRandomStringOnDateTime(randomText.wrongDateTime)).toBe('');
         });
 
-        it('[C286279] Should be able to save row with Date field', () => {
+        it('[C286279] Should be able to save row with Date field', async () => {
             widget.dynamicTable().clickAddButton();
             widget.dynamicTable().addRandomStringOnDate(randomText.wrongDate);
             widget.dynamicTable().clickSaveButton();
@@ -126,7 +126,7 @@ describe('Dynamic Table', () => {
             expect(widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
         });
 
-        it('[C311456] Should be able to delete date that is not mandatory and save the Dynamic Table', () => {
+        it('[C311456] Should be able to delete date that is not mandatory and save the Dynamic Table', async () => {
             widget.dynamicTable().clickAddButton();
             widget.dynamicTable().clickSaveButton();
             expect(widget.dynamicTable().checkErrorMessage()).toBe(randomText.requiredError);
@@ -141,7 +141,7 @@ describe('Dynamic Table', () => {
         });
     });
 
-    describe('Required Dropdown', () => {
+    describe('Required Dropdown',  () => {
         const app = resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
         const dropdown = widget.dropdown();
 
@@ -174,7 +174,7 @@ describe('Dynamic Table', () => {
             processFiltersPage.clickNewProcessDropdown();
         });
 
-        it('[C286519] Should be able to save row with required dropdown column', () => {
+        it('[C286519] Should be able to save row with required dropdown column', async () => {
             const dropdownOption = 'Option 1';
             widget.dynamicTable().clickAddButton();
             dropdown.selectOption(dropdownOption);

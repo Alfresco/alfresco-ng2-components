@@ -33,7 +33,7 @@ import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
 import path = require('path');
 
-describe('Start Task - Task App', () => {
+describe('Start Task - Task App',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -76,7 +76,7 @@ describe('Start Task - Task App', () => {
         done();
     });
 
-    it('[C260421] Should a standalone task be displayed when creating a new task without form', () => {
+    it('[C260421] Should a standalone task be displayed when creating a new task without form', async () => {
 
         taskPage.createNewTask().addName(tasks[0]).clickStartButton();
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
@@ -88,7 +88,7 @@ describe('Start Task - Task App', () => {
         expect(taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
     });
 
-    it('[C268910] Should a standalone task be displayed in completed tasks when completing it', () => {
+    it('[C268910] Should a standalone task be displayed in completed tasks when completing it', async () => {
         taskPage.createNewTask().addName(tasks[1]).clickStartButton();
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
         taskPage.formFields().noFormIsDisplayed();
@@ -102,7 +102,7 @@ describe('Start Task - Task App', () => {
         expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
-    it('[C268911] Should allow adding a form to a standalone task when clicking on Add form button', () => {
+    it('[C268911] Should allow adding a form to a standalone task when clicking on Add form button', async () => {
         taskPage.createNewTask().addName(tasks[2]).clickStartButton();
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
         taskPage.formFields().noFormIsDisplayed();
@@ -111,7 +111,7 @@ describe('Start Task - Task App', () => {
         expect(taskPage.taskDetails().getFormName()).toEqual(app.formName);
     });
 
-    it('[C268912] Should a standalone task be displayed when removing the form from APS', () => {
+    it('[C268912] Should a standalone task be displayed when removing the form from APS', async () => {
         taskPage.createNewTask().addName(tasks[3]).addForm(app.formName).clickStartButton();
 
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);

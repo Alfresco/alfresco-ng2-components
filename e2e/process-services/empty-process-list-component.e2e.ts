@@ -29,7 +29,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Empty Process List Test', () => {
+describe('Empty Process List Test',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -66,7 +66,7 @@ describe('Empty Process List Test', () => {
         done();
     });
 
-    it('[C260494] Should add process to list when a process is created', () => {
+    it('[C260494] Should add process to list when a process is created', async () => {
         navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(appA.title).clickProcessButton();

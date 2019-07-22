@@ -25,7 +25,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Content Services Viewer', () => {
+describe('Content Services Viewer',  () => {
     const acsUser = new AcsUserModel();
     const viewerPage = new ViewerPage();
     const contentServicesPage = new ContentServicesPage();
@@ -123,7 +123,7 @@ describe('Content Services Viewer', () => {
         done();
     });
 
-    it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', () => {
+    it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', async () => {
         contentServicesPage.checkAcsContainer();
 
         viewerPage.viewFile(pdfFile.name);
@@ -181,7 +181,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C260042] Should be able to download, open full-screen and Info container from the Viewer', () => {
+    it('[C260042] Should be able to download, open full-screen and Info container from the Viewer', async () => {
         viewerPage.viewFile(jpgFile.name);
         viewerPage.checkZoomInButtonIsDisplayed();
 
@@ -198,7 +198,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C260052] Should display image, toolbar and pagination when opening a .jpg file', () => {
+    it('[C260052] Should display image, toolbar and pagination when opening a .jpg file', async () => {
         viewerPage.viewFile(jpgFile.name);
         viewerPage.checkZoomInButtonIsDisplayed();
 
@@ -220,7 +220,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C260483] Should be able to zoom and rotate image when .jpg file is open', () => {
+    it('[C260483] Should be able to zoom and rotate image when .jpg file is open', async () => {
         viewerPage.viewFile(jpgFile.name);
         viewerPage.checkZoomInButtonIsDisplayed();
 
@@ -246,7 +246,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C279922] Should display first page, toolbar and pagination when opening a .ppt file', () => {
+    it('[C279922] Should display first page, toolbar and pagination when opening a .ppt file', async () => {
         viewerPage.viewFile(pptFile.name);
         viewerPage.checkZoomInButtonIsDisplayed();
 
@@ -266,7 +266,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C291903] Should display the buttons in order in the adf viewer toolbar', () => {
+    it('[C291903] Should display the buttons in order in the adf viewer toolbar', async () => {
         viewerPage.viewFile(pdfFile.name);
         viewerPage.checkLeftSideBarIsNotDisplayed();
         viewerPage.clickLeftSidebarButton();
@@ -277,7 +277,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C260053] Should display first page, toolbar and pagination when opening a .docx file', () => {
+    it('[C260053] Should display first page, toolbar and pagination when opening a .docx file', async () => {
         viewerPage.viewFile(docxFile.name);
         viewerPage.checkZoomInButtonIsDisplayed();
 
@@ -297,7 +297,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C260054] Should display Preview could not be loaded and viewer toolbar when opening an unsupported file', () => {
+    it('[C260054] Should display Preview could not be loaded and viewer toolbar when opening an unsupported file', async () => {
         viewerPage.viewFile(unsupportedFile.name);
 
         viewerPage.checkCloseButtonIsDisplayed();
@@ -313,7 +313,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C260056] Should display video and viewer toolbar when opening a media file', () => {
+    it('[C260056] Should display video and viewer toolbar when opening a media file', async () => {
         viewerPage.viewFile(mp4File.name);
 
         viewerPage.checkMediaPlayerContainerIsDisplayed();
@@ -329,7 +329,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C261123] Should be able to preview all pages and navigate to a page when using thumbnails', () => {
+    it('[C261123] Should be able to preview all pages and navigate to a page when using thumbnails', async () => {
         viewerPage.viewFile(pdfFile.name);
 
         viewerPage.checkZoomInButtonIsDisplayed();
@@ -359,7 +359,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C268105] Should display current thumbnail when getting to the page following the last visible thumbnail', () => {
+    it('[C268105] Should display current thumbnail when getting to the page following the last visible thumbnail', async () => {
         viewerPage.viewFile(pdfFile.name);
         viewerPage.checkZoomInButtonIsDisplayed();
 
@@ -376,7 +376,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C269109] Should not be able to open thumbnail panel before the pdf is loaded', () => {
+    it('[C269109] Should not be able to open thumbnail panel before the pdf is loaded', async () => {
         viewerPage.viewFile(pdfFile.name);
 
         viewerPage.checkThumbnailsBtnIsDisabled();
@@ -385,7 +385,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C268901] Should need a password when opening a protected file', () => {
+    it('[C268901] Should need a password when opening a protected file', async () => {
         viewerPage.viewFile(protectedFile.name);
 
         viewerPage.checkZoomInButtonIsDisplayed();
@@ -404,7 +404,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C307985] Should close the viewer when password dialog is cancelled', () => {
+    it('[C307985] Should close the viewer when password dialog is cancelled', async () => {
         viewerPage.viewFile(protectedFile.name);
         viewerPage.checkPasswordDialogIsDisplayed();
         viewerPage.clickClosePasswordDialog();

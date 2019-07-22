@@ -22,7 +22,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { LoginPage, ErrorPage, StringUtil, BrowserActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Document List Component', () => {
+describe('Document List Component',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -38,7 +38,7 @@ describe('Document List Component', () => {
         });
     });
 
-    describe('Permission Message', async () => {
+    describe('Permission Message',  () => {
 
         beforeAll(async (done) => {
             acsUser = new AcsUserModel();
@@ -63,20 +63,20 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C217334] Should display a message when accessing file without permissions', () => {
+        it('[C217334] Should display a message when accessing file without permissions', async () => {
             BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorCode()).toBe('403');
             expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
 
-        it('[C279924] Should display custom message when accessing a file without permissions', () => {
+        it('[C279924] Should display custom message when accessing a file without permissions', async () => {
             contentServicesPage.goToDocumentList();
             contentServicesPage.enableCustomPermissionMessage();
             BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorCode()).toBe('403');
         });
 
-        it('[C279925] Should display translated message when accessing a file without permissions if language is changed', () => {
+        it('[C279925] Should display translated message when accessing a file without permissions if language is changed', async () => {
             navBar.openLanguageMenu();
             navBar.chooseLanguage('Italiano');
             browser.sleep(2000);

@@ -25,7 +25,7 @@ import { SearchConfiguration } from '../search.config';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-describe('Search Radio Component', () => {
+describe('Search Radio Component',  () => {
 
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
@@ -89,7 +89,7 @@ describe('Search Radio Component', () => {
         done();
     });
 
-    it('[C277039] Should be able to choose only one option at a time', () => {
+    it('[C277039] Should be able to choose only one option at a time', async () => {
         searchFiltersPage.checkTypeFilterIsDisplayed();
         searchFiltersPage.checkTypeFilterIsCollapsed();
         searchFiltersPage.clickTypeFilterHeader();
@@ -123,7 +123,7 @@ describe('Search Radio Component', () => {
         searchResults.checkContentIsDisplayed(nodeNames.document);
     });
 
-    describe('configuration change', () => {
+    describe('configuration change',  () => {
 
         let jsonFile;
 
@@ -243,7 +243,7 @@ describe('Search Radio Component', () => {
 
     });
 
-    describe('Properties', () => {
+    describe('Properties',  () => {
 
         let jsonFile;
 

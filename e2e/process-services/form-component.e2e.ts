@@ -22,7 +22,7 @@ import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Form Component', () => {
+describe('Form Component',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -78,7 +78,7 @@ describe('Form Component', () => {
         done();
     });
 
-    it('[C286505] Should be able to display errors under the Error Log section', () => {
+    it('[C286505] Should be able to display errors under the Error Log section', async () => {
         widget.numberWidget().getNumberFieldLabel(fields.numberWidgetId);
         widget.numberWidget().setFieldValue(fields.numberWidgetId, message.test);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);

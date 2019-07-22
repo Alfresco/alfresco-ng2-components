@@ -33,9 +33,9 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('Process filters cloud', () => {
+describe('Process filters cloud',  () => {
 
-    describe('Process Filters', () => {
+    describe('Process Filters',  () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -106,13 +106,13 @@ describe('Process filters cloud', () => {
             done();
         });
 
-        it('[C290021] Should be able to view default filters', () => {
+        it('[C290021] Should be able to view default filters', async () => {
             processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
         });
 
-        it('[C290043] Should display process in Running Processes List when process is started', () => {
+        it('[C290043] Should display process in Running Processes List when process is started', async () => {
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
@@ -129,7 +129,7 @@ describe('Process filters cloud', () => {
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
         });
 
-        it('[C290044] Should display process in Completed Processes List when process is completed', () => {
+        it('[C290044] Should display process in Completed Processes List when process is completed', async () => {
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');

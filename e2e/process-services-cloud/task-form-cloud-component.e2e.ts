@@ -35,7 +35,7 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 
 import resources = require('../util/resources');
 
-describe('Task form cloud component', () => {
+describe('Task form cloud component',  () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -160,16 +160,16 @@ describe('Task form cloud component', () => {
 
     });
 
-    describe('Complete task - cloud directive', () => {
+    describe('Complete task - cloud directive',  () => {
 
-        beforeEach((done) => {
+        beforeEach(async (done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(candidateBaseApp);
             done();
         });
 
-        it('[C307093] Complete button is not displayed when the task is already completed', () => {
+        it('[C307093] Complete button is not displayed when the task is already completed', async () => {
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
@@ -178,7 +178,7 @@ describe('Task form cloud component', () => {
             taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
 
-        it('[C307095] Task can not be completed by owner user', () => {
+        it('[C307095] Task can not be completed by owner user', async () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
@@ -189,7 +189,7 @@ describe('Task form cloud component', () => {
             taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
 
-        it('[C307110] Task list is displayed after clicking on Cancel button', () => {
+        it('[C307110] Task list is displayed after clicking on Cancel button', async () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -202,7 +202,7 @@ describe('Task form cloud component', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
         });
 
-        it('[C307094] Standalone Task can be completed by a user that is owner and assignee', () => {
+        it('[C307094] Standalone Task can be completed by a user that is owner and assignee', async () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -217,7 +217,7 @@ describe('Task form cloud component', () => {
             taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
 
-        it('[C307111] Task of a process can be completed by a user that is owner and assignee', () => {
+        it('[C307111] Task of a process can be completed by a user that is owner and assignee', async () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 

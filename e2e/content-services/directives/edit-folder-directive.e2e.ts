@@ -25,7 +25,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FileModel } from '../../models/ACS/fileModel';
 import resources = require('../../util/resources');
 
-describe('Edit folder directive', function () {
+describe('Edit folder directive',  () =>{
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -223,7 +223,7 @@ describe('Edit folder directive', function () {
         contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', updateFolderName);
     });
 
-    describe('Edit Folder - no permission', () => {
+    describe('Edit Folder - no permission',  () => {
 
         beforeEach(async (done) => {
             loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);

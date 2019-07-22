@@ -32,7 +32,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Start Task - Task App', () => {
+describe('Start Task - Task App',  () => {
 
     const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();
@@ -80,7 +80,7 @@ describe('Start Task - Task App', () => {
         done();
     });
 
-    it('[C274690] Should be able to open a file attached to a start form', () => {
+    it('[C274690] Should be able to open a file attached to a start form', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);

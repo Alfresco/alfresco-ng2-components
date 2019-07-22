@@ -24,7 +24,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-describe('Datatable component - selection', () => {
+describe('Datatable component - selection',  () => {
 
     const dataTablePage = new DataTablePage();
     const loginPage = new LoginPage();
@@ -49,7 +49,7 @@ describe('Datatable component - selection', () => {
         done();
     });
 
-    it('[C213258] Should be possible change the selection modes when change the selectionMode property', () => {
+    it('[C213258] Should be possible change the selection modes when change the selectionMode property', async () => {
         dataTablePage.selectRow('2');
         dataTableComponent.checkRowIsSelected('Id', '2');
         expect(dataTablePage.getNumberOfSelectedRows()).toEqual(1);
@@ -69,7 +69,7 @@ describe('Datatable component - selection', () => {
         dataTablePage.checkNoRowIsSelected();
     });
 
-    it('[C260059] Should be possible select multiple row when multiselect is true', () => {
+    it('[C260059] Should be possible select multiple row when multiselect is true', async () => {
         dataTablePage.clickMultiSelect();
         dataTablePage.clickCheckbox('1');
         dataTablePage.checkRowIsChecked('1');
@@ -82,7 +82,7 @@ describe('Datatable component - selection', () => {
         dataTablePage.checkRowIsChecked('1');
     });
 
-    it('[C260058] Should be possible select all the rows when multiselect is true', () => {
+    it('[C260058] Should be possible select all the rows when multiselect is true', async () => {
         dataTablePage.checkAllRows();
         dataTablePage.checkRowIsChecked('1');
         dataTablePage.checkRowIsChecked('2');
@@ -90,7 +90,7 @@ describe('Datatable component - selection', () => {
         dataTablePage.checkRowIsChecked('4');
     });
 
-    it('[C277262] Should be possible reset the selected row when click on the reset button', () => {
+    it('[C277262] Should be possible reset the selected row when click on the reset button', async () => {
         dataTablePage.checkRowIsChecked('1');
         dataTablePage.checkRowIsChecked('2');
         dataTablePage.checkRowIsChecked('3');

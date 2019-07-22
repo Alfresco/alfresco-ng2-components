@@ -25,7 +25,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Upload component', () => {
+describe('Upload component', async () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -73,7 +73,7 @@ describe('Upload component', () => {
         contentServicesPage.goToDocumentList();
     });
 
-    it('[C272792] Should be possible to cancel upload of a big file using row cancel icon', () => {
+    it('[C272792] Should be possible to cancel upload of a big file using row cancel icon', async () => {
         browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 3000)');
 
         contentServicesPage.uploadFile(largeFile.location);
@@ -83,7 +83,7 @@ describe('Upload component', () => {
         contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
     });
 
-    it('[C287790] Should be possible to cancel upload of a big file through the cancel uploads button', () => {
+    it('[C287790] Should be possible to cancel upload of a big file through the cancel uploads button', async () => {
         browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
             'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)');
 
@@ -94,7 +94,7 @@ describe('Upload component', () => {
         contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
     });
 
-    it('[C272793] Should be able to cancel multiple files upload', () => {
+    it('[C272793] Should be able to cancel multiple files upload', async () => {
         browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
             'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)');
 

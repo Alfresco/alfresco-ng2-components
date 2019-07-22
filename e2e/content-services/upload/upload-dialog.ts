@@ -26,7 +26,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
-describe('Upload component', () => {
+describe('Upload component',  () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialog();
@@ -93,7 +93,7 @@ describe('Upload component', () => {
         done();
     });
 
-    it('[C260143] Should be possible to maximize/minimize the upload dialog', () => {
+    it('[C260143] Should be possible to maximize/minimize the upload dialog', async () => {
         contentServicesPage
             .uploadFile(docxFileModel.location)
             .checkContentIsDisplayed(docxFileModel.name);
@@ -110,7 +110,7 @@ describe('Upload component', () => {
         uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
     });
 
-    it('[C291902] Should be shown upload counter display in dialog box', () => {
+    it('[C291902] Should be shown upload counter display in dialog box', async () => {
         contentServicesPage
             .uploadFile(docxFileModel.location)
             .checkContentIsDisplayed(docxFileModel.name);
@@ -120,7 +120,7 @@ describe('Upload component', () => {
         uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
     });
 
-    it('[C260168] Should be possible to cancel upload using dialog icon', () => {
+    it('[C260168] Should be possible to cancel upload using dialog icon', async () => {
         contentServicesPage.uploadFile(pdfFileModel.location)
             .checkContentIsDisplayed(pdfFileModel.name);
         uploadDialog.removeUploadedFile(pdfFileModel.name).fileIsCancelled(pdfFileModel.name);
@@ -129,7 +129,7 @@ describe('Upload component', () => {
         contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
     });
 
-    it('[C260176] Should remove files from upload dialog box when closed', () => {
+    it('[C260176] Should remove files from upload dialog box when closed', async () => {
         contentServicesPage.uploadFile(pngFileModelTwo.location).checkContentIsDisplayed(pngFileModelTwo.name);
 
         uploadDialog.fileIsUploaded(pngFileModelTwo.name);
@@ -141,7 +141,7 @@ describe('Upload component', () => {
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
     });
 
-    it('[C260170] Should be possible to upload multiple files', () => {
+    it('[C260170] Should be possible to upload multiple files', async () => {
         contentServicesPage.checkAcsContainer();
         uploadToggles.enableMultipleFileUpload();
         contentServicesPage.uploadMultipleFile(filesLocation).checkContentsAreDisplayed(filesName);
@@ -151,7 +151,7 @@ describe('Upload component', () => {
         uploadToggles.disableMultipleFileUpload();
     });
 
-    it('[C311305] Should NOT be able to remove uploaded version', () => {
+    it('[C311305] Should NOT be able to remove uploaded version', async () => {
         contentServicesPage.uploadFile(docxFileModel.location);
         uploadDialog.fileIsUploaded(docxFileModel.name);
         contentServicesPage.checkContentIsDisplayed(docxFileModel.name);

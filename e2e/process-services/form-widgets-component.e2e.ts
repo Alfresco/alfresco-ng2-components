@@ -32,7 +32,7 @@ import { UsersActions } from '../actions/users.actions';
 
 const formInstance = new FormDefinitionModel();
 
-describe('Form widgets', () => {
+describe('Form widgets',  () => {
     let alfrescoJsApi;
     const taskPage = new TasksPage();
     const newTask = 'First task';
@@ -41,7 +41,7 @@ describe('Form widgets', () => {
     let appModel;
     const widget = new Widget();
 
-    describe('Form widgets', () => {
+    describe('Form widgets',  () => {
         const app = resources.Files.WIDGETS_SMOKE_TEST;
         const appFields = app.form_fields;
 
@@ -90,7 +90,7 @@ describe('Form widgets', () => {
             done();
         });
 
-        it('[C272778] Should display text and multi-line in form', () => {
+        it('[C272778] Should display text and multi-line in form', async () => {
             expect(taskPage.formFields().getFieldLabel(appFields.text_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.text_id).name);
             expect(taskPage.formFields().getFieldValue(appFields.text_id))
@@ -102,7 +102,7 @@ describe('Form widgets', () => {
                 .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).name);
         });
 
-        it('[C272779] Should display number and amount in form', () => {
+        it('[C272779] Should display number and amount in form', async () => {
             expect(taskPage.formFields().getFieldValue(appFields.number_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.number_id).value || '');
             expect(taskPage.formFields().getFieldLabel(appFields.number_id))
@@ -114,14 +114,14 @@ describe('Form widgets', () => {
                 .toEqual(formInstance.getWidgetBy('id', appFields.amount_id).name);
         });
 
-        it('[C272780] Should display attach file and attach folder in form', () => {
+        it('[C272780] Should display attach file and attach folder in form', async () => {
             expect(taskPage.formFields().getFieldLabel(appFields.attachFolder_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.attachFolder_id).name);
             expect(taskPage.formFields().getFieldLabel(appFields.attachFile_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.attachFile_id).name);
         });
 
-        it('[C272781] Should display date and date & time in form', () => {
+        it('[C272781] Should display date and date & time in form', async () => {
             expect(taskPage.formFields().getFieldLabel(appFields.date_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.date_id).name);
             expect(taskPage.formFields().getFieldValue(appFields.date_id))
@@ -133,7 +133,7 @@ describe('Form widgets', () => {
                 .toEqual(formInstance.getWidgetBy('id', appFields.dateTime_id).value || '');
         });
 
-        it('[C272782] Should display people and group in form', () => {
+        it('[C272782] Should display people and group in form', async () => {
             expect(taskPage.formFields().getFieldValue(appFields.people_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.people_id).value || '');
             expect(taskPage.formFields().getFieldLabel(appFields.people_id))
@@ -145,7 +145,7 @@ describe('Form widgets', () => {
                 .toEqual(formInstance.getWidgetBy('id', appFields.group_id).name);
         });
 
-        it('[C272783] Should display displayText and displayValue in form', () => {
+        it('[C272783] Should display displayText and displayValue in form', async () => {
 
             expect(widget.displayTextWidget().getFieldLabel(appFields.displayText_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.displayText_id).value);
@@ -153,7 +153,7 @@ describe('Form widgets', () => {
                 .toEqual(formInstance.getWidgetBy('id', appFields.displayValue_id).value || 'Unknown type: readonly');
         });
 
-        it('[C272784] Should display typeahead and header in form', () => {
+        it('[C272784] Should display typeahead and header in form', async () => {
             expect(widget.headerWidget().getFieldLabel(appFields.header_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.header_id).name);
             expect(taskPage.formFields().getFieldValue(appFields.typeAhead_id))
@@ -162,7 +162,7 @@ describe('Form widgets', () => {
                 .toEqual(formInstance.getWidgetBy('id', appFields.typeAhead_id).name);
         });
 
-        it('[C272785] Should display checkbox and radio button in form', () => {
+        it('[C272785] Should display checkbox and radio button in form', async () => {
             const radioOption = 1;
 
             expect(taskPage.formFields().getFieldLabel(appFields.checkbox_id))
@@ -174,7 +174,7 @@ describe('Form widgets', () => {
                 .toContain(formInstance.getWidgetBy('id', appFields.radioButtons_id).options[radioOption - 1].name);
         });
 
-        it('[C268149] Should display hyperlink, dropdown and dynamic table in form', () => {
+        it('[C268149] Should display hyperlink, dropdown and dynamic table in form', async () => {
 
             expect(widget.hyperlink().getFieldText(appFields.hyperlink_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.hyperlink_id).hyperlinkUrl || '');
@@ -194,7 +194,7 @@ describe('Form widgets', () => {
 
     });
 
-    describe('with fields involving other people', () => {
+    describe('with fields involving other people',  () => {
 
         const appsActions = new AppsActions();
         const app = resources.Files.FORM_ADF;
@@ -239,7 +239,7 @@ describe('Form widgets', () => {
             done();
         });
 
-        it('[C260405] Value fields configured with process variables', () => {
+        it('[C260405] Value fields configured with process variables', async () => {
             taskPage.formFields().checkFormIsDisplayed();
             expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
 

@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { check } from '../../util/material';
 
-describe('Aspect oriented config', () => {
+describe('Aspect oriented config',  () => {
 
     const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();

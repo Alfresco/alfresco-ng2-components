@@ -22,9 +22,9 @@ import { browser } from 'protractor';
 import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiService } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('People Groups Cloud Component', () => {
+describe('People Groups Cloud Component',  () => {
 
-    describe('People Groups Cloud Component', () => {
+    describe('People Groups Cloud Component',  () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
@@ -114,7 +114,7 @@ describe('People Groups Cloud Component', () => {
             browser.refresh();
         });
 
-        it('[C305041] Should filter the People Single Selection with the Application name filter', () => {
+        it('[C305041] Should filter the People Single Selection with the Application name filter', async () => {
             peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
             peopleGroupCloudComponentPage.clickPeopleFilerByApp();
             peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
@@ -125,7 +125,7 @@ describe('People Groups Cloud Component', () => {
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
         });
 
-        it('[C305041] Should filter the People Multiple Selection with the Application name filter', () => {
+        it('[C305041] Should filter the People Multiple Selection with the Application name filter', async () => {
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickPeopleFilerByApp();
             peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
@@ -143,7 +143,7 @@ describe('People Groups Cloud Component', () => {
             peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
         });
 
-        it('[C305041] Should filter the Groups Single Selection with the Application name filter', () => {
+        it('[C305041] Should filter the Groups Single Selection with the Application name filter', async () => {
             peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
             peopleGroupCloudComponentPage.clickGroupFilerByApp();
             peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
@@ -153,7 +153,7 @@ describe('People Groups Cloud Component', () => {
             expect(groupCloudComponentPage.getGroupsFieldContent()).toBe(`${groupActiviti.name}`);
         });
 
-        it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', () => {
+        it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', async () => {
             peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickGroupFilerByApp();
             peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);

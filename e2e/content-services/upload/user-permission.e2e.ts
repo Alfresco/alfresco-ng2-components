@@ -31,7 +31,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 import CONSTANTS = require('../../util/constants');
 
-describe('Upload - User permission', () => {
+describe('Upload - User permission',  () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialog();
@@ -98,7 +98,7 @@ describe('Upload - User permission', () => {
         done();
     });
 
-    describe('Consumer permissions', () => {
+    describe('Consumer permissions',  () => {
 
         beforeEach(async (done) => {
             contentServicesPage.goToDocumentList();
@@ -106,7 +106,7 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        it('[C291921] Should display tooltip for uploading files without permissions', () => {
+        it('[C291921] Should display tooltip for uploading files without permissions', async () => {
             navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
             contentServicesPage.checkDragAndDropDIsDisplayed();
@@ -120,7 +120,7 @@ describe('Upload - User permission', () => {
             expect(uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
         });
 
-        it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', () => {
+        it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', async () => {
             contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
 
             uploadDialog.fileIsUploaded(emptyFile.name);
@@ -138,7 +138,7 @@ describe('Upload - User permission', () => {
 
     });
 
-    describe('full permissions', () => {
+    describe('full permissions',  () => {
 
         beforeEach(async (done) => {
             navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
@@ -148,7 +148,7 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        it('[C279917] Should be allowed to upload a file in a folder with manager permissions', () => {
+        it('[C279917] Should be allowed to upload a file in a folder with manager permissions', async () => {
             contentServicesPage.uploadFile(emptyFile.location);
 
             uploadDialog.fileIsUploaded(emptyFile.name);
@@ -156,7 +156,7 @@ describe('Upload - User permission', () => {
 
     });
 
-    describe('multiple users', () => {
+    describe('multiple users',  () => {
 
         beforeEach(async (done) => {
             contentServicesPage.goToDocumentList();

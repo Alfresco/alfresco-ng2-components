@@ -24,7 +24,7 @@ import { UsersActions } from '../../actions/users.actions';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
 import { checkboxVisibilityForm } from '../../resources/forms/checkbox-visibility-condition';
 
-describe('Visibility conditions - cloud', () => {
+describe('Visibility conditions - cloud',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -85,7 +85,7 @@ describe('Visibility conditions - cloud', () => {
         done();
     });
 
-    it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', () => {
+    it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', async () => {
 
         widget.textWidget().isWidgetVisible(widgets.textOneId);
         widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldValue);
@@ -96,7 +96,7 @@ describe('Visibility conditions - cloud', () => {
         widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldValue);
     });
 
-    it('[C309648] Should be able to see Checkbox widget when visibility condition refers to a form variable and a field', () => {
+    it('[C309648] Should be able to see Checkbox widget when visibility condition refers to a form variable and a field', async () => {
 
         widget.textWidget().isWidgetVisible(widgets.textOneId);
         widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
@@ -108,7 +108,7 @@ describe('Visibility conditions - cloud', () => {
         widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
     });
 
-    it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a field and a form variable', () => {
+    it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a field and a form variable', async () => {
 
         widget.textWidget().isWidgetVisible(widgets.textOneId);
         widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
@@ -120,7 +120,7 @@ describe('Visibility conditions - cloud', () => {
         widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
     });
 
-    it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', () => {
+    it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', async () => {
 
         widget.textWidget().isWidgetVisible(widgets.textOneId);
         widget.textWidget().isWidgetVisible(widgets.textTwoId);
@@ -136,7 +136,7 @@ describe('Visibility conditions - cloud', () => {
         widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField);
     });
 
-    it('[C311424] Should be able to see Checkbox widget when visibility condition refers to a variable with specific value', () => {
+    it('[C311424] Should be able to see Checkbox widget when visibility condition refers to a variable with specific value', async () => {
         formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
 
         widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableValue);
@@ -152,7 +152,7 @@ describe('Visibility conditions - cloud', () => {
         formCloudDemoPage.setConfigToEditor(visibleCheckbox);
     });
 
-    it('[C311426] Should be able to see Checkbox widget when visibility condition refers to form variable and another form variable', () => {
+    it('[C311426] Should be able to see Checkbox widget when visibility condition refers to form variable and another form variable', async () => {
         formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
 
         widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableVariable);

@@ -23,7 +23,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, Key } from 'protractor';
 
-describe('Create folder directive', function () {
+describe('Create folder directive',  ()=> {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -59,7 +59,7 @@ describe('Create folder directive', function () {
         done();
     });
 
-    it('[C260154] Should not create the folder if cancel button is clicked', () => {
+    it('[C260154] Should not create the folder if cancel button is clicked', async () => {
         const folderName = 'cancelFolder';
         contentServicesPage.clickOnCreateNewFolder();
 
@@ -69,7 +69,7 @@ describe('Create folder directive', function () {
         contentServicesPage.checkContentIsNotDisplayed(folderName);
     });
 
-    it('[C260155] Should enable the Create button only when a folder name is present', () => {
+    it('[C260155] Should enable the Create button only when a folder name is present', async () => {
         const folderName = 'NotEnableFolder';
         contentServicesPage.clickOnCreateNewFolder();
 
@@ -80,7 +80,7 @@ describe('Create folder directive', function () {
         createFolderDialog.checkCreateUpdateBtnIsEnabled();
     });
 
-    it('[C260156] Should not be possible create two folder with the same name', () => {
+    it('[C260156] Should not be possible create two folder with the same name', async () => {
         const folderName = 'duplicate';
         contentServicesPage.createNewFolder(folderName);
 
@@ -91,7 +91,7 @@ describe('Create folder directive', function () {
         notificationHistoryPage.checkNotifyContains('There\'s already a folder with this name. Try a different name.');
     });
 
-    it('[C260157] Should be possible create a folder under a folder with the same name', () => {
+    it('[C260157] Should be possible create a folder under a folder with the same name', async () => {
         const folderName = 'sameSubFolder';
 
         contentServicesPage.createNewFolder(folderName);
@@ -103,7 +103,7 @@ describe('Create folder directive', function () {
         contentServicesPage.checkContentIsDisplayed(folderName);
     });
 
-    it('[C260158] Should be possible add a folder description when create a new folder', () => {
+    it('[C260158] Should be possible add a folder description when create a new folder', async () => {
         const folderName = 'folderDescription';
         const description = 'this is the description';
 
@@ -121,7 +121,7 @@ describe('Create folder directive', function () {
         expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('this is the description');
     });
 
-    it('[C260159] Should not be possible create a folder with banned character', () => {
+    it('[C260159] Should not be possible create a folder with banned character', async () => {
         browser.refresh();
         contentServicesPage.clickOnCreateNewFolder();
 

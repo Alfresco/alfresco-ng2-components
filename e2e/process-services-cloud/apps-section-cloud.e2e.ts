@@ -21,7 +21,7 @@ import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import resources = require('../util/resources');
 
-describe('Applications list', () => {
+describe('Applications list',  () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -72,7 +72,7 @@ describe('Applications list', () => {
         });
     });
 
-    it('[C289910] Should the app be displayed on dashboard when is deployed on APS', () => {
+    it('[C289910] Should the app be displayed on dashboard when is deployed on APS', async () => {
         browser.refresh();
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudPage.checkApsContainer();

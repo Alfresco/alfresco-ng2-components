@@ -23,7 +23,7 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 import { StringUtil } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('Start Process', () => {
+describe('Start Process',  () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -77,7 +77,7 @@ describe('Start Process', () => {
         done();
     });
 
-    it('[C291857] Should be possible to cancel a process', () => {
+    it('[C291857] Should be possible to cancel a process', async () => {
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
@@ -88,7 +88,7 @@ describe('Start Process', () => {
         startProcessPage.clickCancelProcessButton();
     });
 
-    it('[C291842] Should be displayed an error message if process name exceed 255 characters', () => {
+    it('[C291842] Should be displayed an error message if process name exceed 255 characters', async () => {
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
@@ -101,7 +101,7 @@ describe('Start Process', () => {
         expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
     });
 
-    it('[C291860] Should be able to start a process', () => {
+    it('[C291860] Should be able to start a process', async () => {
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();

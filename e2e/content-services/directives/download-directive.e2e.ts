@@ -25,7 +25,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FolderModel } from '../../models/ACS/folderModel';
 
-describe('Version component actions', () => {
+describe('Version component actions',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -92,7 +92,7 @@ describe('Version component actions', () => {
         BrowserVisibility.waitUntilDialogIsClose();
     });
 
-    it('[C260083] Download files - Different size values', () => {
+    it('[C260083] Download files - Different size values', async () => {
         contentListPage.selectRow(txtFileModel.name);
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded(txtFileModel.name);
@@ -103,13 +103,13 @@ describe('Version component actions', () => {
         FileBrowserUtil.isFileDownloaded(file0BytesModel.name);
     });
 
-    it('[C260084] Download folder', () => {
+    it('[C260084] Download folder', async () => {
         contentListPage.selectRow(folderInfo.name);
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded(folderInfo.name + '.zip');
     });
 
-    it('[C261032] File and Folder', () => {
+    it('[C261032] File and Folder', async () => {
         contentServicesPage.clickMultiSelectToggle();
         contentServicesPage.checkAcsContainer();
         contentListPage.dataTablePage().checkAllRows();
@@ -117,7 +117,7 @@ describe('Version component actions', () => {
         FileBrowserUtil.isFileDownloaded('archive.zip');
     });
 
-    it('[C261033] Folder and Folder', () => {
+    it('[C261033] Folder and Folder', async () => {
         contentListPage.selectRow(folderInfo.name);
         contentListPage.selectRow(folderSecond.name);
 
@@ -127,7 +127,7 @@ describe('Version component actions', () => {
         BrowserVisibility.waitUntilDialogIsClose();
     });
 
-    it('[C277757] Download file - Comma in file name', () => {
+    it('[C277757] Download file - Comma in file name', async () => {
         contentListPage.selectRow(txtFileComma.name);
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded(txtFileComma.name);

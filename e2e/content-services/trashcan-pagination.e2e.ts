@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
-describe('Trashcan - Pagination', () => {
+describe('Trashcan - Pagination',  () => {
     const pagination = {
         base: 'newFile',
         extension: '.txt'
@@ -95,7 +95,7 @@ describe('Trashcan - Pagination', () => {
         done();
     });
 
-    it('[C272811] Should be able to set Items per page to 20', () => {
+    it('[C272811] Should be able to set Items per page to 20', async () => {
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
 
         trashcanPage.waitForTableBody();
@@ -109,7 +109,7 @@ describe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C276742] Should be able to set Items per page to 15', () => {
+    it('[C276742] Should be able to set Items per page to 15', async () => {
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();
@@ -120,7 +120,7 @@ describe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C276743] Should be able to set Items per page to 10', () => {
+    it('[C276743] Should be able to set Items per page to 10', async () => {
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
         trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();
@@ -131,7 +131,7 @@ describe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C276744] Should be able to set Items per page to 5', () => {
+    it('[C276744] Should be able to set Items per page to 5', async () => {
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();

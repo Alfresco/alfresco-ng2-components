@@ -38,9 +38,9 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 
 import resources = require('../util/resources');
 
-describe('Process Header cloud component', () => {
+describe('Process Header cloud component',  () => {
 
-    describe('Process Header cloud component', () => {
+    describe('Process Header cloud component',  () => {
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const subProcessApp = resources.ACTIVITI7_APPS.SUB_PROCESS_APP.name;
@@ -115,7 +115,7 @@ describe('Process Header cloud component', () => {
             appListCloudComponent.checkApsContainer();
         });
 
-        it('[C305010] Should display process details for running process', () => {
+        it('[C305010] Should display process details for running process', async () => {
             appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
@@ -137,7 +137,7 @@ describe('Process Header cloud component', () => {
             expect(processHeaderCloudPage.getLastModified()).toEqual(runningCreatedDate);
         });
 
-        it('[C305008] Should display process details for completed process', () => {
+        it('[C305008] Should display process details for completed process', async () => {
             appListCloudComponent.goToApp(subProcessApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();

@@ -22,7 +22,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Tree View Component', () => {
+describe('Tree View Component',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -75,7 +75,7 @@ describe('Tree View Component', () => {
         done();
     });
 
-    it('[C289972] Should be able to show folders and sub-folders of a node as a tree view', () => {
+    it('[C289972] Should be able to show folders and sub-folders of a node as a tree view', async () => {
         treeViewPage.checkTreeViewTitleIsDisplayed();
 
         expect(treeViewPage.getNodeId()).toEqual(nodeNames.parentFolder);
@@ -101,7 +101,7 @@ describe('Tree View Component', () => {
         treeViewPage.checkNodeIsNotDisplayed(nodeNames.thirdFolder);
     });
 
-    it('[C289973] Should be able to change the default nodeId', () => {
+    it('[C289973] Should be able to change the default nodeId', async () => {
         treeViewPage.clearNodeIdInput();
 
         treeViewPage.checkNoNodeIdMessageIsDisplayed();
@@ -122,7 +122,7 @@ describe('Tree View Component', () => {
         treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
     });
 
-    it('[C290071] Should not be able to display files', () => {
+    it('[C290071] Should not be able to display files', async () => {
         treeViewPage.addNodeId(secondTreeFolder.entry.id);
 
         treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);

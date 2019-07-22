@@ -30,7 +30,7 @@ import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { by } from 'protractor';
 
-describe('Attach Form Component', () => {
+describe('Attach Form Component',  () => {
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
@@ -89,7 +89,7 @@ describe('Attach Form Component', () => {
         done();
     });
 
-    it('[C280047] Should be able to view the attach-form component after creating a standalone task', () => {
+    it('[C280047] Should be able to view the attach-form component after creating a standalone task', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -100,7 +100,7 @@ describe('Attach Form Component', () => {
         attachFormPage.checkCompleteButtonIsDisplayed();
     });
 
-    it('[C280048] Should be able to view the attach-form component after clicking cancel button', () => {
+    it('[C280048] Should be able to view the attach-form component after clicking cancel button', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -120,7 +120,7 @@ describe('Attach Form Component', () => {
         attachFormPage.checkAttachFormButtonIsDisplayed();
     });
 
-    it('[C280017] Should be able to attach a form on a standalone task and complete', () => {
+    it('[C280017] Should be able to attach a form on a standalone task and complete', async () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);

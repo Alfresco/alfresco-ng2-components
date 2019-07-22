@@ -31,7 +31,7 @@ import { StandaloneTask } from '../models/APS/standaloneTask';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Task Details - Form', () => {
+describe('Task Details - Form',  () => {
     const loginPage = new LoginPage();
     const tasksListPage = new TasksListPage();
     const taskDetailsPage = new TaskDetailsPage();
@@ -100,7 +100,7 @@ describe('Task Details - Form', () => {
         done();
     });
 
-    it('[C280018] Should be able to change the form in a task', () => {
+    it('[C280018] Should be able to change the form in a task', async () => {
         tasksListPage.selectRow(task.name);
         taskDetailsPage.clickForm();
 
@@ -131,7 +131,7 @@ describe('Task Details - Form', () => {
         taskDetailsPage.checkFormIsAttached(newForm.name);
     });
 
-    it('[C280019] Should be able to remove the form form a task', () => {
+    it('[C280019] Should be able to remove the form form a task', async () => {
         tasksListPage.selectRow(task.name);
         taskDetailsPage.clickForm();
 
@@ -143,7 +143,7 @@ describe('Task Details - Form', () => {
         expect(taskDetailsPage.getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
-    it('[C280557] Should display task details when selecting another task while the Attach Form dialog is displayed', () => {
+    it('[C280557] Should display task details when selecting another task while the Attach Form dialog is displayed', async () => {
         tasksListPage.selectRow(task.name);
         taskDetailsPage.clickForm();
 

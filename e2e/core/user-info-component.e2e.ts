@@ -29,7 +29,7 @@ import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
-describe('User Info component', () => {
+describe('User Info component',  () => {
 
     const loginPage = new LoginPage();
     const userInfoPage = new UserInfoPage();
@@ -142,7 +142,7 @@ describe('User Info component', () => {
 
     it('[C260117] Should display UserInfo with profile image uploaded in ACS', async () => {
         await PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
-        await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', function () {
+        await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-',  async()=> {
         });
 
         await loginPage.loginToContentServicesUsingUserModel(contentUserModel);

@@ -28,9 +28,9 @@ import { browser } from 'protractor';
 import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
 import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
 
-describe('Process list cloud', () => {
+describe('Process list cloud',  () => {
 
-    describe('Process List', () => {
+    describe('Process List',  () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -265,7 +265,7 @@ describe('Process list cloud', () => {
             BrowserActions.closeMenuAndDialogs();
         });
 
-        describe('Process List - Check Action Filters', () => {
+        describe('Process List - Check Action Filters',  () => {
 
             beforeEach(async (done) => {
                 await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({

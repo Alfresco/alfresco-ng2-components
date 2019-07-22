@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Header widget', () => {
+describe('Header widget', async () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -74,7 +74,7 @@ describe('Header widget', () => {
         done();
     });
 
-    it('[C276737] Should be able to set general and visibility properties for Header widget', () => {
+    it('[C276737] Should be able to set general and visibility properties for Header widget', async () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.header_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.header_id);

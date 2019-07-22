@@ -25,7 +25,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Process List Test', () => {
+describe('Process List Test',  () => {
 
     const loginPage = new LoginPage();
     const processListDemoPage = new ProcessListDemoPage();
@@ -105,7 +105,7 @@ describe('Process List Test', () => {
         done();
     });
 
-    it('[C286638] Should display all process by default', () => {
+    it('[C286638] Should display all process by default', async () => {
         processListDemoPage.checkAppIdFieldIsDisplayed()
             .checkProcessInstanceIdFieldIsDisplayed()
             .checkProcessInstanceIdFieldIsDisplayed()
@@ -113,7 +113,7 @@ describe('Process List Test', () => {
             .checkStateFieldIsDisplayed();
     });
 
-    it('[C282006] Should be able to filter processes with App ID', () => {
+    it('[C282006] Should be able to filter processes with App ID', async () => {
         processListDemoPage.addAppId('a');
 
         processListDemoPage.checkErrorMessageIsDisplayed(errorMessages.appIdNumber);
@@ -132,7 +132,7 @@ describe('Process List Test', () => {
         processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
     });
 
-    it('[C282015] Should be able to filter by Process Definition ID', () => {
+    it('[C282015] Should be able to filter by Process Definition ID', async () => {
         processListDemoPage.addProcessDefinitionId(procWithDate.processDefinitionId);
 
         processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
@@ -142,7 +142,7 @@ describe('Process List Test', () => {
         processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
     });
 
-    it('[C282016] Should be able to filter by Process Instance ID', () => {
+    it('[C282016] Should be able to filter by Process Instance ID', async () => {
         processListDemoPage.addProcessInstanceId(procWithDate.id);
 
         processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
@@ -152,7 +152,7 @@ describe('Process List Test', () => {
         processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
     });
 
-    it('[C282017] Should be able to filter by Status', () => {
+    it('[C282017] Should be able to filter by Status', async () => {
         processListDemoPage.selectStateFilter('Active');
 
         processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithDate);
@@ -177,7 +177,7 @@ describe('Process List Test', () => {
         processListDemoPage.checkProcessIsDisplayed(processName.procWithUserWidget);
     });
 
-    it('[C282010] Should be able to sort by creation date', () => {
+    it('[C282010] Should be able to sort by creation date', async () => {
         processListDemoPage.selectSorting('asc');
 
         processListDemoPage.getDisplayedProcessesNames().then((sortedProcessList) => {

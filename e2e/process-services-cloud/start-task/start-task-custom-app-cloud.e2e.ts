@@ -24,7 +24,7 @@ import {
 } from '@alfresco/adf-testing';
 import resources = require('../../util/resources');
 
-describe('Start Task', () => {
+describe('Start Task',  () => {
 
     const loginSSOPage = new LoginSSOPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
@@ -102,7 +102,7 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
     });
 
-    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
+    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         peopleCloudComponent.clearAssignee();
@@ -121,7 +121,7 @@ describe('Start Task', () => {
         expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');
     });
 
-    it('[C291956] Should be able to create a new standalone task without assignee', () => {
+    it('[C291956] Should be able to create a new standalone task without assignee', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         expect(peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
@@ -135,7 +135,7 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
     });
 
-    it('[C290166] Should be possible to cancel a task', () => {
+    it('[C290166] Should be possible to cancel a task', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.checkStartButtonIsDisabled()
@@ -149,7 +149,7 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(standaloneTaskName);
     });
 
-    it('[C290180] Should be able to create a new standalone task', () => {
+    it('[C290180] Should be able to create a new standalone task', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(standaloneTaskName)
@@ -160,7 +160,7 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
     });
 
-    it('[C290181] Should be displayed an error message if task name exceed 255 characters', () => {
+    it('[C290181] Should be displayed an error message if task name exceed 255 characters', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(taskName255Characters)
@@ -172,7 +172,7 @@ describe('Start Task', () => {
             .clickCancelButton();
     });
 
-    it('[C291774] Should be displayed an error message if the date is invalid', () => {
+    it('[C291774] Should be displayed an error message if the date is invalid', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.addDueDate('12/12/2018')
             .checkStartButtonIsEnabled();
@@ -183,7 +183,7 @@ describe('Start Task', () => {
             .clickCancelButton();
     });
 
-    it('[C290182] Should be possible to assign the task to another user', () => {
+    it('[C290182] Should be possible to assign the task to another user', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(standaloneTaskName);
@@ -195,14 +195,14 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(standaloneTaskName);
     });
 
-    it('[C291953] Assignee field should display the logged user as default', () => {
+    it('[C291953] Assignee field should display the logged user as default', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         expect(peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
         startTask.clickCancelButton();
     });
 
-    it('[C305050] Should be able to reassign the removed user when starting a new task', () => {
+    it('[C305050] Should be able to reassign the removed user when starting a new task', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(reassignTaskName);

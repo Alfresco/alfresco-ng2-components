@@ -29,7 +29,7 @@ import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { ModelsActions } from '../actions/APS/models.actions';
 
-describe('Modify applications', () => {
+describe('Modify applications',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -63,7 +63,7 @@ describe('Modify applications', () => {
         done();
     });
 
-    it('[C260198] Should the app be displayed on dashboard when is deployed on APS', () => {
+    it('[C260198] Should the app be displayed on dashboard when is deployed on APS', async () => {
         navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.checkApsContainer();

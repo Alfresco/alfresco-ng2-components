@@ -30,7 +30,7 @@ import resources = require('../../util/resources');
 import {AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 
-describe('Document List Component', () => {
+describe('Document List Component',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -102,7 +102,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    describe('Document List Component - Actions Move and Copy', () => {
+    describe('Document List Component - Actions Move and Copy',  () => {
 
         beforeEach(async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -110,7 +110,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C260128] Move - Same name file', () => {
+        it('[C260128] Move - Same name file', async () => {
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
             contentServicesPage.pressContextMenuActionNamed('Move');
@@ -121,7 +121,7 @@ describe('Document List Component', () => {
             notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
 
-        it('[C260134] Move - folder with subfolder and file within it', () => {
+        it('[C260134] Move - folder with subfolder and file within it', async () => {
             contentServicesPage.checkContentIsDisplayed(destinationFolder.entry.name);
             contentServicesPage.checkContentIsDisplayed(sourceFolder.entry.name);
             contentServicesPage.getDocumentList().rightClickOnRow(sourceFolder.entry.name);
@@ -139,7 +139,7 @@ describe('Document List Component', () => {
             contentServicesPage.checkContentIsDisplayed(subFile.entry.name);
         });
 
-        it('[C260135] Move - Same name folder', () => {
+        it('[C260135] Move - Same name folder', async () => {
             contentServicesPage.checkContentIsDisplayed(duplicateFolderName.entry.name);
             contentServicesPage.getDocumentList().rightClickOnRow(duplicateFolderName.entry.name);
             contentServicesPage.pressContextMenuActionNamed('Move');
@@ -150,7 +150,7 @@ describe('Document List Component', () => {
             notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
 
-        it('[C260129] Copy - Same name file', () => {
+        it('[C260129] Copy - Same name file', async () => {
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
             contentServicesPage.pressContextMenuActionNamed('Copy');
@@ -161,7 +161,7 @@ describe('Document List Component', () => {
             notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
 
-        it('[C260136] Copy - Same name folder', () => {
+        it('[C260136] Copy - Same name folder', async () => {
             contentServicesPage.checkContentIsDisplayed(duplicateFolderName.entry.name);
             contentServicesPage.getDocumentList().rightClickOnRow(duplicateFolderName.entry.name);
             contentServicesPage.pressContextMenuActionNamed('Copy');
@@ -174,7 +174,7 @@ describe('Document List Component', () => {
 
     });
 
-    describe('Document List actionns - Move, Copy on no permission folder', () => {
+    describe('Document List actionns - Move, Copy on no permission folder',  () => {
 
         beforeAll((done) => {
             loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
@@ -183,7 +183,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C260133] Move - no permission folder', () => {
+        it('[C260133] Move - no permission folder', async () => {
             contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
             contentServicesPage.getDocumentList().rightClickOnRow(subFolder.entry.name);
             contentServicesPage.checkContextActionIsVisible('Move');
@@ -191,7 +191,7 @@ describe('Document List Component', () => {
             contentServicesPage.closeActionContext();
         });
 
-        it('[C260140] Copy - No permission folder', () => {
+        it('[C260140] Copy - No permission folder', async () => {
             contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
             contentServicesPage.checkContentIsDisplayed(copyFolder.entry.name);
             contentServicesPage.getDocumentList().rightClickOnRow(copyFolder.entry.name);

@@ -24,9 +24,9 @@ import { AppListCloudPage } from '@alfresco/adf-testing';
 import { StringUtil } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('Task list cloud - selection', () => {
+describe('Task list cloud - selection',  () => {
 
-    describe('Task list cloud - selection', () => {
+    describe('Task list cloud - selection',  () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -87,7 +87,7 @@ describe('Task list cloud - selection', () => {
             tasksCloudDemoPage.clickAppButton();
         });
 
-        it('[C291914] Should not be able to select any row when selection mode is set to None', () => {
+        it('[C291914] Should not be able to select any row when selection mode is set to None', async () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('None');
             tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
@@ -98,7 +98,7 @@ describe('Task list cloud - selection', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkNoRowIsSelected();
         });
 
-        it('[C291918] Should be able to select only one row when selection mode is set to Single', () => {
+        it('[C291918] Should be able to select only one row when selection mode is set to Single', async () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Single');
             tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
@@ -115,7 +115,7 @@ describe('Task list cloud - selection', () => {
             expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
         });
 
-        it('[C291919] Should be able to select only one row when selection mode is set to Multiple', () => {
+        it('[C291919] Should be able to select only one row when selection mode is set to Multiple', async () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Multiple');
             tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
@@ -132,7 +132,7 @@ describe('Task list cloud - selection', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkRowIsNotSelected(tasks[2]);
         });
 
-        it('[C291916] Should be able to select multiple row when multiselect is true', () => {
+        it('[C291916] Should be able to select multiple row when multiselect is true', async () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
@@ -153,7 +153,7 @@ describe('Task list cloud - selection', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
         });
 
-        it('[C291915] Should be possible select all the rows when multiselect is true', () => {
+        it('[C291915] Should be possible select all the rows when multiselect is true', async () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
@@ -167,7 +167,7 @@ describe('Task list cloud - selection', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[2]);
         });
 
-        it('[C297472] Should be able to see selected tasks with Multiselection and Testing switched on', () => {
+        it('[C297472] Should be able to see selected tasks with Multiselection and Testing switched on', async () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickSettingsButton().enableTestingMode();
             tasksCloudDemoPage.clickAppButton();

@@ -28,7 +28,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { DropActions } from '../../actions/drop.actions';
 
-describe('Upload component', () => {
+describe('Upload component',  () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialog();
@@ -90,7 +90,7 @@ describe('Upload component', () => {
         contentServicesPage.goToDocumentList();
     });
 
-    describe('', () => {
+    describe('',  () => {
 
         beforeEach(() => {
             contentServicesPage.goToDocumentList();
@@ -107,7 +107,7 @@ describe('Upload component', () => {
             done();
         });
 
-        it('[C272788] Should display upload button', () => {
+        it('[C272788] Should display upload button', async () => {
             expect(contentServicesPage.getSingleFileButtonTooltip()).toEqual('Custom tooltip');
 
             contentServicesPage
@@ -115,7 +115,7 @@ describe('Upload component', () => {
                 .checkContentIsDisplayed(firstPdfFileModel.name);
         });
 
-        it('[C272789] Should be able to upload PDF file', () => {
+        it('[C272789] Should be able to upload PDF file', async () => {
             contentServicesPage
                 .uploadFile(pdfFileModel.location)
                 .checkContentIsDisplayed(pdfFileModel.name);
@@ -125,7 +125,7 @@ describe('Upload component', () => {
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
         });
 
-        it('[C272790] Should be able to upload text file', () => {
+        it('[C272790] Should be able to upload text file', async () => {
             contentServicesPage
                 .uploadFile(docxFileModel.location)
                 .checkContentIsDisplayed(docxFileModel.name);
@@ -134,7 +134,7 @@ describe('Upload component', () => {
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
         });
 
-        it('[C260141] Should be possible to upload PNG file', () => {
+        it('[C260141] Should be possible to upload PNG file', async () => {
             contentServicesPage
                 .uploadFile(pngFileModel.location)
                 .checkContentIsDisplayed(pngFileModel.name);
@@ -143,7 +143,7 @@ describe('Upload component', () => {
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
         });
 
-        it('[C260143] Should be possible to maximize/minimize the upload dialog', () => {
+        it('[C260143] Should be possible to maximize/minimize the upload dialog', async () => {
             contentServicesPage
                 .uploadFile(docxFileModel.location)
                 .checkContentIsDisplayed(docxFileModel.name);
@@ -160,7 +160,7 @@ describe('Upload component', () => {
             uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
         });
 
-        it('[C272794] Should display tooltip for uploading files', () => {
+        it('[C272794] Should display tooltip for uploading files', async () => {
             uploadToggles.enableMultipleFileUpload();
             uploadToggles.checkMultipleFileUploadToggleIsEnabled();
 
@@ -169,7 +169,7 @@ describe('Upload component', () => {
             uploadToggles.disableMultipleFileUpload();
         });
 
-        it('[C279920] Should rename a file uploaded twice', () => {
+        it('[C279920] Should rename a file uploaded twice', async () => {
             contentServicesPage
                 .uploadFile(pdfFileModel.location)
                 .checkContentIsDisplayed(pdfFileModel.name);
@@ -187,7 +187,7 @@ describe('Upload component', () => {
             pdfFileModel.setVersion('');
         });
 
-        it('[C260172] Should be possible to enable versioning', () => {
+        it('[C260172] Should be possible to enable versioning', async () => {
             uploadToggles.enableVersioning();
             uploadToggles.checkVersioningToggleIsEnabled();
 
@@ -215,7 +215,7 @@ describe('Upload component', () => {
             uploadToggles.disableVersioning();
         });
 
-        it('[C260174] Should be possible to set a max size', () => {
+        it('[C260174] Should be possible to set a max size', async () => {
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkAcsContainer();
             uploadToggles.enableMaxSize();
@@ -238,7 +238,7 @@ describe('Upload component', () => {
             uploadToggles.disableMaxSize();
         });
 
-        it('[C272796] Should be possible to set max size to 0', () => {
+        it('[C272796] Should be possible to set max size to 0', async () => {
             contentServicesPage.goToDocumentList();
             uploadToggles.enableMaxSize();
             uploadToggles.checkMaxSizeToggleIsEnabled();
@@ -253,7 +253,7 @@ describe('Upload component', () => {
             uploadToggles.disableMaxSize();
         });
 
-        it('[C272797] Should be possible to set max size to 1', () => {
+        it('[C272797] Should be possible to set max size to 1', async () => {
             uploadToggles.enableMaxSize();
             uploadToggles.checkMaxSizeToggleIsEnabled();
             browser.driver.sleep(1000);
@@ -264,7 +264,7 @@ describe('Upload component', () => {
             contentServicesPage.checkContentIsDisplayed(fileWithSpecificSize.name);
         });
 
-        it('[C91318] Should Enable/Disable upload button when change the disable property', () => {
+        it('[C91318] Should Enable/Disable upload button when change the disable property', async () => {
             uploadToggles.clickCheckboxDisableUpload();
             expect(contentServicesPage.uploadButtonIsEnabled()).toBeFalsy();
 
@@ -273,7 +273,7 @@ describe('Upload component', () => {
         });
     });
 
-    it('[C260171] Should upload only the extension filter allowed when Enable extension filter is enabled', () => {
+    it('[C260171] Should upload only the extension filter allowed when Enable extension filter is enabled', async () => {
         uploadToggles.enableExtensionFilter();
         browser.driver.sleep(1000);
         uploadToggles.addExtension('.docx');
@@ -285,7 +285,7 @@ describe('Upload component', () => {
         uploadToggles.disableExtensionFilter();
     });
 
-    it('[C274687] Should upload with drag and drop only the extension filter allowed when Enable extension filter is enabled', () => {
+    it('[C274687] Should upload with drag and drop only the extension filter allowed when Enable extension filter is enabled', async () => {
         uploadToggles.enableExtensionFilter();
         browser.driver.sleep(1000);
         uploadToggles.addExtension('.docx');

@@ -39,7 +39,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import path = require('path');
 import { StringUtil } from '@alfresco/adf-testing';
 
-describe('Start Process Component', () => {
+describe('Start Process Component',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -116,7 +116,7 @@ describe('Start Process Component', () => {
         done();
     });
 
-    describe(' Once logged with user without apps', () => {
+    describe(' Once logged with user without apps',  () => {
 
         beforeEach(async () => {
             await loginPage.loginToProcessServicesUsingUserModel(procUserModel);
@@ -124,7 +124,7 @@ describe('Start Process Component', () => {
             processServicesPage.checkApsContainer();
         });
 
-        it('[C260458] Should NOT be able to start a process without process model', () => {
+        it('[C260458] Should NOT be able to start a process without process model', async () => {
             processServicesPage.goToApp('Task App');
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -133,7 +133,7 @@ describe('Start Process Component', () => {
         });
     });
 
-    describe(' Once logged with user with app', () => {
+    describe(' Once logged with user with app',  () => {
 
         beforeAll(async () => {
             await loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
@@ -144,7 +144,7 @@ describe('Start Process Component', () => {
             processServicesPage.checkApsContainer();
         });
 
-        it('[C260441] Should display start process form and default name when creating a new process', () => {
+        it('[C260441] Should display start process form and default name when creating a new process', async () => {
             processServicesPage.goToApp('Task App');
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -152,7 +152,7 @@ describe('Start Process Component', () => {
             expect(startProcessPage.getDefaultName()).toEqual('My Default Name');
         });
 
-        it('[C260445] Should require process definition and be possible to click cancel button', () => {
+        it('[C260445] Should require process definition and be possible to click cancel button', async () => {
             processServicesPage.goToApp('Task App');
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -164,7 +164,7 @@ describe('Start Process Component', () => {
             processFiltersPage.checkNoContentMessage();
         });
 
-        it('[C260444] Should require process name', () => {
+        it('[C260444] Should require process name', async () => {
             processServicesPage.goToApp(app.title);
 
             processServiceTabBarPage.clickProcessButton();
@@ -180,7 +180,7 @@ describe('Start Process Component', () => {
             startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
         });
 
-        it('[C260443] Should be possible to start a process without start event', () => {
+        it('[C260443] Should be possible to start a process without start event', async () => {
             processServicesPage.goToApp(app.title);
 
             processServiceTabBarPage.clickProcessButton();
@@ -197,7 +197,7 @@ describe('Start Process Component', () => {
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
-        it('[C260449] Should be possible to start a process with start event', () => {
+        it('[C260449] Should be possible to start a process with start event', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -222,7 +222,7 @@ describe('Start Process Component', () => {
             });
         });
 
-        it('[C286503] Should NOT display any process definition when typing a non-existent one', () => {
+        it('[C286503] Should NOT display any process definition when typing a non-existent one', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -232,7 +232,7 @@ describe('Start Process Component', () => {
             startProcessPage.checkStartProcessButtonIsDisabled();
         });
 
-        it('[C286504] Should display proper options when typing a part of existent process definitions', () => {
+        it('[C286504] Should display proper options when typing a part of existent process definitions', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -244,7 +244,7 @@ describe('Start Process Component', () => {
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
-        it('[C286508] Should display only one option when typing an existent process definition', () => {
+        it('[C286508] Should display only one option when typing an existent process definition', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -256,7 +256,7 @@ describe('Start Process Component', () => {
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
-        it('[C286509] Should select automatically the processDefinition when the app contains only one', () => {
+        it('[C286509] Should select automatically the processDefinition when the app contains only one', async () => {
             processServicesPage.goToApp(simpleApp.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -265,7 +265,7 @@ describe('Start Process Component', () => {
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
-        it('[C286511] Should be able to type the process definition and start a process', () => {
+        it('[C286511] Should be able to type the process definition and start a process', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -280,7 +280,7 @@ describe('Start Process Component', () => {
             processFiltersPage.selectFromProcessList('Type');
         });
 
-        it('[C286513] Should be able to use down arrow key when navigating throw suggestions', () => {
+        it('[C286513] Should be able to use down arrow key when navigating throw suggestions', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -291,7 +291,7 @@ describe('Start Process Component', () => {
             expect(startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
         });
 
-        it('[C286514] Should the process definition input be cleared when clicking on options drop down ', () => {
+        it('[C286514] Should the process definition input be cleared when clicking on options drop down ', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -304,7 +304,7 @@ describe('Start Process Component', () => {
             expect(startProcessPage.getProcessDefinitionValue()).toBe('');
         });
 
-        it('[C260453] Should be possible to add a comment on an active process', () => {
+        it('[C260453] Should be possible to add a comment on an active process', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -318,7 +318,7 @@ describe('Start Process Component', () => {
             processDetailsPage.checkCommentIsDisplayed('comment1');
         });
 
-        it('[C260454] Should be possible to download audit log file', () => {
+        it('[C260454] Should be possible to download audit log file', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -333,7 +333,7 @@ describe('Start Process Component', () => {
             expect(Util.fileExists(auditLogFile, 15)).toBe(true);
         });
 
-        it('Should be able to attach a file using the button', () => {
+        it('Should be able to attach a file using the button', async () => {
             processServicesPage.goToApp(app.title);
 
             processServiceTabBarPage.clickProcessButton();
@@ -352,7 +352,7 @@ describe('Start Process Component', () => {
             attachmentListPage.checkFileIsAttached(jpgFile.name);
         });
 
-        it('[C260451] Should be possible to display process diagram', () => {
+        it('[C260451] Should be possible to display process diagram', async () => {
             processServicesPage.goToApp(app.title);
 
             processServiceTabBarPage.clickProcessButton();
@@ -370,7 +370,7 @@ describe('Start Process Component', () => {
             processDetailsPage.clickShowDiagram();
         });
 
-        it('[C260452] Should redirect user when clicking on active/completed task', () => {
+        it('[C260452] Should redirect user when clicking on active/completed task', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -403,7 +403,7 @@ describe('Start Process Component', () => {
             processDetailsPage.checkShowDiagramIsDisabled();
         });
 
-        it('[C260461] Should be possible to add a comment on a completed/canceled process', () => {
+        it('[C260461] Should be possible to add a comment on a completed/canceled process', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -420,7 +420,7 @@ describe('Start Process Component', () => {
             processDetailsPage.checkCommentIsDisplayed('goodbye');
         });
 
-        it('[C260467] Should NOT be possible to attach a file on a completed process', () => {
+        it('[C260467] Should NOT be possible to attach a file on a completed process', async () => {
             processServicesPage.goToApp(app.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
@@ -436,7 +436,7 @@ describe('Start Process Component', () => {
             attachmentListPage.checkAttachFileButtonIsNotDisplayed();
         });
 
-        it('[C291781] Should be displayed an error message if process name exceed 255 characters', () => {
+        it('[C291781] Should be displayed an error message if process name exceed 255 characters', async () => {
             processServicesPage.goToApp(app.title);
 
             processServiceTabBarPage.clickProcessButton();
@@ -453,7 +453,7 @@ describe('Start Process Component', () => {
             startProcessPage.checkStartProcessButtonIsDisabled();
         });
 
-        it('[C261039] Advanced date time widget', () => {
+        it('[C261039] Advanced date time widget', async () => {
             processServicesPage.goToApp(dateFormApp.title);
             processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();

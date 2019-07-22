@@ -26,7 +26,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
-describe('permissions', () => {
+describe('permissions',  () => {
 
     const METADATA = {
         DATA_FORMAT: 'mmm dd yyyy',

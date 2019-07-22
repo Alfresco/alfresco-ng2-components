@@ -24,7 +24,7 @@ import { Util } from '../../util/util';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Document List - Pagination', function () {
+describe('Document List - Pagination',  () =>{
     const pagination = {
         base: 'newFile',
         secondSetBase: 'secondSet',
@@ -92,7 +92,7 @@ describe('Document List - Pagination', function () {
         done();
     });
 
-    it('[C260062] Should use default pagination settings', () => {
+    it('[C260062] Should use default pagination settings', async () => {
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -106,7 +106,7 @@ describe('Document List - Pagination', function () {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C274713] Should be able to set Items per page to 20', () => {
+    it('[C274713] Should be able to set Items per page to 20', async () => {
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -132,7 +132,7 @@ describe('Document List - Pagination', function () {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
-    it('[C260069] Should be able to set Items per page to 5', () => {
+    it('[C260069] Should be able to set Items per page to 5', async () => {
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -184,7 +184,7 @@ describe('Document List - Pagination', function () {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
-    it('[C260067] Should be able to set Items per page to 10', () => {
+    it('[C260067] Should be able to set Items per page to 10', async () => {
         currentPage = 1;
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
@@ -217,7 +217,7 @@ describe('Document List - Pagination', function () {
         currentPage = 1;
     });
 
-    it('[C260065] Should be able to set Items per page to 15', () => {
+    it('[C260065] Should be able to set Items per page to 15', async () => {
         currentPage = 1;
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
@@ -248,7 +248,7 @@ describe('Document List - Pagination', function () {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
-    it('[C91320] Pagination should preserve sorting', () => {
+    it('[C91320] Pagination should preserve sorting', async () => {
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -278,7 +278,7 @@ describe('Document List - Pagination', function () {
         expect(contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
     });
 
-    it('[C260107] Should not display pagination bar when a folder is empty', () => {
+    it('[C260107] Should not display pagination bar when a folder is empty', async () => {
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -293,7 +293,7 @@ describe('Document List - Pagination', function () {
         contentServicesPage.checkPaginationIsNotDisplayed();
     });
 
-    it('[C260071] Should be able to change pagination when having 25 files', () => {
+    it('[C260071] Should be able to change pagination when having 25 files', async () => {
         currentPage = 1;
         contentServicesPage.doubleClickRow(folderThreeModel.name);
         contentServicesPage.checkAcsContainer();

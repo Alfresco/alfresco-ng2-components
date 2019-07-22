@@ -26,7 +26,7 @@ import { User } from '../models/APS/user';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Analytics Smoke Test', () => {
+describe('Analytics Smoke Test',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -61,7 +61,7 @@ describe('Analytics Smoke Test', () => {
         done();
     });
 
-    it('[C260346] Should be able to change title of a report', () => {
+    it('[C260346] Should be able to change title of a report', async () => {
         navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp('Task App');

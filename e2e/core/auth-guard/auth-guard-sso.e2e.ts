@@ -18,7 +18,7 @@
 import { ErrorPage, LoginSSOPage, SettingsPage, BrowserActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
-describe('Auth Guard SSO', () => {
+describe('Auth Guard SSO',  () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();

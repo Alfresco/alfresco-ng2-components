@@ -27,7 +27,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-describe('Viewer', () => {
+describe('Viewer',  () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
@@ -93,7 +93,7 @@ describe('Viewer', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
-    it('[C260105] Should be able to open an image file shared via API', () => {
+    it('[C260105] Should be able to open an image file shared via API', async () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
         viewerPage.checkImgContainerIsDisplayed();
         BrowserActions.getUrl(browser.params.testConfig.adf.url);
@@ -102,7 +102,7 @@ describe('Viewer', () => {
         viewerPage.checkImgContainerIsDisplayed();
     });
 
-    it('[C260106] Should be able to open a Word file shared via API', () => {
+    it('[C260106] Should be able to open a Word file shared via API', async () => {
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
 

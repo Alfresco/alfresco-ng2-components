@@ -25,7 +25,7 @@ import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer', () => {
+describe('Viewer',  () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
@@ -62,7 +62,7 @@ describe('Viewer', () => {
         done();
     });
 
-    describe('Word Folder Uploaded', () => {
+    describe('Word Folder Uploaded',  () => {
 
         let uploadedWords;
         let wordFolderUploaded;
@@ -83,7 +83,7 @@ describe('Viewer', () => {
             done();
         });
 
-        it('[C280011] Should be possible to open any Word file', () => {
+        it('[C280011] Should be possible to open any Word file', async () => {
             contentServicesPage.doubleClickRow('word');
 
             uploadedWords.forEach((currentFile) => {

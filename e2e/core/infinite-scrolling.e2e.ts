@@ -29,7 +29,7 @@ import { Util } from '../util/util';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '@alfresco/adf-testing';
 
-describe('Enable infinite scrolling', () => {
+describe('Enable infinite scrolling',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -88,7 +88,7 @@ describe('Enable infinite scrolling', () => {
         done();
     });
 
-    it('[C260484] Should be possible to enable infinite scrolling', () => {
+    it('[C260484] Should be possible to enable infinite scrolling', async () => {
         contentServicesPage.doubleClickRow(folderModel.name);
         contentServicesPage.enableInfiniteScrolling();
         infinitePaginationPage.clickLoadMoreButton();
@@ -97,7 +97,7 @@ describe('Enable infinite scrolling', () => {
         }
     });
 
-    it('[C268165] Delete folder when infinite scrolling is enabled', () => {
+    it('[C268165] Delete folder when infinite scrolling is enabled', async () => {
         contentServicesPage.doubleClickRow(deleteUploaded.entry.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -116,7 +116,7 @@ describe('Enable infinite scrolling', () => {
         }
     });
 
-    it('[C299201] Should use default pagination settings for infinite pagination', () => {
+    it('[C299201] Should use default pagination settings for infinite pagination', async () => {
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.doubleClickRow(folderModel.name);
@@ -129,7 +129,7 @@ describe('Enable infinite scrolling', () => {
         infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
     });
 
-    it('[C299202] Should not display load more button when all the files are already displayed', () => {
+    it('[C299202] Should not display load more button when all the files are already displayed', async () => {
         LocalStorageUtil.setUserPreference('paginationSize', '30');
 
         navigationBarPage.clickContentServicesButton();
@@ -143,7 +143,7 @@ describe('Enable infinite scrolling', () => {
         infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
     });
 
-    it('[C299203] Should not display load more button when a folder is empty', () => {
+    it('[C299203] Should not display load more button when a folder is empty', async () => {
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
 

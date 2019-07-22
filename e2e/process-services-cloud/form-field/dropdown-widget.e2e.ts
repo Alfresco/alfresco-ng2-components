@@ -25,7 +25,7 @@ import { AppListCloudPage } from '@alfresco/adf-testing';
 import resources = require('../../util/resources');
 import { browser } from 'protractor';
 
-describe('Form Field Component - Dropdown Widget', () => {
+describe('Form Field Component - Dropdown Widget',  () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();

@@ -26,7 +26,7 @@ import { browser } from 'protractor';
 import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Lock File', () => {
+describe('Lock File',  () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -78,7 +78,7 @@ describe('Lock File', () => {
 
     });
 
-    describe('Lock file interaction with the UI', () => {
+    describe('Lock file interaction with the UI',  () => {
 
         beforeAll(async (done) => {
             const pngLockedUploadedFile = await uploadActions.uploadFile(pngFileToLock.location, pngFileToLock.name, documentLibrary);
@@ -128,7 +128,7 @@ describe('Lock File', () => {
             done();
         });
 
-        it('[C286604] Should be able to open Lock file option by clicking the lock image', () => {
+        it('[C286604] Should be able to open Lock file option by clicking the lock image', async () => {
             contentServices.lockContent(pngFileModel.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();
@@ -136,7 +136,7 @@ describe('Lock File', () => {
             lockFilePage.checkSaveButtonIsDisplayed();
         });
 
-        it('[C286625] Should be able to click Cancel to cancel lock file operation', () => {
+        it('[C286625] Should be able to click Cancel to cancel lock file operation', async () => {
             contentServices.lockContent(pngFileModel.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();
@@ -145,7 +145,7 @@ describe('Lock File', () => {
             contentServices.checkUnlockedIcon(pngFileModel.name);
         });
 
-        it('[C286603] Should be able to click on Lock file checkbox and lock a file', () => {
+        it('[C286603] Should be able to click on Lock file checkbox and lock a file', async () => {
             contentServices.lockContent(pngFileToLock.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();
@@ -155,7 +155,7 @@ describe('Lock File', () => {
             contentServices.checkLockedIcon(pngFileToLock.name);
         });
 
-        it('[C286618] Should be able to uncheck Lock file checkbox and unlock a file', () => {
+        it('[C286618] Should be able to uncheck Lock file checkbox and unlock a file', async () => {
             contentServices.lockContent(pngFileModel.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();
@@ -173,7 +173,7 @@ describe('Lock File', () => {
 
     });
 
-    describe('Locked file without owner permissions', () => {
+    describe('Locked file without owner permissions',  () => {
 
         beforeEach(async (done) => {
             const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
@@ -262,7 +262,7 @@ describe('Lock File', () => {
 
     });
 
-    describe('Locked file with owner permissions', () => {
+    describe('Locked file with owner permissions',  () => {
 
         let pngFileToBeLocked;
 
@@ -349,7 +349,7 @@ describe('Lock File', () => {
 
         });
 
-        it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', () => {
+        it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', async () => {
             contentServices.lockContent(pngFileToLock.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();

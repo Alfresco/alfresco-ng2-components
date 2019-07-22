@@ -25,7 +25,7 @@ import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-describe('Viewer', () => {
+describe('Viewer',  () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
@@ -63,7 +63,7 @@ describe('Viewer', () => {
         done();
     });
 
-    describe('PowerPoint Folder Uploaded', () => {
+    describe('PowerPoint Folder Uploaded',  () => {
 
         let uploadedPpt;
         let pptFolderUploaded;
@@ -84,7 +84,7 @@ describe('Viewer', () => {
             done();
         });
 
-        it('[C280009] Should be possible to open any PowerPoint file', () => {
+        it('[C280009] Should be possible to open any PowerPoint file', async () => {
             contentServicesPage.doubleClickRow('ppt');
 
             uploadedPpt.forEach((currentFile) => {

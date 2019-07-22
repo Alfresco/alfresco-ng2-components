@@ -24,7 +24,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer', () => {
+describe('Viewer',  () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
@@ -69,7 +69,7 @@ describe('Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C260096] Should the Viewer able to accept a customToolbar', () => {
+    it('[C260096] Should the Viewer able to accept a customToolbar', async () => {
         viewerPage.clickLeftSidebarButton();
         viewerPage.checkLeftSideBarIsDisplayed();
         viewerPage.checkToolbarIsDisplayed();
@@ -78,7 +78,7 @@ describe('Viewer', () => {
         viewerPage.disableCustomToolbar();
     });
 
-    it('[C260097] Should the viewer able to show a custom info-drawer when the sidebarTemplate is set', () => {
+    it('[C260097] Should the viewer able to show a custom info-drawer when the sidebarTemplate is set', async () => {
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         viewerPage.clickOnTab('Comments');

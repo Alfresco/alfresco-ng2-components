@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Text widget', () => {
+describe('Text widget',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;

@@ -34,7 +34,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 
-describe('Version component actions', () => {
+describe('Version component actions',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -87,21 +87,21 @@ describe('Version component actions', () => {
         done();
     });
 
-    it('[C280003] Should not be possible delete a file version if there is only one version', () => {
+    it('[C280003] Should not be possible delete a file version if there is only one version', async () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
         versionManagePage.closeActionsMenu();
         BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
     });
 
-    it('[C280004] Should not be possible restore the version if there is only one version', () => {
+    it('[C280004] Should not be possible restore the version if there is only one version', async () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
         versionManagePage.closeActionsMenu();
         BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });
 
-    it('[C280005] Should be showed all the default action when you have more then one version', () => {
+    it('[C280005] Should be showed all the default action when you have more then one version', async () => {
         versionManagePage.showNewVersionButton.click();
 
         versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
@@ -111,7 +111,7 @@ describe('Version component actions', () => {
         versionManagePage.closeActionsMenu();
     });
 
-    it('[C269081] Should be possible download all the version of a file', () => {
+    it('[C269081] Should be possible download all the version of a file', async () => {
         versionManagePage.downloadFileVersion('1.0');
 
         expect(Util.fileExists(path.join(__dirname, 'downloads', txtFileModel.name), 20)).toBe(true);
@@ -121,7 +121,7 @@ describe('Version component actions', () => {
         expect(Util.fileExists(path.join(__dirname, 'downloads', fileModelVersionTwo.name), 20)).toBe(true);
     });
 
-    it('[C272819] Should be possible delete a version when click on delete version action', () => {
+    it('[C272819] Should be possible delete a version when click on delete version action', async () => {
         versionManagePage.deleteFileVersion('1.1');
 
         versionManagePage.clickAcceptConfirm();
@@ -130,7 +130,7 @@ describe('Version component actions', () => {
         versionManagePage.checkFileVersionExist('1.0');
     });
 
-    it('[C280006] Should be possible prevent a version to be deleted when click on No on the confirm dialog', () => {
+    it('[C280006] Should be possible prevent a version to be deleted when click on No on the confirm dialog', async () => {
         versionManagePage.showNewVersionButton.click();
 
         versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);

@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Task List Pagination - Sorting', () => {
+describe('Task List Pagination - Sorting',  () => {
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
@@ -77,7 +77,7 @@ describe('Task List Pagination - Sorting', () => {
         done();
     });
 
-    it('[C260308] Should be possible to sort tasks by name', () => {
+    it('[C260308] Should be possible to sort tasks by name', async () => {
         new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         taskPage.tasksListPage().getDataTable().waitForTableBody();

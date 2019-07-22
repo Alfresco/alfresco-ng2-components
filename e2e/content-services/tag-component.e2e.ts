@@ -24,7 +24,7 @@ import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-describe('Tag component', () => {
+describe('Tag component',  () => {
 
     const loginPage = new LoginPage();
     const tagPage = new TagPage();
@@ -89,7 +89,7 @@ describe('Tag component', () => {
         done();
     });
 
-    it('[C260374] Should NOT be possible to add a new tag without Node ID', () => {
+    it('[C260374] Should NOT be possible to add a new tag without Node ID', async () => {
         navigationBarPage.clickTagButton();
 
         expect(tagPage.getNodeId()).toEqual('');
@@ -101,7 +101,7 @@ describe('Tag component', () => {
         expect(tagPage.getNewTagInput()).toEqual('a');
     });
 
-    it('[C268151] Should be possible to add a new tag to a Node', () => {
+    it('[C268151] Should be possible to add a new tag to a Node', async () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[0]);
 
@@ -109,7 +109,7 @@ describe('Tag component', () => {
         tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[0]);
     });
 
-    it('[C260377] Should NOT be possible to add a tag that already exists', () => {
+    it('[C260377] Should NOT be possible to add a tag that already exists', async () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(sameTag);
         tagPage.checkTagIsDisplayedInTagList(sameTag);
@@ -117,7 +117,7 @@ describe('Tag component', () => {
         expect(tagPage.getErrorMessage()).toEqual('Tag already exists');
     });
 
-    it('[C91326] Should be possible to create a tag with different characters', () => {
+    it('[C91326] Should be possible to create a tag with different characters', async () => {
         tagPage.insertNodeId(pdfFileModel.id);
 
         tagPage.addTag(uppercaseTag + digitsTag + nonLatinTag);
@@ -130,7 +130,7 @@ describe('Tag component', () => {
         tagPage.checkTagIsNotDisplayedInTagList(uppercaseTag + digitsTag + nonLatinTag);
     });
 
-    it('[C260375] Should be possible to delete a tag', () => {
+    it('[C260375] Should be possible to delete a tag', async () => {
         const deleteTag = StringUtil.generateRandomString().toUpperCase();
 
         tagPage.insertNodeId(deleteFile.id);
@@ -158,7 +158,7 @@ describe('Tag component', () => {
         tagPage.checkTagIsNotDisplayedInTagListByNodeId(deleteTag.toLowerCase());
     });
 
-    it('[C286290] Should be able to hide the delete option from a tag component', () => {
+    it('[C286290] Should be able to hide the delete option from a tag component', async () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[3]);
 
@@ -170,7 +170,7 @@ describe('Tag component', () => {
         tagPage.checkDeleteTagFromTagListByNodeIdIsNotDisplayed(tagList[3]);
     });
 
-    it('[C286472] Should be able to click Show more/less button on List Tags Content Services', () => {
+    it('[C286472] Should be able to click Show more/less button on List Tags Content Services', async () => {
         tagPage.insertNodeId(pdfFileModel.id);
 
         tagPage.checkShowMoreButtonIsDisplayed();
@@ -185,7 +185,7 @@ describe('Tag component', () => {
         tagPage.checkShowLessButtonIsNotDisplayed();
     });
 
-    it('[C260378] Should be possible to add multiple tags', () => {
+    it('[C260378] Should be possible to add multiple tags', async () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[2]);
 

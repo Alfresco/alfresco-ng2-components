@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Multi-line Widget', () => {
+describe('Multi-line Widget',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -74,7 +74,7 @@ describe('Multi-line Widget', () => {
         done();
     });
 
-    it('[C268182] Should be able to set general properties for Multi-line Text Widget', () => {
+    it('[C268182] Should be able to set general properties for Multi-line Text Widget', async () => {
         const label = widget.multilineTextWidget().getFieldLabel(app.FIELD.multiSimple);
         expect(label).toBe('multiSimple*');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();

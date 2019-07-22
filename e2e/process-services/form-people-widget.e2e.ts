@@ -30,7 +30,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
-describe('Form widgets - People', () => {
+describe('Form widgets - People',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;

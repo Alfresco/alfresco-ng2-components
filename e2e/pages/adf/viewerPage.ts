@@ -142,7 +142,7 @@ export class ViewerPage {
 
     async enterPassword(password): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.passwordInput);
-        await BrowserActions.clearSendKeys(this.passwordInpu, password)
+        await BrowserActions.clearSendKeys(this.passwordInput, password)
     }
 
     async checkFileIsLoaded(fileName?: string): Promise<void> {
@@ -210,7 +210,7 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
     }
 
-    getLastButtonTitle(): promnise.Promise<string> {
+    getLastButtonTitle(): promise.Promise<string> {
         return this.lastButton.getAttribute('title');
     }
 

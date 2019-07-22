@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NodeActions } from '../../actions/ACS/node.actions';
 import CONSTANTS = require('../../util/constants');
 
-describe('Version component permissions', () => {
+describe('Version component permissions',  () => {
 
     const loginPage = new LoginPage();
     const versionManagePage = new VersionManagePage();
@@ -121,7 +121,7 @@ describe('Version component permissions', () => {
         done();
     });
 
-    describe('Manager', () => {
+    describe('Manager',  () => {
 
         const sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -146,7 +146,7 @@ describe('Version component permissions', () => {
             done();
         });
 
-        it('[C277200] should a user with Manager permission be able to upload a new version for a file with different creator', () => {
+        it('[C277200] should a user with Manager permission be able to upload a new version for a file with different creator', async () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
             BrowserActions.click(versionManagePage.showNewVersionButton);
@@ -167,14 +167,14 @@ describe('Version component permissions', () => {
             uploadDialog.clickOnCloseButton();
         });
 
-        it('[C277204] Should be disabled the option for locked file', () => {
+        it('[C277204] Should be disabled the option for locked file', async () => {
             contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
             const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
             expect(actionVersion.isEnabled()).toBeFalsy();
         });
     });
 
-    describe('Consumer', () => {
+    describe('Consumer',  () => {
 
         beforeAll(async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(consumerUser);
@@ -184,13 +184,13 @@ describe('Version component permissions', () => {
             done();
         });
 
-        it('[C277197] Should a user with Consumer permission not be able to upload a new version for a file with different creator', () => {
+        it('[C277197] Should a user with Consumer permission not be able to upload a new version for a file with different creator', async () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
             notificationHistoryPage.checkNotifyContains(`You don't have access to do this`);
         });
 
-        it('[C277201] Should a user with Consumer permission not be able to upload a new version for a locked file', () => {
+        it('[C277201] Should a user with Consumer permission not be able to upload a new version for a locked file', async () => {
             contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
             const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
             expect(actionVersion.isEnabled()).toBeFalsy();
@@ -198,7 +198,7 @@ describe('Version component permissions', () => {
 
     });
 
-    describe('Contributor', () => {
+    describe('Contributor',  () => {
         const sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
@@ -222,7 +222,7 @@ describe('Version component permissions', () => {
             done();
         });
 
-        it('[C277177] Should a user with Contributor permission be able to upload a new version for the created file', () => {
+        it('[C277177] Should a user with Contributor permission be able to upload a new version for the created file', async () => {
             contentServices.versionManagerContent(sameCreatorFile.name);
 
             BrowserActions.click(versionManagePage.showNewVersionButton);
@@ -243,20 +243,20 @@ describe('Version component permissions', () => {
             uploadDialog.clickOnCloseButton();
         });
 
-        it('[C277198] Should a user with Contributor permission not be able to upload a new version for a file with different creator', () => {
+        it('[C277198] Should a user with Contributor permission not be able to upload a new version for a file with different creator', async () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
             notificationHistoryPage.checkNotifyContains(`You don't have access to do this`);
         });
 
-        it('[C277202] Should be disabled the option for a locked file', () => {
+        it('[C277202] Should be disabled the option for a locked file', async () => {
             contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
             const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
             expect(actionVersion.isEnabled()).toBeFalsy();
         });
     });
 
-    describe('Collaborator', () => {
+    describe('Collaborator',  () => {
         const sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
@@ -280,7 +280,7 @@ describe('Version component permissions', () => {
             done();
         });
 
-        it('[C277195] Should a user with Collaborator permission be able to upload a new version for the created file', () => {
+        it('[C277195] Should a user with Collaborator permission be able to upload a new version for the created file', async () => {
             contentServices.versionManagerContent(sameCreatorFile.name);
 
             BrowserActions.click(versionManagePage.showNewVersionButton);
@@ -301,7 +301,7 @@ describe('Version component permissions', () => {
             uploadDialog.clickOnCloseButton();
         });
 
-        it('[C277199] should a user with Collaborator permission be able to upload a new version for a file with different creator', () => {
+        it('[C277199] should a user with Collaborator permission be able to upload a new version for a file with different creator', async () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
             BrowserActions.click(versionManagePage.showNewVersionButton);
@@ -321,7 +321,7 @@ describe('Version component permissions', () => {
             versionManagePage.closeVersionDialog();
         });
 
-        it('[C277203] Should a user with Collaborator permission not be able to upload a new version for a locked file', () => {
+        it('[C277203] Should a user with Collaborator permission not be able to upload a new version for a locked file', async () => {
             contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
             const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
             expect(actionVersion.isEnabled()).toBeFalsy();

@@ -29,7 +29,7 @@ import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/brea
 import { InfinitePaginationPage } from '../../pages/adf/core/infinitePaginationPage';
 import { FolderModel } from '../../models/ACS/folderModel';
 
-describe('Document List Component - Actions', () => {
+describe('Document List Component - Actions',  () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -46,7 +46,7 @@ describe('Document List Component - Actions', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
 
-    describe('Document List Component - Check Actions', () => {
+    describe('Document List Component - Check Actions',  () => {
 
         let uploadedFolder, secondUploadedFolder;
         let acsUser = null;
@@ -94,9 +94,9 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
-        describe('File Actions', () => {
+        describe('File Actions',  () => {
 
-            it('[C213257] Should be able to copy a file', () => {
+            it('[C213257] Should be able to copy a file', async () => {
                 contentServicesPage.checkContentIsDisplayed(pdfUploadedNode.entry.name);
                 contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
                 contentServicesPage.pressContextMenuActionNamed('Copy');
@@ -109,7 +109,7 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             });
 
-            it('[C260131] Copy - Destination picker search', () => {
+            it('[C260131] Copy - Destination picker search', async () => {
                 contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
                 contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
                 contentServicesPage.pressContextMenuActionNamed('Copy');
@@ -120,7 +120,7 @@ describe('Document List Component - Actions', () => {
                 contentNodeSelector.checkDialogIsNotDisplayed();
             });
 
-            it('[C297491] Should be able to move a file', () => {
+            it('[C297491] Should be able to move a file', async () => {
                 contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
                 contentServicesPage.getDocumentList().rightClickOnRow(testFileModel.name);
@@ -134,7 +134,7 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.checkContentIsDisplayed(testFileModel.name);
             });
 
-            it('[C260127] Move - Destination picker search', () => {
+            it('[C260127] Move - Destination picker search', async () => {
                 contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
                 contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
                 contentServicesPage.pressContextMenuActionNamed('Move');
@@ -145,7 +145,7 @@ describe('Document List Component - Actions', () => {
                 contentNodeSelector.checkDialogIsNotDisplayed();
             });
 
-            it('[C280561] Should be able to delete a file via dropdown menu', () => {
+            it('[C280561] Should be able to delete a file via dropdown menu', async () => {
                 contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
                 contentServicesPage.checkContentIsDisplayed(fileNames[0]);
@@ -153,7 +153,7 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.checkContentIsNotDisplayed(fileNames[0]);
             });
 
-            it('[C280562] Only one file is deleted when multiple files are selected using dropdown menu', () => {
+            it('[C280562] Only one file is deleted when multiple files are selected using dropdown menu', async () => {
                 contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
                 contentListPage.selectRow(fileNames[1]);
@@ -163,7 +163,7 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.checkContentIsDisplayed(fileNames[2]);
             });
 
-            it('[C280565] Should be able to delete a file using context menu', () => {
+            it('[C280565] Should be able to delete a file using context menu', async () => {
                 contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
                 contentListPage.rightClickOnRow(fileNames[2]);
@@ -171,7 +171,7 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.checkContentIsNotDisplayed(fileNames[2]);
             });
 
-            it('[C280567] Only one file is deleted when multiple files are selected using context menu', () => {
+            it('[C280567] Only one file is deleted when multiple files are selected using context menu', async () => {
                 contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
                 contentListPage.selectRow(fileNames[3]);
@@ -182,7 +182,7 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.checkContentIsDisplayed(fileNames[4]);
             });
 
-            it('[C280566] Should be able to open context menu with right click', () => {
+            it('[C280566] Should be able to open context menu with right click', async () => {
                 contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
                 contentServicesPage.checkContextActionIsVisible('Download');
                 contentServicesPage.checkContextActionIsVisible('Copy');
@@ -197,9 +197,9 @@ describe('Document List Component - Actions', () => {
 
         });
 
-        describe('Folder Actions', () => {
+        describe('Folder Actions',  () => {
 
-            it('[C260138] Should be able to copy a folder', () => {
+            it('[C260138] Should be able to copy a folder', async () => {
                 contentServicesPage.copyContent(folderName);
                 contentNodeSelector.checkDialogIsDisplayed();
                 contentNodeSelector.typeIntoNodeSelectorSearchField(secondUploadedFolder.entry.name);
@@ -210,12 +210,12 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.checkContentIsDisplayed(folderName);
             });
 
-            it('[C260123] Should be able to delete a folder using context menu', () => {
+            it('[C260123] Should be able to delete a folder using context menu', async () => {
                 contentServicesPage.deleteContent(folderName);
                 contentServicesPage.checkContentIsNotDisplayed(folderName);
             });
 
-            it('[C280568] Should be able to open context menu with right click', () => {
+            it('[C280568] Should be able to open context menu with right click', async () => {
                 contentServicesPage.checkContentIsDisplayed(secondUploadedFolder.entry.name);
 
                 contentListPage.rightClickOnRow(secondUploadedFolder.entry.name);
@@ -230,7 +230,7 @@ describe('Document List Component - Actions', () => {
         });
     });
 
-    describe('Folder Actions - Copy and Move', () => {
+    describe('Folder Actions - Copy and Move',  () => {
 
         const folderModel1 = new FolderModel({'name': StringUtil.generateRandomString()});
         const folderModel2 = new FolderModel({'name': StringUtil.generateRandomString()});
@@ -277,7 +277,7 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
-        it('[C260132] Move action on folder with - Load more', () => {
+        it('[C260132] Move action on folder with - Load more', async () => {
 
             expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
             expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
@@ -330,7 +330,7 @@ describe('Document List Component - Actions', () => {
 
         });
 
-        it('[C305051] Copy action on folder with - Load more', () => {
+        it('[C305051] Copy action on folder with - Load more', async () => {
 
             expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
             expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);

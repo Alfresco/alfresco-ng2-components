@@ -30,7 +30,7 @@ import { EditProcessFilterConfiguration } from './config/edit-process-filter.con
 import { ProcessListPage } from '../pages/adf/process-services/processListPage';
 import moment = require('moment');
 
-describe('Process filters cloud', () => {
+describe('Process filters cloud',  () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -299,7 +299,7 @@ describe('Process filters cloud', () => {
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
-    it('[C311319] Should not display any processes when the lastModifiedFrom and lastModifiedTo are set to a future date', () => {
+    it('[C311319] Should not display any processes when the lastModifiedFrom and lastModifiedTo are set to a future date', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedFrom', afterDate);
         processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', afterDate);
         processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();

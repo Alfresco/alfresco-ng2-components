@@ -26,7 +26,7 @@ import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer', () => {
+describe('Viewer',  () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
@@ -64,7 +64,7 @@ describe('Viewer', () => {
         done();
     });
 
-    describe('Archive Folder Uploaded', () => {
+    describe('Archive Folder Uploaded',  () => {
         let uploadedArchives;
         let archiveFolderUploaded;
 
@@ -84,7 +84,7 @@ describe('Viewer', () => {
             done();
         });
 
-        it('[C260517] Should be possible to open any Archive file', () => {
+        it('[C260517] Should be possible to open any Archive file', async () => {
             contentServicesPage.doubleClickRow('archive');
 
             uploadedArchives.forEach((currentFile) => {

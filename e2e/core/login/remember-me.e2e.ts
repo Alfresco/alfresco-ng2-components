@@ -17,7 +17,7 @@
 
 import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
 
-describe('Login component - Remember Me', () => {
+describe('Login component - Remember Me',  () => {
 
     const settingsPage = new SettingsPage();
     const loginPage = new LoginPage();
@@ -29,7 +29,7 @@ describe('Login component - Remember Me', () => {
         done();
     });
 
-    it('[C260501] Should Remember me checkbox not be present in the login if the property showRememberMe is false', () => {
+    it('[C260501] Should Remember me checkbox not be present in the login if the property showRememberMe is false', async () => {
         loginPage.checkRememberIsDisplayed();
         loginPage.disableRememberMe();
         loginPage.checkRememberIsNotDisplayed();

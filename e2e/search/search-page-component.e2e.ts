@@ -29,7 +29,7 @@ import { Util } from '../util/util';
 import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Search component - Search Page', () => {
+describe('Search component - Search Page',  () => {
     const search = {
         active: {
             firstFile: null,
@@ -96,14 +96,14 @@ describe('Search component - Search Page', () => {
         done();
     });
 
-    it('[C260264] Should display message when no results are found', () => {
+    it('[C260264] Should display message when no results are found', async () => {
         const notExistentFileName = StringUtil.generateRandomString();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(notExistentFileName);
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C272810] Should display only files corresponding to search', () => {
+    it('[C272810] Should display only files corresponding to search', async () => {
         searchDialog
             .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.firstFile);
@@ -112,7 +112,7 @@ describe('Search component - Search Page', () => {
         expect(searchResultPage.numberOfResultsDisplayed()).toBe(1);
     });
 
-    it('[C260267] Should display content when opening a folder from search results', () => {
+    it('[C260267] Should display content when opening a folder from search results', async () => {
         searchDialog
             .clickOnSearchIcon()
             .enterTextAndPressEnter(emptyFolderModel.name);
@@ -125,7 +125,7 @@ describe('Search component - Search Page', () => {
         });
     });
 
-    it('[C260261] Should be able to delete a file from search results', () => {
+    it('[C260261] Should be able to delete a file from search results', async () => {
         searchDialog
             .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.firstFile);
@@ -142,7 +142,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C272809] Should be able to delete a folder from search results', () => {
+    it('[C272809] Should be able to delete a folder from search results', async () => {
         searchDialog
             .clickOnSearchIcon()
             .enterTextAndPressEnter(emptyFolderModel.name);
@@ -158,7 +158,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C286675] Should display results when searching for all elements', () => {
+    it('[C286675] Should display results when searching for all elements', async () => {
         searchDialog
             .clickOnSearchIcon()
             .enterTextAndPressEnter('*');

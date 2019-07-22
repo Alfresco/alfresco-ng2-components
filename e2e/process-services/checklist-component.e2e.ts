@@ -33,7 +33,7 @@ import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
 import path = require('path');
 
-describe('Checklist component', () => {
+describe('Checklist component',  () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -86,7 +86,7 @@ describe('Checklist component', () => {
         done();
     });
 
-    it('[C279976] Should no checklist be created when no title is typed', () => {
+    it('[C279976] Should no checklist be created when no title is typed', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         taskPage.tasksListPage().selectRow(tasks[0]);
 
@@ -95,7 +95,7 @@ describe('Checklist component', () => {
         expect(taskPage.getNumberOfChecklists()).toEqual('0');
     });
 
-    it('[C279975] Should no checklist be created when clicking on Cancel button on checklist dialog', () => {
+    it('[C279975] Should no checklist be created when clicking on Cancel button on checklist dialog', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         taskPage.tasksListPage().selectRow(tasks[0]);
 
@@ -104,7 +104,7 @@ describe('Checklist component', () => {
         expect(taskPage.getNumberOfChecklists()).toEqual('0');
     });
 
-    it('[C261025] Should Checklist dialog be displayed when clicking on add checklist button', () => {
+    it('[C261025] Should Checklist dialog be displayed when clicking on add checklist button', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         taskPage.tasksListPage().selectRow(tasks[0]);
 
@@ -116,7 +116,7 @@ describe('Checklist component', () => {
         taskPage.usingCheckListDialog().clickCancelButton();
     });
 
-    it('[C261026] Should Checklist number increase when a new checklist is added', () => {
+    it('[C261026] Should Checklist number increase when a new checklist is added', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
         taskPage.tasksListPage().selectRow(tasks[1]);
 
@@ -130,7 +130,7 @@ describe('Checklist component', () => {
         expect(taskPage.getNumberOfChecklists()).toEqual('2');
     });
 
-    it('[C279980] Should checklist be removed when clicking on remove button', () => {
+    it('[C279980] Should checklist be removed when clicking on remove button', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
         taskPage.tasksListPage().selectRow(tasks[2]);
 
@@ -147,7 +147,7 @@ describe('Checklist component', () => {
         taskPage.checkChecklistIsNotDisplayed(removeChecklist[1]);
     });
 
-    it('[C261027] Should not be able to remove a completed Checklist when clicking on remove button', () => {
+    it('[C261027] Should not be able to remove a completed Checklist when clicking on remove button', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
         taskPage.tasksListPage().selectRow(tasks[3]);
 
@@ -169,7 +169,7 @@ describe('Checklist component', () => {
         taskPage.checkChecklistsRemoveButtonIsNotDisplayed(removeChecklist[3]);
     });
 
-    it('[C261028] Should all checklists of a task be completed when the task is completed', () => {
+    it('[C261028] Should all checklists of a task be completed when the task is completed', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
         taskPage.tasksListPage().selectRow(tasks[4]);
 

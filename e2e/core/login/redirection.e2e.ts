@@ -62,7 +62,7 @@ describe('Login component - Redirect', () => {
         done();
     });
 
-    it('[C213838] Should after login in CS be redirect to Login page when try to access to PS', () => {
+    it('[C213838] Should after login in CS be redirect to Login page when try to access to PS', async () => {
         loginPage.goToLoginPage();
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcm();
@@ -76,7 +76,7 @@ describe('Login component - Redirect', () => {
         loginPage.waitForElements();
     });
 
-    it('[C260085] Should after login in PS be redirect to Login page when try to access to CS', () => {
+    it('[C260085] Should after login in PS be redirect to Login page when try to access to CS', async () => {
         loginPage.goToLoginPage();
         loginPage.clickSettingsIcon();
         settingsPage.setProviderBpm();
@@ -94,7 +94,7 @@ describe('Login component - Redirect', () => {
         loginPage.waitForElements();
     });
 
-    it('[C260081] Should after login in BOTH not be redirect to Login page when try to access to CS or PS', () => {
+    it('[C260081] Should after login in BOTH not be redirect to Login page when try to access to CS or PS', async () => {
         loginPage.goToLoginPage();
         loginPage.clickSettingsIcon();
 
@@ -109,7 +109,7 @@ describe('Login component - Redirect', () => {
         contentServicesPage.checkAcsContainer();
     });
 
-    it('[C260088] Should be re-redirect to the request URL after login when try to access to a protect URL ', () => {
+    it('[C260088] Should be re-redirect to the request URL after login when try to access to a protect URL ', async () => {
         loginPage.goToLoginPage();
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcm();
@@ -139,7 +139,7 @@ describe('Login component - Redirect', () => {
 
     });
 
-    it('[C299161] Should redirect user to requested URL after reloading login page', () => {
+    it('[C299161] Should redirect user to requested URL after reloading login page', async () => {
         loginPage.goToLoginPage();
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcm();
