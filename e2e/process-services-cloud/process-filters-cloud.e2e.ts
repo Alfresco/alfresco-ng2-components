@@ -98,7 +98,7 @@ describe('Process filters cloud',  () => {
         });
 
         beforeEach(async(done) => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(candidateBaseApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();

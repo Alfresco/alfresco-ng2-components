@@ -49,7 +49,7 @@ export class TasksListPage {
         return this.dataTable.selectRow('Name', taskName);
     }
 
-    getAllRowsNameColumn() {
+    getAllRowsNameColumn(): Promise<any> {
         return this.dataTable.getAllRowsColumnValues('Name');
     }
 

@@ -122,8 +122,8 @@ describe('Process list cloud',  () => {
             done();
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
+        beforeEach( async() => {
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(candidateBaseApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
@@ -274,7 +274,7 @@ describe('Process list cloud',  () => {
                         'saveAs'
                     ]
                 }));
-                navigationBarPage.navigateToProcessServicesCloudPage();
+                await navigationBarPage.navigateToProcessServicesCloudPage();
                 appListCloudComponent.checkApsContainer();
                 appListCloudComponent.goToApp(candidateBaseApp);
                 tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();

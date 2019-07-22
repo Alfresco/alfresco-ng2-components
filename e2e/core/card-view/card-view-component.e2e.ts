@@ -32,7 +32,7 @@ describe('CardView Component',  () => {
 
     beforeAll(async (done) => {
         await loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        navigationBarPage.clickCardViewButton();
+        await navigationBarPage.clickCardViewButton();
 
         done();
     });

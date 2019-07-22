@@ -32,7 +32,7 @@ describe('Auth Guard SSO',  () => {
 
         loginSSOPage.clickOnSSOButton();
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/cloud/simple-app');
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/cloud/simple-app');
         browser.driver.sleep(1000);
         expect(errorPage.getErrorCode()).toBe('403');
     });

@@ -83,7 +83,7 @@ describe('Trashcan - Pagination',  () => {
         });
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        navigationBarPage.clickTrashcanButton();
+        await navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
 
         done();
@@ -96,50 +96,50 @@ describe('Trashcan - Pagination',  () => {
     });
 
     it('[C272811] Should be able to set Items per page to 20', async () => {
-        paginationPage.selectItemsPerPage(itemsPerPage.twenty);
+        await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
 
         trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();
 
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfFiles + ' of ' + nrOfFiles);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfFiles + ' of ' + nrOfFiles);
         expect(trashcanPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
 
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
+        await paginationPage.checkNextPageButtonIsDisabled();
+        await paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
     it('[C276742] Should be able to set Items per page to 15', async () => {
-        paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
+        await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + nrOfFiles);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + nrOfFiles);
         expect(trashcanPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
+        await paginationPage.checkNextPageButtonIsEnabled();
+        await paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
     it('[C276743] Should be able to set Items per page to 10', async () => {
-        paginationPage.selectItemsPerPage(itemsPerPage.ten);
+        await paginationPage.selectItemsPerPage(itemsPerPage.ten);
         trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue + ' of ' + nrOfFiles);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue + ' of ' + nrOfFiles);
         expect(trashcanPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
+        await paginationPage.checkNextPageButtonIsEnabled();
+        await paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
     it('[C276744] Should be able to set Items per page to 5', async () => {
-        paginationPage.selectItemsPerPage(itemsPerPage.five);
+        await paginationPage.selectItemsPerPage(itemsPerPage.five);
         trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + nrOfFiles);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + nrOfFiles);
         expect(trashcanPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
+        await paginationPage.checkNextPageButtonIsEnabled();
+        await paginationPage.checkPreviousPageButtonIsDisabled();
     });
 })
 ;

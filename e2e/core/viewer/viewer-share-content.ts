@@ -94,16 +94,16 @@ describe('Viewer',  () => {
     });
 
     it('[C260105] Should be able to open an image file shared via API', async () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
-        viewerPage.checkImgContainerIsDisplayed();
-        BrowserActions.getUrl(browser.params.testConfig.adf.url);
-        navigationBarPage.clickLogoutButton();
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
-        viewerPage.checkImgContainerIsDisplayed();
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+        await viewerPage.checkImgContainerIsDisplayed();
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
+        await navigationBarPage.clickLogoutButton();
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+        await viewerPage.checkImgContainerIsDisplayed();
     });
 
     it('[C260106] Should be able to open a Word file shared via API', async () => {
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
 
         contentList.selectRow(wordFileInfo.name);
@@ -114,14 +114,14 @@ describe('Viewer',  () => {
             const sharedLink = await shareDialog.getShareLink();
 
             await BrowserActions.getUrl(sharedLink);
-            viewerPage.checkFileIsLoaded();
-            viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
+            await viewerPage.checkFileIsLoaded();
+            await viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
 
             await BrowserActions.getUrl(browser.params.testConfig.adf.url);
-            navigationBarPage.clickLogoutButton();
+            await navigationBarPage.clickLogoutButton();
             await BrowserActions.getUrl(sharedLink);
-            viewerPage.checkFileIsLoaded();
-            viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
+            await viewerPage.checkFileIsLoaded();
+            await viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
         });
     });
 });

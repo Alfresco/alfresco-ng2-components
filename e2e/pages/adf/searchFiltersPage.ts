@@ -22,7 +22,7 @@ import { SearchTextPage } from '../../../lib/testing/src/lib/content-services/pa
 import { NumberRangeFilterPage } from '../../../lib/testing/src/lib/content-services/pages/search/number-range-filter.page';
 import { DateRangeFilterPage } from '../../../lib/testing/src/lib/content-services/pages/search/date-range-filter.page';
 import { SearchSliderPage } from '../../../lib/testing/src/lib/content-services/pages/search/search-slider.page';
-import { SearchRadioPage } from '@alfresco/adf-testing/lib/content-services/pages/search/search-radio.page';
+import { SearchRadioPage } from '../../../lib/testing/src/lib/content-services/pages/search/search-radio.page';
 
 export class SearchFiltersPage {
 
@@ -86,35 +86,35 @@ export class SearchFiltersPage {
     }
 
     async checkCheckListFilterIsDisplayed(): Promise<void> {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.checkListFilter);
+        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.checkListFilter);
     }
 
     async checkNameFilterIsExpanded(): Promise<void> {
-        this.searchCategoriesPage.checkFilterIsExpanded(this.nameFilter);
+        await this.searchCategoriesPage.checkFilterIsExpanded(this.nameFilter);
     }
 
     async checkNameFilterIsDisplayed(): Promise<void> {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.nameFilter);
+        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.nameFilter);
     }
 
     async checkDefaultFacetQueryGroupIsDisplayed(): Promise<void> {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesDefaultGroup);
+        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesDefaultGroup);
     }
 
     async checkTypeFacetQueryGroupIsDisplayed(): Promise<void> {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesTypeGroup);
+        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesTypeGroup);
     }
 
     async checkSizeFacetQueryGroupIsDisplayed(): Promise<void> {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesSizeGroup);
+        await  this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesSizeGroup);
     }
 
     async checkFacetIntervalsByCreatedIsDisplayed(): Promise<void> {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.facetIntervalsByCreated);
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.facetIntervalsByCreated);
     }
 
     async checkFacetIntervalsByModifiedIsDisplayed(): Promise<void> {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.facetIntervalsByModified);
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.facetIntervalsByModified);
     }
 
     isTypeFacetQueryGroupPresent(): promise.Promise<boolean> {
@@ -154,7 +154,7 @@ export class SearchFiltersPage {
     }
 
     async checkCreatedRangeFilterIsDisplayed(): Promise<void> {
-        this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
     }
 
     async clickCreatedRangeFilterHeader(): Promise<void> {
@@ -210,7 +210,7 @@ export class SearchFiltersPage {
     }
 
     async checkFacetIntervalsByCreatedIsExpanded(): Promise<void> {
-        this.searchCategoriesPage.checkFilterIsExpanded(this.facetIntervalsByCreated);
+        await this.searchCategoriesPage.checkFilterIsExpanded(this.facetIntervalsByCreated);
     }
 
     async checkFacetIntervalsByCreatedIsCollapsed(): Promise<void> {

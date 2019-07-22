@@ -60,11 +60,11 @@ describe('People widget',  () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await BrowserActions.getUrl(urlToNavigateTo);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
@@ -75,26 +75,26 @@ describe('People widget',  () => {
     });
 
     it('[C260435] Should select user from People Widget', async () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
 
         const admin = processUserModel.firstName + ' ' + processUserModel.lastName;
-        widget.peopleWidget().insertUser(app.FIELD.widget_id, admin.charAt(0));
-        widget.peopleWidget().checkDropDownListIsDisplayed();
-        widget.peopleWidget().checkUserIsListed(admin);
-        widget.peopleWidget().selectUserFromDropDown(admin);
+        await widget.peopleWidget().insertUser(app.FIELD.widget_id, admin.charAt(0));
+        await widget.peopleWidget().checkDropDownListIsDisplayed();
+        await widget.peopleWidget().checkUserIsListed(admin);
+        await widget.peopleWidget().selectUserFromDropDown(admin);
     });
 
     it('[C274707] Should be possible to set visibility properties for People Widget', async () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
 
         const admin = processUserModel.firstName + ' ' + processUserModel.lastName;
-        widget.peopleWidget().insertUser(app.FIELD.widget_id, admin.charAt(0));
-        widget.peopleWidget().checkDropDownListIsDisplayed();
-        widget.peopleWidget().checkUserIsListed(admin);
-        widget.peopleWidget().selectUserFromDropDown(admin);
+        await widget.peopleWidget().insertUser(app.FIELD.widget_id, admin.charAt(0));
+        await widget.peopleWidget().checkDropDownListIsDisplayed();
+        await widget.peopleWidget().checkUserIsListed(admin);
+        await widget.peopleWidget().selectUserFromDropDown(admin);
     });
 });

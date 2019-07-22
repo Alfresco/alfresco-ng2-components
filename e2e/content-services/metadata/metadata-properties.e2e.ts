@@ -81,7 +81,7 @@ describe('CardView Component - properties', () => {
     });
 
     afterEach(async () => {
-        await  viewerPage.clickCloseButton();
+        await  await viewerPage.clickCloseButton();
     });
 
     it('[C246516] Should show/hide the empty metadata when the property displayEmpty is true/false', async () => {

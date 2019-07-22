@@ -60,11 +60,11 @@ describe('Dropdown widget',  () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await BrowserActions.getUrl(urlToNavigateTo);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
@@ -75,24 +75,24 @@ describe('Dropdown widget',  () => {
     });
 
     it('[C269051] Should be possible to set general and options properties for Dropdown widget ', async () => {
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
         widget.dropdown().selectOption('Happy');
         expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Happy');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
 
         widget.dropdown().selectOption('Choose one');
         expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Choose one');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
         widget.dropdown().selectOption('Sad');
         expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Sad');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C269052] Should be possible to set visibility properties for Dropdown widget', async () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.dropdown_visible);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.dropdown_visible);
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.dropdown_visible);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.dropdown_visible);
     });
 });

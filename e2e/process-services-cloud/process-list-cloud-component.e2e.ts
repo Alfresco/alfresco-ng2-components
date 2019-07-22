@@ -88,7 +88,7 @@ describe('Process list cloud',  () => {
 
             await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(jsonFile));
 
-            navigationBarPage.navigateToProcessServicesCloudPage();
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(candidateBaseApp);
             processCloudDemoPage.clickOnProcessFilters();

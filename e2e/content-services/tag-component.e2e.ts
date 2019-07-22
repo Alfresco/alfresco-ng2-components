@@ -90,7 +90,7 @@ describe('Tag component',  () => {
     });
 
     it('[C260374] Should NOT be possible to add a new tag without Node ID', async () => {
-        navigationBarPage.clickTagButton();
+        await navigationBarPage.clickTagButton();
 
         expect(tagPage.getNodeId()).toEqual('');
         expect(tagPage.getNewTagPlaceholder()).toEqual('New Tag');

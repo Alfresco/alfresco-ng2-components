@@ -128,13 +128,13 @@ export class DataTableComponentPage {
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
         await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
-        column.each(function(currentElement) {
-            currentElement.getText().then(function(text) {
+        column.each(function (currentElement) {
+            currentElement.getText().then(function (text) {
                 if (text.length !== 0) {
                     initialList.push(text.toLowerCase());
                 }
             });
-        }).then(function() {
+        }).then(function () {
             let sortedList = [...initialList];
             sortedList = sortedList.sort();
             if (sortOrder.toLocaleLowerCase() === 'desc') {
@@ -165,16 +165,17 @@ export class DataTableComponentPage {
         return this.rootElement.all(this.rows).count();
     }
 
-    async getAllRowsColumnValues(column): Promise<string> {
+    async getAllRowsColumnValues(column): Promise<any> {
         const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + column + "'] span");
         await BrowserVisibility.waitUntilElementIsVisible(element.all(columnLocator).first());
-        return element.all(columnLocator).getText();
+        const initialList: any = await element.all(columnLocator).getText();
+        return initialList.filter((el) => el);
     }
 
     async getRowsWithSameColumnValues(columnName, columnValue): Promise<string> {
         const columnLocator = by.css(`div[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`);
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(columnLocator).first());
-        return BrowserActions.getText(this.rootElement.all(columnLocator));
+        return BrowserActions.getText(this.rootElement.all(columnLocator).first());
     }
 
     async doubleClickRow(columnName: string, columnValue: string): Promise<void> {
@@ -205,7 +206,7 @@ export class DataTableComponentPage {
     async sortByColumn(sortOrder: string, titleColumn: string): Promise<any> {
         const locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(element(locator));
-        return element(locator).getAttribute('class').then(function(result) {
+        return element(locator).getAttribute('class').then(function (result) {
             if (sortOrder.toLocaleLowerCase() === 'asc') {
                 if (!result.includes('sorted-asc')) {
                     if (result.includes('sorted-desc') || result.includes('sortable')) {
@@ -245,7 +246,7 @@ export class DataTableComponentPage {
     }
 
     async contentInPosition(position): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.contents);
+        await BrowserVisibility.waitUntilElementIsVisible(this.contents.first());
         return BrowserActions.getText(this.contents.get(position - 1));
     }
 
@@ -266,7 +267,7 @@ export class DataTableComponentPage {
     }
 
     async waitTillContentLoaded(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.contents);
+        await BrowserVisibility.waitUntilElementIsVisible(this.contents.first());
     }
 
     async checkColumnIsDisplayed(column): Promise<void> {

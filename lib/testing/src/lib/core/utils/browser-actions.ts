@@ -16,7 +16,7 @@
  */
 
 import { BrowserVisibility } from './browser-visibility';
-import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
+import { browser, by, element, ElementFinder, protractor } from 'protractor';
 
 export class BrowserActions {
 

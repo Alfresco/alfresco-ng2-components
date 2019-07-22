@@ -90,7 +90,7 @@ describe('Document List Component - Actions',  () => {
         });
 
         beforeEach(async(done) => {
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             done();
         });
 
@@ -263,7 +263,7 @@ describe('Document List Component - Actions',  () => {
             await loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.waitForTableBody();
-            paginationPage.selectItemsPerPage('5');
+            await paginationPage.selectItemsPerPage('5');
             contentServicesPage.checkAcsContainer();
             contentListPage.waitForTableBody();
             done();
@@ -279,8 +279,8 @@ describe('Document List Component - Actions',  () => {
 
         it('[C260132] Move action on folder with - Load more', async () => {
 
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
+            expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
+            expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             contentListPage.rightClickOnRow('A' + folderModel1.name);
             contentServicesPage.checkContextActionIsVisible('Move');
             contentServicesPage.pressContextMenuActionNamed('Move');
@@ -332,8 +332,8 @@ describe('Document List Component - Actions',  () => {
 
         it('[C305051] Copy action on folder with - Load more', async () => {
 
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
+            expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
+            expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             contentListPage.rightClickOnRow('A' + folderModel1.name);
             contentServicesPage.checkContextActionIsVisible('Copy');
             contentServicesPage.pressContextMenuActionNamed('Copy');
@@ -364,7 +364,7 @@ describe('Document List Component - Actions',  () => {
             contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
             contentNodeSelector.clickMoveCopyButton();
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
-            paginationPage.clickOnNextPage();
+            await paginationPage.clickOnNextPage();
             contentListPage.waitForTableBody();
             contentServicesPage.doubleClickRow('F' + folderModel6.name);
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);

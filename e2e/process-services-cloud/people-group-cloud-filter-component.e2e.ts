@@ -104,8 +104,8 @@ describe('People Groups Cloud Component',  () => {
             await identityService.deleteIdentityUser(activitiUser.idIdentityService);
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToPeopleGroupCloudPage();
+        beforeEach( async() => {
+            await navigationBarPage.navigateToPeopleGroupCloudPage();
             peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
             peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
         });

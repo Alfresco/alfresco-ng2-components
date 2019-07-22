@@ -65,7 +65,7 @@ describe('Form Component',  () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.clickFormButton();
+        await navigationBarPage.clickFormButton();
 
         done();
     });
@@ -79,29 +79,29 @@ describe('Form Component',  () => {
     });
 
     it('[C286505] Should be able to display errors under the Error Log section', async () => {
-        widget.numberWidget().getNumberFieldLabel(fields.numberWidgetId);
-        widget.numberWidget().setFieldValue(fields.numberWidgetId, message.test);
-        formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
-        formPage.checkErrorLogMessage(message.errorLogNumber);
+        await widget.numberWidget().getNumberFieldLabel(fields.numberWidgetId);
+        await widget.numberWidget().setFieldValue(fields.numberWidgetId, message.test);
+        await formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
+        await formPage.checkErrorLogMessage(message.errorLogNumber);
 
-        widget.dateWidget().checkLabelIsVisible(fields.dateWidgetId);
-        widget.dateWidget().setDateInput(fields.dateWidgetId, message.test);
-        widget.dateWidget().clickOutsideWidget(fields.dateWidgetId);
-        formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
-        formPage.checkErrorLogMessage(message.errorLogDate);
+        await widget.dateWidget().checkLabelIsVisible(fields.dateWidgetId);
+        await widget.dateWidget().setDateInput(fields.dateWidgetId, message.test);
+        await widget.dateWidget().clickOutsideWidget(fields.dateWidgetId);
+        await formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
+        await formPage.checkErrorLogMessage(message.errorLogDate);
 
-        widget.amountWidget().getAmountFieldLabel(fields.amountWidgetId);
-        widget.amountWidget().setFieldValue(fields.amountWidgetId, message.test);
-        formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
-        formPage.checkErrorLogMessage(message.errorLogAmount);
+        await widget.amountWidget().getAmountFieldLabel(fields.amountWidgetId);
+        await widget.amountWidget().setFieldValue(fields.amountWidgetId, message.test);
+        await formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
+        await formPage.checkErrorLogMessage(message.errorLogAmount);
 
-        widget.amountWidget().removeFromAmountWidget(fields.amountWidgetId);
-        formPage.checkErrorMessageIsNotDisplayed(message.errorLogAmount);
+        await widget.amountWidget().removeFromAmountWidget(fields.amountWidgetId);
+        await formPage.checkErrorMessageIsNotDisplayed(message.errorLogAmount);
 
-        widget.dateWidget().clearDateInput(fields.dateWidgetId);
-        widget.numberWidget().clearFieldValue(fields.numberWidgetId);
-        formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
-        formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
-        formPage.checkErrorLogMessage(message.errorLabel);
+        await widget.dateWidget().clearDateInput(fields.dateWidgetId);
+        await widget.numberWidget().clearFieldValue(fields.numberWidgetId);
+        await formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
+        await formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
+        await formPage.checkErrorLogMessage(message.errorLabel);
     });
 });

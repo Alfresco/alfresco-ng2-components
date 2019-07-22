@@ -29,7 +29,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Empty Process List Test',  () => {
+describe('Empty Process List Test', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -67,31 +67,31 @@ describe('Empty Process List Test',  () => {
     });
 
     it('[C260494] Should add process to list when a process is created', async () => {
-        navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
-        processServicesPage.goToApp(appA.title).clickProcessButton();
-        expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
-        expect(processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
+        await navigationBarPage.navigateToProcessServicesPage();
+        await processServicesPage.checkApsContainer();
+        await(await processServicesPage.goToApp(appA.title)).clickProcessButton();
+        expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
-        processFiltersPage.clickCreateProcessButton();
-        processFiltersPage.clickNewProcessDropdown();
-        startProcessPage.selectFromProcessDropdown(appA.process_wse_name);
-        startProcessPage.clickStartProcessButton();
-        expect(processFiltersPage.numberOfProcessRows()).toEqual(1);
+        await processFiltersPage.clickCreateProcessButton();
+        await processFiltersPage.clickNewProcessDropdown();
+        await startProcessPage.selectFromProcessDropdown(appA.process_wse_name);
+        await startProcessPage.clickStartProcessButton();
+        expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
 
-        processDetailsPage.checkProcessDetailsCard();
-        navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
-        processServicesPage.goToApp(appB.title).clickProcessButton();
-        expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
-        expect(processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
+        await processDetailsPage.checkProcessDetailsCard();
+        await navigationBarPage.navigateToProcessServicesPage();
+        await processServicesPage.checkApsContainer();
+        await(await processServicesPage.goToApp(appB.title)).clickProcessButton();
+        expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
-        processFiltersPage.clickCreateProcessButton();
-        processFiltersPage.clickNewProcessDropdown();
-        startProcessPage.selectFromProcessDropdown(appB.processName);
-        startProcessPage.clickStartProcessButton();
-        expect(processFiltersPage.numberOfProcessRows()).toEqual(1);
-        processDetailsPage.checkProcessDetailsCard();
+        await processFiltersPage.clickCreateProcessButton();
+        await processFiltersPage.clickNewProcessDropdown();
+        await startProcessPage.selectFromProcessDropdown(appB.processName);
+        await startProcessPage.clickStartProcessButton();
+        expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
+        await processDetailsPage.checkProcessDetailsCard();
     });
 
 });

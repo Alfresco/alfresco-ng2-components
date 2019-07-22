@@ -61,8 +61,8 @@ describe('Edit process filters cloud',  () => {
             done();
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
+        beforeEach( async() => {
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();

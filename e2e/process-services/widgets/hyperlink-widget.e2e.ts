@@ -60,11 +60,11 @@ describe('Hyperlink widget',  () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await BrowserActions.getUrl(urlToNavigateTo);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
@@ -75,11 +75,11 @@ describe('Hyperlink widget',  () => {
     });
 
     it('[C276728] Should be able to set visibility properties for Hyperlink widget', async () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.hyperlink_id);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.hyperlink_id);
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.hyperlink_id);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.hyperlink_id);
 
-        expect(widget.hyperlink().getFieldLabel(app.FIELD.hyperlink_id)).toBe('Hyperlink');
-        expect(widget.hyperlink().getFieldText(app.FIELD.hyperlink_id)).toBe('https://www.google.com/');
+        expect(await widget.hyperlink().getFieldLabel(app.FIELD.hyperlink_id)).toBe('Hyperlink');
+        expect(await widget.hyperlink().getFieldText(app.FIELD.hyperlink_id)).toBe('https://www.google.com/');
     });
 });

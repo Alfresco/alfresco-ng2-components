@@ -111,8 +111,8 @@ describe('People Groups Cloud Component',  () => {
             done();
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToPeopleGroupCloudPage();
+        beforeEach( async() => {
+            await navigationBarPage.navigateToPeopleGroupCloudPage();
             peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
             peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
         });
@@ -123,7 +123,7 @@ describe('People Groups Cloud Component',  () => {
 
         describe('[C297674] Should be able to add filtering to People Cloud Component',  () => {
 
-            beforeEach(() => {
+            beforeEach( async() => {
                 peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
                 peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
                 peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
@@ -162,7 +162,7 @@ describe('People Groups Cloud Component',  () => {
 
         describe('[C309674] Should be able to add filtering to Group Cloud Component',  () => {
 
-            beforeEach(() => {
+            beforeEach( async() => {
                 peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
                 peopleGroupCloudComponentPage.clickGroupCloudFilterRole();
             });

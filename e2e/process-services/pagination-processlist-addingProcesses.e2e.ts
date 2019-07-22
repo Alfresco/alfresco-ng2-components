@@ -28,7 +28,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
-describe('Process List - Pagination when adding processes',  () => {
+describe('Process List - Pagination when adding processes', () => {
 
     const itemsPerPage = {
         fifteen: '15',
@@ -70,7 +70,7 @@ describe('Process List - Pagination when adding processes',  () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        await new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
+        await (await(await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         done();
     });
@@ -81,34 +81,32 @@ describe('Process List - Pagination when adding processes',  () => {
         totalPages = 2;
         page = 1;
 
-        paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
+        await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
+        await processDetailsPage.checkProcessTitleIsDisplayed();
+        await processFiltersPage.waitForTableBody();
 
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + (nrOfProcesses - 5));
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
+        expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+        expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + (nrOfProcesses - 5));
+        expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
+        await paginationPage.checkNextPageButtonIsEnabled();
+        await paginationPage.checkPreviousPageButtonIsDisabled();
 
-        browser.controlFlow().execute(async () => {
-            for (i; i < nrOfProcesses; i++) {
-                await apps.startProcess(this.alfrescoJsApi, resultApp);
-            }
-        });
+        for (i; i < nrOfProcesses; i++) {
+            await apps.startProcess(this.alfrescoJsApi, resultApp);
+        }
 
         page++;
-        paginationPage.clickOnNextPage();
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsEnabled();
+        await paginationPage.clickOnNextPage();
+        await processDetailsPage.checkProcessTitleIsDisplayed();
+        await processFiltersPage.waitForTableBody();
+        expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+        expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
+        expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
+        await paginationPage.checkNextPageButtonIsDisabled();
+        await paginationPage.checkPreviousPageButtonIsEnabled();
     });
 });

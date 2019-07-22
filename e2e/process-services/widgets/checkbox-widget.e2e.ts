@@ -60,11 +60,11 @@ describe('Checkbox Widget',  () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await BrowserActions.getUrl(urlToNavigateTo);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
@@ -75,16 +75,16 @@ describe('Checkbox Widget',  () => {
     });
 
     it('[C268554] Should be able to set general settings for Checkbox widget ', async () => {
-        taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
-        expect(widget.checkboxWidget().getCheckboxLabel()).toContain(app.FIELD.checkbox_label);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_input_id);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
+        expect(await widget.checkboxWidget().getCheckboxLabel()).toContain(app.FIELD.checkbox_label);
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_input_id);
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C272812] Should be able to set visibility settings for Checkbox widget', async () => {
-        widget.checkboxWidget().isCheckboxHidden(app.FIELD.checkbox_field_id);
-        taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
-        widget.checkboxWidget().isCheckboxDisplayed(app.FIELD.checkbox_field_id);
+        await widget.checkboxWidget().isCheckboxHidden(app.FIELD.checkbox_field_id);
+        await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
+        await widget.checkboxWidget().isCheckboxDisplayed(app.FIELD.checkbox_field_id);
     });
 });

@@ -97,7 +97,7 @@ describe('Task form cloud component',  () => {
     }, 5 * 60 * 1000);
 
     it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.goToApp(candidateBaseApp);
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
@@ -107,7 +107,7 @@ describe('Task form cloud component',  () => {
     });
 
     it('[C310142] Empty content is displayed when having a task without form', async () => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.goToApp(candidateBaseApp);
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
@@ -121,7 +121,7 @@ describe('Task form cloud component',  () => {
     });
 
     it('[C310199] Should not be able to complete a task when required field is empty or invalid data is added to a field', async () => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.goToApp(candidateBaseApp);
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
@@ -163,7 +163,7 @@ describe('Task form cloud component',  () => {
     describe('Complete task - cloud directive',  () => {
 
         beforeEach(async (done) => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(candidateBaseApp);
             done();

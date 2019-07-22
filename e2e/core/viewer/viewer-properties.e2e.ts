@@ -68,10 +68,10 @@ describe('Viewer - properties',  () => {
 
         contentServicesPage.checkAcsContainer();
 
-        viewerPage.viewFile(pngFile.name);
+        await viewerPage.viewFile(pngFile.name);
 
-        viewerPage.clickLeftSidebarButton();
-        viewerPage.checkLeftSideBarIsDisplayed();
+        await viewerPage.clickLeftSidebarButton();
+        await viewerPage.checkLeftSideBarIsDisplayed();
 
         done();
     });
@@ -83,116 +83,116 @@ describe('Viewer - properties',  () => {
     });
 
     it('[C260066] Should Show/Hide viewer toolbar when showToolbar is true/false', async () => {
-        viewerPage.checkToolbarIsDisplayed();
-        viewerPage.disableToolbar();
-        viewerPage.checkToolbarIsNotDisplayed();
-        viewerPage.enableToolbar();
+        await viewerPage.checkToolbarIsDisplayed();
+        await viewerPage.disableToolbar();
+        await viewerPage.checkToolbarIsNotDisplayed();
+        await viewerPage.enableToolbar();
     });
 
     it('[C260076] Should Show/Hide back button when allowGoBack is true/false', async () => {
-        viewerPage.checkGoBackIsDisplayed();
-        viewerPage.disableGoBack();
-        viewerPage.checkGoBackIsNotDisplayed();
-        viewerPage.enableGoBack();
+        await viewerPage.checkGoBackIsDisplayed();
+        await viewerPage.disableGoBack();
+        await viewerPage.checkGoBackIsNotDisplayed();
+        await viewerPage.enableGoBack();
     });
 
     it('[C260077] Should Show toolbar options dropdown when adf-viewer-open-with directive is used', async () => {
-        viewerPage.checkToolbarOptionsIsNotDisplayed();
-        viewerPage.enableToolbarOptions();
-        viewerPage.checkToolbarOptionsIsDisplayed();
-        viewerPage.disableToolbarOptions();
+        await viewerPage.checkToolbarOptionsIsNotDisplayed();
+        await viewerPage.enableToolbarOptions();
+        await viewerPage.checkToolbarOptionsIsDisplayed();
+        await viewerPage.disableToolbarOptions();
     });
 
     it('[C260079] Should Show/Hide download button when allowDownload is true/false', async () => {
-        viewerPage.checkDownloadButtonDisplayed();
-        viewerPage.disableDownload();
-        viewerPage.checkDownloadButtonIsNotDisplayed();
-        viewerPage.enableDownload();
+        await viewerPage.checkDownloadButtonDisplayed();
+        await viewerPage.disableDownload();
+        await viewerPage.checkDownloadButtonIsNotDisplayed();
+        await viewerPage.enableDownload();
     });
 
     it('[C260082] Should Show/Hide print button when allowPrint is true/false', async () => {
-        viewerPage.checkPrintButtonIsDisplayed();
-        viewerPage.disablePrint();
-        viewerPage.checkPrintButtonIsNotDisplayed();
-        viewerPage.enablePrint();
+        await viewerPage.checkPrintButtonIsDisplayed();
+        await viewerPage.disablePrint();
+        await viewerPage.checkPrintButtonIsNotDisplayed();
+        await viewerPage.enablePrint();
     });
 
     it('[C260092] Should show adf-viewer-toolbar-actions directive buttons when adf-viewer-toolbar-actions is used', async () => {
-        viewerPage.checkMoreActionsDisplayed();
+        await viewerPage.checkMoreActionsDisplayed();
 
-        viewerPage.disableMoreActions();
+        await viewerPage.disableMoreActions();
 
-        viewerPage.checkMoreActionsIsNotDisplayed();
+        await viewerPage.checkMoreActionsIsNotDisplayed();
 
-        viewerPage.enableMoreActions();
+        await viewerPage.enableMoreActions();
     });
 
     it('[C260074] Should show a custom file name when displayName property is used', async () => {
-        viewerPage.checkFileNameIsDisplayed(pngFile.name);
+        await viewerPage.checkFileNameIsDisplayed(pngFile.name);
 
-        viewerPage.enableCustomName();
+        await viewerPage.enableCustomName();
 
-        viewerPage.enterCustomName('test custom title');
-        viewerPage.checkFileNameIsDisplayed('test custom title');
+        await viewerPage.enterCustomName('test custom title');
+        await viewerPage.checkFileNameIsDisplayed('test custom title');
 
-        viewerPage.disableCustomName();
+        await viewerPage.disableCustomName();
     });
 
     it('[C260090] Should showSidebar allow right info-drawer to be shown', async () => {
-        viewerPage.clickToggleRightSidebar();
-        viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.clickToggleRightSidebar();
+        await viewerPage.checkInfoSideBarIsDisplayed();
 
-        viewerPage.clickToggleRightSidebar();
-        viewerPage.checkInfoSideBarIsNotDisplayed();
+        await viewerPage.clickToggleRightSidebar();
+        await viewerPage.checkInfoSideBarIsNotDisplayed();
     });
 
     it('[C286442] Should showLeftSidebar allow left info-drawer to be shown', async () => {
-        viewerPage.clickToggleLeftSidebar();
-        viewerPage.checkLeftSideBarIsNotDisplayed();
-        viewerPage.clickLeftSidebarButton();
-        viewerPage.checkLeftSideBarIsDisplayed();
+        await viewerPage.clickToggleLeftSidebar();
+        await viewerPage.checkLeftSideBarIsNotDisplayed();
+        await viewerPage.clickLeftSidebarButton();
+        await viewerPage.checkLeftSideBarIsDisplayed();
     });
 
     it('[C260089] Should Show/Hide info-drawer if allowSidebar true/false', async () => {
-        viewerPage.clickInfoButton();
+        await viewerPage.clickInfoButton();
 
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.checkInfoButtonIsDisplayed();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.checkInfoButtonIsDisplayed();
 
-        viewerPage.disableAllowSidebar();
+        await viewerPage.disableAllowSidebar();
 
-        viewerPage.checkInfoButtonIsNotDisplayed();
-        viewerPage.checkInfoSideBarIsNotDisplayed();
+        await viewerPage.checkInfoButtonIsNotDisplayed();
+        await viewerPage.checkInfoSideBarIsNotDisplayed();
     });
 
     it('[C286596] Should Show/Hide left info-drawer if allowLeftSidebar true/false', async () => {
-        viewerPage.checkLeftSideBarIsDisplayed();
-        viewerPage.checkLeftSideBarButtonIsDisplayed();
+        await viewerPage.checkLeftSideBarIsDisplayed();
+        await viewerPage.checkLeftSideBarButtonIsDisplayed();
 
-        viewerPage.disableAllowLeftSidebar();
+        await viewerPage.disableAllowLeftSidebar();
 
-        viewerPage.checkLeftSideBarButtonIsNotDisplayed();
-        viewerPage.checkLeftSideBarIsNotDisplayed();
+        await viewerPage.checkLeftSideBarButtonIsNotDisplayed();
+        await viewerPage.checkLeftSideBarIsNotDisplayed();
     });
 
     it('[C260100] Should be possible to disable Overlay viewer', async () => {
-        viewerPage.clickCloseButton();
-        navigationBarPage.scrollTo(navigationBarPage.overlayViewerButton);
-        navigationBarPage.clickOverlayViewerButton();
+        await viewerPage.clickCloseButton();
+        await navigationBarPage.scrollTo(await navigationBarPage.overlayViewerButton);
+        await navigationBarPage.clickOverlayViewerButton();
 
         dataTable.doubleClickRow('Name', fileForOverlay.name);
-        viewerPage.checkOverlayViewerIsDisplayed();
-        viewerPage.clickCloseButton();
+        await viewerPage.checkOverlayViewerIsDisplayed();
+        await viewerPage.clickCloseButton();
         dataTable.doubleClickRow('Name', pngFile.name);
-        viewerPage.checkOverlayViewerIsDisplayed();
-        viewerPage.clickCloseButton();
+        await viewerPage.checkOverlayViewerIsDisplayed();
+        await viewerPage.clickCloseButton();
 
-        viewerPage.disableOverlay();
+        await viewerPage.disableOverlay();
         dataTable.doubleClickRow('Name', fileForOverlay.name);
-        viewerPage.checkImgContainerIsDisplayed();
-        viewerPage.checkInlineViewerIsDisplayed();
+        await viewerPage.checkImgContainerIsDisplayed();
+        await viewerPage.checkInlineViewerIsDisplayed();
         dataTable.doubleClickRow('Name', pngFile.name);
-        viewerPage.checkImgContainerIsDisplayed();
-        viewerPage.checkInlineViewerIsDisplayed();
+        await viewerPage.checkImgContainerIsDisplayed();
+        await viewerPage.checkInlineViewerIsDisplayed();
     });
 });

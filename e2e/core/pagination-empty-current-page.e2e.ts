@@ -106,24 +106,24 @@ describe('Pagination - returns to previous page when current is empty',  () => {
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
 
-        paginationPage.selectItemsPerPage(itemsPerPage.five);
+        await paginationPage.selectItemsPerPage(itemsPerPage.five);
 
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
 
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
 
         contentServicesPage.getAllRowsNameColumn().then((list) => {
             expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
         });
 
-        paginationPage.clickOnNextPage();
+        await paginationPage.clickOnNextPage();
 
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
 
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
         contentServicesPage.getAllRowsNameColumn().then((list) => {
             expect(Util.arrayContainsArray(list, fileNames.slice(5, 6))).toEqual(true);
@@ -132,7 +132,7 @@ describe('Pagination - returns to previous page when current is empty',  () => {
         contentServicesPage.deleteContent(lastFile);
         contentServicesPage.checkContentIsNotDisplayed(lastFile);
 
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
 
         contentServicesPage.getAllRowsNameColumn().then((list) => {
@@ -147,15 +147,15 @@ describe('Pagination - returns to previous page when current is empty',  () => {
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
 
-        paginationPage.selectItemsPerPage(itemsPerPage.five);
+        await paginationPage.selectItemsPerPage(itemsPerPage.five);
 
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
 
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
 
-        paginationPage.clickOnNextPage();
+        await paginationPage.clickOnNextPage();
 
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -163,8 +163,8 @@ describe('Pagination - returns to previous page when current is empty',  () => {
         contentServicesPage.doubleClickRow(lastFolderResponse.entry.name);
         contentServicesPage.checkContentIsDisplayed(pngFileInfo.name);
 
-        viewerPage.viewFile(pngFileUploaded.entry.name);
-        viewerPage.checkImgViewerIsDisplayed();
-        viewerPage.clickCloseButton();
+        await viewerPage.viewFile(pngFileUploaded.entry.name);
+        await viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.clickCloseButton();
     });
 });

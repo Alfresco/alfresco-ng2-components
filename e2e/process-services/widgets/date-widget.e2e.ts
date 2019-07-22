@@ -60,11 +60,11 @@ describe('Date widget',  () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await BrowserActions.getUrl(urlToNavigateTo);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
@@ -75,20 +75,20 @@ describe('Date widget',  () => {
     });
 
     it('[C268814] Should be able to set general settings for Date widget', async () => {
-        expect(widget.dateWidget().getDateLabel(app.FIELD.date_input)).toContain('Date');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        widget.dateWidget().setDateInput(app.FIELD.date_input, '20-10-2018');
-        widget.dateWidget().clickOutsideWidget(app.FIELD.date_input);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        expect(await widget.dateWidget().getDateLabel(app.FIELD.date_input)).toContain('Date');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.dateWidget().setDateInput(app.FIELD.date_input, '20-10-2018');
+        await widget.dateWidget().clickOutsideWidget(app.FIELD.date_input);
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C277234] Should be able to set advanced settings for Date widget ', async () => {
-        widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2017');
-        widget.dateWidget().clickOutsideWidget(app.FIELD.date_between_input);
-        expect(widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be less than 1-10-2018');
-        widget.dateWidget().clearDateInput(app.FIELD.date_between_input);
-        widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2019');
-        widget.dateWidget().clickOutsideWidget(app.FIELD.date_between_input);
-        expect(widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be greater than 31-10-2018');
+        await widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2017');
+        await widget.dateWidget().clickOutsideWidget(app.FIELD.date_between_input);
+        expect(await widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be less than 1-10-2018');
+        await widget.dateWidget().clearDateInput(app.FIELD.date_between_input);
+        await widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2019');
+        await widget.dateWidget().clickOutsideWidget(app.FIELD.date_between_input);
+        expect(await widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be greater than 31-10-2018');
     });
 });

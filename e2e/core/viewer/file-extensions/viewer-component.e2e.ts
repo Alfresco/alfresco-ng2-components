@@ -75,14 +75,14 @@ describe('Viewer',  () => {
     it('[C272813] Should be redirected to site when opening and closing a file in a site', async () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.goToSite(site);
+        await navigationBarPage.goToSite(site);
         contentServicesPage.checkAcsContainer();
 
-        viewerPage.viewFile(pngFileUploaded.entry.name);
+        await viewerPage.viewFile(pngFileUploaded.entry.name);
 
-        viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.checkImgViewerIsDisplayed();
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
     describe('Other Folder Uploaded',  () => {
@@ -112,8 +112,8 @@ describe('Viewer',  () => {
             uploadedOthers.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkFileIsLoaded();
-                    viewerPage.clickCloseButton();
+                    await viewerPage.checkFileIsLoaded();
+                    await viewerPage.clickCloseButton();
                 }
             });
         });

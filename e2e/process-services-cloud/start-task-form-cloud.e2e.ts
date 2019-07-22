@@ -184,8 +184,8 @@ describe('Start Task Form',  () => {
 
     describe('StandaloneTask with form',  () => {
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
+        beforeEach( async() => {
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
             appListCloudComponent.goToApp(candidateBaseApp);
@@ -209,7 +209,7 @@ describe('Start Task Form',  () => {
             expect(widget.textWidget().getFieldValue('FirstName')).toBe('sample');
             expect(widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
 
-            navigationBarPage.navigateToProcessServicesCloudPage();
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
             appListCloudComponent.goToApp(candidateBaseApp);
@@ -236,16 +236,16 @@ describe('Start Task Form',  () => {
 
     describe('Start a process with a start event form',  () => {
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
+        beforeEach( async() => {
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
             appListCloudComponent.goToApp(candidateBaseApp);
             processCloudDemoPage.openNewProcessForm();
-            startProcessPage.clearField(startProcessPage.processNameInput);
-            startProcessPage.enterProcessName(startEventFormProcess);
-            startProcessPage.selectFromProcessDropdown('processwithstarteventform');
-            startProcessPage.formFields().checkFormIsDisplayed();
+            await startProcessPage.clearField(await startProcessPage.processNameInput);
+            await startProcessPage.enterProcessName(startEventFormProcess);
+            await startProcessPage.selectFromProcessDropdown('processwithstarteventform');
+            await startProcessPage.formFields().checkFormIsDisplayed();
         });
 
         it('[C311277] Should be able to start a process with a start event form - default values', async () => {
@@ -257,25 +257,25 @@ describe('Start Task Form',  () => {
         it('[C311277] Should be able to start a process with a start event form - form validation', async () => {
 
             expect(widget.textWidget().getErrorMessage('FirstName')).toBe('Enter no more than 10 characters');
-            expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+            expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
 
             widget.textWidget().setValue('FirstName', 'Sam');
             expect(widget.textWidget().getErrorMessage('FirstName')).toBe('Enter at least 5 characters');
-            expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+            expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
             widget.numberWidget().setFieldValue('Number07vyx9', 9);
             expect(widget.numberWidget().getErrorMessage('Number07vyx9')).toBe('Can\'t be less than 10');
-            expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+            expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
             widget.numberWidget().setFieldValue('Number07vyx9', 99999);
             expect(widget.numberWidget().getErrorMessage('Number07vyx9')).toBe('Can\'t be greater than 1,000');
-            expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+            expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
         });
 
         it('[C311277] Should be able to start a process with a start event form - claim and complete the process', async () => {
 
             widget.textWidget().setValue('FirstName', 'Sample');
             widget.numberWidget().setFieldValue('Number07vyx9', 100);
-            expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
-            startProcessPage.clickStartProcessButton();
+            expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
+            await startProcessPage.clickStartProcessButton();
             processCloudDemoPage.clickOnProcessFilters();
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
@@ -306,7 +306,7 @@ describe('Start Task Form',  () => {
     describe('Attach content to process-cloud task form using upload widget',  () => {
 
         beforeEach(async (done) => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
             appListCloudComponent.goToApp(candidateBaseApp);

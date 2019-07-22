@@ -136,7 +136,7 @@ describe('Version component permissions',  () => {
 
             await loginPage.loginToContentServicesUsingUserModel(managerUser);
 
-            navigationBarPage.openContentServicesFolder(site.entry.guid);
+            await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
             done();
         });
@@ -179,7 +179,7 @@ describe('Version component permissions',  () => {
         beforeAll(async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(consumerUser);
 
-            navigationBarPage.openContentServicesFolder(site.entry.guid);
+            await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
             done();
         });
@@ -212,7 +212,7 @@ describe('Version component permissions',  () => {
 
             await loginPage.loginToContentServicesUsingUserModel(contributorUser);
 
-            navigationBarPage.openContentServicesFolder(site.entry.guid);
+            await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
             done();
         });
@@ -270,7 +270,7 @@ describe('Version component permissions',  () => {
 
             await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
 
-            navigationBarPage.openContentServicesFolder(site.entry.guid);
+            await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
             done();
         });

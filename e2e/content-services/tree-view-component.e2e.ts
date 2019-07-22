@@ -59,7 +59,7 @@ describe('Tree View Component',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.clickTreeViewButton();
+        await navigationBarPage.clickTreeViewButton();
 
         done();
     });

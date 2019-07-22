@@ -90,53 +90,53 @@ describe('Attach Form Component',  () => {
     });
 
     it('[C280047] Should be able to view the attach-form component after creating a standalone task', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().selectRow(testNames.taskName);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().selectRow(testNames.taskName);
 
-        attachFormPage.checkNoFormMessageIsDisplayed();
-        attachFormPage.checkAttachFormButtonIsDisplayed();
-        attachFormPage.checkCompleteButtonIsDisplayed();
+        await attachFormPage.checkNoFormMessageIsDisplayed();
+        await attachFormPage.checkAttachFormButtonIsDisplayed();
+        await attachFormPage.checkCompleteButtonIsDisplayed();
     });
 
     it('[C280048] Should be able to view the attach-form component after clicking cancel button', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().selectRow(testNames.taskName);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().selectRow(testNames.taskName);
 
-        attachFormPage.clickAttachFormButton();
-        attachFormPage.checkDefaultFormTitleIsDisplayed(testNames.formTitle);
-        attachFormPage.checkFormDropdownIsDisplayed();
-        attachFormPage.checkCancelButtonIsDisplayed();
-        attachFormPage.checkAttachFormButtonIsDisabled();
-        attachFormPage.clickAttachFormDropdown();
-        attachFormPage.selectAttachFormOption(testNames.formName);
+        await attachFormPage.clickAttachFormButton();
+        await attachFormPage.checkDefaultFormTitleIsDisplayed(testNames.formTitle);
+        await attachFormPage.checkFormDropdownIsDisplayed();
+        await attachFormPage.checkCancelButtonIsDisplayed();
+        await attachFormPage.checkAttachFormButtonIsDisabled();
+        await attachFormPage.clickAttachFormDropdown();
+        await attachFormPage.selectAttachFormOption(testNames.formName);
 
-        formFields.checkWidgetIsReadOnlyMode(testNames.widgetTitle);
+        await formFields.checkWidgetIsReadOnlyMode(testNames.widgetTitle);
 
-        attachFormPage.clickCancelButton();
-        attachFormPage.checkAttachFormButtonIsDisplayed();
+        await attachFormPage.clickCancelButton();
+        await attachFormPage.checkAttachFormButtonIsDisplayed();
     });
 
     it('[C280017] Should be able to attach a form on a standalone task and complete', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().selectRow(testNames.taskName);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().selectRow(testNames.taskName);
 
-        attachFormPage.clickAttachFormButton();
-        attachFormPage.clickAttachFormDropdown();
-        attachFormPage.selectAttachFormOption(testNames.formName);
-        attachFormPage.clickAttachFormButton();
+        await attachFormPage.clickAttachFormButton();
+        await attachFormPage.clickAttachFormDropdown();
+        await attachFormPage.selectAttachFormOption(testNames.formName);
+        await attachFormPage.clickAttachFormButton();
 
-        formFields.setFieldValue(by.id, formTextField, testNames.formFieldValue);
-        formFields.completeForm();
+        await formFields.setFieldValue(by.id, formTextField, testNames.formFieldValue);
+        await formFields.completeForm();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectRow(testNames.taskName);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        await taskPage.tasksListPage().selectRow(testNames.taskName);
 
-        expect(formFields.getFieldValue(formTextField)).toEqual(testNames.formFieldValue);
+        expect(await formFields.getFieldValue(formTextField)).toEqual(testNames.formFieldValue);
     });
 });

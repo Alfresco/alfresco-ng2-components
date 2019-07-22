@@ -143,7 +143,7 @@ export class NavigationBarPage {
     }
 
     openContentServicesFolder(folderId): Promise<void> {
-        return BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + folderId);
+        return await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + folderId);
     }
 
     async chooseLanguage(language): Promise<void> {
@@ -215,11 +215,11 @@ export class NavigationBarPage {
     }
 
     async openViewer(nodeId): Promise<void> {
-        await  BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
+        await  await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
     }
 
     async goToSite(site): Promise<void> {
-        await  BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files/${site.entry.guid}/display/list`);
+        await  await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files/${site.entry.guid}/display/list`);
     }
 
     async scrollTo(el: ElementFinder): Promise<void> {

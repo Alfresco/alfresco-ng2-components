@@ -175,7 +175,7 @@ describe('Search Filters', () => {
         const resultFileNames: any = await contentList.getAllRowsColumnValues('Display name');
 
         expect(bucketNumberForFilter).not.toEqual('0');
-        expect(paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
+        expect(await paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
 
         resultFileNames.map((nameOfResultFiles) => {
             expect(nameOfResultFiles).toContain('.png');
@@ -222,7 +222,7 @@ describe('Search Filters', () => {
     });
 
     it('[C297509] Should display search intervals under specified labels from config', async () => {
-        await  BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+        await  await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         await searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed();
         await searchFiltersPage.checkFacetIntervalsByCreatedIsExpanded();

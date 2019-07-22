@@ -92,8 +92,8 @@ describe('Form Field Component - Dropdown Widget',  () => {
         done();
     });
 
-    beforeEach(() => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
+    beforeEach( async() => {
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.goToApp(simpleApp);
 

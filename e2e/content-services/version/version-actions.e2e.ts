@@ -80,7 +80,7 @@ describe('Version component actions',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
         contentServicesPage.versionManagerContent(txtFileModel.name);
 
@@ -168,7 +168,7 @@ describe('Version component actions',  () => {
 
         await browser.refresh();
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
         contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
     });

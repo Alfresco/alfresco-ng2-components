@@ -36,7 +36,7 @@ import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { FileModel } from '../models/ACS/fileModel';
 
-describe('Attachment list action menu for tasks',  () => {
+describe('Attachment list action menu for tasks', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -57,7 +57,7 @@ describe('Attachment list action menu for tasks',  () => {
         emptyList: 'Empty List'
     };
 
-    beforeAll(async(done) => {
+    beforeAll(async (done) => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -82,7 +82,7 @@ describe('Attachment list action menu for tasks',  () => {
         done();
     });
 
-    afterAll(async(done) => {
+    afterAll(async (done) => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
@@ -90,115 +90,118 @@ describe('Attachment list action menu for tasks',  () => {
     });
 
     it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickTasksButton();
+        await(await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(taskName.active).clickStartButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        const task = await taskPage.createNewTask();
+        await task.addName(taskName.active);
+        await task.clickStartButton();
 
-        attachmentListPage.clickAttachFileButton(pngFile.location);
-        attachmentListPage.viewFile(pngFile.name);
+        await attachmentListPage.clickAttachFileButton(pngFile.location);
+        await attachmentListPage.viewFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(pngFile.name);
-        viewerPage.clickCloseButton();
+        await viewerPage.checkFileNameIsDisplayed(pngFile.name);
+        await viewerPage.clickCloseButton();
 
-        attachmentListPage.doubleClickFile(pngFile.name);
+        await attachmentListPage.doubleClickFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(pngFile.name);
-        viewerPage.clickCloseButton();
+        await viewerPage.checkFileNameIsDisplayed(pngFile.name);
+        await viewerPage.clickCloseButton();
 
-        attachmentListPage.downloadFile(pngFile.name);
+        await attachmentListPage.downloadFile(pngFile.name);
 
-        browser.driver.sleep(1000);
+        await browser.driver.sleep(1000);
 
         expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
 
-        attachmentListPage.removeFile(pngFile.name);
-        attachmentListPage.checkFileIsRemoved(pngFile.name);
+        await attachmentListPage.removeFile(pngFile.name);
+        await attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
     it('[C260236] Should be able to View /Download /Remove from Attachment List on a completed task', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickTasksButton();
+        await(await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(taskName.completed).clickStartButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        const task = await taskPage.createNewTask();
+        await task.addName(taskName.completed);
+        await task.clickStartButton();
 
-        attachmentListPage.clickAttachFileButton(pngFile.location);
-        attachmentListPage.checkFileIsAttached(pngFile.name);
+        await attachmentListPage.clickAttachFileButton(pngFile.location);
+        await attachmentListPage.checkFileIsAttached(pngFile.name);
 
-        taskPage.completeTaskNoForm();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectRow(taskName.completed);
+        await taskPage.completeTaskNoForm();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        await taskPage.tasksListPage().selectRow(taskName.completed);
 
-        attachmentListPage.checkAttachFileButtonIsNotDisplayed();
-        attachmentListPage.viewFile(pngFile.name);
+        await attachmentListPage.checkAttachFileButtonIsNotDisplayed();
+        await attachmentListPage.viewFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(pngFile.name);
-        viewerPage.clickCloseButton();
+        await viewerPage.checkFileNameIsDisplayed(pngFile.name);
+        await viewerPage.clickCloseButton();
 
-        attachmentListPage.downloadFile(pngFile.name);
+        await attachmentListPage.downloadFile(pngFile.name);
 
-        browser.driver.sleep(1000);
+        await browser.driver.sleep(1000);
 
         expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
 
-        attachmentListPage.removeFile(pngFile.name);
-        attachmentListPage.checkFileIsRemoved(pngFile.name);
+        await attachmentListPage.removeFile(pngFile.name);
+        await attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
     it('[C260225] Should be able to upload a file in the Attachment list on Task App', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        await(await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(taskName.taskApp).clickStartButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        const task = await taskPage.createNewTask();
+        await task.addName(taskName.taskApp);
+        await task.clickStartButton();
 
-        attachmentListPage.clickAttachFileButton(pngFile.location);
-        attachmentListPage.checkFileIsAttached(pngFile.name);
+        await attachmentListPage.clickAttachFileButton(pngFile.location);
+        await attachmentListPage.checkFileIsAttached(pngFile.name);
     });
 
     it('[C279884] Should be able to view the empty attachment list for tasks', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(taskName.emptyList).clickStartButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        const task = await taskPage.createNewTask();
+        await task.addName(taskName.emptyList);
+        await task.clickStartButton();
 
-        attachmentListPage.checkEmptyAttachmentList();
-        attachmentListPage.clickAttachFileButton(pngFile.location);
-        attachmentListPage.checkFileIsAttached(pngFile.name);
-        attachmentListPage.removeFile(pngFile.name);
-        attachmentListPage.checkFileIsRemoved(pngFile.name);
-        attachmentListPage.checkEmptyAttachmentList();
+        await attachmentListPage.checkEmptyAttachmentList();
+        await attachmentListPage.clickAttachFileButton(pngFile.location);
+        await attachmentListPage.checkFileIsAttached(pngFile.name);
+        await attachmentListPage.removeFile(pngFile.name);
+        await attachmentListPage.checkFileIsRemoved(pngFile.name);
+        await attachmentListPage.checkEmptyAttachmentList();
     });
 
     it('[C260234] Should be able to attache a file on a task on APS and check on ADF', async () => {
-        browser.controlFlow().execute(async() => {
-            const newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: 'SHARE KNOWLEDGE'});
+        const newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: 'SHARE KNOWLEDGE' });
+        const newTaskId = newTask.id;
+        const filePath = path.join(browser.params.testConfig.main.rootPath + pngFile.location);
+        const file = fs.createReadStream(filePath);
 
-            const newTaskId = newTask.id;
+        relatedContent = await this.alfrescoJsApi.activiti.contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });
+        relatedContentId = relatedContent.id;
 
-            const filePath = path.join(browser.params.testConfig.main.rootPath + pngFile.location);
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
-            const file = fs.createReadStream(filePath);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().selectRow('SHARE KNOWLEDGE');
 
-            relatedContent = await this.alfrescoJsApi.activiti.contentApi.createRelatedContentOnTask(newTaskId, file, {'isRelatedContent': true});
-            relatedContentId = relatedContent.id;
-        });
+        await attachmentListPage.checkFileIsAttached(pngFile.name);
 
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().selectRow('SHARE KNOWLEDGE');
-
-        attachmentListPage.checkFileIsAttached(pngFile.name);
-
-        browser.controlFlow().execute(async() => {
+        browser.controlFlow().execute(async () => {
             await this.alfrescoJsApi.activiti.contentApi.deleteContent(relatedContentId);
         });
 
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().selectRow('SHARE KNOWLEDGE');
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().selectRow('SHARE KNOWLEDGE');
 
-        attachmentListPage.checkEmptyAttachmentList();
+        await attachmentListPage.checkEmptyAttachmentList();
     });
 });

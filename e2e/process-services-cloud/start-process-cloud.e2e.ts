@@ -60,7 +60,7 @@ describe('Start Process',  () => {
             browser.params.config.identityHost);
         loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
-        navigationBarPage.navigateToProcessServicesCloudPage();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         done();
     });
@@ -72,7 +72,7 @@ describe('Start Process',  () => {
     });
 
     afterEach((done) => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         done();
     });
@@ -81,34 +81,34 @@ describe('Start Process',  () => {
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
-        startProcessPage.clearField(startProcessPage.processNameInput);
-        startProcessPage.blur(startProcessPage.processNameInput);
-        startProcessPage.checkValidationErrorIsDisplayed(requiredError);
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
-        startProcessPage.clickCancelProcessButton();
+        await startProcessPage.clearField(await startProcessPage.processNameInput);
+        await startProcessPage.blur(await startProcessPage.processNameInput);
+        await startProcessPage.checkValidationErrorIsDisplayed(requiredError);
+        expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+        await startProcessPage.clickCancelProcessButton();
     });
 
     it('[C291842] Should be displayed an error message if process name exceed 255 characters', async () => {
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
-        startProcessPage.enterProcessName(processName255Characters);
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
+        await startProcessPage.enterProcessName(processName255Characters);
+        expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
 
-        startProcessPage.enterProcessName(processNameBiggerThen255Characters);
-        startProcessPage.blur(startProcessPage.processNameInput);
-        startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+        await startProcessPage.enterProcessName(processNameBiggerThen255Characters);
+        await startProcessPage.blur(await startProcessPage.processNameInput);
+        await startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
+        expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
     });
 
     it('[C291860] Should be able to start a process', async () => {
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
-        startProcessPage.clearField(startProcessPage.processNameInput);
-        startProcessPage.enterProcessName(processName);
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
-        startProcessPage.clickStartProcessButton();
+        await startProcessPage.clearField(await startProcessPage.processNameInput);
+        await startProcessPage.enterProcessName(processName);
+        expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
+        await startProcessPage.clickStartProcessButton();
         processCloudDemoPage.clickOnProcessFilters();
 
         processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
@@ -121,10 +121,10 @@ describe('Start Process',  () => {
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
-        startProcessPage.clearField(startProcessPage.processNameInput);
-        startProcessPage.enterProcessName(processName);
-        startProcessPage.selectFromProcessDropdown(processDefinitionWithoutName);
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
+        await startProcessPage.clearField(await startProcessPage.processNameInput);
+        await startProcessPage.enterProcessName(processName);
+        await startProcessPage.selectFromProcessDropdown(processDefinitionWithoutName);
+        expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
 
     });
 });

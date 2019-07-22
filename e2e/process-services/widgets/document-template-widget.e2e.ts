@@ -60,11 +60,11 @@ describe('Document Template widget',  () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await BrowserActions.getUrl(urlToNavigateTo);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
@@ -75,7 +75,7 @@ describe('Document Template widget',  () => {
     });
 
     it('[C260406] should check that the template contains assigned file ', async () => {
-        expect(widget.containerWidget().getFieldText(app.form_fields.container_id))
+        expect(await widget.containerWidget().getFieldText(app.form_fields.container_id))
             .toEqual(app.attached_file);
     });
 });

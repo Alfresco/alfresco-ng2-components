@@ -83,7 +83,7 @@ describe('Enable infinite scrolling',  () => {
     });
 
     beforeEach(async (done) => {
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
         done();
     });
@@ -117,7 +117,7 @@ describe('Enable infinite scrolling',  () => {
     });
 
     it('[C299201] Should use default pagination settings for infinite pagination', async () => {
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.doubleClickRow(folderModel.name);
 
@@ -132,7 +132,7 @@ describe('Enable infinite scrolling',  () => {
     it('[C299202] Should not display load more button when all the files are already displayed', async () => {
         LocalStorageUtil.setUserPreference('paginationSize', '30');
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
 
         contentServicesPage.doubleClickRow(folderModel.name);
@@ -144,7 +144,7 @@ describe('Enable infinite scrolling',  () => {
     });
 
     it('[C299203] Should not display load more button when a folder is empty', async () => {
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
 
         contentServicesPage.doubleClickRow(emptyFolderModel.entry.name);

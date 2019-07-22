@@ -115,10 +115,10 @@ describe('Comment Component', () => {
     });
 
     it('[C276948] Should be able to add a comment on a file', async () => {
-        await  viewerPage.viewFile(pngFileModel.name);
-        await  viewerPage.checkImgViewerIsDisplayed();
-        await  viewerPage.clickInfoButton();
-        await  viewerPage.checkInfoSideBarIsDisplayed();
+        await  await viewerPage.viewFile(pngFileModel.name);
+        await  await viewerPage.checkImgViewerIsDisplayed();
+        await  await viewerPage.clickInfoButton();
+        await  await viewerPage.checkInfoSideBarIsDisplayed();
         await viewerPage.clickOnCommentsTab();
 
         await  commentsPage.addComment(comments.first);
@@ -131,11 +131,11 @@ describe('Comment Component', () => {
     });
 
     it('[C280021] Should be able to add a multiline comment on a file', async () => {
-        await  viewerPage.viewFile(pngFileModel.name);
-        await  viewerPage.checkImgViewerIsDisplayed();
-        await  viewerPage.clickInfoButton();
-        await  viewerPage.checkInfoSideBarIsDisplayed();
-        await  viewerPage.clickOnCommentsTab();
+        await  await viewerPage.viewFile(pngFileModel.name);
+        await  await viewerPage.checkImgViewerIsDisplayed();
+        await  await viewerPage.clickInfoButton();
+        await  await viewerPage.checkInfoSideBarIsDisplayed();
+        await  await viewerPage.clickOnCommentsTab();
 
         await  commentsPage.addComment(comments.multiline);
         await  commentsPage.checkUserIconIsDisplayed(0);

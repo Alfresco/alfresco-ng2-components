@@ -62,11 +62,11 @@ describe('Process Instance Details',  () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
-        processServicesPage.goToApp(app.title);
-        processServiceTabBarPage.clickProcessButton();
-        processListPage.checkProcessListIsDisplayed();
+        await navigationBarPage.navigateToProcessServicesPage();
+        await processServicesPage.checkApsContainer();
+        await processServicesPage.goToApp(app.title);
+        await processServiceTabBarPage.clickProcessButton();
+        await processListPage.checkProcessListIsDisplayed();
 
         process = await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processModel.id);
 
@@ -75,17 +75,15 @@ describe('Process Instance Details',  () => {
 
     afterAll(async (done) => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appModel.id);
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
 
         done();
     });
 
     it('[C307031] Should display the created date in the default format', async () => {
-        processDetailsPage.checkDetailsAreDisplayed();
-        expect(processDetailsPage.getCreated()).toEqual(dateFormat(process.started, PROCESS_DATE_FORMAT));
+        await processDetailsPage.checkDetailsAreDisplayed();
+        expect(await processDetailsPage.getCreated()).toEqual(dateFormat(process.started, PROCESS_DATE_FORMAT));
     });
 
 });

@@ -85,9 +85,9 @@ describe('Start Task - Group Cloud Component',  () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-        navigationBarPage.navigateToProcessServicesCloudPage();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
@@ -97,7 +97,7 @@ describe('Start Task - Group Cloud Component',  () => {
     });
 
     afterEach(async () => {
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C291954] Should be able to select/delete an group for a standalone task', async () => {
@@ -119,9 +119,9 @@ describe('Start Task - Group Cloud Component',  () => {
         startTask.addName(oneGroupTaskName);
         startTask.clickStartButton();
 
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
         loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
-        navigationBarPage.navigateToProcessServicesCloudPage();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
@@ -152,9 +152,9 @@ describe('Start Task - Group Cloud Component',  () => {
         startTask.addName(bothGroupsTaskName);
         startTask.clickStartButton();
 
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
         loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
-        navigationBarPage.navigateToProcessServicesCloudPage();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);

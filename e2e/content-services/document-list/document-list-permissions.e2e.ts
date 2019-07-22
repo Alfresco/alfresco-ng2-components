@@ -64,7 +64,7 @@ describe('Document List Component',  () => {
         });
 
         it('[C217334] Should display a message when accessing file without permissions', async () => {
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorCode()).toBe('403');
             expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
@@ -80,7 +80,7 @@ describe('Document List Component',  () => {
             navBar.openLanguageMenu();
             navBar.chooseLanguage('Italiano');
             await browser.sleep(2000);
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
         });
 

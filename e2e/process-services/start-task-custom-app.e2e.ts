@@ -36,7 +36,7 @@ import { UsersActions } from '../actions/users.actions';
 
 import CONSTANTS = require('../util/constants');
 
-describe('Start Task - Custom App',  () => {
+describe('Start Task - Custom App', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -84,202 +84,172 @@ describe('Start Task - Custom App',  () => {
     });
 
     it('[C263942] Should be possible to modify a task', async () => {
-        navigationBarPage.navigateToProcessServicesPage()
-            .goToApp(appModel.name)
-            .clickTasksButton();
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
 
-        taskPage
-            .filtersPage()
-            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        taskPage
-            .createNewTask()
-            .addName(tasks[0])
-            .addForm(app.formName).clickStartButton()
-            .then(() => {
-                taskPage
-                    .tasksListPage()
-                    .checkContentIsDisplayed(tasks[0]);
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[0]);
+        await task.addForm(app.formName);
+        await task.clickStartButton();
 
-                taskPage
-                    .taskDetails()
-                    .clickInvolvePeopleButton()
-                    .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-                    .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-                    .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskPage
+            .tasksListPage()
+            .checkContentIsDisplayed(tasks[0]);
 
-                taskPage
-                    .taskDetails()
-                    .clickAddInvolvedUserButton();
+        const taskDetails = await taskPage.taskDetails();
 
-                expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)).toEqual(assigneeUserModel.email);
+        await taskDetails.clickInvolvePeopleButton();
+        await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
 
-                taskPage
-                    .taskDetails()
-                    .selectActivityTab()
-                    .addComment(firstComment)
-                    .checkCommentIsDisplayed(firstComment);
+        await taskDetails.clickAddInvolvedUserButton();
 
-                taskPage
-                    .clickOnAddChecklistButton()
-                    .addName(firstChecklist)
-                    .clickCreateChecklistButton();
+        expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
+        ).toEqual(assigneeUserModel.email);
 
-                taskPage
-                    .checkChecklistIsDisplayed(firstChecklist);
+        await taskDetails.selectActivityTab();
+        await taskDetails.addComment(firstComment);
+        await taskDetails.checkCommentIsDisplayed(firstComment);
 
-                taskPage
-                    .taskDetails()
-                    .selectDetailsTab();
-            });
+        const checklistDialog = await taskPage.clickOnAddChecklistButton();
+        await checklistDialog.addName(firstChecklist);
+        await checklistDialog.clickCreateChecklistButton();
+
+        await taskPage
+            .checkChecklistIsDisplayed(firstChecklist);
+
+        await taskPage
+            .taskDetails()
+            .selectDetailsTab();
     });
 
     it('[C263947] Should be able to start a task without form', async () => {
-        navigationBarPage.navigateToProcessServicesPage()
-            .goToApp(appModel.name)
-            .clickTasksButton();
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
 
-        taskPage
-            .filtersPage()
-            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        taskPage
-            .createNewTask()
-            .addName(tasks[2])
-            .clickStartButton();
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[2]);
+        await task.checkStartButtonIsEnabled();
+        await task.clickCancelButton();
 
-        taskPage
+        await taskPage
             .tasksListPage()
             .checkContentIsDisplayed(tasks[2]);
 
-        taskPage
+        await taskPage
             .formFields()
             .noFormIsDisplayed();
 
-        expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
     it('[C263948] Should be possible to cancel a task', async () => {
-        navigationBarPage.navigateToProcessServicesPage()
-            .goToApp(appModel.name)
-            .clickTasksButton();
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
 
-        taskPage
-            .filtersPage()
-            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        taskPage
-            .createNewTask()
-            .addName(tasks[3])
-            .checkStartButtonIsEnabled()
-            .clickCancelButton();
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[3]);
+        await task.checkStartButtonIsEnabled();
+        await task.clickCancelButton();
 
-        taskPage.tasksListPage()
-            .checkContentIsNotDisplayed(tasks[3]);
+        await taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
 
-        expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        expect(await taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
     it('[C263949] Should be possible to save filled form', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage()
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
+        await taskPage.filtersPage()
             .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        taskPage.createNewTask()
-            .addForm(app.formName)
-            .addName(tasks[4])
-            .clickStartButton();
+        const task = await taskPage.createNewTask();
+        await task.addForm(app.formName);
+        await task.addName(tasks[4]);
+        await  task.clickStartButton();
 
-        taskPage
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
+
+        const formFields = await taskPage.formFields();
+        await formFields.setFieldValue(by.id, formTextField, formFieldValue);
+        expect(formFields.getFieldValue(formTextField)).toEqual(formFieldValue);
+
+        await formFields.refreshForm();
+        await formFields.checkFieldValue(by.id, formTextField, '');
+
+        await taskPage
             .tasksListPage()
             .checkContentIsDisplayed(tasks[4]);
 
-        expect(taskPage.formFields()
-            .setFieldValue(by.id, formTextField, formFieldValue)
-            .getFieldValue(formTextField)).toEqual(formFieldValue);
+        await formFields.setFieldValue(by.id, formTextField, formFieldValue);
+        await formFields.checkFieldValue(by.id, formTextField, formFieldValue);
 
-        taskPage
-            .formFields()
-            .refreshForm()
-            .checkFieldValue(by.id, formTextField, '');
-
-        taskPage
-            .tasksListPage()
-            .checkContentIsDisplayed(tasks[4]);
-
-        taskPage
-            .formFields()
-            .setFieldValue(by.id, formTextField, formFieldValue)
-            .checkFieldValue(by.id, formTextField, formFieldValue);
-
-        taskPage
-            .formFields()
-            .saveForm()
-            .checkFieldValue(by.id, formTextField, formFieldValue);
+        await formFields.saveForm();
+        await formFields.checkFieldValue(by.id, formTextField, formFieldValue);
     });
 
     it('[C263951] Should be possible to assign a user', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
-        taskPage
-            .filtersPage()
-            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        taskPage
-            .createNewTask()
-            .addName(tasks[5])
-            .addAssignee(assigneeUserModel.firstName)
-            .clickStartButton();
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[5]);
+        await task.addAssignee(assigneeUserModel.firstName);
+        await task.clickStartButton();
 
-        taskPage
+        await taskPage
             .tasksListPage()
             .checkTaskListIsLoaded();
 
-        taskPage
+        await taskPage
             .tasksListPage()
             .getDataTable().waitForTableBody();
 
-        taskPage
-            .filtersPage()
+        await taskPage.filtersPage()
             .goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
 
-        taskPage.tasksListPage()
+        await taskPage.tasksListPage()
             .checkContentIsDisplayed(tasks[5]);
-        taskPage.tasksListPage().selectRow(tasks[5]);
+        await taskPage.tasksListPage().selectRow(tasks[5]);
 
-        taskPage.checkTaskTitle(tasks[5]);
+        await taskPage.checkTaskTitle(tasks[5]);
 
-        expect(taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
     });
 
     it('Attach a file', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage
-            .createNewTask()
-            .addName(tasks[6])
-            .clickStartButton();
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[6]);
+        await task.clickStartButton();
 
-        attachmentListPage.clickAttachFileButton(pngFile.location);
-        attachmentListPage.checkFileIsAttached(pngFile.name);
+        await attachmentListPage.clickAttachFileButton(pngFile.location);
+        await attachmentListPage.checkFileIsAttached(pngFile.name);
     });
 
     it('[C263945] Should Information box be hidden when showHeaderContent property is set on false on custom app', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(showHeaderTask).clickStartButton();
-        taskPage.tasksListPage().checkContentIsDisplayed(showHeaderTask);
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        const task = await taskPage.createNewTask();
+        await task.addName(showHeaderTask);
+        await task.clickStartButton();
+        await taskPage.tasksListPage().checkContentIsDisplayed(showHeaderTask);
 
-        processServiceTabBarPage.clickSettingsButton();
-        taskPage.taskDetails().appSettingsToggles().disableShowHeader();
-        processServiceTabBarPage.clickTasksButton();
+        await processServiceTabBarPage.clickSettingsButton();
+        await taskPage.taskDetails().appSettingsToggles().disableShowHeader();
+        await processServiceTabBarPage.clickTasksButton();
 
-        taskPage.taskDetails().taskInfoDrawerIsNotDisplayed();
+        await taskPage.taskDetails().taskInfoDrawerIsNotDisplayed();
 
-        processServiceTabBarPage.clickSettingsButton();
-        taskPage.taskDetails().appSettingsToggles().enableShowHeader();
-        processServiceTabBarPage.clickTasksButton();
+        await processServiceTabBarPage.clickSettingsButton();
+        await taskPage.taskDetails().appSettingsToggles().enableShowHeader();
+        await processServiceTabBarPage.clickTasksButton();
 
-        taskPage.taskDetails().taskInfoDrawerIsDisplayed();
+        await taskPage.taskDetails().taskInfoDrawerIsDisplayed();
     });
 
 });

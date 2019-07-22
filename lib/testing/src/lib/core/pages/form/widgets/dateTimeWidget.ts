@@ -88,4 +88,11 @@ export class DateTimeWidget {
         await BrowserVisibility.waitUntilElementIsVisible(widget);
         await BrowserActions.clearSendKeys(element(by.id(fieldId)), '');
     }
+
+    async clearDateTimeInput(fieldId) {
+        const dateInput = element(by.id(fieldId));
+        await BrowserVisibility.waitUntilElementIsVisible(dateInput);
+        await dateInput.clear();
+    }
+
 }

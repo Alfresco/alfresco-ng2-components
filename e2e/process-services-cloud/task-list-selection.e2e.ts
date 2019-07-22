@@ -78,8 +78,8 @@ describe('Task list cloud - selection',  () => {
             done();
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
+        beforeEach( async() => {
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();

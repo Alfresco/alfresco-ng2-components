@@ -100,8 +100,8 @@ describe('Task Header cloud component',  () => {
         done();
     });
 
-    beforeEach(() => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
+    beforeEach( async() => {
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.goToApp(simpleApp);
     });
@@ -177,7 +177,7 @@ describe('Task Header cloud component',  () => {
                 '"defaultDateTimeFormat": "M/d/yy, h:mm a",' +
                 '"defaultLocale": "uk"' +
                 '}');
-            navigationBarPage.navigateToProcessServicesCloudPage();
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
         });

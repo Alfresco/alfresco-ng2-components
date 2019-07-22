@@ -65,8 +65,8 @@ describe('Radio Buttons Widget', () => {
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
@@ -77,17 +77,17 @@ describe('Radio Buttons Widget', () => {
     });
 
     it('[C277316] Should display empty radio buttons when no preselection is configured', async () => {
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        widget.radioWidget().isSelectionClean(app.FIELD.radio_buttons_id);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await widget.radioWidget().isSelectionClean(app.FIELD.radio_buttons_id);
     });
 
     it('[C274704] Should be able to set visibility properties for Radio Button widget', async () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.radio_buttons_id);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.radio_buttons_id);
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        expect(widget.radioWidget().getRadioWidgetLabel(app.FIELD.radio_buttons_id)).toContain('Radio posts');
-        widget.radioWidget().selectOption(app.FIELD.radio_buttons_id, 1);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        expect(await widget.radioWidget().getRadioWidgetLabel(app.FIELD.radio_buttons_id)).toContain('Radio posts');
+        await widget.radioWidget().selectOption(app.FIELD.radio_buttons_id, 1);
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 });

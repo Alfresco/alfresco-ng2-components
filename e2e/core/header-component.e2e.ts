@@ -68,7 +68,7 @@ describe('Header Component',  () => {
     });
 
     beforeEach(async(done) => {
-        navigationBarPage.clickHeaderDataButton();
+        await navigationBarPage.clickHeaderDataButton();
         done();
     });
 
@@ -90,23 +90,23 @@ describe('Header Component',  () => {
 
     it('[C279996] Should be able to show/hide menu button', async () => {
         headerPage.clickShowMenuButton();
-        navigationBarPage.checkMenuButtonIsNotDisplayed();
+        await navigationBarPage.checkMenuButtonIsNotDisplayed();
         headerPage.clickShowMenuButton();
-        navigationBarPage.checkMenuButtonIsDisplayed();
+        await navigationBarPage.checkMenuButtonIsDisplayed();
     });
 
     it('[C279999] Should be able to change the colour between primary, accent and warn', async () => {
         headerPage.changeHeaderColor(names.color_accent);
-        navigationBarPage.checkToolbarColor(names.color_accent);
+        await navigationBarPage.checkToolbarColor(names.color_accent);
         headerPage.changeHeaderColor(names.color_primary);
-        navigationBarPage.checkToolbarColor(names.color_primary);
+        await navigationBarPage.checkToolbarColor(names.color_primary);
         headerPage.changeHeaderColor(names.color_warn);
-        navigationBarPage.checkToolbarColor(names.color_warn);
+        await navigationBarPage.checkToolbarColor(names.color_warn);
     });
 
     it('[C280552] Should be able to change the colour of the header by typing a hex code', async () => {
         headerPage.addHexCodeColor(names.color_custom);
-        navigationBarPage.checkToolbarColor(names.color_custom);
+        await navigationBarPage.checkToolbarColor(names.color_custom);
     });
 
     it('[C279997] Should be able to change the title of the app', async () => {
@@ -123,19 +123,19 @@ describe('Header Component',  () => {
 
     it('[C280553] Should be able to set a hyperlink to the logo', async () => {
         headerPage.addLogoHyperlink(names.urlPath_logo_link);
-        navigationBarPage.clickAppLogo(names.logo_title);
+        await navigationBarPage.clickAppLogo(names.logo_title);
         settingsPage.checkProviderDropdownIsDisplayed();
     });
 
     it('[C286517] Should be able to set a hyperlink to the logo text', async () => {
         headerPage.addLogoHyperlink(names.urlPath_logo_link);
-        navigationBarPage.clickAppLogoText();
+        await navigationBarPage.clickAppLogoText();
         settingsPage.checkProviderDropdownIsDisplayed();
     });
 
     it('[C280554] Should be able to customise the tooltip-text of the logo', async () => {
         headerPage.addLogoTooltip(names.logo_tooltip);
-        navigationBarPage.checkLogoTooltip(names.logo_tooltip);
+        await navigationBarPage.checkLogoTooltip(names.logo_tooltip);
     });
 
     it('[C286297] Should be able to change the position of the sidebar menu', async () => {

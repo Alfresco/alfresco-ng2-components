@@ -88,8 +88,8 @@ describe('Viewer',  () => {
             uploadedExcels.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkFileIsLoaded(currentFile.entry.name);
-                    viewerPage.clickCloseButton();
+                    await viewerPage.checkFileIsLoaded(currentFile.entry.name);
+                    await viewerPage.clickCloseButton();
                 }
             });
         });

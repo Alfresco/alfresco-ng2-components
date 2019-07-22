@@ -159,11 +159,11 @@ export class TaskListDemoPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
     }
 
-    getAllProcessDefinitionIds(): Promise<string> {
+    getAllProcessDefinitionIds(): Promise<any> {
         return this.taskList().getDataTable().getAllRowsColumnValues('Process Definition Id');
     }
 
-    getAllProcessInstanceIds(): Promise<string> {
+    getAllProcessInstanceIds(): Promise<any> {
         return this.taskList().getDataTable().getAllRowsColumnValues('Process Instance Id');
     }
 

@@ -61,11 +61,11 @@ describe('Number widget',  () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await BrowserActions.getUrl(urlToNavigateTo);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
@@ -76,32 +76,32 @@ describe('Number widget',  () => {
     });
 
     it('[C269111] Should be able to set general properties for Number Widget', async () => {
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        expect(widget.numberWidget().getNumberFieldLabel(app.FIELD.number_general)).toContain('Number General');
-        expect(widget.numberWidget().getPlaceholder(app.FIELD.number_general)).toContain('Type a number');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        expect(await widget.numberWidget().getNumberFieldLabel(app.FIELD.number_general)).toContain('Number General');
+        expect(await widget.numberWidget().getPlaceholder(app.FIELD.number_general)).toContain('Type a number');
 
-        widget.numberWidget().setFieldValue(app.FIELD.number_general, 2);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.numberWidget().setFieldValue(app.FIELD.number_general, 2);
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C274702] Should be able to set advanced and visibility properties for Number Widget', async () => {
-        widget.numberWidget().setFieldValue(app.FIELD.number_general, 2);
+        await widget.numberWidget().setFieldValue(app.FIELD.number_general, 2);
 
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.number_visible);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.number_visible);
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.number_visible);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.number_visible);
 
-        widget.numberWidget().setFieldValue(app.FIELD.number_visible, 2);
-        expect(widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe('Can\'t be less than 3');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
+        await widget.numberWidget().setFieldValue(app.FIELD.number_visible, 2);
+        expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe('Can\'t be less than 3');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
 
-        widget.numberWidget().setFieldValue(app.FIELD.number_visible, 101);
-        expect(widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe('Can\'t be greater than 100');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
+        await widget.numberWidget().setFieldValue(app.FIELD.number_visible, 101);
+        expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe('Can\'t be greater than 100');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
 
-        widget.numberWidget().setFieldValue(app.FIELD.number_visible, 4);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.numberWidget().setFieldValue(app.FIELD.number_visible, 4);
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 });

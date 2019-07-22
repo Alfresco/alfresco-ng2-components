@@ -75,27 +75,27 @@ describe('Info Drawer',  () => {
     beforeEach(async() => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.goToSite(site);
+        await navigationBarPage.goToSite(site);
         contentServicesPage.checkAcsContainer();
     });
 
     it('[C277251] Should display the icon when the icon property is defined', async () => {
-        viewerPage.viewFile(pngFileUploaded.entry.name);
-        viewerPage.clickLeftSidebarButton();
-        viewerPage.enableShowTabWithIcon();
-        viewerPage.enableShowTabWithIconAndLabel();
-        viewerPage.checkTabHasNoIcon(0);
-        expect(viewerPage.getTabIconById(1)).toBe('face');
-        expect(viewerPage.getTabIconById(2)).toBe('comment');
+        await viewerPage.viewFile(pngFileUploaded.entry.name);
+        await viewerPage.clickLeftSidebarButton();
+        await viewerPage.enableShowTabWithIcon();
+        await viewerPage.enableShowTabWithIconAndLabel();
+        await viewerPage.checkTabHasNoIcon(0);
+        expect(await viewerPage.getTabIconById(1)).toBe('face');
+        expect(await viewerPage.getTabIconById(2)).toBe('comment');
     });
 
     it('[C277252] Should display the label when the label property is defined', async () => {
-        viewerPage.viewFile(pngFileUploaded.entry.name);
-        viewerPage.clickLeftSidebarButton();
-        viewerPage.enableShowTabWithIcon();
-        viewerPage.enableShowTabWithIconAndLabel();
-        expect(viewerPage.getTabLabelById(0)).toBe('SETTINGS');
-        viewerPage.checkTabHasNoLabel(1);
-        expect(viewerPage.getTabLabelById(2)).toBe('COMMENTS');
+        await viewerPage.viewFile(pngFileUploaded.entry.name);
+        await viewerPage.clickLeftSidebarButton();
+        await viewerPage.enableShowTabWithIcon();
+        await viewerPage.enableShowTabWithIconAndLabel();
+        expect(await viewerPage.getTabLabelById(0)).toBe('SETTINGS');
+        await viewerPage.checkTabHasNoLabel(1);
+        expect(await viewerPage.getTabLabelById(2)).toBe('COMMENTS');
     });
 });

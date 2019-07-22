@@ -91,7 +91,7 @@ describe('Restore content directive', () => {
     });
 
     beforeEach(async (done) => {
-        await  navigationBarPage.clickContentServicesButton();
+        await  await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
         done();
     });
@@ -99,7 +99,7 @@ describe('Restore content directive', () => {
     describe('Restore same name folders', () => {
 
         beforeAll(async (done) => {
-            await  navigationBarPage.clickContentServicesButton();
+            await  await navigationBarPage.clickContentServicesButton();
             await  contentServicesPage.waitForTableBody();
             await  contentServicesPage.checkContentIsDisplayed(folderName);
             await contentServicesPage.deleteContent(folderName);
@@ -125,7 +125,7 @@ describe('Restore content directive', () => {
             await trashcanPage.getDocumentList().dataTablePage().checkAllRows();
             await trashcanPage.clickRestore();
             await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
-            await  navigationBarPage.clickContentServicesButton();
+            await  await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
             await contentServicesPage.checkContentIsDisplayed(folderName);
 
@@ -202,7 +202,7 @@ describe('Restore content directive', () => {
         await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderWithFolder.entry.name);
         await trashcanPage.clickRestore();
 
-        await  navigationBarPage.clickContentServicesButton();
+        await  await navigationBarPage.clickContentServicesButton();
         await  contentServicesPage.waitForTableBody();
         await  contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
         await  contentServicesPage.doubleClickRow(folderWithFolder.entry.name);
@@ -306,7 +306,7 @@ describe('Restore content directive', () => {
             contentServicesPage.deleteContent(mainFolder.entry.name);
             contentServicesPage.deleteContent(mainFile.entry.name);
 
-            navigationBarPage.clickTrashcanButton();
+            await navigationBarPage.clickTrashcanButton();
             trashcanPage.waitForTableBody();
             trashcanPage.checkRestoreButtonIsNotDisplayed();
             trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(parentFolder.entry.name);
@@ -317,7 +317,7 @@ describe('Restore content directive', () => {
             trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(mainFile.entry.name);
             trashcanPage.clickRestore();
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             contentServicesPage.waitForTableBody();
             contentServicesPage.checkContentIsDisplayed(parentFolder.entry.name);
             contentServicesPage.checkContentIsDisplayed(mainFolder.entry.name);

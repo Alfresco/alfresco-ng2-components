@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Task List Pagination - Sorting',  () => {
+describe('Task List Pagination - Sorting', () => {
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
@@ -69,7 +69,7 @@ describe('Task List Pagination - Sorting',  () => {
         await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         for (let i = 0; i < nrOfTasks; i++) {
-            this.alfrescoJsApi.activiti.taskApi.createNewTask({name: taskNames[i]});
+            await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskNames[i] });
         }
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
@@ -78,18 +78,18 @@ describe('Task List Pagination - Sorting',  () => {
     });
 
     it('[C260308] Should be possible to sort tasks by name', async () => {
-        new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        taskPage.tasksListPage().getDataTable().waitForTableBody();
-        paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        taskPage.tasksListPage().getDataTable().waitForTableBody();
-        taskPage.filtersPage().sortByName('ASC');
-        taskPage.tasksListPage().getDataTable().waitForTableBody();
-        taskPage.filtersPage().getAllRowsNameColumn().then(function (list) {
+        await  (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
+        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.filtersPage().sortByName('ASC');
+        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.filtersPage().getAllRowsNameColumn().then(function (list) {
             expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
         });
-        taskPage.filtersPage().sortByName('DESC');
-        taskPage.filtersPage().getAllRowsNameColumn().then(function (list) {
+        await taskPage.filtersPage().sortByName('DESC');
+        await taskPage.filtersPage().getAllRowsNameColumn().then(function (list) {
             taskNames.reverse();
             expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
         });

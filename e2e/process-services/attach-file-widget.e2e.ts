@@ -32,7 +32,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Start Task - Task App',  () => {
+describe('Start Task - Task App', () => {
 
     const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();
@@ -81,24 +81,23 @@ describe('Start Task - Task App',  () => {
     });
 
     it('[C274690] Should be able to open a file attached to a start form', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        taskPage
-            .createNewTask()
-            .addName('View file')
-            .addForm(app.formName)
-            .clickStartButton();
+        const newTask = await taskPage.createNewTask();
+        await newTask.addName('View file');
+        await newTask.addForm(app.formName);
+        await newTask.clickStartButton();
 
-        widget.attachFileWidget().attachFile(appFields.attachFile_id, browser.params.testConfig.main.rootPath + pdfFile.location);
-        widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
+        await widget.attachFileWidget().attachFile(appFields.attachFile_id, browser.params.testConfig.main.rootPath + pdfFile.location);
+        await widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
 
-        widget.attachFileWidget().viewFile(pdfFile.name);
-        viewerPage.checkFileContent('1', pdfFile.firstPageText);
-        viewerPage.checkCloseButtonIsDisplayed();
-        viewerPage.clickCloseButton();
-        taskPage.tasksListPage().checkContentIsDisplayed('View file');
+        await widget.attachFileWidget().viewFile(pdfFile.name);
+        await viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        await viewerPage.checkCloseButtonIsDisplayed();
+        await viewerPage.clickCloseButton();
+        await taskPage.tasksListPage().checkContentIsDisplayed('View file');
     });
 
 });

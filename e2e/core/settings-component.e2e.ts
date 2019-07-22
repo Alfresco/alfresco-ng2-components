@@ -141,10 +141,10 @@ describe('Settings component',  () => {
             loginPage.enterUsername(adminUserModel.id);
             loginPage.enterPassword(adminUserModel.password);
             loginPage.clickSignInButton();
-            navigationBarPage.navigateToProcessServicesPage();
+            await navigationBarPage.navigateToProcessServicesPage();
             processServicesPage.checkApsContainer();
             processServicesPage.checkAppIsDisplayed('Task App');
-            navigationBarPage.navigateToSettingsPage();
+            await navigationBarPage.navigateToSettingsPage();
             expect(settingsPage.getSelectedOptionText()).toBe('BPM');
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
@@ -157,7 +157,7 @@ describe('Settings component',  () => {
             expect(applyButton.isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
             processServicesPage.checkApsContainer();
             processServicesPage.checkAppIsDisplayed('Task App');
         });
@@ -173,9 +173,9 @@ describe('Settings component',  () => {
             loginPage.enterUsername(adminUserModel.id);
             loginPage.enterPassword(adminUserModel.password);
             loginPage.clickSignInButton();
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             contentServicesPage.checkAcsContainer();
-            navigationBarPage.navigateToSettingsPage();
+            await navigationBarPage.navigateToSettingsPage();
             expect(settingsPage.getSelectedOptionText()).toBe('ECM');
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
@@ -187,7 +187,7 @@ describe('Settings component',  () => {
             expect(applyButton.isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
             contentServicesPage.checkAcsContainer();
         });
 
@@ -202,12 +202,12 @@ describe('Settings component',  () => {
             loginPage.enterUsername(adminUserModel.id);
             loginPage.enterPassword(adminUserModel.password);
             loginPage.clickSignInButton();
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             contentServicesPage.checkAcsContainer();
-            navigationBarPage.navigateToProcessServicesPage();
+            await navigationBarPage.navigateToProcessServicesPage();
             processServicesPage.checkApsContainer();
             processServicesPage.checkAppIsDisplayed('Task App');
-            navigationBarPage.navigateToSettingsPage();
+            await navigationBarPage.navigateToSettingsPage();
             expect(settingsPage.getSelectedOptionText()).toBe('ALL');
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
@@ -220,9 +220,9 @@ describe('Settings component',  () => {
             expect(applyButton.isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
             contentServicesPage.checkAcsContainer();
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
             processServicesPage.checkApsContainer();
             processServicesPage.checkAppIsDisplayed('Task App');
         });

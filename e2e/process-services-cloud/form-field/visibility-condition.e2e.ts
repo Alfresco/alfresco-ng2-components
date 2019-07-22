@@ -72,7 +72,7 @@ describe('Visibility conditions - cloud',  () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.clickFormCloudButton();
+        await navigationBarPage.clickFormCloudButton();
 
         formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
 

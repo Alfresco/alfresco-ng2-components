@@ -147,8 +147,8 @@ describe('Process filters cloud',  () => {
         done();
     });
 
-    beforeEach(() => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
+    beforeEach( async() => {
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.goToApp(candidateBaseApp);
         tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
@@ -165,7 +165,7 @@ describe('Process filters cloud',  () => {
     it('[C306889] Should be able to see "No process found" when using an app with no processes in the appName field', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setAppNameDropDown('subprocessapp').setProperty('initiator', testUser.username);
         processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
     });
 
     it('[C306890] Should be able to filter by initiator', async () => {
@@ -178,7 +178,7 @@ describe('Process filters cloud',  () => {
     it('[C306891] Should be able to see "No process found" when providing an initiator whitout processes', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('initiator', anotherUser.username);
         processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
     });
 
     it('[C311315] Should be able to filter by process definition id', async () => {
@@ -303,7 +303,7 @@ describe('Process filters cloud',  () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedFrom', afterDate);
         processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', afterDate);
         processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
     });
 
 });

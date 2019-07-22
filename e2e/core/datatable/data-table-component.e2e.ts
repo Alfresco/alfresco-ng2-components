@@ -61,7 +61,7 @@ describe('Datatable component', () => {
     describe('Datatable component', () => {
 
         beforeAll(async (done) => {
-            navigationBarPage.navigateToDatatable();
+            await navigationBarPage.navigateToDatatable();
 
             done();
         });
@@ -102,7 +102,7 @@ describe('Datatable component', () => {
     describe('Datatable component - copyContent', () => {
 
         beforeAll(async (done) => {
-            navigationBarPage.navigateToCopyContentDatatable();
+            await navigationBarPage.navigateToCopyContentDatatable();
             done();
         });
 

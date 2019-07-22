@@ -94,8 +94,8 @@ describe('Start Task',  () => {
         done();
     });
 
-    beforeEach(() => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
+    beforeEach( async() => {
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);

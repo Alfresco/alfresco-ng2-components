@@ -66,26 +66,26 @@ describe('Viewer',  () => {
     });
 
     afterEach(async () => {
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
     it('[C260096] Should the Viewer able to accept a customToolbar', async () => {
-        viewerPage.clickLeftSidebarButton();
-        viewerPage.checkLeftSideBarIsDisplayed();
-        viewerPage.checkToolbarIsDisplayed();
-        viewerPage.enableCustomToolbar();
-        viewerPage.checkCustomToolbarIsDisplayed();
-        viewerPage.disableCustomToolbar();
+        await viewerPage.clickLeftSidebarButton();
+        await viewerPage.checkLeftSideBarIsDisplayed();
+        await viewerPage.checkToolbarIsDisplayed();
+        await viewerPage.enableCustomToolbar();
+        await viewerPage.checkCustomToolbarIsDisplayed();
+        await viewerPage.disableCustomToolbar();
     });
 
     it('[C260097] Should the viewer able to show a custom info-drawer when the sidebarTemplate is set', async () => {
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickOnTab('Comments');
-        viewerPage.checkTabIsActive('Comments');
-        viewerPage.clickOnTab('Properties');
-        viewerPage.checkTabIsActive('Properties');
-        viewerPage.clickOnTab('Versions');
-        viewerPage.checkTabIsActive('Versions');
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.clickOnTab('Comments');
+        await viewerPage.checkTabIsActive('Comments');
+        await viewerPage.clickOnTab('Properties');
+        await viewerPage.checkTabIsActive('Properties');
+        await viewerPage.clickOnTab('Versions');
+        await viewerPage.checkTabIsActive('Versions');
     });
 });

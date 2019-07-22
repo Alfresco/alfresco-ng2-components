@@ -29,7 +29,7 @@ import { UsersActions } from '../actions/users.actions';
 import resources = require('../util/resources');
 import { browser } from 'protractor';
 
-describe('Items per page set to 15 and adding of tasks',  () => {
+describe('Items per page set to 15 and adding of tasks', () => {
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
@@ -76,30 +76,29 @@ describe('Items per page set to 15 and adding of tasks',  () => {
     });
 
     it('[C260306] Items per page set to 15 and adding of tasks', async () => {
-        new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
+        await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
 
-        browser.controlFlow().execute(async () => {
-            for (i; i < nrOfTasks; i++) {
-                await apps.startProcess(this.alfrescoJsApi, resultApp);
-            }
-        });
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
+        expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
+        expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
+
+        for (i; i < nrOfTasks; i++) {
+            await apps.startProcess(this.alfrescoJsApi, resultApp);
+        }
 
         currentPage++;
-        paginationPage.clickOnNextPage();
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsEnabled();
+        await paginationPage.clickOnNextPage();
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
+        expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
+        expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
+        await paginationPage.checkNextPageButtonIsDisabled();
+        await paginationPage.checkPreviousPageButtonIsEnabled();
     });
 
 });

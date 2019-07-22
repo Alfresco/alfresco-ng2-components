@@ -75,7 +75,7 @@ describe('Favorite directive',  () => {
     });
 
     beforeEach(async (done) => {
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         done();
     });
@@ -91,7 +91,7 @@ describe('Favorite directive',  () => {
         customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsDisplayed(testFile.entry.name);
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
@@ -113,7 +113,7 @@ describe('Favorite directive',  () => {
         customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsDisplayed(testFolder1.entry.name);
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder1.entry.name);
         contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFolder1.entry.name);
@@ -138,7 +138,7 @@ describe('Favorite directive',  () => {
         customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsNotDisplayed(testFile.entry.name);
 
-        navigationBarPage.clickTrashcanButton();
+        await navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
         expect(trashcanPage.numberOfResultsDisplayed()).toBe(1);
         trashcanPage.getDocumentList().dataTablePage().clickRowByContent(testFile.entry.name);
@@ -146,7 +146,7 @@ describe('Favorite directive',  () => {
         trashcanPage.clickRestore();
         trashcanPage.checkTrashcanIsEmpty();
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);

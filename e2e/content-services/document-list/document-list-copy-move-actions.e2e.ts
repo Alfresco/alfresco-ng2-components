@@ -106,7 +106,7 @@ describe('Document List Component',  () => {
 
         beforeEach(async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             done();
         });
 
@@ -178,7 +178,7 @@ describe('Document List Component',  () => {
 
         beforeAll((done) => {
             await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + sourceFolder.entry.id);
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + sourceFolder.entry.id);
             contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
             done();
         });

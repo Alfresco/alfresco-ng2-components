@@ -32,7 +32,7 @@ import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { browser } from 'protractor';
 
-describe('Task Details component',  () => {
+describe('Task Details component', () => {
 
     const processServices = new ProcessServicesPage();
     let processUserModel, appModel;
@@ -75,263 +75,249 @@ describe('Task Details component',  () => {
     });
 
     it('[C260506] Should display task details for standalone task - Task App', async () => {
-        processServices.goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask()
-            .addName(tasks[1])
-            .addDescription('Description')
-            .addForm(app.formName)
-            .clickStartButton();
-        expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
+        await (await processServices.goToTaskApp()).clickTasksButton();
 
-        const allTasks = await browser.controlFlow().execute(async () => {
-            return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-        });
+        await  taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[1]);
+        await task.addDescription('Description');
+        await task.addForm(app.formName);
+        await task.clickStartButton();
+
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
-        expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        expect(taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
-        expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        expect(taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
-        expect(taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        expect(taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        expect(taskPage.taskDetails().getParentTaskId()).toEqual('');
-        expect(taskPage.taskDetails().getDuration()).toEqual('');
-        expect(taskPage.taskDetails().getEndDate()).toEqual('');
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
+        expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await browser.controlFlow().execute(async () => {
-            return await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
-        });
-
+        const taskForm = await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
         formModel = new FormModel(taskForm);
 
-        expect(taskPage.taskDetails().getFormName()).toEqual(formModel.getName());
+        expect(await taskPage.taskDetails().getFormName()).toEqual(formModel.getName());
     });
 
     it('[C263946] Should display task details for standalone task - Custom App', async () => {
-        processServices.goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask()
-            .addName(tasks[1])
-            .addDescription('Description')
-            .addForm(app.formName)
-            .clickStartButton();
-        expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
+        await (await processServices.goToTaskApp()).clickTasksButton();
 
-        const allTasks = await browser.controlFlow().execute(async () => {
-            return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-        });
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[1]);
+        await task.addDescription('Description');
+        await task.addForm(app.formName);
+        await task.clickStartButton();
+
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
 
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
-        expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        expect(taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
-        expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        expect(taskPage.taskDetails().getCategory()).toEqual(taskModel.getCategory());
-        expect(taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        expect(taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        expect(taskPage.taskDetails().getDuration()).toEqual('' );
-        expect(taskPage.taskDetails().getEndDate()).toEqual('');
-        expect(taskPage.taskDetails().getParentTaskId()).toEqual('');
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(taskModel.getCategory());
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await browser.controlFlow().execute(async () => {
-            return await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
-        });
+        const taskForm = await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
+
 
         formModel = new FormModel(taskForm);
 
-        expect(taskPage.taskDetails().getFormName()).toEqual(formModel.getName());
+        expect(await taskPage.taskDetails().getFormName()).toEqual(formModel.getName());
     });
 
     it('[C286706] Should display task details for task - Task App', async () => {
-        browser.controlFlow().execute(async () => {
-            await apps.startProcess(this.alfrescoJsApi, appModel);
-        });
+        await apps.startProcess(this.alfrescoJsApi, appModel);
 
-        processServices.goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await (await processServices.goToTaskApp()).clickTasksButton();
 
-        expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        const allTasks = await browser.controlFlow().execute(async () => {
-            return await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({sort: 'created-desc'}));
-        });
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
 
-        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
-        expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        expect(taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
-        expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        expect(taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
-        expect(taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        expect(taskPage.taskDetails().getParentName()).toEqual(appModel.definition.models[0].name);
-        expect(taskPage.taskDetails().getDuration()).toEqual('' );
-        expect(taskPage.taskDetails().getEndDate()).toEqual('');
-        expect(taskPage.taskDetails().getParentTaskId()).toEqual('');
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
+        expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(appModel.definition.models[0].name);
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await browser.controlFlow().execute(async () => {
-            return await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
-        });
+        const taskForm = await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
 
         formModel = new FormModel(taskForm);
 
-        expect(taskPage.taskDetails().getFormName())
+        expect(await taskPage.taskDetails().getFormName())
             .toEqual(formModel.getName() === null ? CONSTANTS.TASK_DETAILS.NO_FORM : formModel.getName());
     });
 
     it('[C286705] Should display task details for task - Custom App', async () => {
-        browser.controlFlow().execute(async () => {
-            await apps.startProcess(this.alfrescoJsApi, appModel);
-        });
+        await apps.startProcess(this.alfrescoJsApi, appModel);
 
-        processServices.goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await (await processServices.goToTaskApp()).clickTasksButton();
 
-        expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        const allTasks = await browser.controlFlow().execute(async () => {
-            return await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({sort: 'created-desc'}));
-        });
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
 
-        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
-        expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        expect(taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
-        expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        expect(taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
-        expect(taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        expect(taskPage.taskDetails().getParentName()).toEqual(appModel.definition.models[0].name);
-        expect(taskPage.taskDetails().getDuration()).toEqual('' );
-        expect(taskPage.taskDetails().getEndDate()).toEqual('');
-        expect(taskPage.taskDetails().getParentTaskId()).toEqual('');
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
+        expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(appModel.definition.models[0].name);
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await browser.controlFlow().execute(async () => {
-            return await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
-        });
+        const taskForm = await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
 
         formModel = new FormModel(taskForm);
 
-        expect(taskPage.taskDetails().getFormName())
+        expect(await taskPage.taskDetails().getFormName())
             .toEqual(formModel.getName() === null ? CONSTANTS.TASK_DETAILS.NO_FORM : formModel.getName());
     });
 
-    it('[C286708] Should display task details for subtask - Task App', async() => {
+    it('[C286708] Should display task details for subtask - Task App', async () => {
         const taskName = 'TaskAppSubtask';
         const checklistName = 'TaskAppChecklist';
-        browser.controlFlow().execute(async () => {
-            await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': taskName});
-        });
+        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': taskName });
 
-        processServices.goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkContentIsDisplayed(taskName);
-        taskPage.tasksListPage().selectRow(taskName);
+        await (await processServices.goToTaskApp()).clickTasksButton();
 
-        taskPage.clickOnAddChecklistButton().addName(checklistName).clickCreateChecklistButton();
-        taskPage.checkChecklistIsDisplayed(checklistName);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskName);
+        await taskPage.tasksListPage().selectRow(taskName);
 
-        taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
-        taskPage.tasksListPage().selectRow(checklistName);
+        const dialog = await taskPage.clickOnAddChecklistButton();
+        await dialog.addName(checklistName);
+        await dialog.clickCreateChecklistButton();
 
-        const allTasks = await browser.controlFlow().execute(async () => {
-            return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-        });
+        await taskPage.checkChecklistIsDisplayed(checklistName);
+
+        await taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
+        await taskPage.tasksListPage().selectRow(checklistName);
+
+        const allTasks = await  this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
-        expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        expect(taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
-        expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        expect(taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
-        expect(taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        expect(taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        expect(taskPage.taskDetails().getDuration()).toEqual('');
-        expect(taskPage.taskDetails().getEndDate()).toEqual('');
-        expect(taskPage.taskDetails().getParentTaskId()).toEqual(taskModel.getParentTaskId());
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
+        expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual(taskModel.getParentTaskId());
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
     });
 
-    it('[C286707] Should display task details for subtask - Custom App', async() => {
+    it('[C286707] Should display task details for subtask - Custom App', async () => {
         const checklistName = 'CustomAppChecklist';
 
-        browser.controlFlow().execute(async () => {
-            await apps.startProcess(this.alfrescoJsApi, appModel);
-        });
+        await apps.startProcess(this.alfrescoJsApi, appModel);
 
-        processServices.goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await (await processServices.goToTaskApp()).clickTasksButton();
 
-        expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        taskPage.clickOnAddChecklistButton().addName(checklistName).clickCreateChecklistButton();
-        taskPage.checkChecklistIsDisplayed(checklistName);
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
-        taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
-        taskPage.tasksListPage().selectRow(checklistName);
 
-        const allTasks = await browser.controlFlow().execute(async () => {
-            return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-        });
+        const dialog = await taskPage.clickOnAddChecklistButton();
+        await dialog.addName(checklistName);
+        await dialog.clickCreateChecklistButton();
+
+        await taskPage.checkChecklistIsDisplayed(checklistName);
+
+        await taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
+        await taskPage.tasksListPage().selectRow(checklistName);
+
+        const allTasks = await   this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
-        expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        expect(taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
-        expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        expect(taskPage.taskDetails().getCategory()).toEqual(taskModel.getCategory());
-        expect(taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        expect(taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        expect(taskPage.taskDetails().getDuration()).toEqual('');
-        expect(taskPage.taskDetails().getEndDate()).toEqual('');
-        expect(taskPage.taskDetails().getParentTaskId()).toEqual(taskModel.getParentTaskId());
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
+        expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(taskModel.getCategory());
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual(taskModel.getParentTaskId());
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
     });
 
-    it('[C286709] Should display task details for completed task - Task App', async() => {
+    it('[C286709] Should display task details for completed task - Task App', async () => {
         const taskName = 'TaskAppCompleted';
-        const taskId = await browser.controlFlow().execute(async () => {
-            return this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': taskName});
-        });
+        const taskId = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': taskName });
 
-        processServices.goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkContentIsDisplayed(taskName).selectRow('Name', taskName);
+        await (await processServices.goToTaskApp()).clickTasksButton();
 
-        taskPage.completeTaskNoForm();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectRow(taskName);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        const getTaskResponse = await browser.controlFlow().execute(async () => {
-            return this.alfrescoJsApi.activiti.taskApi.getTask(taskId.id);
-        });
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskName);
+        await taskPage.tasksListPage().selectRow(taskName);
+
+        await taskPage.completeTaskNoForm();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        await taskPage.tasksListPage().selectRow(taskName);
+
+        const getTaskResponse = await  this.alfrescoJsApi.activiti.taskApi.getTask(taskId.id);
 
         const taskModel = new TaskModel(getTaskResponse);
-        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
-        expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        expect(taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
-        expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        expect(taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
-        expect(taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        expect(taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        expect(taskPage.taskDetails().getDuration()).toEqual(taskPage.taskDetails().getDuration());
-        expect(taskPage.taskDetails().getEndDate()).toEqual(taskPage.taskDetails().getEndDate());
-        expect(taskPage.taskDetails().getParentTaskId()).toEqual('');
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.COMPLETED);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
+        expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskPage.taskDetails().getDuration()).toEqual(await taskPage.taskDetails().getDuration());
+        expect(await taskPage.taskDetails().getEndDate()).toEqual(await taskPage.taskDetails().getEndDate());
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.COMPLETED);
     });
 
 });

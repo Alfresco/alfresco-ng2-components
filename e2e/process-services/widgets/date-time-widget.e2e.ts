@@ -60,11 +60,11 @@ describe('Date and time widget',  () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await BrowserActions.getUrl(urlToNavigateTo);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
@@ -75,32 +75,32 @@ describe('Date and time widget',  () => {
     });
 
     it('[C268818] Should be able to set general settings for Date Time widget', async () => {
-        expect(widget.dateTimeWidget().getDateTimeLabel(app.FIELD.date_time_input)).toContain('Date');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        expect(await widget.dateTimeWidget().getDateTimeLabel(app.FIELD.date_time_input)).toContain('Date');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_input);
-        widget.dateTimeWidget().selectDay('10');
-        widget.dateTimeWidget().selectHour('8');
-        widget.dateTimeWidget().selectMinute('30');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_input);
+        await widget.dateTimeWidget().selectDay('10');
+        await widget.dateTimeWidget().selectHour('8');
+        await widget.dateTimeWidget().selectMinute('30');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
 
-        expect(widget.dateTimeWidget().getPlaceholder(app.FIELD.date_time_between_input)).toBe('Choose anything...');
+        expect(await widget.dateTimeWidget().getPlaceholder(app.FIELD.date_time_between_input)).toBe('Choose anything...');
     });
 
     it('[C268819] Should be able to set advanced settings for Date Time widget ', async () => {
-        widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
-        widget.dateTimeWidget().closeDataTimeWidget();
-        widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-17 07:30 PM');
-        widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
-        expect(widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be less than');
+        await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
+        await widget.dateTimeWidget().closeDataTimeWidget();
+        await widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-17 07:30 PM');
+        await widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
+        expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be less than');
 
-        widget.dateTimeWidget().closeDataTimeWidget();
+        await widget.dateTimeWidget().closeDataTimeWidget();
 
-        widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
-        widget.dateTimeWidget().removeFromDatetimeWidget(app.FIELD.date_time_between_input);
-        widget.dateTimeWidget().closeDataTimeWidget();
-        widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-19 07:30 PM');
-        widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
-        expect(widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be greater than');
+        await widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
+        await widget.dateTimeWidget().removeFromDatetimeWidget(app.FIELD.date_time_between_input);
+        await widget.dateTimeWidget().closeDataTimeWidget();
+        await widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-19 07:30 PM');
+        await widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
+        expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be greater than');
     });
 });

@@ -98,8 +98,8 @@ describe('Viewer',  () => {
             uploadedImages.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkImgViewerIsDisplayed();
-                    viewerPage.clickCloseButton();
+                    await viewerPage.checkImgViewerIsDisplayed();
+                    await viewerPage.clickCloseButton();
                 }
             });
 
@@ -108,8 +108,8 @@ describe('Viewer',  () => {
             uploadedImgRenditionFolderInfo.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkFileIsLoaded();
-                    viewerPage.clickCloseButton();
+                    await viewerPage.checkFileIsLoaded();
+                    await viewerPage.clickCloseButton();
                 }
             });
         });

@@ -114,7 +114,7 @@ describe('Aspect oriented config', () => {
             }
         }));
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.clickInfoButton();
@@ -145,7 +145,7 @@ describe('Aspect oriented config', () => {
             }
         }));
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.clickInfoButton();

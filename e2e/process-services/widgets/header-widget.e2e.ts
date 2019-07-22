@@ -60,11 +60,11 @@ describe('Header widget', async () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await BrowserActions.getUrl(urlToNavigateTo);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
@@ -75,11 +75,11 @@ describe('Header widget', async () => {
     });
 
     it('[C276737] Should be able to set general and visibility properties for Header widget', async () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.header_id);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.header_id);
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.header_id);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.header_id);
 
-        expect(widget.headerWidget().getFieldLabel(app.FIELD.header_id)).toBe('Header');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        expect(await widget.headerWidget().getFieldLabel(app.FIELD.header_id)).toBe('Header');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 });

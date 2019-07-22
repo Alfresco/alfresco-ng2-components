@@ -107,7 +107,7 @@ describe('Upload - User permission',  () => {
         });
 
         it('[C291921] Should display tooltip for uploading files without permissions', async () => {
-            navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
+            await navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
@@ -127,7 +127,7 @@ describe('Upload - User permission',  () => {
 
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
-            navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
+            await navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
             await browser.sleep(3000);
 
@@ -141,7 +141,7 @@ describe('Upload - User permission',  () => {
     describe('full permissions',  () => {
 
         beforeEach(async (done) => {
-            navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
+            await navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
 
             contentServicesPage.goToDocumentList();
 
@@ -171,7 +171,7 @@ describe('Upload - User permission',  () => {
 
             contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
-            navigationBarPage.clickLoginButton();
+            await navigationBarPage.clickLoginButton();
             await loginPage.loginToContentServicesUsingUserModel(acsUserTwo);
             await contentServicesPage.goToDocumentList();
 

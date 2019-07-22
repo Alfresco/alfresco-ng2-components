@@ -68,10 +68,10 @@ describe('Login component - Redirect', () => {
         settingsPage.setProviderEcm();
         loginPage.login(user.id, user.password);
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
 
-        navigationBarPage.navigateToProcessServicesPage();
+        await navigationBarPage.navigateToProcessServicesPage();
 
         loginPage.waitForElements();
     });
@@ -86,10 +86,10 @@ describe('Login component - Redirect', () => {
 
         loginPage.login(adminUserModel.id, adminUserModel.password);
 
-        navigationBarPage.navigateToProcessServicesPage();
+        await navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
         loginPage.waitForElements();
     });
@@ -102,10 +102,10 @@ describe('Login component - Redirect', () => {
 
         loginPage.login(adminUserModel.id, adminUserModel.password);
 
-        navigationBarPage.navigateToProcessServicesPage();
+        await navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
     });
 
@@ -115,7 +115,7 @@ describe('Login component - Redirect', () => {
         settingsPage.setProviderEcm();
         loginPage.login(user.id, user.password);
 
-        navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
+        await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
         browser.getCurrentUrl().then((actualUrl) => {
             expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
@@ -123,11 +123,11 @@ describe('Login component - Redirect', () => {
 
         contentServicesPage.waitForTableBody();
 
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
 
         logoutPage.checkLogoutSectionIsDisplayed();
 
-        navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
+        await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
         loginPage.waitForElements();
 
@@ -145,7 +145,7 @@ describe('Login component - Redirect', () => {
         settingsPage.setProviderEcm();
         loginPage.login(user.id, user.password);
 
-        navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
+        await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
         browser.getCurrentUrl().then((actualUrl) => {
             expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
@@ -153,11 +153,11 @@ describe('Login component - Redirect', () => {
 
         contentServicesPage.waitForTableBody();
 
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
 
         logoutPage.checkLogoutSectionIsDisplayed();
 
-        navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
+        await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
         loginPage.waitForElements();
         browser.refresh();
         loginPage.waitForElements();
@@ -166,7 +166,7 @@ describe('Login component - Redirect', () => {
         loginPage.enterPassword(user.password);
         loginPage.clickSignInButton();
 
-        navigationBarPage.checkMenuButtonIsDisplayed();
+        await navigationBarPage.checkMenuButtonIsDisplayed();
 
         browser.getCurrentUrl().then((actualUrl) => {
             expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);

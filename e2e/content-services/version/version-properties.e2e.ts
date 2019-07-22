@@ -65,7 +65,7 @@ describe('Version Properties',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
         contentServicesPage.versionManagerContent(txtFileModel.name);
 

@@ -88,7 +88,7 @@ describe('Metadata component', () => {
 
         beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            await  navigationBarPage.clickContentServicesButton();
+            await  await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
 
             await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({

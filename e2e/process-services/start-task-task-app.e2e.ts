@@ -36,8 +36,9 @@ import { UsersActions } from '../actions/users.actions';
 import { StringUtil } from '@alfresco/adf-testing';
 import fs = require('fs');
 import path = require('path');
+import { ChecklistDialog } from '../pages/adf/process-services/dialog/createChecklistDialog';
 
-describe('Start Task - Task App',  () => {
+describe('Start Task - Task App', () => {
 
     const loginPage = new LoginPage();
     const attachmentListPage = new AttachmentListPage();
@@ -91,93 +92,125 @@ describe('Start Task - Task App',  () => {
     });
 
     beforeEach(async (done) => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         done();
     });
 
     it('[C260383] Should be possible to modify a task', async () => {
-        taskPage.createNewTask().addName(tasks[0])
-            .addForm(app.formName).clickStartButton();
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-        taskPage.taskDetails().clickInvolvePeopleButton()
-            .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.taskDetails().clickAddInvolvedUserButton();
-        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[0]);
+        await task.addForm(app.formName);
+        await task.clickStartButton();
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        const taskDetails = await taskPage.taskDetails();
+        await taskDetails.clickInvolvePeopleButton();
+        await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+
+        await taskPage.taskDetails().clickAddInvolvedUserButton();
+
+        expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
-        taskPage.taskDetails().selectActivityTab().addComment(firstComment)
-            .checkCommentIsDisplayed(firstComment);
-        taskPage.clickOnAddChecklistButton().addName(firstChecklist).clickCreateChecklistButton();
-        taskPage.checkChecklistIsDisplayed(firstChecklist);
-        taskPage.taskDetails().selectDetailsTab();
+
+        await taskDetails.selectActivityTab();
+        await taskDetails.addComment(firstComment);
+        await taskDetails.checkCommentIsDisplayed(firstComment);
+
+        await (await taskPage.clickOnAddChecklistButton()).addName(firstChecklist);
+
+        const checklistDialog = new ChecklistDialog();
+        await checklistDialog.clickCreateChecklistButton();
+
+        await taskPage.checkChecklistIsDisplayed(firstChecklist);
+        await taskPage.taskDetails().selectDetailsTab();
     });
 
     it('[C260422] Should be possible to cancel a task', async () => {
-        taskPage.createNewTask().addName(tasks[3])
-            .checkStartButtonIsEnabled().clickCancelButton();
-        taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
-        expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        const task = await taskPage.createNewTask();
+
+        await task.addName(tasks[3]);
+        await task.checkStartButtonIsEnabled();
+        await task.clickCancelButton();
+
+        await taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
+        expect(await taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
     it('[C260423] Should be possible to save filled form', async () => {
-        taskPage.createNewTask()
-            .addForm(app.formName).addName(tasks[4]).clickStartButton();
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
-        expect(taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue)
-            .getFieldValue(formTextField)).toEqual(formFieldValue);
-        taskPage.formFields().refreshForm().checkFieldValue(by.id, formTextField, '');
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
-        taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue)
-            .checkFieldValue(by.id, formTextField, formFieldValue);
-        taskPage.formFields().saveForm().checkFieldValue(by.id, formTextField, formFieldValue);
+        const task = await taskPage.createNewTask();
+        await task.addForm(app.formName);
+        await task.addName(tasks[4]);
+        await task.clickStartButton();
+
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
+
+        const formFields = await taskPage.formFields();
+        formFields.setFieldValue(by.id, formTextField, formFieldValue);
+
+        expect(formFields.getFieldValue(formTextField)).toEqual(formFieldValue);
+
+        formFields.refreshForm();
+        formFields.checkFieldValue(by.id, formTextField, '');
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
+
+        await formFields.setFieldValue(by.id, formTextField, formFieldValue);
+        await formFields.checkFieldValue(by.id, formTextField, formFieldValue);
+
+        await taskPage.formFields().saveForm();
+        await formFields.checkFieldValue(by.id, formTextField, formFieldValue);
     });
 
     it('[C260425] Should be possible to assign a user', async () => {
-        taskPage.createNewTask()
-            .addName(tasks[5])
-            .addAssignee(assigneeUserModel.firstName)
-            .clickStartButton();
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[5]);
+        await task.addAssignee(assigneeUserModel.firstName);
+        await task.clickStartButton();
 
-        taskPage.tasksListPage().checkTaskListIsLoaded();
-        taskPage.tasksListPage().getDataTable().waitForTableBody();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[5]);
-        taskPage.tasksListPage().selectRow(tasks[5]);
-        taskPage.checkTaskTitle(tasks[5]);
-        expect(taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
+        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[5]);
+        await taskPage.tasksListPage().selectRow(tasks[5]);
+        await taskPage.checkTaskTitle(tasks[5]);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
     });
 
     it('Attach a file', async () => {
-        taskPage.createNewTask().addName(tasks[6]).clickStartButton();
-        attachmentListPage.clickAttachFileButton(jpgFile.location);
-        attachmentListPage.checkFileIsAttached(jpgFile.name);
+        const startTaskDialog = await taskPage.createNewTask();
+        await startTaskDialog.addName(tasks[6]);
+        await startTaskDialog.clickStartButton();
+        await attachmentListPage.clickAttachFileButton(jpgFile.location);
+        await attachmentListPage.checkFileIsAttached(jpgFile.name);
     });
 
     it('[C260420] Should Information box be hidden when showHeaderContent property is set on false', async () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(showHeaderTask);
+        await taskPage.tasksListPage().checkContentIsDisplayed(showHeaderTask);
 
-        processServiceTabBarPage.clickSettingsButton();
-        taskPage.taskDetails().appSettingsToggles().disableShowHeader();
-        processServiceTabBarPage.clickTasksButton();
+        await processServiceTabBarPage.clickSettingsButton();
+        await taskPage.taskDetails().appSettingsToggles().disableShowHeader();
+        await processServiceTabBarPage.clickTasksButton();
 
-        taskPage.taskDetails().taskInfoDrawerIsNotDisplayed();
+        await taskPage.taskDetails().taskInfoDrawerIsNotDisplayed();
 
-        processServiceTabBarPage.clickSettingsButton();
-        taskPage.taskDetails().appSettingsToggles().enableShowHeader();
-        processServiceTabBarPage.clickTasksButton();
+        await processServiceTabBarPage.clickSettingsButton();
+        await taskPage.taskDetails().appSettingsToggles().enableShowHeader();
+        await processServiceTabBarPage.clickTasksButton();
 
-        taskPage.taskDetails().taskInfoDrawerIsDisplayed();
+        await taskPage.taskDetails().taskInfoDrawerIsDisplayed();
     });
 
     it('[C291780] Should be displayed an error message if task name exceed 255 characters', async () => {
-        const startDialog = taskPage.createNewTask().addName(taskName255Characters).checkStartButtonIsEnabled();
-        startDialog.addName(taskNameBiggerThen255Characters)
-            .blur(startDialog.name)
-            .checkValidationErrorIsDisplayed(lengthValidationError)
-            .checkStartButtonIsDisabled();
+        const startDialog = await taskPage.createNewTask();
+        await startDialog.addName(taskName255Characters);
+
+        await startDialog.checkStartButtonIsEnabled();
+        await startDialog.addName(taskNameBiggerThen255Characters);
+        await startDialog.blur(startDialog.name);
+        await startDialog.checkValidationErrorIsDisplayed(lengthValidationError);
+        await startDialog.checkStartButtonIsDisabled();
 
     });
 

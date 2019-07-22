@@ -60,11 +60,11 @@ describe('Multi-line Widget',  () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await BrowserActions.getUrl(urlToNavigateTo);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
@@ -75,35 +75,35 @@ describe('Multi-line Widget',  () => {
     });
 
     it('[C268182] Should be able to set general properties for Multi-line Text Widget', async () => {
-        const label = widget.multilineTextWidget().getFieldLabel(app.FIELD.multiSimple);
+        const label = await widget.multilineTextWidget().getFieldLabel(app.FIELD.multiSimple);
         expect(label).toBe('multiSimple*');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        const placeHolder = widget.multilineTextWidget().getFieldPlaceHolder(app.FIELD.multiSimple);
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        const placeHolder = await widget.multilineTextWidget().getFieldPlaceHolder(app.FIELD.multiSimple);
         expect(placeHolder).toBe('Type something...');
-        widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C268184] Should be able to set advanced properties for Multi-line Text Widget', async () => {
-        widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'A');
-        expect(widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter at least 4 characters');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAAAAAAAAA');
-        expect(widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter no more than 10 characters');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAA');
+        await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'A');
+        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter at least 4 characters');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAAAAAAAAA');
+        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter no more than 10 characters');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAA');
 
-        widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
-        widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, '3');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        expect(widget.multilineTextWidget().getErrorMessage(app.FIELD.multiRegexp)).toBe('Enter a different value');
-        widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, 'TE');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
+        await widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, '3');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiRegexp)).toBe('Enter a different value');
+        await widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, 'TE');
+        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C268232] Should be able to set visibility properties for Multi-line Text Widget', async () => {
-        widget.textWidget().isWidgetNotVisible(app.FIELD.multiVisible);
-        widget.textWidget().setValue(app.FIELD.showMultiHidden, '1');
-        widget.textWidget().isWidgetVisible(app.FIELD.multiVisible);
+        await widget.textWidget().isWidgetNotVisible(app.FIELD.multiVisible);
+        await widget.textWidget().setValue(app.FIELD.showMultiHidden, '1');
+        await widget.textWidget().isWidgetVisible(app.FIELD.multiVisible);
     });
 });

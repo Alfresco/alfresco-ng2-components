@@ -32,7 +32,7 @@ describe('Login component - SSO',  () => {
     describe('Login component - SSO implicit Flow',  () => {
 
         afterEach(async () => {
-            navigationBarPage.clickLogoutButton();
+            await navigationBarPage.clickLogoutButton();
             browser.executeScript('window.sessionStorage.clear();');
             browser.executeScript('window.localStorage.clear();');
         });
@@ -111,7 +111,7 @@ describe('Login component - SSO',  () => {
             browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId, '/login');
         loginSSOPage.clickOnSSOButton();
         loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
 
         browser.getCurrentUrl().then((actualUrl) => {
             expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/login');

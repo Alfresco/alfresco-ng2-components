@@ -82,8 +82,8 @@ describe('Process list cloud',  () => {
             done();
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
+        beforeEach( async() => {
+            await navigationBarPage.navigateToProcessServicesCloudPage();
             expect(processInstances.length).toEqual(noOfProcesses, 'Wrong preconditions');
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);

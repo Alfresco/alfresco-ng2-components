@@ -85,7 +85,7 @@ describe('Login component',  () => {
 
     it('[C299206] Should redirect the user without the right access role on a forbidden page', async () => {
         await loginPage.loginToContentServicesUsingUserModel(userA);
-        navigationBarPage.navigateToProcessServicesCloudPage();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
         expect(errorPage.getErrorCode()).toBe('403');
         expect(errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
         expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
@@ -179,9 +179,9 @@ describe('Login component',  () => {
         loginPage.clickSettingsIcon();
         settingsPage.setProviderBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
-        navigationBarPage.navigateToProcessServicesPage();
+        await navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         loginPage.waitForElements();
     });
 
@@ -191,7 +191,7 @@ describe('Login component',  () => {
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcm();
         loginPage.login(browser.params.testConfig.adf.adminUser, browser.params.testConfig.adf.adminPassword);
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
     });
 
@@ -203,11 +203,11 @@ describe('Login component',  () => {
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
-        navigationBarPage.navigateToProcessServicesPage();
+        await navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
-        navigationBarPage.clickLoginButton();
+        await navigationBarPage.clickLoginButton();
         loginPage.waitForElements();
     });
 
@@ -217,7 +217,7 @@ describe('Login component',  () => {
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         browser.executeScript('window.localStorage.removeItem("ticket-ECM");');
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
         loginPage.waitForElements();
     });
 
@@ -237,7 +237,7 @@ describe('Login component',  () => {
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         browser.executeScript('window.localStorage.removeItem("ticket-BPM");');
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
         loginPage.waitForElements();
     });
 
@@ -252,9 +252,9 @@ describe('Login component',  () => {
         browser.getAllWindowHandles().then((handles) => {
 
             browser.switchTo().window(handles[1]).then(() => {
-                BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+                await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
                 processServicesPage.checkApsContainer();
-                BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+                await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
                 contentServicesPage.checkAcsContainer();
             });
         });
@@ -270,7 +270,7 @@ describe('Login component',  () => {
     });
 
     it('[C291854] Should be possible login in valid credentials', async () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url);
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
         loginPage.waitForElements();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterUsername(invalidUsername);

@@ -86,13 +86,13 @@ describe('Upload component',  () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach( async() => {
         contentServicesPage.goToDocumentList();
     });
 
     describe('',  () => {
 
-        beforeEach(() => {
+        beforeEach( async() => {
             contentServicesPage.goToDocumentList();
         });
 
@@ -312,7 +312,7 @@ describe('Upload component',  () => {
             return await uploadActions.createFolder(folderName, '-my-');
         });
 
-        navigationBarPage.openContentServicesFolder(folderUploadedModel.entry.id);
+        await navigationBarPage.openContentServicesFolder(folderUploadedModel.entry.id);
         contentServicesPage.checkUploadButton();
 
         browser.controlFlow().execute(async () => {

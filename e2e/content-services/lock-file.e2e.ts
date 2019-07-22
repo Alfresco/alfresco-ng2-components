@@ -280,7 +280,7 @@ describe('Lock File',  () => {
                 const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
                 nodeId = pngUploadedFile.entry.id;
                 await loginPage.loginToContentServicesUsingUserModel(adminUser);
-                navigationBarPage.openContentServicesFolder(documentLibrary);
+                await navigationBarPage.openContentServicesFolder(documentLibrary);
             } catch (error) {
             }
             done();

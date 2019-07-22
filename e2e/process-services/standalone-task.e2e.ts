@@ -33,7 +33,7 @@ import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
 import path = require('path');
 
-describe('Start Task - Task App',  () => {
+describe('Start Task - Task App', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -70,65 +70,80 @@ describe('Start Task - Task App',  () => {
     });
 
     beforeEach(async (done) => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         done();
     });
 
     it('[C260421] Should a standalone task be displayed when creating a new task without form', async () => {
 
-        taskPage.createNewTask().addName(tasks[0]).clickStartButton();
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-        taskPage.taskDetails().noFormIsDisplayed();
-        taskPage.taskDetails().checkCompleteTaskButtonIsDisplayed().checkCompleteTaskButtonIsEnabled();
-        taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
-        taskPage.taskDetails().checkAttachFormButtonIsEnabled();
-        expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        expect(taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[0]);
+        await task.clickStartButton();
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        await taskPage.taskDetails().noFormIsDisplayed();
+
+        const taskDetails = await taskPage.taskDetails();
+        await taskDetails.checkCompleteTaskButtonIsDisplayed();
+        await taskDetails.checkCompleteTaskButtonIsEnabled();
+        await taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
+        await taskPage.taskDetails().checkAttachFormButtonIsEnabled();
+        expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
     });
 
     it('[C268910] Should a standalone task be displayed in completed tasks when completing it', async () => {
-        taskPage.createNewTask().addName(tasks[1]).clickStartButton();
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
-        taskPage.formFields().noFormIsDisplayed();
+        const task = await taskPage.createNewTask();
+        await  task.addName(tasks[1]);
+        await task.clickStartButton();
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
+        await taskPage.formFields().noFormIsDisplayed();
 
-        taskPage.completeTaskNoForm();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectRow(tasks[1]);
-        expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + tasks[1] + ' completed');
+        await taskPage.completeTaskNoForm();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        await taskPage.tasksListPage().selectRow(tasks[1]);
+        expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + tasks[1] + ' completed');
 
-        taskPage.formFields().noFormIsDisplayed();
-        expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await taskPage.formFields().noFormIsDisplayed();
+        expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
     it('[C268911] Should allow adding a form to a standalone task when clicking on Add form button', async () => {
-        taskPage.createNewTask().addName(tasks[2]).clickStartButton();
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
-        taskPage.formFields().noFormIsDisplayed();
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[2]);
+        await task.clickStartButton();
 
-        taskPage.formFields().clickOnAttachFormButton().selectForm(app.formName).clickOnAttachFormButton();
-        expect(taskPage.taskDetails().getFormName()).toEqual(app.formName);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
+        await taskPage.formFields().noFormIsDisplayed();
+
+        const formFields = await taskPage.formFields();
+        await formFields.clickOnAttachFormButton();
+        await formFields.selectForm(app.formName);
+        await formFields.clickOnAttachFormButton();
+
+        expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
     });
 
     it('[C268912] Should a standalone task be displayed when removing the form from APS', async () => {
-        taskPage.createNewTask().addName(tasks[3]).addForm(app.formName).clickStartButton();
+        const task = await taskPage.createNewTask();
+        await task.addName(tasks[3]);
+        await task.addForm(app.formName);
+        await task.clickStartButton();
 
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
-        expect(taskPage.taskDetails().getFormName()).toEqual(app.formName);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
+        expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
 
-        browser.controlFlow().execute(async () => {
-            const listOfTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-            await this.alfrescoJsApi.activiti.taskApi.removeForm(listOfTasks.data[0].id);
-        });
+        const listOfTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        await this.alfrescoJsApi.activiti.taskApi.removeForm(listOfTasks.data[0].id);
 
-        browser.refresh();
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
-        taskPage.checkTaskTitle(tasks[3]);
+        await browser.refresh();
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
+        await taskPage.checkTaskTitle(tasks[3]);
 
-        taskPage.formFields().noFormIsDisplayed();
-        expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        expect(taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
+        await taskPage.formFields().noFormIsDisplayed();
+        expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
     });
 
 });
