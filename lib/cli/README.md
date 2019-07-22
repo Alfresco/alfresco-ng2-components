@@ -54,3 +54,19 @@ adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --us
 ```
 
 You can use the option --installCheck to install kubectl as part of the command
+
+
+### Update commit sha
+
+This command allows you to update the commit sha as part of the package.json.
+Your package.json must to have an existing property called "commit"
+
+```bash
+adf-cli update-commit-sha --pathProject "$(pwd)"
+```
+
+You can use the option --pointer to chose a different pointer from the default HEAD.
+
+```bash
+adf-cli update-commit-sha --pointer "HEAD~1" --pathProject "$(pwd)"
+```
