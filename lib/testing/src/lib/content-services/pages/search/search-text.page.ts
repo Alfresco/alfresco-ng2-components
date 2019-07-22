@@ -17,7 +17,7 @@
 
 import { protractor, by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
-import { BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions } from '../../../core/utils/browser-actions';
 
 export class SearchTextPage {
 
