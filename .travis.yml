@@ -48,7 +48,7 @@ jobs:
 
         - stage: Lint & Build Dist
           name:  Build Dist
-          script: travis_wait 30 ./scripts/travis/build/build.sh || exit 1;
+          script: ./scripts/travis/build/build.sh || exit 1;
         - stage: Lint & Build Dist
           name:  Lint
           script: ./scripts/lint.sh || exit 1;
