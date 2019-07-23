@@ -55,6 +55,39 @@ adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --us
 
 You can use the option --installCheck to install kubectl as part of the command
 
+### update version
+
+This command allows you to update the adf dependencies and js-api with different versions
+
+Update adf libs and js-api with latest alpha
+
+```bash
+adf-cli update-version --alpha --pathPackage "$(pwd)"
+```
+
+Update adf libs and js-api with latest beta
+
+```bash
+adf-cli update-version --beta --pathPackage "$(pwd)"
+```
+
+Update adf libs and js-api with latest
+
+```bash
+adf-cli update-version --latest --pathPackage "$(pwd)"
+```
+
+Update only adf libs with a specific version
+
+```bash
+adf-cli update-version --version "3.2.0-fa5916ff413131513c3e382d7f27dd9b4cfa0e7e" --pathPackage "$(pwd)"
+```
+
+Update only js-api with a specific version
+
+```bash
+adf-cli update-version --vjs "3.2.0-fa5916ff413131513c3e382d7f27dd9b4cfa0e7e" --pathPackage "$(pwd)"
+```
 
 ### Update commit sha
 
