@@ -13,7 +13,6 @@ eval GIT_ISH=""
 eval SINGLE_TEST=""
 eval EXEC_VERSION_JSAPI=false
 eval JSAPI_VERSION=""
-eval EXECLINT=true
 
 eval projects=( "core"
     "content-services"
@@ -94,10 +93,6 @@ exec_install(){
     EXEC_INSTALL=false
 }
 
-skip_lint(){
-    EXECLINT=false
-}
-
 while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
@@ -113,7 +108,6 @@ while [[ $1 == -* ]]; do
       -c|--clean)  clean; shift;;
       -si|--skipinstall)  exec_install; shift;;
       -sb|--skipbuild)  exclude_build; shift;;
-      -sl|--skip-lint)  skip_lint; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
 done
@@ -129,10 +123,6 @@ fi
 if $EXEC_INSTALL == true; then
     echo "====== Install components dependencies ====="
     npm install
-fi
-
-if $EXECLINT == true; then
-    ./scripts/lint.sh || exit 1;
 fi
 
 if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
