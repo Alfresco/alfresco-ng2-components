@@ -126,7 +126,7 @@ function _tagPerform(args: UpdateArgs, tag: string, logger: logging.Logger) {
 }
 
 function _tagLibPerform(args: UpdateArgs, tag: string, logger: logging.Logger) {
-    const libVersion = _getLatestVersionFromNpm(tag, '@alfresco/adf-cli', logger);
+    const libVersion = _getLatestVersionFromNpm(tag, '@alfresco/adf-extensions', logger);
     _updateLibsVersionPerform(args.pathPackage, libVersion, logger);
 }
 
