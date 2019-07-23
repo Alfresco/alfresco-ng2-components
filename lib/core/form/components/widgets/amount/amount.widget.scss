@@ -3,38 +3,17 @@
 .adf {
     &-amount-widget {
         width: 100%;
-        vertical-align: baseline !important;
 
-        .mat-input-placeholder {
-            margin-top: 5px;
-            display: none;
+        .mat-input-element {
+            margin-left: 13px;
+            margin-right: 13px;
         }
-
-        .mat-form-field-flex {
-            position: relative;
-            padding-top: 18.5px;
-        }
-
-        .mat-form-field-infix {
-            position: static;
-            padding-top: 19px;
-        }
-
-        .adf-label {
-            position: absolute;
-            top: 18.5px;
-            left:0;
-        }
-
     }
 
-    &-amount-widget__container {
-        max-width: 100%;
-
-        .mat-form-field-label-wrapper {
-            top: 34px !important;
-            left: 13px;
-        }
+    &-amount-widget__container .mat-form-field-label-wrapper {
+        top: 17px;
+        left: 12px;
+        right: 12px;
     }
 
     &-amount-widget__input .mat-focused {
@@ -42,8 +21,8 @@
     }
 
     &-amount-widget__prefix-spacing {
-        padding-right: 5px;
+        position: absolute;
+        top: 12px;
     }
-
 }
 

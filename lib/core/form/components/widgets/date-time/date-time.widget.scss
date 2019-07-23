@@ -1,27 +1,11 @@
 @import '../form';
 
 .adf {
-
     &-date-time-widget {
-
         .mat-form-field-suffix {
-            text-align: right;
-            position: absolute;
-            margin-top: 30px;
-            width: 100%;
+            top: 26px;
         }
 
     }
-
-    /* query for Microsoft IE 11*/
-    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-        &-date-widget {
-            .mat-form-field-suffix {
-                position: relative;
-                width: auto;
-            }
-        }
-    }
-
 }
 
