@@ -17,7 +17,7 @@
 
 import { SimpleChange, DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import {
     FormFieldModel, FormFieldTypes, FormService, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService,
@@ -236,6 +236,48 @@ describe('FormCloudComponent', () => {
 
         expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(appName, taskId);
     });
+
+    it('should call the process storage to retrieve the folder with only the taskId', fakeAsync(() => {
+        spyOn(formComponent, 'getFormByTaskId').and.stub();
+        spyOn(formCloudService, 'getProcessStorageFolderTask')
+            .and.returnValue( of({nodeId : '123', path: '/a/path/type', type: 'fakeType'}));
+        const taskId = '<task id>';
+        const appName = 'test-app';
+        formComponent.appName = appName;
+        formComponent.form = new FormCloud({id : 'fake-form-id'});
+        formComponent.form['hasUpload'] = true;
+        formComponent.taskId = taskId;
+        formComponent.readOnly = false;
+
+        const change = new SimpleChange(null, 'new-app-name', true);
+        formComponent.ngOnChanges({ 'appName': change });
+        tick();
+        expect(formCloudService.getProcessStorageFolderTask).toHaveBeenCalledWith(appName, taskId, undefined);
+        expect(formComponent.form.nodeId).toBe('123');
+        expect(formComponent.form.contentHost).toBe('/a/path/type');
+    }));
+
+    it('should call the process storage to retrieve the folder with taskId and processInstanceId', fakeAsync(() => {
+        spyOn(formComponent, 'getFormByTaskId').and.stub();
+        spyOn(formCloudService, 'getProcessStorageFolderTask')
+            .and.returnValue( of({nodeId : '123', path: '/a/path/type', type: 'fakeType'}));
+        const taskId = '<task id>';
+        const processInstanceId = 'i-am-the-process-instance-id';
+        const appName = 'test-app';
+        formComponent.appName = appName;
+        formComponent.form = new FormCloud({id : 'fake-form-id'});
+        formComponent.form['hasUpload'] = true;
+        formComponent.taskId = taskId;
+        formComponent.processInstanceId = processInstanceId;
+        formComponent.readOnly = false;
+
+        const change = new SimpleChange(null, 'new-app-name', true);
+        formComponent.ngOnChanges({ 'appName': change });
+        tick();
+        expect(formCloudService.getProcessStorageFolderTask).toHaveBeenCalledWith(appName, taskId, processInstanceId);
+        expect(formComponent.form.nodeId).toBe('123');
+        expect(formComponent.form.contentHost).toBe('/a/path/type');
+    }));
 
     it('should reload form definition by form id on binding changes', () => {
         spyOn(formComponent, 'getFormById').and.stub();

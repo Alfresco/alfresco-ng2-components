@@ -138,7 +138,6 @@ describe('Form Cloud service', () => {
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
                 done();
             });
-
         });
 
         it('should fetch task form flattened', (done) => {
@@ -185,6 +184,45 @@ describe('Form Cloud service', () => {
                 done();
             });
 
+        });
+
+        it('should fetch process storage folder with process instance id and task id', (done) => {
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({
+                    nodeId: 'fake-node-id-really-long',
+                    path: 'path/to/node/id',
+                    type: 'nodeType'
+              }));
+
+            service.getProcessStorageFolderTask(appName, taskId, processInstanceId).subscribe((result) => {
+                expect(result).toBeDefined();
+                expect(result).not.toBeNull();
+                expect(result.nodeId).toBe('fake-node-id-really-long');
+                expect(result.path).toBe('path/to/node/id');
+                expect(result.type).toBe('nodeType');
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/process-storage/v1/folders/${processInstanceId}/${taskId}`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
+                done();
+            });
+        });
+
+
+        it('should fetch process storage folder with task id only', (done) => {
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({
+                    nodeId: 'fake-node-id-really-long',
+                    path: 'path/to/node/id',
+                    type: 'nodeType'
+              }));
+
+            service.getProcessStorageFolderTask(appName, taskId, null).subscribe((result) => {
+                expect(result).toBeDefined();
+                expect(result).not.toBeNull();
+                expect(result.nodeId).toBe('fake-node-id-really-long');
+                expect(result.path).toBe('path/to/node/id');
+                expect(result.type).toBe('nodeType');
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/process-storage/v1/folders/${taskId}`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
+                done();
+            });
         });
 
     });
