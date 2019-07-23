@@ -14,7 +14,7 @@
                 <span [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key" *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
             </span>
 
-            <mat-icon *ngIf="valueDate"
+            <mat-icon *ngIf="showClearAction()"
                 class="adf-date-reset-icon"
                 (click)="onDateClear()"
                 [attr.title]="'CORE.METADATA.ACTIONS.CLEAR' | translate"

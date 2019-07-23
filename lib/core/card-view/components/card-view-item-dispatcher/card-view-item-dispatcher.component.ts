@@ -42,6 +42,12 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     @Input()
     displayEmpty: boolean = true;
 
+    @Input()
+    displayNoneOption: boolean = true;
+
+    @Input()
+    displayClearAction: boolean = true;
+
     @ViewChild(CardViewContentProxyDirective)
     private content: CardViewContentProxyDirective;
 
@@ -92,6 +98,8 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.componentReference.instance.editable = this.editable;
         this.componentReference.instance.property = this.property;
         this.componentReference.instance.displayEmpty = this.displayEmpty;
+        this.componentReference.instance.displayNoneOption = this.displayNoneOption;
+        this.componentReference.instance.displayClearAction = this.displayClearAction;
     }
 
     private proxy(methodName, ...args) {

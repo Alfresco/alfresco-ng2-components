@@ -52,6 +52,9 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
     @Input()
     displayEmpty: boolean = true;
 
+    @Input()
+    displayClearAction: boolean = true;
+
     @ViewChild('datetimePicker')
     public datepicker: MatDatetimepicker<any>;
 
@@ -92,6 +95,10 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
+    showClearAction() {
+        return !this.property.isEmpty() && this.displayClearAction;
+    }
+
     isEditable() {
         return this.editable && this.property.editable;
     }
@@ -113,8 +120,8 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
 
     onDateClear() {
         this.valueDate = null;
-        this.cardViewUpdateService.update(this.property, '');
-        this.property.value = '';
+        this.cardViewUpdateService.update(this.property, null);
+        this.property.value = null;
     }
 
 }
