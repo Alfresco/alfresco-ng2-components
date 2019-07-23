@@ -78,17 +78,17 @@ describe('Date widget', () => {
         expect(widget.dateWidget().getDateLabel(app.FIELD.date_input)).toContain('Date');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         widget.dateWidget().setDateInput(app.FIELD.date_input, '20-10-2018');
-        widget.dateWidget().clickOutsideWidget(app.FIELD.date_input);
+        taskPage.formFields().saveForm();
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C277234] Should be able to set advanced settings for Date widget ', () => {
         widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2017');
-        widget.dateWidget().clickOutsideWidget(app.FIELD.date_between_input);
+        taskPage.formFields().saveForm();
         expect(widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be less than 1-10-2018');
         widget.dateWidget().clearDateInput(app.FIELD.date_between_input);
         widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2019');
-        widget.dateWidget().clickOutsideWidget(app.FIELD.date_between_input);
+        taskPage.formFields().saveForm();
         expect(widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be greater than 31-10-2018');
     });
 });

@@ -91,16 +91,14 @@ describe('Date and time widget', () => {
         widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
         widget.dateTimeWidget().closeDataTimeWidget();
         widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-17 07:30 PM');
-        widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
+        taskPage.formFields().saveForm();
         expect(widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be less than');
 
+        widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
         widget.dateTimeWidget().closeDataTimeWidget();
-
-        widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
         widget.dateTimeWidget().removeFromDatetimeWidget(app.FIELD.date_time_between_input);
-        widget.dateTimeWidget().closeDataTimeWidget();
         widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-19 07:30 PM');
-        widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
+        taskPage.formFields().saveForm();
         expect(widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be greater than');
     });
 });
