@@ -98,20 +98,20 @@ export class StartProcessPage {
         await BrowserActions.click(this.cancelProcessButton);
     }
 
-    clickFormStartProcessButton(): Promise<void> {
-        return BrowserActions.click(this.formStartProcessButton);
+    async clickFormStartProcessButton(): Promise<void> {
+        await BrowserActions.click(this.formStartProcessButton);
     }
 
-    checkStartFormProcessButtonIsEnabled() {
-        expect(this.formStartProcessButton.isEnabled()).toBe(true);
+    async checkStartFormProcessButtonIsEnabled() {
+        expect(await this.formStartProcessButton.isEnabled()).toBe(true);
     }
 
-    checkStartProcessButtonIsEnabled() {
-        expect(this.startProcessButton.isEnabled()).toBe(true);
+    async checkStartProcessButtonIsEnabled() {
+        expect(await this.startProcessButton.isEnabled()).toBe(true);
     }
 
-    checkStartProcessButtonIsDisabled() {
-        expect(this.startProcessButton.isEnabled()).toBe(false);
+    async checkStartProcessButtonIsDisabled() {
+        expect(await this.startProcessButton.isEnabled()).toBe(false);
     }
 
     async clickStartProcessButton(): Promise<void> {

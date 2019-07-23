@@ -90,7 +90,7 @@ describe('Task Header cloud component',  () => {
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         done();
     });
 

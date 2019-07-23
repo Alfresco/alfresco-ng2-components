@@ -40,9 +40,9 @@ describe('User Info - SSO',  () => {
             browser.params.testConfig.adf.hostSso,
             browser.params.testConfig.adf.hostIdentity, silentLogin, true, browser.params.config.oauth2.clientId);
 
-        loginSSOPage.clickOnSSOButton();
+        await loginSSOPage.clickOnSSOButton();
 
-        loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
+        await loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
 
         done();
     });

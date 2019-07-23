@@ -40,6 +40,7 @@ describe('Version component actions',  () => {
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
+    const uploadDialog = new UploadDialog();
 
     const acsUser = new AcsUserModel();
 
@@ -165,7 +166,7 @@ describe('Version component actions',  () => {
         await versionManagePage.uploadNewVersionFile(bigFileToCancel.location);
         await versionManagePage.closeVersionDialog();
 
-        await expect(new UploadDialog().getTitleText()).toEqual('Upload canceled');
+        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
 
         await browser.refresh();
 

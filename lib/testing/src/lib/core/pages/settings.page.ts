@@ -98,22 +98,19 @@ export class SettingsPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         await this.clickApply();
-        return this;
     }
 
     async setProviderBpm() {
         await this.setProvider(this.bpm.option, this.bpm.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await this.clickApply();
-        return this;
     }
 
     async setProviderEcm() {
         await this.setProvider(this.ecm.option, this.ecm.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        expect(this.bpmText.isPresent()).toBeFalsy();
+        expect(await this.bpmText.isPresent()).toBe(false, 'Bpm text is present');
         await this.clickApply();
-        return this;
     }
 
     async setProviderOauth() {
@@ -121,9 +118,8 @@ export class SettingsPage {
         await this.setProvider(this.oauth.option, this.oauth.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        expect(this.authHostText.isPresent()).toBeTruthy();
+        expect(await this.authHostText.isPresent()).toBe(true, 'Auth Host text not present');
         await this.clickApply();
-        return this;
     }
 
     async clickBackButton() {
@@ -262,7 +258,6 @@ export class SettingsPage {
 
     async checkApplyButtonIsDisabled() {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id*="host-button"]:disabled')));
-        return this;
     }
 
     async checkProviderDropdownIsDisplayed() {

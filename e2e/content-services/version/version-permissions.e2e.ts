@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 
 import { LoginPage, BrowserActions, UploadActions, StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -169,8 +169,8 @@ describe('Version component permissions',  () => {
 
         it('[C277204] Should be disabled the option for locked file', async () => {
             await contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
-            const actionVersion = await contentServices.checkContextActionIsVisible('Manage versions');
-            expect(await actionVersion.isEnabled()).toBeFalsy();
+            const actionVersion: ElementFinder = await contentServices.checkContextActionIsVisible('Manage versions');
+            expect(await actionVersion.isEnabled()).toBe(false, 'Manage versions is enabled');
         });
     });
 
@@ -193,7 +193,7 @@ describe('Version component permissions',  () => {
         it('[C277201] Should a user with Consumer permission not be able to upload a new version for a locked file', async () => {
             await contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
             const actionVersion = await contentServices.checkContextActionIsVisible('Manage versions');
-            expect(await actionVersion.isEnabled()).toBeFalsy();
+            expect(await actionVersion.isEnabled()).toBe(false, 'Manage version is enabled');
         });
 
     });
@@ -252,7 +252,7 @@ describe('Version component permissions',  () => {
         it('[C277202] Should be disabled the option for a locked file', async () => {
             await contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
             const actionVersion = await contentServices.checkContextActionIsVisible('Manage versions');
-            expect(await actionVersion.isEnabled()).toBeFalsy();
+            expect(await actionVersion.isEnabled()).toBe(false, 'Manage versions is enabled');
         });
     });
 
@@ -324,7 +324,7 @@ describe('Version component permissions',  () => {
         it('[C277203] Should a user with Collaborator permission not be able to upload a new version for a locked file', async () => {
             await contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
             const actionVersion = await contentServices.checkContextActionIsVisible('Manage versions');
-            expect(await actionVersion.isEnabled()).toBeFalsy();
+            expect(await actionVersion.isEnabled()).toBe(false, 'Manage versions is enabled');
         });
     });
 

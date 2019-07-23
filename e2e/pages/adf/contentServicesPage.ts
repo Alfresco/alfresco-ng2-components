@@ -510,12 +510,12 @@ export class ContentServicesPage {
 
     async checkEmptyFolderTextToBe(text): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.emptyFolder);
-        expect(this.emptyFolder.getText()).toContain(text);
+        expect(await this.emptyFolder.getText()).toContain(text);
     }
 
     async checkEmptyFolderImageUrlToContain(url): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.emptyFolderImage);
-        expect(this.emptyFolderImage.getAttribute('src')).toContain(url);
+        expect(await this.emptyFolderImage.getAttribute('src')).toContain(url);
     }
 
     async checkEmptyRecentFileIsDisplayed(): Promise<void> {

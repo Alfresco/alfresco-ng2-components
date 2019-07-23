@@ -57,16 +57,15 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setSortFilterDropDown(option) {
-        this.clickOnDropDownArrow('sort');
+        await this.clickOnDropDownArrow('sort');
 
         const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
         await BrowserActions.click(sortElement);
-        return this;
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
         const sortLocator = element.all(by.css("mat-form-field[data-automation-id='sort'] span")).first();
-        return BrowserActions.getText(sortLocator);
+        return await BrowserActions.getText(sortLocator);
     }
 
     async setOrderFilterDropDown(option) {

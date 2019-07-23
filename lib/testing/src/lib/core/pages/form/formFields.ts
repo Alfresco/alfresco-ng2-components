@@ -62,16 +62,16 @@ export class FormFields {
     }
 
     async getFieldValue(fieldId, valueLocatorParam?: any): Promise<string> {
-        const value = await this.getWidget(fieldId);
+        const value: ElementFinder = await this.getWidget(fieldId);
         value.element(valueLocatorParam || this.valueLocator);
         await BrowserVisibility.waitUntilElementIsVisible(value);
-        return value.getAttribute('value');
+        return await value.getAttribute('value');
     }
 
     async getFieldLabel(fieldId, labelLocatorParam?: any): Promise<string> {
         const label = await this.getWidget(fieldId);
         label.all(labelLocatorParam || this.labelLocator).first();
-        return BrowserActions.getText(label);
+        return await BrowserActions.getText(label);
     }
 
     async getFieldErrorMessage(fieldId): Promise<string> {

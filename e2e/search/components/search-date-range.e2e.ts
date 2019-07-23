@@ -78,13 +78,13 @@ describe('Search Date Range Filter', () => {
         await dateRangeFilter.checkFromDateToggleIsDisplayed();
         const fromDatePicker = await dateRangeFilter.openFromDatePicker();
         await fromDatePicker.selectTodayDate();
-        await expect(await dateRangeFilter.getFromDate()).toEqual(await dateRangeFilter.getFromCalendarSelectedDate());
+        expect(await dateRangeFilter.getFromDate()).toEqual(await dateRangeFilter.getFromCalendarSelectedDate());
     });
 
     it('[C277105] Should be able to type a date', async () => {
         const date = '01-May-18';
         await dateRangeFilter.putFromDate(date);
-        await expect(await dateRangeFilter.getFromCalendarSelectedDate()).toEqual(await dateRangeFilter.getFromDate());
+        expect(await dateRangeFilter.getFromCalendarSelectedDate()).toEqual(await dateRangeFilter.getFromDate());
     });
 
     it('[C277119] FROM and TO dates should depend on each other', async () => {
@@ -139,8 +139,8 @@ describe('Search Date Range Filter', () => {
             const currentDate = currentResult.getAttribute('title');
             const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
 
-            await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
-            await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
+            expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
+            expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
         }
     });
 
@@ -206,7 +206,7 @@ describe('Search Date Range Filter', () => {
             const todayDate = DateUtil.formatDate('MM-DD-YY');
             await datePicker.selectTodayDate();
 
-            await expect(await dateRangeFilter.getFromDate()).toEqual(todayDate);
+            expect(await dateRangeFilter.getFromDate()).toEqual(todayDate);
         });
     });
 });

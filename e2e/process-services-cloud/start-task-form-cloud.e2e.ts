@@ -164,7 +164,7 @@ describe('Start Task Form', () => {
             browser.params.config.oauth2.host,
             browser.params.config.identityHost,
             browser.params.config.oauth2.clientId);
-        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-start-process', JSON.stringify(startProcessCloudConfig));
         done();
     });

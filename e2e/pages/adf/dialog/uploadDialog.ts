@@ -107,7 +107,7 @@ export class UploadDialog {
 
     async getTitleText(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.title);
-        return this.title.getText();
+        return await this.title.getText();
     }
 
     async getConfirmationDialogTitleText(): Promise<string> {

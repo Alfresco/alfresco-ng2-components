@@ -176,7 +176,7 @@ describe('Search Number Range Filter', () => {
             try {
                 const currentSize = await currentResult.getAttribute('title');
                 if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
+                    expect(parseInt(currentSize, 10) <= toSize).toBe(true);
                 }
             } catch (e) {
             }
@@ -205,7 +205,7 @@ describe('Search Number Range Filter', () => {
             try {
                 const currentSize = await currentResult.getAttribute('title');
                 if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
+                    expect(parseInt(currentSize, 10) <= toSize).toBe(true);
                 }
             } catch (e) {
             }
@@ -221,7 +221,7 @@ describe('Search Number Range Filter', () => {
             try {
                 const currentSize = await currentResult.getAttribute('title');
                 if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
+                    expect(parseInt(currentSize, 10) <= toSize).toBe(true);
                 }
             } catch (e) {
             }
@@ -232,7 +232,7 @@ describe('Search Number Range Filter', () => {
             try {
                 const name = await currentResult.getAttribute('title');
                 if (name && name.trim() !== '') {
-                    await expect(/z*/i.test(name)).toBe(true);
+                    expect(/z*/i.test(name)).toBe(true);
                 }
             } catch (e) {
             }
@@ -273,7 +273,7 @@ describe('Search Number Range Filter', () => {
             try {
                 const currentSize = await currentResult.getAttribute('title');
                 if (currentSize && currentSize.trim() !== '') {
-                    await expect(currentSize === '0').toBe(true);
+                    expect(currentSize === '0').toBe(true);
                 }
             } catch (e) {
             }
@@ -313,10 +313,9 @@ describe('Search Number Range Filter', () => {
         const results = await dataTable.geCellElementDetail('Size');
         for (const currentResult of results) {
             try {
-
                 const currentSize = await currentResult.getAttribute('title');
                 if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) <= 1000).toBe(true);
+                    expect(parseInt(currentSize, 10) <= 1000).toBe(true);
                 }
             } catch (e) {
             }
@@ -330,10 +329,9 @@ describe('Search Number Range Filter', () => {
         const resultsSize = await dataTable.geCellElementDetail('Size');
         for (const currentResult of resultsSize) {
             try {
-
                 const currentSize = await currentResult.getAttribute('title');
                 if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) >= 1000).toBe(true);
+                    expect(parseInt(currentSize, 10) >= 1000).toBe(true);
                 }
             } catch (e) {
             }
@@ -418,13 +416,11 @@ describe('Search Number Range Filter', () => {
 
             const results = await dataTable.geCellElementDetail('Created');
             for (const currentResult of results) {
-                currentResult.getAttribute('title').then(async (currentDate) => {
-                    const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
+                const currentDate = await currentResult.getAttribute('title');
+                const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
 
-                    await expect(currentDateFormatted.getFullYear() <= toYear).toBe(true);
-                    await expect(currentDateFormatted.getFullYear() >= fromYear).toBe(true);
-                });
-
+                expect(currentDateFormatted.getFullYear() <= toYear).toBe(true);
+                expect(currentDateFormatted.getFullYear() >= fromYear).toBe(true);
             }
 
         });

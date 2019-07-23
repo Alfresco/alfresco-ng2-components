@@ -124,7 +124,7 @@ describe('Search Number Range Filter', () => {
             try {
                 const currentSize = await currentResult.getAttribute('title');
                 if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
+                    expect(parseInt(currentSize, 10) <= 5000).toBe(true);
                 }
             } catch (e) {
             }
@@ -139,10 +139,9 @@ describe('Search Number Range Filter', () => {
         const resultsSize = await dataTable.geCellElementDetail('Size');
         for (const currentResult of resultsSize) {
             try {
-
                 const currentSize = await currentResult.getAttribute('title');
                 if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
+                    expect(parseInt(currentSize, 10) >= 5000).toBe(true);
                 }
             } catch (e) {
             }

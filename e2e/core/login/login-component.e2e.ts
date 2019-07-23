@@ -153,9 +153,8 @@ describe('Login component', () => {
         expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
         await loginPage.enterPassword('test');
         await loginPage.showPassword();
-        await loginPage.getShownPassword().then(async (tooltip) => {
-            await expect(tooltip).toEqual('test');
-        });
+        const tooltip = await loginPage.getShownPassword();
+        expect(tooltip).toEqual('test');
         await loginPage.hidePassword();
         await loginPage.checkPasswordIsHidden();
         await loginPage.clearPassword();

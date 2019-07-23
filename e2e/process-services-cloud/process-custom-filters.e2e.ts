@@ -109,7 +109,7 @@ describe('Process list cloud', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
             await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
             done();

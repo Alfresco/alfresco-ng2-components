@@ -272,10 +272,10 @@ describe('Upload component', () => {
 
         it('[C91318] Should Enable/Disable upload button when change the disable property', async () => {
             await uploadToggles.clickCheckboxDisableUpload();
-            expect(await contentServicesPage.uploadButtonIsEnabled()).toBeFalsy();
+            expect(await contentServicesPage.uploadButtonIsEnabled()).toBe(false, 'Upload button is enabled');
 
             await uploadToggles.clickCheckboxDisableUpload();
-            expect(await contentServicesPage.uploadButtonIsEnabled()).toBeTruthy();
+            expect(await contentServicesPage.uploadButtonIsEnabled()).toBe(true, 'Upload button not enabled');
         });
     });
 

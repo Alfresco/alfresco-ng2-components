@@ -92,7 +92,7 @@ describe('Task form cloud component',  () => {
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+        await loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
         done();
     }, 5 * 60 * 1000);
 
