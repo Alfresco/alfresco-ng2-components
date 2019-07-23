@@ -49,12 +49,12 @@ export class ProcessFiltersPage {
 
     async clickCompletedFilterButton(): Promise<void> {
         await BrowserActions.click(this.completedFilter);
-        expect(this.completedFilter.isEnabled()).toBe(true);
+        expect(await this.completedFilter.isEnabled()).toBe(true);
     }
 
     async clickAllFilterButton(): Promise<void> {
         await BrowserActions.click(this.allFilter);
-        expect(this.allFilter.isEnabled()).toBe(true);
+        expect(await this.allFilter.isEnabled()).toBe(true);
     }
 
     async clickCreateProcessButton(): Promise<void> {
