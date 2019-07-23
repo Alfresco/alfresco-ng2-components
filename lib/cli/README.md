@@ -88,3 +88,18 @@ Update only js-api with a specific version
 ```bash
 adf-cli update-version --vjs "3.2.0-fa5916ff413131513c3e382d7f27dd9b4cfa0e7e" --pathPackage "$(pwd)"
 ```
+
+### Update commit sha
+
+This command allows you to update the commit sha as part of the package.json.
+Your package.json must to have an existing property called "commit"
+
+```bash
+adf-cli update-commit-sha --pathProject "$(pwd)"
+```
+
+You can use the option --pointer to chose a different pointer from the default HEAD.
+
+```bash
+adf-cli update-commit-sha --pointer "HEAD~1" --pathProject "$(pwd)"
+```
