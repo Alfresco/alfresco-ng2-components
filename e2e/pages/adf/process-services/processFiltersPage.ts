@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Locator, promise } from 'protractor';
+import { element, by, ElementFinder, Locator } from 'protractor';
 import { StartProcessPage } from './startProcessPage';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
@@ -43,9 +43,8 @@ export class ProcessFiltersPage {
         return new StartProcessPage();
     }
 
-    clickRunningFilterButton(): Promise<void> {
-        return BrowserActions.click(this.runningFilter);
-
+    async clickRunningFilterButton(): Promise<void> {
+        await BrowserActions.click(this.runningFilter);
     }
 
     async clickCompletedFilterButton(): Promise<void> {
@@ -85,8 +84,8 @@ export class ProcessFiltersPage {
         await BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
     }
 
-    numberOfProcessRows(): promise.Promise<number> {
-        return element.all(this.rows).count();
+    async numberOfProcessRows(): Promise<number> {
+        return await element.all(this.rows).count();
     }
 
     async waitForTableBody(): Promise<void> {
@@ -98,12 +97,12 @@ export class ProcessFiltersPage {
      *
      * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
      */
-    sortByName(sortOrder: string) {
-        this.dataTable.sortByColumn(sortOrder, 'name');
+    async sortByName(sortOrder: string) {
+        await this.dataTable.sortByColumn(sortOrder, 'name');
     }
 
-    getAllRowsNameColumn() {
-        return this.dataTable.getAllRowsColumnValues('Name');
+    async getAllRowsNameColumn() {
+        return await this.dataTable.getAllRowsColumnValues('Name');
     }
 
     async checkFilterIsDisplayed(name): Promise<void> {
@@ -121,7 +120,7 @@ export class ProcessFiltersPage {
         const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
         const icon = filterName.element(this.processIcon);
-        return BrowserActions.getText(icon);
+        return await BrowserActions.getText(icon);
     }
 
     async checkFilterIsNotDisplayed(name): Promise<void> {
@@ -129,19 +128,17 @@ export class ProcessFiltersPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(filterName);
     }
 
-    checkProcessesSortedByNameAsc() {
-        this.getAllRowsNameColumn().then((list) => {
-            for (let i = 1; i < list.length; i++) {
-                expect(JSON.stringify(list[i]) > JSON.stringify(list[i - 1])).toEqual(true);
-            }
-        });
+    async checkProcessesSortedByNameAsc(): Promise<void> {
+        const list = await this.getAllRowsNameColumn();
+        for (let i = 1; i < list.length; i++) {
+            expect(JSON.stringify(list[i]) > JSON.stringify(list[i - 1])).toEqual(true);
+        }
     }
 
-    checkProcessesSortedByNameDesc() {
-        this.getAllRowsNameColumn().then((list) => {
-            for (let i = 1; i < list.length; i++) {
-                expect(JSON.stringify(list[i]) < JSON.stringify(list[i - 1])).toEqual(true);
-            }
-        });
+    async checkProcessesSortedByNameDesc(): Promise<void> {
+        const list = await this.getAllRowsNameColumn();
+        for (let i = 1; i < list.length; i++) {
+            expect(JSON.stringify(list[i]) < JSON.stringify(list[i - 1])).toEqual(true);
+        }
     }
 }

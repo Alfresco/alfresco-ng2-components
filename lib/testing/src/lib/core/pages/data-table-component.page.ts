@@ -19,7 +19,6 @@ import { browser, by, element, Locator, protractor } from 'protractor';
 import { ElementFinder, ElementArrayFinder } from 'protractor/built/element';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
-import { promise as wdpromise } from 'selenium-webdriver';
 
 export class DataTableComponentPage {
 
@@ -84,8 +83,8 @@ export class DataTableComponentPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.selectedRowNumber);
     }
 
-    getNumberOfSelectedRows(): wdpromise.Promise<number> {
-        return this.allSelectedRows.count();
+    async getNumberOfSelectedRows(): Promise<number> {
+        return await this.allSelectedRows.count();
     }
 
     async selectRowWithKeyboard(columnName, columnValue): Promise<void> {
@@ -124,26 +123,21 @@ export class DataTableComponentPage {
      * @return 'true' if the list is sorted as expected and 'false' if it isn't
      */
     async checkListIsSorted(sortOrder: string, columnTitle: string): Promise<any> {
-        const deferred = protractor.promise.defer();
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
         await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
-        column.each(async (currentElement) => {
-            await currentElement.getText().then(function (text) {
-                if (text.length !== 0) {
-                    initialList.push(text.toLowerCase());
-                }
-            });
-        }).then(function () {
-            let sortedList = [...initialList];
-            sortedList = sortedList.sort();
-            if (sortOrder.toLocaleLowerCase() === 'desc') {
-                sortedList = sortedList.reverse();
+        await column.each(async (currentElement) => {
+            const text = await currentElement.getText();
+            if (text.length !== 0) {
+                initialList.push(text.toLowerCase());
             }
-
-            deferred.fulfill(initialList.toString() === sortedList.toString());
         });
-        return deferred.promise;
+        let sortedList = [...initialList];
+        sortedList = sortedList.sort();
+        if (sortOrder.toLocaleLowerCase() === 'desc') {
+            sortedList = sortedList.reverse();
+        }
+        return initialList.toString() === sortedList.toString();
     }
 
     async rightClickOnRow(columnName, columnValue): Promise<void> {
@@ -153,8 +147,8 @@ export class DataTableComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
     }
 
-    getTooltip(columnName, columnValue): wdpromise.Promise<string> {
-        return this.getCellElementByValue(columnName, columnValue).getAttribute('title');
+    async getTooltip(columnName, columnValue): Promise<string> {
+        return await this.getCellElementByValue(columnName, columnValue).getAttribute('title');
     }
 
     async rightClickOnRowByIndex(index: number): Promise<void> {
@@ -167,8 +161,8 @@ export class DataTableComponentPage {
         return element(by.cssContainingText('adf-name-column[class*="adf-datatable-link"] span', filename));
     }
 
-    numberOfRows(): wdpromise.Promise<number> {
-        return this.rootElement.all(this.rows).count();
+    async numberOfRows(): Promise<number> {
+        return await this.rootElement.all(this.rows).count();
     }
 
     async getAllRowsColumnValues(column): Promise<any> {
@@ -197,7 +191,7 @@ export class DataTableComponentPage {
 
     async getFirstElementDetail(detail): Promise<string> {
         const firstNode = element.all(by.css(`adf-datatable div[title="${detail}"] span`)).first();
-        return BrowserActions.getText(firstNode);
+        return await BrowserActions.getText(firstNode);
     }
 
     geCellElementDetail(detail): ElementArrayFinder {
@@ -209,27 +203,24 @@ export class DataTableComponentPage {
      *
      * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
      */
-    async sortByColumn(sortOrder: string, titleColumn: string): Promise<any> {
+    async sortByColumn(sortOrder: string, titleColumn: string): Promise<void> {
         const locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(element(locator));
-        return element(locator).getAttribute('class').then(async (result) => {
-            if (sortOrder.toLocaleLowerCase() === 'asc') {
-                if (!result.includes('sorted-asc')) {
-                    if (result.includes('sorted-desc') || result.includes('sortable')) {
-                        await element(locator).click();
-                    }
-                }
-            } else {
-                if (result.includes('sorted-asc')) {
-                    await element(locator).click();
-                } else if (result.includes('sortable')) {
-                    await element(locator).click();
+        const result = await element(locator).getAttribute('class');
+        if (sortOrder.toLocaleLowerCase() === 'asc') {
+            if (!result.includes('sorted-asc')) {
+                if (result.includes('sorted-desc') || result.includes('sortable')) {
                     await element(locator).click();
                 }
             }
-
-            return Promise.resolve();
-        });
+        } else {
+            if (result.includes('sorted-asc')) {
+                await element(locator).click();
+            } else if (result.includes('sortable')) {
+                await element(locator).click();
+                await element(locator).click();
+            }
+        }
     }
 
     async checkContentIsDisplayed(columnName, columnValue): Promise<void> {
@@ -280,12 +271,12 @@ export class DataTableComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_entry.${column}"]`)));
     }
 
-    getNumberOfColumns(): wdpromise.Promise<number> {
-        return this.allColumns.count();
+    async getNumberOfColumns(): Promise<number> {
+        return await this.allColumns.count();
     }
 
-    getNumberOfRows(): wdpromise.Promise<number> {
-        return this.list.count();
+    async getNumberOfRows(): Promise<number> {
+        return await this.list.count();
     }
 
     getCellByRowNumberAndColumnName(rowNumber, columnName): ElementFinder {
@@ -371,7 +362,7 @@ export class DataTableComponentPage {
 
     async mouseOverElement(elem): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(elem);
-        await  browser.actions().mouseMove(elem).perform();
+        await browser.actions().mouseMove(elem).perform();
     }
 
     async clickColumn(columnName, columnValue): Promise<void> {

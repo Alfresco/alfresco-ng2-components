@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, browser, protractor, ElementFinder, promise, ElementArrayFinder } from 'protractor';
+import { by, element, browser, protractor, ElementFinder, ElementArrayFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class CreateLibraryDialog {
@@ -33,9 +33,9 @@ export class CreateLibraryDialog {
     errorMessages: ElementArrayFinder = element.all(by.css('.mat-dialog-content .mat-error'));
     libraryNameHint: ElementFinder = element(by.css('adf-library-dialog .mat-hint'));
 
-    getSelectedRadio(): Promise<string> {
+    async getSelectedRadio(): Promise<string> {
         const radio: ElementFinder = element(by.css('.mat-radio-button[class*="checked"]'));
-        return BrowserActions.getText(radio);
+        return await BrowserActions.getText(radio);
     }
 
     async waitForDialogToOpen(): Promise<void> {
@@ -46,68 +46,68 @@ export class CreateLibraryDialog {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.libraryDialog);
     }
 
-    isDialogOpen(): promise.Promise<any> {
-        return browser.isElementPresent(this.libraryDialog);
+    async isDialogOpen(): Promise<any> {
+        return await browser.isElementPresent(this.libraryDialog);
     }
 
-    getTitle(): Promise<string> {
-        return BrowserActions.getText(this.libraryTitle);
+    async getTitle(): Promise<string> {
+        return await BrowserActions.getText(this.libraryTitle);
     }
 
-    getLibraryIdText(): promise.Promise<string> {
-        return this.libraryIdField.getAttribute('value');
+    async getLibraryIdText(): Promise<string> {
+        return await this.libraryIdField.getAttribute('value');
     }
 
-    isErrorMessageDisplayed(): promise.Promise<boolean> {
-        return this.errorMessage.isDisplayed();
+    async isErrorMessageDisplayed(): Promise<boolean> {
+        return await this.errorMessage.isDisplayed();
     }
 
-    getErrorMessage(): Promise<string> {
-        return BrowserActions.getText(this.errorMessage);
+    async getErrorMessage(): Promise<string> {
+        return await BrowserActions.getText(this.errorMessage);
     }
 
-    getErrorMessages(position): Promise<string> {
-        return BrowserActions.getText(this.errorMessages.get(position));
+    async getErrorMessages(position): Promise<string> {
+        return await BrowserActions.getText(this.errorMessages.get(position));
     }
 
     async waitForLibraryNameHint(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.libraryNameHint);
     }
 
-    getLibraryNameHint(): Promise<string> {
-        return BrowserActions.getText(this.libraryNameHint);
+    async getLibraryNameHint(): Promise<string> {
+        return await BrowserActions.getText(this.libraryNameHint);
     }
 
-    isNameDisplayed(): promise.Promise<boolean> {
-        return this.libraryNameField.isDisplayed();
+    async isNameDisplayed(): Promise<boolean> {
+        return await this.libraryNameField.isDisplayed();
     }
 
-    isLibraryIdDisplayed(): promise.Promise<boolean> {
-        return this.libraryIdField.isDisplayed();
+    async isLibraryIdDisplayed(): Promise<boolean> {
+        return await this.libraryIdField.isDisplayed();
     }
 
-    isDescriptionDisplayed(): promise.Promise<boolean> {
-        return this.libraryDescriptionField.isDisplayed();
+    async isDescriptionDisplayed(): Promise<boolean> {
+        return await this.libraryDescriptionField.isDisplayed();
     }
 
-    isPublicDisplayed(): promise.Promise<boolean> {
-        return this.publicRadioButton.isDisplayed();
+    async isPublicDisplayed(): Promise<boolean> {
+        return await this.publicRadioButton.isDisplayed();
     }
 
-    isModeratedDisplayed(): promise.Promise<boolean> {
-        return this.moderatedRadioButton.isDisplayed();
+    async isModeratedDisplayed(): Promise<boolean> {
+        return await this.moderatedRadioButton.isDisplayed();
     }
 
-    isPrivateDisplayed(): promise.Promise<boolean> {
-        return this.privateRadioButton.isDisplayed();
+    async isPrivateDisplayed(): Promise<boolean> {
+        return await this.privateRadioButton.isDisplayed();
     }
 
-    isCreateEnabled(): promise.Promise<boolean> {
-        return this.createButton.isEnabled();
+    async isCreateEnabled(): Promise<boolean> {
+        return await this.createButton.isEnabled();
     }
 
-    isCancelEnabled(): promise.Promise<boolean> {
-        return this.cancelButton.isEnabled();
+    async isCancelEnabled(): Promise<boolean> {
+        return await this.cancelButton.isEnabled();
     }
 
     async clickCreate(): Promise<void> {

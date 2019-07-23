@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { by, ElementFinder, Locator, promise, protractor } from 'protractor';
+import { by, ElementFinder, Locator, protractor } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
@@ -39,8 +39,8 @@ export class NumberRangeFilterPage {
         await BrowserActions.clearSendKeys(this.filter.element(this.fromInput), '');
     }
 
-    getFromNumber(): promise.Promise<string> {
-        return this.filter.element(this.fromInput).getAttribute('value');
+    async getFromNumber(): Promise<string> {
+        return await this.filter.element(this.fromInput).getAttribute('value');
     }
 
     async putFromNumber(value): Promise<void> {
@@ -51,8 +51,7 @@ export class NumberRangeFilterPage {
     }
 
     async getFromErrorRequired(): Promise<string> {
-        return BrowserActions.getText(this.filter.element(this.fromErrorRequired));
-
+        return await BrowserActions.getText(this.filter.element(this.fromErrorRequired));
     }
 
     async checkFromErrorRequiredIsDisplayed(): Promise<void> {
@@ -60,7 +59,7 @@ export class NumberRangeFilterPage {
     }
 
     async getFromErrorInvalid(): Promise<string> {
-        return BrowserActions.getText(this.filter.element(this.fromErrorInvalid));
+        return await BrowserActions.getText(this.filter.element(this.fromErrorInvalid));
     }
 
     async checkFromErrorInvalidIsDisplayed(): Promise<void> {
@@ -76,8 +75,8 @@ export class NumberRangeFilterPage {
         await BrowserActions.clearSendKeys(this.filter.element(this.toInput), '');
     }
 
-    getToNumber(): promise.Promise<string> {
-        return this.filter.element(this.toInput).getAttribute('value');
+    async getToNumber(): Promise<string> {
+        return await this.filter.element(this.toInput).getAttribute('value');
     }
 
     async putToNumber(value): Promise<void> {
@@ -88,7 +87,7 @@ export class NumberRangeFilterPage {
     }
 
     async getToErrorRequired(): Promise<string> {
-        return BrowserActions.getText(this.filter.element(this.toErrorRequired));
+        return await BrowserActions.getText(this.filter.element(this.toErrorRequired));
     }
 
     async checkToErrorRequiredIsDisplayed(): Promise<void> {
@@ -96,7 +95,7 @@ export class NumberRangeFilterPage {
     }
 
     async getToErrorInvalid(): Promise<string> {
-        return BrowserActions.getText(this.filter.element(this.toErrorInvalid));
+        return await BrowserActions.getText(this.filter.element(this.toErrorInvalid));
     }
 
     async checkToErrorInvalidIsDisplayed(): Promise<void> {
@@ -115,8 +114,8 @@ export class NumberRangeFilterPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.applyButton));
     }
 
-    checkApplyButtonIsEnabled(): promise.Promise<boolean> {
-        return this.filter.element(this.applyButton).isEnabled();
+    async checkApplyButtonIsEnabled(): Promise<boolean> {
+        return await this.filter.element(this.applyButton).isEnabled();
     }
 
     async clickClearButton(): Promise<void> {

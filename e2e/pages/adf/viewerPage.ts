@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { TabsPage } from '@alfresco/adf-testing';
-import { FormControllersPage } from '@alfresco/adf-testing';
-import { element, by, browser, protractor, ElementFinder, promise } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { TabsPage, FormControllersPage, BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { element, by, browser, protractor, ElementFinder } from 'protractor';
 
 export class ViewerPage {
 
@@ -118,21 +116,21 @@ export class ViewerPage {
         await this.pageSelectorInput.sendKeys(protractor.Key.ENTER);
     }
 
-    getZoom(): Promise<string> {
-        return BrowserActions.getText(this.percentage);
+    async getZoom(): Promise<string> {
+        return await BrowserActions.getText(this.percentage);
     }
 
-    getCanvasWidth(): promise.Promise<string> {
-        return this.canvasLayer.getAttribute(`width`);
+    async getCanvasWidth(): Promise<string> {
+        return await this.canvasLayer.getAttribute(`width`);
     }
 
-    getCanvasHeight(): promise.Promise<string> {
-        return this.canvasLayer.getAttribute(`height`);
+    async getCanvasHeight(): Promise<string> {
+        return await this.canvasLayer.getAttribute(`height`);
     }
 
     async getDisplayedFileName(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.fileName);
-        return this.fileName.getText();
+        return await BrowserActions.getText(this.fileName);
     }
 
     async exitFullScreen(): Promise<void> {
@@ -151,7 +149,7 @@ export class ViewerPage {
 
     async clickClosePasswordDialog(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.passwordDialogClose);
-        await this.passwordDialogClose.click();
+        await BrowserActions.click(this.passwordDialogClose);
     }
 
     async checkImgViewerIsDisplayed(): Promise<void> {
@@ -210,12 +208,12 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
     }
 
-    getLastButtonTitle(): promise.Promise<string> {
-        return this.lastButton.getAttribute('title');
+    async getLastButtonTitle(): Promise<string> {
+        return await this.lastButton.getAttribute('title');
     }
 
-    getMoreActionsMenuTitle(): promise.Promise<string> {
-        return this.moreActionsMenu.getAttribute('title');
+    async getMoreActionsMenuTitle(): Promise<string> {
+        return await this.moreActionsMenu.getAttribute('title');
     }
 
     async checkDownloadButtonIsDisplayed(): Promise<void> {
@@ -579,7 +577,7 @@ export class ViewerPage {
     }
 
     async enableCustomName(): Promise<void> {
-        await  this.formControllersPage.enableToggle(this.customNameSwitch);
+        await this.formControllersPage.enableToggle(this.customNameSwitch);
     }
 
     async clickToggleRightSidebar(): Promise<void> {
@@ -597,7 +595,7 @@ export class ViewerPage {
     }
 
     async disableOverlay(): Promise<void> {
-        await  this.formControllersPage.disableToggle(element(by.id('adf-viewer-overlay')));
+        await this.formControllersPage.disableToggle(element(by.id('adf-viewer-overlay')));
     }
 
     async checkOverlayViewerIsDisplayed(): Promise<void> {
@@ -611,7 +609,6 @@ export class ViewerPage {
     async checkTabHasNoIcon(index: number): Promise<void> {
         const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
         await BrowserVisibility.waitUntilElementIsNotVisible(tab);
-
     }
 
     async checkTabHasNoLabel(index: number): Promise<void> {
@@ -619,14 +616,14 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(tab);
     }
 
-    getTabLabelById(index: number): Promise<string> {
+    async getTabLabelById(index: number): Promise<string> {
         const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
-        return BrowserActions.getText(tab);
+        return await BrowserActions.getText(tab);
     }
 
-    getTabIconById(index: number): Promise<string> {
+    async getTabIconById(index: number): Promise<string> {
         const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
-        return BrowserActions.getText(tab);
+        return await BrowserActions.getText(tab);
     }
 
     async checkUnknownFormatIsDisplayed(): Promise<void> {
@@ -635,6 +632,6 @@ export class ViewerPage {
 
     async getUnknownFormatMessage(): Promise<string> {
         const unknownFormatLabel = this.unknownFormat.element(by.css(`.label`));
-        return BrowserActions.getText(unknownFormatLabel);
+        return await BrowserActions.getText(unknownFormatLabel);
     }
 }

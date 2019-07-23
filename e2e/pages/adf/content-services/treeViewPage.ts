@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, ElementArrayFinder, promise } from 'protractor';
+import { element, by, ElementFinder, ElementArrayFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
-import { promise as wdpromise } from 'selenium-webdriver';
 
 export class TreeViewPage {
 
@@ -26,13 +25,13 @@ export class TreeViewPage {
     noNodeMessage: ElementFinder = element(by.id('adf-tree-view-missing-node'));
     nodesOnPage: ElementArrayFinder = element.all(by.css('mat-tree-node'));
 
-    checkTreeViewTitleIsDisplayed(): Promise<void> {
-        return BrowserVisibility.waitUntilElementIsVisible(this.treeViewTitle);
+    async checkTreeViewTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.treeViewTitle);
     }
 
-    async getNodeId(): promise.Promise<string> {
+    async getNodeId(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.nodeIdInput);
-        return this.nodeIdInput.getAttribute('value');
+        return await this.nodeIdInput.getAttribute('value');
     }
 
     async clickNode(nodeName): Promise<void> {
@@ -79,7 +78,7 @@ export class TreeViewPage {
         await BrowserVisibility.waitUntilElementIsVisible(clickedNode);
     }
 
-    async getTotalNodes(): wdpromise.Promise<number> {
-        return this.nodesOnPage.count();
+    async getTotalNodes() {
+        return await this.nodesOnPage.count();
     }
 }

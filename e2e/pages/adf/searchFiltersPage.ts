@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, promise } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, SearchCategoriesPage } from '@alfresco/adf-testing';
 import { SearchCheckListPage } from '../../../lib/testing/src/lib/content-services/pages/search/search-checkList.page';
 import { SearchTextPage } from '../../../lib/testing/src/lib/content-services/pages/search/search-text.page';
@@ -117,12 +117,12 @@ export class SearchFiltersPage {
         await this.searchCategoriesPage.checkFilterIsDisplayed(this.facetIntervalsByModified);
     }
 
-    isTypeFacetQueryGroupPresent(): promise.Promise<boolean> {
-        return this.facetQueriesTypeGroup.isPresent();
+    async isTypeFacetQueryGroupPresent(): Promise<boolean> {
+        return await this.facetQueriesTypeGroup.isPresent();
     }
 
-    isSizeFacetQueryGroupPresent(): promise.Promise<boolean> {
-        return this.facetQueriesSizeGroup.isPresent();
+    async isSizeFacetQueryGroupPresent(): Promise<boolean> {
+        return await this.facetQueriesSizeGroup.isPresent();
     }
 
     async clickCheckListFilter(): Promise<void> {

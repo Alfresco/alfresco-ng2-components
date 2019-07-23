@@ -19,7 +19,6 @@ import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { element, by, ElementFinder } from 'protractor';
 import { ContentServicesPage } from './contentServicesPage';
 import { BrowserVisibility, SearchSortingPickerPage } from '@alfresco/adf-testing';
-import { promise as wdpromise } from 'selenium-webdriver';
 
 export class SearchResultsPage {
 
@@ -40,8 +39,8 @@ export class SearchResultsPage {
         await this.dataTable.checkContentIsDisplayed('Display name', content);
     }
 
-    numberOfResultsDisplayed(): wdpromise.Promise<number> {
-        return this.dataTable.numberOfRows();
+    async numberOfResultsDisplayed(): Promise<number> {
+        return await this.dataTable.numberOfRows();
     }
 
     async checkContentIsNotDisplayed(content): Promise<void> {

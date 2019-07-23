@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser, ElementFinder, Locator } from 'protractor';
+import { element, by, browser, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class UploadDialog {
@@ -128,20 +128,14 @@ export class UploadDialog {
         await BrowserActions.click(this.confirmationDialogNoButton);
     }
 
-    numberOfCurrentFilesUploaded() {
-        const deferred = protractor.promise.defer();
-        this.getTitleText().then((text: any) => {
-            deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[0]);
-        });
-        return deferred.promise;
+    async numberOfCurrentFilesUploaded(): Promise<string> {
+        const text = await this.getTitleText();
+        return text.split('Uploaded ')[1].split(' / ')[0];
     }
 
-    numberOfInitialFilesUploaded() {
-        const deferred = protractor.promise.defer();
-        this.getTitleText().then((text: any) => {
-            deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[1]);
-        });
-        return deferred.promise;
+    async numberOfInitialFilesUploaded(): Promise<string> {
+        const text = await this.getTitleText();
+        return text.split('Uploaded ')[1].split(' / ')[1];
     }
 
     async minimizeUploadDialog(): Promise<void> {
@@ -157,8 +151,8 @@ export class UploadDialog {
         await browser.actions().mouseMove(element(this.errorStatusIcon)).perform();
     }
 
-    getTooltip(): Promise<string> {
-        return BrowserActions.getText(this.errorTooltip);
+    async getTooltip(): Promise<string> {
+        return await BrowserActions.getText(this.errorTooltip);
     }
 
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder, promise } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
@@ -46,52 +46,52 @@ export class MetadataViewPage {
     displayAspect: ElementFinder = element(by.css(`input[placeholder='Display Aspect']`));
     applyAspect: ElementFinder = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
 
-    getTitle(): promise.Promise<string> {
-        return BrowserActions.getText(this.title);
+    async getTitle(): Promise<string> {
+        return await BrowserActions.getText(this.title);
     }
 
-    getExpandedAspectName(): promise.Promise<string> {
-        return BrowserActions.getText(this.expandedAspect.element(this.aspectTitle));
+    async getExpandedAspectName(): Promise<string> {
+        return await BrowserActions.getText(this.expandedAspect.element(this.aspectTitle));
     }
 
-    getName(): promise.Promise<string> {
-        return BrowserActions.getText(this.name);
+    async getName(): Promise<string> {
+        return await BrowserActions.getText(this.name);
     }
 
-    getCreator(): promise.Promise<string> {
-        return BrowserActions.getText(this.creator);
+    async getCreator(): Promise<string> {
+        return await BrowserActions.getText(this.creator);
     }
 
-    getCreatedDate(): promise.Promise<string> {
-        return BrowserActions.getText(this.createdDate);
+    async getCreatedDate(): Promise<string> {
+        return await BrowserActions.getText(this.createdDate);
     }
 
-    getModifier(): promise.Promise<string> {
-        return BrowserActions.getText(this.modifier);
+    async getModifier(): Promise<string> {
+        return await BrowserActions.getText(this.modifier);
     }
 
-    getModifiedDate(): promise.Promise<string> {
-        return BrowserActions.getText(this.modifiedDate);
+    async getModifiedDate(): Promise<string> {
+        return await BrowserActions.getText(this.modifiedDate);
     }
 
-    getMimetypeName(): promise.Promise<string> {
-        return BrowserActions.getText(this.mimetypeName);
+    async getMimetypeName(): Promise<string> {
+        return await BrowserActions.getText(this.mimetypeName);
     }
 
-    getSize(): promise.Promise<string> {
-        return BrowserActions.getText(this.size);
+    async getSize(): Promise<string> {
+        return await BrowserActions.getText(this.size);
     }
 
-    getDescription(): promise.Promise<string> {
-        return BrowserActions.getText(this.description);
+    async getDescription(): Promise<string> {
+        return await BrowserActions.getText(this.description);
     }
 
-    getAuthor(): promise.Promise<string> {
-        return BrowserActions.getText(this.author);
+    async getAuthor(): Promise<string> {
+        return await BrowserActions.getText(this.author);
     }
 
     async getTitleProperty(): Promise<string> {
-        return BrowserActions.getText(this.titleProperty);
+        return await BrowserActions.getText(this.titleProperty);
     }
 
     async editIconIsDisplayed(): Promise<void> {
@@ -117,16 +117,15 @@ export class MetadataViewPage {
 
     async clickOnInformationButton(): Promise<void> {
         await this.informationButtonIsDisplayed();
-        await browser.sleep(600);
         await BrowserActions.click(this.informationButton);
     }
 
-    getInformationButtonText(): promise.Promise<string> {
-        return BrowserActions.getText(this.informationSpan);
+    async getInformationButtonText(): Promise<string> {
+        return await BrowserActions.getText(this.informationSpan);
     }
 
-    getInformationIconText(): promise.Promise<string> {
-        return BrowserActions.getText(this.informationIcon);
+    async getInformationIconText(): Promise<string> {
+        return await BrowserActions.getText(this.informationIcon);
     }
 
     async clickOnPropertiesTab(): Promise<void> {
@@ -135,8 +134,8 @@ export class MetadataViewPage {
         await BrowserActions.click(propertiesTab);
     }
 
-    getEditIconTooltip(): promise.Promise<string> {
-        return this.editIcon.getAttribute('title');
+    async getEditIconTooltip(): Promise<string> {
+        return await this.editIcon.getAttribute('title');
     }
 
     async editPropertyIconIsDisplayed(propertyName: string) {
@@ -149,14 +148,14 @@ export class MetadataViewPage {
         await BrowserVisibility.waitUntilElementIsVisible(updatePropertyIcon);
     }
 
-    clickUpdatePropertyIcon(propertyName: string): promise.Promise<void> {
+    async clickUpdatePropertyIcon(propertyName: string): Promise<void> {
         const updatePropertyIcon: ElementFinder = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
-        return BrowserActions.click(updatePropertyIcon);
+        await BrowserActions.click(updatePropertyIcon);
     }
 
-    clickClearPropertyIcon(propertyName: string): promise.Promise<void> {
+    async clickClearPropertyIcon(propertyName: string): Promise<void> {
         const clearPropertyIcon: ElementFinder = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
-        return BrowserActions.click(clearPropertyIcon);
+        await BrowserActions.click(clearPropertyIcon);
     }
 
     async enterPropertyText(propertyName: string, text: string | number): Promise<void> {
@@ -179,11 +178,11 @@ export class MetadataViewPage {
         await BrowserActions.clearSendKeys(textField, text);
     }
 
-    getPropertyText(propertyName: string, type?: string): promise.Promise<string> {
+    async getPropertyText(propertyName: string, type?: string): Promise<string> {
         const propertyType = type || 'textitem';
         const textField: ElementFinder = element(by.css('span[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]'));
 
-        return BrowserActions.getText(textField);
+        return await BrowserActions.getText(textField);
     }
 
     async clearPropertyIconIsDisplayed(propertyName: string): Promise<void> {
@@ -196,9 +195,9 @@ export class MetadataViewPage {
         await BrowserActions.click(editPropertyIcon);
     }
 
-    getPropertyIconTooltip(propertyName: string): promise.Promise<string> {
+    async getPropertyIconTooltip(propertyName: string): Promise<string> {
         const editPropertyIcon: ElementFinder = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
-        return editPropertyIcon.getAttribute('title');
+        return await editPropertyIcon.getAttribute('title');
     }
 
     async clickMetadataGroup(groupName: string): Promise<void> {
@@ -228,9 +227,9 @@ export class MetadataViewPage {
         expect(group.getAttribute('class')).not.toContain('mat-expanded');
     }
 
-    getMetadataGroupTitle(groupName: string): promise.Promise<string> {
+    async getMetadataGroupTitle(groupName: string): Promise<string> {
         const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
-        return BrowserActions.getText(group);
+        return await BrowserActions.getText(group);
     }
 
     async checkPropertyIsVisible(propertyName: string, type: string): Promise<void> {

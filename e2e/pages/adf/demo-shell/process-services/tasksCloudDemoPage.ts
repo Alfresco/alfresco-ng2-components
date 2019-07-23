@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, ElementFinder, ElementArrayFinder, promise } from 'protractor';
+import { element, by, browser, ElementFinder, ElementArrayFinder } from 'protractor';
 import {
     FormControllersPage,
     TaskFiltersCloudComponentPage,
@@ -82,8 +82,8 @@ export class TasksCloudDemoPage {
         return new TaskFiltersCloudComponentPage(this.completedTasks);
     }
 
-    getActiveFilterName(): Promise<string> {
-        return BrowserActions.getText(this.activeFilter);
+    async getActiveFilterName(): Promise<string> {
+        return await BrowserActions.getText(this.activeFilter);
     }
 
     customTaskFilter(filterName): TaskFiltersCloudComponentPage {
@@ -95,15 +95,15 @@ export class TasksCloudDemoPage {
         await BrowserActions.click(this.newTaskButton);
     }
 
-    firstFilterIsActive(): promise.Promise<boolean> {
-        return this.defaultActiveFilter.getAttribute('class').then((value) => value.includes('adf-active'));
+    async firstFilterIsActive(): Promise<boolean> {
+        const value = await this.defaultActiveFilter.getAttribute('class');
+        return value.includes('adf-active');
     }
 
     async clickSettingsButton(): Promise<void> {
         await BrowserActions.click(this.settingsButton);
         await browser.driver.sleep(400);
         await BrowserVisibility.waitUntilElementIsVisible(this.multiSelectionToggle);
-        await BrowserVisibility.waitUntilElementIsVisible(this.modeDropDownArrow);
         await BrowserVisibility.waitUntilElementIsClickable(this.modeDropDownArrow);
     }
 
@@ -129,12 +129,12 @@ export class TasksCloudDemoPage {
 
     async getNoOfSelectedRows(): Promise<number> {
         await this.checkSelectedRowsIsDisplayed();
-        return this.noOfSelectedRows.count();
+        return await this.noOfSelectedRows.count();
     }
 
     async getSelectedTaskRowText(rowNo: string): Promise<string> {
         await this.checkSelectedRowsIsDisplayed();
         const row: ElementFinder = element(by.xpath(`//div[text()=' Selected rows: ']//li[${rowNo}]`));
-        return row.getText();
+        return await row.getText();
     }
 }

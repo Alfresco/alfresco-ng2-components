@@ -20,7 +20,6 @@ import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { ElementFinder } from 'protractor/built/element';
-import { promise as wdpromise } from 'selenium-webdriver';
 
 export class ContentNodeSelectorDialogPage {
     dialog: ElementFinder = element(by.css(`adf-content-node-selector`));
@@ -49,7 +48,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async getSearchLabel(): Promise<string> {
-        return BrowserActions.getText(this.searchLabel);
+        return await BrowserActions.getText(this.searchLabel);
     }
 
     async checkSelectedSiteIsDisplayed(siteName): Promise<void> {
@@ -64,12 +63,12 @@ export class ContentNodeSelectorDialogPage {
         await BrowserActions.click(this.cancelButton);
     }
 
-    checkCancelButtonIsEnabled(): wdpromise.Promise<boolean> {
-        return this.cancelButton.isEnabled();
+    async checkCancelButtonIsEnabled(): Promise<boolean> {
+        return await this.cancelButton.isEnabled();
     }
 
-    checkCopyMoveButtonIsEnabled(): wdpromise.Promise<boolean> {
-        return this.moveCopyButton.isEnabled();
+    async checkCopyMoveButtonIsEnabled(): Promise<boolean> {
+        return await this.moveCopyButton.isEnabled();
     }
 
     async checkMoveCopyButtonIsDisplayed(): Promise<void> {
@@ -77,15 +76,15 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async getMoveCopyButtonText(): Promise<string> {
-        return BrowserActions.getText(this.moveCopyButton);
+        return await BrowserActions.getText(this.moveCopyButton);
     }
 
     async clickMoveCopyButton(): Promise<void> {
         await BrowserActions.click(this.moveCopyButton);
     }
 
-    numberOfResultsDisplayed(): wdpromise.Promise<number> {
-        return this.contentList.dataTablePage().numberOfRows();
+    async numberOfResultsDisplayed(): Promise<number> {
+        return await this.contentList.dataTablePage().numberOfRows();
     }
 
     async typeIntoNodeSelectorSearchField(text): Promise<void> {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, promise } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, FormControllersPage, BrowserActions } from '@alfresco/adf-testing';
 import moment = require('moment');
 
@@ -62,12 +62,11 @@ export class ShareDialog {
 
     async getShareLink(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.shareLink);
-        return this.shareLink.getAttribute('value');
+        return await this.shareLink.getAttribute('value');
     }
 
     async clickCloseButton(): Promise<void> {
         await BrowserActions.click(this.closeButton);
-
     }
 
     async clickShareLinkButton(): Promise<void> {
@@ -90,7 +89,7 @@ export class ShareDialog {
         const tomorrow = moment().add(1, 'days').format('D');
 
         if (tomorrow !== '1') {
-            const today: any = this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
+            const today = await this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
             await BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
         }
     }
@@ -100,7 +99,7 @@ export class ShareDialog {
 
         const tomorrow = moment().add(1, 'days').format('LL');
         await BrowserVisibility.waitUntilElementIsClickable(this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)));
-        this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)).click();
+        await this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)).click();
     }
 
     async setDefaultHour(): Promise<void> {
@@ -120,8 +119,8 @@ export class ShareDialog {
         await BrowserVisibility.waitUntilElementIsStale(element(by.css('mat-datetimepicker-content')));
     }
 
-    getExpirationDate(): promise.Promise<string> {
-        return this.expirationDateInput.getAttribute('value');
+    async getExpirationDate(): Promise<string> {
+        return await this.expirationDateInput.getAttribute('value');
     }
 
     async expirationDateInputHasValue(value): Promise<void> {

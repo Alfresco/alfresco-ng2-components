@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder, protractor } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
@@ -79,14 +79,11 @@ export class SearchSortingPickerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.sortingSelector);
     }
 
-    async checkOrderArrowIsDownward(): Promise<any> {
-        const deferred = protractor.promise.defer();
+    async checkOrderArrowIsDownward(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
 
-        this.orderArrow.getText().then((result) => {
-            deferred.fulfill(result !== 'arrow_upward');
-        });
-        return deferred.promise;
+        const result = await this.orderArrow.getText();
+        return result !== 'arrow_upward';
     }
 
     async checkOrderArrowIsDisplayed(): Promise<void> {

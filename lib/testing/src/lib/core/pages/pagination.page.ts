@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, Locator, protractor } from 'protractor';
+import { browser, by, element, Locator } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { ElementFinder } from 'protractor/built/element';
@@ -86,20 +86,16 @@ export class PaginationPage {
         await BrowserActions.click(option);
     }
 
-    async getPageDropdownOptions(): Promise<any> {
-        const deferred = protractor.promise.defer();
+    async getPageDropdownOptions() {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const initialList = [];
-        element.all(this.pageDropDownOptions).each(async (currentOption) => {
-            await currentOption.getText().then(function (text) {
-                if (text !== '') {
-                    initialList.push(text);
-                }
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
+        await element.all(this.pageDropDownOptions).each(async (currentOption) => {
+            const text = await currentOption.getText();
+            if (text !== '') {
+                initialList.push(text);
+            }
         });
-        return deferred.promise;
+        return initialList;
     }
 
     async checkNextPageButtonIsDisabled(): Promise<void> {
@@ -118,13 +114,9 @@ export class PaginationPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.previousButtonDisabled);
     }
 
-    async getTotalNumberOfFiles(): Promise<any> {
+    async getTotalNumberOfFiles() {
         await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
-        const numberOfFiles = this.totalFiles.getText().then(function (totalNumber) {
-            const totalNumberOfFiles = totalNumber.split('of ')[1];
-            return totalNumberOfFiles;
-        });
-
-        return numberOfFiles;
+        const totalNumberOfFiles = await this.totalFiles.getText();
+        return totalNumberOfFiles.split('of ')[1];
     }
 }

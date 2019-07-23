@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser, ElementFinder, ElementArrayFinder, promise } from 'protractor';
+import { element, by, protractor, browser, ElementFinder, ElementArrayFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TagPage {
@@ -35,9 +35,9 @@ export class TagPage {
     tagsOnPage: ElementArrayFinder = element.all(by.css('div[class*="adf-list-tag"]'));
     confirmTag: ElementFinder = element(by.id('adf-tag-node-send'));
 
-    async getNodeId() {
+    async getNodeId(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.insertNodeIdElement);
-        return this.insertNodeIdElement.getAttribute('value');
+        return await this.insertNodeIdElement.getAttribute('value');
     }
 
     async insertNodeId(nodeId) {
@@ -46,8 +46,8 @@ export class TagPage {
         await browser.driver.sleep(200);
         this.insertNodeIdElement.sendKeys(' ');
         await browser.driver.sleep(200);
-        this.insertNodeIdElement.sendKeys(protractor.Key.BACK_SPACE);
-        this.clickConfirmTag();
+        await this.insertNodeIdElement.sendKeys(protractor.Key.BACK_SPACE);
+        await this.clickConfirmTag();
     }
 
     async addNewTagInput(tag) {
@@ -72,37 +72,37 @@ export class TagPage {
 
     async getNewTagInput(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
-        return this.newTagInput.getAttribute('value');
+        return await this.newTagInput.getAttribute('value');
     }
 
     async getNewTagPlaceholder(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
-        return this.newTagInput.getAttribute('placeholder');
+        return await this.newTagInput.getAttribute('placeholder');
     }
 
     async addTagButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.addTagButton);
-        return this.addTagButton.isEnabled();
+        return await this.addTagButton.isEnabled();
     }
 
-    checkTagIsDisplayedInTagList(tagName): Promise<void> {
+    async checkTagIsDisplayedInTagList(tagName): Promise<void> {
         const tag: ElementFinder = element(by.cssContainingText('div[id*="tag_name"]', tagName));
-        return BrowserVisibility.waitUntilElementIsVisible(tag);
+        await BrowserVisibility.waitUntilElementIsVisible(tag);
     }
 
-    checkTagIsNotDisplayedInTagList(tagName): Promise<void> {
+    async checkTagIsNotDisplayedInTagList(tagName): Promise<void> {
         const tag: ElementFinder = element(by.cssContainingText('div[id*="tag_name"]', tagName));
-        return BrowserVisibility.waitUntilElementIsNotVisible(tag);
+        await BrowserVisibility.waitUntilElementIsNotVisible(tag);
     }
 
-    checkTagIsNotDisplayedInTagListByNodeId(tagName): Promise<void> {
+    async checkTagIsNotDisplayedInTagListByNodeId(tagName): Promise<void> {
         const tag: ElementFinder = element(by.cssContainingText('span[id*="tag_name"]', tagName));
-        return BrowserVisibility.waitUntilElementIsNotVisible(tag);
+        await BrowserVisibility.waitUntilElementIsNotVisible(tag);
     }
 
-    checkTagIsDisplayedInTagListByNodeId(tagName): Promise<void> {
+    async checkTagIsDisplayedInTagListByNodeId(tagName): Promise<void> {
         const tag: ElementFinder = element(by.cssContainingText('span[id*="tag_name"]', tagName));
-        return BrowserVisibility.waitUntilElementIsVisible(tag);
+        await BrowserVisibility.waitUntilElementIsVisible(tag);
     }
 
     async checkTagListIsEmpty(): Promise<void> {
@@ -118,40 +118,36 @@ export class TagPage {
         await BrowserVisibility.waitUntilElementIsVisible(tag);
     }
 
-    getErrorMessage(): Promise<string> {
-        return BrowserActions.getText(this.errorMessage);
+    async getErrorMessage(): Promise<string> {
+        return await BrowserActions.getText(this.errorMessage);
     }
 
-    checkTagListIsOrderedAscending(): Promise<any> {
-        return this.checkListIsSorted(false, this.tagListRowLocator);
+    async checkTagListIsOrderedAscending(): Promise<any> {
+        await this.checkListIsSorted(false, this.tagListRowLocator);
     }
 
-    checkTagListByNodeIdIsOrderedAscending(): Promise<any> {
-        return this.checkListIsSorted(false, this.tagListByNodeIdRowLocator);
+    async checkTagListByNodeIdIsOrderedAscending(): Promise<any> {
+        await this.checkListIsSorted(false, this.tagListByNodeIdRowLocator);
     }
 
-    checkTagListContentServicesIsOrderedAscending(): Promise<any> {
-        return this.checkListIsSorted(false, this.tagListContentServicesRowLocator);
+    async checkTagListContentServicesIsOrderedAscending(): Promise<any> {
+        await this.checkListIsSorted(false, this.tagListContentServicesRowLocator);
     }
 
-    async checkListIsSorted(sortOrder, locator): Promise<any> {
-        const deferred = protractor.promise.defer();
+    async checkListIsSorted(sortOrder, locator): Promise<boolean> {
         const tagList: ElementArrayFinder = element.all(locator);
         await BrowserVisibility.waitUntilElementIsVisible(tagList.first());
         const initialList = [];
-        tagList.each(function(currentElement) {
-            currentElement.getText().then(function(text) {
-                initialList.push(text);
-            });
-        }).then(function() {
-            let sortedList = initialList;
-            sortedList = sortedList.sort();
-            if (sortOrder === false) {
-                sortedList = sortedList.reverse();
-            }
-            deferred.fulfill(initialList.toString() === sortedList.toString());
+        await tagList.each(async (currentElement) => {
+            const text = await currentElement.getText();
+            initialList.push(text);
         });
-        return deferred.promise;
+        let sortedList = initialList;
+        sortedList = sortedList.sort();
+        if (sortOrder === false) {
+            sortedList = sortedList.reverse();
+        }
+        return initialList.toString() === sortedList.toString();
     }
 
     async checkDeleteTagFromTagListByNodeIdIsDisplayed(name): Promise<void> {
@@ -184,8 +180,8 @@ export class TagPage {
         await BrowserActions.click(this.confirmTag);
     }
 
-    checkTagsOnList(): promise.Promise<number> {
-        return this.tagsOnPage.count();
+    async checkTagsOnList(): Promise<number> {
+        return await this.tagsOnPage.count();
     }
 
     async checkShowLessButtonIsDisplayed(): Promise<void> {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder, promise } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class FolderDialog {
@@ -27,8 +27,8 @@ export class FolderDialog {
     folderTitle: ElementFinder = this.folderDialog.element((by.css('h2.mat-dialog-title')));
     validationMessage: ElementFinder = this.folderDialog.element(by.css('div.mat-form-field-subscript-wrapper mat-hint span'));
 
-    getDialogTitle(): Promise<string> {
-        return BrowserActions.getText(this.folderTitle);
+    async getDialogTitle(): Promise<string> {
+        return await BrowserActions.getText(this.folderTitle);
     }
 
     async checkFolderDialogIsDisplayed(): Promise<void> {
@@ -54,7 +54,6 @@ export class FolderDialog {
     async addFolderName(folderName): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.folderNameField);
         await BrowserActions.clearSendKeys(this.folderNameField, folderName);
-        await browser.driver.sleep(500);
     }
 
     async addFolderDescription(folderDescription): Promise<void> {
@@ -62,12 +61,12 @@ export class FolderDialog {
         await BrowserActions.clearSendKeys(this.folderDescriptionField, folderDescription);
     }
 
-    getFolderName(): promise.Promise<string> {
-        return this.folderNameField.getAttribute('value');
+    async getFolderName(): Promise<string> {
+        return await this.folderNameField.getAttribute('value');
     }
 
     async getValidationMessage(): Promise<string> {
-        return BrowserActions.getText(this.validationMessage);
+        return await BrowserActions.getText(this.validationMessage);
     }
 
     async checkValidationMessageIsNotDisplayed(): Promise<void> {

@@ -17,7 +17,7 @@
 
 import { BrowserActions, BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
 
-import { element, by, ElementFinder, Locator, promise } from 'protractor';
+import { element, by, ElementFinder, Locator } from 'protractor';
 
 export class TrashcanPage {
 
@@ -28,8 +28,8 @@ export class TrashcanPage {
     emptyTrashcan: ElementFinder = element(by.css('adf-empty-content'));
     restoreButton: ElementFinder = element(by.css(`button[title='Restore']`));
 
-    numberOfResultsDisplayed(): promise.Promise<number> {
-        return element.all(this.rows).count();
+    async numberOfResultsDisplayed(): Promise<number> {
+        return await element.all(this.rows).count();
     }
 
     async waitForTableBody(): Promise<void> {
