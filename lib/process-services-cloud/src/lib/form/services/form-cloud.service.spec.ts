@@ -205,7 +205,6 @@ describe('Form Cloud service', () => {
             });
         });
 
-
         it('should fetch process storage folder with task id only', (done) => {
             oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({
                     nodeId: 'fake-node-id-really-long',
