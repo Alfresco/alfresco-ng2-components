@@ -509,6 +509,18 @@ describe('WidgetVisibilityCloudService', () => {
             expect(fakeFormField.isVisible).toBeFalsy();
         });
 
+        it('should reset value when the field is not visibile', () => {
+            visibilityObjTest.leftValue = 'test_1';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightType = WidgetTypeEnum.field;
+            visibilityObjTest.rightValue = 'test_3';
+            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
+            fakeFormField.value = 'value';
+            service.refreshEntityVisibility(fakeFormField);
+            expect(fakeFormField.isVisible).toBeFalsy();
+            expect(fakeFormField.value).toEqual(null);
+        });
+
         it('should return true when the visibility condition is not valid', () => {
             visibilityObjTest = new WidgetVisibilityModel();
             visibilityObjTest.leftType = '';
@@ -979,6 +991,5 @@ describe('WidgetVisibilityCloudService', () => {
 
             expect(isVisible).toBeTruthy();
         });
-
     });
 });

@@ -909,6 +909,18 @@ describe('WidgetVisibilityService', () => {
             service.refreshEntityVisibility(contModel.field);
             expect(contModel.isVisible).toBeFalsy();
         });
+
+        it('should set null value when the field is not visibile', () => {
+            visibilityObjTest.leftFormFieldId = 'test_4';
+            visibilityObjTest.operator = '!=';
+            visibilityObjTest.rightFormFieldId = 'dropdown';
+            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
+            fakeFormField.value = 'value';
+
+            service.refreshEntityVisibility(fakeFormField);
+            expect(fakeFormField.isVisible).toBeFalsy();
+            expect(fakeFormField.value).toEqual(null);
+        });
     });
 
     describe('Visibility based on form variables', () => {
