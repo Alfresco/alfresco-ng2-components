@@ -21,7 +21,7 @@ import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } f
 export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
         await elementFinder.click();
     }
 
@@ -46,6 +46,11 @@ export class BrowserActions {
     static async getColor(elementFinder: ElementFinder): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         return elementFinder.getWebElement().getCssValue('color');
+    }
+
+    static async clearWithBackSpace(elementFinder: ElementFinder) {
+        await elementFinder.clear();
+        await elementFinder.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
     }
 
     static async clearSendKeys(elementFinder: ElementFinder, text: string): Promise<void> {

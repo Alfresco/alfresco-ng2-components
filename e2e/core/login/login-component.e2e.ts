@@ -248,15 +248,12 @@ describe('Login component', () => {
 
         await Util.openNewTabInBrowser();
 
-        await browser.getAllWindowHandles().then((handles) => {
-
-            browser.switchTo().window(handles[1]).then(async () => {
-                await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
-                await processServicesPage.checkApsContainer();
-                await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
-                await contentServicesPage.checkAcsContainer();
-            });
-        });
+        const handles = await browser.getAllWindowHandles();
+        await browser.switchTo().window(handles[1]);
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+        await processServicesPage.checkApsContainer();
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+        await contentServicesPage.checkAcsContainer();
     });
 
     it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', async () => {

@@ -17,7 +17,7 @@
 
 import { LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
-import { DataTableComponentPage } from '@alfresco/adf-testing';
+import { DataTableComponentPage, BrowserActions } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 
@@ -62,6 +62,7 @@ describe('Datatable component', () => {
 
         beforeAll(async () => {
             await navigationBarPage.navigateToDatatable();
+            await dataTablePage.dataTable.waitForTableBody();
         });
 
         beforeEach(async () => {
@@ -99,7 +100,12 @@ describe('Datatable component', () => {
 
         beforeAll(async (done) => {
             await navigationBarPage.navigateToCopyContentDatatable();
+            await dataTablePage.dataTable.waitForTableBody();
             done();
+        });
+
+        beforeEach(async () => {
+            await BrowserActions.closeMenuAndDialogs();
         });
 
         it('[C307037] A tooltip is displayed when mouseOver a column with copyContent set to true', async () => {
@@ -184,13 +190,17 @@ describe('Datatable component', () => {
             await copyContentDataTablePage.pasteClipboard();
             expect(await copyContentDataTablePage.getClipboardInputText()).toContain(jsonValue);
         });
+
+        afterAll(async () => {
+            await navigationBarPage.clickHomeButton();
+        });
     });
 
     describe('Datatable component - Drag and Drop', () => {
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await navigationBarPage.navigateToDragAndDropDatatable();
-            done();
+            await dragAndDropDataTablePage.dataTable.waitForTableBody();
         });
 
         it('[C307984] Should trigger the event handling header-drop and cell-drop', async () => {

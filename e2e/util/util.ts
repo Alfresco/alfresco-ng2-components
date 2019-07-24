@@ -56,14 +56,13 @@ export class Util {
         });
     }
 
-    static openNewTabInBrowser() {
-        browser.driver.executeScript("window.open('about: blank', '_blank');");
+    static async openNewTabInBrowser() {
+        await browser.executeScript("window.open('about: blank', '_blank');");
     }
 
     static async switchToWindowHandler(windowNumber) {
-        await browser.driver.getAllWindowHandles().then((handles) => {
-            browser.driver.switchTo().window(handles[windowNumber]);
-        });
+        const handles = await browser.getAllWindowHandles();
+        await browser.switchTo().window(handles[windowNumber]);
     }
 
     /**
@@ -72,7 +71,7 @@ export class Util {
      * @param retries - number of retries
      * @returns - true if file is found, false otherwise
      */
-    static fileExists(filePath, retries) {
+    static async fileExists(filePath, retries) {
         let tries = 0;
         return new Promise(function(resolve, reject) {
             const checkExist = setInterval(() => {

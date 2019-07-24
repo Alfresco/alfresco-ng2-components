@@ -74,12 +74,12 @@ export class LoginPage {
 
     async clearUsername(): Promise<void> {
         await BrowserActions.click(this.txtUsername);
-        await BrowserActions.clearSendKeys(this.txtUsername, '');
+        await BrowserActions.clearWithBackSpace(this.txtUsername);
     }
 
     async clearPassword(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-        await BrowserActions.clearSendKeys(this.txtPassword, '');
+        await BrowserActions.clearWithBackSpace(this.txtPassword);
     }
 
     async getUsernameTooltip(): Promise<string> {
@@ -127,7 +127,7 @@ export class LoginPage {
 
     async getSignInButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
-        return this.signInButton.isEnabled();
+        return await this.signInButton.isEnabled();
     }
 
     async loginToAllUsingUserModel(userModel): Promise<void> {

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, Locator, protractor } from 'protractor';
-import { ElementFinder, ElementArrayFinder } from 'protractor/built/element';
+import { browser, by, element, Locator, protractor, ElementFinder, ElementArrayFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
@@ -87,15 +86,15 @@ export class DataTableComponentPage {
         return await this.allSelectedRows.count();
     }
 
-    async selectRowWithKeyboard(columnName, columnValue): Promise<void> {
-        const row = this.getRow(columnName, columnValue);
-        await browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
-    }
-
     async selectRow(columnName, columnValue): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         await BrowserActions.click(row);
+    }
+
+    async selectRowWithKeyboard(columnName, columnValue): Promise<void> {
+        await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
+        await this.selectRow(columnName, columnValue);
+        await browser.actions().sendKeys(protractor.Key.NULL).perform();
     }
 
     async checkRowIsSelected(columnName, columnValue): Promise<void> {
@@ -352,7 +351,7 @@ export class DataTableComponentPage {
     }
 
     async copyContentTooltipIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.copyColumnTooltip);
+        await BrowserVisibility.waitUntilElementIsStale(this.copyColumnTooltip);
     }
 
     async mouseOverColumn(columnName, columnValue): Promise<void> {

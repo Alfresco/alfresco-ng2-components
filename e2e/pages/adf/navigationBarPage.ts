@@ -43,8 +43,14 @@ export class NavigationBarPage {
     formButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Form"]'));
     peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="People/Group Cloud"]'));
 
+    async clickDataTable(): Promise<void> {
+        await BrowserActions.clickExecuteScript(`.adf-sidenav-link[data-automation-id="Datatable"]`);
+        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
+    }
+
     async clickMenuButton(title): Promise<void> {
-        await BrowserActions.clickExecuteScript(`.adf-sidenav-link[data-automation-id="${title}"]`);
+        const menu = element(by.css(`.adf-sidenav-link[data-automation-id="${title}"]`));
+        await BrowserActions.click(menu);
     }
 
     async clickSocialButton(): Promise<void> {
@@ -56,17 +62,17 @@ export class NavigationBarPage {
     }
 
     async navigateToDatatable(): Promise<void> {
-        await this.clickMenuButton('Datatable');
+        await this.clickDataTable();
         await BrowserActions.click(this.dataTableNestedButton);
     }
 
     async navigateToCopyContentDatatable(): Promise<void> {
-        await this.clickMenuButton('Datatable');
+        await this.clickDataTable();
         await BrowserActions.click(this.dataTableCopyContentButton);
     }
 
     async navigateToDragAndDropDatatable(): Promise<void> {
-        await this.clickMenuButton('Datatable');
+        await this.clickDataTable();
         await BrowserActions.click(this.dataTableDragAndDropButton);
     }
 
@@ -161,7 +167,7 @@ export class NavigationBarPage {
     }
 
     async clickAboutButton(): Promise<void> {
-        await  this.clickMenuButton('About');
+        await this.clickMenuButton('About');
     }
 
     async clickTreeViewButton(): Promise<void> {

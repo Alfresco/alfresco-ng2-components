@@ -117,12 +117,14 @@ export class DataTablePage {
     }
 
     async selectRow(rowNumber): Promise<void> {
-        await BrowserActions.clickExecuteScript(`div[title="${this.columns.id}"] div[data-automation-id="text_${rowNumber}"] span`);
+        const row = this.dataTable.getCellElementByValue(this.columns.id, rowNumber);
+        await BrowserActions.click(row);
     }
 
     async selectRowWithKeyboard(rowNumber): Promise<void> {
-        const row = this.dataTable.getCellElementByValue(this.columns.id, rowNumber);
-        await browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
+        await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
+        await this.selectRow(rowNumber);
+        await browser.actions().sendKeys(protractor.Key.NULL).perform();
     }
 
     async selectSelectionMode(selectionMode): Promise<void> {
@@ -135,8 +137,8 @@ export class DataTablePage {
         return this.dataTable.getCellElementByValue(this.columns.id, rowNumber).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
     }
 
-    getCopyContentTooltip(): Promise<string> {
-        return this.dataTable.getCopyContentTooltip();
+    async getCopyContentTooltip(): Promise<string> {
+        return await this.dataTable.getCopyContentTooltip();
     }
 
     async mouseOverNameColumn(name): Promise<void> {
@@ -187,6 +189,6 @@ export class DataTablePage {
 
     async getClipboardInputText(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pasteClipboardInput);
-        return this.pasteClipboardInput.getAttribute('value');
+        return await this.pasteClipboardInput.getAttribute('value');
     }
 }
