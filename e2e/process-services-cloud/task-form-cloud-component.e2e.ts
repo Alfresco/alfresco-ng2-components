@@ -84,7 +84,7 @@ describe('Task form cloud component',  () => {
         processInstancesService = new ProcessInstancesService(apiService);
         completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-        await browser.driver.sleep(4000); // eventual consistency query
+        await browser.sleep(4000); // eventual consistency query
         const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
         claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
 

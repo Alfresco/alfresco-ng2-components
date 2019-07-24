@@ -72,9 +72,9 @@ describe('Search Sorting Picker', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         pngA = await uploadActions.uploadFile(pngAModel.location, pngAModel.name, '-my-');
-        await browser.driver.sleep(3000);
+        await browser.sleep(3000);
         pngD = await uploadActions.uploadFile(pngDModel.location, pngDModel.name, '-my-');
-        await browser.driver.sleep(12000);
+        await browser.sleep(12000);
 
         await loginPage.loginToContentServices(acsUser.id, acsUser.password);
 

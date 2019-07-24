@@ -328,8 +328,6 @@ exports.config = {
     },
 
     onPrepare: async () => {
-        await browser.waitForAngularEnabled(false);
-
         browserLogErrorPrint();
 
         retry.onPrepare();
@@ -367,7 +365,7 @@ exports.config = {
         jasmine.getEnv().addReporter(junitReporter);
 
 
-        return browser.driver.executeScript(disableCSSAnimation);
+        return browser.executeScript(disableCSSAnimation);
 
         function disableCSSAnimation() {
             let css = '* {' +

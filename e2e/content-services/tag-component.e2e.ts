@@ -124,7 +124,7 @@ describe('Tag component', () => {
 
         await tagPage.addTag(uppercaseTag + digitsTag + nonLatinTag);
 
-        await browser.driver.sleep(5000); // wait CS return tags
+        await browser.sleep(5000); // wait CS return tags
 
         await tagPage.checkTagIsDisplayedInTagList(uppercaseTag.toLowerCase() + digitsTag + nonLatinTag);
         await tagPage.checkTagIsDisplayedInTagListByNodeId(uppercaseTag.toLowerCase() + digitsTag + nonLatinTag);
@@ -191,7 +191,7 @@ describe('Tag component', () => {
         await tagPage.insertNodeId(pdfFileModel.id);
         await tagPage.addTag(tagList[2]);
 
-        await browser.driver.sleep(5000); // wait CS return tags
+        await browser.sleep(5000); // wait CS return tags
 
         await tagPage.checkTagListIsOrderedAscending();
         await tagPage.checkTagListByNodeIdIsOrderedAscending();

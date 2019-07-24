@@ -117,15 +117,14 @@ describe('Login component - Redirect', () => {
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
-        browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-        });
+        let actualUrl = await browser.getCurrentUrl();
+        expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
 
         await contentServicesPage.waitForTableBody();
 
         await navigationBarPage.clickLogoutButton();
 
-        logoutPage.checkLogoutSectionIsDisplayed();
+        await logoutPage.checkLogoutSectionIsDisplayed();
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
@@ -133,10 +132,8 @@ describe('Login component - Redirect', () => {
 
         await loginPage.login(user.id, user.password);
 
-        browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-        });
-
+        actualUrl = await browser.getCurrentUrl();
+        expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
     });
 
     it('[C299161] Should redirect user to requested URL after reloading login page', async () => {
@@ -169,6 +166,5 @@ describe('Login component - Redirect', () => {
 
         const actualUrl = await browser.getCurrentUrl();
         expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-
     });
 });

@@ -58,7 +58,7 @@ export class SettingsPage {
     validationMessage: ElementFinder = element(by.cssContainingText('mat-error', 'This field is required'));
 
     async goToSettingsPage(): Promise<void> {
-        await browser.driver.get(this.settingsURL);
+        await browser.get(this.settingsURL);
         await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
     }
 

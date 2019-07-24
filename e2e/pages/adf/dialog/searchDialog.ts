@@ -52,7 +52,7 @@ export class SearchDialog {
     }
 
     async checkNoResultMessageIsDisplayed(): Promise<void> {
-        await browser.driver.sleep(500);
+        await browser.sleep(500);
         await BrowserVisibility.waitUntilElementIsVisible(this.noResultMessage);
     }
 

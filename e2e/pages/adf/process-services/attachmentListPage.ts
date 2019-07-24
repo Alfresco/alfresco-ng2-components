@@ -55,9 +55,9 @@ export class AttachmentListPage {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         await element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
         await BrowserActions.click(this.buttonMenu);
-        await browser.driver.sleep(500);
+        await browser.sleep(500);
         await BrowserActions.click(this.viewButton);
-        await browser.driver.sleep(500);
+        await browser.sleep(500);
     }
 
     async removeFile(name): Promise<void> {
@@ -65,9 +65,9 @@ export class AttachmentListPage {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         await element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
         await BrowserActions.click(this.buttonMenu);
-        await browser.driver.sleep(500);
+        await browser.sleep(500);
         await BrowserActions.click(this.removeButton);
-        await browser.driver.sleep(500);
+        await browser.sleep(500);
     }
 
     async downloadFile(name): Promise<void> {
@@ -75,7 +75,7 @@ export class AttachmentListPage {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         await element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
         await BrowserActions.click(this.buttonMenu);
-        await browser.driver.sleep(500);
+        await browser.sleep(500);
         await BrowserActions.click(this.downloadButton);
     }
 

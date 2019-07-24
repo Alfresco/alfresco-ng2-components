@@ -89,7 +89,7 @@ describe('Document List Component',  () => {
                 }
             });
 
-        await browser.driver.sleep(10000);
+        await browser.sleep(10000);
         done();
     });
 

@@ -102,7 +102,7 @@ describe('Search component - Search Bar', () => {
         filesToDelete.push(await uploadActions.createFolder(secondFolder.name, '-my-'));
         filesToDelete.push(await uploadActions.createFolder(thirdFolder.name, '-my-'));
 
-        await browser.driver.sleep(15000); // wait search index previous file/folder uploaded
+        await browser.sleep(15000); // wait search index previous file/folder uploaded
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 

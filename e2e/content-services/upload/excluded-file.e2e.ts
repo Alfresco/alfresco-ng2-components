@@ -87,7 +87,7 @@ describe('Upload component - Excluded Files', () => {
 
         await dragAndDrop.dropFile(dragAndDropArea, iniExcludedFile.location);
 
-        await browser.driver.sleep(5000);
+        await browser.sleep(5000);
 
         await uploadDialog.dialogIsNotDisplayed();
 
@@ -122,11 +122,11 @@ describe('Upload component - Excluded Files', () => {
         await contentServicesPage.goToDocumentList();
 
         await uploadToggles.enableExtensionFilter();
-        await browser.driver.sleep(1000);
+        await browser.sleep(1000);
         await uploadToggles.addExtension('.png');
 
         await contentServicesPage.uploadFile(pngFile.location);
-        await browser.driver.sleep(1000);
+        await browser.sleep(1000);
         await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
     });
 });

@@ -168,7 +168,7 @@ describe('Upload component', () => {
             await uploadToggles.enableMultipleFileUpload();
             await uploadToggles.checkMultipleFileUploadToggleIsEnabled();
 
-            await browser.driver.sleep(1000);
+            await browser.sleep(1000);
             expect(await contentServicesPage.getMultipleFileButtonTooltip()).toEqual('Custom tooltip');
             await uploadToggles.disableMultipleFileUpload();
         });
@@ -260,7 +260,7 @@ describe('Upload component', () => {
         it('[C272797] Should be possible to set max size to 1', async () => {
             await uploadToggles.enableMaxSize();
             await uploadToggles.checkMaxSizeToggleIsEnabled();
-            await browser.driver.sleep(1000);
+            await browser.sleep(1000);
             await uploadToggles.addMaxSize('1');
             await uploadToggles.disableMaxSize();
             await contentServicesPage.uploadFile(fileWithSpecificSize.location);
@@ -281,7 +281,7 @@ describe('Upload component', () => {
 
     it('[C260171] Should upload only the extension filter allowed when Enable extension filter is enabled', async () => {
         await uploadToggles.enableExtensionFilter();
-        await browser.driver.sleep(1000);
+        await browser.sleep(1000);
         await uploadToggles.addExtension('.docx');
         await contentServicesPage.uploadFile(docxFileModel.location);
         await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
@@ -297,7 +297,7 @@ describe('Upload component', () => {
 
     it('[C274687] Should upload with drag and drop only the extension filter allowed when Enable extension filter is enabled', async () => {
         await uploadToggles.enableExtensionFilter();
-        await browser.driver.sleep(1000);
+        await browser.sleep(1000);
         await uploadToggles.addExtension('.docx');
 
         const dragAndDrop = new DropActions();

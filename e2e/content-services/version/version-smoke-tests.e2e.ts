@@ -99,7 +99,7 @@ describe('Version component',  () => {
     it('[C279995] Should show/hide the new upload file options when click on add New version/cancel button', async () => {
         await versionManagePage.showNewVersionButton.click();
 
-        await browser.driver.sleep(300);
+        await browser.sleep(300);
 
         await BrowserVisibility.waitUntilElementIsVisible(await versionManagePage.cancelButton);
         await BrowserVisibility.waitUntilElementIsVisible(await versionManagePage.majorRadio);
@@ -110,7 +110,7 @@ describe('Version component',  () => {
 
         await versionManagePage.cancelButton.click();
 
-        await browser.driver.sleep(300);
+        await browser.sleep(300);
 
         await BrowserVisibility.waitUntilElementIsNotVisible(await versionManagePage.cancelButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(await versionManagePage.majorRadio);

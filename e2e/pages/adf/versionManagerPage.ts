@@ -160,14 +160,14 @@ export class VersionManagePage {
     async downloadFileVersion(version): Promise<void> {
         await this.clickActionButton(version);
         const downloadButton: ElementFinder = element(by.id(`adf-version-list-action-download-${version}`));
-        await browser.driver.sleep(500);
+        await browser.sleep(500);
         await BrowserActions.click(downloadButton);
     }
 
     async deleteFileVersion(version): Promise<void> {
         await this.clickActionButton(version);
         const deleteButton: ElementFinder = element(by.id(`adf-version-list-action-delete-${version}`));
-        await browser.driver.sleep(500);
+        await browser.sleep(500);
         await BrowserActions.click(deleteButton);
     }
 
@@ -175,7 +175,7 @@ export class VersionManagePage {
         await this.clickActionButton(version);
         const restoreButton: ElementFinder = element(by.id(`adf-version-list-action-restore-${version}`));
         await BrowserVisibility.waitUntilElementIsVisible(restoreButton);
-        await browser.driver.sleep(500);
+        await browser.sleep(500);
         await BrowserActions.click(restoreButton);
     }
 

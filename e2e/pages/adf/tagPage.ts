@@ -43,9 +43,9 @@ export class TagPage {
     async insertNodeId(nodeId) {
         await BrowserActions.clearSendKeys(this.insertNodeIdElement, nodeId);
 
-        await browser.driver.sleep(200);
+        await browser.sleep(200);
         this.insertNodeIdElement.sendKeys(' ');
-        await browser.driver.sleep(200);
+        await browser.sleep(200);
         await this.insertNodeIdElement.sendKeys(protractor.Key.BACK_SPACE);
         await this.clickConfirmTag();
     }

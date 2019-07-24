@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
-import { ElementFinder } from 'protractor/built/element';
+import { browser, by, element, ElementFinder } from 'protractor';
 
 export class IconsPage {
 
@@ -26,5 +25,23 @@ export class IconsPage {
 
     locateLigatureIcon(name): ElementFinder {
         return element(by.css(`adf-icon[value='${name}'] .material-icons`));
+    }
+
+    async isCustomIconDisplayed(name) {
+        const present = await browser.isElementPresent(this.locateCustomIcon(name));
+        if (present) {
+          return await this.locateCustomIcon(name).isDisplayed();
+        } else {
+          return false;
+        }
+    }
+
+    async isLigatureIconDisplayed(name) {
+        const present = await browser.isElementPresent(this.locateLigatureIcon(name));
+        if (present) {
+          return await this.locateLigatureIcon(name).isDisplayed();
+        } else {
+          return false;
+        }
     }
 }

@@ -102,7 +102,7 @@ export class TasksCloudDemoPage {
 
     async clickSettingsButton(): Promise<void> {
         await BrowserActions.click(this.settingsButton);
-        await browser.driver.sleep(400);
+        await browser.sleep(400);
         await BrowserVisibility.waitUntilElementIsVisible(this.multiSelectionToggle);
         await BrowserVisibility.waitUntilElementIsClickable(this.modeDropDownArrow);
     }

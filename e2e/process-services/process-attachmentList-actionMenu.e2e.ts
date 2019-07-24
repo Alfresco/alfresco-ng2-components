@@ -121,7 +121,7 @@ describe('Attachment list action menu for processes',  () => {
 
         await attachmentListPage.downloadFile(pngFile.name);
 
-        await browser.driver.sleep(1000);
+        await browser.sleep(1000);
 
         expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
 
@@ -154,7 +154,7 @@ describe('Attachment list action menu for processes',  () => {
 
         await attachmentListPage.downloadFile(pngFile.name);
 
-        await browser.driver.sleep(1000);
+        await browser.sleep(1000);
 
         expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
 

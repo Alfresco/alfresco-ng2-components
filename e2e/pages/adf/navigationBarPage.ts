@@ -148,8 +148,8 @@ export class NavigationBarPage {
         await BrowserActions.click(this.cardViewButton);
     }
 
-    openContentServicesFolder(folderId): Promise<void> {
-        return BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + folderId);
+    async openContentServicesFolder(folderId): Promise<void> {
+        await BrowserActions.getUrl(`/files/${folderId}`);
     }
 
     async chooseLanguage(language): Promise<void> {

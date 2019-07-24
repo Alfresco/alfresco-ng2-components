@@ -116,7 +116,7 @@ describe('Process filters cloud',  () => {
         });
         queryService = new QueryService(apiService);
 
-        await browser.driver.sleep(4000); // eventual consistency query
+        await browser.sleep(4000); // eventual consistency query
         const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
         tasksService = new TasksService(apiService);
         const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
