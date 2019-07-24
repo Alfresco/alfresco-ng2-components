@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
-import { ElementFinder } from 'protractor/built/element';
 
 export class SettingsPage {
 
@@ -73,12 +72,12 @@ export class SettingsPage {
         return BrowserActions.getText(this.selectedOption);
     }
 
-    getBpmHostUrl() {
-        return this.bpmText.getAttribute('value');
+    async getBpmHostUrl() {
+        return await this.bpmText.getAttribute('value');
     }
 
-    getEcmHostUrl() {
-        return this.ecmText.getAttribute('value');
+    async getEcmHostUrl() {
+        return await this.ecmText.getAttribute('value');
     }
 
     getBpmOption() {
@@ -181,8 +180,7 @@ export class SettingsPage {
 
     async setLogoutUrl(logoutUrl) {
         await BrowserVisibility.waitUntilElementIsPresent(this.logoutUrlText);
-        this.logoutUrlText.clear();
-        this.logoutUrlText.sendKeys(logoutUrl);
+        await BrowserActions.clearSendKeys(this.logoutUrlText, logoutUrl);
     }
 
     async setProcessServicesURL(processServiceURL) {
@@ -192,8 +190,7 @@ export class SettingsPage {
 
     async setClientId(clientId: string = browser.params.config.oauth2.clientId) {
         await BrowserVisibility.waitUntilElementIsVisible(this.clientIdText);
-        this.clientIdText.clear();
-        this.clientIdText.sendKeys(clientId);
+        await BrowserActions.clearSendKeys(this.clientIdText, clientId);
     }
 
     async setContentServicesURL(contentServiceURL) {
@@ -203,28 +200,22 @@ export class SettingsPage {
 
     async clearContentServicesURL() {
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        await this.ecmText.clear();
-        await this.ecmText.sendKeys('a');
-        await this.ecmText.sendKeys(protractor.Key.BACK_SPACE);
+        await BrowserActions.clearWithBackSpace(this.ecmText);
     }
 
     async clearProcessServicesURL() {
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        await this.bpmText.clear();
-        await this.bpmText.sendKeys('a');
-        await this.bpmText.sendKeys(protractor.Key.BACK_SPACE);
+        await BrowserActions.clearWithBackSpace(this.bpmText);
     }
 
     async setAuthHost(authHostURL) {
         await BrowserVisibility.waitUntilElementIsVisible(this.authHostText);
-        await this.authHostText.clear();
-        await this.authHostText.sendKeys(authHostURL);
+        await BrowserActions.clearSendKeys(this.authHostText, authHostURL);
     }
 
     async setIdentityHost(identityHost) {
         await BrowserVisibility.waitUntilElementIsVisible(this.identityHostText);
-        await this.identityHostText.clear();
-        await this.identityHostText.sendKeys(identityHost);
+        await BrowserActions.clearSendKeys(this.identityHostText, identityHost);
     }
 
     async clickApply() {
@@ -237,11 +228,8 @@ export class SettingsPage {
         const isChecked = (await this.silentLoginToggleElement.getAttribute('class')).includes('mat-checked');
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            return await BrowserActions.click(this.silentLoginToggleLabel);
-
+            await BrowserActions.click(this.silentLoginToggleLabel);
         }
-
-        return Promise.resolve();
     }
 
     async setImplicitFlow(enableToggle) {
@@ -252,8 +240,6 @@ export class SettingsPage {
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
             await BrowserActions.click(this.implicitFlowLabel);
         }
-
-        return Promise.resolve();
     }
 
     async checkApplyButtonIsDisabled() {
@@ -275,33 +261,29 @@ export class SettingsPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.bpm.option);
     }
 
-    async getBasicAuthRadioButton() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.basicAuthRadioButton);
+    getBasicAuthRadioButton() {
         return this.basicAuthRadioButton;
     }
 
-    async getSsoRadioButton() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.ssoRadioButton);
+    getSsoRadioButton() {
         return this.ssoRadioButton;
     }
 
-    async getBackButton() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.backButton);
+    getBackButton() {
         return this.backButton;
     }
 
-    async getApplyButton() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.applyButton);
+    getApplyButton() {
         return this.applyButton;
     }
 
     async checkBasicAuthRadioIsSelected() {
-        const radioButton = await this.getBasicAuthRadioButton();
-        expect(radioButton.getAttribute('class')).toContain('mat-radio-checked');
+        const radioButton = this.getBasicAuthRadioButton();
+        expect(await radioButton.getAttribute('class')).toContain('mat-radio-checked');
     }
 
     async checkSsoRadioIsNotSelected() {
-        const radioButton = await this.getBasicAuthRadioButton();
-        expect(radioButton.getAttribute('class')).not.toContain('mat-radio-checked');
+        const radioButton = this.getSsoRadioButton();
+        expect(await radioButton.getAttribute('class')).not.toContain('mat-radio-checked');
     }
 }
