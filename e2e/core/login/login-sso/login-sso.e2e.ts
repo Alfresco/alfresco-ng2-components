@@ -65,7 +65,7 @@ describe('Login component - SSO', () => {
                 browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId);
             await loginSSOPage.clickOnSSOButton();
             await loginSSOPage.checkLoginErrorIsDisplayed();
-            expect(loginSSOPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
+            expect(await loginSSOPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
         });
     });
 
@@ -92,8 +92,8 @@ describe('Login component - SSO', () => {
         await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.adf.hostSso,
             browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId, '/login');
-        await  loginSSOPage.clickOnSSOButton();
-        await  loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await loginSSOPage.clickOnSSOButton();
+        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await navigationBarPage.clickLogoutButton();
 
         const actualUrl = await browser.getCurrentUrl();

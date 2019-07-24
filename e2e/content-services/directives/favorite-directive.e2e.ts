@@ -131,7 +131,7 @@ describe('Favorite directive',  () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
         await contentServicesPage.clickOnFavoriteButton();
         await contentServicesPage.checkIsMarkedFavorite();
-        contentListPage.rightClickOnRow(testFile.entry.name);
+        await contentListPage.rightClickOnRow(testFile.entry.name);
         await contentServicesPage.pressContextMenuActionNamed('Delete');
         await contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
         await customSourcesPage.navigateToCustomSources();

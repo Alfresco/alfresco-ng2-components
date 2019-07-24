@@ -129,9 +129,8 @@ export class TaskDetailsPage {
 
     async checkFormIsAttached(formName): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
-        this.formNameField.getText().then((attachedFormName) => {
-            expect(attachedFormName).toEqual(formName);
-        });
+        const attachedFormName = await this.formNameField.getText();
+        expect(attachedFormName).toEqual(formName);
     }
 
     getFormName(): Promise<string> {

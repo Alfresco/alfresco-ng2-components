@@ -114,9 +114,8 @@ describe('Pagination - returns to previous page when current is empty',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
 
-        await contentServicesPage.getAllRowsNameColumn().then((list) => {
-            expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
-        });
+        let list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
 
         await paginationPage.clickOnNextPage();
 
@@ -125,9 +124,8 @@ describe('Pagination - returns to previous page when current is empty',  () => {
 
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
-        await contentServicesPage.getAllRowsNameColumn().then((list) => {
-            expect(Util.arrayContainsArray(list, fileNames.slice(5, 6))).toEqual(true);
-        });
+        list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames.slice(5, 6))).toEqual(true);
 
         await contentServicesPage.deleteContent(lastFile);
         await contentServicesPage.checkContentIsNotDisplayed(lastFile);
@@ -135,9 +133,8 @@ describe('Pagination - returns to previous page when current is empty',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
 
-        await contentServicesPage.getAllRowsNameColumn().then((list) => {
-            expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
-        });
+        list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
 
     });
 

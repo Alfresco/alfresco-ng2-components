@@ -99,9 +99,8 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfFiles + ' of ' + nrOfFiles);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, fileNames)).toEqual(true);
-        });
+        const list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames)).toEqual(true);
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
     });
@@ -116,9 +115,8 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfFiles + ' of ' + nrOfFiles);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, fileNames)).toEqual(true);
-        });
+        const list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames)).toEqual(true);
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
@@ -142,9 +140,8 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
-        });
+        let list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
         await contentServicesPage.checkAcsContainer();
@@ -152,9 +149,8 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, fileNames.slice(5, 10))).toEqual(true);
-        });
+        list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames.slice(5, 10))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
         await contentServicesPage.checkAcsContainer();
@@ -162,9 +158,8 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, fileNames.slice(10, 15))).toEqual(true);
-        });
+        list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames.slice(10, 15))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
         await contentServicesPage.checkAcsContainer();
@@ -172,11 +167,10 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfFiles);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
-        });
+        list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
 
-        browser.refresh();
+        await browser.refresh();
         await contentServicesPage.checkAcsContainer();
         await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
@@ -195,9 +189,8 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfFiles);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, fileNames.slice(0, 10))).toEqual(true);
-        });
+        let list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames.slice(0, 10))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
         await contentServicesPage.checkAcsContainer();
@@ -205,11 +198,10 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfFiles);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, fileNames.slice(10, 20))).toEqual(true);
-        });
+        list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames.slice(10, 20))).toEqual(true);
 
-        browser.refresh();
+        await browser.refresh();
         await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         await navigationBarPage.clickLogoutButton();
@@ -229,9 +221,8 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * currentPage + ' of ' + nrOfFiles);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, fileNames.slice(0, 15))).toEqual(true);
-        });
+        let list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames.slice(0, 15))).toEqual(true);
         currentPage++;
         await paginationPage.clickOnNextPage();
         await contentServicesPage.checkAcsContainer();
@@ -239,11 +230,10 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfFiles + ' of ' + nrOfFiles);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles - itemsPerPage.fifteenValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
-        });
+        list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
 
-        browser.refresh();
+        await browser.refresh();
         await contentServicesPage.waitForTableBody();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
@@ -306,9 +296,8 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * currentPage + ' of ' + secondSetNumber);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(0, 15))).toEqual(true);
-        });
+        let list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(0, 15))).toEqual(true);
 
         currentPage++;
         await paginationPage.clickOnNextPage();
@@ -317,9 +306,8 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + secondSetNumber + ' of ' + secondSetNumber);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.fifteenValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(15, 25))).toEqual(true);
-        });
+        list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(15, 25))).toEqual(true);
 
         currentPage = 1;
         await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
@@ -328,9 +316,8 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.twentyValue * currentPage + ' of ' + secondSetNumber);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.twentyValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(0, 20))).toEqual(true);
-        });
+        list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(0, 20))).toEqual(true);
 
         currentPage++;
         await paginationPage.clickOnNextPage();
@@ -339,8 +326,7 @@ describe('Document List - Pagination',  () => {
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 21-' + secondSetNumber + ' of ' + secondSetNumber);
         expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.twentyValue);
-        await contentServicesPage.getAllRowsNameColumn().then(function(list) {
-            expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(20, 25))).toEqual(true);
-        });
+        list = await contentServicesPage.getAllRowsNameColumn();
+        expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(20, 25))).toEqual(true);
     });
 });

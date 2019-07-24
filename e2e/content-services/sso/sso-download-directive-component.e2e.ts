@@ -135,7 +135,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         it('[C291936] Should be able to download a file', async (done) => {
             await contentListPage.selectRow(pngFileModel.name);
             await contentServicesPage.clickDownloadButton();
-            expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
+            expect(await Util.fileExists(downloadedPngFile, 30)).toBe(true);
             done();
         });
 
@@ -172,9 +172,9 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await contentServicesPage.checkAcsContainer();
             await contentListPage.waitForTableBody();
             const filePdfIconUrl = await contentServicesPage.getRowIconImageUrl(firstPdfFileModel.name);
-            expect(await filePdfIconUrl).toContain(`/versions/1/nodes/${pdfUploadedFile.entry.id}/renditions`);
+            expect(filePdfIconUrl).toContain(`/versions/1/nodes/${pdfUploadedFile.entry.id}/renditions`);
             const filePngIconUrl = await contentServicesPage.getRowIconImageUrl(pngFileModel.name);
-            expect(await filePngIconUrl).toContain(`/versions/1/nodes/${pngUploadedFile.entry.id}/renditions`);
+            expect(filePngIconUrl).toContain(`/versions/1/nodes/${pngUploadedFile.entry.id}/renditions`);
         });
     });
 });

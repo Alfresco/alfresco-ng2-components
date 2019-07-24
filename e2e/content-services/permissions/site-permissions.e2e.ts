@@ -189,11 +189,11 @@ describe('Permissions Component', () => {
 
             const roleDropdownOptions: ElementArrayFinder = await permissionsPage.getRoleDropdownOptions();
 
-            expect(roleDropdownOptions.count()).toBe(4);
-            expect(roleDropdownOptions.get(0).getText()).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);
-            expect(roleDropdownOptions.get(1).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONSUMER);
-            expect(roleDropdownOptions.get(2).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
-            expect(roleDropdownOptions.get(3).getText()).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
+            expect(await roleDropdownOptions.count()).toBe(4);
+            expect(await roleDropdownOptions.get(0).getText()).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);
+            expect(await roleDropdownOptions.get(1).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONSUMER);
+            expect(await roleDropdownOptions.get(2).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
+            expect(await roleDropdownOptions.get(3).getText()).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
         });
 
     });
@@ -296,7 +296,7 @@ describe('Permissions Component', () => {
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
             await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
 
-            expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
+            expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
             await metadataViewPage.clickCloseButton();
 
             await contentServicesPage.uploadFile(pngFileModel.location);

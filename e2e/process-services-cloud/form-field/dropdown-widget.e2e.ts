@@ -118,11 +118,11 @@ describe('Form Field Component - Dropdown Widget', () => {
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Dropdown097maj');
-        dropdown.selectOption('Clementine Bauch', 'dropdown-cloud-widget mat-select');
-        expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        await dropdown.selectOption('Clementine Bauch', 'dropdown-cloud-widget mat-select');
+        expect(await dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
         await taskFormCloudComponent.checkSaveButtonIsDisplayed();
         await taskFormCloudComponent.clickSaveButton();
-        expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        expect(await dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
         await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
         await taskFormCloudComponent.clickCompleteButton();
         expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
@@ -134,7 +134,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Dropdown097maj');
-        expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        expect(await dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
         await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
     });
 

@@ -99,7 +99,7 @@ describe('Tag component', () => {
         await tagPage.checkTagListByNodeIdIsEmpty();
         await tagPage.addNewTagInput('a');
 
-        expect(tagPage.addTagButtonIsEnabled()).toEqual(false);
+        expect(await tagPage.addTagButtonIsEnabled()).toEqual(false);
         expect(await tagPage.getNewTagInput()).toEqual('a');
     });
 

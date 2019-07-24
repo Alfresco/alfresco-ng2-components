@@ -369,7 +369,7 @@ describe('Start Task Form', () => {
             const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
             await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
-            expect(breadCrumbDropdownPage.getTextOfCurrentFolder()).toBe(testUser.username);
+            expect(await breadCrumbDropdownPage.getTextOfCurrentFolder()).toBe(testUser.username);
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowContentIsDisplayed(folderName);
             expect(await contentNodeSelectorDialogPage.checkCancelButtonIsEnabled()).toBe(true);

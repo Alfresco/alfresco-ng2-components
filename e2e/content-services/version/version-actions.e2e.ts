@@ -90,14 +90,14 @@ describe('Version component actions',  () => {
 
     it('[C280003] Should not be possible delete a file version if there is only one version', async () => {
         await versionManagePage.clickActionButton('1.0');
-        expect(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
+        expect(await element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
         await versionManagePage.closeActionsMenu();
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
     });
 
     it('[C280004] Should not be possible restore the version if there is only one version', async () => {
         await versionManagePage.clickActionButton('1.0');
-        expect(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
+        expect(await element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
         await versionManagePage.closeActionsMenu();
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });

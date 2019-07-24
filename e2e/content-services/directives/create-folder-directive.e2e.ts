@@ -118,7 +118,7 @@ describe('Create folder directive', () => {
 
         await contentServicesPage.metadataContent(folderName);
 
-        expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('this is the description');
+        expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('this is the description');
     });
 
     it('[C260159] Should not be possible create a folder with banned character', async () => {

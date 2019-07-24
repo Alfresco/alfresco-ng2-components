@@ -314,7 +314,7 @@ describe('Version component permissions',  () => {
 
             await versionManagePage.clickActionButton('1.1');
 
-            expect(element(by.css(`[id="adf-version-list-action-delete-1.1"]`)).isEnabled()).toBe(false);
+            expect(await element(by.css(`[id="adf-version-list-action-delete-1.1"]`)).isEnabled()).toBe(false);
 
             await versionManagePage.closeActionsMenu();
 

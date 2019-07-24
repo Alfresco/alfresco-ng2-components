@@ -127,14 +127,14 @@ describe('Process Header cloud component',  () => {
 
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
             await processCloudDemoPage.processListCloudComponent().selectRow(runningProcess.entry.name);
-            expect(processHeaderCloudPage.getId()).toEqual(runningProcess.entry.id);
-            expect(processHeaderCloudPage.getName()).toEqual(runningProcess.entry.name);
-            expect(processHeaderCloudPage.getStatus()).toEqual(runningProcess.entry.status);
-            expect(processHeaderCloudPage.getInitiator()).toEqual(runningProcess.entry.initiator);
-            expect(processHeaderCloudPage.getStartDate()).toEqual(runningCreatedDate);
-            expect(processHeaderCloudPage.getParentId()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_PARENT);
-            expect(processHeaderCloudPage.getBusinessKey()).toEqual(runningProcess.entry.businessKey);
-            expect(processHeaderCloudPage.getLastModified()).toEqual(runningCreatedDate);
+            expect(await processHeaderCloudPage.getId()).toEqual(runningProcess.entry.id);
+            expect(await processHeaderCloudPage.getName()).toEqual(runningProcess.entry.name);
+            expect(await processHeaderCloudPage.getStatus()).toEqual(runningProcess.entry.status);
+            expect(await processHeaderCloudPage.getInitiator()).toEqual(runningProcess.entry.initiator);
+            expect(await processHeaderCloudPage.getStartDate()).toEqual(runningCreatedDate);
+            expect(await processHeaderCloudPage.getParentId()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_PARENT);
+            expect(await processHeaderCloudPage.getBusinessKey()).toEqual(runningProcess.entry.businessKey);
+            expect(await processHeaderCloudPage.getLastModified()).toEqual(runningCreatedDate);
         });
 
         it('[C305008] Should display process details for completed process', async () => {
@@ -150,14 +150,14 @@ describe('Process Header cloud component',  () => {
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
             await processCloudDemoPage.processListCloudComponent().selectRowById(childCompleteProcess.entry.id);
 
-            expect(processHeaderCloudPage.getId()).toEqual(childCompleteProcess.entry.id);
-            expect(processHeaderCloudPage.getName()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_NAME);
-            expect(processHeaderCloudPage.getStatus()).toEqual(childCompleteProcess.entry.status);
-            expect(processHeaderCloudPage.getInitiator()).toEqual(childCompleteProcess.entry.initiator);
-            expect(processHeaderCloudPage.getStartDate()).toEqual(completedCreatedDate);
-            expect(processHeaderCloudPage.getParentId()).toEqual(childCompleteProcess.entry.parentId);
-            expect(processHeaderCloudPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_BUSINESS_KEY);
-            expect(processHeaderCloudPage.getLastModified()).toEqual(completedCreatedDate);
+            expect(await processHeaderCloudPage.getId()).toEqual(childCompleteProcess.entry.id);
+            expect(await processHeaderCloudPage.getName()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_NAME);
+            expect(await processHeaderCloudPage.getStatus()).toEqual(childCompleteProcess.entry.status);
+            expect(await processHeaderCloudPage.getInitiator()).toEqual(childCompleteProcess.entry.initiator);
+            expect(await processHeaderCloudPage.getStartDate()).toEqual(completedCreatedDate);
+            expect(await processHeaderCloudPage.getParentId()).toEqual(childCompleteProcess.entry.parentId);
+            expect(await processHeaderCloudPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_BUSINESS_KEY);
+            expect(await processHeaderCloudPage.getLastModified()).toEqual(completedCreatedDate);
         });
 
     });

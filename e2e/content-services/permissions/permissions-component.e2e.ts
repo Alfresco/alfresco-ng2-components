@@ -304,12 +304,12 @@ describe('Permissions Component', () => {
 
             const roleDropdownOptions = await permissionsPage.getRoleDropdownOptions();
 
-            expect(roleDropdownOptions.count()).toBe(5);
-            expect(roleDropdownOptions.get(0).getText()).toBe('Contributor');
-            expect(roleDropdownOptions.get(1).getText()).toBe('Collaborator');
-            expect(roleDropdownOptions.get(2).getText()).toBe('Coordinator');
-            expect(roleDropdownOptions.get(3).getText()).toBe('Editor');
-            expect(roleDropdownOptions.get(4).getText()).toBe('Consumer');
+            expect(await roleDropdownOptions.count()).toBe(5);
+            expect(await roleDropdownOptions.get(0).getText()).toBe('Contributor');
+            expect(await roleDropdownOptions.get(1).getText()).toBe('Collaborator');
+            expect(await roleDropdownOptions.get(2).getText()).toBe('Coordinator');
+            expect(await roleDropdownOptions.get(3).getText()).toBe('Editor');
+            expect(await roleDropdownOptions.get(4).getText()).toBe('Consumer');
 
             await permissionsPage.selectOption('Collaborator');
 

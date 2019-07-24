@@ -113,8 +113,8 @@ describe('People Groups Cloud Component',  () => {
 
         beforeEach( async() => {
             await navigationBarPage.navigateToPeopleGroupCloudPage();
-            peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
-            peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
+            await peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
+            await peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
         });
 
         afterEach(async () => {
@@ -124,10 +124,10 @@ describe('People Groups Cloud Component',  () => {
         describe('[C297674] Should be able to add filtering to People Cloud Component',  () => {
 
             beforeEach( async() => {
-                peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
-                peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
-                peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
-                peopleGroupCloudComponentPage.checkPeopleCloudFilterRole();
+                await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
+                await peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
+                await peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
+                await peopleGroupCloudComponentPage.checkPeopleCloudFilterRole();
             });
 
             it('No role filtering', async () => {
@@ -140,7 +140,7 @@ describe('People Groups Cloud Component',  () => {
             });
 
             it('One role filtering', async () => {
-                peopleGroupCloudComponentPage.enterPeopleRoles(`["${await identityService.ROLES.APS_USER}"]`);
+                await peopleGroupCloudComponentPage.enterPeopleRoles(`["${await identityService.ROLES.APS_USER}"]`);
                 await peopleCloudComponent.searchAssignee(apsUser.lastName);
                 await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
                 await peopleCloudComponent.searchAssignee(activitiUser.lastName);
@@ -150,7 +150,7 @@ describe('People Groups Cloud Component',  () => {
             });
 
             it('Multiple roles filtering', async () => {
-                peopleGroupCloudComponentPage.enterPeopleRoles(`["${await identityService.ROLES.APS_USER}", "${await identityService.ROLES.ACTIVITI_USER}"]`);
+                await peopleGroupCloudComponentPage.enterPeopleRoles(`["${await identityService.ROLES.APS_USER}", "${await identityService.ROLES.ACTIVITI_USER}"]`);
                 await peopleCloudComponent.searchAssignee(apsUser.lastName);
                 await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
                 await peopleCloudComponent.searchAssignee(activitiUser.lastName);
@@ -163,111 +163,111 @@ describe('People Groups Cloud Component',  () => {
         describe('[C309674] Should be able to add filtering to Group Cloud Component',  () => {
 
             beforeEach( async() => {
-                peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
-                peopleGroupCloudComponentPage.clickGroupCloudFilterRole();
+                await peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
+                await peopleGroupCloudComponentPage.clickGroupCloudFilterRole();
             });
 
             it('No role filtering', async () => {
-                peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.groupRoleInput);
-                groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(groupNoRole.name);
-                groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(groupActiviti.name);
-                groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
+                await peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.groupRoleInput);
+                await groupCloudComponentPage.searchGroups(groupNoRole.name);
+                await groupCloudComponentPage.checkGroupIsDisplayed(groupNoRole.name);
+                await groupCloudComponentPage.searchGroups(groupActiviti.name);
+                await groupCloudComponentPage.checkGroupIsDisplayed(groupActiviti.name);
+                await groupCloudComponentPage.searchGroups(groupAps.name);
+                await groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
             });
 
             it('One role filtering', async () => {
-                peopleGroupCloudComponentPage.enterGroupRoles(`["${await identityService.ROLES.APS_ADMIN}"]`);
-                groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
-                groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(groupActiviti.name);
-                groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
+                await peopleGroupCloudComponentPage.enterGroupRoles(`["${await identityService.ROLES.APS_ADMIN}"]`);
+                await groupCloudComponentPage.searchGroups(groupAps.name);
+                await groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
+                await groupCloudComponentPage.searchGroups(groupActiviti.name);
+                await groupCloudComponentPage.checkGroupIsNotDisplayed(groupActiviti.name);
+                await groupCloudComponentPage.searchGroups(groupNoRole.name);
+                await groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
             });
 
             it('[C309996] Should be able to filter groups based on composite roles Activit_Admin', async () => {
-                peopleGroupCloudComponentPage.enterGroupRoles(`["${await identityService.ROLES.ACTIVITI_ADMIN}"]`);
-                groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(groupActiviti.name);
-                groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
-                groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
+                await peopleGroupCloudComponentPage.enterGroupRoles(`["${await identityService.ROLES.ACTIVITI_ADMIN}"]`);
+                await groupCloudComponentPage.searchGroups(groupActiviti.name);
+                await groupCloudComponentPage.checkGroupIsDisplayed(groupActiviti.name);
+                await groupCloudComponentPage.searchGroups(groupNoRole.name);
+                await groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
+                await groupCloudComponentPage.searchGroups(groupAps.name);
+                await groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
             });
 
             it('[C309996] Should be able to filter groups based on composite roles Aps_User', async () => {
-                peopleGroupCloudComponentPage.enterGroupRoles(`["${await identityService.ROLES.APS_USER}"]`);
-                groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(groupActiviti.name);
-                groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
-                groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
+                await peopleGroupCloudComponentPage.enterGroupRoles(`["${await identityService.ROLES.APS_USER}"]`);
+                await groupCloudComponentPage.searchGroups(groupActiviti.name);
+                await groupCloudComponentPage.checkGroupIsNotDisplayed(groupActiviti.name);
+                await groupCloudComponentPage.searchGroups(groupNoRole.name);
+                await groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
+                await groupCloudComponentPage.searchGroups(groupAps.name);
+                await groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
             });
 
             it('[C309996] Should be able to filter groups based on composite roles Activiti_User', async () => {
-                peopleGroupCloudComponentPage.enterGroupRoles(`["${await identityService.ROLES.ACTIVITI_USER}"]`);
-                groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(groupActiviti.name);
-                groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
-                groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
+                await peopleGroupCloudComponentPage.enterGroupRoles(`["${await identityService.ROLES.ACTIVITI_USER}"]`);
+                await groupCloudComponentPage.searchGroups(groupActiviti.name);
+                await groupCloudComponentPage.checkGroupIsNotDisplayed(groupActiviti.name);
+                await groupCloudComponentPage.searchGroups(groupNoRole.name);
+                await groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
+                await groupCloudComponentPage.searchGroups(groupAps.name);
+                await groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
             });
 
             it('Multiple roles filtering', async () => {
-                peopleGroupCloudComponentPage.enterGroupRoles(`["${await identityService.ROLES.APS_ADMIN}", "${await identityService.ROLES.ACTIVITI_ADMIN}"]`);
-                groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(groupActiviti.name);
-                groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
-                groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
+                await peopleGroupCloudComponentPage.enterGroupRoles(`["${await identityService.ROLES.APS_ADMIN}", "${await identityService.ROLES.ACTIVITI_ADMIN}"]`);
+                await groupCloudComponentPage.searchGroups(groupActiviti.name);
+                await groupCloudComponentPage.checkGroupIsDisplayed(groupActiviti.name);
+                await groupCloudComponentPage.searchGroups(groupAps.name);
+                await groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
+                await groupCloudComponentPage.searchGroups(groupNoRole.name);
+                await groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
             });
         });
 
         it('[C305033] Should fetch the preselect users based on the Validate flag set to True in Single mode selection', async () => {
 
-            peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
-            peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
-            peopleGroupCloudComponentPage.clickPreselectValidation();
-            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
+            await peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
+            await peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
+            await peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(await peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
 
-            peopleGroupCloudComponentPage.enterPeoplePreselect('[{"id":"12345","username":"someUsername","email":"someEmail"}]');
+            await peopleGroupCloudComponentPage.enterPeoplePreselect('[{"id":"12345","username":"someUsername","email":"someEmail"}]');
             expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe('');
 
-            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
-            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${noRoleUser.idIdentityService}"}]`);
+            expect(await peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
+            await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${noRoleUser.idIdentityService}"}]`);
             expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
 
-            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"email":"${apsUser.email}"}]`);
+            await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"email":"${apsUser.email}"}]`);
             expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${apsUser.firstName} ${apsUser.lastName}`);
 
-            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"username":"${activitiUser.username}"}]`);
+            await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"username":"${activitiUser.username}"}]`);
             expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName} ${activitiUser.lastName}`);
         });
 
         it('[C309676] Should fetch the preselect users based on the Validate flag set to True in Multiple mode selection', async () => {
 
-            peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
-            peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
-            peopleGroupCloudComponentPage.clickPreselectValidation();
-            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
+            await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
+            await peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
+            await peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(await peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
 
-            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${apsUser.idIdentityService}"},{"id":"${activitiUser.idIdentityService}"},` +
+            await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${apsUser.idIdentityService}"},{"id":"${activitiUser.idIdentityService}"},` +
                 `{"id":"${noRoleUser.idIdentityService}"}]`);
             await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName} ${apsUser.lastName}`);
             await peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName} ${activitiUser.lastName}`);
             await peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
 
-            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"email":"${apsUser.email}"},{"email":"${activitiUser.email}"},{"email":"${noRoleUser.email}"}]`);
+            await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"email":"${apsUser.email}"},{"email":"${activitiUser.email}"},{"email":"${noRoleUser.email}"}]`);
             await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName} ${apsUser.lastName}`);
             await peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName} ${activitiUser.lastName}`);
             await peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
 
-            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"username":"${apsUser.username}"},{"username":"${activitiUser.username}"},` +
+            await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"username":"${apsUser.username}"},{"username":"${activitiUser.username}"},` +
                 `{"username":"${noRoleUser.username}"}]`);
             await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName} ${apsUser.lastName}`);
             await peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName} ${activitiUser.lastName}`);
@@ -279,11 +279,11 @@ describe('People Groups Cloud Component',  () => {
         });
 
         it('[C309677] Should populate the Users without any validation when the Preselect flag is set to false', async () => {
-            peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
-            peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
-            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
+            await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
+            await peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
+            expect(await peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
 
-            peopleGroupCloudComponentPage.enterPeoplePreselect(
+            await peopleGroupCloudComponentPage.enterPeoplePreselect(
                 `[{"id":"TestId1","firstName":"TestFirstName1","lastName":"TestLastName1"},` +
                 `{"id":"TestId2","firstName":"TestFirstName2","lastName":"TestLastName2"},` +
                 `{"id":"TestId3","firstName":"TestFirstName3","lastName":"TestLastName3"}]`);
@@ -294,12 +294,12 @@ describe('People Groups Cloud Component',  () => {
         });
 
         it('[C309678] Should not fetch the preselect users when mandatory parameters Id, Email and username are missing', async () => {
-            peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
-            peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
-            peopleGroupCloudComponentPage.clickPreselectValidation();
-            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
+            await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
+            await peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
+            await peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(await peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
 
-            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"firstName":"${apsUser.firstName}","lastName":"${apsUser.lastName},"` +
+            await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"firstName":"${apsUser.firstName}","lastName":"${apsUser.lastName},"` +
                 `{"firstName":"${activitiUser.firstName}","lastName":"${activitiUser.lastName}",{"firstName":"${noRoleUser.firstName}","lastName":"${noRoleUser.lastName}"]`);
             await browser.sleep(200);
             expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe('');
