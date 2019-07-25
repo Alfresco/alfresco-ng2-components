@@ -86,7 +86,7 @@ describe('Form Component', () => {
 
         widget.dateWidget().checkLabelIsVisible(fields.dateWidgetId);
         widget.dateWidget().setDateInput(fields.dateWidgetId, message.test);
-        widget.dateWidget().clickOutsideWidget(fields.dateWidgetId);
+        formPage.saveForm();
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
         formPage.checkErrorLogMessage(message.errorLogDate);
 
