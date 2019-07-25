@@ -171,7 +171,7 @@ describe('Search Number Range Filter', () => {
         await searchResults.tableIsLoaded();
         await searchResults.sortBySize('DESC');
 
-        const results = await dataTable.geCellElementDetail('Size');
+        const results: any = dataTable.geCellElementDetail('Size');
         for (const currentResult of results) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -200,7 +200,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.clickApplyButton();
         await searchResults.sortBySize('DESC');
 
-        const results = await dataTable.geCellElementDetail('Size');
+        const results: any = dataTable.geCellElementDetail('Size');
         for (const currentResult of results) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -216,7 +216,7 @@ describe('Search Number Range Filter', () => {
         nameFilter.searchByName('z*');
         await searchResults.sortBySize('DESC');
 
-        const resultsSize = await dataTable.geCellElementDetail('Size');
+        const resultsSize: any = dataTable.geCellElementDetail('Size');
         for (const currentResult of resultsSize) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -227,7 +227,7 @@ describe('Search Number Range Filter', () => {
             }
         }
 
-        const resultsDisplay = await dataTable.geCellElementDetail('Display name');
+        const resultsDisplay: any = dataTable.geCellElementDetail('Display name');
         for (const currentResult of resultsDisplay) {
             try {
                 const name = await currentResult.getAttribute('title');
@@ -268,7 +268,7 @@ describe('Search Number Range Filter', () => {
         await searchResults.tableIsLoaded();
         await searchResults.sortBySize('DESC');
 
-        const results = await dataTable.geCellElementDetail('Size');
+        const results: any = dataTable.geCellElementDetail('Size');
         for (const currentResult of results) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -310,7 +310,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.clickApplyButton();
         await searchResults.sortBySize('DESC');
 
-        const results = await dataTable.geCellElementDetail('Size');
+        const results: any = dataTable.geCellElementDetail('Size');
         for (const currentResult of results) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -326,7 +326,7 @@ describe('Search Number Range Filter', () => {
         expect(await sizeRangeFilter.getFromNumber()).toEqual('');
         expect(await sizeRangeFilter.getToNumber()).toEqual('');
 
-        const resultsSize = await dataTable.geCellElementDetail('Size');
+        const resultsSize: any = dataTable.geCellElementDetail('Size');
         for (const currentResult of resultsSize) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -414,7 +414,7 @@ describe('Search Number Range Filter', () => {
             await searchResults.tableIsLoaded();
             await searchResults.sortByCreated('DESC');
 
-            const results = await dataTable.geCellElementDetail('Created');
+            const results: any = dataTable.geCellElementDetail('Created');
             for (const currentResult of results) {
                 const currentDate = await currentResult.getAttribute('title');
                 const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');

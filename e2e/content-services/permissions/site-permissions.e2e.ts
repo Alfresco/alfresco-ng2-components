@@ -22,7 +22,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
-import { browser, ElementArrayFinder } from 'protractor';
+import { browser } from 'protractor';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import CONSTANTS = require('../../util/constants');
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
@@ -187,7 +187,7 @@ describe('Permissions Component', () => {
 
             await permissionsPage.clickRoleDropdownByUserOrGroupName(consumerUser.getId());
 
-            const roleDropdownOptions: ElementArrayFinder = await permissionsPage.getRoleDropdownOptions();
+            const roleDropdownOptions = permissionsPage.getRoleDropdownOptions();
 
             expect(await roleDropdownOptions.count()).toBe(4);
             expect(await roleDropdownOptions.get(0).getText()).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);

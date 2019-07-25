@@ -68,19 +68,12 @@ describe('Metadata component', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async (done) => {
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
-
         Object.assign(pngFileModel, pngUploadedFile.entry);
-
         pngFileModel.update(pngUploadedFile.entry);
-
         done();
     });
 
@@ -90,7 +83,6 @@ describe('Metadata component', () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
-
             await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
                 presets: {
                     default: {
@@ -100,10 +92,9 @@ describe('Metadata component', () => {
             }));
         });
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await viewerPage.viewFile(pngFileModel.name);
             await viewerPage.checkFileIsLoaded();
-            done();
         });
 
         afterEach(async () => {
@@ -282,6 +273,7 @@ describe('Metadata component', () => {
 
             await metadataViewPage.clickEditPropertyIcons('name');
             await metadataViewPage.enterPropertyText('name', 'newnameFolder');
+            await metadataViewPage.clickUpdatePropertyIcon('name');
             expect(await metadataViewPage.getPropertyText('name')).toEqual('newnameFolder');
 
             await metadataViewPage.clickEditPropertyIcons('name');

@@ -140,7 +140,6 @@ export class DataTableComponentPage {
     }
 
     async rightClickOnRow(columnName, columnValue): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         await browser.actions().mouseMove(row).perform();
         await browser.actions().click(row, protractor.Button.RIGHT).perform();
@@ -179,7 +178,6 @@ export class DataTableComponentPage {
     }
 
     async doubleClickRow(columnName: string, columnValue: string): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         await BrowserActions.click(row);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
@@ -244,7 +242,7 @@ export class DataTableComponentPage {
 
     async contentInPosition(position): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.contents.first());
-        return BrowserActions.getText(this.contents.get(position - 1));
+        return await BrowserActions.getText(this.contents.get(position - 1));
     }
 
     getCellElementByValue(columnName, columnValue): ElementFinder {
@@ -348,7 +346,7 @@ export class DataTableComponentPage {
     }
 
     async getCopyContentTooltip(): Promise<string> {
-        return BrowserActions.getText(this.copyColumnTooltip);
+        return await BrowserActions.getText(this.copyColumnTooltip);
     }
 
     async copyContentTooltipIsNotDisplayed(): Promise<void> {

@@ -84,11 +84,14 @@ describe('Edit folder directive', () => {
         done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-        done();
+    });
+
+    afterEach(async () => {
+        await BrowserActions.closeMenuAndDialogs();
     });
 
     it('[C260161] Update folder - Cancel button', async () => {
@@ -153,8 +156,7 @@ describe('Edit folder directive', () => {
         expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t end with a period .');
         await editFolderDialog.checkCreateUpdateBtnIsDisabled();
 
-        await editFolderDialog.getFolderNameField().clear();
-        await editFolderDialog.getFolderNameField().sendKeys(protractor.Key.SPACE);
+        await BrowserActions.clearSendKeys(editFolderDialog.getFolderNameField(), protractor.Key.SPACE);
         expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain only spaces');
         await editFolderDialog.checkCreateUpdateBtnIsDisabled();
 

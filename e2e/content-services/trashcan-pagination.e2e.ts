@@ -55,7 +55,7 @@ describe('Trashcan - Pagination', () => {
 
     const acsUser = new AcsUserModel();
     const newFolderModel = new FolderModel({ name: 'newFolder' });
-    const nrOfFiles = 20;
+    const noOfFiles = 20;
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -64,7 +64,7 @@ describe('Trashcan - Pagination', () => {
         });
         const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-        const fileNames = Util.generateSequenceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
+        const fileNames = Util.generateSequenceFiles(10, noOfFiles + 9, pagination.base, pagination.extension);
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -74,9 +74,13 @@ describe('Trashcan - Pagination', () => {
 
         const folderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
 
-        await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
+        const emptyFiles: any = await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
 
-        await this.alfrescoJsApi.node.deleteNode(folderUploadedModel.entry.id);
+        await emptyFiles.list.entries.forEach(async (node) => {
+            await this.alfrescoJsApi.node.deleteNode(node.entry.id).then(() => {}, () => {
+                this.alfrescoJsApi.node.deleteNode(node.entry.id);
+            });
+        });
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navigationBarPage.clickTrashcanButton();
@@ -98,8 +102,8 @@ describe('Trashcan - Pagination', () => {
         await trashcanPage.waitForPagination();
 
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
-        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfFiles + ' of ' + nrOfFiles);
-        expect(await trashcanPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + noOfFiles + ' of ' + noOfFiles);
+        expect(await trashcanPage.numberOfResultsDisplayed()).toBe(noOfFiles);
 
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
@@ -110,7 +114,7 @@ describe('Trashcan - Pagination', () => {
         await trashcanPage.waitForTableBody();
         await trashcanPage.waitForPagination();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + nrOfFiles);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + noOfFiles);
         expect(await trashcanPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
@@ -121,7 +125,7 @@ describe('Trashcan - Pagination', () => {
         await trashcanPage.waitForTableBody();
         await trashcanPage.waitForPagination();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue + ' of ' + nrOfFiles);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue + ' of ' + noOfFiles);
         expect(await trashcanPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
@@ -132,7 +136,7 @@ describe('Trashcan - Pagination', () => {
         await trashcanPage.waitForTableBody();
         await trashcanPage.waitForPagination();
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + nrOfFiles);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + noOfFiles);
         expect(await trashcanPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();

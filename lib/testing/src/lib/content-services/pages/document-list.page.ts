@@ -63,7 +63,6 @@ export class DocumentListPage {
     }
 
     async clickOnActionMenu(content): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
         const row = this.dataTable.getRow('Display name', content);
         await BrowserActions.click(row.element(this.optionButton));
         await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
@@ -78,8 +77,8 @@ export class DocumentListPage {
         return new DataTableComponentPage(this.rootElement);
     }
 
-    getAllRowsColumnValues(column): Promise<any> {
-        return this.dataTable.getAllRowsColumnValues(column);
+    async getAllRowsColumnValues(column): Promise<any> {
+        return await this.dataTable.getAllRowsColumnValues(column);
     }
 
     async doubleClickRow(nodeName): Promise<void> {

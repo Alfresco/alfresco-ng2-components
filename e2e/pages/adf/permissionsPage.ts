@@ -31,7 +31,7 @@ export class PermissionsPage {
     addPermissionButton: ElementFinder = element(by.css("button[data-automation-id='adf-add-permission-button']"));
     addPermissionDialog: ElementFinder = element(by.css('adf-add-permission-dialog'));
     searchUserInput: ElementFinder = element(by.id('searchInput'));
-    searchResults: ElementFinder = element.all(by.id('adf-search-results-content')).first();
+    searchResults: ElementFinder = element(by.css('#adf-add-permission-authority-results #adf-search-results-content'));
     addButton: ElementFinder = element(by.id('add-permission-dialog-confirm-button'));
     permissionInheritedButton: ElementFinder = element.all(by.css("div[class='adf-inherit_permission_button'] button")).first();
     noPermissions: ElementFinder = element(by.css('div[id="adf-no-permissions-template"]'));
@@ -88,49 +88,47 @@ export class PermissionsPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.permissionInheritedButton);
     }
 
-    clickPermissionInheritedButton(): Promise<void> {
-        return BrowserActions.click(this.permissionInheritedButton);
-
+    async clickPermissionInheritedButton(): Promise<void> {
+        await BrowserActions.click(this.permissionInheritedButton);
     }
 
-    clickDeletePermissionButton(): Promise<void> {
-        return BrowserActions.click(this.deletePermissionButton);
+    async clickDeletePermissionButton(): Promise<void> {
+        await BrowserActions.click(this.deletePermissionButton);
     }
 
     async checkNoPermissionsIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noPermissions);
     }
 
-    getPermissionInheritedButtonText(): Promise<string> {
-        return BrowserActions.getText(this.permissionInheritedButton);
+    async getPermissionInheritedButtonText(): Promise<string> {
+        return await BrowserActions.getText(this.permissionInheritedButton);
     }
 
-    checkPermissionsDatatableIsDisplayed(): DataTableComponentPage {
-        return new DataTableComponentPage(element(by.css('[class*="adf-datatable-permission"]')));
+    async checkPermissionsDatatableIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('[class*="adf-datatable-permission"]')));
     }
 
-    getRoleCellValue(rowName): Promise<string> {
+    async getRoleCellValue(rowName): Promise<string> {
         const locator = new DataTableComponentPage().getCellByRowContentAndColumn('Authority ID', rowName, column.role);
-        return BrowserActions.getText(locator);
+        return await BrowserActions.getText(locator);
     }
 
-    clickRoleDropdownByUserOrGroupName(name): Promise<void> {
+    async clickRoleDropdownByUserOrGroupName(name): Promise<void> {
         const row = this.dataTableComponentPage.getRow('Authority ID', name);
-        return BrowserActions.click(row.element(by.id('adf-select-role-permission')));
+        await BrowserActions.click(row.element(by.id('adf-select-role-permission')));
     }
 
-    async getRoleDropdownOptions(): Promise<any> {
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('.mat-option-text')).first());
+    getRoleDropdownOptions() {
         return element.all(by.css('.mat-option-text'));
     }
 
     async selectOption(name): Promise<void> {
-        const selectProcessDropdown: ElementFinder = element(by.cssContainingText('.mat-option-text', name));
+        const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         await BrowserActions.click(selectProcessDropdown);
     }
 
-    getAssignPermissionErrorText(): Promise<string> {
-        return BrowserActions.getText(this.assignPermissionError);
+    async getAssignPermissionErrorText(): Promise<string> {
+        return await BrowserActions.getText(this.assignPermissionError);
     }
 
     async checkPermissionContainerIsDisplayed(): Promise<void> {

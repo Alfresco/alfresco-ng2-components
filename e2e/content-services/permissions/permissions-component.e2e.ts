@@ -168,7 +168,6 @@ describe('Permissions Component', () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await folders.forEach(async (folder) => {
             await uploadActions.deleteFileOrFolder(folder.entry.id);
-
         });
 
         done();
@@ -177,30 +176,24 @@ describe('Permissions Component', () => {
     describe('Inherit and assigning permissions', () => {
 
         beforeEach(async (done) => {
-
             await this.alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
-
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
-
             await loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
-
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkContentIsDisplayed(fileModel.name);
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             await contentList.rightClickOnRow(fileModel.name);
-
             await contentServicesPage.pressContextMenuActionNamed('Permission');
-
             await permissionsPage.checkPermissionContainerIsDisplayed();
-
             done();
-
         });
 
         afterEach(async (done) => {
-
-            await uploadActions.deleteFileOrFolder(file.entry.id);
-
+            await BrowserActions.closeMenuAndDialogs();
+            try {
+                await uploadActions.deleteFileOrFolder(file.entry.id);
+            } catch (error) {
+            }
             done();
         });
 
@@ -214,7 +207,6 @@ describe('Permissions Component', () => {
             await permissionsPage.clickPermissionInheritedButton();
             expect(await permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
             await permissionsPage.checkPermissionsDatatableIsDisplayed();
-
         });
 
         it('[C286272] Should be able to see results when searching for a user', async () => {
@@ -224,7 +216,6 @@ describe('Permissions Component', () => {
             await permissionsPage.checkSearchUserInputIsDisplayed();
             await permissionsPage.searchUserOrGroup('a');
             await permissionsPage.checkResultListIsDisplayed();
-
         });
 
         it('[C276979] Should be able to give permissions to a group of people', async () => {
@@ -235,7 +226,6 @@ describe('Permissions Component', () => {
             await permissionsPage.searchUserOrGroup('GROUP_' + groupBody.id);
             await permissionsPage.clickUserOrGroup('GROUP_' + groupBody.id);
             await permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
-
         });
 
         it('[C277100] Should display EVERYONE group in the search result set', async () => {
@@ -249,7 +239,6 @@ describe('Permissions Component', () => {
             await permissionsPage.searchUserOrGroup('somerandomtext');
             await permissionsPage.checkResultListIsDisplayed();
             await permissionsPage.checkUserOrGroupIsDisplayed('EVERYONE');
-
         });
 
     });
@@ -257,21 +246,14 @@ describe('Permissions Component', () => {
     describe('Changing and duplicate Permissions', () => {
 
         beforeEach(async (done) => {
-
             await this.alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
-
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
-
             await loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
-
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkContentIsDisplayed(fileModel.name);
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-
             await contentList.rightClickOnRow(fileModel.name);
-
             await contentServicesPage.pressContextMenuActionNamed('Permission');
-
             await permissionsPage.checkAddPermissionButtonIsDisplayed();
             await permissionsPage.clickAddPermissionButton();
             await permissionsPage.checkAddPermissionDialogIsDisplayed();
@@ -279,78 +261,54 @@ describe('Permissions Component', () => {
             await permissionsPage.searchUserOrGroup(filePermissionUser.getId());
             await permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
             await permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
-
             done();
-
         });
 
         afterEach(async (done) => {
-
             try {
                 await uploadActions.deleteFileOrFolder(file.entry.id);
-
             } catch (error) {
-
             }
             done();
-
         });
 
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', async () => {
-
             expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
-
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
-
-            const roleDropdownOptions = await permissionsPage.getRoleDropdownOptions();
-
+            const roleDropdownOptions = permissionsPage.getRoleDropdownOptions();
             expect(await roleDropdownOptions.count()).toBe(5);
             expect(await roleDropdownOptions.get(0).getText()).toBe('Contributor');
             expect(await roleDropdownOptions.get(1).getText()).toBe('Collaborator');
             expect(await roleDropdownOptions.get(2).getText()).toBe('Coordinator');
             expect(await roleDropdownOptions.get(3).getText()).toBe('Editor');
             expect(await roleDropdownOptions.get(4).getText()).toBe('Consumer');
-
             await permissionsPage.selectOption('Collaborator');
-
             expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Collaborator');
-
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
             await permissionsPage.selectOption('Coordinator');
-
             expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Coordinator');
-
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
             await permissionsPage.selectOption('Editor');
-
             expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Editor');
-
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
             await permissionsPage.selectOption('Consumer');
-
             expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Consumer');
-
         });
 
         it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', async () => {
             expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
-
             await permissionsPage.clickAddPermissionButton();
             await permissionsPage.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.checkSearchUserInputIsDisplayed();
             await permissionsPage.searchUserOrGroup(filePermissionUser.getId());
             await permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
-
             expect(await permissionsPage.getAssignPermissionErrorText()).toBe(duplicateUserPermissionMessage);
-
         });
 
         it('[C276982] Should be able to remove User or Group from the locally set permissions', async () => {
             expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
-
             await permissionsPage.clickDeletePermissionButton();
             await permissionsPage.checkUserOrGroupIsDeleted(filePermissionUser.getId());
-
         });
 
     });
@@ -358,225 +316,133 @@ describe('Permissions Component', () => {
     describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor, No Permissions', () => {
 
         it('[C276993] Role Consumer', async () => {
-
             await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
-
             await navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
-
             await contentServicesPage.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
-
             await contentList.doubleClickRow('RoleConsumer' + fileModel.name);
-
             await viewerPage.checkFileIsLoaded();
             await viewerPage.clickCloseButton();
-
             await contentList.waitForTableBody();
-
             await contentServicesPage.checkDeleteIsDisabled('RoleConsumer' + fileModel.name);
-
             await BrowserActions.closeMenuAndDialogs();
-
             await contentList.checkActionMenuIsNotDisplayed();
-
             await contentServicesPage.metadataContent('RoleConsumer' + fileModel.name);
-
             await notificationPage.checkNotifyContains('You don\'t have access to do this.');
-
             await contentServicesPage.uploadFile(fileModel.location);
-
             await notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
-
         });
 
         it('[C276996] Role Contributor', async () => {
-
             await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
-
             await navigationBarPage.openContentServicesFolder(roleContributorFolder.entry.id);
-
             await contentServicesPage.checkContentIsDisplayed('RoleContributor' + fileModel.name);
-
             await contentList.doubleClickRow('RoleContributor' + fileModel.name);
-
             await viewerPage.checkFileIsLoaded();
             await viewerPage.clickCloseButton();
-
             await contentList.waitForTableBody();
-
             await contentServicesPage.checkDeleteIsDisabled('RoleContributor' + fileModel.name);
-
             await BrowserActions.closeMenuAndDialogs();
-
             await contentList.checkActionMenuIsNotDisplayed();
-
             await contentServicesPage.metadataContent('RoleContributor' + fileModel.name);
-
             await notificationPage.checkNotifyContains('You don\'t have access to do this.');
-
             await contentServicesPage.uploadFile(testFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
-
             await uploadDialog.fileIsUploaded(testFileModel.name);
             await uploadDialog.clickOnCloseButton();
             await uploadDialog.dialogIsNotDisplayed();
-
         });
 
         it('[C277000] Role Editor', async () => {
-
             await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
-
             await navigationBarPage.openContentServicesFolder(roleEditorFolder.entry.id);
-
             await contentServicesPage.checkContentIsDisplayed('RoleEditor' + fileModel.name);
-
             await contentList.doubleClickRow('RoleEditor' + fileModel.name);
-
             await viewerPage.checkFileIsLoaded();
             await viewerPage.clickCloseButton();
-
             await contentList.waitForTableBody();
-
             await contentServicesPage.checkDeleteIsDisabled('RoleEditor' + fileModel.name);
-
             await BrowserActions.closeMenuAndDialogs();
-
             await contentList.checkActionMenuIsNotDisplayed();
-
             await contentServicesPage.metadataContent('RoleEditor' + fileModel.name);
-
             await metadataViewPage.editIconIsDisplayed();
-
             await metadataViewPage.editIconClick();
-
-            await  metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-            await  metadataViewPage.clickEditPropertyIcons('properties.cm:title');
-            await  metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle1');
-
+            await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
+            await metadataViewPage.clickEditPropertyIcons('properties.cm:title');
+            await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle1');
             await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
-
             expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle1');
-
             await metadataViewPage.clickCloseButton();
-
             await contentServicesPage.uploadFile(fileModel.location);
-
             await notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
-
         });
 
         it('[C277003] Role Collaborator', async () => {
-
             await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
-
             await navigationBarPage.openContentServicesFolder(roleCollaboratorFolder.entry.id);
-
             await contentServicesPage.checkContentIsDisplayed('RoleCollaborator' + fileModel.name);
-
             await contentList.doubleClickRow('RoleCollaborator' + fileModel.name);
-
             await viewerPage.checkFileIsLoaded();
             await viewerPage.clickCloseButton();
-
             await contentList.waitForTableBody();
-
             await contentServicesPage.checkDeleteIsDisabled('RoleCollaborator' + fileModel.name);
-
             await BrowserActions.closeMenuAndDialogs();
-
             await contentList.checkActionMenuIsNotDisplayed();
-
             await contentServicesPage.metadataContent('RoleCollaborator' + fileModel.name);
-
             await metadataViewPage.editIconIsDisplayed();
-
             await metadataViewPage.editIconClick();
-
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
             await metadataViewPage.clickEditPropertyIcons('properties.cm:title');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle2');
-
             await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
-
             expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle2');
-
             await metadataViewPage.clickCloseButton();
-
             await contentServicesPage.uploadFile(testFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
-
             await uploadDialog.fileIsUploaded(testFileModel.name);
             await uploadDialog.clickOnCloseButton();
             await uploadDialog.dialogIsNotDisplayed();
-
         });
 
         it('[C277004] Role Coordinator', async () => {
-
             await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
-
             await navigationBarPage.openContentServicesFolder(roleCoordinatorFolder.entry.id);
-
             await contentServicesPage.checkContentIsDisplayed('RoleCoordinator' + fileModel.name);
-
             await contentList.doubleClickRow('RoleCoordinator' + fileModel.name);
-
             await viewerPage.checkFileIsLoaded();
             await viewerPage.clickCloseButton();
-
             await contentList.waitForTableBody();
-
             await contentServicesPage.metadataContent('RoleCoordinator' + fileModel.name);
-
             await metadataViewPage.editIconIsDisplayed();
-
             await metadataViewPage.editIconClick();
-
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
             await metadataViewPage.clickEditPropertyIcons('properties.cm:title');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle3');
-
             await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
-
             expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle3');
-
             await metadataViewPage.clickCloseButton();
             await contentServicesPage.uploadFile(pngFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(pngFileModel.name);
-
             await uploadDialog.fileIsUploaded(pngFileModel.name);
             await uploadDialog.clickOnCloseButton();
             await uploadDialog.dialogIsNotDisplayed();
-
             await contentServicesPage.checkContentIsDisplayed('RoleCoordinator' + fileModel.name);
             await contentServicesPage.deleteContent('RoleCoordinator' + fileModel.name);
             await contentServicesPage.checkContentIsNotDisplayed('RoleCoordinator' + fileModel.name);
-
         });
 
         it('[C279881] No Permission User', async () => {
-
             await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
-
             await navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
-
             await contentServicesPage.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-
             await contentList.rightClickOnRow('RoleConsumer' + fileModel.name);
-
             await contentServicesPage.pressContextMenuActionNamed('Permission');
-
             await permissionsPage.checkPermissionInheritedButtonIsDisplayed();
             await permissionsPage.checkAddPermissionButtonIsDisplayed();
             await permissionsPage.clickPermissionInheritedButton();
-
             await notificationPage.checkNotifyContains('You are not allowed to change permissions');
-
             await permissionsPage.clickAddPermissionButton();
-
             await notificationPage.checkNotifyContains('You are not allowed to change permissions');
-
         });
 
     });

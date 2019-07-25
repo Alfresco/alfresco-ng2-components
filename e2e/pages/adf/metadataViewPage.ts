@@ -129,7 +129,6 @@ export class MetadataViewPage {
     }
 
     async clickOnPropertiesTab(): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
         const propertiesTab: ElementFinder = element(by.cssContainingText(`.adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content`, `Properties`));
         await BrowserActions.click(propertiesTab);
     }
@@ -160,7 +159,7 @@ export class MetadataViewPage {
 
     async enterPropertyText(propertyName: string, text: string | number): Promise<void> {
         const textField: ElementFinder = element(by.css('input[data-automation-id="card-textitem-editinput-' + propertyName + '"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(textField);
+        await BrowserVisibility.waitUntilElementIsClickable(textField);
         await BrowserActions.clearSendKeys(textField, text.toString());
     }
 

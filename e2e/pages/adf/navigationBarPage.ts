@@ -110,9 +110,8 @@ export class NavigationBarPage {
         return new PeopleGroupCloudComponentPage();
     }
 
-    async navigateToSettingsPage(): Promise<AppListCloudPage> {
+    async navigateToSettingsPage(): Promise<void> {
         await this.clickMenuButton('Settings');
-        return new AppListCloudPage();
     }
 
     async clickLoginButton(): Promise<void> {

@@ -133,7 +133,7 @@ describe('Search Date Range Filter', () => {
 
         await searchResults.sortByCreated('ASC');
 
-        const results = await dataTable.geCellElementDetail('Created');
+        const results: any = dataTable.geCellElementDetail('Created');
         for (const currentResult of results) {
 
             const currentDate = currentResult.getAttribute('title');

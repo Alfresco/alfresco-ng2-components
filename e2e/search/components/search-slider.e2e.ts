@@ -119,7 +119,7 @@ describe('Search Number Range Filter', () => {
         await searchResults.sortBySize('DESC');
         await searchResults.tableIsLoaded();
 
-        const results = await dataTable.geCellElementDetail('Size');
+        const results: any = dataTable.geCellElementDetail('Size');
         for (const currentResult of results) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -136,7 +136,7 @@ describe('Search Number Range Filter', () => {
         await searchResults.sortBySize('DESC');
         await searchResults.tableIsLoaded();
 
-        const resultsSize = await dataTable.geCellElementDetail('Size');
+        const resultsSize: any = dataTable.geCellElementDetail('Size');
         for (const currentResult of resultsSize) {
             try {
                 const currentSize = await currentResult.getAttribute('title');

@@ -49,8 +49,8 @@ export class BrowserActions {
     }
 
     static async clearWithBackSpace(elementFinder: ElementFinder) {
-        await elementFinder.clear();
-        await elementFinder.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
+        await this.clearSendKeys(elementFinder, ' ');
+        await elementFinder.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'a', protractor.Key.NULL), protractor.Key.BACK_SPACE);
     }
 
     static async clearSendKeys(elementFinder: ElementFinder, text: string): Promise<void> {
