@@ -238,35 +238,34 @@ describe('FormCloudComponent', () => {
     });
 
     it('should call the process storage to retrieve the folder with only the taskId', fakeAsync(() => {
-        spyOn(formComponent, 'getFormByTaskId').and.stub();
+        spyOn(formCloudService, 'getTaskForm').and.returnValue(of(cloudFormMock));
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({list: { entries: []}}));
         spyOn(formCloudService, 'getProcessStorageFolderTask')
             .and.returnValue( of({nodeId : '123', path: '/a/path/type', type: 'fakeType'}));
         const taskId = '<task id>';
         const appName = 'test-app';
         formComponent.appName = appName;
-        formComponent.form = new FormCloud({id : 'fake-form-id'});
-        formComponent.form['hasUpload'] = true;
         formComponent.taskId = taskId;
         formComponent.readOnly = false;
 
-        const change = new SimpleChange(null, 'new-app-name', true);
+        const change = new SimpleChange(null, appName, true);
         formComponent.ngOnChanges({ 'appName': change });
         tick();
+
         expect(formCloudService.getProcessStorageFolderTask).toHaveBeenCalledWith(appName, taskId, undefined);
         expect(formComponent.form.nodeId).toBe('123');
         expect(formComponent.form.contentHost).toBe('/a/path/type');
     }));
 
     it('should call the process storage to retrieve the folder with taskId and processInstanceId', fakeAsync(() => {
-        spyOn(formComponent, 'getFormByTaskId').and.stub();
+        spyOn(formCloudService, 'getTaskForm').and.returnValue(of(cloudFormMock));
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({list: { entries: []}}));
         spyOn(formCloudService, 'getProcessStorageFolderTask')
             .and.returnValue( of({nodeId : '123', path: '/a/path/type', type: 'fakeType'}));
         const taskId = '<task id>';
         const processInstanceId = 'i-am-the-process-instance-id';
         const appName = 'test-app';
         formComponent.appName = appName;
-        formComponent.form = new FormCloud({id : 'fake-form-id'});
-        formComponent.form['hasUpload'] = true;
         formComponent.taskId = taskId;
         formComponent.processInstanceId = processInstanceId;
         formComponent.readOnly = false;
