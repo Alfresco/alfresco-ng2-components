@@ -246,7 +246,6 @@ describe('FormCloudComponent', () => {
         const appName = 'test-app';
         formComponent.appName = appName;
         formComponent.taskId = taskId;
-        formComponent.readOnly = false;
 
         const change = new SimpleChange(null, appName, true);
         formComponent.ngOnChanges({ 'appName': change });
@@ -268,7 +267,6 @@ describe('FormCloudComponent', () => {
         formComponent.appName = appName;
         formComponent.taskId = taskId;
         formComponent.processInstanceId = processInstanceId;
-        formComponent.readOnly = false;
 
         const change = new SimpleChange(null, 'new-app-name', true);
         formComponent.ngOnChanges({ 'appName': change });
