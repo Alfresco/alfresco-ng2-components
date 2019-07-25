@@ -72,6 +72,8 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
 
+    subscriptions: any[] = [];
+
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(formService: FormService,

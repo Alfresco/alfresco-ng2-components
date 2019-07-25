@@ -30,12 +30,12 @@ import { FormBaseComponent,
         NotificationService,
         FormRenderingService,
         FORM_FIELD_VALIDATORS,
+        FormValidationService,
         FormFieldValidator } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
-import { FormControlService } from '../../../../../core/form/services/form-control.service';
 import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget/attach-file-cloud-widget.component';
 
 @Component({
@@ -97,13 +97,13 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(protected formCloudService: FormCloudService,
-                protected formControlService: FormControlService,
+                protected formValidationService: FormValidationService,
                 private notificationService: NotificationService,
                 private formRenderingService: FormRenderingService,
                 protected visibilityService: WidgetVisibilityService) {
         super();
 
-        this.formControlService.formContentClicked
+        this.formValidationService.formContentClicked
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((content: any) => {
             this.formContentClicked.emit(content);
