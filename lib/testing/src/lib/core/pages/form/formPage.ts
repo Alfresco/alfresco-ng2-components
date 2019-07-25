@@ -19,7 +19,6 @@ import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/public-api';
 
-
 export class FormPage {
 
     errorLog = element(by.css('div[class*="console"]'));
