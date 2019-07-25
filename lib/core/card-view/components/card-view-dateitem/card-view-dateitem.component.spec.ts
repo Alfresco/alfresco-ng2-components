@@ -116,13 +116,14 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should render value when editable:true', () => {
+        component.displayClearAction = false;
         component.editable = true;
         component.property.editable = true;
         fixture.detectChanges();
 
         const value = fixture.debugElement.query(By.css('.adf-property-value'));
         expect(value).not.toBeNull();
-        expect(value.nativeElement.innerText.trim()).toContain('Jul 10, 2017');
+        expect(value.nativeElement.innerText.trim()).toBe('Jul 10, 2017');
     });
 
     it('should render the picker and toggle in case of editable:true', () => {
@@ -212,6 +213,16 @@ describe('CardViewDateItemComponent', () => {
 
         const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear-${component.property.key}"]`));
         expect(datePickerClearToggle).not.toBeNull('Clean Icon should be in DOM');
+    });
+
+    it('should render value and clear icon when editable:true and displayClearAction:true', () => {
+        component.editable = true;
+        component.property.editable = true;
+        fixture.detectChanges();
+
+        const value = fixture.debugElement.query(By.css('.adf-property-value'));
+        expect(value).not.toBeNull();
+        expect(value.nativeElement.innerText.trim()).toBe('Jul 10, 2017clear');
     });
 
     it('should not render the clear icon in case of property value empty', () => {

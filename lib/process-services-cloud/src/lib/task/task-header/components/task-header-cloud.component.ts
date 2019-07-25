@@ -62,6 +62,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
     parentTaskName: string;
     dateFormat: string;
     dateLocale: string;
+    displayDateClearAction = false;
 
     private onDestroy$ = new Subject<boolean>();
 
