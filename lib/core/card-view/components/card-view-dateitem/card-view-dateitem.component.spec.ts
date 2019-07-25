@@ -215,16 +215,6 @@ describe('CardViewDateItemComponent', () => {
         expect(datePickerClearToggle).not.toBeNull('Clean Icon should be in DOM');
     });
 
-    it('should render value and clear icon when editable:true and displayClearAction:true', () => {
-        component.editable = true;
-        component.property.editable = true;
-        fixture.detectChanges();
-
-        const value = fixture.debugElement.query(By.css('.adf-property-value'));
-        expect(value).not.toBeNull();
-        expect(value.nativeElement.innerText.trim()).toBe('Jul 10, 2017clear');
-    });
-
     it('should not render the clear icon in case of property value empty', () => {
         component.editable = true;
         component.property.editable = true;
