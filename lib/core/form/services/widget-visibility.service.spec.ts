@@ -659,7 +659,6 @@ describe('WidgetVisibilityService', () => {
             tab.visibilityCondition = visibilityObjTest;
             fakeFormWithField.tabs.push(tab);
             service.refreshVisibility(fakeFormWithField);
-
             expect(fakeFormWithField.tabs[0].isVisible).toBeFalsy();
         });
 
@@ -915,7 +914,6 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'dropdown';
             const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
-            fakeFormField.value = 'value';
 
             service.refreshEntityVisibility(fakeFormField);
             expect(fakeFormField.isVisible).toBeFalsy();

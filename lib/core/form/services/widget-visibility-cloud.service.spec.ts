@@ -515,7 +515,7 @@ describe('WidgetVisibilityCloudService', () => {
             visibilityObjTest.rightType = WidgetTypeEnum.field;
             visibilityObjTest.rightValue = 'test_3';
             const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
-            fakeFormField.value = 'value';
+
             service.refreshEntityVisibility(fakeFormField);
             expect(fakeFormField.isVisible).toBeFalsy();
             expect(fakeFormField.value).toEqual(null);
