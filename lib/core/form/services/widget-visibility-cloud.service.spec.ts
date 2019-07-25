@@ -344,7 +344,7 @@ describe('WidgetVisibilityCloudService', () => {
 
     describe('should return the value of the field', () => {
         let visibilityObjTest: WidgetVisibilityModel;
-        const fakeFormWithField = new FormModel(fakeFormJson);
+        let fakeFormWithField = new FormModel(fakeFormJson);
         const jsonFieldFake = {
             id: 'FAKE_FORM_FIELD_ID',
             value: 'FAKE_FORM_FIELD_VALUE',
@@ -362,6 +362,7 @@ describe('WidgetVisibilityCloudService', () => {
         beforeEach(() => {
             visibilityObjTest = new WidgetVisibilityModel({});
             formTest.values = formValues;
+            fakeFormWithField = new FormModel(fakeFormJson);
             jsonFieldFake.visibilityCondition = visibilityObjTest;
         });
 

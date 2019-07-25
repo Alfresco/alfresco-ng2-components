@@ -190,12 +190,13 @@ describe('WidgetVisibilityService', () => {
     });
 
     describe('should retrieve the process variables', () => {
-        const fakeFormWithField = new FormModel(fakeFormJson);
+        let fakeFormWithField = new FormModel(fakeFormJson);
         let visibilityObjTest: WidgetVisibilityModel;
         const chainedVisibilityObj = new WidgetVisibilityModel({});
 
         beforeEach(() => {
             visibilityObjTest = new WidgetVisibilityModel({});
+            fakeFormWithField = new FormModel(fakeFormJson);
         });
 
         it('should return the process variables for task', (done) => {
@@ -341,7 +342,7 @@ describe('WidgetVisibilityService', () => {
 
     describe('should return the value of the field', () => {
         let visibilityObjTest: WidgetVisibilityModel;
-        const fakeFormWithField = new FormModel(fakeFormJson);
+        let fakeFormWithField = new FormModel(fakeFormJson);
         const jsonFieldFake = {
             id: 'FAKE_FORM_FIELD_ID',
             value: 'FAKE_FORM_FIELD_VALUE',
@@ -358,6 +359,7 @@ describe('WidgetVisibilityService', () => {
 
         beforeEach(() => {
             visibilityObjTest = new WidgetVisibilityModel();
+            fakeFormWithField = new FormModel(fakeFormJson);
             formTest.values = formValues;
             jsonFieldFake.visibilityCondition = visibilityObjTest;
         });
