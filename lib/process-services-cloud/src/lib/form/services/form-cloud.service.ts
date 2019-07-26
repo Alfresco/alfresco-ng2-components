@@ -299,7 +299,9 @@ export class FormCloudService extends BaseCloudService {
     }
 
     private buildFolderTask(appName: string, taskId: string, processInstanceId: string): string {
-        return `${this.getBasePath(appName)}/process-storage/v1/folders/${processInstanceId}/${taskId}`;
+        return processInstanceId
+            ? `${this.getBasePath(appName)}/process-storage/v1/folders/${processInstanceId}/${taskId}`
+            : `${this.getBasePath(appName)}/process-storage/v1/folders/${taskId}`;
     }
 
     private handleError(error: any) {
