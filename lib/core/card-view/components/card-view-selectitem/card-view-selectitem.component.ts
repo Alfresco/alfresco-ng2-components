@@ -34,6 +34,9 @@ export class CardViewSelectItemComponent implements OnChanges {
 
     @Input() options$: Observable<CardViewSelectItemOption<string>[]>;
 
+    @Input()
+    displayNoneOption: boolean = true;
+
     value: string;
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
@@ -51,7 +54,12 @@ export class CardViewSelectItemComponent implements OnChanges {
     }
 
     onChange(event: MatSelectChange): void {
-        this.cardViewUpdateService.update(this.property, event.value);
-        this.property.value = event.value;
+        const selectedOption = event.value !== undefined ? event.value : null;
+        this.cardViewUpdateService.update(this.property, selectedOption);
+        this.property.value = selectedOption;
+    }
+
+    showNoneOption() {
+        return this.displayNoneOption;
     }
 }

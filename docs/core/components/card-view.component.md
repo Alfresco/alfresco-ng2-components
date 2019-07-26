@@ -97,7 +97,9 @@ Defining properties from Typescript:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| displayClearAction | `boolean` | true | Toggles whether or not to display clear action. |
 | displayEmpty | `boolean` | true | Toggles whether or not to show empty items in non-editable mode. |
+| displayNoneOption | `boolean` | true | Toggles whether or not to display none option. |
 | editable | `boolean` |  | Toggles whether or not the items can be edited. |
 | properties | [`CardViewItem`](../../../lib/core/card-view/interfaces/card-view-item.interface.ts)`[]` |  | (**required**) Items to show in the card view. |
 

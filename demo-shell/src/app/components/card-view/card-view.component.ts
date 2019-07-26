@@ -44,6 +44,8 @@ export class CardViewComponent implements OnInit, OnDestroy {
     isEditable = true;
     properties: any;
     logs: string[];
+    showClearDateAction = false;
+    showNoneOption = false;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -164,6 +166,14 @@ export class CardViewComponent implements OnInit, OnDestroy {
     toggleEditable() {
         this.isEditable = !this.isEditable;
         this.createCard();
+    }
+
+    toggleClearDate() {
+        this.showClearDateAction = !this.showClearDateAction;
+    }
+
+    toggleNoneOption() {
+        this.showNoneOption = !this.showNoneOption;
     }
 
     reset() {
