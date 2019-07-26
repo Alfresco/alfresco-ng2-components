@@ -32,7 +32,7 @@ export interface UpdateArgs {
 const ALPHA = 'alpha';
 const BETA = 'beta';
 const LATEST = 'latest';
-const ADF_LIBS_PREFIX = '@alfresco/adf-';
+const ADF_LIBS_PREFIX = '\"@alfresco/adf-[^"]*\":';
 const JS_API_DEPENDENCY = '@alfresco/js-api';
 
 let projects = [''];
@@ -80,7 +80,7 @@ function _betaPerform(args: UpdateArgs, logger: logging.Logger) {
 
 function _findADFLibsDependencies(args: UpdateArgs, logger: logging.Logger) {
     const prjs: any = [];
-    const result = _exec('grep', [ADF_LIBS_PREFIX, `${args.pathPackage}/package.json`], {}, logger).trim();
+    const result = _exec('grep', [`${ADF_LIBS_PREFIX}`, `${args.pathPackage}/package.json`], {}, logger).trim();
     const res = result.replace(/,\s*$/, '').split(',');
     res.forEach( (dependecy) => {
         const dep = dependecy.split(':');
