@@ -142,6 +142,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
+        clearTimeout(this.currentTimeout);
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
