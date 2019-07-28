@@ -17,10 +17,12 @@
 
 import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
+import { BrowserActions } from '../../utils/public-api';
 
 export class FormPage {
 
     errorLog: ElementFinder = element(by.css('div[class*="console"]'));
+    saveButton: ElementFinder = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
 
     async checkErrorMessageForWidgetIsDisplayed(errorMessage): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
@@ -38,6 +40,10 @@ export class FormPage {
     async checkErrorMessageIsNotDisplayed(errorMessage): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.errorLog);
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
+    }
+
+    async saveForm() {
+        await BrowserActions.click(this.saveButton);
     }
 
 }

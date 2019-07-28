@@ -58,6 +58,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     properties: CardViewItem [];
     inEdit: boolean = false;
+    displayDateClearAction = false;
     dateFormat: string;
     dateLocale: string;
 

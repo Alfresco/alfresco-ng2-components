@@ -86,7 +86,8 @@ describe('Form Component',  () => {
 
         await widget.dateWidget().checkLabelIsVisible(fields.dateWidgetId);
         await widget.dateWidget().setDateInput(fields.dateWidgetId, message.test);
-        await widget.dateWidget().clickOutsideWidget(fields.dateWidgetId);
+      
+        await formPage.saveForm();
         await formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
         await formPage.checkErrorLogMessage(message.errorLogDate);
 
@@ -97,11 +98,12 @@ describe('Form Component',  () => {
 
         await widget.amountWidget().removeFromAmountWidget(fields.amountWidgetId);
         await formPage.checkErrorMessageIsNotDisplayed(message.errorLogAmount);
-
+      
         await widget.dateWidget().clearDateInput(fields.dateWidgetId);
         await widget.numberWidget().clearFieldValue(fields.numberWidgetId);
         await formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
         await formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
         await formPage.checkErrorLogMessage(message.errorLabel);
+
     });
 });

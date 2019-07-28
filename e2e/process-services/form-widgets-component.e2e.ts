@@ -154,7 +154,9 @@ describe('Form widgets', () => {
             expect(await widget.displayTextWidget().getFieldLabel(appFields.displayText_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.displayText_id).value);
             expect(await widget.displayValueWidget().getFieldLabel(appFields.displayValue_id))
-                .toEqual(formInstance.getWidgetBy('id', appFields.displayValue_id).value || 'Unknown type: readonly');
+                .toEqual(formInstance.getWidgetBy('id', appFields.displayValue_id).value || 'Display value' || '');
+            expect(await widget.displayValueWidget().getFieldValue(appFields.displayValue_id))
+                .toEqual(formInstance.getWidgetBy('id', appFields.displayValue_id).value || '');
         });
 
         it('[C272784] Should display typeahead and header in form', async () => {

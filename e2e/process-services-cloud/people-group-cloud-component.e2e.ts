@@ -97,16 +97,13 @@ describe('People Groups Cloud Component',  () => {
 
         afterAll(async (done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            for (let i = 0; i < users.length; i++) {
-                await identityService.deleteIdentityUser(users[i]);
-            }
-            for (let i = 0; i < groups.length; i++) {
-                await groupIdentityService.deleteIdentityGroup(groups[i]);
-            }
+            users.forEach(async (user) => {
+                await identityService.deleteIdentityUser(user);
+            });
 
-            await identityService.deleteIdentityUser(testUser.idIdentityService);
-            await identityService.deleteIdentityUser(apsUser.idIdentityService);
-            await identityService.deleteIdentityUser(activitiUser.idIdentityService);
+            groups.forEach(async (group) => {
+                await groupIdentityService.deleteIdentityGroup(group);
+            });
 
             done();
         });
@@ -303,7 +300,6 @@ describe('People Groups Cloud Component',  () => {
                 `{"firstName":"${activitiUser.firstName}","lastName":"${activitiUser.lastName}",{"firstName":"${noRoleUser.firstName}","lastName":"${noRoleUser.lastName}"]`);
             await browser.sleep(200);
             expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe('');
-
         });
 
     });

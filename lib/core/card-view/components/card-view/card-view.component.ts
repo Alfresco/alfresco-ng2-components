@@ -35,4 +35,12 @@ export class CardViewComponent {
     /** Toggles whether or not to show empty items in non-editable mode. */
     @Input()
     displayEmpty: boolean = true;
+
+    /** Toggles whether or not to display none option. */
+    @Input()
+    displayNoneOption: boolean = true;
+
+    /** Toggles whether or not to display clear action. */
+    @Input()
+    displayClearAction: boolean = true;
 }

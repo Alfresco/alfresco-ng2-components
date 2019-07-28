@@ -21,7 +21,7 @@ import { by, Locator } from 'protractor';
 export class DisplayValueWidget {
 
     formFields: FormFields = new FormFields();
-    labelLocator: Locator = by.css('span[class*="unknown-text"]');
+    labelLocator: Locator = by.css("label[class*='adf-label']");
     inputLocator: Locator = by.css('input');
 
     getFieldLabel(fieldId): Promise<string> {

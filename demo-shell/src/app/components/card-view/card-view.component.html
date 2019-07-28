@@ -4,7 +4,9 @@
     <mat-card class="adf-card-view">
         <adf-card-view
             [properties]="properties"
-            [editable]="true">
+            [editable]="true"
+            [displayClearAction]="showClearDateAction"
+            [displayNoneOption]="showNoneOption">
         </adf-card-view>
     </mat-card>
 
@@ -22,6 +24,20 @@
         (change)="toggleEditable()"
         [checked]="isEditable">
         Editable
+    </mat-slide-toggle><br>
+    <mat-slide-toggle
+        id="adf-toggle-clear-date"
+        [color]="'primary'"
+        (change)="toggleClearDate()"
+        [checked]="showClearDateAction">
+        Show clear date icon
+    </mat-slide-toggle><br>
+    <mat-slide-toggle
+        id="adf-toggle-none-option"
+        [color]="'primary'"
+        (change)="toggleNoneOption()"
+        [checked]="showNoneOption">
+        Show none option
     </mat-slide-toggle>
 </p>
 
