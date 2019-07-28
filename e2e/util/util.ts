@@ -73,9 +73,9 @@ export class Util {
      */
     static async fileExists(filePath, retries) {
         let tries = 0;
-        return new Promise(function(resolve, reject) {
+        return new Promise(function(resolve) {
             const checkExist = setInterval(() => {
-                fs.stat(filePath, function(error, stats) {
+                fs.access(filePath, function(error) {
                     tries++;
 
                     if (error && tries === retries) {

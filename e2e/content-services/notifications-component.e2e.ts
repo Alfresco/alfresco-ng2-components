@@ -51,7 +51,7 @@ describe('Notifications Component',  () => {
     });
 
     afterEach( async() => {
-        browser.executeScript(`document.querySelector('button[data-automation-id="notification-custom-dismiss-button"]').click();`);
+        await browser.executeScript(`document.querySelector('button[data-automation-id="notification-custom-dismiss-button"]').click();`);
         await notificationHistoryPage.enterDurationField(3000);
     });
 

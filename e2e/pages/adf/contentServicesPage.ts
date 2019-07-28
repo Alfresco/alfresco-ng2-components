@@ -92,13 +92,12 @@ export class ContentServicesPage {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 
-    async checkContextActionIsVisible(actionName): Promise<ElementFinder> {
+    async checkContextActionIsVisible(actionName) {
         const actionButton: ElementFinder = element(by.css(`button[data-automation-id="context-${actionName}"`));
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
-        return actionButton;
     }
 
-    async checkContentActionIsEnabled(actionName): Promise<boolean> {
+    async checkContextActionIsEnabled(actionName): Promise<boolean> {
         const actionButton: ElementFinder = element(by.css(`button[data-automation-id="context-${actionName}"`));
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
         return await actionButton.isEnabled();
@@ -187,7 +186,7 @@ export class ContentServicesPage {
     }
 
     async getElementsDisplayedId() {
-        return this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.nodeId);
+        return await this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.nodeId);
     }
 
     checkElementsDateSortedAsc(elements) {
@@ -253,7 +252,7 @@ export class ContentServicesPage {
     }
 
     async checkAcsContainer(): Promise<void> {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
+        await BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
     }
 
     async waitForTableBody(): Promise<void> {
@@ -390,13 +389,13 @@ export class ContentServicesPage {
     }
 
     async uploadMultipleFile(files): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadMultipleFileButton);
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
         let allFiles = path.resolve(path.join(browser.params.testConfig.main.rootPath, files[0]));
         for (let i = 1; i < files.length; i++) {
             allFiles = allFiles + '\n' + path.resolve(path.join(browser.params.testConfig.main.rootPath, files[i]));
         }
         await this.uploadMultipleFileButton.sendKeys(allFiles);
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadMultipleFileButton);
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
     }
 
     async uploadFolder(folder): Promise<void> {
@@ -406,17 +405,17 @@ export class ContentServicesPage {
     }
 
     async getSingleFileButtonTooltip(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadFileButton);
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFileButton);
         return await this.uploadFileButtonInput.getAttribute('title');
     }
 
     async getMultipleFileButtonTooltip(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadMultipleFileButton);
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
         return await this.uploadMultipleFileButton.getAttribute('title');
     }
 
     async getFolderButtonTooltip(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFolderButton);
         return await this.uploadFolderButton.getAttribute('title');
     }
 
@@ -576,9 +575,8 @@ export class ContentServicesPage {
     }
 
     async selectGridSortingFromDropdown(sortingChosen): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
+        // await BrowserActions.closeMenuAndDialogs();
         const sortingDropdown: ElementFinder = element(by.css('mat-select[data-automation-id="grid-view-sorting"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(sortingDropdown);
         await BrowserActions.click(sortingDropdown);
         const optionToClick: ElementFinder = element(by.css(`mat-option[data-automation-id="grid-view-sorting-${sortingChosen}"]`));
         await BrowserActions.click(optionToClick);

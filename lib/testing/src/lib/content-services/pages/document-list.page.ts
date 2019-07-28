@@ -50,8 +50,8 @@ export class DocumentListPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
-    async getTooltip(nodeName): Promise<void> {
-        await this.dataTable.getTooltip('Display name', nodeName);
+    async getTooltip(nodeName): Promise<string> {
+        return await this.dataTable.getTooltip('Display name', nodeName);
     }
 
     async selectRow(nodeName): Promise<void> {
@@ -77,7 +77,7 @@ export class DocumentListPage {
         return new DataTableComponentPage(this.rootElement);
     }
 
-    async getAllRowsColumnValues(column): Promise<any> {
+    async getAllRowsColumnValues(column) {
         return await this.dataTable.getAllRowsColumnValues(column);
     }
 

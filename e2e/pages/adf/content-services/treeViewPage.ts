@@ -60,8 +60,8 @@ export class TreeViewPage {
     }
 
     async clearNodeIdInput(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.nodeIdInput);
-        await BrowserActions.clearSendKeys(this.nodeIdInput, '');
+        await BrowserActions.click(this.nodeIdInput);
+        await BrowserActions.clearWithBackSpace(this.nodeIdInput);
     }
 
     async checkNoNodeIdMessageIsDisplayed(): Promise<void> {

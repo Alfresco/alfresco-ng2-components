@@ -86,7 +86,6 @@ describe('Restore content directive', () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(folderWithContent.entry.id);
         await uploadActions.deleteFileOrFolder(folderWithFolder.entry.id);
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         done();
     });
 
@@ -250,6 +249,14 @@ describe('Restore content directive', () => {
             siteFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), publicSite.entry.guid);
             siteFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, siteFolder.entry.id);
             await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
+            done();
+        });
+
+        afterAll(async (done) => {
+            try {
+                await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
+            } catch (error) {
+            }
             done();
         });
 

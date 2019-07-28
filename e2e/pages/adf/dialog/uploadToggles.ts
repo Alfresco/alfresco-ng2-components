@@ -36,6 +36,7 @@ export class UploadToggles {
     }
 
     async disableMultipleFileUpload(): Promise<void> {
+        await browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
         await this.formControllersPage.disableToggle(this.multipleFileUploadToggle);
     }
 

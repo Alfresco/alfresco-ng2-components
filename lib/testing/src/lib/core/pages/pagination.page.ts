@@ -42,6 +42,7 @@ export class PaginationPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
         const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
         await BrowserActions.click(itemsPerPage);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.pageSelectorDropDown);
     }
 
     async checkPageSelectorIsNotDisplayed(): Promise<void> {

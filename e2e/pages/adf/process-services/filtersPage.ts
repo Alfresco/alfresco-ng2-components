@@ -37,8 +37,8 @@ export class FiltersPage {
         await this.dataTable.sortByColumn(sortOrder, 'name');
     }
 
-    getAllRowsNameColumn(): Promise<string> {
-        return this.dataTable.getAllRowsColumnValues('Name');
+    async getAllRowsNameColumn() {
+        return await this.dataTable.getAllRowsColumnValues('Name');
     }
 
 }

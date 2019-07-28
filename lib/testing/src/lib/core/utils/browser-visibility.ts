@@ -26,7 +26,7 @@ export class BrowserVisibility {
      * Wait for element is visible
      */
     static async waitUntilElementIsVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = ''): Promise<any> {
-        return browser.wait(until.visibilityOf(elementToCheck), waitTimeout, 'Element is not visible ' + elementToCheck.locator());
+        return browser.wait(until.visibilityOf(elementToCheck), waitTimeout, message || 'Element is not visible ' + elementToCheck.locator());
     }
 
     /*

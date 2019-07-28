@@ -100,7 +100,7 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         await metadataViewPage.checkPropertyIsNotVisible('properties.exif:model', 'textitem');
 
-        check(metadataViewPage.displayEmptySwitch);
+        await check(metadataViewPage.displayEmptySwitch);
 
         await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         await metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
@@ -113,7 +113,7 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
-        check(metadataViewPage.readonlySwitch);
+        await check(metadataViewPage.readonlySwitch);
 
         await metadataViewPage.editIconIsNotDisplayed();
     });
@@ -139,7 +139,7 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
 
-        check(metadataViewPage.multiSwitch);
+        await check(metadataViewPage.multiSwitch);
 
         await metadataViewPage.clickMetadataGroup('properties');
 
@@ -154,13 +154,13 @@ describe('CardView Component - properties', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        uncheck(metadataViewPage.defaultPropertiesSwitch);
+        await uncheck(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.checkMetadataGroupIsNotPresent('properties');
         await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
 
-        check(metadataViewPage.defaultPropertiesSwitch);
+        await check(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.checkMetadataGroupIsPresent('properties');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
@@ -174,7 +174,7 @@ describe('CardView Component - properties', () => {
 
         await metadataViewPage.informationButtonIsDisplayed();
 
-        uncheck(metadataViewPage.defaultPropertiesSwitch);
+        await uncheck(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.informationButtonIsNotDisplayed();
     });
@@ -190,7 +190,7 @@ describe('CardView Component - properties', () => {
 
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
-        check(metadataViewPage.displayEmptySwitch);
+        await check(metadataViewPage.displayEmptySwitch);
 
         await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         await metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
@@ -203,6 +203,5 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.clickApplyAspect();
         await metadataViewPage.checkMetadataGroupIsPresent('properties');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
-
     });
 });

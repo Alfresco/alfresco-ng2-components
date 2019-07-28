@@ -104,7 +104,6 @@ export class ViewerPage {
     }
 
     async viewFile(fileName): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
         const fileView: ElementFinder = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
         await BrowserActions.click(fileView);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
@@ -112,8 +111,7 @@ export class ViewerPage {
 
     async clearPageNumber(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
-        await this.pageSelectorInput.clear();
-        await this.pageSelectorInput.sendKeys(protractor.Key.ENTER);
+        await BrowserActions.clearSendKeys(this.pageSelectorInput, protractor.Key.ENTER);
     }
 
     async getZoom(): Promise<string> {
@@ -144,11 +142,10 @@ export class ViewerPage {
     }
 
     async checkFileIsLoaded(fileName?: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 30000, `not loaded ${fileName}`);
+        await BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 30000, `${fileName} not loaded`);
     }
 
     async clickClosePasswordDialog(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.passwordDialogClose);
         await BrowserActions.click(this.passwordDialogClose);
     }
 
@@ -429,7 +426,7 @@ export class ViewerPage {
     }
 
     async getActiveTab(): Promise<string> {
-        return BrowserActions.getText(this.activeTab);
+        return await BrowserActions.getText(this.activeTab);
     }
 
     async clickOnCommentsTab(): Promise<void> {

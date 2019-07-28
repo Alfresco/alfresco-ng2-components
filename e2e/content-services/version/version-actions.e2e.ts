@@ -28,10 +28,8 @@ import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '@alfresco/adf-testing';
-import { Util } from '../../util/util';
-import path = require('path');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, FileBrowserUtil, BrowserActions } from '@alfresco/adf-testing';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 
 describe('Version component actions',  () => {
@@ -66,26 +64,24 @@ describe('Version component actions',  () => {
             hostEcm: browser.params.testConfig.adf.url
         });
         uploadActions = new UploadActions(this.alfrescoJsApi);
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
         const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
-
         Object.assign(txtFileModel, txtUploadedFile.entry);
-
         txtFileModel.update(txtUploadedFile.entry);
-
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        done();
+    });
 
+    beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
+    });
 
-        done();
+    afterEach(async () => {
+        await BrowserActions.closeMenuAndDialogs();
     });
 
     it('[C280003] Should not be possible delete a file version if there is only one version', async () => {
@@ -115,12 +111,9 @@ describe('Version component actions',  () => {
 
     it('[C269081] Should be possible download all the version of a file', async () => {
         await versionManagePage.downloadFileVersion('1.0');
-
-        expect(await Util.fileExists(path.join(__dirname, 'downloads', txtFileModel.name), 20)).toBe(true);
-
+        expect(await FileBrowserUtil.isFileDownloaded(txtFileModel.name)).toBe(true, `${txtFileModel.name} not downloaded`);
         await versionManagePage.downloadFileVersion('1.1');
-
-        expect(await Util.fileExists(path.join(__dirname, 'downloads', fileModelVersionTwo.name), 20)).toBe(true);
+        expect(await FileBrowserUtil.isFileDownloaded(fileModelVersionTwo.name)).toBe(true, `${fileModelVersionTwo.name} not downloaded`);
     });
 
     it('[C272819] Should be possible delete a version when click on delete version action', async () => {

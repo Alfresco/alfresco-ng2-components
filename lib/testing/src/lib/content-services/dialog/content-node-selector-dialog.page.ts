@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { ElementFinder } from 'protractor/built/element';
 
 export class ContentNodeSelectorDialogPage {
     dialog: ElementFinder = element(by.css(`adf-content-node-selector`));
@@ -40,7 +39,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async getDialogHeaderText(): Promise<string> {
-        return BrowserActions.getText(this.header);
+        return await BrowserActions.getText(this.header);
     }
 
     async checkSearchInputIsDisplayed(): Promise<void> {

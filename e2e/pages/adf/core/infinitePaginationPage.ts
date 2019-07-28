@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
-import { ElementFinder } from 'protractor/built/element';
-
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class InfinitePaginationPage {

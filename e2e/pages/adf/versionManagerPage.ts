@@ -16,7 +16,6 @@
  */
 
 import path = require('path');
-import remote = require('selenium-webdriver/remote');
 import { browser, by, element, ElementFinder } from 'protractor';
 import { FormControllersPage } from '@alfresco/adf-testing';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
@@ -45,35 +44,34 @@ export class VersionManagePage {
     }
 
     async uploadNewVersionFile(fileLocation): Promise<void> {
-        await browser.setFileDetector(new remote.FileDetector());
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadNewVersionButton);
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadNewVersionButton);
         await this.uploadNewVersionButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
-        await BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
+        await BrowserVisibility.waitUntilElementIsPresent(this.showNewVersionButton);
     }
 
     async getFileVersionName(version): Promise<string> {
         const fileElement: ElementFinder = element(by.css(`[id="adf-version-list-item-name-${version}"]`));
-        return BrowserActions.getText(fileElement);
+        return await BrowserActions.getText(fileElement);
     }
 
     async checkFileVersionExist(version): Promise<void> {
         const fileVersion: ElementFinder = element(by.id(`adf-version-list-item-version-${version}`));
-        return BrowserVisibility.waitUntilElementIsVisible(fileVersion);
+        await BrowserVisibility.waitUntilElementIsVisible(fileVersion);
     }
 
     async checkFileVersionNotExist(version): Promise<void> {
         const fileVersion: ElementFinder = element(by.id(`adf-version-list-item-version-${version}`));
-        return BrowserVisibility.waitUntilElementIsNotVisible(fileVersion);
+        await BrowserVisibility.waitUntilElementIsNotVisible(fileVersion);
     }
 
     async getFileVersionComment(version): Promise<string> {
         const fileComment: ElementFinder = element(by.id(`adf-version-list-item-comment-${version}`));
-        return BrowserActions.getText(fileComment);
+        return await BrowserActions.getText(fileComment);
     }
 
     async getFileVersionDate(version): Promise<string> {
         const fileDate: ElementFinder = element(by.id(`adf-version-list-item-date-${version}`));
-        return BrowserActions.getText(fileDate);
+        return await BrowserActions.getText(fileDate);
     }
 
     async enterCommentText(text): Promise<void> {
@@ -135,6 +133,7 @@ export class VersionManagePage {
 
     async clickActionButton(version): Promise<void> {
         await BrowserActions.click(element(by.id(`adf-version-list-action-menu-button-${version}`)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('.cdk-overlay-container .mat-menu-content')));
     }
 
     async clickAcceptConfirm(): Promise<void> {
@@ -146,9 +145,9 @@ export class VersionManagePage {
     }
 
     async closeActionsMenu(): Promise<void> {
-        const container: ElementFinder = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
+        // const container: ElementFinder = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserVisibility.waitUntilElementIsNotVisible(container);
+        // await BrowserVisibility.waitUntilElementIsNotVisible(container);
     }
 
     async closeDisabledActionsMenu(): Promise<void> {
@@ -160,22 +159,19 @@ export class VersionManagePage {
     async downloadFileVersion(version): Promise<void> {
         await this.clickActionButton(version);
         const downloadButton: ElementFinder = element(by.id(`adf-version-list-action-download-${version}`));
-        await browser.sleep(500);
         await BrowserActions.click(downloadButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(downloadButton);
     }
 
     async deleteFileVersion(version): Promise<void> {
         await this.clickActionButton(version);
         const deleteButton: ElementFinder = element(by.id(`adf-version-list-action-delete-${version}`));
-        await browser.sleep(500);
         await BrowserActions.click(deleteButton);
     }
 
     async restoreFileVersion(version): Promise<void> {
         await this.clickActionButton(version);
         const restoreButton: ElementFinder = element(by.id(`adf-version-list-action-restore-${version}`));
-        await BrowserVisibility.waitUntilElementIsVisible(restoreButton);
-        await browser.sleep(500);
         await BrowserActions.click(restoreButton);
     }
 

@@ -76,31 +76,25 @@ const JS_BIND_INPUT_FOLDER = function(target) {
 
 export class DropActions {
 
-    dropFile(dropArea, filePath) {
+    async dropFile(dropArea, filePath) {
         browser.setFileDetector(new remote.FileDetector());
 
         const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, filePath));
 
         fs.accessSync(absolutePath, fs.constants.F_OK);
-        return dropArea.getWebElement().then((element) => {
-            browser.executeScript(JS_BIND_INPUT, element).then((input: any) => {
-                input.sendKeys(absolutePath);
-
-            });
-        });
+        const elem = await dropArea.getWebElement();
+        const input: any = await browser.executeScript(JS_BIND_INPUT, elem);
+        return await input.sendKeys(absolutePath);
     }
 
-    dropFolder(dropArea, folderPath) {
+    async dropFolder(dropArea, folderPath) {
         browser.setFileDetector(new remote.FileDetector());
 
         const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, folderPath));
         fs.accessSync(absolutePath, fs.constants.F_OK);
 
-        return dropArea.getWebElement().then((element) => {
-            browser.executeScript(JS_BIND_INPUT_FOLDER, element).then((input: any) => {
-                input.sendKeys(absolutePath);
-
-            });
-        });
+        const elem = await dropArea.getWebElement();
+        const input: any = await browser.executeScript(JS_BIND_INPUT_FOLDER, elem);
+        return await input.sendKeys(absolutePath);
     }
 }

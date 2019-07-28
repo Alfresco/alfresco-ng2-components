@@ -77,8 +77,6 @@ describe('Upload component', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        await contentServicesPage.goToDocumentList();
-
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
 
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
@@ -92,18 +90,14 @@ describe('Upload component', () => {
 
     describe('', () => {
 
-        beforeEach(async () => {
-            await contentServicesPage.goToDocumentList();
-        });
-
         afterEach(async (done) => {
-
-            await contentServicesPage.getElementsDisplayedId().then((nodeList) => {
-                nodeList.forEach(async (currentNode) => {
+            const nodeList = await contentServicesPage.getElementsDisplayedId();
+            await nodeList.forEach(async (currentNode) => {
+                try {
                     await uploadActions.deleteFileOrFolder(currentNode);
-                });
+                } catch (error) {
+                }
             });
-
             done();
         });
 
@@ -167,8 +161,6 @@ describe('Upload component', () => {
         it('[C272794] Should display tooltip for uploading files', async () => {
             await uploadToggles.enableMultipleFileUpload();
             await uploadToggles.checkMultipleFileUploadToggleIsEnabled();
-
-            await browser.sleep(1000);
             expect(await contentServicesPage.getMultipleFileButtonTooltip()).toEqual('Custom tooltip');
             await uploadToggles.disableMultipleFileUpload();
         });

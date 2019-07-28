@@ -132,6 +132,7 @@
     "ajv-cli": "^3.0.0",
     "bundlesize": "^0.17.2",
     "chalk": "^2.3.2",
+    "chrome-remote-interface": "^0.26.1",
     "codelyzer": "5.0.0",
     "commander": "^2.15.1",
     "concurrently": "^3.5.1",

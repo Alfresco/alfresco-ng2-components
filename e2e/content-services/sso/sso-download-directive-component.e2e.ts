@@ -25,14 +25,14 @@ import {
     IdentityService,
     SettingsPage,
     StringUtil,
-    UserModel
+    UserModel,
+    FileBrowserUtil
 } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/fileModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import * as path from 'path';
-import { Util } from '../../util/util';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 
@@ -135,7 +135,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         it('[C291936] Should be able to download a file', async (done) => {
             await contentListPage.selectRow(pngFileModel.name);
             await contentServicesPage.clickDownloadButton();
-            expect(await Util.fileExists(downloadedPngFile, 30)).toBe(true);
+            expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true, `${downloadedPngFile} not downloaded`);
             done();
         });
 
@@ -164,7 +164,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await contentListPage.dataTablePage().checkRowIsChecked('Display name', pngFileModel.name);
             await contentListPage.dataTablePage().checkRowIsChecked('Display name', firstPdfFileModel.name);
             await contentServicesPage.clickDownloadButton();
-            expect(await Util.fileExists(downloadedMultipleFiles, 30)).toBe(true);
+            expect(await FileBrowserUtil.isFileDownloaded(downloadedMultipleFiles)).toBe(true, `${downloadedMultipleFiles} not downloaded`);
         });
 
         it('[C291940] Should be able to view thumbnails when enabled', async () => {

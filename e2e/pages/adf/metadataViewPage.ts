@@ -107,7 +107,6 @@ export class MetadataViewPage {
     }
 
     async informationButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.informationButton);
         await BrowserVisibility.waitUntilElementIsClickable(this.informationButton);
     }
 
@@ -116,7 +115,6 @@ export class MetadataViewPage {
     }
 
     async clickOnInformationButton(): Promise<void> {
-        await this.informationButtonIsDisplayed();
         await BrowserActions.click(this.informationButton);
     }
 

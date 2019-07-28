@@ -43,6 +43,6 @@ export class ProcessServiceTabBarPage {
 
     async clickReportsButton(): Promise<void> {
         await BrowserActions.click(this.reportsButton);
-        return BrowserVisibility.waitUntilElementIsVisible(this.reportsButtonSelected);
+        await BrowserVisibility.waitUntilElementIsVisible(this.reportsButtonSelected);
     }
 }

@@ -10,6 +10,8 @@ const argv = require('yargs').argv;
 const fs = require('fs');
 const rimraf = require('rimraf');
 const projectRoot = path.resolve(__dirname);
+const CDP = require('chrome-remote-interface');
+
 const width = 1366;
 const height = 768;
 
@@ -51,14 +53,22 @@ let browser_options = function () {
     if (BROWSER_RUN === true) {
         args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
     } else {
-        args_options = ['--incognito', '--headless', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
+        args_options = [
+            '--incognito',
+            '--headless',
+            `--window-size=${width},${height}`,
+            '--disable-gpu',
+            '--disable-web-security',
+            '--remote-debugging-port=9222',
+            '--disable-browser-side-navigation'
+        ];
     }
     return args_options;
 };
 
 let args_options = browser_options();
 
-let downloadFolder = path.join(__dirname, 'e2e/downloads');
+let downloadFolder = path.join(__dirname, 'e2e-output/downloads');
 
 let specs = () => {
     let specsToRun = './**/e2e/' + FOLDER + '/**/*.e2e.ts';
@@ -268,6 +278,12 @@ exports.config = {
                 'download': {
                     'prompt_for_download': false,
                     'default_directory': downloadFolder
+                },
+                browser: {
+                    'set_download_behavior': {
+                        'behavior': 'allow',
+                        'downloadPath': downloadFolder
+                    }
                 }
             },
             args: args_options
@@ -283,7 +299,8 @@ exports.config = {
         config: TestConfig.appConfig,
         identityAdmin: TestConfig.identityAdmin,
         identityUser: TestConfig.identityUser,
-        rootPath: __dirname
+        rootPath: __dirname,
+        downloadFolder: downloadFolder
     },
 
     framework: 'jasmine2',
@@ -364,6 +381,16 @@ exports.config = {
         });
         jasmine.getEnv().addReporter(junitReporter);
 
+        CDP()
+        .then(client => {
+          client.send('Page.setDownloadBehavior', {
+            behavior: 'allow',
+            downloadPath: downloadFolder
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
 
         return browser.executeScript(disableCSSAnimation);
 

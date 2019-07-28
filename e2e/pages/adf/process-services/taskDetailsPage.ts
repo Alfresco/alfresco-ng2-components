@@ -237,10 +237,8 @@ export class TaskDetailsPage {
         await BrowserActions.click(this.addInvolvedUserButton);
     }
 
-    async getRowsUser(user): Promise<ElementFinder> {
-        const row: ElementFinder = element(by.cssContainingText('div[class*="people-full-name"]', user));
-        await BrowserVisibility.waitUntilElementIsVisible(row);
-        return row;
+    getRowsUser(user) {
+        return element(by.cssContainingText('div[class*="people-full-name"]', user));
     }
 
     async removeInvolvedUser(user): Promise<void> {

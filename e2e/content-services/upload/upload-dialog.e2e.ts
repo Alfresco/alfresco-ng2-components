@@ -178,10 +178,8 @@ describe('Upload component', () => {
         await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
         await contentServicesPage.versionManagerContent(docxFileModel.name);
-        await BrowserActions.click(await versionManagePage.showNewVersionButton);
-        await versionManagePage.uploadNewVersionFile(
-            pngFileModel.location
-        );
+        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.uploadNewVersionFile(pngFileModel.location);
         await versionManagePage.closeVersionDialog();
         await uploadDialog.removeUploadedFile(pngFileModel.name);
         await contentServicesPage.checkContentIsDisplayed(pngFileModel.name);

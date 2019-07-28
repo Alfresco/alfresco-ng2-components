@@ -111,7 +111,7 @@ export class DataTableComponentPage {
         const row = this.getRow(identifyingColumn, identifyingValue);
         await BrowserVisibility.waitUntilElementIsVisible(row);
         const rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
-        return BrowserActions.getText(rowColumn);
+        return await BrowserActions.getText(rowColumn);
     }
 
     /**
@@ -123,7 +123,7 @@ export class DataTableComponentPage {
      */
     async checkListIsSorted(sortOrder: string, columnTitle: string): Promise<any> {
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
-        await BrowserVisibility.waitUntilElementIsVisible(column.first());
+        // await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
         await column.each(async (currentElement) => {
             const text = await currentElement.getText();
@@ -131,7 +131,7 @@ export class DataTableComponentPage {
                 initialList.push(text.toLowerCase());
             }
         });
-        let sortedList = [...initialList];
+        let sortedList = initialList;
         sortedList = sortedList.sort();
         if (sortOrder.toLocaleLowerCase() === 'desc') {
             sortedList = sortedList.reverse();
@@ -164,11 +164,12 @@ export class DataTableComponentPage {
         return await this.rootElement.all(this.rows).count();
     }
 
-    async getAllRowsColumnValues(column): Promise<any> {
+    async getAllRowsColumnValues(column) {
         const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + column + "'] span");
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(columnLocator).first());
-        const initialList: any = await element.all(columnLocator).getText();
-        return initialList.filter((el) => el);
+        await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first());
+        return await element.all(columnLocator)
+            .filter(async (el) => await el.isPresent())
+            .map(async (el) => await el.getText());
     }
 
     async getRowsWithSameColumnValues(columnName, columnValue): Promise<string> {
@@ -286,32 +287,27 @@ export class DataTableComponentPage {
     }
 
     async selectRowByContent(content): Promise<void> {
-        const row = await this.getCellByContent(content);
+        const row = this.getCellByContent(content);
         await BrowserActions.click(row);
     }
 
     async checkRowByContentIsSelected(folderName): Promise<void> {
-        const selectedRow = await this.getCellByContent(folderName);
-        selectedRow.element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         await BrowserVisibility.waitUntilElementIsVisible(selectedRow);
     }
 
     async checkRowByContentIsNotSelected(folderName): Promise<void> {
-        const selectedRow = await this.getCellByContent(folderName);
-        selectedRow.element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         await BrowserVisibility.waitUntilElementIsNotVisible(selectedRow);
     }
 
-    async getCellByContent(content): Promise<ElementFinder> {
-        const cell = this.rootElement.all(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content)).first();
-        await BrowserVisibility.waitUntilElementIsVisible(cell);
-        return cell;
+    getCellByContent(content) {
+        return this.rootElement.all(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content)).first();
     }
 
-    async checkCellByHighlightContent(content): Promise<ElementFinder> {
+    async checkCellByHighlightContent(content) {
         const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name'] span.adf-highlight`, content));
         await BrowserVisibility.waitUntilElementIsVisible(cell);
-        return cell;
     }
 
     async clickRowByContent(name): Promise<void> {
@@ -321,6 +317,7 @@ export class DataTableComponentPage {
 
     async clickRowByContentCheckbox(name): Promise<void> {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first().element(by.xpath(`ancestor::div/div/mat-checkbox`));
+        await browser.actions().mouseMove(resultElement);
         await BrowserActions.click(resultElement);
     }
 

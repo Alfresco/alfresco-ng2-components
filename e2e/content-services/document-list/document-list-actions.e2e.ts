@@ -162,8 +162,8 @@ describe('Document List Component - Actions', () => {
             it('[C280562] Only one file is deleted when multiple files are selected using dropdown menu', async () => {
                 await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
-                await contentListPage.selectRow(fileNames[1]);
-                await contentListPage.selectRow(fileNames[2]);
+                await contentServicesPage.getDocumentList().selectRow(fileNames[1]);
+                await contentServicesPage.getDocumentList().selectRow(fileNames[2]);
                 await contentServicesPage.deleteContent(fileNames[1]);
                 await contentServicesPage.checkContentIsNotDisplayed(fileNames[1]);
                 await contentServicesPage.checkContentIsDisplayed(fileNames[2]);
@@ -171,8 +171,8 @@ describe('Document List Component - Actions', () => {
 
             it('[C280565] Should be able to delete a file using context menu', async () => {
                 await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
-
-                await contentListPage.rightClickOnRow(fileNames[2]);
+                await contentServicesPage.checkContentIsDisplayed(fileNames[2]);
+                await contentServicesPage.getDocumentList().rightClickOnRow(fileNames[2]);
                 await contentServicesPage.pressContextMenuActionNamed('Delete');
                 await contentServicesPage.checkContentIsNotDisplayed(fileNames[2]);
             });
@@ -180,9 +180,9 @@ describe('Document List Component - Actions', () => {
             it('[C280567] Only one file is deleted when multiple files are selected using context menu', async () => {
                 await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
-                await contentListPage.selectRow(fileNames[3]);
-                await contentListPage.selectRow(fileNames[4]);
-                await contentListPage.rightClickOnRow(fileNames[3]);
+                await contentServicesPage.getDocumentList().selectRow(fileNames[3]);
+                await contentServicesPage.getDocumentList().selectRow(fileNames[4]);
+                await contentServicesPage.getDocumentList().rightClickOnRow(fileNames[3]);
                 await contentServicesPage.pressContextMenuActionNamed('Delete');
                 await contentServicesPage.checkContentIsNotDisplayed(fileNames[3]);
                 await contentServicesPage.checkContentIsDisplayed(fileNames[4]);
@@ -224,7 +224,7 @@ describe('Document List Component - Actions', () => {
             it('[C280568] Should be able to open context menu with right click', async () => {
                 await contentServicesPage.checkContentIsDisplayed(secondUploadedFolder.entry.name);
 
-                await contentListPage.rightClickOnRow(secondUploadedFolder.entry.name);
+                await contentServicesPage.getDocumentList().rightClickOnRow(secondUploadedFolder.entry.name);
                 await contentServicesPage.checkContextActionIsVisible('Download');
                 await contentServicesPage.checkContextActionIsVisible('Copy');
                 await contentServicesPage.checkContextActionIsVisible('Move');
@@ -287,7 +287,7 @@ describe('Document List Component - Actions', () => {
 
             expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
             expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
-            await contentListPage.rightClickOnRow('A' + folderModel1.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
             await contentServicesPage.checkContextActionIsVisible('Move');
             await contentServicesPage.pressContextMenuActionNamed('Move');
             await contentNodeSelector.checkDialogIsDisplayed();
@@ -308,7 +308,7 @@ describe('Document List Component - Actions', () => {
             await contentNodeSelector.checkDialogIsNotDisplayed();
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
-            await contentListPage.rightClickOnRow('A' + folderModel1.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
             await contentServicesPage.checkContextActionIsVisible('Move');
             await contentServicesPage.pressContextMenuActionNamed('Move');
             await contentNodeSelector.checkDialogIsDisplayed();
@@ -320,7 +320,7 @@ describe('Document List Component - Actions', () => {
             await contentServicesPage.doubleClickRow('F' + folderModel6.name);
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
-            await contentListPage.rightClickOnRow('A' + folderModel1.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
             await contentServicesPage.checkContextActionIsVisible('Move');
             await contentServicesPage.pressContextMenuActionNamed('Move');
             await contentNodeSelector.checkDialogIsDisplayed();
@@ -340,7 +340,7 @@ describe('Document List Component - Actions', () => {
 
             expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
             expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
-            await contentListPage.rightClickOnRow('A' + folderModel1.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
             await contentServicesPage.checkContextActionIsVisible('Copy');
             await contentServicesPage.pressContextMenuActionNamed('Copy');
             await contentNodeSelector.checkDialogIsDisplayed();
@@ -361,7 +361,7 @@ describe('Document List Component - Actions', () => {
             await contentNodeSelector.checkDialogIsNotDisplayed();
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
-            await contentListPage.rightClickOnRow('A' + folderModel1.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
             await contentServicesPage.checkContextActionIsVisible('Copy');
             await contentServicesPage.pressContextMenuActionNamed('Copy');
             await contentNodeSelector.checkDialogIsDisplayed();
@@ -371,7 +371,7 @@ describe('Document List Component - Actions', () => {
             await contentNodeSelector.clickMoveCopyButton();
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
             await paginationPage.clickOnNextPage();
-            await contentListPage.waitForTableBody();
+            await contentServicesPage.getDocumentList().waitForTableBody();
             await contentServicesPage.doubleClickRow('F' + folderModel6.name);
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 

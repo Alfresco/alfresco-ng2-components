@@ -17,9 +17,8 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { ElementFinder } from 'protractor/built/element';
 
 const column = {
     id: 'Id',
@@ -116,40 +115,40 @@ export class TaskListCloudComponentPage {
         return BrowserActions.getText(this.noTasksFound);
     }
 
-    getAllRowsNameColumn(): Promise<string> {
-        return this.dataTable.getAllRowsColumnValues(column.name);
+    async getAllRowsNameColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.name);
     }
 
-    getAllRowsByIdColumn(): Promise<string> {
-        return this.dataTable.getAllRowsColumnValues(column.id);
+    async getAllRowsByIdColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.id);
     }
 
-    getAllRowsByProcessDefIdColumn(): Promise<string> {
-        return this.dataTable.getAllRowsColumnValues(column.processDefinitionId);
+    async getAllRowsByProcessDefIdColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.processDefinitionId);
     }
 
-    getAllRowsByProcessInstanceIdColumn(): Promise<string> {
-        return this.dataTable.getAllRowsColumnValues(column.processInstanceId);
+    async getAllRowsByProcessInstanceIdColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.processInstanceId);
     }
 
-    getAllRowsByAssigneeColumn(): Promise<string> {
-        return this.dataTable.getAllRowsColumnValues(column.assignee);
+    async getAllRowsByAssigneeColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.assignee);
     }
 
-    getAllRowsByParentTaskIdColumn(): Promise<string> {
-        return this.dataTable.getAllRowsColumnValues(column.parentTaskId);
+    async getAllRowsByParentTaskIdColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.parentTaskId);
     }
 
-    getAllRowsByPriorityColumn(): Promise<string> {
-        return this.dataTable.getAllRowsColumnValues(column.priority);
+    async getAllRowsByPriorityColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.priority);
     }
 
-    getAllRowsByStandAloneColumn(): Promise<string> {
-        return this.dataTable.getAllRowsColumnValues(column.standAlone);
+    async getAllRowsByStandAloneColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.standAlone);
     }
 
-    getAllRowsByOwnerColumn(): Promise<string> {
-        return this.dataTable.getAllRowsColumnValues(column.owner);
+    async getAllRowsByOwnerColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.owner);
     }
 
     async getIdCellValue(rowName): Promise<string> {

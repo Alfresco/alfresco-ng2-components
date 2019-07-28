@@ -45,7 +45,8 @@ export class BrowserActions {
 
     static async getColor(elementFinder: ElementFinder): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        return elementFinder.getWebElement().getCssValue('color');
+        const webElem = await elementFinder.getWebElement();
+        return await webElem.getCssValue('color');
     }
 
     static async clearWithBackSpace(elementFinder: ElementFinder) {
@@ -54,10 +55,9 @@ export class BrowserActions {
     }
 
     static async clearSendKeys(elementFinder: ElementFinder, text: string): Promise<void> {
-        await BrowserActions.click(elementFinder);
+        await this.click(elementFinder);
         await elementFinder.sendKeys('');
         await elementFinder.clear();
-
         await elementFinder.sendKeys(text);
     }
 
@@ -86,12 +86,12 @@ export class BrowserActions {
         await this.click(dropDownElement);
         await BrowserVisibility.waitUntilElementIsVisible(element('div[class*="mat-menu-content"] button'));
         const optionElement = element(by.cssContainingText('div[class*="mat-menu-content"] button', option));
-        await BrowserActions.click(optionElement);
+        await this.click(optionElement);
     }
 
     static async clickOnSelectDropdownOption(option: string, dropDownElement: ElementFinder): Promise<void> {
         await this.click(dropDownElement);
         const optionElement = element(by.cssContainingText('mat-option span.mat-option-text', option));
-        await BrowserActions.click(optionElement);
+        await this.click(optionElement);
     }
 }

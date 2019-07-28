@@ -58,14 +58,13 @@ export class UploadDialog {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.dialog);
     }
 
-    async getRowsName(content): Promise<ElementFinder> {
+    getRowsName(content) {
         const row: ElementFinder = element.all(by.css(`div[class*='uploading-row'] span[title="${content}"]`)).first();
-        await BrowserVisibility.waitUntilElementIsVisible(row);
         return row;
     }
 
-    async getRowByRowName(content): Promise<ElementFinder> {
-        const rows = await this.getRowsName(content);
+    getRowByRowName(content) {
+        const rows = this.getRowsName(content);
         return rows.element(this.rowByRowName);
     }
 

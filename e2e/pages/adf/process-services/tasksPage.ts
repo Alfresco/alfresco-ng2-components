@@ -78,16 +78,14 @@ export class TasksPage {
         return new ChecklistDialog();
     }
 
-    async getRowsName(name): Promise<ElementFinder> {
+    getRowsName(name) {
         const row: ElementFinder = element(this.checklistContainer).element(by.cssContainingText('span', name));
-        await BrowserVisibility.waitUntilElementIsVisible(row);
         return row;
     }
 
-    async getChecklistByName(checklist): Promise<ElementFinder> {
-        const ele = await this.getRowsName(checklist);
-        const row = ele.element(this.rowByRowName);
-        await BrowserVisibility.waitUntilElementIsVisible(row);
+    getChecklistByName(checklist) {
+        const elem = this.getRowsName(checklist);
+        const row = elem.element(this.rowByRowName);
         return row;
     }
 
@@ -131,24 +129,24 @@ export class TasksPage {
     }
 
     async removeChecklists(checklist): Promise<void> {
-        const ele = await this.getRowsName(checklist);
-        const row = ele.element(this.rowByRowName);
+        const elem = this.getRowsName(checklist);
+        const row = elem.element(this.rowByRowName);
         await BrowserVisibility.waitUntilElementIsVisible(row.element(by.css('mat-icon')));
         await row.element(by.css('mat-icon')).click();
     }
 
     async checkChecklistsRemoveButtonIsNotDisplayed(checklist): Promise<void> {
-        const ele = await this.getRowsName(checklist);
-        const row = ele.element(this.rowByRowName);
+        const elem = this.getRowsName(checklist);
+        const row = elem.element(this.rowByRowName);
         await BrowserVisibility.waitUntilElementIsNotVisible(row.element(by.css('mat-icon')));
     }
 
-    clickSortByNameAsc(): Promise<any> {
-        return this.tasksListPage().getDataTable().sortByColumn('ASC', 'name');
+    async clickSortByNameAsc(): Promise<any> {
+        return await this.tasksListPage().getDataTable().sortByColumn('ASC', 'name');
     }
 
-    clickSortByNameDesc(): Promise<any> {
-        return this.tasksListPage().getDataTable().sortByColumn('DESC', 'name');
+    async clickSortByNameDesc(): Promise<any> {
+        return await this.tasksListPage().getDataTable().sortByColumn('DESC', 'name');
     }
 
 }

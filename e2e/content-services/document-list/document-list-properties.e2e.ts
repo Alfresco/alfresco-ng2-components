@@ -77,11 +77,10 @@ describe('Document List Component - Properties',  () => {
 
             await contentServicesPage.disableDropFilesInAFolder();
 
-            const dragAndDropArea = await contentServicesPage.getRowByName(subFolder.entry.name);
+            const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
 
             const dragAndDrop = new DropActions();
             await dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
-
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
             await contentServicesPage.doubleClickRow(subFolder.entry.name);
             await contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
@@ -93,7 +92,7 @@ describe('Document List Component - Properties',  () => {
 
             await contentServicesPage.enableDropFilesInAFolder();
 
-            const dragAndDropArea = await contentServicesPage.getRowByName(subFolder.entry.name);
+            const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
 
             const dragAndDrop = new DropActions();
             await dragAndDrop.dropFile(dragAndDropArea, pngFile.location);

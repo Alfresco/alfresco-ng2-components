@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
-import { ElementFinder } from 'protractor/built/element';
 
 export class CardViewComponentPage {
 

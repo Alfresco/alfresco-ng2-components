@@ -88,8 +88,6 @@ describe('Document List Component',  () => {
                     }]
                 }
             });
-
-        await browser.sleep(10000);
         done();
     });
 
@@ -104,8 +102,12 @@ describe('Document List Component',  () => {
 
     describe('Document List Component - Actions Move and Copy',  () => {
 
-        beforeEach(async (done) => {
+        beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        });
+
+        beforeEach(async (done) => {
+            await BrowserActions.closeMenuAndDialogs();
             await navigationBarPage.clickContentServicesButton();
             done();
         });
@@ -178,7 +180,7 @@ describe('Document List Component',  () => {
 
         beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + sourceFolder.entry.id);
+            await BrowserActions.getUrl('/files/' + sourceFolder.entry.id);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });
 
@@ -186,7 +188,7 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
             await contentServicesPage.getDocumentList().rightClickOnRow(subFolder.entry.name);
             await contentServicesPage.checkContextActionIsVisible('Move');
-            expect(await contentServicesPage.checkContentActionIsEnabled('Move')).toBe(false);
+            expect(await contentServicesPage.checkContextActionIsEnabled('Move')).toBe(false);
             await contentServicesPage.closeActionContext();
         });
 
@@ -195,7 +197,7 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContentIsDisplayed(copyFolder.entry.name);
             await contentServicesPage.getDocumentList().rightClickOnRow(copyFolder.entry.name);
             await contentServicesPage.checkContextActionIsVisible('Copy');
-            expect(await contentServicesPage.checkContentActionIsEnabled('Copy')).toBe(true);
+            expect(await contentServicesPage.checkContextActionIsEnabled('Copy')).toBe(true);
             await contentServicesPage.pressContextMenuActionNamed('Copy');
             await contentNodeSelector.checkDialogIsDisplayed();
             await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);

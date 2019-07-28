@@ -200,9 +200,9 @@ describe('Create library directive', () => {
         }
     });
 
-    it('[C291985] Should not accept less than one character name for Library name', async () => {
+    it('[C291985] Should not accept less than 2 characters for Library name', async () => {
         const name = 'x';
-        const libraryId = 'My New Library';
+        const libraryId = 'my-library-id';
 
         await createLibraryDialog.typeLibraryName(name);
         await createLibraryDialog.typeLibraryId(libraryId);
