@@ -61,7 +61,6 @@ export class SearchCategoriesPage {
 
     async clickFilterHeader(filter: ElementFinder): Promise<void> {
         const fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
-        await BrowserVisibility.waitUntilElementIsClickable(fileSizeFilterHeader);
         await BrowserActions.click(fileSizeFilterHeader);
     }
 

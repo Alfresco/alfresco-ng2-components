@@ -30,7 +30,7 @@ export class BrowserActions {
     }
 
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(elementCssSelector)));
+        await BrowserVisibility.waitUntilElementIsPresent(element(by.css(elementCssSelector)));
         await browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
 

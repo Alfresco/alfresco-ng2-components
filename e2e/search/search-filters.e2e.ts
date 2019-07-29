@@ -109,9 +109,6 @@ describe('Search Filters', () => {
 
         await browser.sleep(15000); // wait search index previous file/folder uploaded
 
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-
         jsonFile = SearchConfiguration.getConfiguration();
 
         done();
@@ -130,6 +127,8 @@ describe('Search Filters', () => {
     });
 
     it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', async () => {
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter(fileUploaded.entry.name);
 
         await searchFiltersPage.checkSearchFiltersIsDisplayed();
@@ -142,7 +141,7 @@ describe('Search Filters', () => {
     });
 
     it('[C277146] Should Show more/less buttons be hidden when inactive', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+        await BrowserActions.getUrl('/search;q=*');
 
         const searchCheckListPage = searchFiltersPage.creatorCheckListFiltersPage();
 
@@ -154,7 +153,7 @@ describe('Search Filters', () => {
     });
 
     it('[C286556] Search categories should preserve their collapsed/expanded state after the search', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+        await BrowserActions.getUrl('/search;q=*');
 
         await searchFiltersPage.clickFileTypeListFilter();
         await searchFiltersPage.checkFileTypeFilterIsCollapsed();
@@ -168,7 +167,7 @@ describe('Search Filters', () => {
     });
 
     it('[C287796] Should be able to display the correct bucket number after selecting a filter', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+        await BrowserActions.getUrl('/search;q=*');
 
         await searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
 
@@ -199,7 +198,7 @@ describe('Search Filters', () => {
     });
 
     it('[C291980] Should group search facets under specified labels', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+        await BrowserActions.getUrl('/search;q=*');
 
         await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
         await searchFiltersPage.checkTypeFacetQueryGroupIsDisplayed();
@@ -222,7 +221,7 @@ describe('Search Filters', () => {
     });
 
     it('[C297509] Should display search intervals under specified labels from config', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+        await BrowserActions.getUrl('/search;q=*');
 
         await searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed();
         await searchFiltersPage.checkFacetIntervalsByCreatedIsExpanded();
@@ -239,6 +238,9 @@ describe('Search Filters', () => {
     });
 
     it('[C299200] Should reset the filters facet with search query', async () => {
+        await navigationBarPage.clickContentServicesButton();
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter(fileTypeTxt1.entry.name);
 
         await searchFiltersPage.checkSearchFiltersIsDisplayed();
@@ -246,6 +248,9 @@ describe('Search Filters', () => {
         await searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
         await searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (1)');
         await searchFiltersPage.checkFileTypeFacetLabelIsNotDisplayed('JPEG Image');
+
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
 
         await searchDialog.enterTextAndPressEnter(fileNamePrefix);
         await searchFiltersPage.checkSearchFiltersIsDisplayed();

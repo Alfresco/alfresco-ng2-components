@@ -23,7 +23,7 @@ export class SearchSortingPickerPage {
 
     sortingSelector: ElementFinder = element(by.css('adf-sorting-picker div[class="mat-select-arrow"]'));
     orderArrow: ElementFinder = element(by.css('adf-sorting-picker button mat-icon'));
-    optionsDropdown: ElementFinder = element(by.css('div[class*="mat-select-panel"]'));
+    optionsDropdown: ElementFinder = element(by.css('div .mat-select-panel'));
 
     async sortBy(sortOrder: string, sortType: string | RegExp): Promise<void> {
         await BrowserActions.click(this.sortingSelector);

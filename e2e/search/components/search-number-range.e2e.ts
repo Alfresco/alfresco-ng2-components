@@ -189,7 +189,7 @@ describe('Search Number Range Filter', () => {
         const fromSize = 0;
         await searchFilters.checkNameFilterIsDisplayed();
         await searchFilters.checkNameFilterIsExpanded();
-        nameFilter.searchByName('*');
+        await nameFilter.searchByName('*');
 
         await sizeRangeFilter.checkFromFieldIsDisplayed();
         await sizeRangeFilter.putFromNumber(fromSize);
@@ -213,7 +213,7 @@ describe('Search Number Range Filter', () => {
 
         await searchFilters.checkNameFilterIsDisplayed();
         await searchFilters.checkNameFilterIsExpanded();
-        nameFilter.searchByName('z*');
+        await nameFilter.searchByName('z*');
         await searchResults.sortBySize('DESC');
 
         const resultsSize: any = dataTable.geCellElementDetail('Size');
@@ -251,8 +251,7 @@ describe('Search Number Range Filter', () => {
         await searchFilters.clickCheckListFilter();
         await searchFilters.checkCheckListFilterIsExpanded();
 
-        await searchFilters.checkListFiltersPage()
-            .clickCheckListOption('Folder');
+        await searchFilters.checkListFiltersPage().clickCheckListOption('Folder');
 
         await searchResults.tableIsLoaded();
         await searchResults.checkNoResultMessageIsDisplayed();

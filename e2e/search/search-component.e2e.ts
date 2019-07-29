@@ -253,7 +253,6 @@ describe('Search component - Search Bar', () => {
         await searchDialog.enterText(secondFolder.shortName);
         await searchDialog.pressDownArrowAndEnter();
 
-        await searchResultPage.tableIsLoaded();
         expect(await contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 

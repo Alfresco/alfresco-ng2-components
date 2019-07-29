@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { element, by, ElementFinder, Locator, browser } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
@@ -65,9 +65,7 @@ export class SearchCheckListPage {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         const inputElement = this.filter.all(this.inputBy).first();
         await BrowserVisibility.waitUntilElementIsClickable(inputElement);
-
-        inputElement.clear();
-        this.filter.all(this.inputBy).first().sendKeys(option);
+        await BrowserActions.clearSendKeys(inputElement, option);
     }
 
     async checkShowLessButtonIsNotDisplayed(): Promise<void> {
@@ -87,7 +85,7 @@ export class SearchCheckListPage {
     }
 
     async clickShowMoreButtonUntilIsNotDisplayed(): Promise<void> {
-        const visible = this.filter.element(this.showMoreBy).isDisplayed();
+        const visible = await browser.isElementPresent(this.filter.element(this.showMoreBy));
         if (visible) {
             await BrowserActions.click(this.filter.element(this.showMoreBy));
             await this.clickShowMoreButtonUntilIsNotDisplayed();
@@ -95,8 +93,7 @@ export class SearchCheckListPage {
     }
 
     async clickShowLessButtonUntilIsNotDisplayed(): Promise<void> {
-        const visible = this.filter.element(this.showLessBy).isDisplayed();
-
+        const visible = await browser.isElementPresent(this.filter.element(this.showLessBy));
         if (visible) {
             await BrowserActions.click(this.filter.element(this.showLessBy));
             await this.clickShowLessButtonUntilIsNotDisplayed();
@@ -139,7 +136,6 @@ export class SearchCheckListPage {
     async clickClearAllButton(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const result = this.filter.element(this.clearAllButton);
-        await BrowserVisibility.waitUntilElementIsVisible(result);
         await BrowserActions.click(result);
 
     }

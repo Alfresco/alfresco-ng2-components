@@ -30,7 +30,7 @@ export class SearchDialog {
     searchDialog: ElementFinder = element(by.css(`mat-list[id='autocomplete-search-result-list']`));
 
     async pressDownArrowAndEnter(): Promise<void> {
-        element(by.css(`adf-search-control div input`)).sendKeys(protractor.Key.ARROW_DOWN);
+        await element(by.css(`adf-search-control div input`)).sendKeys(protractor.Key.ARROW_DOWN);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
@@ -47,7 +47,6 @@ export class SearchDialog {
     }
 
     async checkSearchBarIsNotVisible(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.searchBarExpanded);
     }
 
@@ -61,13 +60,13 @@ export class SearchDialog {
     }
 
     async enterText(text): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
+        await BrowserVisibility.waitUntilElementIsPresent(this.searchBar);
         await BrowserActions.clickExecuteScript('adf-search-control input');
         await this.searchBar.sendKeys(text);
     }
 
     async enterTextAndPressEnter(text): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
+        await BrowserVisibility.waitUntilElementIsPresent(this.searchBar);
         await BrowserActions.clickExecuteScript('adf-search-control input');
         await this.searchBar.sendKeys(text);
         await this.searchBar.sendKeys(protractor.Key.ENTER);
@@ -87,16 +86,16 @@ export class SearchDialog {
         return element(by.css(`mat-list-item[data-automation-id='autocomplete_for_${name}']`));
     }
 
-    getSpecificRowsHighlightName(name): Promise<string> {
-        return BrowserActions.getText(this.getRowByRowName(name).element(this.highlightName));
+    async getSpecificRowsHighlightName(name): Promise<string> {
+        return await BrowserActions.getText(this.getRowByRowName(name).element(this.highlightName));
     }
 
-    getSpecificRowsCompleteName(name): Promise<string> {
-        return BrowserActions.getText(this.getRowByRowName(name).element(this.completeName));
+    async getSpecificRowsCompleteName(name): Promise<string> {
+        return await BrowserActions.getText(this.getRowByRowName(name).element(this.completeName));
     }
 
-    getSpecificRowsAuthor(name): Promise<string> {
-        return BrowserActions.getText(this.getRowByRowName(name).element(this.rowsAuthor));
+    async getSpecificRowsAuthor(name): Promise<string> {
+        return await BrowserActions.getText(this.getRowByRowName(name).element(this.rowsAuthor));
     }
 
     async clearText(): Promise<void> {

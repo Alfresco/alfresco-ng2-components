@@ -36,7 +36,7 @@ export class NumberRangeFilterPage {
 
     async clearFromField(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromInput));
-        await BrowserActions.clearSendKeys(this.filter.element(this.fromInput), '');
+        await BrowserActions.clearWithBackSpace(this.filter.element(this.fromInput));
     }
 
     async getFromNumber(): Promise<string> {
@@ -45,8 +45,7 @@ export class NumberRangeFilterPage {
 
     async putFromNumber(value): Promise<void> {
         await this.checkFromFieldIsDisplayed();
-        await this.filter.element(this.fromInput).clear();
-        await this.filter.element(this.fromInput).sendKeys(value);
+        await BrowserActions.clearSendKeys(this.filter.element(this.fromInput), value);
         await this.filter.element(this.fromInput).sendKeys(protractor.Key.ENTER);
     }
 
@@ -72,7 +71,7 @@ export class NumberRangeFilterPage {
 
     async clearToField(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toInput));
-        await BrowserActions.clearSendKeys(this.filter.element(this.toInput), '');
+        await BrowserActions.clearWithBackSpace(this.filter.element(this.toInput));
     }
 
     async getToNumber(): Promise<string> {
@@ -81,8 +80,7 @@ export class NumberRangeFilterPage {
 
     async putToNumber(value): Promise<void> {
         await this.checkToFieldIsDisplayed();
-        await this.filter.element(this.toInput).clear();
-        await this.filter.element(this.toInput).sendKeys(value);
+        await BrowserActions.clearSendKeys(this.filter.element(this.toInput), value);
         await this.filter.element(this.toInput).sendKeys(protractor.Key.ENTER);
     }
 

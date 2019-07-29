@@ -27,7 +27,7 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
 
-describe('Search Number Range Filter', () => {
+describe('Search Slider Filter', () => {
 
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
@@ -80,28 +80,27 @@ describe('Search Number Range Filter', () => {
         done();
     });
 
-    beforeEach(async () => {
-        await searchFilters.checkSizeSliderFilterIsDisplayed();
-        await searchFilters.clickSizeSliderFilterHeader();
-        await searchFilters.checkSizeSliderFilterIsExpanded();
-    });
-
-    afterEach(async (done) => {
+    afterEach(async () => {
         await browser.refresh();
-        done();
     });
 
     it('[C276970] Should be able to expand/collapse Search Size Slider', async () => {
-        await searchFilters.checkSizeSliderFilterIsExpanded();
+        await searchFilters.checkSizeSliderFilterIsDisplayed();
         await searchFilters.clickSizeSliderFilterHeader();
         await sizeSliderFilter.checkSliderIsDisplayed();
         await sizeSliderFilter.checkClearButtonIsDisplayed();
         await sizeSliderFilter.checkClearButtonIsEnabled();
+        await searchFilters.clickSizeSliderFilterHeader();
         await searchFilters.checkSizeSliderFilterIsCollapsed();
+        await sizeSliderFilter.checkSliderIsNotDisplayed();
+        await sizeSliderFilter.checkClearButtonIsNotDisplayed();
     });
 
     it('[C276972] Should be keep value when Search Size Slider is collapsed', async () => {
         const size = 5;
+
+        await searchFilters.checkSizeSliderFilterIsDisplayed();
+        await searchFilters.clickSizeSliderFilterHeader();
         await sizeSliderFilter.checkSliderIsDisplayed();
         await sizeSliderFilter.setValue(size);
         await searchFilters.clickSizeSliderFilterHeader();
@@ -109,11 +108,15 @@ describe('Search Number Range Filter', () => {
         await searchFilters.clickSizeSliderFilterHeader();
         await searchFilters.checkSizeSliderFilterIsExpanded();
         await searchFilters.checkSizeSliderFilterIsDisplayed();
+
         expect(await sizeSliderFilter.getValue()).toEqual(`${size}`);
     });
 
     it('[C276981] Should be able to clear value in Search Size Slider', async () => {
         const size = 5;
+
+        await searchFilters.checkSizeSliderFilterIsDisplayed();
+        await searchFilters.clickSizeSliderFilterHeader();
         await sizeSliderFilter.checkSliderIsDisplayed();
         await sizeSliderFilter.setValue(size);
         await searchResults.sortBySize('DESC');
@@ -151,13 +154,12 @@ describe('Search Number Range Filter', () => {
     describe('Configuration change', () => {
         let jsonFile;
 
-        beforeEach(() => {
+        beforeEach(async () => {
             jsonFile = SearchConfiguration.getConfiguration();
+            await navigationBar.clickContentServicesButton();
         });
 
         it('[C276983] Should be able to disable thumb label in Search Size Slider', async () => {
-            await navigationBar.clickContentServicesButton();
-
             jsonFile.categories[2].component.settings.thumbLabel = false;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
@@ -174,8 +176,6 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276985] Should be able to set min value for Search Size Slider', async () => {
-            await navigationBar.clickContentServicesButton();
-
             const minSize = 3;
             jsonFile.categories[2].component.settings.min = minSize;
 
@@ -195,8 +195,6 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276986] Should be able to set max value for Search Size Slider', async () => {
-            await navigationBar.clickContentServicesButton();
-
             const maxSize = 50;
             jsonFile.categories[2].component.settings.max = maxSize;
 
@@ -216,8 +214,6 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276987] Should be able to set steps for Search Size Slider', async () => {
-            await navigationBar.clickContentServicesButton();
-
             const step = 10;
             jsonFile.categories[2].component.settings.step = step;
 

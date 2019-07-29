@@ -223,11 +223,11 @@ export class LoginPage {
     }
 
     async enableSuccessRouteSwitch(): Promise<void> {
-        await   this.formControllersPage.enableToggle(this.successRouteSwitch);
+        await this.formControllersPage.enableToggle(this.successRouteSwitch);
     }
 
     async enableLogoSwitch(): Promise<void> {
-        await   this.formControllersPage.enableToggle(this.logoSwitch);
+        await this.formControllersPage.enableToggle(this.logoSwitch);
     }
 
     async enterSuccessRoute(route): Promise<void> {

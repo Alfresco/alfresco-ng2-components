@@ -18,7 +18,6 @@
 import {
     LoginPage,
     LocalStorageUtil,
-    BrowserActions,
     SearchSortingPickerPage,
     UploadActions
 } from '@alfresco/adf-testing';
@@ -72,7 +71,6 @@ describe('Search Sorting Picker', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         pngA = await uploadActions.uploadFile(pngAModel.location, pngAModel.name, '-my-');
-        await browser.sleep(3000);
         pngD = await uploadActions.uploadFile(pngDModel.location, pngDModel.name, '-my-');
         await browser.sleep(12000);
 
@@ -87,16 +85,13 @@ describe('Search Sorting Picker', () => {
         done();
     });
 
-    beforeEach(async (done) => {
-        await searchDialog.checkSearchIconIsVisible();
+    beforeEach(async () => {
         await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter(search);
-        done();
     });
 
-    afterEach(async (done) => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
-        done();
+    afterEach(async () => {
+        await browser.refresh();
     });
 
     it(`[C277269] Should see the "sort by" option when search results are displayed in search results page`, async () => {
@@ -168,7 +163,7 @@ describe('Search Sorting Picker', () => {
         await searchSortingPicker.clickSortingSelector();
         await searchSortingPicker.checkOptionIsDisplayed('Name');
         await searchSortingPicker.clickSortingOption('Name');
-        expect(searchSortingPicker.checkOrderArrowIsDownward()).toBe(true);
+        expect(await searchSortingPicker.checkOrderArrowIsDownward()).toBe(true);
     });
 
     it('[C277280] Should be able to sort the search results by "Name" ASC', async () => {

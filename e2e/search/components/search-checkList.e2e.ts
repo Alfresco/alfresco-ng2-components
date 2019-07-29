@@ -68,9 +68,12 @@ describe('Search Checklist Component',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName + '');
-
         done();
+    });
+
+    beforeEach(async () => {
+        await navigationBarPage.clickContentServicesButton();
+        await BrowserActions.getUrl(`/search;q=${randomName}`);
     });
 
     afterAll(async (done) => {
