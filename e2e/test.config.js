@@ -22,7 +22,7 @@ const PROXY = process.env.PROXY_HOST_ADF;
 const LOG = process.env.LOG;
 const BPM_HOST = process.env.URL_HOST_BPM_ADF || "bpm";
 const OAUTH_HOST = process.env.URL_HOST_SSO_ADF || "keycloak";
-const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENDID || "alfresco";
+const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENDID || "activiti";
 
 const IDENTITY_HOST = process.env.URL_HOST_IDENTITY || "identity";
 const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";

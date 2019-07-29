@@ -15,25 +15,24 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget } from '@alfresco/adf-testing';
+import { ApiService, IdentityService, LoginSSOPage, SettingsPage, Widget } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { UsersActions } from '../../actions/users.actions';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
 import { checkboxVisibilityForm } from '../../resources/forms/checkbox-visibility-condition';
 
 describe('Visibility conditions - cloud', () => {
 
-    const loginPage = new LoginPage();
+    const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudDemoPage();
     const checkboxVisibilityFormJson = JSON.parse(checkboxVisibilityForm);
     const widget = new Widget();
+    const settingsPage = new SettingsPage();
 
-    let tenantId, user;
+    let user;
     let visibleCheckbox;
+    let identityService;
 
     const widgets = {
         textOneId: 'textOne',
@@ -54,23 +53,20 @@ describe('Visibility conditions - cloud', () => {
         checkboxVariableVariable: 'CheckboxVariableVariable'
     };
 
+    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
+
     beforeAll(async (done) => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
-        });
 
-        const users = new UsersActions();
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        identityService = new IdentityService(apiService);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
 
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        tenantId = user.tenantId;
-
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost);
+        loginSSOPage.loginSSOIdentityService(user.email, user.password);
 
         navigationBarPage.clickFormCloudButton();
 
@@ -80,8 +76,8 @@ describe('Visibility conditions - cloud', () => {
     });
 
     afterAll(async (done) => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await identityService.deleteIdentityUser(user.idIdentityService);
         done();
     });
 
