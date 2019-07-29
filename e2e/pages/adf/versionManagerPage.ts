@@ -16,6 +16,7 @@
  */
 
 import path = require('path');
+import remote = require('selenium-webdriver/remote');
 import { browser, by, element, ElementFinder } from 'protractor';
 import { FormControllersPage } from '@alfresco/adf-testing';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
@@ -44,6 +45,7 @@ export class VersionManagePage {
     }
 
     async uploadNewVersionFile(fileLocation): Promise<void> {
+        browser.setFileDetector(new remote.FileDetector());
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadNewVersionButton);
         await this.uploadNewVersionButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
         await BrowserVisibility.waitUntilElementIsPresent(this.showNewVersionButton);

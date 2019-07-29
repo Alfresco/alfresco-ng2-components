@@ -30,7 +30,6 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 
-import path = require('path');
 import { Util } from '../util/util';
 
 describe('Task Audit', () => {
@@ -43,7 +42,7 @@ describe('Task Audit', () => {
     const taskTaskApp = 'Audit task task app';
     const taskCustomApp = 'Audit task custom app';
     const taskCompleteCustomApp = 'Audit completed task custom app';
-    const auditLogFile = path.join('./e2e/download/', 'Audit.pdf');
+    const auditLogFile = 'Audit.pdf';
 
     beforeAll(async (done) => {
         const users = new UsersActions();

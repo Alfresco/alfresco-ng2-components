@@ -25,8 +25,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import resources = require('../util/resources');
 import { Util } from '../util/util';
 
-import path = require('path');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -47,7 +45,7 @@ describe('Attachment list action menu for processes',  () => {
         name: resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
-    const downloadedPngFile = path.join(__dirname, 'downloads', pngFile.name);
+    const downloadedPngFile = pngFile.name;
     let tenantId, appId;
     const processName = {
         active: 'Active Process',
@@ -123,7 +121,7 @@ describe('Attachment list action menu for processes',  () => {
 
         await browser.sleep(1000);
 
-        expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        expect(await Util.fileExists(downloadedPngFile, 30)).toBe(true);
 
         await attachmentListPage.removeFile(pngFile.name);
         await attachmentListPage.checkFileIsRemoved(pngFile.name);
@@ -156,7 +154,7 @@ describe('Attachment list action menu for processes',  () => {
 
         await browser.sleep(1000);
 
-        expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        expect(await Util.fileExists(downloadedPngFile, 30)).toBe(true);
 
         await attachmentListPage.removeFile(pngFile.name);
         await attachmentListPage.checkFileIsRemoved(pngFile.name);

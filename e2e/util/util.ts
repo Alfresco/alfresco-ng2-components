@@ -17,6 +17,7 @@
 
 import { browser } from 'protractor';
 import fs = require('fs');
+import path = require('path');
 
 export class Util {
 
@@ -71,7 +72,10 @@ export class Util {
      * @param retries - number of retries
      * @returns - true if file is found, false otherwise
      */
-    static async fileExists(filePath, retries) {
+    static async fileExists(fileName, retries) {
+        const config = await browser.getProcessedConfig();
+        const filePath = path.join(config.params.downloadFolder, fileName);
+
         let tries = 0;
         return new Promise(function(resolve) {
             const checkExist = setInterval(() => {

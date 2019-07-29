@@ -36,7 +36,6 @@ import { FileModel } from '../models/ACS/fileModel';
 import dateFormat = require('dateformat');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import path = require('path');
 import { StringUtil } from '@alfresco/adf-testing';
 
 describe('Start Process Component', () => {
@@ -61,7 +60,7 @@ describe('Start Process Component', () => {
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
 
-    const auditLogFile = path.join('../e2e/download/', 'Audit.pdf');
+    const auditLogFile = 'Audit.pdf';
 
     const jpgFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,

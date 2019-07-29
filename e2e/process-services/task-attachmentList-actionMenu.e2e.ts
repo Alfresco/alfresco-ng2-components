@@ -48,7 +48,7 @@ describe('Attachment list action menu for tasks', () => {
         location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
         name: resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
-    const downloadedPngFile = path.join(__dirname, 'downloads', pngFile.name);
+    const downloadedPngFile = pngFile.name;
     let tenantId, appId, relatedContent, relatedContentId;
     const taskName = {
         active: 'Active Task',
@@ -112,7 +112,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await browser.sleep(1000);
 
-        expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        expect(await Util.fileExists(downloadedPngFile, 30)).toBe(true);
 
         await attachmentListPage.removeFile(pngFile.name);
         await attachmentListPage.checkFileIsRemoved(pngFile.name);
@@ -143,7 +143,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await browser.sleep(1000);
 
-        expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        expect(await Util.fileExists(downloadedPngFile, 30)).toBe(true);
 
         await attachmentListPage.removeFile(pngFile.name);
         await attachmentListPage.checkFileIsRemoved(pngFile.name);

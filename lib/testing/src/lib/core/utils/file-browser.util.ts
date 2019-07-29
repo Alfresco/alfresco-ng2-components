@@ -29,19 +29,15 @@ export class FileBrowserUtil {
 
         return new Promise(function(resolve) {
           const checkExist = setInterval(() => {
-            fs.access(filePath, function(error) {
-              tries--;
-
-              if (error && tries === 0) {
-                clearInterval(checkExist);
-                resolve(false);
-              }
-
-              if (!error) {
+            const exists = fs.existsSync(filePath);
+            tries--;
+            if (exists) {
                 clearInterval(checkExist);
                 resolve(true);
-              }
-            });
+            } else if (tries === 0) {
+                clearInterval(checkExist);
+                resolve(false);
+            }
           }, 1000);
         });
     }

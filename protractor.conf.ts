@@ -10,7 +10,7 @@ const argv = require('yargs').argv;
 const fs = require('fs');
 const rimraf = require('rimraf');
 const projectRoot = path.resolve(__dirname);
-const CDP = require('chrome-remote-interface');
+// const CDP = require('chrome-remote-interface');
 
 const width = 1366;
 const height = 768;
@@ -59,7 +59,7 @@ let browser_options = function () {
             `--window-size=${width},${height}`,
             '--disable-gpu',
             '--disable-web-security',
-            '--remote-debugging-port=9222',
+            // '--remote-debugging-port=9222',
             '--disable-browser-side-navigation'
         ];
     }
@@ -381,16 +381,16 @@ exports.config = {
         });
         jasmine.getEnv().addReporter(junitReporter);
 
-        CDP()
-        .then(client => {
-          client.send('Page.setDownloadBehavior', {
-            behavior: 'allow',
-            downloadPath: downloadFolder
-          });
-        })
-        .catch(err => {
-          console.log(err);
-        });
+        // CDP()
+        // .then(client => {
+        //   client.send('Page.setDownloadBehavior', {
+        //     behavior: 'allow',
+        //     downloadPath: downloadFolder
+        //   });
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        // });
 
         return browser.executeScript(disableCSSAnimation);
 
