@@ -41,7 +41,8 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
-    DATE_FORMAT = 'DD/MM/YYYY';
+    DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
+    DATE_FORMAT = 'DD-MM-YYYY';
 
     minDate: Moment;
     maxDate: Moment;
@@ -66,11 +67,13 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = moment(this.field.minValue, this.DATE_FORMAT);
+                const minValueDateFormat = this.extractDateFormat(this.field.minValue);
+                this.minDate = moment(this.field.minValue, minValueDateFormat);
             }
 
             if (this.field.maxValue) {
-                this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT);
+                const maxValueDateFormat = this.extractDateFormat(this.field.maxValue);
+                this.maxDate = moment(this.field.maxValue, maxValueDateFormat);
             }
         }
         this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
@@ -90,5 +93,10 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
             this.field.value = null;
         }
         this.onFieldChanged(this.field);
+    }
+
+    extractDateFormat(date: string): string {
+        const brokenDownDate = date.split('-');
+        return brokenDownDate[0].length === 4 ? this.DATE_FORMAT_CLOUD : this.DATE_FORMAT;
     }
 }
