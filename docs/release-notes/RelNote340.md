@@ -1,6 +1,6 @@
 
 ---
-Title: Release notes v3.3.0
+Title: Release notes v3.4.0
 ---
 
 # Alfresco Application Development Framework (ADF) version 3.4.0 Release Note
