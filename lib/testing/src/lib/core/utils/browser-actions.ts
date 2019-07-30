@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from './browser-visibility';
 import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
 
 export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
+        // await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
         await elementFinder.click();
     }
 
@@ -30,12 +29,12 @@ export class BrowserActions {
     }
 
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(element(by.css(elementCssSelector)));
+        // await BrowserVisibility.waitUntilElementIsPresent(element(by.css(elementCssSelector)));
         await browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
 
     static async getText(elementFinder: ElementFinder): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        // await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         return elementFinder.getText();
     }
 
@@ -44,7 +43,7 @@ export class BrowserActions {
     }
 
     static async getColor(elementFinder: ElementFinder): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        // await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         const webElem = await elementFinder.getWebElement();
         return await webElem.getCssValue('color');
     }
@@ -62,13 +61,13 @@ export class BrowserActions {
     }
 
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        // await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         const valueCheck = await elementFinder.getAttribute('disabled');
         expect(valueCheck).toEqual('true');
     }
 
     static async rightClick(elementFinder: ElementFinder): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        // await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         await browser.actions().mouseMove(elementFinder).perform();
         await browser.actions().click(elementFinder, protractor.Button.RIGHT).perform();
     }
@@ -84,7 +83,7 @@ export class BrowserActions {
 
     static async clickOnDropdownOption(option: string, dropDownElement: ElementFinder): Promise<void> {
         await this.click(dropDownElement);
-        await BrowserVisibility.waitUntilElementIsVisible(element('div[class*="mat-menu-content"] button'));
+        // await BrowserVisibility.waitUntilElementIsVisible(element('div[class*="mat-menu-content"] button'));
         const optionElement = element(by.cssContainingText('div[class*="mat-menu-content"] button', option));
         await this.click(optionElement);
     }

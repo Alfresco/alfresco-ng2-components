@@ -26,14 +26,16 @@ export class BrowserVisibility {
      * Wait for element is visible
      */
     static async waitUntilElementIsVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = ''): Promise<any> {
-        return browser.wait(until.visibilityOf(elementToCheck), waitTimeout, message || 'Element is not visible ' + elementToCheck.locator());
+        const present = await this.waitUntilElementIsPresent(elementToCheck);
+        return present && (await elementToCheck.isDisplayed());
     }
 
     /*
      * Wait for element to be clickable
      */
     static async waitUntilElementIsClickable(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(until.elementToBeClickable(elementToCheck), waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
+        const visible = await this.waitUntilElementIsVisible(elementToCheck);
+        return visible && (await elementToCheck.isEnabled());
     }
 
     /*
@@ -58,7 +60,7 @@ export class BrowserVisibility {
     }
 
     static async waitUntilElementIsPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
+        return await browser.isElementPresent(elementToCheck);
     }
 
     static async waitUntilElementIsNotPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
