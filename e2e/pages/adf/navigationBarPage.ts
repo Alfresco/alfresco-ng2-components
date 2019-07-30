@@ -44,7 +44,7 @@ export class NavigationBarPage {
     peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="People/Group Cloud"]'));
 
     async clickDataTable(): Promise<void> {
-        await BrowserActions.clickExecuteScript(`.adf-sidenav-link[data-automation-id="Datatable"]`);
+        await BrowserActions.click(element(by.css(`.adf-sidenav-link[data-automation-id="Datatable"]`)));
         await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
     }
 
@@ -96,22 +96,27 @@ export class NavigationBarPage {
         await this.clickMenuButton('Configuration Editor');
     }
 
+    async clickProcessCloudButton() {
+        await BrowserActions.click(element(by.css(`.adf-sidenav-link[data-automation-id="Process Cloud"]`)));
+        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
+    }
+
     async navigateToProcessServicesPage(): Promise<ProcessServicesPage> {
-        await this.clickMenuButton('Process Services');
+        await this.clickProcessCloudButton();
         await BrowserActions.click(this.processServicesNestedButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new ProcessServicesPage();
     }
 
     async navigateToProcessServicesCloudPage(): Promise<AppListCloudPage> {
-        await this.clickMenuButton('Process Cloud');
+        await this.clickProcessCloudButton();
         await BrowserActions.click(this.processServicesCloudHomeButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new AppListCloudPage();
     }
 
     async navigateToPeopleGroupCloudPage(): Promise<PeopleGroupCloudComponentPage> {
-        await this.clickMenuButton('Process Cloud');
+        await this.clickProcessCloudButton();
         await BrowserActions.click(this.peopleGroupCloudButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new PeopleGroupCloudComponentPage();
@@ -213,7 +218,6 @@ export class NavigationBarPage {
     }
 
     async clickFormButton(): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(this.processServicesButton);
         await BrowserActions.click(this.formButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
