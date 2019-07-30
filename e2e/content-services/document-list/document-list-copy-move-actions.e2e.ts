@@ -180,7 +180,7 @@ describe('Document List Component',  () => {
 
         beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
-            await BrowserActions.getUrl('/files/' + sourceFolder.entry.id);
+            await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${sourceFolder.entry.id}`);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });
 

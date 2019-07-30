@@ -141,7 +141,7 @@ describe('Search Filters', () => {
     });
 
     it('[C277146] Should Show more/less buttons be hidden when inactive', async () => {
-        await BrowserActions.getUrl('/search;q=*');
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
 
         const searchCheckListPage = searchFiltersPage.creatorCheckListFiltersPage();
 
@@ -153,7 +153,7 @@ describe('Search Filters', () => {
     });
 
     it('[C286556] Search categories should preserve their collapsed/expanded state after the search', async () => {
-        await BrowserActions.getUrl('/search;q=*');
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
 
         await searchFiltersPage.clickFileTypeListFilter();
         await searchFiltersPage.checkFileTypeFilterIsCollapsed();
@@ -167,7 +167,7 @@ describe('Search Filters', () => {
     });
 
     it('[C287796] Should be able to display the correct bucket number after selecting a filter', async () => {
-        await BrowserActions.getUrl('/search;q=*');
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
 
         await searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
 
@@ -198,7 +198,7 @@ describe('Search Filters', () => {
     });
 
     it('[C291980] Should group search facets under specified labels', async () => {
-        await BrowserActions.getUrl('/search;q=*');
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
 
         await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
         await searchFiltersPage.checkTypeFacetQueryGroupIsDisplayed();
@@ -221,7 +221,7 @@ describe('Search Filters', () => {
     });
 
     it('[C297509] Should display search intervals under specified labels from config', async () => {
-        await BrowserActions.getUrl('/search;q=*');
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
 
         await searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed();
         await searchFiltersPage.checkFacetIntervalsByCreatedIsExpanded();

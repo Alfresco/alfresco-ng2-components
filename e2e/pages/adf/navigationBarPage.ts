@@ -51,6 +51,7 @@ export class NavigationBarPage {
     async clickMenuButton(title): Promise<void> {
         const menu = element(by.css(`.adf-sidenav-link[data-automation-id="${title}"]`));
         await BrowserActions.click(menu);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async clickSocialButton(): Promise<void> {
@@ -64,16 +65,19 @@ export class NavigationBarPage {
     async navigateToDatatable(): Promise<void> {
         await this.clickDataTable();
         await BrowserActions.click(this.dataTableNestedButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async navigateToCopyContentDatatable(): Promise<void> {
         await this.clickDataTable();
         await BrowserActions.click(this.dataTableCopyContentButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async navigateToDragAndDropDatatable(): Promise<void> {
         await this.clickDataTable();
         await BrowserActions.click(this.dataTableDragAndDropButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async clickContentServicesButton(): Promise<void> {
@@ -95,18 +99,21 @@ export class NavigationBarPage {
     async navigateToProcessServicesPage(): Promise<ProcessServicesPage> {
         await this.clickMenuButton('Process Services');
         await BrowserActions.click(this.processServicesNestedButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new ProcessServicesPage();
     }
 
     async navigateToProcessServicesCloudPage(): Promise<AppListCloudPage> {
         await this.clickMenuButton('Process Cloud');
         await BrowserActions.click(this.processServicesCloudHomeButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new AppListCloudPage();
     }
 
     async navigateToPeopleGroupCloudPage(): Promise<PeopleGroupCloudComponentPage> {
         await this.clickMenuButton('Process Cloud');
         await BrowserActions.click(this.peopleGroupCloudButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new PeopleGroupCloudComponentPage();
     }
 
@@ -135,6 +142,7 @@ export class NavigationBarPage {
     async clickOnSpecificThemeButton(themeName): Promise<void> {
         const themeElement: ElementFinder = element(by.css(`button[data-automation-id="${themeName}"]`));
         await BrowserActions.click(themeElement);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async clickLogoutButton(): Promise<void> {
@@ -148,12 +156,13 @@ export class NavigationBarPage {
     }
 
     async openContentServicesFolder(folderId): Promise<void> {
-        await BrowserActions.getUrl(`/files/${folderId}`);
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${folderId}`);
     }
 
     async chooseLanguage(language): Promise<void> {
         const buttonLanguage: ElementFinder = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
         await BrowserActions.click(buttonLanguage);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async openLanguageMenu(): Promise<void> {
@@ -207,11 +216,13 @@ export class NavigationBarPage {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(this.processServicesButton);
         await BrowserActions.click(this.formButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async clickFormCloudButton(): Promise<void> {
         await this.clickMenuButton('Process Cloud');
         await BrowserActions.click(this.formButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async checkLogoTooltip(logoTooltipTitle): Promise<void> {
