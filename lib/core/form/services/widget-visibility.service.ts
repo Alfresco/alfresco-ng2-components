@@ -90,7 +90,6 @@ export class WidgetVisibilityService {
             leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
         } else if (visibilityObj.leftType && visibilityObj.leftType === WidgetTypeEnum.field) {
             leftValue = this.getFormValue(form, visibilityObj.leftValue);
-            leftValue = leftValue ? leftValue : this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
         }
         return leftValue;
     }
