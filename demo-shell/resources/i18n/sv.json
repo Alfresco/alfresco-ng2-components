@@ -24,8 +24,8 @@
       "COMMENTS": "Visa kommentarer"
     },
     "PERSONAL-FILES": "Personliga filer",
-    "WARN-MULTIPLE-UPLOADS": "Visa varning för flera uppladningar",
-    "CUSTOM-PERMISSION-MESSAGE": "Aktivera anpassat behörighetersmeddelande",
+    "WARN-MULTIPLE-UPLOADS": "Visa varning för flera uppladdningar",
+    "CUSTOM-PERMISSION-MESSAGE": "Aktivera anpassat behörighetsmeddelande",
     "MEDIUM-TIME-FORMAT": "Aktivera mellantidsformat för dokumentlista",
     "SEARCH": {
       "RADIO": {
@@ -59,7 +59,7 @@
     "NODE-SELECTOR": "Nodväljare",
     "SITES": "Webbplatser",
     "CONTENT_SERVICES": "Content Services",
-    "BREADCRUMB": "Brödsmula",
+    "BREADCRUMB": "Synlig sökväg",
     "NOTIFICATIONS": "Aviseringar",
     "TASK_LIST": "Uppgiftslista",
     "PROCESS_LIST": "Processlista",
@@ -78,11 +78,12 @@
     "UPLOADER": "Uppladdad av",
     "WEBSCRIPT": "Webbskript",
     "TAG": "Tagg",
+    "PIPES": "Pipes",
     "TRASHCAN": "Papperskorg",
     "SOCIAL": "Social",
     "SETTINGS": "Inställningar",
     "CONFIG-EDITOR": "Konfigurationseditor",
-    "OVERLAY_VIEWER": "Överdragsvisare",
+    "OVERLAY_VIEWER": "Överlagringssvisare",
     "ABOUT": "Om",
     "SEARCH": "Utvidgad sökning",
     "EXTENDED_SEARCH_QUERY_BODY": "Utvidgad sökning med frågetext",
@@ -110,7 +111,7 @@
     }
   },
   "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Fleraval (med kryssrutor)",
+    "MULTISELECT_CHECKBOXES": "Flerval (med kryssrutor)",
     "THUMBNAILS": "Aktivera miniatyrbilder",
     "ALLOW_DROP_FILES": "Aktivera släpp filer i en mapp",
     "MULTIPLE_FILE_UPLOAD": "Uppladdning av flera filer",
@@ -179,7 +180,7 @@
     "REPLACE_ROWS": "Ersätt rader",
     "REPLACE_COLUMNS": "Ersätt kolumner",
     "LOAD_NODE": "Läs in nod",
-    "MULTISELECT": "Fleraval",
+    "MULTISELECT": "Flerval",
     "MULTISELECT_DESCRIPTION": "Använd Cmd (Mac) eller Ctrl (Windows) för att växla val av flera objekt"
   },
   "ANALYTICS_REPORT": {
@@ -230,7 +231,7 @@
       "CREATED": "5:Skapad den"
     },
     "FACET_QUERIES": {
-      "MY_FACET_QUERIES": "Mina facet-förfrågningar",
+      "MY_FACET_QUERIES": "Mina fasettförfrågningar",
       "CREATED_THIS_YEAR": "1.Skapad det här året",
       "MIMETYPE": "2.Typ: HTML",
       "XTRASMALL": "3.Storlek: extra small",
