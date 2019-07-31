@@ -72,6 +72,10 @@ export class ProcessCloudDemoPage {
         return BrowserActions.getText(this.activeFilter);
     }
 
+    checkFilterIsActive(filterName) {
+        return BrowserVisibility.waitUntilElementIsVisible(element(by.css(`mat-list-item[class*="active"] span[data-automation-id*="${filterName}_filter"]`)));
+    }
+
     clickOnProcessFilters() {
         return BrowserActions.click(this.processFilters);
     }

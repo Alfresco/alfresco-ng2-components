@@ -45,8 +45,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     clickCustomiseFilterHeader() {
-        BrowserActions.click(this.customiseFilter);
-        return this;
+        return BrowserActions.click(this.customiseFilter);
     }
 
     setStatusFilterDropDown(option) {
@@ -58,7 +57,9 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getStatusFilterDropDownValue() {
-        return element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-status'] span")).first().getText();
+        const statusDropdown = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-status'] span")).first();
+        BrowserVisibility.waitUntilElementIsVisible(statusDropdown);
+        return statusDropdown.getText();
     }
 
     setSortFilterDropDown(option) {
@@ -177,18 +178,15 @@ export class EditTaskFilterCloudComponentPage {
     clickSaveAsButton() {
         const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
-        BrowserActions.click(this.saveAsButton);
-        return this.editTaskFilterDialogPage;
+        return BrowserActions.click(this.saveAsButton);
     }
 
     clickDeleteButton() {
-        BrowserActions.click(this.deleteButton);
-        return this;
+        return BrowserActions.click(this.deleteButton);
     }
 
     clickSaveButton() {
-        BrowserActions.click(this.saveButton);
-        return this;
+        return BrowserActions.click(this.saveButton);
     }
 
     clearAssignee() {

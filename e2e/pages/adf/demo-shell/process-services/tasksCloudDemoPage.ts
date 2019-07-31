@@ -94,8 +94,8 @@ export class TasksCloudDemoPage {
         return BrowserActions.getText(this.activeFilter);
     }
 
-    async isFilterActive(filterName) {
-        return await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`mat-list-item[class*="adf-active"] span[data-automation-id*="${filterName}-filter"]`)));
+    checkFilterIsActive(filterName) {
+        return BrowserVisibility.waitUntilElementIsVisible(element(by.css(`mat-list-item[class*="adf-active"] span[data-automation-id*="${filterName}-filter"]`)));
     }
 
     customTaskFilter(filterName) {

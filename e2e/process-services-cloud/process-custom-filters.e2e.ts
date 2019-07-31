@@ -116,9 +116,11 @@ describe('Process list cloud', () => {
         });
 
         afterAll(async (done) => {
+            await processInstancesService.deleteProcessInstance(runningProcessInstance.entry.id, candidateBaseApp);
+            await processInstancesService.deleteProcessInstance(anotherProcessInstance.entry.id, candidateBaseApp);
+            await processInstancesService.deleteProcessInstance(switchProcessInstance.entry.id, candidateBaseApp);
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-            await processInstancesService.deleteProcessInstance(anotherProcessInstance.id, candidateBaseApp);
             done();
         });
 
@@ -221,7 +223,7 @@ describe('Process list cloud', () => {
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
+            processCloudDemoPage.checkFilterIsActive('new');
 
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
             expect(processCloudDemoPage.processListCloudComponent().getDataTable().numberOfRows()).toBe(1);
@@ -245,7 +247,7 @@ describe('Process list cloud', () => {
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SavedFilter').clickOnSaveButton();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('SavedFilter');
+            processCloudDemoPage.checkFilterIsActive('savedfilter');
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
@@ -256,7 +258,7 @@ describe('Process list cloud', () => {
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(switchProcessInstance.entry.id);
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SwitchFilter').clickOnSaveButton();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('SwitchFilter');
+            processCloudDemoPage.checkFilterIsActive('switchfilter');
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);

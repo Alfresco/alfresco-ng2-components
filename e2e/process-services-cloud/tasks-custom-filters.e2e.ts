@@ -121,8 +121,9 @@ describe('Task filters cloud', () => {
             done();
         });
 
-        it('[C290045] Should display only tasks with Assigned status when Assigned is selected from status dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED');
+        it('[C290045] Should display only tasks with Assigned status when Assigned is selected from status dropdown', async () => {
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED');
 
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
@@ -130,9 +131,10 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
-        it('[C290061] Should display only tasks with Completed status when Completed is selected from status dropdown', () => {
+        it('[C290061] Should display only tasks with Completed status when Completed is selected from status dropdown', async () => {
+            await tasksCloudDemoPage.editTaskFilterCloudComponent()
+                .clickCustomiseFilterHeader();
             tasksCloudDemoPage.editTaskFilterCloudComponent()
-                .clickCustomiseFilterHeader()
                 .setStatusFilterDropDown('COMPLETED');
 
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
@@ -141,8 +143,9 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
-        it('[C290139] Should display only tasks with all statuses when All is selected from status dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee()
+        it('[C290139] Should display only tasks with all statuses when All is selected from status dropdown', async () => {
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee()
                 .setStatusFilterDropDown('ALL');
 
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(deletedTaskName);
@@ -151,16 +154,18 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
         });
 
-        it('[C290060] Should display only tasks with Created status when Created is selected from status dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
+        it('[C290060] Should display only tasks with Created status when Created is selected from status dropdown', async () => {
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('CREATED');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
-        it('[C290155] Should display only tasks with Cancelled status when Cancelled is selected from status dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CANCELLED');
+        it('[C290155] Should display only tasks with Cancelled status when Cancelled is selected from status dropdown', async () => {
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('CANCELLED');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(deletedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);

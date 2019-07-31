@@ -102,14 +102,15 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
     });
 
-    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
+    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         peopleCloudComponent.clearAssignee();
         startTask.addName(unassignedTaskName);
-        startTask.clickStartButton();
+        await startTask.clickStartButton();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent()
+            .clickCustomiseFilterHeader();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
-            .clickCustomiseFilterHeader()
             .clearAssignee()
             .setStatusFilterDropDown('CREATED');
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
@@ -121,15 +122,16 @@ describe('Start Task', () => {
         expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');
     });
 
-    it('[C291956] Should be able to create a new standalone task without assignee', () => {
+    it('[C291956] Should be able to create a new standalone task without assignee', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         expect(peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
         startTask.addName(unassignedTaskName);
-        startTask.clickStartButton();
+        await startTask.clickStartButton();
         startTask.checkStartButtonIsEnabled();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent()
+            .clickCustomiseFilterHeader();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
-            .clickCustomiseFilterHeader()
             .setStatusFilterDropDown('CREATED')
             .clearAssignee();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
@@ -202,7 +204,7 @@ describe('Start Task', () => {
         startTask.clickCancelButton();
     });
 
-    it('[C305050] Should be able to reassign the removed user when starting a new task', () => {
+    it('[C305050] Should be able to reassign the removed user when starting a new task', async () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(reassignTaskName);
@@ -210,9 +212,10 @@ describe('Start Task', () => {
         peopleCloudComponent.searchAssignee(apsUser.username);
         peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
         peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
-        startTask.clickStartButton();
+        await startTask.clickStartButton();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent()
+            .clickCustomiseFilterHeader();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
-            .clickCustomiseFilterHeader()
             .clearAssignee()
             .setStatusFilterDropDown('ALL');
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(reassignTaskName);

@@ -100,7 +100,7 @@ describe('Start Task - Group Cloud Component', () => {
         navigationBarPage.clickLogoutButton();
     });
 
-    it('[C291954] Should be able to select/delete an group for a standalone task', () => {
+    it('[C291954] Should be able to select/delete an group for a standalone task', async () => {
         peopleCloudComponent.clearAssignee();
 
         groupCloud.searchGroups(testGroup.name);
@@ -117,9 +117,9 @@ describe('Start Task - Group Cloud Component', () => {
         groupCloud.checkGroupNotSelected(testGroup.name);
 
         startTask.addName(oneGroupTaskName);
-        startTask.clickStartButton();
+        await startTask.clickStartButton();
 
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
         loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
@@ -127,8 +127,9 @@ describe('Start Task - Group Cloud Component', () => {
         appListCloudComponent.goToApp(simpleApp);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
+        await tasksCloudDemoPage.editTaskFilterCloudComponent()
+            .clickCustomiseFilterHeader();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
-            .clickCustomiseFilterHeader()
             .clearAssignee()
             .setStatusFilterDropDown('CREATED');
 
@@ -136,7 +137,7 @@ describe('Start Task - Group Cloud Component', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(oneGroupTaskName);
     });
 
-    it('[C291955] Should be able to select multiple groups when the selection mode=multiple', () => {
+    it('[C291955] Should be able to select multiple groups when the selection mode=multiple', async () => {
         peopleCloudComponent.clearAssignee();
 
         groupCloud.searchGroups(testGroup.name);
@@ -150,9 +151,9 @@ describe('Start Task - Group Cloud Component', () => {
         groupCloud.checkSelectedGroup(hrGroup.name);
 
         startTask.addName(bothGroupsTaskName);
-        startTask.clickStartButton();
+        await startTask.clickStartButton();
 
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
         loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
@@ -160,8 +161,9 @@ describe('Start Task - Group Cloud Component', () => {
         appListCloudComponent.goToApp(simpleApp);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
+        await tasksCloudDemoPage.editTaskFilterCloudComponent()
+            .clickCustomiseFilterHeader();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
-            .clickCustomiseFilterHeader()
             .clearAssignee()
             .setStatusFilterDropDown('CREATED');
 
