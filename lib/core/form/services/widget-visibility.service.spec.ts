@@ -270,10 +270,10 @@ describe('WidgetVisibilityService', () => {
             service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
                     visibilityObjTest.leftRestResponseId = 'TEST_VAR_2';
-                    const rightValue = service.getLeftValue(formTest, visibilityObjTest);
+                    const leftValue = service.getLeftValue(formTest, visibilityObjTest);
 
-                    expect(rightValue).not.toBeNull();
-                    expect(rightValue).toBe('test_value_2');
+                    expect(leftValue).not.toBeNull();
+                    expect(leftValue).toBe('test_value_2');
                     done();
                 }
             );
