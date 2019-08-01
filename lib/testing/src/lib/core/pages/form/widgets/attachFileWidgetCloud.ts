@@ -40,11 +40,10 @@ export class AttachFileWidgetCloud {
         return this;
     }
 
-    clickAttachContentFile(fileId: string) {
+    async clickAttachContentFile(fileId: string) {
         const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
-        BrowserActions.click(uploadButton);
-        BrowserActions.click(this.contentButton);
-
+        await BrowserActions.click(uploadButton);
+        await BrowserActions.click(this.contentButton);
     }
 
     checkUploadContentButtonIsDisplayed(fileId: string) {
