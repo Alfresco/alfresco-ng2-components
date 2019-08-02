@@ -102,9 +102,9 @@ export class TasksCloudDemoPage {
         return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
     }
 
-    openNewTaskForm() {
-        BrowserActions.click(this.createButton);
-        BrowserActions.click(this.newTaskButton);
+    async openNewTaskForm() {
+        await BrowserActions.click(this.createButton);
+        await BrowserActions.click(this.newTaskButton);
         return this;
     }
 

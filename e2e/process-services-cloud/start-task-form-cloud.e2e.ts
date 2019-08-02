@@ -192,12 +192,12 @@ describe('Start Task Form', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         });
 
-        it('[C307976] Should be able to start and save a task with a form', () => {
+        it('[C307976] Should be able to start and save a task with a form', async () => {
             tasksCloudDemoPage.openNewTaskForm();
             startTask.checkFormIsDisplayed();
             startTask.addName(standaloneTaskName);
             startTask.selectFormDefinition('StartEventForm');
-            startTask.clickStartButton();
+            await startTask.clickStartButton();
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
             tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
             taskFormCloudComponent.formFields().checkFormIsDisplayed();
@@ -275,10 +275,9 @@ describe('Start Task Form', () => {
             widget.textWidget().setValue('FirstName', 'Sample');
             widget.numberWidget().setFieldValue('Number07vyx9', 100);
             expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
-            startProcessPage.clickStartProcessButton();
-            processCloudDemoPage.clickOnProcessFilters();
-            processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+            await startProcessPage.clickStartProcessButton();
+            await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.checkFilterIsActive('running-processes');
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('processName', startEventFormProcess);
             processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(startEventFormProcess);
@@ -293,10 +292,10 @@ describe('Start Task Form', () => {
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
-            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
-            processCloudDemoPage.clickOnProcessFilters();
-            processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
+            await processCloudDemoPage.clickOnProcessFilters();
+            await processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processId);
 
         });
