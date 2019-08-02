@@ -61,6 +61,7 @@ describe('Login component - SSO', () => {
         });
 
         it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', () => {
+            browser.refresh();
             settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 'http://aps22/auth/realms/alfresco',
                 browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId);
