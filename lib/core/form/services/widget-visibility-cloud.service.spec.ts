@@ -271,10 +271,10 @@ describe('WidgetVisibilityCloudService', () => {
                 (res: TaskProcessVariableModel[]) => {
                     visibilityObjTest.leftValue = 'TEST_VAR_2';
                     visibilityObjTest.leftType = WidgetTypeEnum.field;
-                    const rightValue = service.getLeftValue(formTest, visibilityObjTest);
+                    const leftValue = service.getLeftValue(formTest, visibilityObjTest);
 
-                    expect(rightValue).not.toBeNull();
-                    expect(rightValue).toBe('test_value_2');
+                    expect(leftValue).not.toBeNull();
+                    expect(leftValue).toBe('test_value_2');
                     done();
                 }
             );
@@ -896,6 +896,72 @@ describe('WidgetVisibilityCloudService', () => {
             }));
             service.refreshEntityVisibility(contModel.field);
             expect(contModel.isVisible).toBeFalsy();
+        });
+
+        it('should evaluate checkbox condition', (done) => {
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'CheckboxOne';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightType = WidgetTypeEnum.field;
+            visibilityObjTest.rightValue = 'CheckboxTwo';
+
+            const checkboxForm = new FormModel({
+                id: '9999',
+                name: 'CHECKBOX_VISIBILITY',
+                processDefinitionId: 'PROCESS_TEST:9:9999',
+                processDefinitionName: 'PROCESS_TEST',
+                processDefinitionKey: 'PROCESS_TEST',
+                taskId: '999',
+                taskName: 'TEST',
+                fields: [
+                    {
+                        fieldType: 'ContainerRepresentation',
+                        id: '000000000000000000',
+                        name: 'Label',
+                        type: 'container',
+                        value: null,
+                        numberOfColumns: 2,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'CheckboxOne',
+                                    name: 'CheckboxOne',
+                                    type: 'boolean',
+                                    required: false,
+                                    value: false,
+                                    colspan: 1,
+                                    visibilityCondition: null
+                                },
+                                {
+                                    id: 'CheckboxTwo',
+                                    name: 'CheckboxTwo',
+                                    type: 'boolean',
+                                    required: false,
+                                    value: false,
+                                    colspan: 1,
+                                    visibilityCondition: null
+                                }
+                            ],
+                            2: [
+                                {
+                                    id: 'CheckboxNotReq',
+                                    name: 'CheckboxNotReq',
+                                    type: 'boolean',
+                                    required: false,
+                                    colspan: 1,
+                                    visibilityCondition: visibilityObjTest
+                                }
+                            ]
+                        }
+                    }
+                ]
+            });
+
+            service.refreshVisibility(checkboxForm);
+
+            const fieldWithVisibilityAttached = checkboxForm.getFieldById('CheckboxNotReq');
+            expect(fieldWithVisibilityAttached.isVisible).toBeTruthy();
+            done();
         });
     });
 
