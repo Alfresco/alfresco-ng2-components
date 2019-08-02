@@ -76,16 +76,24 @@ describe('Start Task', () => {
 
     afterAll(async (done) => {
         try {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             const tasksService = new TasksService(apiService);
 
-            const tasks = [standaloneTaskName, unassignedTaskName, reassignTaskName];
+            const tasks = [standaloneTaskName, unassignedTaskName];
+            let taskId;
             for (let i = 0; i < tasks.length; i++) {
-                const taskId = await tasksService.getTaskId(tasks[i], simpleApp);
+                taskId = await tasksService.getTaskId(tasks[i], simpleApp);
                 if (taskId) {
                     await tasksService.deleteTask(taskId, simpleApp);
                 }
             }
+
+            await apiService.login(apsUser.email, apsUser.password);
+            taskId = await tasksService.getTaskId(reassignTaskName, simpleApp);
+            if (taskId) {
+                await tasksService.deleteTask(taskId, simpleApp);
+            }
+
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(activitiUser.idIdentityService);
             await identityService.deleteIdentityUser(apsUser.idIdentityService);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
