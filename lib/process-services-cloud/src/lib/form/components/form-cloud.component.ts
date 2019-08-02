@@ -39,6 +39,7 @@ import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget/attach-file-cloud-widget.component';
+import { DateCloudWidgetComponent } from './date-cloud/date-cloud.widget';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -112,6 +113,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         });
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {

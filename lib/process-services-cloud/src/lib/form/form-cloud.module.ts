@@ -29,6 +29,7 @@ import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outc
 import { DropdownCloudWidgetComponent } from './components/dropdown-cloud/dropdown-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/attach-file-cloud-widget/attach-file-cloud-widget.component';
 import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
+import { DateCloudWidgetComponent } from './components/date-cloud/date-cloud.widget';
 
 @NgModule({
     imports: [
@@ -49,7 +50,9 @@ import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
         FormDefinitionSelectorCloudComponent,
         FormCustomOutcomesComponent,
         DropdownCloudWidgetComponent,
-        AttachFileCloudWidgetComponent],
+        AttachFileCloudWidgetComponent,
+        DateCloudWidgetComponent
+    ],
     providers: [
         FormDefinitionSelectorCloudService,
         FormRenderingService
@@ -57,10 +60,15 @@ import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
     entryComponents: [
         UploadCloudWidgetComponent,
         DropdownCloudWidgetComponent,
-        AttachFileCloudWidgetComponent
+        AttachFileCloudWidgetComponent,
+        DateCloudWidgetComponent
     ],
     exports: [
-        FormCloudComponent, UploadCloudWidgetComponent, FormDefinitionSelectorCloudComponent, FormCustomOutcomesComponent, AttachFileCloudWidgetComponent
+        FormCloudComponent,
+        UploadCloudWidgetComponent,
+        FormDefinitionSelectorCloudComponent,
+        FormCustomOutcomesComponent,
+        AttachFileCloudWidgetComponent
     ]
 })
 export class FormCloudModule {

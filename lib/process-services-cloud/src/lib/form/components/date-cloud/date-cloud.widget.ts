@@ -17,31 +17,28 @@
 
 /* tslint:disable:component-selector  */
 
-import { UserPreferencesService, UserPreferenceValues } from '../../../../services/user-preferences.service';
-import { MomentDateAdapter } from '../../../../utils/momentDateAdapter';
-import { MOMENT_DATE_FORMATS } from '../../../../utils/moment-date-formats.model';
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-import { FormService } from './../../../services/form.service';
-import { baseHost, WidgetComponent } from './../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter, baseHost, WidgetComponent,
+    UserPreferencesService, UserPreferenceValues, FormService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'date-widget',
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
-    templateUrl: './date.widget.html',
-    styleUrls: ['./date.widget.scss'],
+    templateUrl: './date-cloud.widget.html',
+    styleUrls: ['./date-cloud.widget.scss'],
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
-    DATE_FORMAT = 'DD-MM-YYYY';
+    DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
 
     minDate: Moment;
     maxDate: Moment;
@@ -66,11 +63,11 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = moment(this.field.minValue, this.DATE_FORMAT);
+                this.minDate = moment(this.field.minValue, this.DATE_FORMAT_CLOUD);
             }
 
             if (this.field.maxValue) {
-                this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT);
+                this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT_CLOUD);
             }
         }
         this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
