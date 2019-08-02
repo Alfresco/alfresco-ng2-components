@@ -292,12 +292,12 @@ export class WidgetVisibilityService {
         return res || {};
     }
 
-    private isValidOperator(operator: string) {
+    private isValidOperator(operator: string): boolean {
         return operator !== undefined;
     }
 
-    private isValidCondition(condition: WidgetVisibilityModel) {
-        return condition && condition.operator;
+    private isValidCondition(condition: WidgetVisibilityModel): boolean {
+        return !!(condition && condition.operator);
     }
 
     private handleError(err) {
