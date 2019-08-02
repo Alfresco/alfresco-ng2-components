@@ -48,6 +48,9 @@ export class WidgetVisibilityService {
 
     refreshEntityVisibility(element: FormFieldModel | TabModel) {
         const visible = this.evaluateVisibility(element.form, element.visibilityCondition);
+        if (!visible && element instanceof FormFieldModel) {
+            element.value = null;
+        }
         element.isVisible = visible;
     }
 
@@ -90,7 +93,9 @@ export class WidgetVisibilityService {
             leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
         } else if (visibilityObj.leftType && visibilityObj.leftType === WidgetTypeEnum.field) {
             leftValue = this.getFormValue(form, visibilityObj.leftValue);
-            leftValue = leftValue ? leftValue : this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
+            if (this.isInvalidValue(leftValue)) {
+                leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
+            }
         }
         return leftValue;
     }
@@ -133,6 +138,10 @@ export class WidgetVisibilityService {
             valueFound = valueList[fieldId];
         }
         return valueFound;
+    }
+
+    private isInvalidValue(value: any): boolean {
+        return value === undefined || value === '';
     }
 
     searchValueInForm(form: FormModel, fieldId: string): string {

@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-process-services",
   "description": "Alfresco ADF process services",
-  "version": "3.4.0-beta8",
+  "version": "3.4.0-beta15",
   "author": "Alfresco Software, Ltd.",
   "main": "bundles/adf-process-services.js",
   "repository": {
@@ -27,8 +27,8 @@
     "@angular/router": ">=7.0.3",
     "@alfresco/js-api": "3.4.0-beta8",
     "rxjs": ">=6.2.2",
-    "@alfresco/adf-core": "3.4.0-beta8",
-    "@alfresco/adf-content-services": "3.4.0-beta8",
+    "@alfresco/adf-core": "3.4.0-beta15",
+    "@alfresco/adf-content-services": "3.4.0-beta15",
     "@ngx-translate/core": ">=11.0.0",
     "core-js": ">=2.5.4",
     "hammerjs": ">=2.0.8",
