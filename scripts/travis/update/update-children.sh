@@ -14,7 +14,5 @@ echo "Update AMA"
 ./scripts/travis/update/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-modeler-app'
 echo "Update Workspace"
 ./scripts/travis/update/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-process-workspace-app'
-echo "Update AMA Activiti"
-./scripts/travis/update/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Activiti/activiti-modeling-app'
 echo "Update APA Activiti"
 ./scripts/travis/update/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-admin-app'
