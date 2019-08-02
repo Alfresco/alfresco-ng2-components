@@ -78,14 +78,17 @@ describe('Process Header cloud component', () => {
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.email, testUser.password);
+
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             const childProcessDefinition = await processDefinitionService.getProcessDefinitions(subProcessApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
+
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key,
                 simpleApp, { name: StringUtil.generateRandomString(), businessKey: 'test' });
             runningCreatedDate = moment(runningProcess.entry.startDate).format(formatDate);
+
             parentCompleteProcess = await processInstancesService.createProcessInstance(childProcessDefinition.list.entries[0].entry.key,
                 subProcessApp);
 
@@ -115,13 +118,13 @@ describe('Process Header cloud component', () => {
             appListCloudComponent.checkApsContainer();
         });
 
-        it('[C305010] Should display process details for running process', () => {
+        it('[C305010] Should display process details for running process', async () => {
             appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-            processCloudDemoPage.clickOnProcessFilters();
+            await processCloudDemoPage.clickOnProcessFilters();
 
             processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
-            processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+            await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcess.entry.name);
 
@@ -137,14 +140,14 @@ describe('Process Header cloud component', () => {
             expect(processHeaderCloudPage.getLastModified()).toEqual(runningCreatedDate);
         });
 
-        it('[C305008] Should display process details for completed process', () => {
+        it('[C305008] Should display process details for completed process', async () => {
             appListCloudComponent.goToApp(subProcessApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-            processCloudDemoPage.clickOnProcessFilters();
+            await processCloudDemoPage.clickOnProcessFilters();
 
             processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
-            processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('Completed Processes');
+            await processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.checkFilterIsActive('completed-processes');
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(childCompleteProcess.entry.name);
 
             processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
