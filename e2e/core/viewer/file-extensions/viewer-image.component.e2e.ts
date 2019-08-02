@@ -112,7 +112,7 @@ describe('Viewer', () => {
                     viewerPage.clickCloseButton();
                 }
             });
-        });
+        }, 5 * 60 * 1000);
 
     });
 
