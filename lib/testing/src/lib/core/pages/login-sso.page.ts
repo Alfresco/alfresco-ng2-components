@@ -42,7 +42,7 @@ export class LoginSSOPage {
         await this.ssoButton.click();
     }
 
-    async enterUsername(username):Promise<void> {
+    async enterUsername(username): Promise<void> {
         await this.usernameField.clear();
         await this.usernameField.sendKeys(username);
     }
