@@ -92,6 +92,9 @@ import { CommunityProcessesCloudDemoComponent } from './components/cloud/communi
 import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/community/community-task-details-cloud.component';
 import { environment } from '../environments/environment';
 
+import { UserPreferenceCloudService,
+    PROCESS_FILTERS_SERVICE_TOKEN, TASK_FILTERS_SERVICE_TOKEN } from '@alfresco/adf-process-services-cloud';
+
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import localeDe from '@angular/common/locales/de';
@@ -207,6 +210,8 @@ registerLocaleData(localeSv);
             provide: HTTP_INTERCEPTORS, useClass:
             AuthBearerInterceptor, multi: true
         },
+        { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
+        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         {
             provide: TRANSLATION_PROVIDER,
