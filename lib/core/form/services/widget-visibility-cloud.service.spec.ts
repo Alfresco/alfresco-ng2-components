@@ -344,7 +344,7 @@ describe('WidgetVisibilityCloudService', () => {
 
     describe('should return the value of the field', () => {
         let visibilityObjTest: WidgetVisibilityModel;
-        const fakeFormWithField = new FormModel(fakeFormJson);
+        let fakeFormWithField = new FormModel(fakeFormJson);
         const jsonFieldFake = {
             id: 'FAKE_FORM_FIELD_ID',
             value: 'FAKE_FORM_FIELD_VALUE',
@@ -362,6 +362,7 @@ describe('WidgetVisibilityCloudService', () => {
         beforeEach(() => {
             visibilityObjTest = new WidgetVisibilityModel({});
             formTest.values = formValues;
+            fakeFormWithField = new FormModel(fakeFormJson);
             jsonFieldFake.visibilityCondition = visibilityObjTest;
         });
 
@@ -507,6 +508,18 @@ describe('WidgetVisibilityCloudService', () => {
             service.refreshEntityVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeFalsy();
+        });
+
+        it('should reset value when the field is not visibile', () => {
+            visibilityObjTest.leftValue = 'test_1';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightType = WidgetTypeEnum.field;
+            visibilityObjTest.rightValue = 'test_3';
+            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
+
+            service.refreshEntityVisibility(fakeFormField);
+            expect(fakeFormField.isVisible).toBeFalsy();
+            expect(fakeFormField.value).toEqual(null);
         });
 
         it('should return true when the visibility condition is not valid', () => {
@@ -979,6 +992,5 @@ describe('WidgetVisibilityCloudService', () => {
 
             expect(isVisible).toBeTruthy();
         });
-
     });
 });

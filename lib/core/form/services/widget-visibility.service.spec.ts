@@ -190,12 +190,13 @@ describe('WidgetVisibilityService', () => {
     });
 
     describe('should retrieve the process variables', () => {
-        const fakeFormWithField = new FormModel(fakeFormJson);
+        let fakeFormWithField = new FormModel(fakeFormJson);
         let visibilityObjTest: WidgetVisibilityModel;
         const chainedVisibilityObj = new WidgetVisibilityModel({});
 
         beforeEach(() => {
             visibilityObjTest = new WidgetVisibilityModel({});
+            fakeFormWithField = new FormModel(fakeFormJson);
         });
 
         it('should return the process variables for task', (done) => {
@@ -341,7 +342,7 @@ describe('WidgetVisibilityService', () => {
 
     describe('should return the value of the field', () => {
         let visibilityObjTest: WidgetVisibilityModel;
-        const fakeFormWithField = new FormModel(fakeFormJson);
+        let fakeFormWithField = new FormModel(fakeFormJson);
         const jsonFieldFake = {
             id: 'FAKE_FORM_FIELD_ID',
             value: 'FAKE_FORM_FIELD_VALUE',
@@ -358,6 +359,7 @@ describe('WidgetVisibilityService', () => {
 
         beforeEach(() => {
             visibilityObjTest = new WidgetVisibilityModel();
+            fakeFormWithField = new FormModel(fakeFormJson);
             formTest.values = formValues;
             jsonFieldFake.visibilityCondition = visibilityObjTest;
         });
@@ -659,7 +661,6 @@ describe('WidgetVisibilityService', () => {
             tab.visibilityCondition = visibilityObjTest;
             fakeFormWithField.tabs.push(tab);
             service.refreshVisibility(fakeFormWithField);
-
             expect(fakeFormWithField.tabs[0].isVisible).toBeFalsy();
         });
 
@@ -908,6 +909,17 @@ describe('WidgetVisibilityService', () => {
             }));
             service.refreshEntityVisibility(contModel.field);
             expect(contModel.isVisible).toBeFalsy();
+        });
+
+        it('should set null value when the field is not visibile', () => {
+            visibilityObjTest.leftFormFieldId = 'test_4';
+            visibilityObjTest.operator = '!=';
+            visibilityObjTest.rightFormFieldId = 'dropdown';
+            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
+
+            service.refreshEntityVisibility(fakeFormField);
+            expect(fakeFormField.isVisible).toBeFalsy();
+            expect(fakeFormField.value).toEqual(null);
         });
     });
 
