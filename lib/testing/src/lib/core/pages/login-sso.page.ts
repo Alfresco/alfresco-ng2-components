@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor, ElementFinder } from 'protractor';
-import { BrowserVisibility } from '../utils/browser-visibility';
-import { BrowserActions } from '../utils/browser-actions';
+import { element, by, browser, ElementFinder } from 'protractor';
 
 export class LoginSSOPage {
 
@@ -30,36 +28,44 @@ export class LoginSSOPage {
 
     async loginSSOIdentityService(username, password): Promise<void> {
         browser.ignoreSynchronization = true;
-        await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
         await this.enterUsername(username);
         await this.enterPassword(password);
         await this.clickLoginButton();
-        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        await BrowserVisibility.waitUntilElementIsVisible(this.header);
+        const hasError = await this.checkLoginErrorIsDisplayed();
+        if (!hasError) {
+            browser.ignoreSynchronization = false;
+        }
     }
 
     async clickOnSSOButton(): Promise<void> {
-        await BrowserActions.clickExecuteScript('[data-automation-id="login-button-sso"]');
+        browser.ignoreSynchronization = true;
+        await this.ssoButton.click();
     }
 
-    async enterUsername(username): Promise<void> {
-        await BrowserActions.clearSendKeys(this.usernameField, username);
+    async enterUsername(username):Promise<void> {
+        await this.usernameField.clear();
+        await this.usernameField.sendKeys(username);
     }
 
     async enterPassword(password): Promise<void> {
-        await BrowserActions.clearSendKeys(this.passwordField, password);
+        await this.passwordField.clear();
+        await this.passwordField.sendKeys(password);
     }
 
     async clickLoginButton(): Promise<void> {
-        await BrowserActions.click(this.loginButton);
+        await this.loginButton.click();
     }
 
-    async checkLoginErrorIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.loginError);
+    async checkLoginErrorIsDisplayed(): Promise<any> {
+        return await browser.isElementPresent(this.loginError);
     }
 
     async getLoginErrorMessage(): Promise<string> {
-        return BrowserActions.getText(this.loginError);
+        if (await this.checkLoginErrorIsDisplayed()) {
+            return await this.loginError.getText();
+        } else {
+            return '';
+        }
     }
 
 }

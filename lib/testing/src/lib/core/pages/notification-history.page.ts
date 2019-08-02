@@ -21,36 +21,46 @@ import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class NotificationHistoryPage {
 
-    notificationList: ElementFinder = element(by.css('#adf-notification-history-list'));
+    notificationList: ElementFinder = element(by.id('adf-notification-history-list'));
+
+    async isNotificationListOpen() {
+        return await BrowserVisibility.waitUntilElementIsPresent(this.notificationList);
+    }
 
     async clickNotificationButton(): Promise<void> {
-        await BrowserActions.clickExecuteScript('#adf-notification-history-open-button');
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.click(element(by.id('adf-notification-history-open-button')));
         await BrowserVisibility.waitUntilElementIsVisible(this.notificationList);
     }
 
     async clickMarkAsRead(): Promise<void> {
-        await BrowserActions.click(element(by.css('#adf-notification-history-mark-as-read')));
+        await BrowserActions.click(element(by.id('adf-notification-history-mark-as-read')));
     }
 
-    async checkNotificationIsPresent(text: string): Promise<void> {
-        const notificationLisText = await BrowserActions.getText(this.notificationList);
-        expect(notificationLisText).toContain(text);
+    private async checkNotificationIsPresent(text: string) {
+        const notificationListText = await BrowserActions.getText(this.notificationList);
+        return notificationListText.includes(text);
     }
 
-    async checkNotificationIsNotPresent(text: string): Promise<void> {
-        const notificationLisText = await BrowserActions.getText(this.notificationList);
-        expect(notificationLisText).not.toContain(text);
+    private async checkNotificationIsNotPresent(text: string) {
+        const notificationListText = await BrowserActions.getText(this.notificationList);
+        return notificationListText.indexOf(text) === -1;
     }
 
-    async checkNotifyContains(text: string): Promise<void> {
-        await this.clickNotificationButton();
-        await this.checkNotificationIsPresent(text);
-        await this.clickMarkAsRead();
+    async checkNotifyContains(text: string) {
+        const isOpen = await this.isNotificationListOpen();
+        if (!isOpen) {
+            await this.clickNotificationButton();
+        }
+        const textExists = await this.checkNotificationIsPresent(text);
+        expect(textExists).toBe(true, `Notifications list does not contain: ${text}`);
     }
 
     async checkNotifyNotContains(text: string): Promise<void> {
-        await this.clickNotificationButton();
+        const isOpen = await this.isNotificationListOpen();
+        if (!isOpen) {
+            await this.clickNotificationButton();
+        }
         await this.checkNotificationIsNotPresent(text);
-        await BrowserActions.closeMenuAndDialogs();
     }
 }

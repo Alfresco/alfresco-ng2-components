@@ -16,6 +16,7 @@
  */
 
 import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
+import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class BrowserActions {
 
@@ -34,8 +35,12 @@ export class BrowserActions {
     }
 
     static async getText(elementFinder: ElementFinder): Promise<string> {
-        // await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        return elementFinder.getText();
+        const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+        if (present) {
+            return elementFinder.getText();
+        } else {
+            return '';
+        }
     }
 
     static async getArrayText(elementFinders: ElementArrayFinder): Promise<string> {

@@ -55,6 +55,7 @@ describe('Login component - SSO', () => {
     describe('SSO Login Error for login component', () => {
 
         afterEach(async () => {
+            browser.ignoreSynchronization = false;
             await browser.executeScript('window.sessionStorage.clear();');
             await browser.executeScript('window.localStorage.clear();');
         });

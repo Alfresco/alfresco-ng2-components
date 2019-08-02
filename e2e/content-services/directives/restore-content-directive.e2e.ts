@@ -24,7 +24,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import resources = require('../../util/resources');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { TrashcanPage } from '../../pages/adf/trashcanPage';
-import { LoginPage, NotificationHistoryPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
+import { LoginPage, NotificationHistoryPage, StringUtil, UploadActions, BrowserActions } from '@alfresco/adf-testing';
 import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
 
 describe('Restore content directive', () => {
@@ -90,6 +90,7 @@ describe('Restore content directive', () => {
     });
 
     beforeEach(async (done) => {
+        await BrowserActions.closeMenuAndDialogs();
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
         done();
@@ -207,8 +208,8 @@ describe('Restore content directive', () => {
         await contentServicesPage.doubleClickRow(folderWithFolder.entry.name);
         await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
         await notificationHistoryPage.clickNotificationButton();
-        await notificationHistoryPage.checkNotificationIsPresent('Can\'t restore ' + subFolder.entry.name + ' item, the original location no longer exists');
-        await notificationHistoryPage.checkNotificationIsPresent('Restore successful');
+        await notificationHistoryPage.checkNotifyContains(`Can't restore ${subFolder.entry.name} item, the original location no longer exists`);
+        await notificationHistoryPage.checkNotifyContains('Restore successful');
         await notificationHistoryPage.clickMarkAsRead();
     });
 

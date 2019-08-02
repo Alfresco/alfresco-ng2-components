@@ -29,12 +29,12 @@ describe('Auth Guard SSO',  () => {
             browser.params.testConfig.adf.hostSso,
             browser.params.testConfig.adf.hostIdentity,
             false, true, browser.params.config.oauth2.clientId);
-
         await loginSSOPage.clickOnSSOButton();
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/cloud/simple-app');
         await browser.sleep(1000);
-        expect(await errorPage.getErrorCode()).toBe('403');
+        const error = await errorPage.getErrorCode();
+        expect(error).toBe('403');
     });
 
 });

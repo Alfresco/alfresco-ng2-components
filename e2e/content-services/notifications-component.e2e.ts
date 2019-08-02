@@ -24,7 +24,7 @@ import { browser } from 'protractor';
 describe('Notifications Component',  () => {
 
     const loginPage = new LoginPage();
-    const notificationHistoryPage = new NotificationPage();
+    const notificationPage = new NotificationPage();
 
     const acsUser = new AcsUserModel();
 
@@ -43,74 +43,74 @@ describe('Notifications Component',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        await notificationHistoryPage.goToNotificationsPage();
+        await notificationPage.goToNotificationsPage();
 
-        await notificationHistoryPage.enterDurationField(3000);
+        await notificationPage.enterDurationField(3000);
 
         done();
     });
 
     afterEach( async() => {
         await browser.executeScript(`document.querySelector('button[data-automation-id="notification-custom-dismiss-button"]').click();`);
-        await notificationHistoryPage.enterDurationField(3000);
+        await notificationPage.enterDurationField(3000);
     });
 
     it('[C279977] Should show notification when the message is not empty and button is clicked', async () => {
-        await notificationHistoryPage.enterMessageField('Notification test');
-        await notificationHistoryPage.clickNotificationButton();
-        await notificationHistoryPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
+        await notificationPage.enterMessageField('Notification test');
+        await notificationPage.clickNotificationButton();
+        await notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
     });
 
     it('[C279979] Should not show notification when the message is empty and button is clicked', async () => {
-        await notificationHistoryPage.clearMessage();
-        await notificationHistoryPage.clickNotificationButton();
-        await notificationHistoryPage.checkNotificationSnackBarIsNotDisplayed();
+        await notificationPage.clearMessage();
+        await notificationPage.clickNotificationButton();
+        await notificationPage.checkNotificationSnackBarIsNotDisplayed();
     });
 
     it('[C279978] Should show notification with action when the message is not empty and button is clicked', async () => {
-        await notificationHistoryPage.enterMessageField('Notification test');
-        await notificationHistoryPage.clickActionToggle();
-        await notificationHistoryPage.clickNotificationButton();
-        await notificationHistoryPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
-        await notificationHistoryPage.clickActionButton();
-        await notificationHistoryPage.checkActionEvent();
-        await notificationHistoryPage.clickActionToggle();
+        await notificationPage.enterMessageField('Notification test');
+        await notificationPage.clickActionToggle();
+        await notificationPage.clickNotificationButton();
+        await notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
+        await notificationPage.clickActionButton();
+        await notificationPage.checkActionEvent();
+        await notificationPage.clickActionToggle();
     });
 
     it('[C279981] Should show notification with action when the message is not empty and custom configuration button is clicked', async () => {
-        await notificationHistoryPage.enterMessageField('Notification test');
-        await notificationHistoryPage.clickNotificationButton();
-        await notificationHistoryPage.checkNotificationSnackBarIsDisplayed();
+        await notificationPage.enterMessageField('Notification test');
+        await notificationPage.clickNotificationButton();
+        await notificationPage.checkNotificationSnackBarIsDisplayed();
     });
 
     it('[C279987] Should show custom notification during a limited time when a duration is added', async () => {
-        await notificationHistoryPage.enterMessageField('Notification test');
-        await notificationHistoryPage.enterDurationField(1000);
-        await notificationHistoryPage.clickNotificationButton();
-        await notificationHistoryPage.checkNotificationSnackBarIsDisplayed();
+        await notificationPage.enterMessageField('Notification test');
+        await notificationPage.enterDurationField(1000);
+        await notificationPage.clickNotificationButton();
+        await notificationPage.checkNotificationSnackBarIsDisplayed();
         await browser.sleep(1500);
-        await notificationHistoryPage.checkNotificationSnackBarIsNotDisplayed();
+        await notificationPage.checkNotificationSnackBarIsNotDisplayed();
     });
 
     it('[C280000] Should show notification with action when the message is not empty and custom button is clicked', async () => {
-        await notificationHistoryPage.enterMessageField('Notification test');
-        await notificationHistoryPage.clickActionToggle();
-        await notificationHistoryPage.clickNotificationButton();
-        await notificationHistoryPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
-        await notificationHistoryPage.checkNotificationSnackBarIsNotDisplayed();
-        await notificationHistoryPage.clickNotificationButton();
-        await notificationHistoryPage.clickActionButton();
-        await notificationHistoryPage.checkActionEvent();
-        await notificationHistoryPage.clickActionToggle();
+        await notificationPage.enterMessageField('Notification test');
+        await notificationPage.clickActionToggle();
+        await notificationPage.clickNotificationButton();
+        await notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
+        await notificationPage.checkNotificationSnackBarIsNotDisplayed();
+        await notificationPage.clickNotificationButton();
+        await notificationPage.clickActionButton();
+        await notificationPage.checkActionEvent();
+        await notificationPage.clickActionToggle();
     });
 
     it('[C280001] Should meet configuration when a custom notification is set', async () => {
-        await notificationHistoryPage.enterMessageField('Notification test');
-        await notificationHistoryPage.enterDurationField(1000);
-        await notificationHistoryPage.selectHorizontalPosition('Right');
-        await notificationHistoryPage.selectVerticalPosition('Top');
-        await notificationHistoryPage.selectDirection('Left to right');
-        await notificationHistoryPage.clickNotificationButton();
-        expect(await notificationHistoryPage.getConfigObject()).toBe('{"direction": "ltr", "duration": "1000", "horizontalPosition": "right", "verticalPosition": "top"}');
+        await notificationPage.enterMessageField('Notification test');
+        await notificationPage.enterDurationField(1000);
+        await notificationPage.selectHorizontalPosition('Right');
+        await notificationPage.selectVerticalPosition('Top');
+        await notificationPage.selectDirection('Left to right');
+        await notificationPage.clickNotificationButton();
+        expect(await notificationPage.getConfigObject()).toBe('{"direction": "ltr", "duration": "1000", "horizontalPosition": "right", "verticalPosition": "top"}');
     });
 });

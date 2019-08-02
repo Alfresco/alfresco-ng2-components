@@ -94,30 +94,22 @@ export class SettingsPage {
 
     async setProviderEcmBpm() {
         await this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
-        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         await this.clickApply();
     }
 
     async setProviderBpm() {
         await this.setProvider(this.bpm.option, this.bpm.text);
-        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await this.clickApply();
     }
 
     async setProviderEcm() {
         await this.setProvider(this.ecm.option, this.ecm.text);
-        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        expect(await this.bpmText.isPresent()).toBe(false, 'Bpm text is present');
         await this.clickApply();
     }
 
     async setProviderOauth() {
         await this.goToSettingsPage();
         await this.setProvider(this.oauth.option, this.oauth.text);
-        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        expect(await this.authHostText.isPresent()).toBe(true, 'Auth Host text not present');
         await this.clickApply();
     }
 
@@ -129,18 +121,16 @@ export class SettingsPage {
         await BrowserActions.click(this.ssoRadioButton);
     }
 
-    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUr: string = '/logout') {
+    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUrl: string = '/logout') {
         await this.goToSettingsPage();
         await this.setProvider(this.ecm.option, this.ecm.text);
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.bpmText);
-        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         await this.clickSsoRadioButton();
         await this.setContentServicesURL(contentServiceURL);
         await this.setAuthHost(authHost);
         await this.setIdentityHost(identityHost);
         await this.setSilentLogin(silentLogin);
         await this.setImplicitFlow(implicitFlow);
-        await this.setLogoutUrl(logoutUr);
+        await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
         await browser.sleep(1000);
     }
@@ -189,17 +179,14 @@ export class SettingsPage {
     }
 
     async setClientId(clientId: string = browser.params.config.oauth2.clientId) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.clientIdText);
         await BrowserActions.clearSendKeys(this.clientIdText, clientId);
     }
 
     async setContentServicesURL(contentServiceURL) {
-        await BrowserVisibility.waitUntilElementIsClickable(this.ecmText);
         await BrowserActions.clearSendKeys(this.ecmText, contentServiceURL);
     }
 
     async clearContentServicesURL() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         await BrowserActions.clearWithBackSpace(this.ecmText);
     }
 
