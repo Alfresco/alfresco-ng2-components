@@ -33,7 +33,10 @@ export class LoginSSOPage {
         await this.enterUsername(username);
         await this.enterPassword(password);
         await this.clickLoginButton();
-        await browser.waitForAngularEnabled(true);
+        const hasError = await this.checkLoginErrorIsDisplayed();
+        if (!hasError) {
+            await browser.waitForAngularEnabled(true);
+        }
     }
 
     async clickOnSSOButton(): Promise<void> {

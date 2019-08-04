@@ -94,24 +94,21 @@ describe('Viewer',  () => {
 
         it('[C279966] Should be possible to open any Image supported extension', async () => {
             await contentServicesPage.doubleClickRow('images');
-
-            uploadedImages.forEach(async(currentFile) => {
-                if (currentFile.entry.name !== '.DS_Store') {
-                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
+            for (const image of uploadedImages) {
+                if (image.entry.name !== '.DS_Store') {
+                    await contentServicesPage.doubleClickRow(image.entry.name);
                     await viewerPage.checkImgViewerIsDisplayed();
                     await viewerPage.clickCloseButton();
                 }
-            });
-
+            }
             await contentServicesPage.doubleClickRow('images-rendition');
-
-            uploadedImgRenditionFolderInfo.forEach(async(currentFile) => {
-                if (currentFile.entry.name !== '.DS_Store') {
-                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
+            for (const item of uploadedImgRenditionFolderInfo) {
+                if (item.entry.name !== '.DS_Store') {
+                    await contentServicesPage.doubleClickRow(item.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }
-            });
+            }
         });
 
     });

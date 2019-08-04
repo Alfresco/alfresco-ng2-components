@@ -159,10 +159,8 @@ describe('Share file',  () => {
 
         beforeAll(async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
-
             done();
         });
 
@@ -171,8 +169,8 @@ describe('Share file',  () => {
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickShareLinkButton();
-            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             const sharedLink = await shareDialog.getShareLink();
+            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             await BrowserActions.getUrl(sharedLink);
             await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });
@@ -182,14 +180,14 @@ describe('Share file',  () => {
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickShareLinkButton();
-            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             const sharedLink = await shareDialog.getShareLink();
             await shareDialog.clickCloseButton();
+            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickShareLinkButton();
-            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             const secondSharedLink = await shareDialog.getShareLink();
+            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             expect(sharedLink).toEqual(secondSharedLink);
             await BrowserActions.getUrl(sharedLink);
             await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);

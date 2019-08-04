@@ -175,6 +175,7 @@ export class NavigationBarPage {
     }
 
     async clickLogoutButton(): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
         await this.clickNavigationBarItem('Logout');
     }
 

@@ -34,6 +34,10 @@ export class NotificationHistoryPage {
     }
 
     async clickMarkAsRead(): Promise<void> {
+        const isOpen = await this.isNotificationListOpen();
+        if (!isOpen) {
+            await this.clickNotificationButton();
+        }
         await BrowserActions.click(element(by.id('adf-notification-history-mark-as-read')));
     }
 

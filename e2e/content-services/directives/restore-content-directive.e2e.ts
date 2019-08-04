@@ -194,6 +194,7 @@ describe('Restore content directive', () => {
         await trashcanPage.getDocumentList().dataTablePage().clickRowByContent(subFolder.entry.name);
         await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(subFolder.entry.name);
         await trashcanPage.clickRestore();
+        await notificationHistoryPage.checkNotifyContains(`Can't restore ${subFolder.entry.name} item, the original location no longer exists`);
         await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);
         await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderWithFolder.entry.name);
         await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(subFolder.entry.name);
@@ -201,16 +202,13 @@ describe('Restore content directive', () => {
         await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderWithFolder.entry.name);
         await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderWithFolder.entry.name);
         await trashcanPage.clickRestore();
-
+        await notificationHistoryPage.checkNotifyContains('Restore successful');
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
         await contentServicesPage.doubleClickRow(folderWithFolder.entry.name);
         await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
         await notificationHistoryPage.clickNotificationButton();
-        await notificationHistoryPage.checkNotifyContains(`Can't restore ${subFolder.entry.name} item, the original location no longer exists`);
-        await notificationHistoryPage.checkNotifyContains('Restore successful');
-        await notificationHistoryPage.clickMarkAsRead();
     });
 
     it('[C260241] Should display restore icon both for file and folder', async () => {
