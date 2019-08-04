@@ -67,7 +67,7 @@ export class DocumentListPage {
     clickOnActionMenu(content) {
         BrowserActions.closeMenuAndDialogs();
         const row = this.dataTable.getRow('Display name', content);
-        row.element(this.optionButton).click();
+        BrowserActions.click(row.element(this.optionButton));
         BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
         browser.sleep(500);
         return this;

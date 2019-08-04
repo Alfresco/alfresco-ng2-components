@@ -38,7 +38,7 @@ const value = {
 };
 
 const checkbox = {
-    checkboxFieldValue : 'text1value',
+    checkboxFieldValue: 'text1value',
     checkboxVariableField: 'variablefield',
     checkboxFieldVariable: 'text1variable',
     checkboxFieldField: 'text1text2',
@@ -83,9 +83,9 @@ describe('Process-Services - Visibility conditions', () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
+        await BrowserActions.getUrl(urlToNavigateTo);
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.formFields().checkFormIsDisplayed();
     });

@@ -59,9 +59,9 @@ describe('Attach Folder widget', () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
+        await BrowserActions.getUrl(urlToNavigateTo);
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.formFields().checkFormIsDisplayed();
     });

@@ -27,7 +27,7 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import resources = require('../../util/resources');
-import {AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 
 describe('Document List Component', () => {
@@ -44,7 +44,8 @@ describe('Document List Component', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFolder2, copyFolder, subFile, duplicateFolderName;
+    let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFolder2, copyFolder, subFile,
+        duplicateFolderName;
     let acsUser = null, anotherAcsUser: AcsUserModel;
     let folderName, sameNameFolder;
 
@@ -89,16 +90,21 @@ describe('Document List Component', () => {
                 }
             });
 
-        browser.driver.sleep(10000);
+        browser.driver.sleep(12000);
         done();
     });
 
     afterAll(async (done) => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
-        uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
-        uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
-        uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
+        try {
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
+            await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
+            await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
+            await uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('Error delete file or folder' + error);
+        }
         done();
     });
 
