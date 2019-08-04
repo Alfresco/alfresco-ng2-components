@@ -59,7 +59,7 @@ describe('Task Header cloud component',  () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [await identityService.ROLES.APS_USER]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);

@@ -42,7 +42,6 @@ export class NavigationBarPage {
         const menu = element(by.css(`.adf-sidenav-link[data-automation-id="${title}"]`));
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(menu);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async clickHomeButton(): Promise<void> {

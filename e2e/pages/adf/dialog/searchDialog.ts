@@ -51,7 +51,6 @@ export class SearchDialog {
     }
 
     async checkNoResultMessageIsDisplayed(): Promise<void> {
-        await browser.sleep(500);
         await BrowserVisibility.waitUntilElementIsVisible(this.noResultMessage);
     }
 
@@ -60,14 +59,12 @@ export class SearchDialog {
     }
 
     async enterText(text): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.searchBar);
-        await BrowserActions.clickExecuteScript('adf-search-control input');
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
         await this.searchBar.sendKeys(text);
     }
 
     async enterTextAndPressEnter(text): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.searchBar);
-        await BrowserActions.clickExecuteScript('adf-search-control input');
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
         await this.searchBar.sendKeys(text);
         await this.searchBar.sendKeys(protractor.Key.ENTER);
     }

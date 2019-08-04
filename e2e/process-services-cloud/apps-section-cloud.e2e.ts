@@ -38,7 +38,7 @@ describe('Applications list',  () => {
     beforeAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [await identityService.ROLES.APS_USER, await identityService.ROLES.APS_DEVOPS_USER]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER, identityService.ROLES.APS_DEVOPS_USER]);
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
