@@ -98,11 +98,16 @@ export class NavigationBarPage {
 
     async clickProcessCloudButton() {
         await BrowserActions.click(element(by.css(`.adf-sidenav-link[data-automation-id="Process Cloud"]`)));
-        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
+        await BrowserVisibility.waitForElementToBeVisible(this.linkMenuChildrenContainer);
+    }
+
+    async clickProcessServicesButton() {
+        await BrowserActions.click(element(by.css(`.adf-sidenav-link[data-automation-id="Process Services"]`)));
+        await BrowserVisibility.waitForElementToBeVisible(this.linkMenuChildrenContainer);
     }
 
     async navigateToProcessServicesPage(): Promise<ProcessServicesPage> {
-        await this.clickProcessCloudButton();
+        await this.clickProcessServicesButton();
         await BrowserActions.click(this.processServicesNestedButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new ProcessServicesPage();

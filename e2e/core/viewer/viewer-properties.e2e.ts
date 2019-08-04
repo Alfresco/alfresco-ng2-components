@@ -177,21 +177,21 @@ describe('Viewer - properties',  () => {
 
     it('[C260100] Should be possible to disable Overlay viewer', async () => {
         await viewerPage.clickCloseButton();
-        await navigationBarPage.scrollTo(await navigationBarPage.overlayViewerButton);
+        await navigationBarPage.scrollTo(navigationBarPage.overlayViewerButton);
         await navigationBarPage.clickOverlayViewerButton();
 
-        dataTable.doubleClickRow('Name', fileForOverlay.name);
+        await dataTable.doubleClickRow('Name', fileForOverlay.name);
         await viewerPage.checkOverlayViewerIsDisplayed();
         await viewerPage.clickCloseButton();
-        dataTable.doubleClickRow('Name', pngFile.name);
+        await dataTable.doubleClickRow('Name', pngFile.name);
         await viewerPage.checkOverlayViewerIsDisplayed();
         await viewerPage.clickCloseButton();
 
         await viewerPage.disableOverlay();
-        dataTable.doubleClickRow('Name', fileForOverlay.name);
+        await dataTable.doubleClickRow('Name', fileForOverlay.name);
         await viewerPage.checkImgContainerIsDisplayed();
         await viewerPage.checkInlineViewerIsDisplayed();
-        dataTable.doubleClickRow('Name', pngFile.name);
+        await dataTable.doubleClickRow('Name', pngFile.name);
         await viewerPage.checkImgContainerIsDisplayed();
         await viewerPage.checkInlineViewerIsDisplayed();
     });

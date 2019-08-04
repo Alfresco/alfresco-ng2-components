@@ -34,6 +34,10 @@ export class BrowserVisibility {
         return present && (await elementToCheck.isDisplayed());
     }
 
+    static async waitForElementToBeVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = 'Element is not visible') {
+        return browser.wait(until.visibilityOf(elementToCheck), waitTimeout, message);
+    }
+
     /*
      * Wait for element to be clickable
      */
