@@ -16,6 +16,7 @@
  */
 
 import { element, by, browser, ElementFinder } from 'protractor';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class LoginSSOPage {
 
@@ -25,35 +26,30 @@ export class LoginSSOPage {
     loginButton: ElementFinder = element(by.css('input[type="submit"]'));
     header: ElementFinder = element(by.id('adf-header'));
     loginError: ElementFinder = element(by.css(`div[data-automation-id="login-error"]`));
+    sidenavLayout = element(by.css(`[data-automation-id="sidenav-layout"]`));
 
     async loginSSOIdentityService(username, password): Promise<void> {
         await browser.waitForAngularEnabled(false);
         await this.enterUsername(username);
         await this.enterPassword(password);
         await this.clickLoginButton();
-        const hasError = await this.checkLoginErrorIsDisplayed();
-        if (!hasError) {
-            await browser.waitForAngularEnabled(false);
-        }
+        await browser.waitForAngularEnabled(true);
     }
 
     async clickOnSSOButton(): Promise<void> {
-        await browser.waitForAngularEnabled(false);
-        await this.ssoButton.click();
+        await BrowserActions.click(this.ssoButton);
     }
 
     async enterUsername(username): Promise<void> {
-        await this.usernameField.clear();
-        await this.usernameField.sendKeys(username);
+        await BrowserActions.clearSendKeys(this.usernameField, username);
     }
 
     async enterPassword(password): Promise<void> {
-        await this.passwordField.clear();
-        await this.passwordField.sendKeys(password);
+        await BrowserActions.clearSendKeys(this.passwordField, password);
     }
 
     async clickLoginButton(): Promise<void> {
-        await this.loginButton.click();
+        await BrowserActions.clickExecuteScript('input[type="submit"]');
     }
 
     async checkLoginErrorIsDisplayed(): Promise<any> {
@@ -61,11 +57,6 @@ export class LoginSSOPage {
     }
 
     async getLoginErrorMessage(): Promise<string> {
-        if (await this.checkLoginErrorIsDisplayed()) {
-            return await this.loginError.getText();
-        } else {
-            return '';
-        }
+        return BrowserActions.getText(this.loginButton);
     }
-
 }

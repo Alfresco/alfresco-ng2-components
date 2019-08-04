@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, SettingsPage, LoginPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage, LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
@@ -31,7 +31,7 @@ describe('Login component - SSO', () => {
     describe('Login component - SSO implicit Flow', () => {
 
         afterEach(async () => {
-            await navigationBarPage.clickLogoutButton();
+            await BrowserActions.clickExecuteScript(`mat-list-item[data-automation-id="Logout"]`);
             await browser.executeScript('window.sessionStorage.clear();');
             await browser.executeScript('window.localStorage.clear();');
         });
@@ -55,7 +55,6 @@ describe('Login component - SSO', () => {
     describe('SSO Login Error for login component', () => {
 
         afterEach(async () => {
-            browser.ignoreSynchronization = false;
             await browser.executeScript('window.sessionStorage.clear();');
             await browser.executeScript('window.localStorage.clear();');
         });
