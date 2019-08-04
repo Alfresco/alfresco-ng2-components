@@ -27,18 +27,18 @@ export class LoginSSOPage {
     loginError: ElementFinder = element(by.css(`div[data-automation-id="login-error"]`));
 
     async loginSSOIdentityService(username, password): Promise<void> {
-        browser.ignoreSynchronization = true;
+        await browser.waitForAngularEnabled(false);
         await this.enterUsername(username);
         await this.enterPassword(password);
         await this.clickLoginButton();
         const hasError = await this.checkLoginErrorIsDisplayed();
         if (!hasError) {
-            browser.ignoreSynchronization = false;
+            await browser.waitForAngularEnabled(false);
         }
     }
 
     async clickOnSSOButton(): Promise<void> {
-        browser.ignoreSynchronization = true;
+        await browser.waitForAngularEnabled(false);
         await this.ssoButton.click();
     }
 

@@ -29,21 +29,15 @@ export class BrowserVisibility {
     /*
      * Wait for element is visible
      */
-    static async waitUntilElementIsVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = ''): Promise<any> {
-        const present = await this.waitUntilElementIsPresent(elementToCheck);
-        return present && (await elementToCheck.isDisplayed());
-    }
-
-    static async waitForElementToBeVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = 'Element is not visible') {
-        return browser.wait(until.visibilityOf(elementToCheck), waitTimeout, message);
+    static async waitUntilElementIsVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = 'Element is not visible'): Promise<any> {
+        return browser.wait(until.visibilityOf(elementToCheck), waitTimeout, message + elementToCheck.locator());
     }
 
     /*
      * Wait for element to be clickable
      */
     static async waitUntilElementIsClickable(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        const visible = await this.waitUntilElementIsVisible(elementToCheck);
-        return visible && (await elementToCheck.isEnabled());
+        return browser.wait(until.elementToBeClickable(elementToCheck), waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
     }
 
     /*

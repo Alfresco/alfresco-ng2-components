@@ -390,7 +390,7 @@ export class ViewerPage {
     }
 
     async clickCloseButton(): Promise<void> {
-        await BrowserActions.clickExecuteScript('button[data-automation-id="adf-toolbar-back"]');
+        await BrowserActions.click(this.closeButton);
     }
 
     async clickPreviousPageButton(): Promise<void> {
