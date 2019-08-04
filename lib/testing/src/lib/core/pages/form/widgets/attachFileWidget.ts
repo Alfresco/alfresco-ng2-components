@@ -29,12 +29,12 @@ export class AttachFileWidget {
     filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
 
     async attachFile(fieldId, fileLocation): Promise<void> {
-        await browser.setFileDetector(new remote.FileDetector());
+        browser.setFileDetector(new remote.FileDetector());
         const widget = await this.formFields.getWidget(fieldId);
         const uploadButton = await widget.element(this.uploadLocator);
         await BrowserActions.click(uploadButton);
-        await BrowserVisibility.waitUntilElementIsVisible(this.localStorageButton);
-        await BrowserActions.clearSendKeys(this.localStorageButton, fileLocation);
+        await BrowserVisibility.waitUntilElementIsPresent(this.localStorageButton);
+        await this.localStorageButton.sendKeys(fileLocation);
     }
 
     async checkFileIsAttached(fieldId, name): Promise<void> {

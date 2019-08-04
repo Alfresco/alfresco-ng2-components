@@ -65,7 +65,7 @@ describe('Form Component',  () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        await navigationBarPage.clickFormButton();
+        await navigationBarPage.navigateToProcessServicesFormPage();
 
         done();
     });

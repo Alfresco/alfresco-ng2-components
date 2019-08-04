@@ -177,7 +177,6 @@ describe('Viewer - properties',  () => {
 
     it('[C260100] Should be possible to disable Overlay viewer', async () => {
         await viewerPage.clickCloseButton();
-        await navigationBarPage.scrollTo(navigationBarPage.overlayViewerButton);
         await navigationBarPage.clickOverlayViewerButton();
 
         await dataTable.doubleClickRow('Name', fileForOverlay.name);

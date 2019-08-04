@@ -142,7 +142,7 @@ describe('Settings component', () => {
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.checkAppIsDisplayed('Task App');
-            await navigationBarPage.navigateToSettingsPage();
+            await navigationBarPage.clickSettingsButton();
             expect(await settingsPage.getSelectedOptionText()).toBe('BPM');
 
             await settingsPage.checkBasicAuthRadioIsSelected();
@@ -171,7 +171,7 @@ describe('Settings component', () => {
             await loginPage.clickSignInButton();
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.checkAcsContainer();
-            await navigationBarPage.navigateToSettingsPage();
+            await navigationBarPage.clickSettingsButton();
             expect(await settingsPage.getSelectedOptionText()).toBe('ECM');
             await settingsPage.checkBasicAuthRadioIsSelected();
             await settingsPage.checkSsoRadioIsNotSelected();
@@ -201,7 +201,7 @@ describe('Settings component', () => {
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.checkAppIsDisplayed('Task App');
-            await navigationBarPage.navigateToSettingsPage();
+            await navigationBarPage.clickSettingsButton();
             expect(await settingsPage.getSelectedOptionText()).toBe('ALL');
             await settingsPage.checkBasicAuthRadioIsSelected();
             await settingsPage.checkSsoRadioIsNotSelected();

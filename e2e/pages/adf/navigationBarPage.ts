@@ -28,81 +28,70 @@ export class NavigationBarPage {
     dataTableNestedButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Datatable"]'));
     dataTableCopyContentButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Copy Content"]'));
     dataTableDragAndDropButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Drag and Drop"]'));
-    processServicesButton: ElementFinder = element(by.css('.adf-sidenav-link[data-automation-id="Process Services"]'));
     processServicesNestedButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="App"]'));
     processServicesCloudHomeButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Home"]'));
-    loginButton: ElementFinder = element(by.css('.adf-sidenav-link[data-automation-id="Login"]'));
-    overlayViewerButton: ElementFinder = element(by.css('.adf-sidenav-link[data-automation-id="Overlay Viewer"]'));
     themeButton: ElementFinder = element(by.css('button[data-automation-id="theme menu"]'));
     themeMenuContent: ElementFinder = element(by.css('div[class*="mat-menu-panel"]'));
-    logoutButton: ElementFinder = element(by.css('.adf-sidenav-link[adf-logout]'));
-    cardViewButton: ElementFinder = element(by.css('.adf-sidenav-link[data-automation-id="CardView"]'));
     languageMenuButton: ElementFinder = element(by.css('button[data-automation-id="language-menu-button"]'));
     appTitle: ElementFinder = element(by.css('.adf-app-title'));
     menuButton: ElementFinder = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Form"]'));
     peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="People/Group Cloud"]'));
 
-    async clickDataTable(): Promise<void> {
-        await BrowserActions.click(element(by.css(`.adf-sidenav-link[data-automation-id="Datatable"]`)));
-        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
-    }
-
-    async clickMenuButton(title): Promise<void> {
+    async clickNavigationBarItem(title): Promise<void> {
         const menu = element(by.css(`.adf-sidenav-link[data-automation-id="${title}"]`));
+        await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(menu);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    async clickSocialButton(): Promise<void> {
-        await this.clickMenuButton('Social');
-    }
-
-    async clickTagButton(): Promise<void> {
-        await this.clickMenuButton('Tag');
-    }
-
-    async navigateToDatatable(): Promise<void> {
-        await this.clickDataTable();
-        await BrowserActions.click(this.dataTableNestedButton);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
-    }
-
-    async navigateToCopyContentDatatable(): Promise<void> {
-        await this.clickDataTable();
-        await BrowserActions.click(this.dataTableCopyContentButton);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
-    }
-
-    async navigateToDragAndDropDatatable(): Promise<void> {
-        await this.clickDataTable();
-        await BrowserActions.click(this.dataTableDragAndDropButton);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
+    async clickHomeButton(): Promise<void> {
+        await this.clickNavigationBarItem('Home');
     }
 
     async clickContentServicesButton(): Promise<void> {
-        await this.clickMenuButton('Content Services');
+        await this.clickNavigationBarItem('Content Services');
+    }
+
+    async clickCardViewButton(): Promise<void> {
+        await this.clickNavigationBarItem('CardView');
+    }
+
+    async clickHeaderDataButton(): Promise<void> {
+        await this.clickNavigationBarItem('Header Data');
     }
 
     async clickTaskListButton(): Promise<void> {
-        await this.clickMenuButton('Task List');
-    }
-
-    async clickHomeButton(): Promise<void> {
-        await this.clickMenuButton('Home');
-    }
-
-    async clickConfigEditorButton(): Promise<void> {
-        await this.clickMenuButton('Configuration Editor');
+        await this.clickNavigationBarItem('Task List');
     }
 
     async clickProcessCloudButton() {
-        await BrowserActions.click(element(by.css(`.adf-sidenav-link[data-automation-id="Process Cloud"]`)));
+        await this.clickNavigationBarItem('Process Cloud');
         await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
     }
 
+    async navigateToProcessServicesCloudPage(): Promise<AppListCloudPage> {
+        await this.clickProcessCloudButton();
+        await BrowserActions.click(this.processServicesCloudHomeButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
+        return new AppListCloudPage();
+    }
+
+    async navigateToFormCloudPage(): Promise<void> {
+        await this.clickProcessCloudButton();
+        await BrowserActions.click(this.formButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
+    }
+
+    async navigateToPeopleGroupCloudPage(): Promise<PeopleGroupCloudComponentPage> {
+        await this.clickProcessCloudButton();
+        await BrowserActions.click(this.peopleGroupCloudButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
+        return new PeopleGroupCloudComponentPage();
+    }
+
     async clickProcessServicesButton() {
-        await BrowserActions.click(element(by.css(`.adf-sidenav-link[data-automation-id="Process Services"]`)));
+        await this.clickNavigationBarItem('Process Services');
         await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
     }
 
@@ -113,34 +102,81 @@ export class NavigationBarPage {
         return new ProcessServicesPage();
     }
 
-    async navigateToProcessServicesCloudPage(): Promise<AppListCloudPage> {
-        await this.clickProcessCloudButton();
-        await BrowserActions.click(this.processServicesCloudHomeButton);
+    async navigateToProcessServicesFormPage(): Promise<void> {
+        await this.clickProcessServicesButton();
+        await BrowserActions.click(this.formButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
-        return new AppListCloudPage();
-    }
-
-    async navigateToPeopleGroupCloudPage(): Promise<PeopleGroupCloudComponentPage> {
-        await this.clickProcessCloudButton();
-        await BrowserActions.click(this.peopleGroupCloudButton);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
-        return new PeopleGroupCloudComponentPage();
-    }
-
-    async navigateToSettingsPage(): Promise<void> {
-        await this.clickMenuButton('Settings');
     }
 
     async clickLoginButton(): Promise<void> {
-        await this.clickMenuButton('Login');
+        await this.clickNavigationBarItem('Login');
     }
 
     async clickTrashcanButton(): Promise<void> {
-        await this.clickMenuButton('Trashcan');
+        await this.clickNavigationBarItem('Trashcan');
+    }
+
+    async clickCustomSources(): Promise<void> {
+        await this.clickNavigationBarItem('Custom Sources');
+    }
+
+    async clickDataTable(): Promise<void> {
+        await this.clickNavigationBarItem('Datatable');
+        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
+    }
+
+    async navigateToDatatable(): Promise<void> {
+        await this.clickDataTable();
+        await BrowserActions.click(this.dataTableNestedButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
+    }
+
+    async navigateToDragAndDropDatatable(): Promise<void> {
+        await this.clickDataTable();
+        await BrowserActions.click(this.dataTableDragAndDropButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
+    }
+
+    async navigateToCopyContentDatatable(): Promise<void> {
+        await this.clickDataTable();
+        await BrowserActions.click(this.dataTableCopyContentButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
+    }
+
+    async clickTagButton(): Promise<void> {
+        await this.clickNavigationBarItem('Tag');
+    }
+
+    async clickSocialButton(): Promise<void> {
+        await this.clickNavigationBarItem('Social');
+    }
+
+    async clickSettingsButton(): Promise<void> {
+        await this.clickNavigationBarItem('Settings');
+    }
+
+    async clickConfigEditorButton(): Promise<void> {
+        await this.clickNavigationBarItem('Configuration Editor');
     }
 
     async clickOverlayViewerButton(): Promise<void> {
-        await this.clickMenuButton('Overlay Viewer');
+        await this.clickNavigationBarItem('Overlay Viewer');
+    }
+
+    async clickTreeViewButton(): Promise<void> {
+        await this.clickNavigationBarItem('Tree View');
+    }
+
+    async clickIconsButton(): Promise<void> {
+        await this.clickNavigationBarItem('Icons');
+    }
+
+    async clickAboutButton(): Promise<void> {
+        await this.clickNavigationBarItem('About');
+    }
+
+    async clickLogoutButton(): Promise<void> {
+        await this.clickNavigationBarItem('Logout');
     }
 
     async clickThemeButton(): Promise<void> {
@@ -155,49 +191,20 @@ export class NavigationBarPage {
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    async clickLogoutButton(): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.click(this.logoutButton);
-    }
-
-    async clickCardViewButton(): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.click(this.cardViewButton);
-    }
-
     async openContentServicesFolder(folderId): Promise<void> {
         await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${folderId}`);
+    }
+
+    async openLanguageMenu(): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.click(this.languageMenuButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.appTitle);
     }
 
     async chooseLanguage(language): Promise<void> {
         const buttonLanguage: ElementFinder = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
         await BrowserActions.click(buttonLanguage);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
-    }
-
-    async openLanguageMenu(): Promise<void> {
-        await BrowserActions.click(this.languageMenuButton);
-        await BrowserVisibility.waitUntilElementIsVisible(this.appTitle);
-    }
-
-    async clickHeaderDataButton(): Promise<void> {
-        await this.clickMenuButton('Header Data');
-    }
-
-    async clickAboutButton(): Promise<void> {
-        await this.clickMenuButton('About');
-    }
-
-    async clickTreeViewButton(): Promise<void> {
-        await this.clickMenuButton('Tree View');
-    }
-
-    async navigateToIconsPage(): Promise<void> {
-        await this.clickMenuButton('Icons');
-    }
-
-    async navigateToCustomSources(): Promise<void> {
-        await this.clickMenuButton('Custom Sources');
     }
 
     async checkMenuButtonIsDisplayed(): Promise<void> {
@@ -220,18 +227,6 @@ export class NavigationBarPage {
 
     async clickAppLogoText(): Promise<void> {
         await BrowserActions.click(this.appTitle);
-    }
-
-    async clickFormButton(): Promise<void> {
-        await BrowserActions.click(this.processServicesButton);
-        await BrowserActions.click(this.formButton);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
-    }
-
-    async clickFormCloudButton(): Promise<void> {
-        await this.clickMenuButton('Process Cloud');
-        await BrowserActions.click(this.formButton);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async checkLogoTooltip(logoTooltipTitle): Promise<void> {

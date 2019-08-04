@@ -44,7 +44,7 @@ describe('Universal Icon component',  () => {
     });
 
     beforeEach(async (done) => {
-        await navigationBarPage.navigateToIconsPage();
+        await navigationBarPage.clickIconsButton();
         done();
     });
 

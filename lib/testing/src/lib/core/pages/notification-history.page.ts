@@ -54,6 +54,7 @@ export class NotificationHistoryPage {
         }
         const textExists = await this.checkNotificationIsPresent(text);
         expect(textExists).toBe(true, `Notifications list does not contain: ${text}`);
+        await BrowserActions.closeMenuAndDialogs();
     }
 
     async checkNotifyNotContains(text: string): Promise<void> {
@@ -62,5 +63,6 @@ export class NotificationHistoryPage {
             await this.clickNotificationButton();
         }
         await this.checkNotificationIsNotPresent(text);
+        await BrowserActions.closeMenuAndDialogs();
     }
 }

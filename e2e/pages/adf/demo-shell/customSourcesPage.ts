@@ -53,7 +53,7 @@ export class CustomSources {
     }
 
     async navigateToCustomSources(): Promise<void> {
-        await this.navigationBarPage.navigateToCustomSources();
+        await this.navigationBarPage.clickCustomSources();
         await this.waitForToolbarToBeVisible();
     }
 
