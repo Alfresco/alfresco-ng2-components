@@ -32,7 +32,8 @@ import { AppsProcessCloudService } from '../../../app/services/apps-process-clou
 import { fakeApplicationInstance } from './../../../app/mock/app-model.mock';
 import moment from 'moment-es6';
 import { AbstractControl } from '@angular/forms';
-import { UserPreferenceCloudService } from '../../../services/user-preference.cloud.service';
+import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -56,7 +57,10 @@ describe('EditProcessFilterCloudComponent', () => {
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
-        providers: [MatDialog, UserPreferenceCloudService]
+        providers: [
+            MatDialog,
+            { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+        ]
     });
 
     beforeEach(() => {
