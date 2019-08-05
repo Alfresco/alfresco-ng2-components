@@ -58,7 +58,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getStatusFilterDropDownValue() {
-        return element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-status'] span")).first().getText();
+        return BrowserActions.getText(element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-status'] span span")));
     }
 
     setSortFilterDropDown(option) {
@@ -70,8 +70,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getSortFilterDropDownValue() {
-        const elementSort = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span")).first();
-        return BrowserActions.getText(elementSort);
+        return BrowserActions.getText(element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span span")));
     }
 
     setOrderFilterDropDown(option) {
@@ -84,13 +83,12 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getOrderFilterDropDownValue() {
-        return element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-order'] span")).first().getText();
+        return BrowserActions.getText(element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-order'] span span")));
     }
 
     clickOnDropDownArrow(option) {
         const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
-        BrowserVisibility.waitUntilElementIsVisible(dropDownArrow);
-        dropDownArrow.click();
+        BrowserActions.click(dropDownArrow);
         BrowserVisibility.waitUntilElementIsVisible(this.selectedOption);
     }
 
@@ -210,8 +208,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getAppNameDropDownValue() {
-        const locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
-        return BrowserActions.getText(locator);
+        return BrowserActions.getText(element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span span")));
     }
 
     setId(option) {
