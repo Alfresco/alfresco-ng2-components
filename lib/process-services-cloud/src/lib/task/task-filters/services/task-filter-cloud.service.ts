@@ -20,7 +20,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { PreferenceCloudInterface } from '../../../services/preference-cloud.interface';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class TaskFilterCloudService {
     constructor(
         private identityUserService: IdentityUserService,
         @Inject(TASK_FILTERS_SERVICE_TOKEN)
-        public preferenceService: PreferenceCloudInterface
+        public preferenceService: PreferenceCloudServiceInterface
     ) {
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();

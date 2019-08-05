@@ -16,8 +16,8 @@
  */
 
 import { InjectionToken } from '@angular/core';
-import { PreferenceCloudInterface } from './preference-cloud.interface';
+import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
 
-export const PROCESS_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudInterface>('proccess-filters-cloud');
+export const PROCESS_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudServiceInterface>('proccess-filters-cloud');
 
-export const TASK_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudInterface>('task-filters-cloud');
+export const TASK_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudServiceInterface>('task-filters-cloud');

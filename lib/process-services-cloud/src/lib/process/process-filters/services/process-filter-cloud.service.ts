@@ -21,7 +21,7 @@ import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
-import { PreferenceCloudInterface } from '../../../services/preference-cloud.interface';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 @Injectable()
 export class ProcessFilterCloudService {
 
@@ -29,7 +29,7 @@ export class ProcessFilterCloudService {
     filters$: Observable<ProcessFilterCloudModel[]>;
 
     constructor(
-        @Inject(PROCESS_FILTERS_SERVICE_TOKEN) public preferenceService: PreferenceCloudInterface,
+        @Inject(PROCESS_FILTERS_SERVICE_TOKEN) public preferenceService: PreferenceCloudServiceInterface,
         private identityUserService: IdentityUserService) {
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
