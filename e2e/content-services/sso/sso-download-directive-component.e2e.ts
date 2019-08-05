@@ -51,7 +51,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url,
+        hostEcm: browser.params.testConfig.adf_acs.host,
         authType: 'OAUTH',
         oauth2: {
             host: browser.params.testConfig.adf.hostSso,

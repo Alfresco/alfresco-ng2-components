@@ -63,7 +63,7 @@ describe('Process List - Pagination', function () {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -95,7 +95,7 @@ describe('Process List - Pagination', function () {
 
             this.alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
-                hostBpm: browser.params.testConfig.adf.url
+                hostBpm: browser.params.testConfig.adf_aps.host
             });
 
             await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);

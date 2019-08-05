@@ -39,7 +39,7 @@ describe('Favorite directive', function () {
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const pdfFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,

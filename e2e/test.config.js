@@ -165,7 +165,7 @@ module.exports = {
          * The protocol where the app runs.
          * @config main.protocol {String}
          */
-        host: HOST,
+        host: PROXY || HOST,
 
         /**
          * The port where the app runs.
@@ -193,7 +193,7 @@ module.exports = {
          * The host where the app runs.
          * @config main.host {String}
          */
-        host: HOST,
+        host: PROXY || HOST,
 
         /**
          * The port where the app runs.

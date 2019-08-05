@@ -33,7 +33,7 @@ describe('Permissions Component', function () {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();

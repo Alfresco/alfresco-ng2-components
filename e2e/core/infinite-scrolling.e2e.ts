@@ -55,7 +55,7 @@ describe('Enable infinite scrolling', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
         const uploadActions = new UploadActions(this.alfrescoJsApi);
 
