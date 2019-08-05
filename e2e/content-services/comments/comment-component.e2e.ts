@@ -61,7 +61,6 @@ describe('Comment Component', () => {
     };
 
     beforeAll(async (done) => {
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -69,7 +68,6 @@ describe('Comment Component', () => {
     });
 
     beforeEach(async (done) => {
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
