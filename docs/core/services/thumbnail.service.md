@@ -16,9 +16,11 @@ Retrieves an SVG thumbnail image to represent a document type.
 -   **getDefaultMimeTypeIcon**(): `string`<br/>
     Gets a "miscellaneous" thumbnail URL for types with no other icon defined.
     -   **Returns** `string` - URL string
--   **getDocumentThumbnailUrl**(node: `any`): `string`<br/>
+-   **getDocumentThumbnailUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
     Gets a thumbnail URL for the given document node.
-    -   _node:_ `any`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to get URL for.
+    -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`  - Node or Node ID to get URL for.
+    -   _attachment:_ `boolean`  - (Optional) 
+    -   _ticket:_ `string`  - (Optional) 
     -   **Returns** `string` - URL string
 -   **getMimeTypeIcon**(mimeType: `string`): `string`<br/>
     Gets a thumbnail URL for a MIME type.

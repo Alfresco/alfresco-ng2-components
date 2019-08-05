@@ -18,26 +18,26 @@ Accesses app-generated data objects via URLs and file downloads.
     -   _blob:_ [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Data to wrap into object URL
     -   **Returns** `string` - URL string
 -   **downloadBlob**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob), fileName: `string`)<br/>
-    Invokes content download for a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) with a file name.
+    (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) with a file name.) 
     -   _blob:_ [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Content to download.
     -   _fileName:_ `string`  - Name of the resulting file.
 -   **downloadData**(data: `any`, fileName: `string`)<br/>
-    Invokes content download for a data array with a file name.
+    (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a data array with a file name.) 
     -   _data:_ `any`  - Data to download.
     -   _fileName:_ `string`  - Name of the resulting file.
 -   **downloadJSON**(json: `any`, fileName: `string`)<br/>
-    Invokes content download for a JSON object with a file name.
+    (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a JSON object with a file name.) 
     -   _json:_ `any`  - JSON object to download.
     -   _fileName:_ `string`  - Name of the resulting file.
--   **getContentUrl**(node: `any`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
+-   **getContentUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
     Gets a content URL for the given node.
-    -   _node:_ `any`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to get URL for.
+    -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`  - Node or Node ID to get URL for.
     -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
     -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
-    -   **Returns** `string` - URL string
--   **getDocumentThumbnailUrl**(node: `any`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
-    Gets a thumbnail URL for the given document node.
-    -   _node:_ `any`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to get URL for.
+    -   **Returns** `string` - URL string or `null`
+-   **getDocumentThumbnailUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
+    (**Deprecated:** in 3.2.0, use ThumbnailService instead. Gets a thumbnail URL for the given document node.) 
+    -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`  - Node or Node ID to get URL for.
     -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
     -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
     -   **Returns** `string` - URL string
