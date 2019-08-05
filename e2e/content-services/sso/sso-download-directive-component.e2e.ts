@@ -90,15 +90,15 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             silentLogin = false;
             implicitFlow = true;
-            settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 browser.params.testConfig.adf.hostSso,
                 browser.params.testConfig.adf.hostIdentity,
                 silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
 
-            loginSsoPage.clickOnSSOButton();
-            loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
+            await loginSsoPage.clickOnSSOButton();
+            await loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             contentServicesPage.checkAcsContainer();
             contentListPage.doubleClickRow(folderName);
             contentListPage.waitForTableBody();
