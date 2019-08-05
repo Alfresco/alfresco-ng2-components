@@ -149,7 +149,7 @@ describe('Unshare file', () => {
             shareDialog.confirmationDialogIsDisplayed();
             shareDialog.clickConfirmationDialogRemoveButton();
             shareDialog.dialogIsClosed();
-            BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.adf_acs.host,browser.params.testConfig.adf.host));
+            BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.adf_acs.host, browser.params.testConfig.adf.host));
             errorPage.checkErrorCode();
         });
     });
