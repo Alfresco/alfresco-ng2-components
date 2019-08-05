@@ -35,7 +35,7 @@ export class LoginSSOPage {
         this.enterPassword(password);
         this.clickLoginButton();
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        return BrowserVisibility.waitUntilElementIsVisible(this.header);
+        BrowserVisibility.waitUntilElementIsVisible(this.header);
     }
 
     clickOnSSOButton() {

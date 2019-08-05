@@ -29,6 +29,10 @@ describe('Login component - SSO', () => {
     const silentLogin = false;
     let implicitFlow;
 
+    beforeEach(() => {
+        browser.ignoreSynchronization = false;
+    });
+
     describe('Login component - SSO implicit Flow', () => {
 
         afterEach(() => {
