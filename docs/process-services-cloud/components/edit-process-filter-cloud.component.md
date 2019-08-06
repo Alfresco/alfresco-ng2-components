@@ -212,3 +212,7 @@ Users can save a filter if they make any changes to it in an application using t
 ## See also
 
 -   [Edit task filter cloud component](edit-task-filter-cloud.component.md)
+-   [Process Filter Cloud Service](../services/process-filter-cloud.service.md)
+-   [Local preference Cloud Service](../services/local-preference-cloud.service.md)
+-   [User preference Cloud Service](../services/user-preference-cloud.service.md)
+

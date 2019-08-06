@@ -16,12 +16,12 @@
  */
 
 import { IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
-import { UserPreferenceCloudService } from '../../../services/public-api';
 import { switchMap, map, catchError } from 'rxjs/operators';
-
+import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 @Injectable()
 export class ProcessFilterCloudService {
 
@@ -29,7 +29,7 @@ export class ProcessFilterCloudService {
     filters$: Observable<ProcessFilterCloudModel[]>;
 
     constructor(
-        private preferenceService: UserPreferenceCloudService,
+        @Inject(PROCESS_FILTERS_SERVICE_TOKEN) public preferenceService: PreferenceCloudServiceInterface,
         private identityUserService: IdentityUserService) {
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
@@ -42,7 +42,7 @@ export class ProcessFilterCloudService {
      */
     private createDefaultFilters(appName: string) {
         const key: string = this.prepareKey(appName);
-        this.preferenceService.getPreferences(appName).pipe(
+        this.preferenceService.getPreferences(appName, key).pipe(
             switchMap((response: any) => {
                 const preferences = (response && response.list && response.list.entries) ? response.list.entries : [];
                 if (!this.hasPreferences(preferences)) {

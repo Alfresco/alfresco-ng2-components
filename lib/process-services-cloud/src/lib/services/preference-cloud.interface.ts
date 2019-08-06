@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-export * from './user-preference-cloud.service';
-export * from './local-preference-cloud.service';
-export * from './cloud-token.service';
-export * from './preference-cloud.interface';
+import { Observable } from 'rxjs';
+
+export interface PreferenceCloudServiceInterface {
+
+    getPreferences(appName: string, key?: string): Observable<any>;
+    getPreferenceByKey(appName: string, key: string): Observable<any>;
+    createPreference(appName: string, key: string, newPreference: any): Observable<any>;
+    updatePreference(appName: string, key: string, updatedPreference: any): Observable<any>;
+    deletePreference(appName: string, key: any): Observable<any>;
+
+}

@@ -7,7 +7,7 @@ Last reviewed: 2019-01-09
 
 # [Task Filter Cloud Service](../../../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts "Defined in task-filter-cloud.service.ts")
 
-Manages task filters. 
+Manages task filters.
 
 ## Class members
 
@@ -52,6 +52,48 @@ this.taskFilterService.getTaskListFilters(appName).subscribe( (filters: TaskFilt
 ```
 
 These filters can now be used to get matching task instances for the process app.
+
+## Inject Preference service
+
+Token: [`TASK_FILTERS_SERVICE_TOKEN`](../../../lib/process-services-cloud/src/lib/services/cloud-token.service.ts)
+A DI token that maps to the dependency to be injected.
+
+[Task Filter Cloud Service](../../../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts "Defined in task-filter-cloud.service.ts")
+is by default injected with the [Local Preference Cloud Service](../../process-services-cloud/services/local-preference-cloud.service.md)
+
+```ts
+import { NgModule } from '@angular/core';
+import { LocalPreferenceCloudService, TASK_FILTERS_SERVICE_TOKEN } from '@alfresco/adf-process-services-cloud';
+
+@NgModule({
+    imports: [
+        ...Import Required Modules
+    ],
+    providers: [
+        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+    ]
+})
+export class ExampleModule {}
+
+```
+
+If you would like to inject the [UserPreferenceCloudService](../../process-services-cloud/services/user-preference-cloud.service.md),  you can inject the service like below shown 
+
+```ts
+import { NgModule } from '@angular/core';
+import { UserPreferenceCloudService, TASK_FILTERS_SERVICE_TOKEN } from '@alfresco/adf-process-services-cloud';
+
+@NgModule({
+    imports: [
+        ...Import Required Modules
+    ],
+    providers: [
+        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
+    ]
+})
+export class ExampleModule {}
+
+```
 
 ## See also
 
