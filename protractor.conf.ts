@@ -177,7 +177,7 @@ let uploadReport = async function (alfrescoJsApi, filenameReport) {
     }
 };
 
-let browserLogErrorPrint = function () {
+let beforeAllRewrite = function () {
 
     const originalBeforeAll = global.beforeAll;
 
@@ -196,6 +196,9 @@ let browserLogErrorPrint = function () {
         originalBeforeAll(wrapClbk, timeout);
 
     };
+};
+
+let browserLogErrorPrint = function () {
 
     if (process.env.LOG) {
         var browserLogs = require('protractor-browser-logs'),
@@ -347,6 +350,7 @@ exports.config = {
     },
 
     onPrepare() {
+        beforeAllRewrite();
         browserLogErrorPrint();
 
         retry.onPrepare();
