@@ -118,6 +118,7 @@ describe('Search Filters', () => {
         await uploadActions.deleteFileOrFolder(fileTypeTxt1.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypeTxt2.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypeJpg.entry.id);
+        await navigationBarPage.clickLogoutButton();
 
         done();
     });

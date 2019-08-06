@@ -71,6 +71,10 @@ describe('Search component - Text widget', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     it('[C289329] Placeholder should be displayed in the widget when the input string is empty', () => {
         BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
         searchResultPage.tableIsLoaded();

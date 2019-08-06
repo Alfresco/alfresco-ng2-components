@@ -25,6 +25,7 @@ import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Search Component - Multi-Select Facet', () => {
     const loginPage = new LoginPage();
@@ -36,6 +37,8 @@ describe('Search Component - Multi-Select Facet', () => {
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const searchFiltersPage = new SearchFiltersPage();
+    const navigationBarPage = new NavigationBarPage();
+
     let site, userOption;
 
     describe('', () => {
@@ -97,6 +100,7 @@ describe('Search Component - Multi-Select Facet', () => {
             ]);
 
             await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+            await navigationBarPage.clickLogoutButton();
 
             done();
         });

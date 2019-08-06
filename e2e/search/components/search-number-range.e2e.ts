@@ -81,6 +81,9 @@ describe('Search Number Range Filter', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         await uploadActions.deleteFileOrFolder(file0Bytes.entry.id);
+
+        await navigationBarPage.clickLogoutButton();
+
         done();
     });
 

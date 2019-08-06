@@ -79,6 +79,8 @@ describe('Search Checklist Component', () => {
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);
 
+        await navigationBarPage.clickLogoutButton();
+
         done();
     });
 

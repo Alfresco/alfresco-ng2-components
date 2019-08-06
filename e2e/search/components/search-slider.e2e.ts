@@ -77,6 +77,9 @@ describe('Search Number Range Filter', () => {
             await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         } catch (error) {
         }
+
+        await navigationBarPage.clickLogoutButton();
+
         done();
     });
 

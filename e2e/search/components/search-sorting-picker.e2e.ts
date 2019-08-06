@@ -78,6 +78,9 @@ describe('Search Sorting Picker', () => {
     afterAll(async (done) => {
         await uploadActions.deleteFileOrFolder(pngA.entry.id);
         await uploadActions.deleteFileOrFolder(pngD.entry.id);
+
+        await navigationBarPage.clickLogoutButton();
+
         done();
     });
 
