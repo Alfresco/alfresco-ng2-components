@@ -165,16 +165,14 @@ export class DateFieldValidator implements FormFieldValidator {
     }
 }
 
-export class MinDateFieldValidator implements FormFieldValidator {
+export abstract class BoundaryDateFieldValidator implements FormFieldValidator {
 
-    private supportedTypes = [
+    DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
+    DATE_FORMAT = 'DD-MM-YYYY';
+
+    supportedTypes = [
         FormFieldTypes.DATE
     ];
-
-    isSupported(field: FormFieldModel): boolean {
-        return field &&
-            this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
-    }
 
     validate(field: FormFieldModel): boolean {
         let isValid = true;
@@ -191,8 +189,20 @@ export class MinDateFieldValidator implements FormFieldValidator {
         return isValid;
     }
 
-    private checkDate(field: FormFieldModel, dateFormat: string): boolean {
-        const MIN_DATE_FORMAT = 'DD-MM-YYYY';
+    extractDateFormat(date: string): string {
+        const brokenDownDate = date.split('-');
+        return brokenDownDate[0].length === 4 ? this.DATE_FORMAT_CLOUD : this.DATE_FORMAT;
+    }
+
+    abstract checkDate(field: FormFieldModel, dateFormat: string);
+    abstract isSupported(field: FormFieldModel);
+
+}
+
+export class MinDateFieldValidator extends BoundaryDateFieldValidator {
+
+    checkDate(field: FormFieldModel, dateFormat: string): boolean {
+
         let isValid = true;
         // remove time and timezone info
         let fieldValueData;
@@ -201,7 +211,9 @@ export class MinDateFieldValidator implements FormFieldValidator {
         } else {
             fieldValueData = field.value;
         }
-        const min = moment(field.minValue, MIN_DATE_FORMAT);
+
+        const minValueDateFormat = this.extractDateFormat(field.minValue);
+        const min = moment(field.minValue, minValueDateFormat);
 
         if (fieldValueData.isBefore(min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
@@ -210,46 +222,40 @@ export class MinDateFieldValidator implements FormFieldValidator {
         }
         return isValid;
     }
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
+    }
 }
 
-export class MaxDateFieldValidator implements FormFieldValidator {
+export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
 
-    MAX_DATE_FORMAT = 'DD-MM-YYYY';
+    checkDate(field: FormFieldModel, dateFormat: string): boolean {
 
-    private supportedTypes = [
-        FormFieldTypes.DATE
-    ];
+        let isValid = true;
+        // remove time and timezone info
+        let fieldValueData;
+        if (typeof field.value === 'string') {
+            fieldValueData = moment(field.value.split('T')[0], dateFormat);
+        } else {
+            fieldValueData = field.value;
+        }
+
+        const maxValueDateFormat = this.extractDateFormat(field.maxValue);
+        const max = moment(field.maxValue, maxValueDateFormat);
+
+        if (fieldValueData.isAfter(max)) {
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
+            field.validationSummary.attributes.set('maxValue', max.format(field.dateDisplayFormat).toLocaleUpperCase());
+            isValid = false;
+        }
+        return isValid;
+    }
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
-    }
-
-    validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
-            const dateFormat = field.dateDisplayFormat;
-
-            if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
-                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
-                return false;
-            }
-
-            // remove time and timezone info
-            let d;
-            if (typeof field.value === 'string') {
-                d = moment(field.value.split('T')[0], dateFormat);
-            } else {
-                d = field.value;
-            }
-            const max = moment(field.maxValue, this.MAX_DATE_FORMAT);
-
-            if (d.isAfter(max)) {
-                field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-                field.validationSummary.attributes.set('maxValue', max.format(field.dateDisplayFormat).toLocaleUpperCase());
-                return false;
-            }
-        }
-        return true;
     }
 }
 

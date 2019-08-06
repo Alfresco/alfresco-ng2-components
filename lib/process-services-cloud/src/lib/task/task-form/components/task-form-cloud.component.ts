@@ -25,6 +25,7 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { FormRenderingService } from '@alfresco/adf-core';
 import { AttachFileCloudWidgetComponent } from '../../../form/components/attach-file-cloud-widget/attach-file-cloud-widget.component';
 import { DropdownCloudWidgetComponent } from '../../../form/components/dropdown-cloud/dropdown-cloud.widget';
+import { DateCloudWidgetComponent } from '../../../form/components/date-cloud/date-cloud.widget';
 
 @Component({
     selector: 'adf-cloud-task-form',
@@ -98,6 +99,7 @@ export class TaskFormCloudComponent implements OnChanges {
         private formRenderingService: FormRenderingService) {
             this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
             this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
+            this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
