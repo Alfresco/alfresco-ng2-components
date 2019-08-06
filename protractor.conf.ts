@@ -178,6 +178,25 @@ let uploadReport = async function (alfrescoJsApi, filenameReport) {
 };
 
 let browserLogErrorPrint = function () {
+
+    const originalBeforeAll = global.beforeAll;
+
+    // tslint:disable-next-line
+    global.beforeAll = function (beforeEachFunction, timeout) {
+        const wrapClbk = async (done) => {
+            try {
+                await beforeEachFunction(done);
+            } catch (error) {
+                // tslint:disable-next-line:no-console
+                console.log('Error Before all' + JSON.stringify(error));
+                process.exit(1);
+            }
+        };
+
+        originalBeforeAll(wrapClbk, timeout);
+
+    };
+
     if (process.env.LOG) {
         var browserLogs = require('protractor-browser-logs'),
             logs = browserLogs(browser);
@@ -258,9 +277,9 @@ exports.config = {
 
         browserName: 'chrome',
 
-        shardTestFiles: true,
-
         maxInstances: MAXINSTANCES,
+
+        shardTestFiles: true,
 
         chromeOptions: {
             prefs: {
