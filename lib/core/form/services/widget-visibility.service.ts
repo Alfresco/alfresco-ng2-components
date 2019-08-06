@@ -67,14 +67,17 @@ export class WidgetVisibilityService {
         const leftValue = this.getLeftValue(form, visibilityObj);
         const rightValue = this.getRightValue(form, visibilityObj);
         const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
-        accumulator.push({ value: actualResult, operator: visibilityObj.nextConditionOperator });
-        if (visibilityObj.nextCondition) {
-            result = this.isFieldVisible(form, visibilityObj.nextCondition, accumulator);
-        } else {
-            result = accumulator[0].value ? accumulator[0].value : result;
 
+        if (this.isValidOperator(visibilityObj.nextConditionOperator)) {
+            accumulator.push({ value: actualResult, operator: visibilityObj.nextConditionOperator });
+        }
+
+        if (this.isValidCondition(visibilityObj.nextCondition)) {
+            result = this.isFieldVisible(form, visibilityObj.nextCondition, accumulator);
+        } else if (accumulator[0] !== undefined) {
+            result = accumulator[0].value;
             for (let i = 1; i < accumulator.length; i++) {
-                if (accumulator[i - 1].operator && accumulator[i].value) {
+                if (accumulator[i] !== undefined) {
                     result = this.evaluateLogicalOperation(
                         accumulator[i - 1].operator,
                         result,
@@ -82,6 +85,8 @@ export class WidgetVisibilityService {
                     );
                 }
             }
+        } else {
+            result = actualResult;
         }
         return !!result;
 
@@ -285,6 +290,14 @@ export class WidgetVisibilityService {
 
     toJson(res: any): any {
         return res || {};
+    }
+
+    private isValidOperator(operator: string): boolean {
+        return operator !== undefined;
+    }
+
+    private isValidCondition(condition: WidgetVisibilityModel): boolean {
+        return !!(condition && condition.operator);
     }
 
     private handleError(err) {

@@ -34,7 +34,7 @@ import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import {
     fakeFormJson, fakeTaskProcessVariableModels,
     formTest, formValues, complexVisibilityJsonVisible,
-    complexVisibilityJsonNotVisible } from 'core/mock/form/widget-visibility-cloud.service.mock';
+    nextConditionForm, complexVisibilityJsonNotVisible } from 'core/mock/form/widget-visibility-cloud.service.mock';
 
 declare let jasmine: any;
 
@@ -186,6 +186,23 @@ describe('WidgetVisibilityCloudService', () => {
         it('should return undefined for invalid operation', () => {
             booleanResult = service.evaluateCondition(null, null, undefined);
             expect(booleanResult).toBeUndefined();
+        });
+
+        it('should evaluate true visibility condition with next condition operator', (done) => {
+            const myForm = new FormModel(nextConditionForm);
+            service.refreshVisibility(myForm);
+            const nextConditionFormVIsibility = myForm.getFieldById('Text4');
+            expect(nextConditionFormVIsibility.isVisible).toBeTruthy();
+            done();
+        });
+
+        it('should evaluate false visibility condition with next condition operator', (done) => {
+            const myForm = new FormModel(nextConditionForm);
+            myForm.getFieldById('Text3').value = 'wrong value';
+            service.refreshVisibility(myForm);
+            const nextConditionFormVIsibility = myForm.getFieldById('Text4');
+            expect(nextConditionFormVIsibility.isVisible).toBeFalsy();
+            done();
         });
     });
 
