@@ -99,9 +99,9 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
 
             await navigationBarPage.clickContentServicesButton();
-            contentServicesPage.checkAcsContainer();
+            await contentServicesPage.checkAcsContainer();
             contentListPage.doubleClickRow(folderName);
-            contentListPage.waitForTableBody();
+            await contentListPage.waitForTableBody();
             done();
         });
 

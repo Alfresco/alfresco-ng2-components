@@ -88,11 +88,11 @@ export class LoginPage {
     }
 
     enterUsername(username) {
-        BrowserActions.clearSendKeys(this.txtUsername, username);
+        return BrowserActions.clearSendKeys(this.txtUsername, username);
     }
 
     enterPassword(password) {
-        BrowserActions.clearSendKeys(this.txtPassword, password);
+        return BrowserActions.clearSendKeys(this.txtPassword, password);
     }
 
     async clearUsername() {

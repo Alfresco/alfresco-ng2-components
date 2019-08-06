@@ -77,8 +77,8 @@ describe('People Groups Cloud Component', () => {
             await groupIdentityService.assignRole(groupActiviti.id, activitiAdminRoleId, identityService.ROLES.ACTIVITI_ADMIN);
             groupNoRole = await groupIdentityService.createIdentityGroup();
 
-            await groupIdentityService.addClientRole(groupAps.id, clientId, clientActivitiAdminRoleId, identityService.ROLES.ACTIVITI_ADMIN );
-            await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, identityService.ROLES.ACTIVITI_ADMIN );
+            await groupIdentityService.addClientRole(groupAps.id, clientId, clientActivitiAdminRoleId, identityService.ROLES.ACTIVITI_ADMIN);
+            await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, identityService.ROLES.ACTIVITI_ADMIN);
             users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`, `${testUser.idIdentityService}`];
             groups = [`${groupAps.id}`, `${groupActiviti.id}`, `${groupNoRole.id}`];
 
@@ -91,17 +91,20 @@ describe('People Groups Cloud Component', () => {
         });
 
         afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            for (let i = 0; i < users.length; i++) {
-                await identityService.deleteIdentityUser(users[i]);
-            }
-            for (let i = 0; i < groups.length; i++) {
-                await groupIdentityService.deleteIdentityGroup(groups[i]);
-            }
+            try {
+                await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+                for (let i = 0; i < users.length; i++) {
+                    await identityService.deleteIdentityUser(users[i]);
+                }
+                for (let i = 0; i < groups.length; i++) {
+                    await groupIdentityService.deleteIdentityGroup(groups[i]);
+                }
 
-            await identityService.deleteIdentityUser(testUser.idIdentityService);
-            await identityService.deleteIdentityUser(apsUser.idIdentityService);
-            await identityService.deleteIdentityUser(activitiUser.idIdentityService);
+                await identityService.deleteIdentityUser(testUser.idIdentityService);
+                await identityService.deleteIdentityUser(apsUser.idIdentityService);
+                await identityService.deleteIdentityUser(activitiUser.idIdentityService);
+            } catch (error) {
+            }
         });
 
         beforeEach(() => {
