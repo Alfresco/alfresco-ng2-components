@@ -375,7 +375,7 @@ export class FormFieldModel extends FormWidgetModel {
             case FormFieldTypes.UPLOAD:
                 this.form.hasUpload = true;
                 if (this.value && this.value.length > 0) {
-                    this.form.values[this.id] = this.value.map((elem) => elem.id).join(',');
+                    this.form.values[this.id] = Array.isArray(this.value) ? this.value.map((elem) => elem.id).join(',') : [this.value];
                 } else {
                     this.form.values[this.id] = null;
                 }
