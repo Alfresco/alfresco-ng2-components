@@ -43,7 +43,7 @@ describe('Applications list', () => {
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await apiService.login(testUser.email, testUser.password);
         applicationsService = new ApplicationsService(apiService);
         applications = await applicationsService.getApplicationsByStatus('RUNNING');

@@ -19,8 +19,17 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
-    LoginSSOPage, AppListCloudPage, StringUtil, GroupCloudComponentPage,
-    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, SettingsPage, GroupIdentityService
+    LoginSSOPage,
+    AppListCloudPage,
+    StringUtil,
+    GroupCloudComponentPage,
+    StartTasksCloudPage,
+    PeopleCloudComponentPage,
+    TasksService,
+    ApiService,
+    IdentityService,
+    SettingsPage,
+    GroupIdentityService
 } from '@alfresco/adf-testing';
 import resources = require('../../util/resources');
 
@@ -85,8 +94,8 @@ describe('Start Task - Group Cloud Component', () => {
         done();
     });
 
-    beforeEach(() => {
-        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+    beforeEach(async () => {
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
@@ -100,7 +109,7 @@ describe('Start Task - Group Cloud Component', () => {
         navigationBarPage.clickLogoutButton();
     });
 
-    it('[C291954] Should be able to select/delete an group for a standalone task', () => {
+    it('[C291954] Should be able to select/delete an group for a standalone task', async () => {
         peopleCloudComponent.clearAssignee();
 
         groupCloud.searchGroups(testGroup.name);
@@ -120,7 +129,7 @@ describe('Start Task - Group Cloud Component', () => {
         startTask.clickStartButton();
 
         navigationBarPage.clickLogoutButton();
-        loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
+        await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
@@ -136,7 +145,7 @@ describe('Start Task - Group Cloud Component', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(oneGroupTaskName);
     });
 
-    it('[C291955] Should be able to select multiple groups when the selection mode=multiple', () => {
+    it('[C291955] Should be able to select multiple groups when the selection mode=multiple', async () => {
         peopleCloudComponent.clearAssignee();
 
         groupCloud.searchGroups(testGroup.name);
@@ -153,7 +162,7 @@ describe('Start Task - Group Cloud Component', () => {
         startTask.clickStartButton();
 
         navigationBarPage.clickLogoutButton();
-        loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
+        await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.checkAppIsDisplayed(simpleApp);

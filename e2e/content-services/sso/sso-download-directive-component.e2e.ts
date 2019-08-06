@@ -26,7 +26,8 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import * as path from 'path';
 import { Util } from '../../util/util';
 
-describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
+/* tslint:disable */
+xdescribe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 
     const settingsPage = new SettingsPage();
     const navigationBarPage = new NavigationBarPage();
