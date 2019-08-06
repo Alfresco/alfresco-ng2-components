@@ -28,7 +28,7 @@ import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
-import { UserPreferenceCloudService } from '../../../services/user-preference.cloud.service';
+import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 
 describe('ProcessFiltersCloudComponent', () => {
 

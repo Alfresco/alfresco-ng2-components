@@ -44,13 +44,47 @@ Manage Process Filters, which are pre-configured Process Instance queries.
     Update process instance filter
     -   _filter:_ [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)  - The new filter to update
 
-## Details
+## Inject Preference service
 
-The methods of this service generally return an instance of
-[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts) or an array of instances.
+Token: [`PROCESS_FILTERS_SERVICE_TOKEN`](../../../lib/process-services-cloud/src/lib/services/cloud-token.service.ts)
+A DI token that maps to the dependency to be injected.
 
-You can use the returned filters to get matching process instances for the process app, 
-such as 'Running', 'Completed', 'All', etc.
+[Process Filter Cloud Service](../../../lib/process-services-cloud/src/lib/process/process-filters/services/process-filter-cloud.service.ts "Defined in process-filter-cloud.service.ts")
+is by default injected with the [Local Preference Cloud Service](../../process-services-cloud/services/local-preference-cloud.service.md)
+
+```ts
+import { NgModule } from '@angular/core';
+import { LocalPreferenceCloudService, PROCESS_FILTERS_SERVICE_TOKEN } from '@alfresco/adf-process-services-cloud';
+
+@NgModule({
+    imports: [
+        ...Import Required Modules
+    ],
+    providers: [
+        { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+    ]
+})
+export class ExampleModule {}
+
+```
+
+If you would like to inject the [User Preference Cloud Service](../../process-services-cloud/services/user-preference-cloud.service.md), you can inject the service like below shown 
+
+```ts
+import { NgModule } from '@angular/core';
+import { UserPreferenceCloudService, PROCESS_FILTERS_SERVICE_TOKEN } from '@alfresco/adf-process-services-cloud';
+
+@NgModule({
+    imports: [
+        ...Import Required Modules
+    ],
+    providers: [
+        { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
+    ]
+})
+export class ExampleModule {}
+
+```
 
 ## See also
 

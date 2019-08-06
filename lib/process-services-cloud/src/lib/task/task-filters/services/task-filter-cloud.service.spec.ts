@@ -27,7 +27,7 @@ import {
     fakePreferenceWithNoTaskFilterPreference,
     fakeTaskFilter
 } from '../mock/task-filters-cloud.mock';
-import { UserPreferenceCloudService } from '../../../services/user-preference.cloud.service';
+import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 
 describe('TaskFilterCloudService', () => {

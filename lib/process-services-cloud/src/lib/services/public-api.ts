@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export * from './user-preference.cloud.service';
+export * from './user-preference-cloud.service';
 export * from './local-preference-cloud.service';
 export * from './cloud-token.service';
 export * from './preference-cloud.interface';

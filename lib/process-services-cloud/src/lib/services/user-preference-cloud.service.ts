@@ -59,7 +59,7 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
    * Gets user preference.
    * @param appName Name of the target app
    * @param key Key of the target preference
-   * @returns Observable of user preferences
+   * @returns Observable of user preference
    */
   getPreferenceByKey(appName: string, key: string): Observable<any> {
     if (appName || appName === '') {

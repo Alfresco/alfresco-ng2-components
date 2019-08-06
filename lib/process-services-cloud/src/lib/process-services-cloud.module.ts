@@ -24,7 +24,7 @@ import { GroupCloudModule } from './group/group-cloud.module';
 import { FormCloudModule } from './form/form-cloud.module';
 import { TaskFormModule } from './task/task-form/task-form.module';
 import { BaseCloudService } from './services/base-cloud.service';
-import { UserPreferenceCloudService } from './services/user-preference.cloud.service';
+import { UserPreferenceCloudService } from './services/user-preference-cloud.service';
 import {
     LocalPreferenceCloudService,
     PROCESS_FILTERS_SERVICE_TOKEN,

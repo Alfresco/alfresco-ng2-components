@@ -1,7 +1,7 @@
 {
   "name": "alfresco-components",
   "description": "Alfresco Angular components",
-  "version": "3.4.0-beta8",
+  "version": "3.4.0-beta15",
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
@@ -180,7 +180,7 @@
     "raw-loader": "0.5.1",
     "remark": "^9.0.0",
     "remark-frontmatter": "^1.2.0",
-    "rimraf": "^2.6.3",
+    "rimraf": "^2.6.2",
     "rxjs-tslint-rules": "^4.10.0",
     "sass-loader": "7.1.0",
     "scss-bundle": "2.3.2",
@@ -192,7 +192,7 @@
     "tslib": "^1.9.0",
     "tslint": "5.9.1",
     "tslint-consistent-codestyle": "^1.15.1",
-    "typedoc": "^0.14.2",
+    "typedoc": "^0.15.0",
     "typescript": "3.1.6",
     "unist-util-select": "^2.0.0",
     "url-join": "^4.0.0",

@@ -23,44 +23,72 @@ import { Observable, of } from 'rxjs';
 @Injectable()
 export class LocalPreferenceCloudService implements PreferenceCloudServiceInterface {
 
-  contentTypes = ['application/json'];
-  accepts = ['application/json'];
+  constructor(private storage: StorageService) { }
 
-  constructor(
-    private storage: StorageService) { }
-
-  getPreferences(appName: string, key?: string): Observable<any> {
-      if (key || key === '') {
-          return of(this.prepareFilterResponse(key));
-      }
-  }
-
-  getPreferenceByKey(appName: string, key: string): Observable<any> {
-    return of(JSON.parse(this.storage.getItem(key)) || []);
-  }
-
-  createPreference(appName: string, key: string, newPreference: any): Observable<any> {
-    const storedFilters = JSON.parse(this.storage.getItem(key) || '[]');
-    storedFilters.push(...newPreference);
-    this.storage.setItem(key, JSON.stringify(storedFilters));
-    return of(storedFilters);
-  }
-
-  updatePreference(appName: string, key: string, updatedPreference: any): Observable<any> {
-    if (key) {
-        this.storage.setItem(key, JSON.stringify(updatedPreference));
-        return of(updatedPreference);
+    /**
+     * Gets local preferences
+     * @param appName Name of the target app
+     * @returns List of local preferences
+     */
+    getPreferences(appName: string, key: string): Observable<any> {
+        if (key || key === '') {
+            return of(this.prepareLocalPreferenceResponse(key));
+        }
     }
-  }
 
-  deletePreference(key: string, filters: any): Observable<any> {
-    if (key) {
-        this.storage.setItem(key, JSON.stringify(filters));
-        return of(filters);
+    /**
+     * Gets local preference.
+     * @param appName Name of the target app
+     * @param key Key of the target preference
+     * @returns Observable of local preference
+     */
+    getPreferenceByKey(appName: string, key: string): Observable<any> {
+        return of(JSON.parse(this.storage.getItem(key)) || []);
     }
-  }
 
-    prepareFilterResponse(key: string): any {
+    /**
+     * Creates local preference.
+     * @param appName Name of the target app
+     * @param key Key of the target preference
+     * @newPreference Details of new local preference
+     * @returns Observable of created local preferences
+     */
+    createPreference(appName: string, key: string, newPreference: any): Observable<any> {
+        const storedFilters = JSON.parse(this.storage.getItem(key) || '[]');
+        storedFilters.push(...newPreference);
+        this.storage.setItem(key, JSON.stringify(storedFilters));
+        return of(storedFilters);
+    }
+
+    /**
+     * Updates local preference.
+     * @param appName Name of the target app
+     * @param key Key of the target preference
+     * @param updatedPreference Details of updated preference
+     * @returns Observable of updated local preferences
+     */
+    updatePreference(appName: string, key: string, updatedPreference: any): Observable<any> {
+        if (key) {
+            this.storage.setItem(key, JSON.stringify(updatedPreference));
+            return of(updatedPreference);
+        }
+    }
+
+    /**
+     * Deletes local preference by given preference key.
+     * @param appName Name of the target app
+     * @param key Key of the target preference
+     * @param preferences Details of updated preferences
+     * @returns Observable of preferences without deleted preference
+     */
+    deletePreference(key: string, preferences: any): Observable<any> {
+        if (key) {
+            this.storage.setItem(key, JSON.stringify(preferences));
+            return of(preferences);
+        }
+    }
+
+    prepareLocalPreferenceResponse(key: string): any {
         return {
             'list': {
                 'entries': [

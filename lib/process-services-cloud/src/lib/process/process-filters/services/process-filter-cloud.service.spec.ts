@@ -29,7 +29,7 @@ import {
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
-import { UserPreferenceCloudService } from '../../../services/user-preference.cloud.service';
+import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
