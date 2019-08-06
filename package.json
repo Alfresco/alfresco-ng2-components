@@ -192,7 +192,7 @@
     "tslib": "^1.9.0",
     "tslint": "5.9.1",
     "tslint-consistent-codestyle": "^1.15.1",
-    "typedoc": "^0.14.2",
+    "typedoc": "^0.15.0",
     "typescript": "3.1.6",
     "unist-util-select": "^2.0.0",
     "url-join": "^4.0.0",
