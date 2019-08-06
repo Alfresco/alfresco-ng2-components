@@ -127,6 +127,7 @@ set_test_folder(){
 
 set_selenium(){
     SELENIUM_SERVER=$1
+    export SELENIUM_SERVER=$SELENIUM_SERVER
 }
 
 set_env(){
@@ -209,8 +210,6 @@ rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/screenshots/
 
 export TIMEOUT=$TIMEOUT
-
-export SELENIUM_SERVER=$SELENIUM_SERVER
 
 export SELENIUM_PROMISE_MANAGER=$SELENIUM_PROMISE_MANAGER
 
