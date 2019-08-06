@@ -58,6 +58,10 @@ describe('Datatable component', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     describe('Datatable component', () => {
 
         beforeAll(async (done) => {

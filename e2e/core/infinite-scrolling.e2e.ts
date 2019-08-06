@@ -82,6 +82,10 @@ describe('Enable infinite scrolling', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     beforeEach(async (done) => {
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();

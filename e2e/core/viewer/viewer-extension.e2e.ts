@@ -75,6 +75,7 @@ describe('Viewer', () => {
     afterAll(async (done) => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(jsFileUploaded.entry.id);
+        await navigationBarPage.clickLogoutButton();
         done();
     });
 

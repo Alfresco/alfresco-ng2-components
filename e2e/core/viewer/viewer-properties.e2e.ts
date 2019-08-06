@@ -78,6 +78,7 @@ describe('Viewer - properties', () => {
 
     afterAll(async (done) => {
         await uploadActions.deleteFileOrFolder(pngFile.getId());
+        await navigationBarPage.clickLogoutButton();
 
         done();
     });

@@ -25,12 +25,15 @@ import resources = require('../../../util/resources');
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
+    const navigationBarPage = new NavigationBarPage();
+
     let site;
     const acsUser = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({
@@ -62,6 +65,10 @@ describe('Viewer', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     describe('Archive Folder Uploaded', () => {

@@ -19,12 +19,14 @@ import { LoginPage, ErrorPage, BrowserActions } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Error Component', () => {
 
     const acsUser = new AcsUserModel();
     const loginPage = new LoginPage();
     const errorPage = new ErrorPage();
+    const navigationBarPage = new NavigationBarPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -38,6 +40,10 @@ describe('Error Component', () => {
 
         done();
 
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C277302] Should display the error 403 when access to unauthorized page - My Change', () => {

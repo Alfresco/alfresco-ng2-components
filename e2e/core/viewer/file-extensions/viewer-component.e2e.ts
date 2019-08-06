@@ -30,9 +30,10 @@ import { NavigationBarPage } from '../../..//pages/adf/navigationBarPage';
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
-    const navigationBarPage = new NavigationBarPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
+    const navigationBarPage = new NavigationBarPage();
+
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -70,6 +71,10 @@ describe('Viewer', () => {
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, site.entry.guid);
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C272813] Should be redirected to site when opening and closing a file in a site', async () => {

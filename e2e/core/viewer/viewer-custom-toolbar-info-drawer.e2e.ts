@@ -23,9 +23,11 @@ import resources = require('../../util/resources');
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Viewer', () => {
 
+    const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -57,6 +59,7 @@ describe('Viewer', () => {
 
     afterAll(async (done) => {
         await uploadActions.deleteFileOrFolder(txtFileUploaded.entry.id);
+        await navigationBarPage.clickLogoutButton();
         done();
     });
 

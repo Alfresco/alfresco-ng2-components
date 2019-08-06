@@ -79,6 +79,10 @@ describe('Info Drawer', () => {
         contentServicesPage.checkAcsContainer();
     });
 
+    afterEach(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     it('[C277251] Should display the icon when the icon property is defined', () => {
         viewerPage.viewFile(pngFileUploaded.entry.name);
         viewerPage.clickLeftSidebarButton();

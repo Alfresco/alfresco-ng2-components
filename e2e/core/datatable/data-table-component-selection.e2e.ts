@@ -49,6 +49,10 @@ describe('Datatable component - selection', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     it('[C213258] Should be possible change the selection modes when change the selectionMode property', () => {
         dataTablePage.selectRow('2');
         dataTableComponent.checkRowIsSelected('Id', '2');

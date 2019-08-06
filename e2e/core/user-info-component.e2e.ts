@@ -28,12 +28,15 @@ import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('User Info component', () => {
 
     const loginPage = new LoginPage();
     const userInfoPage = new UserInfoPage();
     let processUserModel, contentUserModel;
+    const navigationBarPage = new NavigationBarPage();
+
     const acsAvatarFileModel = new FileModel({
         'name': resources.Files.PROFILE_IMAGES.ECM.file_name,
         'location': resources.Files.PROFILE_IMAGES.ECM.file_location
@@ -67,6 +70,10 @@ describe('User Info component', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(contentUserModel);
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C260111] Should display UserInfo when Process Services and Content Services are enabled', async () => {

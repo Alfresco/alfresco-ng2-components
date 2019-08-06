@@ -43,6 +43,10 @@ describe('Universal Icon component', function () {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     beforeEach(async (done) => {
         navigationBarPage.navigateToIconsPage();
         done();
