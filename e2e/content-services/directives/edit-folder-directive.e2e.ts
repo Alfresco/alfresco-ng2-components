@@ -34,6 +34,7 @@ describe('Edit folder directive', function () {
     const anotherAcsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
+
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf_acs.host
@@ -77,6 +78,7 @@ describe('Edit folder directive', function () {
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(editFolder.entry.id);
         await uploadActions.deleteFileOrFolder(anotherFolder.entry.id);

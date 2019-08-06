@@ -277,12 +277,12 @@ describe('Search component - Search Bar', () => {
 
     describe('Highlight', () => {
 
-        const navigationBar = new NavigationBarPage();
+        const navigationBarPage = new NavigationBarPage();
 
         const searchConfiguration = SearchConfiguration.getConfiguration();
 
         beforeAll(async () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(searchConfiguration));
 

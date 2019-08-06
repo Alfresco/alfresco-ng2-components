@@ -86,6 +86,11 @@ describe('Upload component', () => {
         done();
     });
 
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+        done();
+    });
+
     beforeEach(() => {
         contentServicesPage.goToDocumentList();
     });

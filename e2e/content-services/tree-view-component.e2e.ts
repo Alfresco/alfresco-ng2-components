@@ -65,6 +65,8 @@ describe('Tree View Component', () => {
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+
         try {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 

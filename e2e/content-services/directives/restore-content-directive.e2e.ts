@@ -83,6 +83,8 @@ describe('Restore content directive', function () {
     });
 
     afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+
         try {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await uploadActions.deleteFileOrFolder(folderWithContent.entry.id);

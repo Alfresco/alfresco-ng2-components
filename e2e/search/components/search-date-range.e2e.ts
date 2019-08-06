@@ -34,7 +34,7 @@ describe('Search Date Range Filter', () => {
     const dateRangeFilter = searchFilters.createdDateRangeFilterPage();
     const searchResults = new SearchResultsPage();
     const datePicker = new DatePickerPage();
-    const navigationBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
     beforeAll(async (done) => {
@@ -191,7 +191,7 @@ describe('Search Date Range Filter', () => {
         });
 
         it('[C277117] Should be able to change date format', async () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[4].component.settings.dateFormat = 'MM-DD-YY';
 

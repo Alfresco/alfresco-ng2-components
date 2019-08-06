@@ -29,6 +29,7 @@ import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { DropActions } from '../../actions/drop.actions';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Upload component - Excluded Files', () => {
 
@@ -37,6 +38,7 @@ describe('Upload component - Excluded Files', () => {
     const uploadToggles = new UploadToggles();
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
+    const navigationBarPage = new NavigationBarPage();
 
     const iniExcludedFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.INI.file_name,
@@ -69,6 +71,11 @@ describe('Upload component - Excluded Files', () => {
 
         contentServicesPage.goToDocumentList();
 
+        done();
+    });
+
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
         done();
     });
 

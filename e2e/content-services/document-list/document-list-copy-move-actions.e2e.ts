@@ -95,6 +95,8 @@ describe('Document List Component', () => {
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+
         try {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);

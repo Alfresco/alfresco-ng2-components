@@ -29,7 +29,7 @@ describe('Document List Component - Properties', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const navigationBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
 
     let subFolder, parentFolder;
     this.alfrescoJsApi = new AlfrescoApi({
@@ -72,7 +72,7 @@ describe('Document List Component - Properties', () => {
         });
 
         it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
             contentServicesPage.doubleClickRow(parentFolder.entry.name);
 
             contentServicesPage.disableDropFilesInAFolder();
@@ -88,7 +88,7 @@ describe('Document List Component - Properties', () => {
         });
 
         it('[C91319] Should allow upload content on a folder row if allowDropFiles is true', () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
             contentServicesPage.doubleClickRow(parentFolder.entry.name);
 
             contentServicesPage.enableDropFilesInAFolder();

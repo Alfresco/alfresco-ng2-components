@@ -20,11 +20,13 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NotificationPage } from '../pages/adf/notificationPage';
 import { browser } from 'protractor';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Notifications Component', () => {
 
     const loginPage = new LoginPage();
     const notificationHistoryPage = new NotificationPage();
+    const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
 
@@ -48,6 +50,10 @@ describe('Notifications Component', () => {
         notificationHistoryPage.enterDurationField(3000);
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     afterEach( () => {

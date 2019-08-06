@@ -89,6 +89,10 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
+
         beforeEach(async(done) => {
             await navigationBarPage.clickContentServicesButton();
             done();

@@ -35,6 +35,7 @@ describe('Document List Component', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let acsUser = null;
     const navBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
 
     describe('Gallery View', () => {
 
@@ -79,6 +80,10 @@ describe('Document List Component', () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             done();
+        });
+
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         beforeEach(async () => {

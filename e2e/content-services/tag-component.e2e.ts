@@ -82,6 +82,8 @@ describe('Tag component', () => {
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+
         try {
             await uploadActions.deleteFileOrFolder(pdfUploadedFile.entry.id);
         } catch (error) {

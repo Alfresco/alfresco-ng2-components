@@ -142,6 +142,8 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async (done) => {
+            await navigationBarPage.clickLogoutButton();
+
             await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             done();
         });
@@ -184,6 +186,10 @@ describe('Version component permissions', () => {
             done();
         });
 
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
+
         it('[C277197] Should a user with Consumer permission not be able to upload a new version for a file with different creator', () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
@@ -218,6 +224,8 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async (done) => {
+            await navigationBarPage.clickLogoutButton();
+
             await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             done();
         });
@@ -276,6 +284,7 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async (done) => {
+            await navigationBarPage.clickLogoutButton();
             await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             done();
         });

@@ -33,7 +33,7 @@ describe('Comment Component', () => {
     const contentServicesPage = new ContentServicesPage();
     const viewerPage = new ViewerPage();
     const commentsPage = new CommentsPage();
-    const navigationBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
     const acsUser = new AcsUserModel();
 
     let userFullName, nodeId;
@@ -67,6 +67,10 @@ describe('Comment Component', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     beforeEach(async (done) => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
@@ -78,7 +82,7 @@ describe('Comment Component', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBar.clickContentServicesButton();
+        navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
 
         done();
@@ -188,7 +192,7 @@ describe('Comment Component', () => {
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             done();
         });
@@ -200,7 +204,7 @@ describe('Comment Component', () => {
         });
 
         it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', () => {
-            navigationBar.goToSite(site);
+            navigationBarPage.goToSite(site);
             contentServicesPage.checkAcsContainer();
 
             viewerPage.viewFile(pngUploadedFile.entry.name);

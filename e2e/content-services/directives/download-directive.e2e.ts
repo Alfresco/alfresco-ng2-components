@@ -88,6 +88,10 @@ describe('Version component actions', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     afterEach(async () => {
         BrowserVisibility.waitUntilDialogIsClose();
     });

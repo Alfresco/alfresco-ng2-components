@@ -22,6 +22,7 @@ import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, Key } from 'protractor';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Create folder directive', function () {
 
@@ -31,6 +32,7 @@ describe('Create folder directive', function () {
     const notificationHistoryPage = new NotificationHistoryPage();
     const metadataViewPage = new MetadataViewPage();
     const acsUser = new AcsUserModel();
+    const navigationBarPage = new NavigationBarPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -47,6 +49,10 @@ describe('Create folder directive', function () {
         contentServicesPage.goToDocumentList();
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     beforeEach(async (done) => {

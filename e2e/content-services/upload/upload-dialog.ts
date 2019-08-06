@@ -25,6 +25,7 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Upload component', () => {
 
@@ -34,6 +35,8 @@ describe('Upload component', () => {
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
     const versionManagePage = new VersionManagePage();
+    const navigationBarPage = new NavigationBarPage();
+
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf_acs.host
@@ -72,6 +75,11 @@ describe('Upload component', () => {
         contentServicesPage.goToDocumentList();
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
+        done();
+    });
+
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
         done();
     });
 

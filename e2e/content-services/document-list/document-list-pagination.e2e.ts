@@ -85,6 +85,10 @@ describe('Document List - Pagination', function () {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     beforeEach((done) => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();

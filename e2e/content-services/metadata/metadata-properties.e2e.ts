@@ -80,6 +80,10 @@ describe('CardView Component - properties', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     afterEach(() => {
         viewerPage.clickCloseButton();
     });

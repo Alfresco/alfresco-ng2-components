@@ -85,6 +85,7 @@ describe('Social component', () => {
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
         await uploadActions.deleteFileOrFolder(emptyFile.entry.id);
         done();
     });

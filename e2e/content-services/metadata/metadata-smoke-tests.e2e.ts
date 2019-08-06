@@ -84,6 +84,10 @@ describe('Metadata component', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     describe('Viewer Metadata', () => {
 
         beforeAll(async () => {

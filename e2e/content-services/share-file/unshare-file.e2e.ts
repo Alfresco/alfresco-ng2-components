@@ -38,6 +38,8 @@ describe('Unshare file', () => {
     const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     const notificationHistoryPage = new NotificationHistoryPage();
+    const navigationBarPage = new NavigationBarPage();
+
     const shareDialog = new ShareDialog();
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
     const acsUser = new AcsUserModel();
@@ -99,6 +101,10 @@ describe('Unshare file', () => {
         navBar.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
         done();
+    });
+
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     afterEach(async (done) => {

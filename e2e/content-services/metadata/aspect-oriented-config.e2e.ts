@@ -86,6 +86,10 @@ describe('Aspect oriented config', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     afterEach(async (done) => {
         viewerPage.clickCloseButton();
         contentServicesPage.checkAcsContainer();

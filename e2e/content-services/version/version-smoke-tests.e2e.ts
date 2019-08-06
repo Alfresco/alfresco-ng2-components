@@ -88,6 +88,11 @@ describe('Version component', () => {
         done();
     });
 
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+        done();
+    });
+
     it('[C272768] Should be visible the first file version when you upload a file', () => {
         versionManagePage.checkUploadNewVersionsButtonIsDisplayed();
 

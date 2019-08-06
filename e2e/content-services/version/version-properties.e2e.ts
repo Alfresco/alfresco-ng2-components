@@ -72,6 +72,11 @@ describe('Version Properties', () => {
         done();
     });
 
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+        done();
+    });
+
     it('[C272817] Should NOT be present the download action when allowDownload property is false', () => {
         versionManagePage.disableDownload();
 

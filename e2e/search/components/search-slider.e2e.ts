@@ -34,7 +34,7 @@ describe('Search Number Range Filter', () => {
     const searchFilters = new SearchFiltersPage();
     const sizeSliderFilter = searchFilters.sizeSliderFilterPage();
     const searchResults = new SearchResultsPage();
-    const navigationBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
     const acsUser = new AcsUserModel();
@@ -159,7 +159,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276983] Should be able to disable thumb label in Search Size Slider', async () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[2].component.settings.thumbLabel = false;
 
@@ -177,7 +177,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276985] Should be able to set min value for Search Size Slider', async () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             const minSize = 3;
             jsonFile.categories[2].component.settings.min = minSize;
@@ -198,7 +198,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276986] Should be able to set max value for Search Size Slider', async () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             const maxSize = 50;
             jsonFile.categories[2].component.settings.max = maxSize;
@@ -219,7 +219,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276987] Should be able to set steps for Search Size Slider', async () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             const step = 10;
             jsonFile.categories[2].component.settings.step = step;

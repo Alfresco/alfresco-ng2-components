@@ -57,14 +57,16 @@ describe('Share file', () => {
 
         nodeId = pngUploadedFile.entry.id;
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
         done();
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+
         try {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await uploadActions.deleteFileOrFolder(nodeId);

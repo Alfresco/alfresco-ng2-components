@@ -165,6 +165,8 @@ describe('Permissions Component', function () {
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await folders.forEach(function (folder) {
             uploadActions.deleteFileOrFolder(folder.entry.id);

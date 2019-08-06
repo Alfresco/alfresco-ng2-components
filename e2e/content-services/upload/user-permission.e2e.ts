@@ -98,6 +98,11 @@ describe('Upload - User permission', () => {
         done();
     });
 
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+        done();
+    });
+
     describe('Consumer permissions', () => {
 
         beforeEach(async (done) => {

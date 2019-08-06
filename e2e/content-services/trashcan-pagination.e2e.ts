@@ -89,6 +89,11 @@ describe('Trashcan - Pagination', () => {
         done();
     });
 
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+        done();
+    });
+
     afterEach((done) => {
         browser.refresh();
         trashcanPage.waitForTableBody();
