@@ -48,6 +48,4 @@ Manages Local Storage preferences.
 
 ## See also
 
--   [Task filters Cloud Service](task-filters-cloud.service.md)
--   [Process filters Cloud Service](process-filters-cloud.service.md)
 -   [User preference Cloud Service](user-preference-cloud.service.md)

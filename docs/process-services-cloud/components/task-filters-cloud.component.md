@@ -54,3 +54,9 @@ as the value of `filterParam` as shown in the table below:
 | name | string | The name of the task filter, lowercase is checked |
 | key | string | The key of the task filter |
 | index | string | The zero-based position of the filter in the array. |
+
+## See also
+
+-   [Task filter Cloud Service](../services/task-filter-cloud.service.md)
+-   [Local preference Cloud Service](../services/local-preference-cloud.service.md)
+-   [User preference Cloud Service](../services/user-preference-cloud.service.md)
