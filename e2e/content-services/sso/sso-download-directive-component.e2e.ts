@@ -95,10 +95,8 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
                 browser.params.testConfig.adf.hostSso,
                 browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
 
-
             await loginSsoPage.clickOnSSOButton();
             await loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
-
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.checkAcsContainer();
             contentListPage.doubleClickRow(folderName);
