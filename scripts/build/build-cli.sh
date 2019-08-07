@@ -6,7 +6,4 @@ cd $DIR/../../lib/cli/
 
 echo "====== Cli ======"
 echo "====== Build ======"
-npm run dist
-
-cd $DIR/../../
-cp -R ./lib/cli/dist lib/dist/cli/
+npm run build
