@@ -18,15 +18,7 @@
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import {
-    ApiService,
-    LoginSSOPage,
-    UploadActions,
-    IdentityService,
-    SettingsPage,
-    StringUtil,
-    UserModel
-} from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UploadActions, IdentityService, SettingsPage, StringUtil, UserModel } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/fileModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import resources = require('../../util/resources');
@@ -34,8 +26,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import * as path from 'path';
 import { Util } from '../../util/util';
 
-/* tslint:disable */
-xdescribe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
+describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 
     const settingsPage = new SettingsPage();
     const navigationBarPage = new NavigationBarPage();
@@ -115,9 +106,12 @@ xdescribe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentLis
         });
 
         afterAll(async (done) => {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await uploadActions.deleteFileOrFolder(folder.entry.id);
-            await identityService.deleteIdentityUser(acsUser.id);
+            try {
+                await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+                await uploadActions.deleteFileOrFolder(folder.entry.id);
+                await identityService.deleteIdentityUser(acsUser.id);
+            } catch (error) {
+            }
             await this.alfrescoJsApi.logout();
             browser.executeScript('window.sessionStorage.clear();');
             browser.executeScript('window.localStorage.clear();');
