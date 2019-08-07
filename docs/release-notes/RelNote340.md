@@ -1,4 +1,3 @@
-
 ---
 Title: Release notes v3.4.0
 ---
@@ -19,7 +18,7 @@ versions of ADF.
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
     -   [Form visibility](#form-field-visibility)
-    -   [User preferences](#user-preferences)
+    -   [Preference service](#preference-service)
     -   [Forms in standalone tasks](#forms-in-standalone-tasks)
     -   [Angular Material upgrade](#angular-material-upgrade)
 -   [Localisation](#localisation)
@@ -36,42 +35,54 @@ versions of ADF.
 
 ## Goals for this release
 
-This is the fourth minor release since of ADF since February 2019 when version 3 was released.
+This is the fourth minor release of ADF since February 2019 when version 3.0.0 was released.
 
-This release continues to provide additional support for [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti.
+The highlights of this release include additional support for [Activiti 7](https://www.activiti.org/) and an Angular Material upgrade. 
 
-The functionality and enhancements of this release are focused on forms. Form field visibility has been improved, form validation has been implemented and it is now possible to use form variables. Multilingual support for forms has been enhanced and dropdown menus reading from a REST source have been updated. From an end-user perspective, a process can now be started using a form when the start event contains a valid form. 
+Further enhancements have been made to forms in this release including improvements to form field visibility and the ability to attach forms to standalone tasks. End users can now also take advantage of the preference service to store custom filters for task and process lists and have them accessible between different sessions and devices. 
 
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
 
 The following are the most important features of this release:
 
 -   [Form visibility](#form-field-visibility)
--   [User preferences](#user-preferences)
+-   [Preference service](#preference-service)
 -   [Forms in standalone tasks](#forms-in-standalone-tasks)
 -   [Angular Material upgrade](#angular-material-upgrade)
 
 ### Form field visibility
 
-Since the lastest version of the Modelling Application, the visibility conditions on form fields has been improved to be more complete and possibly complex. In this ADF release the components support this new set of capabilities.
+Visibility conditions form fields has been enhanced to cover additional use cases within the Modeling Application. In this release of ADF the relevant components have been updated to support this new set of capabilities.
 
-### User preferences
+### Preference service
 
-[Edit Process Filter Cloud component](https://www.alfresco.com/abn/adf/docs/process-services-cloud/components/edit-process-filter-cloud.component/) and [Edit Task Filter Cloud component](https://www.alfresco.com/abn/adf/docs/process-services-cloud/components/edit-task-filter-cloud.component/) have been introduced in the previous versions of ADF to support the custom filters available to the end-users. The limitation of the previous implementation was that the filters where available only until the valid session expired.
+The [edit process filter cloud component](https://www.alfresco.com/abn/adf/docs/process-services-cloud/components/edit-process-filter-cloud.component/) and [edit task filter cloud component](https://www.alfresco.com/abn/adf/docs/process-services-cloud/components/edit-task-filter-cloud.component/) were introduced in a previous release of ADF to support custom filters for end users. The limitation of the components was that the filters were stored in a user's local browser storage and only available until that session expired.
 
-In the current implementation, a server side User Preference Service is used to store that information, so that the filters are available beyond the current session and can be used cross-devices and cross-sessions.
+In this release a server side preference service now stores that information, so that task and process list filters can be stored on a user-by-user basis and be made available between sessions and devices.
 
-Considering that the User Preference Service is not available in Activiti Cloud, this enhancement cannot be claimed for the Community Edition.
+**Note** This functionality is not available in the community edition, Activiti Cloud. Custom filters are still stored in the local browser storage for community implementations.
 
 ### Forms in standalone tasks
 
-Since this ADF version, forms can be used also on standalone tasks on Activiti BPMN Engine. To be able to use a form in a standalone task, the modeler needs to explicitly allow this usage during its definition.
+Forms can now be used in standalone tasks and not just those that form part of a user task within a process. To be able to use a form in a standalone task, the modeler needs to explicitly allow it during its design. 
 
-In the image below you can see how the form defintion looks like, with the new toggle allowing it to be used in standalone tasks. 
+The following is an example JSON excerpt of a form definition with the new boolean property `standAlone` which toggles whether the form is available to attach to standalone tasks:
+
+```json
+{
+    "formRepresentation": {
+        "id": "form-5601d74a-77b6-4fc5-88b3-3bdcd1e914cc",
+        "name": "holiday-request-form",
+        "description": "A form to request leave",
+        "version": 2,
+        "standAlone": true,
+        "formDefinition": {
+        ...
+``` 
 
 ### Angular Material upgrade
 
-At the moment, the latest available version for @angular/material is 8.0.1, but to avoid any breaking change this version of ADF has been updated to @angular/material version 7.3.7, in order to have access to the latest fixes and features.
+The latest available version of @angular/material is 8.0.1. To avoid any breaking changes but still access the latest fixes and features this version of ADF has been updated to @angular/material version 7.3.7.
 
 ## Localisation
 
