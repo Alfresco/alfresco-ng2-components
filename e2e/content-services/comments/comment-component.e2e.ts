@@ -89,12 +89,8 @@ describe('Comment Component', () => {
     });
 
     afterEach(async (done) => {
-        try {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await uploadActions.deleteFileOrFolder(nodeId);
-        } catch (error) {
-
-        }
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await uploadActions.deleteFileOrFolder(nodeId);
         done();
     });
 

@@ -29,7 +29,7 @@ import {
     ApiService,
     IdentityService,
     SettingsPage,
-    GroupIdentityService
+    GroupIdentityService, RolesService
 } from '@alfresco/adf-testing';
 import resources = require('../../util/resources');
 
@@ -65,7 +65,12 @@ describe('Start Task - Group Cloud Component', () => {
         apsUser = await identityService.createIdentityUser();
 
         hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
-        testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
+        testGroup = await groupIdentityService.createIdentityGroup();
+
+        const rolesService = new RolesService(apiService);
+        let apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.ROLES.APS_USER);
+        await groupIdentityService.assignRole(testGroup.id, apsAdminRoleId, identityService.ROLES.APS_USER);
+
         await identityService.addUserToGroup(testUser.idIdentityService, testGroup.id);
         await identityService.addUserToGroup(apsUser.idIdentityService, hrGroup.id);
 
@@ -77,20 +82,18 @@ describe('Start Task - Group Cloud Component', () => {
     });
 
     afterAll(async (done) => {
-        try {
-            await apiService.login(testUser.email, testUser.password);
-            const tasksService = new TasksService(apiService);
+        await apiService.login(testUser.email, testUser.password);
+        const tasksService = new TasksService(apiService);
 
-            const bothGroupsTaskId = await tasksService.getTaskId(bothGroupsTaskName, simpleApp);
-            await tasksService.deleteTask(bothGroupsTaskId, simpleApp);
+        const bothGroupsTaskId = await tasksService.getTaskId(bothGroupsTaskName, simpleApp);
+        await tasksService.deleteTask(bothGroupsTaskId, simpleApp);
 
-            const oneGroupTaskId = await tasksService.getTaskId(oneGroupTaskName, simpleApp);
-            await tasksService.deleteTask(oneGroupTaskId, simpleApp);
+        const oneGroupTaskId = await tasksService.getTaskId(oneGroupTaskName, simpleApp);
+        await tasksService.deleteTask(oneGroupTaskId, simpleApp);
 
-            await identityService.deleteIdentityUser(apsUser.idIdentityService);
-            await identityService.deleteIdentityUser(testUser.idIdentityService);
-        } catch (error) {
-        }
+        await identityService.deleteIdentityUser(apsUser.idIdentityService);
+        await identityService.deleteIdentityUser(testUser.idIdentityService);
+
         done();
     });
 

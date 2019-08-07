@@ -74,15 +74,11 @@ describe('Comment component for Processes', () => {
     });
 
     afterAll(async (done) => {
-        try {
-            await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-            await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-        } catch (error) {
-
-        }
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();
     });
 

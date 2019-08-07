@@ -15,7 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, LocalStorageUtil, NotificationHistoryPage, UploadActions } from '@alfresco/adf-testing';
+import {
+    LoginPage,
+    BrowserActions,
+    LocalStorageUtil,
+    NotificationHistoryPage,
+    UploadActions
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
@@ -29,9 +35,9 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 describe('Share file', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -67,11 +73,8 @@ describe('Share file', () => {
     afterAll(async (done) => {
         await navigationBarPage.clickLogoutButton();
 
-        try {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await uploadActions.deleteFileOrFolder(nodeId);
-        } catch (error) {
-        }
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await uploadActions.deleteFileOrFolder(nodeId);
         done();
     });
 

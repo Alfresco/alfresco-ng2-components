@@ -30,9 +30,9 @@ describe('Tree View Component', () => {
 
     const acsUser = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     let treeFolder, secondTreeFolder, thirdTreeFolder;
@@ -52,10 +52,22 @@ describe('Tree View Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        treeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, { name: nodeNames.folder, nodeType: 'cm:folder' });
-        secondTreeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, { name: nodeNames.secondFolder, nodeType: 'cm:folder' });
-        thirdTreeFolder = await this.alfrescoJsApi.nodes.addNode(secondTreeFolder.entry.id, { name: nodeNames.thirdFolder, nodeType: 'cm:folder' });
-        await this.alfrescoJsApi.nodes.addNode(thirdTreeFolder.entry.id, { name: nodeNames.document, nodeType: 'cm:content' });
+        treeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {
+            name: nodeNames.folder,
+            nodeType: 'cm:folder'
+        });
+        secondTreeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {
+            name: nodeNames.secondFolder,
+            nodeType: 'cm:folder'
+        });
+        thirdTreeFolder = await this.alfrescoJsApi.nodes.addNode(secondTreeFolder.entry.id, {
+            name: nodeNames.thirdFolder,
+            nodeType: 'cm:folder'
+        });
+        await this.alfrescoJsApi.nodes.addNode(thirdTreeFolder.entry.id, {
+            name: nodeNames.document,
+            nodeType: 'cm:content'
+        });
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -67,13 +79,10 @@ describe('Tree View Component', () => {
     afterAll(async (done) => {
         await navigationBarPage.clickLogoutButton();
 
-        try {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-            await uploadActions.deleteFileOrFolder(treeFolder.entry.id);
-            await uploadActions.deleteFileOrFolder(secondTreeFolder.entry.id);
-        } catch (error) {
-        }
+        await uploadActions.deleteFileOrFolder(treeFolder.entry.id);
+        await uploadActions.deleteFileOrFolder(secondTreeFolder.entry.id);
         done();
     });
 

@@ -16,8 +16,9 @@
  */
 
 import { StringUtil } from '../utils/string.util';
+import { browser } from 'protractor';
 
-const EMAIL_DOMAIN = global['TestConfig'] ? global['TestConfig'].projectName : 'alfresco';
+const EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
 
 export class UserModel {
 

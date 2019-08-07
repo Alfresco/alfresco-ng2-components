@@ -17,6 +17,9 @@
 
 import { ApiService } from '../api.service';
 import { StringUtil } from '../../utils/string.util';
+import { browser } from 'protractor';
+
+const GROUP_SUFFIX = browser.params.testConfig ?  browser.params.testConfig.projectName : 'TestGroup';
 
 export class GroupIdentityService {
 
@@ -40,7 +43,7 @@ export class GroupIdentityService {
         const path = '/groups';
         const method = 'POST';
         const queryParams = {}, postBody = {
-            'name': groupName + 'TestGroup'
+            'name': groupName + GROUP_SUFFIX
         };
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
@@ -49,8 +52,7 @@ export class GroupIdentityService {
     async deleteGroup(groupId) {
         const path = `/groups/${groupId}`;
         const method = 'DELETE';
-        const queryParams = {}, postBody = {
-        };
+        const queryParams = {}, postBody = {};
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
     }
@@ -58,7 +60,7 @@ export class GroupIdentityService {
     async getGroupInfoByGroupName(groupName) {
         const path = `/groups`;
         const method = 'GET';
-        const queryParams = { 'search' : groupName }, postBody = {};
+        const queryParams = { 'search': groupName }, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0];
@@ -68,7 +70,7 @@ export class GroupIdentityService {
         const path = `/groups/${groupId}/role-mappings/realm`;
         const method = 'POST';
         const queryParams = {},
-            postBody = [{'id': roleId, 'name': roleName}];
+            postBody = [{ 'id': roleId, 'name': roleName }];
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
@@ -102,7 +104,7 @@ export class GroupIdentityService {
      */
     async getClientIdByApplicationName(applicationName: string) {
         const path = `/clients`;
-        const method = 'GET', queryParams = {clientId: applicationName}, postBody = {};
+        const method = 'GET', queryParams = { clientId: applicationName }, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0].id;

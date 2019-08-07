@@ -85,15 +85,10 @@ describe('Restore content directive', function () {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        try {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await uploadActions.deleteFileOrFolder(folderWithContent.entry.id);
-            await uploadActions.deleteFileOrFolder(folderWithFolder.entry.id);
-            await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
-        } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Error delete site' + error);
-        }
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await uploadActions.deleteFileOrFolder(folderWithContent.entry.id);
+        await uploadActions.deleteFileOrFolder(folderWithFolder.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
     });
 
     beforeEach(async (done) => {

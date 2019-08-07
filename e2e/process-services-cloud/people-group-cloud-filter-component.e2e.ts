@@ -91,20 +91,18 @@ describe('People Groups Cloud Component', () => {
         });
 
         afterAll(async () => {
-            try {
-                await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-                for (let i = 0; i < users.length; i++) {
-                    await identityService.deleteIdentityUser(users[i]);
-                }
-                for (let i = 0; i < groups.length; i++) {
-                    await groupIdentityService.deleteIdentityGroup(groups[i]);
-                }
-
-                await identityService.deleteIdentityUser(testUser.idIdentityService);
-                await identityService.deleteIdentityUser(apsUser.idIdentityService);
-                await identityService.deleteIdentityUser(activitiUser.idIdentityService);
-            } catch (error) {
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            for (let i = 0; i < users.length; i++) {
+                await identityService.deleteIdentityUser(users[i]);
             }
+            for (let i = 0; i < groups.length; i++) {
+                await groupIdentityService.deleteIdentityGroup(groups[i]);
+            }
+
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
+            await identityService.deleteIdentityUser(apsUser.idIdentityService);
+            await identityService.deleteIdentityUser(activitiUser.idIdentityService);
+
         });
 
         beforeEach(() => {

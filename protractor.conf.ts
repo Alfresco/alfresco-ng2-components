@@ -196,7 +196,7 @@ let beforeAllRewrite = function () {
                     await beforeAllFunction(done);
                 } catch (e) {
                     // tslint:disable-next-line:no-console
-                    console.log('Error Before second attempt fail all' + JSON.stringify(error));
+                    console.log('Error Before all second attempt fail all' + JSON.stringify(error));
                     expect(true).toBe(false);
                 }
             }
@@ -244,7 +244,7 @@ let beforeEachAllRewrite = function () {
                 await beforeEachFunction(done);
             } catch (error) {
                 // tslint:disable-next-line:no-console
-                console.log('Error After all' + JSON.stringify(error));
+                console.log('Error before Each' + JSON.stringify(error));
                 expect(true).toBe(false);
             }
 
@@ -268,7 +268,7 @@ let afterEachAllRewrite = function () {
                 await afterEachFunction(done);
             } catch (error) {
                 // tslint:disable-next-line:no-console
-                console.log('Error After all' + JSON.stringify(error));
+                console.log('Error After each' + JSON.stringify(error));
 
             }
 
