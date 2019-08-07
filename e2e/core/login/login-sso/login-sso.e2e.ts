@@ -88,23 +88,6 @@ describe('Login component - SSO', () => {
         });
     });
 
-    describe('SSO Login Error for login component', () => {
-
-        afterEach(async () => {
-            await browser.executeScript('window.sessionStorage.clear();');
-            await browser.executeScript('window.localStorage.clear();');
-        });
-
-        it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', async () => {
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
-                'http://aps22/auth/realms/alfresco',
-                browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId);
-            await loginSSOPage.clickOnSSOButton();
-            await loginSSOPage.checkLoginErrorIsDisplayed();
-            expect(loginSSOPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
-        });
-    });
-
     it('[C280665] Should be possible change the logout redirect URL', async () => {
         await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.adf.hostSso,
