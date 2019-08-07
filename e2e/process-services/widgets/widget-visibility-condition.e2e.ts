@@ -132,9 +132,13 @@ describe('Process-Services - Visibility conditions', () => {
     it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', () => {
 
         widget.textWidget().isWidgetVisible(widgets.textOneId);
-        expect(widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField)).toBe(true);
+        expect(widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField)).toBe(true);
         widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
+
+        expect(widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField)).toBe(true);
+
         widget.textWidget().setValue(widgets.textTwoId, value.displayCheckbox);
+
         expect(widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField)).toBe(true);
     });
 
