@@ -107,6 +107,7 @@ describe('CardViewDateItemComponent', () => {
             format: '',
             editable: true
         });
+        component.displayClearAction = false;
         component.editable = true;
         fixture.detectChanges();
 
@@ -205,7 +206,7 @@ describe('CardViewDateItemComponent', () => {
         );
     }));
 
-    it('should render the clear icon in case of editable:true', () => {
+    it('should render the clear icon in case of displayClearAction:true', () => {
         component.editable = true;
         component.property.editable = true;
         component.property.value = 'Jul 10 2017';
@@ -225,7 +226,7 @@ describe('CardViewDateItemComponent', () => {
         expect(datePickerClearToggle).toBeNull('Clean Icon should not be in DOM');
     });
 
-    it('should not render the clear icon in case displayClearAction is set false', () => {
+    it('should not render the clear icon in case of displayClearAction:false', () => {
         component.editable = true;
         component.property.editable = true;
         component.displayClearAction = false;
@@ -247,6 +248,38 @@ describe('CardViewDateItemComponent', () => {
         fixture.whenStable().then(
             (updateNotification) => {
                 expect(component.property.value).toBeNull();
+            }
+        );
+    }));
+
+    it('should remove the property default value after a successful clear attempt', async(() => {
+        component.editable = true;
+        component.property.editable = true;
+        component.property.default = 'Jul 10 2017';
+        fixture.detectChanges();
+
+        component.onDateClear();
+
+        fixture.whenStable().then(
+            (updateNotification) => {
+                expect(component.property.default).toBeNull();
+            }
+        );
+    }));
+
+    it('should remove actual and default value after a successful clear attempt', async(() => {
+        component.editable = true;
+        component.property.editable = true;
+        component.property.default = 'Jul 10 2017';
+        component.property.value = 'Jul 10 2017';
+        fixture.detectChanges();
+
+        component.onDateClear();
+
+        fixture.whenStable().then(
+            (updateNotification) => {
+                expect(component.property.value).toBeNull();
+                expect(component.property.default).toBeNull();
             }
         );
     }));
