@@ -84,14 +84,13 @@ describe('Viewer',  () => {
 
         it('[C280008] Should be possible to open any Excel file', async () => {
             await contentServicesPage.doubleClickRow('excel');
-
-            uploadedExcels.forEach(async(currentFile) => {
+            for (const currentFile of uploadedExcels) {
                 if (currentFile.entry.name !== '.DS_Store') {
                     await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkFileIsLoaded(currentFile.entry.name);
                     await viewerPage.clickCloseButton();
                 }
-            });
+            }
         });
 
     });

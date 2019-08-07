@@ -92,12 +92,12 @@ describe('Upload component', () => {
 
         afterEach(async (done) => {
             const nodeList = await contentServicesPage.getElementsDisplayedId();
-            await nodeList.forEach(async (currentNode) => {
+            for (const node of nodeList) {
                 try {
-                    await uploadActions.deleteFileOrFolder(currentNode);
+                    await uploadActions.deleteFileOrFolder(node);
                 } catch (error) {
                 }
-            });
+            }
             done();
         });
 

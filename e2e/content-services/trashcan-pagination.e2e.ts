@@ -63,29 +63,20 @@ describe('Trashcan - Pagination', () => {
             hostEcm: browser.params.testConfig.adf.url
         });
         const uploadActions = new UploadActions(this.alfrescoJsApi);
-
         const fileNames = Util.generateSequenceFiles(10, noOfFiles + 9, pagination.base, pagination.extension);
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
         const folderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
-
         const emptyFiles: any = await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
-
-        await emptyFiles.list.entries.forEach(async (node) => {
-            await this.alfrescoJsApi.node.deleteNode(node.entry.id).then(() => {}, () => {
-                this.alfrescoJsApi.node.deleteNode(node.entry.id);
+        for (const entry of emptyFiles.list.entries) {
+            await this.alfrescoJsApi.node.deleteNode(entry.entry.id).then(() => {}, () => {
+                this.alfrescoJsApi.node.deleteNode(entry.entry.id);
             });
-        });
-
+        }
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navigationBarPage.clickTrashcanButton();
         await trashcanPage.waitForTableBody();
-
         done();
     });
 
@@ -97,14 +88,11 @@ describe('Trashcan - Pagination', () => {
 
     it('[C272811] Should be able to set Items per page to 20', async () => {
         await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-
         await trashcanPage.waitForTableBody();
         await trashcanPage.waitForPagination();
-
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + noOfFiles + ' of ' + noOfFiles);
         expect(await trashcanPage.numberOfResultsDisplayed()).toBe(noOfFiles);
-
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
     });

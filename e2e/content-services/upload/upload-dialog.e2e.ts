@@ -83,13 +83,11 @@ describe('Upload component', () => {
         const nbResults = await contentServicesPage.numberOfResultsDisplayed();
         if (nbResults > 1) {
             const nodesPromise = await contentServicesPage.getElementsDisplayedId();
-
-            nodesPromise.forEach(async (currentNodePromise) => {
-                const nodeId = await currentNodePromise;
+            for (const node of nodesPromise) {
+                const nodeId = await node;
                 await uploadActions.deleteFileOrFolder(nodeId);
-            });
+            }
         }
-
         done();
     });
 

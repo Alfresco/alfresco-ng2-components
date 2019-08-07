@@ -166,10 +166,9 @@ describe('Permissions Component', () => {
 
     afterAll(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await folders.forEach(async (folder) => {
+        for (const folder of folders) {
             await uploadActions.deleteFileOrFolder(folder.entry.id);
-        });
-
+        }
         done();
     });
 

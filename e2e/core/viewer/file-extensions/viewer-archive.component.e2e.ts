@@ -45,22 +45,17 @@ describe('Viewer', () => {
     });
 
     beforeAll(async (done) => {
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(8),
             visibility: 'PUBLIC'
         });
-
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
         done();
     });
 
@@ -70,12 +65,9 @@ describe('Viewer', () => {
 
         beforeAll(async (done) => {
             archiveFolderUploaded = await uploadActions.createFolder(archiveFolderInfo.name, '-my-');
-
             uploadedArchives = await uploadActions.uploadFolder(archiveFolderInfo.location, archiveFolderUploaded.entry.id);
-
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
-
             done();
         });
 
@@ -86,14 +78,13 @@ describe('Viewer', () => {
 
         it('[C260517] Should be possible to open any Archive file', async () => {
             await contentServicesPage.doubleClickRow('archive');
-
-            uploadedArchives.forEach(async (currentFile) => {
-                if (currentFile.entry.name !== '.DS_Store') {
-                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
+            for (const file of uploadedArchives) {
+                if (file.entry.name !== '.DS_Store') {
+                    await contentServicesPage.doubleClickRow(file.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }
-            });
+            }
         });
 
     });

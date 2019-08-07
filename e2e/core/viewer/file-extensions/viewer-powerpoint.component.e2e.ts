@@ -87,13 +87,13 @@ describe('Viewer', () => {
         it('[C280009] Should be possible to open any PowerPoint file', async () => {
             await contentServicesPage.doubleClickRow('ppt');
 
-            uploadedPpt.forEach(async (currentFile) => {
+            for (const currentFile of uploadedPpt) {
                 if (currentFile.entry.name !== '.DS_Store') {
                     await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }
-            });
+            }
         });
 
     });

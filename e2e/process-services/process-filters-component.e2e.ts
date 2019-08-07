@@ -160,10 +160,10 @@ describe('Process Filters Test', () => {
 
         expect(taskAppFilters.size).toBe(defaultFiltersNumber);
 
-        taskAppFilters.data.forEach(async (filter) => {
+        for (const filter of taskAppFilters) {
             await BrowserActions.getUrl(processFilterUrl + filter.id);
             await processListPage.checkProcessListIsDisplayed();
             await processFiltersPage.checkFilterIsHighlighted(filter.name);
-        });
+        }
     });
 });

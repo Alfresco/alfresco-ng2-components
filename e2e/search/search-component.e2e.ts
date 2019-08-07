@@ -110,12 +110,9 @@ describe('Search component - Search Bar', () => {
     });
 
     afterAll(async (done) => {
-
-        filesToDelete.forEach(async (currentNode) => {
+        for (const currentNode of filesToDelete) {
             await uploadActions.deleteFileOrFolder(currentNode.entry.id);
-
-        });
-
+        }
         done();
     });
 

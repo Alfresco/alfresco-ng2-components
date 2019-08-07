@@ -97,14 +97,12 @@ describe('People Groups Cloud Component',  () => {
 
         afterAll(async (done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            users.forEach(async (user) => {
+            for (const user of users) {
                 await identityService.deleteIdentityUser(user);
-            });
-
-            groups.forEach(async (group) => {
+            }
+            for (const group of groups) {
                 await groupIdentityService.deleteIdentityGroup(group);
-            });
-
+            }
             done();
         });
 

@@ -277,14 +277,13 @@ describe('Document List Component - Actions', () => {
 
         afterAll(async (done) => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await folders.forEach(async (folder) => {
+            for (const folder of folders) {
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
-            });
+            }
             done();
         });
 
         it('[C260132] Move action on folder with - Load more', async () => {
-
             expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
             expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);

@@ -48,7 +48,7 @@ describe('Applications list',  () => {
         applicationsService = new ApplicationsService(apiService);
         applications = await applicationsService.getApplicationsByStatus('RUNNING');
 
-        applications.list.entries.forEach(async (app) => {
+        applications.list.entries.forEach(app => {
             appNames.push(app.entry.name.toLowerCase());
         });
 

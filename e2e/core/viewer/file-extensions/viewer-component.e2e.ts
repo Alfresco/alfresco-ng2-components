@@ -108,14 +108,13 @@ describe('Viewer',  () => {
 
         it('[C280012] Should be possible to open any other Document supported extension', async () => {
             await contentServicesPage.doubleClickRow('other');
-
-            uploadedOthers.forEach(async(currentFile) => {
-                if (currentFile.entry.name !== '.DS_Store') {
-                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
+            for (const file of uploadedOthers) {
+                if (file.entry.name !== '.DS_Store') {
+                    await contentServicesPage.doubleClickRow(file.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }
-            });
+            }
         });
 
     });

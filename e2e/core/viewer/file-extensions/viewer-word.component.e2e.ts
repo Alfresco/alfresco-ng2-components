@@ -85,14 +85,13 @@ describe('Viewer', () => {
 
         it('[C280011] Should be possible to open any Word file', async () => {
             await contentServicesPage.doubleClickRow('word');
-
-            uploadedWords.forEach(async (currentFile) => {
+            for (const currentFile of uploadedWords) {
                 if (currentFile.entry.name !== '.DS_Store') {
                     await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }
-            });
+            }
         });
 
     });

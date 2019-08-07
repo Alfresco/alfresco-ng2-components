@@ -85,14 +85,13 @@ describe('Viewer', () => {
 
         it('[C280010] Should be possible to open any Text file', async () => {
             await contentServicesPage.doubleClickRow('text');
-
-            uploadedTexts.forEach(async (currentFile) => {
+            for (const currentFile of uploadedTexts) {
                 if (currentFile.entry.name !== '.DS_Store') {
                     await contentServicesPage.doubleClickRow(currentFile.entry.name);
                     await viewerPage.checkFileIsLoaded();
                     await viewerPage.clickCloseButton();
                 }
-            });
+            }
         });
 
     });
