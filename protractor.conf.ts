@@ -190,10 +190,17 @@ let beforeAllRewrite = function () {
             try {
                 await beforeAllFunction(done);
             } catch (error) {
-                // tslint:disable-next-line:no-console
-                console.log('Error Before all' + JSON.stringify(error));
-                failFast.disableSpecs();
+                console.log('Error Before all second attempt in 10 sec');
+                sleep(10000);
+                try {
+                    await beforeAllFunction(done);
+                } catch (e) {
+                    // tslint:disable-next-line:no-console
+                    console.log('Error Before second attempt fail all' + JSON.stringify(error));
+                    expect(true).toBe(false);
+                }
             }
+
             done();
             return;
         };
@@ -238,7 +245,7 @@ let beforeEachAllRewrite = function () {
             } catch (error) {
                 // tslint:disable-next-line:no-console
                 console.log('Error After all' + JSON.stringify(error));
-
+                expect(true).toBe(false);
             }
 
             done();
@@ -341,6 +348,7 @@ let saveReport = async function (alfrescoJsApi, retryCount) {
         console.log('done delete screenshot');
     });
 };
+
 exports.config = {
     allScriptsTimeout: TIMEOUT,
 
@@ -534,3 +542,8 @@ exports.config = {
     }
 
 };
+
+function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay) ;
+}

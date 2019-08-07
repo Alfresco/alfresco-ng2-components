@@ -46,7 +46,7 @@ describe('Visibility conditions - cloud', () => {
     };
 
     const checkbox = {
-        checkboxFieldValue : 'CheckboxFieldValue',
+        checkboxFieldValue: 'CheckboxFieldValue',
         checkboxVariableField: 'CheckboxVariableField',
         checkboxFieldVariable: 'CheckboxFieldVariable',
         checkboxFieldField: 'CheckboxFieldField',

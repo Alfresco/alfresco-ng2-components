@@ -17,12 +17,14 @@
 
 import { StringUtil } from '../utils/string.util';
 
+const EMAIL_DOMAIN = global['TestConfig'] ? global['TestConfig'].projectName : 'alfresco';
+
 export class UserModel {
 
     firstName: string = StringUtil.generateRandomString();
     lastName: string = StringUtil.generateRandomString();
     password: string = StringUtil.generateRandomString();
-    email: string = StringUtil.generateRandomEmail('@alfresco.com');
+    email: string = StringUtil.generateRandomEmail(`@${EMAIL_DOMAIN}.com`);
     username: string = StringUtil.generateRandomString().toLowerCase();
     idIdentityService: string;
 
