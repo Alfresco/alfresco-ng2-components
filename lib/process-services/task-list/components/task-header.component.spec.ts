@@ -292,6 +292,21 @@ describe('TaskHeaderComponent', () => {
         });
     }));
 
+    it('should set clickable to false if the task has already completed', async(() => {
+        component.taskDetails.endDate = new Date('05/05/2002');
+        component.formName = 'test form';
+        component.refreshData();
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            const clickableForm = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-clickable-value'));
+            expect(clickableForm).toBeNull();
+
+            const readOnlyForm = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-ellipsis'));
+            expect(readOnlyForm.nativeElement.innerText).toBe('test form');
+        });
+    }));
+
     it('should display the default parent value if is undefined', async(() => {
         component.taskDetails.processInstanceId = null;
         component.refreshData();
