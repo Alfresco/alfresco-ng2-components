@@ -68,7 +68,7 @@ describe('Start Task - Group Cloud Component', () => {
         testGroup = await groupIdentityService.createIdentityGroup();
 
         const rolesService = new RolesService(apiService);
-        let apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.ROLES.APS_USER);
+        const apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.ROLES.APS_USER);
         await groupIdentityService.assignRole(testGroup.id, apsAdminRoleId, identityService.ROLES.APS_USER);
 
         await identityService.addUserToGroup(testUser.idIdentityService, testGroup.id);
