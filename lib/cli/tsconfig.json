@@ -9,7 +9,7 @@
     "noImplicitThis": true,
     "noUnusedParameters": false,  // The linter is used for these.
     "noUnusedLocals": false,  // The linter is used for these.
-    "outDir": "./bin",
+    "outDir": "./dist",
     "rootDir": ".",
     "skipLibCheck": true,
     "strictNullChecks": true,

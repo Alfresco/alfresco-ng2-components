@@ -16,9 +16,8 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "scripts": {
-    "build": "npm run build-tsc",
-    "build-tsc": "rm -rf ./bin/scripts && tsc -p tsconfig.json",
-    "dist": "rm -rf ./dist/ && npm run build && cp -R ./bin ./dist/ && cp ./package.json ./dist/"
+    "build-tsc": "tsc -p tsconfig.json",
+    "dist": "rm -rf ./dist/ && npm run build-tsc && cp -R ./bin ./dist/ && cp ./package.json ./dist/"
   },
   "dependencies": {
     "commander": "^2.15.1",
@@ -28,8 +27,7 @@
     "rxjs": ">=6.2.2",
     "shelljs": "^0.8.3",
     "spdx-license-list": "^5.0.0",
-    "ejs": "^2.6.1",
-    "typescript": "3.1.6"
+    "ejs": "^2.6.1"
   },
   "keywords": [
     "alfresco-component"
