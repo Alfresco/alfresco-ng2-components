@@ -194,7 +194,7 @@ export class WidgetVisibilityService {
         return (field.id && fieldToFind) ? field.id.toUpperCase() === fieldToFind.toUpperCase() : false;
     }
 
-    getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): any {
+    getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {
         const processVariableValue = this.getProcessVariableValue(name, processVarList);
         const variableDefaultValue = this.getFormVariableDefaultValue(form, name);
         return (processVariableValue === undefined) ? variableDefaultValue : processVariableValue;
