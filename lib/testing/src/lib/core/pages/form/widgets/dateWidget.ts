@@ -51,11 +51,6 @@ export class DateWidget {
         return dateInput.clear();
     }
 
-    clickOutsideWidget(fieldId) {
-        const form = this.formFields.getWidget(fieldId);
-        BrowserActions.click(form);
-    }
-
     getErrorMessage(fieldId) {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         return BrowserActions.getText(errorMessage);
