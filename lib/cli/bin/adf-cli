@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// tslint:disable: no-var-requires adf-file-name
+
 const minimist = require('minimist');
 const path = require('path');
 
@@ -6,11 +8,10 @@ const args = minimist(process.argv.slice(2), {
   boolean: ['verbose']
 });
 const scriptName = args._.shift();
-const scriptPath = path.join('../scripts', scriptName);
+const scriptPath = path.join(__dirname, 'scripts', scriptName);
 
 const cwd = process.cwd();
 process.chdir(path.join(__dirname, '..'));
-
 
 // This might get awkward, so we fallback to console if there was an error.
 let logger = null;
@@ -29,6 +30,7 @@ try {
         case 'warn': color = yellow; break;
         case 'error': color = red; output = process.stderr; break;
         case 'fatal': color = x => bold(red(x)); output = process.stderr; break;
+        default: break;
       }
 
       output.write(color(entry.message) + '\n');
@@ -41,10 +43,9 @@ try {
     warn: console.warn.bind(console),
     error: console.error.bind(console),
     fatal: x => { console.error(x); process.exit(100); },
-    createChild: () => logger,
+    createChild: () => logger
   };
 }
-
 
 try {
   Promise.resolve()
