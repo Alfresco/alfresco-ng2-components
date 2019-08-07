@@ -98,8 +98,9 @@ export class WidgetVisibilityService {
             leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
         } else if (visibilityObj.leftType && visibilityObj.leftType === WidgetTypeEnum.field) {
             leftValue = this.getFormValue(form, visibilityObj.leftValue);
-            if (this.isInvalidValue(leftValue)) {
-                leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
+            if (leftValue === undefined || leftValue === '') {
+                const variableValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
+                leftValue = !this.isInvalidValue(variableValue) ? variableValue : leftValue;
             }
         }
         return leftValue;
@@ -124,7 +125,7 @@ export class WidgetVisibilityService {
     getFormValue(form: FormModel, fieldId: string): any {
         let value = this.getFieldValue(form.values, fieldId);
 
-        if (!value) {
+        if (this.isInvalidValue(value)) {
             value = this.searchValueInForm(form, fieldId);
         }
         return value;
@@ -146,7 +147,7 @@ export class WidgetVisibilityService {
     }
 
     private isInvalidValue(value: any): boolean {
-        return value === undefined || value === '';
+        return value === undefined || value === null;
     }
 
     searchValueInForm(form: FormModel, fieldId: string): string {
@@ -157,13 +158,12 @@ export class WidgetVisibilityService {
                 if (!fieldValue) {
                     if (formField.value && formField.value.id) {
                         fieldValue = formField.value.id;
-                    } else {
+                    } else if (!this.isInvalidValue(formField.value)) {
                         fieldValue = formField.value;
                     }
                 }
             }
         });
-
         return fieldValue;
     }
 
@@ -194,12 +194,13 @@ export class WidgetVisibilityService {
         return (field.id && fieldToFind) ? field.id.toUpperCase() === fieldToFind.toUpperCase() : false;
     }
 
-    getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {
-        return this.getFormVariableValue(form, name) ||
-            this.getProcessVariableValue(name, processVarList);
+    getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): any {
+        const processVariableValue = this.getProcessVariableValue(name, processVarList);
+        const variableDefaultValue = this.getFormVariableDefaultValue(form, name);
+        return (processVariableValue === undefined) ? variableDefaultValue : processVariableValue;
     }
 
-    private getFormVariableValue(form: FormModel, identifier: string): string {
+    private getFormVariableDefaultValue(form: FormModel, identifier: string): string {
         const variables = this.getFormVariables(form);
         if (variables) {
             const formVariable = variables.find((formVar) => {
@@ -213,7 +214,6 @@ export class WidgetVisibilityService {
                     value += 'T00:00:00.000Z';
                 }
             }
-
             return value;
         }
     }
@@ -229,6 +229,7 @@ export class WidgetVisibilityService {
                 return processVariable.value;
             }
         }
+
     }
 
     evaluateLogicalOperation(logicOp, previousValue, newValue): boolean {

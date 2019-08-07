@@ -413,6 +413,9 @@ export class FormFieldModel extends FormWidgetModel {
             case FormFieldTypes.AMOUNT:
                 this.form.values[this.id] = this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
                 break;
+            case FormFieldTypes.BOOLEAN:
+                this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : false;
+                break;
             default:
                 if (!FormFieldTypes.isReadOnlyType(this.type) && !this.isInvalidFieldType(this.type)) {
                     this.form.values[this.id] = this.value;
