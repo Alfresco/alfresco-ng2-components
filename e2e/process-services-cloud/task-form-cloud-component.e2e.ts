@@ -95,7 +95,6 @@ describe('Task form cloud component', () => {
         done();
     }, 5 * 60 * 1000);
 
-
     afterAll(async (done) => {
         try {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
