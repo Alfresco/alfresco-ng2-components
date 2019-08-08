@@ -71,8 +71,6 @@ describe('Share file', () => {
     });
 
     afterAll(async (done) => {
-        await navigationBarPage.clickLogoutButton();
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(nodeId);
         done();
@@ -206,9 +204,9 @@ describe('Share file', () => {
             shareDialog.checkDialogIsDisplayed();
             shareDialog.checkShareLinkIsDisplayed();
             const sharedLink = await shareDialog.getShareLink();
-            await shareDialog.clickCloseButton();
-            await navigationBarPage.clickLogoutButton();
-            await BrowserActions.getUrl(sharedLink);
+            shareDialog.clickCloseButton();
+            navigationBarPage.clickLogoutButton();
+            BrowserActions.getUrl(sharedLink);
             viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });
     });
