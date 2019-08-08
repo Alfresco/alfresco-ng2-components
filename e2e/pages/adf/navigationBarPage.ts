@@ -135,7 +135,7 @@ export class NavigationBarPage {
 
     async clickLogoutButton() {
         BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.logoutButton);
+        BrowserActions.clickExecuteScript('.adf-sidenav-link[adf-logout]');
     }
 
     async clickCardViewButton() {

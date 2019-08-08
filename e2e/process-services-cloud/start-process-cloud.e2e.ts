@@ -36,7 +36,6 @@ describe('Start Process', () => {
         browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
     );
 
-    const processDefinitionWithoutName = 'process-';
     const processName = StringUtil.generateRandomString(10);
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
@@ -58,7 +57,7 @@ describe('Start Process', () => {
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
@@ -109,7 +108,6 @@ describe('Start Process', () => {
         startProcessPage.enterProcessName(processName);
         expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
         startProcessPage.clickStartProcessButton();
-        processCloudDemoPage.clickOnProcessFilters();
 
         processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
         expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
@@ -117,14 +115,4 @@ describe('Start Process', () => {
 
     });
 
-    it('[C309875] Should display the processId when Process Definition has process name missing', async () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
-        startProcessPage.clearField(startProcessPage.processNameInput);
-        startProcessPage.enterProcessName(processName);
-        startProcessPage.selectFromProcessDropdown(processDefinitionWithoutName);
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
-
-    });
 });

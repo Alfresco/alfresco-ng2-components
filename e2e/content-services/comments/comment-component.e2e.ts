@@ -33,7 +33,7 @@ describe('Comment Component', () => {
     const contentServicesPage = new ContentServicesPage();
     const viewerPage = new ViewerPage();
     const commentsPage = new CommentsPage();
-    const navigationBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
     const acsUser = new AcsUserModel();
 
     let userFullName, nodeId;
@@ -44,7 +44,7 @@ describe('Comment Component', () => {
     });
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -61,15 +61,17 @@ describe('Comment Component', () => {
     };
 
     beforeAll(async (done) => {
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         done();
     });
 
-    beforeEach(async (done) => {
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
 
+    beforeEach(async (done) => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
@@ -80,19 +82,15 @@ describe('Comment Component', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBar.clickContentServicesButton();
+        navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
 
         done();
     });
 
     afterEach(async (done) => {
-        try {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await uploadActions.deleteFileOrFolder(nodeId);
-        } catch (error) {
-
-        }
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await uploadActions.deleteFileOrFolder(nodeId);
         done();
     });
 
@@ -190,7 +188,7 @@ describe('Comment Component', () => {
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             done();
         });
@@ -202,7 +200,7 @@ describe('Comment Component', () => {
         });
 
         it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', () => {
-            navigationBar.goToSite(site);
+            navigationBarPage.goToSite(site);
             contentServicesPage.checkAcsContainer();
 
             viewerPage.viewFile(pngUploadedFile.entry.name);

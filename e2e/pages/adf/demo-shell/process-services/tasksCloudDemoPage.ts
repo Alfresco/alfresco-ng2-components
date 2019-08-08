@@ -100,7 +100,7 @@ export class TasksCloudDemoPage {
 
     openNewTaskForm() {
         BrowserActions.click(this.createButton);
-        BrowserActions.click(this.newTaskButton);
+        BrowserActions.clickExecuteScript('button[data-automation-id="btn-start-task"]');
         return this;
     }
 

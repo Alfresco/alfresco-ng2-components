@@ -35,7 +35,7 @@ describe('Datatable component - selection', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -47,6 +47,10 @@ describe('Datatable component - selection', () => {
         await navigationBarPage.navigateToDatatable();
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C213258] Should be possible change the selection modes when change the selectionMode property', () => {

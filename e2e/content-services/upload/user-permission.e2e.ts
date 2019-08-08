@@ -59,7 +59,7 @@ describe('Upload - User permission', () => {
     beforeAll(() => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
     });
 
@@ -95,6 +95,11 @@ describe('Upload - User permission', () => {
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
+        done();
+    });
+
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
         done();
     });
 

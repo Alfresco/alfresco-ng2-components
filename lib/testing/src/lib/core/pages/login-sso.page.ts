@@ -28,37 +28,38 @@ export class LoginSSOPage {
     header = element(by.id('adf-header'));
     loginError = element(by.css(`div[data-automation-id="login-error"]`));
 
-    loginSSOIdentityService(username, password) {
+    async loginSSOIdentityService(username, password) {
         browser.ignoreSynchronization = true;
-        BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
-        this.enterUsername(username);
-        this.enterPassword(password);
-        this.clickLoginButton();
-        browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        return BrowserVisibility.waitUntilElementIsVisible(this.header);
+        await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
+        await this.enterUsername(username);
+        await this.enterPassword(password);
+        await this.clickLoginButton();
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        await BrowserVisibility.waitUntilElementIsVisible(this.header);
+        await browser.waitForAngular('');
     }
 
-    clickOnSSOButton() {
-        return BrowserActions.clickExecuteScript('[data-automation-id="login-button-sso"]');
+    async clickOnSSOButton() {
+        await BrowserActions.clickExecuteScript('[data-automation-id="login-button-sso"]');
     }
 
-    enterUsername(username) {
-        BrowserActions.clearSendKeys(this.usernameField, username);
+    async enterUsername(username) {
+        await BrowserActions.clearSendKeys(this.usernameField, username);
     }
 
-    enterPassword(password) {
-        BrowserActions.clearSendKeys(this.passwordField, password);
+    async enterPassword(password) {
+        await BrowserActions.clearSendKeys(this.passwordField, password);
     }
 
-    clickLoginButton() {
-        return BrowserActions.click(this.loginButton);
+    async clickLoginButton() {
+        await BrowserActions.click(this.loginButton);
     }
 
-    checkLoginErrorIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.loginError);
+    async checkLoginErrorIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.loginError);
     }
 
-    getLoginErrorMessage() {
+    async getLoginErrorMessage() {
         return BrowserActions.getText(this.loginError);
     }
 

@@ -42,7 +42,7 @@ describe('Form widgets - People', () => {
     const startProcess = new StartProcessPage();
     const processDetailsPage = new ProcessDetailsPage();
     const taskDetails = new TaskDetailsPage();
-    const appNavigationBar = new ProcessServiceTabBarPage();
+    const processServiceTabBarPage = new ProcessServiceTabBarPage();
 
     beforeAll(async (done) => {
         const users = new UsersActions();
@@ -50,7 +50,7 @@ describe('Form widgets - People', () => {
 
         alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -108,7 +108,7 @@ describe('Form widgets - People', () => {
         taskDetails.checkCompleteFormButtonIsDisplayed();
         taskDetails.clickCompleteFormTask();
 
-        appNavigationBar.clickProcessButton();
+        processServiceTabBarPage.clickProcessButton();
         processFiltersPage.clickCompletedFilterButton();
         processFiltersPage.selectFromProcessList(app.processName);
 

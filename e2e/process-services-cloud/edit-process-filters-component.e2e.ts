@@ -51,7 +51,7 @@ describe('Edit process filters cloud', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             done();
         });
 
@@ -95,6 +95,8 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
 
+            browser.driver.sleep(1000);
+
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
@@ -114,6 +116,9 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
+
+            browser.driver.sleep(1000);
+
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
@@ -121,9 +126,15 @@ describe('Edit process filters cloud', () => {
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton().setFilterName('New').clickOnSaveButton();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
+
+            browser.driver.sleep(1000);
+
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
+
+            browser.driver.sleep(1000);
+
             processCloudDemoPage.customProcessFilter('custom-new').clickProcessFilter();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
@@ -137,6 +148,9 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
+
+            browser.driver.sleep(1000);
+
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
@@ -144,6 +158,9 @@ describe('Edit process filters cloud', () => {
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveButton();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
+
+            browser.driver.sleep(1000);
+
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
@@ -156,10 +173,17 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
+
+            browser.driver.sleep(1000);
+
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
+
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
+
+            browser.driver.sleep(1000);
+
             expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
             processCloudDemoPage.customProcessFilter('New').checkProcessFilterNotDisplayed();
         });

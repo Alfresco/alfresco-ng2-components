@@ -149,7 +149,7 @@ export class SettingsPage {
         this.setSilentLogin(silentLogin);
         this.setImplicitFlow(implicitFlow);
         this.setLogoutUrl(logoutUr);
-        this.clickApply();
+        await this.clickApply();
         await browser.sleep(1000);
     }
 

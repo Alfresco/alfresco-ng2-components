@@ -24,6 +24,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { StringUtil } from '@alfresco/adf-testing';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Create library directive', function () {
 
@@ -31,6 +32,7 @@ describe('Create library directive', function () {
     const contentServicesPage = new ContentServicesPage();
     const createLibraryDialog = new CreateLibraryDialog();
     const customSourcesPage = new CustomSources();
+    const navigationBarPage = new NavigationBarPage();
 
     const visibility = {
         public: 'Public',
@@ -45,7 +47,7 @@ describe('Create library directive', function () {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -60,6 +62,10 @@ describe('Create library directive', function () {
         });
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     beforeEach((done) => {

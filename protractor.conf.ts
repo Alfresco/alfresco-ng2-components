@@ -36,6 +36,8 @@ let LIST_SPECS = process.env.LIST_SPECS || [];
 let LOG = process.env.LOG ? true : false;
 let arraySpecs = [];
 
+let failFast = require('jasmine-fail-fast');
+
 if (LOG) {
     console.log('======= PROTRACTOR CONFIGURATION ====== ');
     console.log('SAVE_SCREENSHOT : ' + SAVE_SCREENSHOT);
@@ -43,6 +45,7 @@ if (LOG) {
     console.log('FOLDER : ' + FOLDER);
     console.log('MAXINSTANCES : ' + MAXINSTANCES);
     console.log('LIST_SPECS : ' + LIST_SPECS);
+    console.log('SELENIUM_SERVER : ' + SELENIUM_SERVER);
 }
 
 let browser_options = function () {
@@ -177,7 +180,109 @@ let uploadReport = async function (alfrescoJsApi, filenameReport) {
     }
 };
 
+let beforeAllRewrite = function () {
+
+    const originalBeforeAll = global.beforeAll;
+
+    // tslint:disable-next-line
+    global.beforeAll = function (beforeAllFunction, timeout) {
+        const wrapClbk = async (done) => {
+            try {
+                await beforeAllFunction(done);
+            } catch (error) {
+                console.log('Error Before all second attempt in 10 sec');
+                sleep(10000);
+                try {
+                    await beforeAllFunction(done);
+                } catch (e) {
+                    // tslint:disable-next-line:no-console
+                    console.log('Error Before all second attempt fail all' + JSON.stringify(error));
+                    expect(true).toBe(false);
+                }
+            }
+
+            done();
+            return;
+        };
+
+        originalBeforeAll(wrapClbk, timeout);
+
+    };
+};
+
+let afterAllRewrite = function () {
+
+    const originalAfterAll = global.afterAll;
+
+    // tslint:disable-next-line
+    global.afterAll = function (afterAllFunction, timeout) {
+        const wrapClbk = async (done) => {
+            try {
+                await afterAllFunction(done);
+            } catch (error) {
+                // tslint:disable-next-line:no-console
+                console.log('Error After all' + JSON.stringify(error));
+            }
+
+            done();
+            return;
+        };
+
+        originalAfterAll(wrapClbk, timeout);
+
+    };
+};
+
+let beforeEachAllRewrite = function () {
+
+    const originalBeforeEach = global.beforeEach;
+
+    // tslint:disable-next-line
+    global.beforeEach = function (beforeEachFunction, timeout) {
+        const wrapClbk = async (done) => {
+            try {
+                await beforeEachFunction(done);
+            } catch (error) {
+                // tslint:disable-next-line:no-console
+                console.log('Error before Each' + JSON.stringify(error));
+                expect(true).toBe(false);
+            }
+
+            done();
+            return;
+        };
+
+        originalBeforeEach(wrapClbk, timeout);
+
+    };
+};
+
+let afterEachAllRewrite = function () {
+
+    const originalAfterEach = global.afterEach;
+
+    // tslint:disable-next-line
+    global.afterEach = function (afterEachFunction, timeout) {
+        const wrapClbk = async (done) => {
+            try {
+                await afterEachFunction(done);
+            } catch (error) {
+                // tslint:disable-next-line:no-console
+                console.log('Error After each' + JSON.stringify(error));
+
+            }
+
+            done();
+            return;
+        };
+
+        originalAfterEach(wrapClbk, timeout);
+
+    };
+};
+
 let browserLogErrorPrint = function () {
+
     if (process.env.LOG) {
         var browserLogs = require('protractor-browser-logs'),
             logs = browserLogs(browser);
@@ -243,6 +348,7 @@ let saveReport = async function (alfrescoJsApi, retryCount) {
         console.log('done delete screenshot');
     });
 };
+
 exports.config = {
     allScriptsTimeout: TIMEOUT,
 
@@ -258,9 +364,9 @@ exports.config = {
 
         browserName: 'chrome',
 
-        shardTestFiles: true,
-
         maxInstances: MAXINSTANCES,
+
+        shardTestFiles: true,
 
         chromeOptions: {
             prefs: {
@@ -328,12 +434,15 @@ exports.config = {
     },
 
     onPrepare() {
+        afterEachAllRewrite();
+        beforeEachAllRewrite();
+        afterAllRewrite();
+        beforeAllRewrite();
         browserLogErrorPrint();
 
         retry.onPrepare();
 
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
-        let failFast = require('jasmine-fail-fast');
         jasmine.getEnv().addReporter(failFast.init());
 
         require('ts-node').register({
@@ -433,3 +542,8 @@ exports.config = {
     }
 
 };
+
+function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay) ;
+}

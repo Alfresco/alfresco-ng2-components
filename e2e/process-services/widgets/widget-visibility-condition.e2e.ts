@@ -38,7 +38,7 @@ const value = {
 };
 
 const checkbox = {
-    checkboxFieldValue : 'text1value',
+    checkboxFieldValue: 'text1value',
     checkboxVariableField: 'variablefield',
     checkboxFieldVariable: 'text1variable',
     checkboxFieldField: 'text1text2',
@@ -64,7 +64,7 @@ describe('Process-Services - Visibility conditions', () => {
 
         alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -83,9 +83,9 @@ describe('Process-Services - Visibility conditions', () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
+        await BrowserActions.getUrl(urlToNavigateTo);
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.formFields().checkFormIsDisplayed();
     });
@@ -132,9 +132,13 @@ describe('Process-Services - Visibility conditions', () => {
     it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', () => {
 
         widget.textWidget().isWidgetVisible(widgets.textOneId);
-        expect(widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField)).toBe(true);
+        expect(widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField)).toBe(true);
         widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
+
+        expect(widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField)).toBe(true);
+
         widget.textWidget().setValue(widgets.textTwoId, value.displayCheckbox);
+
         expect(widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField)).toBe(true);
     });
 

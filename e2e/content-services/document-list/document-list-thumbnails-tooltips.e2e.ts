@@ -22,6 +22,7 @@ import resources = require('../../util/resources');
 import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Document List Component', () => {
 
@@ -30,11 +31,12 @@ describe('Document List Component', () => {
     let uploadedFolder, uploadedFolderExtra;
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let acsUser = null;
     let testFileNode, pdfBFileNode;
+    const navigationBarPage = new NavigationBarPage();
 
     afterEach(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -92,6 +94,8 @@ describe('Document List Component', () => {
         });
 
         afterAll(async (done) => {
+            await navigationBarPage.clickLogoutButton();
+
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             if (filePdfNode) {
                 await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);

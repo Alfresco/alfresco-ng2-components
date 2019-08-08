@@ -24,12 +24,15 @@ import resources = require('../../util/resources');
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Content Services Viewer', () => {
     const acsUser = new AcsUserModel();
     const viewerPage = new ViewerPage();
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+
     let zoom;
 
     const pdfFile = new FileModel({
@@ -70,7 +73,7 @@ describe('Content Services Viewer', () => {
     });
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -111,7 +114,6 @@ describe('Content Services Viewer', () => {
     });
 
     afterAll(async (done) => {
-
         await uploadActions.deleteFileOrFolder(pdfFile.getId());
         await uploadActions.deleteFileOrFolder(protectedFile.getId());
         await uploadActions.deleteFileOrFolder(docxFile.getId());
@@ -119,6 +121,7 @@ describe('Content Services Viewer', () => {
         await uploadActions.deleteFileOrFolder(mp4File.getId());
         await uploadActions.deleteFileOrFolder(pptFile.getId());
         await uploadActions.deleteFileOrFolder(unsupportedFile.getId());
+        await navigationBarPage.clickLogoutButton();
 
         done();
     });

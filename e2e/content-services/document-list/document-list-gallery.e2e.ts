@@ -30,11 +30,12 @@ describe('Document List Component', () => {
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let acsUser = null;
     const navBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
 
     describe('Gallery View', () => {
 
@@ -79,6 +80,10 @@ describe('Document List Component', () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             done();
+        });
+
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         beforeEach(async () => {

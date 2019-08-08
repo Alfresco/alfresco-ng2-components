@@ -35,7 +35,7 @@ describe('Search Filters', () => {
     const searchFiltersPage = new SearchFiltersPage();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const paginationPage = new PaginationPage();
@@ -118,6 +118,7 @@ describe('Search Filters', () => {
         await uploadActions.deleteFileOrFolder(fileTypeTxt1.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypeTxt2.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypeJpg.entry.id);
+        await navigationBarPage.clickLogoutButton();
 
         done();
     });

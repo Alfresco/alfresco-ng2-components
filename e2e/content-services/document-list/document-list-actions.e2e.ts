@@ -41,7 +41,7 @@ describe('Document List Component - Actions', () => {
     const breadCrumbPage = new BreadCrumbPage();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
@@ -85,12 +85,16 @@ describe('Document List Component - Actions', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            browser.driver.sleep(10000);
+            browser.driver.sleep(12000);
             done();
         });
 
-        beforeEach((done) => {
-            navigationBarPage.clickContentServicesButton();
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
+
+        beforeEach(async(done) => {
+            await navigationBarPage.clickContentServicesButton();
             done();
         });
 

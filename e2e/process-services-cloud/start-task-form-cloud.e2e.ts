@@ -83,9 +83,10 @@ describe('Start Task Form', () => {
     let testUser, acsUser, groupInfo;
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
-    let processDefinition, uploadLocalFileProcess, uploadContentFileProcess, uploadDefaultFileProcess, cancelUploadFileProcess, completeUploadFileProcess;
+    let processDefinition, uploadLocalFileProcess, uploadContentFileProcess, uploadDefaultFileProcess,
+        cancelUploadFileProcess, completeUploadFileProcess;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
-    const pdfFile = new FileModel({'name': resources.Files.ADF_DOCUMENTS.PDF.file_name});
+    const pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const pdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
@@ -163,22 +164,19 @@ describe('Start Task Form', () => {
             browser.params.config.oauth2.host,
             browser.params.config.identityHost,
             browser.params.config.oauth2.clientId);
-        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-start-process', JSON.stringify(startProcessCloudConfig));
         done();
     });
 
     afterAll(async (done) => {
-        try {
-            await this.alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
-            await apiService.login(testUser.email, testUser.password);
-            const tasksService = new TasksService(apiService);
-            const standAloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
-            await tasksService.deleteTask(standAloneTaskId, candidateBaseApp);
-            await identityService.deleteIdentityUser(testUser.idIdentityService);
-        } catch (error) {
-        }
+        await this.alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
+        await apiService.login(testUser.email, testUser.password);
+        const tasksService = new TasksService(apiService);
+        const standAloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
+        await tasksService.deleteTask(standAloneTaskId, candidateBaseApp);
+        await identityService.deleteIdentityUser(testUser.idIdentityService);
         done();
     });
 

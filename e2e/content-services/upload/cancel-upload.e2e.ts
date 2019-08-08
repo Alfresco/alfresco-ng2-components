@@ -24,12 +24,13 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Upload component', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialog();
@@ -37,6 +38,7 @@ describe('Upload component', () => {
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const navigationBarPage = new NavigationBarPage();
 
     const firstPdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
@@ -66,6 +68,11 @@ describe('Upload component', () => {
 
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
 
+        done();
+    });
+
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
         done();
     });
 

@@ -170,7 +170,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
      * There is a delay of at least one second between attempts.
      */
     @Input()
-    maxRetries = 10;
+    maxRetries = 30;
 
     /** Emitted when user clicks the 'Back' button. */
     @Output()
@@ -200,7 +200,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     invalidSharedLink = new EventEmitter();
 
-    TRY_TIMEOUT: number = 2000;
+    TRY_TIMEOUT: number = 10000;
 
     viewerType = 'unknown';
     isLoading = false;

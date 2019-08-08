@@ -62,7 +62,7 @@ describe('Version component actions', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
         uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -85,6 +85,10 @@ describe('Version component actions', () => {
         contentServicesPage.versionManagerContent(txtFileModel.name);
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C280003] Should not be possible delete a file version if there is only one version', () => {

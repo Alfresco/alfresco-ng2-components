@@ -45,7 +45,7 @@ describe('Version Properties', () => {
     });
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -69,6 +69,11 @@ describe('Version Properties', () => {
         contentServicesPage.waitForTableBody();
         contentServicesPage.versionManagerContent(txtFileModel.name);
 
+        done();
+    });
+
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
         done();
     });
 

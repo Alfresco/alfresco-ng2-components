@@ -19,8 +19,17 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
-    LoginSSOPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
-    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, SettingsPage, GroupIdentityService
+    LoginSSOPage,
+    AppListCloudPage,
+    StringUtil,
+    TaskHeaderCloudPage,
+    StartTasksCloudPage,
+    PeopleCloudComponentPage,
+    TasksService,
+    ApiService,
+    IdentityService,
+    SettingsPage,
+    GroupIdentityService
 } from '@alfresco/adf-testing';
 import resources = require('../../util/resources');
 
@@ -70,27 +79,24 @@ describe('Start Task', () => {
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         done();
     });
 
     afterAll(async (done) => {
-        try {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            const tasksService = new TasksService(apiService);
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        const tasksService = new TasksService(apiService);
 
-            const tasks = [standaloneTaskName, unassignedTaskName, reassignTaskName];
-            for (let i = 0; i < tasks.length; i++) {
-                const taskId = await tasksService.getTaskId(tasks[i], simpleApp);
-                if (taskId) {
-                    await tasksService.deleteTask(taskId, simpleApp);
-                }
+        const tasks = [standaloneTaskName, unassignedTaskName, reassignTaskName];
+        for (let i = 0; i < tasks.length; i++) {
+            const taskId = await tasksService.getTaskId(tasks[i], simpleApp);
+            if (taskId) {
+                await tasksService.deleteTask(taskId, simpleApp);
             }
-            await identityService.deleteIdentityUser(activitiUser.idIdentityService);
-            await identityService.deleteIdentityUser(apsUser.idIdentityService);
-            await identityService.deleteIdentityUser(testUser.idIdentityService);
-        } catch (error) {
         }
+        await identityService.deleteIdentityUser(activitiUser.idIdentityService);
+        await identityService.deleteIdentityUser(apsUser.idIdentityService);
+        await identityService.deleteIdentityUser(testUser.idIdentityService);
         done();
     });
 

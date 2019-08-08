@@ -28,6 +28,7 @@ import { FileModel } from '../models/ACS/fileModel';
 import { Util } from '../util/util';
 import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Search component - Search Page', () => {
     const search = {
@@ -47,6 +48,7 @@ describe('Search component - Search Page', () => {
     const contentServicesPage = new ContentServicesPage();
     const searchDialog = new SearchDialog();
     const searchResultPage = new SearchResultsPage();
+    const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
     const emptyFolderModel = new FolderModel({ 'name': 'search' + StringUtil.generateRandomString() });
@@ -57,7 +59,7 @@ describe('Search component - Search Page', () => {
     const adminNrOfFiles = 5;
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -94,6 +96,10 @@ describe('Search component - Search Page', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C260264] Should display message when no results are found', () => {

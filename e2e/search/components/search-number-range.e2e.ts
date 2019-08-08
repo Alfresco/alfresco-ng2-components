@@ -34,7 +34,7 @@ describe('Search Number Range Filter', () => {
     const searchFilters = new SearchFiltersPage();
     const sizeRangeFilter = searchFilters.sizeRangeFilterPage();
     const searchResults = new SearchResultsPage();
-    const navigationBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
     const acsUser = new AcsUserModel();
@@ -52,7 +52,7 @@ describe('Search Number Range Filter', () => {
     let file2Bytes, file0Bytes;
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -81,6 +81,9 @@ describe('Search Number Range Filter', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         await uploadActions.deleteFileOrFolder(file0Bytes.entry.id);
+
+        await navigationBarPage.clickLogoutButton();
+
         done();
     });
 
@@ -389,7 +392,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276928] Should be able to change the field property for number range', async () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[3].component.settings.field = 'cm:created';
 
@@ -431,7 +434,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C277139] Should be able to set To field to be exclusive', async () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[3].component.settings.format = '[{FROM} TO {TO}>';
 
@@ -467,7 +470,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C277140] Should be able to set From field to be exclusive', async () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[3].component.settings.format = '<{FROM} TO {TO}]';
 
