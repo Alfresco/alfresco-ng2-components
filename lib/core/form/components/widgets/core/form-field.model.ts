@@ -398,7 +398,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.DATETIME:
-                const dateTimeValue = moment(this.value, this.dateDisplayFormat, true);
+                const dateTimeValue = moment(this.value, this.dateDisplayFormat, true).utc();
                 if (dateTimeValue && dateTimeValue.isValid()) {
                     /* cspell:disable-next-line */
                     this.form.values[this.id] = dateTimeValue.format('YYYY-MM-DDTHH:mm:ssZ');

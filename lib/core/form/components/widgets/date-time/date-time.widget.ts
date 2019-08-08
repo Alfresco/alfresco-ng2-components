@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
@@ -75,7 +75,10 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
                 this.maxDate = moment(this.field.maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
             }
         }
-        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
+        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat)
+            .add(
+                moment(this.field.value, this.field.dateDisplayFormat).utcOffset(),
+                'minutes');
     }
 
     ngOnDestroy() {
