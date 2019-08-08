@@ -65,7 +65,7 @@ describe('Start Task - Group Cloud Component', () => {
         apsUser = await identityService.createIdentityUser();
 
         hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
-        testGroup = await groupIdentityService.createIdentityGroup();
+        testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
 
         const rolesService = new RolesService(apiService);
         const apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.ROLES.APS_USER);
@@ -78,11 +78,12 @@ describe('Start Task - Group Cloud Component', () => {
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
+
         done();
     });
 
     afterAll(async (done) => {
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         const tasksService = new TasksService(apiService);
 
         const bothGroupsTaskId = await tasksService.getTaskId(bothGroupsTaskName, simpleApp);
@@ -116,6 +117,7 @@ describe('Start Task - Group Cloud Component', () => {
         peopleCloudComponent.clearAssignee();
 
         groupCloud.searchGroups(testGroup.name);
+
         groupCloud.checkGroupIsDisplayed(testGroup.name);
         groupCloud.selectGroupFromList(testGroup.name);
         groupCloud.checkSelectedGroup(testGroup.name);

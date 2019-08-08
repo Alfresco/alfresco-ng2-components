@@ -68,21 +68,25 @@ describe('Edit task filters and task list properties', () => {
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+
         await apiService.login(testUser.email, testUser.password);
+
         otherOwnerTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         await tasksService.claimTask(otherOwnerTask.entry.id, simpleApp);
 
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         await tasksService.claimTask(createdTask.entry.id, simpleApp);
+
         notAssigned = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: priority });
         await tasksService.claimTask(priorityTask.entry.id, simpleApp);
+
         notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
         await tasksService.claimTask(notDisplayedTask.entry.id, candidateBaseApp);
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
         processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
+            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
@@ -220,7 +224,10 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setProcessInstanceId(processInstance.entry.id)
                 .setStatusFilterDropDown('ALL').clearAssignee();
 
+            browser.sleep(1000);
+
             expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfRows()).toBe(1);
+
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByProcessInstanceId(processInstance.entry.id);
         });
 
