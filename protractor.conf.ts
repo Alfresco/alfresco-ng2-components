@@ -1,11 +1,15 @@
 const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
 const jasmineReporters = require('jasmine-reporters');
-const htmlReporter = require('protractor-html-reporter-2');
 const retry = require('protractor-retry').retry;
 const tsConfig = require('./e2e/tsconfig.e2e.json');
 const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 const TestConfig = require('./e2e/test.config');
+const failFast = require('./e2e/protractor/fail-fast');
+
+const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
+const { uploadScreenshot, saveReport } = require('./e2e/protractor/save-remote');
+
 const argv = require('yargs').argv;
 const fs = require('fs');
 const rimraf = require('rimraf');
@@ -35,8 +39,6 @@ let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
 let LIST_SPECS = process.env.LIST_SPECS || [];
 let LOG = process.env.LOG ? true : false;
 let arraySpecs = [];
-
-let failFast = require('jasmine-fail-fast');
 
 if (LOG) {
     console.log('======= PROTRACTOR CONFIGURATION ====== ');
@@ -77,277 +79,6 @@ let specs = () => {
 };
 
 specs();
-
-let buildNumber = () => {
-    let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
-    if (!buildNumber) {
-        process.env.TRAVIS_BUILD_NUMBER = Date.now();
-    }
-
-    return process.env.TRAVIS_BUILD_NUMBER;
-};
-
-let uploadScreenshot = async function (alfrescoJsApi, retryCount) {
-    let files = fs.readdirSync(path.join(__dirname, './e2e-output/screenshots'));
-
-    if (files && files.length > 0) {
-
-        let folder;
-
-        try {
-            folder = await alfrescoJsApi.nodes.addNode('-my-', {
-                'name': `retry-${retryCount}`,
-                'relativePath': `Builds/${buildNumber()}/screenshot`,
-                'nodeType': 'cm:folder'
-            }, {}, {
-                'overwrite': true
-            });
-        } catch (error) {
-            folder = await alfrescoJsApi.nodes.getNode('-my-', {
-                'relativePath': `Builds/${buildNumber()}/screenshot/retry-${retryCount}`,
-                'nodeType': 'cm:folder'
-            }, {}, {
-                'overwrite': true
-            });
-        }
-
-        for (const fileName of files) {
-            let pathFile = path.join(__dirname, './e2e-output/screenshots', fileName);
-            let file = fs.createReadStream(pathFile);
-
-            let safeFileName = fileName.replace(new RegExp('"', 'g'), '');
-
-            try {
-                await alfrescoJsApi.upload.uploadFile(
-                    file,
-                    '',
-                    folder.entry.id,
-                    null,
-                    {
-                        'name': safeFileName,
-                        'nodeType': 'cm:content',
-                        'autoRename': true
-                    }
-                );
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
-};
-
-let uploadReport = async function (alfrescoJsApi, filenameReport) {
-    let pathFile = path.join(__dirname, './e2e-output/junit-report/html', filenameReport + '.html');
-    let reportFile = fs.createReadStream(pathFile);
-
-    let reportFolder;
-
-    try {
-        reportFolder = await alfrescoJsApi.nodes.addNode('-my-', {
-            'name': 'report',
-            'relativePath': `Builds/${buildNumber()}`,
-            'nodeType': 'cm:folder'
-        }, {}, {
-            'overwrite': true
-        });
-    } catch (error) {
-        reportFolder = await alfrescoJsApi.nodes.getNode('-my-', {
-            'relativePath': `Builds/${buildNumber()}/report`,
-            'nodeType': 'cm:folder'
-        }, {}, {
-            'overwrite': true
-        });
-
-    }
-
-    try {
-        await
-            alfrescoJsApi.upload.uploadFile(
-                reportFile,
-                '',
-                reportFolder.entry.id,
-                null,
-                {
-                    'name': reportFile.name,
-                    'nodeType': 'cm:content',
-                    'autoRename': true
-                }
-            );
-
-    } catch (error) {
-        console.log('error' + error);
-
-    }
-};
-
-let beforeAllRewrite = function () {
-
-    const originalBeforeAll = global.beforeAll;
-
-    // tslint:disable-next-line
-    global.beforeAll = function (beforeAllFunction, timeout) {
-        const wrapClbk = async (done) => {
-            try {
-                await beforeAllFunction(done);
-            } catch (error) {
-                console.log('Error Before all second attempt in 10 sec');
-                sleep(10000);
-                try {
-                    await beforeAllFunction(done);
-                } catch (e) {
-                    // tslint:disable-next-line:no-console
-                    console.log('Error Before all second attempt fail all' + JSON.stringify(error));
-                    expect(true).toBe(false);
-                }
-            }
-
-            done();
-            return;
-        };
-
-        originalBeforeAll(wrapClbk, timeout);
-
-    };
-};
-
-let afterAllRewrite = function () {
-
-    const originalAfterAll = global.afterAll;
-
-    // tslint:disable-next-line
-    global.afterAll = function (afterAllFunction, timeout) {
-        const wrapClbk = async (done) => {
-            try {
-                await afterAllFunction(done);
-            } catch (error) {
-                // tslint:disable-next-line:no-console
-                console.log('Error After all' + JSON.stringify(error));
-            }
-
-            done();
-            return;
-        };
-
-        originalAfterAll(wrapClbk, timeout);
-
-    };
-};
-
-let beforeEachAllRewrite = function () {
-
-    const originalBeforeEach = global.beforeEach;
-
-    // tslint:disable-next-line
-    global.beforeEach = function (beforeEachFunction, timeout) {
-        const wrapClbk = async (done) => {
-            try {
-                await beforeEachFunction(done);
-            } catch (error) {
-                // tslint:disable-next-line:no-console
-                console.log('Error before Each' + JSON.stringify(error));
-                expect(true).toBe(false);
-            }
-
-            done();
-            return;
-        };
-
-        originalBeforeEach(wrapClbk, timeout);
-
-    };
-};
-
-let afterEachAllRewrite = function () {
-
-    const originalAfterEach = global.afterEach;
-
-    // tslint:disable-next-line
-    global.afterEach = function (afterEachFunction, timeout) {
-        const wrapClbk = async (done) => {
-            try {
-                await afterEachFunction(done);
-            } catch (error) {
-                // tslint:disable-next-line:no-console
-                console.log('Error After each' + JSON.stringify(error));
-
-            }
-
-            done();
-            return;
-        };
-
-        originalAfterEach(wrapClbk, timeout);
-
-    };
-};
-
-let browserLogErrorPrint = function () {
-
-    if (process.env.LOG) {
-        var browserLogs = require('protractor-browser-logs'),
-            logs = browserLogs(browser);
-
-        global.logs = logs;
-
-        beforeEach(function () {
-            logs.reset();
-
-            // You can put here all expected generic expectations.
-            logs.ignore('favicon.ico');
-            logs.ignore('favicon.ico');
-            logs.ignore('favicon-96x96.png');
-            logs.ignore(logs.or(logs.INFO, logs.DEBUG));
-        });
-
-        afterEach(async () => {
-            let url = await  browser.getCurrentUrl();
-
-            return logs.verify();
-        });
-    }
-};
-
-let saveReport = async function (alfrescoJsApi, retryCount) {
-    let filenameReport = `ProtractorTestReport-${FOLDER}-${retryCount}`;
-
-    let output = '';
-    let savePath = `${projectRoot}/e2e-output/junit-report/`;
-    let temporaryHtmlPath = savePath + 'html/temporaryHtml/';
-    let lastFileName = '';
-
-    let files = fs.readdirSync(savePath);
-
-    if (files && files.length > 0) {
-        for (const fileName of files) {
-            const testConfigReport = {
-                reportTitle: 'Protractor Test Execution Report',
-                outputPath: temporaryHtmlPath,
-                outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
-            };
-
-            let filePath = `${projectRoot}/e2e-output/junit-report/` + fileName;
-
-            new htmlReporter().from(filePath, testConfigReport);
-            lastFileName = testConfigReport.outputFilename;
-        }
-    }
-
-    let lastHtmlFile = temporaryHtmlPath + lastFileName + '.html';
-
-    if (!(fs.lstatSync(lastHtmlFile).isDirectory())) {
-        output = output + fs.readFileSync(lastHtmlFile);
-    }
-
-    let fileName = savePath + 'html/' + filenameReport + '.html';
-
-    fs.writeFileSync(fileName, output, 'utf8');
-
-    await uploadReport(alfrescoJsApi, filenameReport);
-
-    rimraf(`${projectRoot}/e2e-output/screenshots/`, function () {
-        console.log('done delete screenshot');
-    });
-};
 
 exports.config = {
     allScriptsTimeout: TIMEOUT,
@@ -438,7 +169,6 @@ exports.config = {
         beforeEachAllRewrite();
         afterAllRewrite();
         beforeAllRewrite();
-        browserLogErrorPrint();
 
         retry.onPrepare();
 
@@ -542,8 +272,3 @@ exports.config = {
     }
 
 };
-
-function sleep(delay) {
-    var start = new Date().getTime();
-    while (new Date().getTime() < start + delay) ;
-}
