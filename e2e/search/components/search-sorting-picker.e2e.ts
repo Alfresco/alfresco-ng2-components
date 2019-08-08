@@ -91,7 +91,7 @@ describe('Search Sorting Picker', () => {
     });
 
     afterEach(async () => {
-        await browser.refresh();
+        await navigationBar.clickHomeButton();
     });
 
     it(`[C277269] Should see the "sort by" option when search results are displayed in search results page`, async () => {
