@@ -206,9 +206,9 @@ describe('Share file', () => {
             shareDialog.checkDialogIsDisplayed();
             shareDialog.checkShareLinkIsDisplayed();
             const sharedLink = await shareDialog.getShareLink();
-            shareDialog.clickCloseButton();
-            navigationBarPage.clickLogoutButton();
-            BrowserActions.getUrl(sharedLink);
+            await shareDialog.clickCloseButton();
+            await navigationBarPage.clickLogoutButton();
+            await BrowserActions.getUrl(sharedLink);
             viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });
     });

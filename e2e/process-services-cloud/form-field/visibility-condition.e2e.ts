@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage, Widget } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { UsersActions } from '../../actions/users.actions';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
 import { checkboxVisibilityForm } from '../../resources/forms/checkbox-visibility-condition';
 
 describe('Visibility conditions - cloud', () => {
 
-    const loginPage = new LoginPage();
+    const settingsPage = new SettingsPage();
+    const loginSSOPage = new LoginSSOPage();
+
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudDemoPage();
     const checkboxVisibilityFormJson = JSON.parse(checkboxVisibilityForm);
     const widget = new Widget();
 
-    let tenantId, user;
     let visibleCheckbox;
 
     const widgets = {
@@ -60,28 +60,16 @@ describe('Visibility conditions - cloud', () => {
             hostBpm: browser.params.testConfig.adf_aps.host
         });
 
-        const users = new UsersActions();
-
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        tenantId = user.tenantId;
-
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost);
+        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         navigationBarPage.clickFormCloudButton();
 
         formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
 
-        done();
-    });
-
-    afterAll(async (done) => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();
     });
 
