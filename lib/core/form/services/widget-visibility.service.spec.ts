@@ -914,7 +914,7 @@ describe('WidgetVisibilityService', () => {
             expect(contModel.isVisible).toBeFalsy();
         });
 
-        it('should set null value when the field is not visibile', () => {
+        it('should not set null value when the field is not visibile', () => {
             visibilityObjTest.leftFormFieldId = 'test_4';
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'dropdown';
@@ -922,7 +922,7 @@ describe('WidgetVisibilityService', () => {
 
             service.refreshEntityVisibility(fakeFormField);
             expect(fakeFormField.isVisible).toBeFalsy();
-            expect(fakeFormField.value).toEqual(null);
+            expect(fakeFormField.value).toEqual('FAKE_FORM_FIELD_VALUE');
         });
     });
 
