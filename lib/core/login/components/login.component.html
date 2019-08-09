@@ -68,7 +68,7 @@
                                                 ) | translate"
                                             (click)="toggleShowPassword($event)"
                                             (keyup.enter)="toggleShowPassword($event)"
-                                            data-automation-id="hide_password">
+                                            [attr.data-automation-id]="isPasswordShow ? 'hide_password':'show_password'">
                                            <mat-icon class="adf-login-password-icon">
                                                {{ isPasswordShow ? 'visibility':'visibility_off' }}
                                             </mat-icon>
