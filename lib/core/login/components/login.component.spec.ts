@@ -98,16 +98,22 @@ describe('LoginComponent', () => {
         passwordInput.dispatchEvent(new Event('input'));
         fixture.detectChanges();
 
-        element.querySelector('button').click();
+        element.querySelector('.adf-login-button').click();
         fixture.detectChanges();
     }
 
     it('should be autocomplete off', () => {
-        expect(element.querySelector('#adf-login-form').getAttribute('autocomplete')).toBe('off');
+        expect(
+            element
+                .querySelector('#adf-login-form')
+                .getAttribute('autocomplete')
+        ).toBe('off');
     });
 
     it('should redirect to route on successful login', () => {
-        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(authService, 'login').and.returnValue(
+            of({ type: 'type', ticket: 'ticket' })
+        );
         const redirect = '/home';
         component.successRoute = redirect;
         spyOn(router, 'navigate');
