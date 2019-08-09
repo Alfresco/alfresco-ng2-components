@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-testing",
   "description": "Alfresco ADF testing page and utils",
-  "version": "3.4.0-a8ef686cddc5364975fbddba68e6683305f47d42",
+  "version": "3.4.0",
   "author": "Alfresco Software, Ltd.",
   "repository": {
     "type": "git",
