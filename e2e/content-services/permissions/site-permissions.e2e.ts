@@ -33,7 +33,7 @@ describe('Permissions Component', function () {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -149,6 +149,8 @@ describe('Permissions Component', function () {
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);

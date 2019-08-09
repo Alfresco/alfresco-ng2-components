@@ -161,6 +161,7 @@
         "NAME": "Name",
         "VALUE": "Value"
       },
+      "NONE": "None",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Use a number format",
         "INT_VALIDATION_ERROR": "Use an integer format"
@@ -184,6 +185,7 @@
         "EDIT": "Edit",
         "SAVE": "Save",
         "CANCEL": "Cancel",
+        "CLEAR": "Clear",
         "TOGGLE": "Toggle value"
       }
     }
@@ -298,7 +300,7 @@
       "OF": "of"
     },
     "LOADING": "Loading",
-    "UNKNOWN_FORMAT": "Couldn't load preview",
+    "UNKNOWN_FORMAT": "Couldn't load preview. Unknown format.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Page {{ pageNum }}"

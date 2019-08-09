@@ -33,7 +33,7 @@ describe('Universal Icon component', function () {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -41,6 +41,10 @@ describe('Universal Icon component', function () {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     beforeEach(async (done) => {

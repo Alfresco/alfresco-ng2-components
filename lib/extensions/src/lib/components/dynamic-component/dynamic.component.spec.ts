@@ -39,7 +39,10 @@ import { HttpClientModule } from '@angular/common/http';
 export class TestComponent implements OnChanges {
     @Input() data: any;
     public onChangesCalled = 0;
-    ngOnChanges(changes: SimpleChanges) { this.onChangesCalled ++; }
+
+    ngOnChanges(changes: SimpleChanges) {
+        this.onChangesCalled++;
+    }
 }
 
 describe('DynamicExtensionComponent', () => {
@@ -51,16 +54,16 @@ describe('DynamicExtensionComponent', () => {
 
     beforeEach(async(() => {
         componentRegister = new ComponentRegisterService();
-        componentRegister.setComponents({'test-component': TestComponent});
+        componentRegister.setComponents({ 'test-component': TestComponent });
 
         TestBed.configureTestingModule({
-            imports: [ HttpClientModule ],
-            declarations: [ DynamicExtensionComponent, TestComponent ],
-            providers: [ { provide: ComponentRegisterService, useValue: componentRegister } ]
+            imports: [HttpClientModule],
+            declarations: [DynamicExtensionComponent, TestComponent],
+            providers: [{ provide: ComponentRegisterService, useValue: componentRegister }]
         });
 
         TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [ TestComponent ] }
+            set: { entryComponents: [TestComponent] }
         });
 
         TestBed.compileComponents();

@@ -39,10 +39,17 @@ else
  gnu=''
 fi
 
+if [ $BRANCH_NAME == 'undefined' ]; then
+    echo "Rebase your branch"
+    exit 1
+fi
+
 #reset the tmp folder
 affected="$(./scripts/affected-libs.sh ${gnu[@]} -b "$BRANCH_NAME")"
 echo $affected
 libs=(`echo $affected | sed 's/^$/\n/g'`)
+
+echo "Builds"
 
 #extensions
 for i in "${libs[@]}"

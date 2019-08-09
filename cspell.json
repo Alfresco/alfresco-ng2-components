@@ -126,7 +126,9 @@
     "uncheck",
     "subfolders",
     "ECMBPM",
-    "processwithvariables"
+    "processwithvariables",
+    "dropdownrestprocess",
+    "devops"
   ],
   "dictionaries": [
     "html",

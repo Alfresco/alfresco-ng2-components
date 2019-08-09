@@ -46,8 +46,9 @@ export class CloudFiltersDemoComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.currentTaskFilter$ = this.cloudLayoutService.getCurrentTaskFilterParam();
-        this.currentProcessFilter$ = this.cloudLayoutService.getCurrentProcessFilterParam();
+        this.currentTaskFilter$ = this.cloudLayoutService.taskFilter$;
+        this.currentProcessFilter$ = this.cloudLayoutService.processFilter$;
+
         let root = '';
         if (this.route.snapshot && this.route.snapshot.firstChild) {
             root = this.route.snapshot.firstChild.url[0].path;
@@ -62,13 +63,13 @@ export class CloudFiltersDemoComponent implements OnInit {
     }
 
     onTaskFilterSelected(filter) {
-        this.cloudLayoutService.setCurrentTaskFilterParam({id: filter.id});
+        this.cloudLayoutService.setCurrentTaskFilterParam({id: filter && filter.id ? filter.id : ''});
         const currentFilter = Object.assign({}, filter);
         this.router.navigate([`/cloud/${this.appName}/tasks/`], { queryParams: currentFilter });
     }
 
     onProcessFilterSelected(filter) {
-        this.cloudLayoutService.setCurrentProcessFilterParam({id: filter.id});
+        this.cloudLayoutService.setCurrentProcessFilterParam({id: filter && filter.id ? filter.id : ''});
         const currentFilter = Object.assign({}, filter);
         this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: currentFilter });
     }

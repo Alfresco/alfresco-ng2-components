@@ -80,7 +80,7 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.contextMenuService.show.subscribe((mouseEvent) => this.showMenu(mouseEvent.event, mouseEvent.obj)),
 
-            this.menuTrigger.onMenuOpen.subscribe(() => {
+            this.menuTrigger.menuOpened.subscribe(() => {
                 const container = this.overlayContainer.getContainerElement();
                 if (container) {
                     this.contextMenuListenerFn = this.renderer.listen(container, 'contextmenu', (contextmenuEvent: Event) => {
@@ -90,7 +90,7 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
                 this.menuElement = this.getContextMenuElement();
             }),
 
-            this.menuTrigger.onMenuClose.subscribe(() => {
+            this.menuTrigger.menuClosed.subscribe(() => {
                 this.menuElement = null;
                 if (this.contextMenuListenerFn) {
                     this.contextMenuListenerFn();

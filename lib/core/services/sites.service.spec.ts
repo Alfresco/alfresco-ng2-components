@@ -106,38 +106,4 @@ describe('Sites service', () => {
         });
     });
 
-    it('deleteSite should perform a call against the server', (done) => {
-        service.deleteSite('fake-site-id').subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().method).toBe('DELETE');
-            expect(jasmine.Ajax.requests.mostRecent().url)
-                .toContain('alfresco/api/-default-/public/alfresco/versions/1/sites/fake-site-id');
-            done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 204
-        });
-    });
-
-    it('getSites catch errors call', (done) => {
-        service.getSites().subscribe(() => {
-        }, () => {
-            done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 403
-        });
-    });
-
-    it('getSite catch errors call', (done) => {
-        service.getSite('error-id').subscribe(() => {
-        }, () => {
-            done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 403
-        });
-    });
 });

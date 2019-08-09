@@ -227,23 +227,6 @@ describe('SearchControlComponent', () => {
             expect(element.querySelector('#adf-control-input').getAttribute('autocomplete')).toBe('on');
         }));
 
-        xit('should fire a search when a enter key is pressed', (done) => {
-            const searchDisposable = component.submit.subscribe((value) => {
-                expect(value).toBe('TEST');
-                searchDisposable.unsubscribe();
-                done();
-            });
-
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
-
-            fixture.detectChanges();
-            const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            typeWordIntoSearchInput('TEST');
-            const enterKeyEvent: any = new Event('keyup');
-            enterKeyEvent.keyCode = '13';
-            inputDebugElement.nativeElement.dispatchEvent(enterKeyEvent);
-        });
     });
 
     describe('autocomplete list', () => {
@@ -408,67 +391,6 @@ describe('SearchControlComponent', () => {
             });
         });
 
-        xit('should select the first item on autocomplete list when ARROW DOWN is pressed on input', (done) => {
-            searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
-            fixture.detectChanges();
-            typeWordIntoSearchInput('TEST');
-            const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#autocomplete-search-result-list')).not.toBeNull();
-
-                inputDebugElement.triggerEventHandler('keyup.arrowdown', {});
-                fixture.detectChanges();
-                expect(document.activeElement.id).toBe('result_option_0');
-                done();
-            });
-        });
-
-        xit('should select the second item on autocomplete list when ARROW DOWN is pressed on list', (done) => {
-            searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
-            fixture.detectChanges();
-            const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            typeWordIntoSearchInput('TEST');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#autocomplete-search-result-list')).not.toBeNull();
-
-                inputDebugElement.triggerEventHandler('keyup.arrowdown', {});
-                fixture.detectChanges();
-                expect(document.activeElement.id).toBe('result_option_0');
-
-                const firstElement = debugElement.query(By.css('#result_option_0'));
-                firstElement.triggerEventHandler('keyup.arrowdown', { target: firstElement.nativeElement });
-                fixture.detectChanges();
-                expect(document.activeElement.id).toBe('result_option_1');
-                done();
-            });
-        });
-
-        xit('should focus the input search when ARROW UP is pressed on the first list item', (done) => {
-            searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
-            fixture.detectChanges();
-            const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            typeWordIntoSearchInput('TEST');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#autocomplete-search-result-list')).not.toBeNull();
-
-                inputDebugElement.triggerEventHandler('keyup.arrowdown', {});
-                fixture.detectChanges();
-                expect(document.activeElement.id).toBe('result_option_0');
-
-                const firstElement = debugElement.query(By.css('#result_option_0'));
-                firstElement.triggerEventHandler('keyup.arrowup', { target: firstElement.nativeElement });
-                fixture.detectChanges();
-                expect(document.activeElement.id).toBe('adf-control-input');
-                done();
-            });
-        });
-
     });
 
     describe('search button', () => {
@@ -512,24 +434,6 @@ describe('SearchControlComponent', () => {
             tick(100);
 
             expect(component.subscriptAnimationState.value).toBe('active');
-            discardPeriodicTasks();
-        }));
-
-        xit('click on the search button should apply focus on input', fakeAsync(() => {
-            fixture.detectChanges();
-            tick(100);
-
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-            searchButton.triggerEventHandler('click', null);
-
-            const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-
-            tick(100);
-            fixture.detectChanges();
-
-            tick(100);
-
-            expect(document.activeElement.id).toBe(inputDebugElement.nativeElement.id);
             discardPeriodicTasks();
         }));
 

@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": false,  // The linter is used for these.
+    "noUnusedLocals": false,  // The linter is used for these.
+    "outDir": "./dist",
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "target": "es2018",
+    "lib": [
+      "es2018"
+    ],
+    "baseUrl": ".",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ],
+    "paths": {
+    }
+  },
+  "exclude": [
+    "dist/**/*",
+    "./build.ts",
+    "node_modules/**/*"
+  ]
+}

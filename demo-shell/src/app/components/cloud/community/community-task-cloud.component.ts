@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { TaskListCloudComponent, TaskListCloudSortingModel, TaskFilterCloudModel, TaskFilterCloudService } from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CloudLayoutService } from '../services/cloud-layout.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Pagination } from '@alfresco/js-api';
 
 @Component({
     templateUrl: './community-task-cloud.component.html',
@@ -28,8 +31,7 @@ import { CloudLayoutService } from '../services/cloud-layout.service';
       }
       `]
 })
-export class CommunityTasksCloudDemoComponent implements OnInit {
-
+export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
     public static ACTION_SAVE_AS = 'saveAs';
     static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
@@ -50,6 +52,8 @@ export class CommunityTasksCloudDemoComponent implements OnInit {
     testingMode: boolean;
     selectionMode: string;
     taskDetailsRedirection: boolean;
+
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         private cloudLayoutService: CloudLayoutService,
@@ -79,14 +83,23 @@ export class CommunityTasksCloudDemoComponent implements OnInit {
             }
         });
 
-        this.cloudLayoutService.getCurrentSettings()
-            .subscribe((settings) => this.setCurrentSettings(settings));
+        this.cloudLayoutService
+            .settings$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(settings => this.setCurrentSettings(settings));
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     loadDefaultFilters() {
-        this.taskFilterCloudService.getTaskListFilters('community').subscribe( (filters: TaskFilterCloudModel[]) => {
-            this.onFilterChange(filters[0]);
-        });
+        this.taskFilterCloudService
+            .getTaskListFilters('community')
+            .subscribe((filters: TaskFilterCloudModel[]) => {
+                this.onFilterChange(filters[0]);
+            });
     }
 
     setCurrentSettings(settings) {
@@ -98,7 +111,7 @@ export class CommunityTasksCloudDemoComponent implements OnInit {
         }
     }
 
-    onChangePageSize(event) {
+    onChangePageSize(event: Pagination) {
         this.userPreference.paginationSize = event.maxItems;
     }
 
@@ -106,7 +119,7 @@ export class CommunityTasksCloudDemoComponent implements OnInit {
         this.selectedRows = [];
     }
 
-    onRowClick(taskId) {
+    onRowClick(taskId: string) {
         if (!this.multiselect && this.selectionMode !== 'multiple' && this.taskDetailsRedirection) {
             this.router.navigate([`/cloud/community/task-details/${taskId}`]);
         }

@@ -40,7 +40,7 @@ export class ProcessInstancesService {
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('create process-instances Service not working');
+            console.log('create process-instances Service not working', error.message);
         }
 
     }
@@ -56,7 +56,7 @@ export class ProcessInstancesService {
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('suspend process-instances Service not working');
+            console.log('suspend process-instances Service not working', error.message);
         }
     }
 
@@ -71,7 +71,7 @@ export class ProcessInstancesService {
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('delete process-instances Service not working');
+            console.log('delete process-instances Service not working', error.message);
         }
     }
 
@@ -87,7 +87,7 @@ export class ProcessInstancesService {
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('complete process-instances Service not working');
+            console.log('complete process-instances Service not working', error.message);
         }
     }
 }

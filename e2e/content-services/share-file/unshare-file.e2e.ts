@@ -30,7 +30,7 @@ describe('Unshare file', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -38,6 +38,8 @@ describe('Unshare file', () => {
     const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     const notificationHistoryPage = new NotificationHistoryPage();
+    const navigationBarPage = new NavigationBarPage();
+
     const shareDialog = new ShareDialog();
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
     const acsUser = new AcsUserModel();
@@ -101,6 +103,10 @@ describe('Unshare file', () => {
         done();
     });
 
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     afterEach(async (done) => {
         await browser.refresh();
         done();
@@ -149,7 +155,7 @@ describe('Unshare file', () => {
             shareDialog.confirmationDialogIsDisplayed();
             shareDialog.clickConfirmationDialogRemoveButton();
             shareDialog.dialogIsClosed();
-            BrowserActions.getUrl(sharedLink);
+            BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.adf_acs.host, browser.params.testConfig.adf.host));
             errorPage.checkErrorCode();
         });
     });

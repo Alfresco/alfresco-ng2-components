@@ -18,8 +18,8 @@
 import { MultilineTextWidget } from './multilineTextWidget';
 import { HeaderWidget } from './headerWidget';
 import { DisplayTextWidget } from './displayTextWidget';
-import { AttachFileWidget } from './attachFileWidget';
 import { DisplayValueWidget } from './displayValueWidget';
+import { AttachFileWidget } from './attachFileWidget';
 import { RadioButtonsWidget } from './radioButtonsWidget';
 import { HyperlinkWidget } from './hyperlinkWidget';
 import { DropdownWidget } from './dropdownWidget';
@@ -33,6 +33,7 @@ import { AmountWidget } from './amountWidget';
 import { ContainerWidget } from './containerWidget';
 import { PeopleWidget } from './peopleWidget';
 import { DocumentWidget } from './documentWidget';
+import { AttachFileWidgetCloud } from './attachFileWidgetCloud';
 
 export class Widget {
 
@@ -50,6 +51,10 @@ export class Widget {
 
     attachFileWidget() {
         return new AttachFileWidget();
+    }
+
+    attachFileWidgetCloud(fieldId: string) {
+        return new AttachFileWidgetCloud(fieldId);
     }
 
     displayValueWidget() {

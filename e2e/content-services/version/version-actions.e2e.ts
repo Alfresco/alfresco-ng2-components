@@ -62,7 +62,7 @@ describe('Version component actions', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
         uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -87,17 +87,21 @@ describe('Version component actions', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     it('[C280003] Should not be possible delete a file version if there is only one version', () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
-        versionManagePage.closeActionButton();
+        versionManagePage.closeActionsMenu();
         BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
     });
 
     it('[C280004] Should not be possible restore the version if there is only one version', () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
-        versionManagePage.closeActionButton();
+        versionManagePage.closeActionsMenu();
         BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });
 
@@ -108,7 +112,7 @@ describe('Version component actions', () => {
 
         versionManagePage.clickActionButton('1.1').checkActionsArePresent('1.1');
 
-        versionManagePage.closeActionButton();
+        versionManagePage.closeActionsMenu();
     });
 
     it('[C269081] Should be possible download all the version of a file', () => {

@@ -17,20 +17,20 @@
 
 import { LogService } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
 import { TaskDetailsEvent, TaskDetailsModel } from '../../task-list';
 import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
-import { share } from 'rxjs/operators';
+import { share, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-process-instance-tasks',
     templateUrl: './process-instance-tasks.component.html',
     styleUrls: ['./process-instance-tasks.component.css']
 })
-export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
+export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestroy {
 
     /** (**required**) The ID of the process instance to display tasks for. */
     @Input()
@@ -51,10 +51,10 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
 
     private taskObserver: Observer<TaskDetailsModel>;
     private completedTaskObserver: Observer<TaskDetailsModel>;
+    private onDestroy$ = new Subject<boolean>();
 
     task$: Observable<TaskDetailsModel>;
     completedTask$: Observable<TaskDetailsModel>;
-
     message: string;
     processId: string;
 
@@ -78,12 +78,18 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.task$.subscribe((task: TaskDetailsModel) => {
-            this.activeTasks.push(task);
-        });
-        this.completedTask$.subscribe((task: TaskDetailsModel) => {
-            this.completedTasks.push(task);
-        });
+        this.task$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(task => this.activeTasks.push(task));
+
+        this.completedTask$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(task => this.completedTasks.push(task));
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     ngOnChanges(changes: SimpleChanges) {

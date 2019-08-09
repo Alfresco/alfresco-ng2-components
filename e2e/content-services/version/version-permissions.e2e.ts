@@ -64,7 +64,7 @@ describe('Version component permissions', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const nodeActions = new NodeActions();
@@ -142,6 +142,8 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async (done) => {
+            await navigationBarPage.clickLogoutButton();
+
             await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             done();
         });
@@ -184,6 +186,10 @@ describe('Version component permissions', () => {
             done();
         });
 
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
+
         it('[C277197] Should a user with Consumer permission not be able to upload a new version for a file with different creator', () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
@@ -218,6 +224,8 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async (done) => {
+            await navigationBarPage.clickLogoutButton();
+
             await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             done();
         });
@@ -276,6 +284,7 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async (done) => {
+            await navigationBarPage.clickLogoutButton();
             await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             done();
         });
@@ -316,7 +325,7 @@ describe('Version component permissions', () => {
 
             expect(element(by.css(`[id="adf-version-list-action-delete-1.1"]`)).isEnabled()).toBe(false);
 
-            versionManagePage.closeActionButton();
+            versionManagePage.closeActionsMenu();
 
             versionManagePage.closeVersionDialog();
         });

@@ -41,7 +41,7 @@ describe('Date and time widget', () => {
 
         alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -60,9 +60,9 @@ describe('Date and time widget', () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        BrowserActions.getUrl(urlToNavigateTo);
+        await BrowserActions.getUrl(urlToNavigateTo);
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.formFields().checkFormIsDisplayed();
     });
@@ -91,16 +91,14 @@ describe('Date and time widget', () => {
         widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
         widget.dateTimeWidget().closeDataTimeWidget();
         widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-17 07:30 PM');
-        widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
+        taskPage.formFields().saveForm();
         expect(widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be less than');
 
+        widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
         widget.dateTimeWidget().closeDataTimeWidget();
-
-        widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
         widget.dateTimeWidget().removeFromDatetimeWidget(app.FIELD.date_time_between_input);
-        widget.dateTimeWidget().closeDataTimeWidget();
         widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-19 07:30 PM');
-        widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
+        taskPage.formFields().saveForm();
         expect(widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be greater than');
     });
 });

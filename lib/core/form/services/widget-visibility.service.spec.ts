@@ -25,20 +25,16 @@ import {
 } from './../components/widgets/core/index';
 import { TaskProcessVariableModel } from './../models/task-process-variable.model';
 import { WidgetVisibilityModel } from './../models/widget-visibility.model';
-import {
-    fakeFormJson,
-    complexVisibilityJsonVisible,
-    complexVisibilityJsonNotVisible,
-    fakeTaskProcessVariableModels,
-    formTest,
-    formValues
-} from '../../mock';
 import { WidgetVisibilityService } from './widget-visibility.service';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
+import { fakeTaskProcessVariableModels,
+        fakeFormJson, formTest,
+        formValues, complexVisibilityJsonVisible,
+        complexVisibilityJsonNotVisible } from 'core/mock/form/widget-visibility.service.mock';
 
 declare let jasmine: any;
 
@@ -194,12 +190,14 @@ describe('WidgetVisibilityService', () => {
     });
 
     describe('should retrieve the process variables', () => {
-        const fakeFormWithField = new FormModel(fakeFormJson);
+        let fakeFormWithField: FormModel;
         let visibilityObjTest: WidgetVisibilityModel;
-        const chainedVisibilityObj = new WidgetVisibilityModel();
+        const chainedVisibilityObj = new WidgetVisibilityModel({});
 
         beforeEach(() => {
-            visibilityObjTest = new WidgetVisibilityModel();
+            fakeFormWithField = new FormModel(fakeFormJson);
+            visibilityObjTest = new WidgetVisibilityModel({});
+            fakeFormWithField = new FormModel(fakeFormJson);
         });
 
         it('should return the process variables for task', (done) => {
@@ -274,10 +272,10 @@ describe('WidgetVisibilityService', () => {
             service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
                     visibilityObjTest.leftRestResponseId = 'TEST_VAR_2';
-                    const rightValue = service.getLeftValue(formTest, visibilityObjTest);
+                    const leftValue = service.getLeftValue(formTest, visibilityObjTest);
 
-                    expect(rightValue).not.toBeNull();
-                    expect(rightValue).toBe('test_value_2');
+                    expect(leftValue).not.toBeNull();
+                    expect(leftValue).toBe('test_value_2');
                     done();
                 }
             );
@@ -294,7 +292,7 @@ describe('WidgetVisibilityService', () => {
                     visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
                     visibilityObjTest.operator = '!=';
                     visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
-                    const isVisible = service.isFieldVisible(fakeFormWithField, visibilityObjTest);
+                    const isVisible = service.isFieldVisible(fakeFormWithField, new WidgetVisibilityModel(visibilityObjTest));
 
                     expect(isVisible).toBeTruthy();
                     done();
@@ -345,7 +343,8 @@ describe('WidgetVisibilityService', () => {
 
     describe('should return the value of the field', () => {
         let visibilityObjTest: WidgetVisibilityModel;
-        const fakeFormWithField = new FormModel(fakeFormJson);
+        let fakeFormWithField: FormModel;
+
         const jsonFieldFake = {
             id: 'FAKE_FORM_FIELD_ID',
             value: 'FAKE_FORM_FIELD_VALUE',
@@ -361,7 +360,9 @@ describe('WidgetVisibilityService', () => {
         });
 
         beforeEach(() => {
+            fakeFormWithField = new FormModel(fakeFormJson);
             visibilityObjTest = new WidgetVisibilityModel();
+            fakeFormWithField = new FormModel(fakeFormJson);
             formTest.values = formValues;
             jsonFieldFake.visibilityCondition = visibilityObjTest;
         });
@@ -459,7 +460,7 @@ describe('WidgetVisibilityService', () => {
             expect(leftValue).toBe('value_2');
         });
 
-        it('should return an empty string for a value that is not on variable or form', () => {
+        it('should return empty string for a value that is not on variable or form', () => {
             const leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
 
             expect(leftValue).toBe('');
@@ -663,7 +664,6 @@ describe('WidgetVisibilityService', () => {
             tab.visibilityCondition = visibilityObjTest;
             fakeFormWithField.tabs.push(tab);
             service.refreshVisibility(fakeFormWithField);
-
             expect(fakeFormWithField.tabs[0].isVisible).toBeFalsy();
         });
 
@@ -913,17 +913,29 @@ describe('WidgetVisibilityService', () => {
             service.refreshEntityVisibility(contModel.field);
             expect(contModel.isVisible).toBeFalsy();
         });
+
+        it('should not set null value when the field is not visibile', () => {
+            visibilityObjTest.leftFormFieldId = 'test_4';
+            visibilityObjTest.operator = '!=';
+            visibilityObjTest.rightFormFieldId = 'dropdown';
+            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
+
+            service.refreshEntityVisibility(fakeFormField);
+            expect(fakeFormField.isVisible).toBeFalsy();
+            expect(fakeFormField.value).toEqual('FAKE_FORM_FIELD_VALUE');
+        });
     });
 
     describe('Visibility based on form variables', () => {
 
-        const fakeFormWithVariables = new FormModel(fakeFormJson);
+        let fakeFormWithVariables = new FormModel(fakeFormJson);
         const complexVisibilityModel = new FormModel(complexVisibilityJsonVisible);
         const complexVisibilityJsonNotVisibleModel = new FormModel(complexVisibilityJsonNotVisible);
         let visibilityObjTest: WidgetVisibilityModel;
 
         beforeEach(() => {
             visibilityObjTest = new WidgetVisibilityModel();
+            fakeFormWithVariables = new FormModel(fakeFormJson);
         });
 
         it('should set visibility to true when validation for string variables succeeds', () => {
@@ -943,9 +955,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should be able to analyze a complex visibility JSON false', () => {
-            const isVisible = service.isFieldVisible(complexVisibilityJsonNotVisibleModel,
-                complexVisibilityJsonNotVisible.formDefinition.fields[2].fields[2][0].visibilityCondition);
-
+            const formField = new FormFieldModel(complexVisibilityJsonNotVisibleModel, complexVisibilityJsonNotVisible.formDefinition.fields[2].fields[2][0]);
+            const isVisible = service.isFieldVisible(complexVisibilityJsonNotVisibleModel, new WidgetVisibilityModel(formField.visibilityCondition));
             expect(isVisible).toBe(false);
         });
 
@@ -979,7 +990,7 @@ describe('WidgetVisibilityService', () => {
         it('should set visibility to true when validation for date variables succeeds', () => {
             visibilityObjTest.leftRestResponseId = 'dob';
             visibilityObjTest.operator = '==';
-            visibilityObjTest.rightValue = '2019-05-13';
+            visibilityObjTest.rightValue = '2019-05-13T00:00:00.000Z';
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
@@ -988,7 +999,7 @@ describe('WidgetVisibilityService', () => {
         it('should set visibility to false when validation for date variables fails', () => {
             visibilityObjTest.leftRestResponseId = 'dob';
             visibilityObjTest.operator = '==';
-            visibilityObjTest.rightValue = '2019-05-15';
+            visibilityObjTest.rightValue = '2019-05-15T00:00:00.000Z';
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
 
             expect(isVisible).toBeFalsy();
@@ -997,7 +1008,7 @@ describe('WidgetVisibilityService', () => {
         it('should validate visiblity for form fields by finding the field with id', () => {
             visibilityObjTest.leftRestResponseId = '0207b649-ff07-4f3a-a589-d10afa507b9b';
             visibilityObjTest.operator = '==';
-            visibilityObjTest.rightValue = '2019-05-13';
+            visibilityObjTest.rightValue = '2019-05-13T00:00:00.000Z';
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();

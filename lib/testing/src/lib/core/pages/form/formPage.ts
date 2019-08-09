@@ -17,10 +17,12 @@
 
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
+import { BrowserActions } from '../../utils/public-api';
 
 export class FormPage {
 
     errorLog = element(by.css('div[class*="console"]'));
+    saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
 
     checkErrorMessageForWidgetIsDisplayed(errorMessage) {
         return BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
@@ -38,6 +40,11 @@ export class FormPage {
     checkErrorMessageIsNotDisplayed(errorMessage) {
         BrowserVisibility.waitUntilElementIsVisible(this.errorLog);
         return BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
+    }
+
+    saveForm() {
+        BrowserActions.click(this.saveButton);
+        return this;
     }
 
 }

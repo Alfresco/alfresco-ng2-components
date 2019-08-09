@@ -4,6 +4,15 @@
     $accent: map-get($theme, accent);
     $primary: map-get($theme, primary);
 
+    $document-list-selection-color: mat-color($accent) !default;
+    $document-list-background: mat-color($background, background) !default;
+
+    .adf-document-list {
+        min-height: 0;
+        height: 100%;
+        background-color: $document-list-background;
+    }
+
     .mat-icon.adf-datatable-selected {
         height: 100%;
         width: 100%;
@@ -17,7 +26,7 @@
     }
 
     .adf-datatable-selected > svg {
-        fill: mat-color($accent);
+        fill: $document-list-selection-color;
         width: 32px;
         height: 32px;
     }

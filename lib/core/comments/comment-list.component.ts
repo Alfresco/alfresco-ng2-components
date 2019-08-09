@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { CommentModel } from '../models/comment.model';
 import { EcmUserService } from '../userinfo/services/ecm-user.service';
 import { PeopleProcessService } from '../services/people-process.service';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-comment-list',
@@ -28,7 +30,7 @@ import { UserPreferencesService, UserPreferenceValues } from '../services/user-p
     encapsulation: ViewEncapsulation.None
 })
 
-export class CommentListComponent {
+export class CommentListComponent implements OnInit, OnDestroy {
 
     /** The comments data used to populate the list. */
     @Input()
@@ -39,15 +41,24 @@ export class CommentListComponent {
     clickRow: EventEmitter<CommentModel> = new EventEmitter<CommentModel>();
 
     selectedComment: CommentModel;
-
     currentLocale;
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(public peopleProcessService: PeopleProcessService,
                 public ecmUserService: EcmUserService,
                 public userPreferenceService: UserPreferencesService) {
-        userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.currentLocale = locale;
-        });
+    }
+
+    ngOnInit() {
+        this.userPreferenceService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.currentLocale = locale);
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     selectComment(comment: CommentModel): void {

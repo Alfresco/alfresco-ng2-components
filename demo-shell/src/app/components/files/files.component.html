@@ -94,7 +94,9 @@
                         (click)="createLibrary()">
                         <mat-icon>library_add</mat-icon>
                     </button>
-                    <button mat-icon-button
+                    <button
+                        data-automation-id="edit-folder"
+                        mat-icon-button
                             [disabled]="!canEditFolder(documentList.selection)"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"
                             (error)="openSnackMessage($event)"
@@ -119,7 +121,9 @@
                             matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}">
                         <mat-icon>delete</mat-icon>
                     </button>
-                    <button mat-icon-button
+                    <button
+                        data-automation-id="favorite"
+                        mat-icon-button
                             [disabled]="!documentList.selection.length"
                             #favorite="adfFavorite"
                             [adf-node-favorite]="documentList.selection"

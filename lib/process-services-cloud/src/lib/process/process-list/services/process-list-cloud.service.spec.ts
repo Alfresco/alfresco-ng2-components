@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import { async } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, StorageService } from '@alfresco/adf-core';
 import { fakeProcessCloudList } from '../mock/process-list-service.mock';
 import { AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { ProcessListCloudService } from './process-list-cloud.service';
@@ -25,7 +25,7 @@ describe('Activiti ProcessList Cloud Service', () => {
     let service: ProcessListCloudService;
     let alfrescoApiMock: AlfrescoApiServiceMock;
 
-    function returFakeProcessListResults() {
+    function returnFakeProcessListResults() {
         return {
             oauth2Auth: {
                 callCustomApi: () => {
@@ -62,7 +62,7 @@ describe('Activiti ProcessList Cloud Service', () => {
     });
 
     beforeEach(async(() => {
-        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null));
+        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         service = new ProcessListCloudService(alfrescoApiMock,
             new AppConfigService(null),
             new LogService(new AppConfigService(null)));
@@ -70,7 +70,7 @@ describe('Activiti ProcessList Cloud Service', () => {
 
     it('should return the processes', (done) => {
         const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returFakeProcessListResults);
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeProcessListResults);
         service.getProcessByRequest(processRequest).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();

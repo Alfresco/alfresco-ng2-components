@@ -50,7 +50,7 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup min value for date picker', () => {
-        const minValue = '1982-03-13T10:00Z';
+        const minValue = '1982-03-13T10:00:000Z';
         widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
@@ -77,7 +77,7 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup max value for date picker', () => {
-        const maxValue = '1982-03-13T10:00Z';
+        const maxValue = '1982-03-13T10:00:000Z';
         widget.field = new FormFieldModel(null, {
             maxValue: maxValue
         });
@@ -93,14 +93,14 @@ describe('DateTimeWidgetComponent', () => {
         const field = new FormFieldModel(new FormModel(), {
             id: 'date-field-id',
             name: 'date-name',
-            value: '9-12-9999 10:00 AM',
+            value: '09-12-9999 10:00 AM',
             type: 'datetime',
             readOnly: 'false'
         });
 
         widget.field = field;
 
-        widget.onDateChanged({ value: moment('13-03-1982 10:00 AM') });
+        widget.onDateChanged({ value: moment('1982-03-13T10:00:000Z') });
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
 
@@ -122,29 +122,6 @@ describe('DateTimeWidgetComponent', () => {
                 const dateElement: any = element.querySelector('#date-field-id');
                 expect(dateElement.value).toBe('30-11-9999 10:30 AM');
             });
-        }));
-
-        xit('should check correctly the min value with different formats', async(() => {
-            widget.field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '11-29-9999 10:30 AM',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime',
-                readOnly: 'false',
-                minValue: '9999-11-30T10:30Z'
-            });
-            fixture.detectChanges();
-            widget.field.validate();
-            fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    expect(element.querySelector('#date-field-id')).toBeDefined();
-                    expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    const dateElement: any = element.querySelector('#date-field-id');
-                    expect(dateElement.value).toContain('11-29-9999 10:30 AM');
-                    expect(element.querySelector('.adf-error-text').textContent).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
-                });
         }));
 
         it('should show the correct format type', async(() => {

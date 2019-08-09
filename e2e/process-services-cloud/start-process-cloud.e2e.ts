@@ -36,7 +36,6 @@ describe('Start Process', () => {
         browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
     );
 
-    const processDefinitionWithoutName = 'process-bc59fd64-d0b1-4eda-8b02-2ef38062cf39';
     const processName = StringUtil.generateRandomString(10);
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
@@ -51,14 +50,14 @@ describe('Start Process', () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
@@ -84,7 +83,7 @@ describe('Start Process', () => {
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.blur(startProcessPage.processNameInput);
         startProcessPage.checkValidationErrorIsDisplayed(requiredError);
-        startProcessPage.checkStartProcessButtonIsDisabled();
+        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
         startProcessPage.clickCancelProcessButton();
     });
 
@@ -93,12 +92,12 @@ describe('Start Process', () => {
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
         startProcessPage.enterProcessName(processName255Characters);
-        startProcessPage.checkStartProcessButtonIsEnabled();
+        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
 
         startProcessPage.enterProcessName(processNameBiggerThen255Characters);
         startProcessPage.blur(startProcessPage.processNameInput);
         startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
-        startProcessPage.checkStartProcessButtonIsDisabled();
+        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
     });
 
     it('[C291860] Should be able to start a process', () => {
@@ -107,9 +106,8 @@ describe('Start Process', () => {
         processCloudDemoPage.openNewProcessForm();
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.enterProcessName(processName);
-        startProcessPage.checkStartProcessButtonIsEnabled();
+        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
         startProcessPage.clickStartProcessButton();
-        processCloudDemoPage.clickOnProcessFilters();
 
         processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
         expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
@@ -117,14 +115,4 @@ describe('Start Process', () => {
 
     });
 
-    it('[C309875] Should display the processId when Process Definition has process name missing', async () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
-        startProcessPage.clearField(startProcessPage.processNameInput);
-        startProcessPage.enterProcessName(processName);
-        startProcessPage.selectFromProcessDropdown(processDefinitionWithoutName);
-        startProcessPage.checkStartProcessButtonIsEnabled();
-
-    });
 });

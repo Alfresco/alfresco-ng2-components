@@ -19,7 +19,8 @@
 import { Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ContentService } from './content.service';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { NodeEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -156,7 +157,7 @@ export class ThumbnailService {
         'selected': './assets/images/ft_ic_selected.svg'
     };
 
-    constructor(public contentService: ContentService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    constructor(protected apiService: AlfrescoApiService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
         Object.keys(this.mimeTypeIcons).forEach((key) => {
             const url = sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]);
 
@@ -167,12 +168,25 @@ export class ThumbnailService {
 
     /**
      * Gets a thumbnail URL for the given document node.
-     * @param node Node to get URL for.
+     * @param node Node or Node ID to get URL for.
      * @returns URL string
      */
-    public getDocumentThumbnailUrl(node: any): string {
-        const thumbnail = this.contentService.getDocumentThumbnailUrl(node);
-        return thumbnail || this.DEFAULT_ICON;
+    getDocumentThumbnailUrl(node: NodeEntry | string, attachment?: boolean, ticket?: string): string {
+        let resultUrl: string;
+
+        if (node) {
+            let nodeId: string;
+
+            if (typeof node === 'string') {
+                nodeId = node;
+            } else if (node.entry) {
+                nodeId = node.entry.id;
+            }
+
+            resultUrl = this.apiService.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
+        }
+
+        return resultUrl || this.DEFAULT_ICON;
     }
 
     /**

@@ -28,7 +28,9 @@ import {
     RegExFieldValidator,
     RequiredFieldValidator,
     MaxDateTimeFieldValidator,
-    MinDateTimeFieldValidator
+    MinDateTimeFieldValidator,
+    MaxDateFieldValidator,
+    MinDateFieldValidator
 } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
@@ -860,6 +862,194 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.DATETIME,
                 value: '07-02-9999 09:10 AM',
                 minValue: '9999-02-08 09:10 AM'
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBeFalsy();
+            expect(field.validationSummary).not.toBeNull();
+        });
+
+    });
+
+    describe('MaxDateFieldValidator', () => {
+
+        let validator: MaxDateFieldValidator;
+
+        beforeEach(() => {
+            validator = new MaxDateFieldValidator();
+        });
+
+        it('should require maxValue defined', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE
+            });
+            expect(validator.isSupported(field)).toBeFalsy();
+
+            field.maxValue = '9999-02-08';
+            expect(validator.isSupported(field)).toBeTruthy();
+        });
+
+        it('should support date widgets only', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                maxValue: '9999-02-08'
+            });
+
+            expect(validator.isSupported(field)).toBeTruthy();
+
+            field.type = FormFieldTypes.TEXT;
+            expect(validator.isSupported(field)).toBeFalsy();
+        });
+
+        it('should allow empty values', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: null,
+                maxValue: '9999-02-08'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should succeed for unsupported types', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should succeed validating value checking the date', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: '9999-02-08T00:00:00',
+                maxValue: '9999-02-09'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should fail validating value checking the date', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: '9999-02-08T00:00:00',
+                maxValue: '9999-02-07'
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBeFalsy();
+            expect(field.validationSummary).not.toBeNull();
+        });
+
+        it('should validate with APS1 format', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: '9999-02-08T00:00:00',
+                maxValue: '09-02-9999'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should fail validating with APS1 format', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: '9999-02-08T00:00:00',
+                maxValue: '07-02-9999'
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBeFalsy();
+            expect(field.validationSummary).not.toBeNull();
+        });
+
+    });
+
+    describe('MinDateFieldValidator', () => {
+
+        let validator: MinDateFieldValidator;
+
+        beforeEach(() => {
+            validator = new MinDateFieldValidator();
+        });
+
+        it('should require maxValue defined', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE
+            });
+            expect(validator.isSupported(field)).toBeFalsy();
+
+            field.minValue = '9999-02-08';
+            expect(validator.isSupported(field)).toBeTruthy();
+        });
+
+        it('should support date widgets only', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                minValue: '9999-02-08'
+            });
+
+            expect(validator.isSupported(field)).toBeTruthy();
+
+            field.type = FormFieldTypes.TEXT;
+            expect(validator.isSupported(field)).toBeFalsy();
+        });
+
+        it('should allow empty values', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: null,
+                minValue: '9999-02-08'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should succeed for unsupported types', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should succeed validating value checking the date', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: '9999-02-08T00:00:00',
+                minValue: '9999-02-07'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should fail validating value checking the date', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: '9999-02-08T00:00:00',
+                minValue: '9999-02-09'
+            });
+
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBeFalsy();
+            expect(field.validationSummary).not.toBeNull();
+        });
+
+        it('should validate with APS1 format', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: '9999-02-08T00:00:00',
+                minValue: '07-02-9999'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should fail validating with APS1 format', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: '9999-02-08T00:00:00',
+                minValue: '09-02-9999'
             });
 
             field.validationSummary = new ErrorMessageModel();

@@ -15,17 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
+import { takeUntil } from 'rxjs/operators';
+
 @Component({
     selector: 'adf-cloud-task-filters',
     templateUrl: './task-filters-cloud.component.html',
     styleUrls: ['task-filters-cloud.component.scss']
 })
-export class TaskFiltersCloudComponent implements OnChanges {
+export class TaskFiltersCloudComponent implements OnChanges, OnDestroy {
     /** Display filters available to the current user for the application with the specified name. */
     @Input()
     appName: string;
@@ -59,6 +61,8 @@ export class TaskFiltersCloudComponent implements OnChanges {
 
     filters: TaskFilterCloudModel [] = [];
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(private taskFilterCloudService: TaskFilterCloudService, private translationService: TranslationService) {
     }
 
@@ -72,13 +76,18 @@ export class TaskFiltersCloudComponent implements OnChanges {
         }
     }
 
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
+
     /**
      * Return the filter list filtered by appName
      */
     getFilters(appName: string) {
         this.filters$ = this.taskFilterCloudService.getTaskListFilters(appName);
 
-        this.filters$.subscribe(
+        this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
             (res: TaskFilterCloudModel[]) => {
                 this.resetFilter();
                 this.filters = Object.assign([], res);

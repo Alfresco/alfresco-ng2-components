@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import {
     UploadWidgetComponent,
     FormService,
@@ -26,14 +26,13 @@ import {
     ProcessContentService,
     ActivitiContentService,
     ContentService,
-    FormEvent,
     AppConfigValues,
     AppConfigService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
-import { from, zip, of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { from, zip, of, Subject } from 'rxjs';
+import { mergeMap, takeUntil } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 
 @Component({
@@ -53,10 +52,11 @@ import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.servi
     },
     encapsulation: ViewEncapsulation.None
 })
-export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit {
+export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit, OnDestroy {
 
     repositoryList = [];
     private tempFilesList = [];
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
                 private logger: LogService,
@@ -82,11 +82,18 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             this.repositoryList = repoList;
         });
 
-        this.formService.taskSaved.subscribe((formSaved: FormEvent) => {
-            if (formSaved.form.id === this.field.form.id) {
-                this.tempFilesList = [];
-            }
-        });
+        this.formService.taskSaved
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(formSaved => {
+                if (formSaved.form.id === this.field.form.id) {
+                    this.tempFilesList = [];
+                }
+            });
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     isFileSourceConfigured(): boolean {

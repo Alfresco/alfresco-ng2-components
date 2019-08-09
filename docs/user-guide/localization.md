@@ -10,6 +10,7 @@ Dates are not written the same around the world. That is where localizing a date
 -   [Adding language support](#adding-language-support)
 -   [Using the localized date pipe](#using-the-localized-date-pipe)
 -   [Using the time ago pipe](#using-the-time-ago-pipe)
+-   [Using the decimal number pipe](#using-the-decimal-number-pipe)
 
 ## Setting up the configuration in your app
 
@@ -70,5 +71,20 @@ Converts a recent past date into a number of days ago.
 <!-- {% endraw %} -->
 
 Usage of the [time ago pipe](../core/pipes/time-ago.pipe.md).
+
+## Using the decimal number pipe
+
+Localizes the punctuation marks of a given number.
+
+<!-- {% raw %} -->
+
+    {{ number | adfDecimalNumber }}
+
+<!-- {% endraw %} -->
+`Input:` 1999.12
+`Output (english locale):` 1,999.12
+`Output (italian locale):` 1.999,12
+
+Usage of the [decimal number pipe](../core/pipes/decimal-number.pipe.md).
 
 Find more info about localization in the [Angular Docs](https://angular.io/guide/i18n#setting-up-the-locale-of-your-app).

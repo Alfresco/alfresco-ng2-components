@@ -225,6 +225,12 @@ exports.Files = {
             }
         },
 
+        VISIBILITY: {
+            formName: "visibility-process",
+            title: "visibility-process",
+            processName: "visibility-process"
+        },
+
         AMOUNT: {
             formName: "AmountProcess",
             title: "AmountProcess",
@@ -516,14 +522,21 @@ exports.Files = {
 exports.ACTIVITI7_APPS = {
     CANDIDATE_BASE_APP: {
         name: "candidatebaseapp",
-        file_location: "/resources/activiti7/candidatebaseapp.zip"
+        file_location: "/resources/activiti7/candidatebaseapp.zip",
+        processes: {
+            candidateUserProcess: "candidateUserProcess",
+            candidateGroupProcess: "candidateGroupProcess",
+            anotherCandidateGroupProcess: "anotherCandidateGroupProcess",
+            uploadFileProcess: "uploadFileProcess"
+        }
     },
     SIMPLE_APP: {
         name: "simpleapp",
         file_location: "/resources/activiti7/simpleapp.zip",
         processes: {
             processwithvariables: "processwithvariables",
-            simpleProcess: "simpleProcess"
+            simpleProcess: "simpleProcess",
+            dropdownrestprocess: "dropdownrestprocess"
         }
     },
     SUB_PROCESS_APP: {

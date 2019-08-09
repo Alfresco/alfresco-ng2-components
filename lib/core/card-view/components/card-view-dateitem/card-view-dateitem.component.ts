@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { MatDatetimepicker, DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
@@ -27,6 +27,8 @@ import { UserPreferencesService, UserPreferenceValues } from '../../../services/
 import { MomentDateAdapter } from '../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../utils/moment-date-formats.model';
 import { AppConfigService } from '../../../app-config/app-config.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     providers: [
@@ -39,7 +41,7 @@ import { AppConfigService } from '../../../app-config/app-config.service';
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss']
 })
-export class CardViewDateItemComponent implements OnInit {
+export class CardViewDateItemComponent implements OnInit, OnDestroy {
 
     @Input()
     property: CardViewDateItemModel;
@@ -50,11 +52,16 @@ export class CardViewDateItemComponent implements OnInit {
     @Input()
     displayEmpty: boolean = true;
 
+    @Input()
+    displayClearAction: boolean = true;
+
     @ViewChild('datetimePicker')
     public datepicker: MatDatetimepicker<any>;
 
     valueDate: Moment;
     dateFormat: string;
+
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private cardViewUpdateService: CardViewUpdateService,
                 private dateAdapter: DateAdapter<Moment>,
@@ -64,22 +71,35 @@ export class CardViewDateItemComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => {
+                this.dateAdapter.setLocale(locale);
+                this.property.locale = locale;
+            });
 
-        (<MomentDateAdapter> this.dateAdapter).overrideDisplayFormat = this.dateFormat;
+        (<MomentDateAdapter> this.dateAdapter).overrideDisplayFormat = 'MMM DD';
 
         if (this.property.value) {
             this.valueDate = moment(this.property.value, this.dateFormat);
         }
     }
 
-    showProperty() {
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
+
+    showProperty(): boolean {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
-    isEditable() {
+    showClearAction(): boolean {
+        return this.displayClearAction && (!this.property.isEmpty() || !!this.property.default);
+    }
+
+    isEditable(): boolean {
         return this.editable && this.property.editable;
     }
 
@@ -96,6 +116,13 @@ export class CardViewDateItemComponent implements OnInit {
                 this.property.value = momentDate.toDate();
             }
         }
+    }
+
+    onDateClear() {
+        this.valueDate = null;
+        this.cardViewUpdateService.update(this.property, null);
+        this.property.value = null;
+        this.property.default = null;
     }
 
 }

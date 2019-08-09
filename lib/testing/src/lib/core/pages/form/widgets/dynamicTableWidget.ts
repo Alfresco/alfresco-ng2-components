@@ -120,6 +120,10 @@ export class DynamicTableWidget {
         return BrowserVisibility.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
     }
 
+    getTableCellText(rowNumber: number, columnNumber: number) {
+        return BrowserActions.getText(this.tableRow.get(rowNumber).element(by.xpath(`td[${columnNumber}]`)));
+    }
+
     checkItemIsPresent(item) {
         const row = element(by.cssContainingText('table tbody tr td span', item));
         const present = BrowserVisibility.waitUntilElementIsVisible(row);

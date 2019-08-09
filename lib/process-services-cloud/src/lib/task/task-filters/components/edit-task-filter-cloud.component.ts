@@ -15,31 +15,32 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges, OnInit } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
-import { TaskFilterCloudModel, TaskFilterProperties, FilterOptions, TaskFilterAction } from './../models/filter-cloud.model';
-import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { MatDialog, DateAdapter } from '@angular/material';
-import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
-import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
-import { debounceTime, filter } from 'rxjs/operators';
-import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
+
+import { TaskFilterCloudModel, TaskFilterProperties, FilterOptions, TaskFilterAction } from './../models/filter-cloud.model';
+import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
+import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
+import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
+import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
     templateUrl: './edit-task-filter-cloud.component.html',
     styleUrls: ['./edit-task-filter-cloud.component.scss']
 })
-export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
+export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     public static ACTION_SAVE = 'save';
     public static ACTION_SAVE_AS = 'saveAs';
     public static ACTION_DELETE = 'delete';
     public static APP_RUNNING_STATUS: string = 'RUNNING';
-    public static MIN_VALUE = 1;
     public static APPLICATION_NAME: string = 'appName';
     public static LAST_MODIFIED: string = 'lastModified';
     public static SORT: string = 'sort';
@@ -109,6 +110,9 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     taskFilterActions: TaskFilterAction[] = [];
     toggleFilterActions: boolean = false;
 
+    private onDestroy$ = new Subject<boolean>();
+    isLoading: boolean = false;
+
     constructor(
         private formBuilder: FormBuilder,
         public dialog: MatDialog,
@@ -120,22 +124,22 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
-            this.taskFilterProperties = this.createAndFilterProperties();
-            this.taskFilterActions = this.createAndFilterActions();
-            this.buildForm(this.taskFilterProperties);
+            this.retrieveTaskFilterAndBuildForm();
         }
     }
 
-    retrieveTaskFilter(): TaskFilterCloudModel {
-        return new TaskFilterCloudModel(this.taskFilterCloudService.getTaskFilterById(this.appName, this.id));
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     buildForm(taskFilterProperties: TaskFilterProperties[]) {
@@ -156,8 +160,11 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
      */
     onFilterChange() {
         this.editTaskFilterForm.valueChanges
-            .pipe(debounceTime(500),
-                filter(() => this.isFormValid()))
+            .pipe(
+                debounceTime(500),
+                filter(() => this.isFormValid()),
+                takeUntil(this.onDestroy$)
+            )
             .subscribe((formValues: TaskFilterCloudModel) => {
                 this.setLastModifiedToFilter(formValues);
                 this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
@@ -177,7 +184,25 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
             formValues.lastModifiedTo = lastModifiedToFilterValue.toDate();
         }
     }
-    createAndFilterProperties(): TaskFilterProperties[] {
+
+    /**
+     * Fetches task filter by application name and filter id and creates filter properties, build form
+     */
+    retrieveTaskFilterAndBuildForm() {
+        this.isLoading = true;
+        this.taskFilterCloudService.getTaskFilterById(this.appName, this.id)
+        .pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
+            this.isLoading = false;
+            this.taskFilter = new TaskFilterCloudModel(response);
+            this.taskFilterProperties = this.createAndFilterProperties();
+            this.taskFilterActions = this.createAndFilterActions();
+            this.buildForm(this.taskFilterProperties);
+        }, (error) => {
+            this.isLoading = false;
+        });
+    }
+
+    createAndFilterProperties() {
         this.checkMandatoryFilterProperties();
 
         if (this.checkForApplicationNameProperty()) {
@@ -185,7 +210,6 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
             this.getRunningApplications();
         }
 
-        this.taskFilter = this.retrieveTaskFilter();
         const defaultProperties = this.createTaskFilterProperties(this.taskFilter);
         let filteredProperties = defaultProperties.filter((filterProperty: TaskFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
 
@@ -196,7 +220,6 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
         if (this.hasLastModifiedProperty()) {
             filteredProperties = [...filteredProperties, ...this.createLastModifiedProperty()];
         }
-
         return filteredProperties;
     }
 
@@ -285,15 +308,16 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Check if both filters are same
+     * Return true if both filters are same
+     * @param editedQuery, @param currentQuery
      */
-    compareFilters(editedQuery, currentQuery): boolean {
+    compareFilters(editedQuery: TaskFilterCloudModel, currentQuery: TaskFilterCloudModel): boolean {
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
     getRunningApplications() {
         this.appsProcessCloudService.getDeployedApplicationsByStatus(EditTaskFilterCloudComponent.APP_RUNNING_STATUS)
-            .subscribe((applications: ApplicationInstanceModel[]) => {
+        .pipe(takeUntil(this.onDestroy$)).subscribe((applications: ApplicationInstanceModel[]) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
                         this.applicationNames.push({ label: application.name, value: application.name });
@@ -313,16 +337,20 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     }
 
     save(saveAction: TaskFilterAction) {
-        this.taskFilterCloudService.updateFilter(this.changedTaskFilter);
-        saveAction.filter = this.changedTaskFilter;
-        this.action.emit(saveAction);
-        this.formHasBeenChanged = this.compareFilters(this.changedTaskFilter, this.taskFilter);
+        this.taskFilterCloudService.updateFilter(this.changedTaskFilter)
+        .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            saveAction.filter = this.changedTaskFilter;
+            this.action.emit(saveAction);
+            this.formHasBeenChanged = this.compareFilters(this.changedTaskFilter, this.taskFilter);
+        });
     }
 
     delete(deleteAction: TaskFilterAction) {
-        this.taskFilterCloudService.deleteFilter(this.taskFilter);
-        deleteAction.filter = this.taskFilter;
-        this.action.emit(deleteAction);
+        this.taskFilterCloudService.deleteFilter(this.taskFilter)
+        .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            deleteAction.filter = this.taskFilter;
+            this.action.emit(deleteAction);
+        });
     }
 
     saveAs(saveAsAction: TaskFilterAction) {
@@ -343,21 +371,30 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
                     id: filterId,
                     key: 'custom-' + filterKey
                 };
-                const resultFilter = Object.assign({}, this.changedTaskFilter, newFilter);
-                this.taskFilterCloudService.addFilter(resultFilter);
-                saveAsAction.filter = resultFilter;
-                this.action.emit(saveAsAction);
-
+                const resultFilter: TaskFilterCloudModel = Object.assign({}, this.changedTaskFilter, newFilter);
+                this.taskFilterCloudService.addFilter(resultFilter)
+                .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+                    saveAsAction.filter = resultFilter;
+                    this.action.emit(saveAsAction);
+                });
             }
         });
     }
 
-    getSanitizeFilterName(filterName): string {
+    /**
+     * Return filter name
+     * @param filterName
+     */
+    getSanitizeFilterName(filterName: string): string {
         const nameWithHyphen = this.replaceSpaceWithHyphen(filterName.trim());
         return nameWithHyphen.toLowerCase();
     }
 
-    replaceSpaceWithHyphen(name) {
+    /**
+     * Return name with hyphen
+     * @param name
+     */
+    replaceSpaceWithHyphen(name: string): string {
         const regExt = new RegExp(' ', 'g');
         return name.replace(regExt, '-');
     }

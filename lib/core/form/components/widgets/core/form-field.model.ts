@@ -136,7 +136,6 @@ export class FormFieldModel extends FormWidgetModel {
 
     constructor(form: FormModel, json?: any) {
         super(form, json);
-
         if (json) {
             this.fieldType = json.fieldType;
             this.id = json.id;
@@ -163,7 +162,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.params = <FormFieldMetadata> json.params || {};
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
-            this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
+            this.visibilityCondition = json.visibilityCondition ? new WidgetVisibilityModel(json.visibilityCondition) : undefined;
             this.enableFractions = <boolean> json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
@@ -181,7 +180,7 @@ export class FormFieldModel extends FormWidgetModel {
                         if (processVariable) {
                             this.value = processVariable;
                         }
-                    } else if (json.params.responseVariable) {
+                    } else if (json.params.responseVariable && form.json.variables) {
                         const formVariable = this.getVariablesValue(json.params.field.name, form);
                         if (formVariable) {
                             this.value = formVariable;
@@ -376,7 +375,7 @@ export class FormFieldModel extends FormWidgetModel {
             case FormFieldTypes.UPLOAD:
                 this.form.hasUpload = true;
                 if (this.value && this.value.length > 0) {
-                    this.form.values[this.id] = this.value.map((elem) => elem.id).join(',');
+                    this.form.values[this.id] = Array.isArray(this.value) ? this.value.map((elem) => elem.id).join(',') : [this.value];
                 } else {
                     this.form.values[this.id] = null;
                 }
@@ -399,7 +398,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.DATETIME:
-                const dateTimeValue = moment(this.value, this.dateDisplayFormat, true);
+                const dateTimeValue = moment(this.value, this.dateDisplayFormat, true).utc();
                 if (dateTimeValue && dateTimeValue.isValid()) {
                     /* cspell:disable-next-line */
                     this.form.values[this.id] = dateTimeValue.format('YYYY-MM-DDTHH:mm:ssZ');
@@ -413,6 +412,9 @@ export class FormFieldModel extends FormWidgetModel {
                 break;
             case FormFieldTypes.AMOUNT:
                 this.form.values[this.id] = this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
+                break;
+            case FormFieldTypes.BOOLEAN:
+                this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : false;
                 break;
             default:
                 if (!FormFieldTypes.isReadOnlyType(this.type) && !this.isInvalidFieldType(this.type)) {

@@ -26,7 +26,12 @@ export class TaskFormCloudComponent {
     completeButton = element(by.css('button[id="adf-form-complete"]'));
     releaseButton = element(by.css('button[adf-cloud-unclaim-task]'));
     saveButton = element(by.css('button[id="adf-form-save"]'));
+    claimButton = element(by.css('button[adf-cloud-claim-task]'));
     form = element(by.css('adf-cloud-form'));
+    formTitle = element(by.css(`span.adf-form-title`));
+    emptyContentIcon = element(by.css(`div.adf-empty-content mat-icon.adf-empty-content__icon`));
+    emptyContentTitle = element(by.css(`div.adf-empty-content div.adf-empty-content__title`));
+    emptyContentSubtitle = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
 
     checkCompleteButtonIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
@@ -48,12 +53,32 @@ export class TaskFormCloudComponent {
         return this;
     }
 
+    clickClaimButton() {
+        BrowserActions.click(this.claimButton);
+        return this;
+    }
+
+    clickReleaseButton() {
+        BrowserActions.click(this.releaseButton);
+        return this;
+    }
+
     formFields() {
         return new FormFields();
     }
 
     checkFormIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.form);
+        return this;
+    }
+
+    getFormTitle() {
+        BrowserVisibility.waitUntilElementIsVisible(this.formTitle);
+        return this.formTitle.getText();
+    }
+
+    checkFormIsNotDisplayed() {
+        BrowserVisibility.waitUntilElementIsNotVisible(this.form);
         return this;
     }
 
@@ -71,4 +96,23 @@ export class TaskFormCloudComponent {
         this.saveButton.click();
         return this;
     }
+
+    checkFormContentIsEmpty() {
+        BrowserVisibility.waitUntilElementIsVisible(this.emptyContentIcon);
+        return this;
+    }
+
+    getEmptyFormContentTitle() {
+        return BrowserActions.getText(this.emptyContentTitle);
+    }
+
+    getEmptyFormContentSubtitle() {
+        return BrowserActions.getText(this.emptyContentSubtitle);
+    }
+
+    getCompleteButton() {
+        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+        return this.completeButton;
+    }
+
 }

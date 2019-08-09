@@ -57,14 +57,6 @@ import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-det
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
-import { CommunityTasksCloudDemoComponent } from './components/cloud/community/community-task-cloud.component';
-import { CommunityCloudComponent } from './components/cloud/community/community-cloud.component';
-import { CommunityStartProcessCloudDemoComponent } from './components/cloud/community/community-start-process-cloud.component';
-import { CommunityStartTaskCloudDemoComponent } from './components/cloud/community/community-start-task-cloud.component';
-import { CommunityProcessDetailsCloudDemoComponent } from './components/cloud/community/community-process-details-cloud.component';
-import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-processes-cloud.component';
-import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/community/community-task-details-cloud.component';
-
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: 'app/components/login/login.module#AppLoginModule' },
     { path: 'logout', component: LogoutComponent },
@@ -93,7 +85,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: 'app/components/blob-preview/blob-preview.module#BlobPreviewModule'
+                loadChildren: 'app/components/file-view/file-view.module#FileViewModule'
             }
         ]
     },
@@ -127,11 +119,11 @@ export const appRoutes: Routes = [
                 ]
             },
             {
-                path: 'date',
+                path: 'pipes',
                 children: [
                     {
                         path: '',
-                        loadChildren: 'app/components/date/date.module#AppDateModule'
+                        loadChildren: 'app/components/pipes/pipes.module#AppPipesModule'
                     }
                 ]
             },
@@ -186,33 +178,7 @@ export const appRoutes: Routes = [
                     },
                     {
                         path: 'community',
-                        component: CommunityCloudComponent,
-                        children: [
-                            {
-                                path: 'tasks',
-                                component: CommunityTasksCloudDemoComponent
-                            },
-                            {
-                                path: 'processes',
-                                component: CommunityProcessesCloudDemoComponent
-                            },
-                            {
-                                path: 'start-task',
-                                component: CommunityStartTaskCloudDemoComponent
-                            },
-                            {
-                                path: 'start-process',
-                                component: CommunityStartProcessCloudDemoComponent
-                            },
-                            {
-                                path: 'task-details/:taskId',
-                                component: CommunityTaskDetailsCloudDemoComponent
-                            },
-                            {
-                                path: 'process-details/:processInstanceId',
-                                component: CommunityProcessDetailsCloudDemoComponent
-                            }
-                        ]
+                        loadChildren: 'app/components/cloud/community/community.module#AppCommunityModule'
                     },
                     {
                         path: ':appName',

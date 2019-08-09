@@ -18,7 +18,14 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { Observable, Subject, of } from 'rxjs';
-import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
+import {
+    CardViewItem,
+    NodesApiService,
+    LogService,
+    CardViewUpdateService,
+    AlfrescoApiService,
+    TranslationService
+} from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
 import { switchMap, takeUntil, catchError } from 'rxjs/operators';
@@ -78,7 +85,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private logService: LogService,
         private alfrescoApiService: AlfrescoApiService,
         private translationService: TranslationService
-    ) {}
+    ) {
+    }
 
     ngOnInit() {
         this.cardViewUpdateService.itemUpdated$
@@ -112,7 +120,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
         try {
             statusCode = JSON.parse(error.message).error.statusCode;
-        } catch {}
+        } catch {
+        }
 
         let message = `METADATA.ERRORS.${statusCode}`;
 
@@ -143,12 +152,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return this.nodesApiService.updateNode(this.node.id, nodeBody);
     }
 
-    showGroup(group: CardViewGroup) {
+    showGroup(group: CardViewGroup): boolean {
         const properties = group.properties.filter((property) => {
             return !!property.displayValue;
         });
 
-        return properties.length;
+        return properties.length > 0;
     }
 
     ngOnDestroy() {

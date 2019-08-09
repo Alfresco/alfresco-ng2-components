@@ -16,16 +16,16 @@
  */
 
 import { LogService, UserPreferencesService, UserPreferenceValues, UserProcessModel, FormFieldModel, FormModel } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
-import { switchMap, defaultIfEmpty } from 'rxjs/operators';
+import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
 import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -37,7 +37,7 @@ import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
     encapsulation: ViewEncapsulation.None
 })
-export class StartTaskComponent implements OnInit {
+export class StartTaskComponent implements OnInit, OnDestroy {
 
     public FORMAT_DATE: string = 'DD/MM/YYYY';
     MAX_LENGTH: number = 255;
@@ -71,6 +71,8 @@ export class StartTaskComponent implements OnInit {
     maxTaskNameLength: number = this.MAX_LENGTH;
     loading = false;
 
+    private onDestroy$ = new Subject<boolean>();
+
     /**
      * Constructor
      * @param auth
@@ -92,12 +94,19 @@ export class StartTaskComponent implements OnInit {
         this.validateMaxTaskNameLength();
 
         this.field = new FormFieldModel(new FormModel(), { id: this.assigneeId, value: this.assigneeId, placeholder: 'Assignee' });
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-        });
+
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
 
         this.loadFormsTask();
         this.buildForm();
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     buildForm() {
@@ -107,7 +116,9 @@ export class StartTaskComponent implements OnInit {
             formKey: new FormControl('')
         });
 
-        this.taskForm.valueChanges.subscribe((taskFormValues) => this.setTaskDetails(taskFormValues));
+        this.taskForm.valueChanges
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(taskFormValues => this.setTaskDetails(taskFormValues));
     }
 
     public whitespaceValidator(control: FormControl) {

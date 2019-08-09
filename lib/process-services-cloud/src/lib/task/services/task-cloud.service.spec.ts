@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
+import { setupTestBed, IdentityUserService, StorageService } from '@alfresco/adf-core';
 import { AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
@@ -68,7 +68,7 @@ describe('Task Cloud Service', () => {
     });
 
     beforeEach(async(() => {
-        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null));
+        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         identityUserService = TestBed.get(IdentityUserService);
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(cloudMockUser);
         service = new TaskCloudService(alfrescoApiMock,

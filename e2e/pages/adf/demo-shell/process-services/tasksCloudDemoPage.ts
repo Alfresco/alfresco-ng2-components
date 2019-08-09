@@ -42,6 +42,9 @@ export class TasksCloudDemoPage {
     displayTaskDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
     displayProcessDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="processDetailsRedirection"]'));
     multiSelectionToggle = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
+    testingModeToggle = element(by.css('mat-slide-toggle[data-automation-id="testingMode"]'));
+    selectedRows = element(by.xpath("//div[text()=' Selected rows: ']"));
+    noOfSelectedRows = element.all(by.xpath("//div[text()=' Selected rows: ']//li"));
 
     formControllersPage = new FormControllersPage();
 
@@ -59,6 +62,11 @@ export class TasksCloudDemoPage {
 
     enableMultiSelection() {
         this.formControllersPage.enableToggle(this.multiSelectionToggle);
+        return this;
+    }
+
+    enableTestingMode() {
+        this.formControllersPage.enableToggle(this.testingModeToggle);
         return this;
     }
 
@@ -92,7 +100,7 @@ export class TasksCloudDemoPage {
 
     openNewTaskForm() {
         BrowserActions.click(this.createButton);
-        BrowserActions.click(this.newTaskButton);
+        BrowserActions.clickExecuteScript('button[data-automation-id="btn-start-task"]');
         return this;
     }
 
@@ -130,5 +138,21 @@ export class TasksCloudDemoPage {
     clickOnSelectionModeDropDownArrow() {
         BrowserActions.click(this.modeDropDownArrow);
         BrowserVisibility.waitUntilElementIsVisible(this.modeSelector);
+    }
+
+    checkSelectedRowsIsDisplayed() {
+        BrowserVisibility.waitUntilElementIsVisible(this.selectedRows);
+        return this;
+    }
+
+    getNoOfSelectedRows() {
+        this.checkSelectedRowsIsDisplayed();
+        return this.noOfSelectedRows.count();
+    }
+
+    getSelectedTaskRowText(rowNo: string) {
+        this.checkSelectedRowsIsDisplayed();
+        const row = element(by.xpath(`//div[text()=' Selected rows: ']//li[${rowNo}]`));
+        return row.getText();
     }
 }

@@ -34,14 +34,14 @@ describe('Search Date Range Filter', () => {
     const dateRangeFilter = searchFilters.createdDateRangeFilterPage();
     const searchResults = new SearchResultsPage();
     const datePicker = new DatePickerPage();
-    const navigationBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
     beforeAll(async (done) => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
 
         loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -191,7 +191,7 @@ describe('Search Date Range Filter', () => {
         });
 
         it('[C277117] Should be able to change date format', async () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[4].component.settings.dateFormat = 'MM-DD-YY';
 

@@ -23,6 +23,7 @@ import {
 } from '../../../services/user-preferences.service';
 import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 import { AppConfigService } from '../../../app-config/app-config.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-date-cell',
@@ -75,9 +76,8 @@ export class DateCellComponent extends DataTableCellComponent {
         if (userPreferenceService) {
             userPreferenceService
                 .select(UserPreferenceValues.Locale)
-                .subscribe((locale) => {
-                    this.currentLocale = locale;
-                });
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(locale => this.currentLocale = locale);
         }
     }
 }

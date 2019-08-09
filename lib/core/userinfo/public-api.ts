@@ -23,5 +23,6 @@ export * from './models/bpm-user.model';
 export * from './models/ecm-user.model';
 export * from './models/identity-user.model';
 export * from './models/identity-role.model';
+export * from './models/identity-group.model';
 
 export * from './userinfo.module';

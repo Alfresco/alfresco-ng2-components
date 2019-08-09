@@ -15,15 +15,19 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
+import { TaskHeaderCloudComponent } from '@alfresco/adf-process-services-cloud';
 
 @Component({
     templateUrl: './task-details-cloud-demo.component.html',
     styleUrls: ['./task-details-cloud-demo.component.scss']
 })
 export class TaskDetailsCloudDemoComponent {
+
+    @ViewChild('taskHeader')
+    taskHeader: TaskHeaderCloudComponent;
 
     taskId: string;
     appName: string;
@@ -52,6 +56,14 @@ export class TaskDetailsCloudDemoComponent {
 
     onTaskCompleted() {
         this.goBack();
+    }
+
+    onTaskClaimed() {
+        this.taskHeader.ngOnInit();
+    }
+
+    onTaskUnclaimed() {
+        this.taskHeader.ngOnInit();
     }
 
     onFormContentClicked(resourceId) {

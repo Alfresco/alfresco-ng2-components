@@ -34,7 +34,7 @@ describe('Info Drawer', () => {
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
@@ -77,6 +77,10 @@ describe('Info Drawer', () => {
 
         navigationBarPage.goToSite(site);
         contentServicesPage.checkAcsContainer();
+    });
+
+    afterEach(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C277251] Should display the icon when the icon property is defined', () => {

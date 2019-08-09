@@ -31,6 +31,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { Observable } from 'rxjs/index';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -89,7 +90,7 @@ describe('LoginComponent', () => {
         fixture.destroy();
     });
 
-    function loginWithCredentials(username, password, providers: string = 'ECM') {
+    function loginWithCredentials(username, password) {
         usernameInput.value = username;
         passwordInput.value = password;
 
@@ -130,6 +131,12 @@ describe('LoginComponent', () => {
 
     it('should update user preferences upon login', async(() => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
+        spyOn(alfrescoApiService.getInstance(), 'login').and.callFake(() => {
+            return new Observable((observer) => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         component.success.subscribe(() => {
             expect(userPreferences.setStoragePrefix).toHaveBeenCalledWith('fake-username');
@@ -276,74 +283,216 @@ describe('LoginComponent', () => {
         expect(element.querySelector('#username-error')).toBeNull();
     });
 
-    it('should render validation min-length error when the username is just 1 character with a custom validation Validators.minLength(3)', () => {
-        component.fieldsValidation = {
-            username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-            password: ['', Validators.required]
-        };
-        component.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
-        component.ngOnInit();
-        fixture.detectChanges();
+    describe('Error', () => {
 
-        usernameInput.value = '1';
-        usernameInput.dispatchEvent(new Event('input'));
+        it('should render validation min-length error when the username is just 1 character with a custom validation Validators.minLength(3)', () => {
+            component.fieldsValidation = {
+                username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                password: ['', Validators.required]
+            };
+            component.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
+            component.ngOnInit();
+            fixture.detectChanges();
 
-        fixture.detectChanges();
+            usernameInput.value = '1';
+            usernameInput.dispatchEvent(new Event('input'));
 
-        expect(component.formError).toBeDefined();
-        expect(component.formError.username).toBeDefined();
-        expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-        expect(element.querySelector('#username-error')).toBeDefined();
-        expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-    });
+            fixture.detectChanges();
 
-    it('should render validation min-length error when the username is lower than 3 characters with a custom validation Validators.minLength(3)', () => {
-        component.fieldsValidation = {
-            username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-            password: ['', Validators.required]
-        };
-        component.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
-        component.ngOnInit();
-        fixture.detectChanges();
+            expect(component.formError).toBeDefined();
+            expect(component.formError.username).toBeDefined();
+            expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+            expect(element.querySelector('#username-error')).toBeDefined();
+            expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+        });
 
-        usernameInput.value = '12';
-        usernameInput.dispatchEvent(new Event('input'));
+        it('should render validation min-length error when the username is lower than 3 characters with a custom validation Validators.minLength(3)', () => {
+            component.fieldsValidation = {
+                username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                password: ['', Validators.required]
+            };
+            component.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
+            component.ngOnInit();
+            fixture.detectChanges();
 
-        fixture.detectChanges();
+            usernameInput.value = '12';
+            usernameInput.dispatchEvent(new Event('input'));
 
-        expect(component.formError).toBeDefined();
-        expect(component.formError.username).toBeDefined();
-        expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-        expect(element.querySelector('#username-error')).toBeDefined();
-        expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-    });
+            fixture.detectChanges();
 
-    it('should render validation required error when the username is empty and dirty', () => {
-        usernameInput.value = '';
-        component.form.controls.username.markAsDirty();
-        usernameInput.dispatchEvent(new Event('input'));
+            expect(component.formError).toBeDefined();
+            expect(component.formError.username).toBeDefined();
+            expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+            expect(element.querySelector('#username-error')).toBeDefined();
+            expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+        });
 
-        fixture.detectChanges();
+        it('should render validation required error when the username is empty and dirty', () => {
+            usernameInput.value = '';
+            component.form.controls.username.markAsDirty();
+            usernameInput.dispatchEvent(new Event('input'));
 
-        expect(component.formError).toBeDefined();
-        expect(component.formError.username).toBeDefined();
-        expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
-        expect(element.querySelector('#username-error')).toBeDefined();
-        expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
-    });
+            fixture.detectChanges();
 
-    it('should render validation required error when the password is empty and dirty', () => {
-        passwordInput.value = '';
-        component.form.controls.password.markAsDirty();
-        passwordInput.dispatchEvent(new Event('input'));
+            expect(component.formError).toBeDefined();
+            expect(component.formError.username).toBeDefined();
+            expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
+            expect(element.querySelector('#username-error')).toBeDefined();
+            expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
+        });
 
-        fixture.detectChanges();
+        it('should render validation required error when the password is empty and dirty', () => {
+            passwordInput.value = '';
+            component.form.controls.password.markAsDirty();
+            passwordInput.dispatchEvent(new Event('input'));
 
-        expect(component.formError).toBeDefined();
-        expect(component.formError.password).toBeDefined();
-        expect(component.formError.password).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
-        expect(element.querySelector('#password-required')).toBeDefined();
-        expect(element.querySelector('#password-required').innerText).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
+            fixture.detectChanges();
+
+            expect(component.formError).toBeDefined();
+            expect(component.formError.password).toBeDefined();
+            expect(component.formError.password).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
+            expect(element.querySelector('#password-required')).toBeDefined();
+            expect(element.querySelector('#password-required').innerText).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
+        });
+
+        it('should render no validation errors when the username and password are filled', () => {
+            usernameInput.value = 'fake-username';
+            passwordInput.value = 'fake-password';
+
+            component.form.controls.username.markAsDirty();
+            component.form.controls.password.markAsDirty();
+
+            usernameInput.dispatchEvent(new Event('input'));
+            passwordInput.dispatchEvent(new Event('input'));
+
+            fixture.detectChanges();
+
+            expect(component.formError).toBeDefined();
+            expect(component.formError.username).toEqual('');
+            expect(component.formError.password).toEqual('');
+            expect(element.querySelector('#username-error')).toBeNull();
+            expect(element.querySelector('#password-required')).toBeNull();
+        });
+
+        it('should return error with a wrong username', (done) => {
+            spyOn(alfrescoApiService.getInstance(), 'login').and.callFake(() => {
+                return new Observable((observer) => {
+                    observer.next();
+                    observer.error();
+                });
+            });
+
+            component.error.subscribe(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(getLoginErrorElement()).toBeDefined();
+                    expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+                    done();
+                });
+            });
+
+            loginWithCredentials('fake-wrong-username', 'fake-password');
+        });
+
+        it('should return error with a wrong password', (done) => {
+            spyOn(alfrescoApiService.getInstance(), 'login').and.callFake(() => {
+                return new Observable((observer) => {
+                    observer.next();
+                    observer.error();
+                });
+            });
+
+            component.error.subscribe(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(component.isError).toBe(true);
+                    expect(getLoginErrorElement()).toBeDefined();
+                    expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+                    done();
+                });
+            });
+
+            loginWithCredentials('fake-username', 'fake-wrong-password');
+        });
+
+        it('should return error with a wrong username and password', (done) => {
+            spyOn(alfrescoApiService.getInstance(), 'login').and.callFake(() => {
+                return new Observable((observer) => {
+                    observer.next();
+                    observer.error();
+                });
+            });
+
+            component.error.subscribe(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(component.isError).toBe(true);
+                    expect(getLoginErrorElement()).toBeDefined();
+                    expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+                    done();
+                });
+            });
+
+            loginWithCredentials('fake-wrong-username', 'fake-wrong-password');
+        });
+
+        it('should return CORS error when server CORS error occurs', (done) => {
+            spyOn(authService, 'login').and.returnValue(throwError({
+                error: {
+                    crossDomain: true,
+                    message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
+                }
+            }));
+
+            component.error.subscribe(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(component.isError).toBe(true);
+                    expect(getLoginErrorElement()).toBeDefined();
+                    expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+                    done();
+                });
+            });
+
+            loginWithCredentials('fake-username-CORS-error', 'fake-password');
+        });
+
+        it('should return CSRF error when server CSRF error occurs', async(() => {
+            spyOn(authService, 'login')
+                .and.returnValue(throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 }));
+
+            component.error.subscribe(() => {
+                fixture.detectChanges();
+
+                expect(component.isError).toBe(true);
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CSRF');
+            });
+
+            loginWithCredentials('fake-username-CSRF-error', 'fake-password');
+        }));
+
+        it('should return ECM read-only error when error occurs', async(() => {
+            spyOn(authService, 'login')
+                .and.returnValue(
+                throwError(
+                    {
+                        message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode',
+                        status: 403
+                    }
+                ));
+
+            component.error.subscribe(() => {
+                fixture.detectChanges();
+
+                expect(component.isError).toBe(true);
+                expect(getLoginErrorElement()).toBeDefined();
+                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ECM-LICENSE');
+            });
+
+            loginWithCredentials('fake-username-ECM-access-error', 'fake-password');
+        }));
+
     });
 
     it('should trim the username value', () => {
@@ -354,25 +503,6 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
 
         expect(usernameInput.value).toEqual('username');
-    });
-
-    it('should render no validation errors when the username and password are filled', () => {
-        usernameInput.value = 'fake-username';
-        passwordInput.value = 'fake-password';
-
-        component.form.controls.username.markAsDirty();
-        component.form.controls.password.markAsDirty();
-
-        usernameInput.dispatchEvent(new Event('input'));
-        passwordInput.dispatchEvent(new Event('input'));
-
-        fixture.detectChanges();
-
-        expect(component.formError).toBeDefined();
-        expect(component.formError.username).toEqual('');
-        expect(component.formError.password).toEqual('');
-        expect(element.querySelector('#username-error')).toBeNull();
-        expect(element.querySelector('#password-required')).toBeNull();
     });
 
     it('should render the new values after user and password values are changed', () => {
@@ -408,106 +538,9 @@ describe('LoginComponent', () => {
 
     });
 
-    it('should return error with a wrong username', (done) => {
-
-        component.error.subscribe(() => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(getLoginErrorElement()).toBeDefined();
-                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
-                done();
-            });
-        });
-
-        loginWithCredentials('fake-wrong-username', 'fake-password');
-    });
-
-    it('should return error with a wrong password', (done) => {
-        component.error.subscribe(() => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(component.isError).toBe(true);
-                expect(getLoginErrorElement()).toBeDefined();
-                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
-                done();
-            });
-        });
-
-        loginWithCredentials('fake-username', 'fake-wrong-password');
-    });
-
-    it('should return error with a wrong username and password', (done) => {
-        component.error.subscribe(() => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(component.isError).toBe(true);
-                expect(getLoginErrorElement()).toBeDefined();
-                expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
-                done();
-            });
-        });
-
-        loginWithCredentials('fake-wrong-username', 'fake-wrong-password');
-    });
-
-    it('should return CORS error when server CORS error occurs', (done) => {
-        spyOn(authService, 'login').and.returnValue(throwError({
-            error: {
-                crossDomain: true,
-                message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
-            }
-        }));
-
-        component.error.subscribe(() => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(component.isError).toBe(true);
-                expect(getLoginErrorElement()).toBeDefined();
-                expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
-                done();
-            });
-        });
-
-        loginWithCredentials('fake-username-CORS-error', 'fake-password');
-    });
-
-    it('should return CSRF error when server CSRF error occurs', async(() => {
-        spyOn(authService, 'login')
-            .and.returnValue(throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 }));
-
-        component.error.subscribe(() => {
-            fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CSRF');
-        });
-
-        loginWithCredentials('fake-username-CSRF-error', 'fake-password');
-    }));
-
-    it('should return ECM read-only error when error occurs', async(() => {
-        spyOn(authService, 'login')
-            .and.returnValue(
-            throwError(
-                {
-                    message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode',
-                    status: 403
-                }
-            ));
-
-        component.error.subscribe(() => {
-            fixture.detectChanges();
-
-            expect(component.isError).toBe(true);
-            expect(getLoginErrorElement()).toBeDefined();
-            expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ECM-LICENSE');
-        });
-
-        loginWithCredentials('fake-username-ECM-access-error', 'fake-password');
-    }));
-
     it('should emit success event after the login has succeeded and discard password', async(() => {
+        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+
         component.success.subscribe((event) => {
             fixture.detectChanges();
 
@@ -558,6 +591,13 @@ describe('LoginComponent', () => {
     });
 
     it('should emit only the username and not the password as part of the executeSubmit', async(() => {
+        spyOn(alfrescoApiService.getInstance(), 'login').and.callFake(() => {
+            return new Observable((observer) => {
+                observer.next();
+                observer.complete();
+            });
+        });
+
         component.executeSubmit.subscribe((res) => {
             fixture.detectChanges();
 
@@ -626,7 +666,7 @@ describe('LoginComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.SSO-WRONG-CONFIGURATION' );
+                    expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.SSO-WRONG-CONFIGURATION');
                 });
             }));
 

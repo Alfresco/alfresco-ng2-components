@@ -40,7 +40,7 @@ describe('Auth Guard SSO role service', () => {
     });
 
     it('Should canActivate be true if the Role is present int the JWT token', async(() => {
-        spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1'] } });
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
@@ -50,7 +50,7 @@ describe('Auth Guard SSO role service', () => {
     }));
 
     it('Should canActivate be false if the Role is not present int the JWT token', async(() => {
-        spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role3'] } });
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
@@ -60,7 +60,7 @@ describe('Auth Guard SSO role service', () => {
     }));
 
     it('Should not redirect if canActivate is', async(() => {
-        spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1'] } });
         spyOn(routerService, 'navigate').and.stub();
 
@@ -72,7 +72,7 @@ describe('Auth Guard SSO role service', () => {
     }));
 
     it('Should canActivate return false if the data Role to check is empty', async(() => {
-        spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1', 'role3'] } });
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
@@ -81,7 +81,7 @@ describe('Auth Guard SSO role service', () => {
     }));
 
     it('Should canActivate return false if the realm_access is not present', async(() => {
-        spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({});
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
@@ -90,7 +90,7 @@ describe('Auth Guard SSO role service', () => {
     }));
 
     it('Should redirect to the redirectURL if canActivate is false and redirectUrl is in data', async(() => {
-        spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({});
         spyOn(routerService, 'navigate').and.stub();
 
@@ -102,7 +102,7 @@ describe('Auth Guard SSO role service', () => {
     }));
 
     it('Should not redirect if canActivate is false and redirectUrl is not in  data', async(() => {
-        spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({});
         spyOn(routerService, 'navigate').and.stub();
 
@@ -137,7 +137,7 @@ describe('Auth Guard SSO role service', () => {
 
     it('Should canActivate be true if both Real Role and Client Role are present int the JWT token', () => {
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
 
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({
             'realm_access': { roles: ['role1'] },
@@ -152,7 +152,7 @@ describe('Auth Guard SSO role service', () => {
 
     it('Should canActivate be false if the Client Role is not present int the JWT token with the correct role', () => {
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
 
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({
             'realm_access': { roles: ['role1'] },
@@ -168,7 +168,7 @@ describe('Auth Guard SSO role service', () => {
     describe('ClientRole ', () => {
 
         it('Should be true if the resource_access contains the single role', () => {
-            spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
 
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
@@ -180,7 +180,7 @@ describe('Auth Guard SSO role service', () => {
         });
 
         it('Should be true if the resource_access contains at least one of the roles', () => {
-            spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
 
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
@@ -192,7 +192,7 @@ describe('Auth Guard SSO role service', () => {
         });
 
         it('Should be false if the resource_access does not contain the role', () => {
-            spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
                     'resource_access': { fakeapp: { roles: ['role3'] } }
@@ -202,7 +202,7 @@ describe('Auth Guard SSO role service', () => {
         });
 
         it('Should be false if the resource_access does not contain the client role related to the app', () => {
-            spyOn(localStorage, 'getItem').and.returnValue('my-access_token');
+            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
                     'resource_access': { anotherfakeapp: { roles: ['role1'] } }

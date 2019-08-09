@@ -16,7 +16,7 @@
  */
 
 import { by, element, Key, protractor, browser } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, FormFields } from '@alfresco/adf-testing';
 
 export class StartProcessPage {
 
@@ -120,6 +120,10 @@ export class StartProcessPage {
 
     }
 
+    checkStartFormProcessButtonIsEnabled() {
+        expect(this.formStartProcessButton.isEnabled()).toBe(true);
+    }
+
     checkStartProcessButtonIsEnabled() {
         expect(this.startProcessButton.isEnabled()).toBe(true);
     }
@@ -159,5 +163,9 @@ export class StartProcessPage {
                 locator.sendKeys(protractor.Key.BACK_SPACE);
             }
         });
+    }
+
+    formFields() {
+        return new FormFields();
     }
 }

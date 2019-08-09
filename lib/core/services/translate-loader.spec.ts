@@ -21,8 +21,6 @@ import { TranslationService } from './translation.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
 
-const componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
-
 declare let jasmine: any;
 
 describe('TranslateLoader', () => {
@@ -55,22 +53,6 @@ describe('TranslateLoader', () => {
     it('should add the component to the list', () => {
         customLoader.registerProvider('login', 'path/login');
         expect(customLoader.providerRegistered('login')).toBeTruthy();
-    });
-
-    xit('should return the Json translation ', () => {
-        customLoader.registerProvider('login', 'path/login');
-        customLoader.getTranslation('en').subscribe(
-            (response) => {
-                expect(response).toBeDefined();
-                expect(response).toEqual(JSON.parse(componentJson1));
-            }
-        );
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: componentJson1
-        });
     });
 
 });

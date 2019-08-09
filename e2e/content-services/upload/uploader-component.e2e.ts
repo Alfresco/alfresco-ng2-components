@@ -23,7 +23,6 @@ import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-import { FolderModel } from '../../models/ACS/folderModel';
 import resources = require('../../util/resources');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -38,7 +37,7 @@ describe('Upload component', () => {
     const acsUser = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const navigationBarPage = new NavigationBarPage();
@@ -67,16 +66,6 @@ describe('Upload component', () => {
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
-    const folderOne = new FolderModel({
-        'name': resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_name,
-        'location': resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_location
-    });
-    const folderTwo = new FolderModel({
-        'name': resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_name,
-        'location': resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_location
-    });
-    const uploadedFileInFolder = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_name });
-    const uploadedFileInFolderTwo = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_TWO.file_name });
 
     beforeAll(async (done) => {
 
@@ -94,6 +83,11 @@ describe('Upload component', () => {
 
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
 
+        done();
+    });
+
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
         done();
     });
 
@@ -124,22 +118,6 @@ describe('Upload component', () => {
             contentServicesPage
                 .checkUploadButton()
                 .checkContentIsDisplayed(firstPdfFileModel.name);
-        });
-
-        xit('[C260173] Should be able to upload folder when enabled', () => {
-            uploadToggles.enableFolderUpload();
-            uploadToggles.checkFolderUploadToggleIsEnabled();
-
-            contentServicesPage.uploadFolder(folderOne.location);
-            uploadDialog.checkUploadCompleted().then(() => {
-                contentServicesPage.checkContentIsDisplayed(folderOne.name);
-            });
-            expect(contentServicesPage.getFolderButtonTooltip()).toEqual('Custom tooltip');
-            uploadDialog.fileIsUploaded(uploadedFileInFolder.name);
-            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-            contentServicesPage.doubleClickRow(folderOne.name).checkContentIsDisplayed(uploadedFileInFolder.name);
-            contentServicesPage.goToDocumentList();
-            uploadToggles.disableFolderUpload();
         });
 
         it('[C272789] Should be able to upload PDF file', () => {
@@ -297,32 +275,6 @@ describe('Upload component', () => {
 
             uploadToggles.clickCheckboxDisableUpload();
             expect(contentServicesPage.uploadButtonIsEnabled()).toBeTruthy();
-        });
-
-        xit('[C279882] Should be possible Upload a folder in a folder', () => {
-            uploadToggles.enableFolderUpload();
-            browser.driver.sleep(1000);
-            contentServicesPage.uploadFolder(folderOne.location);
-            uploadDialog.checkUploadCompleted().then(() => {
-                contentServicesPage.checkContentIsDisplayed(folderOne.name);
-            });
-            uploadDialog.fileIsUploaded(uploadedFileInFolder.name);
-
-            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-            contentServicesPage.doubleClickRow(folderOne.name).checkContentIsDisplayed(uploadedFileInFolder.name);
-
-            uploadToggles.enableFolderUpload();
-            browser.driver.sleep(1000);
-            contentServicesPage.uploadFolder(folderTwo.location);
-            uploadDialog.checkUploadCompleted().then(() => {
-                contentServicesPage.checkContentIsDisplayed(folderTwo.name);
-            });
-            uploadDialog.fileIsUploaded(uploadedFileInFolderTwo.name);
-
-            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-            contentServicesPage.doubleClickRow(folderTwo.name).checkContentIsDisplayed(uploadedFileInFolderTwo.name);
-
-            uploadToggles.disableFolderUpload();
         });
     });
 

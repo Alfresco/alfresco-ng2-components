@@ -23,9 +23,10 @@ import {
 import { Pagination } from '@alfresco/js-api';
 import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-pagination',
@@ -82,29 +83,32 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     @Output()
     prevPage: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
-    private paginationSubscription: Subscription;
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService) {
-        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
-            this.pagination.maxItems = pagSize;
-        });
     }
 
     ngOnInit() {
+        this.userPreferencesService
+            .select(UserPreferenceValues.PaginationSize)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(pagSize => this.pagination.maxItems = pagSize);
+
         if (!this.supportedPageSizes) {
             this.supportedPageSizes = this.userPreferencesService.supportedPageSizes;
         }
 
         if (this.target) {
-            this.paginationSubscription = this.target.pagination.subscribe((pagination: PaginationModel) => {
+            this.target.pagination
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(pagination => {
+                    if (pagination.count === 0 && !this.isFirstPage) {
+                        this.goPrevious();
+                    }
 
-                if (pagination.count === 0 && !this.isFirstPage) {
-                    this.goPrevious();
-                }
-
-                this.pagination = pagination;
-                this.cdr.detectChanges();
-            });
+                    this.pagination = pagination;
+                    this.cdr.detectChanges();
+                });
         }
 
         if (!this.pagination) {
@@ -217,6 +221,11 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         });
     }
 
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
+
     handlePaginationEvent(action: string, params: PaginationModel) {
         const {
             NEXT_PAGE,
@@ -256,12 +265,6 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
         if (this.target) {
             this.target.updatePagination(params);
-        }
-    }
-
-    ngOnDestroy() {
-        if (this.paginationSubscription) {
-            this.paginationSubscription.unsubscribe();
         }
     }
 }

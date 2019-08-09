@@ -39,6 +39,7 @@ export enum AppConfigValues {
     DISABLECSRF = 'disableCSRF',
     AUTH_WITH_CREDENTIALS = 'auth.withCredentials',
     APPLICATION = 'application',
+    STORAGE_PREFIX = 'application.storagePrefix',
     NOTIFY_DURATION = 'notificationDefaultDuration'
 }
 

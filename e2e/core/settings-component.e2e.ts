@@ -49,28 +49,6 @@ describe('Settings component', () => {
             loginPage.waitForElements();
         });
 
-        xit('[C291946] Should not save BPM Settings changes when User clicks Back button', () => {
-            settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
-            settingsPage.setProcessServicesURL('http://myenvUrl.co.uk');
-            settingsPage.clickBackButton();
-            loginPage.waitForElements();
-            settingsPage.goToSettingsPage();
-            expect(settingsPage.getSelectedOptionText()).not.toEqual('BPM', 'The Settings changes are saved');
-            expect(settingsPage.getBpmHostUrl()).not.toEqual('http://myenvUrl.co.uk', 'The Settings changes are saved');
-
-        });
-
-        xit('[C291947] Should not save ECM Settings changes when User clicks Back button', () => {
-            settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
-            settingsPage.setContentServicesURL('http://myenvUrl.co.uk');
-            settingsPage.clickBackButton();
-            loginPage.waitForElements();
-            settingsPage.goToSettingsPage();
-            expect(settingsPage.getSelectedOptionText()).not.toEqual('ECM', 'The Settings changes are saved');
-            expect(settingsPage.getBpmHostUrl()).not.toEqual('http://myenvUrl.co.uk', 'The Settings changes are saved');
-
-        });
-
         it('[C291948] Should save ALL Settings changes when User clicks Apply button', () => {
             loginPage.goToLoginPage();
             loginPage.clickSettingsIcon();
@@ -78,8 +56,8 @@ describe('Settings component', () => {
             loginPage.waitForElements();
             settingsPage.goToSettingsPage();
             expect(settingsPage.getSelectedOptionText()).toEqual('ALL', 'The Settings changes are not saved');
-            expect(settingsPage.getBpmHostUrl()).toEqual(browser.params.testConfig.adf.url, 'The BPM Settings changes are not saved');
-            expect(settingsPage.getEcmHostUrl()).toEqual(browser.params.testConfig.adf.url, 'The ECM Settings changes are not saved');
+            expect(settingsPage.getBpmHostUrl()).toEqual(browser.params.testConfig.adf_aps.host, 'The BPM Settings changes are not saved');
+            expect(settingsPage.getEcmHostUrl()).toEqual(browser.params.testConfig.adf_acs.host, 'The ECM Settings changes are not saved');
 
         });
 
@@ -126,8 +104,8 @@ describe('Settings component', () => {
         beforeAll( (done) => {
             settingsPage.goToSettingsPage();
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
-            settingsPage.setContentServicesURL(browser.params.testConfig.adf.url);
-            settingsPage.setProcessServicesURL(browser.params.testConfig.adf.url);
+            settingsPage.setContentServicesURL(browser.params.testConfig.adf_acs.host);
+            settingsPage.setProcessServicesURL(browser.params.testConfig.adf_aps.host);
             settingsPage.clickApply();
             done();
         });
@@ -143,8 +121,8 @@ describe('Settings component', () => {
             settingsPage.checkProviderOptions();
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf.url);
-            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf.url);
+            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
+            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
             expect(settingsPage.getBackButton().isEnabled()).toBe(true);
             expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
             loginPage.goToLoginPage();
@@ -167,7 +145,7 @@ describe('Settings component', () => {
             expect(settingsPage.getSelectedOptionText()).toBe('BPM');
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf.url);
+            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
             expect(settingsPage.getBackButton().isEnabled()).toBe(true);
             expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
             settingsPage.clickBackButton();
@@ -194,7 +172,7 @@ describe('Settings component', () => {
             expect(settingsPage.getSelectedOptionText()).toBe('ECM');
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf.url);
+            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
             expect(settingsPage.getBackButton().isEnabled()).toBe(true);
             expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
             settingsPage.clickBackButton();
@@ -223,8 +201,8 @@ describe('Settings component', () => {
             expect(settingsPage.getSelectedOptionText()).toBe('ALL');
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf.url);
-            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf.url);
+            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
+            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
             expect(settingsPage.getBackButton().isEnabled()).toBe(true);
             expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
             settingsPage.clickBackButton();

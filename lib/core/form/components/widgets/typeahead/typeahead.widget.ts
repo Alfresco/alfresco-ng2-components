@@ -57,50 +57,50 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     getValuesByTaskId() {
         this.formService
             .getRestFieldValues(
-            this.field.form.taskId,
-            this.field.id
+                this.field.form.taskId,
+                this.field.id
             )
             .subscribe(
-            (formFieldOption: FormFieldOption[]) => {
-                const options = formFieldOption || [];
-                this.field.options = options;
+                (formFieldOption: FormFieldOption[]) => {
+                    const options = formFieldOption || [];
+                    this.field.options = options;
 
-                const fieldValue = this.field.value;
-                if (fieldValue) {
-                    const toSelect = options.find((item) => item.id === fieldValue || item.name.toLocaleLowerCase() === fieldValue.toLocaleLowerCase());
-                    if (toSelect) {
-                        this.value = toSelect.name;
+                    const fieldValue = this.field.value;
+                    if (fieldValue) {
+                        const toSelect = options.find((item) => item.id === fieldValue || item.name.toLocaleLowerCase() === fieldValue.toLocaleLowerCase());
+                        if (toSelect) {
+                            this.value = toSelect.name;
+                        }
                     }
-                }
-                this.onFieldChanged(this.field);
-                this.field.updateForm();
-            },
-            (err) => this.handleError(err)
+                    this.onFieldChanged(this.field);
+                    this.field.updateForm();
+                },
+                (err) => this.handleError(err)
             );
     }
 
     getValuesByProcessDefinitionId() {
         this.formService
             .getRestFieldValuesByProcessId(
-            this.field.form.processDefinitionId,
-            this.field.id
+                this.field.form.processDefinitionId,
+                this.field.id
             )
             .subscribe(
-            (formFieldOption: FormFieldOption[]) => {
-                const options = formFieldOption || [];
-                this.field.options = options;
+                (formFieldOption: FormFieldOption[]) => {
+                    const options = formFieldOption || [];
+                    this.field.options = options;
 
-                const fieldValue = this.field.value;
-                if (fieldValue) {
-                    const toSelect = options.find((item) => item.id === fieldValue);
-                    if (toSelect) {
-                        this.value = toSelect.name;
+                    const fieldValue = this.field.value;
+                    if (fieldValue) {
+                        const toSelect = options.find((item) => item.id === fieldValue);
+                        if (toSelect) {
+                            this.value = toSelect.name;
+                        }
                     }
-                }
-                this.onFieldChanged(this.field);
-                this.field.updateForm();
-            },
-            (err) => this.handleError(err)
+                    this.onFieldChanged(this.field);
+                    this.field.updateForm();
+                },
+                (err) => this.handleError(err)
             );
     }
 

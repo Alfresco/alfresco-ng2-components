@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions  } from '@alfresco/adf-testing';
+import { BrowserActions, LoginPage, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
@@ -24,6 +24,8 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { VersionManagePage } from '../../pages/adf/versionManagerPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Upload component', () => {
 
@@ -32,9 +34,12 @@ describe('Upload component', () => {
     const uploadToggles = new UploadToggles();
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
+    const versionManagePage = new VersionManagePage();
+    const navigationBarPage = new NavigationBarPage();
+
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -73,20 +78,25 @@ describe('Upload component', () => {
         done();
     });
 
+    afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+        done();
+    });
+
     beforeEach(() => {
         contentServicesPage.goToDocumentList();
     });
 
     afterEach(async (done) => {
-        const nodesPromise = await contentServicesPage.getElementsDisplayedId();
+        const nbResults = await contentServicesPage.numberOfResultsDisplayed();
+        if (nbResults > 1) {
+            const nodesPromise = await contentServicesPage.getElementsDisplayedId();
 
-        nodesPromise.forEach(async (currentNodePromise) => {
-            await currentNodePromise.then(async (currentNode) => {
-                if (currentNode && currentNode !== 'Node id') {
-                    await uploadActions.deleteFileOrFolder(currentNode);
-                }
+            nodesPromise.forEach(async (currentNodePromise) => {
+                const nodeId = await currentNodePromise;
+                await uploadActions.deleteFileOrFolder(nodeId);
             });
-        });
+        }
 
         done();
     });
@@ -140,7 +150,6 @@ describe('Upload component', () => {
     });
 
     it('[C260170] Should be possible to upload multiple files', () => {
-        contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
         uploadToggles.enableMultipleFileUpload();
         contentServicesPage.uploadMultipleFile(filesLocation).checkContentsAreDisplayed(filesName);
@@ -150,4 +159,18 @@ describe('Upload component', () => {
         uploadToggles.disableMultipleFileUpload();
     });
 
+    it('[C311305] Should NOT be able to remove uploaded version', () => {
+        contentServicesPage.uploadFile(docxFileModel.location);
+        uploadDialog.fileIsUploaded(docxFileModel.name);
+        contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+
+        contentServicesPage.versionManagerContent(docxFileModel.name);
+        BrowserActions.click(versionManagePage.showNewVersionButton);
+        versionManagePage.uploadNewVersionFile(
+            pngFileModel.location
+        );
+        versionManagePage.closeVersionDialog();
+        uploadDialog.removeUploadedFile(pngFileModel.name);
+        contentServicesPage.checkContentIsDisplayed(pngFileModel.name);
+    });
 });

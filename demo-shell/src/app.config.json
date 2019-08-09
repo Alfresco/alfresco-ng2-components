@@ -438,10 +438,15 @@
       20
     ]
   },
-  "dateValues":{
+  "dateValues": {
     "defaultDateFormat": "mediumDate",
     "defaultDateTimeFormat": "MMM d, y, H:mm",
-    "defaultLocale": "en-US"
+    "defaultLocale": "en"
+  },
+  "decimalValues": {
+    "minIntegerDigits": 1,
+    "minFractionDigits": 0,
+    "maxFractionDigits": 2
   },
   "files": {
     "excluded": [

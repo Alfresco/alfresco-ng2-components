@@ -165,6 +165,7 @@ describe('Test PdfViewer component', () => {
             done();
         });
     });
+
     it('should Loader be present', () => {
         expect(element.querySelector('.adf-loader-container')).not.toBeNull();
     });
@@ -206,18 +207,18 @@ describe('Test PdfViewer component', () => {
 
         afterEach(() => {
             document.body.removeChild(elementUrlTestComponent);
+            fixture.destroy();
         });
 
-        it('should Canvas be present', fakeAsync(() => {
+        it('should Canvas be present', (done) => {
             fixtureUrlTestComponent.detectChanges();
-
-            tick(250);
 
             fixtureUrlTestComponent.whenStable().then(() => {
                 expect(elementUrlTestComponent.querySelector('.adf-pdfViewer')).not.toBeNull();
                 expect(elementUrlTestComponent.querySelector('.adf-viewer-pdf-viewer')).not.toBeNull();
+                done();
             });
-        }));
+        }, 25000);
 
         it('should Next an Previous Buttons be present', (done) => {
             fixtureUrlTestComponent.detectChanges();
@@ -226,7 +227,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementUrlTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
                 done();
             });
-        }, 5000);
+        }, 25000);
 
         it('should Input Page elements be present', (done) => {
 
@@ -240,7 +241,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementUrlTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
                 done();
             });
-        }, 5000);
+        }, 25000);
 
         it('should Toolbar be hide if showToolbar is false', (done) => {
             component.showToolbar = false;
@@ -251,7 +252,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementUrlTestComponent.querySelector('.viewer-toolbar-pagination')).toBeNull();
                 done();
             });
-        }, 5000);
+        }, 25000);
     });
 
     describe('View with blob file', () => {
@@ -276,6 +277,7 @@ describe('Test PdfViewer component', () => {
 
         afterEach(() => {
             document.body.removeChild(elementBlobTestComponent);
+            fixture.destroy();
         });
 
         it('should Canvas be present', () => {
@@ -287,14 +289,15 @@ describe('Test PdfViewer component', () => {
             });
         });
 
-        it('should Next an Previous Buttons be present', () => {
+        it('should Next an Previous Buttons be present', (done) => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
                 expect(elementBlobTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
                 expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
+                done();
             });
-        });
+        }, 25000);
 
         it('should Input Page elements be present', (done) => {
             fixtureBlobTestComponent.detectChanges();
@@ -308,7 +311,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
                 done();
             });
-        }, 5000);
+        }, 25000);
 
         it('should Toolbar be hide if showToolbar is false', (done) => {
             componentBlobTestComponent.pdfViewerComponent.showToolbar = false;
@@ -320,7 +323,7 @@ describe('Test PdfViewer component', () => {
                 expect(elementBlobTestComponent.querySelector('.viewer-toolbar-pagination')).toBeNull();
                 done();
             });
-        }, 5000);
+        }, 25000);
     });
 
     describe('Password protection dialog', () => {
@@ -328,64 +331,104 @@ describe('Test PdfViewer component', () => {
         let fixtureUrlTestPasswordComponent: ComponentFixture<UrlTestPasswordComponent>;
         let componentUrlTestPasswordComponent: UrlTestPasswordComponent;
 
-        beforeEach((done) => {
-            fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
-            componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
+        describe('Open password dialog', () => {
+            beforeEach((done) => {
+                fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
+                componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
-            spyOn(dialog, 'open').and.callFake((comp, context) => {
-                if (context.data.reason === pdfjsLib.PasswordResponses.NEED_PASSWORD) {
-                    return {
-                        afterClosed: () => of('wrong_password')
-                    };
-                }
+                spyOn(dialog, 'open').and.callFake((comp, context) => {
+                    if (context.data.reason === pdfjsLib.PasswordResponses.NEED_PASSWORD) {
+                        return {
+                            afterClosed: () => of('wrong_password')
+                        };
+                    }
 
-                if (context.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD) {
-                    return {
-                        afterClosed: () => of('password')
-                    };
-                }
-            });
-
-            fixtureUrlTestPasswordComponent.detectChanges();
-
-            componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
-                done();
-            });
-        });
-
-        afterEach(() => {
-            document.body.removeChild(fixtureUrlTestPasswordComponent.nativeElement);
-        });
-
-        it('should try to access protected pdf', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-
-                expect(dialog.open).toHaveBeenCalledTimes(2);
-                done();
-            });
-        });
-
-        it('should raise dialog asking for password', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
-                    reason: pdfjsLib.PasswordResponses.NEED_PASSWORD
+                    if (context.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD) {
+                        return {
+                            afterClosed: () => of('password')
+                        };
+                    }
                 });
-                done();
+
+                fixtureUrlTestPasswordComponent.detectChanges();
+
+                componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
+                    done();
+                });
+            });
+
+            afterEach(() => {
+                document.body.removeChild(fixtureUrlTestPasswordComponent.nativeElement);
+            });
+
+            it('should try to access protected pdf', (done) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+
+                    expect(dialog.open).toHaveBeenCalledTimes(2);
+                    done();
+                });
+            });
+
+            it('should raise dialog asking for password', (done) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
+                        reason: pdfjsLib.PasswordResponses.NEED_PASSWORD
+                    });
+                    done();
+                });
+            });
+
+            it('it should raise dialog with incorrect password', (done) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(dialog.open['calls'].all()[1].args[1].data).toEqual({
+                        reason: pdfjsLib.PasswordResponses.INCORRECT_PASSWORD
+                    });
+                    done();
+                });
             });
         });
 
-        it('it should raise dialog with incorrect password', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(dialog.open['calls'].all()[1].args[1].data).toEqual({
-                    reason: pdfjsLib.PasswordResponses.INCORRECT_PASSWORD
+        describe('Close password dialog ', () => {
+            beforeEach((done) => {
+                fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
+                componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
+
+                spyOn(dialog, 'open').and.callFake(() => {
+                    return {
+                        afterClosed: () => {
+                            done();
+                            return of('');
+                        }
+                    };
                 });
-                done();
+
+                spyOn(componentUrlTestPasswordComponent.pdfViewerComponent.close, 'emit');
+
+                fixtureUrlTestPasswordComponent.detectChanges();
+
+                componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
+                    done();
+                });
+            });
+
+            afterEach(() => {
+                document.body.removeChild(fixtureUrlTestPasswordComponent.nativeElement);
+            });
+
+            it('should try to access protected pdf', (done) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+
+                    expect(componentUrlTestPasswordComponent.pdfViewerComponent.close.emit).toHaveBeenCalledWith();
+                    done();
+                });
             });
         });
     });
@@ -421,7 +464,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.totalPages).toBe(6);
                 done();
             });
-        }, 5000);
+        }, 25000);
 
         it('should nextPage move to the next page', (done) => {
             const nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
@@ -433,7 +476,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
                 done();
             });
-        }, 5000);
+        }, 25000);
 
         it('should event RIGHT_ARROW keyboard change pages', (done) => {
             EventMock.keyDown(RIGHT_ARROW);
@@ -445,7 +488,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
                 done();
             });
-        }, 5000);
+        }, 25000);
 
         it('should event LEFT_ARROW keyboard change pages', (done) => {
             component.inputPage('2');
@@ -462,7 +505,7 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
             });
-        }, 5000);
+        }, 25000);
 
         it('should previous page move to the previous page', (done) => {
             const previousPageButton: any = elementUrlTestComponent.querySelector('#viewer-previous-page-button');
@@ -477,7 +520,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
                 done();
             });
-        }, 5000);
+        }, 25000);
 
         it('should previous page not move to the previous page if is page 1', (done) => {
             component.previousPage();
@@ -487,7 +530,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(1);
                 done();
             });
-        }, 5000);
+        }, 25000);
 
         it('should Input page move to the inserted page', (done) => {
             componentUrlTestComponent.pdfViewerComponent.inputPage('2');
@@ -497,7 +540,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
                 done();
             });
-        }, 5000);
+        }, 25000);
 
         describe('Resize interaction', () => {
 
@@ -510,7 +553,7 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
 
-            }, 5000);
+            }, 25000);
         });
 
         describe('Thumbnails', () => {
@@ -522,7 +565,7 @@ describe('Test PdfViewer component', () => {
                     expect(componentUrlTestComponent.pdfViewerComponent.pdfThumbnailsContext.viewer).not.toBeNull();
                     done();
                 });
-            }, 5000);
+            }, 25000);
 
             it('should open thumbnails panel', (done) => {
                 expect(elementUrlTestComponent.querySelector('.adf-pdf-viewer__thumbnails')).toBeNull();
@@ -535,7 +578,7 @@ describe('Test PdfViewer component', () => {
                     expect(elementUrlTestComponent.querySelector('.adf-pdf-viewer__thumbnails')).not.toBeNull();
                     done();
                 });
-            }, 5000);
+            }, 25000);
         });
 
         describe('Viewer events', () => {
@@ -560,7 +603,7 @@ describe('Test PdfViewer component', () => {
                         done();
                     });
                 });
-            }, 5000);
+            }, 25000);
 
             it('should react on the emit of pagesLoaded event', (done) => {
                 fixtureUrlTestComponent.detectChanges();
@@ -583,7 +626,7 @@ describe('Test PdfViewer component', () => {
                         done();
                     });
                 });
-            }, 5000);
+            }, 25000);
 
         });
 

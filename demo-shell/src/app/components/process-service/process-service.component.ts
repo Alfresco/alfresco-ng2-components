@@ -35,7 +35,7 @@ import {
     UserProcessInstanceFilterRepresentation
 } from '@alfresco/js-api';
 import {
-    FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
+    FORM_FIELD_VALIDATORS, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues
 } from '@alfresco/adf-core';
 
@@ -57,12 +57,13 @@ import {
     TaskListComponent
 } from '@alfresco/adf-process-services';
 import { LogService } from '@alfresco/adf-core';
-import { AlfrescoApiService, UserPreferencesService, ValidateFormEvent } from '@alfresco/adf-core';
-import { Subscription } from 'rxjs';
+import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { Subject } from 'rxjs';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
 import { PreviewService } from '../../services/preview.service';
 import { Location } from '@angular/common';
+import { takeUntil } from 'rxjs/operators';
 
 const currentProcessIdNew = '__NEW__';
 const currentTaskIdNew = '__NEW__';
@@ -160,7 +161,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         new DemoFieldValidator()
     ];
 
-    private subscriptions: Subscription[] = [];
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
@@ -184,17 +185,28 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         // Uncomment this line to map 'custom_stencil_01' to local editor component
         formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
 
-        this.subscriptions.push(
-            formService.formLoaded.subscribe((formEvent: FormEvent) => {
+        formService.formLoaded
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(formEvent => {
                 this.logService.log(`Form loaded: ${formEvent.form.id}`);
-            }),
-            formService.formFieldValueChanged.subscribe((formFieldEvent: FormFieldEvent) => {
+            });
+
+        formService.formFieldValueChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(formFieldEvent => {
                 this.logService.log(`Field value changed. Form: ${formFieldEvent.form.id}, Field: ${formFieldEvent.field.id}, Value: ${formFieldEvent.field.value}`);
-            }),
-            this.preferenceService.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
+            });
+
+        this.preferenceService
+            .select(UserPreferenceValues.PaginationSize)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((pageSize) => {
                 this.paginationPageSize = pageSize;
-            }),
-            formService.validateDynamicTableRow.subscribe(
+            });
+
+        formService.validateDynamicTableRow
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(
                 (validateDynamicTableRowEvent: ValidateDynamicTableRowEvent) => {
                     const row: DynamicTableRow = validateDynamicTableRowEvent.row;
                     if (row && row.value && row.value.name === 'admin') {
@@ -203,23 +215,28 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                         validateDynamicTableRowEvent.preventDefault();
                     }
                 }
-            ),
+            );
 
-            formService.formContentClicked.subscribe((content) => {
+        formService.formContentClicked
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((content) => {
                 this.showContentPreview(content);
-            }),
+            });
 
-            formService.validateForm.subscribe((validateFormEvent: ValidateFormEvent) => {
+        formService.validateForm
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(validateFormEvent => {
                 this.logService.log('Error form:' + validateFormEvent.errorsField);
-            })
-        );
+            });
 
         // Uncomment this block to see form event handling in action
         /*
-        formService.formEvents.subscribe((event: Event) => {
-            this.logService.log('Event fired:' + event.type);
-            this.logService.log('Event Target:' + event.target);
-        });
+        formService.formEvents
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((event: Event) => {
+                this.logService.log('Event fired:' + event.type);
+                this.logService.log('Event Target:' + event.target);
+            });
         */
     }
 
@@ -247,8 +264,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-        this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onTaskFilterClick(filter: FilterRepresentationModel): void {

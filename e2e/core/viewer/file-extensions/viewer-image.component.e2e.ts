@@ -24,15 +24,18 @@ import resources = require('../../../util/resources');
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
+    const navigationBarPage = new NavigationBarPage();
+
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
@@ -65,6 +68,10 @@ describe('Viewer', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     describe('Image Folder Uploaded', () => {
@@ -112,7 +119,7 @@ describe('Viewer', () => {
                     viewerPage.clickCloseButton();
                 }
             });
-        });
+        }, 5 * 60 * 1000);
 
     });
 

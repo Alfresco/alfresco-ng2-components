@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, protractor } from 'protractor';
+import { element, by, protractor, browser } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
@@ -114,12 +114,11 @@ export class HeaderPage {
 
     sideBarPositionStart() {
         return BrowserActions.click(this.positionStart);
-
     }
 
     sideBarPositionEnd() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.positionEnd);
         return BrowserActions.click(this.positionEnd);
-
     }
 
     checkSidebarPositionStart() {

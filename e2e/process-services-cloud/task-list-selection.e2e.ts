@@ -50,7 +50,7 @@ describe('Task list cloud - selection', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
 
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
@@ -68,7 +68,7 @@ describe('Task list cloud - selection', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             done();
         });
 
@@ -165,6 +165,22 @@ describe('Task list cloud - selection', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
             tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
             tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[2]);
+        });
+
+        it('[C297472] Should be able to see selected tasks with Multiselection and Testing switched on', () => {
+            tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
+            tasksCloudDemoPage.clickSettingsButton().enableTestingMode();
+            tasksCloudDemoPage.clickAppButton();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
+
+            expect(tasksCloudDemoPage.getNoOfSelectedRows()).toBe(2);
+            expect(tasksCloudDemoPage.getSelectedTaskRowText('1')).toBe(tasks[0]);
+            expect(tasksCloudDemoPage.getSelectedTaskRowText('2')).toBe(tasks[1]);
         });
 
     });

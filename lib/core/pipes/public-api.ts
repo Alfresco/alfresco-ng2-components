@@ -24,5 +24,6 @@ export * from './user-initial.pipe';
 export * from './full-name.pipe';
 export * from './multi-value.pipe';
 export * from './localized-date.pipe';
+export * from './decimal-number.pipe';
 
 export * from './pipe.module';

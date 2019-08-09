@@ -54,7 +54,7 @@ describe('Attach Form Component', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         const users = new UsersActions();
@@ -80,12 +80,9 @@ describe('Attach Form Component', () => {
     });
 
     afterAll(async (done) => {
-        try {
-            await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-        } catch (error) {
-        }
+        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();
     });
 

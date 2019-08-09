@@ -259,26 +259,6 @@ Extract the i18n files from the repo and create a zip
 ./extract-langs.sh 
 ```
 
-# docker-publish.sh
-
-***docker-publish.sh*** 
-
-publish doker images in the selected repository
-
-## Options
-
-| Option | Description |
-| --- | --- |
-| -u or --username  | username  |
-| -p or --password  | password |
-| -t or --tags  | tags |
-
-## Examples
-
-```sh
-./docker-publish.sh
-```
-
 # test-e2e-bc.sh
 
 ***test-e2e-bc.sh*** 

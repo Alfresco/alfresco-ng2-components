@@ -22,7 +22,8 @@ import { UploadService } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { AppConfigService } from '@alfresco/adf-core';
 import { PreviewService } from '../../services/preview.service';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 export function processUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
     return new ProcessUploadService(api, config);
@@ -51,7 +52,7 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy
 
     processInstance: ProcessInstance;
 
-    private subscriptions: Subscription[] = [];
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         private uploadService: UploadService,
@@ -60,11 +61,9 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy
     ) {}
 
     ngOnInit() {
-        this.subscriptions.push(
-            this.uploadService.fileUploadComplete.subscribe(
-                (value) => this.onFileUploadComplete(value.data)
-            )
-        );
+        this.uploadService.fileUploadComplete
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(value => this.onFileUploadComplete(value.data));
     }
 
     ngOnChanges() {
@@ -77,8 +76,8 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-        this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onFileUploadComplete(content: any) {

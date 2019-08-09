@@ -2,6 +2,7 @@
     { "title": "Angular Material Design", "file": "angular-material-design.md" },
     { "title": "Form Extensibility and Customisation", "file": "extensibility.md" },
     { "title": "Internationalization in ADF", "file": "internationalization.md" },
+    { "title": "Localization in ADF", "file": "localization.md" },
     { "title": "Theming", "file": "theming.md" },
     { "title": "Transclusion", "file": "transclusion.md" },
     { "title": "Typography", "file": "typography.md" },

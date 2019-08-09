@@ -15,14 +15,23 @@
  * limitations under the License.
  */
 export class IdentityRoleModel {
-
     id: string;
     name: string;
+    description?: string;
+    clientRole?: boolean;
+    composite?: boolean;
+    containerId?: string;
+    scopeParamRequired?: boolean;
 
     constructor(obj?: any) {
         if (obj) {
             this.id = obj.id || null;
             this.name = obj.name || null;
+            this.description = obj.description || null;
+            this.clientRole = obj.clientRole || null;
+            this.composite = obj.composite || null;
+            this.containerId = obj.containerId || null;
+            this.scopeParamRequired = obj.scopeParamRequired || null;
         }
     }
 }

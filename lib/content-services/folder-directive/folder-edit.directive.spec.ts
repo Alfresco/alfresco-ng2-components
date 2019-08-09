@@ -40,7 +40,6 @@ class TestComponent {
 describe('FolderEditDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let element;
-    let node: any;
     let dialog: MatDialog;
     let contentService: ContentService;
     let dialogRefMock;
@@ -68,8 +67,6 @@ describe('FolderEditDirective', () => {
     });
 
     beforeEach(() => {
-        node = { entry: { id: 'folderId' } };
-
         dialogRefMock = {
             afterClosed: (val) =>  of(val),
             componentInstance: {
@@ -79,18 +76,6 @@ describe('FolderEditDirective', () => {
         };
 
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
-    });
-
-    xit('should emit folderEdit event when input value is not undefined', (done) => {
-        spyOn(dialogRefMock, 'afterClosed').and.returnValue(of(node));
-
-        contentService.folderEdit.subscribe((val) => {
-            expect(val).toBe(node);
-            done();
-        });
-
-        element.triggerEventHandler('click', event);
-        fixture.detectChanges();
     });
 
     it('should not emit folderEdit event when input value is undefined', () => {

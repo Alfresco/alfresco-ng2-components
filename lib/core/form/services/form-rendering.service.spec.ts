@@ -20,7 +20,8 @@ import {
     FormFieldModel,
     FormFieldTypes,
     UnknownWidgetComponent,
-    UploadWidgetComponent
+    UploadWidgetComponent,
+    TextWidgetComponent
 } from './../components/widgets/index';
 import { FormRenderingService } from './form-rendering.service';
 
@@ -53,6 +54,12 @@ describe('FormRenderingService', () => {
         const resolver = service.getComponentTypeResolver('missing-type');
         const type = resolver(null);
         expect(type).toBe(UnknownWidgetComponent);
+    });
+
+    it('should resolve Text widget for readonly field type', () => {
+        const resolver = service.getComponentTypeResolver('readonly');
+        const type = resolver(null);
+        expect(type).toBe(TextWidgetComponent);
     });
 
     it('should fallback to default resolver when field type missing', () => {

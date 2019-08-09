@@ -61,19 +61,23 @@ describe('Process filters cloud', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
 
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
             await apiService.login(testUser.email, testUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidateBaseApp);
-            processInstancesService = new  ProcessInstancesService(apiService);
+            const processDefinition = await processDefinitionService
+                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+
+            processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
             completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
             queryService = new QueryService(apiService);
+
+            await browser.driver.sleep(4000); // eventual consistency query
             const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
             tasksService = new TasksService(apiService);
             const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
@@ -83,11 +87,11 @@ describe('Process filters cloud', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             done();
         }, 5 * 60 * 1000);
 
-        afterAll(async(done) => {
+        afterAll(async (done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
             done();

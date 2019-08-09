@@ -35,3 +35,9 @@ Lists all available process filters and allows to select a filter.
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs while loading the filters |
 | filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a filter is selected/clicked |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when filters are loaded successfully |
+
+## See also
+
+-   [Process Filter Cloud Service](./services/process-filter-cloud.service.md)
+-   [Local preference Cloud Service](./services/local-preference-cloud.service.md)
+-   [User preference Cloud Service](./services/user-preference-cloud.service.md)

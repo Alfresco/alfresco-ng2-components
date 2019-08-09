@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v3.4.0](#v340)
 -   [v3.3.0](#v330)
 -   [v3.2.1](#v321)
 -   [v3.2.0](#v320)
@@ -24,6 +25,16 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v3.4.0
+
+**Release:** 2019-08-09<br/>
+
+<!--v340 start-->
+
+-   [Decimal number pipe](core/pipes/decimal-number.pipe.md)
+
+<!--v340 end-->
 
 ## v3.3.0
 

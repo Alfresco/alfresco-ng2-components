@@ -131,24 +131,6 @@ describe('WebscriptComponent', () => {
             });
         });
 
-        xit('HTML response should be displayed', (done) => {
-            component.scriptPath = 'sample/folder/Company%20Home';
-            component.contentType = 'HTML';
-
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#webscript-data-HTML').innerHTML)
-                    .toBe('&lt;test-element-id&gt;&lt;test-elemt-id&gt;');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'text/html',
-                responseText: '<test-element-id><test-elemt-id>'
-            });
-        });
-
         it('datatable response should be displayed', (done) => {
             // reset MDL handler
             window['componentHandler'] = null;

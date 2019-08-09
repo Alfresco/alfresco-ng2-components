@@ -372,7 +372,7 @@ describe('StartProcessCloudComponent', () => {
             });
         }));
 
-        it('should reload processes when appId input changed', async(() => {
+        it('should reload processes when appName input changed', async(() => {
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -387,18 +387,19 @@ describe('StartProcessCloudComponent', () => {
             expect(component.processDefinitionList).toBe(fakeProcessDefinitions);
         });
 
-        it('should filter processes in the select list if input is empty', fakeAsync(() => {
+        it('should display the matching results in the dropdown as the user types down', fakeAsync(() => {
             component.processDefinitionList = fakeProcessDefinitions;
             component.ngOnInit();
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
 
-            const el = fixture.nativeElement.querySelector('#processDefinitionName');
-            el.value = '';
-            el.dispatchEvent(new Event('keyup'));
-            el.dispatchEvent(new Event('input'));
+            component.processForm.controls['processDefinition'].setValue('process');
             fixture.detectChanges();
+            tick(3000);
+            expect(component.filteredProcesses.length).toEqual(3);
 
+            component.processForm.controls['processDefinition'].setValue('processwithfo');
+            fixture.detectChanges();
             tick(3000);
             expect(component.filteredProcesses.length).toEqual(1);
         }));
@@ -487,7 +488,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should able to start the process when the required fields are filled up', (done) => {
+        it('should be able to start the process when the required fields are filled up', (done) => {
             component.processForm.controls['processInstanceName'].setValue('My Process 1');
             component.processForm.controls['processDefinition'].setValue('NewProcess 1');
 

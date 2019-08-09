@@ -124,29 +124,6 @@ describe('DateWidgetComponent', () => {
             });
         }));
 
-        xit('should check correctly the min value with different formats', async(() => {
-            widget.field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
-                name: 'date-name',
-                value:  '11-30-9999',
-                type: 'date',
-                readOnly: 'false',
-                dateDisplayFormat : 'MM-DD-YYYY',
-                minValue : '30-12-9999'
-            });
-            fixture.detectChanges();
-            widget.field.validate();
-            fixture.whenStable()
-            .then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#date-field-id')).toBeDefined();
-                    expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    const dateElement: any = element.querySelector('#date-field-id');
-                    expect(dateElement.value).toContain('11-30-9999');
-                    expect(element.querySelector('.adf-error-text').textContent).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
-                });
-        }));
-
         it('should show the correct format type', async(() => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',

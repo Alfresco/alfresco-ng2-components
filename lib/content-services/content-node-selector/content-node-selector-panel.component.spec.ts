@@ -331,7 +331,7 @@ describe('ContentNodeSelectorComponent', () => {
                     query: {
                         query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
                     },
-                    include: ['path', 'allowableOperations'],
+                    include: ['path', 'allowableOperations', 'properties'],
                     paging: {
                         maxItems: 25,
                         skipCount: skipCount

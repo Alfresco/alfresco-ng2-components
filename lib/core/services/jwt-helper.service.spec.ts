@@ -15,18 +15,20 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
 import { JwtHelperService } from './jwt-helper.service';
 import { mockToken } from './../mock/jwt-helper.service.spec';
+import { setupTestBed } from '../testing/setupTestBed';
+import { TestBed } from '@angular/core/testing';
 
 describe('JwtHelperService', () => {
 
     let jwtHelperService: JwtHelperService;
 
+    setupTestBed({
+        providers: [JwtHelperService]
+    });
+
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [JwtHelperService]
-        });
         jwtHelperService = TestBed.get(JwtHelperService);
     });
 

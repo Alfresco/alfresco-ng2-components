@@ -60,25 +60,25 @@ describe('People Groups Cloud Component', () => {
             groupIdentityService = new GroupIdentityService(apiService);
             clientId = await groupIdentityService.getClientIdByApplicationName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
             groupActiviti = await groupIdentityService.createIdentityGroup();
-            clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.roles.activiti_admin);
-            clientActivitiUserRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.roles.activiti_user);
+            clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.ROLES.ACTIVITI_ADMIN);
+            clientActivitiUserRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.ROLES.ACTIVITI_USER);
 
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
-            apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
-            activitiUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.activiti_user]);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
+            apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
+            activitiUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
             noRoleUser = await identityService.createIdentityUser();
-            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiAdminRoleId, identityService.roles.activiti_admin);
-            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiUserRoleId, identityService.roles.activiti_user);
+            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiAdminRoleId, identityService.ROLES.ACTIVITI_ADMIN);
+            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiUserRoleId, identityService.ROLES.ACTIVITI_USER);
 
             groupAps = await groupIdentityService.createIdentityGroup();
-            apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_admin);
-            await groupIdentityService.assignRole(groupAps.id, apsAdminRoleId, identityService.roles.aps_admin);
-            activitiAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.activiti_admin);
-            await groupIdentityService.assignRole(groupActiviti.id, activitiAdminRoleId, identityService.roles.activiti_admin);
+            apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.ROLES.APS_ADMIN);
+            await groupIdentityService.assignRole(groupAps.id, apsAdminRoleId, identityService.ROLES.APS_ADMIN);
+            activitiAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.ROLES.ACTIVITI_ADMIN);
+            await groupIdentityService.assignRole(groupActiviti.id, activitiAdminRoleId, identityService.ROLES.ACTIVITI_ADMIN);
             groupNoRole = await groupIdentityService.createIdentityGroup();
 
-            await groupIdentityService.addClientRole(groupAps.id, clientId, clientActivitiAdminRoleId, identityService.roles.activiti_admin );
-            await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, identityService.roles.activiti_admin );
+            await groupIdentityService.addClientRole(groupAps.id, clientId, clientActivitiAdminRoleId, identityService.ROLES.ACTIVITI_ADMIN);
+            await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, identityService.ROLES.ACTIVITI_ADMIN);
             users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`, `${testUser.idIdentityService}`];
             groups = [`${groupAps.id}`, `${groupActiviti.id}`, `${groupNoRole.id}`];
 
@@ -86,7 +86,7 @@ describe('People Groups Cloud Component', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             done();
         });
 
@@ -98,6 +98,11 @@ describe('People Groups Cloud Component', () => {
             for (let i = 0; i < groups.length; i++) {
                 await groupIdentityService.deleteIdentityGroup(groups[i]);
             }
+
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
+            await identityService.deleteIdentityUser(apsUser.idIdentityService);
+            await identityService.deleteIdentityUser(activitiUser.idIdentityService);
+
         });
 
         beforeEach(() => {

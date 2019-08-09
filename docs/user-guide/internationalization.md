@@ -18,7 +18,6 @@ fairly straightforward to maintain.
 -   [I18n concepts](#i18n-concepts)
 -   [ADF support for i18n](#adf-support-for-i18n)
 -   [Using the translate pipe](#using-the-translate-pipe)
--   [Using the localized date pipe](#using-the-localized-date-pipe)
 -   [Adding and replacing messages](#adding-and-replacing-messages)
 -   [Interpolations](#interpolations)
 -   [How the display language is selected](#how-the-display-language-is-selected)

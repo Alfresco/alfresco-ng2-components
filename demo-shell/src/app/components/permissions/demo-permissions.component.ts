@@ -48,9 +48,11 @@ export class DemoPermissionComponent implements OnInit {
                 }
             });
         }
-        this.nodeService.getNode(this.nodeId, {include: ['permissions'] }).subscribe( (currentNode: MinimalNodeEntryEntity) => {
-            this.toggleStatus = currentNode.permissions.isInheritanceEnabled;
-        });
+        this.nodeService
+            .getNode(this.nodeId, {include: ['permissions'] })
+            .subscribe( (currentNode: MinimalNodeEntryEntity) => {
+                this.toggleStatus = currentNode.permissions.isInheritanceEnabled;
+            });
     }
 
     onUpdatedPermissions(node: MinimalNodeEntryEntity) {
@@ -63,9 +65,12 @@ export class DemoPermissionComponent implements OnInit {
     }
 
     openAddPermissionDialog(event: Event) {
-        this.nodePermissionDialogService.updateNodePermissionByDialog(this.nodeId).subscribe(
-            () =>  this.displayPermissionComponent.reload(),
-            (error) => this.showErrorMessage(error));
+        this.nodePermissionDialogService
+            .updateNodePermissionByDialog(this.nodeId)
+            .subscribe(
+                () =>  this.displayPermissionComponent.reload(),
+                (error) => this.showErrorMessage(error)
+            );
     }
 
     showErrorMessage(error) {

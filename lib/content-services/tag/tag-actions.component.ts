@@ -18,8 +18,9 @@
 import { TranslationService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation, OnDestroy, OnInit } from '@angular/core';
 import { TagService } from './services/tag.service';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { TagPaging } from '@alfresco/js-api';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  *
@@ -55,17 +56,15 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
     errorMsg: string;
     disableAddTag: boolean = true;
 
-    private subscriptions: Subscription[] = [];
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private tagService: TagService, private translateService: TranslationService) {
     }
 
     ngOnInit() {
-        this.subscriptions.push(
-            this.tagService.refresh.subscribe(() => {
-                this.refreshTag();
-            })
-        );
+        this.tagService.refresh
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => this.refreshTag());
     }
 
     ngOnChanges() {
@@ -73,8 +72,8 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-        this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     refreshTag() {
@@ -93,9 +92,7 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 
     addTag() {
         if (this.searchTag(this.newTagName)) {
-            this.translateService.get('TAG.MESSAGES.EXIST').subscribe((error) => {
-                this.errorMsg = error;
-            });
+            this.errorMsg = this.translateService.instant('TAG.MESSAGES.EXIST');
             this.error.emit(this.errorMsg);
         } else {
             this.tagService.addTag(this.nodeId, this.newTagName).subscribe(() => {

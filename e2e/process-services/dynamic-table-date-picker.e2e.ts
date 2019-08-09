@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget, DatePickerPage } from '@alfresco/adf-testing';
+import { LoginPage, Widget, DatePickerPage, DateUtil } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -40,7 +40,7 @@ describe('Dynamic Table', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         apps = new AppsActions();
@@ -67,11 +67,14 @@ describe('Dynamic Table', () => {
         const app = resources.Files.DYNAMIC_TABLE_APP;
 
         const randomText = {
-            date: 'HELLO WORLD',
-            dateTime: 'Test',
-            error: `Field 'columnDate' is required.`
+            date: '12/12/2012',
+            wrongDate: 'HELLO WORLD',
+            wrongDateTime: 'Test',
+            dateTime: '15/07/2019 23:55',
+            error: `Invalid 'columnDate' format.`,
+            requiredError: `Field 'columnDate' is required.`
         };
-
+        const currentDate = DateUtil.formatDate('DD-MM-YYYY');
         const rowPosition = 0;
 
         beforeAll(async (done) => {
@@ -106,14 +109,13 @@ describe('Dynamic Table', () => {
             widget.dynamicTable().clickAddButton();
             widget.dynamicTable().clickColumnDateTime();
 
-            expect(widget.dynamicTable().addRandomStringOnDateTime(randomText.dateTime)).toBe('');
+            expect(widget.dynamicTable().addRandomStringOnDateTime(randomText.wrongDateTime)).toBe('');
         });
 
         it('[C286279] Should be able to save row with Date field', () => {
             widget.dynamicTable().clickAddButton();
-            widget.dynamicTable().addRandomStringOnDate(randomText.date);
+            widget.dynamicTable().addRandomStringOnDate(randomText.wrongDate);
             widget.dynamicTable().clickSaveButton();
-
             expect(widget.dynamicTable().checkErrorMessage()).toBe(randomText.error);
 
             widget.dynamicTable().clickDateWidget();
@@ -121,6 +123,21 @@ describe('Dynamic Table', () => {
                 .checkDatePickerIsNotDisplayed();
             widget.dynamicTable().clickSaveButton();
             widget.dynamicTable().getTableRow(rowPosition);
+            expect(widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
+        });
+
+        it('[C311456] Should be able to delete date that is not mandatory and save the Dynamic Table', () => {
+            widget.dynamicTable().clickAddButton();
+            widget.dynamicTable().clickSaveButton();
+            expect(widget.dynamicTable().checkErrorMessage()).toBe(randomText.requiredError);
+
+            widget.dynamicTable().clickDateWidget();
+            datePicker.selectTodayDate()
+                .checkDatePickerIsNotDisplayed();
+            widget.dynamicTable().clickSaveButton();
+            widget.dynamicTable().getTableRow(rowPosition);
+            expect(widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
+            expect(widget.dynamicTable().getTableCellText(rowPosition, 2)).toBe('');
         });
     });
 

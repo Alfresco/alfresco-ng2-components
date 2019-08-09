@@ -79,12 +79,20 @@ export class TaskListCloudComponentPage {
         return this.dataTable.selectRow(column.name, taskName);
     }
 
+    selectRowByTaskId(taskId: string) {
+        return this.dataTable.selectRow(column.id, taskId);
+    }
+
     getRow(taskName) {
         return this.dataTable.getCellElementByValue(column.name, taskName);
     }
 
     checkContentIsDisplayedById(taskId) {
         return this.dataTable.checkContentIsDisplayed(column.id, taskId);
+    }
+
+    checkContentIsNotDisplayedById(taskId) {
+        return this.dataTable.checkContentIsNotDisplayed(column.id, taskId);
     }
 
     checkContentIsDisplayedByProcessInstanceId(taskName) {

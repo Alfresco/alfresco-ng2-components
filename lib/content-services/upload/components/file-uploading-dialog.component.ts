@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
-    FileUploadErrorEvent, FileUploadStatus, UploadService, UserPreferencesService
-} from '@alfresco/adf-core';
+import { FileModel, FileUploadStatus, UploadService, UserPreferencesService } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild, HostBinding } from '@angular/core';
 import { Subscription, merge, Subject } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
@@ -33,7 +30,7 @@ import { takeUntil } from 'rxjs/operators';
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /** Dialog direction. Can be 'ltr' or 'rtl. */
     private direction: Direction = 'ltr';
-    private onDestroy$: Subject<boolean> = new Subject<boolean>();
+    private onDestroy$ = new Subject<boolean>();
 
     @ViewChild('uploadList')
     uploadList: FileUploadingListComponent;
@@ -79,8 +76,9 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.listSubscription = this.uploadService
-            .queueChanged.subscribe((fileList: FileModel[]) => {
+        this.listSubscription = this.uploadService.queueChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(fileList => {
                 this.filesUploadingList = fileList;
 
                 if (this.filesUploadingList.length) {
@@ -92,33 +90,38 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
                 this.uploadService.fileUploadComplete,
                 this.uploadService.fileUploadDeleted
             )
-            .subscribe((event: (FileUploadDeleteEvent | FileUploadCompleteEvent)) => {
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(event => {
                 this.totalCompleted = event.totalComplete;
                 this.changeDetector.detectChanges();
             });
 
         this.errorSubscription = this.uploadService.fileUploadError
-            .subscribe((event: FileUploadErrorEvent) => {
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(event => {
                 this.totalErrors = event.totalError;
                 this.changeDetector.detectChanges();
             });
 
-        this.fileUploadSubscription = this.uploadService
-            .fileUpload.subscribe(() => {
+        this.fileUploadSubscription = this.uploadService.fileUpload
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
                 this.changeDetector.detectChanges();
             });
 
-        this.uploadService.fileDeleted.subscribe((objId) => {
-            if (this.filesUploadingList) {
-                const file = this.filesUploadingList.find((item) => {
-                    return item.data.entry.id === objId;
-                });
-                if (file) {
-                    file.status = FileUploadStatus.Cancelled;
-                    this.changeDetector.detectChanges();
+        this.uploadService.fileDeleted
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(objId => {
+                if (this.filesUploadingList) {
+                    const file = this.filesUploadingList.find((item) => {
+                        return item.data.entry.id === objId;
+                    });
+                    if (file) {
+                        file.status = FileUploadStatus.Cancelled;
+                        this.changeDetector.detectChanges();
+                    }
                 }
-            }
-        });
+            });
 
         this.userPreferencesService.select('textOrientation')
             .pipe(takeUntil(this.onDestroy$))

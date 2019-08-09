@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
@@ -28,6 +28,8 @@ import { MomentDateAdapter } from '../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../utils/moment-date-formats.model';
 import { FormService } from './../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     providers: [
@@ -41,11 +43,13 @@ import { WidgetComponent } from './../widget.component';
     styleUrls: ['./date-time.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
+export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
     minDate: Moment;
     maxDate: Moment;
     displayDate: Moment;
+
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
                 private dateAdapter: DateAdapter<Moment>,
@@ -54,9 +58,10 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
 
         const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
@@ -70,7 +75,15 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
                 this.maxDate = moment(this.field.maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
             }
         }
-        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
+        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat)
+            .add(
+                moment(this.field.value, this.field.dateDisplayFormat).utcOffset(),
+                'minutes');
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onDateChanged(newDateValue) {

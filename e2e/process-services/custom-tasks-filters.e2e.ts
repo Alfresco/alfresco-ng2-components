@@ -79,7 +79,7 @@ describe('Start Task - Custom App', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -441,58 +441,6 @@ describe('Start Task - Custom App', () => {
                 expect(Util.arrayContainsArray(list, allTasksName)).toEqual(true);
             });
             expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(23);
-        });
-    });
-
-    // failing due to ADF-3667, blocked by ACTIVITI-1975
-    xit('[C286599] Should be able to sort tasks ascending by due date when choosing due(asc) from sort drop down', () => {
-        const sortAscByDueDate = [taskWithDueDate.name, completedTasks[0].name, completedTasks[1].name, completedTasks[2].name];
-
-        navigationBarPage.clickTaskListButton();
-        taskListSinglePage.clickResetButton();
-
-        taskListSinglePage.typeDueAfter(beforeDate);
-        taskListSinglePage.selectState('All');
-        taskListSinglePage.selectSort('Due (asc)');
-
-        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
-            expect(Util.arrayContainsArray(list, sortAscByDueDate)).toEqual(true);
-        });
-        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(4);
-
-        taskListSinglePage.clickResetButton();
-        taskListSinglePage.selectState('All');
-        taskListSinglePage.selectSort('Due (asc)');
-        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(23);
-        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
-            expect(Util.arrayContainsArray(list.slice(0, 4), sortAscByDueDate)).toEqual(true);
-            expect(Util.arrayContainsArray(list.slice(4, list.length), allTasksName)).toEqual(true);
-        });
-    });
-
-    // failing due to ADF-3667, blocked by ACTIVITI-1975
-    xit('[C286600] Should be able to sort tasks descending by due date when choosing due(desc) from sort drop down', () => {
-        const sortDescByDueDate = [completedTasks[2].name, completedTasks[1].name, completedTasks[0].name, taskWithDueDate.name];
-
-        navigationBarPage.clickTaskListButton();
-        taskListSinglePage.clickResetButton();
-
-        taskListSinglePage.typeDueAfter(beforeDate);
-        taskListSinglePage.selectState('All');
-        taskListSinglePage.selectSort('Due (desc)');
-
-        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
-            expect(Util.arrayContainsArray(list, sortDescByDueDate)).toEqual(true);
-        });
-        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(4);
-
-        taskListSinglePage.clickResetButton();
-        taskListSinglePage.selectState('All');
-        taskListSinglePage.selectSort('Due (asc)');
-        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(23);
-        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
-            expect(Util.arrayContainsArray(list.slice(0, 4), sortDescByDueDate)).toEqual(true);
-            expect(Util.arrayContainsArray(list.slice(4, list.length), allTasksName)).toEqual(true);
         });
     });
 

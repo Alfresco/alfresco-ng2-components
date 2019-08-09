@@ -16,11 +16,12 @@
  */
 
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../../material.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SidebarActionMenuComponent', () => {
     let element: HTMLElement;
@@ -57,23 +58,23 @@ describe('SidebarActionMenuComponent', () => {
 
 @Component({
     template: `
-    <adf-sidebar-action-menu [expanded]="expanded" [title]="title">
-    <mat-icon adf-sidebar-menu-title-icon>arrow_drop_down</mat-icon>
-    <div adf-sidebar-menu-expand-icon>
-        <mat-icon>queue</mat-icon>
-    </div>
-    <div adf-sidebar-menu-options>
-        <button mat-menu-item>
-            <mat-icon>assignment</mat-icon>
-            <span>Option1</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon>assignment</mat-icon>
-            <span>Option2</span>
-        </button>
-    </div>
-</adf-sidebar-action-menu>
-       `
+        <adf-sidebar-action-menu [expanded]="expanded" [title]="title">
+            <mat-icon adf-sidebar-menu-title-icon>arrow_drop_down</mat-icon>
+            <div adf-sidebar-menu-expand-icon>
+                <mat-icon>queue</mat-icon>
+            </div>
+            <div adf-sidebar-menu-options>
+                <button mat-menu-item>
+                    <mat-icon>assignment</mat-icon>
+                    <span>Option1</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>assignment</mat-icon>
+                    <span>Option2</span>
+                </button>
+            </div>
+        </adf-sidebar-action-menu>
+    `
 })
 class CustomSidebarActionMenuComponent {
     title: string = 'Fake title';
@@ -85,17 +86,16 @@ describe('Custom SidebarActionMenuComponent', () => {
     let component: CustomSidebarActionMenuComponent;
     let element: HTMLElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                SidebarActionMenuComponent,
-                CustomSidebarActionMenuComponent
-            ],
-            imports: [
-                MaterialModule
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        declarations: [
+            SidebarActionMenuComponent,
+            CustomSidebarActionMenuComponent
+        ],
+        imports: [
+            MaterialModule,
+            NoopAnimationsModule
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomSidebarActionMenuComponent);

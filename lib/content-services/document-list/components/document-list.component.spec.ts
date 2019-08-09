@@ -51,6 +51,8 @@ describe('DocumentList', () => {
     let eventMock: any;
     let spyGetSites: any;
     let spyFavorite: any;
+    let spyFolder: any;
+    let spyFolderNode: any;
 
     setupTestBed({
         imports: [ContentTestingModule],
@@ -71,11 +73,23 @@ describe('DocumentList', () => {
         apiService = TestBed.get(AlfrescoApiService);
         customResourcesService = TestBed.get(CustomResourcesService);
 
+        spyFolder = spyOn(documentListService, 'getFolder').and.callFake(() => {
+            return Promise.resolve({ list: {} });
+        });
+
+        spyFolderNode = spyOn(documentListService, 'getFolderNode').and.callFake(() => {
+            return Promise.resolve({ entry: {} });
+        });
+
+        spyOn(apiService.nodesApi, 'getNode').and.callFake(() => {
+            return Promise.resolve({ entry: {} });
+        });
+
         documentList.ngOnInit();
         documentList.currentFolderId = 'no-node';
 
         spyGetSites = spyOn(apiService.sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
-        spyFavorite = spyOn(apiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({ list: [] }));
+        spyFavorite = spyOn(apiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({ list: { entries: [] } }));
     });
 
     afterEach(() => {
@@ -249,8 +263,8 @@ describe('DocumentList', () => {
 
     it('should empty template be present when no element are present', () => {
         spyOn(documentList, 'loadFolder').and.callThrough();
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: { id: 'fake-node' } }));
-        spyOn(documentListService, 'getFolder').and.returnValue(of(fakeNodeAnswerWithNOEntries));
+        spyFolderNode.and.returnValue(of({ entry: { id: 'fake-node' } }));
+        spyFolder.and.returnValue(of(fakeNodeAnswerWithNOEntries));
 
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         fixture.detectChanges();
@@ -548,7 +562,13 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        const nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
+        const nodeFile = {
+            entry: {
+                isFolder: true,
+                name: 'xyz',
+                allowableOperations: ['create', 'update', 'delete']
+            }
+        };
 
         const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -968,21 +988,20 @@ describe('DocumentList', () => {
         const filter = <RowFilter> {};
         documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
-        spyOn(documentListService, 'getFolder').and.callThrough();
 
         documentList.rowFilter = filter;
 
         expect(documentList.data.setFilter).toHaveBeenCalledWith(filter);
-        expect(documentListService.getFolder).toHaveBeenCalled();
+        expect(spyFolder).toHaveBeenCalled();
     });
 
     it('should NOT reload contents if currentFolderId is NOT set when setting rowFilter', () => {
+        spyFolder.calls.reset();
         documentList.currentFolderId = null;
-        spyOn(documentListService, 'getFolder');
 
         documentList.ngOnChanges({ rowFilter: new SimpleChange(null, <RowFilter> {}, true) });
 
-        expect(documentListService.getFolder).not.toHaveBeenCalled();
+        expect(spyFolder).not.toHaveBeenCalled();
     });
 
     it('should set image resolver for underlying adapter', () => {
@@ -1043,7 +1062,7 @@ describe('DocumentList', () => {
 
     it('should emit error when getFolderNode fails', (done) => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolder').and.returnValue(throwError(error));
+        spyFolder.and.returnValue(throwError(error));
 
         const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe(error);
@@ -1066,7 +1085,7 @@ describe('DocumentList', () => {
 
     it('should set no permission when getFolderNode fails with 403', (done) => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
-        spyOn(documentListService, 'getFolder').and.returnValue(throwError(error));
+        spyFolder.and.returnValue(throwError(error));
 
         const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe(error);
@@ -1110,8 +1129,8 @@ describe('DocumentList', () => {
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
 
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: fakeNodeWithNoPermission }));
-        spyOn(documentListService, 'getFolder').and.returnValue(throwError(error));
+        spyFolderNode.and.returnValue(of({ entry: fakeNodeWithNoPermission }));
+        spyFolder.and.returnValue(throwError(error));
 
         documentList.loadFolder();
         const clickedFolderNode = new FolderNode('fake-folder-node');
@@ -1121,6 +1140,10 @@ describe('DocumentList', () => {
     });
 
     it('should allow to perform navigation for virtual sources', () => {
+        spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() => {
+            return of({ currentNode: {}, children: { list: { pagination: {} } } });
+        });
+
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
         const node = new FolderNode('folder');
 
@@ -1198,34 +1221,6 @@ describe('DocumentList', () => {
         documentList.loadFolder();
     });
 
-    it('should assure that sites have name property set', (done) => {
-        fixture.detectChanges();
-
-        const disposableReady = documentList.ready.subscribe((page) => {
-            const entriesWithoutName = page.list.entries.filter((item) => !item.entry.name);
-            expect(entriesWithoutName.length).toBe(0);
-            disposableReady.unsubscribe();
-            done();
-        });
-
-        documentList.currentFolderId = '-sites-';
-        documentList.loadFolder();
-    });
-
-    it('should assure that sites have name property set correctly', (done) => {
-        fixture.detectChanges();
-
-        const disposableReady = documentList.ready.subscribe((page) => {
-            const wrongName = page.list.entries.filter((item) => (item.entry.name !== item.entry.title));
-            expect(wrongName.length).toBe(0);
-            disposableReady.unsubscribe();
-            done();
-        });
-
-        documentList.currentFolderId = '-sites-';
-        documentList.loadFolder();
-    });
-
     it('should fetch user membership sites', () => {
         const peopleApi = apiService.getInstance().core.peopleApi;
         spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
@@ -1249,43 +1244,8 @@ describe('DocumentList', () => {
         documentList.loadFolder();
     });
 
-    it('should assure that user membership sites have name property set', (done) => {
-        fixture.detectChanges();
-        const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
-
-        documentList.currentFolderId = '-mysites-';
-        documentList.loadFolder();
-        expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
-
-        const disposableReady = documentList.ready.subscribe((page) => {
-            const entriesWithoutName = page.list.entries.filter((item) => !item.entry.name);
-            expect(entriesWithoutName.length).toBe(0);
-            disposableReady.unsubscribe();
-            done();
-        });
-    });
-
-    it('should assure that user membership sites have name property set correctly', (done) => {
-        fixture.detectChanges();
-        const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
-
-        documentList.currentFolderId = '-mysites-';
-        documentList.loadFolder();
-        expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
-
-        const disposableReady = documentList.ready.subscribe((page) => {
-            const wrongName = page.list.entries.filter((item) => (item.entry.name !== item.entry.title));
-            expect(wrongName.length).toBe(0);
-            disposableReady.unsubscribe();
-            done();
-        });
-    });
-
     it('should fetch favorites', () => {
         const favoritesApi = apiService.getInstance().core.favoritesApi;
-        spyFavorite.and.returnValue(Promise.resolve(null));
 
         documentList.currentFolderId = '-favorites-';
         documentList.loadFolder();
@@ -1302,30 +1262,6 @@ describe('DocumentList', () => {
         });
 
         documentList.currentFolderId = '-favorites-';
-        documentList.loadFolder();
-    });
-
-    it('should fetch recent', () => {
-        const person = { entry: { id: 'person ' } };
-
-        const getPersonSpy = spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
-
-        documentList.currentFolderId = '-recent-';
-        documentList.loadFolder();
-
-        expect(getPersonSpy).toHaveBeenCalledWith('-me-');
-    });
-
-    it('should emit error when fetch recent fails on getPerson call', (done) => {
-        spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.reject('error'));
-
-        const disposableError = documentList.error.subscribe((val) => {
-            expect(val).toBe('error');
-            disposableError.unsubscribe();
-            done();
-        });
-
-        documentList.currentFolderId = '-recent-';
         documentList.loadFolder();
     });
 
@@ -1376,8 +1312,6 @@ describe('DocumentList', () => {
     });
 
     it('should add includeFields in the server request when present', () => {
-        spyOn(documentListService, 'getFolder').and.callThrough();
-
         documentList.includeFields = ['test-include'];
         documentList.currentFolderId = 'fake-id';
 
@@ -1392,8 +1326,6 @@ describe('DocumentList', () => {
     });
 
     it('should add where in the server request when present', () => {
-        spyOn(documentListService, 'getFolder').and.callThrough();
-
         documentList.includeFields = ['test-include'];
         documentList.where = '(isFolder=true)';
         documentList.currentFolderId = 'fake-id';
@@ -1415,8 +1347,6 @@ describe('DocumentList', () => {
             maxItems: 10,
             skipCount: 10
         });
-
-        spyOn(documentListService, 'getFolder').and.callThrough();
 
         documentList.onNodeClick(folder);
 

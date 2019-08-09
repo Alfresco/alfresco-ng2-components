@@ -29,7 +29,7 @@ import { CloudLayoutService } from '../services/cloud-layout.service';
         height: 100% !important;
       }
       `],
-      encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class CommunityCloudComponent  {
 

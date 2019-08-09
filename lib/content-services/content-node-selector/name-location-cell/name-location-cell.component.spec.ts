@@ -15,23 +15,22 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NameLocationCellComponent } from './name-location-cell.component';
 import { By } from '@angular/platform-browser';
 import { DataRow } from '@alfresco/adf-core';
+import { setupTestBed } from '../../../core/testing/setupTestBed';
 
 describe('NameLocationCellComponent', () => {
     let component: NameLocationCellComponent;
     let fixture: ComponentFixture<NameLocationCellComponent>;
     let rowData: DataRow;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                NameLocationCellComponent
-            ]
-        }).compileComponents();
-    }));
+    setupTestBed({
+        declarations: [
+            NameLocationCellComponent
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(NameLocationCellComponent);

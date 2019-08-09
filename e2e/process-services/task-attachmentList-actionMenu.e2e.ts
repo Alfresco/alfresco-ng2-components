@@ -63,7 +63,7 @@ describe('Attachment list action menu for tasks', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -101,14 +101,10 @@ describe('Attachment list action menu for tasks', () => {
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-
         attachmentListPage.doubleClickFile(pngFile.name);
 
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
-
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         attachmentListPage.downloadFile(pngFile.name);
 
@@ -138,9 +134,6 @@ describe('Attachment list action menu for tasks', () => {
 
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
-
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectRow(taskName.completed);
 
         attachmentListPage.downloadFile(pngFile.name);
 

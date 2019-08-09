@@ -72,8 +72,8 @@ export class DataTableComponentPage {
 
     clickCheckbox(columnName, columnValue) {
         const checkbox = this.getRowCheckbox(columnName, columnValue);
-        BrowserVisibility.waitUntilElementIsClickable(checkbox);
-        checkbox.click();
+        BrowserActions.click(checkbox);
+        return this;
     }
 
     checkRowIsNotChecked(columnName, columnValue) {
@@ -154,6 +154,15 @@ export class DataTableComponentPage {
                 sortedList = sortedList.reverse();
             }
 
+            if (initialList.toString() !== sortedList.toString()) {
+                // tslint:disable-next-line:no-console
+                console.log('Wrong order');
+                // tslint:disable-next-line:no-console
+                console.log('List' + initialList.toString());
+                // tslint:disable-next-line:no-console
+                console.log('sortedList sortedList' + sortedList.toString());
+            }
+
             deferred.fulfill(initialList.toString() === sortedList.toString());
         });
         return deferred.promise;
@@ -163,6 +172,12 @@ export class DataTableComponentPage {
         BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         browser.actions().click(row, protractor.Button.RIGHT).perform();
+        BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
+    }
+
+    rightClickOnRowByIndex(index: number) {
+        const row = this.getRowByIndex(index);
+        BrowserActions.rightClick(row);
         BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
     }
 
@@ -258,6 +273,11 @@ export class DataTableComponentPage {
         return row;
     }
 
+    getRowByIndex(index: number) {
+        const row = this.rootElement.element(by.xpath(`//div[contains(@class,'adf-datatable-body')]//div[contains(@class,'adf-datatable-row')][${index}]`));
+        return row;
+    }
+
     contentInPosition(position) {
         BrowserVisibility.waitUntilElementIsVisible(this.contents);
         return this.contents.get(position - 1).getText();
@@ -318,8 +338,20 @@ export class DataTableComponentPage {
         return this;
     }
 
+    checkRowByContentIsNotSelected(folderName) {
+        const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        BrowserVisibility.waitUntilElementIsNotVisible(selectedRow);
+        return this;
+    }
+
     getCellByContent(content) {
-        const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name']`, content));
+        const cell = this.rootElement.all(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content)).first();
+        BrowserVisibility.waitUntilElementIsVisible(cell);
+        return cell;
+    }
+
+    checkCellByHighlightContent(content) {
+        const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name'] span.adf-highlight`, content));
         BrowserVisibility.waitUntilElementIsVisible(cell);
         return cell;
     }
@@ -327,6 +359,36 @@ export class DataTableComponentPage {
     clickRowByContent(name) {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
         BrowserActions.click(resultElement);
+    }
+
+    clickRowByContentCheckbox(name) {
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first().element(by.xpath(`ancestor::div/div/mat-checkbox`));
+        BrowserActions.click(resultElement);
+    }
+
+    checkRowContentIsDisplayed(content) {
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        return this;
+    }
+
+    checkRowContentIsNotDisplayed(content) {
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
+        BrowserVisibility.waitUntilElementIsNotVisible(resultElement);
+        return this;
+    }
+
+    checkRowContentIsDisabled(content) {
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}'] div.adf-cell-value img[aria-label='disable']`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        return this;
+    }
+
+    doubleClickRowByContent(name) {
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
+        BrowserActions.click(resultElement);
+        browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        return this;
     }
 
     getCopyContentTooltip() {

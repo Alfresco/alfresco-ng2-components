@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule, CoreAutomationService } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
@@ -79,17 +79,15 @@ import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-c
 import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
-import { CloudSettingsComponent } from './components/cloud/cloud-settings.component';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
-import { CommunityCloudComponent } from './components/cloud/community/community-cloud.component';
-import { CommunityTasksCloudDemoComponent } from './components/cloud/community/community-task-cloud.component';
-import { CommunityCloudFiltersDemoComponent } from './components/cloud/community/community-filters.component';
-import { CommunityStartProcessCloudDemoComponent } from './components/cloud/community/community-start-process-cloud.component';
-import { CommunityStartTaskCloudDemoComponent } from './components/cloud/community/community-start-task-cloud.component';
-import { CommunityProcessDetailsCloudDemoComponent } from './components/cloud/community/community-process-details-cloud.component';
-import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-processes-cloud.component';
-import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/community/community-task-details-cloud.component';
+import { environment } from '../environments/environment';
+import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
+import {
+    UserPreferenceCloudService,
+    PROCESS_FILTERS_SERVICE_TOKEN,
+    TASK_FILTERS_SERVICE_TOKEN
+} from '@alfresco/adf-process-services-cloud';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -129,7 +127,7 @@ registerLocaleData(localeSv);
 @NgModule({
     imports: [
         BrowserModule,
-        BrowserAnimationsModule,
+        environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
         routing,
         FormsModule,
@@ -145,6 +143,7 @@ registerLocaleData(localeSv);
         ExtensionsModule.forRoot(),
         ThemePickerModule,
         ChartsModule,
+        AppCloudSharedModule,
         MonacoEditorModule.forRoot()
     ],
     declarations: [
@@ -188,24 +187,17 @@ registerLocaleData(localeSv);
         CloudFiltersDemoComponent,
         TemplateDemoComponent,
         PeopleGroupCloudDemoComponent,
-        CloudSettingsComponent,
         ConfirmDialogExampleComponent,
         FormCloudDemoComponent,
-        ConfirmDialogExampleComponent,
-        CommunityCloudComponent,
-        CommunityTasksCloudDemoComponent,
-        CommunityCloudFiltersDemoComponent,
-        CommunityProcessesCloudDemoComponent,
-        CommunityStartProcessCloudDemoComponent,
-        CommunityStartTaskCloudDemoComponent,
-        CommunityProcessDetailsCloudDemoComponent,
-        CommunityTaskDetailsCloudDemoComponent
+        ConfirmDialogExampleComponent
     ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS, useClass:
             AuthBearerInterceptor, multi: true
         },
+        { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
+        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         {
             provide: TRANSLATION_PROVIDER,

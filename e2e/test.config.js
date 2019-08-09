@@ -22,7 +22,7 @@ const PROXY = process.env.PROXY_HOST_ADF;
 const LOG = process.env.LOG;
 const BPM_HOST = process.env.URL_HOST_BPM_ADF || "bpm";
 const OAUTH_HOST = process.env.URL_HOST_SSO_ADF || "keycloak";
-const OAUTH_CLIENDID = process.env.OAUTH_CLIENDID || "activiti";
+const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENDID || "alfresco";
 
 const IDENTITY_HOST = process.env.URL_HOST_IDENTITY || "identity";
 const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";
@@ -39,7 +39,7 @@ const appConfig = {
     "authType": "OAUTH",
     "oauth2": {
         "host": OAUTH_HOST,
-        "clientId": OAUTH_CLIENDID,
+        "clientId": OAUTH_CLIENT_ID,
         "scope": "openid",
         "secret": "",
         "implicitFlow": true,
@@ -61,6 +61,8 @@ if (LOG) {
 }
 
 module.exports = {
+
+    projectName :'ADF',
 
     appConfig: appConfig,
 
@@ -165,7 +167,7 @@ module.exports = {
          * The protocol where the app runs.
          * @config main.protocol {String}
          */
-        host: HOST,
+        host: PROXY || HOST,
 
         /**
          * The port where the app runs.
@@ -193,7 +195,7 @@ module.exports = {
          * The host where the app runs.
          * @config main.host {String}
          */
-        host: HOST,
+        host: PROXY || HOST,
 
         /**
          * The port where the app runs.

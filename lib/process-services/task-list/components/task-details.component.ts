@@ -33,23 +33,24 @@ import {
     Output,
     SimpleChanges,
     TemplateRef,
-    ViewChild
+    ViewChild,
+    OnDestroy
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '@alfresco/adf-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
-import { share } from 'rxjs/operators';
+import { share, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-task-details',
     templateUrl: './task-details.component.html',
     styleUrls: ['./task-details.component.scss']
 })
-export class TaskDetailsComponent implements OnInit, OnChanges {
+export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild('activitiComments')
     activitiComments: CommentsComponent;
@@ -166,17 +167,15 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     taskDetails: TaskDetailsModel;
     taskFormName: string = null;
-
     taskPeople: UserProcessModel[] = [];
-
     noTaskDetailsTemplateComponent: TemplateRef<any>;
-
     showAssignee: boolean = false;
     showAttachForm: boolean = false;
     internalReadOnlyForm: boolean = false;
 
     private peopleSearchObserver: Observer<UserProcessModel[]>;
     public errorDialogRef: MatDialogRef<TemplateRef<any>>;
+    private onDestroy$ = new Subject<boolean>();
 
     peopleSearch: Observable<UserProcessModel[]>;
 
@@ -189,21 +188,30 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService,
                 private dialog: MatDialog) {
-
-        this.peopleSearch = new Observable<UserProcessModel[]>((observer) => this.peopleSearchObserver = observer)
-            .pipe(share());
-        this.authService.getBpmLoggedUser().subscribe((user: UserRepresentation) => {
-            this.currentLoggedUser = user;
-        });
     }
 
     ngOnInit() {
+        this.peopleSearch = new Observable<UserProcessModel[]>((observer) => this.peopleSearchObserver = observer).pipe(share());
+        this.authService.getBpmLoggedUser().subscribe(user => {
+            this.currentLoggedUser = user;
+        });
+
         if (this.taskId) {
             this.loadDetails(this.taskId);
         }
 
-        this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
-        this.cardViewUpdateService.itemClicked$.subscribe(this.clickTaskDetails.bind(this));
+        this.cardViewUpdateService.itemUpdated$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(this.updateTaskDetails.bind(this));
+
+        this.cardViewUpdateService.itemClicked$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(this.clickTaskDetails.bind(this));
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -265,12 +273,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
      * @param updateNotification
      */
     private updateTaskDetails(updateNotification: UpdateNotification) {
-        this.taskListService.updateTask(this.taskId, updateNotification.changed)
-            .subscribe(
-                () => {
-                    this.loadDetails(this.taskId);
-                }
-            );
+        this.taskListService
+            .updateTask(this.taskId, updateNotification.changed)
+            .subscribe(() => this.loadDetails(this.taskId));
     }
 
     private clickTaskDetails(clickNotification: ClickNotification) {
@@ -386,9 +391,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
      * Complete button clicked
      */
     onComplete(): void {
-        this.taskListService.completeTask(this.taskId).subscribe(
-            (res) => this.onFormCompleted(null)
-        );
+        this.taskListService
+            .completeTask(this.taskId)
+            .subscribe(() => this.onFormCompleted(null));
     }
 
     onShowAttachForm() {
@@ -461,10 +466,13 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     searchUser(searchedWord: string) {
         this.peopleProcessService.getWorkflowUsers(null, searchedWord)
-            .subscribe((users) => {
-                users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
-                this.peopleSearchObserver.next(users);
-            }, (error) => this.logService.error('Could not load users'));
+            .subscribe(
+                users => {
+                    users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
+                    this.peopleSearchObserver.next(users);
+                },
+                () => this.logService.error('Could not load users')
+            );
     }
 
     onCloseSearch() {
@@ -472,8 +480,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     assignTaskToUser(selectedUser: UserProcessModel) {
-        this.taskListService.assignTask(this.taskDetails.id, selectedUser).subscribe(
-            (res: any) => {
+        this.taskListService
+            .assignTask(this.taskDetails.id, selectedUser)
+            .subscribe(() => {
                 this.logService.info('Task Assigned to ' + selectedUser.email);
                 this.assignTask.emit();
             });

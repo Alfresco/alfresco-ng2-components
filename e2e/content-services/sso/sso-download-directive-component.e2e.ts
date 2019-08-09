@@ -51,11 +51,11 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url,
+        hostEcm: browser.params.testConfig.adf_acs.host,
         authType: 'OAUTH',
         oauth2: {
             host: browser.params.testConfig.adf.hostSso,
-            clientId: 'alfresco',
+            clientId: browser.params.config.oauth2.clientId,
             scope: 'openid',
             secret: '',
             implicitFlow: false,
@@ -74,7 +74,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
 
         beforeAll(async (done) => {
-            const apiService = new ApiService('alfresco', browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
+            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.testConfig.adf_acs.host, browser.params.testConfig.adf.hostSso, 'ECM');
             await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             identityService = new IdentityService(apiService);
@@ -90,18 +90,18 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             silentLogin = false;
             implicitFlow = true;
-            settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
                 browser.params.testConfig.adf.hostSso,
-                browser.params.testConfig.adf.hostIdentity,
-                silentLogin, implicitFlow, 'alfresco');
+                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
 
-            loginSsoPage.clickOnSSOButton();
-            loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
+            await loginSsoPage.clickOnSSOButton();
+            await loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
 
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.checkAcsContainer();
+            await navigationBarPage.clickContentServicesButton();
+            await contentServicesPage.checkAcsContainer();
             contentListPage.doubleClickRow(folderName);
-            contentListPage.waitForTableBody();
+            await contentListPage.waitForTableBody();
             done();
         });
 

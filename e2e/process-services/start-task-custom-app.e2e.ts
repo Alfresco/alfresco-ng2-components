@@ -63,7 +63,7 @@ describe('Start Task - Custom App', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -280,15 +280,6 @@ describe('Start Task - Custom App', () => {
         processServiceTabBarPage.clickTasksButton();
 
         taskPage.taskDetails().taskInfoDrawerIsDisplayed();
-    });
-
-    xit('[C263950] Should be able to see Spinner loading on task list when clicking on Tasks on custom app', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[7]).clickStartButton();
-
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        taskPage.tasksListPage().getDataTable().checkSpinnerIsDisplayed();
     });
 
 });

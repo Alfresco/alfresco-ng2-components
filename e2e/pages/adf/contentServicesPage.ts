@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CreateFolderDialog } from './dialog/createFolderDialog';
+import { FolderDialog } from './dialog/folderDialog';
 import { CreateLibraryDialog } from './dialog/createLibraryDialog';
 import { FormControllersPage } from '@alfresco/adf-testing';
 import { DropActions } from '../../actions/drop.actions';
@@ -38,17 +38,19 @@ export class ContentServicesPage {
     contentList = new DocumentListPage(element.all(by.css('adf-upload-drag-area adf-document-list')).first());
     formControllersPage = new FormControllersPage();
     multipleFileUploadToggle = element(by.id('adf-document-list-enable-drop-files'));
-    createFolderDialog = new CreateFolderDialog();
+    createFolderDialog = new FolderDialog();
     createLibraryDialog = new CreateLibraryDialog();
     dragAndDropAction = new DropActions();
     uploadBorder = element(by.id('document-list-container'));
     contentServices = element(by.css('.adf-sidenav-link[data-automation-id="Content Services"]'));
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
     createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
+    editFolderButton = element(by.css('button[data-automation-id="edit-folder"]'));
     createLibraryButton = element(by.css('button[data-automation-id="create-new-library"]'));
     activeBreadcrumb = element(by.css('div[class*="active"]'));
     tooltip = by.css('div[class*="--text adf-full-width"] span');
-    uploadFileButton = element(by.css('input[data-automation-id="upload-single-file"]'));
+    uploadFileButton = element(by.css('.adf-upload-button-file-container button'));
+    uploadFileButtonInput = element(by.css('input[data-automation-id="upload-single-file"]'));
     uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));
     uploadFolderButton = element(by.css('input[data-automation-id="uploadFolder"]'));
     errorSnackBar = element(by.css('simple-snack-bar[class*="mat-simple-snackbar"]'));
@@ -81,6 +83,9 @@ export class ContentServicesPage {
     downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
     siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
     downloadButton = element(by.css('button[title="Download"]'));
+    favoriteButton = element(by.css('button[data-automation-id="favorite"]'));
+    markedFavorite = element(by.cssContainingText( 'button[data-automation-id="favorite"] mat-icon', 'star'));
+    notMarkedFavorite = element(by.cssContainingText( 'button[data-automation-id="favorite"] mat-icon', 'star_border'));
     multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
 
     pressContextMenuActionNamed(actionName) {
@@ -90,8 +95,13 @@ export class ContentServicesPage {
     checkContextActionIsVisible(actionName) {
         const actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
         BrowserVisibility.waitUntilElementIsVisible(actionButton);
-        BrowserVisibility.waitUntilElementIsClickable(actionButton);
         return actionButton;
+    }
+
+    checkContentActionIsEnabled(actionName) {
+        const actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
+        BrowserVisibility.waitUntilElementIsVisible(actionButton);
+        return actionButton.isEnabled();
     }
 
     getDocumentList() {
@@ -178,6 +188,7 @@ export class ContentServicesPage {
     }
 
     disableDropFilesInAFolder() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
         this.formControllersPage.disableToggle(this.multipleFileUploadToggle);
         return this;
     }
@@ -352,6 +363,30 @@ export class ContentServicesPage {
         return this;
     }
 
+    clickOnFavoriteButton() {
+        BrowserActions.click(this.favoriteButton);
+        return this;
+    }
+
+    checkIsMarkedFavorite() {
+        BrowserVisibility.waitUntilElementIsVisible(this.markedFavorite);
+        return this;
+    }
+
+    checkIsNotMarkedFavorite() {
+        BrowserVisibility.waitUntilElementIsVisible(this.notMarkedFavorite);
+        return this;
+    }
+
+    clickOnEditFolder() {
+        BrowserActions.click(this.editFolderButton);
+        return this;
+    }
+
+    checkEditFolderButtonIsEnabled() {
+        return this.editFolderButton.isEnabled();
+    }
+
     openCreateLibraryDialog() {
         BrowserActions.click(this.createLibraryButton);
         this.createLibraryDialog.waitForDialogToOpen();
@@ -362,7 +397,7 @@ export class ContentServicesPage {
         this.clickOnCreateNewFolder();
         this.createFolderDialog.addFolderName(folder);
         browser.sleep(200);
-        this.createFolderDialog.clickOnCreateButton();
+        this.createFolderDialog.clickOnCreateUpdateButton();
         return this;
     }
 
@@ -390,8 +425,7 @@ export class ContentServicesPage {
 
     uploadFile(fileLocation) {
         this.checkUploadButton();
-        BrowserVisibility.waitUntilElementIsVisible(this.uploadFileButton);
-        this.uploadFileButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
+        this.uploadFileButtonInput.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
         this.checkUploadButton();
         return this;
     }
@@ -416,7 +450,7 @@ export class ContentServicesPage {
 
     getSingleFileButtonTooltip() {
         BrowserVisibility.waitUntilElementIsVisible(this.uploadFileButton);
-        return this.uploadFileButton.getAttribute('title');
+        return this.uploadFileButtonInput.getAttribute('title');
     }
 
     getMultipleFileButtonTooltip() {
@@ -630,6 +664,11 @@ export class ContentServicesPage {
 
     checkSelectedSiteIsDisplayed(siteName) {
         BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
+    }
+
+    selectSite(siteName: string) {
+        BrowserActions.clickOnSelectDropdownOption(siteName, this.siteListDropdown);
+        return this;
     }
 
     clickDownloadButton() {

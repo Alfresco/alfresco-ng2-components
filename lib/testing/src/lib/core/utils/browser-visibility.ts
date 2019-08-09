@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder, protractor } from 'protractor';
+import { browser, by, element, ExpectedConditions as EC, ElementFinder, protractor } from 'protractor';
 
 const until = protractor.ExpectedConditions;
 const DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 40000;
@@ -46,25 +46,13 @@ export class BrowserVisibility {
      * Wait for element to be clickable
      */
     static waitUntilElementIsClickable(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
-        let isDisplayed = false;
-        return browser.wait(() => {
-            browser.waitForAngularEnabled();
-
-            elementToCheck.isDisplayed().then(
-                () => {
-                    isDisplayed = true;
-                },
-                () => {
-                    isDisplayed = false;
-                }
-            );
-            return isDisplayed;
-        }, waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
+        return browser.wait(EC.elementToBeClickable(elementToCheck),
+            waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
     }
 
     /*
-   * Wait for element to not be visible
-   */
+    * Wait for element to not be present on the page
+    */
     static waitUntilElementIsStale(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
         return browser.wait(until.stalenessOf(elementToCheck), waitTimeout, 'Element is not in stale ' + elementToCheck.locator());
     }
@@ -103,7 +91,7 @@ export class BrowserVisibility {
      * Wait for element to not be visible
      */
     static waitUntilElementIsNotOnPage(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(until.not(until.visibilityOf(elementToCheck)), waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
+        return browser.wait(until.invisibilityOf(elementToCheck), waitTimeout, 'Element is visible on the page ' + elementToCheck.locator());
     }
 
     static waitUntilElementIsPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
@@ -113,7 +101,7 @@ export class BrowserVisibility {
     }
 
     static waitUntilElementIsNotPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(until.not(until.presenceOf(elementToCheck)), waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
+        return browser.wait(until.stalenessOf(elementToCheck), waitTimeout, 'Element is present ' + elementToCheck.locator());
     }
 
     static waitUntilDialogIsClose() {

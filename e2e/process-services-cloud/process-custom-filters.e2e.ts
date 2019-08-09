@@ -28,7 +28,7 @@ import { browser } from 'protractor';
 import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
 import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
 
-xdescribe('Process list cloud', () => {
+describe('Process list cloud', () => {
 
     describe('Process List', () => {
         const loginSSOPage = new LoginSSOPage();
@@ -53,7 +53,8 @@ xdescribe('Process list cloud', () => {
         let processInstancesService: ProcessInstancesService;
         let queryService: QueryService;
 
-        let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, groupInfo, anotherProcessInstance;
+        let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, groupInfo,
+            anotherProcessInstance;
         const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
 
         beforeAll(async (done) => {
@@ -61,15 +62,18 @@ xdescribe('Process list cloud', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
 
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
             await apiService.login(testUser.email, testUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidateBaseApp);
-            const anotherProcessDefinition = await processDefinitionService.getProcessDefinitionByName('anotherCandidateGroupProcess', candidateBaseApp);
+            const processDefinition = await processDefinitionService
+                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+
+            const anotherProcessDefinition = await processDefinitionService
+                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess, candidateBaseApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
@@ -95,6 +99,7 @@ xdescribe('Process list cloud', () => {
             });
             queryService = new QueryService(apiService);
 
+            await browser.driver.sleep(4000); // eventual consistency query
             const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
             tasksService = new TasksService(apiService);
             const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
@@ -104,7 +109,7 @@ xdescribe('Process list cloud', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
             await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
             done();

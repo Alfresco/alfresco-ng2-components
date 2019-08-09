@@ -74,6 +74,7 @@ export class LoginPage {
             'settings'
         )
     );
+    sidenavLayout = element(by.css(`[data-automation-id="sidenav-layout"]`));
 
     goToLoginPage() {
         browser.waitForAngularEnabled(true);
@@ -87,11 +88,11 @@ export class LoginPage {
     }
 
     enterUsername(username) {
-        BrowserActions.clearSendKeys(this.txtUsername, username);
+        return BrowserActions.clearSendKeys(this.txtUsername, username);
     }
 
     enterPassword(password) {
-        BrowserActions.clearSendKeys(this.txtPassword, password);
+        return BrowserActions.clearSendKeys(this.txtPassword, password);
     }
 
     async clearUsername() {
@@ -195,7 +196,7 @@ export class LoginPage {
     }
 
     clickSignInButton() {
-        BrowserActions.clickExecuteScript('#login-button');
+        BrowserActions.click(this.signInButton);
     }
 
     clickSettingsIcon() {
@@ -274,6 +275,6 @@ export class LoginPage {
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();
-        return BrowserVisibility.waitUntilElementIsVisible(this.header);
+        return BrowserVisibility.waitUntilElementIsVisible(this.sidenavLayout);
     }
 }

@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, DataSorting, ContentService, ThumbnailService } from '@alfresco/adf-core';
+import { DataColumn, DataRow, DataSorting, ContentService, ThumbnailService, setupTestBed } from '@alfresco/adf-core';
 import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode } from './../../mock';
 import { ShareDataRow } from './share-data-row.model';
 import { ShareDataTableAdapter } from './share-datatable-adapter';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
+import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TestBed } from '@angular/core/testing';
 
 class FakeSanitizer extends DomSanitizer {
 
@@ -57,12 +59,26 @@ describe('ShareDataTableAdapter', () => {
 
     let thumbnailService: ThumbnailService;
     let contentService: ContentService;
-    const fakeMatIconRegistry: MatIconRegistry = jasmine.createSpyObj(['addSvgIcon', 'addSvgIconInNamespace']);
+
+    setupTestBed({
+        imports: [ContentTestingModule],
+        providers: [
+            {
+                provide: MatIconRegistry,
+                useValue: jasmine.createSpyObj(['addSvgIcon', 'addSvgIconInNamespace'])
+            },
+            {
+                provide: DomSanitizer, useClass: FakeSanitizer
+            }
+        ]
+    });
 
     beforeEach(() => {
         const imageUrl: string = 'http://<addresss>';
-        contentService = new ContentService(null, null, null, null);
-        thumbnailService = new ThumbnailService(contentService, fakeMatIconRegistry, new FakeSanitizer());
+
+        contentService = TestBed.get(ContentService);
+        thumbnailService = TestBed.get(ThumbnailService);
+
         spyOn(thumbnailService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
     });
 

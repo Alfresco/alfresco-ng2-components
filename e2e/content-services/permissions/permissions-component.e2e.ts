@@ -21,7 +21,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
-import { StringUtil, BrowserActions, NotificationHistoryPage, LoginPage, UploadActions  } from '@alfresco/adf-testing';
+import { StringUtil, BrowserActions, NotificationHistoryPage, LoginPage, UploadActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folderModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
@@ -33,7 +33,7 @@ describe('Permissions Component', function () {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -165,6 +165,8 @@ describe('Permissions Component', function () {
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await folders.forEach(function (folder) {
             uploadActions.deleteFileOrFolder(folder.entry.id);
@@ -174,7 +176,7 @@ describe('Permissions Component', function () {
         done();
     });
 
-    describe('Inherit and assigning permissions', () =>  {
+    describe('Inherit and assigning permissions', () => {
 
         beforeEach(async (done) => {
 
@@ -254,7 +256,7 @@ describe('Permissions Component', function () {
 
     });
 
-    describe('Changing and duplicate Permissions', () =>  {
+    describe('Changing and duplicate Permissions', () => {
 
         beforeEach(async (done) => {
 
@@ -285,15 +287,8 @@ describe('Permissions Component', function () {
         });
 
         afterEach(async (done) => {
-
-            try {
-                await uploadActions.deleteFileOrFolder(file.entry.id);
-
-            } catch (error) {
-
-            }
+            await uploadActions.deleteFileOrFolder(file.entry.id);
             done();
-
         });
 
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', () => {

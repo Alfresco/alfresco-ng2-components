@@ -64,7 +64,7 @@ describe('Task filters cloud', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
 
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
@@ -84,12 +84,16 @@ describe('Task filters cloud', () => {
             }
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
+            const processDefinition = await processDefinitionService
+                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
+
             processInstancesService = new ProcessInstancesService(apiService);
             const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
             const secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
             queryService = new QueryService(apiService);
+
+            await browser.driver.sleep(4000); // eventual consistency query
             await queryService.getProcessInstanceTasks(secondProcessInstance.entry.id, simpleApp);
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);
@@ -99,7 +103,7 @@ describe('Task filters cloud', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             done();
         }, 5 * 60 * 1000 );
 

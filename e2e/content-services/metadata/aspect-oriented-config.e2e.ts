@@ -51,7 +51,7 @@ describe('Aspect oriented config', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
         uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -84,6 +84,10 @@ describe('Aspect oriented config', () => {
         await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, {'aspectNames': aspects.entry.aspectNames});
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     afterEach(async (done) => {

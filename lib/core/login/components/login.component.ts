@@ -17,7 +17,7 @@
 
 import {
     Component, EventEmitter,
-    Input, OnInit, Output, TemplateRef, ViewEncapsulation
+    Input, OnInit, Output, TemplateRef, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -35,6 +35,9 @@ import {
     AppConfigValues
 } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../../models/oauth-config.model';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 enum LoginSteps {
     Landing = 0,
@@ -56,7 +59,7 @@ interface ValidationMessage {
         class: 'adf-login'
     }
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
     isPasswordShow: boolean = false;
 
     /**
@@ -126,6 +129,7 @@ export class LoginComponent implements OnInit {
     data: any;
 
     private _message: { [id: string]: { [id: string]: ValidationMessage } };
+    private onDestroy$ = new Subject<boolean>();
 
     /**
      * Constructor
@@ -142,7 +146,8 @@ export class LoginComponent implements OnInit {
         private appConfig: AppConfigService,
         private userPreferences: UserPreferencesService,
         private location: Location,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private sanitizer: DomSanitizer
     ) {
         this.initFormError();
         this.initFormFieldsMessages();
@@ -173,7 +178,14 @@ export class LoginComponent implements OnInit {
             this.initFormFieldsDefault();
             this.initFormFieldsMessagesDefault();
         }
-        this.form.valueChanges.subscribe((data) => this.onValueChanged(data));
+        this.form.valueChanges
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(data => this.onValueChanged(data));
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     submit() {
@@ -347,6 +359,10 @@ export class LoginComponent implements OnInit {
      */
     trimUsername(event: any) {
         event.target.value = event.target.value.trim();
+    }
+
+    getBackgroundUrlImageUrl() {
+        return  this.sanitizer.bypassSecurityTrustStyle(`url(${this.backgroundImageUrl})`);
     }
 
     /**

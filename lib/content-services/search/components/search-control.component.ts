@@ -108,19 +108,24 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         private userPreferencesService: UserPreferencesService
     ) {
 
-        this.toggleSearch.asObservable().pipe(debounceTime(200)).subscribe(() => {
-            if (this.expandable) {
-                this.subscriptAnimationState = this.toggleAnimation();
+        this.toggleSearch
+            .pipe(
+                debounceTime(200),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(() => {
+                if (this.expandable) {
+                    this.subscriptAnimationState = this.toggleAnimation();
 
-                if (this.subscriptAnimationState.value === 'inactive') {
-                    this.searchTerm = '';
-                    this.searchAutocomplete.resetResults();
-                    if ( document.activeElement.id === this.searchInput.nativeElement.id) {
-                        this.searchInput.nativeElement.blur();
+                    if (this.subscriptAnimationState.value === 'inactive') {
+                        this.searchTerm = '';
+                        this.searchAutocomplete.resetResults();
+                        if ( document.activeElement.id === this.searchInput.nativeElement.id) {
+                            this.searchInput.nativeElement.blur();
+                        }
                     }
                 }
-            }
-        });
+            });
     }
 
     applySearchFocus(animationDoneEvent) {
@@ -252,12 +257,12 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     private setupFocusEventHandlers() {
         const focusEvents: Observable<FocusEvent> = this.focusSubject
-            .asObservable()
             .pipe(
                 debounceTime(50),
                 filter(($event: any) => {
                     return this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout');
-                })
+                }),
+                takeUntil(this.onDestroy$)
             );
 
         focusEvents.subscribe(() => {

@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
     templateUrl: './process-list-demo.component.html',
     styleUrls: [`./process-list-demo.component.scss`]
 })
 
-export class ProcessListDemoComponent implements OnInit {
+export class ProcessListDemoComponent implements OnInit, OnDestroy {
 
     DEFAULT_SIZE = 20;
 
@@ -54,6 +55,8 @@ export class ProcessListDemoComponent implements OnInit {
         {value: 'created-desc', title: 'Created (desc)'}
     ];
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(private route: ActivatedRoute,
                 private formBuilder: FormBuilder) {
     }
@@ -72,6 +75,11 @@ export class ProcessListDemoComponent implements OnInit {
         this.buildForm();
     }
 
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
+
     buildForm() {
         this.processListForm = this.formBuilder.group({
             processAppId: new FormControl(this.appId, [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
@@ -84,10 +92,9 @@ export class ProcessListDemoComponent implements OnInit {
         });
 
         this.processListForm.valueChanges
-            .pipe(
-                debounceTime(500)
-            )
-            .subscribe((processFilter) => {
+            .pipe(takeUntil(this.onDestroy$))
+            .pipe(debounceTime(500))
+            .subscribe(processFilter => {
                 if (this.isFormValid()) {
                     this.filterProcesses(processFilter);
                 }

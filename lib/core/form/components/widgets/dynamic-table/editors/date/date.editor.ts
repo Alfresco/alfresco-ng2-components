@@ -21,13 +21,15 @@ import { UserPreferencesService, UserPreferenceValues } from '../../../../../../
 
 import { MomentDateAdapter } from '../../../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../../../utils/moment-date-formats.model';
-import { Component, Input, OnInit } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS, MatDatepickerInputEvent } from '@angular/material';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { DynamicTableColumn } from './../../dynamic-table-column.model';
 import { DynamicTableRow } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-date-editor',
@@ -37,7 +39,7 @@ import { DynamicTableModel } from './../../dynamic-table.widget.model';
         {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
     styleUrls: ['./date.editor.scss']
 })
-export class DateEditorComponent implements OnInit {
+export class DateEditorComponent implements OnInit, OnDestroy {
 
     DATE_FORMAT: string = 'DD-MM-YYYY';
 
@@ -55,31 +57,43 @@ export class DateEditorComponent implements OnInit {
     minDate: Moment;
     maxDate: Moment;
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
 
         const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.DATE_FORMAT;
 
-        this.value = moment(this.table.getCellValue(this.row, this.column), 'YYYY-MM-DD');
+        this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_FORMAT);
     }
 
-    onDateChanged(newDateValue) {
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
+
+    onDateChanged(newDateValue: MatDatepickerInputEvent<any> | HTMLInputElement) {
         if (newDateValue && newDateValue.value) {
+            /* validates the user inputs */
             const momentDate = moment(newDateValue.value, this.DATE_FORMAT, true);
 
             if (!momentDate.isValid()) {
-                this.row.value[this.column.id] = '';
+                this.row.value[this.column.id] =  newDateValue.value;
             } else {
                 this.row.value[this.column.id] = `${momentDate.format('YYYY-MM-DD')}T00:00:00.000Z`;
                 this.table.flushValue();
             }
+        } else {
+            /* removes the date  */
+            this.row.value[this.column.id] = '';
         }
     }
 

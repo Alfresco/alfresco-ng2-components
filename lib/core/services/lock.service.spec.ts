@@ -60,8 +60,10 @@ describe('PeopleProcessService', () => {
             isLocked: true,
             isFile: true,
             properties:
-                { 'cm:lockType': 'READ_ONLY_LOCK',
-                 'cm:lockLifetime': 'PERSISTENT' }
+                {
+                    'cm:lockType': 'READ_ONLY_LOCK',
+                    'cm:lockLifetime': 'PERSISTENT'
+                }
         };
 
         const nodeReadOnlyWithExpiredDate: Node = <Node> {
@@ -69,12 +71,12 @@ describe('PeopleProcessService', () => {
             isLocked: true,
             isFile: true,
             properties:
-            {
-                'cm:lockType': 'WRITE_LOCK',
-                'cm:lockLifetime': 'PERSISTENT',
-                'cm:lockOwner': { id: 'lock-owner-user' },
-                'cm:expiryDate': moment().subtract('days', '4')
-            }
+                {
+                    'cm:lockType': 'WRITE_LOCK',
+                    'cm:lockLifetime': 'PERSISTENT',
+                    'cm:lockOwner': { id: 'lock-owner-user' },
+                    'cm:expiryDate': moment().subtract(4, 'days')
+                }
         };
 
         const nodeReadOnlyWithActiveExpiration: Node = <Node> {
@@ -82,12 +84,12 @@ describe('PeopleProcessService', () => {
             isLocked: true,
             isFile: true,
             properties:
-            {
-                'cm:lockType': 'WRITE_LOCK',
-                'cm:lockLifetime': 'PERSISTENT',
-                'cm:lockOwner': { id: 'lock-owner-user' },
-                'cm:expiryDate': moment().add('days', '4')
-            }
+                {
+                    'cm:lockType': 'WRITE_LOCK',
+                    'cm:lockLifetime': 'PERSISTENT',
+                    'cm:lockOwner': { id: 'lock-owner-user' },
+                    'cm:expiryDate': moment().add(4, 'days')
+                }
         };
 
         it('should return true when readonly lock is active', () => {
@@ -109,11 +111,11 @@ describe('PeopleProcessService', () => {
             isLocked: true,
             isFile: true,
             properties:
-            {
-                'cm:lockType': 'WRITE_LOCK',
-                'cm:lockLifetime': 'PERSISTENT',
-                'cm:lockOwner': { id: 'lock-owner-user' }
-            }
+                {
+                    'cm:lockType': 'WRITE_LOCK',
+                    'cm:lockLifetime': 'PERSISTENT',
+                    'cm:lockOwner': { id: 'lock-owner-user' }
+                }
         };
 
         const nodeOwnerAllowedLockWithExpiredDate: Node = <Node> {
@@ -121,12 +123,12 @@ describe('PeopleProcessService', () => {
             isLocked: true,
             isFile: true,
             properties:
-            {
-                'cm:lockType': 'WRITE_LOCK',
-                'cm:lockLifetime': 'PERSISTENT',
-                'cm:lockOwner': { id: 'lock-owner-user' },
-                'cm:expiryDate': moment().subtract('days', '4')
-            }
+                {
+                    'cm:lockType': 'WRITE_LOCK',
+                    'cm:lockLifetime': 'PERSISTENT',
+                    'cm:lockOwner': { id: 'lock-owner-user' },
+                    'cm:expiryDate': moment().subtract(4, 'days')
+                }
         };
 
         const nodeOwnerAllowedLockWithActiveExpiration: Node = <Node> {
@@ -134,12 +136,12 @@ describe('PeopleProcessService', () => {
             isLocked: true,
             isFile: true,
             properties:
-            {
-                'cm:lockType': 'WRITE_LOCK',
-                'cm:lockLifetime': 'PERSISTENT',
-                'cm:lockOwner': { id: 'lock-owner-user' },
-                'cm:expiryDate': moment().add('days', '4')
-            }
+                {
+                    'cm:lockType': 'WRITE_LOCK',
+                    'cm:lockLifetime': 'PERSISTENT',
+                    'cm:lockOwner': { id: 'lock-owner-user' },
+                    'cm:expiryDate': moment().add(4, 'days')
+                }
         };
 
         it('should return false when the user is the lock owner', () => {

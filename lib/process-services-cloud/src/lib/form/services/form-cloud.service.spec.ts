@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormCloudService } from './form-cloud.service';
-import { AlfrescoApiService, CoreModule, setupTestBed, AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { AlfrescoApiService, CoreModule, setupTestBed, AppConfigService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 
 declare let jasmine: any;
@@ -26,11 +26,6 @@ declare let jasmine: any;
 const responseBody = {
     entry:
         { id: 'id', name: 'name', formKey: 'form-key' }
-};
-
-const alfrescoApiServiceStub = {
-    getInstance() { },
-    load() { }
 };
 
 const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi']);
@@ -48,11 +43,7 @@ describe('Form Cloud service', () => {
             NoopAnimationsModule,
             CoreModule.forRoot()
         ],
-        providers: [
-            FormCloudService,
-            { provide: AlfrescoApiService, useValue: alfrescoApiServiceStub },
-            { provide: AppConfigService, useClass: AppConfigServiceMock }
-        ]
+        providers: [FormCloudService, AlfrescoApiService, AppConfigService]
     });
 
     beforeEach(() => {
@@ -147,7 +138,6 @@ describe('Form Cloud service', () => {
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
                 done();
             });
-
         });
 
         it('should fetch task form flattened', (done) => {
@@ -194,6 +184,44 @@ describe('Form Cloud service', () => {
                 done();
             });
 
+        });
+
+        it('should fetch process storage folder with process instance id and task id', (done) => {
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({
+                    nodeId: 'fake-node-id-really-long',
+                    path: 'path/to/node/id',
+                    type: 'nodeType'
+              }));
+
+            service.getProcessStorageFolderTask(appName, taskId, processInstanceId).subscribe((result) => {
+                expect(result).toBeDefined();
+                expect(result).not.toBeNull();
+                expect(result.nodeId).toBe('fake-node-id-really-long');
+                expect(result.path).toBe('path/to/node/id');
+                expect(result.type).toBe('nodeType');
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/process-storage/v1/folders/${processInstanceId}/${taskId}`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
+                done();
+            });
+        });
+
+        it('should fetch process storage folder with task id only', (done) => {
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({
+                    nodeId: 'fake-node-id-really-long',
+                    path: 'path/to/node/id',
+                    type: 'nodeType'
+              }));
+
+            service.getProcessStorageFolderTask(appName, taskId, null).subscribe((result) => {
+                expect(result).toBeDefined();
+                expect(result).not.toBeNull();
+                expect(result.nodeId).toBe('fake-node-id-really-long');
+                expect(result.path).toBe('path/to/node/id');
+                expect(result.type).toBe('nodeType');
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/process-storage/v1/folders/${taskId}`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
+                done();
+            });
         });
 
     });

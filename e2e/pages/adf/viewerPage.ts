@@ -50,6 +50,7 @@ export class ViewerPage {
     lastThumbnailDisplayed = element.all(by.css('adf-pdf-thumb')).last();
     passwordDialog = element(by.css('adf-pdf-viewer-password-dialog'));
     passwordSubmit = element(by.css('button[data-automation-id="adf-password-dialog-submit"]'));
+    passwordDialogClose = element(by.css('button[data-automation-id="adf-password-dialog-close"]'));
     passwordSubmitDisabled = element(by.css('button[data-automation-id="adf-password-dialog-submit"][disabled]'));
     passwordInput = element(by.css('input[data-automation-id="adf-password-dialog-input"]'));
     passwordError = element(by.css('mat-error[data-automation-id="adf-password-dialog-error"]'));
@@ -99,6 +100,7 @@ export class ViewerPage {
 
     showTabWithIconSwitch = element(by.id('adf-tab-with-icon'));
     showTabWithIconAndLabelSwitch = element(by.id('adf-icon-and-label-tab'));
+    unknownFormat = element(by.css(`adf-viewer-unknown-format .adf-viewer__unknown-format-view`));
 
     checkCodeViewerIsDisplayed() {
         return BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
@@ -147,6 +149,11 @@ export class ViewerPage {
 
     checkFileIsLoaded(fileName?: string) {
         BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 30000, `not loaded ${fileName}`);
+    }
+
+    clickClosePasswordDialog() {
+        BrowserVisibility.waitUntilElementIsVisible(this.passwordDialogClose);
+        this.passwordDialogClose.click();
     }
 
     checkImgViewerIsDisplayed() {
@@ -508,6 +515,7 @@ export class ViewerPage {
     }
 
     enableShowTabWithIcon() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.showTabWithIconSwitch);
         this.formControllersPage.enableToggle(this.showTabWithIconSwitch);
     }
 
@@ -552,6 +560,7 @@ export class ViewerPage {
     }
 
     disableAllowLeftSidebar() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.allowLeftSidebarSwitch);
         this.formControllersPage.disableToggle(this.allowLeftSidebarSwitch);
     }
 
@@ -582,11 +591,13 @@ export class ViewerPage {
     }
 
     disableCustomToolbar() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
         this.formControllersPage.disableToggle(this.customToolbarToggle);
         return this;
     }
 
     enableCustomToolbar() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
         this.formControllersPage.enableToggle(this.customToolbarToggle);
         return this;
     }
@@ -656,5 +667,14 @@ export class ViewerPage {
     getTabIconById(index: number) {
         const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
         return BrowserActions.getText(tab);
+    }
+
+    checkUnknownFormatIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.unknownFormat);
+    }
+
+    getUnknownFormatMessage() {
+        const unknownFormatLabel = this.unknownFormat.element(by.css(`.label`));
+        return BrowserActions.getText(unknownFormatLabel);
     }
 }

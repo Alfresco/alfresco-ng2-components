@@ -28,12 +28,15 @@ import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('User Info component', () => {
 
     const loginPage = new LoginPage();
     const userInfoPage = new UserInfoPage();
     let processUserModel, contentUserModel;
+    const navigationBarPage = new NavigationBarPage();
+
     const acsAvatarFileModel = new FileModel({
         'name': resources.Files.PROFILE_IMAGES.ECM.file_name,
         'location': resources.Files.PROFILE_IMAGES.ECM.file_location
@@ -48,8 +51,8 @@ describe('User Info component', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ALL',
-            hostEcm: browser.params.testConfig.adf.url,
-            hostBpm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host,
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -69,7 +72,11 @@ describe('User Info component', () => {
         done();
     });
 
-    xit('[C260111] Should display UserInfo when Process Services and Content Services are enabled', async () => {
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
+    it('[C260111] Should display UserInfo when Process Services and Content Services are enabled', async () => {
         await loginPage.loginToAllUsingUserModel(contentUserModel);
 
         userInfoPage.clickUserProfile();

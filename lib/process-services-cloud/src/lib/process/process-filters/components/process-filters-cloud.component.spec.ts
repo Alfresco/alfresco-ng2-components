@@ -26,6 +26,9 @@ import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
+import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
+import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 
 describe('ProcessFiltersCloudComponent', () => {
 
@@ -75,7 +78,10 @@ describe('ProcessFiltersCloudComponent', () => {
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
-        providers: [ProcessFilterCloudService]
+        providers: [
+            ProcessFilterCloudService,
+            { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+        ]
     });
 
     beforeEach(() => {
@@ -83,6 +89,14 @@ describe('ProcessFiltersCloudComponent', () => {
         component = fixture.componentInstance;
 
         processFilterService = TestBed.get(ProcessFilterCloudService);
+    });
+
+    it('should create ProcessFiltersCloudComponent instance', () => {
+        expect(component instanceof ProcessFiltersCloudComponent).toBeDefined();
+    });
+
+    it('should be able to use LocalPreferenceCloudService', () => {
+        expect(processFilterService.preferenceService instanceof LocalPreferenceCloudService).toBeTruthy();
     });
 
     it('should attach specific icon for each filter if hasIcon is true', async(() => {
@@ -350,5 +364,34 @@ describe('ProcessFiltersCloudComponent', () => {
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter(<ProcessFilterCloudModel> {id: filter.id});
         expect(component.getCurrentFilter()).toBe(filter);
+    });
+});
+
+describe('Set UserPreferenceService', () => {
+
+    let processFilterService: ProcessFilterCloudService;
+    let component: ProcessFiltersCloudComponent;
+    let fixture: ComponentFixture<ProcessFiltersCloudComponent>;
+
+    setupTestBed({
+        imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
+        providers: [
+            ProcessFilterCloudService,
+            { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
+        ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ProcessFiltersCloudComponent);
+        component = fixture.componentInstance;
+        processFilterService = TestBed.get(ProcessFilterCloudService);
+    });
+
+    it('should create ProcessFiltersCloudComponent instance', () => {
+        expect(component instanceof ProcessFiltersCloudComponent).toBeDefined();
+    });
+
+    it('should able to inject UserPreferenceCloudService when you override with user preferece service', () => {
+        expect(processFilterService.preferenceService instanceof UserPreferenceCloudService).toBeTruthy();
     });
 });

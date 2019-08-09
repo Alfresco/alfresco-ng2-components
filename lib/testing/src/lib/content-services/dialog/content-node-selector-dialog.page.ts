@@ -65,6 +65,14 @@ export class ContentNodeSelectorDialogPage {
         return BrowserActions.click(this.cancelButton);
     }
 
+    checkCancelButtonIsEnabled() {
+        return this.cancelButton.isEnabled();
+    }
+
+    checkCopyMoveButtonIsEnabled() {
+        return this.moveCopyButton.isEnabled();
+    }
+
     checkMoveCopyButtonIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.moveCopyButton);
     }

@@ -58,6 +58,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     properties: CardViewItem [];
     inEdit: boolean = false;
+    displayDateClearAction = false;
     dateFormat: string;
     dateLocale: string;
 
@@ -189,7 +190,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                     value: this.formName,
                     key: 'formName',
                     default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'),
-                    clickable: !!this.formName,
+                    clickable: this.isFormClickable(),
                     icon: 'create'
                 }
             )
@@ -285,11 +286,10 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
      * @param taskId
      */
     claimTask(taskId: string) {
-        this.activitiTaskService.claimTask(taskId).subscribe(
-            (res: any) => {
-                this.logService.info('Task claimed');
-                this.claim.emit(taskId);
-            });
+        this.activitiTaskService.claimTask(taskId).subscribe(() => {
+            this.logService.info('Task claimed');
+            this.claim.emit(taskId);
+        });
     }
 
     /**
@@ -298,11 +298,10 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
      * @param taskId
      */
     unclaimTask(taskId: string) {
-        this.activitiTaskService.unclaimTask(taskId).subscribe(
-            (res: any) => {
-                this.logService.info('Task unclaimed');
-                this.unclaim.emit(taskId);
-            });
+        this.activitiTaskService.unclaimTask(taskId).subscribe(() => {
+            this.logService.info('Task unclaimed');
+            this.unclaim.emit(taskId);
+        });
     }
 
     /**
@@ -310,6 +309,10 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
      */
     isCompleted(): boolean {
         return this.taskDetails && !!this.taskDetails.endDate;
+    }
+
+    isFormClickable(): boolean {
+        return !!this.formName && !this.isCompleted();
     }
 
     getTaskDuration(): string {

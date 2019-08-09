@@ -28,13 +28,15 @@ describe('Document List Component', () => {
     const contentServicesPage = new ContentServicesPage();
     const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
+    const navigationBarPage = new NavigationBarPage();
+
     let privateSite;
     let acsUser = null;
 
     beforeAll(() => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
     });
 
@@ -57,6 +59,7 @@ describe('Document List Component', () => {
         });
 
         afterAll(async (done) => {
+            await navigationBarPage.clickLogoutButton();
             await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
             navBar.openLanguageMenu();
             navBar.chooseLanguage('English');

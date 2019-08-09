@@ -43,11 +43,12 @@ export class FormFieldTypes {
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,
         FormFieldTypes.DISPLAY_VALUE,
-        FormFieldTypes.READONLY_TEXT
+        FormFieldTypes.READONLY_TEXT,
+        FormFieldTypes.GROUP
     ];
 
     static isReadOnlyType(type: string) {
-        return FormFieldTypes.READONLY_TYPES.indexOf(type) > -1;
+        return FormFieldTypes.READONLY_TYPES.includes(type);
     }
 
     static isContainerType(type: string) {

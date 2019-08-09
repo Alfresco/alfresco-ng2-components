@@ -16,7 +16,7 @@
  */
 
 import { async } from '@angular/core/testing';
-import { UserProcessModel, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { UserProcessModel, setupTestBed, CoreModule, StorageService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import {
     fakeCompletedTaskList,
@@ -50,7 +50,9 @@ describe('Activiti TaskList Service', () => {
     });
 
     beforeEach(async(() => {
-        service = new TaskListService(new AlfrescoApiServiceMock(new AppConfigService(null)), new LogService(new AppConfigService(null)));
+        service = new TaskListService(
+            new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService()),
+            new LogService(new AppConfigService(null)));
         jasmine.Ajax.install();
     }));
 

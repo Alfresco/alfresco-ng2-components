@@ -32,7 +32,7 @@ describe('Document List Component', () => {
     let uploadedFolder, uploadedFolderExtra;
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let acsUser = null;
@@ -234,16 +234,6 @@ describe('Document List Component', () => {
         it('[C272774] Should be able to sort by date (Descending)', () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByCreated('desc')).toBe(true, 'List is not sorted.');
         });
-    });
-
-    xit('[C260121] Should show the spinner on content loading', async (done) => {
-        acsUser = new AcsUserModel();
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.clickOnContentServices();
-        contentServicesPage.checkSpinnerIsShowed();
-        done();
     });
 
     it('[C279959] Should display empty folder state for new folders', async (done) => {

@@ -45,7 +45,7 @@ import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
-import { Subscription, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { SearchEntry } from '@alfresco/js-api';
@@ -201,9 +201,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
 
-    private onCreateFolder: Subscription;
-    private onEditFolder: Subscription;
-
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: ContentService,
@@ -264,13 +261,28 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
-        this.uploadService.fileUploadComplete.asObservable()
-            .pipe(debounceTime(300))
-            .subscribe((value) => this.onFileUploadEvent(value));
-        this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
-        this.contentService.folderCreated.subscribe((value) => this.onFolderCreated(value));
-        this.onCreateFolder = this.contentService.folderCreate.subscribe((value) => this.onFolderAction(value));
-        this.onEditFolder = this.contentService.folderEdit.subscribe((value) => this.onFolderAction(value));
+        this.uploadService.fileUploadComplete
+            .pipe(
+                debounceTime(300),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(value => this.onFileUploadEvent(value));
+
+        this.uploadService.fileUploadDeleted
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(value => this.onFileUploadEvent(value));
+
+        this.contentService.folderCreated
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(value => this.onFolderCreated(value));
+
+        this.contentService.folderCreate
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(value => this.onFolderAction(value));
+
+        this.contentService.folderEdit
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(value => this.onFolderAction(value));
 
         this.contentMetadataService.error
             .pipe(takeUntil(this.onDestroy$))
@@ -286,9 +298,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.onCreateFolder.unsubscribe();
-        this.onEditFolder.unsubscribe();
-
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
@@ -383,21 +392,21 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         switch (errorStatusCode) {
             case 403:
-                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.PERMISSION');
+                translatedErrorMessage = this.translateService.instant('OPERATION.ERROR.PERMISSION');
                 break;
             case 409:
-                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.CONFLICT');
+                translatedErrorMessage = this.translateService.instant('OPERATION.ERROR.CONFLICT');
                 break;
             default:
-                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.UNKNOWN');
+                translatedErrorMessage = this.translateService.instant('OPERATION.ERROR.UNKNOWN');
         }
 
-        this.openSnackMessage(translatedErrorMessage.value);
+        this.openSnackMessage(translatedErrorMessage);
     }
 
     onContentActionSuccess(message) {
-        const translatedMessage: any = this.translateService.get(message);
-        this.openSnackMessage(translatedMessage.value);
+        const translatedMessage: any = this.translateService.instant(message);
+        this.openSnackMessage(translatedMessage);
         this.documentList.reload();
     }
 
@@ -424,8 +433,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 width: '630px'
             });
         } else {
-            const translatedErrorMessage: any = this.translateService.get('OPERATION.ERROR.PERMISSION');
-            this.openSnackMessage(translatedErrorMessage.value);
+            const translatedErrorMessage: any = this.translateService.instant('OPERATION.ERROR.PERMISSION');
+            this.openSnackMessage(translatedErrorMessage);
         }
     }
 
@@ -442,8 +451,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 width: '630px'
             });
         } else {
-            const translatedErrorMessage: any = this.translateService.get('OPERATION.ERROR.PERMISSION');
-            this.openSnackMessage(translatedErrorMessage.value);
+            const translatedErrorMessage: any = this.translateService.instant('OPERATION.ERROR.PERMISSION');
+            this.openSnackMessage(translatedErrorMessage);
         }
     }
 
@@ -592,7 +601,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             width: '400px'
         });
 
-        dialogInstance.componentInstance.error.subscribe((message) => {
+        dialogInstance.componentInstance.error.subscribe((message: string) => {
             this.notificationService.openSnackMessage(message);
         });
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import {
     CardViewTextItemModel,
     CardViewDateItemModel,
@@ -27,23 +27,30 @@ import {
     CardViewSelectItemModel,
     CardViewUpdateService,
     CardViewMapItemModel,
-    UpdateNotification
+    UpdateNotification,
+    DecimalNumberPipe
 } from '@alfresco/adf-core';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     templateUrl: './card-view.component.html',
     styleUrls: ['./card-view.component.scss']
 })
-export class CardViewComponent implements OnInit {
+export class CardViewComponent implements OnInit, OnDestroy {
 
     @ViewChild('console') console: ElementRef;
 
     isEditable = true;
     properties: any;
     logs: string[];
+    showClearDateAction = false;
+    showNoneOption = false;
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {
+    private onDestroy$ = new Subject<boolean>();
+
+    constructor(private cardViewUpdateService: CardViewUpdateService,
+                private decimalNumberPipe: DecimalNumberPipe) {
         this.logs = [];
         this.createCard();
     }
@@ -53,7 +60,14 @@ export class CardViewComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.cardViewUpdateService.itemUpdated$.subscribe(this.onItemChange.bind(this));
+        this.cardViewUpdateService.itemUpdated$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(this.onItemChange.bind(this));
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     createCard() {
@@ -102,7 +116,8 @@ export class CardViewComponent implements OnInit {
                 value: 9.9,
                 key: 'float',
                 default: 0.0,
-                editable: this.isEditable
+                editable: this.isEditable,
+                pipes: [{ pipe: this.decimalNumberPipe}]
             }),
             new CardViewKeyValuePairsItemModel({
                 label: 'CardView Key-Value Pairs Item',
@@ -151,6 +166,14 @@ export class CardViewComponent implements OnInit {
     toggleEditable() {
         this.isEditable = !this.isEditable;
         this.createCard();
+    }
+
+    toggleClearDate() {
+        this.showClearDateAction = !this.showClearDateAction;
+    }
+
+    toggleNoneOption() {
+        this.showNoneOption = !this.showNoneOption;
     }
 
     reset() {

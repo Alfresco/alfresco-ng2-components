@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../app-config/app-config.service';
 
 @Injectable({
     providedIn: 'root'
@@ -25,11 +24,18 @@ export class StorageService {
 
     private memoryStore: { [key: string]: any } = {};
     private useLocalStorage: boolean = false;
-    storagePrefix: string;
+    private _prefix: string = '';
 
-    constructor(private appConfigService: AppConfigService) {
+    get prefix() {
+        return this._prefix;
+    }
+
+    set prefix(prefix: string) {
+        this._prefix = prefix ? prefix + '_' : '';
+    }
+
+    constructor() {
         this.useLocalStorage = this.storageAvailable('localStorage');
-        this.appConfigService.onLoad.subscribe(this.getAppPrefix.bind(this));
     }
 
     /**
@@ -39,9 +45,9 @@ export class StorageService {
      */
     getItem(key: string): string | null {
         if (this.useLocalStorage) {
-            return localStorage.getItem(this.storagePrefix + key);
+            return localStorage.getItem(this.prefix + key);
         } else {
-            return this.memoryStore.hasOwnProperty(this.storagePrefix + key) ? this.memoryStore[this.storagePrefix + key] : null;
+            return this.memoryStore.hasOwnProperty(this.prefix + key) ? this.memoryStore[this.prefix + key] : null;
         }
     }
 
@@ -52,9 +58,9 @@ export class StorageService {
      */
     setItem(key: string, data: string) {
         if (this.useLocalStorage) {
-            localStorage.setItem(this.storagePrefix + key, data);
+            localStorage.setItem(this.prefix + key, data);
         } else {
-            this.memoryStore[this.storagePrefix + key] = data.toString();
+            this.memoryStore[this.prefix + key] = data.toString();
         }
     }
 
@@ -73,9 +79,9 @@ export class StorageService {
      */
     removeItem(key: string) {
         if (this.useLocalStorage) {
-            localStorage.removeItem(this.storagePrefix + key);
+            localStorage.removeItem(this.prefix + key);
         } else {
-            delete this.memoryStore[this.storagePrefix + key];
+            delete this.memoryStore[this.prefix + key];
         }
     }
 
@@ -86,7 +92,7 @@ export class StorageService {
      */
     hasItem(key: string): boolean {
         if (this.useLocalStorage) {
-            return localStorage.getItem(this.storagePrefix + key) ? true : false;
+            return localStorage.getItem(this.prefix + key) ? true : false;
         } else {
             return this.memoryStore.hasOwnProperty(key);
         }
@@ -103,19 +109,4 @@ export class StorageService {
             return false;
         }
     }
-
-    /**
-     * Sets the prefix that is used for the local storage of the app
-     * It assigns the string that is defined i the app config,
-     * empty prefix otherwise.
-     */
-    getAppPrefix() {
-        const appConfiguration = this.appConfigService.get<any>('application');
-        if (appConfiguration && appConfiguration.storagePrefix) {
-            this.storagePrefix = appConfiguration.storagePrefix + '_';
-        } else {
-            this.storagePrefix = '';
-        }
-    }
-
 }

@@ -23,6 +23,7 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 
 class SearchServiceMock {
     public query: QueryBody;
+
     searchByQueryBody(query: QueryBody) {
         this.query = query;
     }
@@ -56,7 +57,7 @@ describe('ContentNodeSelectorService', () => {
     it('should make it including the path and allowableOperations', () => {
         service.search('nuka cola quantum');
 
-        expect(search.query.include).toEqual(['path', 'allowableOperations']);
+        expect(search.query.include).toEqual(['path', 'allowableOperations', 'properties']);
     });
 
     it('should make the search restricted to nodes only', () => {

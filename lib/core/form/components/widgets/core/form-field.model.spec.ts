@@ -400,4 +400,47 @@ describe('FormFieldModel', () => {
 
         expect(field.numberOfColumns).toBe(999);
     });
+
+    it('should instantiate FormField when has no variable', () => {
+        const form = new FormModel({});
+        form.json = {
+            variables: undefined
+        };
+        const field = new FormFieldModel(form, {});
+        expect(field).toBeDefined();
+    });
+
+    it('header field type should not appear into form values', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'HeaderFieldtype',
+            id: 'header_field',
+            name: 'header',
+            type: FormFieldTypes.GROUP,
+            value: '',
+            required: false,
+            readOnly: true
+        });
+        field.updateForm();
+        expect(form.values['header_field']).not.toBeDefined();
+    });
+
+    it('dropdown field type should appear into form values', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'HeaderFieldtype',
+            id: 'dropdown_field',
+            name: 'header',
+            type: FormFieldTypes.DROPDOWN,
+            value: 'opt1',
+            required: false,
+            readOnly: true,
+            options: [
+                {id: 'opt1', name: 'Option 1'},
+                {id: 'opt2', name: 'Option 2'}
+            ]
+        });
+        field.updateForm();
+        expect(form.values['dropdown_field'].name).toEqual('Option 1');
+    });
 });

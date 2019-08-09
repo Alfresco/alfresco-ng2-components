@@ -27,7 +27,8 @@ import {
     CardViewFloatItemModel,
     LogService,
     MultiValuePipe,
-    AppConfigService
+    AppConfigService,
+    DecimalNumberPipe
 } from '@alfresco/adf-core';
 import { Property, CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 
@@ -52,6 +53,7 @@ export class PropertyGroupTranslatorService {
 
     constructor(private logService: LogService,
                 private multiValuePipe: MultiValuePipe,
+                private decimalNumberPipe: DecimalNumberPipe,
                 private appConfig: AppConfigService) {
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
     }
@@ -104,7 +106,9 @@ export class PropertyGroupTranslatorService {
 
             case D_FLOAT:
             case D_DOUBLE:
-                cardViewItemProperty = new CardViewFloatItemModel(propertyDefinition);
+                cardViewItemProperty = new CardViewFloatItemModel(Object.assign(propertyDefinition, {
+                    pipes: [{ pipe: this.decimalNumberPipe }]
+                }));
                 break;
 
             case D_DATE:

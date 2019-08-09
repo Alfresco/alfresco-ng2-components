@@ -19,10 +19,8 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from '@angular/forms';
-import { StartTaskCloudService } from '../services/start-task-cloud.service';
-import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import {
     LogService,
     UserPreferencesService,
@@ -32,6 +30,9 @@ import {
 } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
 import { GroupCloudComponent } from '../../../../lib/group/components/group-cloud.component';
+import { TaskCloudService } from '../../services/task-cloud.service';
+import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-start-task',
@@ -101,11 +102,9 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     private assigneeForm: AbstractControl = new FormControl('');
     private groupForm: AbstractControl = new FormControl('');
+    private onDestroy$ = new Subject<boolean>();
 
-    private localeSub: Subscription;
-    private createTaskSub: Subscription;
-
-    constructor(private taskService: StartTaskCloudService,
+    constructor(private taskService: TaskCloudService,
                 private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
                 private formBuilder: FormBuilder,
@@ -114,21 +113,17 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
         this.loadCurrentUser();
         this.buildForm();
     }
 
     ngOnDestroy() {
-        if (this.localeSub) {
-            this.localeSub.unsubscribe();
-        }
-
-        if (this.createTaskSub) {
-            this.createTaskSub.unsubscribe();
-        }
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     buildForm() {
@@ -153,17 +148,16 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     public saveTask() {
         this.submitted = true;
         const newTask = Object.assign(this.taskForm.value);
-        newTask.appName = this.appName;
         newTask.dueDate = this.dueDate;
         newTask.assignee = this.assigneeName;
         newTask.formKey = this.formKey;
         newTask.candidateGroups = this.candidateGroupNames;
 
-        this.createNewTask(new TaskDetailsCloudModel(newTask));
+        this.createNewTask(new StartTaskCloudRequestModel(newTask));
     }
 
-    private createNewTask(newTask: TaskDetailsCloudModel) {
-        this.createTaskSub = this.taskService.createNewTask(newTask)
+    private createNewTask(newTask: StartTaskCloudRequestModel) {
+        this.taskService.createNewTask(newTask, this.appName)
             .subscribe(
                 (res: any) => {
                     this.submitted = false;

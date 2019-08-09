@@ -54,14 +54,37 @@ export class BrowserActions {
         elementFinder.sendKeys(text);
     }
 
+    static async checkIsDisabled(elementFinder: ElementFinder) {
+        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        expect(elementFinder.getAttribute('disabled')).toEqual('true');
+        return this;
+    }
+
+    static async rightClick(elementFinder: ElementFinder) {
+        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        return browser.actions().click(elementFinder, protractor.Button.RIGHT).perform();
+    }
+
     static async closeMenuAndDialogs() {
         return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    }
+
+    static async closeDisabledMenu() {
+        // if the opened menu has only disabled items, pressing escape to close it won't work
+        return browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
     static clickOnDropdownOption(option: string, dropDownElement: ElementFinder) {
         this.click(dropDownElement);
         BrowserVisibility.waitUntilElementIsVisible(element('div[class*="mat-menu-content"] button'));
         const optionElement = element(by.cssContainingText('div[class*="mat-menu-content"] button', option));
+        BrowserActions.click(optionElement);
+        return this;
+    }
+
+    static clickOnSelectDropdownOption(option: string, dropDownElement: ElementFinder) {
+        this.click(dropDownElement);
+        const optionElement = element(by.cssContainingText('mat-option span.mat-option-text', option));
         BrowserActions.click(optionElement);
         return this;
     }

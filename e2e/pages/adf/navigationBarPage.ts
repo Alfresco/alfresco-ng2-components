@@ -135,7 +135,7 @@ export class NavigationBarPage {
 
     async clickLogoutButton() {
         BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.logoutButton);
+        BrowserActions.clickExecuteScript('.adf-sidenav-link[adf-logout]');
     }
 
     async clickCardViewButton() {
@@ -202,6 +202,11 @@ export class NavigationBarPage {
     clickFormButton() {
         BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.processServicesButton);
+        BrowserActions.click(this.formButton);
+    }
+
+    clickFormCloudButton() {
+        this.clickMenuButton('Process Cloud');
         BrowserActions.click(this.formButton);
     }
 

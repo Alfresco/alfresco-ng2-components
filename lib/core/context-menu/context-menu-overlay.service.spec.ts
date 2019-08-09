@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
 import { Overlay } from '@angular/cdk/overlay';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 import { Injector } from '@angular/core';
+import { setupTestBed } from '../testing/setupTestBed';
+import { TestBed } from '@angular/core/testing';
 
 describe('ContextMenuService', () => {
     let contextMenuOverlayService: ContextMenuOverlayService;
@@ -34,12 +35,12 @@ describe('ContextMenuService', () => {
         }
     };
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, CoreTestingModule],
-            providers: [ Overlay ]
-        });
+    setupTestBed({
+        imports: [NoopAnimationsModule, CoreTestingModule],
+        providers: [ Overlay ]
+    });
 
+    beforeEach(() => {
         overlay = TestBed.get(Overlay);
         injector = TestBed.get(Injector);
     });
@@ -52,7 +53,7 @@ describe('ContextMenuService', () => {
             );
         });
 
-        it('should should create a custom overlay', () => {
+        it('should create a custom overlay', () => {
             contextMenuOverlayService.open(overlayConfig);
 
             expect(document.querySelector('.test-panel')).not.toBe(null);

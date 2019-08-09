@@ -50,7 +50,7 @@ describe('Form Component', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         const users = new UsersActions();
@@ -86,7 +86,7 @@ describe('Form Component', () => {
 
         widget.dateWidget().checkLabelIsVisible(fields.dateWidgetId);
         widget.dateWidget().setDateInput(fields.dateWidgetId, message.test);
-        widget.dateWidget().clickOutsideWidget(fields.dateWidgetId);
+        formPage.saveForm();
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
         formPage.checkErrorLogMessage(message.errorLogDate);
 

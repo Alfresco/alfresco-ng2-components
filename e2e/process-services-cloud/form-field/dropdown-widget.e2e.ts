@@ -56,14 +56,15 @@ describe('Form Field Component - Dropdown Widget', () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
-        const processDefinition = await processDefinitionService.getProcessDefinitionByName('dropdownrestprocess', simpleApp);
+        const processDefinition = await processDefinitionService
+            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
@@ -71,6 +72,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
         queryService = new QueryService(apiService);
 
+        await browser.driver.sleep(4000); // eventual consistency query
         tasklist = await queryService.getProcessInstanceTasks(runningProcessInstance.entry.id, simpleApp);
         task = await tasklist.list.entries[0];
         tasksService = new TasksService(apiService);
@@ -80,7 +82,7 @@ describe('Form Field Component - Dropdown Widget', () => {
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         done();
     });
 
@@ -95,6 +97,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.goToApp(simpleApp);
 
+        identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 
     it('[C290069] Should be able to read rest service dropdown options, save and complete the task form', async () => {

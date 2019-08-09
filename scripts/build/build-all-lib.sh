@@ -34,4 +34,6 @@ echo "====== Copy schema ====="
 
 cp ../../lib/core/app-config/schema.json ../../lib/dist/core/app.config.schema.json
 
-npm run bundlesize-check
+echo "====== Bundle check ====="
+
+npm run bundlesize-check || exit 1

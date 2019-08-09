@@ -65,7 +65,7 @@ describe('Start Task - Task App', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -170,10 +170,6 @@ describe('Start Task - Task App', () => {
         processServiceTabBarPage.clickTasksButton();
 
         taskPage.taskDetails().taskInfoDrawerIsDisplayed();
-    });
-
-    xit('[C260424] Should be able to see Spinner loading on task list when clicking on Tasks', () => {
-        taskPage.tasksListPage().getDataTable().checkSpinnerIsDisplayed();
     });
 
     it('[C291780] Should be displayed an error message if task name exceed 255 characters', () => {

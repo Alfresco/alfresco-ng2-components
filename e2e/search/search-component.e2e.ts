@@ -25,7 +25,6 @@ import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 import { FolderModel } from '../models/ACS/folderModel';
-import { Util } from '../util/util';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { SearchConfiguration } from './search.config';
@@ -43,6 +42,7 @@ describe('Search component - Search Bar', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
+    const navigationBarPage = new NavigationBarPage();
 
     const searchDialog = new SearchDialog();
     const searchResultPage = new SearchResultsPage();
@@ -51,7 +51,7 @@ describe('Search component - Search Bar', () => {
     const acsUser = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -116,6 +116,7 @@ describe('Search component - Search Bar', () => {
             await uploadActions.deleteFileOrFolder(currentNode.entry.id);
 
         });
+        await navigationBarPage.clickLogoutButton();
 
         done();
     });
@@ -269,22 +270,6 @@ describe('Search component - Search Bar', () => {
         expect(contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 
-    xit('[C260254] Search bar should get closed when changing browser tab', () => {
-        searchDialog
-            .checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .checkSearchBarIsVisible()
-            .enterText(secondFolder.shortName);
-
-        searchDialog.resultTableContainsRow(secondFolder.name);
-
-        Util.openNewTabInBrowser();
-        Util.switchToWindowHandler(0);
-
-        browser.sleep(500);
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
-    });
-
     it('[C290137] Should be able to search by \'%\'', () => {
         searchDialog
             .clickOnSearchIcon()
@@ -294,12 +279,10 @@ describe('Search component - Search Bar', () => {
 
     describe('Highlight', () => {
 
-        const navigationBar = new NavigationBarPage();
-
         const searchConfiguration = SearchConfiguration.getConfiguration();
 
         beforeAll(async () => {
-            navigationBar.clickContentServicesButton();
+            navigationBarPage.clickContentServicesButton();
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(searchConfiguration));
 

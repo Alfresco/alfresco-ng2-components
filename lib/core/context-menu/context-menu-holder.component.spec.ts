@@ -23,6 +23,7 @@ import { ContextMenuModule } from './context-menu.module';
 import { ContextMenuService } from './context-menu.service';
 import { CoreModule } from '../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { setupTestBed } from '../testing/setupTestBed';
 
 describe('ContextMenuHolderComponent', () => {
     let fixture: ComponentFixture<ContextMenuHolderComponent>;
@@ -52,29 +53,30 @@ describe('ContextMenuHolderComponent', () => {
         })
     };
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-                imports: [
-                    NoopAnimationsModule,
-                    CoreModule.forRoot(),
-                    ContextMenuModule
-                ],
-                providers: [
-                    {
-                        provide: OverlayContainer,
-                        useValue: overlayContainer
-                    },
-                    {
-                        provide: ViewportRuler,
-                        useValue: getViewportRect
-                    }
-                ]
-        });
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot(),
+            ContextMenuModule
+        ],
+        providers: [
+            {
+                provide: OverlayContainer,
+                useValue: overlayContainer
+            },
+            {
+                provide: ViewportRuler,
+                useValue: getViewportRect
+            }
+        ]
+    });
 
+    beforeEach(() => {
         fixture = TestBed.createComponent(ContextMenuHolderComponent);
         component = fixture.componentInstance;
         contextMenuService = TestBed.get(ContextMenuService);
 
+        component.ngOnDestroy = () => {};
         fixture.detectChanges();
     });
 

@@ -171,7 +171,7 @@
                     <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
 
                         <ng-container *ngSwitchCase="'pdf'">
-                            <adf-pdf-viewer [thumbnailsTemplate]="thumbnailsTemplate" [allowThumbnails]="allowThumbnails" [blobFile]="blobFile" [urlFile]="urlFileContent" [nameFile]="displayName"></adf-pdf-viewer>
+                            <adf-pdf-viewer (close)="onBackButtonClick()" [thumbnailsTemplate]="thumbnailsTemplate" [allowThumbnails]="allowThumbnails" [blobFile]="blobFile" [urlFile]="urlFileContent" [nameFile]="displayName"></adf-pdf-viewer>
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'image'">

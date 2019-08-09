@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
-import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
+import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 
-export let taskDetailsMock = new TaskDetailsCloudModel({ assignee: 'fake-assigne', name: 'fake-name' });
+export let taskDetailsMock = new StartTaskCloudRequestModel({ assignee: 'fake-assigne', name: 'fake-name' });

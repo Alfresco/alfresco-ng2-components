@@ -19,26 +19,24 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-cloud-breadcrumbs',
-  templateUrl: './cloud-breadcrumb-component.html',
-  styleUrls: ['cloud-breadcrumb-component.scss']
+    selector: 'app-cloud-breadcrumbs',
+    templateUrl: './cloud-breadcrumb-component.html',
+    styleUrls: ['cloud-breadcrumb-component.scss']
 })
 export class CloudBreadcrumbsComponent implements OnInit {
+    appName: string;
+    filterName: string;
 
-  appName: string;
-  filterName: string;
+    constructor(private route: ActivatedRoute) {}
 
-  constructor(private route: ActivatedRoute) { }
-
-  ngOnInit() {
-    this.route.parent.params.subscribe((
-      params) => {
-      this.appName = params.appName;
-    });
-    this.route.queryParams.subscribe((params) => {
-      if (params.filterName) {
-        this.filterName = params.filterName;
-      }
-    });
-  }
+    ngOnInit() {
+        this.route.parent.params.subscribe(params => {
+            this.appName = params.appName;
+        });
+        this.route.queryParams.subscribe(params => {
+            if (params.filterName) {
+                this.filterName = params.filterName;
+            }
+        });
+    }
 }

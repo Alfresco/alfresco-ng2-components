@@ -30,6 +30,7 @@ import { UploadActions } from '@alfresco/adf-testing';
 import { Util } from '../util/util';
 import resources = require('../util/resources');
 import { browser } from 'protractor';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Pagination - returns to previous page when current is empty', () => {
 
@@ -37,6 +38,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const viewerPage = new ViewerPage();
+    const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
     const folderModel = new FolderModel({ 'name': 'folderOne' });
@@ -68,7 +70,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
         const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -99,6 +101,10 @@ describe('Pagination - returns to previous page when current is empty', () => {
         contentServicesPage.goToDocumentList();
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C274710] Should redirect to previous page when current is emptied', () => {

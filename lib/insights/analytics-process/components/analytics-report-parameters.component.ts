@@ -37,6 +37,8 @@ import { ReportParameterDetailsModel } from '../../diagram/models/report/reportP
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
 import { AnalyticsService } from '../services/analytics.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-analytics-report-parameters',
@@ -80,7 +82,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     onDropdownChanged = new EventEmitter();
 
-    successReportParams = new EventEmitter();
+    successReportParams = new EventEmitter<ReportParametersModel>();
 
     successParamOpt = new EventEmitter();
 
@@ -94,12 +96,10 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     reportName: string;
 
-    private dropDownSub;
-    private reportParamsSub;
-    private paramOpts;
     reportParamQuery: ReportQuery;
     private hideParameters: boolean = true;
     formValidState: boolean = false;
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder,
@@ -110,19 +110,27 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     ngOnInit() {
-        this.dropDownSub = this.onDropdownChanged.subscribe((field) => {
-            const paramDependOn: ReportParameterDetailsModel = this.reportParameters.definition.parameters.find((p) => p.dependsOn === field.id);
-            if (paramDependOn) {
-                this.retrieveParameterOptions(this.reportParameters.definition.parameters, this.appId, this.reportId, field.value);
-            }
-        });
+        this.onDropdownChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((field: any) => {
+                const paramDependOn = this.reportParameters.definition.parameters.find(
+                    (param) => param.dependsOn === field.id
+                );
+                if (paramDependOn) {
+                    this.retrieveParameterOptions(
+                        this.reportParameters.definition.parameters, this.appId, this.reportId, field.value
+                    );
+                }
+            });
 
-        this.paramOpts = this.successReportParams.subscribe((report: ReportParametersModel) => {
-            if (report.hasParameters()) {
-                this.retrieveParameterOptions(report.definition.parameters, this.appId);
-                this.generateFormGroupFromParameter(report.definition.parameters);
-            }
-        });
+        this.successReportParams
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(report => {
+                if (report.hasParameters()) {
+                    this.retrieveParameterOptions(report.definition.parameters, this.appId);
+                    this.generateFormGroupFromParameter(report.definition.parameters);
+                }
+            });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -195,7 +203,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     public getReportParams(reportId: string) {
-        this.reportParamsSub = this.analyticsService.getReportParams(reportId).subscribe(
+        this.analyticsService.getReportParams(reportId).subscribe(
             (res: ReportParametersModel) => {
                 this.reportParameters = res;
                 if (this.reportParameters.hasParameters()) {
@@ -293,11 +301,8 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     ngOnDestroy() {
-        this.dropDownSub.unsubscribe();
-        this.paramOpts.unsubscribe();
-        if (this.reportParamsSub) {
-            this.reportParamsSub.unsubscribe();
-        }
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     public editEnable() {
@@ -309,15 +314,17 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     public editTitle() {
-        this.reportParamsSub = this.analyticsService.updateReport(this.reportParameters.id, this.reportParameters.name).subscribe(
-            (res: ReportParametersModel) => {
-                this.editDisable();
-                this.edit.emit(this.reportParameters.name);
-            },
-            (err: any) => {
-                this.error.emit(err);
-            }
-        );
+        this.analyticsService
+            .updateReport(this.reportParameters.id, this.reportParameters.name)
+            .subscribe(
+                () => {
+                    this.editDisable();
+                    this.edit.emit(this.reportParameters.name);
+                },
+                err => {
+                    this.error.emit(err);
+                }
+            );
     }
 
     public showDialog(event: string) {

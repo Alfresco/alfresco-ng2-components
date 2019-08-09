@@ -15,25 +15,35 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, browser } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ConfigEditorPage {
 
+    textField = element(by.css('#adf-form-config-editor div.overflow-guard > textarea'));
+
     enterConfiguration(text) {
-        const textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
-        BrowserVisibility.waitUntilElementIsVisible(textField);
-        textField.sendKeys(text);
+
+        BrowserVisibility.waitUntilElementIsVisible(this.textField);
+        this.textField.sendKeys(text);
         return this;
     }
 
     clickSaveButton() {
-        const saveButton = element(by.id('adf-configuration-save'));
+        const saveButton = element(by.id('adf-form-config-save'));
         BrowserActions.click(saveButton);
     }
 
     clickClearButton() {
-        const clearButton = element(by.id('adf-configuration-clear'));
+        BrowserVisibility.waitUntilElementIsVisible(this.textField);
+        const clearButton = element(by.id('adf-form-config-clear'));
         BrowserActions.click(clearButton);
+    }
+
+    enterBulkConfiguration(text) {
+        this.clickClearButton();
+        BrowserVisibility.waitUntilElementIsVisible(this.textField);
+        browser.executeScript('this.monaco.editor.getModels()[0].setValue(`' + JSON.stringify(text) + '`)');
+        this.clickSaveButton();
     }
 }

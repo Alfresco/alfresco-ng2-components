@@ -23,16 +23,14 @@ import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { CoreModule } from '../../core.module';
 
-import { throwError, Observable } from 'rxjs';
+import { throwError } from 'rxjs';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerComponent } from './viewer.component';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { NodeEntry } from '@alfresco/js-api';
-import { PreviousRouteService } from 'core/services/previous-route.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -123,22 +121,11 @@ class ViewerWithCustomOpenWithComponent {
 class ViewerWithCustomMoreActionsComponent {
 }
 
-class MockRouter {
-    navigate = jasmine.createSpy('navigate');
-    firstUrl = new NavigationEnd(0, '/files', '/files');
-    events = new Observable((observer) => {
-        observer.next(this.firstUrl);
-        observer.complete();
-    });
-}
-
 describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
     let alfrescoApiService: AlfrescoApiService;
-    let previousRouteService: PreviousRouteService;
-    let router: Router;
     let element: HTMLElement;
 
     setupTestBed({
@@ -162,9 +149,7 @@ describe('ViewerComponent', () => {
                     }
                 }
             },
-            { provide: Router, useClass: MockRouter },
             RenderingQueueServices,
-            PreviousRouteService,
             { provide: Location, useClass: SpyLocation }
         ]
     });
@@ -175,11 +160,13 @@ describe('ViewerComponent', () => {
         component = fixture.componentInstance;
 
         alfrescoApiService = TestBed.get(AlfrescoApiService);
-        previousRouteService = TestBed.get(PreviousRouteService);
-        router = TestBed.get(Router);
     });
 
     describe('Extension Type Test', () => {
+
+        afterEach(() => {
+            fixture.destroy();
+        });
 
         it('should  extension file pdf  be loaded', (done) => {
             component.urlFile = 'fake-test-file.pdf';
@@ -207,30 +194,6 @@ describe('ViewerComponent', () => {
 
         it('should extension file mp4 be loaded', (done) => {
             component.urlFile = 'fake-url-file.mp4';
-            component.ngOnChanges(null);
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-media-player')).not.toBeNull();
-                done();
-            });
-        });
-
-        xit('should extension file mp3 be loaded', (done) => {
-            component.urlFile = 'fake-url-file.mp3';
-            component.ngOnChanges(null);
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-media-player')).not.toBeNull();
-                done();
-            });
-        });
-
-        xit('should extension file wav be loaded', (done) => {
-            component.urlFile = 'fake-url-file.wav';
             component.ngOnChanges(null);
             fixture.detectChanges();
 
@@ -269,34 +232,12 @@ describe('ViewerComponent', () => {
 
     describe('MimeType handling', () => {
 
-        it('should display a PDF file identified by mimetype when the filename has no extension', (done) => {
-            component.urlFile = 'content';
-            component.mimeType = 'application/pdf';
-            fixture.detectChanges();
-            component.ngOnChanges(null);
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
-                done();
-            });
-
-        });
-
-        it('should display a PDF file identified by mimetype when the file extension is wrong', (done) => {
-            component.urlFile = 'content.bin';
-            component.mimeType = 'application/pdf';
-            component.ngOnChanges(null);
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
-                done();
-            });
+        afterEach(() => {
+            fixture.destroy();
         });
 
         it('should display an image file identified by mimetype when the filename has no extension', (done) => {
-            component.urlFile = 'content';
+            component.urlFile = 'fake-content-img';
             component.mimeType = 'image/png';
             fixture.detectChanges();
             component.ngOnChanges(null);
@@ -309,7 +250,7 @@ describe('ViewerComponent', () => {
         });
 
         it('should display a image file identified by mimetype when the file extension is wrong', (done) => {
-            component.urlFile = 'content.bin';
+            component.urlFile = 'fake-content-img.bin';
             component.mimeType = 'image/png';
             fixture.detectChanges();
             component.ngOnChanges(null);
@@ -321,21 +262,8 @@ describe('ViewerComponent', () => {
             });
         });
 
-        it('should display the media player if the file identified by mimetype is a media when the filename has wrong extension', (done) => {
-            component.urlFile = 'content.bin';
-            component.mimeType = 'video/mp4';
-            fixture.detectChanges();
-            component.ngOnChanges(null);
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-media-player')).not.toBeNull();
-                done();
-            });
-        });
-
         it('should display the txt viewer if the file identified by mimetype is a txt when the filename has wrong extension', (done) => {
-            component.urlFile = 'content.bin';
+            component.urlFile = 'fake-content-txt.bin';
             component.mimeType = 'text/plain';
             fixture.detectChanges();
             component.ngOnChanges(null);
@@ -347,19 +275,6 @@ describe('ViewerComponent', () => {
             });
         });
 
-        xit('should display the media player if the file identified by mimetype is a media when the filename has no extension', (done) => {
-            component.urlFile = 'content';
-            component.mimeType = 'video/mp4';
-            fixture.detectChanges();
-            component.ngOnChanges(null);
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-media-player')).not.toBeNull();
-                done();
-            });
-        });
-
         it('should node without content show unkonwn', (done) => {
             const displayName = 'the-name';
             const nodeDetails = { name: displayName, id: '12' };
@@ -367,7 +282,7 @@ describe('ViewerComponent', () => {
             const alfrescoApiInstanceMock = {
                 nodes: {
                     getNodeInfo: () => Promise.resolve(nodeDetails),
-                    getNode: () => Promise.resolve({ id: 'fake-node' })
+                    getNode: () => Promise.resolve({ id: 'fake-node', entry: { content: {} } })
                 },
                 content: { getContentUrl: () => contentUrl }
             };
@@ -384,6 +299,58 @@ describe('ViewerComponent', () => {
                 done();
             });
         });
+
+        it('should display the media player if the file identified by mimetype is a media when the filename has wrong extension', (done) => {
+            component.urlFile = 'fake-content-video.bin';
+            component.mimeType = 'video/mp4';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
+                done();
+            });
+        }, 25000);
+
+        it('should display the media player if the file identified by mimetype is a media when the filename has no extension', (done) => {
+            component.urlFile = 'fake-content-video';
+            component.mimeType = 'video/mp4';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
+                done();
+            });
+        }, 25000);
+
+        it('should display a PDF file identified by mimetype when the filename has no extension', (done) => {
+            component.urlFile = 'fake-content-pdf';
+            component.mimeType = 'application/pdf';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
+                done();
+            });
+
+        }, 25000);
+
+        it('should display a PDF file identified by mimetype when the file extension is wrong', (done) => {
+            component.urlFile = 'fake-content-pdf.bin';
+            component.mimeType = 'application/pdf';
+            component.ngOnChanges(null);
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
+                done();
+            });
+        }, 25000);
 
     });
 
@@ -653,9 +620,9 @@ describe('ViewerComponent', () => {
                 });
             });
 
-            it('should go back when back button is clicked', async(() => {
+            it('should emit `showViewerChange` event on close', async(() => {
 
-                spyOn(previousRouteService, 'getPreviousUrl').and.returnValue('home');
+                spyOn(component.showViewerChange, 'emit');
 
                 const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-back"]') as HTMLButtonElement;
                 button.click();
@@ -663,11 +630,11 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(router.navigate).toHaveBeenCalled();
+                    expect(component.showViewerChange.emit).toHaveBeenCalled();
                 });
             }));
 
-            it('should render close viewer button if it is a shared link', (done) => {
+            it('should not render close viewer button if it is a shared link', (done) => {
                 spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
                     .and.returnValue(Promise.reject({}));
 

@@ -39,6 +39,7 @@ import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget/attach-file-cloud-widget.component';
+import { DateCloudWidgetComponent } from './date-cloud/date-cloud.widget';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -112,15 +113,14 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         });
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
         if (appName && appName.currentValue) {
-            if (this.taskId && this.processInstanceId) {
+            if (this.taskId) {
                 this.getFormDefinitionWithFolderTask(this.appName, this.taskId, this.processInstanceId);
-            } else if (this.taskId) {
-                this.getFormByTaskId(this.appName, this.taskId);
             } else if (this.formId) {
                 this.getFormById(appName.currentValue, this.formId);
             }
