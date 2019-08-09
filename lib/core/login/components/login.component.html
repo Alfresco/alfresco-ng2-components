@@ -82,7 +82,8 @@
                                     mat-raised-button color="primary"
                                     [class.adf-isChecking]="actualLoginStep === LoginSteps.Checking"
                                     [class.adf-isWelcome]="actualLoginStep === LoginSteps.Welcome"
-                                    data-automation-id="login-button" [disabled]="!form.valid">
+                                    data-automation-id="login-button" [disabled]="!form.valid"
+                                    [attr.aria-label]="'LOGIN.BUTTON.LOGIN' | translate">
 
                                 <span *ngIf="actualLoginStep === LoginSteps.Landing" class="adf-login-button-label">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</span>
 
@@ -113,6 +114,7 @@
 
                         <div *ngIf="implicitFlow">
                             <button type="button" (click)="implicitLogin()" id="login-button-sso"
+                                    [attr.aria-label]="'LOGIN.BUTTON.SSO' | translate"
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
                                     data-automation-id="login-button-sso">
