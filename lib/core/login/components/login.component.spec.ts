@@ -572,7 +572,7 @@ describe('LoginComponent', () => {
 
     it('should render the password in clear when the toggleShowPassword is call', () => {
         component.isPasswordShow = false;
-        component.toggleShowPassword();
+        component.toggleShowPassword(new MouseEvent('click'));
 
         fixture.detectChanges();
 
@@ -582,7 +582,7 @@ describe('LoginComponent', () => {
 
     it('should render the hide password when the password is in clear and the toggleShowPassword is call', () => {
         component.isPasswordShow = true;
-        component.toggleShowPassword();
+        component.toggleShowPassword(new MouseEvent('click'));
 
         fixture.detectChanges();
 
