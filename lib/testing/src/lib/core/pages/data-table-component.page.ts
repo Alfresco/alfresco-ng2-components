@@ -154,6 +154,15 @@ export class DataTableComponentPage {
                 sortedList = sortedList.reverse();
             }
 
+            if (initialList.toString() !== sortedList.toString()) {
+                // tslint:disable-next-line:no-console
+                console.log('Wrong order');
+                // tslint:disable-next-line:no-console
+                console.log('List' + initialList.toString());
+                // tslint:disable-next-line:no-console
+                console.log('sortedList sortedList' + sortedList.toString());
+            }
+
             deferred.fulfill(initialList.toString() === sortedList.toString());
         });
         return deferred.promise;
