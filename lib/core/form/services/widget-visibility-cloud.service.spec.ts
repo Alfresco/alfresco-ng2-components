@@ -530,7 +530,7 @@ describe('WidgetVisibilityCloudService', () => {
             expect(fakeFormField.isVisible).toBeFalsy();
         });
 
-        it('should reset value when the field is not visibile', () => {
+        it('should notreset value when the field is not visibile', () => {
             visibilityObjTest.leftValue = 'test_1';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightType = WidgetTypeEnum.field;
@@ -539,7 +539,7 @@ describe('WidgetVisibilityCloudService', () => {
 
             service.refreshEntityVisibility(fakeFormField);
             expect(fakeFormField.isVisible).toBeFalsy();
-            expect(fakeFormField.value).toEqual(null);
+            expect(fakeFormField.value).toEqual('FAKE_FORM_FIELD_VALUE');
         });
 
         it('should return true when the visibility condition is not valid', () => {
