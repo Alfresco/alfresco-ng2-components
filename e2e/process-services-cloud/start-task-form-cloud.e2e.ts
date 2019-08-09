@@ -170,16 +170,13 @@ describe('Start Task Form', () => {
     });
 
     afterAll(async (done) => {
-        try {
-            await this.alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
-            await apiService.login(testUser.email, testUser.password);
-            const tasksService = new TasksService(apiService);
-            const standAloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
-            await tasksService.deleteTask(standAloneTaskId, candidateBaseApp);
-            await identityService.deleteIdentityUser(testUser.idIdentityService);
-        } catch (error) {
-        }
+        await this.alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
+        await apiService.login(testUser.email, testUser.password);
+        const tasksService = new TasksService(apiService);
+        const standAloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
+        await tasksService.deleteTask(standAloneTaskId, candidateBaseApp);
+        await identityService.deleteIdentityUser(testUser.idIdentityService);
         done();
     });
 

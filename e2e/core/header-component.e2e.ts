@@ -49,7 +49,7 @@ describe('Header Component',  () => {
     beforeAll(async(done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         const users = new UsersActions();
@@ -72,6 +72,7 @@ describe('Header Component',  () => {
     });
 
     afterAll(async(done) => {
+        await navigationBarPage.clickLogoutButton();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();

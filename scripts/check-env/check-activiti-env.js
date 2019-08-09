@@ -273,12 +273,10 @@ async function deployApp(apiService, app, name) {
         "version": app.entry.name,
         "security": [{"role": "APS_ADMIN", "groups": [], "users": ["admin.adf"]}, {
             "role": "APS_USER",
-            "groups": ["hr"],
+            "groups": ["hr", "testgroup"],
             "users": ["admin.adf"]
         }]
     };
-
-    //console.log(JSON.stringify(bodyParam));
 
     const headerParams = {}, formParams = {}, queryParams = {},
         contentTypes = ['application/json'], accepts = ['application/json'];

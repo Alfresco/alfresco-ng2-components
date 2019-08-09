@@ -62,7 +62,7 @@ describe('Metadata component', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);
@@ -75,6 +75,10 @@ describe('Metadata component', () => {
         Object.assign(pngFileModel, pngUploadedFile.entry);
         pngFileModel.update(pngUploadedFile.entry);
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     describe('Viewer Metadata', () => {

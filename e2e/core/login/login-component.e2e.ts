@@ -59,8 +59,8 @@ describe('Login component', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ALL',
-            hostEcm: browser.params.testConfig.adf.url,
-            hostBpm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host,
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);

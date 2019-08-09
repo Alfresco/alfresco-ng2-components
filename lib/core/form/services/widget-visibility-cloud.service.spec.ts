@@ -34,7 +34,8 @@ import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import {
     fakeFormJson, fakeTaskProcessVariableModels,
     formTest, formValues, complexVisibilityJsonVisible,
-    complexVisibilityJsonNotVisible } from 'core/mock/form/widget-visibility-cloud.service.mock';
+    nextConditionForm, complexVisibilityJsonNotVisible,
+    headerVisibilityCond } from 'core/mock/form/widget-visibility-cloud.service.mock';
 
 declare let jasmine: any;
 
@@ -186,6 +187,23 @@ describe('WidgetVisibilityCloudService', () => {
         it('should return undefined for invalid operation', () => {
             booleanResult = service.evaluateCondition(null, null, undefined);
             expect(booleanResult).toBeUndefined();
+        });
+
+        it('should evaluate true visibility condition with next condition operator', (done) => {
+            const myForm = new FormModel(nextConditionForm);
+            service.refreshVisibility(myForm);
+            const nextConditionFormVIsibility = myForm.getFieldById('Text4');
+            expect(nextConditionFormVIsibility.isVisible).toBeTruthy();
+            done();
+        });
+
+        it('should evaluate false visibility condition with next condition operator', (done) => {
+            const myForm = new FormModel(nextConditionForm);
+            myForm.getFieldById('Text3').value = 'wrong value';
+            service.refreshVisibility(myForm);
+            const nextConditionFormVIsibility = myForm.getFieldById('Text4');
+            expect(nextConditionFormVIsibility.isVisible).toBeFalsy();
+            done();
         });
     });
 
@@ -381,7 +399,7 @@ describe('WidgetVisibilityCloudService', () => {
             const formValue = service.searchValueInForm(stubFormWithFields, 'FIELD_MYSTERY');
 
             expect(formValue).not.toBeUndefined();
-            expect(formValue).toBe('');
+            expect(formValue).toEqual('');
         });
 
         it('should search in the form if element value is not in form values', () => {
@@ -395,7 +413,7 @@ describe('WidgetVisibilityCloudService', () => {
             const formValue = service.getFormValue(fakeFormWithField, 'FIELD_MYSTERY');
 
             expect(formValue).not.toBeUndefined();
-            expect(formValue).toBe('');
+            expect(formValue).toEqual('');
         });
 
         it('should retrieve the value for the right field when it is a value', () => {
@@ -463,9 +481,9 @@ describe('WidgetVisibilityCloudService', () => {
             expect(leftValue).toBe('value_2');
         });
 
-        it('should return empty string for a value that is not on variable or form', () => {
+        it('should return undefined for a value that is not on variable or form', () => {
             const leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
-            expect(leftValue).toBe('');
+            expect(leftValue).toEqual('');
         });
 
         it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
@@ -490,9 +508,11 @@ describe('WidgetVisibilityCloudService', () => {
         });
 
         it('should evaluate the visibility for the field with single visibility condition between form values', () => {
-            visibilityObjTest.leftType = 'LEFT_FORM_FIELD_ID';
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'LEFT_FORM_FIELD_ID';
             visibilityObjTest.operator = '!=';
-            visibilityObjTest.rightType = 'RIGHT_FORM_FIELD_ID';
+            visibilityObjTest.rightType = WidgetTypeEnum.field;
+            visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_ID';
             const isVisible = service.isFieldVisible(fakeFormWithField, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
@@ -510,7 +530,7 @@ describe('WidgetVisibilityCloudService', () => {
             expect(fakeFormField.isVisible).toBeFalsy();
         });
 
-        it('should reset value when the field is not visibile', () => {
+        it('should notreset value when the field is not visibile', () => {
             visibilityObjTest.leftValue = 'test_1';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightType = WidgetTypeEnum.field;
@@ -519,7 +539,7 @@ describe('WidgetVisibilityCloudService', () => {
 
             service.refreshEntityVisibility(fakeFormField);
             expect(fakeFormField.isVisible).toBeFalsy();
-            expect(fakeFormField.value).toEqual(null);
+            expect(fakeFormField.value).toEqual('FAKE_FORM_FIELD_VALUE');
         });
 
         it('should return true when the visibility condition is not valid', () => {
@@ -723,6 +743,7 @@ describe('WidgetVisibilityCloudService', () => {
                     visibilityObjTest.leftType = WidgetTypeEnum.field;
                     visibilityObjTest.leftValue = 'FIELD_FORM_EMPTY';
                     visibilityObjTest.operator = '==';
+                    visibilityObjTest.rightType = WidgetTypeEnum.value;
                     visibilityObjTest.rightValue = 'PROCESS_RIGHT_FORM_FIELD_VALUE';
 
                     const myForm = new FormModel({
@@ -1057,6 +1078,98 @@ describe('WidgetVisibilityCloudService', () => {
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
+        });
+
+        it('should evaluate visibility between checkbox and variable', (done) => {
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'CheckboxTwo';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightType = WidgetTypeEnum.variable;
+            visibilityObjTest.rightValue = 'var2';
+
+            const checkboxForm = new FormModel({
+                id: '9999',
+                name: 'CHECKBOX_VISIBILITY',
+                processDefinitionId: 'PROCESS_TEST:9:9999',
+                processDefinitionName: 'PROCESS_TEST',
+                processDefinitionKey: 'PROCESS_TEST',
+                taskId: '999',
+                taskName: 'TEST',
+                fields: [
+                    {
+                        fieldType: 'ContainerRepresentation',
+                        id: '000000000000000000',
+                        name: 'Label',
+                        type: 'container',
+                        value: null,
+                        numberOfColumns: 2,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'CheckboxOne',
+                                    name: 'CheckboxOne',
+                                    type: 'boolean',
+                                    required: false,
+                                    value: false,
+                                    colspan: 1,
+                                    visibilityCondition: null
+                                },
+                                {
+                                    id: 'CheckboxTwo',
+                                    name: 'CheckboxTwo',
+                                    type: 'boolean',
+                                    required: false,
+                                    value: false,
+                                    colspan: 1,
+                                    visibilityCondition: null
+                                }
+                            ],
+                            2: [
+                                {
+                                    id: 'CheckboxThree',
+                                    name: 'CheckboxThree',
+                                    type: 'boolean',
+                                    required: false,
+                                    colspan: 1,
+                                    visibilityCondition: visibilityObjTest
+                                }
+                            ]
+                        }
+                    }
+                ],
+                variables: [
+                    {
+                        id: 'id',
+                        name: 'var2',
+                        type: 'boolean',
+                        value: false
+                    }
+                ]
+            });
+
+            service.refreshVisibility(checkboxForm);
+
+            const fieldWithVisibilityAttached = checkboxForm.getFieldById('CheckboxThree');
+            expect(fieldWithVisibilityAttached.isVisible).toBeTruthy();
+            done();
+        });
+
+        it('should evaluate visibility between empty text fields', (done) => {
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'Text1';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightType = WidgetTypeEnum.field;
+            visibilityObjTest.rightValue = 'Text2';
+
+            const checkboxForm = new FormModel(headerVisibilityCond);
+            checkboxForm.getFieldById('Text1').value = '1';
+            checkboxForm.getFieldById('Text1').value = '';
+
+            service.refreshVisibility(checkboxForm);
+
+            const fieldWithVisibilityAttached = checkboxForm.getFieldById('Header0hm6n0');
+            expect(fieldWithVisibilityAttached.isVisible).toBeTruthy();
+            done();
         });
     });
 });

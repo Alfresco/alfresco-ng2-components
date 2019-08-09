@@ -17,7 +17,7 @@
 
 import { TestBed, async } from '@angular/core/testing';
 
-import { UserPreferenceCloudService } from './user-preference.cloud.service';
+import { UserPreferenceCloudService } from './user-preference-cloud.service';
 import { setupTestBed, CoreModule, AlfrescoApiServiceMock, AppConfigService, LogService, AlfrescoApiService } from '@alfresco/adf-core';
 import { mockPreferences, getMockPreference, createMockPreference, updateMockPreference } from '../mock/user-preference.mock';
 

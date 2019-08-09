@@ -202,12 +202,17 @@ export class SomeComponent implements OnInit {
 With this configuration, only the two actions will be shown.
 
 ## Saving custom filters
+
 Users can save a filter if they make any changes to it in an application using the **Save** icon. How it is saved is dictated by the Activiti version used: 
 
-* An Activiti 7 community version stores saved filters in the local browser storage. This restricts a user's custom filters to that single session.
+-   An Activiti 7 community version stores saved filters in the local browser storage. This restricts a user's custom filters to that single session.
 
-* An Activiti Enterprise version uses the preference service to store saved filters. This allows for user's custom filters to be available between sessions and between devices. 
+-   An Activiti Enterprise version uses the preference service to store saved filters. This allows for user's custom filters to be available between sessions and between devices. 
 
 ## See also
 
 -   [Edit task filter cloud component](edit-task-filter-cloud.component.md)
+-   [Process Filter Cloud Service](../services/process-filter-cloud.service.md)
+-   [Local preference Cloud Service](../services/local-preference-cloud.service.md)
+-   [User preference Cloud Service](../services/user-preference-cloud.service.md)
+

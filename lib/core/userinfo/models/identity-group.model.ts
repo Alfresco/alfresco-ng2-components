@@ -14,6 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import { Pagination } from '@alfresco/js-api';
+
 export class IdentityGroupModel {
 
     id: string;
@@ -35,4 +38,31 @@ export class IdentityGroupModel {
             this.attributes = obj.attributes || null;
         }
     }
+}
+
+export interface IdentityGroupSearchParam {
+    name?: string;
+}
+
+export interface IdentityGroupQueryResponse {
+
+    entries: IdentityGroupModel[];
+    pagination: Pagination;
+}
+
+export class IdentityGroupQueryCloudRequestModel {
+
+    first: number;
+    max: number;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.first = obj.first;
+            this.max = obj.max;
+        }
+    }
+}
+
+export interface IdentityGroupCountModel {
+    count: number;
 }

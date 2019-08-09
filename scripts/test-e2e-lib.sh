@@ -10,6 +10,11 @@ EXEC_VERSION_JSAPI=false
 TIMEOUT=120000
 SELENIUM_PROMISE_MANAGER=1
 DEBUG=false
+eval GNU=false
+
+gnu_mode() {
+    GNU=true
+}
 
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
@@ -38,6 +43,7 @@ show_help() {
     echo "-disable-control-flow disable control flow"
     echo "-db or --debug run the debugger"
     echo "-vjsapi install different version from npm of JS-API defined in the package.json"
+    echo "-gnu for gnu"
     echo "-h or --help"
 }
 
@@ -121,6 +127,7 @@ set_test_folder(){
 
 set_selenium(){
     SELENIUM_SERVER=$1
+    export SELENIUM_SERVER=$SELENIUM_SERVER
 }
 
 set_env(){
@@ -188,16 +195,21 @@ while [[ $1 == -* ]]; do
       -m|--maxInstances)  max_instances $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
       -disable-control-flow|--disable-control-flow)  disable_control_flow; shift;;
+      -gnu) gnu_mode; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
 done
+
+if $GNU; then
+ sedi='-i'
+else
+ sedi=('-i' '')
+fi
 
 rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/screenshots/
 
 export TIMEOUT=$TIMEOUT
-
-export SELENIUM_SERVER=$SELENIUM_SERVER
 
 export SELENIUM_PROMISE_MANAGER=$SELENIUM_PROMISE_MANAGER
 
@@ -220,10 +232,26 @@ else
     if [[  $LITESERVER == "true" ]]; then
         echo "====== Run dist in lite-server ====="
         ls demo-shell/dist
+
+        if [[ -n "${PROXY_HOST_ADF}" ]]
+        then
+          replace="\/"
+          encoded=${PROXY_HOST_ADF//\//$replace}
+          sed  -e "s/\"bpmHost\": \".*\"/\"bpmHost\": \"${encoded}\"/g"  "${sedi[@]}"  demo-shell/dist/app.config.json
+        fi
+
+        if [[ -n "${PROXY_HOST_ADF}" ]]
+        then
+          replace="\/"
+          encoded=${PROXY_HOST_ADF//\//$replace}
+          sed  -e "s/\"ecmHost\": \".*\"/\"ecmHost\": \"${encoded}\"/g"  "${sedi[@]}"  demo-shell/dist/app.config.json
+        fi
+
         npm run lite-server-e2e>/dev/null & ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
      else
         if [[  $DEBUG == "true" ]]; then
-            echo "====== DEBUG ====="
+            echo "====== DEBUG   npm run lite-server-e2e>/dev/null & ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
+     else====="
             node --inspect-brk ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
         else
             ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1

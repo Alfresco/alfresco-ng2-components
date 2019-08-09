@@ -22,14 +22,14 @@ import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
 import { of } from 'rxjs';
-
+import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { fakeApplicationInstance } from '../../../app/mock/app-model.mock';
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
-import { UserPreferenceCloudService } from '../../../services/user-preference.cloud.service';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
 import { fakeFilter, fakeAllTaskFilter } from '../mock/task-filters-cloud.mock';
 import { AbstractControl } from '@angular/forms';
@@ -46,7 +46,10 @@ describe('EditTaskFilterCloudComponent', () => {
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
-        providers: [MatDialog, UserPreferenceCloudService]
+        providers: [
+            MatDialog,
+            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+        ]
     });
 
     beforeEach(() => {

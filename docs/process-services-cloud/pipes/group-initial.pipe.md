@@ -23,7 +23,7 @@ Extracts the initial character from a group name.
 
 ## Details
 
-This pipe takes a [`GroupModel`](../../../lib/process-services-cloud/src/lib/group/models/group.model.ts)
+This pipe takes a [`IdentityGroupModel`](../../../lib/core/userinfo/models/identity-group.model.ts)
 object as its parameter and extracts the initial character from the `name`
 property. The initial is a handy way to identify the group in lists and
 other situations where there is limited screen space available.

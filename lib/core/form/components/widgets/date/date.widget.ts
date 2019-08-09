@@ -41,7 +41,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
-    DATE_FORMAT = 'DD/MM/YYYY';
+    DATE_FORMAT = 'DD-MM-YYYY';
 
     minDate: Moment;
     maxDate: Moment;

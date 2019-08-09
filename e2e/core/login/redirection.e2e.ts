@@ -42,8 +42,8 @@ describe('Login component - Redirect', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url,
-        hostBpm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host,
+        hostBpm: browser.params.testConfig.adf_aps.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const logoutPage = new LogoutPage();

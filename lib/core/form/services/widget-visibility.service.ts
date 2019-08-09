@@ -48,9 +48,6 @@ export class WidgetVisibilityService {
 
     refreshEntityVisibility(element: FormFieldModel | TabModel) {
         const visible = this.evaluateVisibility(element.form, element.visibilityCondition);
-        if (!visible && element instanceof FormFieldModel) {
-            element.value = null;
-        }
         element.isVisible = visible;
     }
 
@@ -67,14 +64,17 @@ export class WidgetVisibilityService {
         const leftValue = this.getLeftValue(form, visibilityObj);
         const rightValue = this.getRightValue(form, visibilityObj);
         const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
-        accumulator.push({ value: actualResult, operator: visibilityObj.nextConditionOperator });
-        if (visibilityObj.nextCondition) {
-            result = this.isFieldVisible(form, visibilityObj.nextCondition, accumulator);
-        } else {
-            result = accumulator[0].value ? accumulator[0].value : result;
 
+        if (this.isValidOperator(visibilityObj.nextConditionOperator)) {
+            accumulator.push({ value: actualResult, operator: visibilityObj.nextConditionOperator });
+        }
+
+        if (this.isValidCondition(visibilityObj.nextCondition)) {
+            result = this.isFieldVisible(form, visibilityObj.nextCondition, accumulator);
+        } else if (accumulator[0] !== undefined) {
+            result = accumulator[0].value;
             for (let i = 1; i < accumulator.length; i++) {
-                if (accumulator[i - 1].operator && accumulator[i].value) {
+                if (accumulator[i] !== undefined) {
                     result = this.evaluateLogicalOperation(
                         accumulator[i - 1].operator,
                         result,
@@ -82,6 +82,8 @@ export class WidgetVisibilityService {
                     );
                 }
             }
+        } else {
+            result = actualResult;
         }
         return !!result;
 
@@ -93,8 +95,9 @@ export class WidgetVisibilityService {
             leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
         } else if (visibilityObj.leftType && visibilityObj.leftType === WidgetTypeEnum.field) {
             leftValue = this.getFormValue(form, visibilityObj.leftValue);
-            if (this.isInvalidValue(leftValue)) {
-                leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
+            if (leftValue === undefined || leftValue === '') {
+                const variableValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
+                leftValue = !this.isInvalidValue(variableValue) ? variableValue : leftValue;
             }
         }
         return leftValue;
@@ -119,7 +122,7 @@ export class WidgetVisibilityService {
     getFormValue(form: FormModel, fieldId: string): any {
         let value = this.getFieldValue(form.values, fieldId);
 
-        if (!value) {
+        if (this.isInvalidValue(value)) {
             value = this.searchValueInForm(form, fieldId);
         }
         return value;
@@ -141,7 +144,7 @@ export class WidgetVisibilityService {
     }
 
     private isInvalidValue(value: any): boolean {
-        return value === undefined || value === '';
+        return value === undefined || value === null;
     }
 
     searchValueInForm(form: FormModel, fieldId: string): string {
@@ -152,13 +155,12 @@ export class WidgetVisibilityService {
                 if (!fieldValue) {
                     if (formField.value && formField.value.id) {
                         fieldValue = formField.value.id;
-                    } else {
+                    } else if (!this.isInvalidValue(formField.value)) {
                         fieldValue = formField.value;
                     }
                 }
             }
         });
-
         return fieldValue;
     }
 
@@ -190,11 +192,12 @@ export class WidgetVisibilityService {
     }
 
     getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {
-        return this.getFormVariableValue(form, name) ||
-            this.getProcessVariableValue(name, processVarList);
+        const processVariableValue = this.getProcessVariableValue(name, processVarList);
+        const variableDefaultValue = this.getFormVariableDefaultValue(form, name);
+        return (processVariableValue === undefined) ? variableDefaultValue : processVariableValue;
     }
 
-    private getFormVariableValue(form: FormModel, identifier: string): string {
+    private getFormVariableDefaultValue(form: FormModel, identifier: string): string {
         const variables = this.getFormVariables(form);
         if (variables) {
             const formVariable = variables.find((formVar) => {
@@ -208,7 +211,6 @@ export class WidgetVisibilityService {
                     value += 'T00:00:00.000Z';
                 }
             }
-
             return value;
         }
     }
@@ -224,6 +226,7 @@ export class WidgetVisibilityService {
                 return processVariable.value;
             }
         }
+
     }
 
     evaluateLogicalOperation(logicOp, previousValue, newValue): boolean {
@@ -285,6 +288,14 @@ export class WidgetVisibilityService {
 
     toJson(res: any): any {
         return res || {};
+    }
+
+    private isValidOperator(operator: string): boolean {
+        return operator !== undefined;
+    }
+
+    private isValidCondition(condition: WidgetVisibilityModel): boolean {
+        return !!(condition && condition.operator);
     }
 
     private handleError(err) {

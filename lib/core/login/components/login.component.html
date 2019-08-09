@@ -58,14 +58,21 @@
                                            [formControl]="form.controls['password']"
                                            id="password"
                                            data-automation-id="password">
-                                    <mat-icon *ngIf="isPasswordShow" matSuffix class="adf-login-password-icon"
-                                              data-automation-id="hide_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()">
-                                        visibility
-                                    </mat-icon>
-                                    <mat-icon *ngIf="!isPasswordShow" matSuffix class="adf-login-password-icon"
-                                              data-automation-id="show_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()">
-                                        visibility_off
-                                    </mat-icon>
+                                        <button
+                                            matSuffix
+                                            mat-icon-button
+                                            type="button"
+                                            [attr.aria-label]="(isPasswordShow ?
+                                                    'LOGIN.ARIA-LABEL.HIDE-PASSWORD':
+                                                    'LOGIN.ARIA-LABEL.SHOW-PASSWORD'
+                                                ) | translate"
+                                            (click)="toggleShowPassword($event)"
+                                            (keyup.enter)="toggleShowPassword($event)"
+                                            [attr.data-automation-id]="isPasswordShow ? 'hide_password':'show_password'">
+                                           <mat-icon class="adf-login-password-icon">
+                                               {{ isPasswordShow ? 'visibility':'visibility_off' }}
+                                            </mat-icon>
+                                       </button>
                                 </mat-form-field>
                                 <span class="adf-login-validation" for="password" *ngIf="formError['password']">
                                 <span id="password-required" class="adf-login-error"
@@ -82,7 +89,8 @@
                                     mat-raised-button color="primary"
                                     [class.adf-isChecking]="actualLoginStep === LoginSteps.Checking"
                                     [class.adf-isWelcome]="actualLoginStep === LoginSteps.Welcome"
-                                    data-automation-id="login-button" [disabled]="!form.valid">
+                                    data-automation-id="login-button" [disabled]="!form.valid"
+                                    [attr.aria-label]="'LOGIN.BUTTON.LOGIN' | translate">
 
                                 <span *ngIf="actualLoginStep === LoginSteps.Landing" class="adf-login-button-label">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</span>
 
@@ -113,6 +121,7 @@
 
                         <div *ngIf="implicitFlow">
                             <button type="button" (click)="implicitLogin()" id="login-button-sso"
+                                    [attr.aria-label]="'LOGIN.BUTTON.SSO' | translate"
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
                                     data-automation-id="login-button-sso">

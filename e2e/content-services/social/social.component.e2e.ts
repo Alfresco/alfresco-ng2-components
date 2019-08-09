@@ -36,7 +36,7 @@ describe('Social component', () => {
     const secondComponentVisitor = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -85,6 +85,7 @@ describe('Social component', () => {
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
         await uploadActions.deleteFileOrFolder(emptyFile.entry.id);
         done();
     });

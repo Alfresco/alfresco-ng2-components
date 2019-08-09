@@ -91,15 +91,15 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    showProperty() {
+    showProperty(): boolean {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
-    showClearAction() {
-        return !this.property.isEmpty() && this.displayClearAction;
+    showClearAction(): boolean {
+        return this.displayClearAction && (!this.property.isEmpty() || !!this.property.default);
     }
 
-    isEditable() {
+    isEditable(): boolean {
         return this.editable && this.property.editable;
     }
 
@@ -122,6 +122,7 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
         this.valueDate = null;
         this.cardViewUpdateService.update(this.property, null);
         this.property.value = null;
+        this.property.default = null;
     }
 
 }

@@ -16,13 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { BaseCloudService } from './base-cloud.service';
+import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { from, throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { BaseCloudService } from './base-cloud.service';
 
 @Injectable()
-export class UserPreferenceCloudService extends BaseCloudService {
+export class UserPreferenceCloudService extends BaseCloudService implements PreferenceCloudServiceInterface {
 
   contentTypes = ['application/json'];
   accepts = ['application/json'];
@@ -58,7 +59,7 @@ export class UserPreferenceCloudService extends BaseCloudService {
    * Gets user preference.
    * @param appName Name of the target app
    * @param key Key of the target preference
-   * @returns Observable of user preferences
+   * @returns Observable of user preference
    */
   getPreferenceByKey(appName: string, key: string): Observable<any> {
     if (appName || appName === '') {

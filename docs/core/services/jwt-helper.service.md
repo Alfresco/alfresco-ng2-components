@@ -17,6 +17,9 @@ Decodes a JSON Web Token (JWT) to a JavaScript object.
     Decodes a JSON web token into a JS object.
     -   _token:_ `any`  - Token in encoded form
     -   **Returns** `Object` - Decoded token data object
+-   **getAccessToken**(): `string`<br/>
+    Gets access token
+    -   **Returns** `string` - access token
 -   **getValueFromLocalAccessToken**(key: `string`)<br/>
     Gets a named value from the user access token.
     -   _key:_ `string`  - Key name of the field to retrieve

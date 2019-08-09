@@ -24,7 +24,12 @@ import { GroupCloudModule } from './group/group-cloud.module';
 import { FormCloudModule } from './form/form-cloud.module';
 import { TaskFormModule } from './task/task-form/task-form.module';
 import { BaseCloudService } from './services/base-cloud.service';
-import { UserPreferenceCloudService } from './services/user-preference.cloud.service';
+import { UserPreferenceCloudService } from './services/user-preference-cloud.service';
+import {
+    LocalPreferenceCloudService,
+    PROCESS_FILTERS_SERVICE_TOKEN,
+    TASK_FILTERS_SERVICE_TOKEN
+} from './services/public-api';
 
 @NgModule({
     imports: [
@@ -46,7 +51,10 @@ import { UserPreferenceCloudService } from './services/user-preference.cloud.ser
             }
         },
         BaseCloudService,
-        UserPreferenceCloudService
+        UserPreferenceCloudService,
+        LocalPreferenceCloudService,
+        { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
     ],
     exports: [
         AppListCloudModule,

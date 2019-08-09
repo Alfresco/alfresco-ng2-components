@@ -37,9 +37,10 @@ describe('Favorite directive',  () => {
     const trashcanPage = new TrashcanPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
+
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const pdfFile = new FileModel({
         name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -66,6 +67,7 @@ describe('Favorite directive',  () => {
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(testFolder1.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder2.entry.id);

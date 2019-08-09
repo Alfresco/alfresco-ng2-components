@@ -45,7 +45,7 @@ describe('Viewer - properties',  () => {
     });
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -78,6 +78,7 @@ describe('Viewer - properties',  () => {
 
     afterAll(async (done) => {
         await uploadActions.deleteFileOrFolder(pngFile.getId());
+        await navigationBarPage.clickLogoutButton();
 
         done();
     });

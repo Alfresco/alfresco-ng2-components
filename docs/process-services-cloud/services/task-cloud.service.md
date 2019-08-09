@@ -36,6 +36,11 @@ Manages task cloud.
     -   _appName:_ `string`  - Name of the app
     -   _taskId:_ `string`  - ID of the task to complete
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Details of the task that was completed
+-   **createNewTask**(startTaskRequest: [`StartTaskCloudRequestModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/start-task-cloud-request.model.ts), appName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
+    Creates a new standalone task.
+    -   _startTaskRequest:_ [`StartTaskCloudRequestModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/start-task-cloud-request.model.ts)  - 
+    -   _appName:_ `string`  - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Details of the newly created task
 -   **getBasePath**(appName: `string`): `string`<br/>
 
     -   _appName:_ `string`  - 

@@ -15,23 +15,6 @@
  * limitations under the License.
  */
 
-/*!
- * @license
- * Copyright 2019 Alfresco Software, Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the 'License');
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an 'AS IS' BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import { FormModel, FormValues } from '../../form/components/widgets/core/index';
 
 export let formTest = new FormModel({});
@@ -861,5 +844,197 @@ export let complexVisibilityJsonNotVisible = {
         'variables': [],
         'customFieldsValueInfo': {},
         'gridsterForm': false
+    }
+};
+
+export let nextConditionForm = {
+    id: '9999',
+    name: 'FORM_PROCESS_VARIABLE_VISIBILITY',
+    processDefinitionId: 'PROCESS_TEST:9:9999',
+    processDefinitionName: 'PROCESS_TEST',
+    processDefinitionKey: 'PROCESS_TEST',
+    taskId: '999',
+    taskName: 'TEST',
+    fields: [
+        {
+            'id': '60114002-0da2-4513-ab65-845b4e55d3c8',
+            'name': 'Label',
+            'type': 'container',
+            'tab': null,
+            'numberOfColumns': 2,
+            'fields': {
+                '1': [
+                    {
+                        'id': 'Text1',
+                        'name': 'Text1',
+                        'type': 'text',
+                        'required': false,
+                        'colspan': 1,
+                        'placeholder': null,
+                        'minLength': 0,
+                        'maxLength': 0,
+                        'regexPattern': null,
+                        'visibilityCondition': null,
+                        'params': {
+                            'existingColspan': 1,
+                            'maxColspan': 2
+                        },
+                        'value': 'multiline'
+                    },
+                    {
+                        'id': 'Text3',
+                        'name': 'Text3',
+                        'type': 'text',
+                        'required': false,
+                        'colspan': 1,
+                        'placeholder': null,
+                        'minLength': 0,
+                        'maxLength': 0,
+                        'regexPattern': null,
+                        'visibilityCondition': null,
+                        'params': {
+                            'existingColspan': 1,
+                            'maxColspan': 2
+                        },
+                        'value': 'one'
+                    }
+                ],
+                '2': [
+                    {
+                        'id': 'Text2',
+                        'name': 'Text2',
+                        'type': 'text',
+                        'required': false,
+                        'colspan': 1,
+                        'placeholder': null,
+                        'minLength': 0,
+                        'maxLength': 0,
+                        'regexPattern': null,
+                        'visibilityCondition': null,
+                        'params': {
+                            'existingColspan': 1,
+                            'maxColspan': 2
+                        },
+                        'value': 'one'
+                    },
+                    {
+                        'id': 'Text4',
+                        'name': 'Text4',
+                        'type': 'text',
+                        'required': false,
+                        'colspan': 1,
+                        'placeholder': null,
+                        'minLength': 0,
+                        'maxLength': 0,
+                        'regexPattern': null,
+                        'visibilityCondition': {
+                            'leftType': 'field',
+                            'leftValue': 'Text1',
+                            'operator': '==',
+                            'rightValue': 'multiline',
+                            'rightType': 'value',
+                            'nextConditionOperator': 'and',
+                            'nextCondition': {
+                                'leftType': 'field',
+                                'leftValue': 'Text2',
+                                'operator': '==',
+                                'rightValue': 'Text3',
+                                'rightType': 'field',
+                                'nextConditionOperator': '',
+                                'nextCondition': null
+                            }
+                        },
+                        'params': {
+                            'existingColspan': 1,
+                            'maxColspan': 2
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+};
+
+export let headerVisibilityCond = {
+    'id': 'form-f0823c05-51eb-4703-8634-75a6d5e15df5',
+    'name': 'text_form',
+    'description': '',
+    'version': 0,
+    'standAlone': true,
+    'formDefinition': {
+        'tabs': [],
+        'fields': [
+            {
+                'id': 'Header0hm6n0',
+                'name': 'Header',
+                'type': 'group',
+                'tab': null,
+                'params': {
+                    'allowCollapse': false,
+                    'collapseByDefault': false
+                },
+                'numberOfColumns': 1,
+                'fields': {
+                    '1': []
+                },
+                'visibilityCondition': {
+                    'leftType': 'field',
+                    'leftValue': 'Text1',
+                    'operator': '==',
+                    'rightValue': 'Text2',
+                    'rightType': 'field',
+                    'nextConditionOperator': '',
+                    'nextCondition': null
+                }
+            },
+            {
+                'id': '19c3a066-c1bf-47f1-97f2-2b9420be3566',
+                'name': 'Label',
+                'type': 'container',
+                'tab': null,
+                'numberOfColumns': 2,
+                'fields': {
+                    '1': [
+                        {
+                            'id': 'Text1',
+                            'name': 'Text1',
+                            'type': 'text',
+                            'required': false,
+                            'colspan': 1,
+                            'placeholder': null,
+                            'minLength': 0,
+                            'maxLength': 0,
+                            'regexPattern': null,
+                            'visibilityCondition': null,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2
+                            }
+                        }
+                    ],
+                    '2': [
+                        {
+                            'id': 'Text2',
+                            'name': 'Text2',
+                            'type': 'text',
+                            'required': false,
+                            'colspan': 1,
+                            'placeholder': null,
+                            'minLength': 0,
+                            'maxLength': 0,
+                            'regexPattern': null,
+                            'visibilityCondition': null,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        'outcomes': [],
+        'metadata': {},
+        'variables': []
     }
 };
