@@ -5,8 +5,8 @@
   "CLAIM": "CLAIM",
   "UNCLAIM": "RELEASE",
   "START PROCESS": "START PROCESS",
-  "NOTIFICATION_HISTORY":{
-    "NO_MESSAGE" : "No messages",
+  "NOTIFICATION_HISTORY": {
+    "NO_MESSAGE": "No messages",
     "NOTIFICATIONS": "Notifications",
     "MARK_AS_READ": "Mark all as read"
   },
@@ -208,12 +208,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Sign in",
       "USERNAME": "Username",
       "PASSWORD": "Password",
       "REMEMBER": "Remember me"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Show password",
+      "HIDE-PASSWORD": "Hide password"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Required",
@@ -253,8 +257,8 @@
       "TOOLTIP": "Content actions"
     },
     "ACCESSIBILITY": {
-        "SELECT_ALL": "Select all",
-        "SELECT_FILE": "Select file"
+      "SELECT_ALL": "Select all",
+      "SELECT_FILE": "Select file"
     }
   },
   "USER_PROFILE": {
