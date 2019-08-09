@@ -316,7 +316,7 @@
       "ADD-ACTION": "ADD",
       "CLOSE-ACTION": "CLOSE",
       "BASE-DIALOG-TITLE": "Search a group or people to add...",
-      "EVERYONE" : "EVERYONE"
+      "EVERYONE": "EVERYONE"
     },
     "ERROR": {
       "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}",
@@ -368,6 +368,12 @@
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Library properties updated"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Breadcrumb",
+      "CURRENT_PAGE": "page"
     }
   }
 }

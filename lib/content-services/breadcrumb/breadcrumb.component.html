@@ -3,7 +3,7 @@
     data-automation-id="breadcrumb"
     class="adf-breadcrumb-container"
     role="navigation"
-    aria-label="Breadcrumb"
+    [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.BREADCRUMB' | translate"
 >
     <button
         *ngIf="hasPreviousNodes()"
@@ -42,9 +42,7 @@
         [class.adf-active]="last"
         [ngSwitch]="last"
         title="{{ item.name | translate }}"
-        class="adf-breadcrumb-item"
-        aria-current="page"
-    >
+        class="adf-breadcrumb-item">
         <a
             *ngSwitchDefault
             href="#"
@@ -55,7 +53,8 @@
             {{ item.name | translate }}
         </a>
 
-        <div *ngSwitchCase="true" class="adf-breadcrumb-item-current">
+        <div *ngSwitchCase="true" class="adf-breadcrumb-item-current"
+            [attr.aria-current]="'BREADCRUMB.ARIA-LABEL.CURRENT_PAGE' | translate">
             {{ item.name | translate }}
         </div>
 
@@ -69,7 +68,7 @@
     *ngIf="!folderNode && hasRoot"
     data-automation-id="breadcrumb"
     role="navigation"
-    aria-label="Breadcrumb"
+    [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.BREADCRUMB' | translate"
 >
     <div class="adf-breadcrumb-item adf-active" role="listitem">
         <div class="adf-breadcrumb-item-current">
