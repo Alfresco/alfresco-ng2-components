@@ -19,26 +19,17 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { browser } from 'protractor';
 
+const DEFAULT_ROOT_PATH = browser.params.testConfig ? browser.params.testConfig.main.rootPath : __dirname;
+
 export class FileBrowserUtil {
 
     static async isFileDownloaded(fileName: string) {
-        const config = await browser.getProcessedConfig();
-        const filePath = path.join(config.params.downloadFolder, fileName);
-
-        let tries = 15;
-
-        return new Promise(function(resolve) {
-          const checkExist = setInterval(() => {
-            const exists = fs.existsSync(filePath);
-            tries--;
-            if (exists) {
-                clearInterval(checkExist);
-                resolve(true);
-            } else if (tries === 0) {
-                clearInterval(checkExist);
-                resolve(false);
-            }
-          }, 1000);
+        browser.driver.wait(() => {
+            return fs.existsSync(path.join(DEFAULT_ROOT_PATH, 'downloads', fileName));
+        }, 30000).then((file) => {
+            expect(file).toBe(true);
+        }, (error) => {
+            throw error;
         });
     }
 

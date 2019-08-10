@@ -15,51 +15,52 @@
  * limitations under the License.
  */
 
-import { element, by, browser, ElementFinder } from 'protractor';
+import { element, by, browser, protractor } from 'protractor';
+import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class LoginSSOPage {
 
-    ssoButton: ElementFinder = element(by.css(`[data-automation-id="login-button-sso"]`));
-    usernameField: ElementFinder = element(by.id('username'));
-    passwordField: ElementFinder = element(by.id('password'));
-    loginButton: ElementFinder = element(by.css('input[type="submit"]'));
-    header: ElementFinder = element(by.id('adf-header'));
-    loginError: ElementFinder = element(by.css(`div[data-automation-id="login-error"]`));
-    sidenavLayout = element(by.css(`[data-automation-id="sidenav-layout"]`));
+    ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));
+    usernameField = element(by.id('username'));
+    passwordField = element(by.id('password'));
+    loginButton = element(by.css('input[type="submit"]'));
+    header = element(by.id('adf-header'));
+    loginError = element(by.css(`div[data-automation-id="login-error"]`));
 
-    async loginSSOIdentityService(username, password): Promise<void> {
-        await browser.waitForAngularEnabled(false);
+    async loginSSOIdentityService(username, password) {
+        browser.ignoreSynchronization = true;
+        await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
         await this.enterUsername(username);
         await this.enterPassword(password);
         await this.clickLoginButton();
-        const hasError = await this.checkLoginErrorIsDisplayed();
-        if (!hasError) {
-            await browser.waitForAngularEnabled(true);
-        }
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        await BrowserVisibility.waitUntilElementIsVisible(this.header);
+        await browser.waitForAngular('');
     }
 
-    async clickOnSSOButton(): Promise<void> {
-        await BrowserActions.click(this.ssoButton);
+    async clickOnSSOButton() {
+        await BrowserActions.clickExecuteScript('[data-automation-id="login-button-sso"]');
     }
 
-    async enterUsername(username): Promise<void> {
+    async enterUsername(username) {
         await BrowserActions.clearSendKeys(this.usernameField, username);
     }
 
-    async enterPassword(password): Promise<void> {
+    async enterPassword(password) {
         await BrowserActions.clearSendKeys(this.passwordField, password);
     }
 
-    async clickLoginButton(): Promise<void> {
-        await BrowserActions.clickExecuteScript('input[type="submit"]');
+    async clickLoginButton() {
+        await BrowserActions.click(this.loginButton);
     }
 
-    async checkLoginErrorIsDisplayed(): Promise<any> {
-        return await browser.isElementPresent(this.loginError);
+    async checkLoginErrorIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.loginError);
     }
 
-    async getLoginErrorMessage(): Promise<string> {
-        return BrowserActions.getText(this.loginButton);
+    async getLoginErrorMessage() {
+        return BrowserActions.getText(this.loginError);
     }
+
 }

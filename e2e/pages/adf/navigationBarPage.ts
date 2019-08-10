@@ -176,7 +176,7 @@ export class NavigationBarPage {
 
     async clickLogoutButton(): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await this.clickNavigationBarItem('Logout');
+        await BrowserActions.clickExecuteScript('.adf-sidenav-link[adf-logout]');
     }
 
     async clickThemeButton(): Promise<void> {
