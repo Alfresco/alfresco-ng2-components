@@ -114,7 +114,7 @@ describe('Search component - Search Bar', () => {
         for (const currentNode of filesToDelete) {
             await uploadActions.deleteFileOrFolder(currentNode.entry.id);
 
-        };
+        }
         await navigationBarPage.clickLogoutButton();
     });
 
