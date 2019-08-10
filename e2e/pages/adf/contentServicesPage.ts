@@ -325,6 +325,7 @@ export class ContentServicesPage {
     }
 
     async doubleClickRow(nodeName): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
         await this.contentList.doubleClickRow(nodeName);
     }
 

@@ -40,7 +40,7 @@ export class PaginationPage {
     async selectItemsPerPage(numberOfItem: string): Promise<void> {
         await browser.executeScript(`document.querySelector('div[class*="adf-pagination__perpage-block"] button').click();`);
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
-        const itemsPerPage = element(by.cssContainingText('.mat-menu-item', numberOfItem));
+        const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
         await BrowserActions.click(itemsPerPage);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.pageSelectorDropDown);
     }

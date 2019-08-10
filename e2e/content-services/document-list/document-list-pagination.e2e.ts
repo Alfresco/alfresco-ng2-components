@@ -288,22 +288,6 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.checkPaginationIsNotDisplayed();
     });
 
-    it('[C260107] Should not display pagination bar when a folder is empty', async () => {
-        await paginationPage.selectItemsPerPage(itemsPerPage.five);
-        await contentServicesPage.checkAcsContainer();
-        await contentServicesPage.waitForTableBody();
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        await contentServicesPage.doubleClickRow(newFolderModel.name);
-        await contentServicesPage.checkAcsContainer();
-        await contentServicesPage.waitForTableBody();
-        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        await  contentServicesPage.createNewFolder(folderTwoModel.name);
-        await contentServicesPage.checkContentIsDisplayed(folderTwoModel.name);
-        await contentServicesPage.doubleClickRow(folderTwoModel.name);
-        await contentServicesPage.checkPaginationIsNotDisplayed();
-    });
-
     it('[C260071] Should be able to change pagination when having 25 files', async () => {
         currentPage = 1;
         await contentServicesPage.doubleClickRow(folderThreeModel.name);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, ElementArrayFinder } from 'protractor';
+import { element, by, ElementFinder, ElementArrayFinder, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TreeViewPage {
@@ -71,6 +71,8 @@ export class TreeViewPage {
     async addNodeId(nodeId): Promise<void> {
         await BrowserActions.click(this.nodeIdInput);
         await BrowserActions.clearSendKeys(this.nodeIdInput, nodeId);
+        await this.nodeIdInput.sendKeys('a');
+        await this.nodeIdInput.sendKeys(protractor.Key.BACK_SPACE);
     }
 
     async checkErrorMessageIsDisplayed(): Promise<void> {
