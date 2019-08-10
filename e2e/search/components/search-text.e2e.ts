@@ -46,7 +46,7 @@ describe('Search component - Text widget',  () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -69,6 +69,10 @@ describe('Search component - Text widget',  () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C289329] Placeholder should be displayed in the widget when the input string is empty', async () => {

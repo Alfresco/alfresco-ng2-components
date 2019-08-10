@@ -37,6 +37,10 @@ describe('CardView Component', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     afterEach(async () => {
         await cardViewPageComponent.clickOnResetButton();
     });
