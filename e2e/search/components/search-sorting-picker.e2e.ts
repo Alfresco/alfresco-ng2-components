@@ -125,7 +125,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277272] Should be able to exclude a standard search sorter from the sorting option', async () => {
-        await navigationBar.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         jsonFile = SearchConfiguration.getConfiguration();
         const removedOption = jsonFile.sorting.options.splice(0, 1);
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));

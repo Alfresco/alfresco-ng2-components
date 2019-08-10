@@ -117,14 +117,4 @@ describe('Start Process',  () => {
 
     });
 
-    it('[C309875] Should display the processId when Process Definition has process name missing', async () => {
-        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        await appListCloudComponent.goToApp(simpleApp);
-        await processCloudDemoPage.openNewProcessForm();
-        await startProcessPage.clearField(await startProcessPage.processNameInput);
-        await startProcessPage.enterProcessName(processName);
-        await startProcessPage.selectFromProcessDropdown(processDefinitionWithoutName);
-        expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
-
-    });
 });

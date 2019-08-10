@@ -20,7 +20,6 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/processFilters
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import resources = require('../util/resources');
@@ -29,6 +28,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 
 describe('Form widgets - People', () => {
 
@@ -103,7 +103,7 @@ describe('Form widgets - People', () => {
         await taskDetails.checkCompleteFormButtonIsDisplayed();
         await taskDetails.clickCompleteFormTask();
 
-        await appNavigationBar.clickProcessButton();
+        await processServiceTabBarPage.clickProcessButton();
         await processFiltersPage.clickCompletedFilterButton();
         await processFiltersPage.selectFromProcessList(app.processName);
 

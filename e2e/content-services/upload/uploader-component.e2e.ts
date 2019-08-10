@@ -37,7 +37,7 @@ describe('Upload component', () => {
     const acsUser = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const navigationBarPage = new NavigationBarPage();
@@ -84,13 +84,17 @@ describe('Upload component', () => {
         done();
     });
 
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     beforeEach(async () => {
         await contentServicesPage.goToDocumentList();
     });
 
     describe('', () => {
 
-        afterEach(async (done) => {
+        afterEach(async () => {
             const nodeList = await contentServicesPage.getElementsDisplayedId();
             for (const node of nodeList) {
                 try {
@@ -98,7 +102,6 @@ describe('Upload component', () => {
                 } catch (error) {
                 }
             }
-            done();
         });
 
         it('[C272788] Should display upload button', async () => {

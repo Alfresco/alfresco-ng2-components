@@ -42,6 +42,7 @@ describe('Search component - Search Bar', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
+    const navigationBarPage = new NavigationBarPage();
 
     const searchDialog = new SearchDialog();
     const searchResultPage = new SearchResultsPage();
@@ -50,7 +51,7 @@ describe('Search component - Search Bar', () => {
     const acsUser = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -109,11 +110,12 @@ describe('Search component - Search Bar', () => {
         done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         for (const currentNode of filesToDelete) {
             await uploadActions.deleteFileOrFolder(currentNode.entry.id);
-        }
-        done();
+
+        };
+        await navigationBarPage.clickLogoutButton();
     });
 
     afterEach(async (done) => {
@@ -261,12 +263,10 @@ describe('Search component - Search Bar', () => {
 
     describe('Highlight', () => {
 
-        const navigationBar = new NavigationBarPage();
-
         const searchConfiguration = SearchConfiguration.getConfiguration();
 
         beforeAll(async () => {
-            await navigationBar.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(searchConfiguration));
 

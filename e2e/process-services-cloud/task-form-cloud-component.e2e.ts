@@ -224,15 +224,15 @@ describe('Task form cloud component',  () => {
             await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(claimedTask.entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(claimedTask.entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask.entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTask.entry.name);
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
             await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
             await taskFormCloudComponent.clickCompleteButton();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(claimedTask.entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTask.entry.name);
 
             await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(claimedTask.entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask.entry.name);
             await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
     });

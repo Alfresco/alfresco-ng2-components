@@ -79,12 +79,6 @@ describe('Visibility conditions - cloud',  () => {
         done();
     });
 
-    afterAll(async (done) => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-        done();
-    });
-
     it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', async () => {
 
         await widget.textWidget().isWidgetVisible(widgets.textOneId);

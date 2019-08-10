@@ -33,7 +33,7 @@ describe('Permissions Component', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -165,6 +165,8 @@ describe('Permissions Component', () => {
     });
 
     afterAll(async (done) => {
+        await navigationBarPage.clickLogoutButton();
+
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         for (const folder of folders) {
             await uploadActions.deleteFileOrFolder(folder.entry.id);
@@ -263,12 +265,8 @@ describe('Permissions Component', () => {
             done();
         });
 
-        afterEach(async (done) => {
-            try {
-                await uploadActions.deleteFileOrFolder(file.entry.id);
-            } catch (error) {
-            }
-            done();
+        afterEach(async () => {
+            await uploadActions.deleteFileOrFolder(file.entry.id);
         });
 
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', async () => {

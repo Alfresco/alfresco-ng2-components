@@ -20,11 +20,13 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NotificationPage } from '../pages/adf/notificationPage';
 import { browser } from 'protractor';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Notifications Component',  () => {
 
     const loginPage = new LoginPage();
     const notificationPage = new NotificationPage();
+    const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
 
@@ -32,7 +34,7 @@ describe('Notifications Component',  () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -48,6 +50,10 @@ describe('Notifications Component',  () => {
         await notificationPage.enterDurationField(3000);
 
         done();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     afterEach( async() => {

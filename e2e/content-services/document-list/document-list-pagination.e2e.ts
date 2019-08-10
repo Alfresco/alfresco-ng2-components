@@ -24,7 +24,7 @@ import { Util } from '../../util/util';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Document List - Pagination',  () => {
+describe('Document List - Pagination', () => {
     const pagination = {
         base: 'newFile',
         secondSetBase: 'secondSet',
@@ -58,9 +58,9 @@ describe('Document List - Pagination',  () => {
     const folderTwoModel = new FolderModel({ name: 'folderTwo' });
     const folderThreeModel = new FolderModel({ name: 'folderThree' });
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async (done) => {
@@ -85,7 +85,11 @@ describe('Document List - Pagination',  () => {
         done();
     });
 
-    beforeEach(async(done) => {
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
+    beforeEach(async (done) => {
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.checkAcsContainer();
         await contentServicesPage.waitForTableBody();
@@ -279,6 +283,22 @@ describe('Document List - Pagination',  () => {
         expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await contentServicesPage.createNewFolder(folderTwoModel.name);
+        await contentServicesPage.checkContentIsDisplayed(folderTwoModel.name);
+        await contentServicesPage.doubleClickRow(folderTwoModel.name);
+        await contentServicesPage.checkPaginationIsNotDisplayed();
+    });
+
+    it('[C260107] Should not display pagination bar when a folder is empty', async () => {
+        await paginationPage.selectItemsPerPage(itemsPerPage.five);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        await contentServicesPage.doubleClickRow(newFolderModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+        expect(contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
+        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        await  contentServicesPage.createNewFolder(folderTwoModel.name);
         await contentServicesPage.checkContentIsDisplayed(folderTwoModel.name);
         await contentServicesPage.doubleClickRow(folderTwoModel.name);
         await contentServicesPage.checkPaginationIsNotDisplayed();
