@@ -130,10 +130,14 @@ describe('Start Task - Custom App', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
+        await taskPage
+            .filtersPage()
+            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+
         const task = await taskPage.createNewTask();
+
         await task.addName(tasks[2]);
-        await task.checkStartButtonIsEnabled();
-        await task.clickCancelButton();
+        await task.clickStartButton();
 
         await taskPage
             .tasksListPage()
@@ -167,28 +171,40 @@ describe('Start Task - Custom App', () => {
             .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         const task = await taskPage.createNewTask();
+
         await task.addForm(app.formName);
         await task.addName(tasks[4]);
         await task.clickStartButton();
 
-        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
+        await  taskPage
+            .tasksListPage()
+            .checkContentIsDisplayed(tasks[4]);
 
-        const formFields = await taskPage.formFields();
-        await formFields.setFieldValue(by.id, formTextField, formFieldValue);
-        expect(formFields.getFieldValue(formTextField)).toEqual(formFieldValue);
+        await taskPage.formFields()
+            .setFieldValue(by.id, formTextField, formFieldValue);
 
-        await formFields.refreshForm();
-        await formFields.checkFieldValue(by.id, formTextField, '');
+        await taskPage
+            .formFields()
+            .refreshForm();
+
+        await taskPage
+            .formFields().checkFieldValue(by.id, formTextField, '');
 
         await taskPage
             .tasksListPage()
             .checkContentIsDisplayed(tasks[4]);
 
-        await formFields.setFieldValue(by.id, formTextField, formFieldValue);
-        await formFields.checkFieldValue(by.id, formTextField, formFieldValue);
+        await taskPage
+            .formFields()
+            .setFieldValue(by.id, formTextField, formFieldValue);
 
-        await formFields.saveForm();
-        await formFields.checkFieldValue(by.id, formTextField, formFieldValue);
+        await taskPage.formFields().checkFieldValue(by.id, formTextField, formFieldValue);
+
+        await taskPage
+            .formFields()
+            .saveForm();
+
+        await taskPage.formFields().checkFieldValue(by.id, formTextField, formFieldValue);
     });
 
     it('[C263951] Should be possible to assign a user', async () => {

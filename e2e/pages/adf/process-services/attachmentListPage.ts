@@ -37,7 +37,7 @@ export class AttachmentListPage {
     async clickAttachFileButton(fileLocation): Promise<void> {
         browser.setFileDetector(new remote.FileDetector());
 
-        await BrowserVisibility.waitUntilElementIsVisible(this.attachFileButton);
+        await BrowserVisibility.waitUntilElementIsPresent(this.attachFileButton);
         await this.attachFileButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
     }
 

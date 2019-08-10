@@ -21,6 +21,7 @@ import { BrowserVisibility } from '../utils/browser-visibility';
 export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
         await elementFinder.click();
     }
@@ -35,7 +36,7 @@ export class BrowserActions {
     }
 
     static async getText(elementFinder: ElementFinder): Promise<string> {
-        const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+        const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         if (present) {
             return elementFinder.getText();
         } else {
