@@ -45,7 +45,7 @@ describe('Form widgets', () => {
         const app = resources.Files.WIDGETS_SMOKE_TEST;
         const appFields = app.form_fields;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             const users = new UsersActions();
             const appsActions = new AppsActions();
 
@@ -83,15 +83,13 @@ describe('Form widgets', () => {
             formInstance.setFields(formDefinition.fields);
             formInstance.setAllWidgets(formDefinition.fields);
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
 
-            done();
         });
 
         it('[C272778] Should display text and multi-line in form', async () => {
@@ -207,7 +205,7 @@ describe('Form widgets', () => {
         let deployedApp, process;
         const appFields = app.form_fields;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             const users = new UsersActions();
 
             alfrescoJsApi = new AlfrescoApi({
@@ -228,7 +226,7 @@ describe('Form widgets', () => {
             });
             process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-            done();
+
         });
 
         beforeEach(async () => {
@@ -238,11 +236,11 @@ describe('Form widgets', () => {
             await taskPage.formFields().checkFormIsDisplayed();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-            done();
+
         });
 
         it('[C260405] Value fields configured with process variables', async () => {

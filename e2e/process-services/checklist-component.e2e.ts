@@ -48,7 +48,7 @@ describe('Checklist component', () => {
     const removeChecklist = ['removeFirstRunningChecklist', 'removeSecondRunningChecklist', 'removeFirstCompletedChecklist', 'removeSecondCompletedChecklist'];
     const hierarchyChecklist = ['checklistOne', 'checklistTwo', 'checklistOneChild', 'checklistTwoChild'];
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -75,15 +75,14 @@ describe('Checklist component', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
         await (await processServices.goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        done();
+
     });
 
     it('[C279976] Should no checklist be created when no title is typed', async () => {

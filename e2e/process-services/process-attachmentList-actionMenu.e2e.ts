@@ -54,7 +54,7 @@ describe('Attachment list action menu for processes',  () => {
         dragDrop: 'Drag and Drop'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -82,14 +82,13 @@ describe('Attachment list action menu for processes',  () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-        done();
+
     });
 
     it('[C260228] Should be able to access options of a file attached to an active process', async () => {

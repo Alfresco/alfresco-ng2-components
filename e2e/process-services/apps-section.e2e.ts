@@ -41,7 +41,7 @@ describe('Modify applications', () => {
     const modelActions = new ModelsActions();
     let firstApp, appVersionToBeDeleted;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -60,7 +60,6 @@ describe('Modify applications', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        done();
     });
 
     it('[C260198] Should the app be displayed on dashboard when is deployed on APS', async () => {

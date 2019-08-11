@@ -63,7 +63,7 @@ describe('Process filters cloud',  () => {
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
@@ -129,10 +129,10 @@ describe('Process filters cloud',  () => {
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
-        done();
+
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await processInstancesService.deleteProcessInstance(runningProcessInstance.entry.id, candidateBaseApp);
         await processInstancesService.deleteProcessInstance(anotherProcessInstance.entry.id, candidateBaseApp);
         await processInstancesService.deleteProcessInstance(suspendProcessInstance.entry.id, candidateBaseApp);
@@ -144,7 +144,7 @@ describe('Process filters cloud',  () => {
 
         await identityService.deleteIdentityUser(testUser.idIdentityService);
         await identityService.deleteIdentityUser(anotherUser.idIdentityService);
-        done();
+
     });
 
     beforeEach( async() => {

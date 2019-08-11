@@ -56,7 +56,7 @@ describe('Login component', () => {
     const invalidUsername = 'invaliduser';
     const invalidPassword = 'invalidpassword';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ALL',
             hostEcm: browser.params.testConfig.adf_acs.host,
@@ -68,7 +68,6 @@ describe('Login component', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(userA);
         await this.alfrescoJsApi.core.peopleApi.addPerson(userB);
 
-        done();
     });
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {

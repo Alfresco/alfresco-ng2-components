@@ -30,7 +30,7 @@ describe('Universal Icon component',  () => {
     const navigationBarPage = new NavigationBarPage();
     const iconsPage = new IconsPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -40,16 +40,15 @@ describe('Universal Icon component',  () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await navigationBarPage.clickIconsButton();
-        done();
+
     });
 
     it('[C291872] Should display the icons on the page', async () => {

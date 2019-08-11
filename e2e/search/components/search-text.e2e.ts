@@ -42,7 +42,7 @@ describe('Search component - Text widget',  () => {
     const acsUser = new AcsUserModel();
     const newFolderModel = new FolderModel({ 'name': 'newFolder', 'description': 'newDescription' });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -68,7 +68,6 @@ describe('Search component - Text widget',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
     afterAll(async () => {

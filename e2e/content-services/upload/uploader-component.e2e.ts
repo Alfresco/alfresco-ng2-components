@@ -67,7 +67,7 @@ describe('Upload component', () => {
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -81,7 +81,6 @@ describe('Upload component', () => {
 
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
 
-        done();
     });
 
     afterAll(async () => {

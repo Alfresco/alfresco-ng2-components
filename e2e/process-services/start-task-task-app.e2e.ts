@@ -61,7 +61,7 @@ describe('Start Task - Task App', () => {
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -88,14 +88,12 @@ describe('Start Task - Task App', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        done();
     });
 
     it('[C260383] Should be possible to modify a task', async () => {

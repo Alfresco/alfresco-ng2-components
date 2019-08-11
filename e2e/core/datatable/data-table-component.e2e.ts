@@ -43,7 +43,7 @@ describe('Datatable component', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -55,7 +55,6 @@ describe('Datatable component', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
     afterAll(async () => {
@@ -102,10 +101,10 @@ describe('Datatable component', () => {
 
     describe('Datatable component - copyContent', () => {
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await navigationBarPage.navigateToCopyContentDatatable();
             await dataTablePage.dataTable.waitForTableBody();
-            done();
+
         });
 
         beforeEach(async () => {

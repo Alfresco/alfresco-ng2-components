@@ -57,7 +57,7 @@ describe('Process filters cloud',  () => {
         let runningProcess, completedProcess, testUser, groupInfo;
         const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
@@ -88,22 +88,22 @@ describe('Process filters cloud',  () => {
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            done();
+
         }, 5 * 60 * 1000);
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-            done();
+
         });
 
-        beforeEach(async(done) => {
+        beforeEach(async() => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(candidateBaseApp);
             await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             await processCloudDemoPage.clickOnProcessFilters();
-            done();
+
         });
 
         it('[C290021] Should be able to view default filters', async () => {

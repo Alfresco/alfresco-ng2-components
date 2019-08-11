@@ -39,7 +39,7 @@ describe('Search Sorting Picker', () => {
     const searchDialog = new SearchDialog();
     const searchFilters = new SearchFiltersPage();
     const searchResults = new SearchResultsPage();
-    const navigationBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
     const searchSortingPicker = new SearchSortingPickerPage();
     const contentServices = new ContentServicesPage();
     const nodeActions = new NodeActions();
@@ -57,14 +57,14 @@ describe('Search Sorting Picker', () => {
 
     let pngA, pngD;
     this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
-    });
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const search = '_png_file.png';
     let jsonFile;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -76,13 +76,14 @@ describe('Search Sorting Picker', () => {
 
         await loginPage.loginToContentServices(acsUser.id, acsUser.password);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await uploadActions.deleteFileOrFolder(pngA.entry.id);
         await uploadActions.deleteFileOrFolder(pngD.entry.id);
-        done();
+
+        await navigationBarPage.clickLogoutButton();
+
     });
 
     beforeEach(async () => {
@@ -91,7 +92,7 @@ describe('Search Sorting Picker', () => {
     });
 
     afterEach(async () => {
-        await navigationBar.clickHomeButton();
+        await navigationBarPage.clickHomeButton();
     });
 
     it(`[C277269] Should see the "sort by" option when search results are displayed in search results page`, async () => {
@@ -103,7 +104,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277271] Should be able to add a custom search sorter in the "sort by" option', async () => {
-        await navigationBar.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
             'key': 'Modifier',
@@ -141,7 +142,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277273] Should be able to set a default order for a search sorting option', async () => {
-        await navigationBar.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options[0].ascending = false;
@@ -194,7 +195,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async () => {
-        await navigationBar.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({

@@ -24,6 +24,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { StringUtil } from '@alfresco/adf-testing';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Create library directive', () => {
 
@@ -31,6 +32,7 @@ describe('Create library directive', () => {
     const contentServicesPage = new ContentServicesPage();
     const createLibraryDialog = new CreateLibraryDialog();
     const customSourcesPage = new CustomSources();
+    const navigationBarPage = new NavigationBarPage();
 
     const visibility = {
         public: 'Public',
@@ -42,10 +44,10 @@ describe('Create library directive', () => {
 
     const acsUser = new AcsUserModel();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -59,13 +61,16 @@ describe('Create library directive', () => {
             visibility: 'PUBLIC'
         });
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
+    beforeEach(async () => {
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.openCreateLibraryDialog();
-        done();
+
     });
 
     afterEach(async () => {

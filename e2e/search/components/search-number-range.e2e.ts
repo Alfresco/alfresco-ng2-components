@@ -34,7 +34,7 @@ describe('Search Number Range Filter', () => {
     const searchFilters = new SearchFiltersPage();
     const sizeRangeFilter = searchFilters.sizeRangeFilterPage();
     const searchResults = new SearchResultsPage();
-    const navigationBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
     const acsUser = new AcsUserModel();
@@ -52,11 +52,11 @@ describe('Search Number Range Filter', () => {
     let file2Bytes, file0Bytes;
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -74,14 +74,15 @@ describe('Search Number Range Filter', () => {
         await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter('*');
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         await uploadActions.deleteFileOrFolder(file0Bytes.entry.id);
-        done();
+
+        await navigationBarPage.clickLogoutButton();
+
     });
 
     beforeEach(async () => {
@@ -90,9 +91,9 @@ describe('Search Number Range Filter', () => {
         await searchFilters.checkSizeRangeFilterIsExpanded();
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         await browser.refresh();
-        done();
+
     });
 
     it('[C276921] Should display default values for Number Range widget', async () => {
@@ -387,7 +388,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276928] Should be able to change the field property for number range', async () => {
-            await navigationBar.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[3].component.settings.field = 'cm:created';
 
@@ -425,7 +426,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C277139] Should be able to set To field to be exclusive', async () => {
-            await navigationBar.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[3].component.settings.format = '[{FROM} TO {TO}>';
 
@@ -461,7 +462,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C277140] Should be able to set From field to be exclusive', async () => {
-            await navigationBar.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[3].component.settings.format = '<{FROM} TO {TO}]';
 

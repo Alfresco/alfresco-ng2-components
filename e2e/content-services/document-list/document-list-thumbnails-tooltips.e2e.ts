@@ -38,7 +38,7 @@ describe('Document List Component',  () => {
     let testFileNode, pdfBFileNode;
     const navigationBarPage = new NavigationBarPage();
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         if (uploadedFolder) {
             await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
@@ -56,7 +56,7 @@ describe('Document List Component',  () => {
             await uploadActions.deleteFileOrFolder(pdfBFileNode.entry.id);
             pdfBFileNode = null;
         }
-        done();
+
     });
 
     describe('Thumbnails and tooltips',  () => {
@@ -78,7 +78,7 @@ describe('Document List Component',  () => {
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         let filePdfNode, fileTestNode, fileDocxNode, folderNode;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             acsUser = new AcsUserModel();
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -90,10 +90,9 @@ describe('Document List Component',  () => {
             fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
             folderNode = await uploadActions.createFolder(folderName, '-my-');
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
 
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -109,7 +108,7 @@ describe('Document List Component',  () => {
             if (folderNode) {
                 await uploadActions.deleteFileOrFolder(folderNode.entry.id);
             }
-            done();
+
         });
 
         beforeEach(async () => {
@@ -125,36 +124,36 @@ describe('Document List Component',  () => {
             expect(await contentServicesPage.getDocumentList().getTooltip(folderName)).toEqual(folderName);
         });
 
-        it('[C260119] Should have a specific thumbnail for folders', async (done) => {
+        it('[C260119] Should have a specific thumbnail for folders', async () => {
             const folderIconUrl = await contentServicesPage.getRowIconImageUrl(folderName);
             expect(folderIconUrl).toContain('/assets/images/ft_ic_folder.svg');
-            done();
+
         });
 
-        it('[C280066] Should have a specific thumbnail PDF files', async (done) => {
+        it('[C280066] Should have a specific thumbnail PDF files', async () => {
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_pdf.svg');
-            done();
+
         });
 
-        it('[C280067] Should have a specific thumbnail DOCX files', async (done) => {
+        it('[C280067] Should have a specific thumbnail DOCX files', async () => {
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(docxFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_ms_word.svg');
-            done();
+
         });
 
-        it('[C280068] Should have a specific thumbnail files', async (done) => {
+        it('[C280068] Should have a specific thumbnail files', async () => {
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(testFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_document.svg');
-            done();
+
         });
 
-        it('[C274701] Should be able to enable thumbnails', async (done) => {
+        it('[C274701] Should be able to enable thumbnails', async () => {
             await contentServicesPage.enableThumbnails();
             await contentServicesPage.checkAcsContainer();
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
             expect(fileIconUrl).toContain(`/versions/1/nodes/${filePdfNode.entry.id}/renditions`);
-            done();
+
         });
     });
 

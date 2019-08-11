@@ -38,7 +38,7 @@ describe('Amount Widget',  () => {
     const app = resources.Files.WIDGET_CHECK_APP.AMOUNT;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -59,7 +59,7 @@ describe('Amount Widget',  () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
     beforeEach(async() => {
@@ -69,11 +69,11 @@ describe('Amount Widget',  () => {
         await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
+
     });
 
     it('[C274703] Should be possible to set general, advance and visibility properties for Amount Widget', async () => {

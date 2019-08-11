@@ -55,7 +55,7 @@ describe('Upload component - Excluded Files', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -71,18 +71,16 @@ describe('Upload component - Excluded Files', () => {
 
         await contentServicesPage.goToDocumentList();
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        done();
+
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         await contentServicesPage.goToDocumentList();
 
-        done();
     });
 
     it('[C279914] Should not allow upload default excluded files using D&D', async () => {

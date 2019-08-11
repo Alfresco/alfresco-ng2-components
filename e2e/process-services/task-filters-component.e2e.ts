@@ -47,17 +47,16 @@ describe('Task', () => {
         const app = resources.Files.APP_WITH_DATE_FIELD_FORM;
         let appId, tenantId;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
 
             this.alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
                 hostBpm: browser.params.testConfig.adf_aps.host
             });
 
-            done();
         });
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
 
             const apps = new AppsActions();
             const users = new UsersActions();
@@ -81,10 +80,9 @@ describe('Task', () => {
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp(app.title);
 
-            done();
         });
 
-        afterEach(async (done) => {
+        afterEach(async () => {
 
             await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
@@ -92,7 +90,6 @@ describe('Task', () => {
 
             await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
 
-            done();
         });
 
         it('[C279967] Should display default filters when an app is deployed', async () => {
@@ -234,7 +231,7 @@ describe('Task', () => {
 
         const app = resources.Files.APP_WITH_PROCESSES;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             const apps = new AppsActions();
             const users = new UsersActions();
 
@@ -258,8 +255,6 @@ describe('Task', () => {
             }).id;
 
             await loginPage.loginToProcessServicesUsingUserModel(user);
-
-            done();
 
         });
 

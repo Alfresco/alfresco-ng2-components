@@ -48,7 +48,7 @@ describe('Process List - Pagination when adding processes', () => {
     const apps = new AppsActions();
     let resultApp;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -72,7 +72,6 @@ describe('Process List - Pagination when adding processes', () => {
 
         await (await(await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
-        done();
     });
 
     it('[C261046] Should keep Items per page after adding processes', async () => {

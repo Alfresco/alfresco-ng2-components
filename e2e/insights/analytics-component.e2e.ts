@@ -36,7 +36,7 @@ describe('Analytics Smoke Test',  () => {
     let tenantId;
     const reportTitle = 'New Title';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -53,12 +53,11 @@ describe('Analytics Smoke Test',  () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(procUserModel);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-        done();
+
     });
 
     it('[C260346] Should be able to change title of a report', async () => {

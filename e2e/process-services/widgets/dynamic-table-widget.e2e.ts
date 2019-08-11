@@ -38,7 +38,7 @@ describe('Dynamic Table widget ',  () => {
     describe('with Date Time Widget App',  () => {
         const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             const users = new UsersActions();
 
             alfrescoJsApi = new AlfrescoApi({
@@ -59,7 +59,7 @@ describe('Dynamic Table widget ',  () => {
             });
             process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-            done();
+
         });
 
         beforeEach( async() => {
@@ -69,11 +69,11 @@ describe('Dynamic Table widget ',  () => {
             await taskPage.formFields().checkFormIsDisplayed();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-            done();
+
         });
 
         it('[C276729] Should be possible to set visibility properties for Dynamic Table', async () => {
@@ -99,7 +99,7 @@ describe('Dynamic Table widget ',  () => {
 
         const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             const users = new UsersActions();
 
             alfrescoJsApi = new AlfrescoApi({
@@ -120,7 +120,7 @@ describe('Dynamic Table widget ',  () => {
             });
             process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-            done();
+
         });
 
         beforeEach( async() => {
@@ -130,11 +130,11 @@ describe('Dynamic Table widget ',  () => {
             await taskPage.formFields().checkFormIsDisplayed();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-            done();
+
         });
 
         it('[C260407] Should be able to add/delete/update row in Dynamic Table widget', async () => {

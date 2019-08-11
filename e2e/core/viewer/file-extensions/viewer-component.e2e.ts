@@ -53,7 +53,7 @@ describe('Viewer',  () => {
         'location': resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -70,7 +70,7 @@ describe('Viewer',  () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, site.entry.guid);
-        done();
+
     });
 
     afterAll(async () => {
@@ -95,7 +95,7 @@ describe('Viewer',  () => {
         let uploadedOthers;
         let otherFolderUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             otherFolderUploaded = await uploadActions.createFolder(otherFolderInfo.name, '-my-');
 
             uploadedOthers = await uploadActions.uploadFolder(otherFolderInfo.location, otherFolderUploaded.entry.id);
@@ -103,12 +103,11 @@ describe('Viewer',  () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(otherFolderUploaded.entry.id);
-            done();
+
         });
 
         it('[C280012] Should be possible to open any other Document supported extension', async () => {

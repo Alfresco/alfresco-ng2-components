@@ -45,7 +45,7 @@ describe('Task Details component', () => {
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
         apps = new AppsActions();
 
@@ -66,12 +66,11 @@ describe('Task Details component', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
-        done();
+
     });
 
     it('[C260506] Should display task details for standalone task - Task App', async () => {

@@ -35,7 +35,7 @@ describe('Attach Folder widget',  () => {
     const app = resources.Files.WIDGET_CHECK_APP.ATTACH_FOLDER;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -56,7 +56,7 @@ describe('Attach Folder widget',  () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
     beforeEach( async() => {
@@ -66,11 +66,11 @@ describe('Attach Folder widget',  () => {
         await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
+
     });
 
     it('[C276745] Should be possible to set visibility properties for Attach Folder Widget', async () => {

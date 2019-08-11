@@ -1,6 +1,5 @@
 const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
-const jasmineReporters = require('jasmine-reporters');
 const retry = require('protractor-retry').retry;
 const tsConfig = require('./e2e/tsconfig.e2e.json');
 const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
@@ -46,27 +45,18 @@ if (LOG) {
 }
 
 let browser_options = function () {
-    let args_options = [];
+    let args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
 
-    if (BROWSER_RUN === true) {
-        args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
-    } else {
-        args_options = [
-            '--incognito',
-            '--headless',
-            `--window-size=${width},${height}`,
-            '--disable-gpu',
-            '--disable-web-security',
-            // '--remote-debugging-port=9222',
-            '--disable-browser-side-navigation'
-        ];
+    if (BROWSER_RUN !== true) {
+        args_options.push('--headless') ;
     }
+
     return args_options;
 };
 
 let args_options = browser_options();
 
-let downloadFolder = path.join(__dirname, 'e2e-output/downloads');
+let downloadFolder = path.join(__dirname, 'e2e/downloads');
 
 let specs = () => {
     let specsToRun = './**/e2e/' + FOLDER + '/**/*.e2e.ts';
@@ -108,12 +98,6 @@ exports.config = {
                 'download': {
                     'prompt_for_download': false,
                     'default_directory': downloadFolder
-                },
-                browser: {
-                    'set_download_behavior': {
-                        'behavior': 'allow',
-                        'downloadPath': downloadFolder
-                    }
                 }
             },
             args: args_options
@@ -129,8 +113,7 @@ exports.config = {
         config: TestConfig.appConfig,
         identityAdmin: TestConfig.identityAdmin,
         identityUser: TestConfig.identityUser,
-        rootPath: __dirname,
-        downloadFolder: downloadFolder
+        rootPath: __dirname
     },
 
     framework: 'jasmine2',
@@ -195,14 +178,6 @@ exports.config = {
                 }
             })
         );
-
-        let generatedSuiteName = Math.random().toString(36).substr(2, 5);
-        let junitReporter = new jasmineReporters.JUnitXmlReporter({
-            consolidateAll: true,
-            savePath: `${projectRoot}/e2e-output/junit-report`,
-            filePrefix: 'results.xml-' + generatedSuiteName,
-        });
-        jasmine.getEnv().addReporter(junitReporter);
 
         return browser.driver.executeScript(disableCSSAnimation);
 

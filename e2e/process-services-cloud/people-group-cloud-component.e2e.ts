@@ -53,7 +53,7 @@ describe('People Groups Cloud Component',  () => {
         let groups = [];
         let clientId;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
 
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
@@ -92,10 +92,10 @@ describe('People Groups Cloud Component',  () => {
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            done();
+
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             for (const user of users) {
                 await identityService.deleteIdentityUser(user);
@@ -103,7 +103,7 @@ describe('People Groups Cloud Component',  () => {
             for (const group of groups) {
                 await groupIdentityService.deleteIdentityGroup(group);
             }
-            done();
+
         });
 
         beforeEach( async() => {

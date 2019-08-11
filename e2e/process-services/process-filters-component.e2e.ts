@@ -56,7 +56,7 @@ describe('Process Filters Test', () => {
         completed: 'Completed'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -75,7 +75,6 @@ describe('Process Filters Test', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        done();
     });
 
     beforeEach(async () => {

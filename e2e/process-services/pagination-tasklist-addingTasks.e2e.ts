@@ -50,7 +50,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
         fifteenValue: 15
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -72,7 +72,6 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
     it('[C260306] Items per page set to 15 and adding of tasks', async () => {

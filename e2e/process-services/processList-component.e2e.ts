@@ -51,7 +51,7 @@ describe('Process List Test', () => {
     let appWithDateFieldId;
     let procWithDate, completedProcWithDate, completedProcWithUserWidget;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -86,10 +86,9 @@ describe('Process List Test', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appDateModel.id);
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appUserWidgetModel.id);
 
@@ -97,12 +96,11 @@ describe('Process List Test', () => {
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/process-list');
-        done();
+
     });
 
     it('[C286638] Should display all process by default', async () => {

@@ -55,7 +55,7 @@ describe('Task Header cloud component',  () => {
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
@@ -91,13 +91,13 @@ describe('Task Header cloud component',  () => {
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-        done();
+
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
+
     });
 
     beforeEach( async() => {

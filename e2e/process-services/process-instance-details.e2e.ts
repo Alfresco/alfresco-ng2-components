@@ -42,7 +42,7 @@ describe('Process Instance Details',  () => {
     const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const PROCESS_DATE_FORMAT = 'mmm d, yyyy';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -70,15 +70,13 @@ describe('Process Instance Details',  () => {
 
         process = await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processModel.id);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appModel.id);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
 
-        done();
     });
 
     it('[C307031] Should display the created date in the default format', async () => {

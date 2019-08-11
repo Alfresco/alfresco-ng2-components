@@ -41,7 +41,7 @@ describe('Task Details - No form',  () => {
     const apps = new AppsActions();
     let importedApp;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -63,7 +63,6 @@ describe('Task Details - No form',  () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
     it('[C289311] Should attach form and complete buttons to be displayed when no form is attached', async () => {

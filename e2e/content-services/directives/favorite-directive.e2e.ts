@@ -50,7 +50,7 @@ describe('Favorite directive',  () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let testFolder1, testFolder2, testFolder3, testFolder4, testFile;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -63,23 +63,23 @@ describe('Favorite directive',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await contentServicesPage.goToDocumentList();
-        done();
+
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(testFolder1.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder2.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder3.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder4.entry.id);
-        done();
+
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-        done();
+
     });
 
     it('[C260247] Should be able to mark a file as favorite', async () => {

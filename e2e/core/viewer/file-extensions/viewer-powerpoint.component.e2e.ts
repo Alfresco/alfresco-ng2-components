@@ -44,7 +44,7 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.PPT_FOLDER.folder_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -60,7 +60,6 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        done();
     });
 
     describe('PowerPoint Folder Uploaded', () => {
@@ -68,7 +67,7 @@ describe('Viewer', () => {
         let uploadedPpt;
         let pptFolderUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             pptFolderUploaded = await uploadActions.createFolder(pptFolderInfo.name, '-my-');
 
             uploadedPpt = await uploadActions.uploadFolder(pptFolderInfo.location, pptFolderUploaded.entry.id);
@@ -76,12 +75,11 @@ describe('Viewer', () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(pptFolderUploaded.entry.id);
-            done();
+
         });
 
         it('[C280009] Should be possible to open any PowerPoint file', async () => {

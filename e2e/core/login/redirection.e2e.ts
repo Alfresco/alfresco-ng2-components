@@ -48,7 +48,7 @@ describe('Login component - Redirect', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const logoutPage = new LogoutPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -59,7 +59,6 @@ describe('Login component - Redirect', () => {
 
         uploadedFolder = await uploadActions.createFolder('protecteFolder' + StringUtil.generateRandomString(), '-my-');
 
-        done();
     });
 
     it('[C213838] Should after login in CS be redirect to Login page when try to access to PS', async () => {

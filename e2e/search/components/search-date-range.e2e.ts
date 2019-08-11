@@ -37,7 +37,7 @@ describe('Search Date Range Filter', () => {
     const navigationBar = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -50,7 +50,6 @@ describe('Search Date Range Filter', () => {
         await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter('*');
 
-        done();
     });
 
     beforeEach(async () => {
@@ -59,9 +58,9 @@ describe('Search Date Range Filter', () => {
         await searchFilters.checkCreatedRangeFilterIsExpanded();
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         await browser.refresh();
-        done();
+
     });
 
     it('[C277106] Should display default values for Date Range widget', async () => {

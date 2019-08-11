@@ -54,7 +54,7 @@ describe('Share file',  () => {
 
     let nodeId;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -67,13 +67,12 @@ describe('Share file',  () => {
 
         await navigationBarPage.clickContentServicesButton();
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(nodeId);
-        done();
+
     });
 
     describe('Shared link dialog',  () => {
@@ -154,17 +153,17 @@ describe('Share file',  () => {
     });
 
     describe('Shared link preview',  () => {
-        afterEach(async(done) => {
+        afterEach(async() => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await navigationBarPage.clickContentServicesButton();
-            done();
+
         });
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
-            done();
+
         });
 
         it('[C286565] Should open file when logged user access shared link', async () => {

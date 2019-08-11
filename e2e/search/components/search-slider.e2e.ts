@@ -34,7 +34,7 @@ describe('Search Slider Filter', () => {
     const searchFilters = new SearchFiltersPage();
     const sizeSliderFilter = searchFilters.sizeSliderFilterPage();
     const searchResults = new SearchResultsPage();
-    const navigationBar = new NavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
     const acsUser = new AcsUserModel();
@@ -47,11 +47,11 @@ describe('Search Slider Filter', () => {
     let file2Bytes;
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -68,16 +68,17 @@ describe('Search Slider Filter', () => {
         await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter('*');
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         try {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         } catch (error) {
         }
-        done();
+
+        await navigationBarPage.clickLogoutButton();
+
     });
 
     afterEach(async () => {

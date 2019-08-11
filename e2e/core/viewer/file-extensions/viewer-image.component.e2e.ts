@@ -48,7 +48,7 @@ describe('Viewer',  () => {
         'location': resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -64,7 +64,6 @@ describe('Viewer',  () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        done();
     });
 
     describe('Image Folder Uploaded',  () => {
@@ -72,7 +71,7 @@ describe('Viewer',  () => {
         let uploadedImages, uploadedImgRenditionFolderInfo;
         let imgFolderUploaded, imgFolderRenditionUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             imgFolderUploaded = await uploadActions.createFolder(imgFolderInfo.name, '-my-');
 
             uploadedImages = await uploadActions.uploadFolder(imgFolderInfo.location, imgFolderUploaded.entry.id);
@@ -84,12 +83,11 @@ describe('Viewer',  () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(imgFolderUploaded.entry.id);
-            done();
+
         });
 
         it('[C279966] Should be possible to open any Image supported extension', async () => {

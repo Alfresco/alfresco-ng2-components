@@ -44,7 +44,7 @@ describe('People component', () => {
 
     const tasks = ['no people involved task', 'remove people task', 'can not complete task', 'multiple users', 'completed filter'];
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -75,16 +75,15 @@ describe('People component', () => {
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[3] });
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[4] });
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await (await processServices.goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        done();
+
     });
 
     it('[C279989] Should no people be involved when no user is typed', async () => {

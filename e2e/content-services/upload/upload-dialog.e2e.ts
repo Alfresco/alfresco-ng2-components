@@ -63,7 +63,7 @@ describe('Upload component', () => {
     const filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
     const filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -72,14 +72,14 @@ describe('Upload component', () => {
         await contentServicesPage.goToDocumentList();
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
-        done();
+
     });
 
     beforeEach(async () => {
         await contentServicesPage.goToDocumentList();
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         const nbResults = await contentServicesPage.numberOfResultsDisplayed();
         if (nbResults > 1) {
             const nodesPromise = await contentServicesPage.getElementsDisplayedId();
@@ -88,7 +88,7 @@ describe('Upload component', () => {
                 await uploadActions.deleteFileOrFolder(nodeId);
             }
         }
-        done();
+
     });
 
     it('[C260143] Should be possible to maximize/minimize the upload dialog', async () => {

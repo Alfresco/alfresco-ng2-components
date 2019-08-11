@@ -63,7 +63,7 @@ describe('Upload - User permission',  () => {
         });
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         acsUser = new AcsUserModel();
         acsUserTwo = new AcsUserModel();
 
@@ -95,15 +95,13 @@ describe('Upload - User permission',  () => {
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        done();
     });
 
     describe('Consumer permissions',  () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
         it('[C291921] Should display tooltip for uploading files without permissions', async () => {
@@ -142,12 +140,11 @@ describe('Upload - User permission',  () => {
 
     describe('full permissions',  () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
 
             await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
         it('[C279917] Should be allowed to upload a file in a folder with manager permissions', async () => {
@@ -160,10 +157,9 @@ describe('Upload - User permission',  () => {
 
     describe('multiple users',  () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
         it('[C260175] Should two different user upload files in the proper User Home', async () => {

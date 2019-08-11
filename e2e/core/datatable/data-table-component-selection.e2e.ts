@@ -32,7 +32,7 @@ describe('Datatable component - selection', () => {
     const navigationBarPage = new NavigationBarPage();
     const dataTableComponent = new DataTableComponentPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -46,7 +46,6 @@ describe('Datatable component - selection', () => {
 
         await navigationBarPage.navigateToDatatable();
 
-        done();
     });
 
     afterAll(async () => {

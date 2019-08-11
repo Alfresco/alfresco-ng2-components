@@ -43,7 +43,7 @@ describe('Start Task - Task App', () => {
     const tasks = ['Standalone task', 'Completed standalone task', 'Add a form', 'Remove form'];
     const noFormMessage = 'No forms attached';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -66,14 +66,12 @@ describe('Start Task - Task App', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        done();
     });
 
     it('[C260421] Should a standalone task be displayed when creating a new task without form', async () => {

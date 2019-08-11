@@ -67,14 +67,14 @@ describe('Metadata component', () => {
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         Object.assign(pngFileModel, pngUploadedFile.entry);
         pngFileModel.update(pngUploadedFile.entry);
-        done();
+
     });
 
     afterAll(async () => {
@@ -247,14 +247,13 @@ describe('Metadata component', () => {
 
     describe('Folder metadata', () => {
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await uploadActions.createFolder(folderName, '-my-');
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
 
-            done();
         });
 
         it('[C261157] Should be possible use the metadata component When the node is a Folder', async () => {

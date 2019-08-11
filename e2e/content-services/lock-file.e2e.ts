@@ -52,7 +52,7 @@ describe('Lock File',  () => {
 
     let nodeId, site, documentLibrary, lockedFileNodeId;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(adminUser);
@@ -73,22 +73,18 @@ describe('Lock File',  () => {
             id: managerUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
-
-        done();
-
     });
 
     describe('Lock file interaction with the UI',  () => {
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             const pngLockedUploadedFile = await uploadActions.uploadFile(pngFileToLock.location, pngFileToLock.name, documentLibrary);
 
             lockedFileNodeId = pngLockedUploadedFile.entry.id;
 
-            done();
         });
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             try {
                 const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
                 nodeId = pngUploadedFile.entry.id;
@@ -99,10 +95,10 @@ describe('Lock File',  () => {
             } catch (error) {
 
             }
-            done();
+
         });
 
-        afterEach(async (done) => {
+        afterEach(async () => {
             try {
                 await this.alfrescoJsApi.login(adminUser.id, adminUser.password);
 
@@ -111,10 +107,10 @@ describe('Lock File',  () => {
             } catch (error) {
 
             }
-            done();
+
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             try {
                 await this.alfrescoJsApi.login(adminUser.id, adminUser.password);
 
@@ -125,7 +121,7 @@ describe('Lock File',  () => {
             } catch (error) {
 
             }
-            done();
+
         });
 
         it('[C286604] Should be able to open Lock file option by clicking the lock image', async () => {
@@ -175,7 +171,7 @@ describe('Lock File',  () => {
 
     describe('Locked file without owner permissions',  () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
 
             nodeId = pngUploadedFile.entry.id;
@@ -184,10 +180,9 @@ describe('Lock File',  () => {
 
             await navigationBarPage.openContentServicesFolder(documentLibrary);
 
-            done();
         });
 
-        afterEach(async (done) => {
+        afterEach(async () => {
             await this.alfrescoJsApi.login(adminUser.id, adminUser.password);
 
             try {
@@ -196,7 +191,6 @@ describe('Lock File',  () => {
             } catch (error) {
             }
 
-            done();
         });
 
         it('[C286610] Should not be able to delete a locked file', async () => {
@@ -266,16 +260,16 @@ describe('Lock File',  () => {
 
         let pngFileToBeLocked;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             try {
                 pngFileToBeLocked = await uploadActions.uploadFile(pngFileToLock.location, pngFileToLock.name, documentLibrary);
                 lockedFileNodeId = pngFileToBeLocked.entry.id;
             } catch (error) {
             }
-            done();
+
         });
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             try {
                 const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
                 nodeId = pngUploadedFile.entry.id;
@@ -283,18 +277,16 @@ describe('Lock File',  () => {
                 await navigationBarPage.openContentServicesFolder(documentLibrary);
             } catch (error) {
             }
-            done();
+
         });
 
-        afterEach(async (done) => {
+        afterEach(async () => {
             await this.alfrescoJsApi.login(adminUser.id, adminUser.password);
 
             try {
                 await uploadActions.deleteFileOrFolder(nodeId);
             } catch (error) {
             }
-
-            done();
 
         });
 

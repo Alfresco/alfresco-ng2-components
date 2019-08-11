@@ -42,7 +42,7 @@ describe('Task Audit', () => {
     const taskCompleteCustomApp = 'Audit completed task custom app';
     const auditLogFile = 'Audit.pdf';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
         const apps = new AppsActions();
 
@@ -65,12 +65,11 @@ describe('Task Audit', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
-        done();
+
     });
 
     it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', async () => {

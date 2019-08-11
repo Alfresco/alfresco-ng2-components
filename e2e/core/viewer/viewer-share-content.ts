@@ -56,7 +56,7 @@ describe('Viewer', () => {
 
     let pngFileShared, wordFileUploaded;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -80,7 +80,6 @@ describe('Viewer', () => {
 
         pngFileShared = await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({ 'nodeId': pngFileUploaded.entry.id });
 
-        done();
     });
 
     afterAll(async () => {

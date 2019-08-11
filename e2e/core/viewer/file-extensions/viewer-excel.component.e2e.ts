@@ -43,7 +43,7 @@ describe('Viewer',  () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -59,14 +59,13 @@ describe('Viewer',  () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        done();
     });
     describe('Excel Folder Uploaded',  () => {
 
         let uploadedExcels;
         let excelFolderUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             excelFolderUploaded = await uploadActions.createFolder(excelFolderInfo.name, '-my-');
 
             uploadedExcels = await uploadActions.uploadFolder(excelFolderInfo.location, excelFolderUploaded.entry.id);
@@ -74,12 +73,11 @@ describe('Viewer',  () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(excelFolderUploaded.entry.id);
-            done();
+
         });
 
         it('[C280008] Should be possible to open any Excel file', async () => {

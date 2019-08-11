@@ -81,7 +81,7 @@ describe('Permissions Component', () => {
 
     const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.getId() + ' / role -> Contributor';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
@@ -161,22 +161,21 @@ describe('Permissions Component', () => {
         await uploadActions.uploadFile(fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
         await uploadActions.uploadFile(fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         for (const folder of folders) {
             await uploadActions.deleteFileOrFolder(folder.entry.id);
         }
-        done();
+
     });
 
     describe('Inherit and assigning permissions', () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await this.alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
             await loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
@@ -186,16 +185,16 @@ describe('Permissions Component', () => {
             await contentList.rightClickOnRow(fileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Permission');
             await permissionsPage.checkPermissionContainerIsDisplayed();
-            done();
+
         });
 
-        afterEach(async (done) => {
+        afterEach(async () => {
             await BrowserActions.closeMenuAndDialogs();
             try {
                 await uploadActions.deleteFileOrFolder(file.entry.id);
             } catch (error) {
             }
-            done();
+
         });
 
         it('[C268974] Inherit Permission', async () => {
@@ -246,7 +245,7 @@ describe('Permissions Component', () => {
 
     describe('Changing and duplicate Permissions', () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await this.alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
             await loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
@@ -262,7 +261,7 @@ describe('Permissions Component', () => {
             await permissionsPage.searchUserOrGroup(filePermissionUser.getId());
             await permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
             await permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
-            done();
+
         });
 
         afterEach(async () => {

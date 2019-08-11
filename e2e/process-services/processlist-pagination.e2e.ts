@@ -57,7 +57,7 @@ describe('Process List - Pagination', () => {
     let totalPages;
     const processNameBase = 'process';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -76,7 +76,6 @@ describe('Process List - Pagination', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
     describe('Empty processes', () => {
@@ -90,7 +89,7 @@ describe('Process List - Pagination', () => {
 
     describe('With processes Pagination', () => {
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             const apps = new AppsActions();
 
             this.alfrescoJsApi = new AlfrescoApi({
@@ -104,12 +103,11 @@ describe('Process List - Pagination', () => {
                 await apps.startProcess(this.alfrescoJsApi, deployedTestApp, processNameBase + (i < 10 ? `0${i}` : i));
             }
 
-            done();
         });
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
-            done();
+
         });
 
         it('[C261042] Should display default pagination',  async() => {

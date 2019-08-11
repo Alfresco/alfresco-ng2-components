@@ -49,7 +49,7 @@ describe('Edit folder directive', () => {
     const updateFolderName = StringUtil.generateRandomString(5);
     let editFolder, anotherFolder, filePdfNode, subFolder;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.core.peopleApi.addPerson(anotherAcsUser);
@@ -74,16 +74,15 @@ describe('Edit folder directive', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(editFolder.entry.id);
         await uploadActions.deleteFileOrFolder(anotherFolder.entry.id);
         await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
-        done();
+
     });
 
     beforeEach(async () => {
@@ -230,11 +229,11 @@ describe('Edit folder directive', () => {
 
     describe('Edit Folder - no permission', () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + editFolder.entry.id);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-            done();
+
         });
 
         it('[C260167] Edit folder without permission', async () => {

@@ -64,7 +64,7 @@ describe('Restore content directive', () => {
     let folderWithContent, folderWithFolder, subFolder, subFile, testFile, restoreFile, publicSite, siteFolder,
         siteFile;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.core.peopleApi.addPerson(anotherAcsUser);
@@ -79,7 +79,6 @@ describe('Restore content directive', () => {
         restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        done();
     });
 
     afterAll(async (done) => {
@@ -89,16 +88,15 @@ describe('Restore content directive', () => {
         done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await BrowserActions.closeMenuAndDialogs();
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
-        done();
     });
 
     describe('Restore same name folders', () => {
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
             await contentServicesPage.checkContentIsDisplayed(folderName);
@@ -107,7 +105,6 @@ describe('Restore content directive', () => {
             await navigationBarPage.clickTrashcanButton();
             await trashcanPage.waitForTableBody();
             await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
-            done();
         });
 
         it('[C260227] Should validate when restoring Folders with same name', async () => {
@@ -208,7 +205,6 @@ describe('Restore content directive', () => {
         await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
         await contentServicesPage.doubleClickRow(folderWithFolder.entry.name);
         await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
-        await notificationHistoryPage.clickNotificationButton();
     });
 
     it('[C260241] Should display restore icon both for file and folder', async () => {
@@ -240,7 +236,7 @@ describe('Restore content directive', () => {
 
     describe('Restore deleted library', () => {
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             const publicSiteName = `00${StringUtil.generateRandomString(5)}`;
             const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
@@ -248,7 +244,6 @@ describe('Restore content directive', () => {
             siteFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), publicSite.entry.guid);
             siteFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, siteFolder.entry.id);
             await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
-            done();
         });
 
         afterAll(async (done) => {
@@ -283,7 +278,7 @@ describe('Restore content directive', () => {
 
         let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await this.alfrescoJsApi.login(anotherAcsUser.id, anotherAcsUser.password);
             await uploadActions.createFolder(folderName, '-my-');
             parentFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -296,15 +291,13 @@ describe('Restore content directive', () => {
             await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
             await uploadActions.deleteFileOrFolder(mainFolder.entry.id);
             await uploadActions.deleteFileOrFolder(mainFile.entry.id);
-            done();
         });
 
         it('[C216431] Should restore hierarchy of folders', async () => {

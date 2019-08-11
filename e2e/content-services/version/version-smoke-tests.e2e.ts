@@ -67,7 +67,7 @@ describe('Version component',  () => {
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -85,7 +85,6 @@ describe('Version component',  () => {
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
 
-        done();
     });
 
     it('[C272768] Should be visible the first file version when you upload a file', async () => {

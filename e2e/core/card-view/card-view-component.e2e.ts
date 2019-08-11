@@ -30,11 +30,10 @@ describe('CardView Component', () => {
     const cardViewPageComponent = new CardViewComponentPage();
     const metadataViewPage = new MetadataViewPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await navigationBarPage.clickCardViewButton();
 
-        done();
     });
 
     afterAll(async () => {

@@ -171,12 +171,11 @@ describe('Version component permissions',  () => {
 
     describe('Consumer',  () => {
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(consumerUser);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
-            done();
         });
 
         afterAll(async () => {
@@ -202,7 +201,7 @@ describe('Version component permissions',  () => {
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await this.alfrescoJsApi.login(contributorUser.id, contributorUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
@@ -212,7 +211,6 @@ describe('Version component permissions',  () => {
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
-            done();
         });
 
         afterAll(async () => {
@@ -259,7 +257,7 @@ describe('Version component permissions',  () => {
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await this.alfrescoJsApi.login(collaboratorUser.id, collaboratorUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
@@ -269,7 +267,6 @@ describe('Version component permissions',  () => {
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
-            done();
         });
 
         afterAll(async () => {

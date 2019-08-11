@@ -47,7 +47,7 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
@@ -59,7 +59,7 @@ describe('Viewer', () => {
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        done();
+
     });
 
     afterAll(async () => {
@@ -70,17 +70,17 @@ describe('Viewer', () => {
         let uploadedArchives;
         let archiveFolderUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             archiveFolderUploaded = await uploadActions.createFolder(archiveFolderInfo.name, '-my-');
             uploadedArchives = await uploadActions.uploadFolder(archiveFolderInfo.location, archiveFolderUploaded.entry.id);
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
-            done();
+
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(archiveFolderUploaded.entry.id);
-            done();
+
         });
 
         it('[C260517] Should be possible to open any Archive file', async () => {

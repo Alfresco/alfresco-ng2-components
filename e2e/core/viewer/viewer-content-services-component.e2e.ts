@@ -77,7 +77,7 @@ describe('Content Services Viewer',  () => {
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -110,10 +110,9 @@ describe('Content Services Viewer',  () => {
 
         await contentServicesPage.goToDocumentList();
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await uploadActions.deleteFileOrFolder(pdfFile.getId());
         await uploadActions.deleteFileOrFolder(protectedFile.getId());
         await uploadActions.deleteFileOrFolder(docxFile.getId());
@@ -123,7 +122,6 @@ describe('Content Services Viewer',  () => {
         await uploadActions.deleteFileOrFolder(unsupportedFile.getId());
         await navigationBarPage.clickLogoutButton();
 
-        done();
     });
 
     it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', async () => {

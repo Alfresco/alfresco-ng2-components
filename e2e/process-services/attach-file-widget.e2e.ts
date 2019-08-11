@@ -45,7 +45,7 @@ describe('Start Task - Task App', () => {
     const pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const appFields = app.form_fields;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
         const apps = new AppsActions();
 
@@ -64,10 +64,9 @@ describe('Start Task - Task App', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -77,7 +76,6 @@ describe('Start Task - Task App', () => {
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
 
-        done();
     });
 
     it('[C274690] Should be able to open a file attached to a start form', async () => {

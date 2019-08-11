@@ -19,8 +19,17 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
-    LoginSSOPage, AppListCloudPage, StringUtil, GroupCloudComponentPage,
-    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, SettingsPage, GroupIdentityService
+    LoginSSOPage,
+    AppListCloudPage,
+    StringUtil,
+    GroupCloudComponentPage,
+    StartTasksCloudPage,
+    PeopleCloudComponentPage,
+    TasksService,
+    ApiService,
+    IdentityService,
+    SettingsPage,
+    GroupIdentityService, RolesService
 } from '@alfresco/adf-testing';
 import resources = require('../../util/resources');
 
@@ -47,7 +56,7 @@ describe('Start Task - Group Cloud Component',  () => {
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
@@ -57,6 +66,11 @@ describe('Start Task - Group Cloud Component',  () => {
 
         hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
         testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
+
+        const rolesService = new RolesService(apiService);
+        const apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.ROLES.APS_USER);
+        await groupIdentityService.assignRole(testGroup.id, apsAdminRoleId, identityService.ROLES.APS_USER);
+
         await identityService.addUserToGroup(testUser.idIdentityService, testGroup.id);
         await identityService.addUserToGroup(apsUser.idIdentityService, hrGroup.id);
 
@@ -64,25 +78,22 @@ describe('Start Task - Group Cloud Component',  () => {
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        done();
+
     });
 
-    afterAll(async (done) => {
-        try {
-            await apiService.login(testUser.email, testUser.password);
-            const tasksService = new TasksService(apiService);
+    afterAll(async () => {
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        const tasksService = new TasksService(apiService);
 
-            const bothGroupsTaskId = await tasksService.getTaskId(bothGroupsTaskName, simpleApp);
-            await tasksService.deleteTask(bothGroupsTaskId, simpleApp);
+        const bothGroupsTaskId = await tasksService.getTaskId(bothGroupsTaskName, simpleApp);
+        await tasksService.deleteTask(bothGroupsTaskId, simpleApp);
 
-            const oneGroupTaskId = await tasksService.getTaskId(oneGroupTaskName, simpleApp);
-            await tasksService.deleteTask(oneGroupTaskId, simpleApp);
+        const oneGroupTaskId = await tasksService.getTaskId(oneGroupTaskName, simpleApp);
+        await tasksService.deleteTask(oneGroupTaskId, simpleApp);
 
-            await identityService.deleteIdentityUser(apsUser.idIdentityService);
-            await identityService.deleteIdentityUser(testUser.idIdentityService);
-        } catch (error) {
-        }
-        done();
+        await identityService.deleteIdentityUser(apsUser.idIdentityService);
+        await identityService.deleteIdentityUser(testUser.idIdentityService);
+
     });
 
     beforeEach( async() => {

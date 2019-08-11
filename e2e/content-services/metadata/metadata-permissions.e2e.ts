@@ -61,7 +61,7 @@ describe('permissions', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -91,7 +91,6 @@ describe('permissions', () => {
 
         await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
 
-        done();
     });
 
     afterAll(async () => {

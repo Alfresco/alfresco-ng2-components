@@ -38,7 +38,7 @@ describe('Task Details - Form', () => {
     const filtersPage = new FiltersPage();
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
         const attachedFormModel = {
             'name': StringUtil.generateRandomString(),
@@ -85,10 +85,9 @@ describe('Task Details - Form', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         const taskModel = new StandaloneTask();
 
         const emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
@@ -102,7 +101,6 @@ describe('Task Details - Form', () => {
         await filtersPage.goToFilter('Involved Tasks');
         await tasksListPage.checkTaskListIsLoaded();
 
-        done();
     });
 
     it('[C280018] Should be able to change the form in a task', async () => {

@@ -54,7 +54,7 @@ describe('Task List Pagination', () => {
         default: '20'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -78,7 +78,6 @@ describe('Task List Pagination', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
     it('[C260301] Should display default pagination', async () => {

@@ -43,7 +43,7 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -59,7 +59,6 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        done();
     });
 
     describe('Text Folder Uploaded', () => {
@@ -67,7 +66,7 @@ describe('Viewer', () => {
         let uploadedTexts;
         let textFolderUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             textFolderUploaded = await uploadActions.createFolder(textFolderInfo.name, '-my-');
 
             uploadedTexts = await uploadActions.uploadFolder(textFolderInfo.location, textFolderUploaded.entry.id);
@@ -75,12 +74,11 @@ describe('Viewer', () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(textFolderUploaded.entry.id);
-            done();
+
         });
 
         it('[C280010] Should be possible to open any Text file', async () => {

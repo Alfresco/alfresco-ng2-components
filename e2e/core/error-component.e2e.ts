@@ -28,7 +28,7 @@ describe('Error Component', () => {
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -38,7 +38,6 @@ describe('Error Component', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
     afterAll(async () => {

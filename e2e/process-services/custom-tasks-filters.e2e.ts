@@ -72,7 +72,7 @@ describe('Start Task - Custom App',  () => {
         default: '25'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const appsRuntime = new AppsRuntimeActions();
         const users = new UsersActions();
@@ -122,7 +122,6 @@ describe('Start Task - Custom App',  () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
     describe('',  () => {

@@ -55,7 +55,7 @@ describe('Search Component - Multi-Select Facet',  () => {
             'name': `${randomName}.txt`
         });
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -88,10 +88,9 @@ describe('Search Component - Multi-Select Facet',  () => {
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await Promise.all([
                 uploadActions.deleteFileOrFolder(jpgFile.entry.id),
                 uploadActions.deleteFileOrFolder(jpgFileSite.entry.id),
@@ -102,7 +101,6 @@ describe('Search Component - Multi-Select Facet',  () => {
             await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
             await navigationBarPage.clickLogoutButton();
 
-            done();
         });
 
         it('[C280054] Should be able to select multiple items from a search facet filter', async () => {
@@ -147,7 +145,7 @@ describe('Search Component - Multi-Select Facet',  () => {
             'name': `${randomName}.txt`
         });
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             await this.alfrescoJsApi.core.peopleApi.addPerson(userUploadingTxt);
@@ -205,7 +203,7 @@ describe('Search Component - Multi-Select Facet',  () => {
             'name': `${randomName}.txt`
         });
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -228,13 +226,12 @@ describe('Search Component - Multi-Select Facet',  () => {
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(txtFile.entry.id);
             await this.alfrescoJsApi.core.sitesApi;
-            done();
+
         });
 
         it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {

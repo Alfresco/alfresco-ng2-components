@@ -57,7 +57,7 @@ describe('Start Task - Custom App', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -80,7 +80,6 @@ describe('Start Task - Custom App', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
     it('[C263942] Should be possible to modify a task', async () => {

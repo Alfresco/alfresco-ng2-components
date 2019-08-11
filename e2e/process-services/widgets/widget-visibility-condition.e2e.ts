@@ -59,7 +59,7 @@ describe('Process-Services - Visibility conditions',  () => {
     const app = resources.Files.WIDGET_CHECK_APP.VISIBILITY;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -80,7 +80,7 @@ describe('Process-Services - Visibility conditions',  () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
     beforeEach( async() => {
@@ -90,11 +90,11 @@ describe('Process-Services - Visibility conditions',  () => {
         await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
+
     });
 
     it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', async () => {

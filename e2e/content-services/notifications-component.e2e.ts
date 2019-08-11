@@ -30,7 +30,7 @@ describe('Notifications Component',  () => {
 
     const acsUser = new AcsUserModel();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -48,8 +48,6 @@ describe('Notifications Component',  () => {
         await notificationPage.goToNotificationsPage();
 
         await notificationPage.enterDurationField(3000);
-
-        done();
     });
 
     afterAll(async () => {

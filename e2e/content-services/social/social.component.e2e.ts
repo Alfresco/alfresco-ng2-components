@@ -52,7 +52,7 @@ describe('Social component', () => {
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(componentOwner);
@@ -81,13 +81,12 @@ describe('Social component', () => {
                 }
             });
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
         await uploadActions.deleteFileOrFolder(emptyFile.entry.id);
-        done();
+
     });
 
     describe('User interaction on their own components', () => {

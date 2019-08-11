@@ -65,7 +65,7 @@ describe('Pagination - returns to previous page when current is empty',  () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
@@ -98,7 +98,6 @@ describe('Pagination - returns to previous page when current is empty',  () => {
 
         await contentServicesPage.goToDocumentList();
 
-        done();
     });
 
     it('[C274710] Should redirect to previous page when current is emptied', async () => {

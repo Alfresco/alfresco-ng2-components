@@ -63,7 +63,7 @@ describe('Document List - Pagination', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         fileNames = Util.generateSequenceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
         secondSetOfFiles = Util.generateSequenceFiles(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
 
@@ -82,18 +82,17 @@ describe('Document List - Pagination', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.checkAcsContainer();
         await contentServicesPage.waitForTableBody();
-        done();
+
     });
 
     it('[C260062] Should use default pagination settings', async () => {

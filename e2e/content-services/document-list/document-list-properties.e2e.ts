@@ -46,7 +46,7 @@ describe('Document List Component - Properties',  () => {
 
     describe('Allow drop files property',  () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             acsUser = new AcsUserModel();
 
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -61,14 +61,13 @@ describe('Document List Component - Properties',  () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            done();
         });
 
-        afterEach(async (done) => {
+        afterEach(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await uploadActions.deleteFileOrFolder(subFolder.entry.id);
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
-            done();
+
         });
 
         it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', async () => {

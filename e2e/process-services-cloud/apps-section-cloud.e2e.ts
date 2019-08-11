@@ -35,7 +35,7 @@ describe('Applications list',  () => {
     let applications;
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER, identityService.ROLES.APS_DEVOPS_USER]);
@@ -54,13 +54,12 @@ describe('Applications list',  () => {
 
         await LocalStorageUtil.setConfigField('alfresco-deployed-apps', '[]');
 
-        done();
     });
 
-    afterAll(async(done) => {
+    afterAll(async() => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
+
     });
 
     it('[C310373] Should all the app with running state be displayed on dashboard when alfresco-deployed-apps is not used in config file', async () => {

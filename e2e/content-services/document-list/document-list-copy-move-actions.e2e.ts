@@ -40,11 +40,12 @@ describe('Document List Component',  () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFolder2, copyFolder, subFile, duplicateFolderName;
+    let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFolder2, copyFolder, subFile,
+        duplicateFolderName;
     let acsUser = null, anotherAcsUser: AcsUserModel;
     let folderName, sameNameFolder;
 
@@ -58,7 +59,7 @@ describe('Document List Component',  () => {
         location: resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         acsUser = new AcsUserModel();
         anotherAcsUser = new AcsUserModel();
         folderName = StringUtil.generateRandomString(5);
@@ -88,16 +89,20 @@ describe('Document List Component',  () => {
                     }]
                 }
             });
-        done();
+
+        await browser.driver.sleep(12000);
+
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
         await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
         await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
         await uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
-        done();
+
     });
 
     describe('Document List Component - Actions Move and Copy',  () => {
@@ -106,10 +111,10 @@ describe('Document List Component',  () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
         });
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await BrowserActions.closeMenuAndDialogs();
             await navigationBarPage.clickContentServicesButton();
-            done();
+
         });
 
         it('[C260128] Move - Same name file', async () => {

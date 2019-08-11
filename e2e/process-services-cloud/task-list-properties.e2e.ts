@@ -56,7 +56,7 @@ describe('Edit task filters and task list properties', () => {
     const currentDate = DateUtil.formatDate('DD/MM/YYYY');
     const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
@@ -134,13 +134,13 @@ describe('Edit task filters and task list properties', () => {
                 'delete'
             ]
         }));
-        done();
+
     }, 5 * 60 * 1000);
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
+
     });
 
     describe('Edit task filters and task list properties - filter properties', () => {
@@ -377,13 +377,13 @@ describe('Edit task filters and task list properties', () => {
 
     describe('Edit task filters and task list properties - sort properties', () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            done();
+
         });
 
         it('[C306901] Should display tasks sorted by task name when taskName is selected from sort dropdown', async () => {

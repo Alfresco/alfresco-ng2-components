@@ -54,7 +54,7 @@ describe('Search Checklist Component',  () => {
 
     let createdFile, createdFolder;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -68,7 +68,6 @@ describe('Search Checklist Component',  () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
     beforeEach(async () => {
@@ -76,7 +75,7 @@ describe('Search Checklist Component',  () => {
         await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=${randomName}`);
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
@@ -84,7 +83,6 @@ describe('Search Checklist Component',  () => {
 
         await navigationBarPage.clickLogoutButton();
 
-        done();
     });
 
     it('[C276991] Should be able to click between options and Clear All button', async() => {
@@ -286,10 +284,9 @@ describe('Search Checklist Component',  () => {
             jsonFile = SearchConfiguration.getConfiguration();
         });
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            done();
         });
 
         it('[C277018] Should be able to change the operator', async () => {

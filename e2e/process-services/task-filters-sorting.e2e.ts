@@ -53,7 +53,7 @@ describe('Task Filters Sorting', () => {
         { name: 'Task 5', dueDate: '02/01/2019' },
         { name: 'Task 6', dueDate: '03/01/2019' }];
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -116,8 +116,6 @@ describe('Task Filters Sorting', () => {
         await task6.addName(tasks[5].name);
         await task6.addDueDate(tasks[5].dueDate);
         await task6.clickStartButton();
-
-        done();
 
     });
 

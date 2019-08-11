@@ -44,7 +44,7 @@ describe('Form widgets - People', () => {
     const taskDetails = new TaskDetailsPage();
     const appNavigationBar = new ProcessServiceTabBarPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
         const appsActions = new AppsActions();
 
@@ -63,16 +63,14 @@ describe('Form widgets - People', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
 
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
 
-        done();
     });
 
     beforeEach(async () => {

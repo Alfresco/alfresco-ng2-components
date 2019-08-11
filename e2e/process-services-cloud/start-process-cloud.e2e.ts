@@ -47,7 +47,7 @@ describe('Start Process',  () => {
     let groupIdentityService: GroupIdentityService;
     let testUser, groupInfo;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
@@ -62,19 +62,19 @@ describe('Start Process',  () => {
 
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
-        done();
+
     });
 
-    afterAll(async(done) => {
+    afterAll(async() => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
+
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
-        done();
+
     });
 
     it('[C291857] Should be possible to cancel a process', async () => {

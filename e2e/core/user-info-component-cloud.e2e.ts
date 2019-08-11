@@ -28,7 +28,7 @@ describe('User Info - SSO',  () => {
     let silentLogin, identityUser;
     let identityService: IdentityService;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
         await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -44,7 +44,6 @@ describe('User Info - SSO',  () => {
 
         await loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
 
-        done();
     });
 
     afterAll(async () => {

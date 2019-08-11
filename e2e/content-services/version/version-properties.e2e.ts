@@ -49,7 +49,7 @@ describe('Version Properties',  () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -69,7 +69,6 @@ describe('Version Properties',  () => {
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
 
-        done();
     });
 
     it('[C272817] Should NOT be present the download action when allowDownload property is false', async () => {

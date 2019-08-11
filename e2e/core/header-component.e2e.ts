@@ -46,7 +46,7 @@ describe('Header Component',  () => {
         logo_tooltip: 'test_tooltip'
     };
 
-    beforeAll(async(done) => {
+    beforeAll(async() => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -64,18 +64,17 @@ describe('Header Component',  () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        done();
     });
 
     beforeEach(async() => {
         await navigationBarPage.clickHeaderDataButton();
     });
 
-    afterAll(async(done) => {
+    afterAll(async() => {
         await navigationBarPage.clickLogoutButton();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-        done();
+
     });
 
     it('[C280002] Should be able to view Header component', async () => {

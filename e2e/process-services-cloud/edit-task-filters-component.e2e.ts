@@ -49,7 +49,7 @@ describe('Edit task filters cloud', () => {
         const completedTaskName = StringUtil.generateRandomString(),
             assignedTaskName = StringUtil.generateRandomString();
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
@@ -68,13 +68,13 @@ describe('Edit task filters cloud', () => {
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            done();
+
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-            done();
+
         });
 
         beforeEach(async () => {
@@ -83,9 +83,9 @@ describe('Edit task filters cloud', () => {
             await appListCloudComponent.goToApp(simpleApp);
         });
 
-        afterEach(async (done) => {
+        afterEach(async () => {
             await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            done();
+
         });
 
         it('[C291785] All the filters property should be set up accordingly with the Query Param', async () => {

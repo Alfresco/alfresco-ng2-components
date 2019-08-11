@@ -79,7 +79,7 @@ describe('Search component - Search Bar', () => {
 
     let fileHighlightUploaded;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -107,7 +107,6 @@ describe('Search component - Search Bar', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
     afterAll(async () => {
@@ -118,9 +117,9 @@ describe('Search component - Search Bar', () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url);
-        done();
+
     });
 
     it('[C272798] Search bar should be visible', async () => {

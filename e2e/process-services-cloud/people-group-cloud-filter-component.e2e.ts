@@ -52,7 +52,7 @@ describe('People Groups Cloud Component',  () => {
         let groups = [];
         let clientId;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
             identityService = new IdentityService(apiService);
@@ -87,7 +87,7 @@ describe('People Groups Cloud Component',  () => {
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            done();
+
         });
 
         afterAll(async () => {

@@ -58,7 +58,7 @@ describe('Version component actions',  () => {
         'location': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
@@ -73,7 +73,7 @@ describe('Version component actions',  () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
-        done();
+
     });
 
     beforeEach(async () => {

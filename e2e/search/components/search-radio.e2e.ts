@@ -56,7 +56,7 @@ describe('Search Radio Component', () => {
 
     let createdFile, createdFolder;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -77,10 +77,9 @@ describe('Search Radio Component', () => {
 
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
@@ -88,7 +87,6 @@ describe('Search Radio Component', () => {
 
         await navigationBarPage.clickLogoutButton();
 
-        done();
     });
 
     it('[C277039] Should be able to choose only one option at a time', async () => {
@@ -263,10 +261,9 @@ describe('Search Radio Component', () => {
             jsonFile = SearchConfiguration.getConfiguration();
         });
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            done();
         });
 
         it('[C277033] Should be able to add a new option', async () => {

@@ -56,7 +56,7 @@ describe('Tag component', () => {
     const nonLatinTag = StringUtil.generateRandomStringNonLatin();
     let pdfUploadedFile, nodeId;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -77,15 +77,12 @@ describe('Tag component', () => {
         await this.alfrescoJsApi.core.tagsApi.addTag(nodeId, tags);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
         await uploadActions.deleteFileOrFolder(pdfUploadedFile.entry.id);
-        done();
     });
 
     it('[C260374] Should NOT be possible to add a new tag without Node ID', async () => {

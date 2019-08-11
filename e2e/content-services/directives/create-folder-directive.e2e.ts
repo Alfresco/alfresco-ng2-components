@@ -34,7 +34,7 @@ describe('Create folder directive', () => {
     const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -48,21 +48,20 @@ describe('Create folder directive', () => {
 
         await contentServicesPage.goToDocumentList();
 
-        done();
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await browser.actions().sendKeys(Key.ESCAPE).perform();
-        done();
+
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         await browser.actions().sendKeys(Key.ESCAPE).perform();
-        done();
+
     });
 
     it('[C260154] Should not create the folder if cancel button is clicked', async () => {

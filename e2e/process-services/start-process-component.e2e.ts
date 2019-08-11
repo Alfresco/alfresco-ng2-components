@@ -66,7 +66,7 @@ describe('Start Process Component', () => {
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -98,17 +98,14 @@ describe('Start Process Component', () => {
 
         appId = appCreated.id;
 
-        done();
-
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(appId);
         await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(simpleAppCreated.id);
         await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(dateFormAppCreated.id);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
 
-        done();
     });
 
     describe(' Once logged with user without apps', () => {

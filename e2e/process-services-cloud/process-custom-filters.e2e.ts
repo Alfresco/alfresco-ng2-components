@@ -57,7 +57,7 @@ describe('Process list cloud', () => {
             anotherProcessInstance;
         const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
 
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
@@ -112,14 +112,14 @@ describe('Process list cloud', () => {
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
             await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
-            done();
+
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
             await processInstancesService.deleteProcessInstance(anotherProcessInstance.id, candidateBaseApp);
-            done();
+
         });
 
         beforeEach(async () => {
@@ -319,7 +319,7 @@ describe('Process list cloud', () => {
 
         describe('Process List - Check Action Filters', () => {
 
-            beforeEach(async (done) => {
+            beforeEach(async () => {
                 await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
                     'actions': [
                         'save',
@@ -331,7 +331,7 @@ describe('Process list cloud', () => {
                 await appListCloudComponent.goToApp(candidateBaseApp);
                 await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
                 await processCloudDemoPage.clickOnProcessFilters();
-                done();
+
             });
 
             it('[C305054] Should display the actions filters Save and SaveAs, Delete button is not displayed', async () => {

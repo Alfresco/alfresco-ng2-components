@@ -23,16 +23,18 @@ import resources = require('../../util/resources');
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Viewer', () => {
 
+    const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
-    });
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const acsUser = new AcsUserModel();
     let txtFileUploaded;
@@ -42,7 +44,7 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -52,12 +54,12 @@ describe('Viewer', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await uploadActions.deleteFileOrFolder(txtFileUploaded.entry.id);
-        done();
+        await navigationBarPage.clickLogoutButton();
+
     });
 
     beforeEach(async () => {

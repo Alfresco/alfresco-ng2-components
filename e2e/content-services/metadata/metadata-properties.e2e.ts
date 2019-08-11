@@ -60,7 +60,7 @@ describe('CardView Component - properties', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -77,7 +77,6 @@ describe('CardView Component - properties', () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
 
-        done();
     });
 
     afterEach(async () => {

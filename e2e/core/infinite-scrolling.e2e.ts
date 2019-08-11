@@ -52,7 +52,7 @@ describe('Enable infinite scrolling',  () => {
         extension: '.txt'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -79,17 +79,16 @@ describe('Enable infinite scrolling',  () => {
 
         await uploadActions.createEmptyFiles(deleteFileNames, deleteUploaded.entry.id);
 
-        done();
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.checkAcsContainer();
-        done();
+
     });
 
     it('[C260484] Should be possible to enable infinite scrolling', async () => {

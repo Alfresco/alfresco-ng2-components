@@ -66,7 +66,7 @@ describe('Document List Component',  () => {
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         let filePdfNode, fileTestNode, fileDocxNode, folderNode, filePDFSubNode;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             acsUser = new AcsUserModel();
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             funnyUser = await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -79,7 +79,6 @@ describe('Document List Component',  () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            done();
         });
 
         afterAll(async () => {
@@ -174,7 +173,7 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkListIsSortedByCreatedColumn('asc');
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             if (filePdfNode) {
                 await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
@@ -191,7 +190,7 @@ describe('Document List Component',  () => {
             if (folderNode) {
                 await uploadActions.deleteFileOrFolder(folderNode.entry.id);
             }
-            done();
+
         });
     });
 

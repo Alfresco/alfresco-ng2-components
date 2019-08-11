@@ -48,7 +48,7 @@ describe('Aspect oriented config', () => {
     });
     let uploadActions;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -83,17 +83,16 @@ describe('Aspect oriented config', () => {
 
         await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, { aspectNames: aspects.entry.aspectNames });
 
-        done();
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         await viewerPage.clickCloseButton();
         await contentServicesPage.checkAcsContainer();
-        done();
+
     });
 
     it('[C261117] Should be possible restrict the display properties of one an aspect', async () => {

@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
+import { browser, protractor } from 'protractor';
 import {
     AppListCloudPage,
     StringUtil,
     ApiService,
     LoginSSOPage,
     TasksService,
-    QueryService,
     ProcessDefinitionsService,
     ProcessInstancesService,
     SettingsPage,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
-    Widget
+    Widget, IdentityService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -50,21 +49,24 @@ describe('Task form cloud component',  () => {
     let tasksService: TasksService;
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
-    let queryService: QueryService;
+    let identityService: IdentityService;
 
-    let completedTask, createdTask, assigneeTask, toBeCompletedTask, completedProcess, claimedTask, formValidationsTask;
+    let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, testUser;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
-        await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+
+        identityService = new IdentityService(apiService);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
+        await apiService.login(testUser.email, testUser.password);
 
         tasksService = new TasksService(apiService);
-        queryService = new QueryService(apiService);
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
-
         assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
+
         await tasksService.claimTask(assigneeTask.entry.id, candidateBaseApp);
 
         formValidationsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(), candidateBaseApp, formToTestValidationsKey);
@@ -78,23 +80,31 @@ describe('Task form cloud component',  () => {
         await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
+
         const processDefinition = await processDefinitionService
             .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
-        completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
-
-        await browser.sleep(4000); // eventual consistency query
-        const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
-        claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
+        await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        await loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
-        done();
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+
     }, 5 * 60 * 1000);
+
+    afterAll(async () => {
+        try {
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await identityService.deleteIdentityUser(testUser.id);
+        } catch (error) {
+        }
+        await this.alfrescoJsApi.logout();
+        await browser.executeScript('window.sessionStorage.clear();');
+        await browser.executeScript('window.localStorage.clear();');
+    });
 
     it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -139,11 +149,11 @@ describe('Task form cloud component',  () => {
         expect(await(await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
 
         await widget.dateWidget().setDateInput('Date0m1moq', 'invalid date');
-        await widget.dateWidget().clickOutsideWidget('Date0m1moq');
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
         expect(await(await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
 
         await widget.dateWidget().setDateInput('Date0m1moq', '20-10-2018');
-        await widget.dateWidget().clickOutsideWidget('Date0m1moq');
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
         expect(await(await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
 
         await widget.numberWidget().setFieldValue('Number0klykr', 'invalid number');
@@ -162,11 +172,11 @@ describe('Task form cloud component',  () => {
 
     describe('Complete task - cloud directive',  () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(candidateBaseApp);
-            done();
+
         });
 
         it('[C307093] Complete button is not displayed when the task is already completed', async () => {
@@ -182,6 +192,9 @@ describe('Task form cloud component',  () => {
             await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+
+            browser.driver.sleep(1000);
+
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
 

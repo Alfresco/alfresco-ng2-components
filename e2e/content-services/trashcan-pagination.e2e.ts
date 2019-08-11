@@ -57,10 +57,10 @@ describe('Trashcan - Pagination', () => {
     const newFolderModel = new FolderModel({ name: 'newFolder' });
     const noOfFiles = 20;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
         const uploadActions = new UploadActions(this.alfrescoJsApi);
         const fileNames = Util.generateSequenceFiles(10, noOfFiles + 9, pagination.base, pagination.extension);
@@ -77,13 +77,17 @@ describe('Trashcan - Pagination', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navigationBarPage.clickTrashcanButton();
         await trashcanPage.waitForTableBody();
-        done();
     });
 
-    afterEach(async (done) => {
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+
+    });
+
+    afterEach(async () => {
         await browser.refresh();
         await trashcanPage.waitForTableBody();
-        done();
+
     });
 
     it('[C272811] Should be able to set Items per page to 20', async () => {

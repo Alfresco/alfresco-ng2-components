@@ -37,7 +37,7 @@ describe('Unshare file', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -45,6 +45,8 @@ describe('Unshare file', () => {
     const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     const notificationHistoryPage = new NotificationHistoryPage();
+    const navigationBarPage = new NavigationBarPage();
+
     const shareDialog = new ShareDialog();
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
     const acsUser = new AcsUserModel();
@@ -57,7 +59,7 @@ describe('Unshare file', () => {
         location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const site = {
             title: siteName,
             visibility: 'PRIVATE',
@@ -105,18 +107,22 @@ describe('Unshare file', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navBar.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
-        done();
+
     });
 
-    afterEach(async (done) => {
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
+    afterEach(async () => {
         await browser.refresh();
-        done();
+
     });
 
     describe('with permission', () => {
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(nodeId);
-            done();
+
         });
 
         it('[C286550] Should display unshare confirmation dialog', async () => {
@@ -156,16 +162,16 @@ describe('Unshare file', () => {
             await shareDialog.confirmationDialogIsDisplayed();
             await shareDialog.clickConfirmationDialogRemoveButton();
             await shareDialog.dialogIsClosed();
-            await BrowserActions.getUrl(sharedLink);
+            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.adf_acs.host, browser.params.testConfig.adf.host));
             await errorPage.checkErrorCode();
         });
     });
 
     describe('without permission', () => {
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.sitesApi.deleteSite(siteName, { permanent: true });
-            done();
+
         });
 
         it('[C286555] Should NOT be able to unshare file without permission', async () => {

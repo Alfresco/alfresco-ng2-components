@@ -46,7 +46,7 @@ describe('User Info component',  () => {
         'location': resources.Files.PROFILE_IMAGES.BPM.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -69,7 +69,6 @@ describe('User Info component',  () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(contentUserModel);
 
-        done();
     });
 
     afterAll(async () => {

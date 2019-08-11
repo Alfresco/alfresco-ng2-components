@@ -88,7 +88,7 @@ describe('Search Filters', () => {
 
     let jsonFile;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -111,10 +111,9 @@ describe('Search Filters', () => {
 
         jsonFile = SearchConfiguration.getConfiguration();
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await uploadActions.deleteFileOrFolder(fileUploaded.entry.id);
@@ -124,7 +123,6 @@ describe('Search Filters', () => {
         await uploadActions.deleteFileOrFolder(fileTypeJpg.entry.id);
         await navigationBarPage.clickLogoutButton();
 
-        done();
     });
 
     it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', async () => {

@@ -38,7 +38,7 @@ describe('Document List Component', () => {
     let acsUser = null;
     let testFileNode, pdfBFileNode;
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         if (uploadedFolder) {
             await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
@@ -56,7 +56,7 @@ describe('Document List Component', () => {
             await uploadActions.deleteFileOrFolder(pdfBFileNode.entry.id);
             pdfBFileNode = null;
         }
-        done();
+
     });
 
     describe('Custom Column', () => {
@@ -81,7 +81,7 @@ describe('Document List Component', () => {
 
         let pdfUploadedNode, docxUploadedNode, timeAgoUploadedNode, mediumDateUploadedNode;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
 
             acsUser = new AcsUserModel();
 
@@ -96,10 +96,10 @@ describe('Document List Component', () => {
             uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
             pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
             docxUploadedNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
-            done();
+
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             if (pdfUploadedNode) {
@@ -114,12 +114,12 @@ describe('Document List Component', () => {
             if (mediumDateUploadedNode) {
                 await uploadActions.deleteFileOrFolder(mediumDateUploadedNode.entry.id);
             }
-            done();
+
         });
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            done();
+
         });
 
         it('[C279926] Should only display the user\'s files and folders', async () => {
@@ -138,16 +138,16 @@ describe('Document List Component', () => {
             await contentServicesPage.checkColumnCreatedHeader();
         });
 
-        it('[C279928] Should be able to display date with timeAgo', async (done) => {
+        it('[C279928] Should be able to display date with timeAgo', async () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             timeAgoUploadedNode = await uploadActions.uploadFile(timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
             await contentServicesPage.goToDocumentList();
             const dateValue = await contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
             expect(dateValue).toMatch(/(ago|few)/);
-            done();
+
         });
 
-        it('[C279929] Should be able to display the date with date type', async (done) => {
+        it('[C279929] Should be able to display the date with date type', async () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(mediumFileModel.location, mediumFileModel.name, '-my-');
             const createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
@@ -155,7 +155,7 @@ describe('Document List Component', () => {
             await contentServicesPage.enableMediumTimeFormat();
             const dateValue = await contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
             expect(dateValue).toContain(createdDate);
-            done();
+
         });
     });
 
@@ -178,7 +178,7 @@ describe('Document List Component', () => {
 
         let fileANode, fileBNode, fileCNode;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
 
             const user = new AcsUserModel();
 
@@ -194,10 +194,9 @@ describe('Document List Component', () => {
             await loginPage.loginToContentServicesUsingUserModel(user);
             await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             if (fileANode) {
                 await uploadActions.deleteFileOrFolder(fileANode.entry.id);
@@ -208,7 +207,7 @@ describe('Document List Component', () => {
             if (fileCNode) {
                 await uploadActions.deleteFileOrFolder(fileCNode.entry.id);
             }
-            done();
+
         });
 
         it('[C260112] Should be able to sort by name (Ascending)', async () => {
@@ -236,7 +235,7 @@ describe('Document List Component', () => {
         });
     });
 
-    it('[C279959] Should display empty folder state for new folders', async (done) => {
+    it('[C279959] Should display empty folder state for new folders', async () => {
         acsUser = new AcsUserModel();
 
         const folderName = 'BANANA';
@@ -248,10 +247,10 @@ describe('Document List Component', () => {
         await contentServicesPage.doubleClickRow(folderName);
         await contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
         await contentServicesPage.checkEmptyFolderImageUrlToContain('/assets/images/empty_doc_lib.svg');
-        done();
+
     });
 
-    it('[C272775] Should be able to upload a file in new folder', async (done) => {
+    it('[C272775] Should be able to upload a file in new folder', async () => {
         const testFile = new FileModel({
             name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
             location: resources.Files.ADF_DOCUMENTS.TEST.file_location
@@ -269,10 +268,10 @@ describe('Document List Component', () => {
         await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
         await contentServicesPage.uploadFile(testFile.location);
         await contentServicesPage.checkContentIsDisplayed(testFile.name);
-        done();
+
     });
 
-    it('[C261997] Should be able to clean Recent Files history', async (done) => {
+    it('[C261997] Should be able to clean Recent Files history', async () => {
         acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -284,10 +283,10 @@ describe('Document List Component', () => {
         await contentServicesPage.expandRecentFiles();
         await contentServicesPage.checkEmptyRecentFileIsDisplayed();
         await contentServicesPage.closeRecentFiles();
-        done();
+
     });
 
-    it('[C279970] Should display Islocked field for folders', async (done) => {
+    it('[C279970] Should display Islocked field for folders', async () => {
         acsUser = new AcsUserModel();
         const folderNameA = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         const folderNameB = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
@@ -302,10 +301,10 @@ describe('Document List Component', () => {
         await contentServicesPage.checkContentIsDisplayed(folderNameB);
         await contentServicesPage.checkLockIsDisplayedForElement(folderNameA);
         await contentServicesPage.checkLockIsDisplayedForElement(folderNameB);
-        done();
+
     });
 
-    it('[C269086] Should display Islocked field for files', async (done) => {
+    it('[C269086] Should display Islocked field for files', async () => {
         const testFileA = new FileModel({
             name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
             location: resources.Files.ADF_DOCUMENTS.TEST.file_location
@@ -326,14 +325,14 @@ describe('Document List Component', () => {
         await contentServicesPage.checkContentIsDisplayed(testFileB.name);
         await contentServicesPage.checkLockIsDisplayedForElement(testFileA.name);
         await contentServicesPage.checkLockIsDisplayedForElement(testFileB.name);
-        done();
+
     });
 
     describe('Once uploaded 20 folders', () => {
 
         let folderCreated;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             acsUser = new AcsUserModel();
             folderCreated = [];
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -346,22 +345,22 @@ describe('Document List Component', () => {
                 folder = await uploadActions.createFolder(folderName, '-my-');
                 folderCreated.push(folder);
             }
-            done();
+
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             Promise.all(folderCreated.map(async (folder) =>
                 await uploadActions.deleteFileOrFolder(folder.entry.id)
             )).then(() => {
-                done();
+
             });
         });
 
-        it('[C277093] Should sort files with Items per page set to default', async (done) => {
+        it('[C277093] Should sort files with Items per page set to default', async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkListIsSortedByNameColumn('asc');
-            done();
+
         });
 
     });
@@ -376,7 +375,7 @@ describe('Document List Component', () => {
         let file;
         const viewer = new ViewerPage();
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             acsUser = new AcsUserModel();
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -386,7 +385,7 @@ describe('Document List Component', () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
-            done();
+
         });
 
         it('[C291843] Should be able to navigate using nodes hyperlink when activated', async () => {

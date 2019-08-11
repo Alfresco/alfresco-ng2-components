@@ -54,7 +54,7 @@ describe('Visibility conditions - cloud',  () => {
         checkboxVariableVariable: 'CheckboxVariableVariable'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf.url
@@ -76,7 +76,6 @@ describe('Visibility conditions - cloud',  () => {
 
         await formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
 
-        done();
     });
 
     it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', async () => {

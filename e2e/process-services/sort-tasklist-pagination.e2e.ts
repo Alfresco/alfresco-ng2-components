@@ -51,7 +51,7 @@ describe('Task List Pagination - Sorting', () => {
         twentyValue: 20
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -74,7 +74,6 @@ describe('Task List Pagination - Sorting', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
     it('[C260308] Should be possible to sort tasks by name', async () => {

@@ -76,7 +76,7 @@ describe('Permissions Component', () => {
     contributorUser = new AcsUserModel();
     managerUser = new AcsUserModel();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(folderOwnerUser);
@@ -144,28 +144,24 @@ describe('Permissions Component', () => {
 
         await uploadActions.uploadFile(fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
 
-        done();
-
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
 
-        done();
     });
 
     describe('Role Site Dropdown', () => {
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
 
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + publicSite.entry.guid);
 
-            done();
         });
 
         it('[C277002] Should display the Role Site dropdown', async () => {
@@ -177,6 +173,8 @@ describe('Permissions Component', () => {
 
             await permissionsPage.checkPermissionInheritedButtonIsDisplayed();
             await permissionsPage.checkAddPermissionButtonIsDisplayed();
+
+            await browser.sleep(5000);
 
             await permissionsPage.clickAddPermissionButton();
             await permissionsPage.checkAddPermissionDialogIsDisplayed();

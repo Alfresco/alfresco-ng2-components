@@ -47,7 +47,7 @@ describe('Document List Component - Actions', () => {
     const breadCrumbPage = new BreadCrumbPage();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
@@ -75,7 +75,7 @@ describe('Document List Component - Actions', () => {
             extension: '.txt'
         };
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             acsUser = new AcsUserModel();
             folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -92,12 +92,16 @@ describe('Document List Component - Actions', () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             await browser.sleep(10000);
-            done();
+
         });
 
-        beforeEach(async (done) => {
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
+
+        beforeEach(async () => {
             await navigationBarPage.clickContentServicesButton();
-            done();
+
         });
 
         describe('File Actions', () => {
@@ -250,7 +254,7 @@ describe('Document List Component - Actions', () => {
         let folders;
         const contentServicesUser = new AcsUserModel();
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
 
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.peopleApi.addPerson(contentServicesUser);
@@ -262,25 +266,25 @@ describe('Document List Component - Actions', () => {
             folder5 = await uploadActions.createFolder('E' + folderModel5.name, '-my-');
             folder6 = await uploadActions.createFolder('F' + folderModel6.name, '-my-');
             folders = [folder1, folder2, folder3, folder4, folder5, folder6];
-            done();
+
         });
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
             await paginationPage.selectItemsPerPage('5');
             await contentServicesPage.checkAcsContainer();
             await contentListPage.waitForTableBody();
-            done();
+
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             for (const folder of folders) {
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
             }
-            done();
+
         });
 
         it('[C260132] Move action on folder with - Load more', async () => {

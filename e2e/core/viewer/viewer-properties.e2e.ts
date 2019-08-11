@@ -49,7 +49,7 @@ describe('Viewer - properties',  () => {
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -73,14 +73,12 @@ describe('Viewer - properties',  () => {
         await viewerPage.clickLeftSidebarButton();
         await viewerPage.checkLeftSideBarIsDisplayed();
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await uploadActions.deleteFileOrFolder(pngFile.getId());
         await navigationBarPage.clickLogoutButton();
 
-        done();
     });
 
     it('[C260066] Should Show/Hide viewer toolbar when showToolbar is true/false', async () => {

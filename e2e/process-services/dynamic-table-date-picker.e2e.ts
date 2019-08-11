@@ -37,7 +37,7 @@ describe('Dynamic Table', () => {
     const widget = new Widget();
     let user, tenantId, appId, apps, users;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -52,15 +52,13 @@ describe('Dynamic Table', () => {
 
         tenantId = user.tenantId;
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
 
-        done();
     });
 
     describe('Date Picker', () => {
@@ -77,7 +75,7 @@ describe('Dynamic Table', () => {
         const currentDate = DateUtil.formatDate('DD-MM-YYYY');
         const rowPosition = 0;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await this.alfrescoJsApi.login(user.email, user.password);
 
             const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
@@ -85,15 +83,13 @@ describe('Dynamic Table', () => {
 
             await loginPage.loginToProcessServicesUsingUserModel(user);
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.login(user.email, user.password);
 
             await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
-            done();
         });
 
         beforeEach(async () => {
@@ -145,7 +141,7 @@ describe('Dynamic Table', () => {
         const app = resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
         const dropdown = widget.dropdown();
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
 
             await this.alfrescoJsApi.login(user.email, user.password);
 
@@ -154,15 +150,13 @@ describe('Dynamic Table', () => {
 
             await loginPage.loginToProcessServicesUsingUserModel(user);
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.login(user.email, user.password);
 
             await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
-            done();
         });
 
         beforeEach(async () => {

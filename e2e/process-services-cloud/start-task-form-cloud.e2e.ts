@@ -101,7 +101,7 @@ describe('Start Task Form', () => {
     const folderName = StringUtil.generateRandomString(5);
     let uploadedFolder;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
@@ -166,10 +166,10 @@ describe('Start Task Form', () => {
             browser.params.config.oauth2.clientId);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-start-process', JSON.stringify(startProcessCloudConfig));
-        done();
+
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
         await apiService.login(testUser.email, testUser.password);
@@ -177,7 +177,7 @@ describe('Start Task Form', () => {
         const standAloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
         await tasksService.deleteTask(standAloneTaskId, candidateBaseApp);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
+
     });
 
     describe('StandaloneTask with form', () => {
@@ -306,7 +306,7 @@ describe('Start Task Form', () => {
 
     describe('Attach content to process-cloud task form using upload widget', () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
@@ -314,7 +314,7 @@ describe('Start Task Form', () => {
             await processCloudDemoPage.clickOnProcessFilters();
             await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
-            done();
+
         });
 
         it('[C310358] Should be able to attach a file to a form from local', async () => {
