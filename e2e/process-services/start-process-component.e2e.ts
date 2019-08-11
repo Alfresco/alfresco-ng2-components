@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Util } from '../util/util';
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
-import { LoginPage, StartProcessDialog, Widget } from '@alfresco/adf-testing';
+import { LoginPage, StartProcessDialog, Widget, FileBrowserUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
@@ -170,6 +169,9 @@ describe('Start Process Component', () => {
 
             await startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
             await startProcessPage.deleteDefaultName('My Default Name');
+
+            browser.sleep(1000);
+
             await startProcessPage.checkStartProcessButtonIsDisabled();
             await startProcessPage.clickProcessDropdownArrow();
             await startProcessPage.checkOptionIsDisplayed(processModelWithSe);
@@ -324,7 +326,7 @@ describe('Start Process Component', () => {
             await processFiltersPage.selectFromProcessList('Audit Log');
             await processDetailsPage.clickAuditLogButton();
 
-            expect(await Util.fileExists(auditLogFile, 15)).toBe(true);
+            expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
         });
 
         it('Should be able to attach a file using the button', async () => {

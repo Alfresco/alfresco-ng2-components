@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
@@ -23,7 +23,6 @@ import { ViewerPage } from '../pages/adf/viewerPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import resources = require('../util/resources');
-import { Util } from '../util/util';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
@@ -121,7 +120,7 @@ describe('Attachment list action menu for processes',  () => {
 
         await browser.sleep(1000);
 
-        expect(await Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true);
 
         await attachmentListPage.removeFile(pngFile.name);
         await attachmentListPage.checkFileIsRemoved(pngFile.name);
@@ -154,7 +153,7 @@ describe('Attachment list action menu for processes',  () => {
 
         await browser.sleep(1000);
 
-        expect(await Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true);
 
         await attachmentListPage.removeFile(pngFile.name);
         await attachmentListPage.checkFileIsRemoved(pngFile.name);

@@ -172,10 +172,10 @@ export class DataTableComponentPage {
             .map(async (el) => await el.getText());
     }
 
-    async getRowsWithSameColumnValues(columnName, columnValue): Promise<string> {
+    async getRowsWithSameColumnValues(columnName, columnValue) {
         const columnLocator = by.css(`div[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`);
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(columnLocator).first());
-        return BrowserActions.getText(this.rootElement.all(columnLocator).first());
+        return this.rootElement.all(columnLocator).getText();
     }
 
     async doubleClickRow(columnName: string, columnValue: string): Promise<void> {

@@ -391,9 +391,7 @@ describe('Start Task - Custom App',  () => {
             expect(await taskListSinglePage.getTaskName()).toEqual(paginationTasksName[13]);
 
             await taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[13]);
-            await taskListSinglePage.taskList().getRowsDisplayedWithSameName(paginationTasksName[13]).then((list) => {
-                expect(list.length).toEqual(2);
-            });
+            expect((await taskListSinglePage.taskList().getRowsDisplayedWithSameName(paginationTasksName[13])).length).toBe(2);
         });
 
         it('[C280571] Should be able to see No tasks found when typing a task name that does not exist', async () => {

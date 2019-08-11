@@ -48,9 +48,14 @@ export class StartProcessPage {
         return this.defaultProcessName.getAttribute('value');
     }
 
-    async deleteDefaultName(name): Promise<void> {
+    async deleteDefaultName(name) {
         await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
-        await BrowserActions.clearSendKeys(this.processNameInput, name);
+        const currentValue = await this.processNameInput.getAttribute('value');
+        for (let i = currentValue.length; i >= 0; i--) {
+            if (currentValue === name) {
+                this.processNameInput.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        }
     }
 
     async enterProcessName(name): Promise<void> {

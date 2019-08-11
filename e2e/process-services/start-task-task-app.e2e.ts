@@ -150,8 +150,6 @@ describe('Start Task - Task App', () => {
         const formFields = await taskPage.formFields();
         formFields.setFieldValue(by.id, formTextField, formFieldValue);
 
-        expect(formFields.getFieldValue(formTextField)).toEqual(formFieldValue);
-
         formFields.refreshForm();
         formFields.checkFieldValue(by.id, formTextField, '');
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);

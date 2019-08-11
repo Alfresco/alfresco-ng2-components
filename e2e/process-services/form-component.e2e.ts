@@ -47,7 +47,7 @@ describe('Form Component',  () => {
         errorLabel: 'Error Label4'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -66,16 +66,12 @@ describe('Form Component',  () => {
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
         await navigationBarPage.navigateToProcessServicesFormPage();
-
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
-        done();
     });
 
     it('[C286505] Should be able to display errors under the Error Log section', async () => {

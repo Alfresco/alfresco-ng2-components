@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
@@ -26,7 +26,6 @@ import { ViewerPage } from '../pages/adf/viewerPage';
 import CONSTANTS = require('../util/constants');
 
 import resources = require('../util/resources');
-import { Util } from '../util/util';
 
 import path = require('path');
 import fs = require('fs');
@@ -112,7 +111,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await browser.sleep(1000);
 
-        expect(await Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true);
 
         await attachmentListPage.removeFile(pngFile.name);
         await attachmentListPage.checkFileIsRemoved(pngFile.name);
@@ -143,7 +142,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await browser.sleep(1000);
 
-        expect(await Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true);
 
         await attachmentListPage.removeFile(pngFile.name);
         await attachmentListPage.checkFileIsRemoved(pngFile.name);

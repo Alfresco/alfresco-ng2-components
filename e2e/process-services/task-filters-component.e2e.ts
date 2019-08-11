@@ -128,15 +128,15 @@ describe('Task', () => {
         });
 
         it('[C260348] Should display task in Complete Tasks List when task is completed', async () => {
-            expect(await taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed()).toBeDefined();
-            expect(await taskFiltersDemoPage.queuedTasksFilter().checkTaskFilterIsDisplayed()).toBeDefined();
-            expect(await taskFiltersDemoPage.involvedTasksFilter().checkTaskFilterIsDisplayed()).toBeDefined();
-            expect(await taskFiltersDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed).toBeDefined();
+            await taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            await taskFiltersDemoPage.queuedTasksFilter().checkTaskFilterIsDisplayed();
+            await taskFiltersDemoPage.involvedTasksFilter().checkTaskFilterIsDisplayed();
+            await taskFiltersDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
 
-            expect(await taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed()).toBeDefined();
-            expect(await taskFiltersDemoPage.queuedTasksFilter().checkTaskFilterIsDisplayed()).toBeDefined();
-            expect(await taskFiltersDemoPage.involvedTasksFilter().checkTaskFilterIsDisplayed).toBeDefined();
-            expect(await taskFiltersDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed).toBeDefined();
+            await taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            await taskFiltersDemoPage.queuedTasksFilter().checkTaskFilterIsDisplayed();
+            await taskFiltersDemoPage.involvedTasksFilter().checkTaskFilterIsDisplayed();
+            await taskFiltersDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
 
             const task = await tasksPage.createNewTask();
             await task.addName('Test');

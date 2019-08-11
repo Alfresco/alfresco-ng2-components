@@ -16,8 +16,6 @@
  */
 
 import { browser } from 'protractor';
-import fs = require('fs');
-import path = require('path');
 
 export class Util {
 
@@ -64,35 +62,5 @@ export class Util {
     static async switchToWindowHandler(windowNumber) {
         const handles = await browser.getAllWindowHandles();
         await browser.switchTo().window(handles[windowNumber]);
-    }
-
-    /**
-     * Verify file exists
-     * @param filePath - absolute path to the searched file
-     * @param retries - number of retries
-     * @returns - true if file is found, false otherwise
-     */
-    static async fileExists(fileName, retries) {
-        const config = await browser.getProcessedConfig();
-        const filePath = path.join(config.params.downloadFolder, fileName);
-
-        let tries = 0;
-        return new Promise(function(resolve) {
-            const checkExist = setInterval(() => {
-                fs.access(filePath, function(error) {
-                    tries++;
-
-                    if (error && tries === retries) {
-                        clearInterval(checkExist);
-                        resolve(false);
-                    }
-
-                    if (!error) {
-                        clearInterval(checkExist);
-                        resolve(true);
-                    }
-                });
-            }, 2000);
-        });
     }
 }

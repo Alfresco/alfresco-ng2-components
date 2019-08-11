@@ -62,16 +62,15 @@ export class FormFields {
     }
 
     async getFieldValue(fieldId, valueLocatorParam?: any): Promise<string> {
-        const value: ElementFinder = await this.getWidget(fieldId);
-        value.element(valueLocatorParam || this.valueLocator);
-        await BrowserVisibility.waitUntilElementIsVisible(value);
-        return await value.getAttribute('value');
+        const valueWidget: ElementFinder = await (await this.getWidget(fieldId)).element(valueLocatorParam || this.valueLocator);
+        await BrowserVisibility.waitUntilElementIsVisible(valueWidget);
+
+        return valueWidget.getAttribute('value');
     }
 
-    async getFieldLabel(fieldId, labelLocatorParam?: any): Promise<string> {
-        const label = await this.getWidget(fieldId);
-        label.all(labelLocatorParam || this.labelLocator).first();
-        return await BrowserActions.getText(label);
+    async getFieldLabel(fieldId, labelLocatorParam?: any) {
+        const label = await (await this.getWidget(fieldId)).all(labelLocatorParam || this.labelLocator).first();
+        return BrowserActions.getText(label);
     }
 
     async getFieldErrorMessage(fieldId): Promise<string> {
@@ -80,9 +79,8 @@ export class FormFields {
         return BrowserActions.getText(error);
     }
 
-    async getFieldText(fieldId, labelLocatorParam?: any): Promise<string> {
-        const label = await this.getWidget(fieldId);
-        label.element(labelLocatorParam || this.labelLocator);
+    async getFieldText(fieldId, labelLocatorParam?: any) {
+        const label = await (await this.getWidget(fieldId)).element(labelLocatorParam || this.labelLocator);
         return BrowserActions.getText(label);
     }
 

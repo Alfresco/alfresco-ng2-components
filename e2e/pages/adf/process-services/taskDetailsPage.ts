@@ -242,8 +242,7 @@ export class TaskDetailsPage {
     }
 
     async removeInvolvedUser(user): Promise<void> {
-        const row = await this.getRowsUser(user);
-        row.element(by.xpath('ancestor::div[contains(@class, "adf-datatable-row")]'));
+        const row = await(await this.getRowsUser(user)).element(by.xpath('ancestor::div[contains(@class, "adf-datatable-row")]'));
         await BrowserVisibility.waitUntilElementIsVisible(row);
         await row.element(by.css('button[data-automation-id="action_menu_0"]')).click();
         await BrowserVisibility.waitUntilElementIsVisible(this.removeInvolvedPeople);

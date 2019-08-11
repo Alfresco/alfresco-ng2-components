@@ -177,7 +177,7 @@ describe('Dynamic Table', () => {
         it('[C286519] Should be able to save row with required dropdown column', async () => {
             const dropdownOption = 'Option 1';
             await widget.dynamicTable().clickAddButton();
-            dropdown.selectOption(dropdownOption);
+            await dropdown.selectOption(dropdownOption);
             await widget.dynamicTable().clickSaveButton();
             await widget.dynamicTable().checkItemIsPresent(dropdownOption);
         });
