@@ -36,7 +36,7 @@ export class BrowserActions {
     }
 
     static async getText(elementFinder: ElementFinder): Promise<string> {
-        const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
         if (present) {
             return elementFinder.getText();
         } else {

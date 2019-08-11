@@ -61,7 +61,6 @@ function beforeEachAllRewrite() {
             } catch (error) {
                 // tslint:disable-next-line:no-console
                 console.log('Error before Each' + JSON.stringify(error));
-                expect(true).toBe(false);
             }
 
             done();

@@ -128,7 +128,8 @@ describe('Task Details component', () => {
         expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(await taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
         expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        expect(await taskPage.taskDetails().getCategory()).toEqual(taskModel.getCategory());
+
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
         expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
         expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
         expect(await taskPage.taskDetails().getDuration()).toEqual('');

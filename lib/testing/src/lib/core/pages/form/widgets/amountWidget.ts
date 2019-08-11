@@ -57,9 +57,9 @@ export class AmountWidget {
         await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    async getErrorMessage(fieldId): Promise<void> {
+    async getErrorMessage(fieldId): Promise<string> {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        await BrowserActions.getText(errorMessage);
+        return BrowserActions.getText(errorMessage);
     }
 
     async getPlaceholder(fieldId): Promise<string> {

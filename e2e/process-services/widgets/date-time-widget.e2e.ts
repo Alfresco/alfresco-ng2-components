@@ -71,7 +71,6 @@ describe('Date and time widget',  () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-
     });
 
     it('[C268818] Should be able to set general settings for Date Time widget', async () => {
@@ -97,9 +96,13 @@ describe('Date and time widget',  () => {
 
         await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
         await widget.dateTimeWidget().closeDataTimeWidget();
+
         await widget.dateTimeWidget().removeFromDatetimeWidget(app.FIELD.date_time_between_input);
+
         await widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-19 07:30 PM');
+
         await taskPage.formFields().saveForm();
+
         expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be greater than');
     });
 });

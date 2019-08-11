@@ -41,8 +41,8 @@ export class DateWidget {
         await this.formFields.setValueInInputById(fieldId, value);
     }
 
-    async getDateInput(fieldId): Promise<void> {
-        await this.formFields.getFieldValue(fieldId);
+    async getDateInput(fieldId): Promise<string> {
+        return this.formFields.getFieldValue(fieldId);
     }
 
     async clearDateInput(fieldId): Promise<void> {

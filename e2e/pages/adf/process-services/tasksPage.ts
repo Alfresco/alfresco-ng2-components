@@ -41,7 +41,7 @@ export class TasksPage {
 
     async createNewTask(): Promise<StartTaskDialog> {
         await this.clickOnCreateButton();
-        await BrowserActions.click(this.newTaskButton);
+        await BrowserActions.clickExecuteScript('button[data-automation-id="btn-start-task"]');
         return new StartTaskDialog();
     }
 

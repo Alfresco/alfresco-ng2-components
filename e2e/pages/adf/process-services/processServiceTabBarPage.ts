@@ -27,6 +27,7 @@ export class ProcessServiceTabBarPage {
     reportsButtonSelected: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div[aria-selected="true"]', 'Reports')).first();
 
     async clickTasksButton(): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(this.tasksButton);
         await browser.sleep(700);
     }
