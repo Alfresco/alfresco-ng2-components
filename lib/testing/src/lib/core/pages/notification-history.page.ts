@@ -48,8 +48,8 @@ export class NotificationHistoryPage {
     }
 
     async checkNotifyNotContains(text: string) {
-        this.clickNotificationButton();
-        this.checkNotificationIsNotPresent(text);
+        await this.clickNotificationButton();
+        await this.checkNotificationIsNotPresent(text);
         await BrowserActions.closeMenuAndDialogs();
     }
 }
