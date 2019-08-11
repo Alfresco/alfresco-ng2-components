@@ -79,7 +79,9 @@ export class BrowserActions {
     }
 
     static async closeMenuAndDialogs(): Promise<void> {
+        const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
         await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        await BrowserVisibility.waitUntilElementIsNotVisible(container);
     }
 
     static async closeDisabledMenu(): Promise<void> {

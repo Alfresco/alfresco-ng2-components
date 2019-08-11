@@ -64,12 +64,12 @@ describe('Version component permissions',  () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const nodeActions = new NodeActions();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -117,8 +117,6 @@ describe('Version component permissions',  () => {
         await this.alfrescoJsApi.login(fileCreatorUser.id, fileCreatorUser.password);
 
         await uploadActions.uploadFile(differentCreatorFile.location, differentCreatorFile.name, site.entry.guid);
-
-        done();
     });
 
     describe('Manager',  () => {
@@ -128,7 +126,7 @@ describe('Version component permissions',  () => {
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await this.alfrescoJsApi.login(managerUser.id, managerUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
@@ -137,13 +135,11 @@ describe('Version component permissions',  () => {
             await loginPage.loginToContentServicesUsingUserModel(managerUser);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
-
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
-            done();
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C277200] should a user with Manager permission be able to upload a new version for a file with different creator', async () => {
@@ -183,6 +179,10 @@ describe('Version component permissions',  () => {
             done();
         });
 
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
+
         it('[C277197] Should a user with Consumer permission not be able to upload a new version for a file with different creator', async () => {
             await contentServices.versionManagerContent(differentCreatorFile.name);
 
@@ -215,9 +215,9 @@ describe('Version component permissions',  () => {
             done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
-            done();
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C277177] Should a user with Contributor permission be able to upload a new version for the created file', async () => {
@@ -272,9 +272,9 @@ describe('Version component permissions',  () => {
             done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
-            done();
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C277195] Should a user with Collaborator permission be able to upload a new version for the created file', async () => {

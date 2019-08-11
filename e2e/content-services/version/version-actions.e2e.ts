@@ -48,8 +48,8 @@ describe('Version component actions',  () => {
     });
 
     const fileModelVersionTwo = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
     let uploadActions;
 
@@ -71,12 +71,12 @@ describe('Version component actions',  () => {
         Object.assign(txtFileModel, txtUploadedFile.entry);
         txtFileModel.update(txtUploadedFile.entry);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.waitForTableBody();
         done();
     });
 
     beforeEach(async () => {
-        await navigationBarPage.clickContentServicesButton();
-        await contentServicesPage.waitForTableBody();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
     });
 
@@ -107,6 +107,10 @@ describe('Version component actions',  () => {
         await versionManagePage.checkActionsArePresent('1.1');
 
         await versionManagePage.closeActionsMenu();
+
+        await versionManagePage.closeVersionDialog();
+
+        await uploadDialog.clickOnCloseButton();
     });
 
     it('[C269081] Should be possible download all the version of a file', async () => {

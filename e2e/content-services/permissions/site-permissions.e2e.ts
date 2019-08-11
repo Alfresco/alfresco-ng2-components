@@ -177,11 +177,13 @@ describe('Permissions Component', () => {
 
             await permissionsPage.checkPermissionInheritedButtonIsDisplayed();
             await permissionsPage.checkAddPermissionButtonIsDisplayed();
+
             await permissionsPage.clickAddPermissionButton();
             await permissionsPage.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.checkSearchUserInputIsDisplayed();
 
             await permissionsPage.searchUserOrGroup(consumerUser.getId());
+
             await permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
             await permissionsPage.checkUserOrGroupIsAdded(consumerUser.getId());
 

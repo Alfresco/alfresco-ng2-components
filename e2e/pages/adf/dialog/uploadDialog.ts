@@ -39,7 +39,7 @@ export class UploadDialog {
 
     async clickOnCloseButton(): Promise<void> {
         await this.checkCloseButtonIsDisplayed();
-        await BrowserActions.click(this.closeButton);
+        await BrowserActions.clickExecuteScript('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]');
     }
 
     async checkCloseButtonIsDisplayed(): Promise<void> {

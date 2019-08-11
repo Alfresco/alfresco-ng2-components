@@ -20,13 +20,12 @@ function beforeAllRewrite() {
             }
 
             done();
-            return;
         };
 
         originalBeforeAll(wrapClbk, timeout);
 
     };
-};
+}
 
 function afterAllRewrite() {
 
@@ -43,13 +42,12 @@ function afterAllRewrite() {
             }
 
             done();
-            return;
         };
 
         originalAfterAll(wrapClbk, timeout);
 
     };
-};
+}
 
 function beforeEachAllRewrite() {
 
@@ -67,13 +65,12 @@ function beforeEachAllRewrite() {
             }
 
             done();
-            return;
         };
 
         originalBeforeEach(wrapClbk, timeout);
 
     };
-};
+}
 
 function afterEachAllRewrite() {
 
@@ -87,17 +84,15 @@ function afterEachAllRewrite() {
             } catch (error) {
                 // tslint:disable-next-line:no-console
                 console.log('Error After each' + JSON.stringify(error));
-
             }
 
             done();
-            return;
         };
 
         originalAfterEach(wrapClbk, timeout);
 
     };
-};
+}
 
 function sleep(delay) {
     var start = new Date().getTime();

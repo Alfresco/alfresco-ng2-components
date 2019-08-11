@@ -16,7 +16,6 @@
  */
 
 import path = require('path');
-import remote = require('selenium-webdriver/remote');
 import { browser, by, element, ElementFinder } from 'protractor';
 import { FormControllersPage } from '@alfresco/adf-testing';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
@@ -26,7 +25,8 @@ export class VersionManagePage {
     formControllersPage: FormControllersPage = new FormControllersPage();
 
     showNewVersionButton: ElementFinder = element(by.id('adf-show-version-upload-button'));
-    uploadNewVersionButton: ElementFinder = element(by.css('adf-upload-version-button input[data-automation-id="upload-single-file"]'));
+    uploadNewVersionInput: ElementFinder = element(by.css('adf-upload-version-button input[data-automation-id="upload-single-file"]'));
+    uploadNewVersionButton: ElementFinder = element(by.css('adf-upload-version-button'));
     uploadNewVersionContainer: ElementFinder = element(by.id('adf-new-version-uploader-container'));
     cancelButton: ElementFinder = element(by.id('adf-new-version-cancel'));
     majorRadio: ElementFinder = element(by.id('adf-new-version-major'));
@@ -45,10 +45,9 @@ export class VersionManagePage {
     }
 
     async uploadNewVersionFile(fileLocation): Promise<void> {
-        browser.setFileDetector(new remote.FileDetector());
-        await BrowserVisibility.waitUntilElementIsPresent(this.uploadNewVersionButton);
-        await this.uploadNewVersionButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
-        await BrowserVisibility.waitUntilElementIsPresent(this.showNewVersionButton);
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadNewVersionInput);
+        await this.uploadNewVersionInput.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
+        await BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
     }
 
     async getFileVersionName(version): Promise<string> {
@@ -147,9 +146,7 @@ export class VersionManagePage {
     }
 
     async closeActionsMenu(): Promise<void> {
-        // const container: ElementFinder = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
         await BrowserActions.closeMenuAndDialogs();
-        // await BrowserVisibility.waitUntilElementIsNotVisible(container);
     }
 
     async closeDisabledActionsMenu(): Promise<void> {

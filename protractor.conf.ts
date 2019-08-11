@@ -6,16 +6,12 @@ const tsConfig = require('./e2e/tsconfig.e2e.json');
 const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 const TestConfig = require('./e2e/test.config');
 const failFast = require('./e2e/protractor/fail-fast');
-
 const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
-const { uploadScreenshot, saveReport } = require('./e2e/protractor/save-remote');
-
+const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
-const fs = require('fs');
-const rimraf = require('rimraf');
+
 const projectRoot = path.resolve(__dirname);
-const width = 1366;
-const height = 768;
+const width = 1366, height = 768;
 
 let load_env_file = function () {
     let ENV_FILE = process.env.ENV_FILE;
@@ -32,12 +28,11 @@ let BROWSER_RUN = !!process.env.BROWSER_RUN;
 let FOLDER = process.env.FOLDER || '';
 let SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 let DIRECT_CONNECCT = !SELENIUM_SERVER;
-let SELENIUM_PROMISE_MANAGER = parseInt(process.env.SELENIUM_PROMISE_MANAGER);
 let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
 let LIST_SPECS = process.env.LIST_SPECS || [];
-let LOG = process.env.LOG ? true : false;
+let LOG = !!process.env.LOG;
 let arraySpecs = [];
 
 if (LOG) {
@@ -166,15 +161,6 @@ exports.config = {
         screenshotPath: `${projectRoot}/e2e-output/screenshots/`
     }],
 
-    postTest(results) {
-        browser.manage().logs()
-            .get('browser').then(function (browserLog) {
-            console.log('log: ' +
-                require('util').inspect(browserLog));
-        });
-        retry.onCleanUp(results);
-    },
-
     onCleanUp(results) {
         retry.onCleanUp(results);
     },
@@ -218,7 +204,6 @@ exports.config = {
         });
         jasmine.getEnv().addReporter(junitReporter);
 
-
         return browser.driver.executeScript(disableCSSAnimation);
 
         function disableCSSAnimation() {
@@ -240,18 +225,7 @@ exports.config = {
 
     beforeLaunch: function () {
         if (SAVE_SCREENSHOT) {
-            let reportsFolder = `${projectRoot}/e2e-output/junit-report/`;
-
-            fs.exists(reportsFolder, function (exists, error) {
-                if (exists) {
-                    rimraf(reportsFolder, function (err) {
-                    });
-                }
-
-                if (error) {
-                    console.error('[ERROR] fs', error);
-                }
-            });
+            cleanReportFolder();
         }
     },
 

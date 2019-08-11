@@ -32,7 +32,6 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import * as path from 'path';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 
@@ -59,7 +58,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url,
+        hostEcm: browser.params.testConfig.adf_acs.host,
         authType: 'OAUTH',
         oauth2: {
             host: browser.params.testConfig.adf.hostSso,
@@ -73,16 +72,14 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         }
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
-    const downloadedPngFile = path.join(__dirname, 'downloads', pngFileModel.name);
-    const downloadedMultipleFiles = path.join(__dirname, 'downloads', 'archive.zip');
     const folderName = StringUtil.generateRandomString(5);
     const acsUser = new UserModel();
     let identityService: IdentityService;
 
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
 
-        beforeAll(async (done) => {
-            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
+        beforeAll(async () => {
+            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.testConfig.adf_acs.host, browser.params.testConfig.adf.hostSso, 'ECM');
             await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             identityService = new IdentityService(apiService);
@@ -98,10 +95,10 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             silentLogin = false;
             implicitFlow = true;
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
                 browser.params.testConfig.adf.hostSso,
-                browser.params.testConfig.adf.hostIdentity,
-                silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
+                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
 
             await loginSsoPage.clickOnSSOButton();
             await loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
@@ -110,10 +107,9 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await contentServicesPage.checkAcsContainer();
             await contentListPage.doubleClickRow(folderName);
             await contentListPage.waitForTableBody();
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             try {
                 await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
@@ -123,38 +119,33 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await this.alfrescoJsApi.logout();
             await browser.executeScript('window.sessionStorage.clear();');
             await browser.executeScript('window.localStorage.clear();');
-            done();
         });
 
-        afterEach(async (done) => {
+        afterEach(async () => {
             await browser.refresh();
             await contentListPage.waitForTableBody();
-            done();
         });
 
-        it('[C291936] Should be able to download a file', async (done) => {
+        it('[C291936] Should be able to download a file', async () => {
             await contentListPage.selectRow(pngFileModel.name);
             await contentServicesPage.clickDownloadButton();
-            expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true, `${downloadedPngFile} not downloaded`);
-            done();
+            expect(await FileBrowserUtil.isFileDownloaded(pngFileModel.name)).toBe(true, `${pngFileModel.name} not downloaded`);
         });
 
-        it('[C291938] Should be able to open a document', async (done) => {
+        it('[C291938] Should be able to open a document', async () => {
             await contentServicesPage.doubleClickRow(firstPdfFileModel.name);
             await viewerPage.checkFileIsLoaded();
             await viewerPage.checkFileNameIsDisplayed(firstPdfFileModel.name);
             await viewerPage.clickCloseButton();
             await contentListPage.waitForTableBody();
-            done();
         });
 
-        it('[C291942] Should be able to open an image', async (done) => {
+        it('[C291942] Should be able to open an image', async () => {
             await viewerPage.viewFile(pngFileModel.name);
             await viewerPage.checkImgViewerIsDisplayed();
             await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
             await viewerPage.clickCloseButton();
             await contentListPage.waitForTableBody();
-            done();
         });
 
         it('[C291941] Should be able to download multiple files', async () => {
@@ -164,7 +155,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await contentListPage.dataTablePage().checkRowIsChecked('Display name', pngFileModel.name);
             await contentListPage.dataTablePage().checkRowIsChecked('Display name', firstPdfFileModel.name);
             await contentServicesPage.clickDownloadButton();
-            expect(await FileBrowserUtil.isFileDownloaded(downloadedMultipleFiles)).toBe(true, `${downloadedMultipleFiles} not downloaded`);
+            expect(await FileBrowserUtil.isFileDownloaded('archive.zip')).toBe(true, `archive.zip not downloaded`);
         });
 
         it('[C291940] Should be able to view thumbnails when enabled', async () => {

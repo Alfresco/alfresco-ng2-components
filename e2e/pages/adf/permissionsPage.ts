@@ -109,7 +109,7 @@ export class PermissionsPage {
     }
 
     async getRoleCellValue(rowName): Promise<string> {
-        const locator = new DataTableComponentPage().getCellByRowContentAndColumn('Authority ID', rowName, column.role);
+        const locator = this.dataTableComponentPage.getCellByRowContentAndColumn('Authority ID', rowName, column.role);
         return await BrowserActions.getText(locator);
     }
 

@@ -22,10 +22,9 @@ const DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout
 
 export class BrowserVisibility {
 
-    static async waitUntilElementIsPresent(elementToCheck: ElementFinder) {
-        return browser.isElementPresent(elementToCheck);
+    static async waitUntilElementIsPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
+        return browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
     }
-
     /*
      * Wait for element is visible
      */
