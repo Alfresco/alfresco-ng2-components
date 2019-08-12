@@ -1,6 +1,7 @@
 const htmlReporter = require('protractor-html-reporter-2');
 const fs = require('fs');
 const rimraf = require('rimraf');
+const path = require('path');
 
 function buildNumber() {
     let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
