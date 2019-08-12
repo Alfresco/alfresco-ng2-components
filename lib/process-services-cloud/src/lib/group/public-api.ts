@@ -15,7 +15,5 @@
  * limitations under the License.
  */
 
-export * from './models/group.model';
-export * from './services/group-cloud.service';
 export * from './components/group-cloud.component';
 export * from './group-cloud.module';

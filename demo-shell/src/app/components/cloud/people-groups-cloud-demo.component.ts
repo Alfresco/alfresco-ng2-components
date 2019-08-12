@@ -16,8 +16,9 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { PeopleCloudComponent, GroupCloudComponent, GroupModel } from '@alfresco/adf-process-services-cloud';
+import { PeopleCloudComponent, GroupCloudComponent } from '@alfresco/adf-process-services-cloud';
 import { MatRadioChange, MatCheckboxChange } from '@angular/material';
+import { IdentityGroupModel } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-people-groups-cloud',
@@ -39,8 +40,8 @@ export class PeopleGroupCloudDemoComponent {
     peoplePreselectValidation: Boolean = false;
 
     groupMode: string = GroupCloudComponent.MODE_SINGLE;
-    preSelectGroup: GroupModel[] = [];
-    selectedGroupList: GroupModel[] = [];
+    preSelectGroup: IdentityGroupModel[] = [];
+    selectedGroupList: IdentityGroupModel[] = [];
     groupRoles: string[];
     groupAppName: string;
     groupFilterMode: string = this.DEFAULT_FILTER_MODE;
@@ -144,11 +145,11 @@ export class PeopleGroupCloudDemoComponent {
         return this.groupMode === GroupCloudComponent.MODE_MULTIPLE;
     }
 
-    onRemoveGroup(group: GroupModel) {
+    onRemoveGroup(group: IdentityGroupModel) {
         this.preSelectGroup = this.preSelectGroup.filter((value: any) => value.id !== group.id);
     }
 
-    onSelectGroup(group: GroupModel) {
+    onSelectGroup(group: IdentityGroupModel) {
         if (this.groupMode === GroupCloudComponent.MODE_MULTIPLE) {
             this.preSelectGroup.push(group);
         }

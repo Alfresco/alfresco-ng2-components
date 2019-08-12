@@ -667,19 +667,19 @@ export class IdentityUserService {
         );
     }
 
-    private buildUserUrl(): any {
+    private buildUserUrl(): string {
         return `${this.appConfigService.get('identityHost')}/users`;
     }
 
-    private buildUserClientRoleMapping(userId: string, clientId: string): any {
+    private buildUserClientRoleMapping(userId: string, clientId: string): string {
         return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/clients/${clientId}`;
     }
 
-    private buildRolesUrl(userId: string): any {
+    private buildRolesUrl(userId: string): string {
         return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/realm/composite`;
     }
 
-    private buildGetClientsUrl() {
+    private buildGetClientsUrl(): string {
         return `${this.appConfigService.get('identityHost')}/clients`;
     }
 
