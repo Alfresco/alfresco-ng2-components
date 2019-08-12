@@ -108,8 +108,8 @@ export class NotificationService {
         return this.snackBar.dismiss();
     }
 
-    protected showMessage(message: string, panelClass: string, action?: string): MatSnackBarRef<any> {
-        message = this.translationService.instant(message);
+    protected showMessage(message: string, panelClass: string, action?: string, interpolateArgs?: any): MatSnackBarRef<any> {
+        message = this.translationService.instant(message, interpolateArgs);
         return this.openMessageBar(message, panelClass, action);
     }
 
@@ -136,8 +136,8 @@ export class NotificationService {
      * @param message Text message or translation key for the message.
      * @param action Action name
      */
-    showInfo(message: string, action?: string): MatSnackBarRef<any> {
-        return this.showMessage(message, 'adf-info-snackbar', action);
+    showInfo(message: string, action?: string, interpolateArgs?: any): MatSnackBarRef<any> {
+        return this.showMessage(message, 'adf-info-snackbar', action, interpolateArgs);
     }
 
     /**
