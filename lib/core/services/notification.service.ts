@@ -113,7 +113,7 @@ export class NotificationService {
         return this.openMessageBar(message, panelClass, action);
     }
 
-    private openMessageBar(message: string, panelClass: string, action?: string):  MatSnackBarRef<any>{
+    private openMessageBar(message: string, panelClass: string, action?: string):  MatSnackBarRef<any> {
         this.messages.next({ message: message, dateTime: new Date });
 
         return this.snackBar.open(message, action, {
