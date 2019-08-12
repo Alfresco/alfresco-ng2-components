@@ -124,7 +124,7 @@ export class EditTaskFilterCloudComponentPage {
 
     async setLastModifiedFrom(lastModifiedFromDate) {
         await this.clearField(this.lastModifiedFrom);
-        await this.setProperty('lastModifiedFrom', option);
+        await this.setProperty('lastModifiedFrom', lastModifiedFromDate);
     }
 
     async getLastModifiedFrom(): Promise<string> {
@@ -133,7 +133,7 @@ export class EditTaskFilterCloudComponentPage {
 
     async setLastModifiedTo(lastModifiedToDate): Promise<void> {
         await this.clearField(this.lastModifiedTo);
-        await this.setProperty('lastModifiedTo', option);
+        await this.setProperty('lastModifiedTo', lastModifiedToDate);
     }
 
     async getLastModifiedTo(): Promise<string> {

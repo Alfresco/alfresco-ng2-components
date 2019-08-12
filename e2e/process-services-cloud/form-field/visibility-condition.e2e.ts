@@ -32,7 +32,7 @@ describe('Visibility conditions - cloud',  () => {
     const checkboxVisibilityFormJson = JSON.parse(checkboxVisibilityForm);
     const widget = new Widget();
 
-    let tenantId, user;
+    let user;
     let visibleCheckbox;
 
     const widgets = {
@@ -65,8 +65,6 @@ describe('Visibility conditions - cloud',  () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        tenantId = user.tenantId;
 
         await this.alfrescoJsApi.login(user.email, user.password);
 

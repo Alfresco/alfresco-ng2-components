@@ -42,7 +42,7 @@ describe('Form widgets - People', () => {
     const startProcess = new StartProcessPage();
     const processDetailsPage = new ProcessDetailsPage();
     const taskDetails = new TaskDetailsPage();
-    const appNavigationBar = new ProcessServiceTabBarPage();
+    const processServiceTabBarPage = new ProcessServiceTabBarPage();
 
     beforeAll(async () => {
         const users = new UsersActions();

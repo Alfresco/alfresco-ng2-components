@@ -36,7 +36,6 @@ describe('Start Process',  () => {
         browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
     );
 
-    const processDefinitionWithoutName = 'process-';
     const processName = StringUtil.generateRandomString(10);
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
