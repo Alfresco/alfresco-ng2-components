@@ -22,7 +22,6 @@ import { LocalStorageUtil } from '../utils/local-storage.util';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class LoginPage {
-
     loginURL = browser.baseUrl + '/login';
 
     formControllersPage = new FormControllersPage();
@@ -55,10 +54,10 @@ export class LoginPage {
     );
     signInButton = element(by.id('login-button'));
     showPasswordElement = element(
-        by.css('mat-icon[data-automation-id="show_password"]')
+        by.css('button[data-automation-id="show_password"]')
     );
     hidePasswordElement = element(
-        by.css('mat-icon[data-automation-id="hide_password"]')
+        by.css('button[data-automation-id="hide_password"]')
     );
     rememberMe = element(by.css('mat-checkbox[id="adf-login-remember"]'));
     needHelp = element(by.css('div[id="adf-login-action-left"]'));
