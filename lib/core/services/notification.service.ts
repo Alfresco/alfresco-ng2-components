@@ -45,18 +45,32 @@ export class NotificationService {
      * @returns Information/control object for the SnackBar
      */
     openSnackMessage(message: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
+        const translatedMessage = this.translationService.instant(message);
+        return this.performOpening(translatedMessage, config);
+    }
+
+    /**
+     * Opens a SnackBar notification to show a message.
+     * @param message The message (or resource key) to show.
+     * @param translationArgs The interpolation parameters to add for the translation
+     * @param config Time before notification disappears after being shown or MatSnackBarConfig object
+     * @returns Information/control object for the SnackBar
+     */
+    openSnackMessageWithTranslation(message: string, translationArgs?: any, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
+        const translatedMessage = this.translationService.instant(message, translationArgs);
+        return this.performOpening(translatedMessage, config);
+    }
+
+    private performOpening(translatedMessage: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
         if (!config) {
             config = this.DEFAULT_DURATION_MESSAGE;
         }
-
-        const translatedMessage = this.translationService.instant(message);
 
         if (typeof config === 'number') {
             config = {
                 duration: config
             };
         }
-
         this.messages.next({ message: translatedMessage, dateTime: new Date });
 
         return this.snackBar.open(translatedMessage, null, config);
@@ -96,7 +110,10 @@ export class NotificationService {
 
     protected showMessage(message: string, panelClass: string, action?: string): MatSnackBarRef<any> {
         message = this.translationService.instant(message);
+        return this.openMessageBar(message, panelClass, action);
+    }
 
+    private openMessageBar(message: string, panelClass: string, action?: string):  MatSnackBarRef<any>{
         this.messages.next({ message: message, dateTime: new Date });
 
         return this.snackBar.open(message, action, {

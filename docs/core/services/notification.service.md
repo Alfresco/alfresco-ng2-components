@@ -22,6 +22,12 @@ Shows a notification message with optional feedback.
     -   _message:_ `string`  - The message (or resource key) to show.
     -   _config:_ `number|MatSnackBarConfig`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
+-   **openSnackMessageWithTranslation**(message: `string`, translationArgs?: any, config?: `number|MatSnackBarConfig`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    Opens a SnackBar notification to show a message.
+    -   _message:_ `string`  - The message (or resource key) to show.
+    - translationArgs: `any`  - The object with the keys for the interpolation of your translation string
+    -   _config:_ `number|MatSnackBarConfig`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
+    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar    
 -   **openSnackMessageAction**(message: `string`, action: `string`, config?: `number|MatSnackBarConfig`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Opens a SnackBar notification with a message and a response button.
     -   _message:_ `string`  - The message (or resource key) to show.
