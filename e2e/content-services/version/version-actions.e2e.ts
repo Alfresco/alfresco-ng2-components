@@ -61,7 +61,7 @@ describe('Version component actions',  () => {
     beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
+            hostEcm: browser.params.testConfig.adf_acs.host
         });
         uploadActions = new UploadActions(this.alfrescoJsApi);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);

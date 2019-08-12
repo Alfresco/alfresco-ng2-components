@@ -40,7 +40,7 @@ describe('Restore content directive', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
+        hostEcm: browser.params.testConfig.adf_acs.host
     });
 
     const pdfFileModel = new FileModel({
@@ -81,11 +81,10 @@ describe('Restore content directive', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(folderWithContent.entry.id);
         await uploadActions.deleteFileOrFolder(folderWithFolder.entry.id);
-        done();
     });
 
     beforeEach(async () => {
@@ -246,12 +245,11 @@ describe('Restore content directive', () => {
             await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             try {
                 await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
             } catch (error) {
             }
-            done();
         });
 
         it('[C260241] Should restore the deleted library along with contents inside', async () => {
