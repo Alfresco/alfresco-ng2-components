@@ -34,11 +34,11 @@ export class CheckboxWidget {
         await BrowserActions.click(checkboxInput);
     }
 
-    isCheckboxDisplayed(fieldId): Promise<void> {
-        return this.formFields.checkWidgetIsNotHidden(fieldId);
+    async isCheckboxDisplayed(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsNotHidden(fieldId);
     }
 
-    isCheckboxHidden(fieldId): Promise<void> {
-        return this.formFields.checkWidgetIsHidden(fieldId);
+    async isCheckboxHidden(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsHidden(fieldId);
     }
 }

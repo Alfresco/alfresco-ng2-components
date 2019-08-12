@@ -86,17 +86,17 @@ describe('Multi-line Widget',  () => {
 
     it('[C268184] Should be able to set advanced properties for Multi-line Text Widget', async () => {
         await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'A');
-        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter at least 4 characters');
+        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toContain('Enter at least 4 characters');
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAAAAAAAAA');
-        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter no more than 10 characters');
+        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toContain('Enter no more than 10 characters');
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAA');
 
         await widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
         await widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, '3');
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiRegexp)).toBe('Enter a different value');
+        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiRegexp)).toContain('Enter a different value');
         await widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, 'TE');
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });

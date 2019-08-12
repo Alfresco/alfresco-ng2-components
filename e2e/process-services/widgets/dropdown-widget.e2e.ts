@@ -71,22 +71,21 @@ describe('Dropdown widget',  () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-
     });
 
     it('[C269051] Should be possible to set general and options properties for Dropdown widget ', async () => {
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        widget.dropdown().selectOption('Happy');
-        expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Happy');
+        await widget.dropdown().selectOption('Happy');
+        expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Happy');
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
 
-        widget.dropdown().selectOption('Choose one');
-        expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Choose one');
+        await widget.dropdown().selectOption('Choose one');
+        expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Choose one');
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        widget.dropdown().selectOption('Sad');
-        expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Sad');
+        await widget.dropdown().selectOption('Sad');
+        expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Sad');
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 

@@ -38,7 +38,7 @@ const value = {
 };
 
 const checkbox = {
-    checkboxFieldValue : 'text1value',
+    checkboxFieldValue: 'text1value',
     checkboxVariableField: 'variablefield',
     checkboxFieldVariable: 'text1variable',
     checkboxFieldField: 'text1text2',
@@ -46,7 +46,7 @@ const checkbox = {
     checkboxVariableVariable: 'variablevariable'
 };
 
-describe('Process-Services - Visibility conditions',  () => {
+describe('Process-Services - Visibility conditions', () => {
 
     const loginPage = new LoginPage();
 
@@ -64,7 +64,7 @@ describe('Process-Services - Visibility conditions',  () => {
 
         alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf.url
+            hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -80,10 +80,9 @@ describe('Process-Services - Visibility conditions',  () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
     });
 
-    beforeEach( async() => {
+    beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -94,36 +93,34 @@ describe('Process-Services - Visibility conditions',  () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-
     });
 
     it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', async () => {
-
-        expect(await widget.textWidget().isWidgetVisible(widgets.textOneId)).toBe(true);
-        expect(await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldValue)).toBe(true);
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldValue);
         await widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
-        expect(await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldValue)).toBe(true);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldValue);
     });
 
     it('[C309648] Should be able to see Checkbox widget when visibility condition refers to a form variable and a field', async () => {
 
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
-        expect(await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField)).toBe(true);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
 
         await widget.textWidget().setValue(widgets.textOneId, value.showVariableFieldCheckbox);
-        expect(await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableField)).toBe(true);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableField);
 
         await widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
-        expect(await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField)).toBe(true);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
     });
 
     it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a field and a form variable', async () => {
 
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
-        expect(await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable)).toBe(true);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
 
         await widget.textWidget().setValue(widgets.textOneId, value.displayFieldVariableCheckbox);
-        expect(await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldVariable)).toBe(true);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldVariable);
 
         await widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
@@ -132,17 +129,20 @@ describe('Process-Services - Visibility conditions',  () => {
     it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', async () => {
 
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
-        expect(await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField)).toBe(true);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField);
         await widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
+
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField);
+
         await widget.textWidget().setValue(widgets.textTwoId, value.displayCheckbox);
-        expect(await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField)).toBe(true);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField);
     });
 
     it('[C311424] Should be able to see Checkbox widget when visibility condition refers to a variable with specific value', async () => {
-        expect(await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableValue)).toBe(true);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableValue);
     });
 
     it('[C311426] Should be able to see Checkbox widget when visibility condition refers to form variable and another form variable', async () => {
-        expect(await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableVariable)).toBe(true);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableVariable);
     });
 });

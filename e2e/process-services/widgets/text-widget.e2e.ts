@@ -86,10 +86,10 @@ describe('Text widget',  () => {
 
     it('[C268170] Min-max length properties', async () => {
         await widget.textWidget().setValue(app.FIELD.textMinMax, 'A');
-        expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toBe('Enter at least 4 characters');
+        expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter at least 4 characters');
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await widget.textWidget().setValue(app.FIELD.textMinMax, 'AAAAAAAAAAA');
-        expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toBe('Enter no more than 10 characters');
+        expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter no more than 10 characters');
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
     });
 
@@ -107,7 +107,7 @@ describe('Text widget',  () => {
         await widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
         await widget.textWidget().setValue(app.FIELD.textRegexp, 'T');
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        expect(await widget.textWidget().getErrorMessage(app.FIELD.textRegexp)).toBe('Enter a different value');
+        expect(await widget.textWidget().getErrorMessage(app.FIELD.textRegexp)).toContain('Enter a different value');
         await widget.textWidget().setValue(app.FIELD.textRegexp, 'TE');
         expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
