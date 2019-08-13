@@ -41,8 +41,8 @@ export class LoginPage {
     usernameHighlighted: ElementFinder = element(by.css('input[id="username"][aria-invalid="true"]'));
     passwordHighlighted: ElementFinder = element(by.css('input[id="password"][aria-invalid="true"]'));
     signInButton: ElementFinder = element(by.id('login-button'));
-    showPasswordElement: ElementFinder = element(by.css('mat-icon[data-automation-id="show_password"]'));
-    hidePasswordElement: ElementFinder = element(by.css('mat-icon[data-automation-id="hide_password"]'));
+    showPasswordElement: ElementFinder = element(by.css('button[data-automation-id="show_password"]'));
+    hidePasswordElement: ElementFinder = element(by.css('button[data-automation-id="hide_password"]'));
     rememberMe: ElementFinder = element(by.css('mat-checkbox[id="adf-login-remember"]'));
     needHelp: ElementFinder = element(by.css('div[id="adf-login-action-left"]'));
     register: ElementFinder = element(by.css('div[id="adf-login-action-right"]'));

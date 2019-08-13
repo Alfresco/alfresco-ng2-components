@@ -63,18 +63,18 @@ describe('Login component - SSO', () => {
             await browser.refresh();
         });
 
-        it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', async () => {
-            await  settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
-                browser.params.testConfig.adf.hostSso,
-                browser.params.testConfig.adf.hostIdentity, true, true, browser.params.config.oauth2.clientId);
-            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        });
-
         it('[C261050] Should be possible login with SSO', async () => {
             await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
                 browser.params.testConfig.adf.hostSso,
                 browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId);
             await loginSSOPage.clickOnSSOButton();
+            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        });
+
+        it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', async () => {
+            await  settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
+                browser.params.testConfig.adf.hostSso,
+                browser.params.testConfig.adf.hostIdentity, true, true, browser.params.config.oauth2.clientId);
             await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         });
 
