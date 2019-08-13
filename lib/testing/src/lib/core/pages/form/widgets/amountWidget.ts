@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, Locator, protractor } from 'protractor';
+import { element, by, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { FormFields } from '../formFields';
 
@@ -40,11 +40,7 @@ export class AmountWidget {
 
     async removeFromAmountWidget(fieldId) {
         const amountWidgetInput = element(by.id(fieldId));
-        amountWidgetInput.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        await BrowserActions.clearWithBackSpace(amountWidgetInput);
     }
 
     async clearFieldValue(fieldId): Promise<void> {

@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../formFields';
-import { element, by, ElementFinder, protractor } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DateTimeWidget {
@@ -85,12 +85,8 @@ export class DateTimeWidget {
 
     async removeFromDatetimeWidget(fieldId) {
         await BrowserVisibility.waitUntilElementIsVisible(await this.formFields.getWidget(fieldId));
-
         const amountWidgetInput = element(by.id(fieldId));
-        const result = await amountWidgetInput.getAttribute('value');
-        for (let i = result.length; i >= 0; i--) {
-            amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
-        }
+        await BrowserActions.clearWithBackSpace(amountWidgetInput);
     }
 
     async clearDateTimeInput(fieldId) {

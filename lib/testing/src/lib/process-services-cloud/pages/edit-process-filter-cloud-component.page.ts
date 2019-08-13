@@ -175,7 +175,10 @@ export class EditProcessFilterCloudComponentPage {
 
     async clickSaveButton(): Promise<void> {
         const disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
+        await BrowserVisibility.waitUntilElementIsClickable(this.saveButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
-        await BrowserActions.click(this.saveAsButton);
+        await this.saveButton.click();
     }
+
 }

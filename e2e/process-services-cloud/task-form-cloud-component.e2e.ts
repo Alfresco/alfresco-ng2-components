@@ -193,7 +193,7 @@ describe('Task form cloud component',  () => {
             expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
 
-            browser.driver.sleep(1000);
+            await browser.driver.sleep(1000);
 
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');

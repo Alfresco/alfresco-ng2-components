@@ -46,7 +46,6 @@ export class ProcessFiltersCloudComponentPage {
 
     async clickProcessFilter(): Promise<void> {
         await BrowserActions.click(this.filter);
-
     }
 
     async checkProcessFilterNotDisplayed(): Promise<void> {

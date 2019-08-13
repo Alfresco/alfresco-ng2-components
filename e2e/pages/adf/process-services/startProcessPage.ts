@@ -50,12 +50,7 @@ export class StartProcessPage {
 
     async deleteDefaultName(name) {
         await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
-        const currentValue = await this.processNameInput.getAttribute('value');
-        for (let i = currentValue.length; i >= 0; i--) {
-            if (currentValue === name) {
-                this.processNameInput.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        }
+        await BrowserActions.clearWithBackSpace(this.processNameInput);
     }
 
     async enterProcessName(name): Promise<void> {
@@ -140,12 +135,7 @@ export class StartProcessPage {
     }
 
     async clearField(locator): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(locator);
-        locator.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                locator.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        await BrowserActions.clearWithBackSpace(locator);
     }
 
     formFields(): FormFields {

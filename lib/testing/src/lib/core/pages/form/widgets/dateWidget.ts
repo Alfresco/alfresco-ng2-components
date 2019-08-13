@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../formFields';
-import { element, by, protractor } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DateWidget {
@@ -47,11 +47,7 @@ export class DateWidget {
 
     async clearDateInput(fieldId): Promise<void> {
         const dateInput = element(by.id(fieldId));
-        await BrowserVisibility.waitUntilElementIsVisible(dateInput);
-        const result = await dateInput.getAttribute('value');
-        for (let i = result.length; i >= 0; i--) {
-            await dateInput.sendKeys(protractor.Key.BACK_SPACE);
-        }
+        await BrowserActions.clearWithBackSpace(dateInput);
     }
 
     async clickOutsideWidget(fieldId): Promise<void> {

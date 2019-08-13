@@ -65,9 +65,7 @@ export class EditProcessFilterDialogPage {
     }
 
     async clearFilterName() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
-        await this.filterNameInput.click();
-        await BrowserActions.clearSendKeys(this.filterNameInput, '');
+        await BrowserActions.clearWithBackSpace(this.filterNameInput);
     }
 
 }
