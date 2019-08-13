@@ -234,7 +234,7 @@ const dateItemProperty = new CardViewDateItemModel(options);
 | default | any |  | The default value to display if the value is empty |
 | displayValue\* | any |  | The value to display |
 | editable | boolean | false | Toggles whether the item is editable |
-| format | boolean | "MMM DD YYYY" | Any date format that momentjs accepts |
+| format | string | "MMM DD YYYY" | Any date format that momentjs accepts |
 
 #### Card Datetime Item
 
@@ -252,7 +252,7 @@ const datetimeItemProperty = new CardViewDatetimeItemModel(options);
 | default | any | any | The default value to display if the value is empty |
 | displayValue\* | string |  | The value to display |
 | editable | boolean | false | Toggles whether the item is editable |
-| format | boolean | "MMM DD YYYY HH:mm" | Any datetime format that momentjs accepts |
+| format | string | "MMM DD YYYY HH:mm" | Any datetime format that momentjs accepts |
 
 #### Card Bool Item
 
