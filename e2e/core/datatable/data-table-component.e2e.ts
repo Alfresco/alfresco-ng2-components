@@ -17,7 +17,7 @@
 
 import { LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
-import { DataTableComponentPage, BrowserActions } from '@alfresco/adf-testing';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 
@@ -105,10 +105,6 @@ describe('Datatable component', () => {
             await navigationBarPage.navigateToCopyContentDatatable();
             await dataTablePage.dataTable.waitForTableBody();
 
-        });
-
-        beforeEach(async () => {
-            await BrowserActions.closeMenuAndDialogs();
         });
 
         it('[C307037] A tooltip is displayed when mouseOver a column with copyContent set to true', async () => {

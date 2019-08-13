@@ -82,14 +82,12 @@ describe('Dynamic Table', () => {
             appId = importedApp.id;
 
             await loginPage.loginToProcessServicesUsingUserModel(user);
-
         });
 
         afterAll(async () => {
             await this.alfrescoJsApi.login(user.email, user.password);
 
             await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-
         });
 
         beforeEach(async () => {
@@ -115,8 +113,8 @@ describe('Dynamic Table', () => {
             expect(await widget.dynamicTable().checkErrorMessage()).toBe(randomText.error);
 
             await widget.dynamicTable().clickDateWidget();
-            datePicker.selectTodayDate();
-            datePicker.checkDatePickerIsNotDisplayed();
+            await datePicker.selectTodayDate();
+            await datePicker.checkDatePickerIsNotDisplayed();
             await widget.dynamicTable().clickSaveButton();
             await widget.dynamicTable().getTableRow(rowPosition);
             expect(await widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
@@ -128,8 +126,8 @@ describe('Dynamic Table', () => {
             expect(await widget.dynamicTable().checkErrorMessage()).toBe(randomText.requiredError);
 
             await widget.dynamicTable().clickDateWidget();
-            datePicker.selectTodayDate();
-            datePicker.checkDatePickerIsNotDisplayed();
+            await datePicker.selectTodayDate();
+            await datePicker.checkDatePickerIsNotDisplayed();
             await widget.dynamicTable().clickSaveButton();
             await widget.dynamicTable().getTableRow(rowPosition);
             expect(await widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);

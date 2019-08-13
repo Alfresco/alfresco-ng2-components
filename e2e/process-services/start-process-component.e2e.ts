@@ -97,7 +97,6 @@ describe('Start Process Component', () => {
         dateFormAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, dateFormApp.file_location);
 
         appId = appCreated.id;
-
     });
 
     afterAll(async () => {
@@ -105,7 +104,6 @@ describe('Start Process Component', () => {
         await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(simpleAppCreated.id);
         await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(dateFormAppCreated.id);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
     });
 
     describe(' Once logged with user without apps', () => {

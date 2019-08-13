@@ -35,8 +35,8 @@ export class StartProcessPage {
     }
 
     async pressDownArrowAndEnter(): Promise<void> {
-        this.processDefinition.sendKeys(protractor.Key.ARROW_DOWN);
-        return browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        await this.processDefinition.sendKeys(protractor.Key.ARROW_DOWN);
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
     async checkNoProcessDefinitionOptionIsDisplayed() {
