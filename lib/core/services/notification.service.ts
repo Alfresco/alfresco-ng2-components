@@ -41,22 +41,11 @@ export class NotificationService {
     /**
      * Opens a SnackBar notification to show a message.
      * @param message The message (or resource key) to show.
-     * @param config Time before notification disappears after being shown or MatSnackBarConfig object
-     * @returns Information/control object for the SnackBar
-     */
-    openSnackMessage(message: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
-        const translatedMessage = this.translationService.instant(message);
-        return this.performOpening(translatedMessage, config);
-    }
-
-    /**
-     * Opens a SnackBar notification to show a message.
-     * @param message The message (or resource key) to show.
      * @param translationArgs The interpolation parameters to add for the translation
      * @param config Time before notification disappears after being shown or MatSnackBarConfig object
      * @returns Information/control object for the SnackBar
      */
-    openSnackMessageWithTranslation(message: string, translationArgs?: any, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
+    openSnackMessage(message: string, config?: number | MatSnackBarConfig, translationArgs?: any): MatSnackBarRef<any> {
         const translatedMessage = this.translationService.instant(message, translationArgs);
         return this.performOpening(translatedMessage, config);
     }

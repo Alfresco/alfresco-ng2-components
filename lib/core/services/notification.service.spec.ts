@@ -46,7 +46,7 @@ class ProvidesNotificationServiceComponent {
     }
 
     sendMessageWithArgs() {
-        return this.notificationService.openSnackMessageWithTranslation('Test notification {{ arg }}', {arg: 'arg'}, 1000);
+        return this.notificationService.openSnackMessage('Test notification {{ arg }}', 1000, {arg: 'arg'});
     }
 
     sendCustomMessage() {
