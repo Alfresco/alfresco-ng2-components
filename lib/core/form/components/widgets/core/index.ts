@@ -35,3 +35,4 @@ export * from './content-link.model';
 export * from './error-message.model';
 export * from './external-content';
 export * from './external-content-link';
+export * from './group.model';
