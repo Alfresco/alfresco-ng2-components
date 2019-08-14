@@ -116,10 +116,10 @@ describe('Process list cloud', () => {
         });
 
         afterAll(async () => {
+            await processInstancesService.deleteProcessInstance(anotherProcessInstance.entry.id, candidateBaseApp);
+
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-            await processInstancesService.deleteProcessInstance(anotherProcessInstance.id, candidateBaseApp);
-
         });
 
         beforeEach(async () => {
@@ -251,38 +251,32 @@ describe('Process list cloud', () => {
         });
 
         it('[C297697] The value of the filter should be preserved when saving it', async () => {
-            const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
-
-            await editProcessFilterCloudComponent.clickCustomiseFilterHeader();
-            await editProcessFilterCloudComponent.setProcessInstanceId(completedProcess.entry.id);
+            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessInstanceId(completedProcess.entry.id);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
-
-            const editProcessFilterDialog = editProcessFilterCloudComponent.editProcessFilterDialog();
-            await editProcessFilterDialog.setFilterName('New');
-            await editProcessFilterDialog.clickOnSaveButton();
+            await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New');
+            await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnSaveButton();
 
             expect(await processCloudDemoPage.getActiveFilterName()).toBe('New');
 
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
+            await  processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
             expect(await processCloudDemoPage.processListCloudComponent().getDataTable().numberOfRows()).toBe(1);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+
             expect(await processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(completedProcess.entry.id);
         });
 
         it('[C297646] Should display the filter dropdown fine , after switching between saved filters', async () => {
+            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            noOfApps = await processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions();
 
-            noOfApps = await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
-            await processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions();
             expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
             await BrowserActions.closeMenuAndDialogs();
-
-            const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
-            await editProcessFilterCloudComponent.clickCustomiseFilterHeader();
-            await editProcessFilterCloudComponent.setStatusFilterDropDown('RUNNING');
-            await editProcessFilterCloudComponent.setAppNameDropDown(candidateBaseApp);
-            await editProcessFilterCloudComponent.setProcessInstanceId(runningProcessInstance.entry.id);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING');
+            await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessInstanceId(runningProcessInstance.entry.id);
 
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcessInstance.entry.id);
             expect(await processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
@@ -292,14 +286,12 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SavedFilter');
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnSaveButton();
-
             expect(await processCloudDemoPage.getActiveFilterName()).toBe('SavedFilter');
 
             await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             expect(await processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING');
-
             await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessInstanceId(switchProcessInstance.entry.id);
 
@@ -307,7 +299,6 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SwitchFilter');
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnSaveButton();
-
             expect(await processCloudDemoPage.getActiveFilterName()).toBe('SwitchFilter');
 
             await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();

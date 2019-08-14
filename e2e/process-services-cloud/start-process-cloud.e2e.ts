@@ -73,7 +73,6 @@ describe('Start Process',  () => {
     afterEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
-
     });
 
     it('[C291857] Should be possible to cancel a process', async () => {
@@ -81,9 +80,9 @@ describe('Start Process',  () => {
         await appListCloudComponent.goToApp(simpleApp);
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(await startProcessPage.processNameInput);
-        await startProcessPage.blur(await startProcessPage.processNameInput);
         await startProcessPage.checkValidationErrorIsDisplayed(requiredError);
         expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+
         await startProcessPage.clickCancelProcessButton();
     });
 
@@ -95,7 +94,6 @@ describe('Start Process',  () => {
         expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
 
         await startProcessPage.enterProcessName(processNameBiggerThen255Characters);
-        await startProcessPage.blur(await startProcessPage.processNameInput);
         await startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
         expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
     });

@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage, Widget } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { UsersActions } from '../../actions/users.actions';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
 import { checkboxVisibilityForm } from '../../resources/forms/checkbox-visibility-condition';
 
-describe('Visibility conditions - cloud',  () => {
+describe('Visibility conditions - cloud', () => {
 
-    const loginPage = new LoginPage();
+    const settingsPage = new SettingsPage();
+    const loginSSOPage = new LoginSSOPage();
+
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudDemoPage();
     const checkboxVisibilityFormJson = JSON.parse(checkboxVisibilityForm);
     const widget = new Widget();
 
-    let user;
     let visibleCheckbox;
 
     const widgets = {
@@ -46,7 +46,7 @@ describe('Visibility conditions - cloud',  () => {
     };
 
     const checkbox = {
-        checkboxFieldValue : 'CheckboxFieldValue',
+        checkboxFieldValue: 'CheckboxFieldValue',
         checkboxVariableField: 'CheckboxVariableField',
         checkboxFieldVariable: 'CheckboxFieldVariable',
         checkboxFieldField: 'CheckboxFieldField',
@@ -60,20 +60,15 @@ describe('Visibility conditions - cloud',  () => {
             hostBpm: browser.params.testConfig.adf_aps.host
         });
 
-        const users = new UsersActions();
-
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost);
+        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await navigationBarPage.navigateToFormCloudPage();
 
         await formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
-
     });
 
     it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', async () => {
@@ -105,7 +100,7 @@ describe('Visibility conditions - cloud',  () => {
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
 
         await widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
-        expect(await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldVariable)).toBe(true);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldVariable);
 
         await widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);

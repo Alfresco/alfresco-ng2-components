@@ -177,7 +177,6 @@ describe('Start Task Form', () => {
         const standAloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
         await tasksService.deleteTask(standAloneTaskId, candidateBaseApp);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-
     });
 
     describe('StandaloneTask with form', () => {
@@ -248,34 +247,30 @@ describe('Start Task Form', () => {
         });
 
         it('[C311277] Should be able to start a process with a start event form - default values', async () => {
-
             expect(await widget.textWidget().getFieldValue('FirstName')).toBe('sample name');
             expect(await widget.numberWidget().getFieldValue('Number07vyx9')).toBe('17');
         });
 
         it('[C311277] Should be able to start a process with a start event form - form validation', async () => {
-
-            expect(await widget.textWidget().getErrorMessage('FirstName')).toBe('Enter no more than 10 characters');
+            expect(await widget.textWidget().getErrorMessage('FirstName')).toContain('Enter no more than 10 characters');
             expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
 
             await widget.textWidget().setValue('FirstName', 'Sam');
-            expect(await widget.textWidget().getErrorMessage('FirstName')).toBe('Enter at least 5 characters');
+            expect(await widget.textWidget().getErrorMessage('FirstName')).toContain('Enter at least 5 characters');
             expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
             await widget.numberWidget().setFieldValue('Number07vyx9', 9);
-            expect(await widget.numberWidget().getErrorMessage('Number07vyx9')).toBe('Can\'t be less than 10');
+            expect(await widget.numberWidget().getErrorMessage('Number07vyx9')).toContain('Can\'t be less than 10');
             expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
             await widget.numberWidget().setFieldValue('Number07vyx9', 99999);
-            expect(await widget.numberWidget().getErrorMessage('Number07vyx9')).toBe('Can\'t be greater than 1,000');
+            expect(await widget.numberWidget().getErrorMessage('Number07vyx9')).toContain('Can\'t be greater than 1,000');
             expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
         });
 
         it('[C311277] Should be able to start a process with a start event form - claim and complete the process', async () => {
-
             await widget.textWidget().setValue('FirstName', 'Sample');
             await widget.numberWidget().setFieldValue('Number07vyx9', 100);
             expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
             await startProcessPage.clickStartProcessButton();
-            await processCloudDemoPage.clickOnProcessFilters();
             await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
@@ -296,7 +291,6 @@ describe('Start Task Form', () => {
 
             await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
-            await processCloudDemoPage.clickOnProcessFilters();
             await processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processId);
 
@@ -311,7 +305,6 @@ describe('Start Task Form', () => {
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
             await appListCloudComponent.goToApp(candidateBaseApp);
-            await processCloudDemoPage.clickOnProcessFilters();
             await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
 

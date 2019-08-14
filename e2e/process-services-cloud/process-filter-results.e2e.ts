@@ -30,7 +30,7 @@ import { EditProcessFilterConfiguration } from './config/edit-process-filter.con
 import { ProcessListPage } from '../pages/adf/process-services/processListPage';
 import moment = require('moment');
 
-describe('Process filters cloud',  () => {
+describe('Process filters cloud', () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -147,7 +147,7 @@ describe('Process filters cloud',  () => {
 
     });
 
-    beforeEach( async() => {
+    beforeEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(candidateBaseApp);
@@ -156,7 +156,7 @@ describe('Process filters cloud',  () => {
     });
 
     it('[C306887] Should be able to filter by appName', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
         await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
 
@@ -221,6 +221,8 @@ describe('Process filters cloud',  () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', runningProcessInstance.entry.id);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+
+        await browser.driver.sleep(1000);
         expect(await processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfRows()).toBe(1);
 
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', anotherProcessInstance.entry.id);

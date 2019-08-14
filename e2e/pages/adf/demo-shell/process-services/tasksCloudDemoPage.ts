@@ -92,7 +92,7 @@ export class TasksCloudDemoPage {
 
     async openNewTaskForm(): Promise<void> {
         await BrowserActions.click(this.createButton);
-        await BrowserActions.click(this.newTaskButton);
+        await BrowserActions.clickExecuteScript('button[data-automation-id="btn-start-task"]');
     }
 
     async firstFilterIsActive(): Promise<boolean> {

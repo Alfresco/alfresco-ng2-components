@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, ElementFinder, Locator } from 'protractor';
+import { browser, by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
@@ -45,6 +45,7 @@ export class TaskFiltersCloudComponentPage {
 
     async clickTaskFilter(): Promise<void> {
         await BrowserActions.click(this.filter);
+        await browser.driver.sleep(1000);
     }
 
     async checkTaskFilterNotDisplayed(): Promise<void> {

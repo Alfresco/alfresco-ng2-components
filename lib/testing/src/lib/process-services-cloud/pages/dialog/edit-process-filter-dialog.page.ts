@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { ElementFinder } from 'protractor/built/element';
@@ -33,6 +33,7 @@ export class EditProcessFilterDialogPage {
         const saveButton = this.componentElement.element(this.saveButtonLocator);
         await BrowserActions.click(saveButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
+        await browser.driver.sleep(1000);
     }
 
     async checkSaveButtonIsEnabled() {

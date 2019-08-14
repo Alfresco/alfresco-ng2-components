@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, Locator } from 'protractor';
+import { browser, by, element, Locator } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { ElementFinder } from 'protractor/built/element';
@@ -32,6 +32,7 @@ export class EditTaskFilterDialogPage {
         const saveButton = this.componentElement.element(this.saveButtonLocator);
         await BrowserActions.click(saveButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
+        await browser.driver.sleep(1000);
     }
 
     async checkSaveButtonIsEnabled(): Promise<boolean> {
@@ -60,8 +61,7 @@ export class EditTaskFilterDialogPage {
     }
 
     async clearFilterName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
-        await BrowserActions.clearSendKeys(this.filterNameInput, '');
+        await BrowserActions.clearWithBackSpace(this.filterNameInput);
     }
 
     getTitle(): Promise<string> {

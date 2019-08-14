@@ -94,7 +94,7 @@ export class StartProcessCloudPage {
 
     async clearField(locator) {
         await BrowserVisibility.waitUntilElementIsVisible(locator);
-        await BrowserActions.clearSendKeys(locator, '');
+        await BrowserActions.clearWithBackSpace(locator);
     }
 
     formFields(): FormFields {

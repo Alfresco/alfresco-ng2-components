@@ -36,6 +36,7 @@ export class EditProcessFilterCloudComponentPage {
 
     async clickCustomiseFilterHeader(): Promise<void> {
         await BrowserActions.click(this.customiseFilter);
+        await browser.driver.sleep(1000);
     }
 
     async checkCustomiseFilterHeaderIsExpanded(): Promise<void> {
@@ -46,7 +47,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setStatusFilterDropDown(option): Promise<void> {
-        this.clickOnDropDownArrow('status');
+        await this.clickOnDropDownArrow('status');
 
         const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
         await BrowserActions.click(statusElement);
@@ -56,7 +57,7 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='status'] span")));
     }
 
-    async setSortFilterDropDown(option) {
+    async setSortFilterDropDown(option): Promise<void> {
         await this.clickOnDropDownArrow('sort');
 
         const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
@@ -68,7 +69,7 @@ export class EditProcessFilterCloudComponentPage {
         return await BrowserActions.getText(sortLocator);
     }
 
-    async setOrderFilterDropDown(option) {
+    async setOrderFilterDropDown(option): Promise<void> {
         await this.clickOnDropDownArrow('order');
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
@@ -82,9 +83,7 @@ export class EditProcessFilterCloudComponentPage {
 
     async clickOnDropDownArrow(option): Promise<void> {
         const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class='mat-select-arrow-wrapper']")).first();
-        await BrowserVisibility.waitUntilElementIsVisible(dropDownArrow);
         await BrowserActions.click(dropDownArrow);
-        await BrowserVisibility.waitUntilElementIsVisible(this.selectedOption);
     }
 
     async setAppNameDropDown(option): Promise<void> {
@@ -95,8 +94,8 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async checkAppNamesAreUnique(): Promise<boolean> {
-        const appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span')).first();
-        const appTextList: any = await BrowserActions.getText(appNameList);
+        const appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span'));
+        const appTextList: any = await appNameList.getText();
         const uniqueArray = appTextList.filter((appName) => {
             const sameAppNameArray = appTextList.filter((eachApp) => eachApp === appName);
             return sameAppNameArray.length === 1;
@@ -167,6 +166,7 @@ export class EditProcessFilterCloudComponentPage {
         const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         await BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         await BrowserActions.click(this.saveAsButton);
+        await browser.driver.sleep(1000);
     }
 
     async clickDeleteButton(): Promise<void> {

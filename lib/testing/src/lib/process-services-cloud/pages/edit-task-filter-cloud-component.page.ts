@@ -47,6 +47,7 @@ export class EditTaskFilterCloudComponentPage {
 
     async clickCustomiseFilterHeader(): Promise<void> {
         await BrowserActions.click(this.customiseFilter);
+        await browser.driver.sleep(1000);
     }
 
     async setStatusFilterDropDown(option): Promise<void> {
@@ -171,10 +172,12 @@ export class EditTaskFilterCloudComponentPage {
         const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         await BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         await BrowserActions.click(this.saveAsButton);
+        await browser.driver.sleep(1000);
     }
 
     async clickDeleteButton(): Promise<void> {
         await BrowserActions.click(this.deleteButton);
+        await browser.driver.sleep(1000);
     }
 
     async clickSaveButton(): Promise<void> {

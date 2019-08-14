@@ -137,8 +137,6 @@ describe('Edit task filters cloud', () => {
             await editTaskFilterDialog.setFilterName('New');
             await editTaskFilterDialog.clickOnSaveButton();
 
-            await browser.driver.sleep(1000);
-
             expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
@@ -167,23 +165,20 @@ describe('Edit task filters cloud', () => {
             await editTaskFilterDialog.setFilterName('New');
             await editTaskFilterDialog.clickOnSaveButton();
 
-            await browser.driver.sleep(1000);
-
             expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Priority');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
             await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnSaveButton();
+
             expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Priority');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
             await tasksCloudDemoPage.customTaskFilter('custom-new').clickTaskFilter();
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-
-            await browser.driver.sleep(1000);
 
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
@@ -204,16 +199,12 @@ describe('Edit task filters cloud', () => {
             await editTaskFilterDialog.setFilterName('New');
             await editTaskFilterDialog.clickOnSaveButton();
 
-            await browser.driver.sleep(1000);
-
             expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Name');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveButton();
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-
-            await browser.driver.sleep(1000);
 
             expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
@@ -234,14 +225,10 @@ describe('Edit task filters cloud', () => {
             await editTaskFilterDialog.setFilterName('New');
             await editTaskFilterDialog.clickOnSaveButton();
 
-            await browser.driver.sleep(1000);
-
             expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
-
-            await browser.driver.sleep(1000);
 
             expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.customTaskFilter('New').checkTaskFilterNotDisplayed();
@@ -279,12 +266,14 @@ describe('Edit task filters cloud', () => {
 
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
+
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('My Tasks');
 
             const tasksCloud = await tasksCloudDemoPage.editTaskFilterCloudComponent();
             await tasksCloud.editTaskFilterDialog().clearFilterName();
 
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('');
+
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkSaveButtonIsEnabled()).toEqual(false);
             expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkCancelButtonIsEnabled()).toEqual(true);
             await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnCancelButton();
