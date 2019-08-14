@@ -82,6 +82,21 @@ jobs:
           script:
               ./scripts/travis/e2e/process-services-cloud-e2e.sh
 
+before_deploy:
+  # Set up git user name and tag this commit
+  - git config --local user.name "Alfresco"
+  - export TRAVIS_TAG=$(cat package.json | grep version | head -1 | awk -F= "{ print $2 }" | sed 's/[version:,\",]//g' | tr -d '[[:space:]]')
+  - echo "Create tag:" $TRAVIS_TAG
+  - git tag $TRAVIS_TAG
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  body: "Add the release note"
+  skip_cleanup: true
+  on:
+    branch: master
+
 # Send coverage data to codecov
 after_success:
     bash <(curl -s https://codecov.io/bash) -X gcov
