@@ -67,9 +67,9 @@ describe('Modify applications', () => {
 
         await processServicesPage.checkApsContainer();
 
-        expect(await processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.UNIT);
-        expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
-        expect(await processServicesPage.getDescription(app.title)).toEqual(app.description);
+        await expect(await processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.UNIT);
+        await expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
+        await expect(await processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
     it('[C260213] Should a new version of the app be displayed on dashboard when is replaced by importing another app in APS', async () => {
@@ -77,9 +77,9 @@ describe('Modify applications', () => {
 
         await processServicesPage.checkApsContainer();
 
-        expect(await processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.UNIT);
-        expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
-        expect(await processServicesPage.getDescription(app.title)).toEqual(app.description);
+        await expect(await processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.UNIT);
+        await expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
+        await expect(await processServicesPage.getDescription(app.title)).toEqual(app.description);
 
         await apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, firstApp.id);
 
@@ -88,9 +88,9 @@ describe('Modify applications', () => {
 
         await processServicesPage.checkApsContainer();
 
-        expect(await processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.FAVORITE);
-        expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
-        expect(await processServicesPage.getDescription(app.title)).toEqual(app.description);
+        await expect(await processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.FAVORITE);
+        await expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
+        await expect(await processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
     it('[C260220] Should the app not be displayed on dashboard after it was deleted in APS', async () => {
@@ -114,7 +114,7 @@ describe('Modify applications', () => {
         await processServicesPage.checkApsContainer();
 
         await processServicesPage.checkAppIsDisplayed(appToBeDeleted.title);
-        expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
+        await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
 
         await apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, appVersionToBeDeleted.id);
 
@@ -123,7 +123,7 @@ describe('Modify applications', () => {
 
         await processServicesPage.getBackgroundColor(appToBeDeleted.title);
 
-        expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
+        await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
 
         await modelActions.deleteVersionModel(this.alfrescoJsApi, appVersionToBeDeleted.id);
         await modelActions.deleteVersionModel(this.alfrescoJsApi, appVersionToBeDeleted.id);
@@ -134,7 +134,7 @@ describe('Modify applications', () => {
 
         await processServicesPage.checkApsContainer();
         await processServicesPage.checkAppIsDisplayed(appToBeDeleted.title);
-        expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
+        await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
     });
 
     it('[C260207] Should the app be updated when is edited in APS', async () => {
@@ -143,9 +143,9 @@ describe('Modify applications', () => {
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
 
-        expect(await processServicesPage.getAppIconType(appToBeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
-        expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
-        expect(await processServicesPage.getDescription(appToBeDeleted.title)).toEqual(appToBeDeleted.description);
+        await expect(await processServicesPage.getAppIconType(appToBeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
+        await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
+        await expect(await processServicesPage.getDescription(appToBeDeleted.title)).toEqual(appToBeDeleted.description);
 
         const appDefinition = {
             'appDefinition': {
@@ -162,9 +162,9 @@ describe('Modify applications', () => {
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
 
-        expect(await processServicesPage.getDescription(appToBeDeleted.title)).toEqual(newDescription);
-        expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.RED);
-        expect(await processServicesPage.getAppIconType(appToBeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
+        await expect(await processServicesPage.getDescription(appToBeDeleted.title)).toEqual(newDescription);
+        await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.RED);
+        await expect(await processServicesPage.getAppIconType(appToBeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
     });
 
 });

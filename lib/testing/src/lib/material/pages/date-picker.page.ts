@@ -35,10 +35,10 @@ export class DatePickerPage {
         const afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`));
         if (await afterCalendar.isPresent()) {
             const aria = await afterCalendar.getAttribute('aria-disabled');
-            expect(aria).toBe('true');
+            await expect(aria).toBe('true');
         }
         const isEnabled = await this.nextMonthButton.isEnabled();
-        expect(isEnabled).toBe(false);
+        await expect(isEnabled).toBe(false);
     }
 
     async checkDatesBeforeDateAreDisabled(date): Promise<void> {
@@ -46,10 +46,10 @@ export class DatePickerPage {
         const beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`));
         if (await beforeCalendar.isPresent()) {
             const aria = await beforeCalendar.getAttribute('aria-disabled');
-            expect(aria).toBe('true');
+            await expect(aria).toBe('true');
         }
         const isEnabled = await this.previousMonthButton.isEnabled();
-        expect(isEnabled).toBe(false);
+        await expect(isEnabled).toBe(false);
     }
 
     async selectTodayDate(): Promise<void> {

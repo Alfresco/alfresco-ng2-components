@@ -288,22 +288,22 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C260132] Move action on folder with - Load more', async () => {
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
             await contentServicesPage.checkContextActionIsVisible('Move');
             await contentServicesPage.pressContextMenuActionNamed('Move');
             await contentNodeSelector.checkDialogIsDisplayed();
-            expect(await contentNodeSelector.getDialogHeaderText()).toBe('Move \'' + 'A' + folderModel1.name + '\' to...');
+            await expect(await contentNodeSelector.getDialogHeaderText()).toBe('Move \'' + 'A' + folderModel1.name + '\' to...');
             await contentNodeSelector.checkSearchInputIsDisplayed();
-            expect(await contentNodeSelector.getSearchLabel()).toBe('Search');
+            await expect(await contentNodeSelector.getSearchLabel()).toBe('Search');
             await contentNodeSelector.checkSelectedSiteIsDisplayed('My files');
             await contentNodeSelector.checkCancelButtonIsDisplayed();
             await contentNodeSelector.checkMoveCopyButtonIsDisplayed();
-            expect(await contentNodeSelector.getMoveCopyButtonText()).toBe('MOVE');
-            expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
+            await expect(await contentNodeSelector.getMoveCopyButtonText()).toBe('MOVE');
+            await expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
             await infinitePaginationPage.clickLoadMoreButton();
-            expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
+            await expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
             await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
             await contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
             await contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
@@ -341,22 +341,22 @@ describe('Document List Component - Actions', () => {
 
         it('[C305051] Copy action on folder with - Load more', async () => {
 
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
             await contentServicesPage.checkContextActionIsVisible('Copy');
             await contentServicesPage.pressContextMenuActionNamed('Copy');
             await contentNodeSelector.checkDialogIsDisplayed();
-            expect(await contentNodeSelector.getDialogHeaderText()).toBe('Copy \'' + 'A' + folderModel1.name + '\' to...');
+            await expect(await contentNodeSelector.getDialogHeaderText()).toBe('Copy \'' + 'A' + folderModel1.name + '\' to...');
             await contentNodeSelector.checkSearchInputIsDisplayed();
-            expect(await contentNodeSelector.getSearchLabel()).toBe('Search');
+            await expect(await contentNodeSelector.getSearchLabel()).toBe('Search');
             await contentNodeSelector.checkSelectedSiteIsDisplayed('My files');
             await contentNodeSelector.checkCancelButtonIsDisplayed();
             await contentNodeSelector.checkMoveCopyButtonIsDisplayed();
-            expect(await contentNodeSelector.getMoveCopyButtonText()).toBe('COPY');
-            expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
+            await expect(await contentNodeSelector.getMoveCopyButtonText()).toBe('COPY');
+            await expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
             await infinitePaginationPage.clickLoadMoreButton();
-            expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
+            await expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
             await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
             await contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
             await contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);

@@ -67,15 +67,15 @@ describe('Document List Component',  () => {
 
         it('[C217334] Should display a message when accessing file without permissions', async () => {
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
-            expect(await errorPage.getErrorCode()).toBe('403');
-            expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
+            await expect(await errorPage.getErrorCode()).toBe('403');
+            await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
 
         it('[C279924] Should display custom message when accessing a file without permissions', async () => {
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.enableCustomPermissionMessage();
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
-            expect(await errorPage.getErrorCode()).toBe('403');
+            await expect(await errorPage.getErrorCode()).toBe('403');
         });
 
         it('[C279925] Should display translated message when accessing a file without permissions if language is changed', async () => {
@@ -83,7 +83,7 @@ describe('Document List Component',  () => {
             await navBar.chooseLanguage('Italiano');
             await browser.sleep(2000);
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
-            expect(await errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
+            await expect(await errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
         });
 
     });

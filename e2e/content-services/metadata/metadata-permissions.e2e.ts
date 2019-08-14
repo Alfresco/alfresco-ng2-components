@@ -121,7 +121,7 @@ describe('permissions', () => {
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
-        expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
+        await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
         await metadataViewPage.clickOnInformationButton();
 
@@ -141,7 +141,7 @@ describe('permissions', () => {
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
-        expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
+        await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
         await metadataViewPage.clickOnInformationButton();
 

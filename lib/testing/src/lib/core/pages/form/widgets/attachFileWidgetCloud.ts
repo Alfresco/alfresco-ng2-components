@@ -24,29 +24,28 @@ export class AttachFileWidgetCloud {
 
     widget: ElementFinder;
     formFields: FormFields = new FormFields();
-    contentButton: ElementFinder = element(by.css('button[id="attach-Alfresco Content"]'));
     filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
 
     constructor(fieldId: string) {
         this.assignWidget(fieldId);
     }
 
-    async assignWidget(fieldId: string): Promise<void> {
-        this.widget = await this.formFields.getWidget(fieldId);
+    assignWidget(fieldId: string): void {
+        this.widget = this.formFields.getWidget(fieldId);
     }
 
     async attachLocalFile(fileLocation: string): Promise<void> {
-        browser.setFileDetector(new remote.FileDetector());
+        await browser.setFileDetector(new remote.FileDetector());
         const uploadButton = this.widget.element(by.css(`a input`));
-        await BrowserVisibility.waitUntilElementIsVisible(uploadButton);
-        uploadButton.sendKeys(browser.params.rootPath + '/e2e' + fileLocation);
-        await BrowserVisibility.waitUntilElementIsVisible(uploadButton);
+        await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
+        await uploadButton.sendKeys(browser.params.rootPath + '/e2e' + fileLocation);
+        await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
     }
 
     async clickAttachContentFile(fileId: string): Promise<void> {
         const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
         await BrowserActions.click(uploadButton);
-        await BrowserActions.click(this.contentButton);
+        await BrowserActions.clickExecuteScript('button[id="attach-Alfresco Content"]');
     }
 
     async checkUploadContentButtonIsDisplayed(fileId: string): Promise<void> {

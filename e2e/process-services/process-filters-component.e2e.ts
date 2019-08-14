@@ -157,7 +157,7 @@ describe('Process Filters Test', () => {
         await processServiceTabBarPage.clickProcessButton();
         await processListPage.checkProcessListIsDisplayed();
 
-        expect(taskAppFilters.size).toBe(defaultFiltersNumber);
+        await expect(taskAppFilters.size).toBe(defaultFiltersNumber);
 
         for (const filter of taskAppFilters) {
             await BrowserActions.getUrl(processFilterUrl + filter.id);

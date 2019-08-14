@@ -75,7 +75,7 @@ describe('Form widgets', () => {
 
             await taskPage.tasksListPage().checkContentIsDisplayed(newTask);
             await taskPage.formFields().checkFormIsDisplayed();
-            expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+            await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
             const response = await taskPage.taskDetails().getId();
 
@@ -93,106 +93,106 @@ describe('Form widgets', () => {
         });
 
         it('[C272778] Should display text and multi-line in form', async () => {
-            expect(await taskPage.formFields().getFieldLabel(appFields.text_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.text_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.text_id).name);
-            expect(await taskPage.formFields().getFieldValue(appFields.text_id))
+            await expect(await taskPage.formFields().getFieldValue(appFields.text_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.text_id).value || '');
 
-            expect(await widget.multilineTextWidget().getFieldValue(appFields.multiline_id))
+            await expect(await widget.multilineTextWidget().getFieldValue(appFields.multiline_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).value || '');
-            expect(await taskPage.formFields().getFieldLabel(appFields.multiline_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.multiline_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).name);
         });
 
         it('[C272779] Should display number and amount in form', async () => {
-            expect(await taskPage.formFields().getFieldValue(appFields.number_id))
+            await expect(await taskPage.formFields().getFieldValue(appFields.number_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.number_id).value || '');
-            expect(await taskPage.formFields().getFieldLabel(appFields.number_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.number_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.number_id).name);
 
-            expect(await taskPage.formFields().getFieldValue(appFields.amount_id))
+            await expect(await taskPage.formFields().getFieldValue(appFields.amount_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.amount_id).value || '');
-            expect(await taskPage.formFields().getFieldLabel(appFields.amount_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.amount_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.amount_id).name);
         });
 
         it('[C272780] Should display attach file and attach folder in form', async () => {
-            expect(await taskPage.formFields().getFieldLabel(appFields.attachFolder_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.attachFolder_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.attachFolder_id).name);
-            expect(await taskPage.formFields().getFieldLabel(appFields.attachFile_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.attachFile_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.attachFile_id).name);
         });
 
         it('[C272781] Should display date and date & time in form', async () => {
-            expect(await taskPage.formFields().getFieldLabel(appFields.date_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.date_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.date_id).name);
-            expect(await taskPage.formFields().getFieldValue(appFields.date_id))
+            await expect(await taskPage.formFields().getFieldValue(appFields.date_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.date_id).value || '');
 
-            expect(await taskPage.formFields().getFieldLabel(appFields.dateTime_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.dateTime_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.dateTime_id).name);
-            expect(await taskPage.formFields().getFieldValue(appFields.dateTime_id))
+            await expect(await taskPage.formFields().getFieldValue(appFields.dateTime_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.dateTime_id).value || '');
         });
 
         it('[C272782] Should display people and group in form', async () => {
-            expect(await taskPage.formFields().getFieldValue(appFields.people_id))
+            await expect(await taskPage.formFields().getFieldValue(appFields.people_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.people_id).value || '');
-            expect(await taskPage.formFields().getFieldLabel(appFields.people_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.people_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.people_id).name);
 
-            expect(await taskPage.formFields().getFieldValue(appFields.group_id))
+            await expect(await taskPage.formFields().getFieldValue(appFields.group_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.group_id).value || '');
-            expect(await taskPage.formFields().getFieldLabel(appFields.group_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.group_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.group_id).name);
         });
 
         it('[C272783] Should display displayText and displayValue in form', async () => {
 
-            expect(await widget.displayTextWidget().getFieldLabel(appFields.displayText_id))
+            await expect(await widget.displayTextWidget().getFieldLabel(appFields.displayText_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.displayText_id).value);
-            expect(await widget.displayValueWidget().getFieldLabel(appFields.displayValue_id))
+            await expect(await widget.displayValueWidget().getFieldLabel(appFields.displayValue_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.displayValue_id).value || 'Display value' || '');
-            expect(await widget.displayValueWidget().getFieldValue(appFields.displayValue_id))
+            await expect(await widget.displayValueWidget().getFieldValue(appFields.displayValue_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.displayValue_id).value || '');
         });
 
         it('[C272784] Should display typeahead and header in form', async () => {
-            expect(await widget.headerWidget().getFieldLabel(appFields.header_id))
+            await expect(await widget.headerWidget().getFieldLabel(appFields.header_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.header_id).name);
-            expect(await taskPage.formFields().getFieldValue(appFields.typeAhead_id))
+            await expect(await taskPage.formFields().getFieldValue(appFields.typeAhead_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.typeAhead_id).value || '');
-            expect(await taskPage.formFields().getFieldLabel(appFields.typeAhead_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.typeAhead_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.typeAhead_id).name);
         });
 
         it('[C272785] Should display checkbox and radio button in form', async () => {
             const radioOption = 1;
 
-            expect(await taskPage.formFields().getFieldLabel(appFields.checkbox_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.checkbox_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.checkbox_id).name);
 
-            expect(await taskPage.formFields().getFieldLabel(appFields.radioButtons_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.radioButtons_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.radioButtons_id).name);
-            expect(await widget.radioWidget().getSpecificOptionLabel(appFields.radioButtons_id, radioOption))
+            await expect(await widget.radioWidget().getSpecificOptionLabel(appFields.radioButtons_id, radioOption))
                 .toContain(formInstance.getWidgetBy('id', appFields.radioButtons_id).options[radioOption - 1].name);
         });
 
         it('[C268149] Should display hyperlink, dropdown and dynamic table in form', async () => {
 
-            expect(await widget.hyperlink().getFieldText(appFields.hyperlink_id))
+            await expect(await widget.hyperlink().getFieldText(appFields.hyperlink_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.hyperlink_id).hyperlinkUrl || '');
-            expect(await taskPage.formFields().getFieldLabel(appFields.hyperlink_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.hyperlink_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.hyperlink_id).name);
 
-            expect(await taskPage.formFields().getFieldLabel(appFields.dropdown_id))
+            await expect(await taskPage.formFields().getFieldLabel(appFields.dropdown_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.dropdown_id).name);
-            expect(widget.dropdown().getSelectedOptionText(appFields.dropdown_id))
+            await expect(widget.dropdown().getSelectedOptionText(appFields.dropdown_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.dropdown_id).value);
 
-            expect(await widget.dynamicTable().getFieldLabel(appFields.dynamicTable_id))
+            await expect(await widget.dynamicTable().getFieldLabel(appFields.dynamicTable_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.dynamicTable_id).name);
-            expect(await widget.dynamicTable().getColumnName(appFields.dynamicTable_id))
+            await expect(await widget.dynamicTable().getColumnName(appFields.dynamicTable_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.dynamicTable_id).columnDefinitions[0].name);
         });
 
@@ -245,18 +245,18 @@ describe('Form widgets', () => {
 
         it('[C260405] Value fields configured with process variables', async () => {
             await taskPage.formFields().checkFormIsDisplayed();
-            expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+            await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
             await taskPage.formFields().setValueInInputById('label', 'value 1');
             await taskPage.formFields().completeForm();
             /* cspell:disable-next-line */
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
 
-            expect(await widget.displayTextWidget().getFieldText(appFields.displayText_id))
+            await expect(await widget.displayTextWidget().getFieldText(appFields.displayText_id))
                 .toContain('value 1');
-            expect(await widget.textWidget().getFieldValue(appFields.text_id))
+            await expect(await widget.textWidget().getFieldValue(appFields.text_id))
                 .toEqual('value 1');
-            expect(await widget.displayValueWidget().getFieldValue(appFields.displayValue_id))
+            await expect(await widget.displayValueWidget().getFieldValue(appFields.displayValue_id))
                 .toEqual('value 1');
         });
     });

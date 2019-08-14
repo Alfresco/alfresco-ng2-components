@@ -142,18 +142,18 @@ describe('Dynamic Table widget ',  () => {
             await widget.dynamicTable().clickAddRow();
             await widget.dynamicTable().setDatatableInput('User1');
             await widget.dynamicTable().clickSaveButton();
-            expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User1');
+            await expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User1');
 
             await widget.dynamicTable().clickTableRow(0);
             await widget.dynamicTable().clickEditButton();
             await widget.dynamicTable().setDatatableInput('User2');
             await widget.dynamicTable().clickCancelButton();
-            expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User1');
+            await expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User1');
 
             await widget.dynamicTable().clickEditButton();
             await widget.dynamicTable().setDatatableInput('User2');
             await widget.dynamicTable().clickSaveButton();
-            expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User2');
+            await expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User2');
 
             await widget.dynamicTable().clickAddRow();
             await widget.dynamicTable().setDatatableInput('User3');

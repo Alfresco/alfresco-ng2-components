@@ -79,7 +79,7 @@ describe('Search component - Text widget',  () => {
         await searchResultPage.tableIsLoaded();
 
         await searchFiltersPage.checkNameFilterIsDisplayed();
-        expect(await searchFiltersPage.textFiltersPage().getNamePlaceholder()).toEqual('Enter the name');
+        await expect(await searchFiltersPage.textFiltersPage().getNamePlaceholder()).toEqual('Enter the name');
     });
 
     describe('configuration change',  () => {

@@ -115,7 +115,7 @@ describe('New Process Filters', () => {
         await processServiceTabBarPage.clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.new_icon);
-        expect(await processFiltersPage.getFilterIcon(processFilter.new_icon)).toEqual('cloud');
+        await expect(await processFiltersPage.getFilterIcon(processFilter.new_icon)).toEqual('cloud');
     });
 
     it('[C260474] Should be able to edit a filter on APS and check it on ADF', async () => {
@@ -161,7 +161,7 @@ describe('New Process Filters', () => {
         await processServiceTabBarPage.clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
-        expect(await processFiltersPage.getFilterIcon(processFilter.edit_icon)).toEqual('cloud');
+        await expect(await processFiltersPage.getFilterIcon(processFilter.edit_icon)).toEqual('cloud');
     });
 
     it('[C286452] Should display process filter icons only when showIcon property is set on true', async () => {
@@ -173,7 +173,7 @@ describe('New Process Filters', () => {
         await processServiceTabBarPage.clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.all);
-        expect(await processFiltersPage.getFilterIcon(processFilter.all)).toEqual('dashboard');
+        await expect(await processFiltersPage.getFilterIcon(processFilter.all)).toEqual('dashboard');
     });
 
     it('[C260475] Should be able to delete a filter on APS and check it on ADF', async () => {

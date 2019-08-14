@@ -112,12 +112,12 @@ describe('Task list cloud - selection',  () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
             await tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[0]);
-            expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[1]);
             await tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[1]);
-            expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
         });
 
         it('[C291919] Should be able to select only one row when selection mode is set to Multiple', async () => {
@@ -190,9 +190,9 @@ describe('Task list cloud - selection',  () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
             await tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
 
-            expect(await tasksCloudDemoPage.getNoOfSelectedRows()).toBe(2);
-            expect(await tasksCloudDemoPage.getSelectedTaskRowText('1')).toBe(tasks[0]);
-            expect(await tasksCloudDemoPage.getSelectedTaskRowText('2')).toBe(tasks[1]);
+            await expect(await tasksCloudDemoPage.getNoOfSelectedRows()).toBe(2);
+            await expect(await tasksCloudDemoPage.getSelectedTaskRowText('1')).toBe(tasks[0]);
+            await expect(await tasksCloudDemoPage.getSelectedTaskRowText('2')).toBe(tasks[1]);
         });
 
     });

@@ -79,7 +79,7 @@ describe('Header widget', async () => {
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         await taskPage.formFields().checkWidgetIsVisible(app.FIELD.header_id);
 
-        expect(await widget.headerWidget().getFieldLabel(app.FIELD.header_id)).toBe('Header');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await widget.headerWidget().getFieldLabel(app.FIELD.header_id)).toBe('Header');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 });

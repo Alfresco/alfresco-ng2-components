@@ -109,7 +109,7 @@ describe('Enable infinite scrolling',  () => {
         for (let i = 0; i < nrOfDeletedFiles; i++) {
             await contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
         }
-        expect(await contentServicesPage.getDocumentList().dataTablePage().numberOfRows()).toEqual(nrOfDeletedFiles);
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().numberOfRows()).toEqual(nrOfDeletedFiles);
 
         await contentServicesPage.deleteContent(deleteFileNames[nrOfDeletedFiles - 1]);
         await contentServicesPage.checkContentIsNotDisplayed(deleteFileNames[nrOfDeletedFiles - 1]);
@@ -125,9 +125,9 @@ describe('Enable infinite scrolling',  () => {
         await contentServicesPage.doubleClickRow(folderModel.name);
 
         await contentServicesPage.enableInfiniteScrolling();
-        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(pageSize);
+        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(pageSize);
         await infinitePaginationPage.clickLoadMoreButton();
-        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
+        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
 
         await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
     });
@@ -141,7 +141,7 @@ describe('Enable infinite scrolling',  () => {
         await contentServicesPage.doubleClickRow(folderModel.name);
 
         await contentServicesPage.enableInfiniteScrolling();
-        expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
+        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
 
         await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
     });

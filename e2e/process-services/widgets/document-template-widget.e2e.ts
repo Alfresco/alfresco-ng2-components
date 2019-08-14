@@ -75,7 +75,7 @@ describe('Document Template widget',  () => {
     });
 
     it('[C260406] should check that the template contains assigned file ', async () => {
-        expect(await widget.containerWidget().getFieldText(app.form_fields.container_id))
+        await expect(await widget.containerWidget().getFieldText(app.form_fields.container_id))
             .toEqual(app.attached_file);
     });
 });

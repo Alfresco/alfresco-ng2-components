@@ -15,7 +15,7 @@ function beforeAllRewrite() {
                 } catch (e) {
                     // tslint:disable-next-line:no-console
                     console.log('Error Before all second attempt fail all' + JSON.stringify(error));
-                    expect(true).toBe(false);
+                    await expect(true).toBe(false);
                 }
             }
 

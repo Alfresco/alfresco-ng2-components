@@ -65,7 +65,7 @@ export class SettingsPage {
         await BrowserActions.click(this.providerDropdown);
         await BrowserActions.click(option);
         const selectedOptionText = await BrowserActions.getText(this.selectedOption);
-        expect(selectedOptionText).toEqual(selected);
+        await expect(selectedOptionText).toEqual(selected);
     }
 
     async getSelectedOptionText(): Promise<string> {
@@ -266,11 +266,11 @@ export class SettingsPage {
 
     async checkBasicAuthRadioIsSelected() {
         const radioButton = this.getBasicAuthRadioButton();
-        expect(await radioButton.getAttribute('class')).toContain('mat-radio-checked');
+        await expect(await radioButton.getAttribute('class')).toContain('mat-radio-checked');
     }
 
     async checkSsoRadioIsNotSelected() {
         const radioButton = this.getSsoRadioButton();
-        expect(await radioButton.getAttribute('class')).not.toContain('mat-radio-checked');
+        await expect(await radioButton.getAttribute('class')).not.toContain('mat-radio-checked');
     }
 }

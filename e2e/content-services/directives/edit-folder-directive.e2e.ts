@@ -100,8 +100,8 @@ describe('Edit folder directive', () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
         await contentServicesPage.clickOnEditFolder();
         await editFolderDialog.checkFolderDialogIsDisplayed();
-        expect(await editFolderDialog.getDialogTitle()).toBe('Edit folder');
-        expect(await editFolderDialog.getFolderName()).toBe(editFolder.entry.name);
+        await expect(await editFolderDialog.getDialogTitle()).toBe('Edit folder');
+        await expect(await editFolderDialog.getFolderName()).toBe(editFolder.entry.name);
         await editFolderDialog.checkCreateUpdateBtnIsEnabled();
         await editFolderDialog.checkCancelBtnIsEnabled();
         await editFolderDialog.clickOnCancelButton();
@@ -112,7 +112,7 @@ describe('Edit folder directive', () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
-        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
+        await expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
         await contentServicesPage.clickOnEditFolder();
         await editFolderDialog.checkFolderDialogIsDisplayed();
         await editFolderDialog.checkCreateUpdateBtnIsEnabled();
@@ -127,7 +127,7 @@ describe('Edit folder directive', () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
-        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
+        await expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
         await contentServicesPage.clickOnEditFolder();
         await editFolderDialog.checkFolderDialogIsDisplayed();
         await editFolderDialog.checkCreateUpdateBtnIsEnabled();
@@ -146,7 +146,7 @@ describe('Edit folder directive', () => {
         await editFolderDialog.checkFolderDialogIsDisplayed();
 
         await editFolderDialog.addFolderName('a*"<>\\/?:|');
-        expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain these characters * " < > \\ / ? : |');
+        await expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain these characters * " < > \\ / ? : |');
         await editFolderDialog.checkCreateUpdateBtnIsDisabled();
 
         await editFolderDialog.addFolderName('a.a');
@@ -154,11 +154,11 @@ describe('Edit folder directive', () => {
         await editFolderDialog.checkCreateUpdateBtnIsEnabled();
 
         await editFolderDialog.addFolderName('a.');
-        expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t end with a period .');
+        await expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t end with a period .');
         await editFolderDialog.checkCreateUpdateBtnIsDisabled();
 
         await BrowserActions.clearSendKeys(editFolderDialog.getFolderNameField(), protractor.Key.SPACE);
-        expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain only spaces');
+        await expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain only spaces');
         await editFolderDialog.checkCreateUpdateBtnIsDisabled();
 
         await editFolderDialog.addFolderName(editFolder.entry.name);
@@ -183,12 +183,12 @@ describe('Edit folder directive', () => {
     });
 
     it('[C260166] Enable/Disable edit folder icon - when file selected', async () => {
-        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
-        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
+        await expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
         await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', filePdfNode.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', filePdfNode.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', filePdfNode.entry.name);
-        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
+        await expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
 
     });
 
@@ -202,16 +202,16 @@ describe('Edit folder directive', () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsChecked('Display name', anotherFolder.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', filePdfNode.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotChecked('Display name', filePdfNode.entry.name);
-        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(2);
-        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(2);
+        await expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
     });
 
     it('[C260166] Enable/Disable edit folder icon - when single folder selected', async () => {
-        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
         await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
-        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
-        expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
+        await expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(true);
     });
 
     it('[C260165] Update folder name with non-existing one', async () => {
@@ -240,7 +240,7 @@ describe('Edit folder directive', () => {
             await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', subFolder.entry.name);
             await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', subFolder.entry.name);
             await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', subFolder.entry.name);
-            expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
+            await expect(await contentServicesPage.checkEditFolderButtonIsEnabled()).toBe(false);
         });
 
     });

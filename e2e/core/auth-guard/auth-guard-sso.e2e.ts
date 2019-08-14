@@ -34,7 +34,7 @@ describe('Auth Guard SSO',  () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/cloud/simple-app');
         await browser.sleep(1000);
         const error = await errorPage.getErrorCode();
-        expect(error).toBe('403');
+        await expect(error).toBe('403');
     });
 
 });

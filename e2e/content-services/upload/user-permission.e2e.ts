@@ -115,7 +115,7 @@ describe('Upload - User permission',  () => {
 
             await uploadDialog.displayTooltip();
 
-            expect(await uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
+            await expect(await uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
         });
 
         it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', async () => {

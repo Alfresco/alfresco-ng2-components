@@ -195,8 +195,7 @@ describe('Aspect oriented config', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await
-            await metadataViewPage.informationButtonIsDisplayed();
+        await metadataViewPage.informationButtonIsDisplayed();
         await metadataViewPage.clickOnInformationButton();
 
         await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
@@ -244,8 +243,8 @@ describe('Aspect oriented config', () => {
         await metadataViewPage.checkMetadataGroupIsPresent('GROUP-TITLE1-TRANSLATION-KEY');
         await metadataViewPage.checkMetadataGroupIsPresent('GROUP-TITLE2-TRANSLATION-KEY');
 
-        expect(await metadataViewPage.getMetadataGroupTitle('GROUP-TITLE1-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION ONE');
-        expect(await metadataViewPage.getMetadataGroupTitle('GROUP-TITLE2-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION TWO');
+        await expect(await metadataViewPage.getMetadataGroupTitle('GROUP-TITLE1-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION ONE');
+        await expect(await metadataViewPage.getMetadataGroupTitle('GROUP-TITLE2-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION TWO');
 
     });
 
@@ -267,7 +266,7 @@ describe('Aspect oriented config', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        check(metadataViewPage.presetSwitch);
+        await check(metadataViewPage.presetSwitch);
 
         await metadataViewPage.enterPresetText('custom-preset');
 

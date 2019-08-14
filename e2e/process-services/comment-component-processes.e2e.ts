@@ -83,10 +83,10 @@ describe('Comment component for Processes', () => {
 
         await commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + addedComment.total + ')');
-        expect(await commentsPage.getMessage(0)).toEqual(addedComment.data[0].message);
-        expect(await commentsPage.getUserName(0)).toEqual(addedComment.data[0].createdBy.firstName + ' ' + addedComment.data[0].createdBy.lastName);
-        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + addedComment.total + ')');
+        await expect(await commentsPage.getMessage(0)).toEqual(addedComment.data[0].message);
+        await expect(await commentsPage.getUserName(0)).toEqual(addedComment.data[0].createdBy.firstName + ' ' + addedComment.data[0].createdBy.lastName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
     it('[C260465] Should not be able to view process comment on included task', async () => {
@@ -102,7 +102,7 @@ describe('Comment component for Processes', () => {
         const taskId = taskQuery.data[0].id;
 
         const taskComments = await this.alfrescoJsApi.activiti.commentsApi.getTaskComments(taskId, { 'latestFirst': true });
-        expect(await taskComments.total).toEqual(0);
+        await expect(await taskComments.total).toEqual(0);
     });
 
     it('[C260466] Should be able to display comments from Task on the related Process', async () => {
@@ -121,9 +121,9 @@ describe('Comment component for Processes', () => {
 
         await commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + addedTaskComment.total + ')');
-        expect(await commentsPage.getMessage(0)).toEqual(addedTaskComment.data[0].message);
-        expect(await commentsPage.getUserName(0)).toEqual(addedTaskComment.data[0].createdBy.firstName + ' ' + addedTaskComment.data[0].createdBy.lastName);
-        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + addedTaskComment.total + ')');
+        await expect(await commentsPage.getMessage(0)).toEqual(addedTaskComment.data[0].message);
+        await expect(await commentsPage.getUserName(0)).toEqual(addedTaskComment.data[0].createdBy.firstName + ' ' + addedTaskComment.data[0].createdBy.lastName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 });

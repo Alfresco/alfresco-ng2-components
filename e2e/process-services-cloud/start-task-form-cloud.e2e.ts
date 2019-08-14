@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
+import { browser, protractor } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
@@ -166,16 +166,16 @@ describe('Start Task Form', () => {
             browser.params.config.oauth2.clientId);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-start-process', JSON.stringify(startProcessCloudConfig));
-
     });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
         await apiService.login(testUser.email, testUser.password);
         const tasksService = new TasksService(apiService);
         const standAloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
         await tasksService.deleteTask(standAloneTaskId, candidateBaseApp);
+
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 
@@ -204,8 +204,8 @@ describe('Start Task Form', () => {
             await widget.numberWidget().setFieldValue('Number07vyx9', 26);
             await taskFormCloudComponent.checkSaveButtonIsDisplayed();
             await taskFormCloudComponent.clickSaveButton();
-            expect(await widget.textWidget().getFieldValue('FirstName')).toBe('sample');
-            expect(await widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
+            await expect(await widget.textWidget().getFieldValue('FirstName')).toBe('sample');
+            await expect(await widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
 
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
@@ -213,12 +213,12 @@ describe('Start Task Form', () => {
             await appListCloudComponent.goToApp(candidateBaseApp);
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
             await taskFormCloudComponent.formFields().checkFormIsDisplayed();
-            expect(await widget.textWidget().getFieldValue('FirstName')).toBe('sample');
-            expect(await widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
+            await expect(await widget.textWidget().getFieldValue('FirstName')).toBe('sample');
+            await expect(await widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
             await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
         });
 
@@ -232,7 +232,7 @@ describe('Start Task Form', () => {
 
     });
 
-    describe('Start a process with a start event form', () => {
+    describe('Start a process with a start event form', async () => {
 
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -240,45 +240,49 @@ describe('Start Task Form', () => {
             await appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
             await appListCloudComponent.goToApp(candidateBaseApp);
             await processCloudDemoPage.openNewProcessForm();
-            await startProcessPage.clearField(await startProcessPage.processNameInput);
+            await startProcessPage.clearField(startProcessPage.processNameInput);
             await startProcessPage.enterProcessName(startEventFormProcess);
             await startProcessPage.selectFromProcessDropdown('processwithstarteventform');
             await startProcessPage.formFields().checkFormIsDisplayed();
         });
 
         it('[C311277] Should be able to start a process with a start event form - default values', async () => {
-            expect(await widget.textWidget().getFieldValue('FirstName')).toBe('sample name');
-            expect(await widget.numberWidget().getFieldValue('Number07vyx9')).toBe('17');
+            await expect(await widget.textWidget().getFieldValue('FirstName')).toBe('sample name');
+            await expect(await widget.numberWidget().getFieldValue('Number07vyx9')).toBe('17');
         });
 
         it('[C311277] Should be able to start a process with a start event form - form validation', async () => {
-            expect(await widget.textWidget().getErrorMessage('FirstName')).toContain('Enter no more than 10 characters');
-            expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+            await expect(await widget.textWidget().getErrorMessage('FirstName')).toContain('Enter no more than 10 characters');
+            await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
 
             await widget.textWidget().setValue('FirstName', 'Sam');
-            expect(await widget.textWidget().getErrorMessage('FirstName')).toContain('Enter at least 5 characters');
-            expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+            await expect(await widget.textWidget().getErrorMessage('FirstName')).toContain('Enter at least 5 characters');
+            await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
             await widget.numberWidget().setFieldValue('Number07vyx9', 9);
-            expect(await widget.numberWidget().getErrorMessage('Number07vyx9')).toContain('Can\'t be less than 10');
-            expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+            await expect(await widget.numberWidget().getErrorMessage('Number07vyx9')).toContain('Can\'t be less than 10');
+            await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
             await widget.numberWidget().setFieldValue('Number07vyx9', 99999);
-            expect(await widget.numberWidget().getErrorMessage('Number07vyx9')).toContain('Can\'t be greater than 1,000');
-            expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+            await expect(await widget.numberWidget().getErrorMessage('Number07vyx9')).toContain('Can\'t be greater than 1,000');
+            await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
         });
 
         it('[C311277] Should be able to start a process with a start event form - claim and complete the process', async () => {
+
             await widget.textWidget().setValue('FirstName', 'Sample');
             await widget.numberWidget().setFieldValue('Number07vyx9', 100);
-            expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
+            await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
             await startProcessPage.clickStartProcessButton();
             await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-            expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', startEventFormProcess);
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(startEventFormProcess);
 
             await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', startEventFormProcess);
+
+            await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('StartEventFormTask');
             const processId = await processHeaderCloud.getId();
             await processDetailsCloudDemoPage.selectProcessTaskByName('StartEventFormTask');
@@ -286,11 +290,13 @@ describe('Start Task Form', () => {
             const taskId = await taskHeaderCloudPage.getId();
             await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
             await taskFormCloudComponent.clickCompleteButton();
-            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
             await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
+
+            await processCloudDemoPage.clickOnProcessFilters();
             await processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processId);
 
@@ -298,16 +304,16 @@ describe('Start Task Form', () => {
 
     });
 
-    describe('Attach content to process-cloud task form using upload widget', () => {
+    describe('Attach content to process-cloud task form using upload widget', async () => {
 
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
             await appListCloudComponent.goToApp(candidateBaseApp);
+            await processCloudDemoPage.clickOnProcessFilters();
             await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
-
         });
 
         it('[C310358] Should be able to attach a file to a form from local', async () => {
@@ -359,16 +365,16 @@ describe('Start Task Form', () => {
             const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
             await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
-            expect(await breadCrumbDropdownPage.getTextOfCurrentFolder()).toBe(testUser.username);
+            await expect(await breadCrumbDropdownPage.getTextOfCurrentFolder()).toBe(testUser.username);
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowContentIsDisplayed(folderName);
-            expect(await contentNodeSelectorDialogPage.checkCancelButtonIsEnabled()).toBe(true);
-            expect(await contentNodeSelectorDialogPage.checkCopyMoveButtonIsEnabled()).toBe(false);
+            await expect(await contentNodeSelectorDialogPage.checkCancelButtonIsEnabled()).toBe(true);
+            await expect(await contentNodeSelectorDialogPage.checkCopyMoveButtonIsEnabled()).toBe(false);
 
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(folderName);
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(folderName);
-            expect(await contentNodeSelectorDialogPage.checkCancelButtonIsEnabled()).toBe(true);
-            expect(await contentNodeSelectorDialogPage.checkCopyMoveButtonIsEnabled()).toBe(false);
+            await expect(await contentNodeSelectorDialogPage.checkCancelButtonIsEnabled()).toBe(true);
+            await expect(await contentNodeSelectorDialogPage.checkCopyMoveButtonIsEnabled()).toBe(false);
             await contentNodeSelectorDialogPage.clickCancelButton();
             await contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
         });
@@ -486,7 +492,7 @@ describe('Start Task Form', () => {
             const taskId = await taskHeaderCloudPage.getId();
             await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
             await taskFormCloudComponent.clickCompleteButton();
-            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
             await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();

@@ -90,7 +90,7 @@ describe('Form widgets - People', () => {
         const taskId = await taskDetails.getId();
         const taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
         const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
-        expect(userEmail).toEqual(processUserModel.email);
+        await expect(userEmail).toEqual(processUserModel.email);
     });
 
     it('[C286576] Should be able to see user in completed task', async () => {
@@ -110,6 +110,6 @@ describe('Form widgets - People', () => {
         const taskId = await taskDetails.getId();
         const taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
         const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
-        expect(userEmail).toEqual(processUserModel.email);
+        await expect(userEmail).toEqual(processUserModel.email);
     });
 });

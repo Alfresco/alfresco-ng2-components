@@ -58,8 +58,8 @@ describe('Login component - SSO', () => {
 
         afterEach(async () => {
             await navigationBarPage.clickLogoutButton();
-            browser.executeScript('window.sessionStorage.clear();');
-            browser.executeScript('window.localStorage.clear();');
+            await browser.executeScript('window.sessionStorage.clear();');
+            await browser.executeScript('window.localStorage.clear();');
             await browser.refresh();
         });
 

@@ -116,13 +116,13 @@ describe('Search Component - Multi-Select Facet',  () => {
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
 
-            expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
+            await expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             await searchResultsPage.checkContentIsDisplayed(txtFileSite.entry.name);
 
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
 
-            expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(4);
+            await expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(4);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             await searchResultsPage.checkContentIsDisplayed(txtFileSite.entry.name);
             await searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
@@ -187,7 +187,7 @@ describe('Search Component - Multi-Select Facet',  () => {
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
 
-            expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(2);
+            await expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(2);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             await searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
         });
@@ -245,7 +245,7 @@ describe('Search Component - Multi-Select Facet',  () => {
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
 
-            expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(1);
+            await expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(1);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
         });
     });

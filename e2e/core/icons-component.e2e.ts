@@ -52,9 +52,9 @@ describe('Universal Icon component',  () => {
     });
 
     it('[C291872] Should display the icons on the page', async () => {
-        expect(await iconsPage.isLigatureIconDisplayed('folder')).toBe(true, 'Ligature icon is not displayed');
-        expect(await iconsPage.isCustomIconDisplayed('adf:move_file')).toBe(true, 'Named icon is not displayed');
-        expect(await iconsPage.isCustomIconDisplayed('adf:folder')).toBe(true, 'Thumbnail service icon is not displayed');
+        await expect(await iconsPage.isLigatureIconDisplayed('folder')).toBe(true, 'Ligature icon is not displayed');
+        await expect(await iconsPage.isCustomIconDisplayed('adf:move_file')).toBe(true, 'Named icon is not displayed');
+        await expect(await iconsPage.isCustomIconDisplayed('adf:folder')).toBe(true, 'Thumbnail service icon is not displayed');
     });
 
 });

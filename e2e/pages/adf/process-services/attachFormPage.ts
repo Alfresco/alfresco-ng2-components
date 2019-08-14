@@ -46,7 +46,7 @@ export class AttachFormPage {
 
     async checkDefaultFormTitleIsDisplayed(formTitle): Promise<void> {
         const result = await this.defaultTitle.getText();
-        expect(result).toEqual(formTitle);
+        await expect(result).toEqual(formTitle);
     }
 
     async checkFormDropdownIsDisplayed(): Promise<void> {

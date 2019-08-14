@@ -123,7 +123,7 @@ describe('People Groups Cloud Component',  () => {
             await peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             await browser.sleep(100);
-            expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            await expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
         });
 
         it('[C305041] Should filter the People Multiple Selection with the Application name filter', async () => {
@@ -151,7 +151,7 @@ describe('People Groups Cloud Component',  () => {
             await groupCloudComponentPage.searchGroups(`${groupActiviti.name}`);
             await groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
             await groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
-            expect(await groupCloudComponentPage.getGroupsFieldContent()).toBe(`${groupActiviti.name}`);
+            await expect(await groupCloudComponentPage.getGroupsFieldContent()).toBe(`${groupActiviti.name}`);
         });
 
         it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', async () => {

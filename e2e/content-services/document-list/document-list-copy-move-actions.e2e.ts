@@ -193,7 +193,7 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
             await contentServicesPage.getDocumentList().rightClickOnRow(subFolder.entry.name);
             await contentServicesPage.checkContextActionIsVisible('Move');
-            expect(await contentServicesPage.checkContextActionIsEnabled('Move')).toBe(false);
+            await expect(await contentServicesPage.checkContextActionIsEnabled('Move')).toBe(false);
             await contentServicesPage.closeActionContext();
         });
 
@@ -202,14 +202,14 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContentIsDisplayed(copyFolder.entry.name);
             await contentServicesPage.getDocumentList().rightClickOnRow(copyFolder.entry.name);
             await contentServicesPage.checkContextActionIsVisible('Copy');
-            expect(await contentServicesPage.checkContextActionIsEnabled('Copy')).toBe(true);
+            await expect(await contentServicesPage.checkContextActionIsEnabled('Copy')).toBe(true);
             await contentServicesPage.pressContextMenuActionNamed('Copy');
             await contentNodeSelector.checkDialogIsDisplayed();
             await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);
             await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisabled(subFolder.entry.name);
             await contentNodeSelector.clickContentNodeSelectorResult(subFolder.entry.name);
             await contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected(subFolder.entry.name);
-            expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
+            await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
             await contentNodeSelector.contentListPage().dataTablePage().doubleClickRowByContent(subFolder.entry.name);
             await contentNodeSelector.contentListPage().dataTablePage().waitTillContentLoaded();
             await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder2.entry.name);

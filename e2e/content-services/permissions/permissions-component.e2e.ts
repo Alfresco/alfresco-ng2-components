@@ -199,13 +199,13 @@ describe('Permissions Component', () => {
 
         it('[C268974] Inherit Permission', async () => {
             await permissionsPage.checkPermissionInheritedButtonIsDisplayed();
-            expect(await permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+            await expect(await permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
             await permissionsPage.checkPermissionsDatatableIsDisplayed();
             await permissionsPage.clickPermissionInheritedButton();
-            expect(await permissionsPage.getPermissionInheritedButtonText()).toBe('Inherit Permission');
+            await expect(await permissionsPage.getPermissionInheritedButtonText()).toBe('Inherit Permission');
             await permissionsPage.checkNoPermissionsIsDisplayed();
             await permissionsPage.clickPermissionInheritedButton();
-            expect(await permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+            await expect(await permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
             await permissionsPage.checkPermissionsDatatableIsDisplayed();
         });
 
@@ -269,40 +269,40 @@ describe('Permissions Component', () => {
         });
 
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', async () => {
-            expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
             const roleDropdownOptions = permissionsPage.getRoleDropdownOptions();
-            expect(await roleDropdownOptions.count()).toBe(5);
-            expect(await roleDropdownOptions.get(0).getText()).toBe('Contributor');
-            expect(await roleDropdownOptions.get(1).getText()).toBe('Collaborator');
-            expect(await roleDropdownOptions.get(2).getText()).toBe('Coordinator');
-            expect(await roleDropdownOptions.get(3).getText()).toBe('Editor');
-            expect(await roleDropdownOptions.get(4).getText()).toBe('Consumer');
+            await expect(await roleDropdownOptions.count()).toBe(5);
+            await expect(await roleDropdownOptions.get(0).getText()).toBe('Contributor');
+            await expect(await roleDropdownOptions.get(1).getText()).toBe('Collaborator');
+            await expect(await roleDropdownOptions.get(2).getText()).toBe('Coordinator');
+            await expect(await roleDropdownOptions.get(3).getText()).toBe('Editor');
+            await expect(await roleDropdownOptions.get(4).getText()).toBe('Consumer');
             await permissionsPage.selectOption('Collaborator');
-            expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Collaborator');
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Collaborator');
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
             await permissionsPage.selectOption('Coordinator');
-            expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Coordinator');
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Coordinator');
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
             await permissionsPage.selectOption('Editor');
-            expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Editor');
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Editor');
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
             await permissionsPage.selectOption('Consumer');
-            expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Consumer');
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Consumer');
         });
 
         it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', async () => {
-            expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
             await permissionsPage.clickAddPermissionButton();
             await permissionsPage.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.checkSearchUserInputIsDisplayed();
             await permissionsPage.searchUserOrGroup(filePermissionUser.getId());
             await permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
-            expect(await permissionsPage.getAssignPermissionErrorText()).toBe(duplicateUserPermissionMessage);
+            await expect(await permissionsPage.getAssignPermissionErrorText()).toBe(duplicateUserPermissionMessage);
         });
 
         it('[C276982] Should be able to remove User or Group from the locally set permissions', async () => {
-            expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
             await permissionsPage.clickDeletePermissionButton();
             await permissionsPage.checkUserOrGroupIsDeleted(filePermissionUser.getId());
         });
@@ -366,7 +366,7 @@ describe('Permissions Component', () => {
             await metadataViewPage.clickEditPropertyIcons('properties.cm:title');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle1');
             await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
-            expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle1');
+            await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle1');
             await metadataViewPage.clickCloseButton();
             await contentServicesPage.uploadFile(fileModel.location);
             await notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
@@ -390,7 +390,7 @@ describe('Permissions Component', () => {
             await metadataViewPage.clickEditPropertyIcons('properties.cm:title');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle2');
             await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
-            expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle2');
+            await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle2');
             await metadataViewPage.clickCloseButton();
             await contentServicesPage.uploadFile(testFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
@@ -414,7 +414,7 @@ describe('Permissions Component', () => {
             await metadataViewPage.clickEditPropertyIcons('properties.cm:title');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle3');
             await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
-            expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle3');
+            await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle3');
             await metadataViewPage.clickCloseButton();
             await contentServicesPage.uploadFile(pngFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(pngFileModel.name);

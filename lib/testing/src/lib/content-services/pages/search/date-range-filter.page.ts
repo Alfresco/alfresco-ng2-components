@@ -77,7 +77,7 @@ export class DateRangeFilterPage {
     async checkFromErrorMessageIsDisplayed(msg: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorMessage));
         const text = await BrowserActions.getText(this.filter.element(this.fromErrorMessage));
-        expect(text).toEqual(msg);
+        await expect(text).toEqual(msg);
     }
 
     async checkFromErrorMessageIsNotDisplayed(): Promise<void> {
@@ -110,7 +110,7 @@ export class DateRangeFilterPage {
     async checkToErrorMessageIsDisplayed(msg): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorMessage));
         const text = await BrowserActions.getText(this.filter.element(this.toErrorMessage));
-        expect(text).toEqual(msg);
+        await expect(text).toEqual(msg);
     }
 
     async checkToFieldIsDisplayed(): Promise<void> {
@@ -132,12 +132,12 @@ export class DateRangeFilterPage {
 
     async checkApplyButtonIsEnabled(): Promise<void> {
         const isEnabled = await this.filter.element(this.applyButton).isEnabled();
-        expect(isEnabled).toBe(true);
+        await expect(isEnabled).toBe(true);
     }
 
     async checkApplyButtonIsDisabled(): Promise<void> {
         const isEnabled = await this.filter.element(this.applyButton).isEnabled();
-        expect(isEnabled).toBe(false);
+        await expect(isEnabled).toBe(false);
     }
 
     async checkClearButtonIsDisplayed(): Promise<void> {

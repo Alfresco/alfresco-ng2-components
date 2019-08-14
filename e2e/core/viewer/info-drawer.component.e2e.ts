@@ -85,8 +85,8 @@ describe('Info Drawer',  () => {
         await viewerPage.enableShowTabWithIcon();
         await viewerPage.enableShowTabWithIconAndLabel();
         await viewerPage.checkTabHasNoIcon(0);
-        expect(await viewerPage.getTabIconById(1)).toBe('face');
-        expect(await viewerPage.getTabIconById(2)).toBe('comment');
+        await expect(await viewerPage.getTabIconById(1)).toBe('face');
+        await expect(await viewerPage.getTabIconById(2)).toBe('comment');
     });
 
     it('[C277252] Should display the label when the label property is defined', async () => {
@@ -94,8 +94,8 @@ describe('Info Drawer',  () => {
         await viewerPage.clickLeftSidebarButton();
         await viewerPage.enableShowTabWithIcon();
         await viewerPage.enableShowTabWithIconAndLabel();
-        expect(await viewerPage.getTabLabelById(0)).toBe('SETTINGS');
+        await expect(await viewerPage.getTabLabelById(0)).toBe('SETTINGS');
         await viewerPage.checkTabHasNoLabel(1);
-        expect(await viewerPage.getTabLabelById(2)).toBe('COMMENTS');
+        await expect(await viewerPage.getTabLabelById(2)).toBe('COMMENTS');
     });
 });

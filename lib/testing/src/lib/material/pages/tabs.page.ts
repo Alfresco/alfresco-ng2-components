@@ -28,6 +28,6 @@ export class TabsPage {
     async checkTabIsSelectedByTitle(tabTitle): Promise<void> {
         const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
         const result = await tab.getAttribute('aria-selected');
-        expect(result).toBe('true');
+        await expect(result).toBe('true');
     }
 }

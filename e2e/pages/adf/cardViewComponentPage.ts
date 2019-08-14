@@ -173,7 +173,7 @@ export class CardViewComponentPage {
         const check = await this.editableSwitch.getAttribute('class');
         if (check.indexOf('mat-checked') > -1) {
             await this.editableSwitch.click();
-            expect(await this.editableSwitch.getAttribute('class')).not.toContain('mat-checked');
+            await expect(await this.editableSwitch.getAttribute('class')).not.toContain('mat-checked');
         }
     }
 

@@ -44,7 +44,7 @@ export class TagPage {
         await BrowserActions.clearSendKeys(this.insertNodeIdElement, nodeId);
 
         await browser.sleep(200);
-        this.insertNodeIdElement.sendKeys(' ');
+        await this.insertNodeIdElement.sendKeys(' ');
         await browser.sleep(200);
         await this.insertNodeIdElement.sendKeys(protractor.Key.BACK_SPACE);
         await this.clickConfirmTag();

@@ -103,10 +103,10 @@ describe('Comment Component', () => {
         await commentsPage.checkCommentsTabIsSelected();
         await commentsPage.checkCommentInputIsDisplayed();
 
-        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(await commentsPage.getMessage(0)).toEqual(comments.test);
-        expect(await commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        await expect(await commentsPage.getMessage(0)).toEqual(comments.test);
+        await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
 
     });
 
@@ -120,10 +120,10 @@ describe('Comment Component', () => {
         await commentsPage.addComment(comments.first);
         await commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(await commentsPage.getMessage(0)).toEqual(comments.first);
-        expect(await commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        await expect(await commentsPage.getMessage(0)).toEqual(comments.first);
+        await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
     it('[C280021] Should be able to add a multiline comment on a file', async () => {
@@ -136,18 +136,18 @@ describe('Comment Component', () => {
         await commentsPage.addComment(comments.multiline);
         await commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(await commentsPage.getMessage(0)).toEqual(comments.multiline);
-        expect(await commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        await expect(await commentsPage.getMessage(0)).toEqual(comments.multiline);
+        await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
 
         await commentsPage.addComment(comments.second);
         await commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (2)');
-        expect(await commentsPage.getMessage(0)).toEqual(comments.second);
-        expect(await commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (2)');
+        await expect(await commentsPage.getMessage(0)).toEqual(comments.second);
+        await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
     it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', async () => {
@@ -160,10 +160,10 @@ describe('Comment Component', () => {
         await commentsPage.addComment(comments.codeType);
         await commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(await commentsPage.getMessage(0)).toEqual('First name: Last name:');
-        expect(await commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        await expect(await commentsPage.getMessage(0)).toEqual('First name: Last name:');
+        await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
     describe('Consumer Permissions', () => {

@@ -91,8 +91,8 @@ describe('Version component',  () => {
         await versionManagePage.checkUploadNewVersionsButtonIsDisplayed();
 
         await versionManagePage.checkFileVersionExist('1.0');
-        expect(await versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
-        expect(await versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
+        await expect(await versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
+        await expect(await versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
     });
 
     it('[C279995] Should show/hide the new upload file options when click on add New version/cancel button', async () => {
@@ -122,12 +122,12 @@ describe('Version component',  () => {
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
         await versionManagePage.checkFileVersionExist('1.0');
-        expect(await versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
-        expect(await versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
+        await expect(await versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
+        await expect(await versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
 
         await versionManagePage.checkFileVersionExist('1.1');
-        expect(await versionManagePage.getFileVersionName('1.1')).toEqual(fileModelVersionTwo.name);
-        expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
+        await expect(await versionManagePage.getFileVersionName('1.1')).toEqual(fileModelVersionTwo.name);
+        await expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
     });
 
     it('[C269084] Should be possible add a comment when add a new version', async () => {
@@ -136,9 +136,9 @@ describe('Version component',  () => {
         await versionManagePage.uploadNewVersionFile(fileModelVersionThree.location);
 
         await versionManagePage.checkFileVersionExist('1.2');
-        expect(await versionManagePage.getFileVersionName('1.2')).toEqual(fileModelVersionThree.name);
-        expect(await versionManagePage.getFileVersionDate('1.2')).not.toBeUndefined();
-        expect(await versionManagePage.getFileVersionComment('1.2')).toEqual('Example comment text');
+        await expect(await versionManagePage.getFileVersionName('1.2')).toEqual(fileModelVersionThree.name);
+        await expect(await versionManagePage.getFileVersionDate('1.2')).not.toBeUndefined();
+        await expect(await versionManagePage.getFileVersionComment('1.2')).toEqual('Example comment text');
     });
 
     it('[C275719] Should be possible preview the file when you add a new version', async () => {
@@ -148,7 +148,7 @@ describe('Version component',  () => {
         await versionManagePage.uploadNewVersionFile(fileModelVersionFor.location);
 
         await versionManagePage.checkFileVersionExist('2.0');
-        expect(await versionManagePage.getFileVersionName('2.0')).toEqual(fileModelVersionFor.name);
+        await expect(await versionManagePage.getFileVersionName('2.0')).toEqual(fileModelVersionFor.name);
 
         await BrowserActions.click(versionManagePage.showNewVersionButton);
         await versionManagePage.clickMinorChange();
@@ -156,7 +156,7 @@ describe('Version component',  () => {
         await versionManagePage.uploadNewVersionFile(fileModelVersionFive.location);
 
         await versionManagePage.checkFileVersionExist('2.1');
-        expect(await versionManagePage.getFileVersionName('2.1')).toEqual(fileModelVersionFive.name);
+        await expect(await versionManagePage.getFileVersionName('2.1')).toEqual(fileModelVersionFive.name);
     });
 
 });

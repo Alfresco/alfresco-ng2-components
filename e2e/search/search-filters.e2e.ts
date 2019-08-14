@@ -96,13 +96,9 @@ describe('Search Filters', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         fileUploaded = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
-
         fileTypePng = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
-
         fileTypeTxt1 = await uploadActions.uploadFile(txtFileModel1.location, txtFileModel1.name, '-my-');
-
         fileTypeJpg = await uploadActions.uploadFile(jpgFileModel.location, jpgFileModel.name, '-my-');
-
         fileTypeTxt2 = await uploadActions.uploadFile(txtFileModel2.location, txtFileModel2.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -110,7 +106,6 @@ describe('Search Filters', () => {
         await browser.sleep(15000); // wait search index previous file/folder uploaded
 
         jsonFile = SearchConfiguration.getConfiguration();
-
     });
 
     afterAll(async () => {
@@ -122,7 +117,6 @@ describe('Search Filters', () => {
         await uploadActions.deleteFileOrFolder(fileTypeTxt2.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypeJpg.entry.id);
         await navigationBarPage.clickLogoutButton();
-
     });
 
     it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', async () => {
@@ -173,11 +167,11 @@ describe('Search Filters', () => {
         const bucketNumberForFilter = await searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
         const resultFileNames: any = await contentList.getAllRowsColumnValues('Display name');
 
-        expect(bucketNumberForFilter).not.toEqual('0');
-        expect(await paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
+        await expect(bucketNumberForFilter).not.toEqual('0');
+        await expect(await paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
 
-        resultFileNames.map((nameOfResultFiles) => {
-            expect(nameOfResultFiles).toContain('.png');
+        resultFileNames.map(async (nameOfResultFiles) => {
+            await expect(nameOfResultFiles).toContain('.png');
         });
     });
 
@@ -215,8 +209,8 @@ describe('Search Filters', () => {
         await searchResults.tableIsLoaded();
 
         await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
-        expect(await searchFiltersPage.isTypeFacetQueryGroupPresent()).toBe(false);
-        expect(await searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
+        await expect(await searchFiltersPage.isTypeFacetQueryGroupPresent()).toBe(false);
+        await expect(await searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
     });
 
     it('[C297509] Should display search intervals under specified labels from config', async () => {

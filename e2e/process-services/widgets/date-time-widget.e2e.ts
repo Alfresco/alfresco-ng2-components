@@ -74,16 +74,16 @@ describe('Date and time widget',  () => {
     });
 
     it('[C268818] Should be able to set general settings for Date Time widget', async () => {
-        expect(await widget.dateTimeWidget().getDateTimeLabel(app.FIELD.date_time_input)).toContain('Date');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await widget.dateTimeWidget().getDateTimeLabel(app.FIELD.date_time_input)).toContain('Date');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
         await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_input);
         await widget.dateTimeWidget().selectDay('10');
         await widget.dateTimeWidget().selectHour('8');
         await widget.dateTimeWidget().selectMinute('30');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
 
-        expect(await widget.dateTimeWidget().getPlaceholder(app.FIELD.date_time_between_input)).toBe('Choose anything...');
+        await expect(await widget.dateTimeWidget().getPlaceholder(app.FIELD.date_time_between_input)).toBe('Choose anything...');
     });
 
     it('[C268819] Should be able to set advanced settings for Date Time widget ', async () => {
@@ -92,7 +92,7 @@ describe('Date and time widget',  () => {
 
         await widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-17 07:30 PM');
         await taskPage.formFields().saveForm();
-        expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be less than');
+        await expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be less than');
 
         await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
         await widget.dateTimeWidget().closeDataTimeWidget();
@@ -103,6 +103,6 @@ describe('Date and time widget',  () => {
 
         await taskPage.formFields().saveForm();
 
-        expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be greater than');
+        await expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be greater than');
     });
 });

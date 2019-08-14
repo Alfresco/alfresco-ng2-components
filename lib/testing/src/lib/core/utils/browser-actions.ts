@@ -73,7 +73,7 @@ export class BrowserActions {
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         const valueCheck = await elementFinder.getAttribute('disabled');
-        expect(valueCheck).toEqual('true');
+        await expect(valueCheck).toEqual('true');
     }
 
     static async rightClick(elementFinder: ElementFinder): Promise<void> {

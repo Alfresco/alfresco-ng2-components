@@ -115,6 +115,6 @@ describe('Notifications Component',  () => {
         await notificationPage.selectVerticalPosition('Top');
         await notificationPage.selectDirection('Left to right');
         await notificationPage.clickNotificationButton();
-        expect(await notificationPage.getConfigObject()).toBe('{"direction": "ltr", "duration": "1000", "horizontalPosition": "right", "verticalPosition": "top"}');
+        await expect(await notificationPage.getConfigObject()).toBe('{"direction": "ltr", "duration": "1000", "horizontalPosition": "right", "verticalPosition": "top"}');
     });
 });

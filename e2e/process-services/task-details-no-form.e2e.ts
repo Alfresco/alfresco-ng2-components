@@ -75,8 +75,8 @@ describe('Task Details - No form',  () => {
         await taskPage.taskDetails().checkCompleteTaskButtonIsDisplayed();
         await taskPage.taskDetails().checkCompleteTaskButtonIsEnabled();
         await taskPage.taskDetails().checkAttachFormButtonIsNotDisplayed();
-        expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
+        await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
 
     });
 

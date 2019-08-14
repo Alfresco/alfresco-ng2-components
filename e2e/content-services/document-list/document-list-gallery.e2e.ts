@@ -93,14 +93,14 @@ describe('Document List Component',  () => {
         });
 
         it('[C280016] Should be able to choose Gallery View', async () => {
-            expect(await contentServicesPage.getCardElementShowedInPage()).toBe(4);
+            await expect(await contentServicesPage.getCardElementShowedInPage()).toBe(4);
         });
 
         it('[C280023] Gallery Card should show details', async () => {
-            expect(await contentServicesPage.getDocumentCardIconForElement(folderName)).toContain('/assets/images/ft_ic_folder.svg');
-            expect(await contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
-            expect(await contentServicesPage.getDocumentCardIconForElement(docxFile.name)).toContain('/assets/images/ft_ic_ms_word.svg');
-            expect(await contentServicesPage.getDocumentCardIconForElement(testFile.name)).toContain('/assets/images/ft_ic_document.svg');
+            await expect(await contentServicesPage.getDocumentCardIconForElement(folderName)).toContain('/assets/images/ft_ic_folder.svg');
+            await expect(await contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
+            await expect(await contentServicesPage.getDocumentCardIconForElement(docxFile.name)).toContain('/assets/images/ft_ic_ms_word.svg');
+            await expect(await contentServicesPage.getDocumentCardIconForElement(testFile.name)).toContain('/assets/images/ft_ic_document.svg');
             await contentServicesPage.checkMenuIsShowedForElementIndex(0);
             await contentServicesPage.checkMenuIsShowedForElementIndex(1);
             await contentServicesPage.checkMenuIsShowedForElementIndex(2);
@@ -113,37 +113,37 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.CREATED_BY);
             await contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.CREATED);
 
-            expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.DISPLAY_NAME)).toBe(folderName);
-            expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            await expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.DISPLAY_NAME)).toBe(folderName);
+            await expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
-            expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED)).toMatch(/(ago|few)/);
+            await expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
-            expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.DISPLAY_NAME)).toBe(pdfFile.name);
-            expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.SIZE)).toBe(`105.02 KB`);
-            expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.DISPLAY_NAME)).toBe(pdfFile.name);
+            await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.SIZE)).toBe(`105.02 KB`);
+            await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
-            expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
+            await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
-            expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.DISPLAY_NAME)).toBe(docxFile.name);
-            expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`81.05 KB`);
-            expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY))
+            await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.DISPLAY_NAME)).toBe(docxFile.name);
+            await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`81.05 KB`);
+            await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY))
                 .toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
-            expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
+            await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
-            expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.DISPLAY_NAME)).toBe(testFile.name);
-            expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.SIZE)).toBe(`14 Bytes`);
-            expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED_BY))
+            await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.DISPLAY_NAME)).toBe(testFile.name);
+            await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.SIZE)).toBe(`14 Bytes`);
+            await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED_BY))
                 .toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
-            expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
+            await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
         });
 
         it('[C280129] Should keep Gallery View when accessing a folder', async () => {
             await contentServicesPage.navigateToCardFolder(folderName);
 
-            expect(await contentServicesPage.getCardElementShowedInPage()).toBe(1);
-            expect(await contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
+            await expect(await contentServicesPage.getCardElementShowedInPage()).toBe(1);
+            await expect(await contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
         });
 
         it('[C280130] Should be able to go back to List View', async () => {

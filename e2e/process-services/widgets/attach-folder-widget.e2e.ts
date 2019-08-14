@@ -78,6 +78,6 @@ describe('Attach Folder widget',  () => {
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         await taskPage.formFields().checkWidgetIsVisible(app.FIELD.upload_button_id);
 
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
     });
 });

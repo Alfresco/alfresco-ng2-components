@@ -86,14 +86,14 @@ describe('Version component actions',  () => {
 
     it('[C280003] Should not be possible delete a file version if there is only one version', async () => {
         await versionManagePage.clickActionButton('1.0');
-        expect(await element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
+        await expect(await element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
         await versionManagePage.closeActionsMenu();
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
     });
 
     it('[C280004] Should not be possible restore the version if there is only one version', async () => {
         await versionManagePage.clickActionButton('1.0');
-        expect(await element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
+        await expect(await element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
         await versionManagePage.closeActionsMenu();
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });
@@ -115,9 +115,9 @@ describe('Version component actions',  () => {
 
     it('[C269081] Should be possible download all the version of a file', async () => {
         await versionManagePage.downloadFileVersion('1.0');
-        expect(await FileBrowserUtil.isFileDownloaded(txtFileModel.name)).toBe(true, `${txtFileModel.name} not downloaded`);
+        await expect(await FileBrowserUtil.isFileDownloaded(txtFileModel.name)).toBe(true, `${txtFileModel.name} not downloaded`);
         await versionManagePage.downloadFileVersion('1.1');
-        expect(await FileBrowserUtil.isFileDownloaded(fileModelVersionTwo.name)).toBe(true, `${fileModelVersionTwo.name} not downloaded`);
+        await expect(await FileBrowserUtil.isFileDownloaded(fileModelVersionTwo.name)).toBe(true, `${fileModelVersionTwo.name} not downloaded`);
     });
 
     it('[C272819] Should be possible delete a version when click on delete version action', async () => {
@@ -157,13 +157,13 @@ describe('Version component actions',  () => {
     it('[C307033] Should be possible to cancel the upload of a new version', async () => {
         await browser.refresh();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
-        browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 1000)');
+        await browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 1000)');
 
         await versionManagePage.showNewVersionButton.click();
         await versionManagePage.uploadNewVersionFile(bigFileToCancel.location);
         await versionManagePage.closeVersionDialog();
 
-        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
 
         await browser.refresh();
 

@@ -94,8 +94,8 @@ export class DynamicTableWidget {
     async addRandomStringOnDateTime(randomText): Promise<string> {
         await BrowserActions.click(this.columnDateTime);
         await BrowserActions.closeMenuAndDialogs();
-        this.columnDateTime.sendKeys(randomText);
-        this.columnDateTime.sendKeys(protractor.Key.ENTER);
+        await this.columnDateTime.sendKeys(randomText);
+        await this.columnDateTime.sendKeys(protractor.Key.ENTER);
         return this.columnDateTime.getAttribute('value');
     }
 
@@ -127,6 +127,6 @@ export class DynamicTableWidget {
     async checkItemIsPresent(item): Promise<void> {
         const row = element(by.cssContainingText('table tbody tr td span', item));
         const present = await BrowserVisibility.waitUntilElementIsVisible(row);
-        expect(present).toBe(true);
+        await expect(present).toBe(true);
     }
 }

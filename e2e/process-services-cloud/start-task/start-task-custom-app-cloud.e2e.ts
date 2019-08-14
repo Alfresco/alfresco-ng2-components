@@ -84,7 +84,6 @@ describe('Start Task', () => {
     });
 
     afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         const tasksService = new TasksService(apiService);
 
         const tasks = [standaloneTaskName, unassignedTaskName, reassignTaskName];
@@ -94,6 +93,8 @@ describe('Start Task', () => {
                 await tasksService.deleteTask(taskId, simpleApp);
             }
         }
+
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(activitiUser.idIdentityService);
         await identityService.deleteIdentityUser(apsUser.idIdentityService);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
@@ -123,14 +124,14 @@ describe('Start Task', () => {
         const taskId = await tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(unassignedTaskName);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-        expect(await taskHeaderCloudPage.getId()).toBe(taskId);
-        expect(await taskHeaderCloudPage.getAssignee()).toBe('No assignee');
+        await expect(await taskHeaderCloudPage.getId()).toBe(taskId);
+        await expect(await taskHeaderCloudPage.getAssignee()).toBe('No assignee');
     });
 
     it('[C291956] Should be able to create a new standalone task without assignee', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
-        expect(await peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
+        await expect(await peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
         await startTask.addName(unassignedTaskName);
         await startTask.clickStartButton();
         await startTask.checkStartButtonIsEnabled();
@@ -197,14 +198,13 @@ describe('Start Task', () => {
         await startTask.checkStartButtonIsEnabled();
         await startTask.clickStartButton();
         await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(standaloneTaskName);
+        await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
     });
 
     it('[C291953] Assignee field should display the logged user as default', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
-        expect(await peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
+        await expect(await peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
         await startTask.clickCancelButton();
     });
 
@@ -212,7 +212,7 @@ describe('Start Task', () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
         await startTask.addName(reassignTaskName);
-        expect(await peopleCloudComponent.getAssignee()).toBe(`${testUser.firstName} ${testUser.lastName}`);
+        await expect(await peopleCloudComponent.getAssignee()).toBe(`${testUser.firstName} ${testUser.lastName}`);
         await peopleCloudComponent.searchAssignee(apsUser.username);
         await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
         await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
@@ -223,7 +223,7 @@ describe('Start Task', () => {
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(reassignTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(reassignTaskName);
-        expect(await taskHeaderCloudPage.getAssignee()).toBe(apsUser.username);
+        await expect(await taskHeaderCloudPage.getAssignee()).toBe(apsUser.username);
     });
 
 });

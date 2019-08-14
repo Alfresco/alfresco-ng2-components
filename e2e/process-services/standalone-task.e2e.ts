@@ -87,8 +87,8 @@ describe('Start Task - Task App', () => {
         await taskDetails.checkCompleteTaskButtonIsEnabled();
         await taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
         await taskPage.taskDetails().checkAttachFormButtonIsEnabled();
-        expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
+        await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
     });
 
     it('[C268910] Should a standalone task be displayed in completed tasks when completing it', async () => {
@@ -101,10 +101,10 @@ describe('Start Task - Task App', () => {
         await taskPage.completeTaskNoForm();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow(tasks[1]);
-        expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + tasks[1] + ' completed');
+        await expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + tasks[1] + ' completed');
 
         await taskPage.formFields().noFormIsDisplayed();
-        expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
     it('[C268911] Should allow adding a form to a standalone task when clicking on Add form button', async () => {
@@ -120,7 +120,7 @@ describe('Start Task - Task App', () => {
         await formFields.selectForm(app.formName);
         await formFields.clickOnAttachFormButton();
 
-        expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
+        await expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
     });
 
     it('[C268912] Should a standalone task be displayed when removing the form from APS', async () => {
@@ -130,7 +130,7 @@ describe('Start Task - Task App', () => {
         await task.clickStartButton();
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
-        expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
+        await expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
 
         const listOfTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
         await this.alfrescoJsApi.activiti.taskApi.removeForm(listOfTasks.data[0].id);
@@ -140,8 +140,8 @@ describe('Start Task - Task App', () => {
         await taskPage.checkTaskTitle(tasks[3]);
 
         await taskPage.formFields().noFormIsDisplayed();
-        expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
+        await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
     });
 
 });

@@ -68,6 +68,6 @@ describe('Analytics Smoke Test',  () => {
         await analyticsPage.checkNoReportMessage();
         await analyticsPage.getReport('Process definition heat map');
         await analyticsPage.changeReportTitle(reportTitle);
-        expect(await analyticsPage.getReportTitle()).toEqual(reportTitle);
+        await expect(await analyticsPage.getReportTitle()).toEqual(reportTitle);
     });
 });

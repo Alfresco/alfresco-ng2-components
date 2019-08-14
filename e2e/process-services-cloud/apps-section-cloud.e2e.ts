@@ -16,12 +16,19 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, IdentityService, LoginSSOPage, SettingsPage, LocalStorageUtil, ApplicationsService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    IdentityService,
+    LoginSSOPage,
+    SettingsPage,
+    LocalStorageUtil,
+    ApplicationsService
+} from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import resources = require('../util/resources');
 
-describe('Applications list',  () => {
+describe('Applications list', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -56,7 +63,7 @@ describe('Applications list',  () => {
 
     });
 
-    afterAll(async() => {
+    afterAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
 
@@ -66,8 +73,8 @@ describe('Applications list',  () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudPage.checkApsContainer();
 
-        await appListCloudPage.getNameOfTheApplications().then((list) => {
-            expect(JSON.stringify(list) === JSON.stringify(appNames)).toEqual(true);
+        await appListCloudPage.getNameOfTheApplications().then(async (list) => {
+            await expect(JSON.stringify(list) === JSON.stringify(appNames)).toEqual(true);
         });
     });
 
@@ -80,6 +87,6 @@ describe('Applications list',  () => {
         await appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name);
         await appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.SUB_PROCESS_APP.name);
 
-        expect(await appListCloudPage.countAllApps()).toEqual(3);
+        await expect(await appListCloudPage.countAllApps()).toEqual(3);
     });
 });

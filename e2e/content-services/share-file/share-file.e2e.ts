@@ -190,7 +190,7 @@ describe('Share file',  () => {
             await shareDialog.clickShareLinkButton();
             const secondSharedLink = await shareDialog.getShareLink();
             await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
-            expect(sharedLink).toEqual(secondSharedLink);
+            await expect(sharedLink).toEqual(secondSharedLink);
             await BrowserActions.getUrl(sharedLink);
             await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });

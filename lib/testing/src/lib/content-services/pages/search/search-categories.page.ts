@@ -66,12 +66,12 @@ export class SearchCategoriesPage {
 
     async checkFilterIsCollapsed(filter: ElementFinder): Promise<void> {
         const elementClass = await filter.getAttribute('class');
-        expect(elementClass).not.toContain('mat-expanded');
+        await expect(elementClass).not.toContain('mat-expanded');
     }
 
     async checkFilterIsExpanded(filter: ElementFinder): Promise<void> {
         const elementClass = await filter.getAttribute('class');
-        expect(elementClass).toContain('mat-expanded');
+        await expect(elementClass).toContain('mat-expanded');
     }
 
 }

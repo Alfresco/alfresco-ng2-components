@@ -101,9 +101,9 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'running', 'sort': 'created-asc'
         });
-        expect(processesQuery.data[0].name).toEqual('Process 1');
-        expect(processesQuery.data[1].name).toEqual('Process 2');
-        expect(processesQuery.data[2].name).toEqual('Process 3');
+        await expect(processesQuery.data[0].name).toEqual('Process 1');
+        await expect(processesQuery.data[1].name).toEqual('Process 2');
+        await expect(processesQuery.data[2].name).toEqual('Process 3');
     });
 
     it('[C260477] Should be able to create a filter on APS for completed processes - Oldest first and check on ADF', async () => {
@@ -129,9 +129,9 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'created-asc'
         });
-        expect(processesQuery.data[0].name).toEqual('Process 1');
-        expect(processesQuery.data[1].name).toEqual('Process 2');
-        expect(processesQuery.data[2].name).toEqual('Process 3');
+        await expect(processesQuery.data[0].name).toEqual('Process 1');
+        await expect(processesQuery.data[1].name).toEqual('Process 2');
+        await expect(processesQuery.data[2].name).toEqual('Process 3');
     });
 
     it('[C260478] Should be able to create a filter on APS for all processes - Oldest first and check on ADF', async () => {
@@ -161,12 +161,12 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'all', 'sort': 'created-asc'
         });
-        expect(processesQuery.data[0].name).toEqual('Process 1');
-        expect(processesQuery.data[1].name).toEqual('Process 2');
-        expect(processesQuery.data[2].name).toEqual('Process 3');
-        expect(processesQuery.data[3].name).toEqual('Process 4');
-        expect(processesQuery.data[4].name).toEqual('Process 5');
-        expect(processesQuery.data[5].name).toEqual('Process 6');
+        await expect(processesQuery.data[0].name).toEqual('Process 1');
+        await expect(processesQuery.data[1].name).toEqual('Process 2');
+        await expect(processesQuery.data[2].name).toEqual('Process 3');
+        await expect(processesQuery.data[3].name).toEqual('Process 4');
+        await expect(processesQuery.data[4].name).toEqual('Process 5');
+        await expect(processesQuery.data[5].name).toEqual('Process 6');
     });
 
     it('[C260479] Should be able to create a filter on APS for running processes - Newest first and check on ADF', async () => {
@@ -188,9 +188,9 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'running', 'sort': 'created-desc'
         });
-        expect(processesQuery.data[0].name).toEqual('Process 3');
-        expect(processesQuery.data[1].name).toEqual('Process 2');
-        expect(processesQuery.data[2].name).toEqual('Process 1');
+        await expect(processesQuery.data[0].name).toEqual('Process 3');
+        await expect(processesQuery.data[1].name).toEqual('Process 2');
+        await expect(processesQuery.data[2].name).toEqual('Process 1');
     });
 
     it('[C260480] Should be able to create a filter on APS for completed processes - Newest first and check on ADF', async () => {
@@ -215,9 +215,9 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'created-desc'
         });
-        expect(processesQuery.data[0].name).toEqual('Process 3');
-        expect(processesQuery.data[1].name).toEqual('Process 2');
-        expect(processesQuery.data[2].name).toEqual('Process 1');
+        await expect(processesQuery.data[0].name).toEqual('Process 3');
+        await expect(processesQuery.data[1].name).toEqual('Process 2');
+        await expect(processesQuery.data[2].name).toEqual('Process 1');
     });
 
     it('[C260481] Should be able to create a filter on APS for all processes - Newest first and check on ADF', async () => {
@@ -247,12 +247,12 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'all', 'sort': 'created-desc'
         });
-        expect(processesQuery.data[0].name).toEqual('Process 6');
-        expect(processesQuery.data[1].name).toEqual('Process 5');
-        expect(processesQuery.data[2].name).toEqual('Process 4');
-        expect(processesQuery.data[3].name).toEqual('Process 3');
-        expect(processesQuery.data[4].name).toEqual('Process 2');
-        expect(processesQuery.data[5].name).toEqual('Process 1');
+        await expect(processesQuery.data[0].name).toEqual('Process 6');
+        await expect(processesQuery.data[1].name).toEqual('Process 5');
+        await expect(processesQuery.data[2].name).toEqual('Process 4');
+        await expect(processesQuery.data[3].name).toEqual('Process 3');
+        await expect(processesQuery.data[4].name).toEqual('Process 2');
+        await expect(processesQuery.data[5].name).toEqual('Process 1');
     });
 
     it('[C272815] Should be able to create a filter on APS for completed processes - Completed most recently and check on ADF', async () => {
@@ -278,9 +278,9 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'ended-asc'
         });
-        expect(processesQuery.data[0].name).toEqual('Process 2');
-        expect(processesQuery.data[1].name).toEqual('Process 1');
-        expect(processesQuery.data[2].name).toEqual('Process 3');
+        await expect(processesQuery.data[0].name).toEqual('Process 2');
+        await expect(processesQuery.data[1].name).toEqual('Process 1');
+        await expect(processesQuery.data[2].name).toEqual('Process 3');
     });
 
     it('[C272816] Should be able to create a filter on APS for completed processes - Completed least recently and check on ADF', async () => {
@@ -306,8 +306,8 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'ended-desc'
         });
-        expect(processesQuery.data[0].name).toEqual('Process 3');
-        expect(processesQuery.data[1].name).toEqual('Process 1');
-        expect(processesQuery.data[2].name).toEqual('Process 2');
+        await expect(processesQuery.data[0].name).toEqual('Process 3');
+        await expect(processesQuery.data[1].name).toEqual('Process 1');
+        await expect(processesQuery.data[2].name).toEqual('Process 2');
     });
 });

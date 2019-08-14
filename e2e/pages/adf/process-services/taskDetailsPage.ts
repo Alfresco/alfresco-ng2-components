@@ -71,7 +71,7 @@ export class TaskDetailsPage {
     async checkSelectedForm(formName): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.attachFormName);
         const text = await this.attachFormName.getText();
-        expect(formName).toEqual(text);
+        await expect(formName).toEqual(text);
     }
 
     async checkAttachFormButtonIsDisabled(): Promise<void> {
@@ -130,7 +130,7 @@ export class TaskDetailsPage {
     async checkFormIsAttached(formName): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
         const attachedFormName = await this.formNameField.getText();
-        expect(attachedFormName).toEqual(formName);
+        await expect(attachedFormName).toEqual(formName);
     }
 
     getFormName(): Promise<string> {
@@ -202,7 +202,7 @@ export class TaskDetailsPage {
 
     async addComment(comment): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.commentField);
-        this.commentField.sendKeys(comment);
+        await this.commentField.sendKeys(comment);
         await BrowserActions.click(this.addCommentButton);
     }
 

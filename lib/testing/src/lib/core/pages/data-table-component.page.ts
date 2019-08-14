@@ -25,7 +25,6 @@ export class DataTableComponentPage {
     list: ElementArrayFinder;
     contents: ElementArrayFinder;
     tableBody: ElementFinder;
-    spinner: ElementFinder;
     rows: Locator = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
     allColumns: ElementArrayFinder;
     selectedRowNumber: ElementFinder;
@@ -38,7 +37,6 @@ export class DataTableComponentPage {
         this.list = this.rootElement.all(by.css(`div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`));
         this.contents = this.rootElement.all(by.css('div[class="adf-datatable-body"] span'));
         this.tableBody = this.rootElement.all(by.css(`div[class='adf-datatable-body']`)).first();
-        this.spinner = this.rootElement.element(by.css('mat-progress-spinner'));
         this.allColumns = this.rootElement.all(by.css('div[data-automation-id*="auto_id_entry."]'));
         this.selectedRowNumber = this.rootElement.element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
         this.allSelectedRows = this.rootElement.all(by.css(`div[class*='is-selected']`));
@@ -87,6 +85,7 @@ export class DataTableComponentPage {
     }
 
     async selectRow(columnName, columnValue): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         await BrowserActions.click(row);
     }
@@ -117,9 +116,9 @@ export class DataTableComponentPage {
     /**
      * Check the list is sorted.
      *
-     * @param sortOrder: 'ASC' if the list is expected to be sorted ascending and 'DESC' for descending
+     * @param sortOrder: 'ASC' if the list is await expected to be sorted ascending and 'DESC' for descending
      * @param columnTitle: titleColumn column
-     * @return 'true' if the list is sorted as expected and 'false' if it isn't
+     * @return 'true' if the list is sorted as await expected and 'false' if it isn't
      */
     async checkListIsSorted(sortOrder: string, columnTitle: string): Promise<any> {
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
@@ -248,14 +247,6 @@ export class DataTableComponentPage {
 
     getCellElementByValue(columnName, columnValue): ElementFinder {
         return this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"] span`)).first();
-    }
-
-    async checkSpinnerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.spinner);
-    }
-
-    async checkSpinnerIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.spinner);
     }
 
     async tableIsLoaded(): Promise<void> {

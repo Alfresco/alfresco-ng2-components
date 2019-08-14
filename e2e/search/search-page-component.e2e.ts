@@ -115,7 +115,7 @@ describe('Search component - Search Page', () => {
         await searchDialog.enterTextAndPressEnter(search.active.firstFile);
 
         await searchResultPage.checkContentIsDisplayed(search.active.firstFile);
-        expect(await searchResultPage.numberOfResultsDisplayed()).toBe(1);
+        await expect(await searchResultPage.numberOfResultsDisplayed()).toBe(1);
     });
 
     it('[C260267] Should display content when opening a folder from search results', async () => {
@@ -126,7 +126,7 @@ describe('Search component - Search Page', () => {
         await searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
         await searchResultPage.navigateToFolder(emptyFolderModel.name);
         const result = await contentServicesPage.currentFolderName();
-        expect(result).toEqual(emptyFolderModel.name);
+        await expect(result).toEqual(emptyFolderModel.name);
     });
 
     it('[C260261] Should be able to delete a file from search results', async () => {

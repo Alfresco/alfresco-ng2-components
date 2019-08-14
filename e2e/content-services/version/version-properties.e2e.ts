@@ -91,7 +91,7 @@ describe('Version Properties',  () => {
         await versionManagePage.enterCommentText('Example comment text');
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
         await versionManagePage.checkFileVersionExist('1.1');
-        expect(await versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
+        await expect(await versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
         await versionManagePage.disableComments();
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-item-comment-1.1"]`)));
     });

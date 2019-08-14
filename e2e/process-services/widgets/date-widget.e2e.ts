@@ -75,20 +75,20 @@ describe('Date widget',  () => {
     });
 
     it('[C268814] Should be able to set general settings for Date widget', async () => {
-        expect(await widget.dateWidget().getDateLabel(app.FIELD.date_input)).toContain('Date');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await widget.dateWidget().getDateLabel(app.FIELD.date_input)).toContain('Date');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await widget.dateWidget().setDateInput(app.FIELD.date_input, '20-10-2018');
         await taskPage.formFields().saveForm();
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C277234] Should be able to set advanced settings for Date widget ', async () => {
         await widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2017');
         await taskPage.formFields().saveForm();
-        expect(await widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be less than 1-10-2018');
+        await expect(await widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be less than 1-10-2018');
         await widget.dateWidget().clearDateInput(app.FIELD.date_between_input);
         await widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2019');
         await taskPage.formFields().saveForm();
-        expect(await widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be greater than 31-10-2018');
+        await expect(await widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be greater than 31-10-2018');
     });
 });

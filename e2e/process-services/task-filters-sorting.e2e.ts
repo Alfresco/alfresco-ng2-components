@@ -132,9 +132,9 @@ describe('Task Filters Sorting', () => {
 
         await taskFiltersDemoPage.customTaskFilter('Newest first').clickTaskFilter();
 
-        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[0].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[0].name);
 
     });
 
@@ -151,9 +151,9 @@ describe('Task Filters Sorting', () => {
 
         await taskFiltersDemoPage.customTaskFilter('Newest last').clickTaskFilter();
 
-        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[0].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[2].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[0].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[2].name);
     });
 
     it('[C277256] Should display tasks under new filter from closest due date to farthest when they are completed', async () => {
@@ -169,9 +169,9 @@ describe('Task Filters Sorting', () => {
 
         await taskFiltersDemoPage.customTaskFilter('Due first').clickTaskFilter();
 
-        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[0].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[0].name);
     });
 
     it('[C277257] Should display tasks under new filter from farthest due date to closest when they are completed', async () => {
@@ -187,9 +187,9 @@ describe('Task Filters Sorting', () => {
 
         await taskFiltersDemoPage.customTaskFilter('Due last').clickTaskFilter();
 
-        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[0].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[2].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[0].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[2].name);
     });
 
     it('[C277258] Should display tasks under new filter from newest to oldest when they are open  ', async () => {
@@ -205,9 +205,9 @@ describe('Task Filters Sorting', () => {
 
         await taskFiltersDemoPage.customTaskFilter('Newest first Open').clickTaskFilter();
 
-        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[5].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[3].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[5].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[3].name);
     });
 
     it('[C277259] Should display tasks under new filter from oldest to newest when they are open', async () => {
@@ -223,9 +223,9 @@ describe('Task Filters Sorting', () => {
 
         await taskFiltersDemoPage.customTaskFilter('Newest last Open').clickTaskFilter();
 
-        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[3].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[5].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[3].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[5].name);
     });
 
     it('[C277260] Should display tasks under new filter from closest due date to farthest when they are open', async () => {
@@ -241,9 +241,9 @@ describe('Task Filters Sorting', () => {
 
         await taskFiltersDemoPage.customTaskFilter('Due first Open').clickTaskFilter();
 
-        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[5].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[3].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[5].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[3].name);
     });
 
     it('[C277261] Should display tasks under new filter from farthest due date to closest when they are open', async () => {
@@ -259,9 +259,9 @@ describe('Task Filters Sorting', () => {
 
         await taskFiltersDemoPage.customTaskFilter('Due last Open').clickTaskFilter();
 
-        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[3].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
-        expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[5].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[3].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
+        await expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[5].name);
 
     });
 });

@@ -79,11 +79,11 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
-        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
-        expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
-        expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
+        await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
 
         for (i; i < nrOfTasks; i++) {
             await apps.startProcess(this.alfrescoJsApi, resultApp);
@@ -91,11 +91,11 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
         currentPage++;
         await paginationPage.clickOnNextPage();
-        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
-        expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
-        expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
+        await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsEnabled();
     });

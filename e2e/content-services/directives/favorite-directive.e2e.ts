@@ -142,7 +142,7 @@ describe('Favorite directive',  () => {
 
         await navigationBarPage.clickTrashcanButton();
         await trashcanPage.waitForTableBody();
-        expect(await trashcanPage.numberOfResultsDisplayed()).toBe(1);
+        await expect(await trashcanPage.numberOfResultsDisplayed()).toBe(1);
         await trashcanPage.getDocumentList().dataTablePage().clickRowByContent(testFile.entry.name);
         await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(testFile.entry.name);
         await trashcanPage.clickRestore();
@@ -190,16 +190,16 @@ describe('Favorite directive',  () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder2.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
-        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(3);
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(3);
         await contentServicesPage.clickOnFavoriteButton();
         await contentServicesPage.checkIsMarkedFavorite();
 
         await contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', testFolder3.entry.name);
-        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(2);
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(2);
 
         await contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder4.entry.name);
-        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(3);
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(3);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder2.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder4.entry.name);
@@ -209,13 +209,13 @@ describe('Favorite directive',  () => {
         await contentServicesPage.clickOnFavoriteButton();
         await contentServicesPage.checkIsNotMarkedFavorite();
         await contentServicesPage.getDocumentList().dataTablePage().checkAllRows();
-        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBeGreaterThanOrEqual(4);
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBeGreaterThanOrEqual(4);
         await contentServicesPage.getDocumentList().dataTablePage().uncheckAllRows();
-        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
 
         await contentServicesPage.getDocumentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
-        expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
         await contentServicesPage.checkIsMarkedFavorite();
 
     });

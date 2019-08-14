@@ -76,40 +76,40 @@ describe('Text widget',  () => {
 
     it('[C268157] Should be able to set general properties for Text widget', async () => {
         const label = await widget.textWidget().getFieldLabel(app.FIELD.simpleText);
-        expect(label).toBe('textSimple*');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(label).toBe('textSimple*');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         const placeHolder = await widget.textWidget().getFieldPlaceHolder(app.FIELD.simpleText);
-        expect(placeHolder).toBe('Type something...');
+        await expect(placeHolder).toBe('Type something...');
         await widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C268170] Min-max length properties', async () => {
         await widget.textWidget().setValue(app.FIELD.textMinMax, 'A');
-        expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter at least 4 characters');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter at least 4 characters');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await widget.textWidget().setValue(app.FIELD.textMinMax, 'AAAAAAAAAAA');
-        expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter no more than 10 characters');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter no more than 10 characters');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
     });
 
     it('[C268171] Input mask reversed checkbox properties', async () => {
         await widget.textWidget().setValue(app.FIELD.textMask, '18951523');
-        expect(await widget.textWidget().getFieldValue(app.FIELD.textMask)).toBe('1895-1523');
+        await expect(await widget.textWidget().getFieldValue(app.FIELD.textMask)).toBe('1895-1523');
     });
 
     it('[C268171] Input mask reversed checkbox properties', async () => {
         await widget.textWidget().setValue(app.FIELD.textMaskReversed, '1234567899');
-        expect(await widget.textWidget().getFieldValue(app.FIELD.textMaskReversed)).toBe('3456-7899');
+        await expect(await widget.textWidget().getFieldValue(app.FIELD.textMaskReversed)).toBe('3456-7899');
     });
 
     it('[C268177] Should be able to set Regex Pattern property for Text widget', async () => {
         await widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
         await widget.textWidget().setValue(app.FIELD.textRegexp, 'T');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        expect(await widget.textWidget().getErrorMessage(app.FIELD.textRegexp)).toContain('Enter a different value');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await widget.textWidget().getErrorMessage(app.FIELD.textRegexp)).toContain('Enter a different value');
         await widget.textWidget().setValue(app.FIELD.textRegexp, 'TE');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C274712] Should be able to set visibility properties for Text widget ', async () => {

@@ -55,10 +55,8 @@ export class FormFields {
         await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement, 6000);
     }
 
-    async getWidget(fieldId): Promise<ElementFinder> {
-        const widget: ElementFinder = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
-        await BrowserVisibility.waitUntilElementIsVisible(widget);
-        return widget;
+    getWidget(fieldId): ElementFinder {
+        return element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
     }
 
     async getFieldValue(fieldId, valueLocatorParam?: any): Promise<string> {

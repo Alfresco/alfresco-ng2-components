@@ -81,22 +81,22 @@ describe('Amount Widget',  () => {
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         await taskPage.formFields().checkWidgetIsVisible(app.FIELD.amount_input_id);
 
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        expect(await widget.amountWidget().getAmountFieldLabel(app.FIELD.amount_input_id)).toContain('Amount');
-        expect(await widget.amountWidget().getPlaceholder(app.FIELD.amount_input_id)).toContain('Type amount');
-        expect(await widget.amountWidget().getAmountFieldCurrency(app.FIELD.amount_input_id)).toBe('$');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await widget.amountWidget().getAmountFieldLabel(app.FIELD.amount_input_id)).toContain('Amount');
+        await expect(await widget.amountWidget().getPlaceholder(app.FIELD.amount_input_id)).toContain('Type amount');
+        await expect(await widget.amountWidget().getAmountFieldCurrency(app.FIELD.amount_input_id)).toBe('$');
 
         await widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 4);
-        expect(await widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be less than 5');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be less than 5');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await widget.amountWidget().clearFieldValue(app.FIELD.amount_input_id);
 
         await widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 101);
-        expect(await widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be greater than 100');
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be greater than 100');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await widget.amountWidget().clearFieldValue(app.FIELD.amount_input_id);
 
         await widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 6);
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 });

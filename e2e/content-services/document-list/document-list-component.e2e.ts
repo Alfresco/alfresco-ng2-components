@@ -127,7 +127,7 @@ describe('Document List Component', () => {
             await contentServicesPage.checkContentIsDisplayed(folderName);
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
-            expect(await contentServicesPage.getDocumentListRowNumber()).toBe(4);
+            await expect(await contentServicesPage.getDocumentListRowNumber()).toBe(4);
         });
 
         it('[C279927] Should display default columns', async () => {
@@ -143,7 +143,7 @@ describe('Document List Component', () => {
             timeAgoUploadedNode = await uploadActions.uploadFile(timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
             await contentServicesPage.goToDocumentList();
             const dateValue = await contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
-            expect(dateValue).toMatch(/(ago|few)/);
+            await expect(dateValue).toMatch(/(ago|few)/);
 
         });
 
@@ -154,7 +154,7 @@ describe('Document List Component', () => {
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.enableMediumTimeFormat();
             const dateValue = await contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
-            expect(dateValue).toContain(createdDate);
+            await expect(dateValue).toContain(createdDate);
 
         });
     });
@@ -211,27 +211,27 @@ describe('Document List Component', () => {
         });
 
         it('[C260112] Should be able to sort by name (Ascending)', async () => {
-            expect(await contentServicesPage.sortAndCheckListIsOrderedByName('asc')).toBe(true, 'List is not sorted.');
+            await expect(await contentServicesPage.sortAndCheckListIsOrderedByName('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272770] Should be able to sort by name (Descending)', async () => {
-            expect(await contentServicesPage.sortAndCheckListIsOrderedByName('desc')).toBe(true, 'List is not sorted.');
+            await expect(await contentServicesPage.sortAndCheckListIsOrderedByName('desc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272771] Should be able to sort by author (Ascending)', async () => {
-            expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc')).toBe(true, 'List is not sorted.');
+            await expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272772] Should be able to sort by author (Descending)', async () => {
-            expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc')).toBe(true, 'List is not sorted.');
+            await expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272773] Should be able to sort by date (Ascending)', async () => {
-            expect(await contentServicesPage.sortAndCheckListIsOrderedByCreated('asc')).toBe(true, 'List is not sorted.');
+            await expect(await contentServicesPage.sortAndCheckListIsOrderedByCreated('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272774] Should be able to sort by date (Descending)', async () => {
-            expect(await contentServicesPage.sortAndCheckListIsOrderedByCreated('desc')).toBe(true, 'List is not sorted.');
+            await expect(await contentServicesPage.sortAndCheckListIsOrderedByCreated('desc')).toBe(true, 'List is not sorted.');
         });
     });
 
@@ -279,7 +279,7 @@ describe('Document List Component', () => {
         await contentServicesPage.clickOnContentServices();
         await contentServicesPage.checkRecentFileToBeShowed();
         const icon = await contentServicesPage.getRecentFileIcon();
-        expect(icon).toBe('history');
+        await expect(icon).toBe('history');
         await contentServicesPage.expandRecentFiles();
         await contentServicesPage.checkEmptyRecentFileIsDisplayed();
         await contentServicesPage.closeRecentFiles();
@@ -349,7 +349,7 @@ describe('Document List Component', () => {
         });
 
         afterAll(async () => {
-            Promise.all(folderCreated.map(async (folder) =>
+            await Promise.all(folderCreated.map(async (folder) =>
                 await uploadActions.deleteFileOrFolder(folder.entry.id)
             )).then(() => {
 

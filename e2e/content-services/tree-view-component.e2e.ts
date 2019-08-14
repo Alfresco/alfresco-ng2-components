@@ -86,7 +86,7 @@ describe('Tree View Component',  () => {
     it('[C289972] Should be able to show folders and sub-folders of a node as a tree view', async () => {
         await treeViewPage.checkTreeViewTitleIsDisplayed();
 
-        expect(await treeViewPage.getNodeId()).toEqual(nodeNames.parentFolder);
+        await expect(await treeViewPage.getNodeId()).toEqual(nodeNames.parentFolder);
 
         await treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.folder);
         await treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.secondFolder);
@@ -137,7 +137,7 @@ describe('Tree View Component',  () => {
 
         await treeViewPage.clickNode(nodeNames.thirdFolder);
 
-        expect(await treeViewPage.getTotalNodes()).toEqual(1);
+        await expect(await treeViewPage.getTotalNodes()).toEqual(1);
     });
 
 });

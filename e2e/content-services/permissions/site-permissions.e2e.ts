@@ -185,17 +185,17 @@ describe('Permissions Component', () => {
             await permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
             await permissionsPage.checkUserOrGroupIsAdded(consumerUser.getId());
 
-            expect(await permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('SiteCollaborator');
+            await expect(await permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('SiteCollaborator');
 
             await permissionsPage.clickRoleDropdownByUserOrGroupName(consumerUser.getId());
 
             const roleDropdownOptions = permissionsPage.getRoleDropdownOptions();
 
-            expect(await roleDropdownOptions.count()).toBe(4);
-            expect(await roleDropdownOptions.get(0).getText()).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);
-            expect(await roleDropdownOptions.get(1).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONSUMER);
-            expect(await roleDropdownOptions.get(2).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
-            expect(await roleDropdownOptions.get(3).getText()).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
+            await expect(await roleDropdownOptions.count()).toBe(4);
+            await expect(await roleDropdownOptions.get(0).getText()).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);
+            await expect(await roleDropdownOptions.get(1).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONSUMER);
+            await expect(await roleDropdownOptions.get(2).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
+            await expect(await roleDropdownOptions.get(3).getText()).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
         });
 
     });
@@ -298,7 +298,7 @@ describe('Permissions Component', () => {
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
             await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
 
-            expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
+            await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
             await metadataViewPage.clickCloseButton();
 
             await contentServicesPage.uploadFile(pngFileModel.location);
@@ -332,7 +332,7 @@ describe('Permissions Component', () => {
 
             await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
 
-            expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
+            await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
 
             await metadataViewPage.clickCloseButton();
             await contentServicesPage.uploadFile(testFileModel.location);

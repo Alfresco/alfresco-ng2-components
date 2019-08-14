@@ -55,9 +55,9 @@ describe('Settings component', () => {
             await settingsPage.setProviderEcmBpm();
             await loginPage.waitForElements();
             await settingsPage.goToSettingsPage();
-            expect(await settingsPage.getSelectedOptionText()).toEqual('ALL', 'The Settings changes are not saved');
-            expect(await settingsPage.getBpmHostUrl()).toEqual(browser.params.testConfig.adf_aps.host, 'The BPM Settings changes are not saved');
-            expect(await settingsPage.getEcmHostUrl()).toEqual(browser.params.testConfig.adf_acs.host, 'The ECM Settings changes are not saved');
+            await expect(await settingsPage.getSelectedOptionText()).toEqual('ALL', 'The Settings changes are not saved');
+            await expect(await settingsPage.getBpmHostUrl()).toEqual(browser.params.testConfig.adf_aps.host, 'The BPM Settings changes are not saved');
+            await expect(await settingsPage.getEcmHostUrl()).toEqual(browser.params.testConfig.adf_acs.host, 'The ECM Settings changes are not saved');
 
         });
 
@@ -85,7 +85,7 @@ describe('Settings component', () => {
             await loginPage.enterUsername(adminUserModel.id);
             await loginPage.enterPassword(adminUserModel.password);
             await loginPage.clickSignInButton();
-            expect(await loginPage.getLoginError()).toMatch(loginError);
+            await expect(await loginPage.getLoginError()).toMatch(loginError);
         });
 
         it('[C291952] Should not be able to sign in with invalid Process Services Url', async () => {
@@ -96,7 +96,7 @@ describe('Settings component', () => {
             await loginPage.enterUsername(adminUserModel.id);
             await loginPage.enterPassword(adminUserModel.password);
             await loginPage.clickSignInButton();
-            expect(await loginPage.getLoginError()).toMatch(loginError);
+            await expect(await loginPage.getLoginError()).toMatch(loginError);
         });
     });
 
@@ -119,11 +119,11 @@ describe('Settings component', () => {
             await settingsPage.checkProviderOptions();
             await settingsPage.checkBasicAuthRadioIsSelected();
             await settingsPage.checkSsoRadioIsNotSelected();
-            expect(await settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
-            expect(await settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
+            await expect(await settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
+            await expect(await settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
 
-            expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
             await loginPage.goToLoginPage();
             await loginPage.clickSettingsIcon();
             await settingsPage.checkProviderDropdownIsDisplayed();
@@ -141,14 +141,14 @@ describe('Settings component', () => {
             await processServicesPage.checkApsContainer();
             await processServicesPage.checkAppIsDisplayed('Task App');
             await navigationBarPage.clickSettingsButton();
-            expect(await settingsPage.getSelectedOptionText()).toBe('BPM');
+            await expect(await settingsPage.getSelectedOptionText()).toBe('BPM');
 
             await settingsPage.checkBasicAuthRadioIsSelected();
             await settingsPage.checkSsoRadioIsNotSelected();
-            expect(await settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
+            await expect(await settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
 
-            expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
@@ -170,13 +170,13 @@ describe('Settings component', () => {
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.checkAcsContainer();
             await navigationBarPage.clickSettingsButton();
-            expect(await settingsPage.getSelectedOptionText()).toBe('ECM');
+            await expect(await settingsPage.getSelectedOptionText()).toBe('ECM');
             await settingsPage.checkBasicAuthRadioIsSelected();
             await settingsPage.checkSsoRadioIsNotSelected();
 
-            expect(await settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
-            expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
+            await expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
@@ -200,14 +200,14 @@ describe('Settings component', () => {
             await processServicesPage.checkApsContainer();
             await processServicesPage.checkAppIsDisplayed('Task App');
             await navigationBarPage.clickSettingsButton();
-            expect(await settingsPage.getSelectedOptionText()).toBe('ALL');
+            await expect(await settingsPage.getSelectedOptionText()).toBe('ALL');
             await settingsPage.checkBasicAuthRadioIsSelected();
             await settingsPage.checkSsoRadioIsNotSelected();
-            expect(await settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
-            expect(await settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
+            await expect(await settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
+            await expect(await settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
 
-            expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');

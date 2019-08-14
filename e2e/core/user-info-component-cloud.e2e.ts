@@ -54,9 +54,9 @@ describe('User Info - SSO',  () => {
 
     it('[C290066] Should display UserInfo when login using SSO', async () => {
         await userInfoPage.clickUserProfile();
-        expect(await userInfoPage.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
-        expect(await userInfoPage.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
-        expect(await userInfoPage.getSsoEmail()).toEqual(identityUser.email);
+        await expect(await userInfoPage.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        await expect(await userInfoPage.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        await expect(await userInfoPage.getSsoEmail()).toEqual(identityUser.email);
         await userInfoPage.closeUserProfile();
         await userInfoPage.dialogIsNotDisplayed();
     });

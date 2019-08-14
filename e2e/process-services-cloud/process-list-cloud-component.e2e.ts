@@ -94,7 +94,7 @@ describe('Process list cloud',  () => {
             await processCloudDemoPage.clickOnProcessFilters();
             await processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
             await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-            expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
 
@@ -102,7 +102,7 @@ describe('Process list cloud',  () => {
 
         it('[C291997] Should be able to change the default columns', async () => {
 
-            expect(await processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfColumns()).toBe(10);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfColumns()).toBe(10);
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('id');
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('name');
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('status');

@@ -83,7 +83,7 @@ describe('Upload component', async () => {
 
         await contentServicesPage.uploadFile(largeFile.location);
 
-        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
@@ -95,7 +95,7 @@ describe('Upload component', async () => {
 
         await contentServicesPage.uploadFile(largeFile.location);
 
-        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
@@ -107,7 +107,7 @@ describe('Upload component', async () => {
 
         await uploadToggles.enableMultipleFileUpload();
         await contentServicesPage.uploadMultipleFile([pngFileModel.location, largeFile.location]);
-        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name);

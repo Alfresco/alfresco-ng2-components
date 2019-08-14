@@ -104,7 +104,7 @@ describe('Upload component', () => {
         });
 
         it('[C272788] Should display upload button', async () => {
-            expect(await contentServicesPage.getSingleFileButtonTooltip()).toEqual('Custom tooltip');
+            await expect(await contentServicesPage.getSingleFileButtonTooltip()).toEqual('Custom tooltip');
 
             await contentServicesPage.checkUploadButton();
             await contentServicesPage.checkContentIsDisplayed(firstPdfFileModel.name);
@@ -144,17 +144,17 @@ describe('Upload component', () => {
 
             await uploadDialog.fileIsUploaded(docxFileModel.name);
             await uploadDialog.checkCloseButtonIsDisplayed();
-            expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-            expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+            await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+            await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
             await uploadDialog.minimizeUploadDialog();
             await uploadDialog.dialogIsMinimized();
-            expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-            expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+            await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+            await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
             await uploadDialog.maximizeUploadDialog();
             await uploadDialog.dialogIsDisplayed();
             await uploadDialog.fileIsUploaded(docxFileModel.name);
-            expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-            expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+            await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+            await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
             await uploadDialog.checkCloseButtonIsDisplayed();
             await uploadDialog.clickOnCloseButton();
             await uploadDialog.dialogIsNotDisplayed();
@@ -163,7 +163,7 @@ describe('Upload component', () => {
         it('[C272794] Should display tooltip for uploading files', async () => {
             await uploadToggles.enableMultipleFileUpload();
             await uploadToggles.checkMultipleFileUploadToggleIsEnabled();
-            expect(await contentServicesPage.getMultipleFileButtonTooltip()).toEqual('Custom tooltip');
+            await expect(await contentServicesPage.getMultipleFileButtonTooltip()).toEqual('Custom tooltip');
             await uploadToggles.disableMultipleFileUpload();
         });
 
@@ -220,7 +220,7 @@ describe('Upload component', () => {
             await uploadToggles.addMaxSize('399');
             await contentServicesPage.uploadFile(fileWithSpecificSize.location);
 
-            //  expect(await contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
+            //  await expect(await contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
 
             await contentServicesPage.checkContentIsNotDisplayed(fileWithSpecificSize.name);
             await uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
@@ -239,7 +239,7 @@ describe('Upload component', () => {
             await uploadToggles.checkMaxSizeToggleIsEnabled();
             await uploadToggles.addMaxSize('0');
             await contentServicesPage.uploadFile(fileWithSpecificSize.location);
-            // expect(await contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
+            // await expect(await contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
 
             await uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
             await contentServicesPage.uploadFile(emptyFile.location);
@@ -266,10 +266,10 @@ describe('Upload component', () => {
 
         it('[C91318] Should Enable/Disable upload button when change the disable property', async () => {
             await uploadToggles.clickCheckboxDisableUpload();
-            expect(await contentServicesPage.uploadButtonIsEnabled()).toBe(false, 'Upload button is enabled');
+            await expect(await contentServicesPage.uploadButtonIsEnabled()).toBe(false, 'Upload button is enabled');
 
             await uploadToggles.clickCheckboxDisableUpload();
-            expect(await contentServicesPage.uploadButtonIsEnabled()).toBe(true, 'Upload button not enabled');
+            await expect(await contentServicesPage.uploadButtonIsEnabled()).toBe(true, 'Upload button not enabled');
         });
     });
 
@@ -323,7 +323,7 @@ describe('Upload component', () => {
         await contentServicesPage.uploadFile(pdfFileModel.location);
 
         await uploadDialog.displayTooltip();
-        expect(await uploadDialog.getTooltip()).toEqual('Upload location no longer exists [404]');
+        await expect(await uploadDialog.getTooltip()).toEqual('Upload location no longer exists [404]');
     });
 
 });

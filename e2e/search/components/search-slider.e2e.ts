@@ -110,7 +110,7 @@ describe('Search Slider Filter', () => {
         await searchFilters.checkSizeSliderFilterIsExpanded();
         await searchFilters.checkSizeSliderFilterIsDisplayed();
 
-        expect(await sizeSliderFilter.getValue()).toEqual(`${size}`);
+        await expect(await sizeSliderFilter.getValue()).toEqual(`${size}`);
     });
 
     it('[C276981] Should be able to clear value in Search Size Slider', async () => {
@@ -128,7 +128,7 @@ describe('Search Slider Filter', () => {
             try {
                 const currentSize = await currentResult.getAttribute('title');
                 if (currentSize && currentSize.trim() !== '') {
-                    expect(parseInt(currentSize, 10) <= 5000).toBe(true);
+                    await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
                 }
             } catch (e) {
             }
@@ -145,7 +145,7 @@ describe('Search Slider Filter', () => {
             try {
                 const currentSize = await currentResult.getAttribute('title');
                 if (currentSize && currentSize.trim() !== '') {
-                    expect(parseInt(currentSize, 10) >= 5000).toBe(true);
+                    await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
                 }
             } catch (e) {
             }
@@ -192,7 +192,7 @@ describe('Search Slider Filter', () => {
 
             await sizeSliderFilter.checkSliderIsDisplayed();
 
-            expect(await sizeSliderFilter.getMinValue()).toEqual(`${minSize}`);
+            await expect(await sizeSliderFilter.getMinValue()).toEqual(`${minSize}`);
         });
 
         it('[C276986] Should be able to set max value for Search Size Slider', async () => {
@@ -211,7 +211,7 @@ describe('Search Slider Filter', () => {
 
             await sizeSliderFilter.checkSliderIsDisplayed();
 
-            expect(await sizeSliderFilter.getMaxValue()).toEqual(`${maxSize}`);
+            await expect(await sizeSliderFilter.getMaxValue()).toEqual(`${maxSize}`);
         });
 
         it('[C276987] Should be able to set steps for Search Size Slider', async () => {
@@ -232,9 +232,9 @@ describe('Search Slider Filter', () => {
             await sizeSliderFilter.checkSliderIsDisplayed();
             await sizeSliderFilter.setValue(randomValue);
 
-            expect(await sizeSliderFilter.getValue()).toEqual(`0`);
+            await expect(await sizeSliderFilter.getValue()).toEqual(`0`);
             await sizeSliderFilter.setValue(step);
-            expect(await sizeSliderFilter.getValue()).toEqual(`${step}`);
+            await expect(await sizeSliderFilter.getValue()).toEqual(`${step}`);
         });
     });
 });

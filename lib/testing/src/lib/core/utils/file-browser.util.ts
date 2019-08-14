@@ -29,7 +29,7 @@ export class FileBrowserUtil {
             return fs.existsSync(path.join(DEFAULT_ROOT_PATH, 'downloads', fileName));
         }, 30000);
 
-        expect(file).toBe(true);
+        await expect(file).toBe(true);
 
         return !!file;
     }

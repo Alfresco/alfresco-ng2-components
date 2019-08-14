@@ -117,12 +117,12 @@ describe('Process List - Pagination', () => {
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
 
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
             await paginationPage.checkNextPageButtonIsDisabled();
             await paginationPage.checkPreviousPageButtonIsDisabled();
         });
@@ -137,11 +137,11 @@ describe('Process List - Pagination', () => {
             await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
             await paginationPage.checkNextPageButtonIsEnabled();
             await paginationPage.checkPreviousPageButtonIsDisabled();
 
@@ -149,11 +149,11 @@ describe('Process List - Pagination', () => {
             await paginationPage.clickOnNextPage();
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
             await paginationPage.checkNextPageButtonIsDisabled();
             await paginationPage.checkPreviousPageButtonIsEnabled();
 
@@ -163,9 +163,9 @@ describe('Process List - Pagination', () => {
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         });
 
         it('[C261044] Should be possible to Items per page to 10',  async() => {
@@ -178,11 +178,11 @@ describe('Process List - Pagination', () => {
             await paginationPage.selectItemsPerPage(itemsPerPage.ten);
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
             await paginationPage.checkNextPageButtonIsEnabled();
             await paginationPage.checkPreviousPageButtonIsDisabled();
 
@@ -190,11 +190,11 @@ describe('Process List - Pagination', () => {
             await paginationPage.clickOnNextPage();
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + nrOfProcesses + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
             await paginationPage.checkNextPageButtonIsDisabled();
             await paginationPage.checkPreviousPageButtonIsEnabled();
 
@@ -204,9 +204,9 @@ describe('Process List - Pagination', () => {
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         });
 
         it('[C261047] Should be possible to Items per page to 20',  async() => {
@@ -219,11 +219,11 @@ describe('Process List - Pagination', () => {
             await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
             await paginationPage.checkNextPageButtonIsDisabled();
             await paginationPage.checkPreviousPageButtonIsDisabled();
 
@@ -232,9 +232,9 @@ describe('Process List - Pagination', () => {
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         });
 
         it('[C261045] Should be possible to Items per page to 5',  async() => {
@@ -248,13 +248,13 @@ describe('Process List - Pagination', () => {
             await paginationPage.selectItemsPerPage(itemsPerPage.five);
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
             showing = (itemsPerPage.fiveValue * page);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
             await paginationPage.checkNextPageButtonIsEnabled();
             await paginationPage.checkPreviousPageButtonIsDisabled();
 
@@ -262,13 +262,13 @@ describe('Process List - Pagination', () => {
             await paginationPage.clickOnNextPage();
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
             showing = (itemsPerPage.fiveValue * page);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + showing + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
             await paginationPage.checkNextPageButtonIsEnabled();
             await paginationPage.checkPreviousPageButtonIsEnabled();
 
@@ -276,13 +276,13 @@ describe('Process List - Pagination', () => {
             await paginationPage.clickOnNextPage();
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
             showing = (itemsPerPage.fiveValue * page);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
             await paginationPage.checkNextPageButtonIsEnabled();
             await paginationPage.checkPreviousPageButtonIsEnabled();
 
@@ -290,13 +290,13 @@ describe('Process List - Pagination', () => {
             await paginationPage.clickOnNextPage();
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
             showing = (itemsPerPage.fiveValue * page);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + showing + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
             await paginationPage.checkNextPageButtonIsDisabled();
             await paginationPage.checkPreviousPageButtonIsEnabled();
 
@@ -306,9 +306,9 @@ describe('Process List - Pagination', () => {
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         });
 
         it('[C261049] Should be possible to open page number dropdown',  async() => {
@@ -321,45 +321,45 @@ describe('Process List - Pagination', () => {
             await paginationPage.selectItemsPerPage(itemsPerPage.ten);
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
 
             showing = (itemsPerPage.tenValue * page);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
             await paginationPage.checkNextPageButtonIsEnabled();
             await paginationPage.checkPreviousPageButtonIsDisabled();
 
             await paginationPage.clickOnPageDropdown();
-            expect(await paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
+            await expect(await paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
             page = 2;
             await paginationPage.clickOnPageDropdownOption('2');
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
 
             showing = (itemsPerPage.tenValue * page);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
             await paginationPage.checkNextPageButtonIsDisabled();
             await paginationPage.checkPreviousPageButtonIsEnabled();
 
             await paginationPage.clickOnPageDropdown();
-            expect(await paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
+            await expect(await paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
             page = 1;
             await paginationPage.clickOnPageDropdownOption('1');
             await processDetailsPage.checkProcessTitleIsDisplayed();
             await processFiltersPage.waitForTableBody();
-            expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
 
             showing = (itemsPerPage.tenValue * page);
-            expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
-            expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
             await paginationPage.checkNextPageButtonIsEnabled();
             await paginationPage.checkPreviousPageButtonIsDisabled();
         });

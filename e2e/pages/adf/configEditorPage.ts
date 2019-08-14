@@ -24,7 +24,7 @@ export class ConfigEditorPage {
 
     async enterConfiguration(text): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.textField);
-        this.textField.sendKeys(text);
+        await this.textField.sendKeys(text);
     }
 
     async clickSaveButton(): Promise<void> {

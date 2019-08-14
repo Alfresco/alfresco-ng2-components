@@ -80,11 +80,11 @@ describe('Task filters cloud',  () => {
             await tasksService.claimTask(task.entry.id, simpleApp);
 
             await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(newTask);
 
             await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(newTask);
         });
@@ -97,18 +97,18 @@ describe('Task filters cloud',  () => {
             await tasksService.completeTask(toBeCompletedTask.entry.id, simpleApp);
 
             await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTask);
 
             await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask);
         });
 
         it('[C291792] Should select the first task filter from the list as default', async () => {
 
-            expect(await tasksCloudDemoPage.firstFilterIsActive()).toBe(true);
+            await expect(await tasksCloudDemoPage.firstFilterIsActive()).toBe(true);
         });
 
     });

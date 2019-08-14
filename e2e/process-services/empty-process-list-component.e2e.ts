@@ -70,27 +70,27 @@ describe('Empty Process List Test', () => {
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await(await processServicesPage.goToApp(appA.title)).clickProcessButton();
-        expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
-        expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
+        await expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
         await startProcessPage.selectFromProcessDropdown(appA.process_wse_name);
         await startProcessPage.clickStartProcessButton();
-        expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
+        await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
 
         await processDetailsPage.checkProcessDetailsCard();
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await(await processServicesPage.goToApp(appB.title)).clickProcessButton();
-        expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
-        expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
+        await expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
         await startProcessPage.selectFromProcessDropdown(appB.processName);
         await startProcessPage.clickStartProcessButton();
-        expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
+        await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
         await processDetailsPage.checkProcessDetailsCard();
     });
 

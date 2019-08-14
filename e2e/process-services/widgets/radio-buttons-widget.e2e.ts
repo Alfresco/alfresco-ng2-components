@@ -82,11 +82,11 @@ describe('Radio Buttons Widget', () => {
 
     it('[C274704] Should be able to set visibility properties for Radio Button widget', async () => {
         await taskPage.formFields().checkWidgetIsHidden(app.FIELD.radio_buttons_id);
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        expect(await widget.radioWidget().getRadioWidgetLabel(app.FIELD.radio_buttons_id)).toContain('Radio posts');
+        await expect(await widget.radioWidget().getRadioWidgetLabel(app.FIELD.radio_buttons_id)).toContain('Radio posts');
         await widget.radioWidget().selectOption(app.FIELD.radio_buttons_id, 1);
-        expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 });

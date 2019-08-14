@@ -48,7 +48,7 @@ export class StartTaskDialog {
     async addAssignee(name): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.assignee);
         await this.assignee.sendKeys(name);
-        this.selectAssigneeFromList(name);
+        await this.selectAssigneeFromList(name);
     }
 
     async selectAssigneeFromList(name): Promise<void> {

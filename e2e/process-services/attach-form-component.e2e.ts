@@ -133,6 +133,6 @@ describe('Attach Form Component',  () => {
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow(testNames.taskName);
 
-        expect(await formFields.getFieldValue(formTextField)).toEqual(testNames.formFieldValue);
+        await expect(await formFields.getFieldValue(formTextField)).toEqual(testNames.formFieldValue);
     });
 });

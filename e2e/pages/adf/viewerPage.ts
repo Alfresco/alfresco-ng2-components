@@ -171,14 +171,14 @@ export class ViewerPage {
 
     async checkAllThumbnailsDisplayed(nbPages): Promise<void> {
         const defaultThumbnailHeight = 143;
-        expect(await this.thumbnailsContent.getAttribute('style')).toEqual('height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);');
+        await expect(await this.thumbnailsContent.getAttribute('style')).toEqual('height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);');
     }
 
     async checkCurrentThumbnailIsSelected(): Promise<void> {
         const selectedThumbnail: ElementFinder = element(by.css('adf-pdf-thumb[class="adf-pdf-thumbnails__thumb ng-star-inserted adf-pdf-thumbnails__thumb--selected"] > img'));
         const pageNumber = await this.pageSelectorInput.getAttribute('value');
 
-        expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
+        await expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
     }
 
     async checkThumbnailsCloseIsDisplayed(): Promise<void> {
@@ -231,7 +231,7 @@ export class ViewerPage {
 
     async checkFileNameIsDisplayed(file): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.fileName);
-        expect(await this.fileName.getText()).toEqual(file);
+        await expect(await this.fileName.getText()).toEqual(file);
     }
 
     async checkPreviousPageButtonIsDisplayed() {
@@ -260,7 +260,7 @@ export class ViewerPage {
 
     async checkPageSelectorInputIsDisplayed(checkNumber): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
-        expect(await this.pageSelectorInput.getAttribute('value')).toEqual(checkNumber);
+        await expect(await this.pageSelectorInput.getAttribute('value')).toEqual(checkNumber);
     }
 
     async checkImgContainerIsDisplayed(): Promise<void> {
@@ -296,11 +296,11 @@ export class ViewerPage {
     }
 
     async checkZoomedIn(zoom): Promise<void> {
-        expect(await this.percentage.getText()).toBeGreaterThan(zoom);
+        await expect(await this.percentage.getText()).toBeGreaterThan(zoom);
     }
 
     async checkZoomedOut(zoom): Promise<void> {
-        expect(await this.percentage.getText()).toBeLessThan(zoom);
+        await expect(await this.percentage.getText()).toBeLessThan(zoom);
     }
 
     async checkRotateLeftButtonIsDisplayed(): Promise<void> {
@@ -317,7 +317,7 @@ export class ViewerPage {
 
     async checkRotation(text): Promise<void> {
         const rotation = await this.imgContainer.getAttribute('style');
-        expect(rotation).toEqual(text);
+        await expect(rotation).toEqual(text);
     }
 
     async checkInfoSideBarIsNotDisplayed(): Promise<void> {

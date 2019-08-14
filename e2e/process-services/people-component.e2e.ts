@@ -117,8 +117,8 @@ describe('People component', () => {
         const taskDetails = await taskPage.taskDetails();
 
         await taskDetails.clickInvolvePeopleButton();
-        expect(await taskPage.taskDetails().getInvolvePeopleHeader()).toEqual('Add people and groups');
-        expect(await taskPage.taskDetails().getInvolvePeoplePlaceholder()).toEqual('Search user');
+        await expect(await taskPage.taskDetails().getInvolvePeopleHeader()).toEqual('Add people and groups');
+        await expect(await taskPage.taskDetails().getInvolvePeoplePlaceholder()).toEqual('Search user');
 
         await taskDetails.checkAddPeopleButtonIsEnabled();
         await taskDetails.checkCancelButtonIsEnabled();
@@ -149,7 +149,7 @@ describe('People component', () => {
 
         await taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
         await taskPage.taskDetails().removeInvolvedUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
         await taskPage.taskDetails().checkNoPeopleIsInvolved();
@@ -166,7 +166,7 @@ describe('People component', () => {
         await taskDetails.checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
         await taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
         await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
@@ -189,9 +189,9 @@ describe('People component', () => {
         await taskDetails.checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
         await taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
-        expect(await taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(1)');
+        await expect(await taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(1)');
 
         const taskDetails2 = await taskPage.taskDetails();
         await taskDetails2.clickInvolvePeopleButton();
@@ -201,9 +201,9 @@ describe('People component', () => {
 
         await taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(await taskPage.taskDetails().getInvolvedUserEmail(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
             .toEqual(secondAssigneeUserModel.email);
-        expect(await taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(2)');
+        await expect(await taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(2)');
     });
 
     it('[C280014] Should involved user see the task in completed filters when the task is completed', async () => {
@@ -218,13 +218,13 @@ describe('People component', () => {
 
         await taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
         await taskPage.completeTaskNoForm();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow(tasks[3]);
-        expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
         await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);

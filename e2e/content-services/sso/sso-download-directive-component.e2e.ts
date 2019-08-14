@@ -129,7 +129,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         it('[C291936] Should be able to download a file', async () => {
             await contentListPage.selectRow(pngFileModel.name);
             await contentServicesPage.clickDownloadButton();
-            expect(await FileBrowserUtil.isFileDownloaded(pngFileModel.name)).toBe(true, `${pngFileModel.name} not downloaded`);
+            await expect(await FileBrowserUtil.isFileDownloaded(pngFileModel.name)).toBe(true, `${pngFileModel.name} not downloaded`);
         });
 
         it('[C291938] Should be able to open a document', async () => {
@@ -155,7 +155,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await contentListPage.dataTablePage().checkRowIsChecked('Display name', pngFileModel.name);
             await contentListPage.dataTablePage().checkRowIsChecked('Display name', firstPdfFileModel.name);
             await contentServicesPage.clickDownloadButton();
-            expect(await FileBrowserUtil.isFileDownloaded('archive.zip')).toBe(true, `archive.zip not downloaded`);
+            await expect(await FileBrowserUtil.isFileDownloaded('archive.zip')).toBe(true, `archive.zip not downloaded`);
         });
 
         it('[C291940] Should be able to view thumbnails when enabled', async () => {
@@ -163,9 +163,9 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await contentServicesPage.checkAcsContainer();
             await contentListPage.waitForTableBody();
             const filePdfIconUrl = await contentServicesPage.getRowIconImageUrl(firstPdfFileModel.name);
-            expect(filePdfIconUrl).toContain(`/versions/1/nodes/${pdfUploadedFile.entry.id}/renditions`);
+            await expect(filePdfIconUrl).toContain(`/versions/1/nodes/${pdfUploadedFile.entry.id}/renditions`);
             const filePngIconUrl = await contentServicesPage.getRowIconImageUrl(pngFileModel.name);
-            expect(filePngIconUrl).toContain(`/versions/1/nodes/${pngUploadedFile.entry.id}/renditions`);
+            await expect(filePngIconUrl).toContain(`/versions/1/nodes/${pngUploadedFile.entry.id}/renditions`);
         });
     });
 });

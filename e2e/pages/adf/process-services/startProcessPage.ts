@@ -103,15 +103,15 @@ export class StartProcessPage {
     }
 
     async checkStartFormProcessButtonIsEnabled() {
-        expect(await this.formStartProcessButton.isEnabled()).toBe(true);
+        await expect(await this.formStartProcessButton.isEnabled()).toBe(true);
     }
 
     async checkStartProcessButtonIsEnabled() {
-        expect(await this.startProcessButton.isEnabled()).toBe(true);
+        await expect(await this.startProcessButton.isEnabled()).toBe(true);
     }
 
     async checkStartProcessButtonIsDisabled() {
-        expect(await this.startProcessButton.isEnabled()).toBe(false);
+        await expect(await this.startProcessButton.isEnabled()).toBe(false);
     }
 
     async clickStartProcessButton(): Promise<void> {

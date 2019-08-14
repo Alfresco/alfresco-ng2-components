@@ -33,12 +33,12 @@ export class NotificationHistoryPage {
 
     async checkNotificationIsPresent(text: string): Promise<void> {
         const notificationLisText = await BrowserActions.getText(this.notificationList);
-        expect(notificationLisText).toContain(text);
+        await expect(notificationLisText).toContain(text);
     }
 
     async checkNotificationIsNotPresent(text: string): Promise<void> {
         const notificationLisText = await BrowserActions.getText(this.notificationList);
-        expect(notificationLisText).not.toContain(text);
+        await expect(notificationLisText).not.toContain(text);
     }
 
     async checkNotifyContains(text: string): Promise<void> {

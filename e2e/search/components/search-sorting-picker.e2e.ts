@@ -164,7 +164,7 @@ describe('Search Sorting Picker', () => {
         await searchSortingPicker.clickSortingSelector();
         await searchSortingPicker.checkOptionIsDisplayed('Name');
         await searchSortingPicker.clickSortingOption('Name');
-        expect(await searchSortingPicker.checkOrderArrowIsDownward()).toBe(true);
+        await expect(await searchSortingPicker.checkOrderArrowIsDownward()).toBe(true);
     });
 
     it('[C277280] Should be able to sort the search results by "Name" ASC', async () => {
@@ -172,26 +172,26 @@ describe('Search Sorting Picker', () => {
         await searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
         await searchResults.sortByName('ASC');
 
-        expect(await searchResults.checkListIsOrderedByNameAsc()).toBe(true);
+        await expect(await searchResults.checkListIsOrderedByNameAsc()).toBe(true);
     });
 
     it('[C277281] Should be able to sort the search results by "Name" DESC', async () => {
         await searchFilters.checkSearchFiltersIsDisplayed();
         await searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
         await searchResults.sortByName('DESC');
-        expect(await searchResults.checkListIsOrderedByNameDesc()).toBe(true);
+        await expect(await searchResults.checkListIsOrderedByNameDesc()).toBe(true);
     });
 
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', async () => {
         await searchResults.sortByCreated('ASC');
         const results: any = searchResults.dataTable.geCellElementDetail('Created');
-        expect(contentServices.checkElementsDateSortedAsc(results)).toBe(true);
+        await expect(contentServices.checkElementsDateSortedAsc(results)).toBe(true);
     });
 
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', async () => {
         await searchResults.sortByCreated('DESC');
         const results = searchResults.dataTable.geCellElementDetail('Created');
-        expect(contentServices.checkElementsDateSortedDesc(results)).toBe(true);
+        await expect(contentServices.checkElementsDateSortedDesc(results)).toBe(true);
     });
 
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async () => {
@@ -222,7 +222,7 @@ describe('Search Sorting Picker', () => {
         for (let i = 0; i < nodeList.length; i++) {
             modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
         }
-        expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
+        await expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
     });
 
 });

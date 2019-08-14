@@ -157,9 +157,9 @@ describe('Search component - Search Bar', () => {
 
         await searchDialog.resultTableContainsRow(firstFolderModel.name);
 
-        expect(await searchDialog.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.shortName);
-        expect(await searchDialog.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
-        expect(await searchDialog.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+        await expect(await searchDialog.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.shortName);
+        await expect(await searchDialog.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchDialog.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
 
         await searchDialog.clearText();
 
@@ -167,10 +167,10 @@ describe('Search component - Search Bar', () => {
         await searchDialog.enterText(firstFileModel.shortName);
         await searchDialog.resultTableContainsRow(firstFileModel.name);
 
-        expect(await searchDialog.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.shortName);
-        expect(await searchDialog.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchDialog.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.shortName);
+        await expect(await searchDialog.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
 
-        expect(await searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
+        await expect(await searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
 
     it('[C272800] Should display file/folder in search suggestion when typing name', async () => {
@@ -180,9 +180,9 @@ describe('Search component - Search Bar', () => {
 
         await searchDialog.resultTableContainsRow(firstFolderModel.name);
 
-        expect(await searchDialog.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.name);
-        expect(await searchDialog.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
-        expect(await searchDialog.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+        await expect(await searchDialog.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+        await expect(await searchDialog.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchDialog.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
 
         await searchDialog.clearText();
 
@@ -190,9 +190,9 @@ describe('Search component - Search Bar', () => {
         await searchDialog.enterText(firstFileModel.name);
         await searchDialog.resultTableContainsRow(firstFileModel.name);
 
-        expect(await searchDialog.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.name);
-        expect(await searchDialog.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
-        expect(await searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
+        await expect(await searchDialog.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.name);
+        await expect(await searchDialog.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
 
     it('[C260257] Should display content when clicking on folder from search suggestions', async () => {
@@ -203,7 +203,7 @@ describe('Search component - Search Bar', () => {
         await searchDialog.resultTableContainsRow(firstFolderModel.name);
         await searchDialog.clickOnSpecificRow(firstFolderModel.name);
 
-        expect(await contentServicesPage.currentFolderName()).toEqual(firstFolderModel.name);
+        await expect(await contentServicesPage.currentFolderName()).toEqual(firstFolderModel.name);
 
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
@@ -212,7 +212,7 @@ describe('Search component - Search Bar', () => {
         await searchDialog.resultTableContainsRow(firstFileModel.name);
 
         await searchDialog.clickOnSpecificRow(firstFileModel.name);
-        expect(await viewerPage.getDisplayedFileName()).toEqual(firstFileModel.name);
+        await expect(await viewerPage.getDisplayedFileName()).toEqual(firstFileModel.name);
 
         await viewerPage.clickCloseButton();
     });
@@ -251,7 +251,7 @@ describe('Search component - Search Bar', () => {
         await searchDialog.enterText(secondFolder.shortName);
         await searchDialog.pressDownArrowAndEnter();
 
-        expect(await contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
+        await expect(await contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 
     it('[C290137] Should be able to search by \'%\'', async () => {
@@ -277,8 +277,8 @@ describe('Search component - Search Bar', () => {
 
         it('[C299212] Should be able to configure the highlight option for search results', async () => {
             const text = await searchResultPage.getNodeHighlight(fileHighlightUploaded.entry.name).getText();
-            expect(text.includes(`¿${term}?`)).toBe(true);
-            expect(text.includes(`(${term})`)).toBe(true);
+            await expect(text.includes(`¿${term}?`)).toBe(true);
+            await expect(text.includes(`(${term})`)).toBe(true);
         });
     });
 });

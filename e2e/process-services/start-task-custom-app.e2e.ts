@@ -105,7 +105,7 @@ describe('Start Task - Custom App', () => {
 
         await taskDetails.clickAddInvolvedUserButton();
 
-        expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
         ).toEqual(assigneeUserModel.email);
 
         await taskDetails.selectActivityTab();
@@ -146,7 +146,7 @@ describe('Start Task - Custom App', () => {
             .formFields()
             .noFormIsDisplayed();
 
-        expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
     it('[C263948] Should be possible to cancel a task', async () => {
@@ -161,7 +161,7 @@ describe('Start Task - Custom App', () => {
 
         await taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
 
-        expect(await taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await expect(await taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
     it('[C263949] Should be possible to save filled form', async () => {
@@ -232,7 +232,7 @@ describe('Start Task - Custom App', () => {
 
         await taskPage.checkTaskTitle(tasks[5]);
 
-        expect(await taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await expect(await taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
     });
 
     it('Attach a file', async () => {

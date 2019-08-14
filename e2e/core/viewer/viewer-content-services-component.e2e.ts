@@ -168,16 +168,16 @@ describe('Content Services Viewer',  () => {
         const initialHeight = await viewerPage.getCanvasHeight();
 
         await viewerPage.clickZoomInButton();
-        expect(+(await viewerPage.getCanvasWidth())).toBeGreaterThan(+initialWidth);
-        expect(+(await viewerPage.getCanvasHeight())).toBeGreaterThan(+initialHeight);
+        await expect(+(await viewerPage.getCanvasWidth())).toBeGreaterThan(+initialWidth);
+        await expect(+(await viewerPage.getCanvasHeight())).toBeGreaterThan(+initialHeight);
 
         await viewerPage.clickActualSize();
-        expect(+(await viewerPage.getCanvasWidth())).toEqual(+initialWidth);
-        expect(+(await viewerPage.getCanvasHeight())).toEqual(+initialHeight);
+        await expect(+(await viewerPage.getCanvasWidth())).toEqual(+initialWidth);
+        await expect(+(await viewerPage.getCanvasHeight())).toEqual(+initialHeight);
 
         await viewerPage.clickZoomOutButton();
-        expect(+(await viewerPage.getCanvasWidth())).toBeLessThan(+initialWidth);
-        expect(+(await viewerPage.getCanvasHeight())).toBeLessThan(+initialHeight);
+        await expect(+(await viewerPage.getCanvasWidth())).toBeLessThan(+initialWidth);
+        await expect(+(await viewerPage.getCanvasHeight())).toBeLessThan(+initialHeight);
 
         await viewerPage.clickCloseButton();
     });
@@ -274,7 +274,7 @@ describe('Content Services Viewer',  () => {
         await viewerPage.checkLeftSideBarIsDisplayed();
         await viewerPage.enableMoreActionsMenu();
         await viewerPage.checkToolbarIsDisplayed();
-        expect(await viewerPage.getLastButtonTitle()).toEqual(await viewerPage.getMoreActionsMenuTitle());
+        await expect(await viewerPage.getLastButtonTitle()).toEqual(await viewerPage.getMoreActionsMenuTitle());
         await viewerPage.clickCloseButton();
     });
 
@@ -309,7 +309,7 @@ describe('Content Services Viewer',  () => {
 
         await viewerPage.checkZoomInButtonIsNotDisplayed();
         await viewerPage.checkUnknownFormatIsDisplayed();
-        expect(await viewerPage.getUnknownFormatMessage()).toBe('Couldn\'t load preview. Unknown format.');
+        await expect(await viewerPage.getUnknownFormatMessage()).toBe('Couldn\'t load preview. Unknown format.');
 
         await viewerPage.clickCloseButton();
     });

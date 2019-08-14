@@ -98,17 +98,17 @@ describe('Upload component', () => {
 
         await uploadDialog.fileIsUploaded(docxFileModel.name);
         await uploadDialog.checkCloseButtonIsDisplayed();
-        expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-        expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+        await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+        await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
         await uploadDialog.minimizeUploadDialog();
         await uploadDialog.dialogIsMinimized();
-        expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-        expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+        await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+        await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
         await uploadDialog.maximizeUploadDialog();
         await uploadDialog.dialogIsDisplayed();
         await uploadDialog.fileIsUploaded(docxFileModel.name);
-        expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-        expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+        await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+        await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
         await uploadDialog.checkCloseButtonIsDisplayed();
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
@@ -121,7 +121,7 @@ describe('Upload component', () => {
 
         await uploadDialog.fileIsUploaded(docxFileModel.name);
         await uploadDialog.checkCloseButtonIsDisplayed();
-        expect(await uploadDialog.getTitleText()).toEqual('Uploaded 1 / 1');
+        await expect(await uploadDialog.getTitleText()).toEqual('Uploaded 1 / 1');
         await uploadDialog.checkCloseButtonIsDisplayed();
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
@@ -132,7 +132,7 @@ describe('Upload component', () => {
         await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
         await uploadDialog.removeUploadedFile(pdfFileModel.name);
         await uploadDialog.fileIsCancelled(pdfFileModel.name);
-        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
@@ -164,7 +164,7 @@ describe('Upload component', () => {
         await contentServicesPage.uploadMultipleFile(filesLocation);
         await contentServicesPage.checkContentsAreDisplayed(filesName);
         await uploadDialog.filesAreUploaded(filesName);
-        expect(await uploadDialog.getTitleText()).toEqual('Uploaded 4 / 4');
+        await expect(await uploadDialog.getTitleText()).toEqual('Uploaded 4 / 4');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await uploadToggles.disableMultipleFileUpload();

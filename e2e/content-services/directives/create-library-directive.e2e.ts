@@ -78,16 +78,16 @@ describe('Create library directive', () => {
     });
 
     it('[C290158] Should display the Create Library defaults', async () => {
-        expect(await createLibraryDialog.getTitle()).toMatch('Create Library');
-        expect(await createLibraryDialog.isNameDisplayed()).toBe(true, 'Name input field is not displayed');
-        expect(await createLibraryDialog.isLibraryIdDisplayed()).toBe(true, 'Library ID field is not displayed');
-        expect(await createLibraryDialog.isDescriptionDisplayed()).toBe(true, 'Library description is not displayed');
-        expect(await createLibraryDialog.isPublicDisplayed()).toBe(true, 'Public radio button is not displayed');
-        expect(await createLibraryDialog.isPrivateDisplayed()).toBe(true, 'Private radio button is not displayed');
-        expect(await createLibraryDialog.isModeratedDisplayed()).toBe(true, 'Moderated radio button is not displayed');
-        expect(await createLibraryDialog.isCreateEnabled()).toBe(false, 'Create button is not disabled');
-        expect(await createLibraryDialog.isCancelEnabled()).toBe(true, 'Cancel button is disabled');
-        expect(await createLibraryDialog.getSelectedRadio()).toMatch(visibility.public, 'The default visibility is not public');
+        await expect(await createLibraryDialog.getTitle()).toMatch('Create Library');
+        await expect(await createLibraryDialog.isNameDisplayed()).toBe(true, 'Name input field is not displayed');
+        await expect(await createLibraryDialog.isLibraryIdDisplayed()).toBe(true, 'Library ID field is not displayed');
+        await expect(await createLibraryDialog.isDescriptionDisplayed()).toBe(true, 'Library description is not displayed');
+        await expect(await createLibraryDialog.isPublicDisplayed()).toBe(true, 'Public radio button is not displayed');
+        await expect(await createLibraryDialog.isPrivateDisplayed()).toBe(true, 'Private radio button is not displayed');
+        await expect(await createLibraryDialog.isModeratedDisplayed()).toBe(true, 'Moderated radio button is not displayed');
+        await expect(await createLibraryDialog.isCreateEnabled()).toBe(false, 'Create button is not disabled');
+        await expect(await createLibraryDialog.isCancelEnabled()).toBe(true, 'Cancel button is disabled');
+        await expect(await createLibraryDialog.getSelectedRadio()).toMatch(visibility.public, 'The default visibility is not public');
     });
 
     it('[C290159] Should close the dialog when clicking Cancel button', async () => {
@@ -107,18 +107,18 @@ describe('Create library directive', () => {
         await createLibraryDialog.typeLibraryDescription(libraryDescription);
         await createLibraryDialog.selectPublic();
 
-        expect(await createLibraryDialog.getSelectedRadio()).toMatch(visibility.public, 'The visibility is not public');
+        await expect(await createLibraryDialog.getSelectedRadio()).toMatch(visibility.public, 'The visibility is not public');
 
         await createLibraryDialog.clickCreate();
         await createLibraryDialog.waitForDialogToClose();
 
-        expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create Library dialog is not closed');
+        await expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create Library dialog is not closed');
 
         await customSourcesPage.navigateToCustomSources();
         await customSourcesPage.selectMySitesSourceType();
         await customSourcesPage.checkRowIsDisplayed(libraryName);
 
-        expect(await customSourcesPage.getStatusCell(libraryName)).toMatch('PUBLIC', 'Wrong library status.');
+        await expect(await customSourcesPage.getStatusCell(libraryName)).toMatch('PUBLIC', 'Wrong library status.');
     });
 
     it('[C290173] Should create a private library', async () => {
@@ -128,18 +128,18 @@ describe('Create library directive', () => {
         await createLibraryDialog.typeLibraryDescription(libraryDescription);
         await createLibraryDialog.selectPrivate();
 
-        expect(await createLibraryDialog.getSelectedRadio()).toMatch(visibility.private, 'The visibility is not private');
+        await expect(await createLibraryDialog.getSelectedRadio()).toMatch(visibility.private, 'The visibility is not private');
 
         await createLibraryDialog.clickCreate();
         await createLibraryDialog.waitForDialogToClose();
 
-        expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create Library dialog is not closed');
+        await expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create Library dialog is not closed');
 
         await customSourcesPage.navigateToCustomSources();
         await customSourcesPage.selectMySitesSourceType();
         await customSourcesPage.checkRowIsDisplayed(libraryName);
 
-        expect(await customSourcesPage.getStatusCell(libraryName)).toMatch('PRIVATE', 'Wrong library status.');
+        await expect(await customSourcesPage.getStatusCell(libraryName)).toMatch('PRIVATE', 'Wrong library status.');
     });
 
     it('[C290174, C290175] Should create a moderated library with a given Library ID', async () => {
@@ -151,18 +151,18 @@ describe('Create library directive', () => {
         await createLibraryDialog.typeLibraryDescription(libraryDescription);
         await createLibraryDialog.selectModerated();
 
-        expect(await createLibraryDialog.getSelectedRadio()).toMatch(visibility.moderated, 'The visibility is not moderated');
+        await expect(await createLibraryDialog.getSelectedRadio()).toMatch(visibility.moderated, 'The visibility is not moderated');
 
         await createLibraryDialog.clickCreate();
         await createLibraryDialog.waitForDialogToClose();
 
-        expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create Library dialog is not closed');
+        await expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create Library dialog is not closed');
 
         await customSourcesPage.navigateToCustomSources();
         await customSourcesPage.selectMySitesSourceType();
         await customSourcesPage.checkRowIsDisplayed(libraryName);
 
-        expect(await customSourcesPage.getStatusCell(libraryName)).toMatch('MODERATED', 'Wrong library status.');
+        await expect(await customSourcesPage.getStatusCell(libraryName)).toMatch('MODERATED', 'Wrong library status.');
     });
 
     it('[C290163] Should disable Create button when a mandatory field is not filled in', async () => {
@@ -170,15 +170,15 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.typeLibraryName(inputValue);
         await createLibraryDialog.clearLibraryId();
-        expect(await createLibraryDialog.isCreateEnabled()).not.toBe(true, 'The Create button is enabled');
+        await expect(await createLibraryDialog.isCreateEnabled()).not.toBe(true, 'The Create button is enabled');
         await createLibraryDialog.clearLibraryName();
 
         await createLibraryDialog.typeLibraryId(inputValue);
-        expect(await createLibraryDialog.isCreateEnabled()).not.toBe(true, 'The Create button is enabled');
+        await expect(await createLibraryDialog.isCreateEnabled()).not.toBe(true, 'The Create button is enabled');
         await createLibraryDialog.clearLibraryId();
 
         await createLibraryDialog.typeLibraryDescription(inputValue);
-        expect(await createLibraryDialog.isCreateEnabled()).not.toBe(true, 'The Create button is enabled');
+        await expect(await createLibraryDialog.isCreateEnabled()).not.toBe(true, 'The Create button is enabled');
     });
 
     it('[C290164] Should auto-fill in the Library Id built from library name', async () => {
@@ -187,7 +187,7 @@ describe('Create library directive', () => {
 
         for (let i = 0; i < 3; i++) {
             await createLibraryDialog.typeLibraryName(name[i]);
-            expect(await createLibraryDialog.getLibraryIdText()).toMatch(libraryId[i]);
+            await expect(await createLibraryDialog.getLibraryIdText()).toMatch(libraryId[i]);
             await createLibraryDialog.clearLibraryName();
         }
     });
@@ -200,8 +200,8 @@ describe('Create library directive', () => {
 
         for (let _i = 0; _i < 3; _i++) {
             await createLibraryDialog.typeLibraryId(libraryId[_i]);
-            expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
-            expect(await createLibraryDialog.getErrorMessage()).toMatch('Use numbers and letters only');
+            await expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+            await expect(await createLibraryDialog.getErrorMessage()).toMatch('Use numbers and letters only');
         }
     });
 
@@ -211,8 +211,8 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.typeLibraryName(name);
         await createLibraryDialog.typeLibraryId(libraryId);
-        expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
-        expect(await createLibraryDialog.getErrorMessage()).toMatch('Title must be at least 2 characters long');
+        await expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+        await expect(await createLibraryDialog.getErrorMessage()).toMatch('Title must be at least 2 characters long');
     });
 
     it('[C291793] Should display error for Name field filled in with spaces only', async () => {
@@ -222,8 +222,8 @@ describe('Create library directive', () => {
         await createLibraryDialog.typeLibraryName(name);
         await createLibraryDialog.typeLibraryId(libraryId);
 
-        expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
-        expect(await createLibraryDialog.getErrorMessage()).toMatch("Library name can't contain only spaces");
+        await expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+        await expect(await createLibraryDialog.getErrorMessage()).toMatch("Library name can't contain only spaces");
     });
 
     it('[C290177] Should not accept a duplicate Library Id', async () => {
@@ -239,8 +239,8 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.typeLibraryName(name);
         await createLibraryDialog.typeLibraryId(libraryId);
-        expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
-        expect(await createLibraryDialog.getErrorMessage()).toMatch("This Library ID isn't available. Try a different Library ID.");
+        await expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+        await expect(await createLibraryDialog.getErrorMessage()).toMatch("This Library ID isn't available. Try a different Library ID.");
     });
 
     it('[C290178] Should accept the same library name but different Library Ids', async () => {
@@ -251,12 +251,12 @@ describe('Create library directive', () => {
         await createLibraryDialog.typeLibraryId(libraryId);
 
         await createLibraryDialog.waitForLibraryNameHint();
-        expect(await createLibraryDialog.getLibraryNameHint()).toMatch('Library name already in use', 'The library name hint is wrong');
+        await expect(await createLibraryDialog.getLibraryNameHint()).toMatch('Library name already in use', 'The library name hint is wrong');
 
         await createLibraryDialog.clickCreate();
         await createLibraryDialog.waitForDialogToClose();
 
-        expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create library dialog remained open');
+        await expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create library dialog remained open');
     });
 
     it('[C290179] Should not accept more than the expected characters for input fields', async () => {
@@ -270,8 +270,8 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.selectPublic();
 
-        expect(await createLibraryDialog.getErrorMessages(0)).toMatch('Use 256 characters or less for title');
-        expect(await createLibraryDialog.getErrorMessages(1)).toMatch('Use 72 characters or less for the URL name');
-        expect(await createLibraryDialog.getErrorMessages(2)).toMatch('Use 512 characters or less for description');
+        await expect(await createLibraryDialog.getErrorMessages(0)).toMatch('Use 256 characters or less for title');
+        await expect(await createLibraryDialog.getErrorMessages(1)).toMatch('Use 72 characters or less for the URL name');
+        await expect(await createLibraryDialog.getErrorMessages(2)).toMatch('Use 512 characters or less for description');
     });
 });

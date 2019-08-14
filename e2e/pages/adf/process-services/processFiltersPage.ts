@@ -49,12 +49,12 @@ export class ProcessFiltersPage {
 
     async clickCompletedFilterButton(): Promise<void> {
         await BrowserActions.click(this.completedFilter);
-        expect(await this.completedFilter.isEnabled()).toBe(true);
+        await expect(await this.completedFilter.isEnabled()).toBe(true);
     }
 
     async clickAllFilterButton(): Promise<void> {
         await BrowserActions.click(this.allFilter);
-        expect(await this.allFilter.isEnabled()).toBe(true);
+        await expect(await this.allFilter.isEnabled()).toBe(true);
     }
 
     async clickCreateProcessButton(): Promise<void> {
@@ -131,14 +131,14 @@ export class ProcessFiltersPage {
     async checkProcessesSortedByNameAsc(): Promise<void> {
         const list = await this.getAllRowsNameColumn();
         for (let i = 1; i < list.length; i++) {
-            expect(JSON.stringify(list[i]) > JSON.stringify(list[i - 1])).toEqual(true);
+            await expect(JSON.stringify(list[i]) > JSON.stringify(list[i - 1])).toEqual(true);
         }
     }
 
     async checkProcessesSortedByNameDesc(): Promise<void> {
         const list = await this.getAllRowsNameColumn();
         for (let i = 1; i < list.length; i++) {
-            expect(JSON.stringify(list[i]) < JSON.stringify(list[i - 1])).toEqual(true);
+            await expect(JSON.stringify(list[i]) < JSON.stringify(list[i - 1])).toEqual(true);
         }
     }
 }

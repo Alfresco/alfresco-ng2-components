@@ -117,34 +117,34 @@ describe('Document List Component',  () => {
         });
 
         it('[C260108] Should display tooltip for file\'s name', async () => {
-            expect(await contentServicesPage.getDocumentList().getTooltip(pdfFile.name)).toEqual(pdfFile.name);
+            await expect(await contentServicesPage.getDocumentList().getTooltip(pdfFile.name)).toEqual(pdfFile.name);
         });
 
         it('[C260109] Should display tooltip for folder\'s name', async () => {
-            expect(await contentServicesPage.getDocumentList().getTooltip(folderName)).toEqual(folderName);
+            await expect(await contentServicesPage.getDocumentList().getTooltip(folderName)).toEqual(folderName);
         });
 
         it('[C260119] Should have a specific thumbnail for folders', async () => {
             const folderIconUrl = await contentServicesPage.getRowIconImageUrl(folderName);
-            expect(folderIconUrl).toContain('/assets/images/ft_ic_folder.svg');
+            await expect(folderIconUrl).toContain('/assets/images/ft_ic_folder.svg');
 
         });
 
         it('[C280066] Should have a specific thumbnail PDF files', async () => {
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
-            expect(fileIconUrl).toContain('/assets/images/ft_ic_pdf.svg');
+            await expect(fileIconUrl).toContain('/assets/images/ft_ic_pdf.svg');
 
         });
 
         it('[C280067] Should have a specific thumbnail DOCX files', async () => {
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(docxFile.name);
-            expect(fileIconUrl).toContain('/assets/images/ft_ic_ms_word.svg');
+            await expect(fileIconUrl).toContain('/assets/images/ft_ic_ms_word.svg');
 
         });
 
         it('[C280068] Should have a specific thumbnail files', async () => {
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(testFile.name);
-            expect(fileIconUrl).toContain('/assets/images/ft_ic_document.svg');
+            await expect(fileIconUrl).toContain('/assets/images/ft_ic_document.svg');
 
         });
 
@@ -152,7 +152,7 @@ describe('Document List Component',  () => {
             await contentServicesPage.enableThumbnails();
             await contentServicesPage.checkAcsContainer();
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
-            expect(fileIconUrl).toContain(`/versions/1/nodes/${filePdfNode.entry.id}/renditions`);
+            await expect(fileIconUrl).toContain(`/versions/1/nodes/${filePdfNode.entry.id}/renditions`);
 
         });
     });

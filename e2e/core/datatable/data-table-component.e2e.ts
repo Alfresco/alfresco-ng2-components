@@ -75,9 +75,9 @@ describe('Datatable component', () => {
         it('[C91314] Should be possible add new row to the table', async () => {
             const result = await dataTableComponent.numberOfRows();
             await dataTablePage.addRow();
-            expect(await dataTableComponent.numberOfRows()).toEqual(result + 1);
+            await expect(await dataTableComponent.numberOfRows()).toEqual(result + 1);
             await dataTablePage.addRow();
-            expect(await dataTableComponent.numberOfRows()).toEqual(result + 2);
+            await expect(await dataTableComponent.numberOfRows()).toEqual(result + 2);
         });
 
         it('[C260039] Should be possible replace rows', async () => {
@@ -91,11 +91,11 @@ describe('Datatable component', () => {
         it('[C277314] Should filter the table rows when the input filter is passed', async () => {
             await dataTablePage.replaceRows(1);
             await dataTablePage.replaceColumns();
-            expect(await dataTableComponent.numberOfRows()).toEqual(4);
+            await expect(await dataTableComponent.numberOfRows()).toEqual(4);
             await dataTablePage.insertFilter('Name');
-            expect(await dataTableComponent.numberOfRows()).toEqual(3);
+            await expect(await dataTableComponent.numberOfRows()).toEqual(3);
             await dataTablePage.insertFilter('I');
-            expect(await dataTableComponent.numberOfRows()).toEqual(1);
+            await expect(await dataTableComponent.numberOfRows()).toEqual(1);
         });
     });
 
@@ -109,7 +109,7 @@ describe('Datatable component', () => {
 
         it('[C307037] A tooltip is displayed when mouseOver a column with copyContent set to true', async () => {
             await dataTablePage.mouseOverIdColumn('1');
-            expect(await dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
+            await expect(await dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             await dataTablePage.mouseOverNameColumn('Name 2');
             await dataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
         });
@@ -130,18 +130,18 @@ describe('Datatable component', () => {
 
         it('[C307040] A column value with copyContent set to true is copied when clicking on it', async () => {
             await dataTablePage.mouseOverIdColumn('1');
-            expect(await dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
+            await expect(await dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             await dataTablePage.clickOnIdColumn('1');
             await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
             await dataTablePage.clickOnIdColumn('2');
             await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
             await dataTablePage.pasteClipboard();
-            expect(await dataTablePage.getClipboardInputText()).toEqual('2');
+            await expect(await dataTablePage.getClipboardInputText()).toEqual('2');
         });
 
         it('[C307072] A tooltip is displayed when mouseOver a column with copyContent set to true', async () => {
             await copyContentDataTablePage.mouseOverIdColumn('1');
-            expect(await copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
+            await expect(await copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             await copyContentDataTablePage.mouseOverNameColumn('First');
             await copyContentDataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
         });
@@ -162,32 +162,32 @@ describe('Datatable component', () => {
 
         it('[C307073] A column value with copyContent set to true is copied when clicking on it', async () => {
             await copyContentDataTablePage.mouseOverIdColumn('1');
-            expect(await copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
+            await expect(await copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             await copyContentDataTablePage.clickOnIdColumn('1');
             await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
             await copyContentDataTablePage.clickOnIdColumn('2');
             await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
             await copyContentDataTablePage.pasteClipboard();
-            expect(await copyContentDataTablePage.getClipboardInputText()).toEqual('2');
+            await expect(await copyContentDataTablePage.getClipboardInputText()).toEqual('2');
         });
 
         it('[C307100] A column value of type text and with copyContent set to true is copied when clicking on it', async () => {
             await dataTablePage.mouseOverIdColumn('1');
-            expect(await dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
+            await expect(await dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             await dataTablePage.clickOnIdColumn('1');
             await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
             await dataTablePage.pasteClipboard();
-            expect(await dataTablePage.getClipboardInputText()).toEqual('1');
+            await expect(await dataTablePage.getClipboardInputText()).toEqual('1');
         });
 
         it('[C307101] A column value of type json and with copyContent set to true is copied when clicking on it', async () => {
             const jsonValue = `{   "id": 4 }`;
             await copyContentDataTablePage.mouseOverJsonColumn(2);
-            expect(await copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
+            await expect(await copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             await copyContentDataTablePage.clickOnJsonColumn(2);
             await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
             await copyContentDataTablePage.pasteClipboard();
-            expect(await copyContentDataTablePage.getClipboardInputText()).toContain(jsonValue);
+            await expect(await copyContentDataTablePage.getClipboardInputText()).toContain(jsonValue);
         });
 
         afterAll(async () => {

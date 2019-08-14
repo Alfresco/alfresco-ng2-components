@@ -146,21 +146,21 @@ describe('Search Checklist Component',  () => {
             await searchDialog.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
-            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
             await searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
 
             await searchFiltersPage.checkListFiltersPage().clickShowLessButton();
 
-            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
@@ -185,7 +185,7 @@ describe('Search Checklist Component',  () => {
             await searchDialog.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
-            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
@@ -199,7 +199,7 @@ describe('Search Checklist Component',  () => {
             await searchDialog.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
-            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
@@ -214,7 +214,7 @@ describe('Search Checklist Component',  () => {
             await searchDialog.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
-            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(9);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(9);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
         });
@@ -238,14 +238,14 @@ describe('Search Checklist Component',  () => {
             await searchDialog.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
-            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
             await searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
@@ -261,14 +261,14 @@ describe('Search Checklist Component',  () => {
             await searchDialog.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
-            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
             await searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();

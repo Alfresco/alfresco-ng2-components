@@ -203,7 +203,7 @@ describe('Lock File',  () => {
             try {
                 await this.alfrescoJsApi.core.nodesApi.deleteNode(nodeId);
             } catch (error) {
-                expect(error.status).toEqual(409);
+                await expect(error.status).toEqual(409);
             }
 
         });
@@ -219,7 +219,7 @@ describe('Lock File',  () => {
                 await this.alfrescoJsApi.core.nodesApi.updateNode(nodeId, { name: 'My new name' });
 
             } catch (error) {
-                expect(error.status).toEqual(409);
+                await expect(error.status).toEqual(409);
             }
 
         });
@@ -235,7 +235,7 @@ describe('Lock File',  () => {
                 await this.alfrescoJsApi.core.nodesApi.moveNode(nodeId, { targetParentId: '-my-' });
 
             } catch (error) {
-                expect(error.status).toEqual(409);
+                await expect(error.status).toEqual(409);
             }
         });
 
@@ -250,7 +250,7 @@ describe('Lock File',  () => {
                 await this.alfrescoJsApi.core.nodesApi.updateNodeContent(nodeId, 'NEW FILE CONTENT');
 
             } catch (error) {
-                expect(error.status).toEqual(409);
+                await expect(error.status).toEqual(409);
             }
         });
 
@@ -300,7 +300,7 @@ describe('Lock File',  () => {
 
             try {
                 const response = await this.alfrescoJsApi.core.nodesApi.updateNode(nodeId, { name: 'My new name' });
-                expect(response.entry.name).toEqual('My new name');
+                await expect(response.entry.name).toEqual('My new name');
             } catch (error) {
             }
 
@@ -316,7 +316,7 @@ describe('Lock File',  () => {
 
             try {
                 const response = await this.alfrescoJsApi.core.nodesApi.updateNodeContent(nodeId, 'NEW FILE CONTENT');
-                expect(response.entry.modifiedAt).toBeGreaterThan(response.entry.createdAt);
+                await expect(response.entry.modifiedAt).toBeGreaterThan(response.entry.createdAt);
             } catch (error) {
             }
 
@@ -335,7 +335,7 @@ describe('Lock File',  () => {
 
                 const movedFile = await this.alfrescoJsApi.core.nodesApi.getNode(nodeId);
 
-                expect(movedFile.entry.parentId).not.toEqual(documentLibrary);
+                await expect(movedFile.entry.parentId).not.toEqual(documentLibrary);
             } catch (error) {
             }
 

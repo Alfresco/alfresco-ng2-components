@@ -103,35 +103,35 @@ describe('Dynamic Table', () => {
             await widget.dynamicTable().clickAddButton();
             await widget.dynamicTable().clickColumnDateTime();
 
-            expect(await widget.dynamicTable().addRandomStringOnDateTime(randomText.wrongDateTime)).toBe('');
+            await expect(await widget.dynamicTable().addRandomStringOnDateTime(randomText.wrongDateTime)).toBe('');
         });
 
         it('[C286279] Should be able to save row with Date field', async () => {
             await widget.dynamicTable().clickAddButton();
             await widget.dynamicTable().addRandomStringOnDate(randomText.wrongDate);
             await widget.dynamicTable().clickSaveButton();
-            expect(await widget.dynamicTable().checkErrorMessage()).toBe(randomText.error);
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(randomText.error);
 
             await widget.dynamicTable().clickDateWidget();
             await datePicker.selectTodayDate();
             await datePicker.checkDatePickerIsNotDisplayed();
             await widget.dynamicTable().clickSaveButton();
             await widget.dynamicTable().getTableRow(rowPosition);
-            expect(await widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
+            await expect(await widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
         });
 
         it('[C311456] Should be able to delete date that is not mandatory and save the Dynamic Table', async () => {
             await widget.dynamicTable().clickAddButton();
             await widget.dynamicTable().clickSaveButton();
-            expect(await widget.dynamicTable().checkErrorMessage()).toBe(randomText.requiredError);
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(randomText.requiredError);
 
             await widget.dynamicTable().clickDateWidget();
             await datePicker.selectTodayDate();
             await datePicker.checkDatePickerIsNotDisplayed();
             await widget.dynamicTable().clickSaveButton();
             await widget.dynamicTable().getTableRow(rowPosition);
-            expect(await widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
-            expect(await widget.dynamicTable().getTableCellText(rowPosition, 2)).toBe('');
+            await expect(await widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
+            await expect(await widget.dynamicTable().getTableCellText(rowPosition, 2)).toBe('');
         });
     });
 

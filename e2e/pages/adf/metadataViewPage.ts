@@ -215,13 +215,13 @@ export class MetadataViewPage {
     async checkMetadataGroupIsExpand(groupName: string): Promise<void> {
         const group: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
         await BrowserVisibility.waitUntilElementIsVisible(group);
-        expect(await group.getAttribute('class')).toContain('mat-expanded');
+        await expect(await group.getAttribute('class')).toContain('mat-expanded');
     }
 
     async checkMetadataGroupIsNotExpand(groupName: string): Promise<void> {
         const group: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
         await BrowserVisibility.waitUntilElementIsPresent(group);
-        expect(await group.getAttribute('class')).not.toContain('mat-expanded');
+        await expect(await group.getAttribute('class')).not.toContain('mat-expanded');
     }
 
     async getMetadataGroupTitle(groupName: string): Promise<string> {

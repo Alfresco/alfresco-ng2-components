@@ -58,11 +58,11 @@ describe('CardView Component', () => {
             await cardViewPageComponent.setValue('testValue');
             await cardViewPageComponent.clickOnAddButton();
             await cardViewPageComponent.waitForOutput();
-            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Key-Value Pairs Item] - [{"name":"testName","value":"testValue"}]');
+            await expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Key-Value Pairs Item] - [{"name":"testName","value":"testValue"}]');
 
             await cardViewPageComponent.deletePairsValues();
 
-            expect(await cardViewPageComponent.getOutputText(1)).toBe('[CardView Key-Value Pairs Item] - []');
+            await expect(await cardViewPageComponent.getOutputText(1)).toBe('[CardView Key-Value Pairs Item] - []');
         });
     });
 
@@ -78,7 +78,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.clickSelectBox();
             await cardViewPageComponent.selectValueFromComboBox(1);
 
-            expect(await cardViewPageComponent.getOutputText(0))
+            await expect(await cardViewPageComponent.getOutputText(0))
                 .toBe('[CardView Select Item] - two');
         });
     });
@@ -92,7 +92,7 @@ describe('CardView Component', () => {
         });
 
         it('[C279943] Should be present a default value', async () => {
-            expect(await cardViewPageComponent.getTextFieldText()).toBe('Spock');
+            await expect(await cardViewPageComponent.getTextFieldText()).toBe('Spock');
         });
 
         it('[C279934] Should be possible edit text item', async () => {
@@ -100,7 +100,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterTextField('example');
             await cardViewPageComponent.clickOnTextSaveIcon();
 
-            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Text Item] - example');
+            await expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Text Item] - example');
         });
 
         it('[C279944] Should be possible undo text item modify when click on the clear button', async () => {
@@ -108,7 +108,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterTextField('example');
             await cardViewPageComponent.clickOnTextClearIcon();
 
-            expect(await cardViewPageComponent.getTextFieldText()).toBe('Spock');
+            await expect(await cardViewPageComponent.getTextFieldText()).toBe('Spock');
         });
     });
 
@@ -121,7 +121,7 @@ describe('CardView Component', () => {
         });
 
         it('[C279945] Should be present a default value', async () => {
-            expect(await cardViewPageComponent.getIntFieldText()).toBe('213');
+            await expect(await cardViewPageComponent.getIntFieldText()).toBe('213');
         });
 
         it('[C279946] Should be possible edit int item', async () => {
@@ -129,7 +129,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterIntField('99999');
             await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Int Item] - 99999');
+            await expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Int Item] - 99999');
         });
 
         it('[C279947] Should not be possible add string value to the int item', async () => {
@@ -137,7 +137,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterIntField('string value');
             await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            await expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
         it('[C279948] Should not be possible add float value to the int item', async () => {
@@ -145,7 +145,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterIntField('0.22');
             await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            await expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
         it('[C279949] Should not be possible have an empty value', async () => {
@@ -153,7 +153,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterIntField(' ');
             await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            await expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
         it('[C279950] Should return an error when the value is > 2147483647', async () => {
@@ -161,13 +161,13 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterIntField('214748367');
             await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Int Item] - 214748367');
+            await expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Int Item] - 214748367');
 
             await cardViewPageComponent.clickOnIntField();
             await cardViewPageComponent.enterIntField('2147483648');
             await cardViewPageComponent.clickOnIntSaveIcon();
 
-            expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            await expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
         it('[C279951] Should be possible undo item modify when click on the clear button', async () => {
@@ -175,7 +175,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterIntField('999');
             await cardViewPageComponent.clickOnIntClearIcon();
 
-            expect(await cardViewPageComponent.getIntFieldText()).toBe('213');
+            await expect(await cardViewPageComponent.getIntFieldText()).toBe('213');
         });
     });
 
@@ -188,7 +188,7 @@ describe('CardView Component', () => {
         });
 
         it('[C279952] Should be present a default value', async () => {
-            expect(await cardViewPageComponent.getFloatFieldText()).toBe('9.9');
+            await expect(await cardViewPageComponent.getFloatFieldText()).toBe('9.9');
         });
 
         it('[C279953] Should be possible edit float item', async () => {
@@ -196,7 +196,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterFloatField('77.33');
             await cardViewPageComponent.clickOnFloatSaveIcon();
 
-            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Float Item] - 77.33');
+            await expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Float Item] - 77.33');
         });
 
         it('[C279954] Should not be possible add string value to the float item', async () => {
@@ -204,7 +204,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterFloatField('string value');
             await cardViewPageComponent.clickOnFloatSaveIcon();
 
-            expect(await cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
+            await expect(await cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
         });
 
         it('[C279955] Should be possible undo item item modify when click on the clear button', async () => {
@@ -212,7 +212,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterFloatField('77.33');
             await cardViewPageComponent.clickOnFloatClearIcon();
 
-            expect(await cardViewPageComponent.getFloatFieldText()).toBe('9.9');
+            await expect(await cardViewPageComponent.getFloatFieldText()).toBe('9.9');
         });
 
         it('[C279956] Should not be possible have an empty value', async () => {
@@ -220,7 +220,7 @@ describe('CardView Component', () => {
             await cardViewPageComponent.enterFloatField(' ');
             await cardViewPageComponent.clickOnFloatSaveIcon();
 
-            expect(await cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
+            await expect(await cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
         });
 
     });
@@ -236,11 +236,11 @@ describe('CardView Component', () => {
         it('[C279957] Should be possible edit the checkbox value when click on it', async () => {
             await cardViewPageComponent.checkboxClick();
 
-            expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Boolean Item] - false');
+            await expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Boolean Item] - false');
 
             await cardViewPageComponent.checkboxClick();
 
-            expect(await cardViewPageComponent.getOutputText(1)).toBe('[CardView Boolean Item] - true');
+            await expect(await cardViewPageComponent.getOutputText(1)).toBe('[CardView Boolean Item] - true');
         });
     });
 
@@ -257,8 +257,8 @@ describe('CardView Component', () => {
         });
 
         it('[C279962] Should be present a default value', async () => {
-            expect(await metadataViewPage.getPropertyText('date', 'date')).toEqual('12/24/83');
-            expect(await metadataViewPage.getPropertyText('datetime', 'datetime')).toEqual('Dec 24, 1983, 10:00');
+            await expect(await metadataViewPage.getPropertyText('date', 'date')).toEqual('12/24/83');
+            await expect(await metadataViewPage.getPropertyText('datetime', 'datetime')).toEqual('Dec 24, 1983, 10:00');
         });
 
     });

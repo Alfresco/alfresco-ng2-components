@@ -80,20 +80,20 @@ describe('User Info component',  () => {
 
         await userInfoPage.clickUserProfile();
 
-        expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
-        expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
+        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        await expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        await expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
+        await expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
 
         await userInfoPage.checkInitialImage();
         await userInfoPage.APSProfileImageNotDisplayed();
         await userInfoPage.ACSProfileImageNotDisplayed();
         await userInfoPage.clickOnContentServicesTab();
 
-        expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
-        expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
+        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        await expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        await expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
+        await expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
 
         await userInfoPage.checkInitialImage();
         await userInfoPage.APSProfileImageNotDisplayed();
@@ -101,9 +101,9 @@ describe('User Info component',  () => {
         await userInfoPage.clickOnProcessServicesTab();
         await userInfoPage.checkProcessServicesTabIsSelected();
 
-        expect(await userInfoPage.getProcessHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(await userInfoPage.getProcessTitle()).toEqual(contentUserModel.firstName + ' ' + processUserModel.lastName);
-        expect(await userInfoPage.getProcessEmail()).toEqual(contentUserModel.email);
+        await expect(await userInfoPage.getProcessHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        await expect(await userInfoPage.getProcessTitle()).toEqual(contentUserModel.firstName + ' ' + processUserModel.lastName);
+        await expect(await userInfoPage.getProcessEmail()).toEqual(contentUserModel.email);
 
         await userInfoPage.checkInitialImage();
         await userInfoPage.APSProfileImageNotDisplayed();
@@ -117,10 +117,10 @@ describe('User Info component',  () => {
         await userInfoPage.clickUserProfile();
         await userInfoPage.dialogIsDisplayed();
 
-        expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
-        expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
+        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        await expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        await expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
+        await expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
 
         await userInfoPage.checkInitialImage();
         await userInfoPage.APSProfileImageNotDisplayed();
@@ -136,9 +136,9 @@ describe('User Info component',  () => {
 
         await userInfoPage.dialogIsDisplayed();
 
-        expect(await userInfoPage.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
-        expect(await userInfoPage.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
-        expect(await userInfoPage.getProcessEmail()).toEqual(processUserModel.email);
+        await expect(await userInfoPage.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
+        await expect(await userInfoPage.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
+        await expect(await userInfoPage.getProcessEmail()).toEqual(processUserModel.email);
 
         await userInfoPage.checkInitialImage();
         await userInfoPage.APSProfileImageNotDisplayed();
