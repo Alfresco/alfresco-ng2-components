@@ -176,40 +176,46 @@ export class CardViewComponentPage {
         }
     }
 
-    async clearDateField() {
-        const clearDateButton = element(by.css('mat-icon[data-automation-id="datepicker-date-clear-date"]'));
+    async getDateValue(): Promise<string> {
         const dateValue = element(by.css('span[data-automation-id="card-date-value-date"]'));
-        await BrowserActions.click(clearDateButton);
         return dateValue.getText();
     }
 
-    async clearDateTimeField() {
+    async getDateTimeValue(): Promise<string> {
+        const dateTimeValue = element(by.css('span[data-automation-id="card-datetime-value-datetime"]'));
+        return dateTimeValue.getText();
+    }
+
+    async clearDateField(): Promise<void> {
+        const clearDateButton = element(by.css('mat-icon[data-automation-id="datepicker-date-clear-date"]'));
+        await BrowserActions.click(clearDateButton);
+    }
+
+    async clearDateTimeField(): Promise<void> {
         const clearDateButton = element(by.css('mat-icon[data-automation-id="datepicker-date-clear-datetime"]'));
-        const dateValue = element(by.css('span[data-automation-id="card-datetime-value-datetime"]'));
         await BrowserActions.click(clearDateButton);
-        return dateValue.getText();
     }
 
-    enableClearDate() {
-        BrowserVisibility.waitUntilElementIsVisible(this.clearDateSwitch);
+    async enableClearDate(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.clearDateSwitch);
 
-        this.clearDateSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') === -1) {
-                this.clearDateSwitch.click();
-                expect(this.clearDateSwitch.getAttribute('class')).toContain('mat-checked');
-            }
-        });
+        const switchClass = await this.clearDateSwitch.getAttribute('class');
+        if (switchClass.indexOf('mat-checked') === -1) {
+            await this.clearDateSwitch.click();
+            const clearDateChecked = element(by.css('mat-slide-toggle[id="adf-toggle-clear-date"][class*="mat-checked"]'));
+            await BrowserVisibility.waitUntilElementIsVisible(clearDateChecked);
+        }
     }
 
-    enableNoneOption() {
-        BrowserVisibility.waitUntilElementIsVisible(this.noneOptionSwitch);
+    async enableNoneOption(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noneOptionSwitch);
 
-        this.noneOptionSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') === -1) {
-                this.noneOptionSwitch.click();
-                expect(this.noneOptionSwitch.getAttribute('class')).toContain('mat-checked');
-            }
-        });
+        const switchClass = await this.noneOptionSwitch.getAttribute('class');
+        if (switchClass.indexOf('mat-checked') === -1) {
+            await this.noneOptionSwitch.click();
+            const noneOptionChecked = element(by.css('mat-slide-toggle[id="adf-toggle-none-option"][class*="mat-checked"]'));
+            await BrowserVisibility.waitUntilElementIsVisible(noneOptionChecked);
+        }
     }
 
 }

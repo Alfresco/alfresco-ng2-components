@@ -81,6 +81,15 @@ describe('CardView Component', () => {
             await expect(await cardViewPageComponent.getOutputText(0))
                 .toBe('[CardView Select Item] - two');
         });
+
+        it('[C312448] Should be able to enable None option', async () => {
+            await cardViewPageComponent.enableNoneOption();
+            await cardViewPageComponent.clickSelectBox();
+            await cardViewPageComponent.selectValueFromComboBox(0);
+
+            await expect(cardViewPageComponent.getOutputText(0))
+                .toBe('[CardView Select Item] - null');
+        });
     });
 
     describe('Text', () => {
@@ -262,12 +271,14 @@ describe('CardView Component', () => {
         });
 
         it('[C312447] Should be able to clear the date field', async () => {
-            cardViewPageComponent.enableClearDate();
-            expect(await cardViewPageComponent.clearDateField()).toBe('', 'Date field should be cleared');
-            expect(cardViewPageComponent.getOutputText(0))
+            await cardViewPageComponent.enableClearDate();
+            await cardViewPageComponent.clearDateField();
+            await expect(await cardViewPageComponent.getDateValue()).toBe('', 'Date field should be cleared');
+            await expect(cardViewPageComponent.getOutputText(0))
                 .toBe('[CardView Date Item] - null');
-            expect(await cardViewPageComponent.clearDateTimeField()).toBe('', 'DateTime field should be cleared');
-            expect(cardViewPageComponent.getOutputText(1))
+            await cardViewPageComponent.clearDateTimeField();
+            await expect(await cardViewPageComponent.getDateTimeValue()).toBe('', 'DateTime field should be cleared');
+            await expect(cardViewPageComponent.getOutputText(1))
                 .toBe('[CardView Datetime Item] - null');
         });
 
