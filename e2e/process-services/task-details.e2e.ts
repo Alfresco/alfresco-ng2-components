@@ -65,12 +65,10 @@ describe('Task Details component', () => {
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
     });
 
     beforeEach(async () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
-
     });
 
     it('[C260506] Should display task details for standalone task - Task App', async () => {

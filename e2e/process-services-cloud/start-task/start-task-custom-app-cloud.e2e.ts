@@ -195,9 +195,14 @@ describe('Start Task', () => {
         await startTask.checkFormIsDisplayed();
         await startTask.addName(standaloneTaskName);
         await peopleCloudComponent.searchAssigneeAndSelect(`${activitiUser.firstName} ${activitiUser.lastName}`);
+
         await startTask.checkStartButtonIsEnabled();
         await startTask.clickStartButton();
+
+        await browser.driver.sleep(1000);
+
         await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+
         await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
     });
 
@@ -212,17 +217,25 @@ describe('Start Task', () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
         await startTask.addName(reassignTaskName);
+
+
         await expect(await peopleCloudComponent.getAssignee()).toBe(`${testUser.firstName} ${testUser.lastName}`);
         await peopleCloudComponent.searchAssignee(apsUser.username);
         await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
         await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
         await startTask.clickStartButton();
+
+
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(reassignTaskName);
+
+        await browser.driver.sleep(1000);
+
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(reassignTaskName);
+
         await expect(await taskHeaderCloudPage.getAssignee()).toBe(apsUser.username);
     });
 

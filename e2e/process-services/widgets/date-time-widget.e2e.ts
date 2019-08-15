@@ -96,10 +96,12 @@ describe('Date and time widget',  () => {
 
         await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
         await widget.dateTimeWidget().closeDataTimeWidget();
-
         await widget.dateTimeWidget().removeFromDatetimeWidget(app.FIELD.date_time_between_input);
 
+        await browser.refresh();
+
         await widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-19 07:30 PM');
+        await widget.dateTimeWidget().closeDataTimeWidget();
 
         await taskPage.formFields().saveForm();
 

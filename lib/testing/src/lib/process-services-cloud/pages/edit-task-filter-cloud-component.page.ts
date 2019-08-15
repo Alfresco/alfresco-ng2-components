@@ -31,8 +31,8 @@ export class EditTaskFilterCloudComponentPage {
     id: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskId"]'));
     processDefinitionId: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
     processInstanceId: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'));
-    lastModifiedFrom: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedFrom"]'));
-    lastModifiedTo: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedTo"]'));
+    lastModifiedFrom: ElementFinder = element(by.css('input[placeholder="LastModifiedFrom"]'));
+    lastModifiedTo: ElementFinder = element(by.css('input[placeholder="LastModifiedTo"]'));
     parentTaskId: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]'));
     owner: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-owner"]'));
     saveButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-save"]'));
@@ -125,7 +125,7 @@ export class EditTaskFilterCloudComponentPage {
 
     async setLastModifiedFrom(lastModifiedFromDate) {
         await this.clearField(this.lastModifiedFrom);
-        await this.setProperty('lastModifiedFrom', lastModifiedFromDate);
+        BrowserActions.clearSendKeys(this.lastModifiedFrom, lastModifiedFromDate);
     }
 
     async getLastModifiedFrom(): Promise<string> {
@@ -134,7 +134,7 @@ export class EditTaskFilterCloudComponentPage {
 
     async setLastModifiedTo(lastModifiedToDate): Promise<void> {
         await this.clearField(this.lastModifiedTo);
-        await this.setProperty('lastModifiedTo', lastModifiedToDate);
+        BrowserActions.clearSendKeys(this.lastModifiedTo, lastModifiedToDate);
     }
 
     async getLastModifiedTo(): Promise<string> {

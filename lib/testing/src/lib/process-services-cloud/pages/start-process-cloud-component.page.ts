@@ -75,6 +75,7 @@ export class StartProcessCloudPage {
     }
 
     async checkStartProcessButtonIsEnabled(): Promise<boolean> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.startProcessButton);
         return this.startProcessButton.isEnabled();
     }
 
