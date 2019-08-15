@@ -34,10 +34,9 @@ let LIST_SPECS = process.env.LIST_SPECS || [];
 let LOG = !!process.env.LOG;
 let arraySpecs = [];
 
-console.log('BROWSER_RUN : ' + BROWSER_RUN);
-
 if (LOG) {
     console.log('======= PROTRACTOR CONFIGURATION ====== ');
+    console.log('BROWSER_RUN : ' + BROWSER_RUN);
     console.log('SAVE_SCREENSHOT : ' + SAVE_SCREENSHOT);
     console.log('FOLDER : ' + FOLDER);
     console.log('MAXINSTANCES : ' + MAXINSTANCES);

@@ -35,7 +35,6 @@ export class PermissionsPage {
     addButton: ElementFinder = element(by.id('add-permission-dialog-confirm-button'));
     permissionInheritedButton: ElementFinder = element.all(by.css("div[class='adf-inherit_permission_button'] button")).first();
     noPermissions: ElementFinder = element(by.css('div[id="adf-no-permissions-template"]'));
-    assignPermissionError: ElementFinder = element(by.css('simple-snack-bar'));
     deletePermissionButton: ElementFinder = element(by.css(`button[data-automation-id='adf-delete-permission-button']`));
     permissionDisplayContainer: ElementFinder = element(by.css(`div[id='adf-permission-display-container']`));
     closeButton: ElementFinder = element(by.id('add-permission-dialog-close-button'));
@@ -125,10 +124,6 @@ export class PermissionsPage {
     async selectOption(name): Promise<void> {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         await BrowserActions.click(selectProcessDropdown);
-    }
-
-    async getAssignPermissionErrorText(): Promise<string> {
-        return await BrowserActions.getText(this.assignPermissionError);
     }
 
     async checkPermissionContainerIsDisplayed(): Promise<void> {

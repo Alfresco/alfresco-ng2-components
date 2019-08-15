@@ -44,7 +44,7 @@ describe('Permissions Component', () => {
     const contentList = contentServicesPage.getDocumentList();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
-    const notificationPage = new NotificationHistoryPage();
+    const notificationHistoryPage = new NotificationHistoryPage();
     const uploadDialog = new UploadDialog();
     let fileOwnerUser, filePermissionUser, file;
     const fileModel = new FileModel({
@@ -261,7 +261,6 @@ describe('Permissions Component', () => {
             await permissionsPage.searchUserOrGroup(filePermissionUser.getId());
             await permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
             await permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
-
         });
 
         afterEach(async () => {
@@ -298,7 +297,8 @@ describe('Permissions Component', () => {
             await permissionsPage.checkSearchUserInputIsDisplayed();
             await permissionsPage.searchUserOrGroup(filePermissionUser.getId());
             await permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
-            await expect(await permissionsPage.getAssignPermissionErrorText()).toBe(duplicateUserPermissionMessage);
+
+            await notificationHistoryPage.checkNotifyContains(duplicateUserPermissionMessage);
         });
 
         it('[C276982] Should be able to remove User or Group from the locally set permissions', async () => {
@@ -323,9 +323,9 @@ describe('Permissions Component', () => {
             await BrowserActions.closeMenuAndDialogs();
             await contentList.checkActionMenuIsNotDisplayed();
             await contentServicesPage.metadataContent('RoleConsumer' + fileModel.name);
-            await notificationPage.checkNotifyContains('You don\'t have access to do this.');
+            await notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
             await contentServicesPage.uploadFile(fileModel.location);
-            await notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
         it('[C276996] Role Contributor', async () => {
@@ -340,7 +340,7 @@ describe('Permissions Component', () => {
             await BrowserActions.closeMenuAndDialogs();
             await contentList.checkActionMenuIsNotDisplayed();
             await contentServicesPage.metadataContent('RoleContributor' + fileModel.name);
-            await notificationPage.checkNotifyContains('You don\'t have access to do this.');
+            await notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
             await contentServicesPage.uploadFile(testFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
             await uploadDialog.fileIsUploaded(testFileModel.name);
@@ -369,7 +369,7 @@ describe('Permissions Component', () => {
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle1');
             await metadataViewPage.clickCloseButton();
             await contentServicesPage.uploadFile(fileModel.location);
-            await notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
         it('[C277003] Role Collaborator', async () => {
@@ -436,9 +436,9 @@ describe('Permissions Component', () => {
             await permissionsPage.checkPermissionInheritedButtonIsDisplayed();
             await permissionsPage.checkAddPermissionButtonIsDisplayed();
             await permissionsPage.clickPermissionInheritedButton();
-            await notificationPage.checkNotifyContains('You are not allowed to change permissions');
+            await notificationHistoryPage.checkNotifyContains('You are not allowed to change permissions');
             await permissionsPage.clickAddPermissionButton();
-            await notificationPage.checkNotifyContains('You are not allowed to change permissions');
+            await notificationHistoryPage.checkNotifyContains('You are not allowed to change permissions');
         });
 
     });

@@ -28,7 +28,6 @@ export class ShareDialog {
     shareToggleChecked: ElementFinder = element(by.css('mat-dialog-container mat-slide-toggle.mat-checked'));
     shareLink: ElementFinder = element(by.css('[data-automation-id="adf-share-link"]'));
     closeButton: ElementFinder = element(by.css('button[data-automation-id="adf-share-dialog-close"]'));
-    snackBar: ElementFinder = element(by.css('simple-snack-bar'));
     copySharedLinkButton: ElementFinder = element(by.css('.adf-input-action'));
     timeDatePickerButton: ElementFinder = element(by.css('mat-datetimepicker-toggle button'));
     dayPicker: ElementFinder = element(by.css('mat-datetimepicker-month-view'));
