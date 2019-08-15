@@ -218,13 +218,11 @@ describe('Start Task', () => {
         await startTask.checkFormIsDisplayed();
         await startTask.addName(reassignTaskName);
 
-
         await expect(await peopleCloudComponent.getAssignee()).toBe(`${testUser.firstName} ${testUser.lastName}`);
         await peopleCloudComponent.searchAssignee(apsUser.username);
         await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
         await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
         await startTask.clickStartButton();
-
 
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();

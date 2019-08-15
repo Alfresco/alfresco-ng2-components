@@ -125,7 +125,7 @@ export class EditTaskFilterCloudComponentPage {
 
     async setLastModifiedFrom(lastModifiedFromDate) {
         await this.clearField(this.lastModifiedFrom);
-        BrowserActions.clearSendKeys(this.lastModifiedFrom, lastModifiedFromDate);
+        await BrowserActions.clearSendKeys(this.lastModifiedFrom, lastModifiedFromDate);
     }
 
     async getLastModifiedFrom(): Promise<string> {
@@ -134,7 +134,7 @@ export class EditTaskFilterCloudComponentPage {
 
     async setLastModifiedTo(lastModifiedToDate): Promise<void> {
         await this.clearField(this.lastModifiedTo);
-        BrowserActions.clearSendKeys(this.lastModifiedTo, lastModifiedToDate);
+        await BrowserActions.clearSendKeys(this.lastModifiedTo, lastModifiedToDate);
     }
 
     async getLastModifiedTo(): Promise<string> {
