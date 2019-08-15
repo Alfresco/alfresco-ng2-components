@@ -6,6 +6,8 @@ cd $DIR/../../../
 
 rm -rf tmp && mkdir tmp;
 
+./node_modules/@alfresco/adf-cli/bin/adf-cli update-commit-sha --pointer "HEAD" --pathPackage "$(pwd)"
+
 if [[ $TRAVIS_PULL_REQUEST == "false" ]];
 then
     ./scripts/update-version.sh -nextalpha -gnu -minor -components

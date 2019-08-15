@@ -33,9 +33,9 @@ release() {
     git checkout development
 
     if $GNU; then
-        ./scripts/update-version.sh -gnu -v $VERSION
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli update-version --pathPackage "$(pwd)" --version $VERSION
     else
-        ./scripts/update-version.sh -v $VERSION
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --skipGnu true
     fi
 
     git add .
