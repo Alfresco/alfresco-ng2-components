@@ -92,7 +92,7 @@ adf-cli update-version --vjs "3.2.0-fa5916ff413131513c3e382d7f27dd9b4cfa0e7e" --
 Update adf libs and js-api with latest alpha locally
 
 ```bash
-adf-cli update-version --alpha --pathPackage "$(pwd)" --skipGnu true
+adf-cli update-version --alpha --pathPackage "$(pwd)" --skipGnu
 ```
 
 ### Update commit sha
@@ -112,7 +112,7 @@ adf-cli update-commit-sha --pointer "HEAD~1" --pathProject "$(pwd)"
 
 Run command locally
 ```bash
-adf-cli update-commit-sha --pathProject "$(pwd)" --skipGnu true
+adf-cli update-commit-sha --pathProject "$(pwd)" --skipGnu
 ```
 
 ### npm publish
