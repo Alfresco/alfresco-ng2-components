@@ -99,7 +99,7 @@ function _getLatestVersionFromNpm(tag: string, project: string, logger: logging.
 }
 
 function _updateLibsVersionPerform(args: UpdateArgs, version: string, logger: logging.Logger) {
-    logger.info('Perform libs versioooon...');
+    logger.info('Perform libs version...');
     projects.forEach( (project) => {
         logger.info(`apply version ${version} on ${project} ...`);
         project = project.replace('/', '\\/');
