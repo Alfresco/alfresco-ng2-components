@@ -34,6 +34,8 @@ export class CardViewComponentPage {
     resetButton: ElementFinder = element(by.css(`#adf-reset-card-log`));
     listContent: ElementFinder = element(by.css('.mat-select-panel'));
     editableSwitch: ElementFinder = element(by.id('adf-toggle-editable'));
+    clearDateSwitch: ElementFinder = element(by.id('adf-toggle-clear-date'));
+    noneOptionSwitch: ElementFinder = element(by.id('adf-toggle-none-option'));
 
     async clickOnAddButton(): Promise<void> {
         await BrowserActions.click(this.addButton);
@@ -172,6 +174,42 @@ export class CardViewComponentPage {
             await BrowserActions.click(this.editableSwitch);
             await expect(await this.editableSwitch.getAttribute('class')).not.toContain('mat-checked');
         }
+    }
+
+    async clearDateField() {
+        const clearDateButton = element(by.css('mat-icon[data-automation-id="datepicker-date-clear-date"]'));
+        const dateValue = element(by.css('span[data-automation-id="card-date-value-date"]'));
+        await BrowserActions.click(clearDateButton);
+        return dateValue.getText();
+    }
+
+    async clearDateTimeField() {
+        const clearDateButton = element(by.css('mat-icon[data-automation-id="datepicker-date-clear-datetime"]'));
+        const dateValue = element(by.css('span[data-automation-id="card-datetime-value-datetime"]'));
+        await BrowserActions.click(clearDateButton);
+        return dateValue.getText();
+    }
+
+    enableClearDate() {
+        BrowserVisibility.waitUntilElementIsVisible(this.clearDateSwitch);
+
+        this.clearDateSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') === -1) {
+                this.clearDateSwitch.click();
+                expect(this.clearDateSwitch.getAttribute('class')).toContain('mat-checked');
+            }
+        });
+    }
+
+    enableNoneOption() {
+        BrowserVisibility.waitUntilElementIsVisible(this.noneOptionSwitch);
+
+        this.noneOptionSwitch.getAttribute('class').then((check) => {
+            if (check.indexOf('mat-checked') === -1) {
+                this.noneOptionSwitch.click();
+                expect(this.noneOptionSwitch.getAttribute('class')).toContain('mat-checked');
+            }
+        });
     }
 
 }

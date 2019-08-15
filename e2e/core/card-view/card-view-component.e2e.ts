@@ -261,6 +261,16 @@ describe('CardView Component', () => {
             await expect(await metadataViewPage.getPropertyText('datetime', 'datetime')).toEqual('Dec 24, 1983, 10:00');
         });
 
+        it('[C312447] Should be able to clear the date field', async () => {
+            cardViewPageComponent.enableClearDate();
+            expect(await cardViewPageComponent.clearDateField()).toBe('', 'Date field should be cleared');
+            expect(cardViewPageComponent.getOutputText(0))
+                .toBe('[CardView Date Item] - null');
+            expect(await cardViewPageComponent.clearDateTimeField()).toBe('', 'DateTime field should be cleared');
+            expect(cardViewPageComponent.getOutputText(1))
+                .toBe('[CardView Datetime Item] - null');
+        });
+
     });
 
     it('[C279936] Should not be possible edit any parameter when editable property is false', async () => {
