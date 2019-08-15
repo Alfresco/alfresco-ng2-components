@@ -65,6 +65,7 @@ describe('Task Details component', () => {
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
     });
 
     beforeEach(async () => {
