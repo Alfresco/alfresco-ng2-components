@@ -278,8 +278,9 @@ describe('Start Task Form', () => {
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(startEventFormProcess);
 
             await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', startEventFormProcess);
-
             await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+
+            await browser.sleep(1000);
 
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('StartEventFormTask');
             const processId = await processHeaderCloud.getId();
