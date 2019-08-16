@@ -69,8 +69,6 @@ describe('Task form cloud component',  () => {
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
 
-        await apiService.login(testUser.email, testUser.password);
-
         tasksService = new TasksService(apiService);
 
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
