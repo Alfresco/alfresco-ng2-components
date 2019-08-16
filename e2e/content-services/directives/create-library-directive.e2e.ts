@@ -198,8 +198,8 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.typeLibraryName(name);
 
-        for (let _i = 0; _i < 3; _i++) {
-            await createLibraryDialog.typeLibraryId(libraryId[_i]);
+        for (let i = 0; i < 3; i++) {
+            await createLibraryDialog.typeLibraryId(libraryId[i]);
             await expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
             await expect(await createLibraryDialog.getErrorMessage()).toMatch('Use numbers and letters only');
         }
