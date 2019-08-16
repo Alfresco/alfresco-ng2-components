@@ -150,7 +150,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     size: number;
     skipCount: number = 0;
     currentInstanceId: any;
-    isLoading = false;
+    isLoading = true;
     selectedInstances: any[];
 
     private onDestroy$ = new Subject<boolean>();
