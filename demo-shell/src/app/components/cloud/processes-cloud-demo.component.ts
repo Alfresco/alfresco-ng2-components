@@ -68,6 +68,23 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     private performAction$ = new Subject<any>();
     private onDestroy$ = new Subject<boolean>();
 
+    actions = [
+        {
+            key: 'edit',
+            icon: 'edit',
+            title: 'Edit',
+            visible: true,
+            disable: false
+        },
+        {
+        key: 'delete',
+        icon: 'delete',
+        title: 'Delete',
+        visible: true,
+        disable: false
+        }
+    ];
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,

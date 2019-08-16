@@ -21,11 +21,10 @@ import { DataTableSchema, PaginatedComponent,
          UserPreferencesService, PaginationModel,
          UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-
 @Component({
     selector: 'adf-cloud-process-list',
     templateUrl: './process-list-cloud.component.html',
@@ -145,6 +144,10 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when the list of process instances has been loaded successfully from the server. */
+    @Output()
+    actionClicked =  new EventEmitter<any>();
+
     pagination: BehaviorSubject<PaginationModel>;
     size: number;
     skipCount: number = 0;
@@ -153,6 +156,8 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     isLoading = true;
     rows: any[] = [];
     requestNode: ProcessQueryCloudRequestModel;
+    private performAction$ = new Subject<any>();
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private processListCloudService: ProcessListCloudService,
                 appConfigService: AppConfigService,
