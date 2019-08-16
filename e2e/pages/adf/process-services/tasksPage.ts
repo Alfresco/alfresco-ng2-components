@@ -90,7 +90,7 @@ export class TasksPage {
     }
 
     async checkChecklistIsDisplayed(checklist): Promise<void> {
-        const checklistEle = await this.getChecklistByName(checklist);
+        const checklistEle = this.getChecklistByName(checklist);
         await BrowserVisibility.waitUntilElementIsVisible(checklistEle);
     }
 

@@ -91,19 +91,19 @@ export class TaskListCloudComponentPage {
         return this.dataTable.checkContentIsDisplayed(column.id, taskId);
     }
 
-    checkContentIsNotDisplayedById(taskId): Promise<void> {
+    async checkContentIsNotDisplayedById(taskId): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(column.id, taskId);
     }
 
-    checkContentIsDisplayedByProcessInstanceId(taskName): Promise<void> {
+    async checkContentIsDisplayedByProcessInstanceId(taskName): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(column.processInstanceId, taskName);
     }
 
-    checkContentIsDisplayedByName(taskName): Promise<void> {
+    async checkContentIsDisplayedByName(taskName): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(column.name, taskName);
     }
 
-    checkContentIsNotDisplayedByName(taskName): Promise<void> {
+    async checkContentIsNotDisplayedByName(taskName): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(column.name, taskName);
     }
 

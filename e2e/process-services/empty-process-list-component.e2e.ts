@@ -70,7 +70,7 @@ describe('Empty Process List Test', () => {
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await(await processServicesPage.goToApp(appA.title)).clickProcessButton();
-        await expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
         await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         await processFiltersPage.clickCreateProcessButton();
@@ -83,7 +83,7 @@ describe('Empty Process List Test', () => {
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await(await processServicesPage.goToApp(appB.title)).clickProcessButton();
-        await expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
         await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         await processFiltersPage.clickCreateProcessButton();

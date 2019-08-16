@@ -46,9 +46,8 @@ export class TaskFiltersPage {
         return BrowserActions.click(this.filter);
     }
 
-    async checkTaskFilterNotDisplayed(): Promise<ElementFinder> {
+    async checkTaskFilterNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
-        return this.filter;
     }
 
 }

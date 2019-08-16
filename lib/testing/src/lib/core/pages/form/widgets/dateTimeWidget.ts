@@ -37,12 +37,6 @@ export class DateTimeWidget {
         await this.formFields.setValueInInputById(fieldId, value);
     }
 
-    async learDateTimeInput(fieldId): Promise<void> {
-        const dateInput = element(by.id(fieldId));
-        await BrowserVisibility.waitUntilElementIsVisible(dateInput);
-        await dateInput.clear();
-    }
-
     async clickOutsideWidget(fieldId): Promise<void> {
         const form = await this.formFields.getWidget(fieldId);
         await BrowserActions.click(form);
@@ -62,34 +56,34 @@ export class DateTimeWidget {
         await BrowserActions.click(selectedDay);
     }
 
-    async openDatepicker(fieldId) {
+    async openDatepicker(fieldId): Promise<void> {
         await BrowserActions.click(element(by.id(fieldId)));
     }
 
-    async selectTime(time) {
+    async selectTime(time): Promise<void> {
         const selectedTime = element(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time));
         await BrowserActions.click(selectedTime);
     }
 
-    async selectHour(hour) {
+    async selectHour(hour): Promise<void> {
         return this.selectTime(hour);
     }
 
-    async selectMinute(minute) {
+    async selectMinute(minute): Promise<void> {
         return this.selectTime(minute);
     }
 
-    async getPlaceholder(fieldId) {
+    async getPlaceholder(fieldId): Promise<string> {
         return this.formFields.getFieldPlaceHolder(fieldId);
     }
 
-    async removeFromDatetimeWidget(fieldId) {
+    async removeFromDatetimeWidget(fieldId): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(await this.formFields.getWidget(fieldId));
         const amountWidgetInput = element(by.id(fieldId));
         await BrowserActions.clearWithBackSpace(amountWidgetInput);
     }
 
-    async clearDateTimeInput(fieldId) {
+    async clearDateTimeInput(fieldId): Promise<void> {
         const dateInput = element(by.id(fieldId));
         await BrowserVisibility.waitUntilElementIsVisible(dateInput);
         await dateInput.clear();

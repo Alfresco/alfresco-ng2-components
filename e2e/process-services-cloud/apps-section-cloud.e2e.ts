@@ -73,9 +73,8 @@ describe('Applications list', () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudPage.checkApsContainer();
 
-        await appListCloudPage.getNameOfTheApplications().then(async (list) => {
-            await expect(JSON.stringify(list) === JSON.stringify(appNames)).toEqual(true);
-        });
+        const list = await appListCloudPage.getNameOfTheApplications();
+        await expect(JSON.stringify(list)).toEqual(JSON.stringify(appNames));
     });
 
     it('[C289910] Should the app be displayed on dashboard when is deployed on APS', async () => {

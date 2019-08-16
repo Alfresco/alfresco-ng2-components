@@ -64,7 +64,7 @@ export class CardViewComponentPage {
         return BrowserActions.getText(textField);
     }
 
-    async enterTextField(text): Promise<void> {
+    async enterTextField(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.textField);
         await BrowserActions.clearSendKeys(this.textField, text);
     }
@@ -117,7 +117,6 @@ export class CardViewComponentPage {
     }
 
     async enterFloatField(text): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.floatField);
         await BrowserActions.clearSendKeys(this.floatField, text);
     }
 
@@ -131,21 +130,19 @@ export class CardViewComponentPage {
         return BrowserActions.getText(errorElement);
     }
 
-    async setName(name): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.nameInputField);
-        await this.nameInputField.sendKeys(name);
+    async setName(name: string): Promise<void> {
+        await BrowserActions.clearSendKeys(this.nameInputField, name);
     }
 
     async setValue(value): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.valueInputField);
-        await this.valueInputField.sendKeys(value);
+        await BrowserActions.clearSendKeys(this.valueInputField, value);
     }
 
     async waitForOutput(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.consoleLog);
     }
 
-    getOutputText(index): Promise<string> {
+    getOutputText(index: number): Promise<string> {
         return BrowserActions.getText(this.consoleLog.all(by.css('p')).get(index));
     }
 

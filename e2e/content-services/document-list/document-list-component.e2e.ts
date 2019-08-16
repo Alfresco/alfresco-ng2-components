@@ -345,15 +345,12 @@ describe('Document List Component', () => {
                 folder = await uploadActions.createFolder(folderName, '-my-');
                 folderCreated.push(folder);
             }
-
         });
 
         afterAll(async () => {
-            await Promise.all(folderCreated.map(async (folder) =>
-                await uploadActions.deleteFileOrFolder(folder.entry.id)
-            )).then(() => {
-
-            });
+            for (let i = 0; i <= folderCreated.length; i++) {
+                await uploadActions.deleteFileOrFolder(folderCreated[i].entry.id);
+            }
         });
 
         it('[C277093] Should sort files with Items per page set to default', async () => {

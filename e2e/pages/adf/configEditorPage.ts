@@ -23,8 +23,7 @@ export class ConfigEditorPage {
     textField: ElementFinder = element(by.css('#adf-form-config-editor div.overflow-guard > textarea'));
 
     async enterConfiguration(text): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.textField);
-        await this.textField.sendKeys(text);
+        await BrowserActions.clearSendKeys(this.textField, text);
     }
 
     async clickSaveButton(): Promise<void> {

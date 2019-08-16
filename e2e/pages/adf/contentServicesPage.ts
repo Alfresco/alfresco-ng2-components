@@ -97,10 +97,10 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
     }
 
-    async checkContextActionIsEnabled(actionName): Promise<boolean> {
+    async isContextActionEnabled(actionName): Promise<boolean> {
         const actionButton: ElementFinder = element(by.css(`button[data-automation-id="context-${actionName}"`));
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
-        return await actionButton.isEnabled();
+        return actionButton.isEnabled();
     }
 
     getDocumentList(): DocumentListPage {
@@ -324,7 +324,6 @@ export class ContentServicesPage {
     }
 
     async doubleClickRow(nodeName): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
         await this.contentList.doubleClickRow(nodeName);
     }
 
@@ -348,8 +347,8 @@ export class ContentServicesPage {
         await BrowserActions.click(this.editFolderButton);
     }
 
-    async checkEditFolderButtonIsEnabled(): Promise<boolean> {
-        return await this.editFolderButton.isEnabled();
+    async isEditFolderButtonEnabled(): Promise<boolean> {
+        return this.editFolderButton.isEnabled();
     }
 
     async openCreateLibraryDialog(): Promise<void> {
@@ -428,8 +427,7 @@ export class ContentServicesPage {
     }
 
     async getErrorMessage(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.errorSnackBar);
-        return await this.errorSnackBar.getText();
+        return BrowserActions.getText(this.errorSnackBar);
     }
 
     async enableInfiniteScrolling(): Promise<void> {
@@ -575,7 +573,6 @@ export class ContentServicesPage {
     }
 
     async selectGridSortingFromDropdown(sortingChosen): Promise<void> {
-        // await BrowserActions.closeMenuAndDialogs();
         const sortingDropdown: ElementFinder = element(by.css('mat-select[data-automation-id="grid-view-sorting"]'));
         await BrowserActions.click(sortingDropdown);
         const optionToClick: ElementFinder = element(by.css(`mat-option[data-automation-id="grid-view-sorting-${sortingChosen}"]`));

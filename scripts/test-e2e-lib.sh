@@ -40,7 +40,6 @@ show_help() {
     echo "-l --lint enable lint"
     echo "-m --maxInstances max instances parallel for tests"
     echo "-log or --log print all the browser log"
-    echo "-disable-control-flow disable control flow"
     echo "-db or --debug run the debugger"
     echo "-vjsapi install different version from npm of JS-API defined in the package.json"
     echo "-gnu for gnu"
@@ -150,11 +149,6 @@ max_instances(){
     export MAXINSTANCES=$1
 }
 
-disable_control_flow(){
-    echo "====== disable control flow ====="
-    SELENIUM_PROMISE_MANAGER=0
-}
-
 version_js_api() {
     JSAPI_VERSION=$1
 
@@ -194,7 +188,6 @@ while [[ $1 == -* ]]; do
       -l|--lint)  lint; shift;;
       -m|--maxInstances)  max_instances $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
-      -disable-control-flow|--disable-control-flow)  disable_control_flow; shift;;
       -gnu) gnu_mode; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac

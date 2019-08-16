@@ -37,7 +37,6 @@ export class CommentsPage {
 
     async checkUserIconIsDisplayed(position): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.commentUserIcon.first());
-        return this.commentUserIcon.get(position);
     }
 
     getUserName(position): Promise<string> {
@@ -58,8 +57,7 @@ export class CommentsPage {
     }
 
     async addComment(comment): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
-        await this.commentInput.sendKeys(comment);
+        await BrowserActions.clearSendKeys(this.addCommentButton, comment);
         await BrowserActions.click(this.addCommentButton);
     }
 

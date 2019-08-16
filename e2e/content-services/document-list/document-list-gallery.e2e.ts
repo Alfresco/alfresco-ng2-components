@@ -34,7 +34,6 @@ describe('Document List Component',  () => {
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let acsUser = null;
-    const navBar = new NavigationBarPage();
     const navigationBarPage = new NavigationBarPage();
 
     describe('Gallery View',  () => {
@@ -86,7 +85,7 @@ describe('Document List Component',  () => {
         });
 
         beforeEach(async () => {
-            await navBar.clickHomeButton();
+            await navigationBarPage.clickHomeButton();
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.clickGridViewButton();
             await contentServicesPage.checkCardViewContainerIsDisplayed();

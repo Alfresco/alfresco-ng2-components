@@ -199,8 +199,7 @@ export class TaskDetailsPage {
     }
 
     async addComment(comment): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.commentField);
-        await this.commentField.sendKeys(comment);
+        await BrowserActions.clearSendKeys(this.commentField, comment);
         await BrowserActions.click(this.addCommentButton);
     }
 
@@ -217,12 +216,11 @@ export class TaskDetailsPage {
     }
 
     async typeUser(user): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.addPeopleField);
-        await this.addPeopleField.sendKeys(user);
+        await BrowserActions.clearSendKeys(this.addPeopleField, user);
     }
 
     async selectUserToInvolve(user): Promise<void> {
-        const row = await this.getRowsUser(user);
+        const row = this.getRowsUser(user);
         await BrowserActions.click(row);
     }
 
@@ -240,7 +238,7 @@ export class TaskDetailsPage {
     }
 
     async removeInvolvedUser(user): Promise<void> {
-        const row = await(await this.getRowsUser(user)).element(by.xpath('ancestor::div[contains(@class, "adf-datatable-row")]'));
+        const row = this.getRowsUser(user).element(by.xpath('ancestor::div[contains(@class, "adf-datatable-row")]'));
         await BrowserActions.click(row.element(by.css('button[data-automation-id="action_menu_0"]')));
         await BrowserVisibility.waitUntilElementIsVisible(this.removeInvolvedPeople);
         await BrowserActions.click(this.removeInvolvedPeople);
@@ -328,9 +326,8 @@ export class TaskDetailsPage {
         await BrowserActions.click(this.completeTask);
     }
 
-    async checkCompleteFormButtonIsDisplayed(): Promise<ElementFinder> {
+    async checkCompleteFormButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.completeFormTask);
-        return this.completeFormTask;
     }
 
     async checkCompleteTaskButtonIsEnabled(): Promise<void> {

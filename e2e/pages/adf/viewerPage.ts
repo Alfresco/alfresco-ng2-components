@@ -270,7 +270,7 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.mediaContainer);
     }
 
-    async checkFileContent(pageNumber, text): Promise<void> {
+    async checkFileContent(pageNumber: string, text: string): Promise<void> {
         const allPages = this.canvasLayer;
         const pageLoaded: ElementFinder = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
         const textLayerLoaded: ElementFinder = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]')).first();
@@ -584,7 +584,7 @@ export class ViewerPage {
         await BrowserActions.click(this.showLeftSidebarSwitch);
     }
 
-    async enterCustomName(text): Promise<void> {
+    async enterCustomName(text: string): Promise<void> {
         const textField: ElementFinder = element(by.css('input[data-automation-id="adf-text-custom-name"]'));
         await BrowserVisibility.waitUntilElementIsVisible(textField);
         await BrowserActions.clearSendKeys(textField, text);

@@ -193,7 +193,7 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
             await contentServicesPage.getDocumentList().rightClickOnRow(subFolder.entry.name);
             await contentServicesPage.checkContextActionIsVisible('Move');
-            await expect(await contentServicesPage.checkContextActionIsEnabled('Move')).toBe(false);
+            await expect(await contentServicesPage.isContextActionEnabled('Move')).toBe(false);
             await contentServicesPage.closeActionContext();
         });
 
@@ -202,7 +202,7 @@ describe('Document List Component',  () => {
             await contentServicesPage.checkContentIsDisplayed(copyFolder.entry.name);
             await contentServicesPage.getDocumentList().rightClickOnRow(copyFolder.entry.name);
             await contentServicesPage.checkContextActionIsVisible('Copy');
-            await expect(await contentServicesPage.checkContextActionIsEnabled('Copy')).toBe(true);
+            await expect(await contentServicesPage.isContextActionEnabled('Copy')).toBe(true);
             await contentServicesPage.pressContextMenuActionNamed('Copy');
             await contentNodeSelector.checkDialogIsDisplayed();
             await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);

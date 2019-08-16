@@ -22,7 +22,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { LoginPage, ErrorPage, StringUtil, BrowserActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Document List Component',  () => {
+describe('Document List Component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -33,14 +33,14 @@ describe('Document List Component',  () => {
     let privateSite;
     let acsUser = null;
 
-    beforeAll(async () => {
+    beforeAll(() => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
         });
     });
 
-    describe('Permission Message',  () => {
+    describe('Permission Message', () => {
 
         beforeAll(async () => {
             acsUser = new AcsUserModel();

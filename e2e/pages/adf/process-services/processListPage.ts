@@ -23,7 +23,7 @@ export class ProcessListPage {
     processListTitle: ElementFinder = element.all(by.css("div[class='adf-empty-content__title']")).first();
     processInstanceList: ElementFinder = element(by.css('adf-process-instance-list'));
 
-    checkProcessListTitleIsDisplayed(): Promise<string> {
+    getDisplayedProcessListTitle(): Promise<string> {
         return BrowserActions.getText(this.processListTitle);
     }
 

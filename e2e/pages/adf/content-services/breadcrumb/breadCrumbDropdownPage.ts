@@ -37,7 +37,7 @@ export class BreadCrumbDropdownPage {
     }
 
     async checkBreadCrumbDropdownIsDisplayed(): Promise<void> {
-        await BrowserVisibility. waitUntilElementIsVisible(this.breadCrumbDropdown);
+        await BrowserVisibility.waitUntilElementIsVisible(this.breadCrumbDropdown);
     }
 
     async getTextOfCurrentFolder(): Promise<string> {

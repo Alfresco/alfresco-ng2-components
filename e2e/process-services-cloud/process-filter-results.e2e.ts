@@ -171,7 +171,7 @@ describe('Process filters cloud', () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
 
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 
     it('[C306890] Should be able to filter by initiator', async () => {
@@ -188,7 +188,7 @@ describe('Process filters cloud', () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', anotherUser.username);
 
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 
     it('[C311315] Should be able to filter by process definition id', async () => {
@@ -332,7 +332,7 @@ describe('Process filters cloud', () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedFrom', afterDate);
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', afterDate);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await expect(await processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
+        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 
 });
