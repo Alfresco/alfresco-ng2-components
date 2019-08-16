@@ -32,7 +32,7 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Share file',  () => {
+describe('Share file', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -75,7 +75,7 @@ describe('Share file',  () => {
 
     });
 
-    describe('Shared link dialog',  () => {
+    describe('Shared link dialog', () => {
 
         beforeAll(async () => {
             await contentListPage.selectRow(pngFileModel.name);
@@ -152,7 +152,7 @@ describe('Share file',  () => {
         });
     });
 
-    describe('Shared link preview',  () => {
+    describe('Shared link preview', () => {
         afterEach(async() => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await navigationBarPage.clickContentServicesButton();

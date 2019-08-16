@@ -31,7 +31,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 import CONSTANTS = require('../../util/constants');
 
-describe('Upload - User permission',  () => {
+describe('Upload - User permission', () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialog();
@@ -97,7 +97,7 @@ describe('Upload - User permission',  () => {
 
     });
 
-    describe('Consumer permissions',  () => {
+    describe('Consumer permissions', () => {
 
         beforeEach(async () => {
             await contentServicesPage.goToDocumentList();
@@ -138,7 +138,7 @@ describe('Upload - User permission',  () => {
 
     });
 
-    describe('full permissions',  () => {
+    describe('full permissions', () => {
 
         beforeEach(async () => {
             await navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
@@ -155,7 +155,7 @@ describe('Upload - User permission',  () => {
 
     });
 
-    describe('multiple users',  () => {
+    describe('multiple users', () => {
 
         beforeEach(async () => {
             await contentServicesPage.goToDocumentList();

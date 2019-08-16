@@ -25,7 +25,7 @@ import CONSTANTS = require('../../util/constants');
 import resources = require('../../util/resources');
 import { browser } from 'protractor';
 
-describe('Amount Widget',  () => {
+describe('Amount Widget', () => {
 
     const loginPage = new LoginPage();
 

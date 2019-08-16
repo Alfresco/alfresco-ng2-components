@@ -24,9 +24,9 @@ import { AppListCloudPage } from '@alfresco/adf-testing';
 import { StringUtil } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('Task list cloud - selection',  () => {
+describe('Task list cloud - selection', () => {
 
-    describe('Task list cloud - selection',  () => {
+    describe('Task list cloud - selection', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -78,7 +78,7 @@ describe('Task list cloud - selection',  () => {
 
         });
 
-        beforeEach( async() => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);

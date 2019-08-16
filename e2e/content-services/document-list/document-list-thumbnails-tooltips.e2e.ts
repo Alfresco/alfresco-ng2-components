@@ -24,7 +24,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-describe('Document List Component',  () => {
+describe('Document List Component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -59,7 +59,7 @@ describe('Document List Component',  () => {
 
     });
 
-    describe('Thumbnails and tooltips',  () => {
+    describe('Thumbnails and tooltips', () => {
 
         const pdfFile = new FileModel({
             name: resources.Files.ADF_DOCUMENTS.PDF.file_name,

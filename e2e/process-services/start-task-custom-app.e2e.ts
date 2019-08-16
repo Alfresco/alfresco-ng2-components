@@ -83,7 +83,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263942] Should be possible to modify a task', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
@@ -125,7 +125,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263947] Should be able to start a task without form', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
@@ -150,7 +150,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263948] Should be possible to cancel a task', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
@@ -165,7 +165,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263949] Should be possible to save filled form', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
         await taskPage.filtersPage()
             .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
@@ -175,7 +175,7 @@ describe('Start Task - Custom App', () => {
         await task.addName(tasks[4]);
         await task.clickStartButton();
 
-        await  taskPage
+        await taskPage
             .tasksListPage()
             .checkContentIsDisplayed(tasks[4]);
 
@@ -207,7 +207,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263951] Should be possible to assign a user', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         const task = await taskPage.createNewTask();
@@ -236,7 +236,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('Attach a file', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         const task = await taskPage.createNewTask();
         await task.addName(tasks[6]);
@@ -247,7 +247,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263945] Should Information box be hidden when showHeaderContent property is set on false on custom app', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         const task = await taskPage.createNewTask();
         await task.addName(showHeaderTask);

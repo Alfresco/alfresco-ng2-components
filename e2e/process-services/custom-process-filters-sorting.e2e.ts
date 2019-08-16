@@ -94,7 +94,7 @@ describe('Sorting for process filters', () => {
         await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
         await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.running_old_first);
         await filtersPage.goToFilter(processFilter.running_old_first);
@@ -120,7 +120,7 @@ describe('Sorting for process filters', () => {
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.completed_old_first);
 
@@ -152,7 +152,7 @@ describe('Sorting for process filters', () => {
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.all_old_first);
 
@@ -179,7 +179,7 @@ describe('Sorting for process filters', () => {
         await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
         await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.running_new_first);
 
@@ -207,7 +207,7 @@ describe('Sorting for process filters', () => {
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.completed_new_first);
 
@@ -238,7 +238,7 @@ describe('Sorting for process filters', () => {
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.all_new_first);
 
@@ -269,7 +269,7 @@ describe('Sorting for process filters', () => {
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.completed_most_recently);
 
@@ -297,7 +297,7 @@ describe('Sorting for process filters', () => {
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.completed_least_recently);
 

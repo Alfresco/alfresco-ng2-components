@@ -30,7 +30,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { FileModel } from '../models/ACS/fileModel';
 import { browser } from 'protractor';
 
-describe('Attachment list action menu for processes',  () => {
+describe('Attachment list action menu for processes', () => {
 
     const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
@@ -159,7 +159,7 @@ describe('Attachment list action menu for processes',  () => {
     });
 
     it('[C277296] Should allow upload file when clicking on \'add\' icon', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName.taskApp);
@@ -171,7 +171,7 @@ describe('Attachment list action menu for processes',  () => {
     });
 
     it('[C260235] Should empty list component be displayed when no file is attached', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName.emptyList);

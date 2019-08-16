@@ -170,7 +170,7 @@ describe('People component', () => {
             .toEqual(assigneeUserModel.email);
 
         await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
         await taskPage.tasksListPage().selectRow(tasks[1]);
@@ -228,7 +228,7 @@ describe('People component', () => {
             .toEqual(assigneeUserModel.email);
 
         await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
         await taskPage.tasksListPage().selectRow(tasks[3]);

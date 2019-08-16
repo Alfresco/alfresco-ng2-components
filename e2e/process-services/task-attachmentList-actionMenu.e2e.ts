@@ -88,7 +88,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', async () => {
-        await(await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         const task = await taskPage.createNewTask();
@@ -117,7 +117,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C260236] Should be able to View /Download /Remove from Attachment List on a completed task', async () => {
-        await(await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         const task = await taskPage.createNewTask();
@@ -148,7 +148,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C260225] Should be able to upload a file in the Attachment list on Task App', async () => {
-        await(await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         const task = await taskPage.createNewTask();
@@ -160,7 +160,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C279884] Should be able to view the empty attachment list for tasks', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         const task = await taskPage.createNewTask();
@@ -184,7 +184,7 @@ describe('Attachment list action menu for tasks', () => {
         relatedContent = await this.alfrescoJsApi.activiti.contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });
         relatedContentId = relatedContent.id;
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.tasksListPage().selectRow('SHARE KNOWLEDGE');
@@ -193,7 +193,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await this.alfrescoJsApi.activiti.contentApi.deleteContent(relatedContentId);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.tasksListPage().selectRow('SHARE KNOWLEDGE');

@@ -25,7 +25,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FolderModel } from '../../models/ACS/folderModel';
 
-describe('Version component actions',  () => {
+describe('Version component actions', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();

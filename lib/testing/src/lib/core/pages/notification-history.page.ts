@@ -17,7 +17,7 @@
 
 import { by, element } from 'protractor';
 import { BrowserActions } from '../utils/browser-actions';
-import { ElementFinder } from 'protractor/built/element';
+import { ElementFinder } from 'protractor';
 
 export class NotificationHistoryPage {
 

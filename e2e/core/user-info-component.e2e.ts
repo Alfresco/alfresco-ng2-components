@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-describe('User Info component',  () => {
+describe('User Info component', () => {
 
     const loginPage = new LoginPage();
     const userInfoPage = new UserInfoPage();

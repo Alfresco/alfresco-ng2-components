@@ -22,7 +22,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Tree View Component',  () => {
+describe('Tree View Component', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();

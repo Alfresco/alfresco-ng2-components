@@ -23,7 +23,7 @@ import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Header Component',  () => {
+describe('Header Component', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();

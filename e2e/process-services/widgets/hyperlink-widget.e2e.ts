@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Hyperlink widget',  () => {
+describe('Hyperlink widget', () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -60,7 +60,7 @@ describe('Hyperlink widget',  () => {
 
     });
 
-    beforeEach( async() => {
+    beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);

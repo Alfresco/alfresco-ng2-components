@@ -25,7 +25,7 @@ import { SearchConfiguration } from '../search.config';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-describe('Search Checklist Component',  () => {
+describe('Search Checklist Component', () => {
 
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
@@ -123,7 +123,7 @@ describe('Search Checklist Component',  () => {
         await searchResults.checkContentIsNotDisplayed(nodeNames.folder);
     });
 
-    describe('configuration change',  () => {
+    describe('configuration change', () => {
         let jsonFile;
 
         beforeEach(() => {
@@ -276,7 +276,7 @@ describe('Search Checklist Component',  () => {
 
     });
 
-    describe('Properties',  () => {
+    describe('Properties', () => {
 
         let jsonFile;
 

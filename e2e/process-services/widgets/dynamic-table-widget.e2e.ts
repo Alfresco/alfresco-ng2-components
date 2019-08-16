@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Dynamic Table widget ',  () => {
+describe('Dynamic Table widget ', () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -35,7 +35,7 @@ describe('Dynamic Table widget ',  () => {
     let appModel;
     let deployedApp, process;
 
-    describe('with Date Time Widget App',  () => {
+    describe('with Date Time Widget App', () => {
         const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
         beforeAll(async () => {
@@ -62,7 +62,7 @@ describe('Dynamic Table widget ',  () => {
 
         });
 
-        beforeEach( async() => {
+        beforeEach(async () => {
             const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             await BrowserActions.getUrl(urlToNavigateTo);
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -95,7 +95,7 @@ describe('Dynamic Table widget ',  () => {
         });
     });
 
-    describe('with People Widget App',  () => {
+    describe('with People Widget App', () => {
 
         const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
 
@@ -123,7 +123,7 @@ describe('Dynamic Table widget ',  () => {
 
         });
 
-        beforeEach( async() => {
+        beforeEach(async () => {
             const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             await BrowserActions.getUrl(urlToNavigateTo);
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);

@@ -25,7 +25,7 @@ import { LoginSSOPage, AppListCloudPage, TaskHeaderCloudPage, TasksService } fro
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import resources = require('../util/resources');
 
-describe('Task Header cloud component',  () => {
+describe('Task Header cloud component', () => {
     const basicCreatedTaskName = StringUtil.generateRandomString();
     const completedTaskName = StringUtil.generateRandomString();
     let basicCreatedTask;
@@ -99,7 +99,7 @@ describe('Task Header cloud component',  () => {
         await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 
-    beforeEach( async() => {
+    beforeEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(simpleApp);
@@ -165,7 +165,7 @@ describe('Task Header cloud component',  () => {
             .toEqual(subTask.entry.parentTaskId === null ? '' : subTask.entry.parentTaskId);
     });
 
-    describe('Default Date format',  () => {
+    describe('Default Date format', () => {
         beforeEach(async () => {
             await LocalStorageUtil.setConfigField('dateValues', '{' +
                 '"defaultDateFormat": "shortDate",' +

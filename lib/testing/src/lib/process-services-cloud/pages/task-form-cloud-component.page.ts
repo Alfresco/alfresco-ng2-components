@@ -19,7 +19,7 @@ import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/formFields';
-import { ElementFinder } from 'protractor/built/element';
+import { ElementFinder } from 'protractor';
 
 export class TaskFormCloudComponent {
 

@@ -27,7 +27,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-describe('Search Component - Multi-Select Facet',  () => {
+describe('Search Component - Multi-Select Facet', () => {
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
     const searchResultsPage = new SearchResultsPage();
@@ -41,7 +41,7 @@ describe('Search Component - Multi-Select Facet',  () => {
 
     let site, userOption;
 
-    describe('',  () => {
+    describe('', () => {
         let jpgFile, jpgFileSite, txtFile, txtFileSite;
         const acsUser = new AcsUserModel();
 
@@ -130,7 +130,7 @@ describe('Search Component - Multi-Select Facet',  () => {
         });
     });
 
-    describe('',  () => {
+    describe('', () => {
         let jpgFile, txtFile;
         const userUploadingTxt = new AcsUserModel();
         const userUploadingImg = new AcsUserModel();
@@ -193,7 +193,7 @@ describe('Search Component - Multi-Select Facet',  () => {
         });
     });
 
-    describe('',  () => {
+    describe('', () => {
         let txtFile;
         const acsUser = new AcsUserModel();
 

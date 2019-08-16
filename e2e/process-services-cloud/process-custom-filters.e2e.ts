@@ -260,7 +260,7 @@ describe('Process list cloud', () => {
 
             await expect(await processCloudDemoPage.getActiveFilterName()).toBe('New');
 
-            await  processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
+            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
             await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().numberOfRows()).toBe(1);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();

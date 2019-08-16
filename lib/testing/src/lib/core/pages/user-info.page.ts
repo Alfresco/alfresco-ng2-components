@@ -19,7 +19,7 @@ import { element, by } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { TabsPage } from '../../material/pages/tabs.page';
 import { BrowserActions } from '../utils/browser-actions';
-import { ElementFinder } from 'protractor/built/element';
+import { ElementFinder } from 'protractor';
 
 export class UserInfoPage {
 

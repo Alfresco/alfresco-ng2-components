@@ -35,7 +35,7 @@ export class AppSettingsToggles {
     }
 
     async enableTaskFiltersIcon(): Promise<void> {
-        await  this.formControllersPage.enableToggle(this.showTaskFilterIconsToggle);
+        await this.formControllersPage.enableToggle(this.showTaskFilterIconsToggle);
     }
 
     async enableProcessFiltersIcon(): Promise<void> {

@@ -33,9 +33,9 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('Process filters cloud',  () => {
+describe('Process filters cloud', () => {
 
-    describe('Process Filters',  () => {
+    describe('Process Filters', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();

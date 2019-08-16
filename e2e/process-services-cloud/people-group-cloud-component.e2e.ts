@@ -22,9 +22,9 @@ import { browser } from 'protractor';
 import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiService } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('People Groups Cloud Component',  () => {
+describe('People Groups Cloud Component', () => {
 
-    describe('People Groups Cloud Component',  () => {
+    describe('People Groups Cloud Component', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
@@ -106,7 +106,7 @@ describe('People Groups Cloud Component',  () => {
 
         });
 
-        beforeEach( async() => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToPeopleGroupCloudPage();
             await peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
             await peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
@@ -116,9 +116,9 @@ describe('People Groups Cloud Component',  () => {
             await browser.refresh();
         });
 
-        describe('[C297674] Should be able to add filtering to People Cloud Component',  () => {
+        describe('[C297674] Should be able to add filtering to People Cloud Component', () => {
 
-            beforeEach( async() => {
+            beforeEach(async () => {
                 await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
                 await peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
                 await peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
@@ -155,9 +155,9 @@ describe('People Groups Cloud Component',  () => {
             });
         });
 
-        describe('[C309674] Should be able to add filtering to Group Cloud Component',  () => {
+        describe('[C309674] Should be able to add filtering to Group Cloud Component', () => {
 
-            beforeEach( async() => {
+            beforeEach(async () => {
                 await peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
                 await peopleGroupCloudComponentPage.clickGroupCloudFilterRole();
             });

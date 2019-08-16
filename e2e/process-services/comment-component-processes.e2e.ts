@@ -74,7 +74,7 @@ describe('Comment component for Processes', () => {
     it('[C260464] Should be able to add a comment on APS and check on ADF', async () => {
         await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment({ message: 'HELLO' }, processInstanceId);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList('Comment APS');
@@ -92,7 +92,7 @@ describe('Comment component for Processes', () => {
     it('[C260465] Should not be able to view process comment on included task', async () => {
         await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment({ message: 'GOODBYE' }, processInstanceId);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList('Comment APS');
@@ -112,7 +112,7 @@ describe('Comment component for Processes', () => {
 
         await this.alfrescoJsApi.activiti.taskApi.addTaskComment({ message: 'Task Comment' }, taskId);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList('Comment APS');

@@ -88,7 +88,7 @@ describe('Comment component for Processes', () => {
 
         await this.alfrescoJsApi.activiti.taskActionsApi.completeTask(taskId);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow(taskName.completed_task);

@@ -29,7 +29,7 @@ import { Util } from '../util/util';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '@alfresco/adf-testing';
 
-describe('Enable infinite scrolling',  () => {
+describe('Enable infinite scrolling', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();

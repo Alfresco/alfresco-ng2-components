@@ -91,7 +91,7 @@ describe('Start Task - Task App', () => {
     });
 
     beforeEach(async () => {
-        await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
     });

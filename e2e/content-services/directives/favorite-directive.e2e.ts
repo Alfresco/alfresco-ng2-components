@@ -27,7 +27,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
 import { TrashcanPage } from '../../pages/adf/trashcanPage';
 
-describe('Favorite directive',  () => {
+describe('Favorite directive', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();

@@ -18,7 +18,7 @@
 import { browser, by, element } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
-import { ElementFinder } from 'protractor/built/element';
+import { ElementFinder } from 'protractor';
 import { Locator } from 'protractor/built/locators';
 
 export class EditProcessFilterDialogPage {

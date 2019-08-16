@@ -18,7 +18,7 @@
 import { FormFields } from '../formFields';
 import { BrowserActions } from '../../../utils/public-api';
 import { by, element } from 'protractor';
-import { ElementFinder } from 'protractor/built/element';
+import { ElementFinder } from 'protractor';
 
 export class CheckboxWidget {
 

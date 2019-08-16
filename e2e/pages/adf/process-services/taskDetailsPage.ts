@@ -69,7 +69,7 @@ export class TaskDetailsPage {
     }
 
     async checkSelectedForm(formName): Promise<void> {
-        const text = await await BrowserActions.getText(this.attachFormName);
+        const text = await BrowserActions.getText(this.attachFormName);
         await expect(formName).toEqual(text);
     }
 
@@ -246,7 +246,7 @@ export class TaskDetailsPage {
     }
 
     async getInvolvedUserEmail(user): Promise<string> {
-        const row = await this.getRowsUser(user);
+        const row = this.getRowsUser(user);
         const email = row.element(this.emailInvolvedUser);
         return BrowserActions.getText(email);
     }

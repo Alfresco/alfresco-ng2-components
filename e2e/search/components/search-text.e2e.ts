@@ -30,7 +30,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { SearchConfiguration } from '../search.config';
 
-describe('Search component - Text widget',  () => {
+describe('Search component - Text widget', () => {
 
     const navigationBarPage = new NavigationBarPage();
     const searchFiltersPage = new SearchFiltersPage();
@@ -82,7 +82,7 @@ describe('Search component - Text widget',  () => {
         await expect(await searchFiltersPage.textFiltersPage().getNamePlaceholder()).toEqual('Enter the name');
     });
 
-    describe('configuration change',  () => {
+    describe('configuration change', () => {
 
         let jsonFile;
 

@@ -74,7 +74,7 @@ describe('New Process Filters', () => {
     });
 
     it('[C279965] Should be able to view default filters on ADF', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.running);
         await processFiltersPage.checkFilterIsDisplayed(processFilter.all);
@@ -91,7 +91,7 @@ describe('New Process Filters', () => {
 
         filterId = customProcessFilter.id;
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.new_filter);
     });
@@ -106,7 +106,7 @@ describe('New Process Filters', () => {
 
         filterId = customProcessFilter.id;
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.new_icon);
 
@@ -126,7 +126,7 @@ describe('New Process Filters', () => {
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
         });
 
-         await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
          await processFiltersPage.checkFilterIsDisplayed(processFilter.edited);
     });
@@ -141,7 +141,7 @@ describe('New Process Filters', () => {
 
         filterId = customProcessFilter.id;
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
 
@@ -152,7 +152,7 @@ describe('New Process Filters', () => {
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
         });
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
 
@@ -165,7 +165,7 @@ describe('New Process Filters', () => {
     });
 
     it('[C286452] Should display process filter icons only when showIcon property is set on true', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
         await processFiltersPage.checkFilterHasNoIcon(processFilter.all);
 
         await processServiceTabBarPage.clickSettingsButton();
@@ -188,7 +188,7 @@ describe('New Process Filters', () => {
 
         await this.alfrescoJsApi.activiti.userFiltersApi.deleteUserProcessInstanceFilter(filterId);
 
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsNotDisplayed(processFilter.deleted);
     });

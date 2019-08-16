@@ -86,7 +86,7 @@ export class UploadToggles {
     }
 
     async disableVersioning(): Promise<void> {
-        await  this.formControllersPage.disableToggle(this.versioningToggle);
+        await this.formControllersPage.disableToggle(this.versioningToggle);
     }
 
     async clickCheckboxDisableUpload(): Promise<void> {

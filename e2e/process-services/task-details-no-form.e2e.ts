@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 
-describe('Task Details - No form',  () => {
+describe('Task Details - No form', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -66,7 +66,7 @@ describe('Task Details - No form',  () => {
     });
 
     it('[C289311] Should attach form and complete buttons to be displayed when no form is attached', async () => {
-        await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         await taskPage.tasksListPage().checkContentIsDisplayed(app.taskName);

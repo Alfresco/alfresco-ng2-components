@@ -25,7 +25,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { DropActions } from '../../actions/drop.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 
-describe('Document List Component - Properties',  () => {
+describe('Document List Component - Properties', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -44,7 +44,7 @@ describe('Document List Component - Properties',  () => {
         location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    describe('Allow drop files property',  () => {
+    describe('Allow drop files property', () => {
 
         beforeEach(async () => {
             acsUser = new AcsUserModel();

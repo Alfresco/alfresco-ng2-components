@@ -27,7 +27,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer',  () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();

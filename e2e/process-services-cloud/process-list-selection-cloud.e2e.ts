@@ -26,9 +26,9 @@ import { ProcessDefinitionsService, ApiService } from '@alfresco/adf-testing';
 import { ProcessInstancesService } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('Process list cloud',  () => {
+describe('Process list cloud', () => {
 
-    describe('Process List - selection',  () => {
+    describe('Process List - selection', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -81,7 +81,7 @@ describe('Process list cloud',  () => {
 
         });
 
-        beforeEach( async() => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await expect(processInstances.length).toEqual(noOfProcesses, 'Wrong preconditions');
             await appListCloudComponent.checkApsContainer();

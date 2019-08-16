@@ -69,7 +69,7 @@ describe('Empty Process List Test', () => {
     it('[C260494] Should add process to list when a process is created', async () => {
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
-        await(await processServicesPage.goToApp(appA.title)).clickProcessButton();
+        await (await processServicesPage.goToApp(appA.title)).clickProcessButton();
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
         await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
@@ -82,7 +82,7 @@ describe('Empty Process List Test', () => {
         await processDetailsPage.checkProcessDetailsCard();
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
-        await(await processServicesPage.goToApp(appB.title)).clickProcessButton();
+        await (await processServicesPage.goToApp(appB.title)).clickProcessButton();
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
         await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 

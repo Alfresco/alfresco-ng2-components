@@ -23,7 +23,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Universal Icon component',  () => {
+describe('Universal Icon component', () => {
 
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();

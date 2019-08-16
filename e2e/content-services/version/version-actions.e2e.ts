@@ -32,7 +32,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { BrowserVisibility, FileBrowserUtil, BrowserActions } from '@alfresco/adf-testing';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 
-describe('Version component actions',  () => {
+describe('Version component actions', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();

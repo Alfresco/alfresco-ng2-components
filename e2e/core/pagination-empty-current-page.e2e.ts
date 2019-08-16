@@ -31,7 +31,7 @@ import { Util } from '../util/util';
 import resources = require('../util/resources');
 import { browser } from 'protractor';
 
-describe('Pagination - returns to previous page when current is empty',  () => {
+describe('Pagination - returns to previous page when current is empty', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();

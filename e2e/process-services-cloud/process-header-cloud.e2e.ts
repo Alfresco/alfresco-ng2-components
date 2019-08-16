@@ -38,9 +38,9 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 
 import resources = require('../util/resources');
 
-describe('Process Header cloud component',  () => {
+describe('Process Header cloud component', () => {
 
-    describe('Process Header cloud component',  () => {
+    describe('Process Header cloud component', () => {
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const subProcessApp = resources.ACTIVITI7_APPS.SUB_PROCESS_APP.name;
@@ -110,7 +110,7 @@ describe('Process Header cloud component',  () => {
 
         });
 
-        beforeEach( async() => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
         });

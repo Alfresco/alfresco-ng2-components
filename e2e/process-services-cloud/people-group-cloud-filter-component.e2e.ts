@@ -22,9 +22,9 @@ import { browser } from 'protractor';
 import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiService } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('People Groups Cloud Component',  () => {
+describe('People Groups Cloud Component', () => {
 
-    describe('People Groups Cloud Component',  () => {
+    describe('People Groups Cloud Component', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
@@ -105,7 +105,7 @@ describe('People Groups Cloud Component',  () => {
 
         });
 
-        beforeEach( async() => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToPeopleGroupCloudPage();
             await peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
             await peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();

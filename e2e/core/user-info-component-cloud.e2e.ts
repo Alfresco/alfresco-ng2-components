@@ -20,7 +20,7 @@ import { browser } from 'protractor';
 import { UserInfoPage } from '@alfresco/adf-testing';
 import { IdentityService, ApiService } from '@alfresco/adf-testing';
 
-describe('User Info - SSO',  () => {
+describe('User Info - SSO', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();

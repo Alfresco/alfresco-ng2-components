@@ -21,9 +21,9 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import resources = require('../util/resources');
 
-describe('Task filters cloud',  () => {
+describe('Task filters cloud', () => {
 
-    describe('Task Filters',  () => {
+    describe('Task Filters', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -62,7 +62,7 @@ describe('Task filters cloud',  () => {
 
         });
 
-        beforeEach( async() => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);

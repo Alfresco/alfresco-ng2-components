@@ -27,7 +27,7 @@ import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../..//pages/adf/navigationBarPage';
 
-describe('Viewer',  () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
@@ -90,7 +90,7 @@ describe('Viewer',  () => {
         await viewerPage.clickCloseButton();
     });
 
-    describe('Other Folder Uploaded',  () => {
+    describe('Other Folder Uploaded', () => {
 
         let uploadedOthers;
         let otherFolderUploaded;

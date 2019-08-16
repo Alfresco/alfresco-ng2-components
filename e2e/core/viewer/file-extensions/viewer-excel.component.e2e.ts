@@ -25,7 +25,7 @@ import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer',  () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
@@ -60,7 +60,7 @@ describe('Viewer',  () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
     });
-    describe('Excel Folder Uploaded',  () => {
+    describe('Excel Folder Uploaded', () => {
 
         let uploadedExcels;
         let excelFolderUploaded;

@@ -18,7 +18,7 @@
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { ElementArrayFinder, ElementFinder } from 'protractor/built/element';
+import { ElementArrayFinder, ElementFinder } from 'protractor';
 
 export class AppListCloudPage {
 

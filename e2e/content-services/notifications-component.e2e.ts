@@ -22,7 +22,7 @@ import { NotificationPage } from '../pages/adf/notificationPage';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-describe('Notifications Component',  () => {
+describe('Notifications Component', () => {
 
     const loginPage = new LoginPage();
     const notificationPage = new NotificationPage();
@@ -54,7 +54,7 @@ describe('Notifications Component',  () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    afterEach( async() => {
+    afterEach(async () => {
         await browser.executeScript(`document.querySelector('button[data-automation-id="notification-custom-dismiss-button"]').click();`);
         await notificationPage.enterDurationField(3000);
     });

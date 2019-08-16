@@ -26,7 +26,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-describe('Content Services Viewer',  () => {
+describe('Content Services Viewer', () => {
     const acsUser = new AcsUserModel();
     const viewerPage = new ViewerPage();
     const contentServicesPage = new ContentServicesPage();

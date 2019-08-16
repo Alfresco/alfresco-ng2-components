@@ -29,7 +29,7 @@ import { ProcessListPage } from '../pages/adf/process-services/processListPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import dateFormat = require('dateformat');
 
-describe('Process Instance Details',  () => {
+describe('Process Instance Details', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();

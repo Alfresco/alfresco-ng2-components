@@ -268,7 +268,7 @@ describe('Task Details component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
         await taskPage.tasksListPage().selectRow(checklistName);
 
-        const allTasks = await  this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());

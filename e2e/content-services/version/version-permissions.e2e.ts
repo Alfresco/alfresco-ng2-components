@@ -30,7 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NodeActions } from '../../actions/ACS/node.actions';
 import CONSTANTS = require('../../util/constants');
 
-describe('Version component permissions',  () => {
+describe('Version component permissions', () => {
 
     const loginPage = new LoginPage();
     const versionManagePage = new VersionManagePage();
@@ -119,7 +119,7 @@ describe('Version component permissions',  () => {
         await uploadActions.uploadFile(differentCreatorFile.location, differentCreatorFile.name, site.entry.guid);
     });
 
-    describe('Manager',  () => {
+    describe('Manager', () => {
 
         const sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -169,7 +169,7 @@ describe('Version component permissions',  () => {
         });
     });
 
-    describe('Consumer',  () => {
+    describe('Consumer', () => {
 
         beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(consumerUser);
@@ -195,7 +195,7 @@ describe('Version component permissions',  () => {
 
     });
 
-    describe('Contributor',  () => {
+    describe('Contributor', () => {
         const sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
@@ -251,7 +251,7 @@ describe('Version component permissions',  () => {
         });
     });
 
-    describe('Collaborator',  () => {
+    describe('Collaborator', () => {
         const sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location

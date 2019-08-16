@@ -26,7 +26,7 @@ import { browser } from 'protractor';
 import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Lock File',  () => {
+describe('Lock File', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -75,7 +75,7 @@ describe('Lock File',  () => {
         });
     });
 
-    describe('Lock file interaction with the UI',  () => {
+    describe('Lock file interaction with the UI', () => {
 
         beforeAll(async () => {
             const pngLockedUploadedFile = await uploadActions.uploadFile(pngFileToLock.location, pngFileToLock.name, documentLibrary);
@@ -169,7 +169,7 @@ describe('Lock File',  () => {
 
     });
 
-    describe('Locked file without owner permissions',  () => {
+    describe('Locked file without owner permissions', () => {
 
         beforeEach(async () => {
             const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
@@ -256,7 +256,7 @@ describe('Lock File',  () => {
 
     });
 
-    describe('Locked file with owner permissions',  () => {
+    describe('Locked file with owner permissions', () => {
 
         let pngFileToBeLocked;
 

@@ -70,7 +70,7 @@ describe('Process List - Pagination when adding processes', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        await (await(await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await (await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
     });
 

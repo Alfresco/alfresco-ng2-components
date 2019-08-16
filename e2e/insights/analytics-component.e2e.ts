@@ -26,7 +26,7 @@ import { User } from '../models/APS/user';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Analytics Smoke Test',  () => {
+describe('Analytics Smoke Test', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();

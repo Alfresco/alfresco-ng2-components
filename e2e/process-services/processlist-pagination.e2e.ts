@@ -81,7 +81,7 @@ describe('Process List - Pagination', () => {
     describe('Empty processes', () => {
 
         it('[C280015] Should show empty content message an no pagination when no process are present',  async() => {
-            await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
             await processFiltersPage.checkNoContentMessage();
             await paginationPage.checkPaginationIsNotDisplayed();
         });
@@ -106,7 +106,7 @@ describe('Process List - Pagination', () => {
         });
 
         beforeEach(async () => {
-            await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         });
 
@@ -158,7 +158,7 @@ describe('Process List - Pagination', () => {
             await paginationPage.checkPreviousPageButtonIsEnabled();
 
             page = 1;
-            await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
             await processFiltersPage.clickRunningFilterButton();
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();
@@ -199,7 +199,7 @@ describe('Process List - Pagination', () => {
             await paginationPage.checkPreviousPageButtonIsEnabled();
 
             page = 1;
-            await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
             await processFiltersPage.clickRunningFilterButton();
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();
@@ -227,7 +227,7 @@ describe('Process List - Pagination', () => {
             await paginationPage.checkNextPageButtonIsDisabled();
             await paginationPage.checkPreviousPageButtonIsDisabled();
 
-            await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
             await processFiltersPage.clickRunningFilterButton();
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();
@@ -301,7 +301,7 @@ describe('Process List - Pagination', () => {
             await paginationPage.checkPreviousPageButtonIsEnabled();
 
             page = 1;
-            await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
             await processFiltersPage.clickRunningFilterButton();
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();

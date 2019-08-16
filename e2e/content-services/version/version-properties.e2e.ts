@@ -25,7 +25,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-describe('Version Properties',  () => {
+describe('Version Properties', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();

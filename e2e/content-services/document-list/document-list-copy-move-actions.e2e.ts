@@ -30,7 +30,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 
-describe('Document List Component',  () => {
+describe('Document List Component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -105,7 +105,7 @@ describe('Document List Component',  () => {
 
     });
 
-    describe('Document List Component - Actions Move and Copy',  () => {
+    describe('Document List Component - Actions Move and Copy', () => {
 
         beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -181,7 +181,7 @@ describe('Document List Component',  () => {
 
     });
 
-    describe('Document List actionns - Move, Copy on no permission folder',  () => {
+    describe('Document List actionns - Move, Copy on no permission folder', () => {
 
         beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);

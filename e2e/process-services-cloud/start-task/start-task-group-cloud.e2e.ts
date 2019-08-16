@@ -33,7 +33,7 @@ import {
 } from '@alfresco/adf-testing';
 import resources = require('../../util/resources');
 
-describe('Start Task - Group Cloud Component',  () => {
+describe('Start Task - Group Cloud Component', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -96,7 +96,7 @@ describe('Start Task - Group Cloud Component',  () => {
 
     });
 
-    beforeEach( async() => {
+    beforeEach(async () => {
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();

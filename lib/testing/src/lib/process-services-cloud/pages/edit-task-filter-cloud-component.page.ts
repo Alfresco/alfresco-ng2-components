@@ -19,7 +19,7 @@ import { browser, by, element, protractor } from 'protractor';
 import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { ElementFinder } from 'protractor/built/element';
+import { ElementFinder } from 'protractor';
 
 export class EditTaskFilterCloudComponentPage {
 

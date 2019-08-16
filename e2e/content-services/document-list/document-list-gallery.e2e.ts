@@ -24,7 +24,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-describe('Document List Component',  () => {
+describe('Document List Component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -36,7 +36,7 @@ describe('Document List Component',  () => {
     let acsUser = null;
     const navigationBarPage = new NavigationBarPage();
 
-    describe('Gallery View',  () => {
+    describe('Gallery View', () => {
 
         const cardProperties = {
             DISPLAY_NAME: 'Display name',

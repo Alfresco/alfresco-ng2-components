@@ -91,7 +91,7 @@ describe('Dynamic Table', () => {
         });
 
         beforeEach(async () => {
-            await (await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
             await processServiceTabBarPage.clickProcessButton();
 
@@ -158,7 +158,7 @@ describe('Dynamic Table', () => {
         });
 
         beforeEach(async () => {
-            await (await(await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickProcessButton();
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickProcessButton();
 
             await processServiceTabBarPage.clickProcessButton();
 

@@ -133,7 +133,7 @@ describe('Edit task filters cloud', () => {
 
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
 
-            const editTaskFilterDialog = await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog();
+            const editTaskFilterDialog = tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog();
             await editTaskFilterDialog.setFilterName('New');
             await editTaskFilterDialog.clickOnSaveButton();
 

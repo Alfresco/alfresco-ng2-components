@@ -34,7 +34,7 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 
 import resources = require('../util/resources');
 
-describe('Task form cloud component',  () => {
+describe('Task form cloud component', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -152,33 +152,33 @@ describe('Task form cloud component',  () => {
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number0klykr');
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Amount0mtp1h');
 
-        await expect(await(await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
+        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
         await widget.textWidget().setValue('Text0tma8h', 'Some random text');
-        await expect(await(await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
+        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
 
         await widget.dateWidget().setDateInput('Date0m1moq', 'invalid date');
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        await expect(await(await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
+        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
 
         await widget.dateWidget().setDateInput('Date0m1moq', '20-10-2018');
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        await expect(await(await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
+        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
 
         await widget.numberWidget().setFieldValue('Number0klykr', 'invalid number');
-        await expect(await(await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
+        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
 
         await widget.numberWidget().setFieldValue('Number0klykr', '26');
-        await expect(await(await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
+        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
 
         await widget.amountWidget().setFieldValue('Amount0mtp1h', 'invalid amount');
-        await expect(await(await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
+        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
 
         await widget.amountWidget().setFieldValue('Amount0mtp1h', '660');
-        await expect(await(await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
+        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
 
     });
 
-    describe('Complete task - cloud directive',  () => {
+    describe('Complete task - cloud directive', () => {
 
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();

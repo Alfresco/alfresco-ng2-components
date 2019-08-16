@@ -25,7 +25,7 @@ import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Viewer',  () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
@@ -66,7 +66,7 @@ describe('Viewer',  () => {
 
     });
 
-    describe('Image Folder Uploaded',  () => {
+    describe('Image Folder Uploaded', () => {
 
         let uploadedImages, uploadedImgRenditionFolderInfo;
         let imgFolderUploaded, imgFolderRenditionUploaded;

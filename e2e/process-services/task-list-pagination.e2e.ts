@@ -81,7 +81,7 @@ describe('Task List Pagination', () => {
     });
 
     it('[C260301] Should display default pagination', async () => {
-        await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
         await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
         await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(nrOfTasks);
@@ -93,7 +93,7 @@ describe('Task List Pagination', () => {
     });
 
     it('[C260304] Should be possible to set Items per page to 5', async () => {
-        await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await paginationPage.selectItemsPerPage(itemsPerPage.five);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
@@ -115,13 +115,13 @@ describe('Task List Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
         await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
 
-        await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
     });
 
     it('[C260303] Should be possible to set Items per page to 10', async () => {
-        await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await paginationPage.selectItemsPerPage(itemsPerPage.ten);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
@@ -132,13 +132,13 @@ describe('Task List Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
         await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
 
-        await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
     });
 
     it('[C260302] Should be possible to set Items per page to 15', async () => {
-        await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
@@ -149,7 +149,7 @@ describe('Task List Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
         await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
 
-        await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
@@ -157,7 +157,7 @@ describe('Task List Pagination', () => {
     it('[C261006] Should be possible to navigate to a page with page number dropdown', async () => {
         currentPage = 1;
         totalPages = 2;
-        await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await paginationPage.selectItemsPerPage(itemsPerPage.ten);
@@ -200,7 +200,7 @@ describe('Task List Pagination', () => {
     it('Pagination in an empty task list', async () => {
         await loginPage.loginToProcessServicesUsingUserModel(processUserModelEmpty);
 
-        await(await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await paginationPage.checkPaginationIsNotDisplayed();
     });
 
