@@ -19,12 +19,13 @@ import { Component, ViewEncapsulation, OnChanges, AfterContentInit, ContentChild
 import { DataTableSchema, PaginatedComponent,
          CustomEmptyContentTemplateDirective, AppConfigService,
          UserPreferencesService, PaginationModel,
-         UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective } from '@alfresco/adf-core';
+         UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
+import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'adf-cloud-process-list',
     templateUrl: './process-list-cloud.component.html',
@@ -100,6 +101,26 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     sorting: ProcessListCloudSortingModel[];
 
+    /** Toggles the data actions column. */
+    @Input()
+    actions: any[] = [];
+
+    /** Toggles the data actions column. */
+    @Input()
+    showActions: boolean = false;
+
+    /** Position of the actions dropdown menu. Can be "left" or "right". */
+    @Input()
+    actionsPosition: string = 'right'; // left|right
+
+    /** Toggles the sticky header mode. */
+    @Input()
+    stickyHeader: boolean = false;
+
+    /** Toggles custom context menu for the component. */
+    @Input()
+    showContextMenu: boolean = false;
+
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -116,6 +137,10 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when the list of process instances has been loaded successfully from the server. */
+    @Output()
+    actionClicked =  new EventEmitter<any>();
+
     pagination: BehaviorSubject<PaginationModel>;
     size: number;
     skipCount: number = 0;
@@ -124,6 +149,8 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     isLoading = false;
     rows: any[] = [];
     requestNode: ProcessQueryCloudRequestModel;
+    private performAction$ = new Subject<any>();
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private processListCloudService: ProcessListCloudService,
                 appConfigService: AppConfigService,
@@ -220,6 +247,46 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             event.preventDefault();
             this.currentInstanceId = event.detail.row.getValue('entry.id');
             this.rowClick.emit(this.currentInstanceId);
+        }
+    }
+
+    onShowRowActionsMenu(event: DataCellEvent) {
+        if (this.actions && this.actions.length > 0) {
+            event.value.actions = this.actions;
+        }
+    }
+
+    onShowRowContextMenu(event: DataCellEvent) {
+        event.value.actions = this.getContextMenuActions(event.value.row['obj']);
+    }
+
+    onExecuteRowAction(event: DataRowActionEvent) {
+        this.actionClicked.emit({ data: event.value.row['obj'], type: event.value.action.key });
+    }
+
+    onExecuteContextAction(contextAction: any) {
+        this.actionClicked.emit({ data: contextAction.data, type: contextAction.model.key });
+    }
+
+    performContextActions() {
+        this.performAction$
+          .pipe(takeUntil(this.onDestroy$))
+          .subscribe((action: any) => {
+            if (action) {
+              this.onExecuteContextAction(action);
+            }
+          });
+    }
+
+    getContextMenuActions(row: any): any[] {
+        if (this.actions && this.actions.length > 0) {
+            return this.actions.map((action) => {
+                return {
+                    data: row,
+                    model: action,
+                    subject: this.performAction$
+                };
+            });
         }
     }
 
