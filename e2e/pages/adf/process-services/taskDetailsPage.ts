@@ -225,7 +225,7 @@ export class TaskDetailsPage {
 
     async selectUserToInvolve(user): Promise<void> {
         const row = await this.getRowsUser(user);
-        await row.click();
+        await BrowserActions.click(row);
     }
 
     async checkUserIsSelected(user): Promise<void> {
@@ -243,8 +243,7 @@ export class TaskDetailsPage {
 
     async removeInvolvedUser(user): Promise<void> {
         const row = await(await this.getRowsUser(user)).element(by.xpath('ancestor::div[contains(@class, "adf-datatable-row")]'));
-        await BrowserVisibility.waitUntilElementIsVisible(row);
-        await row.element(by.css('button[data-automation-id="action_menu_0"]')).click();
+        await BrowserActions.click(row.element(by.css('button[data-automation-id="action_menu_0"]')));
         await BrowserVisibility.waitUntilElementIsVisible(this.removeInvolvedPeople);
         await BrowserActions.click(this.removeInvolvedPeople);
 

@@ -90,7 +90,7 @@ export class UploadToggles {
     }
 
     async clickCheckboxDisableUpload(): Promise<void> {
-        await this.disableUploadCheckbox.click();
+        await BrowserActions.click(this.disableUploadCheckbox);
     }
 
     async addExtension(extension): Promise<void> {

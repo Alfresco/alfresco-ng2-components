@@ -63,7 +63,7 @@ export class AttachFormPage {
 
     async selectAttachFormOption(option): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(element(by.cssContainingText("mat-option[role='option']", option)));
-        return element(by.cssContainingText("mat-option[role='option']", option)).click();
+        await BrowserActions.click(element(by.cssContainingText("mat-option[role='option']", option)));
     }
 
     async clickCancelButton(): Promise<void> {

@@ -131,8 +131,7 @@ export class TasksPage {
     async removeChecklists(checklist): Promise<void> {
         const elem = this.getRowsName(checklist);
         const row = elem.element(this.rowByRowName);
-        await BrowserVisibility.waitUntilElementIsVisible(row.element(by.css('mat-icon')));
-        await row.element(by.css('mat-icon')).click();
+        await BrowserActions.click(row.element(by.css('mat-icon')));
     }
 
     async checkChecklistsRemoveButtonIsNotDisplayed(checklist): Promise<void> {

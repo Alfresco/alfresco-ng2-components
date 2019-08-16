@@ -208,15 +208,15 @@ export class DataTableComponentPage {
         if (sortOrder.toLocaleLowerCase() === 'asc') {
             if (!result.includes('sorted-asc')) {
                 if (result.includes('sorted-desc') || result.includes('sortable')) {
-                    await element(locator).click();
+                    await BrowserActions.click(element(locator));
                 }
             }
         } else {
             if (result.includes('sorted-asc')) {
-                await element(locator).click();
+                await BrowserActions.click(element(locator));
             } else if (result.includes('sortable')) {
-                await element(locator).click();
-                await element(locator).click();
+                await BrowserActions.click(element(locator));
+                await BrowserActions.click(element(locator));
             }
         }
     }

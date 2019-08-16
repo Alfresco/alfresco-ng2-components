@@ -102,7 +102,6 @@ describe('Start Task Form', () => {
     let uploadedFolder;
 
     beforeAll(async () => {
-
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
@@ -267,7 +266,6 @@ describe('Start Task Form', () => {
         });
 
         it('[C311277] Should be able to start a process with a start event form - claim and complete the process', async () => {
-
             await widget.textWidget().setValue('FirstName', 'Sample');
             await widget.numberWidget().setFieldValue('Number07vyx9', 100);
             await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);

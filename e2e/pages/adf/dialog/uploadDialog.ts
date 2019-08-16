@@ -101,7 +101,8 @@ export class UploadDialog {
         const row = await this.getRowByRowName(content);
         await BrowserVisibility.waitUntilElementIsVisible(row.element(this.uploadedStatusIcon));
         const elementRow = await this.getRowByRowName(content);
-        elementRow.element(this.uploadedStatusIcon).click();
+        await BrowserActions.click(elementRow.element(this.uploadedStatusIcon));
+
     }
 
     async getTitleText(): Promise<string> {

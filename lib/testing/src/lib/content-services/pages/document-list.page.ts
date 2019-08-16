@@ -65,7 +65,7 @@ export class DocumentListPage {
     async clickOnActionMenu(content): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const row: ElementFinder = this.dataTable.getRow('Display name', content);
-        await row.element(this.optionButton).click();
+        await BrowserActions.click(row.element(this.optionButton));
         await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
         await browser.sleep(500);
     }

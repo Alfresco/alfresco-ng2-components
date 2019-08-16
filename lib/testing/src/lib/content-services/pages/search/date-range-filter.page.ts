@@ -54,24 +54,22 @@ export class DateRangeFilterPage {
     }
 
     async openFromDatePicker(): Promise<DatePickerPage> {
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromDateToggle));
-        await this.filter.element(this.fromDateToggle).click();
+        await BrowserActions.click(this.filter.element(this.fromDateToggle));
+
         const datePicker = new DatePickerPage();
         await datePicker.checkDatePickerIsDisplayed();
         return datePicker;
     }
 
     async openToDatePicker(): Promise<DatePickerPage> {
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toDateToggle));
-        await this.filter.element(this.toDateToggle).click();
+        await BrowserActions.click(this.filter.element(this.toDateToggle));
         const datePicker = new DatePickerPage();
         await datePicker.checkDatePickerIsDisplayed();
         return datePicker;
     }
 
     async clickFromField(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromField));
-        await this.filter.element(this.fromField).click();
+        await BrowserActions.click(this.filter.element(this.fromField));
     }
 
     async checkFromErrorMessageIsDisplayed(msg: string): Promise<void> {
@@ -122,8 +120,7 @@ export class DateRangeFilterPage {
     }
 
     async clickApplyButton(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.applyButton));
-        await this.filter.element(this.applyButton).click();
+        await BrowserActions.click(this.filter.element(this.applyButton));
     }
 
     async checkApplyButtonIsDisplayed(): Promise<void> {
