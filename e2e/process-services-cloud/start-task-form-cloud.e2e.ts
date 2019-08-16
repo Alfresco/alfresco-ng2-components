@@ -274,13 +274,14 @@ describe('Start Task Form', () => {
             await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', startEventFormProcess);
+
+            await browser.sleep(1000);
+
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(startEventFormProcess);
 
             await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', startEventFormProcess);
             await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-
-            await browser.sleep(1000);
 
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('StartEventFormTask');
             const processId = await processHeaderCloud.getId();
