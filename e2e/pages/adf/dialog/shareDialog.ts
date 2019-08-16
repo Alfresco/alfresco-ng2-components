@@ -88,7 +88,7 @@ export class ShareDialog {
         const tomorrow = moment().add(1, 'days').format('D');
 
         if (tomorrow !== '1') {
-            const today = await this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
+            const today = await BrowserActions.getText(this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')));
             await BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
         }
     }

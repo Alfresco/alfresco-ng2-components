@@ -273,8 +273,7 @@ export class ContentServicesPage {
     }
 
     async currentFolderName(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.currentFolder);
-        return await this.currentFolder.getText();
+        return await BrowserActions.getText(this.currentFolder);
     }
 
     async getAllRowsNameColumn(): Promise<any> {

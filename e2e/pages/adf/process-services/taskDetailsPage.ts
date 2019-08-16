@@ -69,8 +69,7 @@ export class TaskDetailsPage {
     }
 
     async checkSelectedForm(formName): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.attachFormName);
-        const text = await this.attachFormName.getText();
+        const text = await await BrowserActions.getText(this.attachFormName);
         await expect(formName).toEqual(text);
     }
 
@@ -128,8 +127,7 @@ export class TaskDetailsPage {
     }
 
     async checkFormIsAttached(formName): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
-        const attachedFormName = await this.formNameField.getText();
+        const attachedFormName = await BrowserActions.getText(this.formNameField);
         await expect(attachedFormName).toEqual(formName);
     }
 

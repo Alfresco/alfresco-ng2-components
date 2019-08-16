@@ -272,11 +272,11 @@ describe('Permissions Component', () => {
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
             const roleDropdownOptions = permissionsPage.getRoleDropdownOptions();
             await expect(await roleDropdownOptions.count()).toBe(5);
-            await expect(await roleDropdownOptions.get(0).getText()).toBe('Contributor');
-            await expect(await roleDropdownOptions.get(1).getText()).toBe('Collaborator');
-            await expect(await roleDropdownOptions.get(2).getText()).toBe('Coordinator');
-            await expect(await roleDropdownOptions.get(3).getText()).toBe('Editor');
-            await expect(await roleDropdownOptions.get(4).getText()).toBe('Consumer');
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(0))).toBe('Contributor');
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(1))).toBe('Collaborator');
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(2))).toBe('Coordinator');
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(3))).toBe('Editor');
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(4))).toBe('Consumer');
             await permissionsPage.selectOption('Collaborator');
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Collaborator');
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());

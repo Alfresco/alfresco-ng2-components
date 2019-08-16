@@ -125,7 +125,7 @@ export class DataTableComponentPage {
         // await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
         await column.each(async (currentElement) => {
-            const text = await currentElement.getText();
+            const text = await BrowserActions.getText(currentElement);
             if (text.length !== 0) {
                 initialList.push(text.toLowerCase());
             }

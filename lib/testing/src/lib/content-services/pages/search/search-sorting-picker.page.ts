@@ -40,7 +40,7 @@ export class SearchSortingPickerPage {
     async sortByOrder(sortOrder: string): Promise<any> {
         await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
 
-        const result = await this.orderArrow.getText();
+        const result = await BrowserActions.getText(this.orderArrow);
         if (sortOrder.toLocaleLowerCase() === 'asc') {
             if (result !== 'arrow_upward') {
                 await browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
@@ -82,7 +82,7 @@ export class SearchSortingPickerPage {
     async checkOrderArrowIsDownward(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
 
-        const result = await this.orderArrow.getText();
+        const result = await BrowserActions.getText(this.orderArrow);
         return result !== 'arrow_upward';
     }
 

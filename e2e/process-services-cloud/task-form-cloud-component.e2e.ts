@@ -27,7 +27,7 @@ import {
     SettingsPage,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
-    Widget, IdentityService
+    Widget, IdentityService, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -50,6 +50,7 @@ describe('Task form cloud component',  () => {
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
     let identityService: IdentityService;
+    let groupIdentityService: GroupIdentityService;
 
     let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, testUser;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
@@ -60,11 +61,20 @@ describe('Task form cloud component',  () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
+        groupIdentityService = new GroupIdentityService(apiService);
+
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
+
+        const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+        await apiService.login(testUser.email, testUser.password);
+
         await apiService.login(testUser.email, testUser.password);
 
         tasksService = new TasksService(apiService);
+
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
+
         assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
 
         await tasksService.claimTask(assigneeTask.entry.id, candidateBaseApp);

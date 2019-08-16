@@ -45,7 +45,7 @@ export class AttachFormPage {
     }
 
     async checkDefaultFormTitleIsDisplayed(formTitle): Promise<void> {
-        const result = await this.defaultTitle.getText();
+        const result = await BrowserActions.getText(this.defaultTitle);
         await expect(result).toEqual(formTitle);
     }
 

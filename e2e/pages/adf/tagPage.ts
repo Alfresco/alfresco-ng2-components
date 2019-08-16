@@ -139,7 +139,7 @@ export class TagPage {
         await BrowserVisibility.waitUntilElementIsVisible(tagList.first());
         const initialList = [];
         await tagList.each(async (currentElement) => {
-            const text = await currentElement.getText();
+            const text = await BrowserActions.getText(currentElement);
             initialList.push(text);
         });
         let sortedList = initialList;

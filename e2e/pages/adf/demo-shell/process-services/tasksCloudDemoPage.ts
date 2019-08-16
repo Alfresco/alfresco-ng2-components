@@ -135,6 +135,6 @@ export class TasksCloudDemoPage {
     async getSelectedTaskRowText(rowNo: string): Promise<string> {
         await this.checkSelectedRowsIsDisplayed();
         const row: ElementFinder = element(by.xpath(`//div[text()=' Selected rows: ']//li[${rowNo}]`));
-        return await row.getText();
+        return await BrowserActions.getText(row);
     }
 }

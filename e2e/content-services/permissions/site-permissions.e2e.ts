@@ -192,10 +192,10 @@ describe('Permissions Component', () => {
             const roleDropdownOptions = permissionsPage.getRoleDropdownOptions();
 
             await expect(await roleDropdownOptions.count()).toBe(4);
-            await expect(await roleDropdownOptions.get(0).getText()).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);
-            await expect(await roleDropdownOptions.get(1).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONSUMER);
-            await expect(await roleDropdownOptions.get(2).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
-            await expect(await roleDropdownOptions.get(3).getText()).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(0))).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(1))).toBe(CONSTANTS.CS_USER_ROLES.CONSUMER);
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(2))).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(3))).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
         });
 
     });

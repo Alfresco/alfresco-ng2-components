@@ -91,7 +91,7 @@ export class PaginationPage {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const initialList = [];
         await element.all(this.pageDropDownOptions).each(async (currentOption) => {
-            const text = await currentOption.getText();
+            const text = await BrowserActions.getText(currentOption);
             if (text !== '') {
                 initialList.push(text);
             }
@@ -117,7 +117,7 @@ export class PaginationPage {
 
     async getTotalNumberOfFiles() {
         await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
-        const totalNumberOfFiles = await this.totalFiles.getText();
+        const totalNumberOfFiles = await BrowserActions.getText(this.totalFiles);
         return totalNumberOfFiles.split('of ')[1];
     }
 }

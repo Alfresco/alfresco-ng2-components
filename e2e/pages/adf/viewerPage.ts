@@ -230,8 +230,7 @@ export class ViewerPage {
     }
 
     async checkFileNameIsDisplayed(file): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.fileName);
-        await expect(await this.fileName.getText()).toEqual(file);
+        await expect(await BrowserActions.getText(this.fileName)).toEqual(file);
     }
 
     async checkPreviousPageButtonIsDisplayed() {
@@ -296,11 +295,11 @@ export class ViewerPage {
     }
 
     async checkZoomedIn(zoom): Promise<void> {
-        await expect(await this.percentage.getText()).toBeGreaterThan(zoom);
+        await expect(await BrowserActions.getText(this.percentage)).toBeGreaterThan(zoom);
     }
 
     async checkZoomedOut(zoom): Promise<void> {
-        await expect(await this.percentage.getText()).toBeLessThan(zoom);
+        await expect(await BrowserActions.getText(this.percentage)).toBeLessThan(zoom);
     }
 
     async checkRotateLeftButtonIsDisplayed(): Promise<void> {
