@@ -17,12 +17,14 @@
 
 import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, SearchCategoriesPage } from '@alfresco/adf-testing';
-import { SearchCheckListPage } from '../../../lib/testing/src/lib/content-services/pages/search/search-checkList.page';
-import { SearchTextPage } from '../../../lib/testing/src/lib/content-services/pages/search/search-text.page';
-import { NumberRangeFilterPage } from '../../../lib/testing/src/lib/content-services/pages/search/number-range-filter.page';
-import { DateRangeFilterPage } from '../../../lib/testing/src/lib/content-services/pages/search/date-range-filter.page';
-import { SearchSliderPage } from '../../../lib/testing/src/lib/content-services/pages/search/search-slider.page';
-import { SearchRadioPage } from '../../../lib/testing/src/lib/content-services/pages/search/search-radio.page';
+import {
+    SearchCheckListPage,
+    SearchTextPage,
+    NumberRangeFilterPage,
+    DateRangeFilterPage,
+    SearchSliderPage,
+    SearchRadioPage
+} from '@alfresco/adf-testing';
 
 export class SearchFiltersPage {
 

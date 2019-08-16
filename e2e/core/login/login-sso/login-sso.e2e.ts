@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, SettingsPage, LoginPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage, LoginPage, BrowserVisibility } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
-import { BrowserVisibility } from '../../../../lib/testing/src/lib/core/utils/browser-visibility';
 
 describe('Login component - SSO', () => {
 
