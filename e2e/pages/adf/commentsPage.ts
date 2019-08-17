@@ -57,7 +57,7 @@ export class CommentsPage {
     }
 
     async addComment(comment): Promise<void> {
-        await BrowserActions.clearSendKeys(this.addCommentButton, comment);
+        await BrowserActions.clearSendKeys(this.commentInput, comment);
         await BrowserActions.click(this.addCommentButton);
     }
 
