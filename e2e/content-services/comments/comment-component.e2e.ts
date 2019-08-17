@@ -29,18 +29,18 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Comment Component', () => {
 
-    const loginPage = new LoginPage();
-    const contentServicesPage = new ContentServicesPage();
-    const viewerPage = new ViewerPage();
-    const commentsPage = new CommentsPage();
+    const loginPage: LoginPage = new LoginPage();
+    const contentServicesPage: ContentServicesPage = new ContentServicesPage();
+    const viewerPage: ViewerPage = new ViewerPage();
+    const commentsPage: CommentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
-    const acsUser = new AcsUserModel();
+    const acsUser: AcsUserModel = new AcsUserModel();
 
     let userFullName, nodeId;
 
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -60,18 +60,17 @@ describe('Comment Component', () => {
         test: 'Test'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        done();
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
@@ -82,96 +81,95 @@ describe('Comment Component', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.clickContentServicesButton();
-        contentServicesPage.waitForTableBody();
+        await navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.waitForTableBody();
 
-        done();
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(nodeId);
-        done();
+
     });
 
     it('[C276947] Should be able to add a comment on ACS and view on ADF', async () => {
         await this.alfrescoJsApi.core.commentsApi.addComment(nodeId, { content: comments.test });
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.checkImgViewerIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
 
-        commentsPage.checkCommentsTabIsSelected();
-        commentsPage.checkCommentInputIsDisplayed();
+        await commentsPage.checkCommentsTabIsSelected();
+        await commentsPage.checkCommentInputIsDisplayed();
 
-        expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(commentsPage.getMessage(0)).toEqual(comments.test);
-        expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        await expect(await commentsPage.getMessage(0)).toEqual(comments.test);
+        await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
 
     });
 
-    it('[C276948] Should be able to add a comment on a file', () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.checkImgViewerIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickOnCommentsTab();
+    it('[C276948] Should be able to add a comment on a file', async () => {
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.clickOnCommentsTab();
 
-        commentsPage.addComment(comments.first);
-        commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.addComment(comments.first);
+        await commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(commentsPage.getMessage(0)).toEqual(comments.first);
-        expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        await expect(await commentsPage.getMessage(0)).toEqual(comments.first);
+        await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
-    it('[C280021] Should be able to add a multiline comment on a file', () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.checkImgViewerIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickOnCommentsTab();
+    it('[C280021] Should be able to add a multiline comment on a file', async () => {
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.clickOnCommentsTab();
 
-        commentsPage.addComment(comments.multiline);
-        commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.addComment(comments.multiline);
+        await commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(commentsPage.getMessage(0)).toEqual(comments.multiline);
-        expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        await expect(await commentsPage.getMessage(0)).toEqual(comments.multiline);
+        await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
 
-        commentsPage.addComment(comments.second);
-        commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.addComment(comments.second);
+        await commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (2)');
-        expect(commentsPage.getMessage(0)).toEqual(comments.second);
-        expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (2)');
+        await expect(await commentsPage.getMessage(0)).toEqual(comments.second);
+        await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
-    it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.checkImgViewerIsDisplayed();
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickOnCommentsTab();
+    it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', async () => {
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.clickOnCommentsTab();
 
-        commentsPage.addComment(comments.codeType);
-        commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.addComment(comments.codeType);
+        await commentsPage.checkUserIconIsDisplayed(0);
 
-        expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
-        expect(commentsPage.getMessage(0)).toEqual('First name: Last name:');
-        expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
+        await expect(await commentsPage.getMessage(0)).toEqual('First name: Last name:');
+        await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
     describe('Consumer Permissions', () => {
         let site, pngUploadedFile;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             site = await this.alfrescoJsApi.core.sitesApi.createSite({
@@ -186,31 +184,29 @@ describe('Comment Component', () => {
 
             pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
-            done();
         });
 
-        afterAll((done) => {
-            uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
+        afterAll(async () => {
+            await uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
 
-            done();
         });
 
-        it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', () => {
-            navigationBarPage.goToSite(site);
-            contentServicesPage.checkAcsContainer();
+        it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', async () => {
+            await navigationBarPage.goToSite(site);
+            await contentServicesPage.checkAcsContainer();
 
-            viewerPage.viewFile(pngUploadedFile.entry.name);
-            viewerPage.checkImgViewerIsDisplayed();
-            viewerPage.checkInfoButtonIsDisplayed();
-            viewerPage.clickInfoButton();
-            viewerPage.checkInfoSideBarIsDisplayed();
+            await viewerPage.viewFile(pngUploadedFile.entry.name);
+            await viewerPage.checkImgViewerIsDisplayed();
+            await viewerPage.checkInfoButtonIsDisplayed();
+            await viewerPage.clickInfoButton();
+            await viewerPage.checkInfoSideBarIsDisplayed();
 
-            commentsPage.checkCommentsTabIsSelected();
-            commentsPage.checkCommentInputIsNotDisplayed();
+            await commentsPage.checkCommentsTabIsSelected();
+            await commentsPage.checkCommentInputIsNotDisplayed();
         });
     });
 });

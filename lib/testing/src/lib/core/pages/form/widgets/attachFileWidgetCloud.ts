@@ -23,72 +23,66 @@ import { element, by, browser, ElementFinder } from 'protractor';
 export class AttachFileWidgetCloud {
 
     widget: ElementFinder;
+    formFields: FormFields = new FormFields();
+    filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
+
     constructor(fieldId: string) {
+        this.assignWidget(fieldId);
+    }
+
+    assignWidget(fieldId: string): void {
         this.widget = this.formFields.getWidget(fieldId);
     }
 
-    formFields = new FormFields();
-    contentButton = element(by.css('button[id="attach-Alfresco Content"]'));
-    filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
-
-    attachLocalFile(fileLocation: string) {
-        browser.setFileDetector(new remote.FileDetector());
+    async attachLocalFile(fileLocation: string): Promise<void> {
+        await browser.setFileDetector(new remote.FileDetector());
         const uploadButton = this.widget.element(by.css(`a input`));
-        BrowserVisibility.waitUntilElementIsVisible(uploadButton);
-        uploadButton.sendKeys(browser.params.rootPath + '/e2e' + fileLocation);
-        BrowserVisibility.waitUntilElementIsVisible(uploadButton);
-        return this;
+        await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
+        await uploadButton.sendKeys(browser.params.rootPath + '/e2e' + fileLocation);
+        await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
     }
 
-    clickAttachContentFile(fileId: string) {
+    async clickAttachContentFile(fileId: string): Promise<void> {
         const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
-        BrowserActions.click(uploadButton);
-        BrowserActions.click(this.contentButton);
-
+        await BrowserActions.click(uploadButton);
+        await BrowserActions.clickExecuteScript('button[id="attach-Alfresco Content"]');
     }
 
-    checkUploadContentButtonIsDisplayed(fileId: string) {
+    async checkUploadContentButtonIsDisplayed(fileId: string): Promise<void> {
         const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
-        BrowserVisibility.waitUntilElementIsVisible(uploadButton);
-        return this;
+        await BrowserVisibility.waitUntilElementIsVisible(uploadButton);
     }
 
-    checkUploadContentButtonIsNotDisplayed(fileId: string) {
+    async checkUploadContentButtonIsNotDisplayed(fileId: string): Promise<void> {
         const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
-        BrowserVisibility.waitUntilElementIsNotVisible(uploadButton);
-        return this;
+        await BrowserVisibility.waitUntilElementIsNotVisible(uploadButton);
     }
 
-    checkFileIsAttached(name) {
+    async checkFileIsAttached(name): Promise<void> {
         const fileAttached = this.widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserVisibility.waitUntilElementIsVisible(fileAttached);
-        return this;
+        await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
-    checkFileIsNotAttached(name) {
+    async checkFileIsNotAttached(name): Promise<void> {
         const fileAttached = this.widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserVisibility.waitUntilElementIsNotVisible(fileAttached);
-        return this;
+        await BrowserVisibility.waitUntilElementIsNotVisible(fileAttached);
     }
 
-    async getFileId(name: string) {
+    async getFileId(name: string): Promise<string> {
         const fileAttached = this.widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserVisibility.waitUntilElementIsVisible(fileAttached);
-        const fileId = await fileAttached.getAttribute('id');
-        return fileId;
+        await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
+        return fileAttached.getAttribute('id');
     }
 
-    async removeFile(fileName: string) {
+    async removeFile(fileName: string): Promise<void> {
         const fileId = await this.getFileId(fileName);
         const deleteButton = this.widget.element(by.css(`button[id='${fileId}-remove']`));
-        BrowserActions.click(deleteButton);
-        return this;
+        await BrowserActions.click(deleteButton);
     }
 
-    viewFile(name) {
+    async viewFile(name): Promise<void> {
         const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserActions.click(fileView);
-        browser.actions().doubleClick(fileView).perform();
-        return this;
+        await BrowserActions.click(fileView);
+        await browser.actions().doubleClick(fileView).perform();
     }
 }

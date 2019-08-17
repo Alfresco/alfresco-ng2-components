@@ -17,12 +17,13 @@
 
 import { by, element } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { ElementFinder } from 'protractor';
 
 export class DownloadDialogPage {
-    cancelButton = element(by.id(`cancel-button`));
+    cancelButton: ElementFinder = element(by.id(`cancel-button`));
 
-    clickCancelButton() {
-        return BrowserActions.click(this.cancelButton);
+    async clickCancelButton(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 
 }

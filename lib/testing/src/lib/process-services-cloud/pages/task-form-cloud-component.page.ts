@@ -19,99 +19,88 @@ import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/formFields';
+import { ElementFinder } from 'protractor';
 
 export class TaskFormCloudComponent {
 
-    cancelButton = element(by.css('button[id="adf-cloud-cancel-task"]'));
-    completeButton = element(by.css('button[id="adf-form-complete"]'));
-    releaseButton = element(by.css('button[adf-cloud-unclaim-task]'));
-    saveButton = element(by.css('button[id="adf-form-save"]'));
-    claimButton = element(by.css('button[adf-cloud-claim-task]'));
-    form = element(by.css('adf-cloud-form'));
-    formTitle = element(by.css(`span.adf-form-title`));
-    emptyContentIcon = element(by.css(`div.adf-empty-content mat-icon.adf-empty-content__icon`));
-    emptyContentTitle = element(by.css(`div.adf-empty-content div.adf-empty-content__title`));
-    emptyContentSubtitle = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
+    cancelButton: ElementFinder = element(by.css('button[id="adf-cloud-cancel-task"]'));
+    completeButton: ElementFinder = element(by.css('button[id="adf-form-complete"]'));
+    releaseButton: ElementFinder = element(by.css('button[adf-cloud-unclaim-task]'));
+    saveButton: ElementFinder = element(by.css('button[id="adf-form-save"]'));
+    claimButton: ElementFinder = element(by.css('button[adf-cloud-claim-task]'));
+    form: ElementFinder = element(by.css('adf-cloud-form'));
+    formTitle: ElementFinder = element(by.css(`span.adf-form-title`));
+    emptyContentIcon: ElementFinder = element(by.css(`div.adf-empty-content mat-icon.adf-empty-content__icon`));
+    emptyContentTitle: ElementFinder = element(by.css(`div.adf-empty-content div.adf-empty-content__title`));
+    emptyContentSubtitle: ElementFinder = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
 
-    checkCompleteButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-        return this;
+    async checkCompleteButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
     }
 
-    checkCompleteButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.completeButton);
-        return this;
+    async checkCompleteButtonIsNotDisplayed() {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.completeButton);
     }
 
-    clickCompleteButton() {
-        BrowserActions.click(this.completeButton);
-        return this;
+    async clickCompleteButton(): Promise<void> {
+        await BrowserActions.click(this.completeButton);
     }
 
-    clickCancelButton() {
-        BrowserActions.click(this.cancelButton);
-        return this;
+    async clickCancelButton(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 
-    clickClaimButton() {
-        BrowserActions.click(this.claimButton);
-        return this;
+    async clickClaimButton(): Promise<void> {
+        await BrowserActions.click(this.claimButton);
     }
 
-    clickReleaseButton() {
-        BrowserActions.click(this.releaseButton);
-        return this;
+    async clickReleaseButton(): Promise<void> {
+        await BrowserActions.click(this.releaseButton);
     }
 
-    formFields() {
+    formFields(): FormFields {
         return new FormFields();
     }
 
-    checkFormIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.form);
-        return this;
+    async checkFormIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.form);
     }
 
-    getFormTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.formTitle);
-        return this.formTitle.getText();
+    async getFormTitle(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.formTitle);
+        return BrowserActions.getText(this.formTitle);
     }
 
-    checkFormIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.form);
-        return this;
+    async checkFormIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.form);
     }
 
-    getReleaseButtonText() {
+    async getReleaseButtonText(): Promise<string> {
         return BrowserActions.getText(this.releaseButton);
     }
 
-    checkSaveButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-        return this;
+    async checkSaveButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
     }
 
-    clickSaveButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-        this.saveButton.click();
-        return this;
+    async clickSaveButton(): Promise<void> {
+        await BrowserActions.click(this.saveButton);
     }
 
-    checkFormContentIsEmpty() {
-        BrowserVisibility.waitUntilElementIsVisible(this.emptyContentIcon);
-        return this;
+    async checkFormContentIsEmpty(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.emptyContentIcon);
     }
 
-    getEmptyFormContentTitle() {
+    async getEmptyFormContentTitle(): Promise<string> {
         return BrowserActions.getText(this.emptyContentTitle);
     }
 
-    getEmptyFormContentSubtitle() {
+    async getEmptyFormContentSubtitle(): Promise<string> {
         return BrowserActions.getText(this.emptyContentSubtitle);
     }
 
-    getCompleteButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+    async getCompleteButton(): Promise<ElementFinder> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
         return this.completeButton;
     }
 

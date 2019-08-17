@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class LogoutPage {
 
-    logoutSection = element(by.css('div[data-automation-id="adf-logout-section"]'));
+    logoutSection: ElementFinder = element(by.css('div[data-automation-id="adf-logout-section"]'));
 
-    checkLogoutSectionIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
+    async checkLogoutSectionIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
     }
 }

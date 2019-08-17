@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
@@ -33,20 +33,18 @@ export class DataTablePage {
         defaultTable: 'datatable'
     };
 
-    dataTable;
-    multiSelect = element(by.css(`div[data-automation-id='multiselect'] label > div[class='mat-checkbox-inner-container']`));
-    reset = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
-    selectionButton = element(by.css(`div[class='mat-select-arrow']`));
-    selectionDropDown = element(by.css(`div[class*='ng-trigger-transformPanel']`));
-    allSelectedRows = element.all(by.css(`div[class*='is-selected']`));
-    selectedRowNumber = element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
-    selectAll = element(by.css(`div[class*='header'] label`));
-    addRowElement = element(by.xpath(`//span[contains(text(),'Add row')]/..`));
-    replaceRowsElement = element(by.xpath(`//span[contains(text(),'Replace rows')]/..`));
-    replaceColumnsElement = element(by.xpath(`//span[contains(text(),'Replace columns')]/..`));
-    createdOnColumn = element(by.css(`div[data-automation-id='auto_id_createdOn']`));
-    idColumnHeader = element(by.css(`div[data-automation-id='auto_id_id']`));
-    pasteClipboardInput = element(by.css(`input[data-automation-id='paste clipboard input']`));
+    dataTable: DataTableComponentPage;
+    multiSelect: ElementFinder = element(by.css(`div[data-automation-id='multiselect'] label > div[class='mat-checkbox-inner-container']`));
+    reset: ElementFinder = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
+    allSelectedRows: ElementArrayFinder = element.all(by.css(`div[class*='is-selected']`));
+    selectedRowNumber: ElementFinder = element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
+    selectAll: ElementFinder = element(by.css(`div[class*='header'] label`));
+    addRowElement: ElementFinder = element(by.xpath(`//span[contains(text(),'Add row')]/..`));
+    replaceRowsElement: ElementFinder = element(by.xpath(`//span[contains(text(),'Replace rows')]/..`));
+    replaceColumnsElement: ElementFinder = element(by.xpath(`//span[contains(text(),'Replace columns')]/..`));
+    createdOnColumn: ElementFinder = element(by.css(`div[data-automation-id='auto_id_createdOn']`));
+    idColumnHeader: ElementFinder = element(by.css(`div[data-automation-id='auto_id_id']`));
+    pasteClipboardInput: ElementFinder = element(by.css(`input[data-automation-id='paste clipboard input']`));
 
     constructor(data?) {
         if (this.data[data]) {
@@ -56,142 +54,141 @@ export class DataTablePage {
         }
     }
 
-    insertFilter(filterText) {
-        const inputFilter = element(by.css(`#adf-datatable-filter-input`));
-        inputFilter.clear();
-        return inputFilter.sendKeys(filterText);
+    async insertFilter(filterText): Promise<void> {
+        const inputFilter: ElementFinder = element(by.css(`#adf-datatable-filter-input`));
+        await BrowserActions.clearSendKeys(inputFilter, filterText);
     }
 
-    addRow() {
-        BrowserActions.click(this.addRowElement);
+    async addRow(): Promise<void> {
+        await BrowserActions.click(this.addRowElement);
     }
 
-    replaceRows(id) {
+    async replaceRows(id): Promise<void> {
         const rowID = this.dataTable.getCellElementByValue(this.columns.id, id);
-        BrowserVisibility.waitUntilElementIsVisible(rowID);
-        BrowserActions.click(this.replaceRowsElement);
-        BrowserVisibility.waitUntilElementIsNotVisible(rowID);
+        await BrowserVisibility.waitUntilElementIsVisible(rowID);
+        await BrowserActions.click(this.replaceRowsElement);
+        await BrowserVisibility.waitUntilElementIsNotVisible(rowID);
     }
 
-    replaceColumns() {
-        BrowserActions.click(this.replaceColumnsElement);
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.createdOnColumn);
+    async replaceColumns(): Promise<void> {
+        await BrowserActions.click(this.replaceColumnsElement);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.createdOnColumn);
     }
 
-    clickMultiSelect() {
-        BrowserActions.click(this.multiSelect);
+    async clickMultiSelect(): Promise<void> {
+        await BrowserActions.click(this.multiSelect);
     }
 
-    clickReset() {
-        BrowserActions.click(this.reset);
+    async clickReset(): Promise<void> {
+        await BrowserActions.click(this.reset);
     }
 
-    checkRowIsNotSelected(rowNumber) {
+    async checkRowIsNotSelected(rowNumber): Promise<void> {
         const isRowSelected = this.dataTable.getCellElementByValue(this.columns.id, rowNumber)
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]`));
-        BrowserVisibility.waitUntilElementIsNotOnPage(isRowSelected);
+        await BrowserVisibility.waitUntilElementIsNotVisible(isRowSelected);
     }
 
-    checkNoRowIsSelected() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.selectedRowNumber);
+    async checkNoRowIsSelected(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.selectedRowNumber);
     }
 
-    checkAllRows() {
-        BrowserActions.click(this.selectAll);
+    async checkAllRows(): Promise<void> {
+        await BrowserActions.click(this.selectAll);
     }
 
-    checkRowIsChecked(rowNumber) {
-        BrowserVisibility.waitUntilElementIsVisible(this.getRowCheckbox(rowNumber));
+    async checkRowIsChecked(rowNumber): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.getRowCheckbox(rowNumber));
     }
 
-    checkRowIsNotChecked(rowNumber) {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.getRowCheckbox(rowNumber));
+    async checkRowIsNotChecked(rowNumber): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.getRowCheckbox(rowNumber));
     }
 
-    getNumberOfSelectedRows() {
+    async getNumberOfSelectedRows(): Promise<number> {
         return this.allSelectedRows.count();
     }
 
-    clickCheckbox(rowNumber) {
-        BrowserActions.closeMenuAndDialogs();
+    async clickCheckbox(rowNumber): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
         const checkbox = this.dataTable.getCellElementByValue(this.columns.id, rowNumber)
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
-        BrowserActions.click(checkbox);
+        await BrowserActions.click(checkbox);
     }
 
-    async selectRow(rowNumber) {
-        BrowserActions.clickExecuteScript(`div[title="${this.columns.id}"] div[data-automation-id="text_${rowNumber}"] span`);
-        return this;
-    }
-
-    selectRowWithKeyboard(rowNumber) {
+    async selectRow(rowNumber): Promise<void> {
         const row = this.dataTable.getCellElementByValue(this.columns.id, rowNumber);
-        browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
+        await BrowserActions.click(row);
     }
 
-    selectSelectionMode(selectionMode) {
-        const selectMode = element(by.cssContainingText(`span[class='mat-option-text']`, selectionMode));
-        BrowserActions.clickExecuteScript('div[class="mat-select-arrow"]');
-        BrowserActions.click(selectMode);
+    async selectRowWithKeyboard(rowNumber): Promise<void> {
+        await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
+        await this.selectRow(rowNumber);
+        await browser.actions().sendKeys(protractor.Key.NULL).perform();
     }
 
-    getRowCheckbox(rowNumber) {
+    async selectSelectionMode(selectionMode): Promise<void> {
+        const selectMode: ElementFinder = element(by.cssContainingText(`span[class='mat-option-text']`, selectionMode));
+        await BrowserActions.clickExecuteScript('div[class="mat-select-arrow"]');
+        await BrowserActions.click(selectMode);
+    }
+
+    getRowCheckbox(rowNumber): ElementFinder {
         return this.dataTable.getCellElementByValue(this.columns.id, rowNumber).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
     }
 
-    getCopyContentTooltip() {
-        return this.dataTable.getCopyContentTooltip();
+    async getCopyContentTooltip(): Promise<string> {
+        return await this.dataTable.getCopyContentTooltip();
     }
 
-    mouseOverNameColumn(name) {
-        return this.dataTable.mouseOverColumn(this.columns.name, name);
+    async mouseOverNameColumn(name): Promise<void> {
+        await this.dataTable.mouseOverColumn(this.columns.name, name);
     }
 
-    mouseOverCreatedByColumn(name) {
-        return this.dataTable.mouseOverColumn(this.columns.createdBy, name);
+    async mouseOverCreatedByColumn(name): Promise<void> {
+        await this.dataTable.mouseOverColumn(this.columns.createdBy, name);
     }
 
-    mouseOverIdColumn(name) {
-        return this.dataTable.mouseOverColumn(this.columns.id, name);
+    async mouseOverIdColumn(name): Promise<void> {
+        await this.dataTable.mouseOverColumn(this.columns.id, name);
     }
 
-    mouseOverJsonColumn(rowNumber) {
-        return this.dataTable.mouseOverElement(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
+    async mouseOverJsonColumn(rowNumber): Promise<void> {
+        await this.dataTable.mouseOverElement(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
     }
 
-    getDropTargetIdColumnCell(rowNumber) {
+    getDropTargetIdColumnCell(rowNumber): ElementFinder {
         return this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.id);
     }
 
-    getDropTargetIdColumnHeader() {
+    getDropTargetIdColumnHeader(): ElementFinder {
         return this.idColumnHeader;
     }
 
-    clickOnIdColumn(name) {
-        return this.dataTable.clickColumn(this.columns.id, name);
+    async clickOnIdColumn(name): Promise<void> {
+        await this.dataTable.clickColumn(this.columns.id, name);
     }
 
-    clickOnJsonColumn(rowNumber) {
-        return BrowserActions.click(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
+    async clickOnJsonColumn(rowNumber): Promise<void> {
+        await BrowserActions.click(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
     }
 
-    clickOnNameColumn(name) {
-        return this.dataTable.clickColumn(this.columns.name, name);
+    async clickOnNameColumn(name): Promise<void> {
+        await this.dataTable.clickColumn(this.columns.name, name);
     }
 
-    clickOnCreatedByColumn(name) {
-        return this.dataTable.clickColumn(this.columns.createdBy, name);
+    async clickOnCreatedByColumn(name): Promise<void> {
+        await this.dataTable.clickColumn(this.columns.createdBy, name);
     }
 
-    pasteClipboard() {
-        this.pasteClipboardInput.clear();
-        BrowserActions.click(this.pasteClipboardInput);
-        this.pasteClipboardInput.sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.INSERT));
-        return this;
+    async pasteClipboard(): Promise<void> {
+        await this.pasteClipboardInput.clear();
+        await BrowserActions.click(this.pasteClipboardInput);
+        await this.pasteClipboardInput.sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.INSERT));
     }
 
-    getClipboardInputText() {
-        BrowserVisibility.waitUntilElementIsVisible(this.pasteClipboardInput);
-        return this.pasteClipboardInput.getAttribute('value');
+    async getClipboardInputText(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.pasteClipboardInput);
+        return await this.pasteClipboardInput.getAttribute('value');
     }
 }

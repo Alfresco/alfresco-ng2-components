@@ -52,7 +52,7 @@ describe('People Groups Cloud Component', () => {
         let groups = [];
         let clientId;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
             identityService = new IdentityService(apiService);
@@ -87,7 +87,7 @@ describe('People Groups Cloud Component', () => {
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            done();
+
         });
 
         afterAll(async () => {
@@ -105,71 +105,71 @@ describe('People Groups Cloud Component', () => {
 
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToPeopleGroupCloudPage();
-            peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
-            peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
+        beforeEach(async () => {
+            await navigationBarPage.navigateToPeopleGroupCloudPage();
+            await peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
+            await peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
         });
 
-        afterEach(() => {
-            browser.refresh();
+        afterEach(async () => {
+            await browser.refresh();
         });
 
-        it('[C305041] Should filter the People Single Selection with the Application name filter', () => {
-            peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
-            peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
-            peopleCloudComponent.searchAssignee(`${activitiUser.firstName}`);
-            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            browser.sleep(100);
-            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+        it('[C305041] Should filter the People Single Selection with the Application name filter', async () => {
+            await peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
+            await peopleGroupCloudComponentPage.clickPeopleFilerByApp();
+            await peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
+            await peopleCloudComponent.searchAssignee(`${activitiUser.firstName}`);
+            await peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            await peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            await browser.sleep(100);
+            await expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
         });
 
-        it('[C305041] Should filter the People Multiple Selection with the Application name filter', () => {
-            peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
-            peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
-            peopleCloudComponent.searchAssignee(`${apsUser.firstName}`);
-            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-            peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+        it('[C305041] Should filter the People Multiple Selection with the Application name filter', async () => {
+            await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
+            await peopleGroupCloudComponentPage.clickPeopleFilerByApp();
+            await peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
+            await peopleCloudComponent.searchAssignee(`${apsUser.firstName}`);
+            await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
 
-            peopleCloudComponent.searchAssigneeToExisting(`${activitiUser.firstName}`);
-            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            await peopleCloudComponent.searchAssigneeToExisting(`${activitiUser.firstName}`);
+            await peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            await peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            await peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
 
-            peopleCloudComponent.searchAssigneeToExisting(`${noRoleUser.firstName}`);
-            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            await peopleCloudComponent.searchAssigneeToExisting(`${noRoleUser.firstName}`);
+            await peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
         });
 
-        it('[C305041] Should filter the Groups Single Selection with the Application name filter', () => {
-            peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
-            peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
-            groupCloudComponentPage.searchGroups(`${groupActiviti.name}`);
-            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
-            groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
-            expect(groupCloudComponentPage.getGroupsFieldContent()).toBe(`${groupActiviti.name}`);
+        it('[C305041] Should filter the Groups Single Selection with the Application name filter', async () => {
+            await peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
+            await peopleGroupCloudComponentPage.clickGroupFilerByApp();
+            await peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
+            await groupCloudComponentPage.searchGroups(`${groupActiviti.name}`);
+            await groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+            await groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
+            await expect(await groupCloudComponentPage.getGroupsFieldContent()).toBe(`${groupActiviti.name}`);
         });
 
-        it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', () => {
-            peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
-            peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
-            groupCloudComponentPage.searchGroups(`${groupAps.name}`);
-            groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
-            groupCloudComponentPage.selectGroupFromList(`${groupAps.name}`);
-            groupCloudComponentPage.checkSelectedGroup(`${groupAps.name}`);
+        it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', async () => {
+            await peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
+            await peopleGroupCloudComponentPage.clickGroupFilerByApp();
+            await peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
+            await groupCloudComponentPage.searchGroups(`${groupAps.name}`);
+            await groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+            await groupCloudComponentPage.selectGroupFromList(`${groupAps.name}`);
+            await groupCloudComponentPage.checkSelectedGroup(`${groupAps.name}`);
 
-            groupCloudComponentPage.searchGroupsToExisting(`${groupActiviti.name}`);
-            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
-            groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
-            groupCloudComponentPage.checkSelectedGroup(`${groupActiviti.name}`);
+            await groupCloudComponentPage.searchGroupsToExisting(`${groupActiviti.name}`);
+            await groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+            await groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
+            await groupCloudComponentPage.checkSelectedGroup(`${groupActiviti.name}`);
 
-            groupCloudComponentPage.searchGroupsToExisting(`${groupNoRole.name}`);
-            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            await groupCloudComponentPage.searchGroupsToExisting(`${groupNoRole.name}`);
+            await groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
         });
 
     });

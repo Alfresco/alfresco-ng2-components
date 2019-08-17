@@ -25,30 +25,28 @@ export class QueryService {
         this.api = api;
     }
 
-    async getProcessInstanceTasks(processInstanceId, appName) {
+    async getProcessInstanceTasks(processInstanceId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
             const method = 'GET';
 
             const queryParams = {}, postBody = {};
 
-            const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-            return data;
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('get process-instances Service error');
         }
     }
 
-    async getProcessInstanceSubProcesses(processInstanceId, appName) {
+    async getProcessInstanceSubProcesses(processInstanceId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/subprocesses';
             const method = 'GET';
 
             const queryParams = {};
 
-            const data = await this.api.performBpmOperation(path, method, queryParams, {});
-            return data;
+            return this.api.performBpmOperation(path, method, queryParams, {});
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('get subprocesses process-instances Service error');

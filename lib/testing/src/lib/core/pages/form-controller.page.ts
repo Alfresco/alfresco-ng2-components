@@ -15,28 +15,27 @@
  * limitations under the License.
  */
 
-import { by } from 'protractor';
+import { by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class FormControllersPage {
 
-    enableToggle(toggle) {
-        BrowserVisibility.waitUntilElementIsVisible(toggle);
-        toggle.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') < 0) {
-                BrowserVisibility.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
-                toggle.all(by.css('div')).first().click();
-            }
-        });
+    async enableToggle(toggle: ElementFinder): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(toggle);
+        const check = await toggle.getAttribute('class');
+        if (check.indexOf('mat-checked') < 0) {
+            const elem = toggle.all(by.css('div')).first();
+            await BrowserActions.click(elem);
+        }
     }
 
-    disableToggle(toggle) {
-        BrowserVisibility.waitUntilElementIsVisible(toggle);
-        toggle.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') >= 0) {
-                BrowserVisibility.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
-                toggle.all(by.css('div')).first().click();
-            }
-        });
+    async disableToggle(toggle: ElementFinder): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(toggle);
+        const check = await toggle.getAttribute('class');
+        if (check.indexOf('mat-checked') >= 0) {
+            const elem = toggle.all(by.css('div')).first();
+            await BrowserActions.click(elem);
+        }
     }
 }

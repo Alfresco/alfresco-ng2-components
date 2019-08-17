@@ -15,220 +15,196 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser } from 'protractor';
+import { element, by, protractor, browser, ElementFinder, ElementArrayFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TagPage {
 
-    addTagButton = element(by.css('button[id="add-tag"]'));
-    insertNodeIdElement = element(by.css('input[id="nodeId"]'));
-    newTagInput = element(by.css('input[id="new-tag-text"]'));
-    tagListRow = element(by.css('adf-tag-node-actions-list mat-list-item'));
-    tagListByNodeIdRow = element(by.css('adf-tag-node-list mat-chip'));
-    errorMessage = element(by.css('mat-hint[data-automation-id="errorMessage"]'));
+    addTagButton: ElementFinder = element(by.css('button[id="add-tag"]'));
+    insertNodeIdElement: ElementFinder = element(by.css('input[id="nodeId"]'));
+    newTagInput: ElementFinder = element(by.css('input[id="new-tag-text"]'));
+    tagListRow: ElementFinder = element(by.css('adf-tag-node-actions-list mat-list-item'));
+    tagListByNodeIdRow: ElementFinder = element(by.css('adf-tag-node-list mat-chip'));
+    errorMessage: ElementFinder = element(by.css('mat-hint[data-automation-id="errorMessage"]'));
     tagListRowLocator = by.css('adf-tag-node-actions-list mat-list-item div');
     tagListByNodeIdRowLocator = by.css('adf-tag-node-list mat-chip span');
     tagListContentServicesRowLocator = by.css('div[class*="adf-list-tag"]');
-    showDeleteButton = element(by.id('adf-remove-button-tag'));
-    showMoreButton = element(by.css('button[data-automation-id="show-more-tags"]'));
-    showLessButton = element(by.css('button[data-automation-id="show-fewer-tags"]'));
-    tagsOnPage = element.all(by.css('div[class*="adf-list-tag"]'));
-    confirmTag = element(by.id('adf-tag-node-send'));
+    showDeleteButton: ElementFinder = element(by.id('adf-remove-button-tag'));
+    showMoreButton: ElementFinder = element(by.css('button[data-automation-id="show-more-tags"]'));
+    showLessButton: ElementFinder = element(by.css('button[data-automation-id="show-fewer-tags"]'));
+    tagsOnPage: ElementArrayFinder = element.all(by.css('div[class*="adf-list-tag"]'));
+    confirmTag: ElementFinder = element(by.id('adf-tag-node-send'));
 
-    getNodeId() {
-        BrowserVisibility.waitUntilElementIsVisible(this.insertNodeIdElement);
-        return this.insertNodeIdElement.getAttribute('value');
+    async getNodeId(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.insertNodeIdElement);
+        return await this.insertNodeIdElement.getAttribute('value');
     }
 
-    insertNodeId(nodeId) {
-        BrowserActions.clearSendKeys(this.insertNodeIdElement, nodeId);
+    async insertNodeId(nodeId) {
+        await BrowserActions.clearSendKeys(this.insertNodeIdElement, nodeId);
 
-        browser.driver.sleep(200);
-        this.insertNodeIdElement.sendKeys(' ');
-        browser.driver.sleep(200);
-        this.insertNodeIdElement.sendKeys(protractor.Key.BACK_SPACE);
-        this.clickConfirmTag();
+        await browser.sleep(200);
+        await this.insertNodeIdElement.sendKeys(' ');
+        await browser.sleep(200);
+        await this.insertNodeIdElement.sendKeys(protractor.Key.BACK_SPACE);
+        await this.clickConfirmTag();
     }
 
-    addNewTagInput(tag) {
-        BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
-        BrowserActions.clearSendKeys(this.newTagInput, tag);
-        return this;
+    async addNewTagInput(tag) {
+        await BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
+        await BrowserActions.clearSendKeys(this.newTagInput, tag);
     }
 
-    addTag(tag) {
-        this.addNewTagInput(tag);
-        BrowserActions.click(this.addTagButton);
-        return this;
+    async addTag(tag): Promise<void> {
+        await this.addNewTagInput(tag);
+        await BrowserActions.click(this.addTagButton);
     }
 
-    deleteTagFromTagListByNodeId(name) {
-        const deleteChip = element(by.id('tag_chips_delete_' + name));
-        BrowserActions.click(deleteChip);
-        return this;
+    async deleteTagFromTagListByNodeId(name): Promise<void> {
+        const deleteChip: ElementFinder = element(by.id('tag_chips_delete_' + name));
+        await BrowserActions.click(deleteChip);
     }
 
-    deleteTagFromTagList(name) {
-        const deleteChip = element(by.id('tag_chips_delete_' + name));
-        BrowserActions.click(deleteChip);
-        return this;
+    async deleteTagFromTagList(name): Promise<void> {
+        const deleteChip: ElementFinder = element(by.id('tag_chips_delete_' + name));
+        await BrowserActions.click(deleteChip);
     }
 
-    getNewTagInput() {
-        BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
-        return this.newTagInput.getAttribute('value');
+    async getNewTagInput(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
+        return await this.newTagInput.getAttribute('value');
     }
 
-    getNewTagPlaceholder() {
-        BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
-        return this.newTagInput.getAttribute('placeholder');
+    async getNewTagPlaceholder(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
+        return await this.newTagInput.getAttribute('placeholder');
     }
 
-    addTagButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.addTagButton);
-        return this.addTagButton.isEnabled();
+    async addTagButtonIsEnabled(): Promise<boolean> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.addTagButton);
+        return await this.addTagButton.isEnabled();
     }
 
-    checkTagIsDisplayedInTagList(tagName) {
-        const tag = element(by.cssContainingText('div[id*="tag_name"]', tagName));
-        return BrowserVisibility.waitUntilElementIsVisible(tag);
+    async checkTagIsDisplayedInTagList(tagName): Promise<void> {
+        const tag: ElementFinder = element(by.cssContainingText('div[id*="tag_name"]', tagName));
+        await BrowserVisibility.waitUntilElementIsVisible(tag);
     }
 
-    checkTagIsNotDisplayedInTagList(tagName) {
-        const tag = element(by.cssContainingText('div[id*="tag_name"]', tagName));
-        return BrowserVisibility.waitUntilElementIsNotOnPage(tag);
+    async checkTagIsNotDisplayedInTagList(tagName): Promise<void> {
+        const tag: ElementFinder = element(by.cssContainingText('div[id*="tag_name"]', tagName));
+        await BrowserVisibility.waitUntilElementIsNotVisible(tag);
     }
 
-    checkTagIsNotDisplayedInTagListByNodeId(tagName) {
-        const tag = element(by.cssContainingText('span[id*="tag_name"]', tagName));
-        return BrowserVisibility.waitUntilElementIsNotOnPage(tag);
+    async checkTagIsNotDisplayedInTagListByNodeId(tagName): Promise<void> {
+        const tag: ElementFinder = element(by.cssContainingText('span[id*="tag_name"]', tagName));
+        await BrowserVisibility.waitUntilElementIsNotVisible(tag);
     }
 
-    checkTagIsDisplayedInTagListByNodeId(tagName) {
-        const tag = element(by.cssContainingText('span[id*="tag_name"]', tagName));
-        return BrowserVisibility.waitUntilElementIsVisible(tag);
+    async checkTagIsDisplayedInTagListByNodeId(tagName): Promise<void> {
+        const tag: ElementFinder = element(by.cssContainingText('span[id*="tag_name"]', tagName));
+        await BrowserVisibility.waitUntilElementIsVisible(tag);
     }
 
-    checkTagListIsEmpty() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.tagListRow);
+    async checkTagListIsEmpty(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.tagListRow);
     }
 
-    checkTagListByNodeIdIsEmpty() {
-        return BrowserVisibility.waitUntilElementIsNotOnPage(this.tagListByNodeIdRow);
+    async checkTagListByNodeIdIsEmpty(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.tagListByNodeIdRow);
     }
 
-    checkTagIsDisplayedInTagListContentServices(tagName) {
-        const tag = element(by.cssContainingText('div[class="adf-list-tag"][id*="tag_name"]', tagName));
-        return BrowserVisibility.waitUntilElementIsVisible(tag);
+    async checkTagIsDisplayedInTagListContentServices(tagName): Promise<void> {
+        const tag: ElementFinder = element(by.cssContainingText('div[class="adf-list-tag"][id*="tag_name"]', tagName));
+        await BrowserVisibility.waitUntilElementIsVisible(tag);
     }
 
-    getErrorMessage() {
-        return BrowserActions.getText(this.errorMessage);
+    async getErrorMessage(): Promise<string> {
+        return await BrowserActions.getText(this.errorMessage);
     }
 
-    checkTagListIsOrderedAscending() {
-        const deferred = protractor.promise.defer();
-        this.checkListIsSorted(false, this.tagListRowLocator).then((result) => {
-            deferred.fulfill(result);
-        });
-        return deferred.promise;
+    async checkTagListIsOrderedAscending(): Promise<any> {
+        await this.checkListIsSorted(false, this.tagListRowLocator);
     }
 
-    checkTagListByNodeIdIsOrderedAscending() {
-        const deferred = protractor.promise.defer();
-        this.checkListIsSorted(false, this.tagListByNodeIdRowLocator).then((result) => {
-            deferred.fulfill(result);
-        });
-        return deferred.promise;
+    async checkTagListByNodeIdIsOrderedAscending(): Promise<any> {
+        await this.checkListIsSorted(false, this.tagListByNodeIdRowLocator);
     }
 
-    checkTagListContentServicesIsOrderedAscending() {
-        const deferred = protractor.promise.defer();
-        this.checkListIsSorted(false, this.tagListContentServicesRowLocator).then((result) => {
-            deferred.fulfill(result);
-        });
-        return deferred.promise;
+    async checkTagListContentServicesIsOrderedAscending(): Promise<any> {
+        await this.checkListIsSorted(false, this.tagListContentServicesRowLocator);
     }
 
-    checkListIsSorted(sortOrder, locator) {
-        const deferred = protractor.promise.defer();
-        const tagList = element.all(locator);
-        BrowserVisibility.waitUntilElementIsVisible(tagList.first());
+    async checkListIsSorted(sortOrder, locator): Promise<boolean> {
+        const tagList: ElementArrayFinder = element.all(locator);
+        await BrowserVisibility.waitUntilElementIsVisible(tagList.first());
         const initialList = [];
-        tagList.each(function (currentElement) {
-            currentElement.getText().then(function (text) {
-                initialList.push(text);
-            });
-        }).then(function () {
-            let sortedList = initialList;
-            sortedList = sortedList.sort();
-            if (sortOrder === false) {
-                sortedList = sortedList.reverse();
-            }
-            deferred.fulfill(initialList.toString() === sortedList.toString());
+        await tagList.each(async (currentElement) => {
+            const text = await BrowserActions.getText(currentElement);
+            initialList.push(text);
         });
-        return deferred.promise;
+        let sortedList = initialList;
+        sortedList = sortedList.sort();
+        if (sortOrder === false) {
+            sortedList = sortedList.reverse();
+        }
+        return initialList.toString() === sortedList.toString();
     }
 
-    checkDeleteTagFromTagListByNodeIdIsDisplayed(name) {
-        const deleteChip = element(by.id('tag_chips_delete_' + name));
-        return BrowserVisibility.waitUntilElementIsVisible(deleteChip);
+    async checkDeleteTagFromTagListByNodeIdIsDisplayed(name): Promise<void> {
+        const deleteChip: ElementFinder = element(by.id('tag_chips_delete_' + name));
+        await BrowserVisibility.waitUntilElementIsVisible(deleteChip);
     }
 
-    checkDeleteTagFromTagListByNodeIdIsNotDisplayed(name) {
-        const deleteChip = element(by.id('tag_chips_delete_' + name));
-        return BrowserVisibility.waitUntilElementIsNotVisible(deleteChip);
+    async checkDeleteTagFromTagListByNodeIdIsNotDisplayed(name): Promise<void> {
+        const deleteChip: ElementFinder = element(by.id('tag_chips_delete_' + name));
+        await BrowserVisibility.waitUntilElementIsNotVisible(deleteChip);
     }
 
-    clickShowDeleteButtonSwitch() {
-        BrowserActions.click(this.showDeleteButton);
+    async clickShowDeleteButtonSwitch(): Promise<void> {
+        await BrowserActions.click(this.showDeleteButton);
     }
 
-    checkShowMoreButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.showMoreButton);
+    async checkShowMoreButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.showMoreButton);
     }
 
-    clickShowMoreButton() {
-        return BrowserActions.click(this.showMoreButton);
+    async clickShowMoreButton(): Promise<void> {
+        await BrowserActions.click(this.showMoreButton);
     }
 
-    clickShowLessButton() {
-        return BrowserActions.click(this.showLessButton);
+    async clickShowLessButton(): Promise<void> {
+        await BrowserActions.click(this.showLessButton);
     }
 
-    clickConfirmTag() {
-        return BrowserActions.click(this.confirmTag);
+    async clickConfirmTag(): Promise<void> {
+        await BrowserActions.click(this.confirmTag);
     }
 
-    checkTagsOnList() {
-        return this.tagsOnPage.count();
+    async checkTagsOnList(): Promise<number> {
+        return await this.tagsOnPage.count();
     }
 
-    checkShowLessButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.showLessButton);
+    async checkShowLessButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.showLessButton);
     }
 
-    checkShowLessButtonIsNotDisplayed() {
-        return BrowserVisibility.waitUntilElementIsNotVisible(this.showLessButton);
+    async checkShowLessButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.showLessButton);
     }
 
-    clickShowMoreButtonUntilNotDisplayed() {
-        this.showMoreButton.isDisplayed().then((visible) => {
-            if (visible) {
-                BrowserActions.click(this.showMoreButton);
-                this.clickShowMoreButtonUntilNotDisplayed();
-            }
-        }, () => {
-        });
+    async clickShowMoreButtonUntilNotDisplayed(): Promise<void> {
+        const visible = await this.showMoreButton.isDisplayed();
+        if (visible) {
+            await BrowserActions.click(this.showMoreButton);
+            await this.clickShowMoreButtonUntilNotDisplayed();
+        }
     }
 
-    clickShowLessButtonUntilNotDisplayed() {
-        this.showLessButton.isDisplayed().then((visible) => {
-            if (visible) {
-                BrowserActions.click(this.showLessButton);
-                this.clickShowLessButtonUntilNotDisplayed();
-            }
-        }, () => {
-        });
+    async clickShowLessButtonUntilNotDisplayed(): Promise<void> {
+        const visible = await this.showLessButton.isDisplayed();
+        if (visible) {
+            await BrowserActions.click(this.showLessButton);
+            await this.clickShowLessButtonUntilNotDisplayed();
+        }
     }
 }

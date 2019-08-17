@@ -24,19 +24,16 @@ import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const navigationBarPage = new NavigationBarPage();
-
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
@@ -47,7 +44,7 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.PPT_FOLDER.folder_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -63,11 +60,6 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        done();
-    });
-
-    afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
     });
 
     describe('PowerPoint Folder Uploaded', () => {
@@ -75,33 +67,32 @@ describe('Viewer', () => {
         let uploadedPpt;
         let pptFolderUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             pptFolderUploaded = await uploadActions.createFolder(pptFolderInfo.name, '-my-');
 
             uploadedPpt = await uploadActions.uploadFolder(pptFolderInfo.location, pptFolderUploaded.entry.id);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(pptFolderUploaded.entry.id);
-            done();
+
         });
 
-        it('[C280009] Should be possible to open any PowerPoint file', () => {
-            contentServicesPage.doubleClickRow('ppt');
+        it('[C280009] Should be possible to open any PowerPoint file', async () => {
+            await contentServicesPage.doubleClickRow('ppt');
 
-            uploadedPpt.forEach((currentFile) => {
+            for (const currentFile of uploadedPpt) {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkFileIsLoaded();
-                    viewerPage.clickCloseButton();
+                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    await viewerPage.checkFileIsLoaded();
+                    await viewerPage.clickCloseButton();
                 }
-            });
-        }, 5 * 60 * 1000);
+            }
+        });
 
     });
 

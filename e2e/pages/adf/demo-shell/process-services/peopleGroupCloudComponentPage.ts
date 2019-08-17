@@ -15,136 +15,120 @@
  * limitations under the License.
  */
 
-import { by, element, protractor } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class PeopleGroupCloudComponentPage {
 
-    peopleCloudSingleSelectionChecked = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"][class*="mat-radio-checked"]'));
-    peopleCloudMultipleSelectionChecked = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"][class*="mat-radio-checked"]'));
-    peopleCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"]'));
-    peopleCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"]'));
-    peopleCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="adf-people-filter-role"]'));
-    groupCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="adf-group-single-mode"]'));
-    groupCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="adf-group-multiple-mode"]'));
-    groupCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="adf-group-filter-role"]'));
-    peopleRoleInput = element(by.css('input[data-automation-id="adf-people-roles-input"]'));
-    peopleAppInput = element(by.css('input[data-automation-id="adf-people-app-input"]'));
-    peoplePreselect = element(by.css('input[data-automation-id="adf-people-preselect-input"]'));
-    groupRoleInput = element(by.css('input[data-automation-id="adf-group-roles-input"]'));
-    groupAppInput = element(by.css('input[data-automation-id="adf-group-app-input"]'));
-    peopleCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
-    groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
-    preselectValidation = element(by.css('mat-checkbox.adf-preselect-value'));
-    preselectValidationStatus = element(by.css('mat-checkbox.adf-preselect-value label input'));
-    peopleFilterByAppName = element(by.css('.people-control-options mat-radio-button[value="appName"]'));
-    groupFilterByAppName = element(by.css('.groups-control-options mat-radio-button[value="appName"]'));
+    peopleCloudSingleSelectionChecked: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"][class*="mat-radio-checked"]'));
+    peopleCloudMultipleSelectionChecked: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"][class*="mat-radio-checked"]'));
+    peopleCloudSingleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"]'));
+    peopleCloudMultipleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"]'));
+    peopleCloudFilterRole: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-people-filter-role"]'));
+    groupCloudSingleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-group-single-mode"]'));
+    groupCloudMultipleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-group-multiple-mode"]'));
+    groupCloudFilterRole: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-group-filter-role"]'));
+    peopleRoleInput: ElementFinder = element(by.css('input[data-automation-id="adf-people-roles-input"]'));
+    peopleAppInput: ElementFinder = element(by.css('input[data-automation-id="adf-people-app-input"]'));
+    peoplePreselect: ElementFinder = element(by.css('input[data-automation-id="adf-people-preselect-input"]'));
+    groupRoleInput: ElementFinder = element(by.css('input[data-automation-id="adf-group-roles-input"]'));
+    groupAppInput: ElementFinder = element(by.css('input[data-automation-id="adf-group-app-input"]'));
+    peopleCloudComponentTitle: ElementFinder = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
+    groupCloudComponentTitle: ElementFinder = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
+    preselectValidation: ElementFinder = element(by.css('mat-checkbox.adf-preselect-value'));
+    preselectValidationStatus: ElementFinder = element(by.css('mat-checkbox.adf-preselect-value label input'));
+    peopleFilterByAppName: ElementFinder = element(by.css('.people-control-options mat-radio-button[value="appName"]'));
+    groupFilterByAppName: ElementFinder = element(by.css('.groups-control-options mat-radio-button[value="appName"]'));
 
-    checkPeopleCloudComponentTitleIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
-        return this;
+    async checkPeopleCloudComponentTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
     }
 
-    checkGroupsCloudComponentTitleIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudComponentTitle);
-        return this;
+    async checkGroupsCloudComponentTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudComponentTitle);
     }
 
-    clickPeopleCloudSingleSelection() {
-        BrowserActions.click(this.peopleCloudSingleSelection);
+    async clickPeopleCloudSingleSelection(): Promise<void> {
+        await BrowserActions.click(this.peopleCloudSingleSelection);
     }
 
-    clickPeopleCloudMultipleSelection() {
-        BrowserActions.click(this.peopleCloudMultipleSelection);
+    async clickPeopleCloudMultipleSelection(): Promise<void> {
+        await BrowserActions.click(this.peopleCloudMultipleSelection);
     }
 
-    checkPeopleCloudSingleSelectionIsSelected() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSingleSelectionChecked);
+    async checkPeopleCloudSingleSelectionIsSelected(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSingleSelectionChecked);
     }
 
-    checkPeopleCloudMultipleSelectionIsSelected() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudMultipleSelectionChecked);
+    async checkPeopleCloudMultipleSelectionIsSelected(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudMultipleSelectionChecked);
     }
 
-    checkPeopleCloudFilterRole() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudFilterRole);
+    async checkPeopleCloudFilterRole(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudFilterRole);
     }
 
-    clickPeopleCloudFilterRole() {
-        BrowserActions.click(this.peopleCloudFilterRole);
+    async clickPeopleCloudFilterRole(): Promise<void> {
+        await BrowserActions.click(this.peopleCloudFilterRole);
     }
 
-    clickGroupCloudFilterRole() {
-        BrowserActions.click(this.groupCloudFilterRole);
+    async clickGroupCloudFilterRole(): Promise<void> {
+        await BrowserActions.click(this.groupCloudFilterRole);
     }
 
-    enterPeopleRoles(roles) {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleRoleInput);
-        this.peopleRoleInput.clear();
-        this.peopleRoleInput.sendKeys(roles);
-        return this;
+    async enterPeopleRoles(roles): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleRoleInput);
+        await BrowserActions.clearSendKeys(this.peopleRoleInput, roles);
     }
 
-    enterPeoplePreselect(preselect) {
-        BrowserVisibility.waitUntilElementIsVisible(this.peoplePreselect);
-        this.peoplePreselect.clear();
-        this.peoplePreselect.sendKeys(preselect);
-        return this;
+    async enterPeoplePreselect(preselect): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peoplePreselect);
+        await BrowserActions.clearSendKeys(this.peoplePreselect, preselect);
     }
 
-    clearField(locator) {
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        locator.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                locator.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+    async clearField(locator): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(locator);
+        await BrowserActions.clearSendKeys(locator, '');
     }
 
-    clickGroupCloudSingleSelection() {
-        BrowserActions.click(this.groupCloudSingleSelection);
+    async clickGroupCloudSingleSelection(): Promise<void> {
+        await BrowserActions.click(this.groupCloudSingleSelection);
     }
 
-    clickGroupCloudMultipleSelection() {
-        BrowserActions.click(this.groupCloudMultipleSelection);
+    async clickGroupCloudMultipleSelection(): Promise<void> {
+        await BrowserActions.click(this.groupCloudMultipleSelection);
     }
 
-    enterGroupRoles(roles) {
-        BrowserVisibility.waitUntilElementIsVisible(this.groupRoleInput);
-        this.groupRoleInput.clear();
-        this.groupRoleInput.sendKeys(roles);
-        return this;
+    async enterGroupRoles(roles): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.groupRoleInput);
+        await BrowserActions.clearSendKeys(this.groupRoleInput, roles);
     }
 
-    clickPreselectValidation() {
-        BrowserActions.click(this.preselectValidation);
+    async clickPreselectValidation(): Promise<void> {
+        await BrowserActions.click(this.preselectValidation);
     }
 
-    getPreselectValidationStatus() {
-        BrowserVisibility.waitUntilElementIsVisible(this.preselectValidationStatus);
+    async getPreselectValidationStatus(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.preselectValidationStatus);
         return this.preselectValidationStatus.getAttribute('aria-checked');
     }
 
-    clickPeopleFilerByApp() {
-        return BrowserActions.click(this.peopleFilterByAppName);
+    async clickPeopleFilerByApp(): Promise<void> {
+        await BrowserActions.click(this.peopleFilterByAppName);
     }
 
-    clickGroupFilerByApp() {
-        return BrowserActions.click(this.groupFilterByAppName);
+    async clickGroupFilerByApp(): Promise<void> {
+        await BrowserActions.click(this.groupFilterByAppName);
     }
 
-    enterPeopleAppName(appName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleAppInput);
-        this.peopleAppInput.clear();
-        this.peopleAppInput.sendKeys(appName);
-        return this;
+    async enterPeopleAppName(appName): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleAppInput);
+        await BrowserActions.clearSendKeys(this.peopleAppInput, appName);
     }
 
-    enterGroupAppName(appName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.groupAppInput);
-        this.groupAppInput.clear();
-        this.groupAppInput.sendKeys(appName);
-        return this;
+    async enterGroupAppName(appName): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.groupAppInput);
+        await BrowserActions.clearSendKeys(this.groupAppInput, appName);
     }
 
 }

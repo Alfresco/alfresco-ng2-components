@@ -16,7 +16,14 @@
  */
 
 import CONSTANTS = require('../../util/constants');
-import { StringUtil, BrowserActions, NotificationHistoryPage, LoginPage, ErrorPage, UploadActions } from '@alfresco/adf-testing';
+import {
+    StringUtil,
+    BrowserActions,
+    NotificationHistoryPage,
+    LoginPage,
+    ErrorPage,
+    UploadActions
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
@@ -48,11 +55,11 @@ describe('Unshare file', () => {
     let nodeId;
     let testSite;
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const site = {
             title: siteName,
             visibility: 'PRIVATE',
@@ -98,88 +105,88 @@ describe('Unshare file', () => {
         nodeId = pngUploadedFile.entry.id;
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        navBar.clickContentServicesButton();
-        contentServicesPage.waitForTableBody();
-        done();
+        await navBar.clickContentServicesButton();
+        await contentServicesPage.waitForTableBody();
+
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         await browser.refresh();
-        done();
+
     });
 
     describe('with permission', () => {
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(nodeId);
-            done();
+
         });
 
-        it('[C286550] Should display unshare confirmation dialog', () => {
-            contentListPage.selectRow(pngFileModel.name);
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickUnShareFile();
-            shareDialog.confirmationDialogIsDisplayed();
+        it('[C286550] Should display unshare confirmation dialog', async () => {
+            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickUnShareFile();
+            await shareDialog.confirmationDialogIsDisplayed();
         });
 
-        it('[C286551] Should be able to cancel unshare action', () => {
-            contentListPage.selectRow(pngFileModel.name);
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickUnShareFile();
-            shareDialog.confirmationDialogIsDisplayed();
-            shareDialog.clickConfirmationDialogCancelButton();
-            shareDialog.shareToggleButtonIsChecked();
+        it('[C286551] Should be able to cancel unshare action', async () => {
+            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickUnShareFile();
+            await shareDialog.confirmationDialogIsDisplayed();
+            await shareDialog.clickConfirmationDialogCancelButton();
+            await shareDialog.shareToggleButtonIsChecked();
         });
 
         it('[C286552] Should be able to confirm unshare action', async () => {
-            contentListPage.selectRow(pngFileModel.name);
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickUnShareFile();
-            shareDialog.confirmationDialogIsDisplayed();
-            shareDialog.clickConfirmationDialogRemoveButton();
-            shareDialog.dialogIsClosed();
+            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickUnShareFile();
+            await shareDialog.confirmationDialogIsDisplayed();
+            await shareDialog.clickConfirmationDialogRemoveButton();
+            await shareDialog.dialogIsClosed();
         });
 
         it('[C280556] Should redirect to 404 when trying to access an unshared file', async () => {
-            contentListPage.selectRow(pngFileModel.name);
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
+            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
             const sharedLink = await shareDialog.getShareLink();
-            shareDialog.clickUnShareFile();
-            shareDialog.confirmationDialogIsDisplayed();
-            shareDialog.clickConfirmationDialogRemoveButton();
-            shareDialog.dialogIsClosed();
-            BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.adf_acs.host, browser.params.testConfig.adf.host));
-            errorPage.checkErrorCode();
+            await shareDialog.clickUnShareFile();
+            await shareDialog.confirmationDialogIsDisplayed();
+            await shareDialog.clickConfirmationDialogRemoveButton();
+            await shareDialog.dialogIsClosed();
+            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.adf_acs.host, browser.params.testConfig.adf.host));
+            await errorPage.checkErrorCode();
         });
     });
 
     describe('without permission', () => {
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.sitesApi.deleteSite(siteName, { permanent: true });
-            done();
+
         });
 
-        it('[C286555] Should NOT be able to unshare file without permission', () => {
-            navBar.goToSite(testSite);
-            contentListPage.doubleClickRow('documentLibrary');
-            contentListPage.selectRow(nodeBody.name);
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.shareToggleButtonIsChecked();
-            shareDialog.clickUnShareFile();
-            shareDialog.confirmationDialogIsDisplayed();
-            shareDialog.clickConfirmationDialogRemoveButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.shareToggleButtonIsChecked();
-            notificationHistoryPage.checkNotifyContains(`You don't have permission to unshare this file`);
+        it('[C286555] Should NOT be able to unshare file without permission', async () => {
+            await navBar.goToSite(testSite);
+            await contentListPage.doubleClickRow('documentLibrary');
+            await contentListPage.selectRow(nodeBody.name);
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.shareToggleButtonIsChecked();
+            await shareDialog.clickUnShareFile();
+            await shareDialog.confirmationDialogIsDisplayed();
+            await shareDialog.clickConfirmationDialogRemoveButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.shareToggleButtonIsChecked();
+            await notificationHistoryPage.checkNotifyContains(`You don't have permission to unshare this file`);
         });
     });
 });

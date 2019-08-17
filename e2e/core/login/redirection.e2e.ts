@@ -48,7 +48,7 @@ describe('Login component - Redirect', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const logoutPage = new LogoutPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -59,118 +59,111 @@ describe('Login component - Redirect', () => {
 
         uploadedFolder = await uploadActions.createFolder('protecteFolder' + StringUtil.generateRandomString(), '-my-');
 
-        done();
     });
 
-    it('[C213838] Should after login in CS be redirect to Login page when try to access to PS', () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcm();
-        loginPage.login(user.id, user.password);
+    it('[C213838] Should after login in CS be redirect to Login page when try to access to PS', async () => {
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcm();
+        await loginPage.login(user.id, user.password);
 
-        navigationBarPage.clickContentServicesButton();
-        contentServicesPage.checkAcsContainer();
+        await navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.checkAcsContainer();
 
-        navigationBarPage.navigateToProcessServicesPage();
+        await navigationBarPage.navigateToProcessServicesPage();
 
-        loginPage.waitForElements();
+        await loginPage.waitForElements();
     });
 
-    it('[C260085] Should after login in PS be redirect to Login page when try to access to CS', () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderBpm();
+    it('[C260085] Should after login in PS be redirect to Login page when try to access to CS', async () => {
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderBpm();
 
-        loginPage.enableSuccessRouteSwitch();
-        loginPage.enterSuccessRoute('activiti');
+        await loginPage.enableSuccessRouteSwitch();
+        await loginPage.enterSuccessRoute('activiti');
 
-        loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
 
-        navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
+        await navigationBarPage.navigateToProcessServicesPage();
+        await processServicesPage.checkApsContainer();
 
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
-        loginPage.waitForElements();
+        await loginPage.waitForElements();
     });
 
-    it('[C260081] Should after login in BOTH not be redirect to Login page when try to access to CS or PS', () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
+    it('[C260081] Should after login in BOTH not be redirect to Login page when try to access to CS or PS', async () => {
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
 
-        settingsPage.setProviderEcmBpm();
+        await settingsPage.setProviderEcmBpm();
 
-        loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
 
-        navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
+        await navigationBarPage.navigateToProcessServicesPage();
+        await processServicesPage.checkApsContainer();
 
-        navigationBarPage.clickContentServicesButton();
-        contentServicesPage.checkAcsContainer();
+        await navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.checkAcsContainer();
     });
 
-    it('[C260088] Should be re-redirect to the request URL after login when try to access to a protect URL ', () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcm();
-        loginPage.login(user.id, user.password);
+    it('[C260088] Should be re-redirect to the request URL after login when try to access to a protect URL ', async () => {
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcm();
+        await loginPage.login(user.id, user.password);
 
-        navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
+        await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
-        browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-        });
+        let actualUrl = await browser.getCurrentUrl();
+        await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
 
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.waitForTableBody();
 
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
 
-        logoutPage.checkLogoutSectionIsDisplayed();
+        await logoutPage.checkLogoutSectionIsDisplayed();
 
-        navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
+        await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
-        loginPage.waitForElements();
+        await loginPage.waitForElements();
 
-        loginPage.login(user.id, user.password);
+        await loginPage.login(user.id, user.password);
 
-        browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-        });
-
+        actualUrl = await browser.getCurrentUrl();
+        await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
     });
 
-    it('[C299161] Should redirect user to requested URL after reloading login page', () => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcm();
-        loginPage.login(user.id, user.password);
+    it('[C299161] Should redirect user to requested URL after reloading login page', async () => {
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcm();
+        await loginPage.login(user.id, user.password);
 
-        navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
+        await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
-        browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-        });
+        const currentUrl = await browser.getCurrentUrl();
+        await expect(currentUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
 
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.waitForTableBody();
 
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
 
-        logoutPage.checkLogoutSectionIsDisplayed();
+        await logoutPage.checkLogoutSectionIsDisplayed();
 
-        navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
-        loginPage.waitForElements();
-        browser.refresh();
-        loginPage.waitForElements();
+        await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
+        await loginPage.waitForElements();
+        await browser.refresh();
+        await loginPage.waitForElements();
 
-        loginPage.enterUsername(user.id);
-        loginPage.enterPassword(user.password);
-        loginPage.clickSignInButton();
+        await loginPage.enterUsername(user.id);
+        await loginPage.enterPassword(user.password);
+        await loginPage.clickSignInButton();
 
-        navigationBarPage.checkMenuButtonIsDisplayed();
+        await navigationBarPage.checkMenuButtonIsDisplayed();
 
-        browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-        });
-
+        const actualUrl = await browser.getCurrentUrl();
+        await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
     });
 });

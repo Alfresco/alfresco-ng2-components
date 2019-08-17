@@ -15,49 +15,46 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ChecklistDialog {
 
-    nameField = element(by.css('input[data-automation-id="checklist-name"]'));
-    addChecklistButton = element(by.css('button[id="add-check"] span'));
-    closeButton = element(by.css('button[id="close-check-dialog"] span'));
-    dialogTitle = element(by.id('add-checklist-title'));
+    nameField: ElementFinder = element(by.css('input[data-automation-id="checklist-name"]'));
+    addChecklistButton: ElementFinder = element(by.css('button[id="add-check"] span'));
+    closeButton: ElementFinder = element(by.css('button[id="close-check-dialog"] span'));
+    dialogTitle: ElementFinder = element(by.id('add-checklist-title'));
 
-    addName(name) {
-        BrowserVisibility.waitUntilElementIsClickable(this.nameField);
-        BrowserActions.clearSendKeys(this.nameField, name);
-        return this;
+    async addName(name): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsClickable(this.nameField);
+        await BrowserActions.clearSendKeys(this.nameField, name);
     }
 
-    clickCreateChecklistButton() {
-        BrowserActions.click(this.addChecklistButton);
+    async clickCreateChecklistButton(): Promise<void> {
+        await BrowserActions.click(this.addChecklistButton);
     }
 
-    clickCancelButton() {
-        BrowserActions.click(this.closeButton);
+    async clickCancelButton(): Promise<void> {
+        await BrowserActions.click(this.closeButton);
     }
 
-    getDialogTitle() {
+    getDialogTitle(): Promise<string> {
         return BrowserActions.getText(this.dialogTitle);
     }
 
-    getNameFieldPlaceholder() {
-        BrowserVisibility.waitUntilElementIsVisible(this.nameField);
+    async getNameFieldPlaceholder(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.nameField);
         return this.nameField.getAttribute('placeholder');
     }
 
-    checkCancelButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.closeButton);
-        return this;
+    async checkCancelButtonIsEnabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
+        await BrowserVisibility.waitUntilElementIsClickable(this.closeButton);
     }
 
-    checkAddChecklistButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.addChecklistButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.addChecklistButton);
-        return this;
+    async checkAddChecklistButtonIsEnabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.addChecklistButton);
+        await BrowserVisibility.waitUntilElementIsClickable(this.addChecklistButton);
     }
 
 }

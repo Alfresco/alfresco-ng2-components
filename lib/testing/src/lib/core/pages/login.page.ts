@@ -16,264 +16,232 @@
  */
 
 import { FormControllersPage } from './form-controller.page';
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { LocalStorageUtil } from '../utils/local-storage.util';
 import { BrowserActions } from '../utils/browser-actions';
+import { ElementFinder } from 'protractor';
 
 export class LoginPage {
-    loginURL = browser.baseUrl + '/login';
 
-    formControllersPage = new FormControllersPage();
-    txtUsername = element(by.css('input[id="username"]'));
-    txtPassword = element(by.css('input[id="password"]'));
-    logoImg = element(by.css('img[id="adf-login-img-logo"]'));
-    successRouteTxt = element(
-        by.css('input[data-automation-id="adf-success-route"]')
-    );
-    logoTxt = element(by.css('input[data-automation-id="adf-url-logo"]'));
-    usernameTooltip = element(
-        by.css('span[data-automation-id="username-error"]')
-    );
-    passwordTooltip = element(
-        by.css('span[data-automation-id="password-required"]')
-    );
-    loginTooltip = element(by.css('span[class="adf-login-error-message"]'));
-    usernameInactive = element(
-        by.css('input[id="username"][aria-invalid="false"]')
-    );
-    passwordInactive = element(
-        by.css('input[id="password"][aria-invalid="false"]')
-    );
-    adfLogo = element(by.css('img[class="adf-img-logo ng-star-inserted"]'));
-    usernameHighlighted = element(
-        by.css('input[id="username"][aria-invalid="true"]')
-    );
-    passwordHighlighted = element(
-        by.css('input[id="password"][aria-invalid="true"]')
-    );
-    signInButton = element(by.id('login-button'));
-    showPasswordElement = element(
-        by.css('button[data-automation-id="show_password"]')
-    );
-    hidePasswordElement = element(
-        by.css('button[data-automation-id="hide_password"]')
-    );
-    rememberMe = element(by.css('mat-checkbox[id="adf-login-remember"]'));
-    needHelp = element(by.css('div[id="adf-login-action-left"]'));
-    register = element(by.css('div[id="adf-login-action-right"]'));
-    footerSwitch = element(by.id('switch4'));
-    rememberMeSwitch = element(by.id('adf-toggle-show-rememberme'));
-    successRouteSwitch = element(by.id('adf-toggle-show-successRoute'));
-    logoSwitch = element(by.id('adf-toggle-logo'));
-    header = element(by.id('adf-header'));
-    settingsIcon = element(
-        by.cssContainingText(
-            'a[data-automation-id="settings"] mat-icon',
-            'settings'
-        )
-    );
+    loginURL: string = browser.baseUrl + '/login';
+
+    formControllersPage: FormControllersPage = new FormControllersPage();
+    txtUsername: ElementFinder = element(by.css('input[id="username"]'));
+    txtPassword: ElementFinder = element(by.css('input[id="password"]'));
+    logoImg: ElementFinder = element(by.css('img[id="adf-login-img-logo"]'));
+    successRouteTxt: ElementFinder = element(by.css('input[data-automation-id="adf-success-route"]'));
+    logoTxt: ElementFinder = element(by.css('input[data-automation-id="adf-url-logo"]'));
+    usernameTooltip: ElementFinder = element(by.css('span[data-automation-id="username-error"]'));
+    passwordTooltip: ElementFinder = element(by.css('span[data-automation-id="password-required"]'));
+    loginTooltip: ElementFinder = element(by.css('span[class="adf-login-error-message"]'));
+    usernameInactive: ElementFinder = element(by.css('input[id="username"][aria-invalid="false"]'));
+    passwordInactive: ElementFinder = element(by.css('input[id="password"][aria-invalid="false"]'));
+    adfLogo: ElementFinder = element(by.css('img[class="adf-img-logo ng-star-inserted"]'));
+    usernameHighlighted: ElementFinder = element(by.css('input[id="username"][aria-invalid="true"]'));
+    passwordHighlighted: ElementFinder = element(by.css('input[id="password"][aria-invalid="true"]'));
+    signInButton: ElementFinder = element(by.id('login-button'));
+    showPasswordElement: ElementFinder = element(by.css('button[data-automation-id="show_password"]'));
+    hidePasswordElement: ElementFinder = element(by.css('button[data-automation-id="hide_password"]'));
+    rememberMe: ElementFinder = element(by.css('mat-checkbox[id="adf-login-remember"]'));
+    needHelp: ElementFinder = element(by.css('div[id="adf-login-action-left"]'));
+    register: ElementFinder = element(by.css('div[id="adf-login-action-right"]'));
+    footerSwitch: ElementFinder = element(by.id('switch4'));
+    rememberMeSwitch: ElementFinder = element(by.id('adf-toggle-show-rememberme'));
+    successRouteSwitch: ElementFinder = element(by.id('adf-toggle-show-successRoute'));
+    logoSwitch: ElementFinder = element(by.id('adf-toggle-logo'));
+    header: ElementFinder = element(by.id('adf-header'));
+    settingsIcon: ElementFinder = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
     sidenavLayout = element(by.css(`[data-automation-id="sidenav-layout"]`));
 
-    goToLoginPage() {
-        browser.waitForAngularEnabled(true);
-        browser.driver.get(this.loginURL);
-        return this.waitForElements();
+    async goToLoginPage(): Promise<void> {
+        await browser.get(this.loginURL);
+        await this.waitForElements();
     }
 
-    waitForElements() {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        return  BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+    async waitForElements(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
     }
 
-    enterUsername(username) {
-        return BrowserActions.clearSendKeys(this.txtUsername, username);
+    async enterUsername(username): Promise<void> {
+        await BrowserActions.clearSendKeys(this.txtUsername, username);
     }
 
-    enterPassword(password) {
-        return BrowserActions.clearSendKeys(this.txtPassword, password);
+    async enterPassword(password): Promise<void> {
+        await BrowserActions.clearSendKeys(this.txtPassword, password);
     }
 
-    async clearUsername() {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        this.txtUsername.click();
-        this.txtUsername.getAttribute('value').then((value) => {
-            for (let i = value.length; i >= 0; i--) {
-                this.txtUsername.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
-        return this;
+    async clearUsername(): Promise<void> {
+        await BrowserActions.click(this.txtUsername);
+        await BrowserActions.clearWithBackSpace(this.txtUsername);
     }
 
-    async clearPassword() {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-        this.txtPassword.getAttribute('value').then((value) => {
-            for (let i = value.length; i >= 0; i--) {
-                this.txtPassword.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+    async clearPassword(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+        await BrowserActions.clearWithBackSpace(this.txtPassword);
     }
 
-    getUsernameTooltip() {
+    async getUsernameTooltip(): Promise<string> {
         return BrowserActions.getText(this.usernameTooltip);
     }
 
-    getPasswordTooltip() {
+    async getPasswordTooltip(): Promise<string> {
         return BrowserActions.getText(this.passwordTooltip);
     }
 
-    getLoginError() {
+    async getLoginError(): Promise<string> {
         return BrowserActions.getText(this.loginTooltip);
     }
 
-    checkLoginImgURL() {
-        BrowserVisibility.waitUntilElementIsVisible(this.logoImg);
+    async checkLoginImgURL(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.logoImg);
         return this.logoImg.getAttribute('src');
     }
 
-    checkUsernameInactive() {
-        BrowserVisibility.waitUntilElementIsVisible(this.usernameInactive);
+    async checkUsernameInactive(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.usernameInactive);
     }
 
-    checkPasswordInactive() {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordInactive);
+    async checkPasswordInactive(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.passwordInactive);
     }
 
-    checkUsernameHighlighted() {
-        this.adfLogo.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.usernameHighlighted);
+    async checkUsernameHighlighted(): Promise<void> {
+        await BrowserActions.click(this.adfLogo);
+        await BrowserVisibility.waitUntilElementIsVisible(this.usernameHighlighted);
     }
 
-    checkPasswordHighlighted() {
-        this.adfLogo.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordHighlighted);
+    async checkPasswordHighlighted(): Promise<void> {
+        await BrowserActions.click(this.adfLogo);
+        await BrowserVisibility.waitUntilElementIsVisible(this.passwordHighlighted);
     }
 
-    checkUsernameTooltipIsNotVisible() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.usernameTooltip);
+    async checkUsernameTooltipIsNotVisible(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.usernameTooltip);
     }
 
-    checkPasswordTooltipIsNotVisible() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.passwordTooltip);
+    async checkPasswordTooltipIsNotVisible(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.passwordTooltip);
     }
 
-    getSignInButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
-        return this.signInButton.isEnabled();
+    async getSignInButtonIsEnabled(): Promise<boolean> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
+        return await this.signInButton.isEnabled();
     }
 
-    async loginToAllUsingUserModel(userModel) {
+    async loginToAllUsingUserModel(userModel): Promise<void> {
         await this.goToLoginPage();
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
         await LocalStorageUtil.apiReset();
-        return this.login(userModel.email, userModel.password);
+        await this.login(userModel.email, userModel.password);
     }
 
-    async loginToProcessServicesUsingUserModel(userModel) {
+    async loginToProcessServicesUsingUserModel(userModel): Promise<void> {
         await this.goToLoginPage();
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'BPM');
         await LocalStorageUtil.apiReset();
-        return this.login(userModel.email, userModel.password);
+        await this.login(userModel.email, userModel.password);
     }
 
-    async loginToContentServicesUsingUserModel(userModel) {
-        this.goToLoginPage();
+    async loginToContentServicesUsingUserModel(userModel): Promise<void> {
+        await this.goToLoginPage();
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
         await LocalStorageUtil.apiReset();
-        return this.login(userModel.getId(), userModel.getPassword());
+        await this.login(userModel.getId(), userModel.getPassword());
     }
 
-    async loginToContentServices(username, password) {
-        this.goToLoginPage();
+    async loginToContentServices(username, password): Promise<void> {
+        await this.goToLoginPage();
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
         await LocalStorageUtil.apiReset();
-        return this.login(username, password);
+        await this.login(username, password);
     }
 
-    clickSignInButton() {
-        BrowserActions.click(this.signInButton);
+    async clickSignInButton(): Promise<void> {
+        await BrowserActions.click(this.signInButton);
     }
 
-    clickSettingsIcon() {
-        BrowserActions.click(this.settingsIcon);
+    async clickSettingsIcon(): Promise<void> {
+        await BrowserActions.click(this.settingsIcon);
     }
 
-    showPassword() {
-        BrowserActions.click(this.showPasswordElement);
+    async showPassword(): Promise<void> {
+        await BrowserActions.click(this.showPasswordElement);
     }
 
-    hidePassword() {
-        BrowserActions.click(this.hidePasswordElement);
+    async hidePassword(): Promise<void> {
+        await BrowserActions.click(this.hidePasswordElement);
     }
 
-    getShownPassword() {
+    async getShownPassword(): Promise<string> {
         return this.txtPassword.getAttribute('value');
     }
 
-    checkPasswordIsHidden() {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+    async checkPasswordIsHidden(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
     }
 
-    checkRememberIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.rememberMe);
+    async checkRememberIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.rememberMe);
     }
 
-    checkRememberIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.rememberMe);
+    async checkRememberIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.rememberMe);
     }
 
-    checkNeedHelpIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.needHelp);
+    async checkNeedHelpIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.needHelp);
     }
 
-    checkNeedHelpIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.needHelp);
+    async checkNeedHelpIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.needHelp);
     }
 
-    checkRegisterDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.register);
+    async checkRegisterDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.register);
     }
 
-    checkRegisterIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.register);
+    async checkRegisterIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.register);
     }
 
-    enableFooter() {
-        this.formControllersPage.enableToggle(this.footerSwitch);
+    async enableFooter(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.footerSwitch);
     }
 
-    disableFooter() {
-        this.formControllersPage.disableToggle(this.footerSwitch);
+    async disableFooter(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.footerSwitch);
     }
 
-    disableRememberMe() {
-        this.formControllersPage.disableToggle(this.rememberMeSwitch);
+    async disableRememberMe(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.rememberMeSwitch);
     }
 
-    enableSuccessRouteSwitch() {
-        this.formControllersPage.enableToggle(this.successRouteSwitch);
+    async enableSuccessRouteSwitch(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.successRouteSwitch);
     }
 
-    enableLogoSwitch() {
-        this.formControllersPage.enableToggle(this.logoSwitch);
+    async enableLogoSwitch(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.logoSwitch);
     }
 
-    enterSuccessRoute(route) {
-        return BrowserActions.clearSendKeys(this.successRouteTxt, route);
+    async enterSuccessRoute(route): Promise<void> {
+        await BrowserActions.clearSendKeys(this.successRouteTxt, route);
     }
 
-    enterLogo(logo) {
-        BrowserActions.clearSendKeys(this.logoTxt, logo);
+    async enterLogo(logo): Promise<void> {
+        await BrowserActions.clearSendKeys(this.logoTxt, logo);
     }
 
-    login(username, password) {
-        this.enterUsername(username);
-        this.enterPassword(password);
-        this.clickSignInButton();
-        return BrowserVisibility.waitUntilElementIsVisible(this.sidenavLayout);
+    async login(username, password): Promise<void> {
+        await this.enterUsername(username);
+        await this.enterPassword(password);
+        await this.clickSignInButton();
+        await BrowserVisibility.waitUntilElementIsVisible(this.sidenavLayout);
     }
 }

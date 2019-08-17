@@ -21,12 +21,19 @@ import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { StringUtil, DocumentListPage, PaginationPage, LoginPage, LocalStorageUtil, UploadActions } from '@alfresco/adf-testing';
+import {
+    StringUtil,
+    DocumentListPage,
+    PaginationPage,
+    LoginPage,
+    LocalStorageUtil,
+    UploadActions,
+    BrowserActions
+} from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
-import { BrowserActions } from '../../lib/testing/src/lib/core/utils/browser-actions';
 
 describe('Search Filters', () => {
 
@@ -81,7 +88,7 @@ describe('Search Filters', () => {
 
     let jsonFile;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -89,28 +96,19 @@ describe('Search Filters', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         fileUploaded = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
-
         fileTypePng = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
-
         fileTypeTxt1 = await uploadActions.uploadFile(txtFileModel1.location, txtFileModel1.name, '-my-');
-
         fileTypeJpg = await uploadActions.uploadFile(jpgFileModel.location, jpgFileModel.name, '-my-');
-
         fileTypeTxt2 = await uploadActions.uploadFile(txtFileModel2.location, txtFileModel2.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        await browser.driver.sleep(15000); // wait search index previous file/folder uploaded
-
-        searchDialog.checkSearchIconIsVisible();
-        searchDialog.clickOnSearchIcon();
+        await browser.sleep(15000); // wait search index previous file/folder uploaded
 
         jsonFile = SearchConfiguration.getConfiguration();
-
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await uploadActions.deleteFileOrFolder(fileUploaded.entry.id);
@@ -119,153 +117,158 @@ describe('Search Filters', () => {
         await uploadActions.deleteFileOrFolder(fileTypeTxt2.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypeJpg.entry.id);
         await navigationBarPage.clickLogoutButton();
-
-        done();
     });
 
-    it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', () => {
-        searchDialog.enterTextAndPressEnter(fileUploaded.entry.name);
+    it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', async () => {
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(fileUploaded.entry.name);
 
-        searchFiltersPage.checkSearchFiltersIsDisplayed();
+        await searchFiltersPage.checkSearchFiltersIsDisplayed();
 
         const userOption = `${acsUser.firstName} ${acsUser.lastName}`;
-        searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption)
-            .checkChipIsDisplayed(userOption)
-            .removeFilterOption(userOption)
-            .checkChipIsNotDisplayed(userOption);
+        const searchCheckListPage = await searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
+        await searchCheckListPage.checkChipIsDisplayed(userOption);
+        await searchCheckListPage.removeFilterOption(userOption);
+        await searchCheckListPage.checkChipIsNotDisplayed(userOption);
     });
 
-    it('[C277146] Should Show more/less buttons be hidden when inactive', () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+    it('[C277146] Should Show more/less buttons be hidden when inactive', async () => {
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
 
-        searchFiltersPage.creatorCheckListFiltersPage().checkShowLessButtonIsNotDisplayed()
-            .checkShowMoreButtonIsDisplayed()
-            .clickShowMoreButtonUntilIsNotDisplayed()
-            .checkShowLessButtonIsDisplayed()
-            .clickShowLessButtonUntilIsNotDisplayed();
+        const searchCheckListPage = searchFiltersPage.creatorCheckListFiltersPage();
+
+        await searchCheckListPage.checkShowLessButtonIsNotDisplayed();
+        await searchCheckListPage.checkShowMoreButtonIsDisplayed();
+        await searchCheckListPage.clickShowMoreButtonUntilIsNotDisplayed();
+        await searchCheckListPage.checkShowLessButtonIsDisplayed();
+        await searchCheckListPage.clickShowLessButtonUntilIsNotDisplayed();
     });
 
-    it('[C286556] Search categories should preserve their collapsed/expanded state after the search', () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+    it('[C286556] Search categories should preserve their collapsed/expanded state after the search', async () => {
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
 
-        searchFiltersPage.clickFileTypeListFilter()
-            .checkFileTypeFilterIsCollapsed()
-            .clickFileSizeFilterHeader()
-            .checkFileSizeFilterIsCollapsed();
+        await searchFiltersPage.clickFileTypeListFilter();
+        await searchFiltersPage.checkFileTypeFilterIsCollapsed();
+        await searchFiltersPage.clickFileSizeFilterHeader();
+        await searchFiltersPage.checkFileSizeFilterIsCollapsed();
 
-        searchFiltersPage.creatorCheckListFiltersPage().clickCheckListOption('Administrator');
+        await searchFiltersPage.creatorCheckListFiltersPage().clickCheckListOption('Administrator');
 
-        searchFiltersPage.checkFileTypeFilterIsCollapsed()
-            .checkFileSizeFilterIsCollapsed();
+        await searchFiltersPage.checkFileTypeFilterIsCollapsed();
+        await searchFiltersPage.checkFileSizeFilterIsCollapsed();
     });
 
-    it('[C287796] Should be able to display the correct bucket number after selecting a filter', () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+    it('[C287796] Should be able to display the correct bucket number after selecting a filter', async () => {
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
 
-        searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
+        await searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
 
-        const bucketNumberForFilter = searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
-        const resultFileNames = contentList.getAllRowsColumnValues('Display name');
+        const bucketNumberForFilter = await searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
+        const resultFileNames: any = await contentList.getAllRowsColumnValues('Display name');
 
-        expect(bucketNumberForFilter).not.toEqual('0');
-        expect(paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
+        await expect(bucketNumberForFilter).not.toEqual('0');
+        await expect(await paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
 
-        resultFileNames.then((fileNames) => {
-            fileNames.map((nameOfResultFiles) => {
-                expect(nameOfResultFiles).toContain('.png');
-            });
+        resultFileNames.map(async (nameOfResultFiles) => {
+            await expect(nameOfResultFiles).toContain('.png');
         });
     });
 
     it('[C291802] Should be able to filter facet fields with "Contains"', async () => {
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
         jsonFile['filterWithContains'] = true;
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        searchDialog.clickOnSearchIcon()
-            .enterTextAndPressEnter('*');
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter('*');
 
-        searchResults.tableIsLoaded();
+        await searchResults.tableIsLoaded();
 
-        searchFiltersPage.creatorCheckListFiltersPage()
-            .searchInFilter('dminis')
-            .checkCheckListOptionIsDisplayed('Administrator');
+        await searchFiltersPage.creatorCheckListFiltersPage().searchInFilter('dminis');
+        await searchFiltersPage.creatorCheckListFiltersPage().checkCheckListOptionIsDisplayed('Administrator');
     });
 
-    it('[C291980] Should group search facets under specified labels', () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+    it('[C291980] Should group search facets under specified labels', async () => {
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
 
-        searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed()
-            .checkTypeFacetQueryGroupIsDisplayed()
-            .checkSizeFacetQueryGroupIsDisplayed();
+        await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
+        await searchFiltersPage.checkTypeFacetQueryGroupIsDisplayed();
+        await searchFiltersPage.checkSizeFacetQueryGroupIsDisplayed();
     });
 
     it('[C291981] Should group search facets under the default label, by default', async () => {
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        searchDialog.clickOnSearchIcon()
-            .enterTextAndPressEnter('*');
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter('*');
 
-        searchResults.tableIsLoaded();
+        await searchResults.tableIsLoaded();
 
-        searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
-        expect(searchFiltersPage.isTypeFacetQueryGroupPresent()).toBe(false);
-        expect(searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
+        await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
+        await expect(await searchFiltersPage.isTypeFacetQueryGroupPresent()).toBe(false);
+        await expect(await searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
     });
 
-    it('[C297509] Should display search intervals under specified labels from config', () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+    it('[C297509] Should display search intervals under specified labels from config', async () => {
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
 
-        searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed()
-            .checkFacetIntervalsByCreatedIsExpanded()
-            .clickFacetIntervalsByCreatedFilterHeader()
-            .checkFacetIntervalsByCreatedIsCollapsed()
-            .clickFacetIntervalsByCreatedFilterHeader()
-            .checkFacetIntervalsByCreatedIsExpanded()
-            .checkFacetIntervalsByModifiedIsDisplayed()
-            .checkFacetIntervalsByModifiedIsExpanded()
-            .clickFacetIntervalsByModifiedFilterHeader()
-            .checkFacetIntervalsByModifiedIsCollapsed()
-            .clickFacetIntervalsByModifiedFilterHeader()
-            .checkFacetIntervalsByModifiedIsExpanded();
+        await searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed();
+        await searchFiltersPage.checkFacetIntervalsByCreatedIsExpanded();
+        await searchFiltersPage.clickFacetIntervalsByCreatedFilterHeader();
+        await searchFiltersPage.checkFacetIntervalsByCreatedIsCollapsed();
+        await searchFiltersPage.clickFacetIntervalsByCreatedFilterHeader();
+        await searchFiltersPage.checkFacetIntervalsByCreatedIsExpanded();
+        await searchFiltersPage.checkFacetIntervalsByModifiedIsDisplayed();
+        await searchFiltersPage.checkFacetIntervalsByModifiedIsExpanded();
+        await searchFiltersPage.clickFacetIntervalsByModifiedFilterHeader();
+        await searchFiltersPage.checkFacetIntervalsByModifiedIsCollapsed();
+        await searchFiltersPage.clickFacetIntervalsByModifiedFilterHeader();
+        await searchFiltersPage.checkFacetIntervalsByModifiedIsExpanded();
     });
 
-    it('[C299200] Should reset the filters facet with search query', () => {
-        searchDialog.enterTextAndPressEnter(fileTypeTxt1.entry.name);
+    it('[C299200] Should reset the filters facet with search query', async () => {
+        await navigationBarPage.clickContentServicesButton();
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(fileTypeTxt1.entry.name);
 
-        searchFiltersPage.checkSearchFiltersIsDisplayed();
-        searchResults.tableIsLoaded();
-        searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
-        searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (1)');
-        searchFiltersPage.checkFileTypeFacetLabelIsNotDisplayed('JPEG Image');
+        await searchFiltersPage.checkSearchFiltersIsDisplayed();
+        await searchResults.tableIsLoaded();
+        await searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
+        await searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (1)');
+        await searchFiltersPage.checkFileTypeFacetLabelIsNotDisplayed('JPEG Image');
 
-        searchDialog.enterTextAndPressEnter(fileNamePrefix);
-        searchFiltersPage.checkSearchFiltersIsDisplayed();
-        searchResults.tableIsLoaded();
-        searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
-        searchResults.checkContentIsDisplayed(fileTypeTxt2.entry.name);
-        searchResults.checkContentIsDisplayed(fileTypeJpg.entry.name);
-        searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (2)');
-        searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('JPEG Image (1)');
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+
+        await searchDialog.enterTextAndPressEnter(fileNamePrefix);
+        await searchFiltersPage.checkSearchFiltersIsDisplayed();
+        await searchResults.tableIsLoaded();
+        await searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
+        await searchResults.checkContentIsDisplayed(fileTypeTxt2.entry.name);
+        await searchResults.checkContentIsDisplayed(fileTypeJpg.entry.name);
+        await searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (2)');
+        await searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('JPEG Image (1)');
 
     });
 
     it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', async () => {
-        navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.clickContentServicesButton();
 
         jsonFile.facetFields.fields[0].label = 'My File Types';
         jsonFile.facetFields.fields[1].label = 'My File Sizes';
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        searchDialog.clickOnSearchIcon()
-            .enterTextAndPressEnter('*');
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter('*');
 
-        searchResults.tableIsLoaded();
-        searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Types');
-        searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Sizes');
+        await searchResults.tableIsLoaded();
+        await searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Types');
+        await searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Sizes');
     });
 
 });

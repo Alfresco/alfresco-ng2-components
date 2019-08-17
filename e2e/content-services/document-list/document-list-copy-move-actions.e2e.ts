@@ -50,16 +50,16 @@ describe('Document List Component', () => {
     let folderName, sameNameFolder;
 
     const pdfFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
     const testFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         acsUser = new AcsUserModel();
         anotherAcsUser = new AcsUserModel();
         folderName = StringUtil.generateRandomString(5);
@@ -90,131 +90,129 @@ describe('Document List Component', () => {
                 }
             });
 
-        browser.driver.sleep(12000);
-        done();
+        await browser.driver.sleep(12000);
+
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        try {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
-            await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
-            await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
-            await uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
-        } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Error delete file or folder' + error);
-        }
-        done();
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
+        await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
+        await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
+        await uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
+
     });
 
     describe('Document List Component - Actions Move and Copy', () => {
 
-        beforeEach(async (done) => {
+        beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            navigationBarPage.clickContentServicesButton();
-            done();
         });
 
-        it('[C260128] Move - Same name file', () => {
-            contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-            contentServicesPage.pressContextMenuActionNamed('Move');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
-            contentNodeSelector.clickContentNodeSelectorResult(folderName);
-            contentNodeSelector.clickMoveCopyButton();
-            notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
+        beforeEach(async () => {
+            await BrowserActions.closeMenuAndDialogs();
+            await navigationBarPage.clickContentServicesButton();
+
         });
 
-        it('[C260134] Move - folder with subfolder and file within it', () => {
-            contentServicesPage.checkContentIsDisplayed(destinationFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(sourceFolder.entry.name);
-            contentServicesPage.getDocumentList().rightClickOnRow(sourceFolder.entry.name);
-            contentServicesPage.pressContextMenuActionNamed('Move');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.typeIntoNodeSelectorSearchField(destinationFolder.entry.name);
-            contentNodeSelector.clickContentNodeSelectorResult(destinationFolder.entry.name);
-            contentNodeSelector.clickMoveCopyButton();
-            contentServicesPage.checkContentIsNotDisplayed(sourceFolder.entry.name);
-            contentServicesPage.doubleClickRow(destinationFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(sourceFolder.entry.name);
-            contentServicesPage.doubleClickRow(sourceFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
-            contentServicesPage.doubleClickRow(subFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(subFile.entry.name);
+        it('[C260128] Move - Same name file', async () => {
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+            await contentServicesPage.pressContextMenuActionNamed('Move');
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
+            await contentNodeSelector.clickContentNodeSelectorResult(folderName);
+            await contentNodeSelector.clickMoveCopyButton();
+            await notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
 
-        it('[C260135] Move - Same name folder', () => {
-            contentServicesPage.checkContentIsDisplayed(duplicateFolderName.entry.name);
-            contentServicesPage.getDocumentList().rightClickOnRow(duplicateFolderName.entry.name);
-            contentServicesPage.pressContextMenuActionNamed('Move');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.typeIntoNodeSelectorSearchField(sourceFolder.entry.name);
-            contentNodeSelector.clickContentNodeSelectorResult(sourceFolder.entry.name);
-            contentNodeSelector.clickMoveCopyButton();
-            notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
+        it('[C260134] Move - folder with subfolder and file within it', async () => {
+            await contentServicesPage.checkContentIsDisplayed(destinationFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(sourceFolder.entry.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow(sourceFolder.entry.name);
+            await contentServicesPage.pressContextMenuActionNamed('Move');
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.typeIntoNodeSelectorSearchField(destinationFolder.entry.name);
+            await contentNodeSelector.clickContentNodeSelectorResult(destinationFolder.entry.name);
+            await contentNodeSelector.clickMoveCopyButton();
+            await contentServicesPage.checkContentIsNotDisplayed(sourceFolder.entry.name);
+            await contentServicesPage.doubleClickRow(destinationFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(sourceFolder.entry.name);
+            await contentServicesPage.doubleClickRow(sourceFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
+            await contentServicesPage.doubleClickRow(subFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(subFile.entry.name);
         });
 
-        it('[C260129] Copy - Same name file', () => {
-            contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-            contentServicesPage.pressContextMenuActionNamed('Copy');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
-            contentNodeSelector.clickContentNodeSelectorResult(folderName);
-            contentNodeSelector.clickMoveCopyButton();
-            notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
+        it('[C260135] Move - Same name folder', async () => {
+            await contentServicesPage.checkContentIsDisplayed(duplicateFolderName.entry.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow(duplicateFolderName.entry.name);
+            await contentServicesPage.pressContextMenuActionNamed('Move');
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.typeIntoNodeSelectorSearchField(sourceFolder.entry.name);
+            await contentNodeSelector.clickContentNodeSelectorResult(sourceFolder.entry.name);
+            await contentNodeSelector.clickMoveCopyButton();
+            await notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
 
-        it('[C260136] Copy - Same name folder', () => {
-            contentServicesPage.checkContentIsDisplayed(duplicateFolderName.entry.name);
-            contentServicesPage.getDocumentList().rightClickOnRow(duplicateFolderName.entry.name);
-            contentServicesPage.pressContextMenuActionNamed('Copy');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.typeIntoNodeSelectorSearchField(sourceFolder.entry.name);
-            contentNodeSelector.clickContentNodeSelectorResult(sourceFolder.entry.name);
-            contentNodeSelector.clickMoveCopyButton();
-            notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
+        it('[C260129] Copy - Same name file', async () => {
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+            await contentServicesPage.pressContextMenuActionNamed('Copy');
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
+            await contentNodeSelector.clickContentNodeSelectorResult(folderName);
+            await contentNodeSelector.clickMoveCopyButton();
+            await notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
+        });
+
+        it('[C260136] Copy - Same name folder', async () => {
+            await contentServicesPage.checkContentIsDisplayed(duplicateFolderName.entry.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow(duplicateFolderName.entry.name);
+            await contentServicesPage.pressContextMenuActionNamed('Copy');
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.typeIntoNodeSelectorSearchField(sourceFolder.entry.name);
+            await contentNodeSelector.clickContentNodeSelectorResult(sourceFolder.entry.name);
+            await contentNodeSelector.clickMoveCopyButton();
+            await notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
 
     });
 
     describe('Document List actionns - Move, Copy on no permission folder', () => {
 
-        beforeAll((done) => {
-            loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + sourceFolder.entry.id);
-            contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-            done();
+        beforeAll(async () => {
+            await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
+            await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${sourceFolder.entry.id}`);
+            await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });
 
-        it('[C260133] Move - no permission folder', () => {
-            contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
-            contentServicesPage.getDocumentList().rightClickOnRow(subFolder.entry.name);
-            contentServicesPage.checkContextActionIsVisible('Move');
-            expect(contentServicesPage.checkContentActionIsEnabled('Move')).toBe(false);
-            contentServicesPage.closeActionContext();
+        it('[C260133] Move - no permission folder', async () => {
+            await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow(subFolder.entry.name);
+            await contentServicesPage.checkContextActionIsVisible('Move');
+            await expect(await contentServicesPage.isContextActionEnabled('Move')).toBe(false);
+            await contentServicesPage.closeActionContext();
         });
 
-        it('[C260140] Copy - No permission folder', () => {
-            contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(copyFolder.entry.name);
-            contentServicesPage.getDocumentList().rightClickOnRow(copyFolder.entry.name);
-            contentServicesPage.checkContextActionIsVisible('Copy');
-            expect(contentServicesPage.checkContentActionIsEnabled('Copy')).toBe(true);
-            contentServicesPage.pressContextMenuActionNamed('Copy');
-            contentNodeSelector.checkDialogIsDisplayed();
-            contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);
-            contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisabled(subFolder.entry.name);
-            contentNodeSelector.clickContentNodeSelectorResult(subFolder.entry.name);
-            contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected(subFolder.entry.name);
-            expect(contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
-            contentNodeSelector.contentListPage().dataTablePage().doubleClickRowByContent(subFolder.entry.name);
-            contentNodeSelector.contentListPage().dataTablePage().waitTillContentLoaded();
-            contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder2.entry.name);
+        it('[C260140] Copy - No permission folder', async () => {
+            await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(copyFolder.entry.name);
+            await contentServicesPage.getDocumentList().rightClickOnRow(copyFolder.entry.name);
+            await contentServicesPage.checkContextActionIsVisible('Copy');
+            await expect(await contentServicesPage.isContextActionEnabled('Copy')).toBe(true);
+            await contentServicesPage.pressContextMenuActionNamed('Copy');
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);
+            await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisabled(subFolder.entry.name);
+            await contentNodeSelector.clickContentNodeSelectorResult(subFolder.entry.name);
+            await contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected(subFolder.entry.name);
+            await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
+            await contentNodeSelector.contentListPage().dataTablePage().doubleClickRowByContent(subFolder.entry.name);
+            await contentNodeSelector.contentListPage().dataTablePage().waitTillContentLoaded();
+            await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder2.entry.name);
         });
 
     });

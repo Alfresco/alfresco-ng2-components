@@ -6,7 +6,7 @@ let ACTIVITI7_APPS = require('../../e2e/util/resources').ACTIVITI7_APPS;
 
 let config = {};
 let absentApps = [];
-let pushFaileApps = [];
+let pushFailedApps = [];
 let notRunningApps = [];
 let host;
 
@@ -97,22 +97,19 @@ async function main() {
 }
 
 async function deleteStaleApps(alfrescoJsApi, notRunningAppAfterWait) {
-
-    notRunningAppAfterWait.forEach(async (currentApp) => {
+    for (const currentApp of notRunningAppAfterWait) {
         await deleteApp(alfrescoJsApi, currentApp.entry.name);
-    });
-
+    }
 }
 
 async function waitPossibleStaleApps(alfrescoJsApi, notRunning) {
-    pushFaileApps = [];
+    pushFailedApps = [];
     do {
         console.log(`Wait stale app  ${TIMEOUT}`);
 
         notRunning.forEach((currentApp) => {
             console.log(`${currentApp.entry.name } ${currentApp.entry.status}`);
         });
-
 
         sleep(TIMEOUT);
         counter++;
@@ -174,19 +171,19 @@ async function getPushFailedApps(alfrescoJsApi) {
         });
 
         if (isNotRunning && isNotRunning.entry.status === 'ImagePushFailed') {
-            pushFaileApps.push(isNotRunning);
+            pushFailedApps.push(isNotRunning);
         }
     });
 
-    if (pushFaileApps.length > 0) {
-        console.log(`The following apps are pushFaileApps:`);
-        pushFaileApps.forEach((currentApp) => {
+    if (pushFailedApps.length > 0) {
+        console.log(`The following apps are pushFailedApps:`);
+        pushFailedApps.forEach((currentApp) => {
             console.log(`App ${currentApp.entry.name } current status ${JSON.stringify(currentApp.entry.status)}`);
         });
 
     }
 
-    return pushFaileApps;
+    return pushFailedApps;
 }
 
 async function deployAbsentApps(alfrescoJsApi) {

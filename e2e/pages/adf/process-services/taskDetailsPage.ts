@@ -16,7 +16,7 @@
  */
 
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
-import { element, by, browser } from 'protractor';
+import { element, by, browser, ElementFinder } from 'protractor';
 import { TabsPage } from '@alfresco/adf-testing';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
@@ -24,348 +24,325 @@ export class TaskDetailsPage {
 
     appSettingsTogglesClass = new AppSettingsToggles();
 
-    formContent = element(by.css('adf-form'));
-    formNameField = element(by.css('span[data-automation-id*="formName"] span'));
-    assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
-    statusField = element(by.css('span[data-automation-id*="status"] span'));
-    categoryField = element(by.css('span[data-automation-id*="category"] span'));
-    parentNameField = element(by.css('span[data-automation-id*="parentName"] span'));
-    parentTaskIdField = element(by.css('span[data-automation-id*="parentTaskId"] span'));
-    durationField = element(by.css('span[data-automation-id*="duration"] span'));
-    endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
-    createdField = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
-    idField = element.all(by.css('span[data-automation-id*="id"] span')).first();
-    descriptionField = element(by.css('span[data-automation-id*="description"] span'));
-    dueDateField = element(by.css('span[data-automation-id*="dueDate"] span'));
-    activitiesTitle = element(by.css('div[class*="adf-info-drawer-layout-header-title"] div'));
-    commentField = element(by.id('comment-input'));
-    addCommentButton = element(by.css('[data-automation-id="comments-input-add"]'));
-    involvePeopleButton = element(by.css('div[class*="add-people"]'));
-    addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
-    addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
+    formContent: ElementFinder = element(by.css('adf-form'));
+    formNameField: ElementFinder = element(by.css('span[data-automation-id*="formName"] span'));
+    assigneeField: ElementFinder = element(by.css('span[data-automation-id*="assignee"] span'));
+    statusField: ElementFinder = element(by.css('span[data-automation-id*="status"] span'));
+    categoryField: ElementFinder = element(by.css('span[data-automation-id*="category"] span'));
+    parentNameField: ElementFinder = element(by.css('span[data-automation-id*="parentName"] span'));
+    parentTaskIdField: ElementFinder = element(by.css('span[data-automation-id*="parentTaskId"] span'));
+    durationField: ElementFinder = element(by.css('span[data-automation-id*="duration"] span'));
+    endDateField: ElementFinder = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
+    createdField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
+    idField: ElementFinder = element.all(by.css('span[data-automation-id*="id"] span')).first();
+    descriptionField: ElementFinder = element(by.css('span[data-automation-id*="description"] span'));
+    dueDateField: ElementFinder = element(by.css('span[data-automation-id*="dueDate"] span'));
+    activitiesTitle: ElementFinder = element(by.css('div[class*="adf-info-drawer-layout-header-title"] div'));
+    commentField: ElementFinder = element(by.id('comment-input'));
+    addCommentButton: ElementFinder = element(by.css('[data-automation-id="comments-input-add"]'));
+    involvePeopleButton: ElementFinder = element(by.css('div[class*="add-people"]'));
+    addPeopleField: ElementFinder = element(by.css('input[data-automation-id="adf-people-search-input"]'));
+    addInvolvedUserButton: ElementFinder = element(by.css('button[id="add-people"] span'));
     emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email"]');
-    taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
-    taskDetailsSection = element(by.css('div[data-automation-id="adf-tasks-details"]'));
-    taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
-    completeTask = element(by.css('button[id="adf-no-form-complete-button"]'));
-    completeFormTask = element(by.css('button[id="adf-form-complete"]'));
-    taskDetailsTitle = element(by.css('h2[class="adf-activiti-task-details__header"] span'));
-    auditLogButton = element(by.css('button[adf-task-audit]'));
-    noPeopleInvolved = element(by.id('no-people-label'));
-    cancelInvolvePeopleButton = element(by.id('close-people-search'));
-    involvePeopleHeader = element(by.css('div[class="adf-search-text-header"]'));
-    removeInvolvedPeople = element(by.css('button[data-automation-id="Remove"]'));
-    peopleTitle = element(by.id('people-title'));
-    attachFormDropdown = element(by.css('div[class="adf-attach-form-row"]'));
-    cancelAttachForm = element(by.id('adf-no-form-cancel-button'));
-    attachFormButton = element(by.id('adf-no-form-attach-form-button'));
-    disabledAttachFormButton = element(by.css('button[id="adf-no-form-attach-form-button"][disabled]'));
-    removeAttachForm = element(by.id('adf-no-form-remove-button'));
-    attachFormName = element(by.css('span[class="adf-form-title ng-star-inserted"]'));
-    emptyTaskDetails = element(by.css('adf-task-details > div > div'));
+    taskDetailsInfoDrawer: ElementFinder = element(by.tagName('adf-info-drawer'));
+    taskDetailsSection: ElementFinder = element(by.css('div[data-automation-id="adf-tasks-details"]'));
+    taskDetailsEmptySection: ElementFinder = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
+    completeTask: ElementFinder = element(by.css('button[id="adf-no-form-complete-button"]'));
+    completeFormTask: ElementFinder = element(by.css('button[id="adf-form-complete"]'));
+    taskDetailsTitle: ElementFinder = element(by.css('h2[class="adf-activiti-task-details__header"] span'));
+    auditLogButton: ElementFinder = element(by.css('button[adf-task-audit]'));
+    noPeopleInvolved: ElementFinder = element(by.id('no-people-label'));
+    cancelInvolvePeopleButton: ElementFinder = element(by.id('close-people-search'));
+    involvePeopleHeader: ElementFinder = element(by.css('div[class="adf-search-text-header"]'));
+    removeInvolvedPeople: ElementFinder = element(by.css('button[data-automation-id="Remove"]'));
+    peopleTitle: ElementFinder = element(by.id('people-title'));
+    attachFormDropdown: ElementFinder = element(by.css('div[class="adf-attach-form-row"]'));
+    cancelAttachForm: ElementFinder = element(by.id('adf-no-form-cancel-button'));
+    attachFormButton: ElementFinder = element(by.id('adf-no-form-attach-form-button'));
+    disabledAttachFormButton: ElementFinder = element(by.css('button[id="adf-no-form-attach-form-button"][disabled]'));
+    removeAttachForm: ElementFinder = element(by.id('adf-no-form-remove-button'));
+    attachFormName: ElementFinder = element(by.css('span[class="adf-form-title ng-star-inserted"]'));
+    emptyTaskDetails: ElementFinder = element(by.css('adf-task-details > div > div'));
 
-    getTaskDetailsTitle() {
+    getTaskDetailsTitle(): Promise<string> {
         return BrowserActions.getText(this.taskDetailsTitle);
     }
 
-    checkSelectedForm(formName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.attachFormName);
-        expect(formName).toEqual(this.attachFormName.getText());
+    async checkSelectedForm(formName): Promise<void> {
+        const text = await BrowserActions.getText(this.attachFormName);
+        await expect(formName).toEqual(text);
     }
 
-    checkAttachFormButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.disabledAttachFormButton);
+    async checkAttachFormButtonIsDisabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.disabledAttachFormButton);
     }
 
-    checkAttachFormButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsClickable(this.attachFormButton);
+    async checkAttachFormButtonIsEnabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsClickable(this.attachFormButton);
     }
 
-    checkAttachFormDropdownIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.attachFormDropdown);
+    async checkAttachFormDropdownIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.attachFormDropdown);
     }
 
-    clickAttachFormDropdown() {
-        return BrowserActions.click(this.attachFormDropdown);
+    async clickAttachFormDropdown(): Promise<void> {
+        await BrowserActions.click(this.attachFormDropdown);
     }
 
-    selectAttachFormOption(option) {
-        const selectedOption = element(by.cssContainingText('mat-option[role="option"]', option));
-        return BrowserActions.click(selectedOption);
+    async selectAttachFormOption(option): Promise<void> {
+        const selectedOption: ElementFinder = element(by.cssContainingText('mat-option[role="option"]', option));
+        await BrowserActions.click(selectedOption);
     }
 
-    checkCancelAttachFormIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelAttachForm);
+    async checkCancelAttachFormIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.cancelAttachForm);
     }
 
-    noFormIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.formContent);
-        return this;
+    async noFormIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.formContent);
     }
 
-    clickCancelAttachForm() {
-        return BrowserActions.click(this.cancelAttachForm);
+    async clickCancelAttachForm(): Promise<void> {
+        await BrowserActions.click(this.cancelAttachForm);
     }
 
-    checkRemoveAttachFormIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.removeAttachForm);
+    async checkRemoveAttachFormIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.removeAttachForm);
     }
 
-    clickRemoveAttachForm() {
-        return BrowserActions.click(this.removeAttachForm);
+    async clickRemoveAttachForm(): Promise<void> {
+        await BrowserActions.click(this.removeAttachForm);
     }
 
-    checkAttachFormButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
+    async checkAttachFormButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
     }
 
-    checkAttachFormButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.attachFormButton);
+    async checkAttachFormButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.attachFormButton);
     }
 
-    clickAttachFormButton() {
+    async clickAttachFormButton(): Promise<void> {
         return BrowserActions.click(this.attachFormButton);
     }
 
-    checkFormIsAttached(formName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
-        this.formNameField.getText().then((attachedFormName) => {
-            expect(attachedFormName).toEqual(formName);
-        });
+    async checkFormIsAttached(formName): Promise<void> {
+        const attachedFormName = await BrowserActions.getText(this.formNameField);
+        await expect(attachedFormName).toEqual(formName);
     }
 
-    getFormName() {
+    getFormName(): Promise<string> {
         return BrowserActions.getText(this.formNameField);
     }
 
-    clickForm() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.formNameField);
+    async clickForm(): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.click(this.formNameField);
     }
 
-    getAssignee() {
+    getAssignee(): Promise<string> {
         return BrowserActions.getText(this.assigneeField);
     }
 
-    getStatus() {
+    getStatus(): Promise<string> {
         return BrowserActions.getText(this.statusField);
     }
 
-    getCategory() {
+    getCategory(): Promise<string> {
         return BrowserActions.getText(this.categoryField);
     }
 
-    getParentName() {
+    getParentName(): Promise<string> {
         return BrowserActions.getText(this.parentNameField);
     }
 
-    getParentTaskId() {
+    getParentTaskId(): Promise<string> {
         return BrowserActions.getText(this.parentTaskIdField);
     }
 
-    getDuration() {
+    getDuration(): Promise<string> {
         return BrowserActions.getText(this.durationField);
     }
 
-    getEndDate() {
+    getEndDate(): Promise<string> {
         return BrowserActions.getText(this.endDateField);
     }
 
-    getCreated() {
+    getCreated(): Promise<string> {
         return BrowserActions.getText(this.createdField);
     }
 
-    getId() {
+    getId(): Promise<string> {
         return BrowserActions.getText(this.idField);
     }
 
-    getDescription() {
+    getDescription(): Promise<string> {
         return BrowserActions.getText(this.descriptionField);
     }
 
-    getDueDate() {
+    getDueDate(): Promise<string> {
         return BrowserActions.getText(this.dueDateField);
     }
 
-    getTitle() {
+    getTitle(): Promise<string> {
         return BrowserActions.getText(this.activitiesTitle);
     }
 
-    selectActivityTab() {
-        const tabsPage = new TabsPage;
-        tabsPage.clickTabByTitle('Activity');
-        return this;
+    async selectActivityTab(): Promise<void> {
+        const tabsPage: TabsPage = new TabsPage;
+        await tabsPage.clickTabByTitle('Activity');
     }
 
-    selectDetailsTab() {
-        const tabsPage = new TabsPage;
-        tabsPage.clickTabByTitle('Details');
-        return this;
+    async selectDetailsTab(): Promise<void> {
+        const tabsPage: TabsPage = new TabsPage;
+        await tabsPage.clickTabByTitle('Details');
     }
 
-    addComment(comment) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentField);
-        this.commentField.sendKeys(comment);
-        BrowserActions.click(this.addCommentButton);
-        return this;
+    async addComment(comment): Promise<void> {
+        await BrowserActions.clearSendKeys(this.commentField, comment);
+        await BrowserActions.click(this.addCommentButton);
     }
 
-    checkCommentIsDisplayed(comment) {
-        const row = element(by.cssContainingText('div[id="comment-message"]', comment));
-        BrowserVisibility.waitUntilElementIsVisible(row);
-        return this;
+    async checkCommentIsDisplayed(comment): Promise<void> {
+        const row: ElementFinder = element(by.cssContainingText('div[id="comment-message"]', comment));
+        await BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
-    clickInvolvePeopleButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.involvePeopleButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.involvePeopleButton);
-        browser.actions().mouseMove(this.involvePeopleButton).perform();
-        BrowserActions.click(this.involvePeopleButton);
-        return this;
+    async clickInvolvePeopleButton(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.involvePeopleButton);
+        await BrowserVisibility.waitUntilElementIsClickable(this.involvePeopleButton);
+        await browser.actions().mouseMove(this.involvePeopleButton).perform();
+        await BrowserActions.click(this.involvePeopleButton);
     }
 
-    typeUser(user) {
-        BrowserVisibility.waitUntilElementIsVisible(this.addPeopleField);
-        this.addPeopleField.sendKeys(user);
-        return this;
+    async typeUser(user): Promise<void> {
+        await BrowserActions.clearSendKeys(this.addPeopleField, user);
     }
 
-    selectUserToInvolve(user) {
-        this.getRowsUser(user).click();
-        return this;
+    async selectUserToInvolve(user): Promise<void> {
+        const row = this.getRowsUser(user);
+        await BrowserActions.click(row);
     }
 
-    checkUserIsSelected(user) {
-        const row = element(by.cssContainingText('div[class*="search-list-container"] div[class*="people-full-name"]', user));
-        BrowserVisibility.waitUntilElementIsVisible(row);
-        return this;
+    async checkUserIsSelected(user): Promise<void> {
+        const row: ElementFinder = element(by.cssContainingText('div[class*="search-list-container"] div[class*="people-full-name"]', user));
+        await BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
-    clickAddInvolvedUserButton() {
-        BrowserActions.click(this.addInvolvedUserButton);
-        return this;
+    async clickAddInvolvedUserButton(): Promise<void> {
+        await BrowserActions.click(this.addInvolvedUserButton);
     }
 
     getRowsUser(user) {
-        const row = element(by.cssContainingText('div[class*="people-full-name"]', user));
-        BrowserVisibility.waitUntilElementIsVisible(row);
-        return row;
+        return element(by.cssContainingText('div[class*="people-full-name"]', user));
     }
 
-    removeInvolvedUser(user) {
+    async removeInvolvedUser(user): Promise<void> {
         const row = this.getRowsUser(user).element(by.xpath('ancestor::div[contains(@class, "adf-datatable-row")]'));
-        BrowserVisibility.waitUntilElementIsVisible(row);
-        row.element(by.css('button[data-automation-id="action_menu_0"]')).click();
-        BrowserVisibility.waitUntilElementIsVisible(this.removeInvolvedPeople);
-        return BrowserActions.click(this.removeInvolvedPeople);
+        await BrowserActions.click(row.element(by.css('button[data-automation-id="action_menu_0"]')));
+        await BrowserVisibility.waitUntilElementIsVisible(this.removeInvolvedPeople);
+        await BrowserActions.click(this.removeInvolvedPeople);
 
     }
 
-    getInvolvedUserEmail(user) {
-        const email = this.getRowsUser(user).element(this.emailInvolvedUser);
+    async getInvolvedUserEmail(user): Promise<string> {
+        const row = this.getRowsUser(user);
+        const email = row.element(this.emailInvolvedUser);
         return BrowserActions.getText(email);
     }
 
-    clickAuditLogButton() {
-        BrowserActions.click(this.auditLogButton);
+    async clickAuditLogButton(): Promise<void> {
+        await BrowserActions.click(this.auditLogButton);
     }
 
-    appSettingsToggles() {
+    appSettingsToggles(): AppSettingsToggles {
         return this.appSettingsTogglesClass;
     }
 
-    taskInfoDrawerIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsInfoDrawer);
+    async taskInfoDrawerIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsInfoDrawer);
     }
 
-    taskInfoDrawerIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.taskDetailsInfoDrawer);
+    async taskInfoDrawerIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.taskDetailsInfoDrawer);
     }
 
-    checkNoPeopleIsInvolved() {
-        BrowserVisibility.waitUntilElementIsVisible(this.noPeopleInvolved);
-        return this;
+    async checkNoPeopleIsInvolved(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noPeopleInvolved);
     }
 
-    clickCancelInvolvePeopleButton() {
-        BrowserActions.click(this.cancelInvolvePeopleButton);
-        return this;
+    async clickCancelInvolvePeopleButton(): Promise<void> {
+        await BrowserActions.click(this.cancelInvolvePeopleButton);
     }
 
-    getInvolvePeopleHeader() {
+    getInvolvePeopleHeader(): Promise<string> {
         return BrowserActions.getText(this.involvePeopleHeader);
     }
 
-    getInvolvePeoplePlaceholder() {
-        BrowserVisibility.waitUntilElementIsVisible(this.addPeopleField);
+    async getInvolvePeoplePlaceholder(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.addPeopleField);
         return this.addPeopleField.getAttribute('placeholder');
     }
 
-    checkCancelButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelInvolvePeopleButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.cancelInvolvePeopleButton);
-        return this;
+    async checkCancelButtonIsEnabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.cancelInvolvePeopleButton);
+        await BrowserVisibility.waitUntilElementIsClickable(this.cancelInvolvePeopleButton);
     }
 
-    checkAddPeopleButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.addInvolvedUserButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.addInvolvedUserButton);
-        return this;
+    async checkAddPeopleButtonIsEnabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.addInvolvedUserButton);
+        await BrowserVisibility.waitUntilElementIsClickable(this.addInvolvedUserButton);
     }
 
-    noUserIsDisplayedInSearchInvolvePeople(user) {
-        BrowserVisibility.waitUntilElementIsNotOnPage(element(by.cssContainingText('div[class*="people-full-name"]', user)));
-        return this;
+    async noUserIsDisplayedInSearchInvolvePeople(user): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('div[class*="people-full-name"]', user)));
     }
 
-    getInvolvedPeopleTitle() {
+    getInvolvedPeopleTitle(): Promise<string> {
         return BrowserActions.getText(this.peopleTitle);
     }
 
-    checkTaskDetailsEmpty() {
+    checkTaskDetailsEmpty(): Promise<string> {
         return BrowserActions.getText(this.taskDetailsEmptySection);
     }
 
-    checkTaskDetailsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsSection);
-        BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
-        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
-        BrowserVisibility.waitUntilElementIsVisible(this.statusField);
-        BrowserVisibility.waitUntilElementIsVisible(this.categoryField);
-        BrowserVisibility.waitUntilElementIsVisible(this.parentNameField);
-        BrowserVisibility.waitUntilElementIsVisible(this.createdField);
-        BrowserVisibility.waitUntilElementIsVisible(this.idField);
-        BrowserVisibility.waitUntilElementIsVisible(this.descriptionField);
-        BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
-        BrowserVisibility.waitUntilElementIsVisible(this.activitiesTitle);
+    async checkTaskDetailsDisplayed(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsSection);
+        await BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.statusField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.categoryField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.parentNameField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.createdField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.idField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.descriptionField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.activitiesTitle);
 
         return BrowserActions.getText(this.taskDetailsSection);
     }
 
-    clickCompleteTask() {
-        return BrowserActions.click(this.completeTask);
+    async clickCompleteTask(): Promise<void> {
+        await BrowserActions.click(this.completeTask);
     }
 
-    checkCompleteFormButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeFormTask);
-        return this.completeFormTask;
+    async checkCompleteFormButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.completeFormTask);
     }
 
-    checkCompleteTaskButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsClickable(this.completeTask);
-        return this;
+    async checkCompleteTaskButtonIsEnabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsClickable(this.completeTask);
     }
 
-    checkCompleteTaskButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeTask);
-        return this;
+    async checkCompleteTaskButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.completeTask);
     }
 
-    clickCompleteFormTask() {
-        return BrowserActions.click(this.completeFormTask);
+    async clickCompleteFormTask(): Promise<void> {
+        await BrowserActions.click(this.completeFormTask);
     }
 
-    getEmptyTaskDetailsMessage() {
+    async getEmptyTaskDetailsMessage(): Promise<string> {
         return BrowserActions.getText(this.emptyTaskDetails);
     }
 

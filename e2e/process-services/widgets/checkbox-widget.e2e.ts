@@ -36,7 +36,7 @@ describe('Checkbox Widget', () => {
     const app = resources.Files.WIDGET_CHECK_APP.CHECKBOX;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -57,34 +57,34 @@ describe('Checkbox Widget', () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
+
     });
 
-    it('[C268554] Should be able to set general settings for Checkbox widget ', () => {
-        taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
-        expect(widget.checkboxWidget().getCheckboxLabel()).toContain(app.FIELD.checkbox_label);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_input_id);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+    it('[C268554] Should be able to set general settings for Checkbox widget ', async () => {
+        await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
+        await expect(await widget.checkboxWidget().getCheckboxLabel()).toContain(app.FIELD.checkbox_label);
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_input_id);
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C272812] Should be able to set visibility settings for Checkbox widget', () => {
-        widget.checkboxWidget().isCheckboxHidden(app.FIELD.checkbox_field_id);
-        taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
-        widget.checkboxWidget().isCheckboxDisplayed(app.FIELD.checkbox_field_id);
+    it('[C272812] Should be able to set visibility settings for Checkbox widget', async () => {
+        await widget.checkboxWidget().isCheckboxHidden(app.FIELD.checkbox_field_id);
+        await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
+        await widget.checkboxWidget().isCheckboxDisplayed(app.FIELD.checkbox_field_id);
     });
 });

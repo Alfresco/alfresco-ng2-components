@@ -24,15 +24,12 @@ import resources = require('../../../util/resources');
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const navigationBarPage = new NavigationBarPage();
-
     let site;
     const acsUser = new AcsUserModel();
 
@@ -46,7 +43,7 @@ describe('Viewer', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -62,45 +59,37 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        done();
     });
-
-    afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
-    });
-
     describe('Excel Folder Uploaded', () => {
 
         let uploadedExcels;
         let excelFolderUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             excelFolderUploaded = await uploadActions.createFolder(excelFolderInfo.name, '-my-');
 
             uploadedExcels = await uploadActions.uploadFolder(excelFolderInfo.location, excelFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(excelFolderUploaded.entry.id);
-            done();
+
         });
 
-        it('[C280008] Should be possible to open any Excel file', () => {
-            contentServicesPage.doubleClickRow('excel');
-
-            uploadedExcels.forEach((currentFile) => {
+        it('[C280008] Should be possible to open any Excel file', async () => {
+            await contentServicesPage.doubleClickRow('excel');
+            for (const currentFile of uploadedExcels) {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkFileIsLoaded(currentFile.entry.name);
-                    viewerPage.clickCloseButton();
+                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    await viewerPage.checkFileIsLoaded(currentFile.entry.name);
+                    await viewerPage.clickCloseButton();
                 }
-            });
-        }, 5 * 60 * 1000);
+            }
+        });
 
     });
 

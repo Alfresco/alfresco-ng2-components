@@ -37,79 +37,79 @@ import { AttachFileWidgetCloud } from './attachFileWidgetCloud';
 
 export class Widget {
 
-    multilineTextWidget() {
+    multilineTextWidget(): MultilineTextWidget {
         return new MultilineTextWidget();
     }
 
-    headerWidget() {
+    headerWidget(): HeaderWidget {
         return new HeaderWidget();
     }
 
-    displayTextWidget() {
+    displayTextWidget(): DisplayTextWidget {
         return new DisplayTextWidget();
     }
 
-    attachFileWidget() {
+    attachFileWidget(): AttachFileWidget {
         return new AttachFileWidget();
     }
 
-    attachFileWidgetCloud(fieldId: string) {
+    attachFileWidgetCloud(fieldId: string): AttachFileWidgetCloud {
         return new AttachFileWidgetCloud(fieldId);
     }
 
-    displayValueWidget() {
+    displayValueWidget(): DisplayValueWidget {
         return new DisplayValueWidget();
     }
 
-    radioWidget() {
+    radioWidget(): RadioButtonsWidget {
         return new RadioButtonsWidget();
     }
 
-    hyperlink() {
+    hyperlink(): HyperlinkWidget {
         return new HyperlinkWidget();
     }
 
-    dropdown() {
+    dropdown(): DropdownWidget {
         return new DropdownWidget();
     }
 
-    dynamicTable() {
+    dynamicTable(): DynamicTableWidget {
         return new DynamicTableWidget();
     }
 
-    textWidget() {
+    textWidget(): TextWidget {
         return new TextWidget();
     }
 
-    documentWidget() {
+    documentWidget(): DocumentWidget {
         return new DocumentWidget();
     }
 
-    checkboxWidget() {
+    checkboxWidget(): CheckboxWidget {
         return new CheckboxWidget();
     }
 
-    dateWidget() {
+    dateWidget(): DateWidget {
         return new DateWidget();
     }
 
-    dateTimeWidget() {
+    dateTimeWidget(): DateTimeWidget {
         return new DateTimeWidget();
     }
 
-    numberWidget() {
+    numberWidget(): NumberWidget {
         return new NumberWidget();
     }
 
-    amountWidget() {
+    amountWidget(): AmountWidget {
         return new AmountWidget();
     }
 
-    containerWidget() {
+    containerWidget(): ContainerWidget {
         return new ContainerWidget();
     }
 
-    peopleWidget() {
+    peopleWidget(): PeopleWidget {
         return new PeopleWidget();
     }
 }

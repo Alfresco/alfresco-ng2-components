@@ -18,36 +18,37 @@
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { element, by } from 'protractor';
 import { BrowserActions } from '../utils/browser-actions';
+import { ElementFinder } from 'protractor';
 
 export class ErrorPage {
 
-    errorPageCode = element(by.css('adf-error-content .adf-error-content-code'));
-    errorPageTitle = element(by.css('adf-error-content .adf-error-content-title'));
-    errorPageDescription = element(by.css('adf-error-content .adf-error-content-description'));
-    backButton = element(by.id('adf-return-button'));
-    secondButton = element(by.id('adf-secondary-button'));
+    errorPageCode: ElementFinder = element(by.css('adf-error-content .adf-error-content-code'));
+    errorPageTitle: ElementFinder = element(by.css('adf-error-content .adf-error-content-title'));
+    errorPageDescription: ElementFinder = element(by.css('adf-error-content .adf-error-content-description'));
+    backButton: ElementFinder = element(by.id('adf-return-button'));
+    secondButton: ElementFinder = element(by.id('adf-secondary-button'));
 
-    clickBackButton() {
-        BrowserActions.click(this.backButton);
+    async clickBackButton(): Promise<void> {
+        await BrowserActions.click(this.backButton);
     }
 
-    clickSecondButton() {
-        BrowserActions.click(this.secondButton);
+    async clickSecondButton(): Promise<void> {
+        await BrowserActions.click(this.secondButton);
     }
 
-    checkErrorCode() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorPageCode);
+    async checkErrorCode(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.errorPageCode);
     }
 
-    getErrorCode() {
+    async getErrorCode(): Promise<string> {
         return BrowserActions.getText(this.errorPageCode);
     }
 
-    getErrorTitle() {
+    async getErrorTitle(): Promise<string> {
         return BrowserActions.getText(this.errorPageTitle);
     }
 
-    getErrorDescription() {
+    async getErrorDescription(): Promise<string> {
         return BrowserActions.getText(this.errorPageDescription);
     }
 }

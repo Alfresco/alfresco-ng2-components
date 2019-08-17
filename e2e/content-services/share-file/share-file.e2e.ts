@@ -48,13 +48,13 @@ describe('Share file', () => {
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     let nodeId;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -67,147 +67,144 @@ describe('Share file', () => {
 
         await navigationBarPage.clickContentServicesButton();
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(nodeId);
-        done();
+
     });
 
     describe('Shared link dialog', () => {
 
-        beforeAll(() => {
-            contentListPage.selectRow(pngFileModel.name);
+        beforeAll(async () => {
+            await contentListPage.selectRow(pngFileModel.name);
         });
 
-        afterEach(() => {
-            BrowserActions.closeMenuAndDialogs();
+        afterEach(async () => {
+            await BrowserActions.closeMenuAndDialogs();
         });
 
-        it('[C286549] Should check automatically toggle button in Share dialog', () => {
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.shareToggleButtonIsChecked();
+        it('[C286549] Should check automatically toggle button in Share dialog', async () => {
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.shareToggleButtonIsChecked();
         });
 
-        it('[C286544] Should display notification when clicking URL copy button', () => {
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickShareLinkButton();
-            notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
+        it('[C286544] Should display notification when clicking URL copy button', async () => {
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickShareLinkButton();
+            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
         });
 
-        it('[C286543] Should be possible to close Share dialog', () => {
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.checkShareLinkIsDisplayed();
+        it('[C286543] Should be possible to close Share dialog', async () => {
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.checkShareLinkIsDisplayed();
         });
 
-        it('[C286578] Should disable today option in expiration day calendar', () => {
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickDateTimePickerButton();
-            shareDialog.calendarTodayDayIsDisabled();
+        it('[C286578] Should disable today option in expiration day calendar', async () => {
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickDateTimePickerButton();
+            await shareDialog.calendarTodayDayIsDisabled();
         });
 
         it('[C286548] Should be possible to set expiry date for link', async () => {
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickDateTimePickerButton();
-            shareDialog.setDefaultDay();
-            shareDialog.setDefaultHour();
-            shareDialog.setDefaultMinutes();
-            shareDialog.dateTimePickerDialogIsClosed();
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickDateTimePickerButton();
+            await shareDialog.setDefaultDay();
+            await shareDialog.setDefaultHour();
+            await shareDialog.setDefaultMinutes();
+            await shareDialog.dateTimePickerDialogIsClosed();
             const value = await shareDialog.getExpirationDate();
-            shareDialog.clickCloseButton();
-            shareDialog.dialogIsClosed();
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.expirationDateInputHasValue(value);
-            BrowserActions.closeMenuAndDialogs();
+            await shareDialog.clickCloseButton();
+            await shareDialog.dialogIsClosed();
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.expirationDateInputHasValue(value);
+            await BrowserActions.closeMenuAndDialogs();
         });
 
-        it('[C286578] Should disable today option in expiration day calendar', () => {
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickDateTimePickerButton();
-            shareDialog.calendarTodayDayIsDisabled();
+        it('[C286578] Should disable today option in expiration day calendar', async () => {
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickDateTimePickerButton();
+            await shareDialog.calendarTodayDayIsDisabled();
         });
 
         it('[C310329] Should be possible to set expiry date only for link', async () => {
             await LocalStorageUtil.setConfigField('sharedLinkDateTimePickerType', JSON.stringify('date'));
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickDateTimePickerButton();
-            shareDialog.setDefaultDay();
-            shareDialog.dateTimePickerDialogIsClosed();
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickDateTimePickerButton();
+            await shareDialog.setDefaultDay();
+            await shareDialog.dateTimePickerDialogIsClosed();
             const value = await shareDialog.getExpirationDate();
-            shareDialog.clickCloseButton();
-            shareDialog.dialogIsClosed();
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.expirationDateInputHasValue(value);
-            BrowserActions.closeMenuAndDialogs();
+            await shareDialog.clickCloseButton();
+            await shareDialog.dialogIsClosed();
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.expirationDateInputHasValue(value);
+            await BrowserActions.closeMenuAndDialogs();
         });
     });
 
     describe('Shared link preview', () => {
-        afterEach((done) => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            navigationBarPage.clickContentServicesButton();
-            done();
+        afterEach(async() => {
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await navigationBarPage.clickContentServicesButton();
+
         });
 
-        beforeAll(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+        beforeAll(async () => {
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await navigationBarPage.clickContentServicesButton();
+            await contentServicesPage.waitForTableBody();
 
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.waitForTableBody();
-
-            done();
         });
 
         it('[C286565] Should open file when logged user access shared link', async () => {
-            contentListPage.selectRow(pngFileModel.name);
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickShareLinkButton();
-            notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
+            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickShareLinkButton();
             const sharedLink = await shareDialog.getShareLink();
-            BrowserActions.getUrl(sharedLink);
-            viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
+            await BrowserActions.getUrl(sharedLink);
+            await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });
 
         it('[C287803] Should the URL be kept the same when opening the share dialog multiple times', async () => {
-            contentListPage.selectRow(pngFileModel.name);
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickShareLinkButton();
-            notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
+            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickShareLinkButton();
             const sharedLink = await shareDialog.getShareLink();
-            shareDialog.clickCloseButton();
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickShareLinkButton();
-            notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
+            await shareDialog.clickCloseButton();
+            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickShareLinkButton();
             const secondSharedLink = await shareDialog.getShareLink();
-            expect(sharedLink).toEqual(secondSharedLink);
-            BrowserActions.getUrl(sharedLink);
-            viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
+            await expect(sharedLink).toEqual(secondSharedLink);
+            await BrowserActions.getUrl(sharedLink);
+            await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });
 
         it('[C286539] Should open file when non-logged user access shared link', async () => {
-            contentListPage.selectRow(pngFileModel.name);
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.checkShareLinkIsDisplayed();
+            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.checkShareLinkIsDisplayed();
             const sharedLink = await shareDialog.getShareLink();
-            shareDialog.clickCloseButton();
-            navigationBarPage.clickLogoutButton();
-            BrowserActions.getUrl(sharedLink);
-            viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+            await shareDialog.clickCloseButton();
+            await navigationBarPage.clickLogoutButton();
+            await BrowserActions.getUrl(sharedLink);
+            await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });
     });
 });

@@ -17,36 +17,39 @@
 
 import { by, element } from 'protractor';
 import { BrowserActions } from '../utils/browser-actions';
+import { ElementFinder } from 'protractor';
 
 export class NotificationHistoryPage {
 
-    notificationList = element(by.css('#adf-notification-history-list'));
+    notificationList: ElementFinder = element(by.css('#adf-notification-history-list'));
 
-    clickNotificationButton() {
-        BrowserActions.clickExecuteScript('#adf-notification-history-open-button');
+    async clickNotificationButton(): Promise<void> {
+        await BrowserActions.clickExecuteScript('#adf-notification-history-open-button');
     }
 
-    clickMarkAsRead() {
-        BrowserActions.click(element(by.css('#adf-notification-history-mark-as-read')));
+    async clickMarkAsRead(): Promise<void> {
+        await BrowserActions.click(element(by.css('#adf-notification-history-mark-as-read')));
     }
 
-    checkNotificationIsPresent(text: string) {
-        expect(BrowserActions.getText(this.notificationList)).toContain(text);
+    async checkNotificationIsPresent(text: string): Promise<void> {
+        const notificationLisText = await BrowserActions.getText(this.notificationList);
+        await expect(notificationLisText).toContain(text);
     }
 
-    checkNotificationIsNotPresent(text: string) {
-        expect(BrowserActions.getText(this.notificationList)).not.toContain(text);
+    async checkNotificationIsNotPresent(text: string): Promise<void> {
+        const notificationLisText = await BrowserActions.getText(this.notificationList);
+        await expect(notificationLisText).not.toContain(text);
     }
 
-    checkNotifyContains(text: string) {
-        this.clickNotificationButton();
-        this.checkNotificationIsPresent(text);
-        this.clickMarkAsRead();
+    async checkNotifyContains(text: string): Promise<void> {
+        await this.clickNotificationButton();
+        await this.checkNotificationIsPresent(text);
+        await this.clickMarkAsRead();
     }
 
-    checkNotifyNotContains(text: string) {
-        this.clickNotificationButton();
-        this.checkNotificationIsNotPresent(text);
-        BrowserActions.closeMenuAndDialogs();
+    async checkNotifyNotContains(text: string): Promise<void> {
+        await this.clickNotificationButton();
+        await this.checkNotificationIsNotPresent(text);
+        await BrowserActions.closeMenuAndDialogs();
     }
 }

@@ -16,19 +16,19 @@
  */
 
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 
 export class ProcessListPage {
 
-    processListTitle = element.all(by.css("div[class='adf-empty-content__title']")).first();
-    processInstanceList = element(by.css('adf-process-instance-list'));
+    processListTitle: ElementFinder = element.all(by.css("div[class='adf-empty-content__title']")).first();
+    processInstanceList: ElementFinder = element(by.css('adf-process-instance-list'));
 
-    checkProcessListTitleIsDisplayed() {
+    getDisplayedProcessListTitle(): Promise<string> {
         return BrowserActions.getText(this.processListTitle);
     }
 
-    checkProcessListIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processInstanceList);
+    async checkProcessListIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceList);
     }
 
 }

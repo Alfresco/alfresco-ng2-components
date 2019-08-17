@@ -36,7 +36,7 @@ export class LoginSSOPage {
         await this.clickLoginButton();
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
         await BrowserVisibility.waitUntilElementIsVisible(this.header);
-        await browser.waitForAngular('');
+        await browser.waitForAngular();
     }
 
     async clickOnSSOButton() {

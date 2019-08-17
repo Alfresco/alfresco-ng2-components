@@ -15,46 +15,41 @@
  * limitations under the License.
  */
 
-import { element, by, protractor } from 'protractor';
+import { element, by, protractor, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AnalyticsPage {
 
-    toolbarTitleInput = element(by.css('input[data-automation-id="reportName"]'));
-    toolbarTitleContainer = element(by.css('adf-toolbar-title'));
-    toolbarTitle = element(by.xpath('//mat-toolbar/adf-toolbar-title/div/h4'));
-    reportMessage = element(by.css('div[class="ng-star-inserted"] span'));
+    toolbarTitleInput: ElementFinder = element(by.css('input[data-automation-id="reportName"]'));
+    toolbarTitleContainer: ElementFinder = element(by.css('adf-toolbar-title'));
+    toolbarTitle: ElementFinder = element(by.xpath('//mat-toolbar/adf-toolbar-title/div/h4'));
+    reportMessage: ElementFinder = element(by.css('div[class="ng-star-inserted"] span'));
 
-    getReport(title) {
-        const reportTitle = element(by.css(`mat-icon[data-automation-id="${title}_filter"]`));
-        BrowserActions.click(reportTitle);
+    async getReport(title): Promise<void> {
+        const reportTitle: ElementFinder = element(by.css(`mat-icon[data-automation-id="${title}_filter"]`));
+        await BrowserActions.click(reportTitle);
     }
 
-    changeReportTitle(title) {
-        BrowserActions.click(this.toolbarTitleContainer);
-        BrowserActions.click(this.toolbarTitleInput);
-        this.clearReportTitle();
-        this.toolbarTitleInput.sendKeys(title);
-        this.toolbarTitleInput.sendKeys(protractor.Key.ENTER);
+    async changeReportTitle(title): Promise<void> {
+        await BrowserActions.click(this.toolbarTitleContainer);
+        await BrowserActions.click(this.toolbarTitleInput);
+        await this.clearReportTitle();
+        await this.toolbarTitleInput.sendKeys(title);
+        await this.toolbarTitleInput.sendKeys(protractor.Key.ENTER);
     }
 
-    clearReportTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleInput);
-        this.toolbarTitleInput.getAttribute('value').then((value) => {
-            let i;
-            for (i = value.length; i >= 0; i--) {
-                this.toolbarTitleInput.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
-        BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleInput);
+    async clearReportTitle(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleInput);
+        await BrowserActions.clearSendKeys(this.toolbarTitleInput, '');
+        await BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleInput);
     }
 
-    getReportTitle() {
+    async getReportTitle(): Promise<string> {
         return BrowserActions.getText(this.toolbarTitle);
     }
 
-    checkNoReportMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.reportMessage);
+    async checkNoReportMessage(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.reportMessage);
     }
 
 }

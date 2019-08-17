@@ -17,48 +17,47 @@
 
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 
 export class TasksListPage {
 
-    taskList = element(by.css('adf-tasklist'));
-    noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
-    dataTable = new DataTableComponentPage(this.taskList);
+    taskList: ElementFinder = element(by.css('adf-tasklist'));
+    noTasksFound: ElementFinder = element.all(by.css("div[class='adf-empty-content__title']")).first();
+    dataTable: DataTableComponentPage = new DataTableComponentPage(this.taskList);
 
     getDataTable() {
         return this.dataTable;
     }
 
-    getRowsDisplayedWithSameName(taskName) {
+    getRowsDisplayedWithSameName(taskName): Promise<string> {
         return this.dataTable.getRowsWithSameColumnValues('Name', taskName);
     }
 
-    checkContentIsDisplayed(taskName) {
+    checkContentIsDisplayed(taskName): Promise<void> {
         return this.dataTable.checkContentIsDisplayed('Name', taskName);
     }
 
-    checkContentIsNotDisplayed(taskName) {
+    checkContentIsNotDisplayed(taskName): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed('Name', taskName);
     }
 
-    checkRowIsSelected(taskName) {
+    checkRowIsSelected(taskName): Promise<void> {
         return this.dataTable.checkRowIsSelected('Name', taskName);
     }
 
-    selectRow(taskName) {
+    selectRow(taskName): Promise<void> {
         return this.dataTable.selectRow('Name', taskName);
     }
 
-    getAllRowsNameColumn() {
+    getAllRowsNameColumn(): Promise<any> {
         return this.dataTable.getAllRowsColumnValues('Name');
     }
 
-    checkTaskListIsLoaded() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskList);
-        return this;
+    async checkTaskListIsLoaded(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.taskList);
     }
 
-    getNoTasksFoundMessage() {
+    getNoTasksFoundMessage(): Promise<string> {
         return BrowserActions.getText(this.noTasksFound);
     }
 

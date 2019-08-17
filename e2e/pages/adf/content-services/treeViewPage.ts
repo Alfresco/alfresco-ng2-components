@@ -15,76 +15,72 @@
  * limitations under the License.
  */
 
-import { element, by, protractor } from 'protractor';
+import { element, by, ElementFinder, ElementArrayFinder, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TreeViewPage {
 
-    treeViewTitle = element(by.cssContainingText('app-tree-view div', 'TREE VIEW TEST'));
-    nodeIdInput = element(by.css('input[placeholder="Node Id"]'));
-    noNodeMessage = element(by.id('adf-tree-view-missing-node'));
-    nodesOnPage = element.all(by.css('mat-tree-node'));
+    treeViewTitle: ElementFinder = element(by.cssContainingText('app-tree-view div', 'TREE VIEW TEST'));
+    nodeIdInput: ElementFinder = element(by.css('input[placeholder="Node Id"]'));
+    noNodeMessage: ElementFinder = element(by.id('adf-tree-view-missing-node'));
+    nodesOnPage: ElementArrayFinder = element.all(by.css('mat-tree-node'));
 
-    checkTreeViewTitleIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.treeViewTitle);
+    async checkTreeViewTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.treeViewTitle);
     }
 
-    getNodeId() {
-        BrowserVisibility.waitUntilElementIsVisible(this.nodeIdInput);
-        return this.nodeIdInput.getAttribute('value');
+    async getNodeId(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.nodeIdInput);
+        return await this.nodeIdInput.getAttribute('value');
     }
 
-    clickNode(nodeName) {
-        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"] button'));
-        return BrowserActions.click(node);
+    async clickNode(nodeName): Promise<void> {
+        const node: ElementFinder = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"] button'));
+        await BrowserActions.click(node);
     }
 
-    checkNodeIsDisplayedAsClosed(nodeName) {
-        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="false"]'));
-        return BrowserVisibility.waitUntilElementIsVisible(node);
+    async checkNodeIsDisplayedAsClosed(nodeName): Promise<void> {
+        const node: ElementFinder = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="false"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(node);
     }
 
-    checkNodeIsDisplayedAsOpen(nodeName) {
-        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="true"]'));
-        return BrowserVisibility.waitUntilElementIsVisible(node);
+    async checkNodeIsDisplayedAsOpen(nodeName): Promise<void> {
+        const node: ElementFinder = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="true"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(node);
     }
 
-    checkClickedNodeName(nodeName) {
-        const clickedNode = element(by.cssContainingText('span', ' CLICKED NODE: ' + nodeName + ''));
-        return BrowserVisibility.waitUntilElementIsVisible(clickedNode);
+    async checkClickedNodeName(nodeName): Promise<void> {
+        const clickedNode: ElementFinder = element(by.cssContainingText('span', ' CLICKED NODE: ' + nodeName + ''));
+        await BrowserVisibility.waitUntilElementIsVisible(clickedNode);
     }
 
-    checkNodeIsNotDisplayed(nodeName) {
-        const node = element(by.id('' + nodeName + '-tree-child-node'));
-        return BrowserVisibility.waitUntilElementIsNotVisible(node);
+    async checkNodeIsNotDisplayed(nodeName): Promise<void> {
+        const node: ElementFinder = element(by.id('' + nodeName + '-tree-child-node'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(node);
     }
 
-    clearNodeIdInput() {
-        BrowserVisibility.waitUntilElementIsVisible(this.nodeIdInput);
-        this.nodeIdInput.getAttribute('value').then((value) => {
-            for (let i = value.length; i >= 0; i--) {
-                this.nodeIdInput.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+    async clearNodeIdInput(): Promise<void> {
+        await BrowserActions.click(this.nodeIdInput);
+        await BrowserActions.clearWithBackSpace(this.nodeIdInput);
     }
 
-    checkNoNodeIdMessageIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.noNodeMessage);
+    async checkNoNodeIdMessageIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noNodeMessage);
     }
 
-    addNodeId(nodeId) {
-        BrowserActions.click(this.nodeIdInput);
-        this.nodeIdInput.clear();
-        this.nodeIdInput.sendKeys(nodeId + ' ');
-        this.nodeIdInput.sendKeys(protractor.Key.BACK_SPACE);
+    async addNodeId(nodeId): Promise<void> {
+        await BrowserActions.click(this.nodeIdInput);
+        await BrowserActions.clearSendKeys(this.nodeIdInput, nodeId);
+        await this.nodeIdInput.sendKeys('a');
+        await this.nodeIdInput.sendKeys(protractor.Key.BACK_SPACE);
     }
 
-    checkErrorMessageIsDisplayed() {
-        const clickedNode = element(by.cssContainingText('span', 'An Error Occurred '));
-        return BrowserVisibility.waitUntilElementIsVisible(clickedNode);
+    async checkErrorMessageIsDisplayed(): Promise<void> {
+        const clickedNode: ElementFinder = element(by.cssContainingText('span', 'An Error Occurred '));
+        await BrowserVisibility.waitUntilElementIsVisible(clickedNode);
     }
 
-    getTotalNodes() {
-        return this.nodesOnPage.count();
+    async getTotalNodes() {
+        return await this.nodesOnPage.count();
     }
 }

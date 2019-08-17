@@ -16,34 +16,30 @@
  */
 
 import { FormControllersPage } from '@alfresco/adf-testing';
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 
 export class AppSettingsToggles {
 
-    formControllersPage = new FormControllersPage();
+    formControllersPage: FormControllersPage = new FormControllersPage();
 
-    showDetailsHeaderToggle = element(by.id('adf-show-header'));
-    showTaskFilterIconsToggle = element(by.id('adf-show-task-filter-icon'));
-    showProcessFilterIconsToggle = element(by.id('adf-show-process-filter-icon'));
+    showDetailsHeaderToggle: ElementFinder = element(by.id('adf-show-header'));
+    showTaskFilterIconsToggle: ElementFinder = element(by.id('adf-show-task-filter-icon'));
+    showProcessFilterIconsToggle: ElementFinder = element(by.id('adf-show-process-filter-icon'));
 
-    enableShowHeader() {
-        this.formControllersPage.enableToggle(this.showDetailsHeaderToggle);
-        return this;
+    async enableShowHeader(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.showDetailsHeaderToggle);
     }
 
-    disableShowHeader() {
-        this.formControllersPage.disableToggle(this.showDetailsHeaderToggle);
-        return this;
+    async disableShowHeader(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.showDetailsHeaderToggle);
     }
 
-    enableTaskFiltersIcon() {
-        this.formControllersPage.enableToggle(this.showTaskFilterIconsToggle);
-        return this;
+    async enableTaskFiltersIcon(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.showTaskFilterIconsToggle);
     }
 
-    enableProcessFiltersIcon() {
-        this.formControllersPage.enableToggle(this.showProcessFilterIconsToggle);
-        return this;
+    async enableProcessFiltersIcon(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.showProcessFilterIconsToggle);
     }
 
 }

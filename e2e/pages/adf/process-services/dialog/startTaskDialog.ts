@@ -15,96 +15,86 @@
  * limitations under the License.
  */
 
-import { element, by, Key } from 'protractor';
+import { element, by, Key, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class StartTaskDialog {
 
-    name = element(by.css('input[id="name_id"]'));
-    dueDate = element(by.css('input[id="date_id"]'));
-    description = element(by.css('textarea[id="description_id"]'));
-    assignee = element(by.css('div#people-widget-content input'));
-    startButton = element(by.css('button[id="button-start"]'));
-    startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
-    cancelButton = element(by.css('button[id="button-cancel"]'));
-    formDropDown = element(by.css('mat-select[id="form_id"]'));
+    name: ElementFinder = element(by.css('input[id="name_id"]'));
+    dueDate: ElementFinder = element(by.css('input[id="date_id"]'));
+    description: ElementFinder = element(by.css('textarea[id="description_id"]'));
+    assignee: ElementFinder = element(by.css('div#people-widget-content input'));
+    startButton: ElementFinder = element(by.css('button[id="button-start"]'));
+    startButtonEnabled: ElementFinder = element(by.css('button[id="button-start"]:not(disabled)'));
+    cancelButton: ElementFinder = element(by.css('button[id="button-cancel"]'));
+    formDropDown: ElementFinder = element(by.css('mat-select[id="form_id"]'));
 
-    addName(userName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.name);
-        this.name.clear();
-        this.name.sendKeys(userName);
-        return this;
+    async addName(userName): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.name);
+        await this.name.clear();
+        await this.name.sendKeys(userName);
     }
 
-    addDescription(userDescription) {
-        BrowserVisibility.waitUntilElementIsVisible(this.description);
-        this.description.sendKeys(userDescription);
-        return this;
+    async addDescription(userDescription): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.description);
+        await this.description.sendKeys(userDescription);
     }
 
-    addDueDate(date) {
-        BrowserVisibility.waitUntilElementIsVisible(this.dueDate);
-        this.dueDate.sendKeys(date);
-        return this;
+    async addDueDate(date): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.dueDate);
+        await this.dueDate.sendKeys(date);
     }
 
-    addAssignee(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.assignee);
-        this.assignee.sendKeys(name);
-        this.selectAssigneeFromList(name);
-        return this;
+    async addAssignee(name): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.assignee);
+        await this.assignee.sendKeys(name);
+        await this.selectAssigneeFromList(name);
     }
 
-    selectAssigneeFromList(name) {
-        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        BrowserActions.click(assigneeRow);
-        BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
-        return this;
+    async selectAssigneeFromList(name): Promise<void> {
+        const assigneeRow: ElementFinder = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+        await BrowserActions.click(assigneeRow);
+        await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
     }
 
-    getAssignee() {
-        BrowserVisibility.waitUntilElementIsVisible(this.assignee);
+    async getAssignee(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.assignee);
         return this.assignee.getAttribute('placeholder');
     }
 
-    addForm(form) {
-        BrowserActions.click(this.formDropDown);
+    async addForm(form): Promise<void> {
+        await BrowserActions.click(this.formDropDown);
         return this.selectForm(form);
     }
 
-    selectForm(form) {
-        const option = element(by.cssContainingText('span[class*="mat-option-text"]', form));
-        BrowserActions.click(option);
-        return this;
+    async selectForm(form): Promise<void> {
+        const option: ElementFinder = element(by.cssContainingText('span[class*="mat-option-text"]', form));
+        await BrowserActions.click(option);
     }
 
-    clickStartButton() {
+    async clickStartButton(): Promise<void> {
         return BrowserActions.click(this.startButton);
     }
 
-    checkStartButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.startButtonEnabled);
-        return this;
+    async checkStartButtonIsEnabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.startButtonEnabled);
     }
 
-    checkStartButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="button-start"]:disabled')));
-        return this;
+    async checkStartButtonIsDisabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="button-start"]:disabled')));
     }
 
-    clickCancelButton() {
-        return BrowserActions.click(this.cancelButton);
+    async clickCancelButton(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 
-    blur(locator) {
-        BrowserActions.click(locator);
-        locator.sendKeys(Key.TAB);
-        return this;
+    async blur(locator): Promise<void> {
+        await BrowserActions.click(locator);
+        await locator.sendKeys(Key.TAB);
     }
 
-    checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
-        const errorElement = element(by.cssContainingText(elementRef, error));
-        BrowserVisibility.waitUntilElementIsVisible(errorElement);
-        return this;
+    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error'): Promise<void> {
+        const errorElement: ElementFinder = element(by.cssContainingText(elementRef, error));
+        await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }
 }

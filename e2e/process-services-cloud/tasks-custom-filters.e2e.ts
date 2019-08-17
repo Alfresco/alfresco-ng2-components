@@ -60,7 +60,7 @@ describe('Task filters cloud', () => {
         let priority = 30;
         const nrOfTasks = 3;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
@@ -93,7 +93,7 @@ describe('Task filters cloud', () => {
 
             queryService = new QueryService(apiService);
 
-            await browser.driver.sleep(4000); // eventual consistency query
+            await browser.sleep(4000); // eventual consistency query
             await queryService.getProcessInstanceTasks(secondProcessInstance.entry.id, simpleApp);
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);
@@ -104,67 +104,73 @@ describe('Task filters cloud', () => {
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            done();
-        }, 5 * 60 * 1000 );
 
-        afterAll(async(done) => {
+        }, 5 * 60 * 1000);
+
+        afterAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-            done();
+
         }, 60000);
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
-            appListCloudComponent.checkApsContainer();
+            await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-            done();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+
         });
 
-        it('[C290045] Should display only tasks with Assigned status when Assigned is selected from status dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED');
+        it('[C290045] Should display only tasks with Assigned status when Assigned is selected from status dropdown', async () => {
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED');
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
-        it('[C290061] Should display only tasks with Completed status when Completed is selected from status dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent()
-                .clickCustomiseFilterHeader()
-                .setStatusFilterDropDown('COMPLETED');
+        it('[C290061] Should display only tasks with Completed status when Completed is selected from status dropdown', async () => {
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('COMPLETED');
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
-        it('[C290139] Should display only tasks with all statuses when All is selected from status dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee()
-                .setStatusFilterDropDown('ALL');
+        it('[C290139] Should display only tasks with all statuses when All is selected from status dropdown', async () => {
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(deletedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(deletedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
         });
 
-        it('[C290060] Should display only tasks with Created status when Created is selected from status dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
+        it('[C290060] Should display only tasks with Created status when Created is selected from status dropdown', async () => {
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
+
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
-        it('[C290155] Should display only tasks with Cancelled status when Cancelled is selected from status dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CANCELLED');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(deletedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
+        it('[C290155] Should display only tasks with Cancelled status when Cancelled is selected from status dropdown', async () => {
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CANCELLED');
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(deletedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
         });
     });
 });

@@ -18,68 +18,69 @@
 import { element, by } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { ElementFinder } from 'protractor';
 
 export class TaskHeaderCloudPage {
 
-    assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
-    statusField = element(by.css('span[data-automation-id*="status"] span'));
-    priorityField = element(by.css('span[data-automation-id*="priority"] span'));
-    dueDateField = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
-    categoryField = element(by.css('span[data-automation-id*="category"] span'));
-    createdField = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
-    parentNameField = element(by.css('span[data-automation-id*="parentName"] span'));
-    parentTaskIdField = element(by.css('span[data-automation-id*="parentTaskId"] span'));
-    endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
-    idField = element.all(by.css('span[data-automation-id*="id"] span')).first();
-    descriptionField = element(by.css('span[data-automation-id*="description"] span'));
-    taskPropertyList = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
+    assigneeField: ElementFinder = element(by.css('span[data-automation-id*="assignee"] span'));
+    statusField: ElementFinder = element(by.css('span[data-automation-id*="status"] span'));
+    priorityField: ElementFinder = element(by.css('span[data-automation-id*="priority"] span'));
+    dueDateField: ElementFinder = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
+    categoryField: ElementFinder = element(by.css('span[data-automation-id*="category"] span'));
+    createdField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
+    parentNameField: ElementFinder = element(by.css('span[data-automation-id*="parentName"] span'));
+    parentTaskIdField: ElementFinder = element(by.css('span[data-automation-id*="parentTaskId"] span'));
+    endDateField: ElementFinder = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
+    idField: ElementFinder = element.all(by.css('span[data-automation-id*="id"] span')).first();
+    descriptionField: ElementFinder = element(by.css('span[data-automation-id*="description"] span'));
+    taskPropertyList: ElementFinder = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
 
-    getAssignee() {
+    async getAssignee(): Promise<string> {
         return BrowserActions.getText(this.assigneeField);
     }
 
-    getStatus() {
+    async getStatus(): Promise<string> {
         return BrowserActions.getText(this.statusField);
     }
 
-    getPriority() {
+    async getPriority(): Promise<string> {
         return BrowserActions.getText(this.priorityField);
     }
 
-    getCategory() {
+    async getCategory(): Promise<string> {
         return BrowserActions.getText(this.categoryField);
     }
 
-    getParentName() {
+    async getParentName(): Promise<string> {
         return BrowserActions.getText(this.parentNameField);
     }
 
-    getParentTaskId() {
+    async getParentTaskId(): Promise<string> {
         return BrowserActions.getText(this.parentTaskIdField);
     }
 
-    getEndDate() {
+    async getEndDate(): Promise<string> {
         return BrowserActions.getText(this.endDateField);
     }
 
-    getCreated() {
+    async getCreated(): Promise<string> {
         return BrowserActions.getText(this.createdField);
     }
 
-    getId() {
+    async getId(): Promise<string> {
         return BrowserActions.getText(this.idField);
     }
 
-    getDescription() {
+    async getDescription(): Promise<string> {
         return BrowserActions.getText(this.descriptionField);
     }
 
-    getDueDate() {
+    async getDueDate(): Promise<string> {
         return BrowserActions.getText(this.dueDateField);
     }
 
-    checkTaskPropertyListIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.taskPropertyList);
+    async checkTaskPropertyListIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.taskPropertyList);
     }
 
 }

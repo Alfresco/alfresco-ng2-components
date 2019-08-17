@@ -19,35 +19,33 @@ import { FormFields } from '../formFields';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import * as remote from 'selenium-webdriver/remote';
 import { element, by, browser } from 'protractor';
+import { ElementFinder } from 'protractor';
 
 export class AttachFileWidget {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
     uploadLocator = by.css('button[id="attachfile"]');
-    localStorageButton = element(by.css('input[id="attachfile"]'));
+    localStorageButton: ElementFinder = element(by.css('input[id="attachfile"]'));
     filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
 
-    attachFile(fieldId, fileLocation) {
+    async attachFile(fieldId, fileLocation): Promise<void> {
         browser.setFileDetector(new remote.FileDetector());
-        const widget = this.formFields.getWidget(fieldId);
-        const uploadButton = widget.element(this.uploadLocator);
-        BrowserActions.click(uploadButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.localStorageButton);
-        this.localStorageButton.sendKeys(fileLocation);
-        return this;
+        const widget = await this.formFields.getWidget(fieldId);
+        const uploadButton = await widget.element(this.uploadLocator);
+        await BrowserActions.click(uploadButton);
+        await BrowserVisibility.waitUntilElementIsPresent(this.localStorageButton);
+        await this.localStorageButton.sendKeys(fileLocation);
     }
 
-    checkFileIsAttached(fieldId, name) {
-        const widget = this.formFields.getWidget(fieldId);
+    async checkFileIsAttached(fieldId, name): Promise<void> {
+        const widget = await this.formFields.getWidget(fieldId);
         const fileAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserVisibility.waitUntilElementIsVisible(fileAttached);
-        return this;
+        await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
-    viewFile(name) {
+    async viewFile(name): Promise<void> {
         const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserActions.click(fileView);
-        browser.actions().doubleClick(fileView).perform();
-        return this;
+        await BrowserActions.click(fileView);
+        await browser.actions().doubleClick(fileView).perform();
     }
 }

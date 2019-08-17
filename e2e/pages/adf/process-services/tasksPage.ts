@@ -21,141 +21,131 @@ import { TaskDetailsPage } from './taskDetailsPage';
 import { FiltersPage } from './filtersPage';
 import { ChecklistDialog } from './dialog/createChecklistDialog';
 import { TasksListPage } from './tasksListPage';
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions, FormFields } from '@alfresco/adf-testing';
 
 export class TasksPage {
 
-    createButton = element(by.css('button[data-automation-id="create-button"'));
-    newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
-    addChecklistButton = element(by.css('button[class*="adf-add-to-checklist-button"]'));
+    createButton: ElementFinder = element(by.css('button[data-automation-id="create-button"'));
+    newTaskButton: ElementFinder = element(by.css('button[data-automation-id="btn-start-task"]'));
+    addChecklistButton: ElementFinder = element(by.css('button[class*="adf-add-to-checklist-button"]'));
     rowByRowName = by.xpath('ancestor::mat-chip');
     checklistContainer = by.css('div[class*="checklist-menu"]');
     taskTitle = 'h2[class="adf-activiti-task-details__header"] span';
     rows = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[class*="adf-datatable-cell"]');
-    completeButtonNoForm = element(by.id('adf-no-form-complete-button'));
-    checklistDialog = element(by.id('checklist-dialog'));
-    checklistNoMessage = element(by.id('checklist-none-message'));
-    numberOfChecklists = element(by.css('[data-automation-id="checklist-label"] mat-chip'));
+    completeButtonNoForm: ElementFinder = element(by.id('adf-no-form-complete-button'));
+    checklistDialog: ElementFinder = element(by.id('checklist-dialog'));
+    checklistNoMessage: ElementFinder = element(by.id('checklist-none-message'));
+    numberOfChecklists: ElementFinder = element(by.css('[data-automation-id="checklist-label"] mat-chip'));
     sortByName = by.css('div[data-automation-id="auto_id_name"]');
 
-    createNewTask() {
-        this.clickOnCreateButton();
-        BrowserActions.click(this.newTaskButton);
+    async createNewTask(): Promise<StartTaskDialog> {
+        await this.clickOnCreateButton();
+        await BrowserActions.clickExecuteScript('button[data-automation-id="btn-start-task"]');
         return new StartTaskDialog();
     }
 
-    newTaskButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.newTaskButton);
-        return this;
+    async newTaskButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.newTaskButton);
     }
 
-    clickOnCreateButton() {
-        BrowserActions.click(this.createButton);
-        return this;
+    async clickOnCreateButton(): Promise<void> {
+        await BrowserActions.click(this.createButton);
     }
 
-    formFields() {
+    formFields(): FormFields {
         return new FormFields();
     }
 
-    taskDetails() {
+    taskDetails(): TaskDetailsPage {
         return new TaskDetailsPage();
     }
 
-    filtersPage() {
+    filtersPage(): FiltersPage {
         return new FiltersPage();
     }
 
-    tasksListPage() {
+    tasksListPage(): TasksListPage {
         return new TasksListPage();
     }
 
-    usingCheckListDialog() {
+    usingCheckListDialog(): ChecklistDialog {
         return new ChecklistDialog();
     }
 
-    clickOnAddChecklistButton() {
-        BrowserActions.click(this.addChecklistButton);
+    async clickOnAddChecklistButton(): Promise<ChecklistDialog> {
+        await BrowserActions.click(this.addChecklistButton);
         return new ChecklistDialog();
     }
 
     getRowsName(name) {
-        const row = element(this.checklistContainer).element(by.cssContainingText('span', name));
-        BrowserVisibility.waitUntilElementIsVisible(row);
+        const row: ElementFinder = element(this.checklistContainer).element(by.cssContainingText('span', name));
         return row;
     }
 
     getChecklistByName(checklist) {
-        const row = this.getRowsName(checklist).element(this.rowByRowName);
-        BrowserVisibility.waitUntilElementIsVisible(row);
+        const elem = this.getRowsName(checklist);
+        const row = elem.element(this.rowByRowName);
         return row;
     }
 
-    checkChecklistIsDisplayed(checklist) {
-        BrowserVisibility.waitUntilElementIsVisible(this.getChecklistByName(checklist));
-        return this;
+    async checkChecklistIsDisplayed(checklist): Promise<void> {
+        const checklistEle = this.getChecklistByName(checklist);
+        await BrowserVisibility.waitUntilElementIsVisible(checklistEle);
     }
 
-    checkChecklistIsNotDisplayed(checklist) {
-        BrowserVisibility.waitUntilElementIsNotOnPage(element(this.checklistContainer).element(by.cssContainingText('span', checklist)));
-        return this;
+    async checkChecklistIsNotDisplayed(checklist): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(this.checklistContainer).element(by.cssContainingText('span', checklist)));
     }
 
-    checkTaskTitle(taskName) {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css(this.taskTitle)));
-        const title = element(by.cssContainingText(this.taskTitle, taskName));
-        BrowserVisibility.waitUntilElementIsVisible(title);
-        return this;
+    async checkTaskTitle(taskName): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(this.taskTitle)));
+        const title: ElementFinder = element(by.cssContainingText(this.taskTitle, taskName));
+        await BrowserVisibility.waitUntilElementIsVisible(title);
     }
 
-    completeTaskNoForm() {
-        BrowserActions.click(this.completeButtonNoForm);
+    async completeTaskNoForm(): Promise<void> {
+        await BrowserActions.click(this.completeButtonNoForm);
     }
 
-    completeTaskNoFormNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.completeButtonNoForm);
-        return this;
+    async completeTaskNoFormNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.completeButtonNoForm);
     }
 
-    checkChecklistDialogIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.checklistDialog);
-        return this;
+    async checkChecklistDialogIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.checklistDialog);
     }
 
-    checkChecklistDialogIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.checklistDialog);
-        return this;
+    async checkChecklistDialogIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.checklistDialog);
     }
 
-    checkNoChecklistIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.checklistNoMessage);
-        return this;
+    async checkNoChecklistIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.checklistNoMessage);
     }
 
-    getNumberOfChecklists() {
+    getNumberOfChecklists(): Promise<string> {
         return BrowserActions.getText(this.numberOfChecklists);
     }
 
-    removeChecklists(checklist) {
-        const row = this.getRowsName(checklist).element(this.rowByRowName);
-        BrowserVisibility.waitUntilElementIsVisible(row.element(by.css('mat-icon')));
-        row.element(by.css('mat-icon')).click();
-        return this;
+    async removeChecklists(checklist): Promise<void> {
+        const elem = this.getRowsName(checklist);
+        const row = elem.element(this.rowByRowName);
+        await BrowserActions.click(row.element(by.css('mat-icon')));
     }
 
-    checkChecklistsRemoveButtonIsNotDisplayed(checklist) {
-        const row = this.getRowsName(checklist).element(this.rowByRowName);
-        BrowserVisibility.waitUntilElementIsNotOnPage(row.element(by.css('mat-icon')));
-        return this;
+    async checkChecklistsRemoveButtonIsNotDisplayed(checklist): Promise<void> {
+        const elem = this.getRowsName(checklist);
+        const row = elem.element(this.rowByRowName);
+        await BrowserVisibility.waitUntilElementIsNotVisible(row.element(by.css('mat-icon')));
     }
 
-    clickSortByNameAsc() {
-        return this.tasksListPage().getDataTable().sortByColumn('ASC', 'name');
+    async clickSortByNameAsc(): Promise<any> {
+        return await this.tasksListPage().getDataTable().sortByColumn('ASC', 'name');
     }
 
-    clickSortByNameDesc() {
-        return this.tasksListPage().getDataTable().sortByColumn('DESC', 'name');
+    async clickSortByNameDesc(): Promise<any> {
+        return await this.tasksListPage().getDataTable().sortByColumn('DESC', 'name');
     }
 
 }

@@ -36,7 +36,7 @@ describe('Date and time widget', () => {
     const app = resources.Files.WIDGET_CHECK_APP.DATETIME;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -57,48 +57,54 @@ describe('Date and time widget', () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
     });
 
-    it('[C268818] Should be able to set general settings for Date Time widget', () => {
-        expect(widget.dateTimeWidget().getDateTimeLabel(app.FIELD.date_time_input)).toContain('Date');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+    it('[C268818] Should be able to set general settings for Date Time widget', async () => {
+        await expect(await widget.dateTimeWidget().getDateTimeLabel(app.FIELD.date_time_input)).toContain('Date');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_input);
-        widget.dateTimeWidget().selectDay('10');
-        widget.dateTimeWidget().selectHour('8');
-        widget.dateTimeWidget().selectMinute('30');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_input);
+        await widget.dateTimeWidget().selectDay('10');
+        await widget.dateTimeWidget().selectHour('8');
+        await widget.dateTimeWidget().selectMinute('30');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
 
-        expect(widget.dateTimeWidget().getPlaceholder(app.FIELD.date_time_between_input)).toBe('Choose anything...');
+        await expect(await widget.dateTimeWidget().getPlaceholder(app.FIELD.date_time_between_input)).toBe('Choose anything...');
     });
 
-    it('[C268819] Should be able to set advanced settings for Date Time widget ', () => {
-        widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
-        widget.dateTimeWidget().closeDataTimeWidget();
-        widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-17 07:30 PM');
-        taskPage.formFields().saveForm();
-        expect(widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be less than');
+    it('[C268819] Should be able to set advanced settings for Date Time widget ', async () => {
+        await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
+        await widget.dateTimeWidget().closeDataTimeWidget();
 
-        widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
-        widget.dateTimeWidget().closeDataTimeWidget();
-        widget.dateTimeWidget().removeFromDatetimeWidget(app.FIELD.date_time_between_input);
-        widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-19 07:30 PM');
-        taskPage.formFields().saveForm();
-        expect(widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be greater than');
+        await widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-17 07:30 PM');
+        await taskPage.formFields().saveForm();
+        await expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be less than');
+
+        await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
+        await widget.dateTimeWidget().closeDataTimeWidget();
+        await widget.dateTimeWidget().removeFromDatetimeWidget(app.FIELD.date_time_between_input);
+
+        await browser.refresh();
+
+        await widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-19 07:30 PM');
+        await widget.dateTimeWidget().closeDataTimeWidget();
+
+        await taskPage.formFields().saveForm();
+
+        await expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be greater than');
     });
 });

@@ -15,59 +15,57 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder, ElementArrayFinder } from 'protractor';
 
 import { TabsPage } from '@alfresco/adf-testing';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class CommentsPage {
 
-    tabsPage = new TabsPage();
-    numberOfComments = element(by.id('comment-header'));
-    commentUserIcon = element.all(by.id('comment-user-icon'));
-    commentUserName = element.all(by.id('comment-user'));
-    commentMessage = element.all(by.id('comment-message'));
-    commentTime = element.all(by.id('comment-time'));
-    commentInput = element(by.id('comment-input'));
-    addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
+    tabsPage: TabsPage = new TabsPage();
+    numberOfComments: ElementFinder = element(by.id('comment-header'));
+    commentUserIcon: ElementArrayFinder = element.all(by.id('comment-user-icon'));
+    commentUserName: ElementArrayFinder = element.all(by.id('comment-user'));
+    commentMessage: ElementArrayFinder = element.all(by.id('comment-message'));
+    commentTime: ElementArrayFinder = element.all(by.id('comment-time'));
+    commentInput: ElementFinder = element(by.id('comment-input'));
+    addCommentButton: ElementFinder = element(by.css("[data-automation-id='comments-input-add']"));
 
-    getTotalNumberOfComments() {
+    async getTotalNumberOfComments(): Promise<string> {
         return BrowserActions.getText(this.numberOfComments);
     }
 
-    checkUserIconIsDisplayed(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentUserIcon.first());
-        return this.commentUserIcon.get(position);
+    async checkUserIconIsDisplayed(position): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.commentUserIcon.first());
     }
 
-    getUserName(position) {
+    getUserName(position): Promise<string> {
         return BrowserActions.getText(this.commentUserName.get(position));
     }
 
-    getMessage(position) {
+    getMessage(position): Promise<string> {
         return BrowserActions.getText(this.commentMessage.get(position));
 
     }
 
-    getTime(position) {
+    getTime(position): Promise<string> {
         return BrowserActions.getText(this.commentTime.get(position));
     }
 
-    checkCommentInputIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.commentInput);
+    async checkCommentInputIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.commentInput);
     }
 
-    addComment(comment) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
-        this.commentInput.sendKeys(comment);
-        BrowserActions.click(this.addCommentButton);
+    async addComment(comment): Promise<void> {
+        await BrowserActions.clearSendKeys(this.commentInput, comment);
+        await BrowserActions.click(this.addCommentButton);
     }
 
-    checkCommentsTabIsSelected() {
-        this.tabsPage.checkTabIsSelectedByTitle('Comments');
+    async checkCommentsTabIsSelected(): Promise<void> {
+        await this.tabsPage.checkTabIsSelectedByTitle('Comments');
     }
 
-    checkCommentInputIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
+    async checkCommentInputIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
     }
 }

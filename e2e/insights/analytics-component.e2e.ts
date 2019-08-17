@@ -36,7 +36,7 @@ describe('Analytics Smoke Test', () => {
     let tenantId;
     const reportTitle = 'New Title';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -53,22 +53,21 @@ describe('Analytics Smoke Test', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(procUserModel);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-        done();
+
     });
 
-    it('[C260346] Should be able to change title of a report', () => {
-        navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
-        processServicesPage.goToApp('Task App');
-        processServiceTabBarPage.clickReportsButton();
-        analyticsPage.checkNoReportMessage();
-        analyticsPage.getReport('Process definition heat map');
-        analyticsPage.changeReportTitle(reportTitle);
-        expect(analyticsPage.getReportTitle()).toEqual(reportTitle);
+    it('[C260346] Should be able to change title of a report', async () => {
+        await navigationBarPage.navigateToProcessServicesPage();
+        await processServicesPage.checkApsContainer();
+        await processServicesPage.goToApp('Task App');
+        await processServiceTabBarPage.clickReportsButton();
+        await analyticsPage.checkNoReportMessage();
+        await analyticsPage.getReport('Process definition heat map');
+        await analyticsPage.changeReportTitle(reportTitle);
+        await expect(await analyticsPage.getReportTitle()).toEqual(reportTitle);
     });
 });

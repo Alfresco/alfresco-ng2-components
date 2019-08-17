@@ -15,41 +15,39 @@
  * limitations under the License.
  */
 
-import { by } from 'protractor';
+import { by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TaskFiltersPage {
 
     filter;
-    taskIcon = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
+    taskIcon: Locator = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
 
-    constructor(filter) {
+    constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 
-    checkTaskFilterIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        return this;
+    async checkTaskFilterIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
-    getTaskFilterIcon() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+    async getTaskFilterIcon(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.taskIcon);
         return BrowserActions.getText(icon);
     }
 
-    checkTaskFilterHasNoIcon() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.taskIcon));
+    async checkTaskFilterHasNoIcon(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.taskIcon));
     }
 
-    clickTaskFilter() {
+    async clickTaskFilter(): Promise<void> {
         return BrowserActions.click(this.filter);
     }
 
-    checkTaskFilterNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
-        return this.filter;
+    async checkTaskFilterNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
     }
 
 }

@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Util } from '../util/util';
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
-import { LoginPage, StartProcessDialog, Widget } from '@alfresco/adf-testing';
+import { LoginPage, StartProcessDialog, Widget, FileBrowserUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
@@ -36,7 +35,6 @@ import { FileModel } from '../models/ACS/fileModel';
 import dateFormat = require('dateformat');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import path = require('path');
 import { StringUtil } from '@alfresco/adf-testing';
 
 describe('Start Process Component', () => {
@@ -61,14 +59,14 @@ describe('Start Process Component', () => {
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
 
-    const auditLogFile = path.join('../e2e/download/', 'Audit.pdf');
+    const auditLogFile = 'Audit.pdf';
 
     const jpgFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -99,37 +97,29 @@ describe('Start Process Component', () => {
         dateFormAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, dateFormApp.file_location);
 
         appId = appCreated.id;
-
-        done();
-
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(appId);
-
         await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(simpleAppCreated.id);
-
         await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(dateFormAppCreated.id);
-
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
-        done();
     });
 
     describe(' Once logged with user without apps', () => {
 
         beforeEach(async () => {
             await loginPage.loginToProcessServicesUsingUserModel(procUserModel);
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
+            await navigationBarPage.navigateToProcessServicesPage();
+            await processServicesPage.checkApsContainer();
         });
 
-        it('[C260458] Should NOT be able to start a process without process model', () => {
-            processServicesPage.goToApp('Task App');
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.checkNoProcessMessage();
+        it('[C260458] Should NOT be able to start a process without process model', async () => {
+            await processServicesPage.goToApp('Task App');
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.checkNoProcessMessage();
         });
     });
 
@@ -140,338 +130,339 @@ describe('Start Process Component', () => {
         });
 
         beforeEach(async () => {
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
+            await navigationBarPage.navigateToProcessServicesPage();
+            await processServicesPage.checkApsContainer();
         });
 
-        it('[C260441] Should display start process form and default name when creating a new process', () => {
-            processServicesPage.goToApp('Task App');
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            expect(startProcessPage.getDefaultName()).toEqual('My Default Name');
+        it('[C260441] Should display start process form and default name when creating a new process', async () => {
+            await processServicesPage.goToApp('Task App');
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await expect(await startProcessPage.getDefaultName()).toEqual('My Default Name');
         });
 
-        it('[C260445] Should require process definition and be possible to click cancel button', () => {
-            processServicesPage.goToApp('Task App');
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.enterProcessName('');
-            browser.actions().sendKeys('v\b\b').perform(); // clear doesn't trigger the validator
-            startProcessPage.checkStartProcessButtonIsDisabled();
-            startProcessPage.clickCancelProcessButton();
-            processFiltersPage.checkNoContentMessage();
+        it('[C260445] Should require process definition and be possible to click cancel button', async () => {
+            await processServicesPage.goToApp('Task App');
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.enterProcessName('');
+            await browser.actions().sendKeys('v\b\b').perform(); // clear doesn't trigger the validator
+            await startProcessPage.checkStartProcessButtonIsDisabled();
+            await startProcessPage.clickCancelProcessButton();
+            await processFiltersPage.checkNoContentMessage();
         });
 
-        it('[C260444] Should require process name', () => {
-            processServicesPage.goToApp(app.title);
+        it('[C260444] Should require process name', async () => {
+            await processServicesPage.goToApp(app.title);
 
-            processServiceTabBarPage.clickProcessButton();
+            await processServiceTabBarPage.clickProcessButton();
 
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
 
-            startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
-            startProcessPage.deleteDefaultName('My Default Name');
-            startProcessPage.checkStartProcessButtonIsDisabled();
-            startProcessPage.clickProcessDropdownArrow();
-            startProcessPage.checkOptionIsDisplayed(processModelWithSe);
-            startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
+            await startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
+            await startProcessPage.deleteDefaultName('My Default Name');
+
+            await browser.sleep(1000);
+
+            await startProcessPage.checkStartProcessButtonIsDisabled();
+            await startProcessPage.clickProcessDropdownArrow();
+            await startProcessPage.checkOptionIsDisplayed(processModelWithSe);
+            await startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
         });
 
-        it('[C260443] Should be possible to start a process without start event', () => {
-            processServicesPage.goToApp(app.title);
+        it('[C260443] Should be possible to start a process without start event', async () => {
+            await processServicesPage.goToApp(app.title);
 
-            processServiceTabBarPage.clickProcessButton();
+            await processServiceTabBarPage.clickProcessButton();
 
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
 
-            expect(startProcessPage.checkSelectProcessPlaceholderIsDisplayed()).toBe('');
+            await expect(await startProcessPage.checkSelectProcessPlaceholderIsDisplayed()).toBe('');
 
-            startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
+            await startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
 
-            expect(startProcessPage.getDefaultName()).toEqual('My Default Name');
+            await expect(await startProcessPage.getDefaultName()).toEqual('My Default Name');
 
-            startProcessPage.checkStartProcessButtonIsEnabled();
+            await startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
-        it('[C260449] Should be possible to start a process with start event', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.enterProcessName('Test');
-            startProcessPage.selectFromProcessDropdown(processModelWithSe);
-            startProcessPage.clickFormStartProcessButton();
-            processDetailsPage.checkDetailsAreDisplayed();
-            browser.controlFlow().execute(async () => {
-                const processId = await processDetailsPage.getId();
-                await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processId).then(function (response) {
-                    expect(processDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
-                    expect(processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
-                    expect(processDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESS_CATEGORY);
-                    expect(processDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_BUSINESS_KEY);
-                    expect(processDetailsPage.getCreatedBy()).toEqual(`${response.startedBy.firstName} ${response.startedBy.lastName}`);
-                    expect(processDetailsPage.getCreated()).toEqual(dateFormat(CONSTANTS.PROCESS_DATE_FORMAT));
-                    expect(processDetailsPage.getId()).toEqual(response.id);
-                    expect(processDetailsPage.getProcessDescription()).toEqual(CONSTANTS.PROCESS_DESCRIPTION);
-                    expect(processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.name);
-                });
-            });
+        it('[C260449] Should be possible to start a process with start event', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.enterProcessName('Test');
+            await startProcessPage.selectFromProcessDropdown(processModelWithSe);
+            await startProcessPage.clickFormStartProcessButton();
+            await processDetailsPage.checkDetailsAreDisplayed();
+            const processId = await processDetailsPage.getId();
+            const response = await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processId);
+
+            await expect(await processDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
+            await expect(await processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
+            await expect(await processDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESS_CATEGORY);
+            await expect(await processDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_BUSINESS_KEY);
+            await expect(await processDetailsPage.getCreatedBy()).toEqual(`${response.startedBy.firstName} ${response.startedBy.lastName}`);
+            await expect(await processDetailsPage.getCreated()).toEqual(dateFormat(CONSTANTS.PROCESS_DATE_FORMAT));
+            await expect(await processDetailsPage.getId()).toEqual(response.id);
+            await expect(await processDetailsPage.getProcessDescription()).toEqual(CONSTANTS.PROCESS_DESCRIPTION);
+            await expect(await processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.name);
         });
 
-        it('[C286503] Should NOT display any process definition when typing a non-existent one', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.typeProcessDefinition('nonexistent');
-            startProcessPage.checkNoProcessDefinitionOptionIsDisplayed();
-            startProcessPage.checkStartProcessButtonIsDisabled();
+        it('[C286503] Should NOT display any process definition when typing a non-existent one', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.typeProcessDefinition('nonexistent');
+            await startProcessPage.checkNoProcessDefinitionOptionIsDisplayed();
+            await startProcessPage.checkStartProcessButtonIsDisabled();
         });
 
-        it('[C286504] Should display proper options when typing a part of existent process definitions', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.typeProcessDefinition('process');
-            startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
-            startProcessPage.checkOptionIsDisplayed(processModelWithSe);
-            startProcessPage.selectOption(processModelWithoutSe);
-            startProcessPage.checkStartProcessButtonIsEnabled();
+        it('[C286504] Should display proper options when typing a part of existent process definitions', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.typeProcessDefinition('process');
+            await startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
+            await startProcessPage.checkOptionIsDisplayed(processModelWithSe);
+            await startProcessPage.selectOption(processModelWithoutSe);
+            await startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
-        it('[C286508] Should display only one option when typing an existent process definition', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.typeProcessDefinition(processModelWithoutSe);
-            startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
-            startProcessPage.checkOptionIsNotDisplayed(processModelWithSe);
-            startProcessPage.selectOption(processModelWithoutSe);
-            startProcessPage.checkStartProcessButtonIsEnabled();
+        it('[C286508] Should display only one option when typing an existent process definition', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.typeProcessDefinition(processModelWithoutSe);
+            await startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
+            await startProcessPage.checkOptionIsNotDisplayed(processModelWithSe);
+            await startProcessPage.selectOption(processModelWithoutSe);
+            await startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
-        it('[C286509] Should select automatically the processDefinition when the app contains only one', () => {
-            processServicesPage.goToApp(simpleApp.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            expect(startProcessPage.getProcessDefinitionValue()).toBe(simpleApp.title);
-            startProcessPage.checkStartProcessButtonIsEnabled();
+        it('[C286509] Should select automatically the processDefinition when the app contains only one', async () => {
+            await processServicesPage.goToApp(simpleApp.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await expect(await startProcessPage.getProcessDefinitionValue()).toBe(simpleApp.title);
+            await startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
-        it('[C286511] Should be able to type the process definition and start a process', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.enterProcessName('Type');
-            startProcessPage.typeProcessDefinition(processModelWithoutSe);
-            startProcessPage.selectOption(processModelWithoutSe);
-            startProcessPage.checkStartProcessButtonIsEnabled();
-            expect(startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
-            startProcessPage.clickStartProcessButton();
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.selectFromProcessList('Type');
+        it('[C286511] Should be able to type the process definition and start a process', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.enterProcessName('Type');
+            await startProcessPage.typeProcessDefinition(processModelWithoutSe);
+            await startProcessPage.selectOption(processModelWithoutSe);
+            await startProcessPage.checkStartProcessButtonIsEnabled();
+            await expect(await startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
+            await startProcessPage.clickStartProcessButton();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.selectFromProcessList('Type');
         });
 
-        it('[C286513] Should be able to use down arrow key when navigating throw suggestions', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.typeProcessDefinition('process');
+        it('[C286513] Should be able to use down arrow key when navigating throw suggestions', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.typeProcessDefinition('process');
 
-            startProcessPage.pressDownArrowAndEnter();
-            expect(startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
+            await startProcessPage.pressDownArrowAndEnter();
+            await expect(await startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
         });
 
-        it('[C286514] Should the process definition input be cleared when clicking on options drop down ', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.typeProcessDefinition('process');
-            startProcessPage.selectOption(processModelWithoutSe);
-            expect(startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
-            startProcessPage.clickProcessDropdownArrow();
+        it('[C286514] Should the process definition input be cleared when clicking on options drop down ', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.typeProcessDefinition('process');
+            await startProcessPage.selectOption(processModelWithoutSe);
+            await expect(await startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
+            await startProcessPage.clickProcessDropdownArrow();
 
-            expect(startProcessPage.getProcessDefinitionValue()).toBe('');
+            await expect(await startProcessPage.getProcessDefinitionValue()).toBe('');
         });
 
-        it('[C260453] Should be possible to add a comment on an active process', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.enterProcessName('Comment Process');
-            startProcessPage.selectFromProcessDropdown(processModelWithSe);
-            startProcessPage.clickFormStartProcessButton();
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.selectFromProcessList('Comment Process');
-            processDetailsPage.addComment('comment1');
-            processDetailsPage.checkCommentIsDisplayed('comment1');
+        it('[C260453] Should be possible to add a comment on an active process', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.enterProcessName('Comment Process');
+            await startProcessPage.selectFromProcessDropdown(processModelWithSe);
+            await startProcessPage.clickFormStartProcessButton();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.selectFromProcessList('Comment Process');
+            await processDetailsPage.addComment('comment1');
+            await processDetailsPage.checkCommentIsDisplayed('comment1');
         });
 
-        it('[C260454] Should be possible to download audit log file', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.enterProcessName('Audit Log');
-            startProcessPage.selectFromProcessDropdown(processModelWithSe);
-            startProcessPage.clickFormStartProcessButton();
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.selectFromProcessList('Audit Log');
-            processDetailsPage.clickAuditLogButton();
+        it('[C260454] Should be possible to download audit log file', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.enterProcessName('Audit Log');
+            await startProcessPage.selectFromProcessDropdown(processModelWithSe);
+            await startProcessPage.clickFormStartProcessButton();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.selectFromProcessList('Audit Log');
+            await processDetailsPage.clickAuditLogButton();
 
-            expect(Util.fileExists(auditLogFile, 15)).toBe(true);
+            await expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
         });
 
-        it('Should be able to attach a file using the button', () => {
-            processServicesPage.goToApp(app.title);
+        it('Should be able to attach a file using the button', async () => {
+            await processServicesPage.goToApp(app.title);
 
-            processServiceTabBarPage.clickProcessButton();
+            await processServiceTabBarPage.clickProcessButton();
 
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
 
-            startProcessPage.enterProcessName('Attach File');
-            startProcessPage.selectFromProcessDropdown(processModelWithSe);
-            startProcessPage.clickFormStartProcessButton();
+            await startProcessPage.enterProcessName('Attach File');
+            await startProcessPage.selectFromProcessDropdown(processModelWithSe);
+            await startProcessPage.clickFormStartProcessButton();
 
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.selectFromProcessList('Attach File');
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.selectFromProcessList('Attach File');
 
-            attachmentListPage.clickAttachFileButton(jpgFile.location);
-            attachmentListPage.checkFileIsAttached(jpgFile.name);
+            await attachmentListPage.clickAttachFileButton(jpgFile.location);
+            await attachmentListPage.checkFileIsAttached(jpgFile.name);
         });
 
-        it('[C260451] Should be possible to display process diagram', () => {
-            processServicesPage.goToApp(app.title);
+        it('[C260451] Should be possible to display process diagram', async () => {
+            await processServicesPage.goToApp(app.title);
 
-            processServiceTabBarPage.clickProcessButton();
+            await processServiceTabBarPage.clickProcessButton();
 
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
 
-            startProcessPage.enterProcessName('Show Diagram');
-            startProcessPage.selectFromProcessDropdown(processModelWithSe);
-            startProcessPage.clickFormStartProcessButton();
+            await startProcessPage.enterProcessName('Show Diagram');
+            await startProcessPage.selectFromProcessDropdown(processModelWithSe);
+            await startProcessPage.clickFormStartProcessButton();
 
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.selectFromProcessList('Show Diagram');
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.selectFromProcessList('Show Diagram');
 
-            processDetailsPage.clickShowDiagram();
+            await processDetailsPage.clickShowDiagram();
         });
 
-        it('[C260452] Should redirect user when clicking on active/completed task', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.enterProcessName('Active Task');
-            startProcessPage.selectFromProcessDropdown(processModelWithSe);
-            startProcessPage.clickFormStartProcessButton();
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.selectFromProcessList('Active Task');
-            processDetailsPage.clickOnActiveTask();
-            processDetailsPage.checkActiveTaskTitleIsDisplayed();
+        it('[C260452] Should redirect user when clicking on active/completed task', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.enterProcessName('Active Task');
+            await startProcessPage.selectFromProcessDropdown(processModelWithSe);
+            await startProcessPage.clickFormStartProcessButton();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.selectFromProcessList('Active Task');
+            await processDetailsPage.clickOnActiveTask();
+            await processDetailsPage.checkActiveTaskTitleIsDisplayed();
         });
 
         it('[C260457] Should display process in Completed when cancelled', async () => {
             await loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.enterProcessName('Cancel Process');
-            startProcessPage.selectFromProcessDropdown(processModelWithSe);
-            startProcessPage.clickFormStartProcessButton();
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.selectFromProcessList('Cancel Process');
-            processDetailsPage.clickCancelProcessButton();
-            processFiltersPage.clickCompletedFilterButton();
-            processFiltersPage.selectFromProcessList('Cancel Process');
-            processDetailsPage.checkShowDiagramIsDisabled();
+            await navigationBarPage.navigateToProcessServicesPage();
+            await processServicesPage.checkApsContainer();
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.enterProcessName('Cancel Process');
+            await startProcessPage.selectFromProcessDropdown(processModelWithSe);
+            await startProcessPage.clickFormStartProcessButton();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.selectFromProcessList('Cancel Process');
+            await processDetailsPage.clickCancelProcessButton();
+            await processFiltersPage.clickCompletedFilterButton();
+            await processFiltersPage.selectFromProcessList('Cancel Process');
+            await processDetailsPage.checkShowDiagramIsDisabled();
         });
 
-        it('[C260461] Should be possible to add a comment on a completed/canceled process', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.enterProcessName('Comment Process 2');
-            startProcessPage.selectFromProcessDropdown(processModelWithSe);
-            startProcessPage.clickFormStartProcessButton();
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.selectFromProcessList('Comment Process 2');
-            processDetailsPage.clickCancelProcessButton();
-            processFiltersPage.clickCompletedFilterButton();
-            processFiltersPage.selectFromProcessList('Comment Process 2');
-            processDetailsPage.addComment('goodbye');
-            processDetailsPage.checkCommentIsDisplayed('goodbye');
+        it('[C260461] Should be possible to add a comment on a completed/canceled process', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.enterProcessName('Comment Process 2');
+            await startProcessPage.selectFromProcessDropdown(processModelWithSe);
+            await startProcessPage.clickFormStartProcessButton();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.selectFromProcessList('Comment Process 2');
+            await processDetailsPage.clickCancelProcessButton();
+            await processFiltersPage.clickCompletedFilterButton();
+            await processFiltersPage.selectFromProcessList('Comment Process 2');
+            await processDetailsPage.addComment('goodbye');
+            await processDetailsPage.checkCommentIsDisplayed('goodbye');
         });
 
-        it('[C260467] Should NOT be possible to attach a file on a completed process', () => {
-            processServicesPage.goToApp(app.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.enterProcessName('File');
-            startProcessPage.selectFromProcessDropdown(processModelWithSe);
-            startProcessPage.clickFormStartProcessButton();
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.selectFromProcessList('File');
-            processDetailsPage.clickCancelProcessButton();
-            processFiltersPage.clickCompletedFilterButton();
-            processFiltersPage.selectFromProcessList('File');
-            attachmentListPage.checkAttachFileButtonIsNotDisplayed();
+        it('[C260467] Should NOT be possible to attach a file on a completed process', async () => {
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.enterProcessName('File');
+            await startProcessPage.selectFromProcessDropdown(processModelWithSe);
+            await startProcessPage.clickFormStartProcessButton();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.selectFromProcessList('File');
+            await processDetailsPage.clickCancelProcessButton();
+            await processFiltersPage.clickCompletedFilterButton();
+            await processFiltersPage.selectFromProcessList('File');
+            await attachmentListPage.checkAttachFileButtonIsNotDisplayed();
         });
 
-        it('[C291781] Should be displayed an error message if process name exceed 255 characters', () => {
-            processServicesPage.goToApp(app.title);
+        it('[C291781] Should be displayed an error message if process name exceed 255 characters', async () => {
+            await processServicesPage.goToApp(app.title);
 
-            processServiceTabBarPage.clickProcessButton();
+            await processServiceTabBarPage.clickProcessButton();
 
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
 
-            startProcessPage.enterProcessName(processName255Characters);
-            startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
-            startProcessPage.checkStartProcessButtonIsEnabled();
+            await startProcessPage.enterProcessName(processName255Characters);
+            await startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
+            await startProcessPage.checkStartProcessButtonIsEnabled();
 
-            startProcessPage.enterProcessName(processNameBiggerThen255Characters);
-            startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
-            startProcessPage.checkStartProcessButtonIsDisabled();
+            await startProcessPage.enterProcessName(processNameBiggerThen255Characters);
+            await startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
+            await startProcessPage.checkStartProcessButtonIsDisabled();
         });
 
-        it('[C261039] Advanced date time widget', () => {
-            processServicesPage.goToApp(dateFormApp.title);
-            processServiceTabBarPage.clickProcessButton();
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-            startProcessPage.enterProcessName('DateFormProcess');
-            startProcessPage.formFields().checkWidgetIsVisible('testdate');
-            widget.dateWidget().setDateInput('testdate', '15-7-2019');
-            startProcessPage.checkStartFormProcessButtonIsEnabled();
-            startProcessPage.clickFormStartProcessButton();
+        it('[C261039] Advanced date time widget', async () => {
+            await processServicesPage.goToApp(dateFormApp.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.enterProcessName('DateFormProcess');
+            await startProcessPage.formFields().checkWidgetIsVisible('testdate');
+            await widget.dateWidget().setDateInput('testdate', '15-7-2019');
+            await startProcessPage.checkStartFormProcessButtonIsEnabled();
+            await startProcessPage.clickFormStartProcessButton();
 
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.selectFromProcessList('DateFormProcess');
-            processDetailsPage.clickOnStartForm();
-            startProcessDialog.checkStartProcessDialogIsDisplayed();
-            expect(startProcessDialog.getTitle()).toBe('Start Form');
-            expect(widget.dateWidget().getDateInput('testdate')).toBe('15-7-2019');
-            startProcessDialog.clickCloseButton();
-            startProcessDialog.checkStartProcessDialogIsNotDisplayed();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.selectFromProcessList('DateFormProcess');
+            await processDetailsPage.clickOnStartForm();
+            await startProcessDialog.checkStartProcessDialogIsDisplayed();
+            await expect(await startProcessDialog.getTitle()).toBe('Start Form');
+            await expect(await (await widget.dateWidget()).getDateInput('testdate')).toBe('15-7-2019');
+            await startProcessDialog.clickCloseButton();
+            await startProcessDialog.checkStartProcessDialogIsNotDisplayed();
         });
     });
 });

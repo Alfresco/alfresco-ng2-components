@@ -46,7 +46,7 @@ describe('Task list cloud - selection', () => {
         let response, testUser, groupInfo;
         const tasks = [];
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
@@ -69,118 +69,130 @@ describe('Task list cloud - selection', () => {
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            done();
+
         });
 
-        afterAll(async(done) => {
+        afterAll(async() => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-            done();
+
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
-            appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(simpleApp);
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
-            tasksCloudDemoPage.clickAppButton();
+        beforeEach(async () => {
+            await navigationBarPage.navigateToProcessServicesCloudPage();
+            await appListCloudComponent.checkApsContainer();
+            await appListCloudComponent.goToApp(simpleApp);
+            await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.disableDisplayTaskDetails();
+            await tasksCloudDemoPage.clickAppButton();
         });
 
-        it('[C291914] Should not be able to select any row when selection mode is set to None', () => {
-            tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('None');
-            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
-            tasksCloudDemoPage.clickAppButton();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        it('[C291914] Should not be able to select any row when selection mode is set to None', async () => {
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.selectSelectionMode('None');
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.disableDisplayTaskDetails();
+            await tasksCloudDemoPage.clickAppButton();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkNoRowIsSelected();
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkNoRowIsSelected();
         });
 
-        it('[C291918] Should be able to select only one row when selection mode is set to Single', () => {
-            tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Single');
-            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
-            tasksCloudDemoPage.clickAppButton();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        it('[C291918] Should be able to select only one row when selection mode is set to Single', async () => {
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.selectSelectionMode('Single');
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.disableDisplayTaskDetails();
+            await tasksCloudDemoPage.clickAppButton();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[0]);
-            expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[0]);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[1]);
-            expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[1]);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
         });
 
-        it('[C291919] Should be able to select only one row when selection mode is set to Multiple', () => {
-            tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Multiple');
-            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
-            tasksCloudDemoPage.clickAppButton();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        it('[C291919] Should be able to select only one row when selection mode is set to Multiple', async () => {
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.selectSelectionMode('Multiple');
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.disableDisplayTaskDetails();
+            await tasksCloudDemoPage.clickAppButton();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[0]);
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().selectRowWithKeyboard(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsNotSelected(tasks[2]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRowWithKeyboard(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsNotSelected(tasks[2]);
         });
 
-        it('[C291916] Should be able to select multiple row when multiselect is true', () => {
-            tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
-            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
-            tasksCloudDemoPage.clickAppButton();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        it('[C291916] Should be able to select multiple row when multiselect is true', async () => {
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.enableMultiSelection();
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.disableDisplayTaskDetails();
+            await tasksCloudDemoPage.clickAppButton();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[1]);
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[2]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsNotChecked(tasks[2]);
-            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsNotChecked(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[2]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsNotChecked(tasks[2]);
+            await tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsNotChecked(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
         });
 
-        it('[C291915] Should be possible select all the rows when multiselect is true', () => {
-            tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
-            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
-            tasksCloudDemoPage.clickAppButton();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        it('[C291915] Should be possible select all the rows when multiselect is true', async () => {
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.enableMultiSelection();
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.disableDisplayTaskDetails();
+            await tasksCloudDemoPage.clickAppButton();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable()
-                .checkAllRowsButtonIsDisplayed()
-                .checkAllRows();
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[2]);
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkAllRows();
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[2]);
         });
 
-        it('[C297472] Should be able to see selected tasks with Multiselection and Testing switched on', () => {
-            tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
-            tasksCloudDemoPage.clickSettingsButton().enableTestingMode();
-            tasksCloudDemoPage.clickAppButton();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        it('[C297472] Should be able to see selected tasks with Multiselection and Testing switched on', async () => {
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.enableMultiSelection();
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.enableTestingMode();
+            await tasksCloudDemoPage.clickAppButton();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[0]);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
+            await tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
 
-            expect(tasksCloudDemoPage.getNoOfSelectedRows()).toBe(2);
-            expect(tasksCloudDemoPage.getSelectedTaskRowText('1')).toBe(tasks[0]);
-            expect(tasksCloudDemoPage.getSelectedTaskRowText('2')).toBe(tasks[1]);
+            await expect(await tasksCloudDemoPage.getNoOfSelectedRows()).toBe(2);
+            await expect(await tasksCloudDemoPage.getSelectedTaskRowText('1')).toBe(tasks[0]);
+            await expect(await tasksCloudDemoPage.getSelectedTaskRowText('2')).toBe(tasks[1]);
         });
 
     });

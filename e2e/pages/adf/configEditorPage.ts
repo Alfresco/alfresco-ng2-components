@@ -15,35 +15,32 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { element, by, browser, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ConfigEditorPage {
 
-    textField = element(by.css('#adf-form-config-editor div.overflow-guard > textarea'));
+    textField: ElementFinder = element(by.css('#adf-form-config-editor div.overflow-guard > textarea'));
 
-    enterConfiguration(text) {
-
-        BrowserVisibility.waitUntilElementIsVisible(this.textField);
-        this.textField.sendKeys(text);
-        return this;
+    async enterConfiguration(text): Promise<void> {
+        await BrowserActions.clearSendKeys(this.textField, text);
     }
 
-    clickSaveButton() {
-        const saveButton = element(by.id('adf-form-config-save'));
-        BrowserActions.click(saveButton);
+    async clickSaveButton(): Promise<void> {
+        const saveButton: ElementFinder = element(by.id('adf-form-config-save'));
+        await BrowserActions.click(saveButton);
     }
 
-    clickClearButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.textField);
-        const clearButton = element(by.id('adf-form-config-clear'));
-        BrowserActions.click(clearButton);
+    async clickClearButton(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.textField);
+        const clearButton: ElementFinder = element(by.id('adf-form-config-clear'));
+        await BrowserActions.click(clearButton);
     }
 
-    enterBulkConfiguration(text) {
-        this.clickClearButton();
-        BrowserVisibility.waitUntilElementIsVisible(this.textField);
-        browser.executeScript('this.monaco.editor.getModels()[0].setValue(`' + JSON.stringify(text) + '`)');
-        this.clickSaveButton();
+    async enterBulkConfiguration(text): Promise<void> {
+        await this.clickClearButton();
+        await BrowserVisibility.waitUntilElementIsVisible(this.textField);
+        await browser.executeScript('this.monaco.editor.getModels()[0].setValue(`' + JSON.stringify(text) + '`)');
+        await this.clickSaveButton();
     }
 }

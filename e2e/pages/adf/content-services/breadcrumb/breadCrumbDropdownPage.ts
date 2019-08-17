@@ -15,32 +15,32 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class BreadCrumbDropdownPage {
 
-    breadCrumb = element(by.css(`adf-dropdown-breadcrumb[data-automation-id='content-node-selector-content-breadcrumb']`));
+    breadCrumb: ElementFinder = element(by.css(`adf-dropdown-breadcrumb[data-automation-id='content-node-selector-content-breadcrumb']`));
     parentFolder = this.breadCrumb.element(by.css(`button[data-automation-id='dropdown-breadcrumb-trigger']`));
-    breadCrumbDropdown = element(by.css(`div[class*='mat-select-panel']`));
+    breadCrumbDropdown: ElementFinder = element(by.css(`div[class*='mat-select-panel']`));
     currentFolder = this.breadCrumb.element(by.css(`div span[data-automation-id="current-folder"]`));
 
-    choosePath(pathName) {
+    async choosePath(pathName): Promise<void> {
         const path = this.breadCrumbDropdown.element(by.cssContainingText(`mat-option[data-automation-class='dropdown-breadcrumb-path-option'] span[class='mat-option-text']`,
             pathName));
-        BrowserActions.click(path);
+        await BrowserActions.click(path);
 
     }
 
-    clickParentFolder() {
-        BrowserActions.click(this.parentFolder);
+    async clickParentFolder(): Promise<void> {
+        await BrowserActions.click(this.parentFolder);
     }
 
-    checkBreadCrumbDropdownIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.breadCrumbDropdown);
+    async checkBreadCrumbDropdownIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.breadCrumbDropdown);
     }
 
-    getTextOfCurrentFolder() {
+    async getTextOfCurrentFolder(): Promise<string> {
         return BrowserActions.getText(this.currentFolder);
     }
 }

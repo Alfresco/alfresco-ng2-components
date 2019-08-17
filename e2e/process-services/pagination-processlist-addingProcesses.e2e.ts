@@ -48,7 +48,7 @@ describe('Process List - Pagination when adding processes', () => {
     const apps = new AppsActions();
     let resultApp;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -70,9 +70,8 @@ describe('Process List - Pagination when adding processes', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        await new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
+        await (await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
-        done();
     });
 
     it('[C261046] Should keep Items per page after adding processes', async () => {
@@ -81,34 +80,32 @@ describe('Process List - Pagination when adding processes', () => {
         totalPages = 2;
         page = 1;
 
-        paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
+        await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
+        await processDetailsPage.checkProcessTitleIsDisplayed();
+        await processFiltersPage.waitForTableBody();
 
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + (nrOfProcesses - 5));
-        expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
+        await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+        await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + (nrOfProcesses - 5));
+        await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
+        await paginationPage.checkNextPageButtonIsEnabled();
+        await paginationPage.checkPreviousPageButtonIsDisabled();
 
-        browser.controlFlow().execute(async () => {
-            for (i; i < nrOfProcesses; i++) {
-                await apps.startProcess(this.alfrescoJsApi, resultApp);
-            }
-        });
+        for (i; i < nrOfProcesses; i++) {
+            await apps.startProcess(this.alfrescoJsApi, resultApp);
+        }
 
         page++;
-        paginationPage.clickOnNextPage();
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
-        expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsEnabled();
+        await paginationPage.clickOnNextPage();
+        await processDetailsPage.checkProcessTitleIsDisplayed();
+        await processFiltersPage.waitForTableBody();
+        await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+        await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
+        await expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
+        await paginationPage.checkNextPageButtonIsDisabled();
+        await paginationPage.checkPreviousPageButtonIsEnabled();
     });
 });

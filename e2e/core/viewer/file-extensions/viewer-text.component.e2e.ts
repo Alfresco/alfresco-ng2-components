@@ -24,19 +24,16 @@ import resources = require('../../../util/resources');
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const navigationBarPage = new NavigationBarPage();
-
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
     const acsUser = new AcsUserModel();
@@ -46,7 +43,7 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -62,11 +59,6 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        done();
-    });
-
-    afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
     });
 
     describe('Text Folder Uploaded', () => {
@@ -74,32 +66,30 @@ describe('Viewer', () => {
         let uploadedTexts;
         let textFolderUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             textFolderUploaded = await uploadActions.createFolder(textFolderInfo.name, '-my-');
 
             uploadedTexts = await uploadActions.uploadFolder(textFolderInfo.location, textFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(textFolderUploaded.entry.id);
-            done();
+
         });
 
-        it('[C280010] Should be possible to open any Text file', () => {
-            contentServicesPage.doubleClickRow('text');
-
-            uploadedTexts.forEach((currentFile) => {
+        it('[C280010] Should be possible to open any Text file', async () => {
+            await contentServicesPage.doubleClickRow('text');
+            for (const currentFile of uploadedTexts) {
                 if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkFileIsLoaded();
-                    viewerPage.clickCloseButton();
+                    await contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    await viewerPage.checkFileIsLoaded();
+                    await viewerPage.clickCloseButton();
                 }
-            });
+            }
         });
 
     });

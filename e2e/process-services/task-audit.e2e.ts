@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, FileBrowserUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 
@@ -30,9 +30,6 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 
-import path = require('path');
-import { Util } from '../util/util';
-
 describe('Task Audit', () => {
 
     const loginPage = new LoginPage();
@@ -43,10 +40,9 @@ describe('Task Audit', () => {
     const taskTaskApp = 'Audit task task app';
     const taskCustomApp = 'Audit task custom app';
     const taskCompleteCustomApp = 'Audit completed task custom app';
-    const auditLogFile = path.join('./e2e/download/', 'Audit.pdf');
-    let appModel;
+    const auditLogFile = 'Audit.pdf';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
         const apps = new AppsActions();
 
@@ -63,70 +59,75 @@ describe('Task Audit', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        this.alfrescoJsApi.activiti.taskApi.createNewTask({name: taskTaskApp});
+        this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskTaskApp });
 
-        appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
-        done();
+
     });
 
-    it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', () => {
-        processServices.goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkContentIsDisplayed(taskTaskApp);
+    it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', async () => {
+        await (await processServices.goToTaskApp()).clickTasksButton();
 
-        taskPage.taskDetails().clickAuditLogButton();
-        expect(Util.fileExists(auditLogFile, 10)).toBe(true);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskTaskApp);
+
+        await taskPage.taskDetails().clickAuditLogButton();
+        await expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
     });
 
-    it('[C260389] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone completed task', () => {
-        processServices.goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkContentIsDisplayed(taskTaskApp);
+    it('[C260389] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone completed task', async () => {
+        await (await processServices.goToTaskApp()).clickTasksButton();
 
-        taskPage.completeTaskNoForm();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectRow(taskTaskApp);
-        expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskTaskApp + ' completed');
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskTaskApp);
 
-        taskPage.taskDetails().clickAuditLogButton();
-        expect(Util.fileExists(auditLogFile, 20)).toBe(true);
+        await taskPage.completeTaskNoForm();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        await taskPage.tasksListPage().selectRow(taskTaskApp);
+        await expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskTaskApp + ' completed');
+
+        await taskPage.taskDetails().clickAuditLogButton();
+        await expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
     });
 
-    it('[C263944] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone completed task', () => {
-        processServices.goToTaskApp().clickTasksButton();
+    it('[C263944] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone completed task', async () => {
+        await (await processServices.goToTaskApp()).clickTasksButton();
 
-        taskPage.createNewTask().addName(taskCompleteCustomApp).clickStartButton();
+        const task = await taskPage.createNewTask();
+        await task.addName(taskCompleteCustomApp);
+        await task.clickStartButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkContentIsDisplayed(taskCompleteCustomApp);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskCompleteCustomApp);
 
-        taskPage.completeTaskNoForm();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectRow(taskCompleteCustomApp);
-        expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskCompleteCustomApp + ' completed');
+        await taskPage.completeTaskNoForm();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        await taskPage.tasksListPage().selectRow(taskCompleteCustomApp);
+        await expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskCompleteCustomApp + ' completed');
 
-        taskPage.taskDetails().clickAuditLogButton();
-        expect(Util.fileExists(auditLogFile, 20)).toBe(true);
+        await taskPage.taskDetails().clickAuditLogButton();
+        await expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
     });
 
-    it('[C263943] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone running task', () => {
-        processServices.goToApp(appModel.name).clickTasksButton();
+    it('[C263943] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone running task', async () => {
+        await (await processServices.goToTaskApp()).clickTasksButton();
 
-        taskPage.createNewTask().addName(taskCustomApp).clickStartButton();
+        const task = await taskPage.createNewTask();
+        await task.addName(taskCustomApp);
+        await task.clickStartButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkContentIsDisplayed(taskCustomApp);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskCustomApp);
 
-        taskPage.taskDetails().clickAuditLogButton();
-        expect(Util.fileExists(auditLogFile, 10)).toBe(true);
+        await taskPage.taskDetails().clickAuditLogButton();
+        await expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
     });
 
 });

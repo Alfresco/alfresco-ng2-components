@@ -1,4 +1,7 @@
 const htmlReporter = require('protractor-html-reporter-2');
+const fs = require('fs');
+const rimraf = require('rimraf');
+const path = require('path');
 
 function buildNumber() {
     let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
@@ -143,8 +146,24 @@ async function saveReport(alfrescoJsApi, retryCount) {
     });
 }
 
+async function cleanReportFolder() {
+    let reportsFolder = `${projectRoot}/e2e-output/junit-report/`;
+
+    fs.exists(reportsFolder, function (exists, error) {
+        if (exists) {
+            rimraf(reportsFolder, function (err) {
+            });
+        }
+
+        if (error) {
+            console.error('[ERROR] fs', error);
+        }
+    });
+}
+
 module.exports = {
     uploadScreenshot: uploadScreenshot,
     uploadReport: uploadReport,
+    cleanReportFolder: cleanReportFolder,
     saveReport: saveReport
 };

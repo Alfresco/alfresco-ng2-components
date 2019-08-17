@@ -108,7 +108,7 @@ exports.Files = {
             dateTime_id: "dateandtime",
             checkbox_id: "checkbox",
             dropdown_id: "dropdown",
-            dropdown_value: "mat-select[id='dropdown'] span span",
+            drofpdown_value: "mat-select[id='dropdown'] span span",
             radioButtons_id: "radiobuttons",
             dynamicTable_id: "dynamictable"
         }

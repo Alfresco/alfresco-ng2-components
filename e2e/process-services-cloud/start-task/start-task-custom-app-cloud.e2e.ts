@@ -62,7 +62,7 @@ describe('Start Task', () => {
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
@@ -80,11 +80,10 @@ describe('Start Task', () => {
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-        done();
+
     });
 
-    afterAll(async (done) => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+    afterAll(async () => {
         const tasksService = new TasksService(apiService);
 
         const tasks = [standaloneTaskName, unassignedTaskName, reassignTaskName];
@@ -94,136 +93,148 @@ describe('Start Task', () => {
                 await tasksService.deleteTask(taskId, simpleApp);
             }
         }
+
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(activitiUser.idIdentityService);
         await identityService.deleteIdentityUser(apsUser.idIdentityService);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
+
     });
 
-    beforeEach(() => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+    beforeEach(async () => {
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudComponent.checkApsContainer();
+        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        await appListCloudComponent.goToApp(simpleApp);
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
     });
 
-    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.checkFormIsDisplayed();
-        peopleCloudComponent.clearAssignee();
-        startTask.addName(unassignedTaskName);
-        startTask.clickStartButton();
-        tasksCloudDemoPage.editTaskFilterCloudComponent()
-            .clickCustomiseFilterHeader()
-            .clearAssignee()
-            .setStatusFilterDropDown('CREATED');
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
-        const taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(unassignedTaskName);
-        taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-        expect(taskHeaderCloudPage.getId()).toBe(taskId);
-        expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');
+    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', async () => {
+        await tasksCloudDemoPage.openNewTaskForm();
+        await startTask.checkFormIsDisplayed();
+        await peopleCloudComponent.clearAssignee();
+        await startTask.addName(unassignedTaskName);
+        await startTask.clickStartButton();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
+        const taskId = await tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow(unassignedTaskName);
+        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+        await expect(await taskHeaderCloudPage.getId()).toBe(taskId);
+        await expect(await taskHeaderCloudPage.getAssignee()).toBe('No assignee');
     });
 
-    it('[C291956] Should be able to create a new standalone task without assignee', () => {
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.checkFormIsDisplayed();
-        expect(peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
-        startTask.addName(unassignedTaskName);
-        startTask.clickStartButton();
-        startTask.checkStartButtonIsEnabled();
-        tasksCloudDemoPage.editTaskFilterCloudComponent()
-            .clickCustomiseFilterHeader()
-            .setStatusFilterDropDown('CREATED')
-            .clearAssignee();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
+    it('[C291956] Should be able to create a new standalone task without assignee', async () => {
+        await tasksCloudDemoPage.openNewTaskForm();
+        await startTask.checkFormIsDisplayed();
+        await expect(await peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
+        await startTask.addName(unassignedTaskName);
+        await startTask.clickStartButton();
+        await startTask.checkStartButtonIsEnabled();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
     });
 
-    it('[C290166] Should be possible to cancel a task', () => {
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.checkFormIsDisplayed();
-        startTask.checkStartButtonIsDisabled()
-            .blur(startTask.name)
-            .checkValidationErrorIsDisplayed(requiredError);
-        startTask.addName(standaloneTaskName)
-            .addDescription('descriptions')
-            .addDueDate('12/12/2018');
-        startTask.checkStartButtonIsEnabled();
-        startTask.clickCancelButton();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(standaloneTaskName);
+    it('[C290166] Should be possible to cancel a task', async () => {
+        await tasksCloudDemoPage.openNewTaskForm();
+        await startTask.checkFormIsDisplayed();
+        await startTask.checkStartButtonIsDisabled();
+        await startTask.blur(await startTask.name);
+        await startTask.checkValidationErrorIsDisplayed(requiredError);
+        await startTask.addName(standaloneTaskName);
+        await startTask.addDescription('descriptions');
+        await startTask .addDueDate('12/12/2018');
+        await startTask.checkStartButtonIsEnabled();
+        await startTask.clickCancelButton();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(standaloneTaskName);
     });
 
-    it('[C290180] Should be able to create a new standalone task', () => {
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.checkFormIsDisplayed();
-        startTask.addName(standaloneTaskName)
-            .addDescription('descriptions')
-            .addDueDate('12/12/2018')
-            .addPriority('50')
-            .clickStartButton();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
+    it('[C290180] Should be able to create a new standalone task', async () => {
+        await tasksCloudDemoPage.openNewTaskForm();
+        await startTask.checkFormIsDisplayed();
+        await startTask.addName(standaloneTaskName);
+        await startTask.addDescription('descriptions');
+        await startTask.addDueDate('12/12/2018');
+        await startTask.addPriority('50');
+        await startTask.clickStartButton();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
     });
 
-    it('[C290181] Should be displayed an error message if task name exceed 255 characters', () => {
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.checkFormIsDisplayed();
-        startTask.addName(taskName255Characters)
-            .checkStartButtonIsEnabled();
-        startTask.addName(taskNameBiggerThen255Characters)
-            .blur(startTask.name)
-            .checkValidationErrorIsDisplayed(lengthValidationError)
-            .checkStartButtonIsDisabled()
-            .clickCancelButton();
+    it('[C290181] Should be displayed an error message if task name exceed 255 characters', async () => {
+        await tasksCloudDemoPage.openNewTaskForm();
+        await startTask.checkFormIsDisplayed();
+        await startTask.addName(taskName255Characters);
+        await startTask.checkStartButtonIsEnabled();
+        await startTask.addName(taskNameBiggerThen255Characters);
+        await startTask.blur(await startTask.name);
+        await startTask.checkValidationErrorIsDisplayed(lengthValidationError);
+        await startTask.checkStartButtonIsDisabled();
+        await startTask.clickCancelButton();
     });
 
-    it('[C291774] Should be displayed an error message if the date is invalid', () => {
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.addDueDate('12/12/2018')
-            .checkStartButtonIsEnabled();
-        startTask.addDueDate('invalid date')
-            .blur(startTask.dueDate)
-            .validateDate(dateValidationError)
-            .checkStartButtonIsDisabled()
-            .clickCancelButton();
+    it('[C291774] Should be displayed an error message if the date is invalid', async () => {
+        await tasksCloudDemoPage.openNewTaskForm();
+        await startTask.addDueDate('12/12/2018');
+        await startTask.checkStartButtonIsEnabled();
+        await startTask.addDueDate('invalid date');
+        await startTask.blur(await startTask.dueDate);
+        await startTask.validateDate(dateValidationError);
+        await startTask.checkStartButtonIsDisabled();
+        await startTask.clickCancelButton();
     });
 
-    it('[C290182] Should be possible to assign the task to another user', () => {
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.checkFormIsDisplayed();
-        startTask.addName(standaloneTaskName);
-        peopleCloudComponent.searchAssigneeAndSelect(`${activitiUser.firstName} ${activitiUser.lastName}`);
-        startTask.checkStartButtonIsEnabled();
-        startTask.clickStartButton();
-        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(standaloneTaskName);
+    it('[C290182] Should be possible to assign the task to another user', async () => {
+        await tasksCloudDemoPage.openNewTaskForm();
+        await startTask.checkFormIsDisplayed();
+        await startTask.addName(standaloneTaskName);
+        await peopleCloudComponent.searchAssigneeAndSelect(`${activitiUser.firstName} ${activitiUser.lastName}`);
+
+        await startTask.checkStartButtonIsEnabled();
+        await startTask.clickStartButton();
+
+        await browser.driver.sleep(1000);
+
+        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+
+        await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
     });
 
-    it('[C291953] Assignee field should display the logged user as default', () => {
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.checkFormIsDisplayed();
-        expect(peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
-        startTask.clickCancelButton();
+    it('[C291953] Assignee field should display the logged user as default', async () => {
+        await tasksCloudDemoPage.openNewTaskForm();
+        await startTask.checkFormIsDisplayed();
+        await expect(await peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
+        await startTask.clickCancelButton();
     });
 
-    it('[C305050] Should be able to reassign the removed user when starting a new task', () => {
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.checkFormIsDisplayed();
-        startTask.addName(reassignTaskName);
-        expect(peopleCloudComponent.getAssignee()).toBe(`${testUser.firstName} ${testUser.lastName}`);
-        peopleCloudComponent.searchAssignee(apsUser.username);
-        peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
-        peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
-        startTask.clickStartButton();
-        tasksCloudDemoPage.editTaskFilterCloudComponent()
-            .clickCustomiseFilterHeader()
-            .clearAssignee()
-            .setStatusFilterDropDown('ALL');
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(reassignTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(reassignTaskName);
-        expect(taskHeaderCloudPage.getAssignee()).toBe(apsUser.username);
+    it('[C305050] Should be able to reassign the removed user when starting a new task', async () => {
+        await tasksCloudDemoPage.openNewTaskForm();
+        await startTask.checkFormIsDisplayed();
+        await startTask.addName(reassignTaskName);
+
+        await expect(await peopleCloudComponent.getAssignee()).toBe(`${testUser.firstName} ${testUser.lastName}`);
+        await peopleCloudComponent.searchAssignee(apsUser.username);
+        await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
+        await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
+        await startTask.clickStartButton();
+
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
+
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(reassignTaskName);
+
+        await browser.driver.sleep(1000);
+
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow(reassignTaskName);
+
+        await expect(await taskHeaderCloudPage.getAssignee()).toBe(apsUser.username);
     });
 
 });

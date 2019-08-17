@@ -26,13 +26,13 @@ export class ApiService {
 
     constructor(clientId: string, host: string, hostSso: string, provider: string) {
         this.config = {
-            provider: provider,
+            provider,
             hostBpm: host,
             hostEcm: host,
             authType: 'OAUTH',
             oauth2: {
                 host: hostSso,
-                clientId: clientId,
+                clientId,
                 scope: 'openid',
                 secret: '',
                 implicitFlow: false,
@@ -46,18 +46,18 @@ export class ApiService {
         this.apiService = new AlfrescoApi(this.config);
     }
 
-    async login(username: string, password: string) {
+    async login(username: string, password: string): Promise<void> {
         await this.apiService.login(username, password);
     }
 
-    async performBpmOperation(path: string, method: string, queryParams: any, postBody: any) {
+    async performBpmOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         const uri = this.config.hostBpm + path;
         const pathParams = {}, formParams = {};
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
 
         const headerParams = {
-            'Authorization': 'bearer ' + this.apiService.oauth2Auth.token
+            Authorization: 'bearer ' + this.apiService.oauth2Auth.token
         };
 
         return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
@@ -67,14 +67,14 @@ export class ApiService {
             });
     }
 
-    async performIdentityOperation(path: string, method: string, queryParams: any, postBody: any) {
+    async performIdentityOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         const uri = this.config.oauth2.host.replace('/realms', '/admin/realms') + path;
         const pathParams = {}, formParams = {};
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
 
         const headerParams = {
-            'Authorization': 'bearer ' + this.apiService.oauth2Auth.token
+            Authorization: 'bearer ' + this.apiService.oauth2Auth.token
         };
 
         return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,

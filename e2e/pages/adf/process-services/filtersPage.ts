@@ -15,31 +15,30 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { BrowserActions } from '@alfresco/adf-testing';
 
 export class FiltersPage {
 
-    activeFilter = element(by.css('mat-list-item[class*="active"]'));
-    dataTable = new DataTableComponentPage();
+    activeFilter: ElementFinder = element(by.css('mat-list-item[class*="active"]'));
+    dataTable: DataTableComponentPage = new DataTableComponentPage();
 
-    getActiveFilter() {
+    async getActiveFilter(): Promise<string> {
         return BrowserActions.getText(this.activeFilter);
     }
 
-    goToFilter(filterName) {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.clickExecuteScript(`span[data-automation-id="${filterName}_filter"]`);
-        return this;
+    async goToFilter(filterName): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.clickExecuteScript(`span[data-automation-id="${filterName}_filter"]`);
     }
 
-    sortByName(sortOrder: string) {
-        this.dataTable.sortByColumn(sortOrder, 'name');
+    async sortByName(sortOrder: string): Promise<void> {
+        await this.dataTable.sortByColumn(sortOrder, 'name');
     }
 
-    getAllRowsNameColumn() {
-        return this.dataTable.getAllRowsColumnValues('Name');
+    async getAllRowsNameColumn() {
+        return await this.dataTable.getAllRowsColumnValues('Name');
     }
 
 }

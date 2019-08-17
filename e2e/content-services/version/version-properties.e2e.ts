@@ -49,7 +49,7 @@ describe('Version Properties', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -65,73 +65,50 @@ describe('Version Properties', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.clickContentServicesButton();
-        contentServicesPage.waitForTableBody();
-        contentServicesPage.versionManagerContent(txtFileModel.name);
+        await navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.versionManagerContent(txtFileModel.name);
 
-        done();
     });
 
-    afterAll(async (done) => {
-        await navigationBarPage.clickLogoutButton();
-        done();
+    it('[C272817] Should NOT be present the download action when allowDownload property is false', async () => {
+        await versionManagePage.disableDownload();
+        await versionManagePage.clickActionButton('1.0');
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
+        await versionManagePage.closeDisabledActionsMenu();
     });
 
-    it('[C272817] Should NOT be present the download action when allowDownload property is false', () => {
-        versionManagePage.disableDownload();
-
-        versionManagePage.clickActionButton('1.0');
-
-        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
-
-        versionManagePage.closeDisabledActionsMenu();
+    it('[C279992] Should be present the download action when allowDownload property is true', async () => {
+        await versionManagePage.enableDownload();
+        await versionManagePage.clickActionButton('1.0');
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
+        await versionManagePage.closeActionsMenu();
     });
 
-    it('[C279992] Should be present the download action when allowDownload property is true', () => {
-        versionManagePage.enableDownload();
-
-        versionManagePage.clickActionButton('1.0');
-
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
-
-        versionManagePage.closeActionsMenu();
+    it('[C269085] Should show/hide comments when showComments true/false', async () => {
+        await versionManagePage.enableComments();
+        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.enterCommentText('Example comment text');
+        await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
+        await versionManagePage.checkFileVersionExist('1.1');
+        await expect(await versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
+        await versionManagePage.disableComments();
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-item-comment-1.1"]`)));
     });
 
-    it('[C269085] Should show/hide comments when showComments true/false', () => {
-        versionManagePage.enableComments();
-
-        BrowserActions.click(versionManagePage.showNewVersionButton);
-
-        versionManagePage.enterCommentText('Example comment text');
-        versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
-
-        versionManagePage.checkFileVersionExist('1.1');
-        expect(versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
-
-        versionManagePage.disableComments();
-
-        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-item-comment-1.1"]`)));
+    it('[C277277] Should show/hide actions menu when readOnly is true/false', async () => {
+        await versionManagePage.disableReadOnly();
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
+        await versionManagePage.enableReadOnly();
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
     });
 
-    it('[C277277] Should show/hide actions menu when readOnly is true/false', () => {
-        versionManagePage.disableReadOnly();
-
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
-
-        versionManagePage.enableReadOnly();
-
-        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
-    });
-
-    it('[C279994] Should show/hide upload new version button when readOnly is true/false', () => {
-        versionManagePage.disableReadOnly();
-
-        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
-
-        versionManagePage.enableReadOnly();
-
-        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.showNewVersionButton);
-        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
+    it('[C279994] Should show/hide upload new version button when readOnly is true/false', async () => {
+        await versionManagePage.disableReadOnly();
+        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
+        await versionManagePage.enableReadOnly();
+        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.showNewVersionButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
     });
 
 });

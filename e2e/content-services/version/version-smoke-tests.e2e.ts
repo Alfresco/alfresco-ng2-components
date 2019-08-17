@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, UploadActions, BrowserVisibility } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -67,7 +67,7 @@ describe('Version component', () => {
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -81,92 +81,82 @@ describe('Version component', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.clickContentServicesButton();
-        contentServicesPage.waitForTableBody();
-        contentServicesPage.versionManagerContent(txtFileModel.name);
+        await navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.versionManagerContent(txtFileModel.name);
 
-        done();
     });
 
-    afterAll(async (done) => {
-        await navigationBarPage.clickLogoutButton();
-        done();
+    it('[C272768] Should be visible the first file version when you upload a file', async () => {
+        await versionManagePage.checkUploadNewVersionsButtonIsDisplayed();
+
+        await versionManagePage.checkFileVersionExist('1.0');
+        await expect(await versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
+        await expect(await versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
     });
 
-    it('[C272768] Should be visible the first file version when you upload a file', () => {
-        versionManagePage.checkUploadNewVersionsButtonIsDisplayed();
+    it('[C279995] Should show/hide the new upload file options when click on add New version/cancel button', async () => {
+        await BrowserActions.click(versionManagePage.showNewVersionButton);
 
-        versionManagePage.checkFileVersionExist('1.0');
-        expect(versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
-        expect(versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
+        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.cancelButton);
+        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.majorRadio);
+        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.minorRadio);
+        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.cancelButton);
+        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.commentText);
+        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.uploadNewVersionButton);
+
+        await BrowserActions.click(versionManagePage.cancelButton);
+
+        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.cancelButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.majorRadio);
+        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.minorRadio);
+        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.cancelButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.commentText);
+        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
+
+        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
     });
 
-    it('[C279995] Should show/hide the new upload file options when click on add New version/cancel button', () => {
-        versionManagePage.showNewVersionButton.click();
+    it('[C260244] Should show the version history when select a file with multiple version', async () => {
+        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
-        browser.driver.sleep(300);
+        await versionManagePage.checkFileVersionExist('1.0');
+        await expect(await versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
+        await expect(await versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
 
-        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.cancelButton);
-        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.majorRadio);
-        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.minorRadio);
-        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.cancelButton);
-        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.commentText);
-        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.uploadNewVersionButton);
-
-        versionManagePage.cancelButton.click();
-
-        browser.driver.sleep(300);
-
-        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.cancelButton);
-        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.majorRadio);
-        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.minorRadio);
-        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.cancelButton);
-        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.commentText);
-        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
-
-        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
+        await versionManagePage.checkFileVersionExist('1.1');
+        await expect(await versionManagePage.getFileVersionName('1.1')).toEqual(fileModelVersionTwo.name);
+        await expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
     });
 
-    it('[C260244] Should show the version history when select a file with multiple version', () => {
-        versionManagePage.showNewVersionButton.click();
-        versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
+    it('[C269084] Should be possible add a comment when add a new version', async () => {
+        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.enterCommentText('Example comment text');
+        await versionManagePage.uploadNewVersionFile(fileModelVersionThree.location);
 
-        versionManagePage.checkFileVersionExist('1.0');
-        expect(versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
-        expect(versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
-
-        versionManagePage.checkFileVersionExist('1.1');
-        expect(versionManagePage.getFileVersionName('1.1')).toEqual(fileModelVersionTwo.name);
-        expect(versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
+        await versionManagePage.checkFileVersionExist('1.2');
+        await expect(await versionManagePage.getFileVersionName('1.2')).toEqual(fileModelVersionThree.name);
+        await expect(await versionManagePage.getFileVersionDate('1.2')).not.toBeUndefined();
+        await expect(await versionManagePage.getFileVersionComment('1.2')).toEqual('Example comment text');
     });
 
-    it('[C269084] Should be possible add a comment when add a new version', () => {
-        versionManagePage.showNewVersionButton.click();
-        versionManagePage.enterCommentText('Example comment text');
-        versionManagePage.uploadNewVersionFile(fileModelVersionThree.location);
+    it('[C275719] Should be possible preview the file when you add a new version', async () => {
+        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.clickMajorChange();
 
-        versionManagePage.checkFileVersionExist('1.2');
-        expect(versionManagePage.getFileVersionName('1.2')).toEqual(fileModelVersionThree.name);
-        expect(versionManagePage.getFileVersionDate('1.2')).not.toBeUndefined();
-        expect(versionManagePage.getFileVersionComment('1.2')).toEqual('Example comment text');
-    });
+        await versionManagePage.uploadNewVersionFile(fileModelVersionFor.location);
 
-    it('[C275719] Should be possible preview the file when you add a new version', () => {
-        versionManagePage.showNewVersionButton.click();
-        versionManagePage.clickMajorChange();
+        await versionManagePage.checkFileVersionExist('2.0');
+        await expect(await versionManagePage.getFileVersionName('2.0')).toEqual(fileModelVersionFor.name);
 
-        versionManagePage.uploadNewVersionFile(fileModelVersionFor.location);
+        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.clickMinorChange();
 
-        versionManagePage.checkFileVersionExist('2.0');
-        expect(versionManagePage.getFileVersionName('2.0')).toEqual(fileModelVersionFor.name);
+        await versionManagePage.uploadNewVersionFile(fileModelVersionFive.location);
 
-        versionManagePage.showNewVersionButton.click();
-        versionManagePage.clickMinorChange();
-
-        versionManagePage.uploadNewVersionFile(fileModelVersionFive.location);
-
-        versionManagePage.checkFileVersionExist('2.1');
-        expect(versionManagePage.getFileVersionName('2.1')).toEqual(fileModelVersionFive.name);
+        await versionManagePage.checkFileVersionExist('2.1');
+        await expect(await versionManagePage.getFileVersionName('2.1')).toEqual(fileModelVersionFive.name);
     });
 
 });

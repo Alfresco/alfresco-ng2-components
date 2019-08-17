@@ -25,51 +25,51 @@ export class TasksService {
         this.api = api;
     }
 
-    async createStandaloneTask(taskName, appName, options?) {
+    async createStandaloneTask(taskName, appName, options?): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks';
             const method = 'POST';
 
             const queryParams = {}, postBody = {
-                'name': taskName,
-                'payloadType': 'CreateTaskPayload',
+                name: taskName,
+                payloadType: 'CreateTaskPayload',
                 ...options
             };
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 
-    async createStandaloneTaskWithForm(taskName, appName, formKey, options?) {
+    async createStandaloneTaskWithForm(taskName, appName, formKey, options?): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks';
             const method = 'POST';
 
             const queryParams = {}, postBody = {
-                'name': taskName,
-                'payloadType': 'CreateTaskPayload',
-                'formKey': formKey,
+                name: taskName,
+                payloadType: 'CreateTaskPayload',
+                formKey: formKey,
                 ...options
             };
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Create FormTask - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 
-    async completeTask(taskId, appName) {
+    async completeTask(taskId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
             const method = 'POST';
 
-            const queryParams = {}, postBody = { 'payloadType': 'CompleteTaskPayload' };
+            const queryParams = {}, postBody = { payloadType: 'CompleteTaskPayload' };
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
@@ -77,56 +77,56 @@ export class TasksService {
 
     }
 
-    async claimTask(taskId, appName) {
+    async claimTask(taskId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks/' + taskId + `/claim`;
             const method = 'POST';
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Claim Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 
-    async deleteTask(taskId, appName) {
+    async deleteTask(taskId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks/' + taskId;
             const method = 'DELETE';
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Delete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 
-    async createAndCompleteTask(taskName, appName) {
+    async createAndCompleteTask(taskName, appName): Promise<any> {
         const task = await this.createStandaloneTask(taskName, appName);
         await this.claimTask(task.entry.id, appName);
         await this.completeTask(task.entry.id, appName);
         return task;
     }
 
-    async getTask(taskId, appName) {
+    async getTask(taskId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/query/v1/tasks/' + taskId;
             const method = 'GET';
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Get Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 
-    async getTaskId(taskName, appName) {
+    async getTaskId(taskName, appName): Promise<any> {
         try {
             const path = '/' + appName + '/query/v1/tasks';
             const method = 'GET';
@@ -141,15 +141,15 @@ export class TasksService {
         }
     }
 
-    async createStandaloneSubtask(parentTaskId, appName, name) {
+    async createStandaloneSubtask(parentTaskId, appName, name): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks';
             const method = 'POST';
 
             const queryParams = {},
-                postBody = { 'name': name, 'parentTaskId': parentTaskId, 'payloadType': 'CreateTaskPayload' };
+                postBody = { name: name, parentTaskId: parentTaskId, payloadType: 'CreateTaskPayload' };
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);

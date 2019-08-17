@@ -36,7 +36,7 @@ describe('Dropdown widget', () => {
     const app = resources.Files.WIDGET_CHECK_APP.DROPDOWN;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -57,42 +57,41 @@ describe('Dropdown widget', () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
     });
 
-    it('[C269051] Should be possible to set general and options properties for Dropdown widget ', () => {
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+    it('[C269051] Should be possible to set general and options properties for Dropdown widget ', async () => {
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        widget.dropdown().selectOption('Happy');
-        expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Happy');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.dropdown().selectOption('Happy');
+        await expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Happy');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
 
-        widget.dropdown().selectOption('Choose one');
-        expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Choose one');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.dropdown().selectOption('Choose one');
+        await expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Choose one');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        widget.dropdown().selectOption('Sad');
-        expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Sad');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.dropdown().selectOption('Sad');
+        await expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Sad');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C269052] Should be possible to set visibility properties for Dropdown widget', () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.dropdown_visible);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.dropdown_visible);
+    it('[C269052] Should be possible to set visibility properties for Dropdown widget', async () => {
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.dropdown_visible);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.dropdown_visible);
     });
 });

@@ -36,7 +36,7 @@ describe('Login component - SSO', () => {
                 browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId);
             await loginSSOPage.clickOnSSOButton();
             await loginSSOPage.checkLoginErrorIsDisplayed();
-            expect(loginSSOPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
+            await expect(loginSSOPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
         });
     });
 

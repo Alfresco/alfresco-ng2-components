@@ -36,7 +36,7 @@ export class IdentityService {
         APS_DEVOPS_USER: 'APS_DEVOPS'
     };
 
-    async createIdentityUserWithRole(apiService: ApiService, roles: string[]) {
+    async createIdentityUserWithRole(apiService: ApiService, roles: string[]): Promise<any> {
         const rolesService = new RolesService(apiService);
         const user = await this.createIdentityUser();
         for (let i = 0; i < roles.length; i++) {
@@ -46,7 +46,7 @@ export class IdentityService {
         return user;
     }
 
-    async createIdentityUser(user: UserModel = new UserModel()) {
+    async createIdentityUser(user: UserModel = new UserModel()): Promise<any> {
         await this.createUser(user);
 
         const userIdentity = await this.getUserInfoByUsername(user.username);
@@ -55,15 +55,15 @@ export class IdentityService {
         return user;
     }
 
-    async createIdentityUserAndSyncECMBPM(user: UserModel) {
+    async createIdentityUserAndSyncECMBPM(user: UserModel): Promise<void> {
         if (this.api.config.provider === 'ECM' || this.api.config.provider === 'ALL') {
-            const createUser: PersonBodyCreate = <PersonBodyCreate> {
+            const createUser: PersonBodyCreate = {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 password: user.password,
                 email: user.email,
                 id: user.email
-            };
+            } as PersonBodyCreate;
             await this.api.apiService.core.peopleApi.addPerson(createUser);
         }
 
@@ -82,89 +82,89 @@ export class IdentityService {
         await this.createIdentityUser(user);
     }
 
-    async deleteIdentityUser(userId) {
+    async deleteIdentityUser(userId): Promise<void> {
         await this.deleteUser(userId);
     }
 
-    async createUser(user: UserModel) {
+    async createUser(user: UserModel): Promise<any> {
         try {
             const path = '/users';
             const method = 'POST';
 
             const queryParams = {}, postBody = {
-                'username': user.username,
-                'firstName': user.firstName,
-                'lastName': user.lastName,
-                'enabled': true,
-                'email': user.email
+                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                enabled: true,
+                email: user.email
             };
 
-            return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+            return this.api.performIdentityOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Create User - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 
-    async deleteUser(userId) {
+    async deleteUser(userId): Promise<any> {
         const path = `/users/${userId}`;
         const method = 'DELETE';
         const queryParams = {}, postBody = {};
-        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
-    async getUserInfoByUsername(username) {
+    async getUserInfoByUsername(username): Promise<any> {
         const path = `/users`;
         const method = 'GET';
-        const queryParams = {'username': username}, postBody = {};
+        const queryParams = { username: username }, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0];
     }
 
-    async resetPassword(id, password) {
+    async resetPassword(id, password): Promise<any> {
         const path = `/users/${id}/reset-password`;
         const method = 'PUT';
         const queryParams = {},
-            postBody = {'type': 'password', 'value': password, 'temporary': false};
+            postBody = { type: 'password', value: password, temporary: false };
 
-        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
-    async addUserToGroup(userId, groupId) {
+    async addUserToGroup(userId, groupId): Promise<any> {
         try {
             const path = `/users/${userId}/groups/${groupId}`;
             const method = 'PUT';
             const queryParams = {},
-                postBody = {'realm': 'alfresco', 'userId': userId, 'groupId': groupId};
+                postBody = { realm: 'alfresco', userId: userId, groupId: groupId };
 
-            return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+            return this.api.performIdentityOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Add User To Group - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 
-    async assignRole(userId, roleId, roleName) {
+    async assignRole(userId, roleId, roleName): Promise<any> {
         const path = `/users/${userId}/role-mappings/realm`;
         const method = 'POST';
         const queryParams = {},
-            postBody = [{'id': roleId, 'name': roleName}];
+            postBody = [{ id: roleId, name: roleName }];
 
-        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
-    async deleteClientRole(userId: string, clientId: string, roleId: string, roleName: string) {
+    async deleteClientRole(userId: string, clientId: string, roleId: string, roleName: string): Promise<any> {
         const path = `/users/${userId}/role-mappings/clients/${clientId}`;
         const method = 'DELETE', queryParams = {},
             postBody = [{
-                'id': roleId,
-                'name': roleName,
-                'composite': false,
-                'clientRole': true,
-                'containerId': clientId
+                id: roleId,
+                name: roleName,
+                composite: false,
+                clientRole: true,
+                containerId: clientId
             }];
-        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
 }

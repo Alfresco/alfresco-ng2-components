@@ -37,7 +37,7 @@ describe('Dynamic Table', () => {
     const widget = new Widget();
     let user, tenantId, appId, apps, users;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -52,15 +52,13 @@ describe('Dynamic Table', () => {
 
         tenantId = user.tenantId;
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
 
-        done();
     });
 
     describe('Date Picker', () => {
@@ -77,67 +75,63 @@ describe('Dynamic Table', () => {
         const currentDate = DateUtil.formatDate('DD-MM-YYYY');
         const rowPosition = 0;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await this.alfrescoJsApi.login(user.email, user.password);
 
             const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
             appId = importedApp.id;
 
             await loginPage.loginToProcessServicesUsingUserModel(user);
-
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.login(user.email, user.password);
 
             await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-
-            done();
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
+        beforeEach(async () => {
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
-            processServiceTabBarPage.clickProcessButton();
+            await processServiceTabBarPage.clickProcessButton();
 
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
         });
 
-        it('[C286277] Should have a datepicker and a mask for DateTime field', () => {
-            widget.dynamicTable().clickAddButton();
-            widget.dynamicTable().clickColumnDateTime();
+        it('[C286277] Should have a datepicker and a mask for DateTime field', async () => {
+            await widget.dynamicTable().clickAddButton();
+            await widget.dynamicTable().clickColumnDateTime();
 
-            expect(widget.dynamicTable().addRandomStringOnDateTime(randomText.wrongDateTime)).toBe('');
+            await expect(await widget.dynamicTable().addRandomStringOnDateTime(randomText.wrongDateTime)).toBe('');
         });
 
-        it('[C286279] Should be able to save row with Date field', () => {
-            widget.dynamicTable().clickAddButton();
-            widget.dynamicTable().addRandomStringOnDate(randomText.wrongDate);
-            widget.dynamicTable().clickSaveButton();
-            expect(widget.dynamicTable().checkErrorMessage()).toBe(randomText.error);
+        it('[C286279] Should be able to save row with Date field', async () => {
+            await widget.dynamicTable().clickAddButton();
+            await widget.dynamicTable().addRandomStringOnDate(randomText.wrongDate);
+            await widget.dynamicTable().clickSaveButton();
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(randomText.error);
 
-            widget.dynamicTable().clickDateWidget();
-            datePicker.selectTodayDate()
-                .checkDatePickerIsNotDisplayed();
-            widget.dynamicTable().clickSaveButton();
-            widget.dynamicTable().getTableRow(rowPosition);
-            expect(widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
+            await widget.dynamicTable().clickDateWidget();
+            await datePicker.selectTodayDate();
+            await datePicker.checkDatePickerIsNotDisplayed();
+            await widget.dynamicTable().clickSaveButton();
+            await widget.dynamicTable().getTableRow(rowPosition);
+            await expect(await widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
         });
 
-        it('[C311456] Should be able to delete date that is not mandatory and save the Dynamic Table', () => {
-            widget.dynamicTable().clickAddButton();
-            widget.dynamicTable().clickSaveButton();
-            expect(widget.dynamicTable().checkErrorMessage()).toBe(randomText.requiredError);
+        it('[C311456] Should be able to delete date that is not mandatory and save the Dynamic Table', async () => {
+            await widget.dynamicTable().clickAddButton();
+            await widget.dynamicTable().clickSaveButton();
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(randomText.requiredError);
 
-            widget.dynamicTable().clickDateWidget();
-            datePicker.selectTodayDate()
-                .checkDatePickerIsNotDisplayed();
-            widget.dynamicTable().clickSaveButton();
-            widget.dynamicTable().getTableRow(rowPosition);
-            expect(widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
-            expect(widget.dynamicTable().getTableCellText(rowPosition, 2)).toBe('');
+            await widget.dynamicTable().clickDateWidget();
+            await datePicker.selectTodayDate();
+            await datePicker.checkDatePickerIsNotDisplayed();
+            await widget.dynamicTable().clickSaveButton();
+            await widget.dynamicTable().getTableRow(rowPosition);
+            await expect(await widget.dynamicTable().getTableCellText(rowPosition, 1)).toBe(currentDate);
+            await expect(await widget.dynamicTable().getTableCellText(rowPosition, 2)).toBe('');
         });
     });
 
@@ -145,7 +139,7 @@ describe('Dynamic Table', () => {
         const app = resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
         const dropdown = widget.dropdown();
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
 
             await this.alfrescoJsApi.login(user.email, user.password);
 
@@ -154,32 +148,30 @@ describe('Dynamic Table', () => {
 
             await loginPage.loginToProcessServicesUsingUserModel(user);
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await this.alfrescoJsApi.login(user.email, user.password);
 
             await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
-            done();
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickProcessButton();
+        beforeEach(async () => {
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickProcessButton();
 
-            processServiceTabBarPage.clickProcessButton();
+            await processServiceTabBarPage.clickProcessButton();
 
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
         });
 
-        it('[C286519] Should be able to save row with required dropdown column', () => {
+        it('[C286519] Should be able to save row with required dropdown column', async () => {
             const dropdownOption = 'Option 1';
-            widget.dynamicTable().clickAddButton();
-            dropdown.selectOption(dropdownOption);
-            widget.dynamicTable().clickSaveButton();
-            widget.dynamicTable().checkItemIsPresent(dropdownOption);
+            await widget.dynamicTable().clickAddButton();
+            await dropdown.selectOption(dropdownOption);
+            await widget.dynamicTable().clickSaveButton();
+            await widget.dynamicTable().checkItemIsPresent(dropdownOption);
         });
     });
 

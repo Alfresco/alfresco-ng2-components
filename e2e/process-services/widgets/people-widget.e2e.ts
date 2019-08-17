@@ -36,7 +36,7 @@ describe('People widget', () => {
     const app = resources.Files.WIDGET_CHECK_APP.ADD_PEOPLE;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -57,44 +57,44 @@ describe('People widget', () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
-    beforeEach(async() => {
+    beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
+
     });
 
-    it('[C260435] Should select user from People Widget', () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
+    it('[C260435] Should select user from People Widget', async () => {
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
 
         const admin = processUserModel.firstName + ' ' + processUserModel.lastName;
-        widget.peopleWidget().insertUser(app.FIELD.widget_id, admin.charAt(0));
-        widget.peopleWidget().checkDropDownListIsDisplayed();
-        widget.peopleWidget().checkUserIsListed(admin);
-        widget.peopleWidget().selectUserFromDropDown(admin);
+        await widget.peopleWidget().insertUser(app.FIELD.widget_id, admin.charAt(0));
+        await widget.peopleWidget().checkDropDownListIsDisplayed();
+        await widget.peopleWidget().checkUserIsListed(admin);
+        await widget.peopleWidget().selectUserFromDropDown(admin);
     });
 
-    it('[C274707] Should be possible to set visibility properties for People Widget', () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
+    it('[C274707] Should be possible to set visibility properties for People Widget', async () => {
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
 
         const admin = processUserModel.firstName + ' ' + processUserModel.lastName;
-        widget.peopleWidget().insertUser(app.FIELD.widget_id, admin.charAt(0));
-        widget.peopleWidget().checkDropDownListIsDisplayed();
-        widget.peopleWidget().checkUserIsListed(admin);
-        widget.peopleWidget().selectUserFromDropDown(admin);
+        await widget.peopleWidget().insertUser(app.FIELD.widget_id, admin.charAt(0));
+        await widget.peopleWidget().checkDropDownListIsDisplayed();
+        await widget.peopleWidget().checkUserIsListed(admin);
+        await widget.peopleWidget().selectUserFromDropDown(admin);
     });
 });

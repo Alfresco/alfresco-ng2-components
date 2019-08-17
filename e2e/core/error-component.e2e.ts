@@ -28,7 +28,7 @@ describe('Error Component', () => {
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -38,49 +38,47 @@ describe('Error Component', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
-
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    it('[C277302] Should display the error 403 when access to unauthorized page - My Change', () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/403');
-        expect(errorPage.getErrorCode()).toBe('403');
-        expect(errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
-        expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
+    it('[C277302] Should display the error 403 when access to unauthorized page - My Change', async () => {
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/403');
+        await expect(await errorPage.getErrorCode()).toBe('403');
+        await expect(await errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
+        await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
 
-    it('[C280563] Should back home button navigate to the home page', () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/404');
+    it('[C280563] Should back home button navigate to the home page', async () => {
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/404');
 
-        errorPage.clickBackButton();
+        await errorPage.clickBackButton();
 
-        expect(browser.getCurrentUrl()).toBe(browser.params.testConfig.adf.url + '/');
+        await expect(await browser.getCurrentUrl()).toBe(browser.params.testConfig.adf.url + '/');
     });
 
-    it('[C280564] Should secondary button by default redirect to report-issue URL', () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/403');
+    it('[C280564] Should secondary button by default redirect to report-issue URL', async () => {
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/403');
 
-        errorPage.clickSecondButton();
+        await errorPage.clickSecondButton();
 
-        expect(browser.getCurrentUrl()).toBe(browser.params.testConfig.adf.url + '/report-issue');
+        await expect(await browser.getCurrentUrl()).toBe(browser.params.testConfig.adf.url + '/report-issue');
     });
 
-    it('[C277304] Should display the error 404 when access to not found page', () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/404');
-        expect(errorPage.getErrorCode()).toBe('404');
-        expect(errorPage.getErrorTitle()).toBe('An error occurred.');
-        expect(errorPage.getErrorDescription()).toBe('We couldn’t find the page you were looking for.');
+    it('[C277304] Should display the error 404 when access to not found page', async () => {
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/404');
+        await expect(await errorPage.getErrorCode()).toBe('404');
+        await expect(await errorPage.getErrorTitle()).toBe('An error occurred.');
+        await expect(await errorPage.getErrorDescription()).toBe('We couldn’t find the page you were looking for.');
     });
 
-    it('[C307029] Should display Unknown message when error is undefined', () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/501');
-        expect(errorPage.getErrorCode()).toBe('UNKNOWN');
-        expect(errorPage.getErrorTitle()).toBe('We hit a problem.');
-        expect(errorPage.getErrorDescription()).toBe('Looks like something went wrong.');
+    it('[C307029] Should display Unknown message when error is undefined', async () => {
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/501');
+        await expect(await errorPage.getErrorCode()).toBe('UNKNOWN');
+        await expect(await errorPage.getErrorTitle()).toBe('We hit a problem.');
+        await expect(await errorPage.getErrorDescription()).toBe('Looks like something went wrong.');
     });
 
 });

@@ -38,7 +38,7 @@ describe('Amount Widget', () => {
     const app = resources.Files.WIDGET_CHECK_APP.AMOUNT;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -59,44 +59,44 @@ describe('Amount Widget', () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
-    beforeEach(async () => {
+    beforeEach(async() => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
+
     });
 
-    it('[C274703] Should be possible to set general, advance and visibility properties for Amount Widget', () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.amount_input_id);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.amount_input_id);
+    it('[C274703] Should be possible to set general, advance and visibility properties for Amount Widget', async () => {
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.amount_input_id);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.amount_input_id);
 
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        expect(widget.amountWidget().getAmountFieldLabel(app.FIELD.amount_input_id)).toContain('Amount');
-        expect(widget.amountWidget().getPlaceholder(app.FIELD.amount_input_id)).toContain('Type amount');
-        expect(widget.amountWidget().getAmountFieldCurrency(app.FIELD.amount_input_id)).toBe('$');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await widget.amountWidget().getAmountFieldLabel(app.FIELD.amount_input_id)).toContain('Amount');
+        await expect(await widget.amountWidget().getPlaceholder(app.FIELD.amount_input_id)).toContain('Type amount');
+        await expect(await widget.amountWidget().getAmountFieldCurrency(app.FIELD.amount_input_id)).toBe('$');
 
-        widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 4);
-        expect(widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be less than 5');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        widget.amountWidget().clearFieldValue(app.FIELD.amount_input_id);
+        await widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 4);
+        await expect(await widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be less than 5');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.amountWidget().clearFieldValue(app.FIELD.amount_input_id);
 
-        widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 101);
-        expect(widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be greater than 100');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        widget.amountWidget().clearFieldValue(app.FIELD.amount_input_id);
+        await widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 101);
+        await expect(await widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be greater than 100');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.amountWidget().clearFieldValue(app.FIELD.amount_input_id);
 
-        widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 6);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 6);
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 });

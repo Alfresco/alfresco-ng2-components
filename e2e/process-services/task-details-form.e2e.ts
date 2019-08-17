@@ -38,7 +38,7 @@ describe('Task Details - Form', () => {
     const filtersPage = new FiltersPage();
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
         const attachedFormModel = {
             'name': StringUtil.generateRandomString(),
@@ -53,7 +53,12 @@ describe('Task Details - Form', () => {
             'modelType': 2,
             'stencilSet': 0
         };
-        const newFormModel = { 'name': StringUtil.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0 };
+        const newFormModel = {
+            'name': StringUtil.generateRandomString(),
+            'description': '',
+            'modelType': 2,
+            'stencilSet': 0
+        };
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -80,10 +85,9 @@ describe('Task Details - Form', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         const taskModel = new StandaloneTask();
 
         const emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
@@ -92,64 +96,63 @@ describe('Task Details - Form', () => {
 
         task = await this.alfrescoJsApi.activiti.taskApi.getTask(emptyTask.id);
 
-        new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp();
-        tasksListPage.checkTaskListIsLoaded();
-        filtersPage.goToFilter('Involved Tasks');
-        tasksListPage.checkTaskListIsLoaded();
+        await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
+        await tasksListPage.checkTaskListIsLoaded();
+        await filtersPage.goToFilter('Involved Tasks');
+        await tasksListPage.checkTaskListIsLoaded();
 
-        done();
     });
 
-    it('[C280018] Should be able to change the form in a task', () => {
-        tasksListPage.selectRow(task.name);
-        taskDetailsPage.clickForm();
+    it('[C280018] Should be able to change the form in a task', async () => {
+        await tasksListPage.selectRow(task.name);
+        await taskDetailsPage.clickForm();
 
-        taskDetailsPage.checkAttachFormDropdownIsDisplayed();
-        taskDetailsPage.checkAttachFormButtonIsDisabled();
+        await taskDetailsPage.checkAttachFormDropdownIsDisplayed();
+        await taskDetailsPage.checkAttachFormButtonIsDisabled();
 
-        taskDetailsPage.clickAttachFormDropdown();
+        await taskDetailsPage.clickAttachFormDropdown();
 
-        taskDetailsPage.selectAttachFormOption(newForm.name);
-        taskDetailsPage.checkSelectedForm(newForm.name);
-        taskDetailsPage.checkAttachFormButtonIsEnabled();
+        await taskDetailsPage.selectAttachFormOption(newForm.name);
+        await taskDetailsPage.checkSelectedForm(newForm.name);
+        await taskDetailsPage.checkAttachFormButtonIsEnabled();
 
-        taskDetailsPage.checkCancelAttachFormIsDisplayed();
-        taskDetailsPage.clickCancelAttachForm();
+        await taskDetailsPage.checkCancelAttachFormIsDisplayed();
+        await taskDetailsPage.clickCancelAttachForm();
 
-        taskDetailsPage.checkFormIsAttached(attachedForm.name);
+        await taskDetailsPage.checkFormIsAttached(attachedForm.name);
 
-        taskDetailsPage.clickForm();
+        await taskDetailsPage.clickForm();
 
-        taskDetailsPage.checkAttachFormDropdownIsDisplayed();
-        taskDetailsPage.clickAttachFormDropdown();
+        await taskDetailsPage.checkAttachFormDropdownIsDisplayed();
+        await taskDetailsPage.clickAttachFormDropdown();
 
-        taskDetailsPage.selectAttachFormOption(newForm.name);
+        await taskDetailsPage.selectAttachFormOption(newForm.name);
 
-        taskDetailsPage.checkAttachFormButtonIsDisplayed();
-        taskDetailsPage.clickAttachFormButton();
+        await taskDetailsPage.checkAttachFormButtonIsDisplayed();
+        await taskDetailsPage.clickAttachFormButton();
 
-        taskDetailsPage.checkFormIsAttached(newForm.name);
+        await taskDetailsPage.checkFormIsAttached(newForm.name);
     });
 
-    it('[C280019] Should be able to remove the form form a task', () => {
-        tasksListPage.selectRow(task.name);
-        taskDetailsPage.clickForm();
+    it('[C280019] Should be able to remove the form form a task', async () => {
+        await tasksListPage.selectRow(task.name);
+        await taskDetailsPage.clickForm();
 
-        taskDetailsPage.checkRemoveAttachFormIsDisplayed();
-        taskDetailsPage.clickRemoveAttachForm();
+        await taskDetailsPage.checkRemoveAttachFormIsDisplayed();
+        await taskDetailsPage.clickRemoveAttachForm();
 
-        taskDetailsPage.checkFormIsAttached('No form');
+        await taskDetailsPage.checkFormIsAttached('No form');
 
-        expect(taskDetailsPage.getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await expect(await taskDetailsPage.getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
-    it('[C280557] Should display task details when selecting another task while the Attach Form dialog is displayed', () => {
-        tasksListPage.selectRow(task.name);
-        taskDetailsPage.clickForm();
+    it('[C280557] Should display task details when selecting another task while the Attach Form dialog is displayed', async () => {
+        await tasksListPage.selectRow(task.name);
+        await taskDetailsPage.clickForm();
 
-        taskDetailsPage.checkRemoveAttachFormIsDisplayed();
+        await taskDetailsPage.checkRemoveAttachFormIsDisplayed();
 
-        tasksListPage.selectRow(otherTask.name);
-        taskDetailsPage.checkFormIsAttached(otherAttachedForm.name);
+        await tasksListPage.selectRow(otherTask.name);
+        await taskDetailsPage.checkFormIsAttached(otherAttachedForm.name);
     });
 });

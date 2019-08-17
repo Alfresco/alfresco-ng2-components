@@ -28,7 +28,7 @@ describe('User Info - SSO', () => {
     let silentLogin, identityUser;
     let identityService: IdentityService;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
         await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -36,15 +36,14 @@ describe('User Info - SSO', () => {
         identityUser = await identityService.createIdentityUser();
 
         silentLogin = false;
-        settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+        await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.adf.hostSso,
             browser.params.testConfig.adf.hostIdentity, silentLogin, true, browser.params.config.oauth2.clientId);
 
-        loginSSOPage.clickOnSSOButton();
+        await loginSSOPage.clickOnSSOButton();
 
-        loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
+        await loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
 
-        done();
     });
 
     afterAll(async () => {
@@ -53,13 +52,13 @@ describe('User Info - SSO', () => {
         }
     });
 
-    it('[C290066] Should display UserInfo when login using SSO', () => {
-        userInfoPage.clickUserProfile();
-        expect(userInfoPage.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
-        expect(userInfoPage.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
-        expect(userInfoPage.getSsoEmail()).toEqual(identityUser.email);
-        userInfoPage.closeUserProfile();
-        userInfoPage.dialogIsNotDisplayed();
+    it('[C290066] Should display UserInfo when login using SSO', async () => {
+        await userInfoPage.clickUserProfile();
+        await expect(await userInfoPage.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        await expect(await userInfoPage.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        await expect(await userInfoPage.getSsoEmail()).toEqual(identityUser.email);
+        await userInfoPage.closeUserProfile();
+        await userInfoPage.dialogIsNotDisplayed();
     });
 
 });

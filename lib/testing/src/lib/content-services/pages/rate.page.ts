@@ -21,42 +21,42 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class RatePage {
 
-    rateComponent(rateValue: number) {
+    async rateComponent(rateValue: number) {
         const unratedStar = element(by.css(`span[id="adf-rate-${rateValue}"]`));
-        return BrowserActions.click(unratedStar);
+        await BrowserActions.click(unratedStar);
     }
 
-    removeRating(rateValue: number) {
+    async removeRating(rateValue: number): Promise<void> {
         const ratedStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
-        return BrowserActions.click(ratedStar);
+        await BrowserActions.click(ratedStar);
     }
 
-    getRatingCounter() {
+    async getRatingCounter(): Promise<string> {
         const ratingsCounter = element(by.css(`div[id="adf-rating-counter"]`));
         return BrowserActions.getText(ratingsCounter);
     }
 
-    isStarRated(rateValue: number) {
+    async isStarRated(rateValue: number): Promise<void> {
         const ratedStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
-        return BrowserVisibility.waitUntilElementIsVisible(ratedStar);
+        await BrowserVisibility.waitUntilElementIsVisible(ratedStar);
     }
 
-    isNotStarRated(rateValue: number) {
+    async isNotStarRated(rateValue: number): Promise<void> {
         const unratedStar = element(by.css(`mat-icon[id="adf-grey-star-${rateValue}"]`));
-        return BrowserVisibility.waitUntilElementIsVisible(unratedStar);
+        await BrowserVisibility.waitUntilElementIsVisible(unratedStar);
     }
 
-    getRatedStarColor(rateValue: number) {
+    async getRatedStarColor(rateValue: number): Promise<string> {
         const ratedStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
         return BrowserActions.getColor(ratedStar);
     }
 
-    getUnratedStarColor(rateValue: number) {
+    async getUnratedStarColor(rateValue: number): Promise<string> {
         const unratedStar = element(by.css(`mat-icon[id="adf-grey-star-${rateValue}"]`));
         return BrowserActions.getColor(unratedStar);
     }
 
-    getAverageStarColor(rateValue: number) {
+    async getAverageStarColor(rateValue: number): Promise<string> {
         const coloredStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
         return BrowserActions.getColor(coloredStar);
     }

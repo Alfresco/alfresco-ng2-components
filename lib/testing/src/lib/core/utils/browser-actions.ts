@@ -15,77 +15,94 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from './browser-visibility';
-import { browser, by, element, ElementFinder, protractor } from 'protractor';
+import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
+import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class BrowserActions {
 
-    static async click(elementFinder: ElementFinder) {
-        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        BrowserVisibility.waitUntilElementIsClickable(elementFinder);
-        return elementFinder.click();
+    static async click(elementFinder: ElementFinder): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
+        await elementFinder.click();
     }
 
-    static async getUrl(url: string) {
+    static async getUrl(url: string): Promise<any> {
         return browser.get(url);
     }
 
-    static async clickExecuteScript(elementCssSelector: string) {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css(elementCssSelector)));
-        browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
+    static async clickExecuteScript(elementCssSelector: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsPresent(element(by.css(elementCssSelector)));
+        await browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
 
-    static async getText(elementFinder: ElementFinder) {
-        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        return elementFinder.getText();
+    static async getText(elementFinder: ElementFinder): Promise<string> {
+        const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+        if (present) {
+            return elementFinder.getText();
+        } else {
+            return '';
+        }
     }
 
-    static async getColor(elementFinder: ElementFinder) {
-        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        return elementFinder.getWebElement().getCssValue('color');
+    static async getArrayText(elementFinders: ElementArrayFinder): Promise<string> {
+        return elementFinders.getText();
     }
 
-    static async clearSendKeys(elementFinder: ElementFinder, text: string) {
-        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        elementFinder.click();
-        elementFinder.sendKeys('');
-        elementFinder.clear();
-
-        elementFinder.sendKeys(text);
+    static async getColor(elementFinder: ElementFinder): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        const webElem = await elementFinder.getWebElement();
+        return await webElem.getCssValue('color');
     }
 
-    static async checkIsDisabled(elementFinder: ElementFinder) {
-        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        expect(elementFinder.getAttribute('disabled')).toEqual('true');
-        return this;
+    static async clearWithBackSpace(elementFinder: ElementFinder) {
+        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        await elementFinder.click();
+        const value = await elementFinder.getAttribute('value');
+        for (let i = value.length; i >= 0; i--) {
+            await elementFinder.sendKeys(protractor.Key.BACK_SPACE);
+        }
     }
 
-    static async rightClick(elementFinder: ElementFinder) {
-        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        return browser.actions().click(elementFinder, protractor.Button.RIGHT).perform();
+    static async clearSendKeys(elementFinder: ElementFinder, text: string): Promise<void> {
+        await this.click(elementFinder);
+        await elementFinder.sendKeys('');
+        await elementFinder.clear();
+        await elementFinder.sendKeys(text);
     }
 
-    static async closeMenuAndDialogs() {
-        return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        const valueCheck = await elementFinder.getAttribute('disabled');
+        await expect(valueCheck).toEqual('true');
     }
 
-    static async closeDisabledMenu() {
+    static async rightClick(elementFinder: ElementFinder): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        await browser.actions().mouseMove(elementFinder).perform();
+        await browser.actions().click(elementFinder, protractor.Button.RIGHT).perform();
+    }
+
+    static async closeMenuAndDialogs(): Promise<void> {
+        const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
+        await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        await BrowserVisibility.waitUntilElementIsNotVisible(container);
+    }
+
+    static async closeDisabledMenu(): Promise<void> {
         // if the opened menu has only disabled items, pressing escape to close it won't work
-        return browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    static clickOnDropdownOption(option: string, dropDownElement: ElementFinder) {
-        this.click(dropDownElement);
-        BrowserVisibility.waitUntilElementIsVisible(element('div[class*="mat-menu-content"] button'));
+    static async clickOnDropdownOption(option: string, dropDownElement: ElementFinder): Promise<void> {
+        await this.click(dropDownElement);
+        await BrowserVisibility.waitUntilElementIsVisible(element('div[class*="mat-menu-content"] button'));
         const optionElement = element(by.cssContainingText('div[class*="mat-menu-content"] button', option));
-        BrowserActions.click(optionElement);
-        return this;
+        await this.click(optionElement);
     }
 
-    static clickOnSelectDropdownOption(option: string, dropDownElement: ElementFinder) {
-        this.click(dropDownElement);
+    static async clickOnSelectDropdownOption(option: string, dropDownElement: ElementFinder): Promise<void> {
+        await this.click(dropDownElement);
         const optionElement = element(by.cssContainingText('mat-option span.mat-option-text', option));
-        BrowserActions.click(optionElement);
-        return this;
+        await this.click(optionElement);
     }
 }

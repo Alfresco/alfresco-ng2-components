@@ -51,7 +51,7 @@ describe('Process List Test', () => {
     let appWithDateFieldId;
     let procWithDate, completedProcWithDate, completedProcWithUserWidget;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -81,15 +81,14 @@ describe('Process List Test', () => {
         const procWithDateTaskId = await apps.getProcessTaskId(this.alfrescoJsApi, completedProcWithDate.id);
         const procWithUserWidgetTaskId = await apps.getProcessTaskId(this.alfrescoJsApi, completedProcWithUserWidget.id);
 
-        await this.alfrescoJsApi.activiti.taskApi.completeTaskForm(procWithDateTaskId, {values: {label: null }});
-        await this.alfrescoJsApi.activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId, {values: {label: null }});
+        await this.alfrescoJsApi.activiti.taskApi.completeTaskForm(procWithDateTaskId.toString(), { values: { label: null } });
+        await this.alfrescoJsApi.activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.toString(), { values: { label: null } });
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appDateModel.id);
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appUserWidgetModel.id);
 
@@ -97,97 +96,95 @@ describe('Process List Test', () => {
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
 
-        done();
     });
 
-    beforeEach((done) => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/process-list');
-        done();
+    beforeEach(async () => {
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/process-list');
+
     });
 
-    it('[C286638] Should display all process by default', () => {
-        processListDemoPage.checkAppIdFieldIsDisplayed()
-            .checkProcessInstanceIdFieldIsDisplayed()
-            .checkProcessInstanceIdFieldIsDisplayed()
-            .checkSortFieldIsDisplayed()
-            .checkStateFieldIsDisplayed();
+    it('[C286638] Should display all process by default', async () => {
+        await processListDemoPage.checkAppIdFieldIsDisplayed();
+        await processListDemoPage.checkProcessInstanceIdFieldIsDisplayed();
+        await processListDemoPage.checkProcessInstanceIdFieldIsDisplayed();
+        await processListDemoPage.checkSortFieldIsDisplayed();
+        await processListDemoPage.checkStateFieldIsDisplayed();
     });
 
-    it('[C282006] Should be able to filter processes with App ID', () => {
-        processListDemoPage.addAppId('a');
+    it('[C282006] Should be able to filter processes with App ID', async () => {
+        await processListDemoPage.addAppId('a');
 
-        processListDemoPage.checkErrorMessageIsDisplayed(errorMessages.appIdNumber);
-        processListDemoPage.clickResetButton();
+        await processListDemoPage.checkErrorMessageIsDisplayed(errorMessages.appIdNumber);
+        await processListDemoPage.clickResetButton();
 
-        processListDemoPage.addAppId('12345');
+        await processListDemoPage.addAppId('12345');
 
-        processListDemoPage.checkNoProcessFoundIsDisplayed();
+        await processListDemoPage.checkNoProcessFoundIsDisplayed();
 
-        processListDemoPage.addAppId(appWithDateFieldId);
+        await processListDemoPage.addAppId(appWithDateFieldId);
 
-        processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
-        processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithDate);
+        await processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
+        await processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithDate);
 
-        processListDemoPage.checkProcessIsNotDisplayed(processName.procWithUserWidget);
-        processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
+        await processListDemoPage.checkProcessIsNotDisplayed(processName.procWithUserWidget);
+        await processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
     });
 
-    it('[C282015] Should be able to filter by Process Definition ID', () => {
-        processListDemoPage.addProcessDefinitionId(procWithDate.processDefinitionId);
+    it('[C282015] Should be able to filter by Process Definition ID', async () => {
+        await processListDemoPage.addProcessDefinitionId(procWithDate.processDefinitionId);
 
-        processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
-        processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithDate);
+        await processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
+        await processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithDate);
 
-        processListDemoPage.checkProcessIsNotDisplayed(processName.procWithUserWidget);
-        processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
+        await processListDemoPage.checkProcessIsNotDisplayed(processName.procWithUserWidget);
+        await processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
     });
 
-    it('[C282016] Should be able to filter by Process Instance ID', () => {
-        processListDemoPage.addProcessInstanceId(procWithDate.id);
+    it('[C282016] Should be able to filter by Process Instance ID', async () => {
+        await processListDemoPage.addProcessInstanceId(procWithDate.id);
 
-        processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
+        await processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
 
-        processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithDate);
-        processListDemoPage.checkProcessIsNotDisplayed(processName.procWithUserWidget);
-        processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
+        await processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithDate);
+        await processListDemoPage.checkProcessIsNotDisplayed(processName.procWithUserWidget);
+        await processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
     });
 
-    it('[C282017] Should be able to filter by Status', () => {
-        processListDemoPage.selectStateFilter('Active');
+    it('[C282017] Should be able to filter by Status', async () => {
+        await processListDemoPage.selectStateFilter('Active');
 
-        processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithDate);
-        processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
+        await processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithDate);
+        await processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
 
-        processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
-        processListDemoPage.checkProcessIsDisplayed(processName.procWithUserWidget);
+        await processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
+        await processListDemoPage.checkProcessIsDisplayed(processName.procWithUserWidget);
 
-        processListDemoPage.selectStateFilter('Completed');
+        await processListDemoPage.selectStateFilter('Completed');
 
-        processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithDate);
-        processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithUserWidget);
+        await processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithDate);
+        await processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithUserWidget);
 
-        processListDemoPage.checkProcessIsNotDisplayed(processName.procWithDate);
-        processListDemoPage.checkProcessIsNotDisplayed(processName.procWithUserWidget);
+        await processListDemoPage.checkProcessIsNotDisplayed(processName.procWithDate);
+        await processListDemoPage.checkProcessIsNotDisplayed(processName.procWithUserWidget);
 
-        processListDemoPage.selectStateFilter('All');
+        await processListDemoPage.selectStateFilter('All');
 
-        processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithDate);
-        processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithUserWidget);
-        processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
-        processListDemoPage.checkProcessIsDisplayed(processName.procWithUserWidget);
+        await processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithDate);
+        await processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithUserWidget);
+        await processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
+        await processListDemoPage.checkProcessIsDisplayed(processName.procWithUserWidget);
     });
 
-    it('[C282010] Should be able to sort by creation date', () => {
-        processListDemoPage.selectSorting('asc');
+    it('[C282010] Should be able to sort by creation date', async () => {
+        await processListDemoPage.selectSorting('asc');
 
-        processListDemoPage.getDisplayedProcessesNames().then((sortedProcessList) => {
-            expect(JSON.stringify(processList) === JSON.stringify(sortedProcessList)).toBe(true);
-        });
+        const sortedProcessListNamesAsc = await processListDemoPage.getDisplayedProcessesNames();
 
-        processListDemoPage.selectSorting('desc');
+        await expect(JSON.stringify(processList) === JSON.stringify(sortedProcessListNamesAsc)).toBe(true);
 
-        processListDemoPage.getDisplayedProcessesNames().then((sortedProcessList) => {
-            expect(JSON.stringify(processList.reverse()) === JSON.stringify(sortedProcessList)).toBe(true);
-        });
+        await processListDemoPage.selectSorting('desc');
+
+        const sortedProcessListNamesDesc = await processListDemoPage.getDisplayedProcessesNames();
+        await expect(JSON.stringify(processList.reverse()) === JSON.stringify(sortedProcessListNamesDesc)).toBe(true);
     });
 });

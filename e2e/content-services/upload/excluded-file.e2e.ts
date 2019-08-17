@@ -55,7 +55,7 @@ describe('Upload component - Excluded Files', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -69,42 +69,39 @@ describe('Upload component - Excluded Files', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        done();
+
     });
 
-    afterEach(async (done) => {
-        contentServicesPage.goToDocumentList();
+    afterEach(async () => {
+        await contentServicesPage.goToDocumentList();
 
-        done();
     });
 
-    it('[C279914] Should not allow upload default excluded files using D&D', () => {
-        contentServicesPage.checkDragAndDropDIsDisplayed();
+    it('[C279914] Should not allow upload default excluded files using D&D', async () => {
+        await contentServicesPage.checkDragAndDropDIsDisplayed();
 
         const dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
 
         const dragAndDrop = new DropActions();
 
-        dragAndDrop.dropFile(dragAndDropArea, iniExcludedFile.location);
+        await dragAndDrop.dropFile(dragAndDropArea, iniExcludedFile.location);
 
-        browser.driver.sleep(5000);
+        await browser.sleep(5000);
 
-        uploadDialog.dialogIsNotDisplayed();
+        await uploadDialog.dialogIsNotDisplayed();
 
-        contentServicesPage.checkContentIsNotDisplayed(iniExcludedFile.name);
+        await contentServicesPage.checkContentIsNotDisplayed(iniExcludedFile.name);
     });
 
-    it('[C260122] Should not allow upload default excluded files using Upload button', () => {
-        contentServicesPage
-            .uploadFile(iniExcludedFile.location)
-            .checkContentIsNotDisplayed(iniExcludedFile.name);
+    it('[C260122] Should not allow upload default excluded files using Upload button', async () => {
+        await contentServicesPage.uploadFile(iniExcludedFile.location);
+        await contentServicesPage.checkContentIsNotDisplayed(iniExcludedFile.name);
     });
 
     it('[C212862] Should not allow upload file excluded in the files extension of app.config.json', async () => {
@@ -113,11 +110,12 @@ describe('Upload component - Excluded Files', () => {
             'match-options': { 'nocase': true }
         }));
 
-        contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
 
-        contentServicesPage
-            .uploadFile(txtFileModel.location)
-            .checkContentIsNotDisplayed(txtFileModel.name);
+        await contentServicesPage
+            .uploadFile(txtFileModel.location);
+
+        await contentServicesPage.checkContentIsNotDisplayed(txtFileModel.name);
     });
 
     it('[C274688] Should extension type added as excluded and accepted not be uploaded', async () => {
@@ -126,14 +124,14 @@ describe('Upload component - Excluded Files', () => {
             'match-options': { 'nocase': true }
         }));
 
-        contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
 
-        uploadToggles.enableExtensionFilter();
-        browser.driver.sleep(1000);
-        uploadToggles.addExtension('.png');
+        await uploadToggles.enableExtensionFilter();
+        await browser.sleep(1000);
+        await uploadToggles.addExtension('.png');
 
-        contentServicesPage.uploadFile(pngFile.location);
-        browser.driver.sleep(1000);
-        contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
+        await contentServicesPage.uploadFile(pngFile.location);
+        await browser.sleep(1000);
+        await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
     });
 });

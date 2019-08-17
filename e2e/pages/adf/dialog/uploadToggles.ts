@@ -15,119 +15,97 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
-import { BrowserVisibility, FormControllersPage } from '@alfresco/adf-testing';
+import { browser, by, element, ElementFinder } from 'protractor';
+import { BrowserActions, BrowserVisibility, FormControllersPage } from '@alfresco/adf-testing';
 
 export class UploadToggles {
 
-    formControllersPage = new FormControllersPage();
-    multipleFileUploadToggle = element(by.id('adf-multiple-upload-switch'));
-    uploadFolderToggle = element(by.id('adf-folder-upload-switch'));
-    extensionFilterToggle = element(by.id('adf-extension-filter-upload-switch'));
-    maxSizeToggle = element(by.id('adf-max-size-filter-upload-switch'));
-    versioningToggle = element(by.id('adf-version-upload-switch'));
-    extensionAcceptedField = element(by.css('input[data-automation-id="accepted-files-type"]'));
-    maxSizeField = element(by.css('input[data-automation-id="max-files-size"]'));
-    disableUploadCheckbox = element(by.css('[id="adf-disable-upload"]'));
+    formControllersPage: FormControllersPage = new FormControllersPage();
+    multipleFileUploadToggle: ElementFinder = element(by.id('adf-multiple-upload-switch'));
+    uploadFolderToggle: ElementFinder = element(by.id('adf-folder-upload-switch'));
+    extensionFilterToggle: ElementFinder = element(by.id('adf-extension-filter-upload-switch'));
+    maxSizeToggle: ElementFinder = element(by.id('adf-max-size-filter-upload-switch'));
+    versioningToggle: ElementFinder = element(by.id('adf-version-upload-switch'));
+    extensionAcceptedField: ElementFinder = element(by.css('input[data-automation-id="accepted-files-type"]'));
+    maxSizeField: ElementFinder = element(by.css('input[data-automation-id="max-files-size"]'));
+    disableUploadCheckbox: ElementFinder = element(by.css('[id="adf-disable-upload"]'));
 
-    enableMultipleFileUpload() {
-        browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
-        this.formControllersPage.enableToggle(this.multipleFileUploadToggle);
-        return this;
+    async enableMultipleFileUpload(): Promise<void> {
+        await browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
+        await this.formControllersPage.enableToggle(this.multipleFileUploadToggle);
     }
 
-    disableMultipleFileUpload() {
-        this.formControllersPage.disableToggle(this.multipleFileUploadToggle);
-        return this;
+    async disableMultipleFileUpload(): Promise<void> {
+        await browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
+        await this.formControllersPage.disableToggle(this.multipleFileUploadToggle);
     }
 
-    enableFolderUpload() {
-        this.formControllersPage.enableToggle(this.uploadFolderToggle);
-        return this;
+    async enableFolderUpload(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.uploadFolderToggle);
     }
 
-    checkFolderUploadToggleIsEnabled() {
-        const enabledToggle = element(by.css('mat-slide-toggle[id="adf-folder-upload-switch"][class*="mat-checked"]'));
-        BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
-        return this;
+    async checkMultipleFileUploadToggleIsEnabled(): Promise<void> {
+        const enabledToggle: ElementFinder = element(by.css('mat-slide-toggle[id="adf-multiple-upload-switch"][class*="mat-checked"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
     }
 
-    checkMultipleFileUploadToggleIsEnabled() {
-        const enabledToggle = element(by.css('mat-slide-toggle[id="adf-multiple-upload-switch"][class*="mat-checked"]'));
-        BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
-        return this;
+    async checkMaxSizeToggleIsEnabled(): Promise<void> {
+        const enabledToggle: ElementFinder = element(by.css('mat-slide-toggle[id="adf-max-size-filter-upload-switch"][class*="mat-checked"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
     }
 
-    checkMaxSizeToggleIsEnabled() {
-        const enabledToggle = element(by.css('mat-slide-toggle[id="adf-max-size-filter-upload-switch"][class*="mat-checked"]'));
-        BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
-        return this;
+    async checkVersioningToggleIsEnabled(): Promise<void> {
+        const enabledToggle: ElementFinder = element(by.css('mat-slide-toggle[id="adf-version-upload-switch"][class*="mat-checked"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
     }
 
-    checkVersioningToggleIsEnabled() {
-        const enabledToggle = element(by.css('mat-slide-toggle[id="adf-version-upload-switch"][class*="mat-checked"]'));
-        BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
-        return this;
+    async disableFolderUpload(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.uploadFolderToggle);
     }
 
-    disableFolderUpload() {
-        this.formControllersPage.disableToggle(this.uploadFolderToggle);
-        return this;
+    async enableExtensionFilter(): Promise<void> {
+        await browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
+        await this.formControllersPage.enableToggle(this.extensionFilterToggle);
     }
 
-    enableExtensionFilter() {
-        browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
-        this.formControllersPage.enableToggle(this.extensionFilterToggle);
-        return this;
+    async disableExtensionFilter(): Promise<void> {
+        await browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
+        await this.formControllersPage.disableToggle(this.extensionFilterToggle);
     }
 
-    disableExtensionFilter() {
-        browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
-        this.formControllersPage.disableToggle(this.extensionFilterToggle);
-        return this;
+    async enableMaxSize(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.maxSizeToggle);
     }
 
-    enableMaxSize() {
-        this.formControllersPage.enableToggle(this.maxSizeToggle);
-        return this;
+    async disableMaxSize(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.maxSizeToggle);
     }
 
-    disableMaxSize() {
-        this.formControllersPage.disableToggle(this.maxSizeToggle);
-        return this;
+    async enableVersioning(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.versioningToggle);
     }
 
-    enableVersioning() {
-        this.formControllersPage.enableToggle(this.versioningToggle);
-        return this;
+    async disableVersioning(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.versioningToggle);
     }
 
-    disableVersioning() {
-        this.formControllersPage.disableToggle(this.versioningToggle);
-        return this;
+    async clickCheckboxDisableUpload(): Promise<void> {
+        await BrowserActions.click(this.disableUploadCheckbox);
     }
 
-    clickCheckboxDisableUpload() {
-        return this.disableUploadCheckbox.click();
+    async addExtension(extension): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.extensionAcceptedField);
+        await this.extensionAcceptedField.sendKeys(',' + extension);
     }
 
-    addExtension(extension) {
-        BrowserVisibility.waitUntilElementIsVisible(this.extensionAcceptedField);
-        this.extensionAcceptedField.sendKeys(',' + extension);
+    async addMaxSize(size): Promise<void> {
+        await this.clearText();
+        await this.maxSizeField.sendKeys(size);
     }
 
-    addMaxSize(size) {
-        this.clearText();
-        this.maxSizeField.sendKeys(size);
-    }
-
-    clearText() {
-        BrowserVisibility.waitUntilElementIsVisible(this.maxSizeField);
-        const deferred = protractor.promise.defer();
-        this.maxSizeField.clear().then(() => {
-            this.maxSizeField.sendKeys(protractor.Key.ESCAPE);
-        });
-        return deferred.promise;
+    async clearText(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.maxSizeField);
+        await BrowserActions.clearSendKeys(this.maxSizeField, '');
     }
 
 }

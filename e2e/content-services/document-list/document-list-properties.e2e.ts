@@ -29,7 +29,7 @@ describe('Document List Component - Properties', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const navigationBarPage = new NavigationBarPage();
+    const navigationBar = new NavigationBarPage();
 
     let subFolder, parentFolder;
     this.alfrescoJsApi = new AlfrescoApi({
@@ -40,13 +40,13 @@ describe('Document List Component - Properties', () => {
     let acsUser = null;
 
     const pngFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    describe('Allow drop files property', async () => {
+    describe('Allow drop files property', () => {
 
-        beforeEach(async (done) => {
+        beforeEach(async () => {
             acsUser = new AcsUserModel();
 
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -61,46 +61,44 @@ describe('Document List Component - Properties', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            done();
         });
 
-        afterEach(async (done) => {
+        afterEach(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await uploadActions.deleteFileOrFolder(subFolder.entry.id);
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
-            done();
+
         });
 
-        it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', () => {
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.doubleClickRow(parentFolder.entry.name);
+        it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', async () => {
+            await navigationBar.clickContentServicesButton();
+            await contentServicesPage.doubleClickRow(parentFolder.entry.name);
 
-            contentServicesPage.disableDropFilesInAFolder();
+            await contentServicesPage.disableDropFilesInAFolder();
 
             const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
 
             const dragAndDrop = new DropActions();
-            dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
-
-            contentServicesPage.checkContentIsDisplayed(pngFile.name);
-            contentServicesPage.doubleClickRow(subFolder.entry.name);
-            contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
+            await dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
+            await contentServicesPage.checkContentIsDisplayed(pngFile.name);
+            await contentServicesPage.doubleClickRow(subFolder.entry.name);
+            await contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
         });
 
-        it('[C91319] Should allow upload content on a folder row if allowDropFiles is true', () => {
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.doubleClickRow(parentFolder.entry.name);
+        it('[C91319] Should allow upload content on a folder row if allowDropFiles is true', async () => {
+            await navigationBar.clickContentServicesButton();
+            await contentServicesPage.doubleClickRow(parentFolder.entry.name);
 
-            contentServicesPage.enableDropFilesInAFolder();
+            await contentServicesPage.enableDropFilesInAFolder();
 
             const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
 
             const dragAndDrop = new DropActions();
-            dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
+            await dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
 
-            contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
-            contentServicesPage.doubleClickRow(subFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(pngFile.name);
+            await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
+            await contentServicesPage.doubleClickRow(subFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(pngFile.name);
         });
     });
 });

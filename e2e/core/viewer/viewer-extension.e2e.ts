@@ -34,9 +34,9 @@ describe('Viewer', () => {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
     const acsUser = new AcsUserModel();
@@ -48,7 +48,7 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.JS.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -69,30 +69,27 @@ describe('Viewer', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(jsFileUploaded.entry.id);
-        await navigationBarPage.clickLogoutButton();
-        done();
     });
 
     describe('Viewer extension', () => {
 
-        it('[C297698] Should be able to add an extension for code editor viewer', () => {
-            navigationBarPage.clickAboutButton();
+        it('[C297698] Should be able to add an extension for code editor viewer', async () => {
+            await navigationBarPage.clickAboutButton();
 
-            monacoExtensionPage.checkMonacoPluginIsDisplayed();
+            await monacoExtensionPage.checkMonacoPluginIsDisplayed();
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
-            contentServicesPage.waitForTableBody();
-            contentServicesPage.checkContentIsDisplayed(jsFileInfo.name);
-            contentServicesPage.doubleClickRow(jsFileInfo.name);
+            await contentServicesPage.waitForTableBody();
+            await contentServicesPage.checkContentIsDisplayed(jsFileInfo.name);
+            await contentServicesPage.doubleClickRow(jsFileInfo.name);
 
-            viewerPage.checkCodeViewerIsDisplayed();
+            await viewerPage.checkCodeViewerIsDisplayed();
         });
     });
 });

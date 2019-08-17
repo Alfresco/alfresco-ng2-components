@@ -1,21 +1,16 @@
 const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
-const jasmineReporters = require('jasmine-reporters');
 const retry = require('protractor-retry').retry;
 const tsConfig = require('./e2e/tsconfig.e2e.json');
 const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 const TestConfig = require('./e2e/test.config');
 const failFast = require('./e2e/protractor/fail-fast');
-
 const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
-const { uploadScreenshot, saveReport } = require('./e2e/protractor/save-remote');
-
+const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
-const fs = require('fs');
-const rimraf = require('rimraf');
+
 const projectRoot = path.resolve(__dirname);
-const width = 1366;
-const height = 768;
+const width = 1366, height = 768;
 
 let load_env_file = function () {
     let ENV_FILE = process.env.ENV_FILE;
@@ -32,18 +27,17 @@ let BROWSER_RUN = !!process.env.BROWSER_RUN;
 let FOLDER = process.env.FOLDER || '';
 let SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 let DIRECT_CONNECCT = !SELENIUM_SERVER;
-let SELENIUM_PROMISE_MANAGER = parseInt(process.env.SELENIUM_PROMISE_MANAGER);
 let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
 let LIST_SPECS = process.env.LIST_SPECS || [];
-let LOG = process.env.LOG ? true : false;
+let LOG = !!process.env.LOG;
 let arraySpecs = [];
 
 if (LOG) {
     console.log('======= PROTRACTOR CONFIGURATION ====== ');
-    console.log('SAVE_SCREENSHOT : ' + SAVE_SCREENSHOT);
     console.log('BROWSER_RUN : ' + BROWSER_RUN);
+    console.log('SAVE_SCREENSHOT : ' + SAVE_SCREENSHOT);
     console.log('FOLDER : ' + FOLDER);
     console.log('MAXINSTANCES : ' + MAXINSTANCES);
     console.log('LIST_SPECS : ' + LIST_SPECS);
@@ -51,13 +45,12 @@ if (LOG) {
 }
 
 let browser_options = function () {
-    let args_options = [];
+    let args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
 
-    if (BROWSER_RUN === true) {
-        args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
-    } else {
-        args_options = ['--incognito', '--headless', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
+    if (BROWSER_RUN !== true) {
+        args_options.push('--headless') ;
     }
+
     return args_options;
 };
 
@@ -140,7 +133,7 @@ exports.config = {
      */
     seleniumAddress: SELENIUM_SERVER,
 
-    SELENIUM_PROMISE_MANAGER: SELENIUM_PROMISE_MANAGER,
+    SELENIUM_PROMISE_MANAGER: false,
 
     plugins: [{
         package: 'jasmine2-protractor-utils',
@@ -150,15 +143,6 @@ exports.config = {
         clearFoldersBeforeTest: true,
         screenshotPath: `${projectRoot}/e2e-output/screenshots/`
     }],
-
-    postTest(results) {
-        browser.manage().logs()
-            .get('browser').then(function (browserLog) {
-            console.log('log: ' +
-                require('util').inspect(browserLog));
-        });
-        retry.onCleanUp(results);
-    },
 
     onCleanUp(results) {
         retry.onCleanUp(results);
@@ -195,15 +179,6 @@ exports.config = {
             })
         );
 
-        let generatedSuiteName = Math.random().toString(36).substr(2, 5);
-        let junitReporter = new jasmineReporters.JUnitXmlReporter({
-            consolidateAll: true,
-            savePath: `${projectRoot}/e2e-output/junit-report`,
-            filePrefix: 'results.xml-' + generatedSuiteName,
-        });
-        jasmine.getEnv().addReporter(junitReporter);
-
-
         return browser.driver.executeScript(disableCSSAnimation);
 
         function disableCSSAnimation() {
@@ -225,18 +200,7 @@ exports.config = {
 
     beforeLaunch: function () {
         if (SAVE_SCREENSHOT) {
-            let reportsFolder = `${projectRoot}/e2e-output/junit-report/`;
-
-            fs.exists(reportsFolder, function (exists, error) {
-                if (exists) {
-                    rimraf(reportsFolder, function (err) {
-                    });
-                }
-
-                if (error) {
-                    console.error('[ERROR] fs', error);
-                }
-            });
+            cleanReportFolder();
         }
     },
 

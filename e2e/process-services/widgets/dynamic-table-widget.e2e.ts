@@ -38,7 +38,7 @@ describe('Dynamic Table widget ', () => {
     describe('with Date Time Widget App', () => {
         const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             const users = new UsersActions();
 
             alfrescoJsApi = new AlfrescoApi({
@@ -59,39 +59,39 @@ describe('Dynamic Table widget ', () => {
             });
             process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-            done();
+
         });
 
         beforeEach(async () => {
             const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             await BrowserActions.getUrl(urlToNavigateTo);
-            taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-            taskPage.formFields().checkFormIsDisplayed();
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.formFields().checkFormIsDisplayed();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-            done();
+
         });
 
-        it('[C276729] Should be possible to set visibility properties for Dynamic Table', () => {
-            taskPage.formFields().checkWidgetIsHidden(app.FIELD.dynamic_table_age_id);
-            widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-            taskPage.formFields().checkWidgetIsVisible(app.FIELD.dynamic_table_age_id);
+        it('[C276729] Should be possible to set visibility properties for Dynamic Table', async () => {
+            await taskPage.formFields().checkWidgetIsHidden(app.FIELD.dynamic_table_age_id);
+            await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+            await taskPage.formFields().checkWidgetIsVisible(app.FIELD.dynamic_table_age_id);
         });
 
-        it('[C279349] Should be able to have a Date Time widget in a Dynamic Table widget', () => {
-            widget.dynamicTable().clickAddButton();
-            widget.dateTimeWidget().openDatepicker(app.FIELD.dateTime_input_id);
-            widget.dateTimeWidget().selectDay('10');
-            widget.dateTimeWidget().selectHour('8');
-            widget.dateTimeWidget().selectMinute('30');
-            widget.dateTimeWidget().clearDateTimeInput(app.FIELD.dateTime_input_id);
+        it('[C279349] Should be able to have a Date Time widget in a Dynamic Table widget', async () => {
+            await widget.dynamicTable().clickAddButton();
+            await widget.dateTimeWidget().openDatepicker(app.FIELD.dateTime_input_id);
+            await widget.dateTimeWidget().selectDay('10');
+            await widget.dateTimeWidget().selectHour('8');
+            await widget.dateTimeWidget().selectMinute('30');
+            await widget.dateTimeWidget().clearDateTimeInput(app.FIELD.dateTime_input_id);
 
-            widget.dynamicTable().clickSaveButton();
-            widget.dynamicTable().getTableRow(0);
+            await widget.dynamicTable().clickSaveButton();
+            await widget.dynamicTable().getTableRow(0);
         });
     });
 
@@ -99,7 +99,7 @@ describe('Dynamic Table widget ', () => {
 
         const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             const users = new UsersActions();
 
             alfrescoJsApi = new AlfrescoApi({
@@ -120,45 +120,45 @@ describe('Dynamic Table widget ', () => {
             });
             process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-            done();
+
         });
 
-        beforeEach(() => {
+        beforeEach(async () => {
             const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-            BrowserActions.getUrl(urlToNavigateTo);
-            taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-            taskPage.formFields().checkFormIsDisplayed();
+            await BrowserActions.getUrl(urlToNavigateTo);
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.formFields().checkFormIsDisplayed();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-            done();
+
         });
 
-        it('[C260407] Should be able to add/delete/update row in Dynamic Table widget', () => {
+        it('[C260407] Should be able to add/delete/update row in Dynamic Table widget', async () => {
 
-            widget.dynamicTable().clickAddRow();
-            widget.dynamicTable().setDatatableInput('User1');
-            widget.dynamicTable().clickSaveButton();
-            expect(widget.dynamicTable().getTableRowText(0)).toEqual('User1');
+            await widget.dynamicTable().clickAddRow();
+            await widget.dynamicTable().setDatatableInput('User1');
+            await widget.dynamicTable().clickSaveButton();
+            await expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User1');
 
-            widget.dynamicTable().clickTableRow(0);
-            widget.dynamicTable().clickEditButton();
-            widget.dynamicTable().setDatatableInput('User2');
-            widget.dynamicTable().clickCancelButton();
-            expect(widget.dynamicTable().getTableRowText(0)).toEqual('User1');
+            await widget.dynamicTable().clickTableRow(0);
+            await widget.dynamicTable().clickEditButton();
+            await widget.dynamicTable().setDatatableInput('User2');
+            await widget.dynamicTable().clickCancelButton();
+            await expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User1');
 
-            widget.dynamicTable().clickEditButton();
-            widget.dynamicTable().setDatatableInput('User2');
-            widget.dynamicTable().clickSaveButton();
-            expect(widget.dynamicTable().getTableRowText(0)).toEqual('User2');
+            await widget.dynamicTable().clickEditButton();
+            await widget.dynamicTable().setDatatableInput('User2');
+            await widget.dynamicTable().clickSaveButton();
+            await expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User2');
 
-            widget.dynamicTable().clickAddRow();
-            widget.dynamicTable().setDatatableInput('User3');
-            widget.dynamicTable().clickCancelButton();
-            widget.dynamicTable().checkTableRowIsNotVisible(1);
+            await widget.dynamicTable().clickAddRow();
+            await widget.dynamicTable().setDatatableInput('User3');
+            await widget.dynamicTable().clickCancelButton();
+            await widget.dynamicTable().checkTableRowIsNotVisible(1);
         });
     });
 

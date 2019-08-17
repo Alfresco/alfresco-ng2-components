@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class SettingsPage {
 
-    settingsURL = browser.baseUrl + '/settings';
+    settingsURL: string = browser.baseUrl + '/settings';
     providerDropdown = element(by.css('mat-select[id="adf-provider-selector"] div[class="mat-select-arrow-wrapper"]'));
     ecmAndBpm = {
         option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"ALL")]')),
@@ -39,47 +39,45 @@ export class SettingsPage {
         option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"OAUTH")]')),
         text: 'OAUTH'
     };
-    selectedOption = element(by.css('span[class*="mat-select-value-text"]'));
-    ecmText = element(by.css('input[data-automation-id*="ecmHost"]'));
-    bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
-    clientIdText = element(by.css('input[id="clientId"]'));
-    authHostText = element(by.css('input[id="oauthHost"]'));
-    logoutUrlText = element(by.css('input[id="logout-url"]'));
-    basicAuthRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
-    identityHostText = element(by.css('input[id="identityHost"]'));
-    ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
-    silentLoginToggleLabel = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
-    silentLoginToggleElement = element(by.css('mat-slide-toggle[name="silentLogin"]'));
-    implicitFlowLabel = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
-    implicitFlowElement = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
-    applyButton = element(by.css('button[data-automation-id*="host-button"]'));
-    backButton = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
-    validationMessage = element(by.cssContainingText('mat-error', 'This field is required'));
+    selectedOption: ElementFinder = element(by.css('span[class*="mat-select-value-text"]'));
+    ecmText: ElementFinder = element(by.css('input[data-automation-id*="ecmHost"]'));
+    bpmText: ElementFinder = element(by.css('input[data-automation-id*="bpmHost"]'));
+    clientIdText: ElementFinder = element(by.css('input[id="clientId"]'));
+    authHostText: ElementFinder = element(by.css('input[id="oauthHost"]'));
+    logoutUrlText: ElementFinder = element(by.css('input[id="logout-url"]'));
+    basicAuthRadioButton: ElementFinder = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
+    identityHostText: ElementFinder = element(by.css('input[id="identityHost"]'));
+    ssoRadioButton: ElementFinder = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
+    silentLoginToggleLabel: ElementFinder = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
+    silentLoginToggleElement: ElementFinder = element(by.css('mat-slide-toggle[name="silentLogin"]'));
+    implicitFlowLabel: ElementFinder = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
+    implicitFlowElement: ElementFinder = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
+    applyButton: ElementFinder = element(by.css('button[data-automation-id*="host-button"]'));
+    backButton: ElementFinder = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
+    validationMessage: ElementFinder = element(by.cssContainingText('mat-error', 'This field is required'));
 
-    goToSettingsPage() {
-        browser.waitForAngularEnabled(true);
-        browser.driver.get(this.settingsURL);
-        return BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
+    async goToSettingsPage(): Promise<void> {
+        await browser.get(this.settingsURL);
+        await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
     }
 
-    setProvider(option, selected) {
-        BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
-        this.providerDropdown.click();
-        BrowserVisibility.waitUntilElementIsVisible(option);
-        option.click();
-        return expect(this.selectedOption.getText()).toEqual(selected);
+    async setProvider(option, selected): Promise<void> {
+        await BrowserActions.click(this.providerDropdown);
+        await BrowserActions.click(option);
+        const selectedOptionText = await BrowserActions.getText(this.selectedOption);
+        await expect(selectedOptionText).toEqual(selected);
     }
 
-    getSelectedOptionText() {
+    async getSelectedOptionText(): Promise<string> {
         return BrowserActions.getText(this.selectedOption);
     }
 
-    getBpmHostUrl() {
-        return this.bpmText.getAttribute('value');
+    async getBpmHostUrl() {
+        return await this.bpmText.getAttribute('value');
     }
 
-    getEcmHostUrl() {
-        return this.ecmText.getAttribute('value');
+    async getEcmHostUrl() {
+        return await this.ecmText.getAttribute('value');
     }
 
     getBpmOption() {
@@ -94,221 +92,185 @@ export class SettingsPage {
         return this.ecmAndBpm.option;
     }
 
-    setProviderEcmBpm() {
-        this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        this.clickApply();
-        return this;
+    async setProviderEcmBpm() {
+        await this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
+        await this.clickApply();
     }
 
-    setProviderBpm() {
-        this.setProvider(this.bpm.option, this.bpm.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        this.clickApply();
-        return this;
+    async setProviderBpm() {
+        await this.setProvider(this.bpm.option, this.bpm.text);
+        await this.clickApply();
     }
 
-    setProviderEcm() {
-        this.setProvider(this.ecm.option, this.ecm.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        expect(this.bpmText.isPresent()).toBeFalsy();
-        this.clickApply();
-        return this;
+    async setProviderEcm() {
+        await this.setProvider(this.ecm.option, this.ecm.text);
+        await this.clickApply();
     }
 
-    setProviderOauth() {
-        this.goToSettingsPage();
-        this.setProvider(this.oauth.option, this.oauth.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        expect(this.authHostText.isPresent()).toBeTruthy();
-        this.clickApply();
-        return this;
+    async setProviderOauth() {
+        await this.goToSettingsPage();
+        await this.setProvider(this.oauth.option, this.oauth.text);
+        await this.clickApply();
     }
 
     async clickBackButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.backButton);
-        await this.backButton.click();
+        await BrowserActions.click(this.backButton);
     }
 
     async clickSsoRadioButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.ssoRadioButton);
-        await this.ssoRadioButton.click();
+        await BrowserActions.click(this.ssoRadioButton);
     }
 
-    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUr: string = '/logout') {
+    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUrl: string = '/logout') {
         await this.goToSettingsPage();
-        this.setProvider(this.ecm.option, this.ecm.text);
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.bpmText);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        this.clickSsoRadioButton();
-        this.setContentServicesURL(contentServiceURL);
-        this.setAuthHost(authHost);
-        this.setIdentityHost(identityHost);
-        this.setSilentLogin(silentLogin);
-        this.setImplicitFlow(implicitFlow);
-        this.setLogoutUrl(logoutUr);
+        await this.setProvider(this.ecm.option, this.ecm.text);
+        await this.clickSsoRadioButton();
+        await this.setContentServicesURL(contentServiceURL);
+        await this.setAuthHost(authHost);
+        await this.setIdentityHost(identityHost);
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
+        await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
         await browser.sleep(1000);
     }
 
     async setProviderBpmSso(processServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true) {
         await this.goToSettingsPage();
-        this.setProvider(this.bpm.option, this.bpm.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.ecmText);
-        this.clickSsoRadioButton();
-        this.setClientId();
-        this.setProcessServicesURL(processServiceURL);
-        this.setAuthHost(authHost);
-        this.setIdentityHost(identityHost);
-        this.setSilentLogin(silentLogin);
-        this.setImplicitFlow(implicitFlow);
+        await this.setProvider(this.bpm.option, this.bpm.text);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.ecmText);
+        await this.clickSsoRadioButton();
+        await this.setClientId();
+        await this.setProcessServicesURL(processServiceURL);
+        await this.setAuthHost(authHost);
+        await this.setIdentityHost(identityHost);
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
         await this.clickApply();
         await browser.sleep(1000);
     }
 
     async setProviderEcmBpmSso(contentServicesURL: string, processServiceURL, authHost, identityHost, clientId: string, silentLogin = true, implicitFlow = true) {
         await this.goToSettingsPage();
-        this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        this.clickSsoRadioButton();
-        this.setClientId(clientId);
-        this.setContentServicesURL(contentServicesURL);
-        this.setProcessServicesURL(processServiceURL);
-        this.setAuthHost(authHost);
-        this.setIdentityHost(identityHost);
-        this.setSilentLogin(silentLogin);
-        this.setImplicitFlow(implicitFlow);
+        await this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
+        await this.clickSsoRadioButton();
+        await this.setClientId(clientId);
+        await this.setContentServicesURL(contentServicesURL);
+        await this.setProcessServicesURL(processServiceURL);
+        await this.setAuthHost(authHost);
+        await this.setIdentityHost(identityHost);
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
         await this.clickApply();
         await browser.sleep(1000);
     }
 
     async setLogoutUrl(logoutUrl) {
-        BrowserVisibility.waitUntilElementIsPresent(this.logoutUrlText);
-        this.logoutUrlText.clear();
-        this.logoutUrlText.sendKeys(logoutUrl);
+        await BrowserVisibility.waitUntilElementIsPresent(this.logoutUrlText);
+        await BrowserActions.clearSendKeys(this.logoutUrlText, logoutUrl);
     }
 
     async setProcessServicesURL(processServiceURL) {
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        await BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
     }
 
     async setClientId(clientId: string = browser.params.config.oauth2.clientId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.clientIdText);
-        this.clientIdText.clear();
-        this.clientIdText.sendKeys(clientId);
+        await BrowserActions.clearSendKeys(this.clientIdText, clientId);
     }
 
     async setContentServicesURL(contentServiceURL) {
-        BrowserVisibility.waitUntilElementIsClickable(this.ecmText);
-        BrowserActions.clearSendKeys(this.ecmText, contentServiceURL);
+        await BrowserActions.clearSendKeys(this.ecmText, contentServiceURL);
     }
 
-    clearContentServicesURL() {
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        this.ecmText.clear();
-        this.ecmText.sendKeys('a');
-        this.ecmText.sendKeys(protractor.Key.BACK_SPACE);
+    async clearContentServicesURL() {
+        await BrowserActions.clearWithBackSpace(this.ecmText);
     }
 
-    clearProcessServicesURL() {
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        this.bpmText.clear();
-        this.bpmText.sendKeys('a');
-        this.bpmText.sendKeys(protractor.Key.BACK_SPACE);
+    async clearProcessServicesURL() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        await BrowserActions.clearWithBackSpace(this.bpmText);
     }
 
     async setAuthHost(authHostURL) {
-        BrowserVisibility.waitUntilElementIsVisible(this.authHostText);
-        await this.authHostText.clear();
-        await this.authHostText.sendKeys(authHostURL);
+        await BrowserVisibility.waitUntilElementIsVisible(this.authHostText);
+        await BrowserActions.clearSendKeys(this.authHostText, authHostURL);
     }
 
     async setIdentityHost(identityHost) {
-        BrowserVisibility.waitUntilElementIsVisible(this.identityHostText);
-        await this.identityHostText.clear();
-        await this.identityHostText.sendKeys(identityHost);
+        await BrowserVisibility.waitUntilElementIsVisible(this.identityHostText);
+        await BrowserActions.clearSendKeys(this.identityHostText, identityHost);
     }
 
     async clickApply() {
-        BrowserVisibility.waitUntilElementIsVisible(this.applyButton);
-        await this.applyButton.click();
+        await BrowserActions.click(this.applyButton);
     }
 
     async setSilentLogin(enableToggle) {
-        BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
+        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
 
         const isChecked = (await this.silentLoginToggleElement.getAttribute('class')).includes('mat-checked');
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            return this.silentLoginToggleLabel.click();
+            await BrowserActions.click(this.silentLoginToggleLabel);
         }
-
-        return Promise.resolve();
     }
 
     async setImplicitFlow(enableToggle) {
-        BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
+        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
 
         const isChecked = (await this.implicitFlowElement.getAttribute('class')).includes('mat-checked');
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            return this.implicitFlowLabel.click();
+            await BrowserActions.click(this.implicitFlowLabel);
         }
-
-        return Promise.resolve();
     }
 
-    checkApplyButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id*="host-button"]:disabled')));
-        return this;
+    async checkApplyButtonIsDisabled() {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id*="host-button"]:disabled')));
     }
 
-    checkProviderDropdownIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
+    async checkProviderDropdownIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
     }
 
-    checkValidationMessageIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.validationMessage);
+    async checkValidationMessageIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.validationMessage);
     }
 
-    checkProviderOptions() {
-        BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
-        this.providerDropdown.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmAndBpm.option);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecm.option);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpm.option);
+    async checkProviderOptions() {
+        await BrowserActions.click(this.providerDropdown);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmAndBpm.option);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecm.option);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpm.option);
     }
 
     getBasicAuthRadioButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.basicAuthRadioButton);
         return this.basicAuthRadioButton;
     }
 
     getSsoRadioButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.ssoRadioButton);
         return this.ssoRadioButton;
     }
 
     getBackButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.backButton);
         return this.backButton;
     }
 
     getApplyButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.applyButton);
         return this.applyButton;
     }
 
-    checkBasicAuthRadioIsSelected() {
-        expect(this.getBasicAuthRadioButton().getAttribute('class')).toContain('mat-radio-checked');
+    async checkBasicAuthRadioIsSelected() {
+        const radioButton = this.getBasicAuthRadioButton();
+        await expect(await radioButton.getAttribute('class')).toContain('mat-radio-checked');
     }
 
-    checkSsoRadioIsNotSelected() {
-        expect(this.getSsoRadioButton().getAttribute('class')).not.toContain('mat-radio-checked');
+    async checkSsoRadioIsNotSelected() {
+        const radioButton = this.getSsoRadioButton();
+        await expect(await radioButton.getAttribute('class')).not.toContain('mat-radio-checked');
     }
 }

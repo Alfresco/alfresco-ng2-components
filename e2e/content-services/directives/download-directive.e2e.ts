@@ -35,28 +35,28 @@ describe('Version component actions', () => {
     const acsUser = new AcsUserModel();
 
     const txtFileComma = new FileModel({
-        'name': 'comma,name',
-        'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
+        name: 'comma,name',
+        location: resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
     const txtFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
+        name: resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
     const file0BytesModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        name: resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     const folderInfo = new FolderModel({
-        'name': 'myFolder',
-        'location': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+        name: 'myFolder',
+        location: resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
     const folderSecond = new FolderModel({
-        'name': 'myrSecondFolder',
-        'location': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+        name: 'myrSecondFolder',
+        location: resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
     this.alfrescoJsApi = new AlfrescoApi({
@@ -65,7 +65,7 @@ describe('Version component actions', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -82,10 +82,9 @@ describe('Version component actions', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.clickContentServicesButton();
-        contentServicesPage.waitForTableBody();
+        await navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.waitForTableBody();
 
-        done();
     });
 
     afterAll(async () => {
@@ -93,48 +92,48 @@ describe('Version component actions', () => {
     });
 
     afterEach(async () => {
-        BrowserVisibility.waitUntilDialogIsClose();
+        await BrowserVisibility.waitUntilDialogIsClose();
     });
 
-    it('[C260083] Download files - Different size values', () => {
-        contentListPage.selectRow(txtFileModel.name);
-        contentServicesPage.clickDownloadButton();
-        FileBrowserUtil.isFileDownloaded(txtFileModel.name);
-        BrowserVisibility.waitUntilDialogIsClose();
+    it('[C260083] Download files - Different size values', async () => {
+        await contentListPage.selectRow(txtFileModel.name);
+        await contentServicesPage.clickDownloadButton();
+        await FileBrowserUtil.isFileDownloaded(txtFileModel.name);
+        await BrowserVisibility.waitUntilDialogIsClose();
 
-        contentListPage.selectRow(file0BytesModel.name);
-        contentServicesPage.clickDownloadButton();
-        FileBrowserUtil.isFileDownloaded(file0BytesModel.name);
+        await contentListPage.selectRow(file0BytesModel.name);
+        await contentServicesPage.clickDownloadButton();
+        await FileBrowserUtil.isFileDownloaded(file0BytesModel.name);
     });
 
-    it('[C260084] Download folder', () => {
-        contentListPage.selectRow(folderInfo.name);
-        contentServicesPage.clickDownloadButton();
-        FileBrowserUtil.isFileDownloaded(folderInfo.name + '.zip');
+    it('[C260084] Download folder', async () => {
+        await contentListPage.selectRow(folderInfo.name);
+        await contentServicesPage.clickDownloadButton();
+        await FileBrowserUtil.isFileDownloaded(folderInfo.name + '.zip');
     });
 
-    it('[C261032] File and Folder', () => {
-        contentServicesPage.clickMultiSelectToggle();
-        contentServicesPage.checkAcsContainer();
-        contentListPage.dataTablePage().checkAllRows();
-        contentServicesPage.clickDownloadButton();
-        FileBrowserUtil.isFileDownloaded('archive.zip');
+    it('[C261032] File and Folder', async () => {
+        await contentServicesPage.clickMultiSelectToggle();
+        await contentServicesPage.checkAcsContainer();
+        await contentListPage.dataTablePage().checkAllRows();
+        await contentServicesPage.clickDownloadButton();
+        await FileBrowserUtil.isFileDownloaded('archive.zip');
     });
 
-    it('[C261033] Folder and Folder', () => {
-        contentListPage.selectRow(folderInfo.name);
-        contentListPage.selectRow(folderSecond.name);
+    it('[C261033] Folder and Folder', async () => {
+        await contentListPage.selectRow(folderInfo.name);
+        await contentListPage.selectRow(folderSecond.name);
 
-        contentServicesPage.clickDownloadButton();
+        await contentServicesPage.clickDownloadButton();
 
-        FileBrowserUtil.isFileDownloaded('archive.zip');
-        BrowserVisibility.waitUntilDialogIsClose();
+        await FileBrowserUtil.isFileDownloaded('archive.zip');
+        await BrowserVisibility.waitUntilDialogIsClose();
     });
 
-    it('[C277757] Download file - Comma in file name', () => {
-        contentListPage.selectRow(txtFileComma.name);
-        contentServicesPage.clickDownloadButton();
-        FileBrowserUtil.isFileDownloaded(txtFileComma.name);
+    it('[C277757] Download file - Comma in file name', async () => {
+        await contentListPage.selectRow(txtFileComma.name);
+        await contentServicesPage.clickDownloadButton();
+        await FileBrowserUtil.isFileDownloaded(txtFileComma.name);
     });
 
 });

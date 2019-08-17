@@ -22,7 +22,8 @@ branches:
 
 # TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
-  - name: Warm Up Cache & Lint & Build Dist
+  - name: Warm Up Cache
+  - name: Lint & Build Dist
   - name: Unit test
   - name: e2e Test
   - name: Deploy PR
@@ -41,10 +42,13 @@ before_install:
 
 jobs:
     include:
-        - stage: Warm Up Cache & Lint & Build Dist
-          name:  Warm Up Cache & Lint & Build Dist
-          script:
-             ./scripts/travis/build/build.sh
+        - stage: Lint & Build Dist
+          name:  Build Dist
+          script: ./scripts/travis/build/build.sh || exit 1;
+        - stage: Lint & Build Dist
+          name:  Lint
+          script: ./scripts/lint.sh || exit 1;
+
         - stage: Unit test
           name: Unit test content
           script:  ./scripts/travis/unit-test/content.sh

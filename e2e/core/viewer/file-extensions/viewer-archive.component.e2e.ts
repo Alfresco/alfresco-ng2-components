@@ -47,24 +47,19 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_location
     });
 
-    beforeAll(async (done) => {
-
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(8),
             visibility: 'PUBLIC'
         });
-
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        done();
     });
 
     afterAll(async () => {
@@ -75,32 +70,28 @@ describe('Viewer', () => {
         let uploadedArchives;
         let archiveFolderUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             archiveFolderUploaded = await uploadActions.createFolder(archiveFolderInfo.name, '-my-');
-
             uploadedArchives = await uploadActions.uploadFolder(archiveFolderInfo.location, archiveFolderUploaded.entry.id);
-
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(archiveFolderUploaded.entry.id);
-            done();
+
         });
 
-        it('[C260517] Should be possible to open any Archive file', () => {
-            contentServicesPage.doubleClickRow('archive');
-
-            uploadedArchives.forEach((currentFile) => {
-                if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkFileIsLoaded();
-                    viewerPage.clickCloseButton();
+        it('[C260517] Should be possible to open any Archive file', async () => {
+            await contentServicesPage.doubleClickRow('archive');
+            for (const file of uploadedArchives) {
+                if (file.entry.name !== '.DS_Store') {
+                    await contentServicesPage.doubleClickRow(file.entry.name);
+                    await viewerPage.checkFileIsLoaded();
+                    await viewerPage.clickCloseButton();
                 }
-            });
+            }
         });
 
     });

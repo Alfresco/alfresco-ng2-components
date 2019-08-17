@@ -32,86 +32,73 @@ export class StartProcessCloudPage {
     processDefinition = element(by.css('input[id="processDefinitionName"]'));
     processDefinitionOptionsPanel = element(by.css('div[class*="processDefinitionOptions"]'));
 
-    checkNoProcessMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
+    async checkNoProcessMessage(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
     }
 
-    pressDownArrowAndEnter() {
-        this.processDefinition.sendKeys(protractor.Key.ARROW_DOWN);
-        return browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    async pressDownArrowAndEnter(): Promise<void> {
+        await this.processDefinition.sendKeys(protractor.Key.ARROW_DOWN);
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    checkNoProcessDefinitionOptionIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.processDefinitionOptionsPanel);
+    async checkNoProcessDefinitionOptionIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.processDefinitionOptionsPanel);
     }
 
-    enterProcessName(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
-        this.clearProcessName();
-        this.processNameInput.sendKeys(name);
+    async enterProcessName(name): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
+        await BrowserActions.clearSendKeys(this.processNameInput, name);
     }
 
-    clearProcessName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
-        this.processNameInput.clear();
+    async selectFromProcessDropdown(name): Promise<void> {
+        await this.clickProcessDropdownArrow();
+        await this.selectOption(name);
     }
 
-    selectFromProcessDropdown(name) {
-        this.clickProcessDropdownArrow();
-        return this.selectOption(name);
+    async clickProcessDropdownArrow(): Promise<void> {
+        await BrowserActions.click(this.selectProcessDropdownArrow);
     }
 
-    clickProcessDropdownArrow() {
-        BrowserActions.click(this.selectProcessDropdownArrow);
-    }
-
-    checkOptionIsDisplayed(name) {
+    async checkOptionIsDisplayed(name): Promise<void> {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
-        BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
-        BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
-        return this;
+        await BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
+        await BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
     }
 
-    selectOption(name) {
+    async selectOption(name): Promise<void> {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
-        BrowserActions.click(selectProcessDropdown);
-        return this;
+        await BrowserActions.click(selectProcessDropdown);
     }
 
-    clickCancelProcessButton() {
-        BrowserActions.click(this.cancelProcessButton);
+    async clickCancelProcessButton(): Promise<void> {
+        await BrowserActions.click(this.cancelProcessButton);
     }
 
-    checkStartProcessButtonIsEnabled() {
+    async checkStartProcessButtonIsEnabled(): Promise<boolean> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.startProcessButton);
         return this.startProcessButton.isEnabled();
     }
 
-    clickStartProcessButton() {
-        return BrowserActions.click(this.startProcessButton);
+    async clickStartProcessButton(): Promise<void> {
+        await BrowserActions.click(this.startProcessButton);
     }
 
-    checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
+    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error'): Promise<void> {
         const errorElement = element(by.cssContainingText(elementRef, error));
-        BrowserVisibility.waitUntilElementIsVisible(errorElement);
-        return this;
+        await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }
 
-    blur(locator) {
-        locator.click();
-        locator.sendKeys(Key.TAB);
-        return this;
+    async blur(locator): Promise<void> {
+        await BrowserActions.click(locator);
+        await locator.sendKeys(Key.TAB);
     }
 
-    clearField(locator) {
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        locator.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                locator.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+    async clearField(locator) {
+        await BrowserVisibility.waitUntilElementIsVisible(locator);
+        await BrowserActions.clearWithBackSpace(locator);
     }
 
-    formFields() {
+    formFields(): FormFields {
         return new FormFields();
     }
 }

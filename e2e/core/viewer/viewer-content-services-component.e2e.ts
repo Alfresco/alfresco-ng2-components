@@ -77,7 +77,7 @@ describe('Content Services Viewer', () => {
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -108,12 +108,11 @@ describe('Content Services Viewer', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await uploadActions.deleteFileOrFolder(pdfFile.getId());
         await uploadActions.deleteFileOrFolder(protectedFile.getId());
         await uploadActions.deleteFileOrFolder(docxFile.getId());
@@ -123,294 +122,293 @@ describe('Content Services Viewer', () => {
         await uploadActions.deleteFileOrFolder(unsupportedFile.getId());
         await navigationBarPage.clickLogoutButton();
 
-        done();
     });
 
-    it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', () => {
-        contentServicesPage.checkAcsContainer();
+    it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', async () => {
+        await contentServicesPage.checkAcsContainer();
 
-        viewerPage.viewFile(pdfFile.name);
-        viewerPage.checkZoomInButtonIsDisplayed();
+        await viewerPage.viewFile(pdfFile.name);
+        await viewerPage.checkZoomInButtonIsDisplayed();
 
-        viewerPage.checkFileContent('1', pdfFile.firstPageText);
-        viewerPage.checkCloseButtonIsDisplayed();
-        viewerPage.checkFileNameIsDisplayed(pdfFile.name);
-        viewerPage.checkFileThumbnailIsDisplayed();
-        viewerPage.checkDownloadButtonIsDisplayed();
-        viewerPage.checkFullScreenButtonIsDisplayed();
-        viewerPage.checkInfoButtonIsDisplayed();
-        viewerPage.checkPreviousPageButtonIsDisplayed();
-        viewerPage.checkNextPageButtonIsDisplayed();
-        viewerPage.checkPageSelectorInputIsDisplayed('1');
-        viewerPage.checkPercentageIsDisplayed();
-        viewerPage.checkZoomInButtonIsDisplayed();
-        viewerPage.checkZoomOutButtonIsDisplayed();
-        viewerPage.checkScalePageButtonIsDisplayed();
+        await viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        await viewerPage.checkCloseButtonIsDisplayed();
+        await viewerPage.checkFileNameIsDisplayed(pdfFile.name);
+        await viewerPage.checkFileThumbnailIsDisplayed();
+        await viewerPage.checkDownloadButtonIsDisplayed();
+        await viewerPage.checkFullScreenButtonIsDisplayed();
+        await viewerPage.checkInfoButtonIsDisplayed();
+        await viewerPage.checkPreviousPageButtonIsDisplayed();
+        await viewerPage.checkNextPageButtonIsDisplayed();
+        await viewerPage.checkPageSelectorInputIsDisplayed('1');
+        await viewerPage.checkPercentageIsDisplayed();
+        await viewerPage.checkZoomInButtonIsDisplayed();
+        await viewerPage.checkZoomOutButtonIsDisplayed();
+        await viewerPage.checkScalePageButtonIsDisplayed();
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
     it('[C260040] Should be able to change pages and zoom when .pdf file is open', async () => {
-        viewerPage.viewFile(pdfFile.name);
-        viewerPage.checkZoomInButtonIsDisplayed();
+        await viewerPage.viewFile(pdfFile.name);
+        await viewerPage.checkZoomInButtonIsDisplayed();
 
-        viewerPage.checkFileContent('1', pdfFile.firstPageText);
-        viewerPage.clickNextPageButton();
-        viewerPage.checkFileContent('2', pdfFile.secondPageText);
-        viewerPage.checkPageSelectorInputIsDisplayed('2');
+        await viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        await viewerPage.clickNextPageButton();
+        await viewerPage.checkFileContent('2', pdfFile.secondPageText);
+        await viewerPage.checkPageSelectorInputIsDisplayed('2');
 
-        viewerPage.clickPreviousPageButton();
-        viewerPage.checkFileContent('1', pdfFile.firstPageText);
-        viewerPage.checkPageSelectorInputIsDisplayed('1');
+        await viewerPage.clickPreviousPageButton();
+        await viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        await viewerPage.checkPageSelectorInputIsDisplayed('1');
 
-        viewerPage.clearPageNumber();
-        viewerPage.checkPageSelectorInputIsDisplayed('');
+        await viewerPage.clearPageNumber();
+        await viewerPage.checkPageSelectorInputIsDisplayed('');
 
         const initialWidth = await viewerPage.getCanvasWidth();
         const initialHeight = await viewerPage.getCanvasHeight();
 
-        viewerPage.clickZoomInButton();
-        expect(+(await viewerPage.getCanvasWidth())).toBeGreaterThan(+initialWidth);
-        expect(+(await viewerPage.getCanvasHeight())).toBeGreaterThan(+initialHeight);
+        await viewerPage.clickZoomInButton();
+        await expect(+(await viewerPage.getCanvasWidth())).toBeGreaterThan(+initialWidth);
+        await expect(+(await viewerPage.getCanvasHeight())).toBeGreaterThan(+initialHeight);
 
-        viewerPage.clickActualSize();
-        expect(+(await viewerPage.getCanvasWidth())).toEqual(+initialWidth);
-        expect(+(await viewerPage.getCanvasHeight())).toEqual(+initialHeight);
+        await viewerPage.clickActualSize();
+        await expect(+(await viewerPage.getCanvasWidth())).toEqual(+initialWidth);
+        await expect(+(await viewerPage.getCanvasHeight())).toEqual(+initialHeight);
 
-        viewerPage.clickZoomOutButton();
-        expect(+(await viewerPage.getCanvasWidth())).toBeLessThan(+initialWidth);
-        expect(+(await viewerPage.getCanvasHeight())).toBeLessThan(+initialHeight);
+        await viewerPage.clickZoomOutButton();
+        await expect(+(await viewerPage.getCanvasWidth())).toBeLessThan(+initialWidth);
+        await expect(+(await viewerPage.getCanvasHeight())).toBeLessThan(+initialHeight);
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C260042] Should be able to download, open full-screen and Info container from the Viewer', () => {
-        viewerPage.viewFile(jpgFile.name);
-        viewerPage.checkZoomInButtonIsDisplayed();
+    it('[C260042] Should be able to download, open full-screen and Info container from the Viewer', async () => {
+        await viewerPage.viewFile(jpgFile.name);
+        await viewerPage.checkZoomInButtonIsDisplayed();
 
-        viewerPage.checkImgContainerIsDisplayed();
+        await viewerPage.checkImgContainerIsDisplayed();
 
-        viewerPage.checkFullScreenButtonIsDisplayed();
-        viewerPage.clickFullScreenButton();
+        await viewerPage.checkFullScreenButtonIsDisplayed();
+        await viewerPage.clickFullScreenButton();
 
-        viewerPage.exitFullScreen();
+        await viewerPage.exitFullScreen();
 
-        viewerPage.checkDownloadButtonIsDisplayed();
-        viewerPage.clickDownloadButton();
+        await viewerPage.checkDownloadButtonIsDisplayed();
+        await viewerPage.clickDownloadButton();
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C260052] Should display image, toolbar and pagination when opening a .jpg file', () => {
-        viewerPage.viewFile(jpgFile.name);
-        viewerPage.checkZoomInButtonIsDisplayed();
+    it('[C260052] Should display image, toolbar and pagination when opening a .jpg file', async () => {
+        await viewerPage.viewFile(jpgFile.name);
+        await viewerPage.checkZoomInButtonIsDisplayed();
 
-        viewerPage.checkImgContainerIsDisplayed();
+        await viewerPage.checkImgContainerIsDisplayed();
 
-        viewerPage.checkCloseButtonIsDisplayed();
-        viewerPage.checkFileNameIsDisplayed(jpgFile.name);
-        viewerPage.checkFileThumbnailIsDisplayed();
-        viewerPage.checkDownloadButtonIsDisplayed();
-        viewerPage.checkFullScreenButtonIsDisplayed();
-        viewerPage.checkInfoButtonIsDisplayed();
-        viewerPage.checkZoomInButtonIsDisplayed();
-        viewerPage.checkZoomOutButtonIsDisplayed();
-        viewerPage.checkPercentageIsDisplayed();
-        viewerPage.checkRotateLeftButtonIsDisplayed();
-        viewerPage.checkRotateRightButtonIsDisplayed();
-        viewerPage.checkScaleImgButtonIsDisplayed();
+        await viewerPage.checkCloseButtonIsDisplayed();
+        await viewerPage.checkFileNameIsDisplayed(jpgFile.name);
+        await viewerPage.checkFileThumbnailIsDisplayed();
+        await viewerPage.checkDownloadButtonIsDisplayed();
+        await viewerPage.checkFullScreenButtonIsDisplayed();
+        await viewerPage.checkInfoButtonIsDisplayed();
+        await viewerPage.checkZoomInButtonIsDisplayed();
+        await viewerPage.checkZoomOutButtonIsDisplayed();
+        await viewerPage.checkPercentageIsDisplayed();
+        await viewerPage.checkRotateLeftButtonIsDisplayed();
+        await viewerPage.checkRotateRightButtonIsDisplayed();
+        await viewerPage.checkScaleImgButtonIsDisplayed();
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C260483] Should be able to zoom and rotate image when .jpg file is open', () => {
-        viewerPage.viewFile(jpgFile.name);
-        viewerPage.checkZoomInButtonIsDisplayed();
+    it('[C260483] Should be able to zoom and rotate image when .jpg file is open', async () => {
+        await viewerPage.viewFile(jpgFile.name);
+        await viewerPage.checkZoomInButtonIsDisplayed();
 
-        viewerPage.checkPercentageIsDisplayed();
+        await viewerPage.checkPercentageIsDisplayed();
 
-        zoom = viewerPage.getZoom();
-        viewerPage.clickZoomInButton();
-        viewerPage.checkZoomedIn(zoom);
+        zoom = await viewerPage.getZoom();
+        await viewerPage.clickZoomInButton();
+        await viewerPage.checkZoomedIn(zoom);
 
-        zoom = viewerPage.getZoom();
-        viewerPage.clickZoomOutButton();
-        viewerPage.checkZoomedOut(zoom);
+        zoom = await viewerPage.getZoom();
+        await viewerPage.clickZoomOutButton();
+        await viewerPage.checkZoomedOut(zoom);
 
-        viewerPage.clickRotateLeftButton();
-        viewerPage.checkRotation('transform: scale(1, 1) rotate(-90deg) translate(0px, 0px);');
+        await viewerPage.clickRotateLeftButton();
+        await viewerPage.checkRotation('transform: scale(1, 1) rotate(-90deg) translate(0px, 0px);');
 
-        viewerPage.clickScaleImgButton();
-        viewerPage.checkRotation('transform: scale(1, 1) rotate(0deg) translate(0px, 0px);');
+        await viewerPage.clickScaleImgButton();
+        await viewerPage.checkRotation('transform: scale(1, 1) rotate(0deg) translate(0px, 0px);');
 
-        viewerPage.clickRotateRightButton();
-        viewerPage.checkRotation('transform: scale(1, 1) rotate(90deg) translate(0px, 0px);');
+        await viewerPage.clickRotateRightButton();
+        await viewerPage.checkRotation('transform: scale(1, 1) rotate(90deg) translate(0px, 0px);');
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C279922] Should display first page, toolbar and pagination when opening a .ppt file', () => {
-        viewerPage.viewFile(pptFile.name);
-        viewerPage.checkZoomInButtonIsDisplayed();
+    it('[C279922] Should display first page, toolbar and pagination when opening a .ppt file', async () => {
+        await viewerPage.viewFile(pptFile.name);
+        await viewerPage.checkZoomInButtonIsDisplayed();
 
-        viewerPage.checkFileContent('1', pptFile.firstPageText);
-        viewerPage.checkCloseButtonIsDisplayed();
-        viewerPage.checkFileThumbnailIsDisplayed();
-        viewerPage.checkFileNameIsDisplayed(pptFile.name);
-        viewerPage.checkDownloadButtonIsDisplayed();
-        viewerPage.checkInfoButtonIsDisplayed();
-        viewerPage.checkPreviousPageButtonIsDisplayed();
-        viewerPage.checkNextPageButtonIsDisplayed();
-        viewerPage.checkPageSelectorInputIsDisplayed('1');
-        viewerPage.checkZoomInButtonIsDisplayed();
-        viewerPage.checkZoomOutButtonIsDisplayed();
-        viewerPage.checkScalePageButtonIsDisplayed();
+        await viewerPage.checkFileContent('1', pptFile.firstPageText);
+        await viewerPage.checkCloseButtonIsDisplayed();
+        await viewerPage.checkFileThumbnailIsDisplayed();
+        await viewerPage.checkFileNameIsDisplayed(pptFile.name);
+        await viewerPage.checkDownloadButtonIsDisplayed();
+        await viewerPage.checkInfoButtonIsDisplayed();
+        await viewerPage.checkPreviousPageButtonIsDisplayed();
+        await viewerPage.checkNextPageButtonIsDisplayed();
+        await viewerPage.checkPageSelectorInputIsDisplayed('1');
+        await viewerPage.checkZoomInButtonIsDisplayed();
+        await viewerPage.checkZoomOutButtonIsDisplayed();
+        await viewerPage.checkScalePageButtonIsDisplayed();
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C291903] Should display the buttons in order in the adf viewer toolbar', () => {
-        viewerPage.viewFile(pdfFile.name);
-        viewerPage.checkLeftSideBarIsNotDisplayed();
-        viewerPage.clickLeftSidebarButton();
-        viewerPage.checkLeftSideBarIsDisplayed();
-        viewerPage.enableMoreActionsMenu();
-        viewerPage.checkToolbarIsDisplayed();
-        expect(viewerPage.getLastButtonTitle()).toEqual(viewerPage.getMoreActionsMenuTitle());
-        viewerPage.clickCloseButton();
+    it('[C291903] Should display the buttons in order in the adf viewer toolbar', async () => {
+        await viewerPage.viewFile(pdfFile.name);
+        await viewerPage.checkLeftSideBarIsNotDisplayed();
+        await viewerPage.clickLeftSidebarButton();
+        await viewerPage.checkLeftSideBarIsDisplayed();
+        await viewerPage.enableMoreActionsMenu();
+        await viewerPage.checkToolbarIsDisplayed();
+        await expect(await viewerPage.getLastButtonTitle()).toEqual(await viewerPage.getMoreActionsMenuTitle());
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C260053] Should display first page, toolbar and pagination when opening a .docx file', () => {
-        viewerPage.viewFile(docxFile.name);
-        viewerPage.checkZoomInButtonIsDisplayed();
+    it('[C260053] Should display first page, toolbar and pagination when opening a .docx file', async () => {
+        await viewerPage.viewFile(docxFile.name);
+        await viewerPage.checkZoomInButtonIsDisplayed();
 
-        viewerPage.checkFileContent('1', docxFile.firstPageText);
-        viewerPage.checkCloseButtonIsDisplayed();
-        viewerPage.checkFileThumbnailIsDisplayed();
-        viewerPage.checkFileNameIsDisplayed(docxFile.name);
-        viewerPage.checkDownloadButtonIsDisplayed();
-        viewerPage.checkInfoButtonIsDisplayed();
-        viewerPage.checkPreviousPageButtonIsDisplayed();
-        viewerPage.checkNextPageButtonIsDisplayed();
-        viewerPage.checkPageSelectorInputIsDisplayed('1');
-        viewerPage.checkZoomInButtonIsDisplayed();
-        viewerPage.checkZoomOutButtonIsDisplayed();
-        viewerPage.checkScalePageButtonIsDisplayed();
+        await viewerPage.checkFileContent('1', docxFile.firstPageText);
+        await viewerPage.checkCloseButtonIsDisplayed();
+        await viewerPage.checkFileThumbnailIsDisplayed();
+        await viewerPage.checkFileNameIsDisplayed(docxFile.name);
+        await viewerPage.checkDownloadButtonIsDisplayed();
+        await viewerPage.checkInfoButtonIsDisplayed();
+        await viewerPage.checkPreviousPageButtonIsDisplayed();
+        await viewerPage.checkNextPageButtonIsDisplayed();
+        await viewerPage.checkPageSelectorInputIsDisplayed('1');
+        await viewerPage.checkZoomInButtonIsDisplayed();
+        await viewerPage.checkZoomOutButtonIsDisplayed();
+        await viewerPage.checkScalePageButtonIsDisplayed();
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C260054] Should display Preview could not be loaded and viewer toolbar when opening an unsupported file', () => {
-        viewerPage.viewFile(unsupportedFile.name);
+    it('[C260054] Should display Preview could not be loaded and viewer toolbar when opening an unsupported file', async () => {
+        await viewerPage.viewFile(unsupportedFile.name);
 
-        viewerPage.checkCloseButtonIsDisplayed();
-        viewerPage.checkFileNameIsDisplayed(unsupportedFile.name);
-        viewerPage.checkFileThumbnailIsDisplayed();
-        viewerPage.checkDownloadButtonIsDisplayed();
-        viewerPage.checkInfoButtonIsDisplayed();
+        await viewerPage.checkCloseButtonIsDisplayed();
+        await viewerPage.checkFileNameIsDisplayed(unsupportedFile.name);
+        await viewerPage.checkFileThumbnailIsDisplayed();
+        await viewerPage.checkDownloadButtonIsDisplayed();
+        await viewerPage.checkInfoButtonIsDisplayed();
 
-        viewerPage.checkZoomInButtonIsNotDisplayed();
-        viewerPage.checkUnknownFormatIsDisplayed();
-        expect(viewerPage.getUnknownFormatMessage()).toBe('Couldn\'t load preview. Unknown format.');
+        await viewerPage.checkZoomInButtonIsNotDisplayed();
+        await viewerPage.checkUnknownFormatIsDisplayed();
+        await expect(await viewerPage.getUnknownFormatMessage()).toBe('Couldn\'t load preview. Unknown format.');
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C260056] Should display video and viewer toolbar when opening a media file', () => {
-        viewerPage.viewFile(mp4File.name);
+    it('[C260056] Should display video and viewer toolbar when opening a media file', async () => {
+        await viewerPage.viewFile(mp4File.name);
 
-        viewerPage.checkMediaPlayerContainerIsDisplayed();
-        viewerPage.checkCloseButtonIsDisplayed();
-        viewerPage.checkFileThumbnailIsDisplayed();
-        viewerPage.checkFileNameIsDisplayed(mp4File.name);
-        viewerPage.checkDownloadButtonIsDisplayed();
-        viewerPage.checkInfoButtonIsDisplayed();
-        viewerPage.checkFullScreenButtonIsNotDisplayed();
+        await viewerPage.checkMediaPlayerContainerIsDisplayed();
+        await viewerPage.checkCloseButtonIsDisplayed();
+        await viewerPage.checkFileThumbnailIsDisplayed();
+        await viewerPage.checkFileNameIsDisplayed(mp4File.name);
+        await viewerPage.checkDownloadButtonIsDisplayed();
+        await viewerPage.checkInfoButtonIsDisplayed();
+        await viewerPage.checkFullScreenButtonIsNotDisplayed();
 
-        viewerPage.checkZoomInButtonIsNotDisplayed();
+        await viewerPage.checkZoomInButtonIsNotDisplayed();
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C261123] Should be able to preview all pages and navigate to a page when using thumbnails', () => {
-        viewerPage.viewFile(pdfFile.name);
+    it('[C261123] Should be able to preview all pages and navigate to a page when using thumbnails', async () => {
+        await viewerPage.viewFile(pdfFile.name);
 
-        viewerPage.checkZoomInButtonIsDisplayed();
-        viewerPage.checkFileContent('1', pdfFile.firstPageText);
-        viewerPage.checkThumbnailsBtnIsDisplayed();
-        viewerPage.clickThumbnailsBtn();
+        await viewerPage.checkZoomInButtonIsDisplayed();
+        await viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        await viewerPage.checkThumbnailsBtnIsDisplayed();
+        await viewerPage.clickThumbnailsBtn();
 
-        viewerPage.checkThumbnailsContentIsDisplayed();
-        viewerPage.checkThumbnailsCloseIsDisplayed();
-        viewerPage.checkAllThumbnailsDisplayed(pdfFile.lastPageNumber);
+        await viewerPage.checkThumbnailsContentIsDisplayed();
+        await viewerPage.checkThumbnailsCloseIsDisplayed();
+        await viewerPage.checkAllThumbnailsDisplayed(pdfFile.lastPageNumber);
 
-        viewerPage.clickSecondThumbnail();
-        viewerPage.checkFileContent('2', pdfFile.secondPageText);
-        viewerPage.checkCurrentThumbnailIsSelected();
+        await viewerPage.clickSecondThumbnail();
+        await viewerPage.checkFileContent('2', pdfFile.secondPageText);
+        await viewerPage.checkCurrentThumbnailIsSelected();
 
-        viewerPage.checkPreviousPageButtonIsDisplayed();
-        viewerPage.clickPreviousPageButton();
-        viewerPage.checkFileContent('1', pdfFile.firstPageText);
-        viewerPage.checkCurrentThumbnailIsSelected();
+        await viewerPage.checkPreviousPageButtonIsDisplayed();
+        await viewerPage.clickPreviousPageButton();
+        await viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        await viewerPage.checkCurrentThumbnailIsSelected();
 
-        viewerPage.clickThumbnailsBtn();
-        viewerPage.checkThumbnailsContentIsNotDisplayed();
-        viewerPage.clickThumbnailsBtn();
-        viewerPage.checkThumbnailsCloseIsDisplayed();
-        viewerPage.clickThumbnailsClose();
+        await viewerPage.clickThumbnailsBtn();
+        await viewerPage.checkThumbnailsContentIsNotDisplayed();
+        await viewerPage.clickThumbnailsBtn();
+        await viewerPage.checkThumbnailsCloseIsDisplayed();
+        await viewerPage.clickThumbnailsClose();
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C268105] Should display current thumbnail when getting to the page following the last visible thumbnail', () => {
-        viewerPage.viewFile(pdfFile.name);
-        viewerPage.checkZoomInButtonIsDisplayed();
+    it('[C268105] Should display current thumbnail when getting to the page following the last visible thumbnail', async () => {
+        await viewerPage.viewFile(pdfFile.name);
+        await viewerPage.checkZoomInButtonIsDisplayed();
 
-        viewerPage.checkFileContent('1', pdfFile.firstPageText);
-        viewerPage.checkThumbnailsBtnIsDisplayed();
-        viewerPage.clickThumbnailsBtn();
-        viewerPage.clickLastThumbnailDisplayed();
-        viewerPage.checkCurrentThumbnailIsSelected();
+        await viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        await viewerPage.checkThumbnailsBtnIsDisplayed();
+        await viewerPage.clickThumbnailsBtn();
+        await viewerPage.clickLastThumbnailDisplayed();
+        await viewerPage.checkCurrentThumbnailIsSelected();
 
-        viewerPage.checkNextPageButtonIsDisplayed();
-        viewerPage.clickNextPageButton();
-        viewerPage.checkCurrentThumbnailIsSelected();
+        await viewerPage.checkNextPageButtonIsDisplayed();
+        await viewerPage.clickNextPageButton();
+        await viewerPage.checkCurrentThumbnailIsSelected();
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C269109] Should not be able to open thumbnail panel before the pdf is loaded', () => {
-        viewerPage.viewFile(pdfFile.name);
+    it('[C269109] Should not be able to open thumbnail panel before the pdf is loaded', async () => {
+        await viewerPage.viewFile(pdfFile.name);
 
-        viewerPage.checkThumbnailsBtnIsDisabled();
+        await viewerPage.checkThumbnailsBtnIsDisabled();
 
-        viewerPage.checkCloseButtonIsDisplayed();
-        viewerPage.clickCloseButton();
+        await viewerPage.checkCloseButtonIsDisplayed();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C268901] Should need a password when opening a protected file', () => {
-        viewerPage.viewFile(protectedFile.name);
+    it('[C268901] Should need a password when opening a protected file', async () => {
+        await viewerPage.viewFile(protectedFile.name);
 
-        viewerPage.checkZoomInButtonIsDisplayed();
-        viewerPage.checkPasswordDialogIsDisplayed();
-        viewerPage.checkPasswordSubmitDisabledIsDisplayed();
+        await viewerPage.checkZoomInButtonIsDisplayed();
+        await viewerPage.checkPasswordDialogIsDisplayed();
+        await viewerPage.checkPasswordSubmitDisabledIsDisplayed();
 
-        viewerPage.enterPassword('random password');
-        viewerPage.clickPasswordSubmit();
-        viewerPage.checkPasswordErrorIsDisplayed();
-        viewerPage.checkPasswordInputIsDisplayed();
+        await viewerPage.enterPassword('random password');
+        await viewerPage.clickPasswordSubmit();
+        await viewerPage.checkPasswordErrorIsDisplayed();
+        await viewerPage.checkPasswordInputIsDisplayed();
 
-        viewerPage.enterPassword(protectedFile.password);
-        viewerPage.clickPasswordSubmit();
-        viewerPage.checkFileContent('1', protectedFile.firstPageText);
+        await viewerPage.enterPassword(protectedFile.password);
+        await viewerPage.clickPasswordSubmit();
+        await viewerPage.checkFileContent('1', protectedFile.firstPageText);
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C307985] Should close the viewer when password dialog is cancelled', () => {
-        viewerPage.viewFile(protectedFile.name);
-        viewerPage.checkPasswordDialogIsDisplayed();
-        viewerPage.clickClosePasswordDialog();
-        contentServicesPage.checkContentIsDisplayed(protectedFile.name);
+    it('[C307985] Should close the viewer when password dialog is cancelled', async () => {
+        await viewerPage.viewFile(protectedFile.name);
+        await viewerPage.checkPasswordDialogIsDisplayed();
+        await viewerPage.clickClosePasswordDialog();
+        await contentServicesPage.checkContentIsDisplayed(protectedFile.name);
     });
 });

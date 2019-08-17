@@ -15,26 +15,28 @@
  * limitations under the License.
  */
 
-import { ErrorPage, LoginSSOPage, SettingsPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
+import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
-describe('Auth Guard SSO', () => {
+describe('Logout component - SSO', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
-    const errorPage = new ErrorPage();
+    const navigationBarPage = new NavigationBarPage();
 
-    it('[C307058] Should be redirected to 403 when user doesn\'t have permissions', async () => {
+    it('[C280665] Should be possible change the logout redirect URL', async () => {
         await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.adf.hostSso,
-            browser.params.testConfig.adf.hostIdentity,
-            false, true, browser.params.config.oauth2.clientId);
+            browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId, '/login');
         await loginSSOPage.clickOnSSOButton();
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/cloud/simple-app');
-        await browser.sleep(1000);
-        const error = await errorPage.getErrorCode();
-        await expect(error).toBe('403');
+        await navigationBarPage.clickLogoutButton();
+
+        await browser.sleep(2000);
+
+        const actualUrl = await browser.getCurrentUrl();
+        await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/login');
     });
 
 });

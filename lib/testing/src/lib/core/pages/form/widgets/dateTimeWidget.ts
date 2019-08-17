@@ -16,81 +16,77 @@
  */
 
 import { FormFields } from '../formFields';
-import { element, by, protractor } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DateTimeWidget {
 
-    formFields = new FormFields();
-    outsideLayer = element(by.css('div[class*="cdk-overlay-container"]'));
+    formFields: FormFields = new FormFields();
+    outsideLayer: ElementFinder = element(by.css('div[class*="cdk-overlay-container"]'));
 
-    checkWidgetIsVisible(fieldId) {
-        return this.formFields.checkWidgetIsVisible(fieldId);
+    async checkWidgetIsVisible(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    getDateTimeLabel(fieldId) {
+    async getDateTimeLabel(fieldId): Promise<string> {
         const label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
         return BrowserActions.getText(label);
     }
 
-    setDateTimeInput(fieldId, value) {
-        return this.formFields.setValueInInputById(fieldId, value);
+    async setDateTimeInput(fieldId, value): Promise<void> {
+        await this.formFields.setValueInInputById(fieldId, value);
     }
 
-    clearDateTimeInput(fieldId) {
-        const dateInput = element(by.id(fieldId));
-        BrowserVisibility.waitUntilElementIsVisible(dateInput);
-        return dateInput.clear();
+    async clickOutsideWidget(fieldId): Promise<void> {
+        const form = await this.formFields.getWidget(fieldId);
+        await BrowserActions.click(form);
     }
 
-    clickOutsideWidget(fieldId) {
-        const form = this.formFields.getWidget(fieldId);
-        BrowserActions.click(form);
+    async closeDataTimeWidget(): Promise<void> {
+        await BrowserActions.click(this.outsideLayer);
     }
 
-    closeDataTimeWidget() {
-        BrowserActions.click(this.outsideLayer);
-    }
-
-    getErrorMessage(fieldId) {
+    async getErrorMessage(fieldId): Promise<string> {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         return BrowserActions.getText(errorMessage);
     }
 
-    selectDay(day) {
+    async selectDay(day): Promise<void> {
         const selectedDay = element(by.cssContainingText('div[class*="mat-datetimepicker-calendar-body-cell-content"]', day));
-        BrowserActions.click(selectedDay);
+        await BrowserActions.click(selectedDay);
     }
 
-    openDatepicker(fieldId) {
-        return element(by.id(fieldId)).click();
+    async openDatepicker(fieldId): Promise<void> {
+        await BrowserActions.click(element(by.id(fieldId)));
     }
 
-    private selectTime(time) {
+    async selectTime(time): Promise<void> {
         const selectedTime = element(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time));
-        BrowserActions.click(selectedTime);
+        await BrowserActions.click(selectedTime);
     }
 
-    selectHour(hour) {
+    async selectHour(hour): Promise<void> {
         return this.selectTime(hour);
     }
 
-    selectMinute(minute) {
+    async selectMinute(minute): Promise<void> {
         return this.selectTime(minute);
     }
 
-    getPlaceholder(fieldId) {
+    async getPlaceholder(fieldId): Promise<string> {
         return this.formFields.getFieldPlaceHolder(fieldId);
     }
 
-    removeFromDatetimeWidget(fieldId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
-
+    async removeFromDatetimeWidget(fieldId): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(await this.formFields.getWidget(fieldId));
         const amountWidgetInput = element(by.id(fieldId));
-        amountWidgetInput.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        await BrowserActions.clearWithBackSpace(amountWidgetInput);
     }
+
+    async clearDateTimeInput(fieldId): Promise<void> {
+        const dateInput = element(by.id(fieldId));
+        await BrowserVisibility.waitUntilElementIsVisible(dateInput);
+        await dateInput.clear();
+    }
+
 }

@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
-import { ElementFinder } from 'protractor/built/element';
-
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class InfinitePaginationPage {
@@ -30,13 +28,12 @@ export class InfinitePaginationPage {
         this.loadMoreButton = this.rootElement.element(by.css('button[data-automation-id="adf-infinite-pagination-button"]'));
     }
 
-    clickLoadMoreButton() {
-        BrowserActions.click(this.loadMoreButton);
-        return this;
+    async clickLoadMoreButton(): Promise<void> {
+        await BrowserActions.click(this.loadMoreButton);
     }
 
-    checkLoadMoreButtonIsNotDisplayed() {
-        return BrowserVisibility.waitUntilElementIsNotOnPage(this.loadMoreButton);
+    async checkLoadMoreButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.loadMoreButton);
     }
 
 }

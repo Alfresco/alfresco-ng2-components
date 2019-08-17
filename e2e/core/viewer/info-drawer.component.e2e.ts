@@ -46,7 +46,7 @@ describe('Info Drawer', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -63,43 +63,39 @@ describe('Info Drawer', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, site.entry.guid);
-        done();
+
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(pngFileUploaded.entry.id);
-        done();
+
     });
 
     beforeEach(async() => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.goToSite(site);
-        contentServicesPage.checkAcsContainer();
+        await navigationBarPage.goToSite(site);
+        await contentServicesPage.checkAcsContainer();
     });
 
-    afterEach(async () => {
-        await navigationBarPage.clickLogoutButton();
+    it('[C277251] Should display the icon when the icon property is defined', async () => {
+        await viewerPage.viewFile(pngFileUploaded.entry.name);
+        await viewerPage.clickLeftSidebarButton();
+        await viewerPage.enableShowTabWithIcon();
+        await viewerPage.enableShowTabWithIconAndLabel();
+        await viewerPage.checkTabHasNoIcon(0);
+        await expect(await viewerPage.getTabIconById(1)).toBe('face');
+        await expect(await viewerPage.getTabIconById(2)).toBe('comment');
     });
 
-    it('[C277251] Should display the icon when the icon property is defined', () => {
-        viewerPage.viewFile(pngFileUploaded.entry.name);
-        viewerPage.clickLeftSidebarButton();
-        viewerPage.enableShowTabWithIcon();
-        viewerPage.enableShowTabWithIconAndLabel();
-        viewerPage.checkTabHasNoIcon(0);
-        expect(viewerPage.getTabIconById(1)).toBe('face');
-        expect(viewerPage.getTabIconById(2)).toBe('comment');
-    });
-
-    it('[C277252] Should display the label when the label property is defined', () => {
-        viewerPage.viewFile(pngFileUploaded.entry.name);
-        viewerPage.clickLeftSidebarButton();
-        viewerPage.enableShowTabWithIcon();
-        viewerPage.enableShowTabWithIconAndLabel();
-        expect(viewerPage.getTabLabelById(0)).toBe('SETTINGS');
-        viewerPage.checkTabHasNoLabel(1);
-        expect(viewerPage.getTabLabelById(2)).toBe('COMMENTS');
+    it('[C277252] Should display the label when the label property is defined', async () => {
+        await viewerPage.viewFile(pngFileUploaded.entry.name);
+        await viewerPage.clickLeftSidebarButton();
+        await viewerPage.enableShowTabWithIcon();
+        await viewerPage.enableShowTabWithIconAndLabel();
+        await expect(await viewerPage.getTabLabelById(0)).toBe('SETTINGS');
+        await viewerPage.checkTabHasNoLabel(1);
+        await expect(await viewerPage.getTabLabelById(2)).toBe('COMMENTS');
     });
 });

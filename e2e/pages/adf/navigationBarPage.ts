@@ -23,209 +23,226 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class NavigationBarPage {
 
-    linkListContainer = element(by.css('.adf-sidenav-linklist'));
-    linkMenuChildrenContainer = element(by.css('.nestedMenu'));
+    linkListContainer: ElementFinder = element(by.css('.adf-sidenav-linklist'));
+    linkMenuChildrenContainer: ElementFinder = element(by.css('.nestedMenu'));
     dataTableNestedButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Datatable"]'));
     dataTableCopyContentButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Copy Content"]'));
     dataTableDragAndDropButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Drag and Drop"]'));
-    processServicesButton = element(by.css('.adf-sidenav-link[data-automation-id="Process Services"]'));
     processServicesNestedButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="App"]'));
     processServicesCloudHomeButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Home"]'));
-    loginButton = element(by.css('.adf-sidenav-link[data-automation-id="Login"]'));
-    overlayViewerButton = element(by.css('.adf-sidenav-link[data-automation-id="Overlay Viewer"]'));
-    themeButton = element(by.css('button[data-automation-id="theme menu"]'));
-    themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
-    logoutButton = element(by.css('.adf-sidenav-link[adf-logout]'));
-    cardViewButton = element(by.css('.adf-sidenav-link[data-automation-id="CardView"]'));
-    languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
-    appTitle = element(by.css('.adf-app-title'));
-    menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
+    themeButton: ElementFinder = element(by.css('button[data-automation-id="theme menu"]'));
+    themeMenuContent: ElementFinder = element(by.css('div[class*="mat-menu-panel"]'));
+    languageMenuButton: ElementFinder = element(by.css('button[data-automation-id="language-menu-button"]'));
+    appTitle: ElementFinder = element(by.css('.adf-app-title'));
+    menuButton: ElementFinder = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Form"]'));
     peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="People/Group Cloud"]'));
 
-    clickMenuButton(title) {
-        BrowserActions.clickExecuteScript(`.adf-sidenav-link[data-automation-id="${title}"]`);
+    async clickNavigationBarItem(title): Promise<void> {
+        const menu = element(by.css(`.adf-sidenav-link[data-automation-id="${title}"]`));
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.click(menu);
     }
 
-    async clickSocialButton() {
-        this.clickMenuButton('Social');
+    async clickHomeButton(): Promise<void> {
+        await this.clickNavigationBarItem('Home');
     }
 
-    async clickTagButton() {
-        this.clickMenuButton('Tag');
+    async clickContentServicesButton(): Promise<void> {
+        await this.clickNavigationBarItem('Content Services');
     }
 
-    async navigateToDatatable() {
-        this.clickMenuButton('Datatable');
-        BrowserActions.click(this.dataTableNestedButton);
+    async clickCardViewButton(): Promise<void> {
+        await this.clickNavigationBarItem('CardView');
     }
 
-    async navigateToCopyContentDatatable() {
-        this.clickMenuButton('Datatable');
-        BrowserActions.click(this.dataTableCopyContentButton);
+    async clickHeaderDataButton(): Promise<void> {
+        await this.clickNavigationBarItem('Header Data');
     }
 
-    async navigateToDragAndDropDatatable() {
-        this.clickMenuButton('Datatable');
-        BrowserActions.click(this.dataTableDragAndDropButton);
+    async clickTaskListButton(): Promise<void> {
+        await this.clickNavigationBarItem('Task List');
     }
 
-    async clickContentServicesButton() {
-        this.clickMenuButton('Content Services');
+    async clickProcessCloudButton() {
+        await this.clickNavigationBarItem('Process Cloud');
+        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
     }
 
-    async clickTaskListButton() {
-        this.clickMenuButton('Task List');
-    }
-
-    async clickHomeButton() {
-        this.clickMenuButton('Home');
-    }
-
-    async clickConfigEditorButton() {
-        this.clickMenuButton('Configuration Editor');
-    }
-
-    navigateToProcessServicesPage() {
-        this.clickMenuButton('Process Services');
-        BrowserActions.click(this.processServicesNestedButton);
-        return new ProcessServicesPage();
-    }
-
-    navigateToProcessServicesCloudPage() {
-        this.clickMenuButton('Process Cloud');
-        BrowserActions.click(this.processServicesCloudHomeButton);
+    async navigateToProcessServicesCloudPage(): Promise<AppListCloudPage> {
+        await this.clickProcessCloudButton();
+        await BrowserActions.click(this.processServicesCloudHomeButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new AppListCloudPage();
     }
 
-    navigateToPeopleGroupCloudPage() {
-        this.clickMenuButton('Process Cloud');
-        BrowserActions.click(this.peopleGroupCloudButton);
+    async navigateToFormCloudPage(): Promise<void> {
+        await this.clickProcessCloudButton();
+        await BrowserActions.click(this.formButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
+    }
+
+    async navigateToPeopleGroupCloudPage(): Promise<PeopleGroupCloudComponentPage> {
+        await this.clickProcessCloudButton();
+        await BrowserActions.click(this.peopleGroupCloudButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new PeopleGroupCloudComponentPage();
     }
 
-    async navigateToSettingsPage() {
-        this.clickMenuButton('Settings');
-        return new AppListCloudPage();
+    async clickProcessServicesButton() {
+        await this.clickNavigationBarItem('Process Services');
+        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
     }
 
-    async clickLoginButton() {
-        this.clickMenuButton('Login');
+    async navigateToProcessServicesPage(): Promise<ProcessServicesPage> {
+        await this.clickProcessServicesButton();
+        await BrowserActions.click(this.processServicesNestedButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
+        return new ProcessServicesPage();
     }
 
-    async clickTrashcanButton() {
-        this.clickMenuButton('Trashcan');
+    async navigateToProcessServicesFormPage(): Promise<void> {
+        await this.clickProcessServicesButton();
+        await BrowserActions.click(this.formButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    async clickOverlayViewerButton() {
-        this.clickMenuButton('Overlay Viewer');
-        return this;
+    async clickLoginButton(): Promise<void> {
+        await this.clickNavigationBarItem('Login');
     }
 
-    async clickThemeButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.themeButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.themeMenuContent);
+    async clickTrashcanButton(): Promise<void> {
+        await this.clickNavigationBarItem('Trashcan');
     }
 
-    async clickOnSpecificThemeButton(themeName) {
-        const themeElement = element(by.css(`button[data-automation-id="${themeName}"]`));
-        BrowserActions.click(themeElement);
+    async clickCustomSources(): Promise<void> {
+        await this.clickNavigationBarItem('Custom Sources');
     }
 
-    async clickLogoutButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.clickExecuteScript('.adf-sidenav-link[adf-logout]');
+    async clickDataTable(): Promise<void> {
+        await this.clickNavigationBarItem('Datatable');
+        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
     }
 
-    async clickCardViewButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.cardViewButton);
+    async navigateToDatatable(): Promise<void> {
+        await this.clickDataTable();
+        await BrowserActions.click(this.dataTableNestedButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    openContentServicesFolder(folderId) {
-        return BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + folderId);
+    async navigateToDragAndDropDatatable(): Promise<void> {
+        await this.clickDataTable();
+        await BrowserActions.click(this.dataTableDragAndDropButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    chooseLanguage(language) {
-        const buttonLanguage = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
-        BrowserActions.click(buttonLanguage);
+    async navigateToCopyContentDatatable(): Promise<void> {
+        await this.clickDataTable();
+        await BrowserActions.click(this.dataTableCopyContentButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    openLanguageMenu() {
-        BrowserActions.click(this.languageMenuButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.appTitle);
+    async clickTagButton(): Promise<void> {
+        await this.clickNavigationBarItem('Tag');
     }
 
-    async clickHeaderDataButton() {
-        this.clickMenuButton('Header Data');
+    async clickSocialButton(): Promise<void> {
+        await this.clickNavigationBarItem('Social');
     }
 
-    async clickAboutButton() {
-        this.clickMenuButton('About');
+    async clickSettingsButton(): Promise<void> {
+        await this.clickNavigationBarItem('Settings');
     }
 
-    async clickTreeViewButton() {
-        this.clickMenuButton('Tree View');
+    async clickConfigEditorButton(): Promise<void> {
+        await this.clickNavigationBarItem('Configuration Editor');
     }
 
-    async navigateToIconsPage() {
-        this.clickMenuButton('Icons');
+    async clickOverlayViewerButton(): Promise<void> {
+        await this.clickNavigationBarItem('Overlay Viewer');
     }
 
-    async navigateToCustomSources() {
-        this.clickMenuButton('Custom Sources');
+    async clickTreeViewButton(): Promise<void> {
+        await this.clickNavigationBarItem('Tree View');
     }
 
-    checkMenuButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.menuButton);
+    async clickIconsButton(): Promise<void> {
+        await this.clickNavigationBarItem('Icons');
     }
 
-    checkMenuButtonIsNotDisplayed() {
-        return BrowserVisibility.waitUntilElementIsNotVisible(this.menuButton);
+    async clickAboutButton(): Promise<void> {
+        await this.clickNavigationBarItem('About');
     }
 
-    checkToolbarColor(color) {
-        const toolbarColor = element(by.css(`mat-toolbar[class*="mat-${color}"]`));
-        return BrowserVisibility.waitUntilElementIsVisible(toolbarColor);
+    async clickLogoutButton(): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.clickExecuteScript('.adf-sidenav-link[adf-logout]');
     }
 
-    clickAppLogo(logoTitle) {
-        const appLogo = element(by.css('a[title="' + logoTitle + '"]'));
-        BrowserActions.click(appLogo);
+    async clickThemeButton(): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.click(this.themeButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.themeMenuContent);
     }
 
-    clickAppLogoText() {
-        BrowserActions.click(this.appTitle);
+    async clickOnSpecificThemeButton(themeName): Promise<void> {
+        const themeElement: ElementFinder = element(by.css(`button[data-automation-id="${themeName}"]`));
+        await BrowserActions.click(themeElement);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    clickFormButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.processServicesButton);
-        BrowserActions.click(this.formButton);
+    async openContentServicesFolder(folderId): Promise<void> {
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${folderId}`);
     }
 
-    clickFormCloudButton() {
-        this.clickMenuButton('Process Cloud');
-        BrowserActions.click(this.formButton);
+    async openLanguageMenu(): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.click(this.languageMenuButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.appTitle);
     }
 
-    checkLogoTooltip(logoTooltipTitle) {
-        const logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(logoTooltip);
+    async chooseLanguage(language): Promise<void> {
+        const buttonLanguage: ElementFinder = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
+        await BrowserActions.click(buttonLanguage);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    async openViewer(nodeId) {
-        await  BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
-        return this;
+    async checkMenuButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.menuButton);
     }
 
-    async goToSite(site) {
+    async checkMenuButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.menuButton);
+    }
+
+    async checkToolbarColor(color): Promise<void> {
+        const toolbarColor: ElementFinder = element(by.css(`mat-toolbar[class*="mat-${color}"]`));
+        await BrowserVisibility.waitUntilElementIsVisible(toolbarColor);
+    }
+
+    async clickAppLogo(logoTitle): Promise<void> {
+        const appLogo: ElementFinder = element(by.css('a[title="' + logoTitle + '"]'));
+        await BrowserActions.click(appLogo);
+    }
+
+    async clickAppLogoText(): Promise<void> {
+        await BrowserActions.click(this.appTitle);
+    }
+
+    async checkLogoTooltip(logoTooltipTitle): Promise<void> {
+        const logoTooltip: ElementFinder = element(by.css('a[title="' + logoTooltipTitle + '"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(logoTooltip);
+    }
+
+    async openViewer(nodeId): Promise<void> {
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
+    }
+
+    async goToSite(site): Promise<void> {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files/${site.entry.guid}/display/list`);
     }
 
-    async scrollTo(el: ElementFinder) {
+    async scrollTo(el: ElementFinder): Promise<void> {
         await browser.executeScript(`return arguments[0].scrollTop = arguments[1].offsetTop`, this.linkListContainer.getWebElement(), el.getWebElement());
-        return this;
     }
 }

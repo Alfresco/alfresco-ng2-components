@@ -15,42 +15,42 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class LockFilePage {
 
-    cancelButton = element(by.css('button[data-automation-id="lock-dialog-btn-cancel"]'));
-    saveButton = element(by.cssContainingText('button span', 'Save'));
-    lockFileCheckboxText = element(by.cssContainingText('mat-checkbox label span', ' Lock file '));
-    lockFileCheckbox = element(by.css('mat-checkbox[data-automation-id="adf-lock-node-checkbox"]'));
-    allowOwnerCheckbox = element(by.cssContainingText('mat-checkbox[class*="adf-lock-file-name"] span', ' Allow the owner to modify this file '));
+    cancelButton: ElementFinder = element(by.css('button[data-automation-id="lock-dialog-btn-cancel"]'));
+    saveButton: ElementFinder = element(by.cssContainingText('button span', 'Save'));
+    lockFileCheckboxText: ElementFinder = element(by.cssContainingText('mat-checkbox label span', ' Lock file '));
+    lockFileCheckbox: ElementFinder = element(by.css('mat-checkbox[data-automation-id="adf-lock-node-checkbox"]'));
+    allowOwnerCheckbox: ElementFinder = element(by.cssContainingText('mat-checkbox[class*="adf-lock-file-name"] span', ' Allow the owner to modify this file '));
 
-    checkLockFileCheckboxIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.lockFileCheckboxText);
+    async checkLockFileCheckboxIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.lockFileCheckboxText);
     }
 
-    checkCancelButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
+    async checkCancelButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
 
-    checkSaveButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
+    async checkSaveButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
     }
 
-    clickCancelButton() {
-        BrowserActions.click(this.cancelButton);
+    async clickCancelButton(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 
-    clickLockFileCheckbox() {
-        BrowserActions.click(this.lockFileCheckbox);
+    async clickLockFileCheckbox(): Promise<void> {
+        await BrowserActions.click(this.lockFileCheckbox);
     }
 
-    clickSaveButton() {
-        BrowserActions.click(this.saveButton);
+    async clickSaveButton(): Promise<void> {
+        await BrowserActions.click(this.saveButton);
     }
 
-    clickAllowOwnerCheckbox() {
-        BrowserActions.click(this.allowOwnerCheckbox);
+    async clickAllowOwnerCheckbox(): Promise<void> {
+        await BrowserActions.click(this.allowOwnerCheckbox);
     }
 }

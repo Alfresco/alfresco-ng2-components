@@ -55,7 +55,7 @@
                     </ng-container>
                 </ng-container>
 
-                <mat-list-item adf-logout [enableRedirect]="enableRedirect" redirectUri="/logout" class="adf-sidenav-link">
+                <mat-list-item adf-logout [enableRedirect]="enableRedirect" redirectUri="/logout" class="adf-sidenav-link" data-automation-id="Logout" >
                     <mat-icon matListIcon>exit_to_app</mat-icon>
                     <span matLine *ngIf="!isMenuMinimized()">Logout</span>
                 </mat-list-item>

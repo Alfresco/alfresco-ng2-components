@@ -19,13 +19,13 @@ import { browser } from 'protractor';
 
 export class FormUtil {
 
-    static async setForm(value: string) {
+    static async setForm(value: string): Promise<void> {
         await browser.executeScript(
             'window.adf.setFormInEditor(`' + value + '`);'
         );
     }
 
-    static async setCloudForm(value: string) {
+    static async setCloudForm(value: string): Promise<void> {
         await browser.executeScript(
             'window.adf.setCloudFormInEditor(`' + value + '`);'
         );

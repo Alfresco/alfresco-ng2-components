@@ -20,7 +20,6 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/processFilters
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import resources = require('../util/resources');
@@ -29,6 +28,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 
 describe('Form widgets - People', () => {
 
@@ -44,7 +44,7 @@ describe('Form widgets - People', () => {
     const taskDetails = new TaskDetailsPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
         const appsActions = new AppsActions();
 
@@ -63,62 +63,53 @@ describe('Form widgets - People', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
 
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
 
-        done();
     });
 
-    beforeEach(() => {
-        new NavigationBarPage().navigateToProcessServicesPage().goToApp(appModel.name)
-            .clickProcessButton();
-        processFiltersPage.clickCreateProcessButton();
-        processFiltersPage.clickNewProcessDropdown();
+    beforeEach(async () => {
+        await (await (await new NavigationBarPage().navigateToProcessServicesPage()).goToApp(appModel.name)).clickProcessButton();
+        await processFiltersPage.clickCreateProcessButton();
+        await processFiltersPage.clickNewProcessDropdown();
 
-        widget.peopleWidget().checkPeopleFieldIsDisplayed();
-        widget.peopleWidget().fillPeopleField(processUserModel.firstName);
-        widget.peopleWidget().selectUserFromDropdown();
+        await widget.peopleWidget().checkPeopleFieldIsDisplayed();
+        await widget.peopleWidget().fillPeopleField(processUserModel.firstName);
+        await widget.peopleWidget().selectUserFromDropdown();
     });
 
     it('[C286577] Should be able to start a process with people widget', async () => {
+        await startProcess.clickFormStartProcessButton();
+        await processDetailsPage.clickOnActiveTask();
 
-        startProcess.clickFormStartProcessButton();
-        processDetailsPage.clickOnActiveTask();
-
-        browser.controlFlow().execute(async () => {
-            const taskId = await taskDetails.getId();
-            const taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
-            const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
-            expect(userEmail).toEqual(processUserModel.email);
-        });
+        const taskId = await taskDetails.getId();
+        const taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
+        const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
+        await expect(userEmail).toEqual(processUserModel.email);
     });
 
     it('[C286576] Should be able to see user in completed task', async () => {
+        await startProcess.enterProcessName(app.processName);
+        await startProcess.clickFormStartProcessButton();
 
-        startProcess.enterProcessName(app.processName);
-        startProcess.clickFormStartProcessButton();
+        await processDetailsPage.clickOnActiveTask();
+        await taskDetails.checkCompleteFormButtonIsDisplayed();
+        await taskDetails.clickCompleteFormTask();
 
-        processDetailsPage.clickOnActiveTask();
-        taskDetails.checkCompleteFormButtonIsDisplayed();
-        taskDetails.clickCompleteFormTask();
+        await processServiceTabBarPage.clickProcessButton();
+        await processFiltersPage.clickCompletedFilterButton();
+        await processFiltersPage.selectFromProcessList(app.processName);
 
-        processServiceTabBarPage.clickProcessButton();
-        processFiltersPage.clickCompletedFilterButton();
-        processFiltersPage.selectFromProcessList(app.processName);
+        await processDetailsPage.clickOnCompletedTask();
 
-        processDetailsPage.clickOnCompletedTask();
-
-        browser.controlFlow().execute(async () => {
-            const taskId = await taskDetails.getId();
-            const taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
-            const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
-            expect(userEmail).toEqual(processUserModel.email);
-        });
+        const taskId = await taskDetails.getId();
+        const taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
+        const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
+        await expect(userEmail).toEqual(processUserModel.email);
     });
 });

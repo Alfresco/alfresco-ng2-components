@@ -16,54 +16,53 @@
  */
 
 import { FormFields } from '../formFields';
-import { element, by, protractor } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DateWidget {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
-    checkWidgetIsVisible(fieldId) {
-        return this.formFields.checkWidgetIsVisible(fieldId);
+    async checkWidgetIsVisible(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    checkLabelIsVisible(fieldId) {
-        return this.formFields.checkWidgetIsVisible(fieldId);
+    async checkLabelIsVisible(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    getDateLabel(fieldId) {
+    async getDateLabel(fieldId): Promise<string> {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }
 
-    setDateInput(fieldId, value) {
-        this.removeFromDatetimeWidget(fieldId);
-        return this.formFields.setValueInInputById(fieldId, value);
+    async setDateInput(fieldId, value): Promise<void> {
+        await this.removeFromDatetimeWidget(fieldId);
+        await this.formFields.setValueInInputById(fieldId, value);
     }
 
-    getDateInput(fieldId) {
+    async getDateInput(fieldId): Promise<string> {
         return this.formFields.getFieldValue(fieldId);
     }
 
-    clearDateInput(fieldId) {
+    async clearDateInput(fieldId): Promise<void> {
         const dateInput = element(by.id(fieldId));
-        BrowserVisibility.waitUntilElementIsVisible(dateInput);
-        return dateInput.clear();
+        await BrowserActions.clearWithBackSpace(dateInput);
     }
 
-    getErrorMessage(fieldId) {
+    async clickOutsideWidget(fieldId): Promise<void> {
+        const form = await this.formFields.getWidget(fieldId);
+        await BrowserActions.click(form);
+    }
+
+    async getErrorMessage(fieldId): Promise<string> {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         return BrowserActions.getText(errorMessage);
     }
 
-    removeFromDatetimeWidget(fieldId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
-
-        const dateWidgetInput = element(by.id(fieldId));
-        dateWidgetInput.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                dateWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+    async removeFromDatetimeWidget(fieldId): Promise<void> {
+        const widget = await this.formFields.getWidget(fieldId);
+        await BrowserVisibility.waitUntilElementIsVisible(widget);
+        await BrowserActions.clearSendKeys(element(by.id(fieldId)), '');
     }
 }

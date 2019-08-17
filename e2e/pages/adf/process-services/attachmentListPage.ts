@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser } from 'protractor';
+import { element, by, protractor, browser, ElementFinder } from 'protractor';
 
 import path = require('path');
 import remote = require('selenium-webdriver/remote');
@@ -23,77 +23,70 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AttachmentListPage {
 
-    attachFileButton = element(by.css("input[type='file']"));
-    buttonMenu = element(by.css("button[data-automation-id='action_menu_0']"));
-    viewButton = element(by.css("button[data-automation-id*='MENU_ACTIONS.VIEW_CONTENT']"));
-    removeButton = element(by.css("button[data-automation-id*='MENU_ACTIONS.REMOVE_CONTENT']"));
-    downloadButton = element(by.css("button[data-automation-id*='MENU_ACTIONS.DOWNLOAD_CONTENT']"));
-    noContentContainer = element(by.css("div[class*='adf-no-content-container']"));
+    attachFileButton: ElementFinder = element(by.css("input[type='file']"));
+    buttonMenu: ElementFinder = element(by.css("button[data-automation-id='action_menu_0']"));
+    viewButton: ElementFinder = element(by.css("button[data-automation-id*='MENU_ACTIONS.VIEW_CONTENT']"));
+    removeButton: ElementFinder = element(by.css("button[data-automation-id*='MENU_ACTIONS.REMOVE_CONTENT']"));
+    downloadButton: ElementFinder = element(by.css("button[data-automation-id*='MENU_ACTIONS.DOWNLOAD_CONTENT']"));
+    noContentContainer: ElementFinder = element(by.css("div[class*='adf-no-content-container']"));
 
-    checkEmptyAttachmentList() {
-        BrowserVisibility.waitUntilElementIsVisible(this.noContentContainer);
+    async checkEmptyAttachmentList(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noContentContainer);
     }
 
-    clickAttachFileButton(fileLocation) {
+    async clickAttachFileButton(fileLocation): Promise<void> {
         browser.setFileDetector(new remote.FileDetector());
 
-        BrowserVisibility.waitUntilElementIsVisible(this.attachFileButton);
-        return this.attachFileButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
+        await BrowserVisibility.waitUntilElementIsPresent(this.attachFileButton);
+        await this.attachFileButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
     }
 
-    checkFileIsAttached(name) {
-        const fileAttached = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
-        BrowserVisibility.waitUntilElementIsVisible(fileAttached);
+    async checkFileIsAttached(name): Promise<void> {
+        const fileAttached: ElementFinder = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
+        await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
-    checkAttachFileButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.attachFileButton);
+    async checkAttachFileButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.attachFileButton);
     }
 
-    viewFile(name) {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
-        element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
-        BrowserActions.click(this.buttonMenu);
-        browser.driver.sleep(500);
-        BrowserActions.click(this.viewButton);
-        browser.driver.sleep(500);
-        return this;
+    async viewFile(name): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.click(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
+        await BrowserActions.click(this.buttonMenu);
+        await browser.sleep(500);
+        await BrowserActions.click(this.viewButton);
+        await browser.sleep(500);
     }
 
-    removeFile(name) {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
-        element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
-        BrowserActions.click(this.buttonMenu);
-        browser.driver.sleep(500);
-        BrowserActions.click(this.removeButton);
-        browser.driver.sleep(500);
-        return this;
+    async removeFile(name): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.click(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
+        await BrowserActions.click(this.buttonMenu);
+        await browser.sleep(500);
+        await BrowserActions.click(this.removeButton);
+        await browser.sleep(500);
     }
 
-    downloadFile(name) {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
-        element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
-        BrowserActions.click(this.buttonMenu);
-        browser.driver.sleep(500);
-        BrowserActions.click(this.downloadButton);
-        return this;
+    async downloadFile(name): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.click(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
+        await BrowserActions.click(this.buttonMenu);
+        await browser.sleep(500);
+        await BrowserActions.click(this.downloadButton);
     }
 
-    doubleClickFile(name) {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
-        const fileAttached = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
-        BrowserActions.click(fileAttached);
-        browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    async doubleClickFile(name): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
+        const fileAttached: ElementFinder = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
+        await BrowserActions.click(fileAttached);
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    checkFileIsRemoved(name) {
-        const fileAttached = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
-        BrowserVisibility.waitUntilElementIsNotVisible(fileAttached);
-        return this;
+    async checkFileIsRemoved(name): Promise<void> {
+        const fileAttached: ElementFinder = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
+        await BrowserVisibility.waitUntilElementIsNotVisible(fileAttached);
     }
 
 }

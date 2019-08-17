@@ -24,15 +24,12 @@ import resources = require('../../../util/resources');
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const navigationBarPage = new NavigationBarPage();
-
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -51,7 +48,7 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -67,11 +64,6 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        done();
-    });
-
-    afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
     });
 
     describe('Image Folder Uploaded', () => {
@@ -79,7 +71,7 @@ describe('Viewer', () => {
         let uploadedImages, uploadedImgRenditionFolderInfo;
         let imgFolderUploaded, imgFolderRenditionUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             imgFolderUploaded = await uploadActions.createFolder(imgFolderInfo.name, '-my-');
 
             uploadedImages = await uploadActions.uploadFolder(imgFolderInfo.location, imgFolderUploaded.entry.id);
@@ -89,37 +81,33 @@ describe('Viewer', () => {
             uploadedImgRenditionFolderInfo = await uploadActions.uploadFolder(imgRenditionFolderInfo.location, imgFolderRenditionUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(imgFolderUploaded.entry.id);
-            done();
+
         });
 
-        it('[C279966] Should be possible to open any Image supported extension', () => {
-            contentServicesPage.doubleClickRow('images');
-
-            uploadedImages.forEach((currentFile) => {
-                if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkImgViewerIsDisplayed();
-                    viewerPage.clickCloseButton();
+        it('[C279966] Should be possible to open any Image supported extension', async () => {
+            await contentServicesPage.doubleClickRow('images');
+            for (const image of uploadedImages) {
+                if (image.entry.name !== '.DS_Store') {
+                    await contentServicesPage.doubleClickRow(image.entry.name);
+                    await viewerPage.checkImgViewerIsDisplayed();
+                    await viewerPage.clickCloseButton();
                 }
-            });
-
-            contentServicesPage.doubleClickRow('images-rendition');
-
-            uploadedImgRenditionFolderInfo.forEach((currentFile) => {
-                if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkFileIsLoaded();
-                    viewerPage.clickCloseButton();
+            }
+            await contentServicesPage.doubleClickRow('images-rendition');
+            for (const item of uploadedImgRenditionFolderInfo) {
+                if (item.entry.name !== '.DS_Store') {
+                    await contentServicesPage.doubleClickRow(item.entry.name);
+                    await viewerPage.checkFileIsLoaded();
+                    await viewerPage.clickCloseButton();
                 }
-            });
-        }, 5 * 60 * 1000);
+            }
+        });
 
     });
 

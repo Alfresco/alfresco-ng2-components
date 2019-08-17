@@ -39,179 +39,182 @@ describe('Settings component', () => {
     });
 
     describe('Should be able to change Urls in the Settings', () => {
-        beforeEach( (done) => {
-            settingsPage.goToSettingsPage();
-            done();
-        });
-
-        it('[C245641] Should navigate User from Settings page to Login screen', () => {
-            settingsPage.clickBackButton();
-            loginPage.waitForElements();
-        });
-
-        it('[C291948] Should save ALL Settings changes when User clicks Apply button', () => {
-            loginPage.goToLoginPage();
-            loginPage.clickSettingsIcon();
-            settingsPage.setProviderEcmBpm();
-            loginPage.waitForElements();
-            settingsPage.goToSettingsPage();
-            expect(settingsPage.getSelectedOptionText()).toEqual('ALL', 'The Settings changes are not saved');
-            expect(settingsPage.getBpmHostUrl()).toEqual(browser.params.testConfig.adf_aps.host, 'The BPM Settings changes are not saved');
-            expect(settingsPage.getEcmHostUrl()).toEqual(browser.params.testConfig.adf_acs.host, 'The ECM Settings changes are not saved');
+        beforeEach(async () => {
+            await settingsPage.goToSettingsPage();
 
         });
 
-        it('[C291949] Should have field validation for Content Services Url', () => {
-            settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
-            settingsPage.clearContentServicesURL();
-            settingsPage.ecmText.sendKeys(protractor.Key.TAB);
-            settingsPage.checkValidationMessageIsDisplayed();
-            settingsPage.checkApplyButtonIsDisabled();
+        it('[C245641] Should navigate User from Settings page to Login screen', async () => {
+            await settingsPage.clickBackButton();
+            await loginPage.waitForElements();
         });
 
-        it('[C291950] Should have field validation for Process Services Url', () => {
-            settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
-            settingsPage.clearProcessServicesURL();
-            settingsPage.bpmText.sendKeys(protractor.Key.TAB);
-            settingsPage.checkValidationMessageIsDisplayed();
-            settingsPage.checkApplyButtonIsDisabled();
+        it('[C291948] Should save ALL Settings changes when User clicks Apply button', async () => {
+            await loginPage.goToLoginPage();
+            await loginPage.clickSettingsIcon();
+            await settingsPage.setProviderEcmBpm();
+            await loginPage.waitForElements();
+            await settingsPage.goToSettingsPage();
+            await expect(await settingsPage.getSelectedOptionText()).toEqual('ALL', 'The Settings changes are not saved');
+            await expect(await settingsPage.getBpmHostUrl()).toEqual(browser.params.testConfig.adf_aps.host, 'The BPM Settings changes are not saved');
+            await expect(await settingsPage.getEcmHostUrl()).toEqual(browser.params.testConfig.adf_acs.host, 'The ECM Settings changes are not saved');
+
         });
 
-        it('[C291951] Should not be able to sign in with invalid Content Services Url', () => {
-            settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
-            settingsPage.setContentServicesURL('http://localhost:7070');
-            settingsPage.clickApply();
-            loginPage.waitForElements();
-            loginPage.enterUsername(adminUserModel.id);
-            loginPage.enterPassword(adminUserModel.password);
-            loginPage.clickSignInButton();
-            expect(loginPage.getLoginError()).toMatch(loginError);
+        it('[C291949] Should have field validation for Content Services Url', async () => {
+            await settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
+            await settingsPage.clearContentServicesURL();
+            await settingsPage.ecmText.sendKeys(protractor.Key.TAB);
+            await settingsPage.checkValidationMessageIsDisplayed();
+            await settingsPage.checkApplyButtonIsDisabled();
         });
 
-        it('[C291952] Should not be able to sign in with invalid Process Services Url', () => {
-            settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
-            settingsPage.setProcessServicesURL('http://localhost:7070');
-            settingsPage.clickApply();
-            loginPage.waitForElements();
-            loginPage.enterUsername(adminUserModel.id);
-            loginPage.enterPassword(adminUserModel.password);
-            loginPage.clickSignInButton();
-            expect(loginPage.getLoginError()).toMatch(loginError);
+        it('[C291950] Should have field validation for Process Services Url', async () => {
+            await settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
+            await settingsPage.clearProcessServicesURL();
+            await settingsPage.bpmText.sendKeys(protractor.Key.TAB);
+            await settingsPage.checkValidationMessageIsDisplayed();
+            await settingsPage.checkApplyButtonIsDisabled();
+        });
+
+        it('[C291951] Should not be able to sign in with invalid Content Services Url', async () => {
+            await settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
+            await settingsPage.setContentServicesURL('http://localhost:7070');
+            await settingsPage.clickApply();
+            await loginPage.waitForElements();
+            await loginPage.enterUsername(adminUserModel.id);
+            await loginPage.enterPassword(adminUserModel.password);
+            await loginPage.clickSignInButton();
+            await expect(await loginPage.getLoginError()).toMatch(loginError);
+        });
+
+        it('[C291952] Should not be able to sign in with invalid Process Services Url', async () => {
+            await settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
+            await settingsPage.setProcessServicesURL('http://localhost:7070');
+            await settingsPage.clickApply();
+            await loginPage.waitForElements();
+            await loginPage.enterUsername(adminUserModel.id);
+            await loginPage.enterPassword(adminUserModel.password);
+            await loginPage.clickSignInButton();
+            await expect(await loginPage.getLoginError()).toMatch(loginError);
         });
     });
 
     describe('Settings Component - Basic Authentication', () => {
-        beforeAll( (done) => {
-            settingsPage.goToSettingsPage();
-            settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
-            settingsPage.setContentServicesURL(browser.params.testConfig.adf_acs.host);
-            settingsPage.setProcessServicesURL(browser.params.testConfig.adf_aps.host);
-            settingsPage.clickApply();
-            done();
+        beforeAll(async () => {
+            await settingsPage.goToSettingsPage();
+            await settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
+            await settingsPage.setContentServicesURL(browser.params.testConfig.adf_acs.host);
+            await settingsPage.setProcessServicesURL(browser.params.testConfig.adf_aps.host);
+            await settingsPage.clickApply();
         });
 
-        beforeEach( (done) => {
-            loginPage.goToLoginPage();
-            loginPage.clickSettingsIcon();
-            settingsPage.checkProviderDropdownIsDisplayed();
-            done();
+        beforeEach(async () => {
+            await loginPage.goToLoginPage();
+            await loginPage.clickSettingsIcon();
+            await settingsPage.checkProviderDropdownIsDisplayed();
         });
 
-        it('[C277751] Should allow the User to login to Process Services using the BPM selection on Settings page', () => {
-            settingsPage.checkProviderOptions();
-            settingsPage.checkBasicAuthRadioIsSelected();
-            settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
-            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
-            expect(settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
-            loginPage.goToLoginPage();
-            loginPage.clickSettingsIcon();
-            settingsPage.checkProviderDropdownIsDisplayed();
-            settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
-            settingsPage.clickBackButton();
-            loginPage.waitForElements();
-            loginPage.clickSettingsIcon();
-            settingsPage.checkProviderDropdownIsDisplayed();
-            settingsPage.setProviderBpm();
-            loginPage.waitForElements();
-            loginPage.enterUsername(adminUserModel.id);
-            loginPage.enterPassword(adminUserModel.password);
-            loginPage.clickSignInButton();
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
-            processServicesPage.checkAppIsDisplayed('Task App');
-            navigationBarPage.navigateToSettingsPage();
-            expect(settingsPage.getSelectedOptionText()).toBe('BPM');
-            settingsPage.checkBasicAuthRadioIsSelected();
-            settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
-            expect(settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
-            settingsPage.clickBackButton();
-            loginPage.waitForElements();
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
-            processServicesPage.checkApsContainer();
-            processServicesPage.checkAppIsDisplayed('Task App');
+        it('[C277751] Should allow the User to login to Process Services using the BPM selection on Settings page', async () => {
+            await settingsPage.checkProviderOptions();
+            await settingsPage.checkBasicAuthRadioIsSelected();
+            await settingsPage.checkSsoRadioIsNotSelected();
+            await expect(await settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
+            await expect(await settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
+
+            await expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
+            await loginPage.goToLoginPage();
+            await loginPage.clickSettingsIcon();
+            await settingsPage.checkProviderDropdownIsDisplayed();
+            await settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
+            await settingsPage.clickBackButton();
+            await loginPage.waitForElements();
+            await loginPage.clickSettingsIcon();
+            await settingsPage.checkProviderDropdownIsDisplayed();
+            await settingsPage.setProviderBpm();
+            await loginPage.waitForElements();
+            await loginPage.enterUsername(adminUserModel.id);
+            await loginPage.enterPassword(adminUserModel.password);
+            await loginPage.clickSignInButton();
+            await navigationBarPage.navigateToProcessServicesPage();
+            await processServicesPage.checkApsContainer();
+            await processServicesPage.checkAppIsDisplayed('Task App');
+            await navigationBarPage.clickSettingsButton();
+            await expect(await settingsPage.getSelectedOptionText()).toBe('BPM');
+
+            await settingsPage.checkBasicAuthRadioIsSelected();
+            await settingsPage.checkSsoRadioIsNotSelected();
+            await expect(await settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
+
+            await expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
+            await settingsPage.clickBackButton();
+            await loginPage.waitForElements();
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+            await processServicesPage.checkApsContainer();
+            await processServicesPage.checkAppIsDisplayed('Task App');
         });
 
-        it('[C277752] Should allow the User to login to Content Services using the ECM selection on Settings page', () => {
-            settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
-            settingsPage.clickBackButton();
-            loginPage.waitForElements();
-            loginPage.clickSettingsIcon();
-            settingsPage.checkProviderDropdownIsDisplayed();
-            settingsPage.setProviderEcm();
-            loginPage.waitForElements();
-            loginPage.enterUsername(adminUserModel.id);
-            loginPage.enterPassword(adminUserModel.password);
-            loginPage.clickSignInButton();
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.checkAcsContainer();
-            navigationBarPage.navigateToSettingsPage();
-            expect(settingsPage.getSelectedOptionText()).toBe('ECM');
-            settingsPage.checkBasicAuthRadioIsSelected();
-            settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
-            expect(settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
-            settingsPage.clickBackButton();
-            loginPage.waitForElements();
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
-            contentServicesPage.checkAcsContainer();
+        it('[C277752] Should allow the User to login to Content Services using the ECM selection on Settings page', async () => {
+            await settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
+            await settingsPage.clickBackButton();
+            await loginPage.waitForElements();
+            await loginPage.clickSettingsIcon();
+            await settingsPage.checkProviderDropdownIsDisplayed();
+            await settingsPage.setProviderEcm();
+            await loginPage.waitForElements();
+            await loginPage.enterUsername(adminUserModel.id);
+            await loginPage.enterPassword(adminUserModel.password);
+            await loginPage.clickSignInButton();
+            await navigationBarPage.clickContentServicesButton();
+            await contentServicesPage.checkAcsContainer();
+            await navigationBarPage.clickSettingsButton();
+            await expect(await settingsPage.getSelectedOptionText()).toBe('ECM');
+            await settingsPage.checkBasicAuthRadioIsSelected();
+            await settingsPage.checkSsoRadioIsNotSelected();
+
+            await expect(await settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
+            await expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
+            await settingsPage.clickBackButton();
+            await loginPage.waitForElements();
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+            await contentServicesPage.checkAcsContainer();
         });
 
-        it('[C277753] Should allow the User to login to both Process Services and Content Services using the ALL selection on Settings Page', () => {
-            settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
-            settingsPage.clickBackButton();
-            loginPage.waitForElements();
-            loginPage.clickSettingsIcon();
-            settingsPage.checkProviderDropdownIsDisplayed();
-            settingsPage.setProviderEcmBpm();
-            loginPage.waitForElements();
-            loginPage.enterUsername(adminUserModel.id);
-            loginPage.enterPassword(adminUserModel.password);
-            loginPage.clickSignInButton();
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.checkAcsContainer();
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
-            processServicesPage.checkAppIsDisplayed('Task App');
-            navigationBarPage.navigateToSettingsPage();
-            expect(settingsPage.getSelectedOptionText()).toBe('ALL');
-            settingsPage.checkBasicAuthRadioIsSelected();
-            settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
-            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
-            expect(settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
-            settingsPage.clickBackButton();
-            loginPage.waitForElements();
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
-            contentServicesPage.checkAcsContainer();
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
-            processServicesPage.checkApsContainer();
-            processServicesPage.checkAppIsDisplayed('Task App');
+        it('[C277753] Should allow the User to login to both Process Services and Content Services using the ALL selection on Settings Page', async () => {
+            await settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
+            await settingsPage.clickBackButton();
+            await loginPage.waitForElements();
+            await loginPage.clickSettingsIcon();
+            await settingsPage.checkProviderDropdownIsDisplayed();
+            await settingsPage.setProviderEcmBpm();
+            await loginPage.waitForElements();
+            await loginPage.enterUsername(adminUserModel.id);
+            await loginPage.enterPassword(adminUserModel.password);
+            await loginPage.clickSignInButton();
+            await navigationBarPage.clickContentServicesButton();
+            await contentServicesPage.checkAcsContainer();
+            await navigationBarPage.navigateToProcessServicesPage();
+            await processServicesPage.checkApsContainer();
+            await processServicesPage.checkAppIsDisplayed('Task App');
+            await navigationBarPage.clickSettingsButton();
+            await expect(await settingsPage.getSelectedOptionText()).toBe('ALL');
+            await settingsPage.checkBasicAuthRadioIsSelected();
+            await settingsPage.checkSsoRadioIsNotSelected();
+            await expect(await settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf_acs.host);
+            await expect(await settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf_aps.host);
+
+            await expect(await settingsPage.getBackButton().isEnabled()).toBe(true);
+            await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
+            await settingsPage.clickBackButton();
+            await loginPage.waitForElements();
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+            await contentServicesPage.checkAcsContainer();
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+            await processServicesPage.checkApsContainer();
+            await processServicesPage.checkAppIsDisplayed('Task App');
         });
     });
 });

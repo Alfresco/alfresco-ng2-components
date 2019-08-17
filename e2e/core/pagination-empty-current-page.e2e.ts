@@ -30,7 +30,6 @@ import { UploadActions } from '@alfresco/adf-testing';
 import { Util } from '../util/util';
 import resources = require('../util/resources');
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Pagination - returns to previous page when current is empty', () => {
 
@@ -38,7 +37,6 @@ describe('Pagination - returns to previous page when current is empty', () => {
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const viewerPage = new ViewerPage();
-    const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
     const folderModel = new FolderModel({ 'name': 'folderOne' });
@@ -67,7 +65,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -98,79 +96,71 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
-
-        done();
-    });
-
-    afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
-    });
-
-    it('[C274710] Should redirect to previous page when current is emptied', () => {
-        contentServicesPage.doubleClickRow(folderModel.name);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
-
-        paginationPage.selectItemsPerPage(itemsPerPage.five);
-
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
-
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-
-        contentServicesPage.getAllRowsNameColumn().then((list) => {
-            expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
-        });
-
-        paginationPage.clickOnNextPage();
-
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
-
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-
-        contentServicesPage.getAllRowsNameColumn().then((list) => {
-            expect(Util.arrayContainsArray(list, fileNames.slice(5, 6))).toEqual(true);
-        });
-
-        contentServicesPage.deleteContent(lastFile);
-        contentServicesPage.checkContentIsNotDisplayed(lastFile);
-
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-
-        contentServicesPage.getAllRowsNameColumn().then((list) => {
-            expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
-        });
+        await contentServicesPage.goToDocumentList();
 
     });
 
-    it('[C297494] Should display content when navigating to a non-empty folder not in the first page', () => {
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.doubleClickRow(parentFolderModel.name);
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+    it('[C274710] Should redirect to previous page when current is emptied', async () => {
+        await contentServicesPage.doubleClickRow(folderModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
 
-        paginationPage.selectItemsPerPage(itemsPerPage.five);
+        await paginationPage.selectItemsPerPage(itemsPerPage.five);
 
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
 
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
 
-        paginationPage.clickOnNextPage();
+        let list = await contentServicesPage.getAllRowsNameColumn();
+        await expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
 
-        contentServicesPage.checkAcsContainer();
-        contentServicesPage.waitForTableBody();
+        await paginationPage.clickOnNextPage();
 
-        contentServicesPage.doubleClickRow(lastFolderResponse.entry.name);
-        contentServicesPage.checkContentIsDisplayed(pngFileInfo.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
 
-        viewerPage.viewFile(pngFileUploaded.entry.name);
-        viewerPage.checkImgViewerIsDisplayed();
-        viewerPage.clickCloseButton();
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+
+        list = await contentServicesPage.getAllRowsNameColumn();
+        await expect(Util.arrayContainsArray(list, fileNames.slice(5, 6))).toEqual(true);
+
+        await contentServicesPage.deleteContent(lastFile);
+        await contentServicesPage.checkContentIsNotDisplayed(lastFile);
+
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
+
+        list = await contentServicesPage.getAllRowsNameColumn();
+        await expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
+
+    });
+
+    it('[C297494] Should display content when navigating to a non-empty folder not in the first page', async () => {
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.doubleClickRow(parentFolderModel.name);
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+
+        await paginationPage.selectItemsPerPage(itemsPerPage.five);
+
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
+
+        await paginationPage.clickOnNextPage();
+
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.waitForTableBody();
+
+        await contentServicesPage.doubleClickRow(lastFolderResponse.entry.name);
+        await contentServicesPage.checkContentIsDisplayed(pngFileInfo.name);
+
+        await viewerPage.viewFile(pngFileUploaded.entry.name);
+        await viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.clickCloseButton();
     });
 });

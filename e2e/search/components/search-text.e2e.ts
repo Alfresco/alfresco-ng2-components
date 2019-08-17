@@ -42,7 +42,7 @@ describe('Search component - Text widget', () => {
     const acsUser = new AcsUserModel();
     const newFolderModel = new FolderModel({ 'name': 'newFolder', 'description': 'newDescription' });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -64,66 +64,66 @@ describe('Search component - Text widget', () => {
                 }
         }, {}, {});
 
-        await browser.driver.sleep(15000);
+        await browser.sleep(15000);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    it('[C289329] Placeholder should be displayed in the widget when the input string is empty', () => {
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
-        searchResultPage.tableIsLoaded();
+    it('[C289329] Placeholder should be displayed in the widget when the input string is empty', async () => {
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+        await searchResultPage.tableIsLoaded();
 
-        searchFiltersPage.checkNameFilterIsDisplayed();
-        expect(searchFiltersPage.textFiltersPage().getNamePlaceholder()).toEqual('Enter the name');
+        await searchFiltersPage.checkNameFilterIsDisplayed();
+        await expect(await searchFiltersPage.textFiltersPage().getNamePlaceholder()).toEqual('Enter the name');
     });
 
     describe('configuration change', () => {
 
         let jsonFile;
 
-        beforeAll(() => {
+        beforeAll(async () => {
             jsonFile = SearchConfiguration.getConfiguration();
         });
 
         it('[C289330] Should be able to change the Field setting', async () => {
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
-            searchResultPage.tableIsLoaded();
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+            await searchResultPage.tableIsLoaded();
 
-            searchFiltersPage.checkCheckListFilterIsDisplayed();
-            searchFiltersPage.clickCheckListFilter();
-            searchFiltersPage.checkListFiltersPage().clickCheckListOption('Folder');
+            await searchFiltersPage.checkCheckListFilterIsDisplayed();
+            await searchFiltersPage.clickCheckListFilter();
+            await searchFiltersPage.checkListFiltersPage().clickCheckListOption('Folder');
 
-            searchFiltersPage.checkNameFilterIsDisplayed();
-            searchFiltersPage.textFiltersPage().searchByName(newFolderModel.name);
-            searchResultPage.checkContentIsDisplayed(newFolderModel.name);
+            await searchFiltersPage.checkNameFilterIsDisplayed();
+            await searchFiltersPage.textFiltersPage().searchByName(newFolderModel.name);
+            await searchResultPage.checkContentIsDisplayed(newFolderModel.name);
 
-            searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
-            searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
+            await searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
+            await searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
 
             jsonFile.categories[0].component.settings.field = 'cm:description';
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');
-            searchResultPage.tableIsLoaded();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.enterTextAndPressEnter('*');
+            await searchResultPage.tableIsLoaded();
 
-            searchFiltersPage.checkCheckListFilterIsDisplayed();
-            searchFiltersPage.clickCheckListFilter();
-            searchFiltersPage.checkListFiltersPage().clickCheckListOption('Folder');
+            await searchFiltersPage.checkCheckListFilterIsDisplayed();
+            await searchFiltersPage.clickCheckListFilter();
+            await searchFiltersPage.checkListFiltersPage().clickCheckListOption('Folder');
 
-            searchFiltersPage.checkNameFilterIsDisplayed();
-            searchFiltersPage.textFiltersPage().searchByName(newFolderModel.name);
-            searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
+            await searchFiltersPage.checkNameFilterIsDisplayed();
+            await searchFiltersPage.textFiltersPage().searchByName(newFolderModel.name);
+            await searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
 
-            searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
-            searchResultPage.checkContentIsDisplayed(newFolderModel.name);
+            await searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
+            await searchResultPage.checkContentIsDisplayed(newFolderModel.name);
         });
     });
 });

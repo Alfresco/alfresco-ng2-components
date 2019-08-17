@@ -56,7 +56,7 @@ describe('Start Task - Group Cloud Component', () => {
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
@@ -79,10 +79,9 @@ describe('Start Task - Group Cloud Component', () => {
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         const tasksService = new TasksService(apiService);
 
@@ -95,117 +94,113 @@ describe('Start Task - Group Cloud Component', () => {
         await identityService.deleteIdentityUser(apsUser.idIdentityService);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
 
-        done();
     });
 
     beforeEach(async () => {
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-        navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.checkFormIsDisplayed();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudComponent.checkApsContainer();
+        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        await appListCloudComponent.goToApp(simpleApp);
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        await tasksCloudDemoPage.openNewTaskForm();
+        await startTask.checkFormIsDisplayed();
     });
 
-    afterEach(() => {
-        navigationBarPage.clickLogoutButton();
+    afterEach(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C291954] Should be able to select/delete an group for a standalone task', async () => {
-        peopleCloudComponent.clearAssignee();
+        await peopleCloudComponent.clearAssignee();
 
-        groupCloud.searchGroups(testGroup.name);
+        await groupCloud.searchGroups(testGroup.name);
+        await groupCloud.checkGroupIsDisplayed(testGroup.name);
+        await groupCloud.selectGroupFromList(testGroup.name);
+        await groupCloud.checkSelectedGroup(testGroup.name);
 
-        groupCloud.checkGroupIsDisplayed(testGroup.name);
-        groupCloud.selectGroupFromList(testGroup.name);
-        groupCloud.checkSelectedGroup(testGroup.name);
+        await groupCloud.searchGroups(hrGroup.name);
+        await groupCloud.checkGroupIsDisplayed(hrGroup.name);
+        await groupCloud.selectGroupFromList(hrGroup.name);
+        await groupCloud.checkSelectedGroup(hrGroup.name);
 
-        groupCloud.searchGroups(hrGroup.name);
-        groupCloud.checkGroupIsDisplayed(hrGroup.name);
-        groupCloud.selectGroupFromList(hrGroup.name);
-        groupCloud.checkSelectedGroup(hrGroup.name);
+        await groupCloud.removeSelectedGroup(testGroup.name);
+        await groupCloud.checkGroupNotSelected(testGroup.name);
 
-        groupCloud.removeSelectedGroup(testGroup.name);
-        groupCloud.checkGroupNotSelected(testGroup.name);
+        await startTask.addName(oneGroupTaskName);
+        await startTask.clickStartButton();
 
-        startTask.addName(oneGroupTaskName);
-        startTask.clickStartButton();
-
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
         await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
-        navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudComponent.checkApsContainer();
+        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        await appListCloudComponent.goToApp(simpleApp);
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-        tasksCloudDemoPage.editTaskFilterCloudComponent()
-            .clickCustomiseFilterHeader()
-            .clearAssignee()
-            .setStatusFilterDropDown('CREATED');
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
 
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(oneGroupTaskName);
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(oneGroupTaskName);
     });
 
     it('[C291955] Should be able to select multiple groups when the selection mode=multiple', async () => {
-        peopleCloudComponent.clearAssignee();
+        await peopleCloudComponent.clearAssignee();
 
-        groupCloud.searchGroups(testGroup.name);
-        groupCloud.checkGroupIsDisplayed(testGroup.name);
-        groupCloud.selectGroupFromList(testGroup.name);
-        groupCloud.checkSelectedGroup(testGroup.name);
+        await groupCloud.searchGroups(testGroup.name);
+        await groupCloud.checkGroupIsDisplayed(testGroup.name);
+        await groupCloud.selectGroupFromList(testGroup.name);
+        await groupCloud.checkSelectedGroup(testGroup.name);
 
-        groupCloud.searchGroups(hrGroup.name);
-        groupCloud.checkGroupIsDisplayed(hrGroup.name);
-        groupCloud.selectGroupFromList(hrGroup.name);
-        groupCloud.checkSelectedGroup(hrGroup.name);
+        await groupCloud.searchGroups(hrGroup.name);
+        await groupCloud.checkGroupIsDisplayed(hrGroup.name);
+        await groupCloud.selectGroupFromList(hrGroup.name);
+        await groupCloud.checkSelectedGroup(hrGroup.name);
 
-        startTask.addName(bothGroupsTaskName);
-        startTask.clickStartButton();
+        await startTask.addName(bothGroupsTaskName);
+        await startTask.clickStartButton();
 
-        navigationBarPage.clickLogoutButton();
+        await navigationBarPage.clickLogoutButton();
         await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
-        navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudComponent.checkApsContainer();
+        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        await appListCloudComponent.goToApp(simpleApp);
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-        tasksCloudDemoPage.editTaskFilterCloudComponent()
-            .clickCustomiseFilterHeader()
-            .clearAssignee()
-            .setStatusFilterDropDown('CREATED');
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
 
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(bothGroupsTaskName);
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(bothGroupsTaskName);
     });
 
-    it('[C291993] Should NOT be able to find a group already selected', () => {
-        groupCloud.searchGroups(testGroup.name);
-        groupCloud.checkGroupIsDisplayed(testGroup.name);
-        groupCloud.selectGroupFromList(testGroup.name);
-        groupCloud.checkSelectedGroup(testGroup.name);
+    it('[C291993] Should NOT be able to find a group already selected', async () => {
+        await groupCloud.searchGroups(testGroup.name);
+        await groupCloud.checkGroupIsDisplayed(testGroup.name);
+        await groupCloud.selectGroupFromList(testGroup.name);
+        await groupCloud.checkSelectedGroup(testGroup.name);
 
-        groupCloud.searchGroups(testGroup.name);
-        groupCloud.checkGroupIsNotDisplayed(testGroup.name);
+        await groupCloud.searchGroups(testGroup.name);
+        await groupCloud.checkGroupIsNotDisplayed(testGroup.name);
     });
 
     it('[C291995] Should be able to add a group previously removed', async () => {
-        groupCloud.searchGroups(testGroup.name);
-        groupCloud.checkGroupIsDisplayed(testGroup.name);
-        groupCloud.selectGroupFromList(testGroup.name);
-        groupCloud.checkSelectedGroup(testGroup.name);
+        await groupCloud.searchGroups(testGroup.name);
+        await groupCloud.checkGroupIsDisplayed(testGroup.name);
+        await groupCloud.selectGroupFromList(testGroup.name);
+        await groupCloud.checkSelectedGroup(testGroup.name);
 
-        groupCloud.removeSelectedGroup(testGroup.name);
-        groupCloud.checkGroupNotSelected(testGroup.name);
+        await groupCloud.removeSelectedGroup(testGroup.name);
+        await groupCloud.checkGroupNotSelected(testGroup.name);
 
-        groupCloud.searchGroups(testGroup.name);
-        groupCloud.checkGroupIsDisplayed(testGroup.name);
-        groupCloud.selectGroupFromList(testGroup.name);
-        groupCloud.checkSelectedGroup(testGroup.name);
+        await groupCloud.searchGroups(testGroup.name);
+        await groupCloud.checkGroupIsDisplayed(testGroup.name);
+        await groupCloud.selectGroupFromList(testGroup.name);
+        await groupCloud.checkSelectedGroup(testGroup.name);
     });
 
 });

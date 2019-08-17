@@ -16,8 +16,19 @@
  */
 
 import {
-    TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService,
-    LoginSSOPage, ApiService, SettingsPage, IdentityService, GroupIdentityService, Widget, NotificationHistoryPage, TaskHeaderCloudPage, TaskFormCloudComponent
+    TasksService,
+    QueryService,
+    ProcessDefinitionsService,
+    ProcessInstancesService,
+    LoginSSOPage,
+    ApiService,
+    SettingsPage,
+    IdentityService,
+    GroupIdentityService,
+    Widget,
+    NotificationHistoryPage,
+    TaskHeaderCloudPage,
+    TaskFormCloudComponent
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -51,7 +62,7 @@ describe('Form Field Component - Dropdown Widget', () => {
     let runningProcessInstance, testUser, groupInfo, tasklist, task;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
@@ -72,7 +83,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
         queryService = new QueryService(apiService);
 
-        await browser.driver.sleep(4000); // eventual consistency query
+        await browser.sleep(4000); // eventual consistency query
         tasklist = await queryService.getProcessInstanceTasks(runningProcessInstance.entry.id, simpleApp);
         task = await tasklist.list.entries[0];
         tasksService = new TasksService(apiService);
@@ -83,46 +94,48 @@ describe('Form Field Component - Dropdown Widget', () => {
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-        done();
+
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
+
     });
 
-    beforeEach(() => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
-        appListCloudComponent.goToApp(simpleApp);
+    beforeEach(async () => {
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudComponent.checkApsContainer();
+        await appListCloudComponent.goToApp(simpleApp);
 
-        identityService.deleteIdentityUser(testUser.idIdentityService);
+        await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 
     it('[C290069] Should be able to read rest service dropdown options, save and complete the task form', async () => {
-        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
-        taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-        taskFormCloudComponent.formFields().checkFormIsDisplayed();
-        taskFormCloudComponent.formFields().checkWidgetIsVisible('Dropdown097maj');
-        dropdown.selectOption('Clementine Bauch', 'dropdown-cloud-widget mat-select');
-        expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
-        taskFormCloudComponent.checkSaveButtonIsDisplayed().clickSaveButton();
-        expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
-        taskFormCloudComponent.checkCompleteButtonIsDisplayed().clickCompleteButton();
-        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(task.entry.name);
-        notificationHistoryPage.checkNotifyContains('Task has been saved successfully');
+        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
+        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+        await taskFormCloudComponent.formFields().checkFormIsDisplayed();
+        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Dropdown097maj');
+        await dropdown.selectOption('Clementine Bauch', 'dropdown-cloud-widget mat-select');
+        await expect(await dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        await taskFormCloudComponent.checkSaveButtonIsDisplayed();
+        await taskFormCloudComponent.clickSaveButton();
+        await expect(await dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
+        await taskFormCloudComponent.clickCompleteButton();
+        await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(task.entry.name);
+        await notificationHistoryPage.checkNotifyContains('Task has been saved successfully');
 
-        tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
-        taskFormCloudComponent.formFields().checkFormIsDisplayed();
-        taskFormCloudComponent.formFields().checkWidgetIsVisible('Dropdown097maj');
-        expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
-        taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
+        await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
+        await taskFormCloudComponent.formFields().checkFormIsDisplayed();
+        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Dropdown097maj');
+        await expect(await dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
     });
 
 });

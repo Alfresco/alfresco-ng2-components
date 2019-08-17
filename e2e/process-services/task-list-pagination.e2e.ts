@@ -54,7 +54,7 @@ describe('Task List Pagination', () => {
         default: '20'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -78,131 +78,130 @@ describe('Task List Pagination', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    it('[C260301] Should display default pagination', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(nrOfTasks);
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
-        paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
+    it('[C260301] Should display default pagination', async () => {
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(nrOfTasks);
+        await paginationPage.checkNextPageButtonIsDisabled();
+        await paginationPage.checkPreviousPageButtonIsDisabled();
+        await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
     });
 
-    it('[C260304] Should be possible to set Items per page to 5', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        paginationPage.selectItemsPerPage(itemsPerPage.five);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
-        paginationPage.clickOnNextPage();
+    it('[C260304] Should be possible to set Items per page to 5', async () => {
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await paginationPage.selectItemsPerPage(itemsPerPage.five);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        await paginationPage.clickOnNextPage();
         currentPage++;
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
-        paginationPage.clickOnNextPage();
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        await paginationPage.clickOnNextPage();
         currentPage++;
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
-        paginationPage.clickOnNextPage();
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        await paginationPage.clickOnNextPage();
         currentPage++;
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
 
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
     });
 
-    it('[C260303] Should be possible to set Items per page to 10', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        paginationPage.selectItemsPerPage(itemsPerPage.ten);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
-        paginationPage.clickOnNextPage();
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
+    it('[C260303] Should be possible to set Items per page to 10', async () => {
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await paginationPage.selectItemsPerPage(itemsPerPage.ten);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
+        await paginationPage.clickOnNextPage();
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
 
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
     });
 
-    it('[C260302] Should be possible to set Items per page to 15', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
-        paginationPage.clickOnNextPage();
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+    it('[C260302] Should be possible to set Items per page to 15', async () => {
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
+        await paginationPage.clickOnNextPage();
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
 
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
-    it('[C261006] Should be possible to navigate to a page with page number dropdown', () => {
+    it('[C261006] Should be possible to navigate to a page with page number dropdown', async () => {
         currentPage = 1;
         totalPages = 2;
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        taskPage.tasksListPage().getDataTable().waitForTableBody();
-        paginationPage.selectItemsPerPage(itemsPerPage.ten);
-        taskPage.tasksListPage().getDataTable().waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await paginationPage.selectItemsPerPage(itemsPerPage.ten);
+        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
+        await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
+        await paginationPage.checkNextPageButtonIsEnabled();
+        await paginationPage.checkPreviousPageButtonIsDisabled();
 
-        paginationPage.clickOnPageDropdown();
-        expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
+        await paginationPage.clickOnPageDropdown();
+        await expect(await paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
         currentPage = 2;
-        paginationPage.clickOnPageDropdownOption('2');
-        taskPage.tasksListPage().getDataTable().waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
-        paginationPage.checkNextPageButtonIsDisabled();
-        paginationPage.checkPreviousPageButtonIsEnabled();
+        await paginationPage.clickOnPageDropdownOption('2');
+        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
+        await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
+        await paginationPage.checkNextPageButtonIsDisabled();
+        await paginationPage.checkPreviousPageButtonIsEnabled();
 
-        paginationPage.clickOnPageDropdown();
-        expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
+        await paginationPage.clickOnPageDropdown();
+        await expect(await paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
         currentPage = 1;
-        paginationPage.clickOnPageDropdownOption('1');
-        taskPage.tasksListPage().getDataTable().waitForTableBody();
-        expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
-        expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
-        paginationPage.checkNextPageButtonIsEnabled();
-        paginationPage.checkPreviousPageButtonIsDisabled();
+        await paginationPage.clickOnPageDropdownOption('1');
+        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
+        await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
+        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
+        await paginationPage.checkNextPageButtonIsEnabled();
+        await paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
     it('Pagination in an empty task list', async () => {
         await loginPage.loginToProcessServicesUsingUserModel(processUserModelEmpty);
 
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        paginationPage.checkPaginationIsNotDisplayed();
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
+        await paginationPage.checkPaginationIsNotDisplayed();
     });
 
 });

@@ -25,7 +25,7 @@ export class RolesService {
         this.api = api;
     }
 
-    async getRoleIdByRoleName(roleName) {
+    async getRoleIdByRoleName(roleName): Promise<any> {
         const path = `/roles`;
         const method = 'GET';
         let roleId;
@@ -40,7 +40,7 @@ export class RolesService {
         return roleId;
     }
 
-    async getClientRoleIdByRoleName(groupId, clientId, clientRoleName) {
+    async getClientRoleIdByRoleName(groupId, clientId, clientRoleName): Promise<any> {
         const path = `/groups/${groupId}/role-mappings/clients/${clientId}/available`;
         const method = 'GET';
         let clientRoleId;

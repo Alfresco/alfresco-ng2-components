@@ -23,14 +23,14 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Universal Icon component', function () {
+describe('Universal Icon component', () => {
 
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
     const iconsPage = new IconsPage();
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -40,25 +40,21 @@ describe('Universal Icon component', function () {
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    beforeEach(async (done) => {
-        navigationBarPage.navigateToIconsPage();
-        done();
+    beforeEach(async () => {
+        await navigationBarPage.clickIconsButton();
+
     });
 
-    it('[C291872] Should display the icons on the page', () => {
-
-        expect(iconsPage.locateLigatureIcon('folder').isDisplayed()).toBe(true, 'Ligature icon is not displayed');
-
-        expect(iconsPage.locateCustomIcon('adf:move_file').isDisplayed()).toBe(true, 'Named icon is not displayed');
-
-        expect(iconsPage.locateCustomIcon('adf:folder').isDisplayed()).toBe(true, 'Thumbnail service icon is not displayed');
+    it('[C291872] Should display the icons on the page', async () => {
+        await expect(await iconsPage.isLigatureIconDisplayed('folder')).toBe(true, 'Ligature icon is not displayed');
+        await expect(await iconsPage.isCustomIconDisplayed('adf:move_file')).toBe(true, 'Named icon is not displayed');
+        await expect(await iconsPage.isCustomIconDisplayed('adf:folder')).toBe(true, 'Thumbnail service icon is not displayed');
     });
 
 });

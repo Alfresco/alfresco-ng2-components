@@ -17,59 +17,60 @@
 
 import { ProcessServiceTabBarPage } from './processServiceTabBarPage';
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { __await } from 'tslib';
 
 export class ProcessServicesPage {
 
-    apsAppsContainer = element(by.css('div[class="adf-app-listgrid ng-star-inserted"]'));
-    taskApp = element(by.css('mat-card[title="Task App"]'));
+    apsAppsContainer: ElementFinder = element(by.css('div[class="adf-app-listgrid ng-star-inserted"]'));
+    taskApp: ElementFinder = element(by.css('mat-card[title="Task App"]'));
     iconTypeLocator = by.css('mat-icon[class*="card-logo-icon"]');
     descriptionLocator = by.css('mat-card-subtitle[class*="subtitle"]');
 
-    checkApsContainer() {
-        BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
+    async checkApsContainer(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
     }
 
-    goToApp(applicationName) {
-        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        BrowserActions.click(app);
+    async goToApp(applicationName): Promise<ProcessServiceTabBarPage> {
+        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+        await BrowserActions.click(app);
         return new ProcessServiceTabBarPage();
     }
 
-    goToTaskApp() {
-        BrowserActions.click(this.taskApp);
+    async goToTaskApp(): Promise<ProcessServiceTabBarPage> {
+        await BrowserActions.click(this.taskApp);
         return new ProcessServiceTabBarPage();
     }
 
-    getAppIconType(applicationName) {
-        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(app);
+    async getAppIconType(applicationName): Promise<string> {
+        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(app);
         const iconType = app.element(this.iconTypeLocator);
         return BrowserActions.getText(iconType);
     }
 
-    getBackgroundColor(applicationName) {
-        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(app);
+    async getBackgroundColor(applicationName): Promise<string> {
+        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(app);
         return app.getCssValue('background-color');
     }
 
-    getDescription(applicationName) {
-        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(app);
+    async getDescription(applicationName): Promise<string> {
+        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(app);
         const description = app.element(this.descriptionLocator);
         return BrowserActions.getText(description);
     }
 
-    checkAppIsNotDisplayed(applicationName) {
-        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        return BrowserVisibility.waitUntilElementIsNotOnPage(app);
+    async checkAppIsNotDisplayed(applicationName): Promise<void> {
+        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(app);
     }
 
-    checkAppIsDisplayed(applicationName) {
-        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        return BrowserVisibility.waitUntilElementIsVisible(app);
+    async checkAppIsDisplayed(applicationName): Promise<void> {
+        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(app);
     }
 
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 import {
     ProcessFiltersCloudComponentPage,
@@ -26,74 +26,71 @@ import {
 
 export class ProcessCloudDemoPage {
 
-    allProcesses = element(by.css('span[data-automation-id="all-processes_filter"]'));
-    runningProcesses = element(by.css('span[data-automation-id="running-processes_filter"]'));
-    completedProcesses = element(by.css('span[data-automation-id="completed-processes_filter"]'));
-    activeFilter = element(by.css("mat-list-item[class*='active'] span"));
-    processFilters = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
-    processFiltersList = element(by.css('adf-cloud-process-filters'));
+    allProcesses: ElementFinder = element(by.css('span[data-automation-id="all-processes_filter"]'));
+    runningProcesses: ElementFinder = element(by.css('span[data-automation-id="running-processes_filter"]'));
+    completedProcesses: ElementFinder = element(by.css('span[data-automation-id="completed-processes_filter"]'));
+    activeFilter: ElementFinder = element(by.css("mat-list-item[class*='active'] span"));
+    processFilters: ElementFinder = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
+    processFiltersList: ElementFinder = element(by.css('adf-cloud-process-filters'));
 
-    createButton = element(by.css('button[data-automation-id="create-button"'));
-    newProcessButton = element(by.css('button[data-automation-id="btn-start-process"]'));
+    createButton: ElementFinder = element(by.css('button[data-automation-id="create-button"'));
+    newProcessButton: ElementFinder = element(by.css('button[data-automation-id="btn-start-process"]'));
 
     processListCloud = new ProcessListCloudComponentPage();
     editProcessFilterCloud = new EditProcessFilterCloudComponentPage();
 
-    editProcessFilterCloudComponent() {
+    editProcessFilterCloudComponent(): EditProcessFilterCloudComponentPage {
         return this.editProcessFilterCloud;
     }
 
-    processListCloudComponent() {
+    processListCloudComponent(): ProcessListCloudComponentPage {
         return this.processListCloud;
     }
 
-    getAllRowsByIdColumn() {
+    getAllRowsByIdColumn(): Promise<any> {
         return this.processListCloud.getAllRowsByColumn('Id');
     }
 
-    allProcessesFilter() {
+    allProcessesFilter(): ProcessFiltersCloudComponentPage {
         return new ProcessFiltersCloudComponentPage(this.allProcesses);
     }
 
-    runningProcessesFilter() {
+    runningProcessesFilter(): ProcessFiltersCloudComponentPage {
         return new ProcessFiltersCloudComponentPage(this.runningProcesses);
     }
 
-    completedProcessesFilter() {
+    completedProcessesFilter(): ProcessFiltersCloudComponentPage {
         return new ProcessFiltersCloudComponentPage(this.completedProcesses);
     }
 
-    customProcessFilter(filterName) {
+    customProcessFilter(filterName): ProcessFiltersCloudComponentPage {
         return new ProcessFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}_filter"]`)));
     }
 
-    getActiveFilterName() {
+    async getActiveFilterName(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
         return BrowserActions.getText(this.activeFilter);
     }
 
-    clickOnProcessFilters() {
-        return BrowserActions.click(this.processFilters);
+    async clickOnProcessFilters(): Promise<void> {
+        await BrowserActions.click(this.processFilters);
     }
 
-    openNewProcessForm() {
-        this.clickOnCreateButton();
-        this.newProcessButtonIsDisplayed();
-        BrowserActions.click(this.newProcessButton);
-        return this;
+    async openNewProcessForm(): Promise<void> {
+        await this.clickOnCreateButton();
+        await this.newProcessButtonIsDisplayed();
+        await BrowserActions.click(this.newProcessButton);
     }
 
-    newProcessButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.newProcessButton);
-        return this;
+    async newProcessButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.newProcessButton);
     }
 
-    isProcessFiltersListVisible() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processFiltersList);
-        return this;
+    async isProcessFiltersListVisible(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.processFiltersList);
     }
 
-    clickOnCreateButton() {
-        BrowserActions.click(this.createButton);
-        return this;
+    async clickOnCreateButton(): Promise<void> {
+        await BrowserActions.click(this.createButton);
     }
 }

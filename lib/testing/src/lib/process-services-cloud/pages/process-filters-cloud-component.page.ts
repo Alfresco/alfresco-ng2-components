@@ -15,44 +15,41 @@
  * limitations under the License.
  */
 
-import { by } from 'protractor';
+import { by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessFiltersCloudComponentPage {
 
-    filter;
-    filterIcon = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
+    filter: ElementFinder;
+    filterIcon: Locator = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
 
-    constructor(filter) {
+    constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 
-    checkProcessFilterIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        return this;
+    async checkProcessFilterIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
-    getProcessFilterIcon() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+    async getProcessFilterIcon(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.filterIcon);
-        BrowserVisibility.waitUntilElementIsVisible(icon);
-        return icon.getText();
+        await BrowserVisibility.waitUntilElementIsVisible(icon);
+        return BrowserActions.getText(icon);
     }
 
-    checkProcessFilterHasNoIcon() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.filterIcon));
+    async checkProcessFilterHasNoIcon(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.filterIcon));
     }
 
-    clickProcessFilter() {
-        return BrowserActions.click(this.filter);
-
+    async clickProcessFilter(): Promise<void> {
+        await BrowserActions.click(this.filter);
     }
 
-    checkProcessFilterNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
-        return this.filter;
+    async checkProcessFilterNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
     }
 
 }

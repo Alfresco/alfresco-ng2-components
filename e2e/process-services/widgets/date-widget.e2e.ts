@@ -36,7 +36,7 @@ describe('Date widget', () => {
     const app = resources.Files.WIDGET_CHECK_APP.DATE;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -57,38 +57,38 @@ describe('Date widget', () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
+
     });
 
-    it('[C268814] Should be able to set general settings for Date widget', () => {
-        expect(widget.dateWidget().getDateLabel(app.FIELD.date_input)).toContain('Date');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        widget.dateWidget().setDateInput(app.FIELD.date_input, '20-10-2018');
-        taskPage.formFields().saveForm();
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+    it('[C268814] Should be able to set general settings for Date widget', async () => {
+        await expect(await widget.dateWidget().getDateLabel(app.FIELD.date_input)).toContain('Date');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.dateWidget().setDateInput(app.FIELD.date_input, '20-10-2018');
+        await taskPage.formFields().saveForm();
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C277234] Should be able to set advanced settings for Date widget ', () => {
-        widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2017');
-        taskPage.formFields().saveForm();
-        expect(widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be less than 1-10-2018');
-        widget.dateWidget().clearDateInput(app.FIELD.date_between_input);
-        widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2019');
-        taskPage.formFields().saveForm();
-        expect(widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be greater than 31-10-2018');
+    it('[C277234] Should be able to set advanced settings for Date widget ', async () => {
+        await widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2017');
+        await taskPage.formFields().saveForm();
+        await expect(await widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be less than 1-10-2018');
+        await widget.dateWidget().clearDateInput(app.FIELD.date_between_input);
+        await widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2019');
+        await taskPage.formFields().saveForm();
+        await expect(await widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be greater than 31-10-2018');
     });
 });
