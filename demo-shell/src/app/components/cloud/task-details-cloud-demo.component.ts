@@ -69,8 +69,6 @@ export class TaskDetailsCloudDemoComponent {
     }
 
     onFormContentClicked(resourceClicked: any) {
-        // this.router.navigate([`/cloud/${this.appName}/task-details/${this.taskId}/files/${resourceClicked.nodeId}/view`]);
-        // this.previewService.showBlob(resourceClicked.name, resourceClicked.contentBlob);
         this.previewService.showResource(resourceClicked.nodeId);
     }
 
