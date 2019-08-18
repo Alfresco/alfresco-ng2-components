@@ -48,10 +48,28 @@
                  tabindex="0"/>
             <span matLine id="{{'file-'+file?.nodeId}}"
                   role="button" tabindex="0" class="adf-file">{{file.name}}</span>
-            <button *ngIf="!field.readOnly" mat-icon-button [id]="'file-'+file?.nodeId+'-remove'"
-                    (click)="onRemoveAttachFile(file);" (keyup.enter)="onRemoveAttachFile(file);">
-                <mat-icon class="mat-24">highlight_off</mat-icon>
+            <button id="{{'file-'+file.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu">
+                <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #fileActionMenu="matMenu" xPosition="before">
+                <button id="{{'file-'+file.id+'-show-file'}}"
+                    [disabled]="file.isExternal"
+                    mat-menu-item (click)="onAttachFileClicked(file)">
+                    <mat-icon>image</mat-icon>
+                    <span>{{ 'FORM.FIELD.SHOW_FILE' | translate }}</span>
+                </button>
+                <button id="{{'file-'+file.id+'-download-file'}}"
+                    mat-menu-item (click)="downloadContent(file)">
+                    <mat-icon>file_download</mat-icon>
+                    <span>{{ 'FORM.FIELD.DOWNLOAD_FILE' | translate }}</span>
+                </button>
+                <button *ngIf="!field.readOnly" id="{{'file-'+file.id+'-remove-file'}}"
+                        mat-menu-item [id]="'file-'+file.id+'-remove'"
+                        (click)="onRemoveAttachFile(file);" (keyup.enter)="onRemoveAttachFile(file);">
+                    <mat-icon class="mat-24">highlight_off</mat-icon>
+                    <span>{{ 'FORM.FIELD.REMOVE_FILE' | translate }}</span>
+                </button>
+            </mat-menu>
         </mat-list-item>
     </mat-list>
 </div>

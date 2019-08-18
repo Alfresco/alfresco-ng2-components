@@ -19,6 +19,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
 import { TaskHeaderCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { PreviewService } from 'app/services/preview.service';
 
 @Component({
     templateUrl: './task-details-cloud-demo.component.html',
@@ -35,7 +36,8 @@ export class TaskDetailsCloudDemoComponent {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private notificationService: NotificationService
+        private notificationService: NotificationService,
+        private previewService: PreviewService
         ) {
         this.route.params.subscribe((params) => {
             this.taskId = params.taskId;
@@ -66,8 +68,10 @@ export class TaskDetailsCloudDemoComponent {
         this.taskHeader.ngOnInit();
     }
 
-    onFormContentClicked(resourceId) {
-        this.router.navigate([`/cloud/${this.appName}/task-details/${this.taskId}/files/${resourceId.nodeId}/view`]);
+    onFormContentClicked(resourceClicked: any) {
+        // this.router.navigate([`/cloud/${this.appName}/task-details/${this.taskId}/files/${resourceClicked.nodeId}/view`]);
+        // this.previewService.showBlob(resourceClicked.name, resourceClicked.contentBlob);
+        this.previewService.showResource(resourceClicked.nodeId);
     }
 
     onFormSaved() {

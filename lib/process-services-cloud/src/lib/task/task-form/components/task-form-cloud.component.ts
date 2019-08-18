@@ -22,7 +22,7 @@ import {
 import { FormCloud } from '../../../form/models/form-cloud.model';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { FormRenderingService } from '@alfresco/adf-core';
+import { FormRenderingService, ContentLinkModel } from '@alfresco/adf-core';
 import { AttachFileCloudWidgetComponent } from '../../../form/components/attach-file-cloud-widget/attach-file-cloud-widget.component';
 import { DropdownCloudWidgetComponent } from '../../../form/components/dropdown-cloud/dropdown-cloud.widget';
 import { DateCloudWidgetComponent } from '../../../form/components/date-cloud/date-cloud.widget';
@@ -89,6 +89,9 @@ export class TaskFormCloudComponent implements OnChanges {
     /** Emitted when any error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter();
 
     taskDetails: TaskDetailsCloudModel;
 
@@ -179,5 +182,9 @@ export class TaskFormCloudComponent implements OnChanges {
 
     onError(data: any) {
         this.error.emit(data);
+    }
+
+    onFormContentClicked(content: ContentLinkModel){
+        this.formContentClicked.emit(content);
     }
 }

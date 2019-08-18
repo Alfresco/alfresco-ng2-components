@@ -2,7 +2,7 @@ var PROXY_HOST_ADF = process.env.PROXY_HOST_ADF;
 
 module.exports = {
     "/alfresco": {
-        "target": (PROXY_HOST_ADF || "http://localhost:8080"),
+        "target": (PROXY_HOST_ADF || "https://gateway.aps2dev.envalfresco.com"),
         "secure": false,
         "pathRewrite": {
             "^/alfresco/alfresco": ""

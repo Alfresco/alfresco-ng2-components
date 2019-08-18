@@ -20,7 +20,7 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService } from '@alfresco/adf-core';
+import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ContentLinkModel } from '@alfresco/adf-core';
 import { ProcessCloudContentService } from '../services/process-cloud-content.service';
 
 @Component({
@@ -122,7 +122,8 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private removeElementFromList(file) {
-        const savedValues = this.field.form.values[this.field.id];
+        const savedValues = this.field.form.values[this.field.id]
+                            ? this.field.form.values[this.field.id] : this.field.value;
         const index = savedValues.indexOf(file);
         if (index !== -1) {
             const filteredValues = savedValues.filter((value: any) => value.nodeId !== file.nodeId);
@@ -142,7 +143,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         }
     }
 
-    fileClicked(nodeId: any): void {
-        this.formService.formContentClicked.next(nodeId);
+    fileClicked(file: ContentLinkModel): void {
+        this.formService.formContentClicked.next(file);
     }
 }

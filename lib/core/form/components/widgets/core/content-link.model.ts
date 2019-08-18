@@ -25,6 +25,7 @@
     created: Date;
     createdBy: any;
     id: number;
+    nodeId: string;
     link: boolean;
     mimeType: string;
     name: string;
@@ -48,6 +49,7 @@
         this.relatedContent = obj && obj.relatedContent;
         this.simpleType = obj && obj.simpleType;
         this.thumbnailStatus = obj && obj.thumbnailStatus;
+        this.nodeId = obj && obj.nodeId;
     }
 
     hasPreviewStatus(): boolean {

@@ -32,7 +32,8 @@ import {
     NotificationService,
     FormRenderingService,
     FORM_FIELD_VALIDATORS,
-    FormFieldValidator
+    FormFieldValidator,
+    ContentLinkModel
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
@@ -91,7 +92,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     formDataRefreshed: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
 
     @Output()
-    formContentClicked: EventEmitter<string> = new EventEmitter<string>();
+    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
 
     protected subscriptions: Subscription[] = [];
     nodeId: string;
@@ -108,7 +109,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
         this.formService.formContentClicked
         .pipe(takeUntil(this.onDestroy$))
-        .subscribe((content: any) => {
+        .subscribe((content: ContentLinkModel) => {
             this.formContentClicked.emit(content);
         });
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
@@ -236,7 +237,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             await this.getFormByTaskId(appName, taskId);
 
             const hasUploadWidget = (<any> this.form).hasUpload;
-            if (hasUploadWidget && !this.readOnly) {
+            if (hasUploadWidget) {
                 try {
                     const processStorageCloudModel = await this.formCloudService.getProcessStorageFolderTask(appName, taskId, processInstanceId).toPromise();
                     this.form.nodeId = processStorageCloudModel.nodeId;

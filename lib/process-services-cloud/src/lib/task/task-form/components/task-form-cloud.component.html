@@ -10,7 +10,8 @@
                     [showSaveButton]="canCompleteTask()"
                     (formSaved)="onFormSaved($event)"
                     (formCompleted)="onFormCompleted($event)"
-                    (formError)="onError($event)">
+                    (formError)="onError($event)"
+                    (formContentClicked)="onFormContentClicked($event)">
         <adf-cloud-form-custom-outcomes>
             <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
             </ng-template>

@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { throwError, Observable, from } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, ContentService } from '@alfresco/adf-core';
 
 @Injectable({
   providedIn: 'root'
@@ -27,11 +27,11 @@ export class ProcessCloudContentService {
 
   constructor(
     private apiService: AlfrescoApiService,
-    private logService: LogService
+    private logService: LogService,
+    public contentService: ContentService
   ) { }
 
   createTemporaryRawRelatedContent(file, nodeId, contentHost): Observable<any> {
-
     const changedConfig = this.apiService.lastConfig;
     changedConfig.provider = 'ALL';
     changedConfig.hostEcm = contentHost.replace('/alfresco', '');
@@ -43,6 +43,18 @@ export class ProcessCloudContentService {
         }),
         catchError((err) => this.handleError(err))
       );
+  }
+
+  getRawContentNode(nodeId: string, contentHost: string): Observable<any> {
+    const changedConfig = this.apiService.lastConfig;
+    changedConfig.provider = 'ALL';
+    changedConfig.hostEcm = contentHost.replace('/alfresco', '');
+    this.apiService.getInstance().setConfig(changedConfig);
+    return this.contentService.getNodeContent(nodeId);
+  }
+
+  downloadNodeContent(blob: Blob, fileName: string): void {
+    this.contentService.downloadBlob(blob, fileName);
   }
 
   private handleError(error: any) {
