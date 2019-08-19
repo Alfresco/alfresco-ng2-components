@@ -8,7 +8,6 @@ EXECLINT=false
 LITESERVER=false
 EXEC_VERSION_JSAPI=false
 TIMEOUT=120000
-SELENIUM_PROMISE_MANAGER=1
 DEBUG=false
 eval GNU=false
 
@@ -203,8 +202,6 @@ rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/screenshots/
 
 export TIMEOUT=$TIMEOUT
-
-export SELENIUM_PROMISE_MANAGER=$SELENIUM_PROMISE_MANAGER
 
 if $EXEC_VERSION_JSAPI == true; then
   echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
