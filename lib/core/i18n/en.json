@@ -260,7 +260,8 @@
       "SELECT_ALL": "Select all",
       "SELECT_FILE": "Select file",
       "SORT_ASCENDING": "ascending",
-      "SORT_DESCENDING": "descending"
+      "SORT_DESCENDING": "descending",
+      "ICON_ALT_TEXT": "File type {{ type }}"
     }
   },
   "USER_PROFILE": {
