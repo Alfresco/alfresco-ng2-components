@@ -22,11 +22,12 @@ branches:
 
 # TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
-  - name: Warm Up Cache
   - name: Lint & Build Dist
   - name: Unit test
   - name: e2e Test
   - name: Deploy PR
+  - name: Release on npm
+    if: branch = development AND type = push
 
 addons:
     chrome: stable
@@ -85,6 +86,12 @@ jobs:
           name: process Cloud
           script:
               ./scripts/travis/e2e/process-services-cloud-e2e.sh
+        - stage: Release on npm
+          script:
+          - npm install @alfresco/adf-cli@alpha
+          - ./scripts/update-version.sh -nextalpha -gnu -minor -components
+          - ./node_modules/@alfresco/adf-cli/bin/adf-cli npm-publish --npmRegistry $NPM_REGISTRY_ADDRESS --tokenRegistry $NPM_REGISTRY_TOKEN --tag $TAG_NPM --pathProject "$(pwd)"
+
 
 before_deploy:
   # Set up git user name and tag this commit
