@@ -258,7 +258,9 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Select all",
-      "SELECT_FILE": "Select file"
+      "SELECT_FILE": "Select file",
+      "SORT_ASCENDING": "ascending",
+      "SORT_DESCENDING": "descending"
     }
   },
   "USER_PROFILE": {
