@@ -1,5 +1,6 @@
 {
-  "name": "alfresco-components",
+  "name": "alfresco-ng2-components",
+  "commit": "b3c31dc32211758c9eed30e716ddd18eb6d562d6",
   "description": "Alfresco Angular components",
   "version": "3.4.0",
   "author": "Alfresco Software, Ltd.",

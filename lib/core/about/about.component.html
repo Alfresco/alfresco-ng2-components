@@ -1,4 +1,74 @@
 <div class="adf-about-container">
+    <h1>{{ application }}</h1>
+
+    <div>
+        <h3>{{ 'ABOUT.SOURCE_CODE.TITLE' | translate }}</h3>
+        <mat-card>
+            <p *ngIf="version">{{ 'ABOUT.VERSION' | translate }}: {{ version }}</p>
+
+            <div *ngIf="githubUrlCommitAlpha">
+                <small>{{ 'ABOUT.SOURCE_CODE.DESCRIPTION' | translate }}</small>
+                <div>
+                    <a [href]="githubUrlCommitAlpha" target="_blank">{{githubUrlCommitAlpha}}</a>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+
+    <h3>{{ 'ABOUT.SERVER_SETTINGS.TITLE' | translate }}</h3>
+    <small>{{ 'ABOUT.SERVER_SETTINGS.DESCRIPTION' | translate }}</small>
+    <mat-card>
+        <p>
+            {{ 'ABOUT.SERVER_SETTINGS.PROCESS_SERVICE_HOST' | translate: { value: bpmHost } }}
+        </p>
+        <p>
+            {{ 'ABOUT.SERVER_SETTINGS.CONTENT_SERVICE_HOST' | translate: { value: ecmHost } }}
+        </p>
+    </mat-card>
+
+
+    <h3>{{ 'ABOUT.VERSIONS.TITLE' | translate }}</h3>
+    <div *ngIf="bpmVersion">
+        <mat-card>
+            <div *ngIf="bpmVersion">
+                <h3>{{ 'ABOUT.VERSIONS.PROCESS_SERVICE' | translate }}</h3>
+                <p>
+                    {{ 'ABOUT.VERSIONS.LABELS.EDITION' | translate }}: {{ bpmVersion.edition }}
+                </p>
+                <p>
+                    {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{ bpmVersion.majorVersion }}.{{
+                    bpmVersion.minorVersion }}.{{ bpmVersion.revisionVersion }}
+                </p>
+            </div>
+
+            <div *ngIf="ecmVersion">
+                <h3>{{ 'ABOUT.VERSIONS.CONTENT_SERVICE' | translate }}</h3>
+                <p>
+                    {{ 'ABOUT.VERSIONS.LABELS.EDITION' | translate }}: {{ ecmVersion.edition }}
+                </p>
+                <p>
+                    {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{ ecmVersion.version.display }}
+                </p>
+
+            </div>
+        </mat-card>
+    </div>
+
+    <div *ngIf="ecmVersion">
+        <h3>{{ 'ABOUT.VERSIONS.LABELS.LICENSE' | translate }}</h3>
+        <adf-datatable [data]="license"></adf-datatable>
+
+        <h3> {{ 'ABOUT.VERSIONS.LABELS.STATUS' | translate }}</h3>
+        <adf-datatable [data]="status"></adf-datatable>
+
+        <h3>{{ 'ABOUT.VERSIONS.LABELS.MODULES' | translate }}</h3>
+        <adf-datatable [data]="modules"></adf-datatable>
+    </div>
+
+    <h3>{{ 'ABOUT.PACKAGES.TITLE' | translate }}</h3>
+    <small>{{ 'ABOUT.PACKAGES.DESCRIPTION' | translate }}</small>
+    <adf-datatable [data]="dependencyEntries"></adf-datatable>
+
     <div class="adf-extension-details-container" *ngIf="showExtensions">
         <h3>{{ 'ABOUT.TITLE' | translate }}</h3>
         <mat-table [dataSource]="extensions$ | async">
@@ -48,52 +118,4 @@
             <mat-row *matRowDef="let row; columns: extensionColumns;"></mat-row>
         </mat-table>
     </div>
-    <h3>{{ 'ABOUT.SERVER_SETTINGS.TITLE' | translate }}</h3>
-    <mat-list>
-        <small>{{ 'ABOUT.SERVER_SETTINGS.DESCRIPTION' | translate }}</small>
-        <mat-list-item>
-            <h4 matLine> {{ 'ABOUT.SERVER_SETTINGS.PROCESS_SERVICE_HOST' | translate: { value: bpmHost } }}</h4>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-            <h4 matLine>{{ 'ABOUT.SERVER_SETTINGS.CONTENT_SERVICE_HOST' | translate: { value: ecmHost } }}</h4>
-        </mat-list-item>
-    </mat-list>
-
-    <h3>{{ 'ABOUT.VERSIONS.TITLE' | translate }}</h3>
-    <div *ngIf="bpmVersion">
-        <h3>{{ 'ABOUT.VERSIONS.PROCESS_SERVICE' | translate }}</h3>
-        <div> {{ 'ABOUT.VERSIONS.divS.EDITION' | translate }} </div> {{ bpmVersion.edition }}
-        <p></p>
-        <div> {{ 'ABOUT.VERSIONS.divS.VERSION' | translate }} </div> {{ bpmVersion.majorVersion }}.{{
-        bpmVersion.minorVersion }}.{{ bpmVersion.revisionVersion }}
-    </div>
-    <div *ngIf="ecmVersion">
-        <h3>{{ 'ABOUT.VERSIONS.CONTENT_SERVICE' | translate }}</h3>
-        <div>{{ 'ABOUT.VERSIONS.divS.EDITION' | translate }}</div> {{ ecmVersion.edition }}
-        <p></p>
-        <div> {{ 'ABOUT.VERSIONS.divS.VERSION' | translate }} </div> {{ ecmVersion.version.display }}
-        <p></p>
-        <h4>{{ 'ABOUT.VERSIONS.divS.LICENSE' | translate }}</h4>
-        <adf-datatable [data]="license"></adf-datatable>
-
-        <h4> {{ 'ABOUT.VERSIONS.divS.STATUS' | translate }}</h4>
-        <adf-datatable [data]="status"></adf-datatable>
-
-        <h4>{{ 'ABOUT.VERSIONS.divS.MODULES' | translate }}</h4>
-
-        <adf-datatable [data]="modules"></adf-datatable>
-    </div>
-
-    <div *ngIf="githubUrlCommitAlpha">
-        <h3>{{ 'ABOUT.SOURCE_CODE.TITLE' | translate }}</h3>
-        <small>{{ 'ABOUT.SOURCE_CODE.DESCRIPTION' | translate }}</small>
-        <div>
-            <a [href]="githubUrlCommitAlpha">{{githubUrlCommitAlpha}}</a>
-        </div>
-    </div>
-
-    <h3>{{ 'ABOUT.PACKAGES.TITLE' | translate }}</h3>
-    <small>{{ 'ABOUT.PACKAGES.DESCRIPTION' | translate }}</small>
-    <adf-datatable [data]="data"></adf-datatable>
 </div>

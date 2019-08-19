@@ -386,6 +386,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Version",
     "SERVER_SETTINGS": {
       "TITLE": "Server settings",
       "DESCRIPTION": "The values below are taken from the AppConfigService",
