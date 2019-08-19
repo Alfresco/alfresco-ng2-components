@@ -32,8 +32,7 @@ import {
     NotificationService,
     FormRenderingService,
     FORM_FIELD_VALIDATORS,
-    FormFieldValidator,
-    ContentLinkModel
+    FormFieldValidator
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
@@ -92,7 +91,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     formDataRefreshed: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
 
     @Output()
-    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
+    formContentClicked: EventEmitter<string> = new EventEmitter<string>();
 
     protected subscriptions: Subscription[] = [];
     nodeId: string;
@@ -109,7 +108,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
         this.formService.formContentClicked
         .pipe(takeUntil(this.onDestroy$))
-        .subscribe((content: ContentLinkModel) => {
+        .subscribe((content: any) => {
             this.formContentClicked.emit(content);
         });
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
