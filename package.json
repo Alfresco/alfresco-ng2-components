@@ -73,6 +73,7 @@
     "process services-cloud"
   ],
   "dependencies": {
+    "@alfresco/adf-cli": "^3.5.0-6c969dda56e850e6e8b8c004ca312e7f3d444256",
     "@alfresco/adf-content-services": "3.4.0",
     "@alfresco/adf-core": "3.4.0",
     "@alfresco/adf-extensions": "3.4.0",
