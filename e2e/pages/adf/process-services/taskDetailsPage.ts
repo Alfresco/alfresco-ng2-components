@@ -64,6 +64,31 @@ export class TaskDetailsPage {
     attachFormName: ElementFinder = element(by.css('span[class="adf-form-title ng-star-inserted"]'));
     emptyTaskDetails: ElementFinder = element(by.css('adf-task-details > div > div'));
 
+    async checkEditableAssigneeIsNotDisplayed(): Promise<void> {
+        const editableAssignee = element(by.css('span[data-automation-id="card-textitem-value-assignee"][class*="clickable"]'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(editableAssignee);
+    }
+
+    async checkEditableFormIsNotDisplayed(): Promise<void> {
+        const editableForm = element(by.css('span[data-automation-id="card-textitem-value-formName"][class*="clickable"]'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(editableForm);
+    }
+
+    async checkEditDescriptionButtonIsNotDisplayed(): Promise<void> {
+        const editDescriptionButton = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-description"]'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(editDescriptionButton);
+    }
+
+    async checkEditPriorityButtonIsNotDisplayed(): Promise<void> {
+        const editPriorityButton = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-priority"]'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(editPriorityButton);
+    }
+
+    async checkDueDatePickerButtonIsNotDisplayed(): Promise<void> {
+        const dueDatePickerButton = element(by.css('mat-datetimepicker-toggle[data-automation-id="datepickertoggle-dueDate"]'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(dueDatePickerButton);
+    }
+
     getTaskDetailsTitle(): Promise<string> {
         return BrowserActions.getText(this.taskDetailsTitle);
     }
