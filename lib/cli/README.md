@@ -103,3 +103,24 @@ You can use the option --pointer to chose a different pointer from the default H
 ```bash
 adf-cli update-commit-sha --pointer "HEAD~1" --pathProject "$(pwd)"
 ```
+
+### npm publish
+
+This command allows you to publish your lib on the npm.
+
+```bash
+adf-cli npm-publish --pathProject "$(pwd)"
+```
+
+You can use the option --npmRegistry "localhost:4873" to chose a different registry and --tokenRegistry "VALID_TOKEN" to pass the token.
+
+```bash
+adf-cli update-commit-sha --npmRegistry "localhost:4873" --tokenRegistry "VALID_TOKEN" --pathProject "$(pwd)"
+```
+
+In case you want to add a tag you can use the option --tag "alpha|beta|latest" .
+
+```bash
+adf-cli update-commit-sha --tag "beta" --pathProject "$(pwd)"
+```
+
