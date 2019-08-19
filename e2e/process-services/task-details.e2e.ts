@@ -28,7 +28,7 @@ import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import dateFormat = require('dateformat');
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, StringUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { browser } from 'protractor';
 
@@ -41,6 +41,13 @@ describe('Task Details component', () => {
     const TASK_DATE_FORMAT = 'mmm d, yyyy';
     let formModel;
     let apps;
+
+    const taskFormModel = {
+        'name': StringUtil.generateRandomString(),
+        'description': '',
+        'modelType': 2,
+        'stencilSet': 0
+    };
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
@@ -315,6 +322,27 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getEndDate()).toEqual(await taskPage.taskDetails().getEndDate());
         await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
         await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.COMPLETED);
+    });
+
+    it('[C260321] Should not be able to edit a completed task\'s details', async () => {
+        const taskName = 'TaskCompleted';
+        const form = await this.alfrescoJsApi.activiti.modelsApi.createModel(taskFormModel);
+        const task = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': taskName });
+        await this.alfrescoJsApi.activiti.taskApi.attachForm(task.id, { 'formId': form.id });
+        await this.alfrescoJsApi.activiti.taskApi.completeTaskForm(task.id, { values: { label: null } });
+
+        await (await processServices.goToTaskApp()).clickTasksButton();
+
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskName);
+        await taskPage.tasksListPage().selectRow(taskName);
+
+        await taskPage.taskDetails().checkEditableAssigneeIsNotDisplayed();
+        await taskPage.taskDetails().checkEditableFormIsNotDisplayed();
+        await taskPage.taskDetails().checkEditDescriptionButtonIsNotDisplayed();
+        await taskPage.taskDetails().checkEditPriorityButtonIsNotDisplayed();
+        await taskPage.taskDetails().checkDueDatePickerButtonIsNotDisplayed();
     });
 
 });
