@@ -73,11 +73,14 @@ function _npmPublish(args: PublishArgs, project: string, logger: logging.Logger)
     }
     const response = _exec('npm', options, {cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`)}, logger);
     logger.info(response);
+    if (args.npmRegistry) {
+        _removeNPMRC(args, project, logger);
+    }
 }
 
 function _changeRegistry(args: PublishArgs, project: string, logger: logging.Logger) {
     logger.info(`Change registry... `);
-    const folder = `${args.pathProject}/lib/${project}`;
+    const folder = `${args.pathProject}/lib/dist/${project}`;
     const content =
 `strict-ssl=false
 registry=http://${args.npmRegistry}
@@ -87,6 +90,12 @@ registry=http://${args.npmRegistry}
     } catch (e) {
         logger.error('Cannot write file', e);
     }
+}
+
+function _removeNPMRC(args: PublishArgs, project: string, logger: logging.Logger) {
+    logger.info(`Removing file from ${project}`);
+    const response = _exec('rm', ['.npmrc'], {cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`)}, logger);
+    logger.info(response);
 }
 
 export default async function (args: PublishArgs, logger: logging.Logger) {
