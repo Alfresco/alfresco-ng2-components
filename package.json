@@ -52,7 +52,7 @@
     "replace-cloud-config": "node appConfigReplace.cloud.js",
     "06": "echo -------------------------------------------- Clean -----------------------------------------------",
     "06s": "",
-    "clean": "rimraf dist ./node_modules typings",
+    "clean": "rimraf dist ./node_modules typings lib/dist",
     "clean-lock": "rimraf package-lock.json",
     "lint:staged": "lint-staged"
   },
