@@ -89,8 +89,7 @@ jobs:
               ./scripts/travis/e2e/process-services-cloud-e2e.sh
         - stage: Release on npm
           script:
-          - npm install @alfresco/adf-cli@alpha
-          - ./node_modules/@alfresco/adf-cli/bin/adf-cli npm-publish --npmRegistry $NPM_REGISTRY_ADDRESS --tokenRegistry $NPM_REGISTRY_TOKEN --tag $TAG_NPM --pathProject "$(pwd)"
+          - ./lib/cli/dist/bin/adf-cli npm-publish --npmRegistry $NPM_REGISTRY_ADDRESS --tokenRegistry $NPM_REGISTRY_TOKEN --tag $TAG_NPM --pathProject "$(pwd)"
 
 
 before_deploy:
