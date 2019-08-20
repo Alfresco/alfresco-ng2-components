@@ -8,6 +8,7 @@ rm -rf tmp && mkdir tmp;
 
 if [[ $TRAVIS_PULL_REQUEST == "false" ]];
 then
+    ./scripts/update-version.sh -nextalpha -gnu -minor -components
     ./scripts/npm-build-all.sh || exit 1;
 else
     ./scripts/update-version.sh -gnu -alpha || exit 1;

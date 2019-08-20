@@ -9,13 +9,7 @@ eval TOTAL_BUILD=true;
 eval SEMANTIC="minor";
 
 eval projects=( "cli"
-    "core"
-    "content-services"
-    "process-services"
-    "process-services-cloud"
-    "insights"
-    "testing"
-    "extensions" )
+    )
 
 cd `dirname $0`
 
@@ -123,7 +117,7 @@ only_components() {
 
 update_component_version() {
    echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
-   DESTDIR="$DIR/../lib/${1}"
+   DESTDIR="$DIR/../lib/dist/${1}"
    sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
 }
 
