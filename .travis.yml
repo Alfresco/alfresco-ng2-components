@@ -89,7 +89,7 @@ jobs:
               ./scripts/travis/e2e/process-services-cloud-e2e.sh
         - stage: Release on npm
           script:
-          - ./lib/cli/dist/bin/adf-cli npm-publish --npmRegistry $NPM_REGISTRY_ADDRESS --tokenRegistry $NPM_REGISTRY_TOKEN --tag $TAG_NPM --pathProject "$(pwd)"
+          - ./lib/dist/cli/bin/adf-cli npm-publish --npmRegistry $NPM_REGISTRY_ADDRESS --tokenRegistry $NPM_REGISTRY_TOKEN --tag $TAG_NPM --pathProject "$(pwd)"
 
 
 before_deploy:
