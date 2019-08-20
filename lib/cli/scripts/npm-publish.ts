@@ -71,7 +71,7 @@ function _npmPublish(args: PublishArgs, project: string, logger: logging.Logger)
         options.push('-tag');
         options.push(`${args.tag}`);
     }
-    const response = _exec('npm', options, {cwd: path.resolve(`${args.pathProject}/lib/${project}`)}, logger);
+    const response = _exec('npm', options, {cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`)}, logger);
     logger.info(response);
 }
 
