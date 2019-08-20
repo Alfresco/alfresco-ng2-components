@@ -50,7 +50,7 @@
     "e2e-lib": "ng e2e lib-e2e-test --port=4200",
     "lite-server-e2e": "lite-server --baseDir='demo-shell/dist/' -c ./e2e/lite-server-proxy.js",
     "replace-cloud-config": "node appConfigReplace.cloud.js",
-    "06": "echo -------------------------------------------- Clean -----------------------------------------------",
+    "06": "echo -------------------------------------------- Clean ----------------------------------------------",
     "06s": "",
     "clean": "rimraf dist ./node_modules typings lib/dist",
     "clean-lock": "rimraf package-lock.json",
