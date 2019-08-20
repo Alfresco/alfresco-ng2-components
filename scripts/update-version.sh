@@ -9,7 +9,13 @@ eval TOTAL_BUILD=true;
 eval SEMANTIC="minor";
 
 eval projects=( "cli"
-    )
+    "core"
+    "content-services"
+    "process-services"
+    "process-services-cloud"
+    "insights"
+    "testing"
+    "extensions" )
 
 cd `dirname $0`
 
