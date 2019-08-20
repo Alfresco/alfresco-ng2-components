@@ -123,7 +123,7 @@ only_components() {
 
 update_component_version() {
    echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
-   DESTDIR="$DIR/../lib/dist/${1}"
+   DESTDIR="$DIR/../lib/${1}"
    sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
 }
 
