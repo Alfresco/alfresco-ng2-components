@@ -304,18 +304,6 @@
     "ROLE_FILTER_MODE": "Filter by role",
     "PRESELECT_VALIDATION": "Preselect validation"
   },
-  "ABOUT": {
-    "TITLE": "Plugins",
-    "TABLE_HEADERS": {
-      "ID": "ID",
-      "NAME": "Name",
-      "VERSION": "Version",
-      "VENDOR": "Vendor",
-      "LICENSE": "License",
-      "RUNTIME": "Runtime",
-      "DESCRIPTION": "Description"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multiselection",
     "TESTING_MODE": "Testing Mode",

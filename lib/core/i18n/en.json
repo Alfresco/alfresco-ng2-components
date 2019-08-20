@@ -438,6 +438,18 @@
         "CLUSTER_ENABLED": "Is Cluster Enabled",
         "CRYPTODOC_ENABLED": "Is Cryptodoc Enabled"
       }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Plugins",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "Name",
+        "VERSION": "Version",
+        "VENDOR": "Vendor",
+        "LICENSE": "License",
+        "RUNTIME": "Runtime",
+        "DESCRIPTION": "Description"
+      }
     }
   },
   "CLIPBOARD": {
