@@ -2,7 +2,7 @@
   "name": "alfresco-ng2-components",
   "commit": "b644b39d17396330d2a67509f58c5b9e890b9b13",
   "description": "Alfresco Angular components",
-  "version": "3.5.0-e27e99b551d71f585a8af0d0193f4a2e2606ff03",
+  "version": "3.4.0",
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
