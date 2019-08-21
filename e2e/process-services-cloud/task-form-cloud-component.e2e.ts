@@ -109,10 +109,9 @@ describe('Task form cloud component', () => {
 
     }, 5 * 60 * 1000);
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
-        done();
     });
 
     afterAll(async () => {
@@ -196,29 +195,29 @@ describe('Task form cloud component', () => {
             await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number0klykr');
             await taskFormCloudComponent.formFields().checkWidgetIsVisible('Amount0mtp1h');
 
-            await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
             await widget.textWidget().setValue('Text0tma8h', 'Some random text');
-            await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
 
             await widget.dateWidget().setDateInput('Date0m1moq', 'invalid date');
             await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-            await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
 
             await widget.dateWidget().setDateInput('Date0m1moq', '20-10-2018');
             await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-            await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
 
             await widget.numberWidget().setFieldValue('Number0klykr', 'invalid number');
-            await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
 
             await widget.numberWidget().setFieldValue('Number0klykr', '26');
-            await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
 
             await widget.amountWidget().setFieldValue('Amount0mtp1h', 'invalid amount');
-            await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
 
             await widget.amountWidget().setFieldValue('Amount0mtp1h', '660');
-            await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
 
         });
 

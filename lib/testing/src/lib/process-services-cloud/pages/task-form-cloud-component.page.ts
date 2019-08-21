@@ -35,6 +35,11 @@ export class TaskFormCloudComponent {
     emptyContentSubtitle: ElementFinder = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
     readOnlyForm = element(by.css('div[class="adf-readonly-form"]'));
 
+    async isCompleteButtonEnabled(): Promise<boolean> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+        return this.completeButton.isEnabled();
+    }
+
     async checkFormIsReadOnly() {
         await BrowserVisibility.waitUntilElementIsVisible(this.readOnlyForm);
     }
