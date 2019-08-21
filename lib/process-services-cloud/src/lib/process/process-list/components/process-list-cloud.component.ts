@@ -21,11 +21,11 @@ import { DataTableSchema, PaginatedComponent,
          UserPreferencesService, PaginationModel,
          UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { takeUntil } from 'rxjs/operators';
+
 @Component({
     selector: 'adf-cloud-process-list',
     templateUrl: './process-list-cloud.component.html',
@@ -103,10 +103,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     /** Toggles the data actions column. */
     @Input()
-    actions: any[] = [];
-
-    /** Toggles the data actions column. */
-    @Input()
     showActions: boolean = false;
 
     /** Position of the actions dropdown menu. Can be "left" or "right". */
@@ -129,6 +125,18 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Output()
     rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
 
+    /** Emitted before the context menu is displayed for a row. */
+    @Output()
+    showRowContextMenu = new EventEmitter<DataCellEvent>();
+
+    /** Emitted before the actions menu is displayed for a row. */
+    @Output()
+    showRowActionsMenu = new EventEmitter<DataCellEvent>();
+
+    /** Emitted when the user executes a row action. */
+    @Output()
+    executeRowAction = new EventEmitter<DataRowActionEvent>();
+
     /** Emitted when an error occurs while loading the list of process instances from the server. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
@@ -136,10 +144,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     /** Emitted when the list of process instances has been loaded successfully from the server. */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
-
-    /** Emitted when the list of process instances has been loaded successfully from the server. */
-    @Output()
-    actionClicked =  new EventEmitter<any>();
 
     pagination: BehaviorSubject<PaginationModel>;
     size: number;
@@ -149,8 +153,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     isLoading = false;
     rows: any[] = [];
     requestNode: ProcessQueryCloudRequestModel;
-    private performAction$ = new Subject<any>();
-    private onDestroy$ = new Subject<boolean>();
 
     constructor(private processListCloudService: ProcessListCloudService,
                 appConfigService: AppConfigService,
@@ -251,43 +253,15 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     onShowRowActionsMenu(event: DataCellEvent) {
-        if (this.actions && this.actions.length > 0) {
-            event.value.actions = this.actions;
-        }
+        this.showRowActionsMenu.emit(event);
     }
 
     onShowRowContextMenu(event: DataCellEvent) {
-        event.value.actions = this.getContextMenuActions(event.value.row['obj']);
+        this.showRowContextMenu.emit(event);
     }
 
-    onExecuteRowAction(event: DataRowActionEvent) {
-        this.actionClicked.emit({ data: event.value.row['obj'], type: event.value.action.key });
-    }
-
-    onExecuteContextAction(contextAction: any) {
-        this.actionClicked.emit({ data: contextAction.data, type: contextAction.model.key });
-    }
-
-    performContextActions() {
-        this.performAction$
-          .pipe(takeUntil(this.onDestroy$))
-          .subscribe((action: any) => {
-            if (action) {
-              this.onExecuteContextAction(action);
-            }
-          });
-    }
-
-    getContextMenuActions(row: any): any[] {
-        if (this.actions && this.actions.length > 0) {
-            return this.actions.map((action) => {
-                return {
-                    data: row,
-                    model: action,
-                    subject: this.performAction$
-                };
-            });
-        }
+    onExecuteRowAction(row: DataRowActionEvent) {
+        this.executeRowAction.emit(row);
     }
 
     private createRequestNode(): ProcessQueryCloudRequestModel {

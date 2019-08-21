@@ -24,7 +24,7 @@ import {
 } from '@alfresco/adf-process-services-cloud';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
+import { UserPreferencesService, AppConfigService, DataCellEvent } from '@alfresco/adf-core';
 import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -55,29 +55,18 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     selectionMode: string;
     selectedRows: string[] = [];
     testingMode: boolean;
+    actionMenu: boolean;
+    contextMenu: boolean;
+    actions: any[] = [];
+    selectedAction: { id: number, name: string, actionType: string};
+    selectedContextAction: { id: number, name: string, actionType: string};
     processFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
     processDetailsRedirection: boolean;
 
     editedFilter: ProcessFilterCloudModel;
 
+    private performAction$ = new Subject<any>();
     private onDestroy$ = new Subject<boolean>();
-
-    actions = [
-        {
-            key: 'edit',
-            icon: 'edit',
-            title: 'Edit',
-            visible: true,
-            disable: false
-        },
-        {
-        key: 'delete',
-        icon: 'delete',
-        title: 'Delete',
-        visible: true,
-        disable: false
-        }
-    ];
 
     constructor(
         private route: ActivatedRoute,
@@ -106,6 +95,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         this.cloudLayoutService.settings$
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(settings => this.setCurrentSettings(settings));
+        this.performContextActions();
     }
 
     ngOnDestroy() {
@@ -119,6 +109,9 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
             this.testingMode = settings.testingMode;
             this.selectionMode = settings.selectionMode;
             this.processDetailsRedirection = settings.processDetailsRedirection;
+            this.actionMenu = settings.actionMenu;
+            this.contextMenu = settings.contextMenu;
+            this.actions = settings.actions;
         }
     }
 
@@ -156,5 +149,42 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     onRowsSelected(nodes) {
         this.resetSelectedRows();
         this.selectedRows = nodes.map((node) => node.obj.entry);
+    }
+
+    onShowRowActionsMenu(event: DataCellEvent) {
+        event.value.actions = this.actions;
+    }
+
+    onShowRowContextMenu(event: DataCellEvent) {
+        event.value.actions = this.actions.map((action) => {
+            return {
+                data: event.value.row['obj'],
+                model: action,
+                subject: this.performAction$
+
+            };
+        });
+    }
+
+    onExecuteRowAction(row: any) {
+        const value = row.value.row['obj'].entry;
+        const action = row.value.action;
+        this.selectedAction = {id: value.id, name: value.name, actionType: action.title};
+    }
+
+    performContextActions() {
+        this.performAction$
+          .pipe(takeUntil(this.onDestroy$))
+          .subscribe((action: any) => {
+            if (action) {
+              this.onExecuteContextAction(action);
+            }
+          });
+    }
+
+    onExecuteContextAction(contextAction: any) {
+        const value = contextAction.data.entry;
+        const action = contextAction.model;
+        this.selectedContextAction = {id: value.id, name: value.name, actionType: action.title};
     }
 }

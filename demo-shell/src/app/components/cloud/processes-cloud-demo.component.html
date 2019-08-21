@@ -25,10 +25,12 @@
             [sorting]="sortArray"
             [selectionMode]="selectionMode"
             [stickyHeader]="true"
-            [actions]="actions"
-            [showActions]="true"
-            [showContextMenu]="true"
+            [showActions]="actionMenu"
+            [showContextMenu]="contextMenu"
             [multiselect]="multiselect"
+            (showRowActionsMenu)="onShowRowActionsMenu($event)"
+            (showRowContextMenu)="onShowRowContextMenu($event)"
+            (executeRowAction)="onExecuteRowAction($event)"
             (rowClick)="onRowClick($event)"
             (rowsSelected)="onRowsSelected($event)">
         </adf-cloud-process-list>
@@ -39,10 +41,28 @@
             (prevPage)="resetSelectedRows()">
         </adf-pagination>
         <div *ngIf="testingMode">
-            Selected rows:
-            <ul>
-                <li *ngFor="let row of selectedRows">{{ row.id }}</li>
-            </ul>
+            <div *ngIf="multiselect">
+                Selected rows:
+                <ul>
+                    <li *ngFor="let row of selectedRows">{{ row.id }}</li>
+                </ul>
+            </div>
+            <div *ngIf="actionMenu">
+                <span>Action menu:</span>
+                <br>
+                <div *ngIf="selectedAction">
+                    <span>ProcessId: {{ selectedAction.id }}</span><br>
+                    <span>ActionType: {{ selectedAction.actionType }}</span>
+                </div>
+            </div>
+            <div *ngIf="contextMenu">
+                <span>Context menu:</span>
+                <br>
+                <div *ngIf="selectedContextAction">
+                    <span>ProcessId: {{ selectedContextAction.id }}</span><br>
+                    <span>ActionType: {{ selectedContextAction.actionType }}</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

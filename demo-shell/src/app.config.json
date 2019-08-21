@@ -899,14 +899,6 @@
     }
   },
   "alfresco-deployed-apps": [
-    {
-      "name": "candidatebaseapp"
-    },
-    {
-      "name": "simpleapp"
-    },
-    {
-      "name": "subprocessapp"
-    }
+
   ]
 }
