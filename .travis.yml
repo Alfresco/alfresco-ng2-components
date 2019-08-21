@@ -26,6 +26,7 @@ stages:
   - name: Unit test
   - name: e2e Test
   - name: Deploy PR
+    if: type = pull_request
   - name: Release on npm
     if: branch = development AND type = push
 
