@@ -210,3 +210,77 @@ export const checkboxVisibilityForm = `{
 		}
 	}
 }`;
+
+export const multipleCheckboxVisibilityForm = `{
+	"formRepresentation": {
+		"id": "form-589a5b5d-da10-4af7-a5be-7dad2482dc19",
+		"name": "newtestform",
+		"description": "",
+		"version": 0,
+		"standAlone": true,
+		"formDefinition": {
+			"tabs": [],
+			"fields": [
+				{
+					"id": "438a9089-2641-498d-8e84-ffad51ea8379",
+					"name": "Label",
+					"type": "container",
+					"tab": null,
+					"numberOfColumns": 2,
+					"fields": {
+						"1": [
+							{
+								"id": "Checkbox1",
+								"name": "Checkbox1",
+								"type": "boolean",
+								"required": false,
+								"colspan": 1,
+								"visibilityCondition": {
+									"leftType": "field",
+									"leftValue": "Checkbox2",
+									"operator": "!=",
+									"rightValue": "Checkbox3",
+									"rightType": "field",
+									"nextConditionOperator": "",
+									"nextCondition": null
+								},
+								"params": {
+									"existingColspan": 1,
+									"maxColspan": 2
+								}
+							},
+							{
+								"id": "Checkbox2",
+								"name": "Checkbox2",
+								"type": "boolean",
+								"required": false,
+								"colspan": 1,
+								"visibilityCondition": null,
+								"params": {
+									"existingColspan": 1,
+									"maxColspan": 2
+								}
+							},
+							{
+								"id": "Checkbox3",
+								"name": "Checkbox3",
+								"type": "boolean",
+								"required": false,
+								"colspan": 1,
+								"visibilityCondition": null,
+								"params": {
+									"existingColspan": 1,
+									"maxColspan": 2
+								}
+							}
+						],
+						"2": []
+					}
+				}
+			],
+			"outcomes": [],
+			"metadata": {},
+			"variables": []
+		}
+	}
+}`;

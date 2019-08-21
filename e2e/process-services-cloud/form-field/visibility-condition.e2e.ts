@@ -21,7 +21,7 @@ import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
-import { checkboxVisibilityForm } from '../../resources/forms/checkbox-visibility-condition';
+import { checkboxVisibilityForm, multipleCheckboxVisibilityForm } from '../../resources/forms/checkbox-visibility-condition';
 
 describe('Visibility conditions - cloud', () => {
 
@@ -31,6 +31,7 @@ describe('Visibility conditions - cloud', () => {
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudDemoPage();
     const checkboxVisibilityFormJson = JSON.parse(checkboxVisibilityForm);
+    const multipleCheckboxVisibilityFormJson = JSON.parse(multipleCheckboxVisibilityForm);
     const widget = new Widget();
 
     let visibleCheckbox;
@@ -51,7 +52,8 @@ describe('Visibility conditions - cloud', () => {
         checkboxFieldVariable: 'CheckboxFieldVariable',
         checkboxFieldField: 'CheckboxFieldField',
         checkboxVariableValue: 'CheckboxVariableValue',
-        checkboxVariableVariable: 'CheckboxVariableVariable'
+        checkboxVariableVariable: 'CheckboxVariableVariable',
+        checkbox1: 'Checkbox1'
     };
 
     beforeAll(async () => {
@@ -159,5 +161,23 @@ describe('Visibility conditions - cloud', () => {
         visibleCheckbox.formRepresentation.formDefinition.variables[0].value = value.displayCheckbox;
         visibleCheckbox.formRepresentation.formDefinition.variables[1].value = value.displayCheckbox;
         await formCloudDemoPage.setConfigToEditor(visibleCheckbox);
+    });
+
+    it('[C312400] Should be able to see Checkbox widget when has visibility condition related to checkbox', async () => {
+        await formCloudDemoPage.setConfigToEditor(multipleCheckboxVisibilityFormJson);
+
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox3');
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkbox1);
+
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkbox1);
+
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox3');
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkbox1);
+
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkbox1);
     });
 });
