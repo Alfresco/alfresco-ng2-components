@@ -107,8 +107,6 @@ describe('Form Field Component - Dropdown Widget', () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(simpleApp);
-
-        await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 
     it('[C290069] Should be able to read rest service dropdown options, save and complete the task form', async () => {

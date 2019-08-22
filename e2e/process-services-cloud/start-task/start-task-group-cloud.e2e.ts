@@ -82,7 +82,7 @@ describe('Start Task - Group Cloud Component', () => {
     });
 
     afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.login(testUser.email, testUser.password);
         const tasksService = new TasksService(apiService);
 
         const bothGroupsTaskId = await tasksService.getTaskId(bothGroupsTaskName, simpleApp);
@@ -91,6 +91,7 @@ describe('Start Task - Group Cloud Component', () => {
         const oneGroupTaskId = await tasksService.getTaskId(oneGroupTaskName, simpleApp);
         await tasksService.deleteTask(oneGroupTaskId, simpleApp);
 
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(apsUser.idIdentityService);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
 
