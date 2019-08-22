@@ -11,6 +11,7 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "target": "es5",
     "allowSyntheticDefaultImports": true,
     "typeRoots": [
