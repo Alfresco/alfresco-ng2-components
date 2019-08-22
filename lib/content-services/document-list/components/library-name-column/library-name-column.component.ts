@@ -35,7 +35,7 @@ import { takeUntil } from 'rxjs/operators';
     template: `
         <span
             role="link"
-            [attr.aria-label]="'LIBRARY_NAME_COLUMN.ACCESSIBILITY.ARIA_LABEL' | translate:{
+            [attr.aria-label]="'NAME_COLUMN_LINK.ACCESSIBILITY.ARIA_LABEL' | translate:{
                 name:  displayText$ | async
             }"
             class="adf-datatable-cell-value"
