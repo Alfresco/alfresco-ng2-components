@@ -261,7 +261,22 @@
       "SELECT_FILE": "Select file",
       "SORT_ASCENDING": "ascending",
       "SORT_DESCENDING": "descending",
-      "ICON_ALT_TEXT": "File type {{ type }}"
+      "ICON_TEXT": "File type {{ type }}"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "document",
+      "FOLDER": "folder",
+      "PDF": "pdf document",
+      "IMAGE": "image",
+      "EXCEL": "excel document",
+      "WORD": "word document",
+      "POWERPOINT": "powerpoint document",
+      "VIDEO": "video",
+      "AUDIO": "audio",
+      "WEBSITE": "website",
+      "ARCHIVE": "archive",
+      "PRESENTATION": "presentation",
+      "SPREADSHEET": "spreadsheet"
     }
   },
   "USER_PROFILE": {
