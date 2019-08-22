@@ -42,25 +42,25 @@
         </adf-pagination>
         <div *ngIf="testingMode">
             <div *ngIf="multiselect">
-                Selected rows:
+                {{ 'SETTINGS_CLOUD.SELECTED_ROWS' | translate }}:
                 <ul>
                     <li *ngFor="let row of selectedRows">{{ row.id }}</li>
                 </ul>
             </div>
             <div *ngIf="actionMenu">
-                <span>Action menu:</span>
+                <span>{{ 'SETTINGS_CLOUD.ACTION.ACTION_MENU' | translate }}:</span>
                 <br>
                 <div *ngIf="selectedAction">
-                    <span>ProcessId: {{ selectedAction.id }}</span><br>
-                    <span>ActionType: {{ selectedAction.actionType }}</span>
+                    <span>{{ 'SETTINGS_CLOUD.ACTION.PROCESS_ID' | translate }}: {{ selectedAction.id }}</span><br>
+                    <span>{{ 'SETTINGS_CLOUD.ACTION.ACTION_TYPE' | translate }}: {{ selectedAction.actionType }}</span>
                 </div>
             </div>
             <div *ngIf="contextMenu">
-                <span>Context menu:</span>
+                <span>{{ 'SETTINGS_CLOUD.ACTION.CONTEX_MENU' | translate }}:</span>
                 <br>
                 <div *ngIf="selectedContextAction">
-                    <span>ProcessId: {{ selectedContextAction.id }}</span><br>
-                    <span>ActionType: {{ selectedContextAction.actionType }}</span>
+                    <span>{{ 'SETTINGS_CLOUD.ACTION.PROCESS_ID' | translate }}: {{ selectedContextAction.id }}</span><br>
+                    <span>{{ 'SETTINGS_CLOUD.ACTION.ACTION_TYPE' | translate }}: {{ selectedContextAction.actionType }}</span>
                 </div>
             </div>
         </div>
