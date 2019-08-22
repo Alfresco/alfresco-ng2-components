@@ -376,7 +376,7 @@
       "CURRENT_PAGE": "page"
     }
   },
-  "LIBRARY_NAME_COLUMN": {
+  "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Open {{ name }} library"
     }
