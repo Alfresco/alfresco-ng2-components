@@ -26,7 +26,7 @@ import { TaskCloudService } from '../services/task-cloud.service';
 describe('CompleteTaskDirective', () => {
 
     @Component({
-        selector:  'adf-test-component',
+        selector:  'adf-cloud-test-component',
         template: `<button adf-cloud-complete-task [taskId]='taskMock' [appName]='appNameMock' (success)="onCompleteTask($event)"></button>`
     })
     class TestComponent {
@@ -73,7 +73,7 @@ describe('CompleteTaskDirective', () => {
 describe('Complete Task Directive validation errors', () => {
 
     @Component({
-        selector:  'adf-no-fields-validation-component',
+        selector:  'adf-cloud-no-fields-validation-component',
         template: '<button adf-cloud-complete-task (success)="onCompleteTask($event)"></button>'
     })
     class TestMissingInputDirectiveComponent {
@@ -91,7 +91,7 @@ describe('Complete Task Directive validation errors', () => {
     }
 
     @Component({
-        selector:  'adf-no-taskid-validation-component',
+        selector:  'adf-cloud-no-taskid-validation-component',
         template: '<button adf-cloud-complete-task [appName]="appName" (success)="onCompleteTask($event)"></button>'
     })
     class TestMissingTaskIdDirectiveComponent {
@@ -107,7 +107,7 @@ describe('Complete Task Directive validation errors', () => {
     }
 
     @Component({
-        selector:  'adf-undefined-appname-component',
+        selector:  'adf-cloud-undefined-appname-component',
         template: '<button adf-cloud-complete-task [taskId]="taskMock" [appName]="appNameUndefined" (success)="onCompleteTask($event)"></button>'
     })
     class TestInvalidAppNameUndefineddDirectiveComponent {
@@ -124,7 +124,7 @@ describe('Complete Task Directive validation errors', () => {
     }
 
     @Component({
-        selector:  'adf-null-appname-component',
+        selector:  'adf-cloud-null-appname-component',
         template: '<button adf-cloud-complete-task [taskId]="taskMock" [appName]="appNameNull" (success)="onCompleteTask($event)"></button>'
     })
     class TestInvalidAppNameNulldDirectiveComponent {
