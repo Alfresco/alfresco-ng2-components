@@ -116,8 +116,14 @@
                                     </mat-icon>
                                     <ng-template #no_selected_row>
                                         <img class="adf-datatable-center-img-ie"
-                                            [attr.aria-label]="data.getValue(row, col) | fileType"
-                                            alt="{{ 'ADF-DATATABLE.ACCESSIBILITY.ICON_ALT_TEXT' | translate:{ type: data.getValue(row, col) | fileType } }}"
+                                            [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
+                                                type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
+                                            }"
+                                            alt="{{
+                                                'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
+                                                        type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
+                                                    }
+                                                }}"
                                             src="{{ data.getValue(row, col) }}"
                                             (error)="onImageLoadingError($event, row)">
                                     </ng-template>
@@ -125,7 +131,10 @@
                             </div>
                             <div *ngSwitchCase="'icon'" class="adf-cell-value">
                                 <span class="adf-sr-only">
-                                    {{ 'ADF-DATATABLE.ACCESSIBILITY.ICON_ALT_TEXT' | translate:{ type: data.getValue(row, col) | fileType } }}
+                                    {{ 'ADF-DATATABLE.ACCESSIBILITY.ICON_ALT_TEXT' | translate:{
+                                            type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
+                                        }
+                                    }}
                                 </span>
                                 <mat-icon>{{ data.getValue(row, col) }}</mat-icon>
                             </div>
