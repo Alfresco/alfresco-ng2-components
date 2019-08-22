@@ -81,7 +81,7 @@
     "@alfresco/adf-process-services": "3.4.0",
     "@alfresco/adf-process-services-cloud": "3.4.0",
     "@alfresco/adf-testing": "3.4.0",
-    "@alfresco/js-api": "3.4.0",
+    "@alfresco/js-api": "3.5.0-beta2",
     "@angular/animations": "^7.2.15",
     "@angular/cdk": "7.3.7",
     "@angular/common": "^7.2.15",
