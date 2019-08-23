@@ -24,7 +24,13 @@
             [lastModifiedTo]="editedFilter.lastModifiedTo"
             [sorting]="sortArray"
             [selectionMode]="selectionMode"
+            [stickyHeader]="true"
+            [showActions]="actionMenu"
+            [showContextMenu]="contextMenu"
             [multiselect]="multiselect"
+            (showRowActionsMenu)="onShowRowActionsMenu($event)"
+            (showRowContextMenu)="onShowRowContextMenu($event)"
+            (executeRowAction)="onExecuteRowAction($event)"
             (rowClick)="onRowClick($event)"
             (rowsSelected)="onRowsSelected($event)">
         </adf-cloud-process-list>
@@ -35,10 +41,28 @@
             (prevPage)="resetSelectedRows()">
         </adf-pagination>
         <div *ngIf="testingMode">
-            Selected rows:
-            <ul>
-                <li *ngFor="let row of selectedRows">{{ row.id }}</li>
-            </ul>
+            <div *ngIf="multiselect">
+                {{ 'SETTINGS_CLOUD.SELECTED_ROWS' | translate }}:
+                <ul>
+                    <li *ngFor="let row of selectedRows">{{ row.id }}</li>
+                </ul>
+            </div>
+            <div *ngIf="actionMenu">
+                <span>{{ 'SETTINGS_CLOUD.ACTION.ACTION_MENU' | translate }}:</span>
+                <br>
+                <div *ngIf="selectedAction">
+                    <span>{{ 'SETTINGS_CLOUD.ACTION.PROCESS_ID' | translate }}: {{ selectedAction.id }}</span><br>
+                    <span>{{ 'SETTINGS_CLOUD.ACTION.ACTION_TYPE' | translate }}: {{ selectedAction.actionType }}</span>
+                </div>
+            </div>
+            <div *ngIf="contextMenu">
+                <span>{{ 'SETTINGS_CLOUD.ACTION.CONTEX_MENU' | translate }}:</span>
+                <br>
+                <div *ngIf="selectedContextAction">
+                    <span>{{ 'SETTINGS_CLOUD.ACTION.PROCESS_ID' | translate }}: {{ selectedContextAction.id }}</span><br>
+                    <span>{{ 'SETTINGS_CLOUD.ACTION.ACTION_TYPE' | translate }}: {{ selectedContextAction.actionType }}</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -320,7 +320,21 @@
     "MULTISELECTION": "Multiselection",
     "TESTING_MODE": "Testing Mode",
     "SELECTION_MODE": "Selection Mode",
+    "SELECTED_ROWS": "Selected rows",
     "TASK_DETAILS_REDIRECTION": "Display task details on task click",
-    "PROCESS_DETAILS_REDIRECTION": "Display process details on process click"
+    "PROCESS_DETAILS_REDIRECTION": "Display process details on process click",
+    "ACTION": {
+      "ACTION_TITLE": "Add Action",
+      "ACTION_MENU": "Action Menu",
+      "CONTEX_MENU": "Context Menu",
+      "ACTION_VISIBLE": "Visible",
+      "ACTION_DISABLE": "Disable",
+      "ADD_BUTTON": "Add",
+      "KEY": "Key",
+      "TITLE": "Title",
+      "ICON": "Icon",
+      "PROCESS_ID": "ProcessInstanceId",
+      "ACTION_TYPE": "Action Type"
+    }
   }
 }

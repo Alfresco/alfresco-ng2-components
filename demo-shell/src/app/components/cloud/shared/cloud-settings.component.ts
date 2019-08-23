@@ -16,9 +16,10 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CloudLayoutService } from '../services/cloud-layout.service';
+import { CloudLayoutService, ActionMenuModel } from '../services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-cloud-settings',
@@ -29,6 +30,9 @@ export class CloudSettingsComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     multiselect: boolean;
+    actionMenu: boolean;
+    contextMenu: boolean;
+    actions: ActionMenuModel[] = [];
     selectionMode: string;
     testingMode: boolean;
     taskDetailsRedirection: boolean;
@@ -39,6 +43,14 @@ export class CloudSettingsComponent implements OnInit, OnDestroy {
         { value: 'single', title: 'Single' },
         { value: 'multiple', title: 'Multiple' }
     ];
+
+    actionMenuForm = new FormGroup({
+        key: new FormControl(''),
+        title: new FormControl(''),
+        icon: new FormControl(''),
+        visible: new FormControl(true),
+        disable: new FormControl(false)
+      });
 
     constructor(private cloudLayoutService: CloudLayoutService) { }
 
@@ -57,6 +69,9 @@ export class CloudSettingsComponent implements OnInit, OnDestroy {
     setCurrentSettings(settings) {
         if (settings) {
             this.multiselect = settings.multiselect;
+            this.actionMenu = this.actionMenu;
+            this.contextMenu = this.contextMenu;
+            this.actions = this.actions;
             this.testingMode = settings.testingMode;
             this.selectionMode = settings.selectionMode;
             this.taskDetailsRedirection = settings.taskDetailsRedirection;
@@ -88,9 +103,35 @@ export class CloudSettingsComponent implements OnInit, OnDestroy {
         this.setSetting();
     }
 
+    toggleActionMenu() {
+        this.actionMenu = !this.actionMenu;
+        this.setSetting();
+    }
+
+    toggleContextMenu() {
+        this.contextMenu = !this.contextMenu;
+        this.setSetting();
+    }
+
+    addAction() {
+        this.actions.push(<ActionMenuModel> this.actionMenuForm.value);
+        this.actionMenuForm.get('key').reset();
+        this.actionMenuForm.get('title').reset();
+        this.actionMenuForm.get('icon').reset();
+        this.setSetting();
+    }
+
+    removeAction(removedAction: ActionMenuModel) {
+        this.actions = this.actions.filter((action: ActionMenuModel) => action.key !== removedAction.key);
+        this.setSetting();
+    }
+
     setSetting() {
         this.cloudLayoutService.setCurrentSettings({
             multiselect: this.multiselect,
+            actionMenu: this.actionMenu,
+            contextMenu: this.contextMenu,
+            actions: this.actions,
             testingMode: this.testingMode,
             selectionMode: this.selectionMode,
             taskDetailsRedirection: this.taskDetailsRedirection,

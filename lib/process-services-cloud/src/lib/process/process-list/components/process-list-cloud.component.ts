@@ -19,12 +19,13 @@ import { Component, ViewEncapsulation, OnChanges, AfterContentInit, ContentChild
 import { DataTableSchema, PaginatedComponent,
          CustomEmptyContentTemplateDirective, AppConfigService,
          UserPreferencesService, PaginationModel,
-         UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective } from '@alfresco/adf-core';
+         UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { BehaviorSubject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
+
 @Component({
     selector: 'adf-cloud-process-list',
     templateUrl: './process-list-cloud.component.html',
@@ -100,6 +101,22 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     sorting: ProcessListCloudSortingModel[];
 
+    /** Toggles the data actions column. */
+    @Input()
+    showActions: boolean = false;
+
+    /** Position of the actions dropdown menu. Can be "left" or "right". */
+    @Input()
+    actionsPosition: string = 'right'; // left|right
+
+    /** Toggles the sticky header mode. */
+    @Input()
+    stickyHeader: boolean = false;
+
+    /** Toggles custom context menu for the component. */
+    @Input()
+    showContextMenu: boolean = false;
+
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -107,6 +124,18 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     /** Emitted when rows are selected/unselected. */
     @Output()
     rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
+
+    /** Emitted before the context menu is displayed for a row. */
+    @Output()
+    showRowContextMenu = new EventEmitter<DataCellEvent>();
+
+    /** Emitted before the actions menu is displayed for a row. */
+    @Output()
+    showRowActionsMenu = new EventEmitter<DataCellEvent>();
+
+    /** Emitted when the user executes a row action. */
+    @Output()
+    executeRowAction = new EventEmitter<DataRowActionEvent>();
 
     /** Emitted when an error occurs while loading the list of process instances from the server. */
     @Output()
@@ -221,6 +250,18 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             this.currentInstanceId = event.detail.row.getValue('entry.id');
             this.rowClick.emit(this.currentInstanceId);
         }
+    }
+
+    onShowRowActionsMenu(event: DataCellEvent) {
+        this.showRowActionsMenu.emit(event);
+    }
+
+    onShowRowContextMenu(event: DataCellEvent) {
+        this.showRowContextMenu.emit(event);
+    }
+
+    onExecuteRowAction(row: DataRowActionEvent) {
+        this.executeRowAction.emit(row);
     }
 
     private createRequestNode(): ProcessQueryCloudRequestModel {
