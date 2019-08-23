@@ -61,7 +61,7 @@ describe('People Groups Cloud Component', () => {
 
             groupNoRole = await groupIdentityService.createIdentityGroup();
 
-            users = [`${apsUser.idIdentityService}`, `${noRoleUser.idIdentityService}`, `${testUser.idIdentityService}`];
+            users = [apsUser.idIdentityService, noRoleUser.idIdentityService, testUser.idIdentityService];
 
             await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
@@ -94,57 +94,57 @@ describe('People Groups Cloud Component', () => {
             await peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
             await peopleGroupCloudComponentPage.clickPeopleFilerByApp();
             await peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
-            await peopleCloudComponent.searchAssignee(`${testUser.firstName}`);
-            await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName}` + ' ' + `${testUser.lastName}`);
-            await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName}` + ' ' + `${testUser.lastName}`);
+            await peopleCloudComponent.searchAssignee(testUser.firstName);
+            await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
+            await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
             await browser.sleep(100);
-            await expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${testUser.firstName}` + ' ' + `${testUser.lastName}`);
+            await expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${testUser.firstName} ${testUser.lastName}`);
         });
 
         it('[C305041] Should filter the People Multiple Selection with the Application name filter', async () => {
             await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             await peopleGroupCloudComponentPage.clickPeopleFilerByApp();
             await peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
-            await peopleCloudComponent.searchAssignee(`${testUser.firstName}`);
-            await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName}` + ' ' + `${testUser.lastName}`);
-            await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName}` + ' ' + `${testUser.lastName}`);
-            await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName}` + ' ' + `${testUser.lastName}`);
+            await peopleCloudComponent.searchAssignee(testUser.firstName);
+            await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
+            await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
+            await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`);
 
-            await peopleCloudComponent.searchAssigneeToExisting(`${apsUser.firstName}`);
-            await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-            await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-            await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            await peopleCloudComponent.searchAssigneeToExisting(apsUser.firstName);
+            await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
+            await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
+            await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName} ${apsUser.lastName}`);
 
-            await peopleCloudComponent.searchAssigneeToExisting(`${noRoleUser.firstName}`);
-            await peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            await peopleCloudComponent.searchAssigneeToExisting(noRoleUser.firstName);
+            await peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
         });
 
         it('[C305041] Should filter the Groups Single Selection with the Application name filter', async () => {
             await peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
             await peopleGroupCloudComponentPage.clickGroupFilerByApp();
             await peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
-            await groupCloudComponentPage.searchGroups(`${hrGroup.name}`);
-            await groupCloudComponentPage.checkGroupIsDisplayed(`${hrGroup.name}`);
-            await groupCloudComponentPage.selectGroupFromList(`${hrGroup.name}`);
-            await expect(await groupCloudComponentPage.getGroupsFieldContent()).toBe(`${hrGroup.name}`);
+            await groupCloudComponentPage.searchGroups(hrGroup.name);
+            await groupCloudComponentPage.checkGroupIsDisplayed(hrGroup.name);
+            await groupCloudComponentPage.selectGroupFromList(hrGroup.name);
+            await expect(await groupCloudComponentPage.getGroupsFieldContent()).toBe(hrGroup.name);
         });
 
         it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', async () => {
             await peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
             await peopleGroupCloudComponentPage.clickGroupFilerByApp();
             await peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
-            await groupCloudComponentPage.searchGroups(`${testGroup.name}`);
-            await groupCloudComponentPage.checkGroupIsDisplayed(`${testGroup.name}`);
-            await groupCloudComponentPage.selectGroupFromList(`${testGroup.name}`);
-            await groupCloudComponentPage.checkSelectedGroup(`${testGroup.name}`);
+            await groupCloudComponentPage.searchGroups(testGroup.name);
+            await groupCloudComponentPage.checkGroupIsDisplayed(testGroup.name);
+            await groupCloudComponentPage.selectGroupFromList(testGroup.name);
+            await groupCloudComponentPage.checkSelectedGroup(testGroup.name);
 
-            await groupCloudComponentPage.searchGroupsToExisting(`${hrGroup.name}`);
-            await groupCloudComponentPage.checkGroupIsDisplayed(`${hrGroup.name}`);
-            await groupCloudComponentPage.selectGroupFromList(`${hrGroup.name}`);
-            await groupCloudComponentPage.checkSelectedGroup(`${hrGroup.name}`);
+            await groupCloudComponentPage.searchGroupsToExisting(hrGroup.name);
+            await groupCloudComponentPage.checkGroupIsDisplayed(hrGroup.name);
+            await groupCloudComponentPage.selectGroupFromList(hrGroup.name);
+            await groupCloudComponentPage.checkSelectedGroup(hrGroup.name);
 
-            await groupCloudComponentPage.searchGroupsToExisting(`${groupNoRole.name}`);
-            await groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            await groupCloudComponentPage.searchGroupsToExisting(groupNoRole.name);
+            await groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
         });
 
     });
