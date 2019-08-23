@@ -15,456 +15,455 @@
  * limitations under the License.
  */
 
- /* tslint:disable */
- export const multipleVisibilityForm = `{
-    "formRepresentation": {
-        "id": "form-417ec60f-59ec-4990-a3b4-674f2c90af8a",
-        "name": "testtesttest",
-        "description": "",
-        "version": 0,
-        "formDefinition": {
-            "tabs": [],
-            "fields": [
+ export const multipleVisibilityFormJson = {
+   formRepresentation: {
+       id: 'form-417ec60f-59ec-4990-a3b4-674f2c90af8a',
+       name: 'testtesttest',
+       description: '',
+       version: 0,
+       formDefinition: {
+           tabs: [],
+           fields: [
                 {
-                    "id": "693934b1-fb52-45db-8ec0-f0d0f0accbed",
-                    "name": "Label",
-                    "type": "container",
-                    "tab": null,
-                    "numberOfColumns": 6,
-                    "fields": {
-                        "1": [
+                   id: '693934b1-fb52-45db-8ec0-f0d0f0accbed',
+                   name: 'Label',
+                   type: 'container',
+                   tab: null,
+                   numberOfColumns: 6,
+                   fields: {
+                       1: [
                             {
-                                "id": "CheckboxReq",
-                                "name": "CheckboxReq",
-                                "type": "boolean",
-                                "required": true,
-                                "colspan": 1,
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               id: 'CheckboxReq',
+                               name: 'CheckboxReq',
+                               type: 'boolean',
+                               required: true,
+                               colspan: 1,
+                               visibilityCondition: null,
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             },
                             {
-                                "id": "CheckboxNotReq",
-                                "name": "CheckboxNotReq",
-                                "type": "boolean",
-                                "required": false,
-                                "colspan": 1,
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               id: 'CheckboxNotReq',
+                               name: 'CheckboxNotReq',
+                               type: 'boolean',
+                               required: false,
+                               colspan: 1,
+                               visibilityCondition: null,
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             },
                             {
-                                "id": "CheckboxColspan",
-                                "name": "CheckboxColspan",
-                                "type": "boolean",
-                                "required": false,
-                                "colspan": 2,
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               id: 'CheckboxColspan',
+                               name: 'CheckboxColspan',
+                               type: 'boolean',
+                               required: false,
+                               colspan: 2,
+                               visibilityCondition: null,
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             },
                             {
-                                "id": "CheckboxBasicFieldValue",
-                                "name": "CheckboxBasicFieldValue",
-                                "type": "boolean",
-                                "required": false,
-                                "colspan": 1,
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               id: 'CheckboxBasicFieldValue',
+                               name: 'CheckboxBasicFieldValue',
+                               type: 'boolean',
+                               required: false,
+                               colspan: 1,
+                               visibilityCondition: null,
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             },
                             {
-                                "id": "CheckboxBasicFieldVariable",
-                                "name": "CheckboxBasicFieldVariable",
-                                "type": "boolean",
-                                "required": false,
-                                "colspan": 1,
-                                "visibilityCondition": {
-                                    "leftFormFieldId": "textOne",
-                                    "leftRestResponseId": "",
-                                    "operator": "==",
-                                    "rightValue": "",
-                                    "rightType": null,
-                                    "rightFormFieldId": "",
-                                    "rightRestResponseId": "948aa549-5011-423e-b8a2-020e69daae5f",
-                                    "nextConditionOperator": "",
-                                    "nextCondition": null
+                               id: 'CheckboxBasicFieldVariable',
+                               name: 'CheckboxBasicFieldVariable',
+                               type: 'boolean',
+                               required: false,
+                               colspan: 1,
+                               visibilityCondition: {
+                                   leftFormFieldId: 'textOne',
+                                   leftRestResponseId: '',
+                                   operator: '==',
+                                   rightValue: '',
+                                   rightType: null,
+                                   rightFormFieldId: '',
+                                   rightRestResponseId: '948aa549-5011-423e-b8a2-020e69daae5f',
+                                   nextConditionOperator: '',
+                                   nextCondition: null
                                 },
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             },
                             {
-                                "id": "CheckboxBasicVariableField",
-                                "name": "CheckboxBasicVariableField",
-                                "type": "boolean",
-                                "required": false,
-                                "colspan": 1,
-                                "visibilityCondition": {
-                                    "leftFormFieldId": "",
-                                    "leftRestResponseId": "948aa549-5011-423e-b8a2-020e69daae5f",
-                                    "operator": "==",
-                                    "rightValue": "",
-                                    "rightType": null,
-                                    "rightFormFieldId": "textOne",
-                                    "rightRestResponseId": "",
-                                    "nextConditionOperator": "",
-                                    "nextCondition": null
+                               id: 'CheckboxBasicVariableField',
+                               name: 'CheckboxBasicVariableField',
+                               type: 'boolean',
+                               required: false,
+                               colspan: 1,
+                               visibilityCondition: {
+                                   leftFormFieldId: '',
+                                   leftRestResponseId: '948aa549-5011-423e-b8a2-020e69daae5f',
+                                   operator: '==',
+                                   rightValue: '',
+                                   rightType: null,
+                                   rightFormFieldId: 'textOne',
+                                   rightRestResponseId: '',
+                                   nextConditionOperator: '',
+                                   nextCondition: null
                                 },
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             },
                             {
-                                "id": "CheckboxMultiple",
-                                "name": "CheckboxMultiple",
-                                "type": "boolean",
-                                "required": false,
-                                "colspan": 1,
-                                "visibilityCondition": {
-                                    "leftFormFieldId": "textOne",
-                                    "leftRestResponseId": "",
-                                    "operator": "==",
-                                    "rightValue": "aaa",
-                                    "rightType": null,
-                                    "rightFormFieldId": "",
-                                    "rightRestResponseId": "",
-                                    "nextConditionOperator": "and",
-                                    "nextCondition": {
-                                        "leftFormFieldId": "textTwo",
-                                        "leftRestResponseId": "",
-                                        "operator": "not equal",
-                                        "rightValue": "aaa",
-                                        "rightType": null,
-                                        "rightFormFieldId": "",
-                                        "rightRestResponseId": "",
-                                        "nextConditionOperator": "",
-                                        "nextCondition": null
+                               id: 'CheckboxMultiple',
+                               name: 'CheckboxMultiple',
+                               type: 'boolean',
+                               required: false,
+                               colspan: 1,
+                               visibilityCondition: {
+                                   leftFormFieldId: 'textOne',
+                                   leftRestResponseId: '',
+                                   operator: '==',
+                                   rightValue: 'aaa',
+                                   rightType: null,
+                                   rightFormFieldId: '',
+                                   rightRestResponseId: '',
+                                   nextConditionOperator: 'and',
+                                   nextCondition: {
+                                       leftFormFieldId: 'textTwo',
+                                       leftRestResponseId: '',
+                                       operator: 'not equal',
+                                       rightValue: 'aaa',
+                                       rightType: null,
+                                       rightFormFieldId: '',
+                                       rightRestResponseId: '',
+                                       nextConditionOperator: '',
+                                       nextCondition: null
                                     }
                                 },
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             },
                             {
-                                "id": "checkboxone",
-                                "name": "CheckboxOne",
-                                "type": "boolean",
-                                "required": false,
-                                "colspan": 1,
-                                "visibilityCondition": {
-                                    "leftFormFieldId": "textOne",
-                                    "leftRestResponseId": "",
-                                    "operator": "==",
-                                    "rightValue": "aaa",
-                                    "rightType": null,
-                                    "rightFormFieldId": "",
-                                    "rightRestResponseId": "",
-                                    "nextConditionOperator": "and",
-                                    "nextCondition": {
-                                        "leftFormFieldId": "textTwo",
-                                        "leftRestResponseId": "",
-                                        "operator": "not equal",
-                                        "rightValue": "aaa",
-                                        "rightType": null,
-                                        "rightFormFieldId": "",
-                                        "rightRestResponseId": "",
-                                        "nextConditionOperator": "and not",
-                                        "nextCondition": {
-                                            "leftFormFieldId": "textThree",
-                                            "leftRestResponseId": "",
-                                            "operator": "empty",
-                                            "rightValue": "",
-                                            "rightType": null,
-                                            "rightFormFieldId": "",
-                                            "rightRestResponseId": "",
-                                            "nextConditionOperator": "or",
-                                            "nextCondition": {
-                                                "leftFormFieldId": "textfour",
-                                                "leftRestResponseId": "",
-                                                "operator": "not empty",
-                                                "rightValue": "aaa",
-                                                "rightType": null,
-                                                "rightFormFieldId": "",
-                                                "rightRestResponseId": "",
-                                                "nextConditionOperator": "or not",
-                                                "nextCondition": {
-                                                    "leftFormFieldId": "textfive",
-                                                    "leftRestResponseId": "",
-                                                    "operator": "==",
-                                                    "rightValue": "aaa",
-                                                    "rightType": null,
-                                                    "rightFormFieldId": "",
-                                                    "rightRestResponseId": "",
-                                                    "nextConditionOperator": "",
-                                                    "nextCondition": null
+                               id: 'checkboxone',
+                               name: 'CheckboxOne',
+                               type: 'boolean',
+                               required: false,
+                               colspan: 1,
+                               visibilityCondition: {
+                                   leftFormFieldId: 'textOne',
+                                   leftRestResponseId: '',
+                                   operator: '==',
+                                   rightValue: 'aaa',
+                                   rightType: null,
+                                   rightFormFieldId: '',
+                                   rightRestResponseId: '',
+                                   nextConditionOperator: 'and',
+                                   nextCondition: {
+                                       leftFormFieldId: 'textTwo',
+                                       leftRestResponseId: '',
+                                       operator: 'not equal',
+                                       rightValue: 'aaa',
+                                       rightType: null,
+                                       rightFormFieldId: '',
+                                       rightRestResponseId: '',
+                                       nextConditionOperator: 'and not',
+                                       nextCondition: {
+                                           leftFormFieldId: 'textThree',
+                                           leftRestResponseId: '',
+                                           operator: 'empty',
+                                           rightValue: '',
+                                           rightType: null,
+                                           rightFormFieldId: '',
+                                           rightRestResponseId: '',
+                                           nextConditionOperator: 'or',
+                                           nextCondition: {
+                                               leftFormFieldId: 'textfour',
+                                               leftRestResponseId: '',
+                                               operator: 'not empty',
+                                               rightValue: 'aaa',
+                                               rightType: null,
+                                               rightFormFieldId: '',
+                                               rightRestResponseId: '',
+                                               nextConditionOperator: 'or not',
+                                               nextCondition: {
+                                                   leftFormFieldId: 'textfive',
+                                                   leftRestResponseId: '',
+                                                   operator: '==',
+                                                   rightValue: 'aaa',
+                                                   rightType: null,
+                                                   rightFormFieldId: '',
+                                                   rightRestResponseId: '',
+                                                   nextConditionOperator: '',
+                                                   nextCondition: null
                                                 }
                                             }
                                         }
                                     }
                                 },
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             },
                             {
-                                "id": "checkboxtworeq",
-                                "name": "CheckboxTwoReq",
-                                "type": "boolean",
-                                "required": true,
-                                "colspan": 2,
-                                "visibilityCondition": {
-                                    "leftFormFieldId": "",
-                                    "leftRestResponseId": "948aa549-5011-423e-b8a2-020e69daae5f",
-                                    "operator": "==",
-                                    "rightValue": "",
-                                    "rightType": null,
-                                    "rightFormFieldId": "textTwo",
-                                    "rightRestResponseId": "",
-                                    "nextConditionOperator": "and",
-                                    "nextCondition": {
-                                        "leftFormFieldId": "",
-                                        "leftRestResponseId": "08f66ebb-1e5c-4ae4-a8cc-ec9c674d1e40",
-                                        "operator": "not equal",
-                                        "rightValue": "",
-                                        "rightType": null,
-                                        "rightFormFieldId": "textOne",
-                                        "rightRestResponseId": "",
-                                        "nextConditionOperator": "and not",
-                                        "nextCondition": {
-                                            "leftFormFieldId": "",
-                                            "leftRestResponseId": "888786b1-e948-4e7a-9caa-deb2583d222f",
-                                            "operator": "not equal",
-                                            "rightValue": "",
-                                            "rightType": null,
-                                            "rightFormFieldId": "textThree",
-                                            "rightRestResponseId": "",
-                                            "nextConditionOperator": "or",
-                                            "nextCondition": {
-                                                "leftFormFieldId": "",
-                                                "leftRestResponseId": "5007cf47-aa68-42c0-b1ab-a98f0dff6bdc",
-                                                "operator": "not equal",
-                                                "rightValue": "",
-                                                "rightType": null,
-                                                "rightFormFieldId": "textfour",
-                                                "rightRestResponseId": "",
-                                                "nextConditionOperator": "or not",
-                                                "nextCondition": {
-                                                    "leftFormFieldId": "",
-                                                    "leftRestResponseId": "948aa549-5011-423e-b8a2-020e69daae5f",
-                                                    "operator": "==",
-                                                    "rightValue": "",
-                                                    "rightType": null,
-                                                    "rightFormFieldId": "textfive",
-                                                    "rightRestResponseId": "",
-                                                    "nextConditionOperator": "",
-                                                    "nextCondition": null
+                               id: 'checkboxtworeq',
+                               name: 'CheckboxTwoReq',
+                               type: 'boolean',
+                               required: true,
+                               colspan: 2,
+                               visibilityCondition: {
+                                   leftFormFieldId: '',
+                                   leftRestResponseId: '948aa549-5011-423e-b8a2-020e69daae5f',
+                                   operator: '==',
+                                   rightValue: '',
+                                   rightType: null,
+                                   rightFormFieldId: 'textTwo',
+                                   rightRestResponseId: '',
+                                   nextConditionOperator: 'and',
+                                   nextCondition: {
+                                       leftFormFieldId: '',
+                                       leftRestResponseId: '08f66ebb-1e5c-4ae4-a8cc-ec9c674d1e40',
+                                       operator: 'not equal',
+                                       rightValue: '',
+                                       rightType: null,
+                                       rightFormFieldId: 'textOne',
+                                       rightRestResponseId: '',
+                                       nextConditionOperator: 'and not',
+                                       nextCondition: {
+                                           leftFormFieldId: '',
+                                           leftRestResponseId: '888786b1-e948-4e7a-9caa-deb2583d222f',
+                                           operator: 'not equal',
+                                           rightValue: '',
+                                           rightType: null,
+                                           rightFormFieldId: 'textThree',
+                                           rightRestResponseId: '',
+                                           nextConditionOperator: 'or',
+                                           nextCondition: {
+                                               leftFormFieldId: '',
+                                               leftRestResponseId: '5007cf47-aa68-42c0-b1ab-a98f0dff6bdc',
+                                               operator: 'not equal',
+                                               rightValue: '',
+                                               rightType: null,
+                                               rightFormFieldId: 'textfour',
+                                               rightRestResponseId: '',
+                                               nextConditionOperator: 'or not',
+                                               nextCondition: {
+                                                   leftFormFieldId: '',
+                                                   leftRestResponseId: '948aa549-5011-423e-b8a2-020e69daae5f',
+                                                   operator: '==',
+                                                   rightValue: '',
+                                                   rightType: null,
+                                                   rightFormFieldId: 'textfive',
+                                                   rightRestResponseId: '',
+                                                   nextConditionOperator: '',
+                                                   nextCondition: null
                                                 }
                                             }
                                         }
                                     }
                                 },
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             },
                             {
-                                "id": "checkboxthree",
-                                "name": "CheckboxThree",
-                                "type": "boolean",
-                                "required": false,
-                                "colspan": 1,
-                                "visibilityCondition": {
-                                    "leftFormFieldId": "textOne",
-                                    "leftRestResponseId": "",
-                                    "operator": "==",
-                                    "rightValue": "",
-                                    "rightType": null,
-                                    "rightFormFieldId": "",
-                                    "rightRestResponseId": "948aa549-5011-423e-b8a2-020e69daae5f",
-                                    "nextConditionOperator": "and",
-                                    "nextCondition": {
-                                        "leftFormFieldId": "textTwo",
-                                        "leftRestResponseId": "",
-                                        "operator": "not equal",
-                                        "rightValue": "",
-                                        "rightType": null,
-                                        "rightFormFieldId": "",
-                                        "rightRestResponseId": "08f66ebb-1e5c-4ae4-a8cc-ec9c674d1e40",
-                                        "nextConditionOperator": "and not",
-                                        "nextCondition": {
-                                            "leftFormFieldId": "textThree",
-                                            "leftRestResponseId": "",
-                                            "operator": "not equal",
-                                            "rightValue": "",
-                                            "rightType": null,
-                                            "rightFormFieldId": "",
-                                            "rightRestResponseId": "888786b1-e948-4e7a-9caa-deb2583d222f",
-                                            "nextConditionOperator": "or",
-                                            "nextCondition": {
-                                                "leftFormFieldId": "textfour",
-                                                "leftRestResponseId": "",
-                                                "operator": "not equal",
-                                                "rightValue": "",
-                                                "rightType": null,
-                                                "rightFormFieldId": "",
-                                                "rightRestResponseId": "5007cf47-aa68-42c0-b1ab-a98f0dff6bdc",
-                                                "nextConditionOperator": "or not",
-                                                "nextCondition": {
-                                                    "leftFormFieldId": "textfive",
-                                                    "leftRestResponseId": "",
-                                                    "operator": "==",
-                                                    "rightValue": "",
-                                                    "rightType": null,
-                                                    "rightFormFieldId": "",
-                                                    "rightRestResponseId": "948aa549-5011-423e-b8a2-020e69daae5f",
-                                                    "nextConditionOperator": "",
-                                                    "nextCondition": null
+                               id: 'checkboxthree',
+                               name: 'CheckboxThree',
+                               type: 'boolean',
+                               required: false,
+                               colspan: 1,
+                               visibilityCondition: {
+                                   leftFormFieldId: 'textOne',
+                                   leftRestResponseId: '',
+                                   operator: '==',
+                                   rightValue: '',
+                                   rightType: null,
+                                   rightFormFieldId: '',
+                                   rightRestResponseId: '948aa549-5011-423e-b8a2-020e69daae5f',
+                                   nextConditionOperator: 'and',
+                                   nextCondition: {
+                                       leftFormFieldId: 'textTwo',
+                                       leftRestResponseId: '',
+                                       operator: 'not equal',
+                                       rightValue: '',
+                                       rightType: null,
+                                       rightFormFieldId: '',
+                                       rightRestResponseId: '08f66ebb-1e5c-4ae4-a8cc-ec9c674d1e40',
+                                       nextConditionOperator: 'and not',
+                                       nextCondition: {
+                                           leftFormFieldId: 'textThree',
+                                           leftRestResponseId: '',
+                                           operator: 'not equal',
+                                           rightValue: '',
+                                           rightType: null,
+                                           rightFormFieldId: '',
+                                           rightRestResponseId: '888786b1-e948-4e7a-9caa-deb2583d222f',
+                                           nextConditionOperator: 'or',
+                                           nextCondition: {
+                                               leftFormFieldId: 'textfour',
+                                               leftRestResponseId: '',
+                                               operator: 'not equal',
+                                               rightValue: '',
+                                               rightType: null,
+                                               rightFormFieldId: '',
+                                               rightRestResponseId: '5007cf47-aa68-42c0-b1ab-a98f0dff6bdc',
+                                               nextConditionOperator: 'or not',
+                                               nextCondition: {
+                                                   leftFormFieldId: 'textfive',
+                                                   leftRestResponseId: '',
+                                                   operator: '==',
+                                                   rightValue: '',
+                                                   rightType: null,
+                                                   rightFormFieldId: '',
+                                                   rightRestResponseId: '948aa549-5011-423e-b8a2-020e69daae5f',
+                                                   nextConditionOperator: '',
+                                                   nextCondition: null
                                                 }
                                             }
                                         }
                                     }
                                 },
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             }
                         ],
-                        "2": [
+                       2: [
                             {
-                                "id": "textOne",
-                                "name": "TextOne",
-                                "type": "text",
-                                "required": false,
-                                "colspan": 1,
-                                "placeholder": null,
-                                "minLength": 0,
-                                "maxLength": 0,
-                                "regexPattern": null,
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               id: 'textOne',
+                               name: 'TextOne',
+                               type: 'text',
+                               required: false,
+                               colspan: 1,
+                               placeholder: null,
+                               minLength: 0,
+                               maxLength: 0,
+                               regexPattern: null,
+                               visibilityCondition: null,
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             }
                         ],
-                        "3": [
+                       3: [
                             {
-                                "id": "textTwo",
-                                "name": "TextTwo",
-                                "type": "text",
-                                "required": false,
-                                "colspan": 1,
-                                "placeholder": null,
-                                "minLength": 0,
-                                "maxLength": 0,
-                                "regexPattern": null,
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               id: 'textTwo',
+                               name: 'TextTwo',
+                               type: 'text',
+                               required: false,
+                               colspan: 1,
+                               placeholder: null,
+                               minLength: 0,
+                               maxLength: 0,
+                               regexPattern: null,
+                               visibilityCondition: null,
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             }
                         ],
-                        "4": [
+                       4: [
                             {
-                                "id": "textThree",
-                                "name": "TextThree",
-                                "type": "text",
-                                "required": false,
-                                "colspan": 1,
-                                "placeholder": null,
-                                "minLength": 0,
-                                "maxLength": 0,
-                                "regexPattern": null,
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               id: 'textThree',
+                               name: 'TextThree',
+                               type: 'text',
+                               required: false,
+                               colspan: 1,
+                               placeholder: null,
+                               minLength: 0,
+                               maxLength: 0,
+                               regexPattern: null,
+                               visibilityCondition: null,
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             }
                         ],
-                        "5": [
+                       5: [
                             {
-                                "id": "textfour",
-                                "name": "TextFour",
-                                "type": "text",
-                                "required": false,
-                                "colspan": 1,
-                                "placeholder": null,
-                                "minLength": 0,
-                                "maxLength": 0,
-                                "regexPattern": null,
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               id: 'textfour',
+                               name: 'TextFour',
+                               type: 'text',
+                               required: false,
+                               colspan: 1,
+                               placeholder: null,
+                               minLength: 0,
+                               maxLength: 0,
+                               regexPattern: null,
+                               visibilityCondition: null,
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             }
                         ],
-                        "6": [
+                       6: [
                             {
-                                "id": "textfive",
-                                "name": "TextFive",
-                                "type": "text",
-                                "required": false,
-                                "colspan": 1,
-                                "placeholder": null,
-                                "minLength": 0,
-                                "maxLength": 0,
-                                "regexPattern": null,
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                               id: 'textfive',
+                               name: 'TextFive',
+                               type: 'text',
+                               required: false,
+                               colspan: 1,
+                               placeholder: null,
+                               minLength: 0,
+                               maxLength: 0,
+                               regexPattern: null,
+                               visibilityCondition: null,
+                               params: {
+                                   existingColspan: 1,
+                                   maxColspan: 2
                                 }
                             }
                         ]
                     }
                 }
             ],
-            "outcomes": [],
-            "metadata": {},
-            "variables": [
+           outcomes: [],
+           metadata: {},
+           variables: [
                 {
-                    "id": "948aa549-5011-423e-b8a2-020e69daae5f",
-                    "name": "vstring",
-                    "type": "string",
-                    "value": "aaa"
+                   id: '948aa549-5011-423e-b8a2-020e69daae5f',
+                   name: 'vstring',
+                   type: 'string',
+                   value: 'aaa'
                 },
                 {
-                    "id": "08f66ebb-1e5c-4ae4-a8cc-ec9c674d1e40",
-                    "name": "vint",
-                    "type": "integer",
-                    "value": 5
+                   id: '08f66ebb-1e5c-4ae4-a8cc-ec9c674d1e40',
+                   name: 'vint',
+                   type: 'integer',
+                   value: 5
                 },
                 {
-                    "id": "888786b1-e948-4e7a-9caa-deb2583d222f",
-                    "name": "vbool",
-                    "type": "boolean",
-                    "value": true
+                   id: '888786b1-e948-4e7a-9caa-deb2583d222f',
+                   name: 'vbool',
+                   type: 'boolean',
+                   value: true
                 },
                 {
-                    "id": "5007cf47-aa68-42c0-b1ab-a98f0dff6bdc",
-                    "name": "vdate",
-                    "type": "date",
-                    "value": "2019-05-10"
+                   id: '5007cf47-aa68-42c0-b1ab-a98f0dff6bdc',
+                   name: 'vdate',
+                   type: 'date',
+                   value: '2019-05-10'
                 }
             ]
         }
     }
-}`;
+};

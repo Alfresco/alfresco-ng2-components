@@ -21,8 +21,8 @@ import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
-import { checkboxVisibilityForm, multipleCheckboxVisibilityForm } from '../../resources/forms/checkbox-visibility-condition';
-import { multipleVisibilityForm } from '../../resources/forms/multiple-visibility-conditions';
+import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
+import { multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
 
 describe('Visibility conditions - cloud', () => {
 
@@ -31,9 +31,6 @@ describe('Visibility conditions - cloud', () => {
 
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudDemoPage();
-    const multipleVisibilityFormJson = JSON.parse(multipleVisibilityForm);
-    const checkboxVisibilityFormJson = JSON.parse(checkboxVisibilityForm);
-    const multipleCheckboxVisibilityFormJson = JSON.parse(multipleCheckboxVisibilityForm);
     const widget = new Widget();
 
     let visibleCheckbox;
@@ -219,7 +216,7 @@ describe('Visibility conditions - cloud', () => {
         text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
 
         await expect(text1).toEqual('bbb');
-        await expect(text2).toEqual('');
+        await expect(text2).toEqual('aaa');
         await widget.textWidget().isWidgetNotVisible(widgets.checkboxBasicField);
 
         await widget.textWidget().setValue(widgets.textOneId, 'aaa');
