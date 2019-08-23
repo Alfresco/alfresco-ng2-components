@@ -280,7 +280,8 @@
                 text-align: right;
             }
 
-            &--image {
+            &--image,
+            &--icon {
                 padding-left: 24px;
                 padding-right: 24px;
                 width: $data-table-thumbnail-width;
