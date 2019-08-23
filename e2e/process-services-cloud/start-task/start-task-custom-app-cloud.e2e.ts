@@ -133,10 +133,10 @@ describe('Start Task', () => {
     it('[C291956] Should be able to create a new standalone task without assignee', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
-        await expect(await peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
+        await peopleCloudComponent.clearAssignee();
         await startTask.addName(unassignedTaskName);
-        await startTask.clickStartButton();
         await startTask.checkStartButtonIsEnabled();
+        await startTask.clickStartButton();
         await tasksCloudDemoPage.editTaskFilterCloudComponent();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');

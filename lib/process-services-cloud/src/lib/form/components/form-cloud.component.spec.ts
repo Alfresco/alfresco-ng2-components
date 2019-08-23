@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*tslint:disable*/
 
 import { SimpleChange, DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -32,7 +31,6 @@ import { cloudFormMock, fakeCloudForm } from '../mocks/cloud-form.mock';
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 
 describe('FormCloudComponent', () => {
-
 
     let formCloudService: FormCloudService;
     let formService: FormService;
