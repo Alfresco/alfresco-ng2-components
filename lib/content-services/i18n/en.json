@@ -378,7 +378,7 @@
   },
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
-      "ARIA_LABEL": "Open {{ name }} library"
+      "ARIA_LABEL": "Open {{ name }}"
     }
   }
 }
