@@ -96,7 +96,7 @@ describe('Task Cloud Service', () => {
         const appName = 'simple-app';
         const taskId = '68d54a8f';
 
-        service.completeTask(appName, taskId).toPromise().then( (res: any) => {
+        service.completeTask(appName, taskId).toPromise().then(() => {
         }, (error) => {
             expect(error).toBeDefined();
             done();
