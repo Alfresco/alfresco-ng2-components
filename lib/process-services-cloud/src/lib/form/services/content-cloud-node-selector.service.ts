@@ -32,7 +32,7 @@ export class ContentCloudNodeSelectorService {
     private dialog: MatDialog) {
   }
 
-  openUploadFileDialog(contentHost: string, title?: string, actionName?: string): Observable<Node[]> {
+  openUploadFileDialog(contentHost: string): Observable<Node[]> {
     const changedConfig = this.apiService.lastConfig;
     changedConfig.provider = 'ALL';
     changedConfig.hostEcm = contentHost.replace('/alfresco', '');

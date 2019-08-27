@@ -162,7 +162,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
         }
     }
 
-    clickTask($event: any, task: TaskDetailsModel) {
+    clickTask(task: TaskDetailsModel) {
         const args = new TaskDetailsEvent(task);
         this.taskClick.emit(args);
     }

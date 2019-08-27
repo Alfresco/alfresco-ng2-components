@@ -63,7 +63,7 @@ export class SharedLinksApiService {
      * @returns The shared link just created
      */
     createSharedLinks(nodeId: string, options: any = {}): Observable<SharedLinkEntry> {
-        const promise = this.sharedLinksApi.addSharedLink({ nodeId: nodeId });
+        const promise = this.sharedLinksApi.addSharedLink({ nodeId: nodeId }, options);
 
         return from(promise).pipe(
             catchError((err) => of(err))

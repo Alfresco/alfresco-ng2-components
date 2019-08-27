@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
         this.alfrescoLogin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
     }
 
-    onLogin($event) {
+    onLogin() {
         this.router.navigate(['/home']);
     }
 

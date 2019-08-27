@@ -158,7 +158,7 @@ export class TranslateLoaderService implements TranslateLoader {
                             observer.complete();
                         }
                     },
-                    (err) => {
+                    () => {
                         observer.error('Failed to load some resources');
                     });
             } else {

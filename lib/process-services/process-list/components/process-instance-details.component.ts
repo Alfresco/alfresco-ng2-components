@@ -142,7 +142,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         }
     }
 
-    onShowProcessDiagram(processInstanceId: any) {
+    onShowProcessDiagram() {
         this.showProcessDiagram.emit({value: this.processInstanceId});
     }
 

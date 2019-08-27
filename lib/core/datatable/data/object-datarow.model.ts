@@ -36,7 +36,7 @@ export class ObjectDataRow implements DataRow {
         return this.getValue(key) !== undefined;
     }
 
-    imageErrorResolver(event: Event): string {
+    imageErrorResolver(): string {
         return '';
     }
 }

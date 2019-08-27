@@ -16,7 +16,7 @@
  */
 
 import { AppConfigService, CardViewDateItemModel, CardViewItem, CardViewBaseItemModel, CardViewTextItemModel, TranslationService } from '@alfresco/adf-core';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { ProcessInstance } from '../models/process-instance.model';
 
 @Component({
@@ -40,7 +40,7 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         this.refreshData();
     }
 

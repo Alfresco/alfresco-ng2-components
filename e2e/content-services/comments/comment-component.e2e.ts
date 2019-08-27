@@ -118,7 +118,7 @@ describe('Comment Component', () => {
         await viewerPage.clickOnCommentsTab();
 
         await commentsPage.addComment(comments.first);
-        await commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.checkUserIconIsDisplayed();
 
         await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         await expect(await commentsPage.getMessage(0)).toEqual(comments.first);
@@ -134,7 +134,7 @@ describe('Comment Component', () => {
         await viewerPage.clickOnCommentsTab();
 
         await commentsPage.addComment(comments.multiline);
-        await commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.checkUserIconIsDisplayed();
 
         await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         await expect(await commentsPage.getMessage(0)).toEqual(comments.multiline);
@@ -142,7 +142,7 @@ describe('Comment Component', () => {
         await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
 
         await commentsPage.addComment(comments.second);
-        await commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.checkUserIconIsDisplayed();
 
         await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (2)');
         await expect(await commentsPage.getMessage(0)).toEqual(comments.second);
@@ -158,7 +158,7 @@ describe('Comment Component', () => {
         await viewerPage.clickOnCommentsTab();
 
         await commentsPage.addComment(comments.codeType);
-        await commentsPage.checkUserIconIsDisplayed(0);
+        await commentsPage.checkUserIconIsDisplayed();
 
         await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         await expect(await commentsPage.getMessage(0)).toEqual('First name: Last name:');

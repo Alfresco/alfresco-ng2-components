@@ -163,7 +163,7 @@ describe('Start Process Component', () => {
             await processFiltersPage.clickNewProcessDropdown();
 
             await startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
-            await startProcessPage.deleteDefaultName('My Default Name');
+            await startProcessPage.deleteDefaultName();
 
             await browser.sleep(1000);
 

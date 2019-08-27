@@ -108,7 +108,7 @@ export class UploadDirective implements OnInit, OnDestroy {
         }
     }
 
-    onDragEnter(event: Event) {
+    onDragEnter() {
         if (this.isDropMode()) {
             this.element.classList.add(this.cssClassName);
             this.isDragging = true;
@@ -124,7 +124,7 @@ export class UploadDirective implements OnInit, OnDestroy {
         return false;
     }
 
-    onDragLeave(event) {
+    onDragLeave() {
         if (this.isDropMode()) {
             this.element.classList.remove(this.cssClassName);
             this.isDragging = false;

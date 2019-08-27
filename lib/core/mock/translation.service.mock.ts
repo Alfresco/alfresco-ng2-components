@@ -42,11 +42,11 @@ export class TranslationMock implements TranslationService {
 
     loadTranslation() {}
 
-    get(key: string | Array<string>, interpolateParams?: Object): Observable<string | any> {
+    get(key: string | Array<string>): Observable<string | any> {
         return of(key);
     }
 
-    instant(key: string | Array<string>, interpolateParams?: Object): string | any {
+    instant(key: string | Array<string>): string | any {
         return key;
     }
 

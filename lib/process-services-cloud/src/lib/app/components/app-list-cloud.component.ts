@@ -59,7 +59,7 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
 
         this.apps$ = this.appsProcessCloudService.getDeployedApplicationsByStatus(AppListCloudComponent.RUNNING_STATUS)
             .pipe(
-                catchError((error) => {
+                catchError(() => {
                     this.loadingError$.next(true);
                     return of();
                 })

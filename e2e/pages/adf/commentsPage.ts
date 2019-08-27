@@ -35,7 +35,7 @@ export class CommentsPage {
         return BrowserActions.getText(this.numberOfComments);
     }
 
-    async checkUserIconIsDisplayed(position): Promise<void> {
+    async checkUserIconIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.commentUserIcon.first());
     }
 

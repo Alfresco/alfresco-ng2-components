@@ -130,6 +130,7 @@ export class SettingsPage {
         await this.setIdentityHost(identityHost);
         await this.setSilentLogin(silentLogin);
         await this.setImplicitFlow(implicitFlow);
+        await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
         await browser.sleep(1000);

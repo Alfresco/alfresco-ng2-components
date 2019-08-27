@@ -262,7 +262,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
         this.router.navigate([`/cloud/${this.appName}/`]);
     }
 
-    onCompletedTask(event: any) {
+    // @deprecated: not used anymore
+    onCompletedTask() {
         this.goBack();
     }
 

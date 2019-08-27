@@ -178,14 +178,14 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         let isPanelOption: boolean = false;
         if ( event ) {
             const clickTarget = event.target as HTMLElement;
-            isPanelOption = !this.isNoResultOption(event) &&
+            isPanelOption = !this.isNoResultOption() &&
                             !!this.searchPanel.panel &&
                             !!this.searchPanel.panel.nativeElement.contains(clickTarget);
         }
         return isPanelOption;
     }
 
-    private isNoResultOption(event: MouseEvent) {
+    private isNoResultOption() {
         return this.searchPanel.results.list ? this.searchPanel.results.list.entries.length === 0 : true;
     }
 

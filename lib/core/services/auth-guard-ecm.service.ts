@@ -35,7 +35,7 @@ export class AuthGuardEcm extends AuthGuardBase {
         super(authenticationService, router, appConfigService);
     }
 
-    checkLogin(activeRoute: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
+    checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
         if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
             return true;
         }

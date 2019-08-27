@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { DiagramElementModel } from '../models/diagram/diagramElement.model';
 import { DiagramModel } from '../models/diagram/diagram.model';
 import { DiagramColorService } from '../services/diagram-color.service';
@@ -65,7 +65,7 @@ export class DiagramComponent implements OnChanges {
                 private diagramsService: DiagramsService) {
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         this.reset();
         this.diagramColorService.setTotalColors(this.metricColor);
         if (this.processDefinitionId) {

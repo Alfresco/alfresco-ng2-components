@@ -21,7 +21,7 @@ import { ContentService, ThumbnailService } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
-import { DataColumn, SitesService, TranslationService, AllowableOperationsEnum } from '@alfresco/adf-core';
+import { SitesService, TranslationService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
@@ -222,7 +222,7 @@ export class ContentNodeDialogService {
         this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
     }
 
-    private imageResolver(row: ShareDataRow, col: DataColumn): string | null {
+    private imageResolver(row: ShareDataRow): string | null {
         const entry: Node = row.node.entry;
         if (!this.contentService.hasAllowableOperations(entry, 'create')) {
             return this.thumbnailService.getMimeTypeIcon('disable/folder');

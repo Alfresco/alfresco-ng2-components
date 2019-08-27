@@ -249,13 +249,13 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     reload(): void {
         if (!this.hasCustomDataSource) {
             this.requestNode = this.createRequestNode();
-            this.load(this.requestNode);
+            this.load();
         } else {
             this.isLoading = false;
         }
     }
 
-    private load(requestNode: TaskQueryRequestRepresentationModel) {
+    private load() {
         this.isLoading = true;
         this.loadTasksByState().subscribe(
             (tasks) => {

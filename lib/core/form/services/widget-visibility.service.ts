@@ -282,7 +282,7 @@ export class WidgetVisibilityService {
                     this.processVarList = <TaskProcessVariableModel[]> jsonRes;
                     return jsonRes;
                 }),
-                catchError((err) => this.handleError(err))
+                catchError(() => this.handleError())
             );
     }
 
@@ -298,7 +298,7 @@ export class WidgetVisibilityService {
         return !!(condition && condition.operator);
     }
 
-    private handleError(err) {
+    private handleError() {
         this.logService.error('Error while performing a call');
         return throwError('Error while performing a call - Server error');
     }

@@ -24,7 +24,7 @@ const JS_BIND_INPUT = function(target) {
     const input = document.createElement('input');
     input.type = 'file';
     input.style.display = 'none';
-    input.addEventListener('change', function(event) {
+    input.addEventListener('change', function() {
         target.scrollIntoView(true);
 
         const rect = target.getBoundingClientRect();
@@ -52,7 +52,7 @@ const JS_BIND_INPUT_FOLDER = function(target) {
     input.style.display = 'none';
     input.multiple = true;
     input.webkitdirectory = true;
-    input.addEventListener('change', function(event) {
+    input.addEventListener('change', function() {
         target.scrollIntoView(true);
 
         const rect = target.getBoundingClientRect();

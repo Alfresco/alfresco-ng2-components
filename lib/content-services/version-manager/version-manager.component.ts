@@ -18,7 +18,7 @@
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { VersionListComponent } from './version-list.component';
-import { AppConfigService, ContentService, AlfrescoApiService } from '@alfresco/adf-core';
+import { ContentService, AlfrescoApiService } from '@alfresco/adf-core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -68,8 +68,7 @@ export class VersionManagerComponent {
 
     uploadState: string = 'close';
 
-    constructor(config: AppConfigService,
-                private contentService: ContentService,
+    constructor(private contentService: ContentService,
                 private alfrescoApiService: AlfrescoApiService) {
     }
 

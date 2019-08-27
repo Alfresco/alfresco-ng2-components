@@ -66,7 +66,7 @@ export class AuthGuard extends AuthGuardBase {
         window.removeEventListener('storage', this.ticketChangeBind);
     }
 
-    checkLogin(activeRoute: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
+    checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
         if (this.authenticationService.isLoggedIn() || this.withCredentials) {
             return true;
         }

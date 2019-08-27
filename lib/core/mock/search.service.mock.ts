@@ -57,7 +57,7 @@ export let mockError = {
 export let searchMockApi = {
     core: {
         queriesApi: {
-            findNodes: (term, opts) => Promise.resolve(fakeSearch)
+            findNodes: () => Promise.resolve(fakeSearch)
         }
     }
 };

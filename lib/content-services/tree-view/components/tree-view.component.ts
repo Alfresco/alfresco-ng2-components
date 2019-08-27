@@ -67,7 +67,7 @@ export class TreeViewComponent implements OnChanges {
 
     isExpandable = (node: TreeBaseNode) => node.expandable;
 
-    hasChild = (level: number, nodeData: TreeBaseNode) => nodeData.expandable;
+    hasChild = (_: number, nodeData: TreeBaseNode) => nodeData.expandable;
 
     private loadTreeNode() {
         this.treeViewService.getTreeNodes(this.nodeId)

@@ -181,7 +181,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 (blob: Blob) => {
                     this.contentService.downloadBlob(blob, (<any> file).name);
                 },
-                (err) => {
+                () => {
                     this.logger.error('Impossible retrieve content for download');
                 }
             );

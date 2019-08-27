@@ -178,8 +178,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
     }
 
-    getFormByTaskId(appName, taskId: string): Promise<FormCloud> {
-        return new Promise<FormCloud>((resolve, reject) => {
+    getFormByTaskId(appName: string, taskId: string): Promise<FormCloud> {
+        return new Promise<FormCloud>(resolve => {
             forkJoin(this.formCloudService.getTaskForm(appName, taskId),
                 this.formCloudService.getTaskVariables(appName, taskId))
                 .pipe(takeUntil(this.onDestroy$))
@@ -261,7 +261,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     () => {
                         this.onTaskSaved(this.form);
                     },
-                    (error) => this.onTaskSavedError(this.form, error)
+                    (error) => this.onTaskSavedError(error)
                 );
         }
     }
@@ -275,7 +275,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     () => {
                         this.onTaskCompleted(this.form);
                     },
-                    (error) => this.onTaskCompletedError(this.form, error)
+                    (error) => this.onTaskCompletedError(error)
                 );
         }
     }
@@ -328,7 +328,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.formSaved.emit(form);
     }
 
-    protected onTaskSavedError(form: FormCloud, error: any) {
+    protected onTaskSavedError(error: any) {
         this.handleError(error);
     }
 
@@ -336,7 +336,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.formCompleted.emit(form);
     }
 
-    protected onTaskCompletedError(form: FormCloud, error: any) {
+    protected onTaskCompletedError(error: any) {
         this.handleError(error);
     }
 
