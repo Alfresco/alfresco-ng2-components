@@ -33,7 +33,7 @@ declare let jasmine: any;
         [download]="download"
         [fileName]="fileName"
         [format]="format"
-        (clicked)="onAuditClick()">My button
+        (clicked)="onAuditClick($event)">My button
     </button>`
 })
 class BasicButtonComponent {
