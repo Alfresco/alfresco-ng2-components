@@ -48,6 +48,10 @@ export class TextWidget {
         await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
+    async isWidgetClickable(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsClickable(fieldId);
+    }
+
     async isWidgetNotVisible(fieldId): Promise<void> {
         await this.formFields.checkWidgetIsHidden(fieldId);
     }
