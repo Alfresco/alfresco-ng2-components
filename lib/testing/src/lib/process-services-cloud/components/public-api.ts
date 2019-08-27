@@ -15,7 +15,4 @@
  * limitations under the License.
  */
 
-export * from './pages/public-api';
-export * from './actions/public-api';
-export * from './app/public-api';
-export * from './components/public-api';
+export * from './filter';
