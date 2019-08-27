@@ -55,7 +55,7 @@ export class ExtensionPresetsComponent implements OnInit, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    trackById(index: number, obj: { id: string }) {
+    trackById(_: number, obj: { id: string }) {
         return obj.id;
     }
 }
