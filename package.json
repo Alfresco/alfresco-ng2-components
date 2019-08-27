@@ -1,6 +1,6 @@
 {
   "name": "alfresco-ng2-components",
-  "commit": "9873e9952a011051379aa2eaed3c0ced07ed678a",
+  "commit": "6d0d1120d69dc39d3b76209bf9161b93ca1d9081",
   "description": "Alfresco Angular components",
   "version": "3.4.0",
   "author": "Alfresco Software, Ltd.",
@@ -74,7 +74,7 @@
     "process services-cloud"
   ],
   "dependencies": {
-      "@alfresco/adf-content-services": "3.4.0",
+    "@alfresco/adf-content-services": "3.4.0",
     "@alfresco/adf-core": "3.4.0",
     "@alfresco/adf-extensions": "3.4.0",
     "@alfresco/adf-insights": "3.4.0",
