@@ -372,7 +372,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.analyticsReportList.reload();
     }
 
-    onReportSaved(reportId: string): void {
+    onReportSaved(reportId: number): void {
         this.analyticsReportList.reload(reportId);
     }
 
