@@ -24,11 +24,14 @@ branches:
 stages:
   - name: Lint & Build Dist
   - name: Unit test
+  - name: Release on npm
+    if: type = push
+  - name: Check bundle
+    if: type = push
   - name: e2e Test
   - name: Deploy PR
     if: type = pull_request
-  - name: Release on npm
-    if: branch = development AND type = push
+
 
 addons:
     chrome: stable
@@ -91,6 +94,10 @@ jobs:
         - stage: Release on npm
           script:
           - ./lib/dist/cli/bin/adf-cli npm-publish --npmRegistry $NPM_REGISTRY_ADDRESS --tokenRegistry $NPM_REGISTRY_TOKEN --tag $TAG_NPM --pathProject "$(pwd)"
+        - stage: Check bundle
+          script:
+          - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+          - ./scripts/npm-check-bundles.sh -v ${ADF_VERSION}
 
 
 before_deploy:
