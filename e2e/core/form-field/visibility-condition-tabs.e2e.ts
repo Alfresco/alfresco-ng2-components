@@ -95,7 +95,7 @@ describe('Visibility conditions on tabs - cloud', () => {
         await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarValue);
         await widget.textWidget().isWidgetVisible(widgets.textTwoId);
 
-        let visibleTab = tabVarValueVisibilityJson;
+        const visibleTab = tabVarValueVisibilityJson;
         visibleTab.formRepresentation.formDefinition.variables[0].value = value.notDisplayTab;
         await formCloudDemoPage.setConfigToEditor(visibleTab);
 
@@ -168,7 +168,7 @@ describe('Visibility conditions on tabs - cloud', () => {
         await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
 
-        let visibleTab = tabVarVarVisibilityJson;
+        const visibleTab = tabVarVarVisibilityJson;
         visibleTab.formRepresentation.formDefinition.variables[0].value = value.notDisplayTab;
         await formCloudDemoPage.setConfigToEditor(visibleTab);
         await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabVarVar);
