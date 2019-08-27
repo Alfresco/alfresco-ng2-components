@@ -182,7 +182,7 @@ describe('AnalyticsReportListComponent', () => {
             component.initObserver();
             expect(component.reports.length).toEqual(0);
 
-            component.reload('2002');
+            component.reload(2002);
 
             component.success.subscribe(() => {
                 expect(component.reports.length).toEqual(5);
