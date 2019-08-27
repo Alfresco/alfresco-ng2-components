@@ -1,7 +1,7 @@
 @mixin adf-permission-list-theme($theme) {
+    $adf-permission-list-width: 70% !default;
 
     .adf {
-
         &-permission-label {
             max-width: 130px;
             min-width: 100px;
@@ -29,12 +29,13 @@
         &-display-permission-container {
             display: flex;
             justify-content: space-around;
+            flex: 1;
         }
 
         &-datatable-permission {
             display: flex;
             min-width: 450px;
-            width: 70%;
+            width: $adf-permission-list-width;
         }
 
         &-locallyset-label {
@@ -46,5 +47,4 @@
             justify-content: center;
         }
     }
-
 }
