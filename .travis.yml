@@ -29,9 +29,9 @@ stages:
   - name: Check bundle
     if: type = push
   - name: Deploy docker
-    if: type = pull_request
+    if: type = push
   - name: Update Rancher
-    if: type = pull_request
+    if: type = push
   - name: e2e Test
   - name: Deploy PR
     if: type = pull_request
