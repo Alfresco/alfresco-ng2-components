@@ -28,6 +28,8 @@ stages:
     if: type = push
   - name: Check bundle
     if: type = push
+  - name: Deploy docker
+    if: type = pull_request
   - name: e2e Test
   - name: Deploy PR
     if: type = pull_request
@@ -98,6 +100,20 @@ jobs:
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           - ./scripts/npm-check-bundles.sh -v ${ADF_VERSION}
+        - stage: Deploy docker
+          script:
+          - if [ "$TRAVIS_BRANCH" == 'master' ]; then
+                TAG_VERSION=$(grep -m1 version package.json | awk '{ print $2 }' | sed 's/[", ]//g')
+            else
+                TAG_VERSION=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
+            fi;
+          - echo "Running the docker with tag" $TAG_VERSION
+          - ./node_modules/@alfresco/adf-cli/bin/adf-cli docker-publish --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --dockerTags "$TAG_VERSION" --pathProject "$(pwd)"
+          - ./scripts/rancher-update.sh --access_key $RANCHER_TOKEN \
+                              --secret_key $RANCHER_SECRET  \
+                              --url $REPO_RANCHER \
+                              --environment_name $REPO_RANCHER_ADF_NAME \
+                              --image docker:alfresco/demo-shell:$TAG_VERSION
 
 
 before_deploy:
