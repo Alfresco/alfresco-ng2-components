@@ -53,7 +53,7 @@ export class FilterComponent {
     return await dropdownElement.getText();
   }
 
-  async isApplicationListLoaded() {
+  async isApplicationListLoaded(): Promise<Boolean> {
     const emptyList = element(by.css(`[data-automation-id='adf-cloud-edit-${this.filterType}-property-appName'] .mat-select-placeholder`));
     return await BrowserVisibility.waitUntilElementIsNotVisible(emptyList);
   }
