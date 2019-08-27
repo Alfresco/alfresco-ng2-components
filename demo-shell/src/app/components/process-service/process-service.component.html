@@ -28,7 +28,7 @@
                                               [appId]="appId"
                                               [showIcon]="showTaskFilterIcon"
                                               (filterClick)="onTaskFilterClick($event)"
-                                              (success)="onSuccessTaskFilterList($event)" #activitiFilter>
+                                              (success)="onSuccessTaskFilterList()" #activitiFilter>
                             </adf-task-filters>
                         </mat-expansion-panel>
                     </mat-accordion>
@@ -48,7 +48,7 @@
                         [sort]="taskFilter?.filter?.sort"
                         [landingTaskId]="currentTaskId"
                         (rowClick)="onTaskRowClick($event)"
-                        (success)="onSuccessTaskList($event)"
+                        (success)="onSuccessTaskList()"
                         (row-click)="onRowClick($event)"
                         (row-dblclick)="onTaskRowDblClick($event)"
                         [multiselect]="multiSelectTask"
@@ -76,11 +76,11 @@
                                       [taskId]="currentTaskId"
                                       [fieldValidators]="fieldValidators"
                                       [showHeaderContent]="showHeaderContent"
-                                      (formCompleted)="onFormCompleted($event)"
+                                      (formCompleted)="onFormCompleted()"
                                       (formContentClicked)="onContentClick($event)"
                                       (taskCreated)="onTaskCreated($event)"
                                       (assignTask)="onAssignTask()"
-                                      (taskDeleted)="onTaskDeleted($event)">
+                                      (taskDeleted)="onTaskDeleted()">
                     </adf-task-details>
                     <mat-divider></mat-divider>
                     <div *ngIf="currentTaskId">
@@ -144,7 +144,7 @@
                                     [showIcon]="showProcessFilterIcon"
                                     (filterClick)="onProcessFilterChange($event)"
                                     (filterSelected)="onProcessFilterChange($event)"
-                                    (success)="onSuccessProcessFilterList($event)">
+                                    (success)="onSuccessProcessFilterList()">
                             </adf-process-instance-filters>
                         </mat-expansion-panel>
                     </mat-accordion>
@@ -164,7 +164,7 @@
                         (rowClick)="onProcessRowClick($event)"
                         (row-dblclick)="onProcessRowDblClick($event)"
                         [multiselect]="multiSelectProcess"
-                        (success)="onSuccessProcessList($event)">
+                        (success)="onSuccessProcessList()">
                         <!-- Custom column definition demo -->
 
                         <!-- <data-columns>
@@ -242,7 +242,7 @@
                     [appId]="appId"
                     [reportId]="report.id"
                     [hideParameters]="false"
-                    (editReport)="onEditReport($event)"
+                    (editReport)="onEditReport()"
                     (reportSaved)="onReportSaved($event)"
                     (reportDeleted)="onReportDeleted()">
                 </adf-analytics>

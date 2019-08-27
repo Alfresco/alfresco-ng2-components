@@ -77,7 +77,7 @@ export class AnalyticsReportListComponent implements OnInit {
     /**
      * Reload the component
      */
-    reload(reportId?) {
+    reload(reportId?: string) {
         this.reset();
         this.getReportList(this.appId, reportId);
     }
