@@ -21,9 +21,17 @@ import { BrowserVisibility } from '../utils/browser-visibility';
 export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
-        await elementFinder.click();
+        try {
+            await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
+            await elementFinder.click();
+        } catch (clickErr) {
+          try {
+            await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
+            await browser.executeScript(`arguments[0].click();`, elementFinder);
+          } catch (jsErr) {
+            throw jsErr;
+          }
+        }
     }
 
     static async waitUntilActionMenuIsVisible(): Promise<void> {
@@ -73,10 +81,32 @@ export class BrowserActions {
         }
     }
 
+    static async clear(elem: ElementFinder) {
+        return new Promise(async (resolve) => {
+            setTimeout(async () => {
+            const fieldValue: any = await browser.executeScript(`return arguments[0].value;`, elem);
+            for (let i = fieldValue.length; i > 0; i--) {
+                await elem.sendKeys(protractor.Key.BACK_SPACE);
+            }
+            resolve();
+            }, 1000);
+        });
+    }
+
     static async clearSendKeys(elementFinder: ElementFinder, text: string): Promise<void> {
         await this.click(elementFinder);
         await elementFinder.sendKeys('');
         await elementFinder.clear();
+        await elementFinder.sendKeys(text);
+    }
+
+    static async sendKeysIfVisible(elementFinder: ElementFinder, text: string) {
+        await BrowserVisibility.waitForElementToBeVisible(elementFinder);
+        await elementFinder.sendKeys(text);
+    }
+
+    static async sendKeysIfPresent(elementFinder: ElementFinder, text: string) {
+        await BrowserVisibility.waitForElementToBePresent(elementFinder);
         await elementFinder.sendKeys(text);
     }
 
