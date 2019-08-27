@@ -317,7 +317,7 @@ describe('FormCloudComponent', () => {
 
         let saved = false;
         formComponent.form = formModel;
-        formComponent.formSaved.subscribe((v) => saved = true);
+        formComponent.formSaved.subscribe(() => saved = true);
         spyOn(formComponent, 'completeTaskForm').and.stub();
 
         const result = formComponent.onOutcomeClicked(outcome);
@@ -368,7 +368,7 @@ describe('FormCloudComponent', () => {
 
         let saved = false;
         formComponent.form = formModel;
-        formComponent.formSaved.subscribe((v) => saved = true);
+        formComponent.formSaved.subscribe(() => saved = true);
 
         const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();

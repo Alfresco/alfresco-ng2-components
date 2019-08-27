@@ -56,7 +56,7 @@ describe('TaskAttachmentList', () => {
             { name: 'FakeName-2', lastUpdatedByFullName: 'FakeUser-2', lastUpdated: '2017-01-03' }
         ]));
 
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {

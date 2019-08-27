@@ -268,7 +268,7 @@ describe('WidgetVisibilityCloudService', () => {
 
         it('should retrieve the value for the right field when it is a process variable', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
-                (res: TaskProcessVariableModel[]) => {
+                () => {
                     visibilityObjTest.rightValue = 'test_value_2';
                     const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
@@ -286,7 +286,7 @@ describe('WidgetVisibilityCloudService', () => {
 
         it('should retrieve the value for the left field when it is a process variable', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
-                (res: TaskProcessVariableModel[]) => {
+                () => {
                     visibilityObjTest.leftValue = 'TEST_VAR_2';
                     visibilityObjTest.leftType = WidgetTypeEnum.field;
                     const leftValue = service.getLeftValue(formTest, visibilityObjTest);
@@ -305,7 +305,7 @@ describe('WidgetVisibilityCloudService', () => {
 
         it('should evaluate the visibility for the field between form value and process var', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
-                (res: TaskProcessVariableModel[]) => {
+                () => {
                     visibilityObjTest.leftType = 'LEFT_FORM_FIELD_ID';
                     visibilityObjTest.operator = '!=';
                     visibilityObjTest.rightValue = 'TEST_VAR_2';
@@ -324,7 +324,7 @@ describe('WidgetVisibilityCloudService', () => {
 
         it('should evaluate visibility with multiple conditions', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
-                (res: TaskProcessVariableModel[]) => {
+                () => {
                     visibilityObjTest.leftType = 'field';
                     visibilityObjTest.leftValue = 'TEST_VAR_2';
                     visibilityObjTest.operator = '!=';

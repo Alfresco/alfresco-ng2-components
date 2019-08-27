@@ -109,7 +109,7 @@ describe('ProcessFiltersComponent', () => {
 
         expect(filterList.currentFilter).toBeUndefined();
 
-        filterList.success.subscribe((res) => {
+        filterList.success.subscribe(() => {
             filterList.selectRunningFilter();
             expect(filterList.currentFilter.name).toEqual('Running');
             done();

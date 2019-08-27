@@ -33,7 +33,7 @@ declare let jasmine: any;
         [download]="download"
         [fileName]="fileName"
         [format]="format"
-        (clicked)="onAuditClick($event)">My button
+        (clicked)="onAuditClick()">My button
     </button>`
 })
 class BasicButtonComponent {
@@ -41,12 +41,8 @@ class BasicButtonComponent {
     download: boolean = false;
     fileName: string;
     format: string;
-    constructor() {
 
-    }
-
-    onAuditClick(event: any) {
-    }
+    onAuditClick() {}
 }
 
 describe('ProcessAuditDirective', () => {

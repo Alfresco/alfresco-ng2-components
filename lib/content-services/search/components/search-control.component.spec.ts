@@ -514,7 +514,7 @@ describe('SearchControlComponent', () => {
         it('should set deactivate the search after element is clicked', (done) => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
-            const clickDisposable = component.optionClicked.subscribe((item) => {
+            const clickDisposable = component.optionClicked.subscribe(() => {
                 expect(component.subscriptAnimationState.value).toBe('inactive');
                 clickDisposable.unsubscribe();
                 done();
@@ -533,7 +533,7 @@ describe('SearchControlComponent', () => {
         it('should NOT reset the search term after element is clicked', (done) => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
-            const clickDisposable = component.optionClicked.subscribe((item) => {
+            const clickDisposable = component.optionClicked.subscribe(() => {
                 expect(component.searchTerm).not.toBeFalsy();
                 expect(component.searchTerm).toBe('TEST');
                 clickDisposable.unsubscribe();

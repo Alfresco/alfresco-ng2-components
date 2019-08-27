@@ -179,7 +179,7 @@ describe('RadioButtonsWidgetComponent', () => {
                 expect(element.querySelector('#radio-id')).not.toBeNull();
                 expect(option).not.toBeNull();
                 option.click();
-                widget.fieldChanged.subscribe((field) => {
+                widget.fieldChanged.subscribe(() => {
                     expect(element.querySelector('#radio-id')).toBeNull();
                     expect(element.querySelector('#radio-id-opt-1-input')).toBeNull();
                 });

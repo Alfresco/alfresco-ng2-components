@@ -89,7 +89,7 @@ describe('ErrorContentComponent', () => {
         }));
 
         it('should hide secondary button if this one has no value', async(() => {
-            spyOn(translateService, 'instant').and.callFake((inputString) => {
+            spyOn(translateService, 'instant').and.callFake(() => {
                 return '';
             });
             fixture.detectChanges();
@@ -100,7 +100,7 @@ describe('ErrorContentComponent', () => {
         }));
 
         it('should render secondary button with its value from the translate file', async(() => {
-            spyOn(translateService, 'instant').and.callFake((inputString) => {
+            spyOn(translateService, 'instant').and.callFake(() => {
                 return 'Secondary Button';
             });
             fixture.detectChanges();

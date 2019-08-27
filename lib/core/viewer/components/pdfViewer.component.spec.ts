@@ -336,7 +336,7 @@ describe('Test PdfViewer component', () => {
                 fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
                 componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
-                spyOn(dialog, 'open').and.callFake((comp, context) => {
+                spyOn(dialog, 'open').and.callFake((_, context) => {
                     if (context.data.reason === pdfjsLib.PasswordResponses.NEED_PASSWORD) {
                         return {
                             afterClosed: () => of('wrong_password')

@@ -33,19 +33,19 @@ class FakeSanitizer extends DomSanitizer {
         return value;
     }
 
-    bypassSecurityTrustStyle(value: string): any {
+    bypassSecurityTrustStyle(): any {
         return null;
     }
 
-    bypassSecurityTrustScript(value: string): any {
+    bypassSecurityTrustScript(): any {
         return null;
     }
 
-    bypassSecurityTrustUrl(value: string): any {
+    bypassSecurityTrustUrl(): any {
         return null;
     }
 
-    bypassSecurityTrustResourceUrl(value: string): any {
+    bypassSecurityTrustResourceUrl(): any {
         return null;
     }
 }

@@ -33,7 +33,7 @@ class FakeDataRow implements DataRow {
     isDropTarget = false;
     isSelected = true;
 
-    hasValue(key: any) {
+    hasValue() {
         return true;
     }
 
@@ -374,7 +374,7 @@ describe('DataTable', () => {
 
         dataTable.ngOnChanges({});
 
-        dataTable.rowClick.subscribe((event) => {
+        dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeFalsy();
             expect(rows[1].isSelected).toBeTruthy();
             done();
@@ -396,7 +396,7 @@ describe('DataTable', () => {
 
         dataTable.ngOnChanges({});
 
-        dataTable.rowClick.subscribe((event) => {
+        dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeFalsy();
             expect(rows[1].isSelected).toBeTruthy();
             done();
@@ -463,7 +463,7 @@ describe('DataTable', () => {
         const rows = dataTable.data.getRows();
         dataTable.ngOnChanges({});
 
-        dataTable.rowClick.subscribe((event) => {
+        dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeTruthy();
             expect(rows[1].isSelected).toBeFalsy();
             done();
@@ -827,49 +827,49 @@ describe('DataTable', () => {
     it('should use special material url scheme', () => {
         const column = <DataColumn> {};
 
-        const row = {
-            getValue: function (key: string) {
+        const row: any = {
+            getValue: function () {
                 return 'material-icons://android';
             }
         };
 
-        expect(dataTable.isIconValue(<DataRow> row, column)).toBeTruthy();
+        expect(dataTable.isIconValue(row, column)).toBeTruthy();
     });
 
     it('should not use special material url scheme', () => {
         const column = <DataColumn> {};
 
-        const row = {
-            getValue: function (key: string) {
+        const row: any = {
+            getValue: function () {
                 return 'http://www.google.com';
             }
         };
 
-        expect(dataTable.isIconValue(<DataRow> row, column)).toBeFalsy();
+        expect(dataTable.isIconValue(row, column)).toBeFalsy();
     });
 
     it('should parse icon value', () => {
         const column = <DataColumn> {};
 
-        const row = {
-            getValue: function (key: string) {
+        const row: any = {
+            getValue: function () {
                 return 'material-icons://android';
             }
         };
 
-        expect(dataTable.asIconValue(<DataRow> row, column)).toBe('android');
+        expect(dataTable.asIconValue(row, column)).toBe('android');
     });
 
     it('should not parse icon value', () => {
         const column = <DataColumn> {};
 
-        const row = {
-            getValue: function (key: string) {
+        const row: any = {
+            getValue: function () {
                 return 'http://www.google.com';
             }
         };
 
-        expect(dataTable.asIconValue(<DataRow> row, column)).toBe(null);
+        expect(dataTable.asIconValue(row, column)).toBe(null);
     });
 
     it('should parse icon values to a valid i18n key', () => {
@@ -966,8 +966,8 @@ describe('DataTable', () => {
         });
 
         const column = <DataColumn> {};
-        const row = <DataRow> {
-            getValue: function (key: string) {
+        const row: any = {
+            getValue: function () {
                 return 'id';
             }
         };

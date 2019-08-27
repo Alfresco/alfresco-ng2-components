@@ -60,10 +60,10 @@ describe('RowEditorComponent', () => {
         spyOn(component.table, 'validateRow').and.returnValue(
             <DynamicRowValidationSummary> {isValid: true, message: null}
         );
-        component.save.subscribe((e) => {
-            expect(e.table).toBe(component.table);
-            expect(e.row).toBe(component.row);
-            expect(e.column).toBe(component.column);
+        component.save.subscribe((event) => {
+            expect(event.table).toBe(component.table);
+            expect(event.row).toBe(component.row);
+            expect(event.column).toBe(component.column);
             done();
         });
         component.onSaveChanges();
@@ -74,7 +74,7 @@ describe('RowEditorComponent', () => {
             <DynamicRowValidationSummary> {isValid: false, message: 'error'}
         );
         let raised = false;
-        component.save.subscribe((e) => raised = true);
+        component.save.subscribe(() => raised = true);
         component.onSaveChanges();
         expect(raised).toBeFalsy();
     });

@@ -40,7 +40,7 @@ describe('TaskAuditDirective', () => {
             [download]="download"
             [fileName]="fileName"
             [format]="format"
-            (clicked)="onAuditClick($event)">My button
+            (clicked)="onAuditClick()">My button
         </button>`
     })
     class BasicButtonComponent {
@@ -48,12 +48,8 @@ describe('TaskAuditDirective', () => {
         download: boolean = false;
         fileName: string;
         format: string;
-        constructor() {
 
-        }
-
-        onAuditClick(event: any) {
-        }
+        onAuditClick() {}
     }
 
     let fixture: ComponentFixture<BasicButtonComponent>;

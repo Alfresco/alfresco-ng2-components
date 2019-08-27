@@ -559,7 +559,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 second: 59
             });
 
-            component.filterChange.subscribe((res) => {
+            component.filterChange.subscribe(() => {
                 expect(component.changedProcessFilter.lastModifiedTo.toISOString()).toEqual(lastModifiedToFilter.toISOString());
                 done();
             });

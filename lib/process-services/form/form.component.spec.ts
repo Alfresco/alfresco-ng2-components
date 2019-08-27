@@ -303,7 +303,7 @@ describe('FormComponent', () => {
 
         let saved = false;
         formComponent.form = formModel;
-        formComponent.formSaved.subscribe((v) => saved = true);
+        formComponent.formSaved.subscribe(() => saved = true);
         spyOn(formComponent, 'completeTaskForm').and.stub();
 
         const result = formComponent.onOutcomeClicked(outcome);
@@ -354,7 +354,7 @@ describe('FormComponent', () => {
 
         let saved = false;
         formComponent.form = formModel;
-        formComponent.formSaved.subscribe((v) => saved = true);
+        formComponent.formSaved.subscribe(() => saved = true);
 
         const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
@@ -436,7 +436,7 @@ describe('FormComponent', () => {
 
         spyOn(formService, 'getTask').and.returnValue(of({}));
         spyOn(formComponent, 'handleError').and.stub();
-        spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
+        spyOn(formService, 'getTaskForm').and.callFake(() => {
             return throwError(error);
         });
 
