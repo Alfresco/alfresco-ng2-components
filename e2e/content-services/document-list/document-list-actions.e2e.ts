@@ -101,7 +101,6 @@ describe('Document List Component - Actions', () => {
 
         beforeEach(async () => {
             await navigationBarPage.clickContentServicesButton();
-
         });
 
         describe('File Actions', () => {
@@ -288,21 +287,26 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C260132] Move action on folder with - Load more', async () => {
+
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
+
             await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
             await contentServicesPage.checkContextActionIsVisible('Move');
             await contentServicesPage.pressContextMenuActionNamed('Move');
             await contentNodeSelector.checkDialogIsDisplayed();
+
             await expect(await contentNodeSelector.getDialogHeaderText()).toBe('Move \'' + 'A' + folderModel1.name + '\' to...');
             await contentNodeSelector.checkSearchInputIsDisplayed();
             await expect(await contentNodeSelector.getSearchLabel()).toBe('Search');
             await contentNodeSelector.checkSelectedSiteIsDisplayed('My files');
             await contentNodeSelector.checkCancelButtonIsDisplayed();
             await contentNodeSelector.checkMoveCopyButtonIsDisplayed();
+
             await expect(await contentNodeSelector.getMoveCopyButtonText()).toBe('MOVE');
             await expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
             await infinitePaginationPage.clickLoadMoreButton();
+
             await expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
             await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
             await contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
@@ -336,7 +340,6 @@ describe('Document List Component - Actions', () => {
             await breadCrumbPage.chooseBreadCrumb(contentServicesUser.id);
             await contentServicesPage.waitForTableBody();
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
-
         });
 
         it('[C305051] Copy action on folder with - Load more', async () => {
