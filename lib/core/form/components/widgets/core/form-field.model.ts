@@ -227,26 +227,12 @@ export class FormFieldModel extends FormWidgetModel {
         return name += '_LABEL';
     }
 
-    private getProcessVariableValue(field: any, form: FormModel) {
+    private getProcessVariableValue(field: any, form: FormModel): any {
         let fieldName = field.name;
         if (this.isTypeaheadFieldType(field.type)) {
             fieldName = this.getFieldNameWithLabel(field.id);
         }
-        return this.findProcessVariableValue(fieldName, form);
-    }
-
-    private findProcessVariableValue(variableName: string, form: FormModel) {
-        if (form.processVariables) {
-            const variable = form.processVariables.find((currentVariable) => {
-                return currentVariable.name === variableName;
-            });
-
-            if (variable) {
-                return variable.type === 'boolean' ? JSON.parse(variable.value) : variable.value;
-            }
-        }
-
-        return undefined;
+        return form.getProcessVariableValue(fieldName);
     }
 
     private containerFactory(json: any, form: FormModel): void {

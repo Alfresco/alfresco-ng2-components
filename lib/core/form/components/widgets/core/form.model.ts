@@ -266,4 +266,29 @@ export class FormModel extends FormBaseModel {
 
         return null;
     }
+
+    /**
+     * Returns a process variable value.
+     * @param name Variable name
+     */
+    getProcessVariableValue(name: string): any {
+        if (this.processVariables) {
+            const names = [`variables.${name}`, name];
+
+            const variable = this.processVariables.find(
+                entry => names.includes(entry.name)
+            );
+
+            if (variable) {
+                switch (variable.type) {
+                    case 'boolean':
+                        return JSON.parse(variable.value);
+                    default:
+                        return variable.value;
+                }
+            }
+        }
+
+        return undefined;
+    }
 }
