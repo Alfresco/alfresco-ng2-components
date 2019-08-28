@@ -77,8 +77,7 @@ export class BrowserActions {
     }
 
     static async rightClick(elementFinder: ElementFinder): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        await browser.actions().mouseMove(elementFinder).perform();
+        await browser.actions().mouseMove(elementFinder).mouseDown().mouseMove(elementFinder).perform();
         await browser.actions().click(elementFinder, protractor.Button.RIGHT).perform();
     }
 
