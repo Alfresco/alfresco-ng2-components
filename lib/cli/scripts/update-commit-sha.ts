@@ -23,6 +23,7 @@ import { spawnSync } from 'child_process';
 export interface CommitArgs {
     pointer: string;
     pathPackage: string;
+    skipGnu: boolean;
 }
 
 function _exec(command: string, args: string[], opts: { cwd?: string }, logger: logging.Logger) {
@@ -55,7 +56,11 @@ function _commitPerform(args: CommitArgs, logger: logging.Logger): string {
 function _replacePerform(args: CommitArgs, sha: string, logger: logging.Logger) {
     logger.info(`Replace commit ${sha} in package...`);
     const sedRule = `s/\"commit\": \".*\"/\"commit\": \"${sha}\"/g`;
-    _exec('sed', [`-i`, `${sedRule}`, `${args.pathPackage}/package.json`], {}, logger);
+    if (args.skipGnu) {
+        _exec('sed', [`-i`, '', `${sedRule}`, `${args.pathPackage}/package.json`], {}, logger);
+    } else {
+        _exec('sed', [`-i`, `${sedRule}`, `${args.pathPackage}/package.json`], {}, logger);
+    }
 }
 
 export default async function (args: CommitArgs, logger: logging.Logger) {

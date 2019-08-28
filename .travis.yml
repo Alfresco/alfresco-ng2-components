@@ -58,7 +58,6 @@ jobs:
         - stage: Lint & Build Dist
           name:  Lint
           script: ./scripts/lint.sh || exit 1;
-
         - stage: Unit test
           name: Unit test content
           script:  ./scripts/travis/unit-test/content.sh

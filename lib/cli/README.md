@@ -89,6 +89,12 @@ Update only js-api with a specific version
 adf-cli update-version --vjs "3.2.0-fa5916ff413131513c3e382d7f27dd9b4cfa0e7e" --pathPackage "$(pwd)"
 ```
 
+Update adf libs and js-api with latest alpha locally
+
+```bash
+adf-cli update-version --alpha --pathPackage "$(pwd)" --skipGnu
+```
+
 ### Update commit sha
 
 This command allows you to update the commit sha as part of the package.json.
@@ -102,6 +108,11 @@ You can use the option --pointer to chose a different pointer from the default H
 
 ```bash
 adf-cli update-commit-sha --pointer "HEAD~1" --pathProject "$(pwd)"
+```
+
+Run command locally
+```bash
+adf-cli update-commit-sha --pathProject "$(pwd)" --skipGnu
 ```
 
 ### npm publish
