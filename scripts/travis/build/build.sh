@@ -6,6 +6,8 @@ cd $DIR/../../../
 
 rm -rf tmp && mkdir tmp;
 
+./scripts/update-version.sh -gnu -alpha || exit 1;
+
 if [[ $TRAVIS_PULL_REQUEST == "false" ]];
 then
 

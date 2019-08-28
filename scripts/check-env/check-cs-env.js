@@ -1,5 +1,7 @@
 let alfrescoApi = require('@alfresco/js-api');
 let program = require('commander');
+const path = require('path');
+const fs = require('fs');
 
 let MAX_RETRY = 10;
 let counter = 0;
@@ -16,13 +18,14 @@ async function main() {
 
 
     await checkEnv();
+    await checkDiskSpaceFullEnv();
 }
 
 async function checkEnv() {
     try {
         this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
             provider: 'ECM',
-            hostEcm:  program.host
+            hostEcm: program.host
         });
 
         await this.alfrescoJsApi.login(program.username, program.password);
@@ -40,6 +43,60 @@ async function checkEnv() {
     }
 }
 
+async function checkDiskSpaceFullEnv() {
+    this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+        provider: 'ECM',
+        hostEcm: program.host
+    });
+
+    await this.alfrescoJsApi.login(program.username, program.password);
+
+    let folder;
+
+    try {
+        folder = await alfrescoJsApi.nodes.addNode('-my-', {
+            'name': `try-env`,
+            'relativePath': `Builds`,
+            'nodeType': 'cm:folder'
+        }, {}, {
+            'overwrite': true
+        });
+
+    } catch (error) {
+        folder = await alfrescoJsApi.nodes.getNode('-my-', {
+            'relativePath': `Builds/try-env`,
+            'nodeType': 'cm:folder'
+        }, {}, {
+            'overwrite': true
+        });
+    }
+
+    try {
+        let pathFile = path.join(__dirname, '../../', 'README.md');
+        let file = fs.createReadStream(pathFile);
+
+        let uploadedFile = await alfrescoJsApi.upload.uploadFile(
+            file,
+            '',
+            folder.entry.id,
+            null,
+            {
+                'name': 'README.md',
+                'nodeType': 'cm:content',
+                'autoRename': true
+            }
+        );
+
+        this.alfrescoJsApi.node.deleteNode(uploadedFile.entry.id, {permanent: true});
+    } catch (error) {
+        console.log('=============================================================');
+        console.log('================ Not able to upload a file ==================');
+        console.log('================ Possible cause CS is full ==================');
+        console.log('=============================================================');
+        process.exit(1);
+    }
+
+}
 
 function sleep(delay) {
     var start = new Date().getTime();
