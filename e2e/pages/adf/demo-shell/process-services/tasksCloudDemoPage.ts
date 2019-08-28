@@ -41,10 +41,17 @@ export class TasksCloudDemoPage {
     modeSelector: ElementFinder = element(by.css("div[class*='mat-select-panel']"));
     displayTaskDetailsToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
     displayProcessDetailsToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="processDetailsRedirection"]'));
+    actionMenuToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="actionmenu"]'));
+    contextMenuToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="contextmenu"]'));
     multiSelectionToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
     testingModeToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="testingMode"]'));
     selectedRows: ElementFinder = element(by.xpath("//div[text()=' Selected rows: ']"));
     noOfSelectedRows: ElementArrayFinder = element.all(by.xpath("//div[text()=' Selected rows: ']//li"));
+    addActionTitle: ElementFinder = element(by.cssContainingText('.mat-card-title', 'Add Action'));
+    keyInputField: ElementFinder = element(by.css('input[placeholder="Key"]'));
+    titleInputField: ElementFinder = element(by.css('input[placeholder="Title"]'));
+    iconInputField: ElementFinder = element(by.css('input[placeholder="Icon"]'));
+    addActionButton: ElementFinder = element(by.cssContainingText('button span', 'Add'));
 
     formControllersPage: FormControllersPage = new FormControllersPage();
 
@@ -60,6 +67,14 @@ export class TasksCloudDemoPage {
 
     async enableMultiSelection(): Promise<void> {
         await this.formControllersPage.enableToggle(this.multiSelectionToggle);
+    }
+
+    async enableActionMenu(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.actionMenuToggle);
+    }
+
+    async enableContextMenu(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.contextMenuToggle);
     }
 
     async enableTestingMode(): Promise<void> {
@@ -137,4 +152,20 @@ export class TasksCloudDemoPage {
         const row: ElementFinder = element(by.xpath(`//div[text()=' Selected rows: ']//li[${rowNo}]`));
         return await BrowserActions.getText(row);
     }
+
+    async addActionIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.addActionTitle);
+    }
+
+    async addAction(text: string): Promise<void> {
+        await BrowserActions.clearSendKeys(this.keyInputField, text);
+        await BrowserActions.clearSendKeys(this.titleInputField, text);
+        await BrowserActions.clearSendKeys(this.iconInputField, text);
+        await BrowserActions.click(this.addActionButton);
+    }
+
+    async actionAdded(action: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`mat-chip`, action)));
+    }
+
 }
