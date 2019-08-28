@@ -66,7 +66,7 @@ function _buildImagePerform(args: PublishArgs, tag: string, logger: logging.Logg
 }
 
 function _tagImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
-    logger.info(`Perform docker tag...${args.dockerRepo}:${tag} on ${args.dockerRepo}:${tag}`);
+    logger.info(`Perform docker tag... ${args.dockerRepo}:${tag} on ${args.dockerRepo}:${tag}`);
     const response = _exec('docker', ['tag', `${args.dockerRepo}:${tag}`, `${args.dockerRepo}:${tag}`], {}, logger);
     logger.info(response);
 }
