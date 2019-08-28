@@ -47,7 +47,7 @@ export interface ComponentTypeResolver {
 ```
 
 Typically a `ComponentTypeResolver` is a function that takes [`FormFieldModel`](../core/models/form-field.model.md) and returns corresponding component type.
-It can be either a predefined component type or a dynamically evaluated based on field properties and metadata.
+This can either be a predefined component type or dynamically evaluated based on the field properties and metadata.
 
 #### Static component mapping
 
