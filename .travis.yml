@@ -105,8 +105,13 @@ jobs:
           script:
           - TAG_VERSION=$(./scripts/travis/deploy/tag-travis-branch.sh)
           - echo "Running the docker with tag" $TAG_VERSION
-          - npm install @alfresco/adf-cli@alpha
-          - ./node_modules/@alfresco/adf-cli/bin/adf-cli docker-publish --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --dockerTags "$TAG_VERSION" --pathProject "$(pwd)"
+          - docker login -u="$DOCKER_REPOSITORY_USER" -p="$DOCKER_REPOSITORY_PASSWORD" "$DOCKER_REPOSITORY_DOMAIN"
+          - echo docker build -t=$DOCKER_REPOSITORY:$TAG_VERSION .
+          - docker build -t=$DOCKER_REPOSITORY:$TAG_VERSION .
+          - echo docker tag $DOCKER_REPOSITORY:$TAG_VERSION $DOCKER_REPOSITORY:$TAG_VERSION
+          - docker tag $DOCKER_REPOSITORY:$TAG_VERSION $DOCKER_REPOSITORY:$TAG_VERSION
+          - echo docker push $DOCKER_REPOSITORY
+          - docker push $DOCKER_REPOSITORY
         - stage: Update Rancher
           script:
           - TAG_VERSION=$(./scripts/travis/deploy/tag-travis-branch.sh)
