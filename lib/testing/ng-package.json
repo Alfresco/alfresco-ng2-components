@@ -3,6 +3,11 @@
   "dest": "../dist/testing",
   "lib": {
     "entryFile": "src/public-api.ts",
-    "flatModuleFile": "adf-testing"
+    "flatModuleFile": "adf-testing",
+    "umdModuleIds": {
+      "@alfresco/js-api": "@alfresco/js-api",
+      "@alfresco/adf-core": "@alfresco/adf-core",
+      "moment-es6": "moment-es6"
+    }
   }
 }

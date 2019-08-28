@@ -22,14 +22,13 @@ export class BreadCrumbDropdownPage {
 
     breadCrumb: ElementFinder = element(by.css(`adf-dropdown-breadcrumb[data-automation-id='content-node-selector-content-breadcrumb']`));
     parentFolder = this.breadCrumb.element(by.css(`button[data-automation-id='dropdown-breadcrumb-trigger']`));
-    breadCrumbDropdown: ElementFinder = element(by.css(`div[class*='mat-select-panel']`));
+    breadCrumbDropdown: ElementFinder = element.all(by.css(`div[class*='mat-select-panel']`)).first();
     currentFolder = this.breadCrumb.element(by.css(`div span[data-automation-id="current-folder"]`));
 
     async choosePath(pathName): Promise<void> {
         const path = this.breadCrumbDropdown.element(by.cssContainingText(`mat-option[data-automation-class='dropdown-breadcrumb-path-option'] span[class='mat-option-text']`,
             pathName));
         await BrowserActions.click(path);
-
     }
 
     async clickParentFolder(): Promise<void> {

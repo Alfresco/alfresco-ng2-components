@@ -83,7 +83,7 @@ export class DataTablePage {
         await BrowserActions.click(this.reset);
     }
 
-    async checkRowIsNotSelected(rowNumber): Promise<void> {
+    async checkRowIsNotSelected(rowNumber: string): Promise<void> {
         const isRowSelected = this.dataTable.getCellElementByValue(this.columns.id, rowNumber)
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]`));
         await BrowserVisibility.waitUntilElementIsNotVisible(isRowSelected);
@@ -97,11 +97,11 @@ export class DataTablePage {
         await BrowserActions.click(this.selectAll);
     }
 
-    async checkRowIsChecked(rowNumber): Promise<void> {
+    async checkRowIsChecked(rowNumber: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.getRowCheckbox(rowNumber));
     }
 
-    async checkRowIsNotChecked(rowNumber): Promise<void> {
+    async checkRowIsNotChecked(rowNumber: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.getRowCheckbox(rowNumber));
     }
 
@@ -109,19 +109,19 @@ export class DataTablePage {
         return this.allSelectedRows.count();
     }
 
-    async clickCheckbox(rowNumber): Promise<void> {
+    async clickCheckbox(rowNumber: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const checkbox = this.dataTable.getCellElementByValue(this.columns.id, rowNumber)
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
         await BrowserActions.click(checkbox);
     }
 
-    async selectRow(rowNumber): Promise<void> {
+    async selectRow(rowNumber: string): Promise<void> {
         const row = this.dataTable.getCellElementByValue(this.columns.id, rowNumber);
         await BrowserActions.click(row);
     }
 
-    async selectRowWithKeyboard(rowNumber): Promise<void> {
+    async selectRowWithKeyboard(rowNumber: string): Promise<void> {
         await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
         await this.selectRow(rowNumber);
         await browser.actions().sendKeys(protractor.Key.NULL).perform();
@@ -133,7 +133,7 @@ export class DataTablePage {
         await BrowserActions.click(selectMode);
     }
 
-    getRowCheckbox(rowNumber): ElementFinder {
+    getRowCheckbox(rowNumber: string): ElementFinder {
         return this.dataTable.getCellElementByValue(this.columns.id, rowNumber).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
     }
 
@@ -141,23 +141,25 @@ export class DataTablePage {
         return await this.dataTable.getCopyContentTooltip();
     }
 
-    async mouseOverNameColumn(name): Promise<void> {
+    async mouseOverNameColumn(name: string): Promise<void> {
         await this.dataTable.mouseOverColumn(this.columns.name, name);
     }
 
-    async mouseOverCreatedByColumn(name): Promise<void> {
+    async mouseOverCreatedByColumn(name: string): Promise<void> {
         await this.dataTable.mouseOverColumn(this.columns.createdBy, name);
     }
 
-    async mouseOverIdColumn(name): Promise<void> {
+    async mouseOverIdColumn(name: string): Promise<void> {
         await this.dataTable.mouseOverColumn(this.columns.id, name);
     }
 
-    async mouseOverJsonColumn(rowNumber): Promise<void> {
-        await this.dataTable.mouseOverElement(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
+    async mouseOverJsonColumn(rowNumber: number): Promise<void> {
+        const cell = this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json);
+        await BrowserVisibility.waitUntilElementIsVisible(cell);
+        await browser.actions().mouseMove(cell).perform();
     }
 
-    getDropTargetIdColumnCell(rowNumber): ElementFinder {
+    getDropTargetIdColumnCell(rowNumber: number): ElementFinder {
         return this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.id);
     }
 
@@ -165,11 +167,11 @@ export class DataTablePage {
         return this.idColumnHeader;
     }
 
-    async clickOnIdColumn(name): Promise<void> {
+    async clickOnIdColumn(name: string): Promise<void> {
         await this.dataTable.clickColumn(this.columns.id, name);
     }
 
-    async clickOnJsonColumn(rowNumber): Promise<void> {
+    async clickOnJsonColumn(rowNumber: number): Promise<void> {
         await BrowserActions.click(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
     }
 
