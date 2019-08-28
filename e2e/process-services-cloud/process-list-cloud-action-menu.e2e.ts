@@ -28,7 +28,7 @@ import resources = require('../util/resources');
 
 describe('Process list cloud', () => {
 
-    describe('Process List - selection', () => {
+    describe('Process List - Custom Action Menu', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
