@@ -89,7 +89,10 @@ async function checkDiskSpaceFullEnv() {
 
         this.alfrescoJsApi.node.deleteNode(uploadedFile.entry.id, {permanent: true});
     } catch (error) {
-        console.log('Is not possible upload a new file possible content full');
+        console.log('=============================================================');
+        console.log('================ Not able to upload a file ==================');
+        console.log('================ Possible cause CS is full ==================');
+        console.log('=============================================================');
         process.exit(1);
     }
 
