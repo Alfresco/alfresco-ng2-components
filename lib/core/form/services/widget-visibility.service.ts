@@ -193,30 +193,9 @@ export class WidgetVisibilityService {
 
     getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {
         const processVariableValue = this.getProcessVariableValue(name, processVarList);
-        const variableDefaultValue = this.getFormVariableDefaultValue(form, name);
+        const variableDefaultValue = form.getFormVariableValue(name);
+
         return (processVariableValue === undefined) ? variableDefaultValue : processVariableValue;
-    }
-
-    private getFormVariableDefaultValue(form: FormModel, identifier: string): string {
-        const variables = this.getFormVariables(form);
-        if (variables) {
-            const formVariable = variables.find((formVar) => {
-                return formVar.name === identifier || formVar.id === identifier;
-            });
-
-            let value;
-            if (formVariable) {
-                value = formVariable.value;
-                if (formVariable.type === 'date') {
-                    value += 'T00:00:00.000Z';
-                }
-            }
-            return value;
-        }
-    }
-
-    private getFormVariables(form: FormModel): any[] {
-        return  form.json.variables;
     }
 
     private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]): string {

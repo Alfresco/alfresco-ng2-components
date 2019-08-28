@@ -15,18 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { FormFieldFileSource } from './form-field-file-source';
-
-export interface FormFieldMetadata {
-    [key: string]: any;
-    fileSource?: FormFieldFileSource;
-    link?: boolean;
-    field?: {
-        id: string;
-        name: string;
-        type: string;
-    };
-    responseVariable?: boolean;
+export interface FormVariableModel {
+    id: string;
+    name: string;
+    type: string;
+    value?: any;
 }

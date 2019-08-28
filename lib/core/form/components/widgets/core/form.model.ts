@@ -35,6 +35,7 @@ import {
     FormFieldValidator
 } from './form-field-validator';
 import { FormBaseModel } from '../../form-base.model';
+import { FormVariableModel } from './form-variable.model';
 
 export class FormModel extends FormBaseModel {
 
@@ -49,6 +50,7 @@ export class FormModel extends FormBaseModel {
     readonly selectedOutcome: string;
 
     processVariables: any;
+    variables: FormVariableModel[] = [];
 
     constructor(formRepresentationJSON?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
         super();
@@ -65,6 +67,7 @@ export class FormModel extends FormBaseModel {
             this.customFieldTemplates = formRepresentationJSON.customFieldTemplates || {};
             this.selectedOutcome = formRepresentationJSON.selectedOutcome || {};
             this.className = formRepresentationJSON.className || '';
+            this.variables = formRepresentationJSON.variables || [];
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 
@@ -225,5 +228,42 @@ export class FormModel extends FormBaseModel {
                 field.value = field.parseValue(field.json);
             }
         }
+    }
+
+    /**
+     * Returns a form variable that matches the identifier.
+     * @param identifier The `name` or `id` value.
+     */
+    getFormVariable(identifier: string): FormVariableModel {
+        if (identifier) {
+            return this.variables.find(
+                variable =>
+                    variable.name === identifier ||
+                    variable.id === identifier
+            );
+        }
+        return null;
+    }
+
+    /**
+     * Returns a value of the form variable that matches the identifier.
+     * Provides additional conversion of types (date, boolean).
+     * @param identifier The `name` or `id` value
+     */
+    getFormVariableValue(identifier: string): string {
+        const variable = this.getFormVariable(identifier);
+
+        if (variable) {
+            switch (variable.type) {
+                case 'date':
+                    return `${variable.value}T00:00:00.000Z`;
+                case 'boolean':
+                    return JSON.parse(variable.value);
+                default:
+                    return variable.value;
+            }
+        }
+
+        return null;
     }
 }

@@ -358,7 +358,25 @@ export class DemoForm {
         'style': '',
         'customFieldTemplates': {},
         'metadata': {},
-        'variables': [],
+        'variables': [
+            {
+                'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+                'name': 'name1',
+                'type': 'string',
+                'value': ''
+            },
+            {
+                'id': '3ed9f28a-dbae-463f-b991-47ef06658bb6',
+                'name': 'name2',
+                'type': 'string',
+                'value': ''
+            },
+            {
+                'id': 'a7710978-1e9c-4b54-a19c-c6267d2b19a2',
+                'name': 'input02',
+                'type': 'integer'
+            }
+        ],
         'customFieldsValueInfo': {},
         'gridsterForm': false,
         'globalDateFormat': 'D-M-YYYY'
@@ -1458,7 +1476,25 @@ export class DemoForm {
         'style': '',
         'customFieldTemplates': {},
         'metadata': {},
-        'variables': [],
+        'variables': [
+            {
+                'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+                'name': 'name1',
+                'type': 'string',
+                'value': ''
+            },
+            {
+                'id': '3ed9f28a-dbae-463f-b991-47ef06658bb6',
+                'name': 'name2',
+                'type': 'string',
+                'value': ''
+            },
+            {
+                'id': 'a7710978-1e9c-4b54-a19c-c6267d2b19a2',
+                'name': 'input02',
+                'type': 'integer'
+            }
+        ],
         'gridsterForm': false,
         'globalDateFormat': 'D-M-YYYY'
     };
@@ -1722,7 +1758,25 @@ export class DemoForm {
             'style': '',
             'customFieldTemplates': {},
             'metadata': {},
-            'variables': [],
+            'variables': [
+                {
+                    'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+                    'name': 'name1',
+                    'type': 'string',
+                    'value': ''
+                },
+                {
+                    'id': '3ed9f28a-dbae-463f-b991-47ef06658bb6',
+                    'name': 'name2',
+                    'type': 'string',
+                    'value': ''
+                },
+                {
+                    'id': 'a7710978-1e9c-4b54-a19c-c6267d2b19a2',
+                    'name': 'input02',
+                    'type': 'integer'
+                }
+            ],
             'customFieldsValueInfo': {},
             'gridsterForm': false
         }
