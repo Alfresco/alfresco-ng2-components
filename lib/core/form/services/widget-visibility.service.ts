@@ -200,12 +200,17 @@ export class WidgetVisibilityService {
 
     private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]): string {
         if (processVarList) {
-            const processVariable = processVarList.find((variable) => variable.id === name);
+            const processVariable = processVarList.find(
+                variable =>
+                    variable.id === name ||
+                    variable.id === `variables.${name}`
+            );
+
             if (processVariable) {
                 return processVariable.value;
             }
         }
-
+        return undefined;
     }
 
     evaluateLogicalOperation(logicOp, previousValue, newValue): boolean {
