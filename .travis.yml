@@ -33,9 +33,8 @@ stages:
   - name: Check bundle
     if: type = push
   - name: e2e Test
-  - name: Deploy PR
+  - name: Update Rancher PR
     if: type = pull_request
-
 
 addons:
     chrome: stable
@@ -58,6 +57,8 @@ jobs:
         - stage: Lint & Build Dist
           name:  Lint
           script: ./scripts/lint.sh || exit 1;
+
+
         - stage: Unit test
           name: Unit test content
           script:  ./scripts/travis/unit-test/content.sh
@@ -67,50 +68,58 @@ jobs:
         - stage: Unit test
           name: Unit test process process-cloud insights
           script: ./scripts/travis/unit-test/process.sh
-        - stage: Deploy PR
-          name: Deploy PR
-          script:
-             ./scripts/travis/deploy/deploy.sh
+
+
         - stage: Update children projects dependency #Update children projects dependency
           name: Update Related Project
           if: tag =~ .*beta.*
           script: ./scripts/travis/update/update-children.sh
+
+
         - stage: e2e Test
           name: core
           script: ./scripts/travis/e2e/core-e2e.sh
         - stage: e2e Test
           name:  content
-          script:
-            ./scripts/travis/e2e/content-services-e2e.sh
+          script: ./scripts/travis/e2e/content-services-e2e.sh
         - stage: e2e Test
           name:  search
-          script:
-              ./scripts/travis/e2e/search-e2e.sh
+          script: ./scripts/travis/e2e/search-e2e.sh
         - stage: e2e Test
           name: process
-          script:
-              ./scripts/travis/e2e/process-services-e2e.sh
+          script: ./scripts/travis/e2e/process-services-e2e.sh
         - stage: e2e Test
           name: process Cloud
-          script:
-              ./scripts/travis/e2e/process-services-cloud-e2e.sh
+          script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
+
+
         - stage: Release on npm
-          script:
-              ./scripts/travis/release/release.sh
+          script: ./scripts/travis/release/release.sh
+
+
         - stage: Check bundle
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           - ./scripts/npm-check-bundles.sh -v ${ADF_VERSION}
+
+
         - stage: Deploy docker
           script:
           - TAG_VERSION=$(./scripts/travis/deploy/tag-travis-branch.sh)
           - echo "Running the docker with tag" $TAG_VERSION
           - ./lib/dist/cli/bin/adf-cli docker-publish --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --dockerTags "$TAG_VERSION" --pathProject "$(pwd)"
+
+
         - stage: Update Rancher
           script:
           - TAG_VERSION=$(./scripts/travis/deploy/tag-travis-branch.sh)
           - echo "Update rancher with docker tag" $TAG_VERSION  --url $REPO_RANCHER --environment_name $REPO_RANCHER_ADF_NAME
           - ./scripts/rancher-update.sh --access_key $RANCHER_TOKEN --secret_key $RANCHER_SECRET --url $REPO_RANCHER --environment_name $REPO_RANCHER_ADF_NAME --image docker:$DOCKER_REPOSITORY:$TAG_VERSION
+
+
+        - stage: Update Rancher PR
+          name: Update Rancher PR
+          script: ./scripts/travis/deploy/deploy.sh
 
 
 before_deploy:

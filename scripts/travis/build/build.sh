@@ -6,26 +6,28 @@ cd $DIR/../../../
 
 rm -rf tmp && mkdir tmp;
 
-./scripts/update-version.sh -gnu -alpha || exit 1;
 
 if [[ $TRAVIS_PULL_REQUEST == "false" ]];
 then
 
     if [[ $TRAVIS_BRANCH == "development" ]];
     then
-        ./scripts/update-version.sh -gnu -alpha || exit 1;
+         #TODO remove when we are going to use the new about
+        ./scripts/update-version.sh -gnu -nextalpha || exit 1;
     fi
+
+    node ./scripts/pre-publish.js
+
+    npm install
 
     ./scripts/npm-build-all.sh || exit 1;
 else
-    ./scripts/update-version.sh -gnu -alpha || exit 1;
+    npm install @alfresco/adf-cli@alpha
+    ./node_modules/@alfresco/adf-cli/bin/adf-cli update-version --alpha --pathPackage "$(pwd)"
+
     npm install;
-    ./scripts/lint.sh || exit 1;
     ./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
 fi;
 
 echo "====== Build Demo shell dist ====="
 npm run build:dist || exit 1;
-
-echo "====== License Check ====="
-npm run license-checker
