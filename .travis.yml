@@ -35,6 +35,8 @@ stages:
   - name: e2e Test
   - name: Update Rancher PR
     if: type = pull_request
+  - name: Update Children Projects
+    if: branch = development AND type = push OR (tag =~ .*beta.*)
 
 addons:
     chrome: stable
@@ -70,9 +72,7 @@ jobs:
           script: ./scripts/travis/unit-test/process.sh
 
 
-        - stage: Update children projects dependency #Update children projects dependency
-          name: Update Related Project
-          if: tag =~ .*beta.*
+        - stage: Update Children Projects
           script: ./scripts/travis/update/update-children.sh
 
 
