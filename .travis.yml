@@ -23,7 +23,9 @@ branches:
 # TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
   - name: Lint & Build Dist
+    if: type != cron
   - name: Unit test
+    if: type != cron
   - name: Deploy docker
     if: type = push
   - name: Update Rancher
@@ -33,6 +35,7 @@ stages:
   - name: Check bundle
     if: type = push
   - name: e2e Test
+    if: type != cron
   - name: Update Rancher PR
     if: type = pull_request
   - name: Update Children Projects
