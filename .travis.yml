@@ -36,7 +36,7 @@ stages:
   - name: Update Rancher PR
     if: type = pull_request
   - name: Update Children Projects
-    if: branch = development AND type = push OR (tag =~ .*beta.*)
+    if: branch = master AND type = push OR (tag =~ .*beta.*)
 
 addons:
     chrome: stable
