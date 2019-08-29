@@ -672,7 +672,7 @@ export class IdentityUserService {
     }
 
     private buildUserClientRoleMapping(userId: string, clientId: string): string {
-        return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/clients/${clientId}`;
+        return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/clients/${clientId}/composite`;
     }
 
     private buildRolesUrl(userId: string): string {
