@@ -19,7 +19,6 @@ then
         then
             NEXT_VERSION=-nextbeta
         fi
-         #TODO remove when we are going to use the new about
         ./scripts/update-version.sh -gnu $NEXT_VERSION || exit 1;
     fi
 
