@@ -143,10 +143,6 @@ deploy:
   on:
     branch: master
 
-# Send coverage data to codecov
-after_success:
-    bash <(curl -s https://codecov.io/bash) -X gcov
-
 cache:
   directories:
   - node_modules

@@ -33,7 +33,15 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'adf-name-column',
     template: `
-        <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}" (click)="onClick()">
+        <span
+            role="link"
+            [attr.aria-label]="'NAME_COLUMN_LINK.ACCESSIBILITY.ARIA_LABEL' | translate:{
+                name:  displayText$ | async
+            }"
+            class="adf-datatable-cell-value"
+            title="{{ node | adfNodeNameTooltip }}"
+            (click)="onClick()">
+
             {{ displayText$ | async }}
         </span>
     `,
