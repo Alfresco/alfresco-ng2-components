@@ -38,7 +38,7 @@ describe('Activiti ProcessList Cloud Service', () => {
     function returnCallQueryParameters() {
         return {
             oauth2Auth: {
-                callCustomApi: (queryUrl, operation, context, queryParams) => {
+                callCustomApi: (_queryUrl, _operation, _context, queryParams) => {
                     return Promise.resolve(queryParams);
                 }
             }
@@ -48,7 +48,7 @@ describe('Activiti ProcessList Cloud Service', () => {
     function returnCallUrl() {
         return {
             oauth2Auth: {
-                callCustomApi: (queryUrl, operation, context, queryParams) => {
+                callCustomApi: (queryUrl) => {
                     return Promise.resolve(queryUrl);
                 }
             }

@@ -425,7 +425,7 @@ describe('TaskFormCloudComponent', () => {
 });
 
 @Component({
-    selector: 'adf-task-form-cloud-with-custom-outcomes',
+    selector: 'adf-cloud-task-form-cloud-with-custom-outcomes',
     template: `
     <adf-cloud-form #adfCloudForm>
         <adf-cloud-form-custom-outcomes>

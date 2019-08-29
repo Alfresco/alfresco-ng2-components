@@ -41,12 +41,8 @@ class BasicButtonComponent {
     download: boolean = false;
     fileName: string;
     format: string;
-    constructor() {
 
-    }
-
-    onAuditClick(event: any) {
-    }
+    onAuditClick() {}
 }
 
 describe('ProcessAuditDirective', () => {

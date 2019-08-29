@@ -48,7 +48,7 @@ export class StartProcessPage {
         return this.defaultProcessName.getAttribute('value');
     }
 
-    async deleteDefaultName(name) {
+    async deleteDefaultName() {
         await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
         await BrowserActions.clearWithBackSpace(this.processNameInput);
     }

@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { ContentService } from '@alfresco/adf-core';
-import { Directive, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Directive, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { TaskListService } from './../services/tasklist.service';
 
 const JSON_FORMAT: string = 'json';
@@ -68,7 +68,7 @@ export class TaskAuditDirective implements OnChanges {
                 private taskListService: TaskListService) {
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(): void {
         if (!this.isValidType()) {
             this.setDefaultFormatType();
         }

@@ -13,7 +13,7 @@
 
 <div class="menu-container" *ngIf="activeTasks?.length > 0" data-automation-id="active-tasks">
     <mat-list>
-        <mat-list-item class="process-tasks__task-item" *ngFor="let task of activeTasks" (click)="clickTask($event, task)">
+        <mat-list-item class="process-tasks__task-item" *ngFor="let task of activeTasks" (click)="clickTask(task)">
                 <mat-icon mat-list-icon>assignment</mat-icon>
                 <h3 matLine>{{task.name || 'Nameless task'}}</h3>
                 <span matLine>
@@ -55,7 +55,7 @@
 
 <div class="menu-container" *ngIf="completedTasks?.length > 0" data-automation-id="completed-tasks">
     <mat-list>
-        <mat-list-item class="process-tasks__task-item" *ngFor="let task of completedTasks" (click)="clickTask($event, task)">
+        <mat-list-item class="process-tasks__task-item" *ngFor="let task of completedTasks" (click)="clickTask(task)">
             <mat-icon mat-list-icon>assignment</mat-icon>
             <h3 matLine>{{task.name || 'Nameless task'}}</h3>
             <span matLine>

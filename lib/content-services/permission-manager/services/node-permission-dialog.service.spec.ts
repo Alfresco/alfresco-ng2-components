@@ -110,7 +110,7 @@ describe('NodePermissionDialogService', () => {
 
         it('should return the updated node', (done) => {
             spyOn(contentService, 'getNode').and.returnValue(of(fakeForbiddenNode));
-            service.updateNodePermissionByDialog('fake-node-id', 'fake-title').subscribe((node) => {
+            service.updateNodePermissionByDialog('fake-node-id', 'fake-title').subscribe(() => {
                 throwError('This call should fail');
             },
             (error) => {

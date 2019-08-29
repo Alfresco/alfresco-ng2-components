@@ -16,7 +16,6 @@
  */
 
 import { ValidateFormFieldEvent } from './../../../events/validate-form-field.event';
-import { ValidateFormEvent } from './../../../events/validate-form.event';
 import { FormService } from './../../../services/form.service';
 import { ContainerModel } from './container.model';
 import { FormFieldTypes } from './form-field-types';
@@ -298,7 +297,7 @@ describe('FormModel', () => {
 
         let validated = false;
 
-        formService.validateForm.subscribe((event: ValidateFormEvent) => {
+        formService.validateForm.subscribe(() => {
             validated = true;
         });
 
@@ -316,7 +315,7 @@ describe('FormModel', () => {
 
         let validated = false;
 
-        formService.validateFormField.subscribe((event: ValidateFormFieldEvent) => {
+        formService.validateFormField.subscribe(() => {
             validated = true;
         });
 
@@ -333,7 +332,7 @@ describe('FormModel', () => {
 
         let validated = false;
 
-        formService.validateFormField.subscribe((event: ValidateFormFieldEvent) => {
+        formService.validateFormField.subscribe(() => {
             validated = true;
         });
 
@@ -385,10 +384,10 @@ describe('FormModel', () => {
         spyOn(form, 'getFormFields').and.returnValue([testField]);
 
         const validator = <FormFieldValidator> {
-            isSupported(field: FormFieldModel): boolean {
+            isSupported(): boolean {
                 return true;
             },
-            validate(field: FormFieldModel): boolean {
+            validate(): boolean {
                 return true;
             }
         };

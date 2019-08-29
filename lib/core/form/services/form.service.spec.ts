@@ -93,7 +93,7 @@ describe('Form service', () => {
         const simpleResponseBody = { id: 1, modelType: 'test' };
 
         it('should fetch and parse process definitions', (done) => {
-            service.getProcessDefinitions().subscribe((result) => {
+            service.getProcessDefinitions().subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/process-definitions')).toBeTruthy();
                 expect( [ { id: '1' }, { id: '2' } ]).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
                 done();
@@ -107,7 +107,7 @@ describe('Form service', () => {
         });
 
         it('should fetch and parse tasks', (done) => {
-            service.getTasks().subscribe((result) => {
+            service.getTasks().subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/tasks/query')).toBeTruthy();
                 expect( [ { id: '1' }, { id: '2' } ]).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
                 done();
@@ -240,7 +240,7 @@ describe('Form service', () => {
             });
             processApiSpy.getProcessDefinitionStartForm.and.returnValue(Promise.resolve({ id: '1' }));
 
-            service.getStartFormDefinition('myprocess:1').subscribe((result) => {
+            service.getStartFormDefinition('myprocess:1').subscribe(() => {
                 expect(processApiSpy.getProcessDefinitionStartForm).toHaveBeenCalledWith('myprocess:1');
                 done();
             });
@@ -344,7 +344,7 @@ describe('Form service', () => {
         });
 
         it('should create a Form with modelType=2', (done) => {
-            service.createForm('testName').subscribe((result) => {
+            service.createForm('testName').subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/models')).toBeTruthy();
                 expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).modelType).toEqual(2);
                 expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual('testName');

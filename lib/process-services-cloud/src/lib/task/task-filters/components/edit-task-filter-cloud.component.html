@@ -1,5 +1,5 @@
 <mat-accordion [hideToggle]="isLoading">
-    <mat-expansion-panel (afterExpand)="onExpand($event)" (closed)="onClose($event)">
+    <mat-expansion-panel (afterExpand)="onExpand()" (closed)="onClose()">
         <mat-expansion-panel-header *ngIf="taskFilter" id="adf-edit-task-filter-expansion-header">
             <ng-container *ngIf="!isLoading; else loadingTemplate">
                 <mat-panel-title fxLayoutAlign="space-between center" id="adf-edit-task-filter-title-id">{{taskFilter.name | translate}}</mat-panel-title>

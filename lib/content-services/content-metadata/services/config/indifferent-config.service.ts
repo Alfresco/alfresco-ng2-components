@@ -21,13 +21,11 @@ import { ContentMetadataConfig, OrganisedPropertyGroup,
 
 export class IndifferentConfigService implements ContentMetadataConfig {
 
-    constructor(config: any) {}
-
-    public isGroupAllowed(groupName: string): boolean {
+    isGroupAllowed(): boolean {
         return true;
     }
 
-    public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+    reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         return Object.keys(propertyGroups)
             .map((groupName) => {
                 const propertyGroup = propertyGroups[groupName],
@@ -39,15 +37,15 @@ export class IndifferentConfigService implements ContentMetadataConfig {
             });
     }
 
-    public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
+    filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
         return propertyGroups;
     }
 
-    public appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+    appendAllPreset(): OrganisedPropertyGroup[] {
         return[];
     }
 
-    public isIncludeAllEnabled(): boolean {
+    isIncludeAllEnabled(): boolean {
         return true;
     }
 }

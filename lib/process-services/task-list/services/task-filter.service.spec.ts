@@ -103,7 +103,7 @@ describe('Activiti Task filter Service', () => {
             spyOn(service, 'callApiTaskFilters').and.returnValue((fakeAppPromise));
 
             const appId = 1;
-            service.getTaskListFilters(appId).subscribe((res) => {
+            service.getTaskListFilters(appId).subscribe(() => {
                 expect(service.callApiTaskFilters).toHaveBeenCalledWith(appId);
                 done();
             });

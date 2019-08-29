@@ -97,7 +97,7 @@ export class ShareDataRow implements DataRow {
         return ObjectUtils.getValue(this.obj.entry, key);
     }
 
-    imageErrorResolver(event: Event): any {
+    imageErrorResolver(): any {
         if (this.obj.entry.content) {
             return this.thumbnailService.getMimeTypeIcon(this.obj.entry.content.mimeType);
         }

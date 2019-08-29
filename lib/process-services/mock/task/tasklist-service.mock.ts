@@ -176,7 +176,7 @@ export let fakeRepresentationFilter2: FilterRepresentationModel = new FilterRepr
     }
 });
 
-export let fakeAppPromise = new Promise(function (resolve, reject) {
+export let fakeAppPromise = new Promise(function (resolve) {
     resolve(fakeAppFilter);
 });
 

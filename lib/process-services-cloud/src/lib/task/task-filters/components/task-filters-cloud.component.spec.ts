@@ -40,7 +40,7 @@ describe('TaskFiltersCloudComponent', () => {
             observer.complete();
         });
 
-    const fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
+    const fakeGlobalFilterPromise = new Promise(function (resolve) {
         resolve(fakeGlobalFilter);
     });
 

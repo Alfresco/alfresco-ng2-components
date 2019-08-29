@@ -852,7 +852,7 @@ describe('DocumentList', () => {
         let called = false;
 
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
-        documentList.preview.subscribe((val) => called = true);
+        documentList.preview.subscribe(() => called = true);
 
         documentList.onNodeClick(file);
         expect(called).toBeFalsy();
@@ -1025,7 +1025,7 @@ describe('DocumentList', () => {
     it('should emit node-click DOM event', (done) => {
         const node = new NodeMinimalEntry();
 
-        document.addEventListener('node-click', (customEvent: CustomEvent) => {
+        document.addEventListener('node-click', () => {
             done();
         });
 
@@ -1043,7 +1043,7 @@ describe('DocumentList', () => {
     it('should emit node-dblclick DOM event', (done) => {
         const node = new NodeMinimalEntry();
 
-        document.addEventListener('node-dblclick', (customEvent: CustomEvent) => {
+        document.addEventListener('node-dblclick', () => {
             done();
         });
 

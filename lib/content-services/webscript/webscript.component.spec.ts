@@ -81,7 +81,7 @@ describe('WebscriptComponent', () => {
         it('url should be the one configured by the input param', (done) => {
             component.scriptPath = 'sample/folder/Company%20Home';
 
-            component.ngOnChanges(null).then(() => {
+            component.ngOnChanges().then(() => {
                 fixture.detectChanges();
                 expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:9876/ecm/alfresco/service/sample/folder/Company%20Home');
                 done();
@@ -98,7 +98,7 @@ describe('WebscriptComponent', () => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'TEXT';
 
-            component.ngOnChanges(null).then(() => {
+            component.ngOnChanges().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#webscript-data-TEXT').innerHTML)
                     .toBe('text test');
@@ -116,7 +116,7 @@ describe('WebscriptComponent', () => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'JSON';
 
-            component.ngOnChanges(null).then(() => {
+            component.ngOnChanges().then(() => {
                 fixture.detectChanges();
                 expect(JSON.parse(element.querySelector('#webscript-data-JSON').innerHTML)[0].name).toBe('Name 1');
                 expect(JSON.parse(element.querySelector('#webscript-data-JSON').innerHTML)[1].name).toBe('Name 2');
@@ -138,7 +138,7 @@ describe('WebscriptComponent', () => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'DATATABLE';
 
-            component.ngOnChanges(null).then(() => {
+            component.ngOnChanges().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#webscript-datatable-wrapper').innerHTML).toBeDefined();
                 done();
@@ -176,7 +176,7 @@ describe('WebscriptComponent', () => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'DATATABLE';
 
-            component.ngOnChanges(null).then(() => {
+            component.ngOnChanges().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#webscript-datatable-wrapper').innerHTML).toBeDefined();
                 done();

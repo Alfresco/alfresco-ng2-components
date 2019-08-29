@@ -470,7 +470,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 second: 59
             });
 
-            component.filterChange.subscribe( (res) => {
+            component.filterChange.subscribe(() => {
                 expect(component.changedTaskFilter.lastModifiedTo.toISOString()).toEqual(lastModifiedToFilter.toISOString());
                 done();
             });

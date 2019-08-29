@@ -151,7 +151,7 @@ describe('TaskDetailsComponent', () => {
         expect(fixture.debugElement.query(By.css('adf-form'))).not.toBeNull();
     }));
 
-    it('should display a form in readonly when the task has an associated form and readOnlyForm is true', async((done) => {
+    it('should display a form in readonly when the task has an associated form and readOnlyForm is true', async(() => {
         component.readOnlyForm = true;
         component.taskId = '123';
         fixture.detectChanges();

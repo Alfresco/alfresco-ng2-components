@@ -360,7 +360,7 @@ describe('IdentityGroupService', () => {
 
     it('should be able to create group', (done) => {
         const createCustomApiSpy = spyOn(apiService, 'getInstance').and.returnValue(createGroupMappingApi);
-        service.createGroup(mockIdentityGroup1).subscribe((res) => {
+        service.createGroup(mockIdentityGroup1).subscribe(() => {
             expect(createCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -390,7 +390,7 @@ describe('IdentityGroupService', () => {
 
     it('should be able to update group', (done) => {
         const updateCustomApiSpy = spyOn(apiService, 'getInstance').and.returnValue(updateGroupMappingApi);
-        service.updateGroup('mock-group-id', mockIdentityGroup1).subscribe((res) => {
+        service.updateGroup('mock-group-id', mockIdentityGroup1).subscribe(() => {
             expect(updateCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -420,7 +420,7 @@ describe('IdentityGroupService', () => {
 
     it('should be able to delete group', (done) => {
         const deleteCustomApiSpy = spyOn(apiService, 'getInstance').and.returnValue(deleteGroupMappingApi);
-        service.deleteGroup('mock-group-id').subscribe((res) => {
+        service.deleteGroup('mock-group-id').subscribe(() => {
             expect(deleteCustomApiSpy).toHaveBeenCalled();
             done();
         });

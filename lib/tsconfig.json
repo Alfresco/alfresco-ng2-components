@@ -10,6 +10,8 @@
         "noLib": false,
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
         "noImplicitAny": false,
         "noImplicitReturns": false,
         "noImplicitUseStrict": false,
@@ -33,8 +35,7 @@
             "es2016",
             "dom"
         ],
-        "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": true
+        "suppressImplicitAnyIndexErrors": true
     },
     "exclude": [
         "*/node_modules",

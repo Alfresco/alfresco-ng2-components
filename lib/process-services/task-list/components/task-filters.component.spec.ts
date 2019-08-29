@@ -52,7 +52,7 @@ describe('TaskFiltersComponent', () => {
         filter: { state: 'open', assignment: 'fake-assignee' }
     }));
 
-    const fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
+    const fakeGlobalFilterPromise = new Promise(function (resolve) {
         resolve(fakeGlobalFilter);
     });
 
@@ -60,7 +60,7 @@ describe('TaskFiltersComponent', () => {
         message: 'invalid data'
     };
 
-    const fakeGlobalEmptyFilterPromise = new Promise(function (resolve, reject) {
+    const fakeGlobalEmptyFilterPromise = new Promise(function (resolve) {
         resolve(fakeGlobalEmptyFilter);
     });
 
@@ -126,7 +126,7 @@ describe('TaskFiltersComponent', () => {
 
     it('should return the filter task list, filtered By Name', (done) => {
 
-        const fakeDeployedApplicationsPromise = new Promise(function (resolve, reject) {
+        const fakeDeployedApplicationsPromise = new Promise(function (resolve) {
             resolve({});
         });
 

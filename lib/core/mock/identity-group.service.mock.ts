@@ -132,7 +132,7 @@ export let deleteGroupMappingApi = {
 
 export let returnCallQueryParameters = {
     oauth2Auth: {
-        callCustomApi: (queryUrl, operation, context, queryParams) => {
+        callCustomApi: (_queryUrl, _operation, _context, queryParams) => {
             return Promise.resolve(queryParams);
         }
     }
@@ -140,7 +140,7 @@ export let returnCallQueryParameters = {
 
 export let returnCallUrl = {
     oauth2Auth: {
-        callCustomApi: (queryUrl, operation, context, queryParams) => {
+        callCustomApi: (queryUrl) => {
             return Promise.resolve(queryUrl);
         }
     }

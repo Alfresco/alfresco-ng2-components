@@ -701,7 +701,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         });
     }
 
-    getAutomationValue(row: DataRow, col: DataColumn) {
+    getAutomationValue(row: DataRow): any {
         const name = this.getNameColumnValue();
         return name ? row.getValue(name.key) : '';
     }

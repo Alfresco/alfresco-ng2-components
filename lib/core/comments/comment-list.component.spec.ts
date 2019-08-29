@@ -156,7 +156,7 @@ describe('CommentListComponent', () => {
         commentList.selectedComment = commentOne;
         commentList.comments = [commentOne, commentTwo];
 
-        commentList.clickRow.subscribe((selectedComment) => {
+        commentList.clickRow.subscribe(() => {
             fixture.detectChanges();
             const commentSelectedList = fixture.nativeElement.querySelectorAll('.adf-is-selected');
             expect(commentSelectedList.length).toBe(1);

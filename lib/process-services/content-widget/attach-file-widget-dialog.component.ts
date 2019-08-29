@@ -68,7 +68,7 @@ export class AttachFileWidgetDialogComponent {
         }
     }
 
-    onClick(event: any) {
+    onClick() {
         this.data.selected.next(this.chosenNode);
         this.data.selected.complete();
     }

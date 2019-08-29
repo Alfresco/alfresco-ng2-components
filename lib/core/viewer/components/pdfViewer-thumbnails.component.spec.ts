@@ -47,7 +47,7 @@ describe('PdfThumbListComponent', () => {
             return this._currentPageNumber;
         },
         pdfDocument: {
-            getPage: (pageNum) => Promise.resolve({
+            getPage: () => Promise.resolve({
                 getViewport: () => ({ height: 421, width: 335 }),
                 render: jasmine.createSpy('render').and.returnValue(Promise.resolve())
             })

@@ -30,7 +30,7 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
      * @param appName Name of the target app
      * @returns List of local preferences
      */
-    getPreferences(appName: string, key: string): Observable<any> {
+    getPreferences(_: string, key: string): Observable<any> {
         if (key || key === '') {
             return of(this.prepareLocalPreferenceResponse(key));
         }
@@ -42,7 +42,7 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
      * @param key Key of the target preference
      * @returns Observable of local preference
      */
-    getPreferenceByKey(appName: string, key: string): Observable<any> {
+    getPreferenceByKey(_: string, key: string): Observable<any> {
         return of(JSON.parse(this.storage.getItem(key)) || []);
     }
 
@@ -53,7 +53,7 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
      * @newPreference Details of new local preference
      * @returns Observable of created local preferences
      */
-    createPreference(appName: string, key: string, newPreference: any): Observable<any> {
+    createPreference(_: string, key: string, newPreference: any): Observable<any> {
         const storedFilters = JSON.parse(this.storage.getItem(key) || '[]');
         storedFilters.push(...newPreference);
         this.storage.setItem(key, JSON.stringify(storedFilters));
@@ -67,7 +67,7 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
      * @param updatedPreference Details of updated preference
      * @returns Observable of updated local preferences
      */
-    updatePreference(appName: string, key: string, updatedPreference: any): Observable<any> {
+    updatePreference(_: string, key: string, updatedPreference: any): Observable<any> {
         if (key) {
             this.storage.setItem(key, JSON.stringify(updatedPreference));
             return of(updatedPreference);

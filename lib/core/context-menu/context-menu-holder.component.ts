@@ -61,8 +61,8 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
         }
     }
 
-    @HostListener('window:resize', ['$event'])
-    onResize(event) {
+    @HostListener('window:resize')
+    onResize() {
         if (this.mdMenuElement) {
             this.updatePosition();
         }

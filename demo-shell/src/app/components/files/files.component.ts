@@ -27,7 +27,7 @@ import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, Site
 import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
-    UploadService, DataColumn, DataRow, UserPreferencesService,
+    UploadService, DataRow, UserPreferencesService,
     PaginationComponent, FormValues, DisplayMode, InfinitePaginationComponent, HighlightDirective,
     SharedLinksApiService
 } from '@alfresco/adf-core';
@@ -474,7 +474,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return this.contentService.hasAllowableOperations(selection[0].entry, 'update');
     }
 
-    getNodeNameTooltip(row: DataRow, col: DataColumn): string {
+    getNodeNameTooltip(row: DataRow): string {
         if (row) {
             return row.getValue('name');
         }

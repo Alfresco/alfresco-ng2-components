@@ -31,7 +31,7 @@ export class TestingAppConfigService extends AppConfigService {
         return '';
     }
 
-    getLocationPort(prefix: string = ''): string {
+    getLocationPort(): string {
         return '';
     }
 

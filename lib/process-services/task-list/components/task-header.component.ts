@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import {
     BpmUserService,
     CardViewDateItemModel,
@@ -75,7 +75,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         this.loadCurrentBpmUserId();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         this.refreshData();
     }
 

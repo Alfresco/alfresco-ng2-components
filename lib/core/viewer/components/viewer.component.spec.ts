@@ -170,7 +170,7 @@ describe('ViewerComponent', () => {
 
         it('should  extension file pdf  be loaded', (done) => {
             component.urlFile = 'fake-test-file.pdf';
-            component.ngOnChanges(null);
+            component.ngOnChanges();
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -182,7 +182,7 @@ describe('ViewerComponent', () => {
 
         it('should  extension file png be loaded', (done) => {
             component.urlFile = 'fake-url-file.png';
-            component.ngOnChanges(null);
+            component.ngOnChanges();
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -194,7 +194,7 @@ describe('ViewerComponent', () => {
 
         it('should extension file mp4 be loaded', (done) => {
             component.urlFile = 'fake-url-file.mp4';
-            component.ngOnChanges(null);
+            component.ngOnChanges();
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -206,7 +206,7 @@ describe('ViewerComponent', () => {
 
         it('should extension file txt be loaded', (done) => {
             component.urlFile = 'fake-test-file.txt';
-            component.ngOnChanges(null);
+            component.ngOnChanges();
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -219,7 +219,7 @@ describe('ViewerComponent', () => {
         it('should display [unknown format] for unsupported extensions', (done) => {
             component.urlFile = 'fake-url-file.unsupported';
             component.mimeType = '';
-            component.ngOnChanges(null);
+            component.ngOnChanges();
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -240,7 +240,7 @@ describe('ViewerComponent', () => {
             component.urlFile = 'fake-content-img';
             component.mimeType = 'image/png';
             fixture.detectChanges();
-            component.ngOnChanges(null);
+            component.ngOnChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -253,7 +253,7 @@ describe('ViewerComponent', () => {
             component.urlFile = 'fake-content-img.bin';
             component.mimeType = 'image/png';
             fixture.detectChanges();
-            component.ngOnChanges(null);
+            component.ngOnChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -266,7 +266,7 @@ describe('ViewerComponent', () => {
             component.urlFile = 'fake-content-txt.bin';
             component.mimeType = 'text/plain';
             fixture.detectChanges();
-            component.ngOnChanges(null);
+            component.ngOnChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -292,7 +292,7 @@ describe('ViewerComponent', () => {
             component.displayName = null;
             spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
 
-            component.ngOnChanges(null);
+            component.ngOnChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('adf-viewer-unknown-format')).toBeDefined();
@@ -304,7 +304,7 @@ describe('ViewerComponent', () => {
             component.urlFile = 'fake-content-video.bin';
             component.mimeType = 'video/mp4';
             fixture.detectChanges();
-            component.ngOnChanges(null);
+            component.ngOnChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -317,7 +317,7 @@ describe('ViewerComponent', () => {
             component.urlFile = 'fake-content-video';
             component.mimeType = 'video/mp4';
             fixture.detectChanges();
-            component.ngOnChanges(null);
+            component.ngOnChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -330,7 +330,7 @@ describe('ViewerComponent', () => {
             component.urlFile = 'fake-content-pdf';
             component.mimeType = 'application/pdf';
             fixture.detectChanges();
-            component.ngOnChanges(null);
+            component.ngOnChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -343,7 +343,7 @@ describe('ViewerComponent', () => {
         it('should display a PDF file identified by mimetype when the file extension is wrong', (done) => {
             component.urlFile = 'fake-content-pdf.bin';
             component.mimeType = 'application/pdf';
-            component.ngOnChanges(null);
+            component.ngOnChanges();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -366,13 +366,13 @@ describe('ViewerComponent', () => {
         component.showViewer = true;
 
         component.nodeId = 'id1';
-        component.ngOnChanges({});
+        component.ngOnChanges();
         tick();
 
         expect(component.fileTitle).toBe('file1');
 
         component.nodeId = 'id2';
-        component.ngOnChanges({});
+        component.ngOnChanges();
         tick();
 
         expect(component.fileTitle).toBe('file2');
@@ -601,7 +601,7 @@ describe('ViewerComponent', () => {
                 };
                 spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
 
-                component.ngOnChanges(null);
+                component.ngOnChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(component.nodeEntry).toBe(node);
@@ -642,7 +642,7 @@ describe('ViewerComponent', () => {
                 component.urlFile = null;
                 component.mimeType = null;
 
-                component.ngOnChanges(null);
+                component.ngOnChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).toBeNull();
@@ -666,7 +666,7 @@ describe('ViewerComponent', () => {
                 });
 
                 it('should Name File be present if is overlay mode ', (done) => {
-                    component.ngOnChanges(null);
+                    component.ngOnChanges();
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
                         fixture.detectChanges();
@@ -733,7 +733,7 @@ describe('ViewerComponent', () => {
                 component.urlFile = undefined;
 
                 expect(() => {
-                    component.ngOnChanges(null);
+                    component.ngOnChanges();
                 }).toThrow();
             });
 
@@ -743,7 +743,7 @@ describe('ViewerComponent', () => {
                 component.urlFile = undefined;
 
                 expect(() => {
-                    component.ngOnChanges(null);
+                    component.ngOnChanges();
                 }).not.toThrow();
             });
 
@@ -752,7 +752,7 @@ describe('ViewerComponent', () => {
                 component.nodeId = undefined;
 
                 expect(() => {
-                    component.ngOnChanges(null);
+                    component.ngOnChanges();
                 }).not.toThrow();
             });
 
@@ -778,7 +778,7 @@ describe('ViewerComponent', () => {
                 component.urlFile = null;
                 component.mimeType = null;
 
-                component.ngOnChanges(null);
+                component.ngOnChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-viewer-unknown-format')).not.toBeNull();
@@ -794,7 +794,7 @@ describe('ViewerComponent', () => {
                 component.urlFile = null;
                 component.mimeType = null;
 
-                component.ngOnChanges(null);
+                component.ngOnChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('adf-viewer-unknown-format')).not.toBeNull();
@@ -815,7 +815,7 @@ describe('ViewerComponent', () => {
                 component.urlFile = null;
                 component.mimeType = null;
 
-                component.ngOnChanges(null);
+                component.ngOnChanges();
             });
 
         });
@@ -831,7 +831,7 @@ describe('ViewerComponent', () => {
 
                 component.urlFile = 'fake-url-file.png';
 
-                component.ngOnChanges(null);
+                component.ngOnChanges();
             });
         });
 
@@ -841,7 +841,7 @@ describe('ViewerComponent', () => {
                 component.urlFile = 'fake-test-file.pdf';
                 component.displayName = 'test name';
                 fixture.detectChanges();
-                component.ngOnChanges(null);
+                component.ngOnChanges();
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -854,7 +854,7 @@ describe('ViewerComponent', () => {
                 component.urlFile = 'fake-test-file.pdf';
                 component.displayName = null;
                 fixture.detectChanges();
-                component.ngOnChanges(null);
+                component.ngOnChanges();
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -870,7 +870,7 @@ describe('ViewerComponent', () => {
                 component.displayName = 'blob file display name';
                 component.blobFile = new Blob(['This is my blob content'], { type: 'text/plain' });
                 fixture.detectChanges();
-                component.ngOnChanges(null);
+                component.ngOnChanges();
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -883,7 +883,7 @@ describe('ViewerComponent', () => {
                 component.displayName = null;
                 component.blobFile = new Blob(['This is my blob content'], { type: 'text/plain' });
                 fixture.detectChanges();
-                component.ngOnChanges(null);
+                component.ngOnChanges();
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -911,7 +911,7 @@ describe('ViewerComponent', () => {
                 component.displayName = null;
                 spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
 
-                component.ngOnChanges(null);
+                component.ngOnChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(displayName);

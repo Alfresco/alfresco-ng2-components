@@ -85,7 +85,7 @@
     [showRememberMe]="showFooter && showRememberMe"
     (executeSubmit)="checkForm($event)"
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
-    (success)="onLogin($event)"
+    (success)="onLogin()"
     (error)="onError($event)">
     <div class="adf-mobile-settings">
         <p>

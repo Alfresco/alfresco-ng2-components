@@ -18,7 +18,7 @@
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, DateAdapter } from '@angular/material';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
@@ -191,14 +191,15 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     retrieveTaskFilterAndBuildForm() {
         this.isLoading = true;
         this.taskFilterCloudService.getTaskFilterById(this.appName, this.id)
-        .pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-            this.isLoading = false;
+        .pipe(
+            finalize(() => this.isLoading = false),
+            takeUntil(this.onDestroy$)
+        )
+        .subscribe(response => {
             this.taskFilter = new TaskFilterCloudModel(response);
             this.taskFilterProperties = this.createAndFilterProperties();
             this.taskFilterActions = this.createAndFilterActions();
             this.buildForm(this.taskFilterProperties);
-        }, (error) => {
-            this.isLoading = false;
         });
     }
 
@@ -403,11 +404,11 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         return this.showFilterActions;
     }
 
-    onExpand(event: any) {
+    onExpand() {
         this.toggleFilterActions = true;
     }
 
-    onClose(event: any) {
+    onClose() {
         this.toggleFilterActions = false;
     }
 

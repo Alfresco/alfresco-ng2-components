@@ -48,12 +48,8 @@ describe('TaskAuditDirective', () => {
         download: boolean = false;
         fileName: string;
         format: string;
-        constructor() {
 
-        }
-
-        onAuditClick(event: any) {
-        }
+        onAuditClick() {}
     }
 
     let fixture: ComponentFixture<BasicButtonComponent>;

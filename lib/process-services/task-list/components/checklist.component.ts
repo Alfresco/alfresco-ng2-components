@@ -74,12 +74,12 @@ export class ChecklistComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         const taskId = changes['taskId'];
         if (taskId && taskId.currentValue) {
-            this.getTaskChecklist(taskId.currentValue);
+            this.getTaskChecklist();
             return;
         }
     }
 
-    public getTaskChecklist(taskId: string) {
+    getTaskChecklist() {
         this.checklist = [];
         if (this.taskId) {
             this.activitiTaskList.getTaskChecklist(this.taskId).subscribe(

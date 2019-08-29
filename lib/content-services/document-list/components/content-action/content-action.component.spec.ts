@@ -227,7 +227,7 @@ describe('ContentAction', () => {
     });
 
     it('should find document action handler via service', () => {
-        const handler = <ContentActionHandler> function (obj: any, target?: any) {
+        const handler = <ContentActionHandler> function () {
         };
         const action = new ContentActionComponent(actionList, documentActions, null);
         spyOn(documentActions, 'getHandler').and.returnValue(handler);
@@ -235,7 +235,7 @@ describe('ContentAction', () => {
     });
 
     it('should find folder action handler via service', () => {
-        const handler = <ContentActionHandler> function (obj: any, target?: any) {
+        const handler = <ContentActionHandler> function () {
         };
         const action = new ContentActionComponent(actionList, null, folderActions);
         spyOn(folderActions, 'getHandler').and.returnValue(handler);

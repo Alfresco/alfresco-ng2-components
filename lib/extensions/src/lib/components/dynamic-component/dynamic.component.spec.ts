@@ -20,7 +20,6 @@
 import {
     Component,
     Input,
-    SimpleChanges,
     OnChanges,
     SimpleChange,
     ComponentFactoryResolver
@@ -40,7 +39,7 @@ export class TestComponent implements OnChanges {
     @Input() data: any;
     public onChangesCalled = 0;
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         this.onChangesCalled++;
     }
 }

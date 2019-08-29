@@ -119,8 +119,8 @@ describe('Comment component for Processes', () => {
 
         const thirdTaskComment = { message: 'Third Task Comment' };
 
-        await commentsPage.checkUserIconIsDisplayed(0);
-        await commentsPage.checkUserIconIsDisplayed(1);
+        await commentsPage.checkUserIconIsDisplayed();
+        await commentsPage.checkUserIconIsDisplayed();
 
         await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + totalCommentsLatest.total + ')');
 
@@ -145,9 +145,9 @@ describe('Comment component for Processes', () => {
 
         const totalComments = await this.alfrescoJsApi.activiti.taskApi.getTaskComments(newTaskId, { 'latestFirst': true });
 
-        await commentsPage.checkUserIconIsDisplayed(0);
-        await commentsPage.checkUserIconIsDisplayed(1);
-        await commentsPage.checkUserIconIsDisplayed(2);
+        await commentsPage.checkUserIconIsDisplayed();
+        await commentsPage.checkUserIconIsDisplayed();
+        await commentsPage.checkUserIconIsDisplayed();
 
         await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + totalComments.total + ')');
 

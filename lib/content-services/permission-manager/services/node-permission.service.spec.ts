@@ -51,7 +51,7 @@ describe('NodePermissionService', () => {
         TestBed.resetTestingModule();
     });
 
-    function returnUpdatedNode(nodeId, nodeBody) {
+    function returnUpdatedNode(_, nodeBody) {
         const fakeNode: Node = new Node({});
         fakeNode.id = 'fake-updated-node';
         fakeNode.permissions = nodeBody.permissions;
@@ -185,7 +185,7 @@ describe('NodePermissionService', () => {
         }];
 
         service.updateLocallySetPermissions(fakeNodeCopy, fakeDuplicateAuthority, ['Contributor'])
-            .subscribe((node: Node) => {
+            .subscribe(() => {
 
             }, (errorMessage) => {
                 expect(errorMessage).not.toBeNull();

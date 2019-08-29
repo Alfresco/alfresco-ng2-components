@@ -18,7 +18,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { SitePaging, SiteEntry, MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { ContentNodeDialogService, ShareDataRow, RowFilter } from '@alfresco/adf-content-services';
-import { DataRow, DataColumn, ThumbnailService } from '@alfresco/adf-core';
+import { ThumbnailService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './content-node-selector.component.html',
@@ -95,7 +95,7 @@ export class ContentNodeSelectorComponent {
         return showNode;
     }
 
-    customImageResolverExample(row: DataRow, col: DataColumn) {
+    customImageResolverExample() {
         return this.thumbnailService.getMimeTypeIcon('video/quicktime');
     }
 

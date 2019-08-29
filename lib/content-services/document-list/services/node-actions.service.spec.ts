@@ -104,7 +104,7 @@ describe('NodeActionsService', () => {
         spyOn(documentListService, 'copyNode').and.returnValue(throwError('FAKE-KO'));
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
-        service.copyFolder(fakeNode, '!allowed').subscribe((value) => {
+        service.copyFolder(fakeNode, '!allowed').subscribe(() => {
         }, (error) => {
             expect(error).toBe('FAKE-KO');
         });

@@ -85,7 +85,7 @@ export class WebscriptComponent implements OnChanges {
                 private logService: LogService) {
     }
 
-    ngOnChanges(changes) {
+    ngOnChanges() {
         if (this.showData) {
             this.clean();
         }

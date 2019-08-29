@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
 import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 
@@ -50,7 +50,7 @@ export class AnalyticsComponent implements OnChanges {
 
     reportParamQuery: ReportQuery;
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         this.analyticsGenerator.reset();
     }
 

@@ -77,7 +77,7 @@ export class AnalyticsReportListComponent implements OnInit {
     /**
      * Reload the component
      */
-    reload(reportId?) {
+    reload(reportId?: number) {
         this.reset();
         this.getReportList(this.appId, reportId);
     }
@@ -85,7 +85,7 @@ export class AnalyticsReportListComponent implements OnInit {
     /**
      * Get the report list
      */
-    getReportList(appId: number, reportId?: string) {
+    getReportList(appId: number, reportId?: number) {
         this.analyticsService.getReportList(appId).subscribe(
             (res: ReportParametersModel[]) => {
                 if (res && res.length === 0) {
@@ -152,7 +152,7 @@ export class AnalyticsReportListComponent implements OnInit {
         this.reportClick.emit(report);
     }
 
-    public selectReportByReportId(reportId) {
+    public selectReportByReportId(reportId: number) {
         const reportFound = this.reports.find((report) => report.id === reportId);
         if (reportFound) {
             this.currentReport = reportFound;

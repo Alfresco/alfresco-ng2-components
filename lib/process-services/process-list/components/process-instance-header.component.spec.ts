@@ -52,7 +52,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display status as running when process is not complete', () => {
         component.processInstance.ended = null;
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
         expect(valueEl.innerText).toBe('Running');
@@ -60,7 +60,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display status as completed when process is complete', () => {
         component.processInstance.ended = new Date('2016-11-03');
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
         expect(valueEl.innerText).toBe('Completed');
@@ -68,7 +68,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display due date', () => {
         component.processInstance.ended = new Date('2016-11-03');
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-ended"]');
         expect(valueEl.innerText).toBe('Nov 3, 2016');
@@ -76,7 +76,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display placeholder if no due date', () => {
         component.processInstance.ended = null;
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-ended"]');
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT');
@@ -84,7 +84,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display process category', () => {
         component.processInstance.processDefinitionCategory = 'Accounts';
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
         expect(valueEl.innerText).toBe('Accounts');
@@ -92,7 +92,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display placeholder if no process category', () => {
         component.processInstance.processDefinitionCategory = null;
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.CATEGORY_DEFAULT');
@@ -100,7 +100,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display created date', () => {
         component.processInstance.started = new Date('2016-11-03');
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-created"]');
         expect(valueEl.innerText).toBe('Nov 3, 2016');
@@ -108,7 +108,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display started by', () => {
         component.processInstance.startedBy = {firstName:  'Admin', lastName: 'User'};
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-assignee"]');
         expect(valueEl.innerText).toBe('Admin User');
@@ -116,7 +116,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display process instance id', () => {
         component.processInstance.id = '123';
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-id"]');
         expect(valueEl.innerText).toBe('123');
@@ -124,7 +124,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display description', () => {
         component.processInstance.processDefinitionDescription = 'Test process';
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
         expect(valueEl.innerText).toBe('Test process');
@@ -132,7 +132,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display placeholder if no description', () => {
         component.processInstance.processDefinitionDescription = null;
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT');
@@ -140,7 +140,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display businessKey value', () => {
         component.processInstance.businessKey = 'fakeBusinessKey';
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-businessKey"]');
         expect(valueEl.innerText).toBe('fakeBusinessKey');
@@ -148,7 +148,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     it('should display default key if no businessKey', () => {
         component.processInstance.businessKey = null;
-        component.ngOnChanges({});
+        component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-businessKey"]');
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT');
@@ -162,7 +162,7 @@ describe('ProcessInstanceHeaderComponent', () => {
                     'properties': ['status', 'ended']
                 }
             };
-            component.ngOnChanges({});
+            component.ngOnChanges();
             fixture.detectChanges();
             const propertyList = fixture.nativeElement.querySelectorAll('.adf-property-list .adf-property');
             expect(propertyList).toBeDefined();
@@ -174,7 +174,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
         it('should show all the default properties if there is no configuration', async(() => {
             appConfigService.config['adf-process-instance-header'] = {};
-            component.ngOnChanges({});
+            component.ngOnChanges();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const propertyList = fixture.nativeElement.querySelectorAll('.adf-property-list .adf-property');

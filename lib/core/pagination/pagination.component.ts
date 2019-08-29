@@ -170,7 +170,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     get pages(): number[] {
         return Array(this.lastPage)
             .fill('n')
-            .map((item, index) => (index + 1));
+            .map((_, index) => (index + 1));
     }
 
     goNext() {

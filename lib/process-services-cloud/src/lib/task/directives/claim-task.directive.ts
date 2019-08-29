@@ -19,6 +19,7 @@ import { IdentityUserService } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
+    // tslint:disable-next-line: directive-selector
     selector: '[adf-cloud-claim-task]'
 })
 export class ClaimTaskDirective implements OnInit {

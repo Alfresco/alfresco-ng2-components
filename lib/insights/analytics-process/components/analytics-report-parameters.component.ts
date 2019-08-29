@@ -199,7 +199,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         });
         this.reportForm = this.formBuilder.group(formBuilderGroup);
         this.reportForm.valueChanges.subscribe((data) => this.onValueChanged(data));
-        this.reportForm.statusChanges.subscribe((data) => this.onStatusChanged(data));
+        this.reportForm.statusChanges.subscribe(() => this.onStatusChanged());
     }
 
     public getReportParams(reportId: string) {
@@ -251,7 +251,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         }
     }
 
-    onStatusChanged(status: any) {
+    onStatusChanged() {
         if (this.reportForm && !this.reportForm.pending && this.reportForm.dirty) {
             this.formValidState = this.reportForm.valid;
         }

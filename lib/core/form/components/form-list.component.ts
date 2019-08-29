@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../services/form.service';
 
 @Component({
@@ -33,7 +33,7 @@ export class FormListComponent implements OnChanges {
     constructor(protected formService: FormService) {
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         this.getForms();
     }
 

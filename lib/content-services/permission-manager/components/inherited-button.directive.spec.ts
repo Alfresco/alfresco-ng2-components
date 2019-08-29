@@ -57,7 +57,7 @@ describe('InheritPermissionDirective', () => {
 
     it('should be able to add inherited permission', async(() => {
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeNoInherit));
-        spyOn(nodeService, 'updateNode').and.callFake((nodeId, nodeBody) => {
+        spyOn(nodeService, 'updateNode').and.callFake((_, nodeBody) => {
             if (nodeBody.permissions.isInheritanceEnabled) {
                 return of(fakeNodeWithInherit);
             } else {
@@ -77,7 +77,7 @@ describe('InheritPermissionDirective', () => {
 
     it('should be able to remove inherited permission', async(() => {
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithInherit));
-        spyOn(nodeService, 'updateNode').and.callFake((nodeId, nodeBody) => {
+        spyOn(nodeService, 'updateNode').and.callFake((_, nodeBody) => {
             if (nodeBody.permissions.isInheritanceEnabled) {
                 return of(fakeNodeWithInherit);
             } else {

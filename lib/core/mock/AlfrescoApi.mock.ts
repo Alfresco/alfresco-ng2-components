@@ -18,7 +18,7 @@
 /* tslint:disable:adf-file-name  */
 export class AlfrescoApiMock {
 
-    login(username: string, password: string) {
+    login() {
         return new Promise((resolve) => {
             resolve('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
         });

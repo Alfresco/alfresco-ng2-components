@@ -92,17 +92,17 @@ export class FolderActionsService {
 
     private copyNode(nodeEntry: NodeEntry, target?: any, permission?: string) {
         const actionObservable = this.nodeActionsService.copyFolder(nodeEntry.entry, permission);
-        this.prepareHandlers(actionObservable, 'folder', 'copy', target, permission);
+        this.prepareHandlers(actionObservable, target);
         return actionObservable;
     }
 
     private moveNode(nodeEntry: NodeEntry, target?: any, permission?: string) {
         const actionObservable = this.nodeActionsService.moveFolder(nodeEntry.entry, permission);
-        this.prepareHandlers(actionObservable, 'folder', 'move', target, permission);
+        this.prepareHandlers(actionObservable, target);
         return actionObservable;
     }
 
-    private prepareHandlers(actionObservable, type: string, action: string, target?: any, permission?: string): void {
+    private prepareHandlers(actionObservable, target?: any): void {
         actionObservable.subscribe(
             (fileOperationMessage) => {
                 if (target && typeof target.reload === 'function') {
