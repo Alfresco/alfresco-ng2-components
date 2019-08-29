@@ -19,7 +19,6 @@
 
 import { logging } from '@angular-devkit/core';
 import { spawnSync } from 'child_process';
-import * as path from 'path';
 
 export interface PublishArgs {
     tag?: string;
@@ -71,7 +70,7 @@ function _tagImagePerform(args: PublishArgs, tag: string, logger: logging.Logger
     logger.info(response);
 }
 
-function _pushImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
+function _pushImagePerform(args: PublishArgs, logger: logging.Logger) {
     logger.info(`Perform docker push... ${args.dockerRepo}`);
     const response = _exec('docker', ['push', `${args.dockerRepo}`], {}, logger);
     logger.info(response);
@@ -93,7 +92,7 @@ export default async function (args: PublishArgs, logger: logging.Logger) {
             logger.info(`Analyzing tag:${tag} ...`);
             _buildImagePerform(args, tag, logger);
             _tagImagePerform(args, tag, logger);
-            _pushImagePerform(args, tag, logger);
+            _pushImagePerform(args, logger);
             _cleanImagePerform(args, tag, logger);
             logger.info(`tag:${tag} done`);
         });

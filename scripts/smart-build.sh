@@ -33,13 +33,15 @@ then
     exit 0
 fi
 
+echo "The branch name to check is $BRANCH_NAME"
+
 if $GNU; then
  gnu='-gnu'
 else
  gnu=''
 fi
 
-if [ $BRANCH_NAME == 'undefined' ]; then
+if [ $BRANCH_NAME == "undefined" ]; then
     echo "Rebase your branch"
     exit 1
 fi

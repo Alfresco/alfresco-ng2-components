@@ -68,4 +68,4 @@ if $EXEC_VERSION_JSAPI == true; then
 fi
 
 echo "====== Build components ====="
-npm run build-lib || exit 1
+./scripts/build/build-all-lib.sh

@@ -149,6 +149,4 @@ deploy:
 cache:
   directories:
   - node_modules
-  - demo-shell/dist
   - tmp
-  - lib/dist
