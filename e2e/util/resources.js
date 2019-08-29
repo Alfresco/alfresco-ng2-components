@@ -537,6 +537,16 @@ exports.ACTIVITI7_APPS = {
             processwithvariables: "processwithvariables",
             simpleProcess: "simpleprocess",
             dropdownrestprocess: "dropdownrestprocess"
+        },
+        forms: {
+            tabVisibilityFields: {
+                name: "tabvisibilitywithfields",
+                id: "form-a81d4541-95eb-4154-a3f4-12dad0a669f9"
+            },
+            tabVisibilityVars: {
+                name: "tabvisibilitywithvars",
+                id: "form-08649360-2964-4479-a003-257074e21f59"
+            }
         }
     },
     SUB_PROCESS_APP: {
