@@ -37,3 +37,4 @@ export * from './external-content';
 export * from './external-content-link';
 export * from './group.model';
 export * from './form-variable.model';
+export * from './process-variable.model';

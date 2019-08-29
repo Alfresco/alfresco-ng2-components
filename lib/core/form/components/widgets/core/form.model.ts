@@ -36,6 +36,7 @@ import {
 } from './form-field-validator';
 import { FormBaseModel } from '../../form-base.model';
 import { FormVariableModel } from './form-variable.model';
+import { ProcessVariableModel } from './process-variable.model';
 
 export class FormModel extends FormBaseModel {
 
@@ -49,7 +50,7 @@ export class FormModel extends FormBaseModel {
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
     readonly selectedOutcome: string;
 
-    processVariables: any;
+    processVariables: ProcessVariableModel[] = [];
     variables: FormVariableModel[] = [];
 
     constructor(formRepresentationJSON?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
@@ -68,10 +69,9 @@ export class FormModel extends FormBaseModel {
             this.selectedOutcome = formRepresentationJSON.selectedOutcome || {};
             this.className = formRepresentationJSON.className || '';
             this.variables = formRepresentationJSON.variables || [];
+            this.processVariables = formRepresentationJSON.processVariables || [];
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
-
-            this.processVariables = formRepresentationJSON.processVariables;
 
             this.tabs = (formRepresentationJSON.tabs || []).map((t) => {
                 const model = new TabModel(this, t);
