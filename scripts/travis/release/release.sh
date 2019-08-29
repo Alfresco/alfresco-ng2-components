@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+cd $DIR/../../../
+
 if [[ $TRAVIS_BRANCH == "development" ]];
 then
     ./scripts/update-version.sh -gnu -nextalpha || exit 1;
