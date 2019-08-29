@@ -14,7 +14,6 @@ then
 
     if [[ $TRAVIS_BRANCH == "development" ]];
     then
-         #TODO remove when we are going to use the new about
         ./scripts/update-version.sh -gnu -nextalpha || exit 1;
     fi
 
@@ -27,6 +26,7 @@ else
     ./node_modules/@alfresco/adf-cli/bin/adf-cli update-version --alpha --pathPackage "$(pwd)"
 
     npm install;
+    
     ./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
 fi;
 
