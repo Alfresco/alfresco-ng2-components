@@ -79,7 +79,7 @@ export class StartProcessPage {
     }
 
     async selectOption(name): Promise<void> {
-        const selectProcessDropdown: ElementFinder = element(by.cssContainingText('.mat-option-text', name));
+        const selectProcessDropdown: ElementFinder = element(by.xpath(`//mat-option/child::span [text() = ' ${name} ']`));
         await BrowserActions.click(selectProcessDropdown);
     }
 
@@ -99,6 +99,7 @@ export class StartProcessPage {
     }
 
     async clickFormStartProcessButton(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsClickable(this.formStartProcessButton);
         await BrowserActions.click(this.formStartProcessButton);
     }
 
