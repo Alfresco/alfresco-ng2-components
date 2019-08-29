@@ -12,8 +12,13 @@ then
 
     if [[ $TRAVIS_BRANCH == "development" ]];
     then
+        NEXT_VERSION=-nextalpha
+        if [[ $TRAVIS_EVENT_TYPE == "cron" ]];
+        then
+            NEXT_VERSION=-nextbeta
+        fi
          #TODO remove when we are going to use the new about
-        ./scripts/update-version.sh -gnu -nextalpha || exit 1;
+        ./scripts/update-version.sh -gnu $NEXT_VERSION || exit 1;
     fi
 
     node ./scripts/pre-publish.js

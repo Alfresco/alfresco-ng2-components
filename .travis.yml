@@ -37,6 +37,8 @@ stages:
     if: type = pull_request
   - name: Update Children Projects
     if: branch = master AND type = push OR (tag =~ .*beta.*)
+  - name: Release beta tag
+    if: type = cron
 
 addons:
     chrome: stable
@@ -74,6 +76,9 @@ jobs:
 
         - stage: Update Children Projects
           script: ./scripts/travis/update/update-children.sh
+
+        - stage: Release beta tag
+          script: ./scripts/travis/release/git-tag-beta.sh
 
 
         - stage: e2e Test
