@@ -242,7 +242,7 @@ export class FormModel extends FormBaseModel {
                     variable.id === identifier
             );
         }
-        return null;
+        return undefined;
     }
 
     /**
@@ -250,7 +250,7 @@ export class FormModel extends FormBaseModel {
      * Provides additional conversion of types (date, boolean).
      * @param identifier The `name` or `id` value
      */
-    getFormVariableValue(identifier: string): string {
+    getFormVariableValue(identifier: string): any {
         const variable = this.getFormVariable(identifier);
 
         if (variable) {
@@ -264,7 +264,7 @@ export class FormModel extends FormBaseModel {
             }
         }
 
-        return null;
+        return undefined;
     }
 
     /**
