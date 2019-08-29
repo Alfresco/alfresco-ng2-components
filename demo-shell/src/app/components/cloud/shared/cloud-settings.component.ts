@@ -49,7 +49,7 @@ export class CloudSettingsComponent implements OnInit, OnDestroy {
         title: new FormControl(''),
         icon: new FormControl(''),
         visible: new FormControl(true),
-        disable: new FormControl(false)
+        disabled: new FormControl(false)
       });
 
     constructor(private cloudLayoutService: CloudLayoutService) { }
