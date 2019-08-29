@@ -14,7 +14,12 @@ then
 
     if [[ $TRAVIS_BRANCH == "development" ]];
     then
-        ./scripts/update-version.sh -gnu -nextalpha || exit 1;
+        NEXT_VERSION=-nextalpha
+        if [[ $TRAVIS_EVENT_TYPE == "cron" ]];
+        then
+            NEXT_VERSION=-nextbeta
+        fi
+        ./scripts/update-version.sh -gnu $NEXT_VERSION || exit 1;
     fi
 
     node ./scripts/pre-publish.js
