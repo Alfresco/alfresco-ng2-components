@@ -96,7 +96,7 @@ jobs:
               ./scripts/travis/e2e/process-services-cloud-e2e.sh
         - stage: Release on npm
           script:
-          - ./lib/dist/cli/bin/adf-cli npm-publish --npmRegistry $NPM_REGISTRY_ADDRESS --tokenRegistry $NPM_REGISTRY_TOKEN --tag $TAG_NPM --pathProject "$(pwd)"
+              ./scripts/travis/release/release.sh
         - stage: Check bundle
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
