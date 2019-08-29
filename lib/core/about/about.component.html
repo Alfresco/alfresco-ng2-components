@@ -70,47 +70,47 @@
     <adf-datatable [data]="dependencyEntries"></adf-datatable>
 
     <div class="adf-extension-details-container" *ngIf="showExtensions">
-        <h3>{{ 'ABOUT.TITLE' | translate }}</h3>
+        <h3>{{ 'ABOUT.EXTENSIONS.TITLE' | translate }}</h3>
         <mat-table [dataSource]="extensions$ | async">
             <!-- $id Column -->
             <ng-container matColumnDef="$id">
-                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.TABLE_HEADERS.ID' | translate }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.EXTENSIONS.TABLE_HEADERS.ID' | translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.$id}}</mat-cell>
             </ng-container>
 
             <!-- $name Column -->
             <ng-container matColumnDef="$name">
-                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.TABLE_HEADERS.NAME' | translate }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.EXTENSIONS.TABLE_HEADERS.NAME' | translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.$name}}</mat-cell>
             </ng-container>
 
             <!-- $version Column -->
             <ng-container matColumnDef="$version">
-                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.TABLE_HEADERS.VERSION' | translate }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.EXTENSIONS.TABLE_HEADERS.VERSION' | translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.$version}}</mat-cell>
             </ng-container>
 
             <!-- $vendor Column -->
             <ng-container matColumnDef="$vendor">
-                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.TABLE_HEADERS.VENDOR' | translate }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.EXTENSIONS.TABLE_HEADERS.VENDOR' | translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.$vendor}}</mat-cell>
             </ng-container>
 
             <!-- $license Column -->
             <ng-container matColumnDef="$license">
-                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.TABLE_HEADERS.LICENSE' | translate }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.EXTENSIONS.TABLE_HEADERS.LICENSE' | translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.$license}}</mat-cell>
             </ng-container>
 
             <!-- $runtime Column -->
             <ng-container matColumnDef="$runtime">
-                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.TABLE_HEADERS.RUNTIME' | translate }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.EXTENSIONS.TABLE_HEADERS.RUNTIME' | translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.$runtime}}</mat-cell>
             </ng-container>
 
             <!-- $description Column -->
             <ng-container matColumnDef="$description">
-                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.TABLE_HEADERS.DESCRIPTION' | translate }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>{{ 'ABOUT.EXTENSIONS.TABLE_HEADERS.DESCRIPTION' | translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.$description}}</mat-cell>
             </ng-container>
 
