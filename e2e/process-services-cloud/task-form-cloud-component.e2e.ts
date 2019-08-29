@@ -27,7 +27,7 @@ import {
     SettingsPage,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
-    Widget, IdentityService, GroupIdentityService
+    Widget, IdentityService, GroupIdentityService, QueryService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -52,12 +52,13 @@ describe('Task form cloud component', () => {
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
 
-    let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, testUser;
+    let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, testUser, formTaskId;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
+    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
 
     beforeAll(async () => {
-        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
@@ -70,7 +71,7 @@ describe('Task form cloud component', () => {
         await apiService.login(testUser.email, testUser.password);
 
         tasksService = new TasksService(apiService);
-
+        const queryService = new QueryService(apiService);
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
 
         assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
@@ -89,11 +90,16 @@ describe('Task form cloud component', () => {
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
 
-        const processDefinition = await processDefinitionService
+        let processDefinition = await processDefinitionService
             .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+
+        processDefinition = await processDefinitionService.getProcessDefinitionByName('dropdownrestprocess', simpleApp);
+        const formProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+        const formTasks = await queryService.getProcessInstanceTasks(formProcess.entry.id, simpleApp);
+        formTaskId = formTasks.list.entries[0].entry.id;
 
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
@@ -103,20 +109,22 @@ describe('Task form cloud component', () => {
 
     }, 5 * 60 * 1000);
 
+    beforeEach(async () => {
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudComponent.checkApsContainer();
+    });
+
     afterAll(async () => {
         try {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await identityService.deleteIdentityUser(testUser.id);
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
         } catch (error) {
         }
-        await this.alfrescoJsApi.logout();
         await browser.executeScript('window.sessionStorage.clear();');
         await browser.executeScript('window.localStorage.clear();');
     });
 
     it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
-        await navigationBarPage.navigateToProcessServicesCloudPage();
-        await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(candidateBaseApp);
         await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
@@ -124,9 +132,43 @@ describe('Task form cloud component', () => {
         await expect(await taskFormCloudComponent.getReleaseButtonText()).toBe('RELEASE');
     });
 
+    it('[C310366] Should refresh buttons and form after an action is complete', async () => {
+        await appListCloudComponent.goToApp(simpleApp);
+        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        await expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
+
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(formTaskId);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(formTaskId);
+
+        await taskFormCloudComponent.checkFormIsReadOnly();
+        await taskFormCloudComponent.checkClaimButtonIsDisplayed();
+        await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
+        await taskFormCloudComponent.checkReleaseButtonIsNotDisplayed();
+
+        await taskFormCloudComponent.clickClaimButton();
+        await taskFormCloudComponent.checkFormIsDisplayed();
+
+        await taskFormCloudComponent.checkFormIsNotReadOnly();
+        await taskFormCloudComponent.checkClaimButtonIsNotDisplayed();
+        await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
+        await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
+
+        await taskFormCloudComponent.clickCompleteButton();
+        await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(formTaskId);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(formTaskId);
+
+        await taskFormCloudComponent.checkFormIsReadOnly();
+        await taskFormCloudComponent.checkClaimButtonIsNotDisplayed();
+        await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
+        await taskFormCloudComponent.checkReleaseButtonIsNotDisplayed();
+        await taskFormCloudComponent.checkCancelButtonIsDisplayed();
+    });
+
     it('[C310142] Empty content is displayed when having a task without form', async () => {
-        await navigationBarPage.navigateToProcessServicesCloudPage();
-        await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(candidateBaseApp);
         await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
@@ -139,8 +181,6 @@ describe('Task form cloud component', () => {
     });
 
     it('[C310199] Should not be able to complete a task when required field is empty or invalid data is added to a field', async () => {
-        await navigationBarPage.navigateToProcessServicesCloudPage();
-        await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(candidateBaseApp);
         await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(formValidationsTask.entry.name);
@@ -181,8 +221,6 @@ describe('Task form cloud component', () => {
     describe('Complete task - cloud directive', () => {
 
         beforeEach(async () => {
-            await navigationBarPage.navigateToProcessServicesCloudPage();
-            await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(candidateBaseApp);
 
         });
