@@ -375,5 +375,10 @@
       "BREADCRUMB": "Breadcrumb",
       "CURRENT_PAGE": "page"
     }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Open {{ name }}"
+    }
   }
 }
