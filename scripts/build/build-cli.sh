@@ -4,6 +4,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../lib/cli/
 
+npm install -g typescript
+
 echo "====== Cli ======"
 echo "====== Build ======"
 npm run dist
