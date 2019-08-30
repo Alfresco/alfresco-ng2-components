@@ -23,14 +23,12 @@ branches:
 # TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
   - name: Lint & Build Dist
-    if: type != cron
+    if: type = pull_request
+  - name: Lint & Build Dist & Release
+    if: type = push
   - name: Unit test
     if: type != cron
-  - name: Deploy docker
-    if: type = push
   - name: Update Rancher
-    if: type = push
-  - name: Release on npm
     if: type = push
   - name: Check bundle
     if: type = push
@@ -57,13 +55,24 @@ before_install:
 
 jobs:
     include:
+        # Run Only for any PR
         - stage: Lint & Build Dist
-          name:  Build Dist
+          name:  Lint & Build Dist
           script:
+            - ./scripts/lint.sh || exit 1;
             - ./scripts/travis/build/build.sh || exit 1;
-        - stage: Lint & Build Dist
-          name:  Lint
-          script: npm install && ./scripts/lint.sh || exit 1;
+
+
+        # Run Only on Development and master
+        - stage: Lint & Build Dist & Release
+          name:  Lint & Build Dist & Release
+          script:
+            - ./scripts/lint.sh || exit 1;
+            - ./scripts/travis/build/build.sh || exit 1;
+            - ./scripts/travis/release/release.sh
+            - TAG_VERSION=$(./scripts/travis/deploy/tag-travis-branch.sh)
+            - echo "Running the docker with tag" $TAG_VERSION
+            - ./node_modules/@alfresco/adf-cli/bin/adf-cli docker-publish --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --dockerTags "$TAG_VERSION" --pathProject "$(pwd)"
 
 
         - stage: Unit test
@@ -101,21 +110,10 @@ jobs:
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
 
 
-        - stage: Release on npm
-          script: ./scripts/travis/release/release.sh
-
-
         - stage: Check bundle
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           - ./scripts/npm-check-bundles.sh -v ${ADF_VERSION}
-
-
-        - stage: Deploy docker
-          script:
-          - TAG_VERSION=$(./scripts/travis/deploy/tag-travis-branch.sh)
-          - echo "Running the docker with tag" $TAG_VERSION
-          - ./node_modules/@alfresco/adf-cli/bin/adf-cli docker-publish --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --dockerTags "$TAG_VERSION" --pathProject "$(pwd)"
 
 
         - stage: Update Rancher
