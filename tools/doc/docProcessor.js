@@ -9,7 +9,7 @@ var remark = require("remark");
 var frontMatter = require("remark-frontmatter");
 var mdCompact = require("mdast-util-compact");
 
-var si = require("./SourceInfoClasses");
+var si = require("./sourceInfoClasses");
 
 // "Aggregate" data collected over the whole file set.
 var aggData = {};

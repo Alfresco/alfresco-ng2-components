@@ -4,19 +4,12 @@ var fs = require("fs");
 var path = require("path");
 var replaceSection = require("mdast-util-heading-range");
 var remark = require("remark");
-// import * as stringify from "remark-stringify";
-// import * as frontMatter from "remark-frontmatter";
 var ejs = require("ejs");
 var mdNav_1 = require("../mdNav");
 var ngHelpers_1 = require("../ngHelpers");
-var libFolders = ["core", "content-services", "process-services", "insights", "process-services-cloud"];
 var templateFolder = path.resolve("tools", "doc", "templates");
-var excludePatterns = [
-    "**/*.spec.ts"
-];
 var nameExceptions;
 function processDocs(mdCache, aggData, _errorMessages) {
-    //initPhase(aggData);
     nameExceptions = aggData.config.typeNameExceptions;
     var pathnames = Object.keys(mdCache);
     var internalErrors;
@@ -36,36 +29,7 @@ function showErrors(filename, errorMessages) {
     });
     console.log("");
 }
-/*
-function initPhase(aggData) {
-    nameExceptions = aggData.config.typeNameExceptions;
-
-    let app = new Application({
-        exclude: excludePatterns,
-        ignoreCompilerErrors: true,
-        experimentalDecorators: true,
-        tsconfig: "tsconfig.json"
-    });
-
-    let sources = app.expandInputFiles(libFolders.map(folder => {
-        return path.resolve("lib", folder);
-    }));
-
-    aggData.projData = app.convert(sources);
-}
-*/
 function updateFile(tree, pathname, aggData, errorMessages) {
-    /*
-    let compName = angNameToClassName(path.basename(pathname, ".md"));
-    let classRef = aggData.projData.findReflectionByName(compName);
-
-    if (!classRef) {
-        // A doc file with no corresponding class (eg, Document Library Model).
-        return false;
-    }
-
-    let compData = new ComponentInfo(classRef);
-    */
     var className = ngHelpers_1.ngNameToClassName(path.basename(pathname, ".md"), nameExceptions);
     var classTypeMatch = className.match(/component|directive|service/i);
     var compData = aggData.classInfo[className];
@@ -96,38 +60,6 @@ function updateFile(tree, pathname, aggData, errorMessages) {
     }
     return true;
 }
-/*
-function initialCap(str: string) {
-    return str[0].toUpperCase() + str.substr(1);
-}
-
-
-function angNameToClassName(rawName: string) {
-    if (nameExceptions[rawName])
-        return nameExceptions[rawName];
-
-    var name = rawName.replace(/\]|\(|\)/g, '');
-
-    var fileNameSections = name.split('.');
-    var compNameSections = fileNameSections[0].split('-');
-
-    var outCompName = '';
-
-    for (var i = 0; i < compNameSections.length; i++) {
-        outCompName = outCompName + initialCap(compNameSections[i]);
-    }
-
-    var itemTypeIndicator = '';
-
-    if (fileNameSections.length > 1) {
-        itemTypeIndicator = initialCap(fileNameSections[1]);
-    }
-
-    var finalName = outCompName + itemTypeIndicator;
-
-    return finalName;
-}
-*/
 function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
     var result = {};
     var nav = new mdNav_1.MDNav(tree);
@@ -194,10 +126,6 @@ function getMethodDocsFromMD(tree) {
         methItem = methListItems
             .listItem(function (l) { return true; }, i);
     }
-    /*
-    let newRoot = unist.makeRoot([methList.item]);
-    console.log(remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false, gfm: false}).stringify(tree));
-    */
     return result;
 }
 function getMDMethodParams(methItem) {

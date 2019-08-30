@@ -11,7 +11,7 @@ import { ngNameToClassName } from "../ngHelpers";
 
 import {
     ComponentInfo
-} from "../SourceInfoClasses"
+} from "../sourceInfoClasses"
 
 let templateFolder = path.resolve("tools", "doc", "templates");
 
