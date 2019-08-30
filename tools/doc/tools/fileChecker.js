@@ -1,4 +1,5 @@
 "use strict";
+// tslint:disable: no-console
 Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var fs = require("fs");
@@ -16,7 +17,7 @@ function processDocs(mdCache, aggData, errorMessages) {
     var linkRefs = {};
     var imageRefs = {};
     var brokenImageRefs = {};
-    var filters = makeFilepathFilters(aggData.config["fileCheckerFilter"]);
+    var filters = makeFilepathFilters(aggData.config['fileCheckerFilter']);
     pathnames.forEach(function (pathname) {
         var fileBaseName = path.basename(pathname, '.md');
         var tree = mdCache[pathname].mdOutTree;
@@ -86,8 +87,8 @@ function getImagePaths(imageFolder) {
     var files = fs.readdirSync(imageFolder);
     return files.map(function (f) { return path.resolve(imageFolder, f); });
 }
-function makeFilepathFilters(regexes) {
-    return regexes.map(function (r) { return new RegExp(r); });
+function makeFilepathFilters(patterns) {
+    return patterns.map(function (r) { return new RegExp(r); });
 }
 function filterFilepath(filters, filepath) {
     for (var i = 0; i < filters.length; i++) {

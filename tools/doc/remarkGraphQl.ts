@@ -10,25 +10,22 @@ import * as removePosInfo from 'unist-util-remove-position';
 
 import * as MQ from './mqDefs';
 
-let docFilePath = path.resolve('..', '..', 'docs', 'core', 'about.component.md');
-let docSrc = fs.readFileSync(docFilePath, 'utf8');
+const docFilePath = path.resolve('..', '..', 'docs', 'core', 'about.component.md');
+const docSrc = fs.readFileSync(docFilePath, 'utf8');
 
 let tree: MDAST.Root = remark()
-.use(frontMatter, ["yaml"])
-.parse(docSrc);
+    .use(frontMatter, ['yaml'])
+    .parse(docSrc);
 
 tree = removePosInfo(tree);
 
-//console.log(JSON.stringify(tree));
+const schema = buildSchema(MQ.schema);
 
-let schema = buildSchema(MQ.schema);
-
-let root = {
+const root = {
     document: () => new MQ.Root(tree)
 };
 
-
-let query = `
+const query = `
     {
         document {
           metadata(key: "Status")
@@ -47,5 +44,6 @@ let query = `
 `;
 
 graphql(schema, query, root).then((response) => {
+  // tslint:disable-next-line: no-console
   console.log(JSON.stringify(response));
 });

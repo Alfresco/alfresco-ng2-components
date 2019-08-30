@@ -10,15 +10,15 @@ var MQ = require("./mqDefs");
 var docFilePath = path.resolve('..', '..', 'docs', 'core', 'about.component.md');
 var docSrc = fs.readFileSync(docFilePath, 'utf8');
 var tree = remark()
-    .use(frontMatter, ["yaml"])
+    .use(frontMatter, ['yaml'])
     .parse(docSrc);
 tree = removePosInfo(tree);
-//console.log(JSON.stringify(tree));
 var schema = graphql_1.buildSchema(MQ.schema);
 var root = {
     document: function () { return new MQ.Root(tree); }
 };
 var query = "\n    {\n        document {\n          metadata(key: \"Status\")\n          heading {\n            link {\n              text {\n                value\n              }\n            }\n          }\n          paragraph {\n            plaintext\n          }\n        }\n    }\n";
 graphql_1.graphql(schema, query, root).then(function (response) {
+    // tslint:disable-next-line: no-console
     console.log(JSON.stringify(response));
 });

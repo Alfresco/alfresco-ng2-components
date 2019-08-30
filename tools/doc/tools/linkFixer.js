@@ -1,4 +1,5 @@
 "use strict";
+// tslint:disable: no-console
 Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var fs = require("fs");

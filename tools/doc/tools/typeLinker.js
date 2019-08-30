@@ -1,12 +1,12 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var unist = require("../unistHelpers");
 var ngHelpers = require("../ngHelpers");
 var includedNodeTypes = [
-    "root", "paragraph", "inlineCode", "list", "listItem",
-    "table", "tableRow", "tableCell", "emphasis", "strong",
-    "link", "text"
+    'root', 'paragraph', 'inlineCode', 'list', 'listItem',
+    'table', 'tableRow', 'tableCell', 'emphasis', 'strong',
+    'link', 'text'
 ];
 var externalNameLinks;
 var linkOverrides;
@@ -28,8 +28,8 @@ function initPhase(aggData, mdCache) {
     aggData.nameLookup = new SplitNameLookup();
     var docFilePaths = Object.keys(mdCache);
     docFilePaths.forEach(function (docFilePath) {
-        var relPath = docFilePath.substring(docFilePath.indexOf('docs') + 5).replace(/\\/g, "/");
-        var compName = path.basename(relPath, ".md");
+        var relPath = docFilePath.substring(docFilePath.indexOf('docs') + 5).replace(/\\/g, '/');
+        var compName = path.basename(relPath, '.md');
         aggData.docFiles[compName] = relPath;
     });
     var classNames = Object.keys(aggData.classInfo);
@@ -46,33 +46,33 @@ function updateFile(tree, pathname, aggData) {
         if (!includedNodeTypes.includes(node.type)) {
             return;
         }
-        if (node.type === "link") {
-            if (node.children[0] && ((node.children[0].type === "inlineCode") ||
-                (node.children[0].type === "text"))) {
+        if (node.type === 'link') {
+            if (node.children[0] && ((node.children[0].type === 'inlineCode') ||
+                (node.children[0].type === 'text'))) {
                 var link = resolveTypeLink(aggData, pathname, node.children[0].value);
                 if (link) {
                     convertNodeToTypeLink(node, node.children[0].value, link);
                 }
             }
         }
-        else if ((node.children) && (node.type !== "heading")) {
+        else if ((node.children) && (node.type !== 'heading')) {
             node.children.forEach(function (child, index) {
-                if ((child.type === "text") || (child.type === "inlineCode")) {
+                var _a;
+                if ((child.type === 'text') || (child.type === 'inlineCode')) {
                     var newNodes = handleLinksInBodyText(aggData, pathname, child.value, child.type === 'inlineCode');
                     (_a = node.children).splice.apply(_a, [index, 1].concat(newNodes));
                 }
                 else {
                     traverseMDTree(child);
                 }
-                var _a;
             });
         }
     }
 }
-var SplitNameNode = (function () {
+var SplitNameNode = /** @class */ (function () {
     function SplitNameNode(key, value) {
-        if (key === void 0) { key = ""; }
-        if (value === void 0) { value = ""; }
+        if (key === void 0) { key = ''; }
+        if (value === void 0) { value = ''; }
         this.key = key;
         this.value = value;
         this.children = {};
@@ -82,21 +82,21 @@ var SplitNameNode = (function () {
     };
     return SplitNameNode;
 }());
-var SplitNameMatchElement = (function () {
+var SplitNameMatchElement = /** @class */ (function () {
     function SplitNameMatchElement(node, textPos) {
         this.node = node;
         this.textPos = textPos;
     }
     return SplitNameMatchElement;
 }());
-var SplitNameMatchResult = (function () {
+var SplitNameMatchResult = /** @class */ (function () {
     function SplitNameMatchResult(value, startPos) {
         this.value = value;
         this.startPos = startPos;
     }
     return SplitNameMatchResult;
 }());
-var SplitNameMatcher = (function () {
+var SplitNameMatcher = /** @class */ (function () {
     function SplitNameMatcher(root) {
         this.root = root;
         this.reset();
@@ -142,17 +142,17 @@ var SplitNameMatcher = (function () {
     };
     return SplitNameMatcher;
 }());
-var SplitNameLookup = (function () {
+var SplitNameLookup = /** @class */ (function () {
     function SplitNameLookup() {
         this.root = new SplitNameNode();
     }
     SplitNameLookup.prototype.addName = function (name) {
-        var spacedName = name.replace(/([A-Z])/g, " $1");
-        var segments = spacedName.trim().toLowerCase().split(" ");
+        var spacedName = name.replace(/([A-Z])/g, ' $1');
+        var segments = spacedName.trim().toLowerCase().split(' ');
         var currNode = this.root;
         segments.forEach(function (segment, index) {
-            var value = "";
-            if (index == (segments.length - 1)) {
+            var value = '';
+            if (index === (segments.length - 1)) {
                 value = name;
             }
             var childNode = currNode.children[segment];
@@ -165,10 +165,10 @@ var SplitNameLookup = (function () {
     };
     return SplitNameLookup;
 }());
-var WordScanner = (function () {
+var WordScanner = /** @class */ (function () {
     function WordScanner(text) {
         this.text = text;
-        this.separators = " \n\r\t.;:<>[]&|";
+        this.separators = ' \n\r\t.;:<>[]&|';
         this.index = 0;
         this.nextSeparator = 0;
         this.next();
@@ -208,9 +208,9 @@ function handleLinksInBodyText(aggData, docFilePath, text, wrapInlineCode) {
     var matcher = new SplitNameMatcher(aggData.nameLookup.root);
     for (var scanner = new WordScanner(text); !scanner.finished(); scanner.next()) {
         var word = scanner.current
-            .replace(/'s$/, "")
-            .replace(/^[;:,\."']+/g, "")
-            .replace(/[;:,\."']+$/g, "");
+            .replace(/'s$/, '')
+            .replace(/^[;:,\."']+/g, '')
+            .replace(/[;:,\."']+$/g, '');
         var link = resolveTypeLink(aggData, docFilePath, word);
         var matchStart = void 0;
         if (!link) {
@@ -261,13 +261,9 @@ function handleLinksInBodyText(aggData, docFilePath, text, wrapInlineCode) {
 function resolveTypeLink(aggData, docFilePath, text) {
     var possTypeName = cleanTypeName(text);
     if (possTypeName === 'constructor') {
-        return "";
+        return '';
     }
-    /*
-    let ref: Reflection = aggData.projData.findReflectionByName(possTypeName);
-*/
     var classInfo = aggData.classInfo[possTypeName];
-    //if (ref && isLinkable(ref.kind)) {
     if (linkOverrides[possTypeName.toLowerCase()]) {
         return '';
     }
@@ -277,16 +273,14 @@ function resolveTypeLink(aggData, docFilePath, text) {
     else if (classInfo) {
         var kebabName = ngHelpers.kebabifyClassName(possTypeName);
         var possDocFile = aggData.docFiles[kebabName];
-        //let url = "../../" + classInfo.sourcePath;
         var url = fixRelSrcUrl(docFilePath, classInfo.sourcePath);
         if (possDocFile) {
-            //url = "../" + possDocFile;
             url = fixRelDocUrl(docFilePath, possDocFile);
         }
         return url;
     }
     else {
-        return "";
+        return '';
     }
 }
 function fixRelSrcUrl(docPath, srcPath) {
@@ -313,13 +307,13 @@ function cleanTypeName(text) {
         return matches[1];
     }
     else {
-        return text.replace(/\[\]$/, "");
+        return text.replace(/\[\]$/, '');
     }
 }
 function convertNodeToTypeLink(node, text, url, title) {
     if (title === void 0) { title = null; }
     var linkDisplayText = unist.makeInlineCode(text);
-    node.type = "link";
+    node.type = 'link';
     node.title = title;
     node.url = url;
     node.children = [linkDisplayText];

@@ -1,4 +1,5 @@
 "use strict";
+// tslint:disable: no-console
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var path = require("path");
@@ -7,7 +8,7 @@ var remark = require("remark");
 var ejs = require("ejs");
 var mdNav_1 = require("../mdNav");
 var ngHelpers_1 = require("../ngHelpers");
-var templateFolder = path.resolve("tools", "doc", "templates");
+var templateFolder = path.resolve('tools', 'doc', 'templates');
 var nameExceptions;
 function processDocs(mdCache, aggData, _errorMessages) {
     nameExceptions = aggData.config.typeNameExceptions;
@@ -25,31 +26,31 @@ exports.processDocs = processDocs;
 function showErrors(filename, errorMessages) {
     console.log(filename);
     errorMessages.forEach(function (message) {
-        console.log("    " + message);
+        console.log('    ' + message);
     });
-    console.log("");
+    console.log('');
 }
 function updateFile(tree, pathname, aggData, errorMessages) {
-    var className = ngHelpers_1.ngNameToClassName(path.basename(pathname, ".md"), nameExceptions);
+    var className = ngHelpers_1.ngNameToClassName(path.basename(pathname, '.md'), nameExceptions);
     var classTypeMatch = className.match(/component|directive|service/i);
     var compData = aggData.classInfo[className];
     if (classTypeMatch && compData) {
         var classType = classTypeMatch[0].toLowerCase();
         // Copy docs back from the .md file when the JSDocs are empty.
-        var inputMD = getPropDocsFromMD(tree, "Properties", 3);
-        var outputMD = getPropDocsFromMD(tree, "Events", 2);
+        var inputMD = getPropDocsFromMD(tree, 'Properties', 3);
+        var outputMD = getPropDocsFromMD(tree, 'Events', 2);
         updatePropDocsFromMD(compData, inputMD, outputMD, errorMessages);
-        if (classType === "service") {
+        if (classType === 'service') {
             var methodMD = getMethodDocsFromMD(tree);
             updateMethodDocsFromMD(compData, methodMD, errorMessages);
         }
-        var templateName = path.resolve(templateFolder, classType + ".ejs");
-        var templateSource = fs.readFileSync(templateName, "utf8");
+        var templateName = path.resolve(templateFolder, classType + '.ejs');
+        var templateSource = fs.readFileSync(templateName, 'utf8');
         var template = ejs.compile(templateSource);
         var mdText = template(compData);
-        mdText = mdText.replace(/^ +\|/mg, "|");
+        mdText = mdText.replace(/^ +\|/mg, '|');
         var newSection_1 = remark().parse(mdText.trim()).children;
-        replaceSection(tree, "Class members", function (before, section, after) {
+        replaceSection(tree, 'Class members', function (before, section, after) {
             newSection_1.unshift(before);
             newSection_1.push(after);
             return newSection_1;
@@ -65,11 +66,11 @@ function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
     var nav = new mdNav_1.MDNav(tree);
     var classMemHeading = nav
         .heading(function (h) {
-        return (h.children[0].type === "text") && (h.children[0].value === "Class members");
+        return (h.children[0].type === 'text') && (h.children[0].value === 'Class members');
     });
     var propsTable = classMemHeading
         .heading(function (h) {
-        return (h.children[0].type === "text") && (h.children[0].value === sectionHeading);
+        return (h.children[0].type === 'text') && (h.children[0].value === sectionHeading);
     }).table();
     var propTableRow = propsTable.childNav
         .tableRow(function () { return true; }, 1).childNav;
@@ -95,11 +96,11 @@ function getMethodDocsFromMD(tree) {
     var nav = new mdNav_1.MDNav(tree);
     var classMemHeading = nav
         .heading(function (h) {
-        return (h.children[0].type === "text") && (h.children[0].value === "Class members");
+        return (h.children[0].type === 'text') && (h.children[0].value === 'Class members');
     });
     var methListItems = classMemHeading
         .heading(function (h) {
-        return (h.children[0].type === "text") && (h.children[0].value === "Methods");
+        return (h.children[0].type === 'text') && (h.children[0].value === 'Methods');
     }).list().childNav;
     var methItem = methListItems
         .listItem();
@@ -118,8 +119,8 @@ function getMethodDocsFromMD(tree) {
                 .text().value;
             var params = getMDMethodParams(methItem);
             result[methName] = {
-                "docText": methDoc.replace(/^\n/, ""),
-                "params": params
+                'docText': methDoc.replace(/^\n/, ''),
+                'params': params
             };
         }
         i++;
@@ -139,7 +140,7 @@ function getMDMethodParams(methItem) {
             .emph().childNav;
         var paramName;
         if (!paramNameNode.empty) {
-            paramName = paramNameNode.text().item.value.replace(/:/, "");
+            paramName = paramNameNode.text().item.value.replace(/:/, '');
         }
         else {
             paramName = paramListItem.childNav
@@ -149,8 +150,8 @@ function getMDMethodParams(methItem) {
         }
         var paramDoc = paramListItem.childNav
             .paragraph().childNav
-            .text(function (t) { return true; }, 1).value; //item.value;
-        result[paramName] = paramDoc.replace(/^[ -]+/, "");
+            .text(function (t) { return true; }, 1).value; // item.value;
+        result[paramName] = paramDoc.replace(/^[ -]+/, '');
     });
     return result;
 }

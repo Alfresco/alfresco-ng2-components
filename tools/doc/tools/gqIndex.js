@@ -1,4 +1,5 @@
 "use strict";
+// tslint:disable: no-console
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var path = require("path");
@@ -21,7 +22,7 @@ function processDocs(mdCache, aggData) {
     var indexFilePath = path.resolve(aggData['rootFolder'], 'docs', 'README.md');
     var indexFileText = fs.readFileSync(indexFilePath, 'utf8');
     var indexMD = remark()
-        .use(frontMatter, ["yaml"])
+        .use(frontMatter, ['yaml'])
         .parse(indexFileText);
     var schema = graphql_1.buildSchema(MQ.schema);
     libNamesList.forEach(function (libName) {
@@ -31,7 +32,7 @@ function processDocs(mdCache, aggData) {
                 console.log(JSON.stringify(response));
             }
             else {
-                //console.log(template(response['data']));
+                // console.log(template(response['data']));
                 var newSection_1 = remark().parse(template(response['data'])).children;
                 replaceZone(indexMD, libName, function (start, _oldZone, end) {
                     newSection_1.unshift(start);
@@ -40,7 +41,7 @@ function processDocs(mdCache, aggData) {
                 });
                 var outText = remark()
                     .use(frontMatter, { type: 'yaml', fence: '---' })
-                    .data("settings", { paddedTable: false, gfm: false })
+                    .data('settings', { paddedTable: false, gfm: false })
                     .stringify(indexMD);
                 fs.writeFileSync(indexFilePath, outText);
             }

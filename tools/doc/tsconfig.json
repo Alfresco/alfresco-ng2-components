@@ -12,8 +12,13 @@
   "files": [
     "remarkGraphQl.ts",
     "mqDefs.ts",
+    "tools/fileChecker.ts",
     "tools/gqIndex.ts",
     "tools/linkFixer.ts",
-    "tools/tsInfo.ts"
+    "tools/sourceLinker.ts",
+    "tools/tsInfo.ts",
+    "tools/tutorialIndex.ts",
+    "tools/typeLinker.ts"
+    // "reviewChecker.ts"
   ]
 }
