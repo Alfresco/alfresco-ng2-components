@@ -26,11 +26,11 @@ stages:
     if: type = pull_request
   - name: Lint & Build Dist & Release
     if: type = push
+  - name: Check bundle
+    if: type = push
   - name: Unit test
     if: type != cron
   - name: Update Rancher
-    if: type = push
-  - name: Check bundle
     if: type = push
   - name: e2e Test
     if: type != cron
