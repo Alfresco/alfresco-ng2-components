@@ -117,6 +117,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     multiselect: boolean = false;
 
+    /** Toggles the sticky header mode. */
     @Input()
     stickyHeader: boolean = false;
 
