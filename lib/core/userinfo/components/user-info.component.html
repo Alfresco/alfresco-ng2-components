@@ -1,5 +1,5 @@
-<div id="userinfo_container" [class.adf-userinfo-name-right]="showOnRight()" (keyup)="onKeyPress($event)"
-    class="adf-userinfo-container" *ngIf="isLoggedIn()">
+<div id="userinfo_container" [class.adf-userinfo-name-right]="showOnRight" (keyup)="onKeyPress($event)"
+    class="adf-userinfo-container" *ngIf="isLoggedIn">
 
     <ng-container *ngIf="showName">
         <span *ngIf="identityUser$ | async as identityUser; else showBpmAndEcmUserFullNames" id="adf-userinfo-identity-name-display"
