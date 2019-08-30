@@ -21,7 +21,8 @@ import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
-import { checkboxVisibilityForm, multipleCheckboxVisibilityForm } from '../../resources/forms/checkbox-visibility-condition';
+import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
+import { multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
 
 describe('Visibility conditions - cloud', () => {
 
@@ -30,15 +31,16 @@ describe('Visibility conditions - cloud', () => {
 
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudDemoPage();
-    const checkboxVisibilityFormJson = JSON.parse(checkboxVisibilityForm);
-    const multipleCheckboxVisibilityFormJson = JSON.parse(multipleCheckboxVisibilityForm);
     const widget = new Widget();
 
     let visibleCheckbox;
 
     const widgets = {
         textOneId: 'textOne',
-        textTwoId: 'textTwo'
+        textTwoId: 'textTwo',
+        textThreeId: 'textThree',
+        checkboxBasicVariable: 'CheckboxBasicVariableField',
+        checkboxBasicField: 'CheckboxBasicFieldValue'
     };
 
     const value = {
@@ -179,5 +181,70 @@ describe('Visibility conditions - cloud', () => {
 
         await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkbox1);
+
+    });
+
+    it('[C309650] Should be able to see Checkbox widget when has multiple visibility conditions and next condition operators', async () => {
+        let text1, text2;
+
+        await formCloudDemoPage.setConfigToEditor(multipleVisibilityFormJson);
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+        text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
+        text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
+
+        await expect(text1).toEqual('');
+        await expect(text2).toEqual('');
+
+        await widget.textWidget().setValue(widgets.textOneId, 'aaa');
+        text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
+        text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
+
+        await expect(text1).toEqual('aaa');
+        await expect(text2).toEqual('');
+        await widget.textWidget().isWidgetVisible(widgets.checkboxBasicVariable);
+
+        await widget.textWidget().setValue(widgets.textOneId, 'bbb');
+        text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
+        text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
+
+        await expect(text1).toEqual('bbb');
+        await expect(text2).toEqual('');
+        await widget.textWidget().isWidgetVisible(widgets.checkboxBasicField);
+
+        await widget.textWidget().setValue(widgets.textTwoId, 'aaa');
+        text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
+        text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
+
+        await expect(text1).toEqual('bbb');
+        await expect(text2).toEqual('aaa');
+        await widget.textWidget().isWidgetNotVisible(widgets.checkboxBasicField);
+
+        await widget.textWidget().setValue(widgets.textOneId, 'aaa');
+        text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
+        text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
+
+        await expect(text1).toEqual('aaa');
+        await expect(text2).toEqual('aaa');
+        await widget.textWidget().isWidgetNotVisible(widgets.checkboxBasicField);
+    });
+
+    it('[C312443] Should be able to see Checkbox widget when has multiple visibility conditions and OR NOT next condition operators', async () => {
+        await formCloudDemoPage.setConfigToEditor(multipleVisibilityFormJson);
+
+        await widget.textWidget().setValue(widgets.textTwoId, 'test');
+        await widget.textWidget().setValue(widgets.textThreeId, 'test');
+        await widget.textWidget().isWidgetNotVisible(widgets.textOneId);
+
+        await widget.textWidget().setValue(widgets.textTwoId, 'test');
+        await widget.textWidget().setValue(widgets.textThreeId, 'something');
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+
+        await widget.textWidget().setValue(widgets.textTwoId, 'something');
+        await widget.textWidget().setValue(widgets.textThreeId, 'test');
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+
+        await widget.textWidget().setValue(widgets.textTwoId, 'something');
+        await widget.textWidget().setValue(widgets.textThreeId, 'something');
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
     });
 });
