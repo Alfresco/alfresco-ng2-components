@@ -63,7 +63,7 @@ jobs:
             - ./scripts/travis/build/build.sh || exit 1;
         - stage: Lint & Build Dist
           name:  Lint
-          script: ./scripts/lint.sh || exit 1;
+          script: npm install && ./scripts/lint.sh || exit 1;
 
 
         - stage: Unit test
