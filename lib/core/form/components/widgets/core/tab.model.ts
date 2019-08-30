@@ -38,7 +38,7 @@ export class TabModel extends FormWidgetModel {
 
         if (json) {
             this.title = json.title;
-            this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
+            this.visibilityCondition = new WidgetVisibilityModel(json.visibilityCondition);
         }
     }
 }

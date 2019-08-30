@@ -34,7 +34,7 @@ import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { fakeTaskProcessVariableModels,
         fakeFormJson, formTest,
         formValues, complexVisibilityJsonVisible,
-        complexVisibilityJsonNotVisible } from 'core/mock/form/widget-visibility.service.mock';
+        complexVisibilityJsonNotVisible, tabVisibilityJsonMock } from 'core/mock/form/widget-visibility.service.mock';
 
 declare let jasmine: any;
 
@@ -929,6 +929,7 @@ describe('WidgetVisibilityService', () => {
     describe('Visibility based on form variables', () => {
 
         let fakeFormWithVariables = new FormModel(fakeFormJson);
+        const fakeTabVisibilityModel = new FormModel(tabVisibilityJsonMock);
         const complexVisibilityModel = new FormModel(complexVisibilityJsonVisible);
         const complexVisibilityJsonNotVisibleModel = new FormModel(complexVisibilityJsonNotVisible);
         let visibilityObjTest: WidgetVisibilityModel;
@@ -1012,6 +1013,19 @@ describe('WidgetVisibilityService', () => {
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
+        });
+
+        it('should validate visiblity for multiple tabs', () => {
+            visibilityObjTest.leftFormFieldId = 'label';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightValue = 'text';
+
+            service.refreshVisibility(fakeTabVisibilityModel);
+            expect(fakeTabVisibilityModel.tabs[1].isVisible).toBeFalsy();
+
+            fakeTabVisibilityModel.getFieldById('label').value = 'text';
+            service.refreshVisibility(fakeTabVisibilityModel);
+            expect(fakeTabVisibilityModel.tabs[1].isVisible).toBeTruthy();
         });
 
     });
