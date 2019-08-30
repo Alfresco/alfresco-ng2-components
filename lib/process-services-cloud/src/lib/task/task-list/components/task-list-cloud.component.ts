@@ -135,10 +135,6 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     actionsPosition: string = 'right'; // left|right
 
-    /** Toggles the sticky header mode. */
-    @Input()
-    stickyHeader: boolean = false;
-
     /** Toggles custom context menu for the component. */
     @Input()
     showContextMenu: boolean = false;
