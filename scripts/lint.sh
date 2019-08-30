@@ -10,6 +10,8 @@ show_help() {
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIR/../"
 
+npm install
+
 echo "====== Parallel lint ====="
 
 npx concurrently -s "all" "npm run lint-lib || exit 1" "npm run stylelint || exit 1" "npm run spellcheck || exit " "ng lint dev || exit 1" "npm run lint-e2e || exit 1" || exit 1
