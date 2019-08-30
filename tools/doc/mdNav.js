@@ -51,105 +51,105 @@ var MDNav = /** @class */ (function () {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "emphasis" && test(h);
+            return h.type === 'emphasis' && test(h);
         }, index);
     };
     MDNav.prototype.heading = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "heading" && test(h);
+            return h.type === 'heading' && test(h);
         }, index);
     };
     MDNav.prototype.headings = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.findAll(function (h) {
-            return h.type === "heading" && test(h);
+            return h.type === 'heading' && test(h);
         }, index);
     };
     MDNav.prototype.html = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "html" && test(h);
+            return h.type === 'html' && test(h);
         }, index);
     };
     MDNav.prototype.link = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "link" && test(h);
+            return h.type === 'link' && test(h);
         }, index);
     };
     MDNav.prototype.links = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.findAll(function (h) {
-            return h.type === "link" && test(h);
+            return h.type === 'link' && test(h);
         }, index);
     };
     MDNav.prototype.list = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "list" && test(h);
+            return h.type === 'list' && test(h);
         }, index);
     };
     MDNav.prototype.listItem = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "listItem" && test(h);
+            return h.type === 'listItem' && test(h);
         }, index);
     };
     MDNav.prototype.listItems = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.findAll(function (h) {
-            return h.type === "listItem" && test(h);
+            return h.type === 'listItem' && test(h);
         }, index);
     };
     MDNav.prototype.paragraph = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "paragraph" && test(h);
+            return h.type === 'paragraph' && test(h);
         }, index);
     };
     MDNav.prototype.strong = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "strong" && test(h);
+            return h.type === 'strong' && test(h);
         }, index);
     };
     MDNav.prototype.table = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "table" && test(h);
+            return h.type === 'table' && test(h);
         }, index);
     };
     MDNav.prototype.tableRow = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "tableRow" && test(h);
+            return h.type === 'tableRow' && test(h);
         }, index);
     };
     MDNav.prototype.tableCell = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "tableCell" && test(h);
+            return h.type === 'tableCell' && test(h);
         }, index);
     };
     MDNav.prototype.text = function (test, index) {
         if (test === void 0) { test = function () { return true; }; }
         if (index === void 0) { index = 0; }
         return this.find(function (h) {
-            return h.type === "text" && test(h);
+            return h.type === 'text' && test(h);
         }, index);
     };
     Object.defineProperty(MDNav.prototype, "item", {
@@ -182,11 +182,11 @@ var MDNav = /** @class */ (function () {
     });
     Object.defineProperty(MDNav.prototype, "value", {
         get: function () {
-            if (this.item && this.item["value"]) {
+            if (this.item && this.item['value']) {
                 return this.item.value;
             }
             else {
-                return "";
+                return '';
             }
         },
         enumerable: true,
@@ -195,20 +195,20 @@ var MDNav = /** @class */ (function () {
     Object.defineProperty(MDNav.prototype, "textValue", {
         get: function () {
             if (this.item) {
-                if (this.item["value"]) {
+                if (this.item['value']) {
                     return this.item.value;
                 }
                 else if (this.item.children &&
                     (this.item.children.length > 0) &&
-                    (this.item.children[0].type === "text")) {
+                    (this.item.children[0].type === 'text')) {
                     return this.item.children[0].value;
                 }
                 else {
-                    return "";
+                    return '';
                 }
             }
             else {
-                return "";
+                return '';
             }
         },
         enumerable: true,

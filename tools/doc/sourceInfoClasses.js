@@ -1,44 +1,46 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var undocMethodNames = {
-    "ngOnChanges": 1
-};
+var skipMethodNames = [
+    'ngOnChanges',
+    'ngOnDestroy',
+    'ngOnInit'
+];
 var PropInfo = /** @class */ (function () {
     function PropInfo(sourceData) {
         var _this = this;
         this.errorMessages = [];
         this.name = sourceData.name;
-        this.docText = sourceData.summary || "";
-        this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
-        var tempDefaultVal = sourceData.syntax["return"].defaultValue;
-        this.defaultValue = tempDefaultVal ? tempDefaultVal.toString() : "";
-        this.defaultValue = this.defaultValue.replace(/\|/, "\\|");
-        this.type = sourceData.syntax["return"].type || "";
-        this.type = this.type.toString().replace(/\|/, "\\|");
+        this.docText = sourceData.summary || '';
+        this.docText = this.docText.replace(/[\n\r]+/g, ' ').trim();
+        var tempDefaultVal = sourceData.syntax['return'].defaultValue;
+        this.defaultValue = tempDefaultVal ? tempDefaultVal.toString() : '';
+        this.defaultValue = this.defaultValue.replace(/\|/, '\\|');
+        this.type = sourceData.syntax['return'].type || '';
+        this.type = this.type.toString().replace(/\|/, '\\|');
         if (sourceData.tags) {
-            var depTag = sourceData.tags.find(function (tag) { return tag.name === "deprecated"; });
+            var depTag = sourceData.tags.find(function (tag) { return tag.name === 'deprecated'; });
             if (depTag) {
                 this.isDeprecated = true;
-                this.docText = "(**Deprecated:** " + depTag.text.replace(/[\n\r]+/g, " ").trim() + ") " + this.docText;
+                this.docText = '(**Deprecated:** ' + depTag.text.replace(/[\n\r]+/g, ' ').trim() + ') ' + this.docText;
             }
         }
         this.isInput = false;
         this.isOutput = false;
         if (sourceData.decorators) {
             sourceData.decorators.forEach(function (dec) {
-                //console.log(dec);
-                if (dec.name === "Input") {
+                if (dec.name === 'Input') {
                     _this.isInput = true;
                     if (dec.arguments) {
-                        var bindingName = dec.arguments["bindingPropertyName"];
-                        if (bindingName && (bindingName !== ""))
-                            _this.name = bindingName.replace(/['"]/g, "");
+                        var bindingName = dec.arguments['bindingPropertyName'];
+                        if (bindingName && (bindingName !== '')) {
+                            _this.name = bindingName.replace(/['"]/g, '');
+                        }
                     }
                     if (!_this.docText && !_this.isDeprecated) {
                         _this.errorMessages.push("Warning: Input \"" + sourceData.name + "\" has no doc text.");
                     }
                 }
-                if (dec.name === "Output") {
+                if (dec.name === 'Output') {
                     _this.isOutput = true;
                     if (!_this.docText && !_this.isDeprecated) {
                         _this.errorMessages.push("Warning: Output \"" + sourceData.name + "\" has no doc text.");
@@ -57,26 +59,27 @@ var PropInfo = /** @class */ (function () {
     return PropInfo;
 }());
 exports.PropInfo = PropInfo;
-;
 var ParamInfo = /** @class */ (function () {
     function ParamInfo(sourceData) {
         this.name = sourceData.id;
-        this.type = sourceData.type.toString().replace(/\s/g, "");
+        this.type = sourceData.type.toString().replace(/\s/g, '');
         this.defaultValue = sourceData.defaultValue;
-        this.docText = sourceData.description.replace(/[\n\r]+/g, " ").trim();
+        this.docText = sourceData.description.replace(/[\n\r]+/g, ' ').trim();
         this.isOptional = false;
         if (sourceData.flags) {
-            var flag = sourceData.flags.find(function (flag) { return flag.name === "isOptional"; });
+            var flag = sourceData.flags.find(function (sourceFlag) { return sourceFlag.name === 'isOptional'; });
             if (flag) {
                 this.isOptional = true;
             }
         }
         this.combined = this.name;
-        if (this.isOptional)
-            this.combined += "?";
+        if (this.isOptional) {
+            this.combined += '?';
+        }
         this.combined += ": `" + this.type + "`";
-        if (this.defaultValue !== "")
+        if (this.defaultValue !== '') {
             this.combined += " = `" + this.defaultValue + "`";
+        }
     }
     return ParamInfo;
 }());
@@ -86,16 +89,16 @@ var MethodSigInfo = /** @class */ (function () {
         var _this = this;
         this.errorMessages = [];
         this.name = sourceData.name;
-        this.docText = sourceData.summary || "";
-        this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
+        this.docText = sourceData.summary || '';
+        this.docText = this.docText.replace(/[\n\r]+/g, ' ').trim();
         if (!this.docText) {
             this.errorMessages.push("Warning: method \"" + sourceData.name + "\" has no doc text.");
         }
-        this.returnType = sourceData.syntax["return"].type || "";
-        this.returnType = this.returnType.toString().replace(/\s/g, "");
-        this.returnsSomething = this.returnType && (this.returnType !== "void");
-        this.returnDocText = sourceData.syntax["return"].summary || "";
-        if (this.returnDocText.toLowerCase() === "nothing") {
+        this.returnType = sourceData.syntax['return'].type || '';
+        this.returnType = this.returnType.toString().replace(/\s/g, '');
+        this.returnsSomething = this.returnType && (this.returnType !== 'void');
+        this.returnDocText = sourceData.syntax['return'].summary || '';
+        if (this.returnDocText.toLowerCase() === 'nothing') {
             this.returnsSomething = false;
         }
         if (this.returnsSomething && !this.returnDocText) {
@@ -103,10 +106,10 @@ var MethodSigInfo = /** @class */ (function () {
         }
         this.isDeprecated = false;
         if (sourceData.tags) {
-            var depTag = sourceData.tags.find(function (tag) { return tag.name === "deprecated"; });
+            var depTag = sourceData.tags.find(function (tag) { return tag.name === 'deprecated'; });
             if (depTag) {
                 this.isDeprecated = true;
-                this.docText = "(**Deprecated:** " + depTag.text.replace(/[\n\r]+/g, " ").trim() + ") " + this.docText;
+                this.docText = '(**Deprecated:** ' + depTag.text.replace(/[\n\r]+/g, ' ').trim() + ') ' + this.docText;
             }
         }
         this.params = [];
@@ -121,7 +124,7 @@ var MethodSigInfo = /** @class */ (function () {
                 paramStrings.push(param.combined);
             });
         }
-        this.signature = "(" + paramStrings.join(", ") + ")";
+        this.signature = '(' + paramStrings.join(', ') + ')';
     }
     Object.defineProperty(MethodSigInfo.prototype, "errors", {
         get: function () {
@@ -150,8 +153,8 @@ var ComponentInfo = /** @class */ (function () {
         this.methods = [];
         sourceData.items.forEach(function (item) {
             switch (item.type) {
-                case "property":
-                case "accessor":
+                case 'property':
+                case 'accessor':
                     var prop = new PropInfo(item);
                     _this.properties.push(prop);
                     if (prop.isInput) {
@@ -161,11 +164,11 @@ var ComponentInfo = /** @class */ (function () {
                         _this.hasOutputs = true;
                     }
                     break;
-                case "method":
+                case 'method':
                     if (item.flags && (item.flags.length > 0) &&
-                        !item.flags.find(function (flag) { return flag.name === "isPrivate"; }) &&
-                        !item.flags.find(function (flag) { return flag.name === "isProtected"; }) &&
-                        !undocMethodNames[item.name]) {
+                        !item.flags.find(function (flag) { return flag.name === 'isPrivate'; }) &&
+                        !item.flags.find(function (flag) { return flag.name === 'isProtected'; }) &&
+                        !skipMethodNames.includes(item.name)) {
                         _this.methods.push(new MethodSigInfo(item));
                         _this.hasMethods = true;
                     }

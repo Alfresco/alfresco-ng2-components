@@ -100,23 +100,23 @@ export class UserInfoComponent implements OnInit {
         }
     }
 
-    isLoggedIn(): boolean {
+    get isLoggedIn(): boolean {
         return this.authService.isLoggedIn();
     }
 
-    loadEcmUserInfo(): void {
+    private loadEcmUserInfo(): void {
         this.ecmUser$ = this.ecmUserService.getCurrentUserInfo();
     }
 
-    loadBpmUserInfo() {
+    private loadBpmUserInfo() {
         this.bpmUser$ = this.bpmUserService.getCurrentUserInfo();
     }
 
-    loadIdentityUserInfo() {
+    private loadIdentityUserInfo() {
         this.identityUser$ = of(this.identityUserService.getCurrentUserInfo());
     }
 
-    stopClosing(event) {
+    stopClosing(event: Event) {
         event.stopPropagation();
     }
 
@@ -128,7 +128,7 @@ export class UserInfoComponent implements OnInit {
         return this.bpmUserService.getCurrentUserProfileImage();
     }
 
-    showOnRight(): boolean {
+    get showOnRight(): boolean {
         return this.namePosition === 'right';
     }
 }

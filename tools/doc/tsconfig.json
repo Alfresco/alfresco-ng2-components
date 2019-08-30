@@ -1,19 +1,24 @@
 {
-    "compilerOptions": {
-      "outDir": ".",
-      "baseUrl": ".",
-      "moduleResolution": "node",
-      "noUnusedLocals": true,
-      "target": "es5",
-      "types": ["node", "@paperist/types-remark"],
-      "lib": [
-        "es2015"
-      ]
-    },
-    "files": [
-        "remarkGraphQl.ts",
-        "mqDefs.ts",
-        "tools/gqIndex.ts",
-        "tools/linkFixer.ts"
-    ]
-  }
+  "compilerOptions": {
+    "outDir": ".",
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "target": "es5",
+    "types": ["node", "@paperist/types-remark"],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2018", "dom"]
+  },
+  "files": [
+    "remarkGraphQl.ts",
+    "mqDefs.ts",
+    "tools/fileChecker.ts",
+    "tools/gqIndex.ts",
+    "tools/linkFixer.ts",
+    "tools/sourceLinker.ts",
+    "tools/tsInfo.ts",
+    "tools/tutorialIndex.ts",
+    "tools/typeLinker.ts"
+    // "reviewChecker.ts"
+  ]
+}

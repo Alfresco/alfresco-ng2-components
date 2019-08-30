@@ -1,8 +1,9 @@
-let undocMethodNames = {
-    "ngOnChanges": 1
-};
+const skipMethodNames = [
+    'ngOnChanges',
+    'ngOnDestroy',
+    'ngOnInit'
+];
 
- 
 export class PropInfo {
     name: string;
     type: string;
@@ -15,26 +16,25 @@ export class PropInfo {
 
     errorMessages: string[];
 
-
     constructor(sourceData) {
         this.errorMessages = [];
 
         this.name = sourceData.name;
-        this.docText = sourceData.summary || "";
-        this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
-        
-        let tempDefaultVal = sourceData.syntax["return"].defaultValue;
-        this.defaultValue = tempDefaultVal ? tempDefaultVal.toString() : "";
-        this.defaultValue = this.defaultValue.replace(/\|/, "\\|");
-        this.type = sourceData.syntax["return"].type || "";
-        this.type = this.type.toString().replace(/\|/, "\\|");
-        
+        this.docText = sourceData.summary || '';
+        this.docText = this.docText.replace(/[\n\r]+/g, ' ').trim();
+
+        const tempDefaultVal = sourceData.syntax['return'].defaultValue;
+        this.defaultValue = tempDefaultVal ? tempDefaultVal.toString() : '';
+        this.defaultValue = this.defaultValue.replace(/\|/, '\\|');
+        this.type = sourceData.syntax['return'].type || '';
+        this.type = this.type.toString().replace(/\|/, '\\|');
+
         if (sourceData.tags) {
-            let depTag = sourceData.tags.find(tag => tag.name === "deprecated");
-            
+            const depTag = sourceData.tags.find(tag => tag.name === 'deprecated');
+
             if (depTag) {
                 this.isDeprecated = true;
-                    this.docText = "(**Deprecated:** " + depTag.text.replace(/[\n\r]+/g, " ").trim() + ") " + this.docText;
+                this.docText = '(**Deprecated:** ' + depTag.text.replace(/[\n\r]+/g, ' ').trim() + ') ' + this.docText;
             }
         }
 
@@ -43,23 +43,23 @@ export class PropInfo {
 
         if (sourceData.decorators) {
             sourceData.decorators.forEach(dec => {
-                //console.log(dec);
-                if (dec.name === "Input") {
+                if (dec.name === 'Input') {
                     this.isInput = true;
-                    
+
                     if (dec.arguments) {
-                        let bindingName = dec.arguments["bindingPropertyName"];
-                        
-                        if (bindingName && (bindingName !== ""))
-                            this.name = bindingName.replace(/['"]/g, "");
+                        const bindingName = dec.arguments['bindingPropertyName'];
+
+                        if (bindingName && (bindingName !== '')) {
+                            this.name = bindingName.replace(/['"]/g, '');
+                        }
                     }
-                    
+
                     if (!this.docText && !this.isDeprecated) {
                         this.errorMessages.push(`Warning: Input "${sourceData.name}" has no doc text.`);
                     }
                 }
 
-                if (dec.name === "Output") {
+                if (dec.name === 'Output') {
                     this.isOutput = true;
 
                     if (!this.docText && !this.isDeprecated) {
@@ -73,8 +73,7 @@ export class PropInfo {
     get errors() {
         return this.errorMessages;
     }
-};
-
+}
 
 export class ParamInfo {
     name: string;
@@ -84,17 +83,16 @@ export class ParamInfo {
     combined: string;
     isOptional: boolean;
 
-
     constructor(sourceData) {
         this.name = sourceData.id;
-        this.type = sourceData.type.toString().replace(/\s/g, "");
+        this.type = sourceData.type.toString().replace(/\s/g, '');
         this.defaultValue = sourceData.defaultValue;
-        this.docText = sourceData.description.replace(/[\n\r]+/g, " ").trim();
+        this.docText = sourceData.description.replace(/[\n\r]+/g, ' ').trim();
 
         this.isOptional = false;
 
         if (sourceData.flags) {
-            let flag = sourceData.flags.find(flag => flag.name === "isOptional");
+            const flag = sourceData.flags.find((sourceFlag: any) => sourceFlag.name === 'isOptional');
 
             if (flag) {
                 this.isOptional = true;
@@ -103,16 +101,17 @@ export class ParamInfo {
 
         this.combined = this.name;
 
-        if (this.isOptional)
-            this.combined += "?";
+        if (this.isOptional) {
+            this.combined += '?';
+        }
 
         this.combined += `: \`${this.type}\``;
-        
-        if (this.defaultValue !== "")
+
+        if (this.defaultValue !== '') {
             this.combined += ` = \`${this.defaultValue}\``;
+        }
     }
 }
-
 
 export class MethodSigInfo {
     name: string;
@@ -123,28 +122,26 @@ export class MethodSigInfo {
     signature: string;
     params: ParamInfo[];
     isDeprecated: boolean;
-
     errorMessages: string[];
-
 
     constructor(sourceData) {
         this.errorMessages = [];
 
         this.name = sourceData.name;
 
-        this.docText = sourceData.summary || "";
-        this.docText = this.docText.replace(/[\n\r]+/g, " ").trim();
+        this.docText = sourceData.summary || '';
+        this.docText = this.docText.replace(/[\n\r]+/g, ' ').trim();
 
         if (!this.docText) {
             this.errorMessages.push(`Warning: method "${sourceData.name}" has no doc text.`);
         }
 
-        this.returnType = sourceData.syntax["return"].type || "";
-        this.returnType = this.returnType.toString().replace(/\s/g, "");
-        this.returnsSomething = this.returnType && (this.returnType !== "void");
-        this.returnDocText = sourceData.syntax["return"].summary || "";
+        this.returnType = sourceData.syntax['return'].type || '';
+        this.returnType = this.returnType.toString().replace(/\s/g, '');
+        this.returnsSomething = this.returnType && (this.returnType !== 'void');
+        this.returnDocText = sourceData.syntax['return'].summary || '';
 
-        if (this.returnDocText.toLowerCase() === "nothing") {
+        if (this.returnDocText.toLowerCase() === 'nothing') {
             this.returnsSomething = false;
         }
 
@@ -155,16 +152,16 @@ export class MethodSigInfo {
         this.isDeprecated = false;
 
         if (sourceData.tags) {
-            let depTag = sourceData.tags.find(tag => tag.name === "deprecated");
-            
+            const depTag = sourceData.tags.find(tag => tag.name === 'deprecated');
+
             if (depTag) {
                 this.isDeprecated = true;
-                    this.docText = "(**Deprecated:** " + depTag.text.replace(/[\n\r]+/g, " ").trim() + ") " + this.docText;
+                this.docText = '(**Deprecated:** ' + depTag.text.replace(/[\n\r]+/g, ' ').trim() + ') ' + this.docText;
             }
         }
 
         this.params = [];
-        let paramStrings = [];
+        const paramStrings = [];
 
         if (sourceData.syntax.parameters) {
             sourceData.syntax.parameters.forEach(rawParam => {
@@ -172,20 +169,19 @@ export class MethodSigInfo {
                     this.errorMessages.push(`Warning: parameter "${rawParam.name}" of method "${sourceData.name}" has no doc text.`);
                 }
 
-                let param = new ParamInfo(rawParam);
+                const param = new ParamInfo(rawParam);
                 this.params.push(param);
                 paramStrings.push(param.combined);
             });
         }
 
-        this.signature = "(" + paramStrings.join(", ") + ")";
+        this.signature = '(' + paramStrings.join(', ') + ')';
     }
 
     get errors() {
         return this.errorMessages;
     }
 }
-
 
 export class ComponentInfo {
     name: string;
@@ -197,7 +193,6 @@ export class ComponentInfo {
     hasMethods: boolean;
     sourcePath: string;
     sourceLine: number;
-
 
     constructor(sourceData) {
         this.name = sourceData.items[0].name;
@@ -213,15 +208,15 @@ export class ComponentInfo {
         if (this.itemType === 'type alias') {
             return;
         }
-        
+
         this.properties = [];
         this.methods = [];
 
         sourceData.items.forEach(item => {
-            switch(item.type) {
-                case "property":
-                case "accessor":
-                    var prop = new PropInfo(item);
+            switch (item.type) {
+                case 'property':
+                case 'accessor':
+                    const prop = new PropInfo(item);
                     this.properties.push(prop);
 
                     if (prop.isInput) {
@@ -232,12 +227,12 @@ export class ComponentInfo {
                         this.hasOutputs = true;
                     }
                     break;
-                
-                case "method":
+
+                case 'method':
                     if (item.flags && (item.flags.length > 0) &&
-                        !item.flags.find(flag => flag.name === "isPrivate") &&
-                        !item.flags.find(flag => flag.name === "isProtected") &&
-                        !undocMethodNames[item.name]
+                        !item.flags.find(flag => flag.name === 'isPrivate') &&
+                        !item.flags.find(flag => flag.name === 'isProtected') &&
+                        !skipMethodNames.includes(item.name)
                     ) {
                         this.methods.push(new MethodSigInfo(item));
                         this.hasMethods = true;
@@ -250,14 +245,13 @@ export class ComponentInfo {
         });
     }
 
-
     get errors() {
-        let combinedErrors = [];
+        const combinedErrors = [];
 
         this.methods.forEach(method => {
             method.errors.forEach(err => {
                 combinedErrors.push(err);
-            })
+            });
         });
 
         this.properties.forEach(prop => {

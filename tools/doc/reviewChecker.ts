@@ -1,35 +1,35 @@
-import * as path from "path";
-import * as fs from "fs";
-import * as process from "process"
+// tslint:disable: no-console
 
-import { GraphQLClient } from "graphql-request";
-import * as remark from "remark";
-import * as frontMatter from "remark-frontmatter";
-import * as yaml from "js-yaml";
-import * as moment from "moment";
-import { Observable } from 'rxjs/Rx';
+import * as path from 'path';
+import * as fs from 'fs';
+import * as process from 'process';
 
-import * as libsearch from "./libsearch";
-import { Stoplist } from "./stoplist";
-import { last } from "rxjs/operator/last";
+import { GraphQLClient } from 'graphql-request';
+import * as remark from 'remark';
+import * as frontMatter from 'remark-frontmatter';
+import * as yaml from 'js-yaml';
+import * as moment from 'moment';
+import { of } from 'rxjs';
 
+import * as libsearch from './libsearch';
+import { Stoplist } from './stoplist';
 
-const adf20StartDate = "2017-11-20";
+const adf20StartDate = '2017-11-20';
 
 const commitWeight = 0.1;
 const scoreTimeBase = 60;
 
-const libFolder = "lib";
-const stoplistFilePath = path.resolve("tools", "doc", "commitStoplist.json");
+const libFolder = 'lib';
+const stoplistFilePath = path.resolve('tools', 'doc', 'commitStoplist.json');
 
 const angFilePattern = /(component)|(directive)|(model)|(pipe)|(service)|(widget)/;
 
-let srcData = {};
-let stoplist = new Stoplist(stoplistFilePath);
+const srcData = {};
+const stoplist = new Stoplist(stoplistFilePath);
 
-let docsFolderPath = path.resolve("docs");
+const docsFolderPath = path.resolve('docs');
 
-let libFolders = ["core", "content-services", "extensions", "insights", "process-services",  "process-services-cloud"];
+const libFolders = ['core', 'content-services', 'extensions', 'insights', 'process-services',  'process-services-cloud'];
 
 libsearch(srcData, path.resolve(libFolder));
 
@@ -58,70 +58,69 @@ const query = `query commitHistory($path: String) {
   }
 }`;
 
-let docFiles = getDocFilePaths(docsFolderPath);
+const docFiles = getDocFilePaths(docsFolderPath);
 
-let docNames = Observable.from(docFiles);
+const docNames = of(docFiles);
 
 console.log("'Name','Review date','Commits since review','Score'");
 
 docNames.subscribe(x => {
-  let key = path.basename(x, ".md");
+  const key = path.basename(x, '.md');
 
-  if (!srcData[key])
+  if (!srcData[key]) {
     return;
+  }
 
-  let vars = {
-    "path": "lib/" + srcData[key].path
+  const vars = {
+    'path': 'lib/' + srcData[key].path
   };
 
   client.request(query, vars).then(data => {
-      let nodes = data["repository"].ref.target.history.nodes;
+      const nodes = data['repository'].ref.target.history.nodes;
 
-      let lastReviewDate = getDocReviewDate(x);//(key + ".md");
+      const lastReviewDate = getDocReviewDate(x); // (key + ".md");
 
-      let numUsefulCommits = extractCommitInfo(nodes, lastReviewDate, stoplist);
-      let dateString = lastReviewDate.format("YYYY-MM-DD");
-      let score = priorityScore(lastReviewDate, numUsefulCommits).toPrecision(3);
+      const numUsefulCommits = extractCommitInfo(nodes, lastReviewDate, stoplist);
+      const dateString = lastReviewDate.format('YYYY-MM-DD');
+      const score = priorityScore(lastReviewDate, numUsefulCommits).toPrecision(3);
 
       console.log(`'${key}','${dateString}','${numUsefulCommits}','${score}'`);
   });
 });
 
-
 function priorityScore(reviewDate, numCommits) {
-  let daysSinceReview = moment().diff(reviewDate, 'days');
-  let commitScore = 2 + numCommits * commitWeight;
+  const daysSinceReview = moment().diff(reviewDate, 'days');
+  const commitScore = 2 + numCommits * commitWeight;
   return Math.pow(commitScore, daysSinceReview / scoreTimeBase);
 }
 
-
 function getDocReviewDate(docFileName) {
-  let mdFilePath = path.resolve(docsFolderPath, docFileName);
+  const mdFilePath = path.resolve(docsFolderPath, docFileName);
 
-  let mdText = fs.readFileSync(mdFilePath);
-  let tree = remark().use(frontMatter, ["yaml"]).parse(mdText);
+  const mdText = fs.readFileSync(mdFilePath);
+  const tree = remark().use(frontMatter, ['yaml']).parse(mdText);
 
   let lastReviewDate = moment(adf20StartDate);
 
-  if (tree.children[0].type == "yaml") {
-    let metadata = yaml.load(tree.children[0].value);
+  if (tree.children[0].type === 'yaml') {
+    const metadata = yaml.load(tree.children[0].value);
 
-    if (metadata["Last reviewed"])
-      lastReviewDate = moment(metadata["Last reviewed"]);
+    if (metadata['Last reviewed']) {
+      lastReviewDate = moment(metadata['Last reviewed']);
+    }
   }
 
   return lastReviewDate;
 }
-
 
 function extractCommitInfo(commitNodes, cutOffDate, stoplist) {
   let numUsefulCommits = 0;
 
   commitNodes.forEach(element => {
     if (!stoplist.isRejected(element.message)) {
-      let abbr = element.message.substr(0, 15);
+     // const abbr = element.message.substr(0, 15);
 
-      let commitDate = moment(element.pushedDate);
+      const commitDate = moment(element.pushedDate);
 
       if (commitDate.isAfter(cutOffDate)) {
         numUsefulCommits++;
@@ -132,30 +131,28 @@ function extractCommitInfo(commitNodes, cutOffDate, stoplist) {
   return numUsefulCommits;
 }
 
-
 function getDocFilePaths(folderPath) {
-  let result = [];
+  const result = [];
 
   libFolders.forEach(element => {
-    let libPath = path.resolve(folderPath, element);
+    const libPath = path.resolve(folderPath, element);
     addItemsRecursively(libPath, result);
   });
 
-
   return result;
 
-  function addItemsRecursively(folderPath: string, resultList: string[]) {
-    let items = fs.readdirSync(folderPath);
+  function addItemsRecursively(elementPath: string, resultList: string[]) {
+    const items = fs.readdirSync(elementPath);
 
     items.forEach(item => {
-      let fullItemPath = path.resolve(folderPath, item);
-      let itemInfo = fs.statSync(fullItemPath);
+      const fullItemPath = path.resolve(elementPath, item);
+      const itemInfo = fs.statSync(fullItemPath);
 
       if (itemInfo.isDirectory()) {
         addItemsRecursively(fullItemPath, resultList);
       } else if (
-        (path.extname(fullItemPath) === ".md") &&
-        (item !== "README.md") &&
+        (path.extname(fullItemPath) === '.md') &&
+        (item !== 'README.md') &&
         (item.match(angFilePattern))
       ) {
         resultList.push(fullItemPath);
