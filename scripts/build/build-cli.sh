@@ -12,3 +12,8 @@ npm run dist
 
 cd $DIR/../../
 cp -R ./lib/cli/dist lib/dist/cli/
+
+echo "====== Move to node_modules ======"
+rm -rf ./node_modules/@alfresco/adf-cli/ && \
+mkdir -p ./node_modules/@alfresco/adf-cli/ && \
+cp -R ./lib/dist/cli/* ./node_modules/@alfresco/adf-cli/
