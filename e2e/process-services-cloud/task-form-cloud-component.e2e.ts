@@ -479,7 +479,7 @@ describe('Task form cloud component', () => {
             await widget.tab().clickTabByLabel(tab.tabVarField);
             await widget.textWidget().setValue(widgets.numberOneId, value.displayTab);
 
-            await expect(await taskFormCloudComponent.completeButtonIsEnabled()).toEqual(false);
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toEqual(false);
         });
 
         it('[C315179] Should be able to complete a standalone task with visible tab with valid value for field', async () => {
