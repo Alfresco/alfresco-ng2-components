@@ -56,4 +56,24 @@ describe('AmountWidgetComponent', () => {
         expect(widget.currency).toBe(AmountWidgetComponent.DEFAULT_CURRENCY);
     });
 
+    it('should setup empty placeholder in readOnly mode', () => {
+        widget.field = new FormFieldModel(null, {
+            readOnly: true,
+            placeholder: '1234'
+        });
+
+        widget.ngOnInit();
+        expect(widget.placeholder).toBe('');
+    });
+
+    it('should setup placeholder when readOnly is false', () => {
+        widget.field = new FormFieldModel(null, {
+            readOnly: false,
+            placeholder: '1234'
+        });
+
+        widget.ngOnInit();
+        expect(widget.placeholder).toBe('1234');
+    });
+
 });

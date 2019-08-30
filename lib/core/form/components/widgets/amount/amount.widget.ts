@@ -34,6 +34,10 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
 
     currency: string = AmountWidgetComponent.DEFAULT_CURRENCY;
 
+    get placeholder(): string {
+        return !this.field.readOnly ? this.field.placeholder : '';
+    }
+
     constructor(public formService: FormService) {
         super(formService);
     }
