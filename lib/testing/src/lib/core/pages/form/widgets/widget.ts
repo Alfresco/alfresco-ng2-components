@@ -32,6 +32,7 @@ import { NumberWidget } from './numberWidget';
 import { AmountWidget } from './amountWidget';
 import { ContainerWidget } from './containerWidget';
 import { PeopleWidget } from './peopleWidget';
+import { Tab } from './tab';
 import { DocumentWidget } from './documentWidget';
 import { AttachFileWidgetCloud } from './attachFileWidgetCloud';
 
@@ -111,5 +112,9 @@ export class Widget {
 
     peopleWidget(): PeopleWidget {
         return new PeopleWidget();
+    }
+
+    tab(): Tab {
+        return new Tab();
     }
 }
