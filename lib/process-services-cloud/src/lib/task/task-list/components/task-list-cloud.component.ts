@@ -117,6 +117,9 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     multiselect: boolean = false;
 
+    @Input()
+    stickyHeader: boolean = false;
+
     /**
      * Specifies how the table should be sorted. The parameters are for BE sorting.
      */
