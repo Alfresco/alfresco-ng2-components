@@ -1,10 +1,14 @@
 <div *ngIf="isDialogActive"
+     role="dialog"
      class="adf-upload-dialog"
      id="upload-dialog"
      [class.adf-upload-dialog--minimized]="isDialogMinimized">
     <header class="adf-upload-dialog__header">
         <button
             mat-button
+            [attr.aria-label]="(isDialogMinimized ?
+                'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MAXIMIZE':
+                'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MINIMIZE') | translate"
             color="secondary"
             [disabled]="isConfirmation"
             [attr.aria-expanded]="!isDialogMinimized"
@@ -76,6 +80,7 @@
             *ngIf="!isConfirmation">
         <button
             id="adf-upload-dialog-cancel-all"
+            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CANCEL_ALL' | translate"
             color="primary"
             mat-button
             *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()"
@@ -85,6 +90,7 @@
 
         <button
             id="adf-upload-dialog-close"
+            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_CLOSE' | translate"
             *ngIf="uploadList.isUploadCompleted() || uploadList.isUploadCancelled()"
             mat-button
             color="primary"
@@ -97,6 +103,7 @@
             *ngIf="isConfirmation">
         <button
             id="adf-upload-dialog-cancel"
+            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CONFIRMATION.CANCEL' | translate"
             color="secondary"
             mat-button
             (click)="cancelAllUploads()">
@@ -105,6 +112,7 @@
 
         <button
             id="adf-upload-dialog-confirm"
+            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CONFIRMATION.CONTINUE' | translate"
             mat-button
             color="primary"
             (click)="toggleConfirmation()">
