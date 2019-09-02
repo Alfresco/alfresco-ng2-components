@@ -7,5 +7,6 @@ git config --local user.name "alfresco-build"
 git config --local user.email "build@alfresco.com"
 git tag -a ${VERSION} -m "${VERSION} [ci skip] "
 git remote rm origin
-git remote add origin `https://$GITHUB_TOKEN:x-oauth-basic@github.com/Alfresco/alfresco-ng2-components.git`
+GITHUB_REPO=https://$GITHUB_TOKEN:x-oauth-basic@github.com/Alfresco/alfresco-ng2-components.git
+git remote add origin $GITHUB_REPO
 git push origin --tags
