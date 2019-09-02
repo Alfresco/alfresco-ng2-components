@@ -15,24 +15,10 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-export class GroupModel {
-
-    externalId: string;
-    groups: any;
-    id: string;
-    name: string;
-    status: string;
-
-    constructor(json?: any) {
-        if (json) {
-            this.externalId = json.externalId;
-            this.groups = json.groups;
-            this.id = json.id;
-            this.name = json.name;
-            this.status = json.status;
-        }
-    }
-
+export interface GroupModel {
+    externalId?: string;
+    groups?: any;
+    id?: string;
+    name?: string;
+    status?: string;
 }
