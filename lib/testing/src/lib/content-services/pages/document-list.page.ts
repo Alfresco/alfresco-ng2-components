@@ -65,7 +65,7 @@ export class DocumentListPage {
         await BrowserActions.closeMenuAndDialogs();
         const row: ElementFinder = this.dataTable.getRow('Display name', content);
         await BrowserActions.click(row.element(this.optionButton));
-       await BrowserActions.waitUntilActionMenuIsVisible();
+        await BrowserActions.waitUntilActionMenuIsVisible();
         await browser.sleep(500);
     }
 
