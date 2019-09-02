@@ -184,7 +184,7 @@ export class TaskFormCloudComponent implements OnChanges {
         this.error.emit(data);
     }
 
-    onFormContentClicked(content: ContentLinkModel){
+    onFormContentClicked(content: ContentLinkModel) {
         this.formContentClicked.emit(content);
     }
 }
