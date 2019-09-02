@@ -25,15 +25,15 @@ stages:
   - name: Lint & Build Dist
     if: type = pull_request
   - name: Lint & Build Dist & Release
-    if: type = push OR type = cron
+    if: type = push OR type = cron AND tag IS blank
   - name: Check bundle
-    if: type = push
+    if: type = push AND tag IS blank
   - name: Unit test
-    if: type != cron
+    if: type != cron AND tag IS blank
   - name: Update Rancher
-    if: type = push
+    if: type = push AND tag IS blank
   - name: e2e Test
-    if: type != cron
+    if: type != cron AND tag IS blank
   - name: Update Rancher PR
     if: type = pull_request
   - name: Update Children Projects
