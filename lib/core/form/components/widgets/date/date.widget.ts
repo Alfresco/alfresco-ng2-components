@@ -89,6 +89,5 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         } else {
             this.field.value = null;
         }
-        this.onFieldChanged(this.field);
     }
 }
