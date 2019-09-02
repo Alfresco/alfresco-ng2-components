@@ -130,7 +130,15 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "File version"
+      "VERSION": "File version",
+      "DIALOG_MAXIMIZE": "Maximize upload dialog",
+      "DIALOG_MINIMIZE": "Minimize upload dialog",
+      "DIALOG_CLOSE": "Close upload dialog",
+      "CANCEL_ALL": "Cancel all uploading files",
+      "CONFIRMATION": {
+        "CANCEL": "Confirm cancel",
+        "CONTINUE": "Continue uploading"
+      }
     }
   },
   "FILE_UPLOAD": {
