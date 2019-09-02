@@ -86,9 +86,6 @@ export class FormModel {
         this.readOnly = readOnly;
         this.json = json;
 
-        // tslint:disable-next-line: no-console
-        console.log('form values', formValues);
-
         if (json) {
             this.id = json.id;
             this.name = json.name;
