@@ -59,9 +59,8 @@ jobs:
         - stage: Lint & Build Dist
           name:  Lint & Build Dist
           script:
-            - ./scripts/lint.sh || exit 1;
             - ./scripts/travis/build/build.sh || exit 1;
-
+            - ./scripts/lint.sh || exit 1;
 
         # Run Only on Development and master
         - stage: Lint & Build Dist & Release
