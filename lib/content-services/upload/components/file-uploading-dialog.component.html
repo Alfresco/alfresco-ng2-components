@@ -64,13 +64,15 @@
         </adf-file-uploading-list>
 
         <div
+            aria-live="polite"
+            aria-labelledby="confirmationTitle"
+            aria-describedby="confirmationDescription"
             class="adf-upload-dialog__confirmation"
             [class.adf-upload-dialog--hide]="!isConfirmation">
-                <p class="adf-upload-dialog__confirmation--title">
+                <p role="heading" id="confirmationTitle" class="adf-upload-dialog__confirmation--title">
                     {{ 'ADF_FILE_UPLOAD.CONFIRMATION.MESSAGE.TITLE' | translate }}
                 </p>
-
-                <p class="adf-upload-dialog__confirmation--text">
+                <p id="confirmationDescription" class="adf-upload-dialog__confirmation--text">
                     {{ 'ADF_FILE_UPLOAD.CONFIRMATION.MESSAGE.TEXT' | translate }}
                 </p>
         </div>
