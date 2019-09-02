@@ -443,4 +443,74 @@ describe('FormFieldModel', () => {
         field.updateForm();
         expect(form.values['dropdown_field'].name).toEqual('Option 1');
     });
+
+    describe('variables', () => {
+
+        let form: FormModel;
+
+        beforeEach(() => {
+            form = new FormModel({
+                variables: [
+                    {
+                        'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+                        'name': 'name2',
+                        'type': 'string',
+                        'value': 'default hello'
+                    }
+                ],
+                processVariables: [
+                    {
+                        'serviceName': 'denys-variable-mapping-rb',
+                        'serviceFullName': 'denys-variable-mapping-rb',
+                        'serviceVersion': '',
+                        'appName': 'denys-variable-mapping',
+                        'appVersion': '',
+                        'serviceType': null,
+                        'id': 3,
+                        'type': 'string',
+                        'name': 'variables.name1',
+                        'createTime': 1566989626284,
+                        'lastUpdatedTime': 1566989626284,
+                        'executionId': null,
+                        'value': 'hello',
+                        'markedAsDeleted': false,
+                        'processInstanceId': '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+                        'taskId': '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+                        'taskVariable': true
+                    }
+                ]
+            });
+        });
+
+        it('it should get a process value for readonly field', () => {
+            const field = new FormFieldModel(form, {
+                type: FormFieldTypes.DISPLAY_VALUE,
+                params: {
+                    field: {
+                        id: 'name1',
+                        name: 'name1',
+                        type: 'string'
+                    }
+                }
+            });
+
+            expect(field.value).toBe('hello');
+        });
+
+        it('it should fallback to a form variable for readonly field', () => {
+            const field = new FormFieldModel(form, {
+                type: FormFieldTypes.DISPLAY_VALUE,
+                params: {
+                    responseVariable: true,
+                    field: {
+                        id: 'name2',
+                        name: 'name2',
+                        type: 'string'
+                    }
+                }
+            });
+
+            expect(field.value).toBe('default hello');
+        });
+    });
 });

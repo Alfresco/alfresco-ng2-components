@@ -15,23 +15,6 @@
  * limitations under the License.
  */
 
-/*!
-* @license
-* Copyright 2019 Alfresco Software, Ltd.
-*
-* Licensed under the Apache License, Version 2.0 (the 'License');
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an 'AS IS' BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
-
 export class DemoForm {
 
     easyForm = {
@@ -358,7 +341,25 @@ export class DemoForm {
         'style': '',
         'customFieldTemplates': {},
         'metadata': {},
-        'variables': [],
+        'variables': [
+            {
+                'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+                'name': 'name1',
+                'type': 'string',
+                'value': ''
+            },
+            {
+                'id': '3ed9f28a-dbae-463f-b991-47ef06658bb6',
+                'name': 'name2',
+                'type': 'string',
+                'value': ''
+            },
+            {
+                'id': 'a7710978-1e9c-4b54-a19c-c6267d2b19a2',
+                'name': 'input02',
+                'type': 'integer'
+            }
+        ],
         'customFieldsValueInfo': {},
         'gridsterForm': false,
         'globalDateFormat': 'D-M-YYYY'
@@ -1458,7 +1459,25 @@ export class DemoForm {
         'style': '',
         'customFieldTemplates': {},
         'metadata': {},
-        'variables': [],
+        'variables': [
+            {
+                'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+                'name': 'name1',
+                'type': 'string',
+                'value': ''
+            },
+            {
+                'id': '3ed9f28a-dbae-463f-b991-47ef06658bb6',
+                'name': 'name2',
+                'type': 'string',
+                'value': ''
+            },
+            {
+                'id': 'a7710978-1e9c-4b54-a19c-c6267d2b19a2',
+                'name': 'input02',
+                'type': 'integer'
+            }
+        ],
         'gridsterForm': false,
         'globalDateFormat': 'D-M-YYYY'
     };
@@ -1722,7 +1741,25 @@ export class DemoForm {
             'style': '',
             'customFieldTemplates': {},
             'metadata': {},
-            'variables': [],
+            'variables': [
+                {
+                    'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+                    'name': 'name1',
+                    'type': 'string',
+                    'value': ''
+                },
+                {
+                    'id': '3ed9f28a-dbae-463f-b991-47ef06658bb6',
+                    'name': 'name2',
+                    'type': 'string',
+                    'value': ''
+                },
+                {
+                    'id': 'a7710978-1e9c-4b54-a19c-c6267d2b19a2',
+                    'name': 'input02',
+                    'type': 'integer'
+                }
+            ],
             'customFieldsValueInfo': {},
             'gridsterForm': false
         }

@@ -15,18 +15,22 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { FormFieldFileSource } from './form-field-file-source';
-
-export interface FormFieldMetadata {
-    [key: string]: any;
-    fileSource?: FormFieldFileSource;
-    link?: boolean;
-    field?: {
-        id: string;
-        name: string;
-        type: string;
-    };
-    responseVariable?: boolean;
+export interface ProcessVariableModel {
+    serviceName?: string;
+    serviceFullName?: string;
+    serviceVersion?: string;
+    appName?: string;
+    appVersion?: string;
+    serviceType?: string;
+    id?: number;
+    type?: string;
+    name?: string;
+    createTime?: number;
+    lastUpdatedTime?: number;
+    executionId?: string;
+    value?: any;
+    markedAsDeleted?: boolean;
+    processInstanceId?: string;
+    taskId?: string;
+    taskVariable?: boolean;
 }

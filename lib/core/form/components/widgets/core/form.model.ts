@@ -35,6 +35,8 @@ import {
     FormFieldValidator
 } from './form-field-validator';
 import { FormBaseModel } from '../../form-base.model';
+import { FormVariableModel } from './form-variable.model';
+import { ProcessVariableModel } from './process-variable.model';
 
 export class FormModel extends FormBaseModel {
 
@@ -48,7 +50,8 @@ export class FormModel extends FormBaseModel {
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
     readonly selectedOutcome: string;
 
-    processVariables: any;
+    processVariables: ProcessVariableModel[] = [];
+    variables: FormVariableModel[] = [];
 
     constructor(formRepresentationJSON?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
         super();
@@ -65,10 +68,10 @@ export class FormModel extends FormBaseModel {
             this.customFieldTemplates = formRepresentationJSON.customFieldTemplates || {};
             this.selectedOutcome = formRepresentationJSON.selectedOutcome || {};
             this.className = formRepresentationJSON.className || '';
+            this.variables = formRepresentationJSON.variables || [];
+            this.processVariables = formRepresentationJSON.processVariables || [];
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
-
-            this.processVariables = formRepresentationJSON.processVariables;
 
             this.tabs = (formRepresentationJSON.tabs || []).map((t) => {
                 const model = new TabModel(this, t);
@@ -225,5 +228,67 @@ export class FormModel extends FormBaseModel {
                 field.value = field.parseValue(field.json);
             }
         }
+    }
+
+    /**
+     * Returns a form variable that matches the identifier.
+     * @param identifier The `name` or `id` value.
+     */
+    getFormVariable(identifier: string): FormVariableModel {
+        if (identifier) {
+            return this.variables.find(
+                variable =>
+                    variable.name === identifier ||
+                    variable.id === identifier
+            );
+        }
+        return undefined;
+    }
+
+    /**
+     * Returns a value of the form variable that matches the identifier.
+     * Provides additional conversion of types (date, boolean).
+     * @param identifier The `name` or `id` value
+     */
+    getFormVariableValue(identifier: string): any {
+        const variable = this.getFormVariable(identifier);
+
+        if (variable) {
+            switch (variable.type) {
+                case 'date':
+                    return `${variable.value}T00:00:00.000Z`;
+                case 'boolean':
+                    return JSON.parse(variable.value);
+                default:
+                    return variable.value;
+            }
+        }
+
+        return undefined;
+    }
+
+    /**
+     * Returns a process variable value.
+     * @param name Variable name
+     */
+    getProcessVariableValue(name: string): any {
+        if (this.processVariables) {
+            const names = [`variables.${name}`, name];
+
+            const variable = this.processVariables.find(
+                entry => names.includes(entry.name)
+            );
+
+            if (variable) {
+                switch (variable.type) {
+                    case 'boolean':
+                        return JSON.parse(variable.value);
+                    default:
+                        return variable.value;
+                }
+            }
+        }
+
+        return undefined;
     }
 }
