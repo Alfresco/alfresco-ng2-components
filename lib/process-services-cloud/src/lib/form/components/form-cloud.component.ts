@@ -285,9 +285,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         if (formCloudRepresentationJSON) {
             const formValues: FormValues = {};
             (this.data || []).forEach(variable => {
-                formValues[variable.name] = {
-                    value: variable.value
-                };
+                formValues[variable.name] = variable.value;
             });
 
             const form = new FormModel(formCloudRepresentationJSON, formValues, this.readOnly);

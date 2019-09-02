@@ -45,6 +45,7 @@ export interface FormRepresentationModel {
     };
     selectedOutcome?: string;
     fields?: any[];
+    tabs?: any[];
     outcomes?: any[];
     formDefinition?: {
         fields?: any[];
@@ -85,6 +86,9 @@ export class FormModel {
         this.readOnly = readOnly;
         this.json = json;
 
+        // tslint:disable-next-line: no-console
+        console.log('form values', formValues);
+
         if (json) {
             this.id = json.id;
             this.name = json.name;
@@ -99,8 +103,8 @@ export class FormModel {
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 
-            this.tabs = (json.tabs || []).map((t) => {
-                const model = new TabModel(this, t);
+            this.tabs = (json.tabs || []).map((tabJson) => {
+                const model = new TabModel(this, tabJson);
                 tabCache[model.id] = model;
                 return model;
             });
@@ -228,8 +232,10 @@ export class FormModel {
     // Typically used when form definition and form data coming from different sources
     private loadData(formValues: FormValues) {
         for (const field of this.getFormFields()) {
-            if (formValues[field.id]) {
-                field.json.value = formValues[field.id];
+            const variableId = `variables.${field.name}`;
+
+            if (formValues[variableId] || formValues[field.id]) {
+                field.json.value = formValues[variableId] || formValues[field.id];
                 field.value = field.parseValue(field.json);
             }
         }

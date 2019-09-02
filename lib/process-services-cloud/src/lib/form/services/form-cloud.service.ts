@@ -264,9 +264,7 @@ export class FormCloudService extends BaseCloudService {
 
             const formValues: FormValues = {};
             (data || []).forEach(variable => {
-                formValues[variable.name] = {
-                    value: variable.value
-                };
+                formValues[variable.name] = variable.value;
             });
 
             const form = new FormModel(flattenForm, formValues, readOnly);
