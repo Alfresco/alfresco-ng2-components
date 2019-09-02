@@ -25,7 +25,7 @@ stages:
   - name: Lint & Build Dist
     if: type = pull_request
   - name: Lint & Build Dist & Release
-    if: type = push
+    if: type = push OR type = cron
   - name: Check bundle
     if: type = push
   - name: Unit test
