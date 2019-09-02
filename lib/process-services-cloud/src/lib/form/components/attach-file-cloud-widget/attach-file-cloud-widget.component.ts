@@ -146,7 +146,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
                         file.name
                     );
                 },
-                (err) => {
+                () => {
                     this.logger.error(
                         'Impossible retrieve content for download'
                     );
