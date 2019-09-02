@@ -11,15 +11,12 @@ npm install @alfresco/adf-cli@alpha
 
 if [[ $TRAVIS_PULL_REQUEST == "false" ]];
 then
-    TAG_NPM=latest
     if [[ $TRAVIS_BRANCH == "development" ]];
     then
         NEXT_VERSION=-nextalpha
-        TAG_NPM=alpha
         if [[ $TRAVIS_EVENT_TYPE == "cron" ]];
         then
             NEXT_VERSION=-nextbeta
-            TAG_NPM=beta
         fi
         ./scripts/update-version.sh -gnu $NEXT_VERSION || exit 1;
     fi
