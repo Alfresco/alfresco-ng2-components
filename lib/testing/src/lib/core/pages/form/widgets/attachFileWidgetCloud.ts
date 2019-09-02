@@ -76,8 +76,12 @@ export class AttachFileWidgetCloud {
 
     async removeFile(fileName: string): Promise<void> {
         const fileId = await this.getFileId(fileName);
-        const deleteButton = this.widget.element(by.css(`button[id='${fileId}-remove']`));
+        const optionMenu = this.widget.element(by.css(`button[id='${fileId}-option-menu']`));
+        await BrowserActions.click(optionMenu);
+        await BrowserActions.waitUntilActionMenuIsVisible();
+        const deleteButton = element(by.css(`button#${fileId}-remove`));
         await BrowserActions.click(deleteButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(deleteButton);
     }
 
     async viewFile(name): Promise<void> {
