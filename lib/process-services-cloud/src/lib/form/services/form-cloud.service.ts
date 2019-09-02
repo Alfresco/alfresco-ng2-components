@@ -16,12 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, FormValues, AppConfigService, FormOutcomeModel, FormFieldOption } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, FormValues, AppConfigService, FormOutcomeModel, FormFieldOption, FormModel } from '@alfresco/adf-core';
 import { throwError, Observable, from } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 import { SaveFormRepresentation, CompleteFormRepresentation } from '@alfresco/js-api';
-import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud, ProcessStorageCloudModel } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 
@@ -258,12 +257,19 @@ export class FormCloudService extends BaseCloudService {
      * @param readOnly Toggles whether or not the form should be read-only
      * @returns Form created from the JSON specification
      */
-    parseForm(json: any, data?: TaskVariableCloud[], readOnly: boolean = false): FormCloud {
+    parseForm(json: any, data?: TaskVariableCloud[], readOnly: boolean = false): FormModel {
         if (json) {
             const flattenForm = {...json.formRepresentation, ...json.formRepresentation.formDefinition};
             delete flattenForm.formDefinition;
 
-            const form = new FormCloud(flattenForm, data, readOnly, this);
+            const formValues: FormValues = {};
+            (data || []).forEach(variable => {
+                formValues[variable.name] = {
+                    value: variable.value
+                };
+            });
+
+            const form = new FormModel(flattenForm, formValues, readOnly);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(<any> form, {

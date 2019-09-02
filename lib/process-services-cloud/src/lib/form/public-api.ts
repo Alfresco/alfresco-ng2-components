@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './models/form-cloud.model';
 export * from './models/task-variable-cloud.model';
 export * from './models/form-definition-selector-cloud.model';
 

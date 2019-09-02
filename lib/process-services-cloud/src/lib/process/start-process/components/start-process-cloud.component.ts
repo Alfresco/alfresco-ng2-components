@@ -23,13 +23,13 @@ import {
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
+import { FormModel } from '@alfresco/adf-core';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 import { Subject } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
-import { FormCloud } from '../../../form/models/form-cloud.model';
 
 @Component({
     selector: 'adf-cloud-start-process',
@@ -74,15 +74,15 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     /** Emitted when the process is successfully started. */
     @Output()
-    success: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
+    success = new EventEmitter<ProcessInstanceCloud>();
 
     /** Emitted when the starting process is cancelled */
     @Output()
-    cancel: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
+    cancel = new EventEmitter<ProcessInstanceCloud>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
+    error = new EventEmitter<ProcessInstanceCloud>();
 
     processDefinitionList: ProcessDefinitionCloud[] = [];
     processDefinitionCurrent: ProcessDefinitionCloud;
@@ -92,8 +92,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     filteredProcesses: ProcessDefinitionCloud[] = [];
     isLoading = false;
     isFormCloudLoaded = false;
-    formCloud: FormCloud;
+    formCloud: FormModel;
     protected onDestroy$ = new Subject<boolean>();
+
     constructor(private startProcessCloudService: StartProcessCloudService,
                 private formBuilder: FormBuilder) {
     }
@@ -128,7 +129,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         return this.processDefinitionCurrent && !!this.processDefinitionCurrent.formKey;
     }
 
-    onFormLoaded(form: FormCloud) {
+    onFormLoaded(form: FormModel) {
         this.isFormCloudLoaded = true;
         this.formCloud = form;
     }

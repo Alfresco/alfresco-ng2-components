@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { FormBaseModel } from './form-base.model';
-import { FormOutcomeModel, FormFieldValidator, FormFieldModel, FormOutcomeEvent } from './widgets';
+import { FormOutcomeModel, FormFieldValidator, FormFieldModel, FormOutcomeEvent, FormModel } from './widgets';
 import { EventEmitter, Input, Output } from '@angular/core';
 
 export abstract class FormBaseComponent {
@@ -92,7 +91,7 @@ export abstract class FormBaseComponent {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    form: FormBaseModel;
+    form: FormModel;
 
     getParsedFormDefinition(): FormBaseComponent {
         return this;
@@ -208,7 +207,7 @@ export abstract class FormBaseComponent {
 
     abstract completeTaskForm(outcome?: string);
 
-    protected abstract onTaskSaved(form: FormBaseModel);
+    protected abstract onTaskSaved(form: FormModel);
 
     protected abstract storeFormAsMetadata();
 
