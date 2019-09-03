@@ -115,7 +115,7 @@ export class ProcessListCloudComponentPage {
         await this.dataTable.rightClickOnRow('Id', processInstance);
     }
 
-    async pressContextMenuActionNamed(actionName): Promise<void> {
+    async clickContextMenuActionNamed(actionName): Promise<void> {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 

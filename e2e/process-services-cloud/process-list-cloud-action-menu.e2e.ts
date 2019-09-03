@@ -102,7 +102,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processListCloudComponent().clickOnCustomActionMenu(editProcess.entry.id, 'edit');
             await processCloudDemoPage.checkActionExecuted(editProcess.entry.id, 'edit');
             await processCloudDemoPage.processListCloudComponent().rightClickOnRow(deleteProcess.entry.id);
-            await processCloudDemoPage.processListCloudComponent().pressContextMenuActionNamed('delete');
+            await processCloudDemoPage.processListCloudComponent().clickContextMenuActionNamed('delete');
             await processCloudDemoPage.checkActionExecuted(deleteProcess.entry.id, 'delete');
         });
 
