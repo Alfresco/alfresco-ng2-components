@@ -262,18 +262,7 @@ export class FormModel {
         const variable = this.getFormVariable(identifier);
 
         if (variable && variable.hasOwnProperty('value')) {
-            switch (variable.type) {
-                case 'date':
-                    return variable.value
-                        ? `${variable.value}T00:00:00.000Z`
-                        : undefined;
-                case 'boolean':
-                    return typeof variable.value === 'string'
-                        ? JSON.parse(variable.value)
-                        : variable.value;
-                default:
-                    return variable.value;
-            }
+            return this.parseValue(variable.type, variable.value);
         }
 
         return undefined;
@@ -292,16 +281,30 @@ export class FormModel {
             );
 
             if (variable) {
-                switch (variable.type) {
-                    case 'boolean':
-                        return JSON.parse(variable.value);
-                    default:
-                        return variable.value;
-                }
+                return this.parseValue(variable.type, variable.value);
             }
         }
 
         return undefined;
+    }
+
+    protected parseValue(type: string, value: any): any {
+        if (type && value) {
+            switch (type) {
+                case 'date':
+                    return value
+                        ? `${value}T00:00:00.000Z`
+                        : undefined;
+                case 'boolean':
+                    return typeof value === 'string'
+                        ? JSON.parse(value)
+                        : value;
+                default:
+                    return value;
+            }
+        }
+
+        return value;
     }
 
     hasTabs(): boolean {
