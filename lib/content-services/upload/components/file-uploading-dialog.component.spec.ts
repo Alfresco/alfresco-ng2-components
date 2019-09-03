@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
     FileModel, FileUploadCompleteEvent, FileUploadErrorEvent, UploadService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock, UserPreferencesService
 } from '@alfresco/adf-core';
@@ -77,6 +77,16 @@ describe('FileUploadingDialogComponent', () => {
 
             expect(component.isDialogActive).toBe(true);
         });
+
+        it('should focus on dialog when uploading file', fakeAsync(() => {
+            uploadService.addToQueue(...fileList);
+            uploadService.uploadFilesInTheQueue(emitter);
+
+            fixture.detectChanges();
+            tick(100);
+
+            expect(document.activeElement.id).toBe('upload-dialog');
+        }));
 
         it('should update uploading file list', () => {
             uploadService.addToQueue(...fileList);
