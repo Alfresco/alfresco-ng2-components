@@ -48,9 +48,9 @@ BRANCH="ADF-update-beta-$VERSION"
 git checkout -b $BRANCH
 
 if $GNU; then
-    npx adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION
+    npx @alfresco/adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION
 else
-    npx adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION --skipGnu
+    npx @alfresco/adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION --skipGnu
 fi
 
 git add .
