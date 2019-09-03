@@ -130,6 +130,7 @@
       }
     },
     "ARIA-LABEL": {
+      "VERSION": "File version",
       "DIALOG": "Upload list",
       "DIALOG_MAXIMIZE": "Maximize upload dialog",
       "DIALOG_MINIMIZE": "Minimize upload dialog",
