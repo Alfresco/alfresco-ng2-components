@@ -1,5 +1,7 @@
 <div *ngIf="isDialogActive"
      role="dialog"
+     [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG'| translate"
+     tabindex="0"
      class="adf-upload-dialog"
      id="upload-dialog"
      [class.adf-upload-dialog--minimized]="isDialogMinimized">
