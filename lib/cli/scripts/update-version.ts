@@ -64,11 +64,11 @@ function _latestPerform(args: UpdateArgs, logger: logging.Logger) {
 }
 
 function _versionPerform(args: UpdateArgs, logger: logging.Logger) {
-    _tagLibPerform(args, args.version, logger);
+    _updateLibsVersionPerform(args.pathPackage, args.version, args.skipGnu, logger);
 }
 
 function _versionJsPerform(args: UpdateArgs, logger: logging.Logger) {
-    _tagJsPerform(args, args.vjs, logger);
+    _updateJsAPIVersionPerform(args.pathPackage, args.version, args.skipGnu, logger);
 }
 
 function _alphaPerform(args: UpdateArgs, logger: logging.Logger) {
@@ -98,28 +98,28 @@ function _getLatestVersionFromNpm(tag: string, project: string, logger: logging.
     return latestVersion;
 }
 
-function _updateLibsVersionPerform(args: UpdateArgs, version: string, logger: logging.Logger) {
+function _updateLibsVersionPerform(path: string, version: string, skipGnu = false, logger: logging.Logger) {
     logger.info('Perform libs version...');
     projects.forEach( (project) => {
         logger.info(`apply version ${version} on ${project} ...`);
         project = project.replace('/', '\\/');
-        _replaceVersionPerform(args, project, version, logger);
+        _replaceVersionPerform(project, version, path, skipGnu, logger);
     });
 }
 
-function _updateJsAPIVersionPerform(args: UpdateArgs, version: string, logger: logging.Logger) {
+function _updateJsAPIVersionPerform(path: string, version: string, skipGnu = false, logger: logging.Logger) {
     logger.info('Perform js-api version...');
     logger.info(`apply version ${version} on ${JS_API_DEPENDENCY} ...`);
     const project = JS_API_DEPENDENCY.replace('/', '\\/');
-    _replaceVersionPerform(args, project, version, logger);
+    _replaceVersionPerform(project, version, path, skipGnu, logger);
 }
 
-function _replaceVersionPerform(args: UpdateArgs, project: string, version: string, logger: logging.Logger) {
+function _replaceVersionPerform(project: string, version: string, path: string, skipGnu = false, logger: logging.Logger) {
     const rule = `s/\"${project}\": \".*\"/\"${project}\": \"${version}\"/g`;
-    if (args.skipGnu) {
-        _exec('sed', ['-i', '', `${rule}`, `${args.pathPackage}/package.json`], {}, logger).trim();
+    if (skipGnu) {
+        _exec('sed', ['-i', '', `${rule}`, `${path}/package.json`], {}, logger).trim();
     } else {
-        _exec('sed', ['-i', `${rule}`, `${args.pathPackage}/package.json`], {}, logger).trim();
+        _exec('sed', ['-i', `${rule}`, `${path}/package.json`], {}, logger).trim();
     }
 }
 
@@ -131,12 +131,12 @@ function _tagPerform(args: UpdateArgs, tag: string, logger: logging.Logger) {
 
 function _tagLibPerform(args: UpdateArgs, tag: string, logger: logging.Logger) {
     const libVersion = _getLatestVersionFromNpm(tag, '@alfresco/adf-extensions', logger);
-    _updateLibsVersionPerform(args, libVersion, logger);
+    _updateLibsVersionPerform(args.pathPackage, libVersion, args.skipGnu, logger);
 }
 
 function _tagJsPerform(args: UpdateArgs, tag: string, logger: logging.Logger) {
     const jsApiVersion = _getLatestVersionFromNpm(tag, JS_API_DEPENDENCY, logger);
-    _updateJsAPIVersionPerform(args, jsApiVersion, logger);
+    _updateJsAPIVersionPerform(args.pathPackage, jsApiVersion, args.skipGnu, logger);
 }
 
 export default async function (args: UpdateArgs, logger: logging.Logger) {

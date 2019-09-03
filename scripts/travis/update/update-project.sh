@@ -47,10 +47,11 @@ git checkout development
 BRANCH="ADF-update-beta-$VERSION"
 git checkout -b $BRANCH
 
+npm install @alfresco/adf-cli@alpha
 if $GNU; then
-    npx @alfresco/adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION
+    npx adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION
 else
-    npx @alfresco/adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION --skipGnu
+    npx adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION --skipGnu
 fi
 
 git add .
