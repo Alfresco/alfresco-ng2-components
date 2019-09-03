@@ -44,6 +44,7 @@ export class TaskDetailsCloudModel {
     managerOfCandidateGroup: boolean;
     memberOfCandidateGroup: boolean;
     memberOfCandidateUsers: boolean;
+    processDefinitionDeploymentId?: string;
 
     constructor(obj?: any) {
         if (obj) {

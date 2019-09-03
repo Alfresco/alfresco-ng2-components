@@ -41,6 +41,7 @@ import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget/attach-file-cloud-widget.component';
 import { DateCloudWidgetComponent } from './date-cloud/date-cloud.widget';
+import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -163,19 +164,19 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     }
 
-    findProcessVariablesByTaskId(appName: string, taskId: string): Observable<any> {
+    findProcessVariablesByTaskId(appName: string, taskId: string): Observable<TaskVariableCloud[]> {
         return this.formCloudService.getTask(appName, taskId).pipe(
-            switchMap((task: any) => {
+            switchMap(task => {
                 if (this.isAProcessTask(task)) {
                     return this.formCloudService.getTaskVariables(appName, taskId);
                 } else {
-                    return of({});
+                    return of([]);
                 }
             })
         );
     }
 
-    isAProcessTask(taskRepresentation) {
+    isAProcessTask(taskRepresentation: TaskDetailsCloudModel): boolean {
         return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
     }
 
