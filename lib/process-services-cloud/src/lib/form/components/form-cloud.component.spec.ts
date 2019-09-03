@@ -163,7 +163,7 @@ describe('FormCloudComponent', () => {
             });
         });
 
-        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
         spyOn(formCloudService, 'getTask').and.callFake((currentTaskId) => {
             return new Observable((observer) => {
                 observer.next({ formRepresentation: { taskId: currentTaskId } });
@@ -188,7 +188,7 @@ describe('FormCloudComponent', () => {
             });
         });
 
-        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
 
         formComponent.appName = 'test-app';
         formComponent.taskId = null;
@@ -238,7 +238,7 @@ describe('FormCloudComponent', () => {
 
     it('should call the process storage to retrieve the folder with only the taskId', fakeAsync(() => {
         spyOn(formCloudService, 'getTaskForm').and.returnValue(of(cloudFormMock));
-        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({list: { entries: []}}));
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
         spyOn(formCloudService, 'getProcessStorageFolderTask')
             .and.returnValue( of({nodeId : '123', path: '/a/path/type', type: 'fakeType'}));
         const taskId = '<task id>';
@@ -257,7 +257,7 @@ describe('FormCloudComponent', () => {
 
     it('should call the process storage to retrieve the folder with taskId and processInstanceId', fakeAsync(() => {
         spyOn(formCloudService, 'getTaskForm').and.returnValue(of(cloudFormMock));
-        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({list: { entries: []}}));
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
         spyOn(formCloudService, 'getProcessStorageFolderTask')
             .and.returnValue( of({nodeId : '123', path: '/a/path/type', type: 'fakeType'}));
         const taskId = '<task id>';
@@ -428,7 +428,7 @@ describe('FormCloudComponent', () => {
         const taskId = '456';
 
         spyOn(formCloudService, 'getTask').and.returnValue(of({}));
-        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
         spyOn(formCloudService, 'getTaskForm').and.returnValue(of({ taskId: taskId, selectedOutcome: 'custom-outcome' }));
 
         formComponent.formLoaded.subscribe(() => {
@@ -447,7 +447,7 @@ describe('FormCloudComponent', () => {
         const error = 'Some error';
 
         spyOn(formCloudService, 'getTask').and.returnValue(of({}));
-        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
         spyOn(formComponent, 'handleError').and.stub();
         spyOn(formCloudService, 'getTaskForm').and.callFake(() => {
             return throwError(error);
