@@ -24,6 +24,7 @@ import {
     TextWidgetComponent
 } from './../components/widgets/index';
 import { FormRenderingService } from './form-rendering.service';
+import { DisplayTextWidgetComponentComponent } from '../components/widgets';
 
 describe('FormRenderingService', () => {
 
@@ -120,6 +121,12 @@ describe('FormRenderingService', () => {
 
     it('should return custom value when resolving with no field', () => {
         expect(service.resolveComponentType(null, UploadWidgetComponent)).toBe(UploadWidgetComponent);
+    });
+
+    it('should resolve Display Text Widget for JSON field type', () => {
+        const resolver = service.getComponentTypeResolver('json');
+        const type = resolver(null);
+        expect(type).toBe(DisplayTextWidgetComponentComponent);
     });
 
 });
