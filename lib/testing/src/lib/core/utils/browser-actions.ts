@@ -26,6 +26,16 @@ export class BrowserActions {
         await elementFinder.click();
     }
 
+    static async waitUntilActionMenuIsVisible(): Promise<void> {
+        const actionMenu = element(by.css('div[role="menu"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(actionMenu);
+    }
+
+    static async waitUntilActionMenuIsNotVisible(): Promise<void> {
+        const actionMenu = element(by.css('div[role="menu"]'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(actionMenu);
+    }
+
     static async getUrl(url: string): Promise<any> {
         return browser.get(url);
     }

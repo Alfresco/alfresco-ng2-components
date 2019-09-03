@@ -23,7 +23,6 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class DocumentListPage {
 
     rootElement: ElementFinder;
-    actionMenu: ElementFinder = element(by.css('div[role="menu"]'));
     optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
     tableBody: ElementFinder;
     dataTable: DataTableComponentPage;
@@ -66,12 +65,12 @@ export class DocumentListPage {
         await BrowserActions.closeMenuAndDialogs();
         const row: ElementFinder = this.dataTable.getRow('Display name', content);
         await BrowserActions.click(row.element(this.optionButton));
-        await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
+        await BrowserActions.waitUntilActionMenuIsVisible();
         await browser.sleep(500);
     }
 
     async checkActionMenuIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.actionMenu);
+        await BrowserActions.waitUntilActionMenuIsNotVisible();
     }
 
     dataTablePage(): DataTableComponentPage {

@@ -236,7 +236,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             await this.getFormByTaskId(appName, taskId);
 
             const hasUploadWidget = (<any> this.form).hasUpload;
-            if (hasUploadWidget && !this.readOnly) {
+            if (hasUploadWidget) {
                 try {
                     const processStorageCloudModel = await this.formCloudService.getProcessStorageFolderTask(appName, taskId, processInstanceId).toPromise();
                     this.form.nodeId = processStorageCloudModel.nodeId;
