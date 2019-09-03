@@ -35,7 +35,7 @@ import { FormFieldTemplates } from './form-field-templates';
 export interface FormRepresentationModel {
     [key: string]: any;
 
-    id?: string;
+    id?: string | number;
     name?: string;
     taskId?: string;
     taskName?: string;
@@ -59,7 +59,7 @@ export class FormModel {
     static COMPLETE_OUTCOME: string = '$complete';
     static START_PROCESS_OUTCOME: string = '$startProcess';
 
-    readonly id: string;
+    readonly id: string | number;
     readonly name: string;
     readonly taskId: string;
     readonly taskName = FormModel.UNSET_TASK_NAME;
