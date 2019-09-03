@@ -34,7 +34,8 @@ import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { fakeTaskProcessVariableModels,
         fakeFormJson, formTest,
         formValues, complexVisibilityJsonVisible,
-        complexVisibilityJsonNotVisible, tabVisibilityJsonMock } from 'core/mock/form/widget-visibility.service.mock';
+        complexVisibilityJsonNotVisible, tabVisibilityJsonMock,
+        tabInvalidFormVisibility } from 'core/mock/form/widget-visibility.service.mock';
 
 declare let jasmine: any;
 
@@ -932,10 +933,12 @@ describe('WidgetVisibilityService', () => {
         const fakeTabVisibilityModel = new FormModel(tabVisibilityJsonMock);
         const complexVisibilityModel = new FormModel(complexVisibilityJsonVisible);
         const complexVisibilityJsonNotVisibleModel = new FormModel(complexVisibilityJsonNotVisible);
+        let tabVisibilityJsonModel: FormModel;
         let visibilityObjTest: WidgetVisibilityModel;
 
         beforeEach(() => {
             visibilityObjTest = new WidgetVisibilityModel();
+            tabVisibilityJsonModel = new FormModel(tabInvalidFormVisibility);
             fakeFormWithVariables = new FormModel(fakeFormJson);
         });
 
@@ -1028,5 +1031,19 @@ describe('WidgetVisibilityService', () => {
             expect(fakeTabVisibilityModel.tabs[1].isVisible).toBeTruthy();
         });
 
+        it('form should be valid when a tab with invalid values is not visibile', () => {
+            tabVisibilityJsonModel.getFieldById('Number1').value = 'invalid';
+            tabVisibilityJsonModel.getFieldById('Number1').updateForm();
+
+            tabVisibilityJsonModel.getFieldById('Text1').value = 'hidetab';
+            tabVisibilityJsonModel.getFieldById('Text1').updateForm();
+
+            tabVisibilityJsonModel.validateForm();
+            expect(tabVisibilityJsonModel.isValid).toBeTruthy();
+
+            tabVisibilityJsonModel.getFieldById('Text1').value = 'showtab';
+            tabVisibilityJsonModel.validateForm();
+            expect(tabVisibilityJsonModel.isValid).toBeFalsy();
+        });
     });
 });

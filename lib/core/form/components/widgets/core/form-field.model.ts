@@ -26,6 +26,7 @@ import { FormFieldTypes } from './form-field-types';
 import { NumberFieldValidator } from './form-field-validator';
 import { FormWidgetModel } from './form-widget.model';
 import { FormModel } from './form.model';
+import { TabModel } from '@alfresco/adf-core';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -123,7 +124,7 @@ export class FormFieldModel extends FormWidgetModel {
         if (!this.readOnly) {
             const validators = this.form.fieldValidators || [];
             for (const validator of validators) {
-                if (!validator.validate(this)) {
+                if (!validator.validate(this) && this.isTabVisible()) {
                     this._isValid = false;
                     return this._isValid;
                 }
@@ -132,6 +133,20 @@ export class FormFieldModel extends FormWidgetModel {
 
         this._isValid = true;
         return this._isValid;
+    }
+
+    isTabVisible() {
+        const containerFields = this.form.fields.filter( field => field.type === 'container' && field.tab );
+        let isVisible: boolean = true;
+        containerFields.map( (field: FormFieldModel) => {
+            if ( !!this.findFieldByCurrentId(field) ) {
+                const currentTab = this.form.tabs.find( (tab: TabModel) => tab.id === field.tab );
+                if (!!currentTab) {
+                    isVisible = currentTab.isVisible;
+                }
+            }
+        });
+        return isVisible;
     }
 
     constructor(form: FormModel, json?: any) {
@@ -207,6 +222,19 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         this.updateForm();
+    }
+
+    private findFieldByCurrentId(value: any) {
+        const tabFields: FormFieldModel[][] = Object.keys(value.field.fields).map( key => value.field.fields[key]);
+        let currentField: FormFieldModel;
+
+        for (const tabField of tabFields) {
+            currentField = tabField.find( (field: FormFieldModel) => field.id === this.id);
+            if (currentField) {
+                return currentField;
+            }
+        }
+        return false;
     }
 
     private getDefaultDateFormat(jsonField: any): string {
