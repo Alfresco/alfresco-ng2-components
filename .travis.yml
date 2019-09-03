@@ -25,7 +25,7 @@ stages:
   - name: Lint & Build Dist
     if: type = pull_request
   - name: Lint & Build Dist & Release
-    if: type = push OR type = cron AND tag IS blank
+    if: (type = push OR type = cron) AND tag IS blank
   - name: Check bundle
     if: type = push AND tag IS blank
   - name: Unit test
