@@ -261,12 +261,16 @@ export class FormModel {
     getFormVariableValue(identifier: string): any {
         const variable = this.getFormVariable(identifier);
 
-        if (variable) {
+        if (variable && variable.hasOwnProperty('value')) {
             switch (variable.type) {
                 case 'date':
-                    return `${variable.value}T00:00:00.000Z`;
+                    return variable.value
+                        ? `${variable.value}T00:00:00.000Z`
+                        : undefined;
                 case 'boolean':
-                    return JSON.parse(variable.value);
+                    return typeof variable.value === 'string'
+                        ? JSON.parse(variable.value)
+                        : variable.value;
                 default:
                     return variable.value;
             }
