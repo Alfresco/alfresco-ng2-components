@@ -128,7 +128,8 @@
     "ECMBPM",
     "processwithvariables",
     "dropdownrestprocess",
-    "devops"
+    "devops",
+    "mouseenter"
   ],
   "dictionaries": [
     "html",
