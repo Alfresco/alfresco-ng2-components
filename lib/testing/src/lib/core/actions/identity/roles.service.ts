@@ -25,6 +25,24 @@ export class RolesService {
         this.api = api;
     }
 
+    async createRole(roleName: string): Promise<any> {
+        const path = '/roles';
+        const method = 'POST';
+        const queryParams = {}, postBody = {
+            name: roleName + 'TestRole'
+        };
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
+    async deleteRole(roleId): Promise<any> {
+        const path = `/roles-by-id/${roleId}`;
+        const method = 'DELETE';
+        const queryParams = {}, postBody = {};
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
     async getRoleIdByRoleName(roleName): Promise<any> {
         const path = `/roles`;
         const method = 'GET';
