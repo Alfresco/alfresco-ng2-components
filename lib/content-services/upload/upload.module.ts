@@ -27,6 +27,7 @@ import { UploadDragAreaComponent } from './components/upload-drag-area.component
 import { FileUploadErrorPipe } from './pipes/file-upload-error.pipe';
 import { CoreModule } from '@alfresco/adf-core';
 import { FileDraggableDirective } from './directives/file-draggable.directive';
+import { ToggleIconDirective } from './directives/toggle-icon.directive';
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import { FileDraggableDirective } from './directives/file-draggable.directive';
         FileUploadingDialogComponent,
         FileUploadingListComponent,
         FileUploadingListRowComponent,
-        FileUploadErrorPipe
+        FileUploadErrorPipe,
+        ToggleIconDirective
     ],
     exports: [
         FileDraggableDirective,
@@ -52,7 +54,8 @@ import { FileDraggableDirective } from './directives/file-draggable.directive';
         FileUploadingDialogComponent,
         FileUploadingListComponent,
         FileUploadingListRowComponent,
-        FileUploadErrorPipe
+        FileUploadErrorPipe,
+        ToggleIconDirective
     ]
 })
 export class UploadModule {}
