@@ -68,7 +68,7 @@ function _versionPerform(args: UpdateArgs, logger: logging.Logger) {
 }
 
 function _versionJsPerform(args: UpdateArgs, logger: logging.Logger) {
-    _updateJsAPIVersionPerform(args.pathPackage, args.version, args.skipGnu, logger);
+    _updateJsAPIVersionPerform(args.pathPackage, args.vjs, args.skipGnu, logger);
 }
 
 function _alphaPerform(args: UpdateArgs, logger: logging.Logger) {
