@@ -17,7 +17,7 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
-import { element, by, ElementFinder } from 'protractor';
+import { element, by, ElementFinder, Locator } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessListCloudComponentPage {
@@ -29,6 +29,8 @@ export class ProcessListCloudComponentPage {
 
     processList: ElementFinder = element(by.css('adf-cloud-process-list'));
     noProcessFound: ElementFinder = element.all(by.css("div[class='adf-empty-content__title']")).first();
+    actionMenu: ElementFinder = element(by.css('div[role="menu"]'));
+    optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
 
     dataTable: DataTableComponentPage = new DataTableComponentPage(this.processList);
 
@@ -98,6 +100,23 @@ export class ProcessListCloudComponentPage {
 
     getAllRowsByColumn(column): Promise<any> {
         return this.dataTable.getAllRowsColumnValues(column);
+    }
+
+    async clickOnCustomActionMenu(content: string, action: string): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        const row: ElementFinder = this.dataTable.getRow('Id', content);
+        await BrowserActions.click(row.element(this.optionButton));
+        await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
+        const actionButton = element(by.css(`button[data-automation-id*="${action}"]`));
+        await BrowserActions.click(actionButton);
+    }
+
+    async rightClickOnRow(processInstance: string): Promise<void> {
+        await this.dataTable.rightClickOnRow('Id', processInstance);
+    }
+
+    async clickContextMenuActionNamed(actionName): Promise<void> {
+        await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 
 }
