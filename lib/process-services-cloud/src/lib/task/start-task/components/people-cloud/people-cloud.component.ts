@@ -355,6 +355,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
             this.currentTimeout = setTimeout(() => {
                 this.searchUserCtrl.setValue(this.preSelectUsers[0]);
+                this.onSelect(this.preSelectUsers[0]);
             }, 0);
         }
     }
