@@ -15,7 +15,7 @@
     .adf-file-uploading-row {
         display: flex;
         align-items: center;
-        padding: 0.5em 1em;
+        padding: 0.3em 1em;
         cursor: default;
 
         &:hover {
@@ -34,28 +34,15 @@
             min-width: 100px;
             display: flex;
             justify-content: flex-end;
+            line-height: 40px;
         }
 
         &__group--toggle {
             cursor: pointer;
-
-            .adf-file-uploading-row__status {
-                display: flex;
-            }
-
-            .adf-file-uploading-row__action {
-                display: none;
-            }
-
-            &:hover {
-                .adf-file-uploading-row__status {
-                    display: none;
-                }
-
-                .adf-file-uploading-row__action {
-                    display: flex;
-                }
-            }
+            display:flex;
+            align-items: center;
+            height: 40px;
+            line-height: 40px;
         }
 
         &__status--done {
