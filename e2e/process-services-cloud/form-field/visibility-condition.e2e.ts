@@ -304,12 +304,6 @@ describe('Task cloud visibility', async () => {
         await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
     });
 
-    afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        await identityService.deleteIdentityUser(testUser.idIdentityService);
-
-    });
-
     it('[C312400] Should validate visibility condition for required number widgets', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();

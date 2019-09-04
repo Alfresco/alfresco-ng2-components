@@ -41,7 +41,6 @@ export class FormFields {
 
     async clickField(locator, field): Promise<void> {
         const fieldElement: any = element(locator(field));
-        await BrowserVisibility.waitUntilElementIsClickable(fieldElement);
         await BrowserActions.click(fieldElement);
     }
 
