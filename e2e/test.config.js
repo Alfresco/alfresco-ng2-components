@@ -3,7 +3,7 @@
  * @class config.test.config
  */
 
-require('dotenv').config({path: ENV_FILE});
+require('dotenv').config({path: process.env.ENV_FILE});
 
 const HOST = process.env.URL_HOST_ADF;
 const HOST_BPM = process.env.URL_HOST_BPM_ADF;
@@ -54,7 +54,7 @@ if (LOG) {
 
 module.exports = {
 
-    projectName :'ADF',
+    projectName: 'ADF',
 
     appConfig: appConfig,
 
