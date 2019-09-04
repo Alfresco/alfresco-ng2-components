@@ -15,71 +15,98 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
-
 import { FormFieldEvent } from './../../../events/form-field.event';
 import { ValidateFormFieldEvent } from './../../../events/validate-form-field.event';
 import { ValidateFormEvent } from './../../../events/validate-form.event';
 import { FormService } from './../../../services/form.service';
 import { ContainerModel } from './container.model';
-import { FormFieldTemplates } from './form-field-templates';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
-import { FormOutcomeModel } from './form-outcome.model';
 import { FormValues } from './form-values';
 import { FormWidgetModel, FormWidgetModelCache } from './form-widget.model';
 import { TabModel } from './tab.model';
 
-import {
-    FORM_FIELD_VALIDATORS,
-    FormFieldValidator
-} from './form-field-validator';
-import { FormBaseModel } from '../../form-base.model';
 import { FormVariableModel } from './form-variable.model';
 import { ProcessVariableModel } from './process-variable.model';
+import { FormOutcomeModel } from './form-outcome.model';
+import { FormFieldValidator, FORM_FIELD_VALIDATORS } from './form-field-validator';
+import { FormFieldTemplates } from './form-field-templates';
 
-export class FormModel extends FormBaseModel {
+export interface FormRepresentationModel {
+    [key: string]: any;
 
-    readonly id: number;
+    id?: string | number;
+    name?: string;
+    taskId?: string;
+    taskName?: string;
+    processDefinitionId?: string;
+    customFieldTemplates?: {
+        [key: string]: string
+    };
+    selectedOutcome?: string;
+    fields?: any[];
+    tabs?: any[];
+    outcomes?: any[];
+    formDefinition?: {
+        fields?: any[];
+    };
+}
+
+export class FormModel {
+
+    static UNSET_TASK_NAME: string = 'Nameless task';
+    static SAVE_OUTCOME: string = '$save';
+    static COMPLETE_OUTCOME: string = '$complete';
+    static START_PROCESS_OUTCOME: string = '$startProcess';
+
+    readonly id: string | number;
     readonly name: string;
     readonly taskId: string;
-    readonly taskName: string = FormModel.UNSET_TASK_NAME;
-    processDefinitionId: string;
-
-    customFieldTemplates: FormFieldTemplates = {};
-    fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
+    readonly taskName = FormModel.UNSET_TASK_NAME;
+    readonly processDefinitionId: string;
     readonly selectedOutcome: string;
 
+    json: FormRepresentationModel;
+    nodeId: string;
+    contentHost: string;
+    values: FormValues = {};
+    tabs: TabModel[] = [];
+    fields: FormWidgetModel[] = [];
+    outcomes: FormOutcomeModel[] = [];
+    fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
+    customFieldTemplates: FormFieldTemplates = {};
+
+    className: string;
+    readOnly = false;
+    isValid = true;
     processVariables: ProcessVariableModel[] = [];
     variables: FormVariableModel[] = [];
 
-    constructor(formRepresentationJSON?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
-        super();
+    constructor(json?: FormRepresentationModel, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
         this.readOnly = readOnly;
+        this.json = json;
 
-        if (formRepresentationJSON) {
-            this.json = formRepresentationJSON;
-
-            this.id = formRepresentationJSON.id;
-            this.name = formRepresentationJSON.name;
-            this.taskId = formRepresentationJSON.taskId;
-            this.taskName = formRepresentationJSON.taskName || formRepresentationJSON.name || FormModel.UNSET_TASK_NAME;
-            this.processDefinitionId = formRepresentationJSON.processDefinitionId;
-            this.customFieldTemplates = formRepresentationJSON.customFieldTemplates || {};
-            this.selectedOutcome = formRepresentationJSON.selectedOutcome || {};
-            this.className = formRepresentationJSON.className || '';
-            this.variables = formRepresentationJSON.variables || [];
-            this.processVariables = formRepresentationJSON.processVariables || [];
+        if (json) {
+            this.id = json.id;
+            this.name = json.name;
+            this.taskId = json.taskId;
+            this.taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
+            this.processDefinitionId = json.processDefinitionId;
+            this.customFieldTemplates = json.customFieldTemplates || {};
+            this.selectedOutcome = json.selectedOutcome;
+            this.className = json.className || '';
+            this.variables = json.variables || [];
+            this.processVariables = json.processVariables || [];
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 
-            this.tabs = (formRepresentationJSON.tabs || []).map((t) => {
-                const model = new TabModel(this, t);
+            this.tabs = (json.tabs || []).map((tabJson) => {
+                const model = new TabModel(this, tabJson);
                 tabCache[model.id] = model;
                 return model;
             });
 
-            this.fields = this.parseRootFields(formRepresentationJSON);
+            this.fields = this.parseRootFields(json);
 
             if (formValues) {
                 this.loadData(formValues);
@@ -95,29 +122,7 @@ export class FormModel extends FormBaseModel {
                 }
             }
 
-            if (formRepresentationJSON.fields) {
-                const saveOutcome = new FormOutcomeModel(this, {
-                    id: FormModel.SAVE_OUTCOME,
-                    name: 'SAVE',
-                    isSystem: true
-                });
-                const completeOutcome = new FormOutcomeModel(this, {
-                    id: FormModel.COMPLETE_OUTCOME,
-                    name: 'COMPLETE',
-                    isSystem: true
-                });
-                const startProcessOutcome = new FormOutcomeModel(this, {
-                    id: FormModel.START_PROCESS_OUTCOME,
-                    name: 'START PROCESS',
-                    isSystem: true
-                });
-
-                const customOutcomes = (formRepresentationJSON.outcomes || []).map((obj) => new FormOutcomeModel(this, obj));
-
-                this.outcomes = [saveOutcome].concat(
-                    customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
-                );
-            }
+            this.parseOutcomes();
         }
 
         this.validateForm();
@@ -125,6 +130,7 @@ export class FormModel extends FormBaseModel {
 
     onFormFieldChanged(field: FormFieldModel) {
         this.validateField(field);
+
         if (this.formService) {
             this.formService.formFieldValueChanged.next(new FormFieldEvent(this, field));
         }
@@ -223,8 +229,10 @@ export class FormModel extends FormBaseModel {
     // Typically used when form definition and form data coming from different sources
     private loadData(formValues: FormValues) {
         for (const field of this.getFormFields()) {
-            if (formValues[field.id]) {
-                field.json.value = formValues[field.id];
+            const variableId = `variables.${field.name}`;
+
+            if (formValues[variableId] || formValues[field.id]) {
+                field.json.value = formValues[variableId] || formValues[field.id];
                 field.value = field.parseValue(field.json);
             }
         }
@@ -253,15 +261,8 @@ export class FormModel extends FormBaseModel {
     getFormVariableValue(identifier: string): any {
         const variable = this.getFormVariable(identifier);
 
-        if (variable) {
-            switch (variable.type) {
-                case 'date':
-                    return `${variable.value}T00:00:00.000Z`;
-                case 'boolean':
-                    return JSON.parse(variable.value);
-                default:
-                    return variable.value;
-            }
+        if (variable && variable.hasOwnProperty('value')) {
+            return this.parseValue(variable.type, variable.value);
         }
 
         return undefined;
@@ -280,15 +281,98 @@ export class FormModel extends FormBaseModel {
             );
 
             if (variable) {
-                switch (variable.type) {
-                    case 'boolean':
-                        return JSON.parse(variable.value);
-                    default:
-                        return variable.value;
-                }
+                return this.parseValue(variable.type, variable.value);
             }
         }
 
         return undefined;
+    }
+
+    protected parseValue(type: string, value: any): any {
+        if (type && value) {
+            switch (type) {
+                case 'date':
+                    return value
+                        ? `${value}T00:00:00.000Z`
+                        : undefined;
+                case 'boolean':
+                    return typeof value === 'string'
+                        ? JSON.parse(value)
+                        : value;
+                default:
+                    return value;
+            }
+        }
+
+        return value;
+    }
+
+    hasTabs(): boolean {
+        return this.tabs && this.tabs.length > 0;
+    }
+
+    hasFields(): boolean {
+        return this.fields && this.fields.length > 0;
+    }
+
+    hasOutcomes(): boolean {
+        return this.outcomes && this.outcomes.length > 0;
+    }
+
+    getFieldById(fieldId: string): FormFieldModel {
+        return this.getFormFields().find((field) => field.id === fieldId);
+    }
+
+    getFormFields(): FormFieldModel[] {
+        const formFieldModel: FormFieldModel[] = [];
+
+        for (let i = 0; i < this.fields.length; i++) {
+            const field = this.fields[i];
+
+            if (field instanceof ContainerModel) {
+                const container = <ContainerModel> field;
+                formFieldModel.push(container.field);
+
+                container.field.columns.forEach((column) => {
+                    formFieldModel.push(...column.fields);
+                });
+            }
+        }
+
+        return formFieldModel;
+    }
+
+    markAsInvalid(): void {
+        this.isValid = false;
+    }
+
+    protected parseOutcomes() {
+        if (this.json.fields) {
+            const saveOutcome = new FormOutcomeModel(<any> this, {
+                id: FormModel.SAVE_OUTCOME,
+                name: 'SAVE',
+                isSystem: true
+            });
+            const completeOutcome = new FormOutcomeModel(<any> this, {
+                id: FormModel.COMPLETE_OUTCOME,
+                name: 'COMPLETE',
+                isSystem: true
+            });
+            const startProcessOutcome = new FormOutcomeModel(<any> this, {
+                id: FormModel.START_PROCESS_OUTCOME,
+                name: 'START PROCESS',
+                isSystem: true
+            });
+
+            const customOutcomes = (this.json.outcomes || []).map(
+                (obj) => new FormOutcomeModel(<any> this, obj)
+            );
+
+            this.outcomes = [saveOutcome].concat(
+                customOutcomes.length > 0
+                    ? customOutcomes
+                    : [completeOutcome, startProcessOutcome]
+            );
+        }
     }
 }

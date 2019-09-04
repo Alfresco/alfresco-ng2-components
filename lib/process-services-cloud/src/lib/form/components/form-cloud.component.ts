@@ -32,14 +32,16 @@ import {
     NotificationService,
     FormRenderingService,
     FORM_FIELD_VALIDATORS,
-    FormFieldValidator
+    FormFieldValidator,
+    FormValues,
+    FormModel
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
-import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget/attach-file-cloud-widget.component';
 import { DateCloudWidgetComponent } from './date-cloud/date-cloud.widget';
+import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -61,7 +63,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     /** Underlying form model instance. */
     @Input()
-    form: FormCloud;
+    form: FormModel;
 
     /** Task id to fetch corresponding form and values. */
     @Input()
@@ -76,22 +78,22 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
-    formSaved: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
+    formSaved = new EventEmitter<FormModel>();
 
     /** Emitted when the form is submitted with the `Complete` outcome. */
     @Output()
-    formCompleted: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
+    formCompleted = new EventEmitter<FormModel>();
 
     /** Emitted when the form is loaded or reloaded. */
     @Output()
-    formLoaded: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
+    formLoaded = new EventEmitter<FormModel>();
 
     /** Emitted when form values are refreshed due to a data property change. */
     @Output()
-    formDataRefreshed: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
+    formDataRefreshed = new EventEmitter<FormModel>();
 
     @Output()
-    formContentClicked: EventEmitter<string> = new EventEmitter<string>();
+    formContentClicked = new EventEmitter<string>();
 
     protected subscriptions: Subscription[] = [];
     nodeId: string;
@@ -162,24 +164,24 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     }
 
-    findProcessVariablesByTaskId(appName: string, taskId: string): Observable<any> {
+    findProcessVariablesByTaskId(appName: string, taskId: string): Observable<TaskVariableCloud[]> {
         return this.formCloudService.getTask(appName, taskId).pipe(
-            switchMap((task: any) => {
+            switchMap(task => {
                 if (this.isAProcessTask(task)) {
                     return this.formCloudService.getTaskVariables(appName, taskId);
                 } else {
-                    return of({});
+                    return of([]);
                 }
             })
         );
     }
 
-    isAProcessTask(taskRepresentation) {
+    isAProcessTask(taskRepresentation: TaskDetailsCloudModel): boolean {
         return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
     }
 
-    getFormByTaskId(appName: string, taskId: string): Promise<FormCloud> {
-        return new Promise<FormCloud>(resolve => {
+    getFormByTaskId(appName: string, taskId: string): Promise<FormModel> {
+        return new Promise<FormModel>(resolve => {
             forkJoin(this.formCloudService.getTaskForm(appName, taskId),
                 this.formCloudService.getTaskVariables(appName, taskId))
                 .pipe(takeUntil(this.onDestroy$))
@@ -255,7 +257,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     saveTaskForm() {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
-                .saveTaskForm(this.appName, this.taskId, this.processInstanceId, this.form.id, this.form.values)
+                .saveTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe(
                     () => {
@@ -269,7 +271,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     completeTaskForm(outcome?: string) {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
-                .completeTaskForm(this.appName, this.taskId, this.processInstanceId, this.form.id, this.form.values, outcome)
+                .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe(
                     () => {
@@ -280,9 +282,14 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    parseForm(formCloudRepresentationJSON: any): FormCloud {
+    parseForm(formCloudRepresentationJSON: any): FormModel {
         if (formCloudRepresentationJSON) {
-            const form = new FormCloud(formCloudRepresentationJSON, this.data, this.readOnly, this.formCloudService);
+            const formValues: FormValues = {};
+            (this.data || []).forEach(variable => {
+                formValues[variable.name] = variable.value;
+            });
+
+            const form = new FormModel(formCloudRepresentationJSON, formValues, this.readOnly);
             if (!form || !form.fields.length) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
@@ -298,7 +305,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
      * Get custom set of outcomes for a Form Definition.
      * @param form Form definition model.
      */
-    getFormDefinitionOutcomes(form: FormCloud): FormOutcomeModel[] {
+    getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
             new FormOutcomeModel(<any> form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
         ];
@@ -316,15 +323,15 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.onFormDataRefreshed(this.form);
     }
 
-    protected onFormLoaded(form: FormCloud) {
+    protected onFormLoaded(form: FormModel) {
         this.formLoaded.emit(form);
     }
 
-    protected onFormDataRefreshed(form: FormCloud) {
+    protected onFormDataRefreshed(form: FormModel) {
         this.formDataRefreshed.emit(form);
     }
 
-    protected onTaskSaved(form: FormCloud) {
+    protected onTaskSaved(form: FormModel) {
         this.formSaved.emit(form);
     }
 
@@ -332,7 +339,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.handleError(error);
     }
 
-    protected onTaskCompleted(form: FormCloud) {
+    protected onTaskCompleted(form: FormModel) {
         this.formCompleted.emit(form);
     }
 

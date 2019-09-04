@@ -19,10 +19,9 @@ import {
     Component, EventEmitter, Input, OnChanges,
     Output, SimpleChanges
 } from '@angular/core';
-import { FormCloud } from '../../../form/models/form-cloud.model';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { FormRenderingService, ContentLinkModel } from '@alfresco/adf-core';
+import { FormRenderingService, FormModel, ContentLinkModel } from '@alfresco/adf-core';
 import { AttachFileCloudWidgetComponent } from '../../../form/components/attach-file-cloud-widget/attach-file-cloud-widget.component';
 import { DropdownCloudWidgetComponent } from '../../../form/components/dropdown-cloud/dropdown-cloud.widget';
 import { DateCloudWidgetComponent } from '../../../form/components/date-cloud/date-cloud.widget';
@@ -64,31 +63,31 @@ export class TaskFormCloudComponent implements OnChanges {
 
     /** Emitted when the form is saved. */
     @Output()
-    formSaved: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
+    formSaved = new EventEmitter<FormModel>();
 
     /** Emitted when the form is submitted with the `Complete` outcome. */
     @Output()
-    formCompleted: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
+    formCompleted = new EventEmitter<FormModel>();
 
     /** Emitted when the task is completed. */
     @Output()
-    taskCompleted: EventEmitter<string> = new EventEmitter<string>();
+    taskCompleted = new EventEmitter<string>();
 
     /** Emitted when the task is claimed. */
     @Output()
-    taskClaimed: EventEmitter<string> = new EventEmitter<string>();
+    taskClaimed = new EventEmitter<string>();
 
     /** Emitted when the task is unclaimed. */
     @Output()
-    taskUnclaimed: EventEmitter<string> = new EventEmitter<string>();
+    taskUnclaimed = new EventEmitter<string>();
 
     /** Emitted when the cancel button is clicked. */
     @Output()
-    cancelClick: EventEmitter<string> = new EventEmitter<string>();
+    cancelClick = new EventEmitter<string>();
 
     /** Emitted when any error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     @Output()
     formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter();
@@ -171,11 +170,11 @@ export class TaskFormCloudComponent implements OnChanges {
         this.cancelClick.emit(this.taskId);
     }
 
-    onFormSaved(form: FormCloud) {
+    onFormSaved(form: FormModel) {
         this.formSaved.emit(form);
     }
 
-    onFormCompleted(form: FormCloud) {
+    onFormCompleted(form: FormModel) {
         this.formCompleted.emit(form);
         this.taskCompleted.emit(this.taskId);
     }

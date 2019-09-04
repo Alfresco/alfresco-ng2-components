@@ -15,21 +15,10 @@
  * limitations under the License.
  */
 
-export class FormDefinitionSelectorCloudModel {
-
-    id: number;
-    name: string;
-    description: string;
-    version: string;
-    standAlone: string;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.name = obj.name || null;
-            this.description = obj.description || null;
-            this.version = obj.version || null;
-            this.standAlone = obj.standAlone || null;
-        }
-    }
+export interface FormDefinitionSelectorCloudModel {
+    id?: number;
+    name?: string;
+    description?: string;
+    version?: string;
+    standAlone?: string;
 }

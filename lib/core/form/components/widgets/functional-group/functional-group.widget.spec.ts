@@ -36,7 +36,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should setup text from underlying field on init', () => {
-        const group = new GroupModel({ name: 'group-1'});
+        const group: GroupModel = { name: 'group-1'};
         widget.field.value = group;
 
         spyOn(formService, 'getWorkflowGroups').and.returnValue(
@@ -81,7 +81,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should update values on item click', () => {
-        const item = new GroupModel({ name: 'group-1' });
+        const item: GroupModel = { name: 'group-1' };
 
         widget.onItemClick(item, null);
         expect(widget.field.value).toBe(item);
@@ -96,8 +96,8 @@ describe('FunctionalGroupWidgetComponent', () => {
 
     it('should flush selected value', () => {
         const groups: GroupModel[] = [
-            new GroupModel({ id: '1', name: 'group 1' }),
-            new GroupModel({ id: '2', name: 'group 2' })
+            { id: '1', name: 'group 1' },
+            { id: '2', name: 'group 2' }
         ];
 
         widget.groups = groups;
@@ -110,8 +110,8 @@ describe('FunctionalGroupWidgetComponent', () => {
 
     it('should be case insensitive when flushing value', () => {
         const groups: GroupModel[] = [
-            new GroupModel({ id: '1', name: 'group 1' }),
-            new GroupModel({ id: '2', name: 'gRoUp 2' })
+            { id: '1', name: 'group 1' },
+            { id: '2', name: 'gRoUp 2' }
         ];
 
         widget.groups = groups;
@@ -123,10 +123,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should fetch groups and show popup on key up', () => {
-        const groups: GroupModel[] = [
-            new GroupModel(),
-            new GroupModel()
-        ];
+        const groups: GroupModel[] = [{}, {}];
         spyOn(formService, 'getWorkflowGroups').and.returnValue(
             new Observable((observer) => {
                 observer.next(groups);
@@ -143,10 +140,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should fetch groups with a group filter', () => {
-        const groups: GroupModel[] = [
-            new GroupModel(),
-            new GroupModel()
-        ];
+        const groups: GroupModel[] = [{}, {}];
         spyOn(formService, 'getWorkflowGroups').and.returnValue(
             new Observable((observer) => {
                 observer.next(groups);
