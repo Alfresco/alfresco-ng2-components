@@ -24,8 +24,6 @@ this.router.navigate(['/error', errorCode]);
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | errorCode | `string` |  | Error code associated with this error. |
-| returnButtonUrl | `string` | "/" | Target URL for the return button. |
-| secondaryButtonUrl | `string` | "report-issue" | Target URL for the secondary button. |
 
 ## Details
 

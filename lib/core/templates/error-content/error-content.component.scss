@@ -40,12 +40,6 @@
             margin-bottom: 60px;
             line-height: 30px;
         }
-
-        &-buttons {
-            display: flex;
-            width: 100%;
-            justify-content: space-evenly;
-        }
     }
 
     @media screen and ($mat-small) {

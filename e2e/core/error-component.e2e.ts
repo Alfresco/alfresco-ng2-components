@@ -51,22 +51,6 @@ describe('Error Component', () => {
         await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
 
-    it('[C280563] Should back home button navigate to the home page', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/404');
-
-        await errorPage.clickBackButton();
-
-        await expect(await browser.getCurrentUrl()).toBe(browser.params.testConfig.adf.url + '/');
-    });
-
-    it('[C280564] Should secondary button by default redirect to report-issue URL', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/403');
-
-        await errorPage.clickSecondButton();
-
-        await expect(await browser.getCurrentUrl()).toBe(browser.params.testConfig.adf.url + '/report-issue');
-    });
-
     it('[C277304] Should display the error 404 when access to not found page', async () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/404');
         await expect(await errorPage.getErrorCode()).toBe('404');

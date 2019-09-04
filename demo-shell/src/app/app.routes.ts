@@ -57,6 +57,7 @@ import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-det
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
+import { DemoErrorComponent } from './components/error/demo-error.component';
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: 'app/components/login/login.module#AppLoginModule' },
     { path: 'logout', component: LogoutComponent },
@@ -414,7 +415,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'error/:id',
-                component: ErrorContentComponent
+                component: DemoErrorComponent
             },
             {
                 path: 'error/no-authorization',
