@@ -16,6 +16,7 @@
  */
 
 import { ApiService } from '../api.service';
+import { Logger } from '../../utils/logger';
 
 export class QueryService {
 
@@ -34,8 +35,7 @@ export class QueryService {
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('get process-instances Service error');
+            Logger.error('get process-instances Service error');
         }
     }
 
@@ -48,8 +48,7 @@ export class QueryService {
 
             return this.api.performBpmOperation(path, method, queryParams, {});
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('get subprocesses process-instances Service error');
+            Logger.error('get subprocesses process-instances Service error');
         }
     }
 

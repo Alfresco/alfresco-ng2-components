@@ -12,15 +12,11 @@ const argv = require('yargs').argv;
 const projectRoot = path.resolve(__dirname);
 const width = 1366, height = 768;
 
-let load_env_file = function () {
-    let ENV_FILE = process.env.ENV_FILE;
+let ENV_FILE = process.env.ENV_FILE;
 
-    if (ENV_FILE) {
-        require('dotenv').config({ path: ENV_FILE });
-    }
-};
-
-load_env_file();
+if (ENV_FILE) {
+    require('dotenv').config({ path: ENV_FILE });
+}
 
 let HOST = process.env.URL_HOST_ADF;
 let BROWSER_RUN = !!process.env.BROWSER_RUN;
@@ -44,22 +40,10 @@ if (LOG) {
     console.log('SELENIUM_SERVER : ' + SELENIUM_SERVER);
 }
 
-let browser_options = function () {
-    let args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
-
-    if (BROWSER_RUN !== true) {
-        args_options.push('--headless') ;
-    }
-
-    return args_options;
-};
-
-let args_options = browser_options();
-
 let downloadFolder = path.join(__dirname, 'e2e/downloads');
 
 let specs = () => {
-    let specsToRun = './**/e2e/' + FOLDER + '/**/*.e2e.ts';
+    let specsToRun = FOLDER ? './**/e2e/' + FOLDER + '/**/*.e2e.ts' : './**/e2e/**/*.e2e.ts';
 
     if (LIST_SPECS.length === 0) {
         arraySpecs = [specsToRun];
@@ -100,7 +84,12 @@ exports.config = {
                     'default_directory': downloadFolder
                 }
             },
-            args: args_options
+            args: ['--incognito',
+                `--window-size=${width},${height}`,
+                '--disable-gpu',
+                '--disable-web-security',
+                '--disable-browser-side-navigation',
+                ...(BROWSER_RUN === true ? [] : ['--headless'])]
         }
     },
 
@@ -162,6 +151,7 @@ exports.config = {
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
         });
+
         require("tsconfig-paths").register({
             project: 'e2e/tsconfig.e2e.json',
             baseUrl: 'e2e/',

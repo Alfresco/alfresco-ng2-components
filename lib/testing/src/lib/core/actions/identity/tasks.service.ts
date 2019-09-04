@@ -16,6 +16,7 @@
  */
 
 import { ApiService } from '../api.service';
+import { Logger } from '../../utils/logger';
 
 export class TasksService {
 
@@ -38,8 +39,7 @@ export class TasksService {
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            Logger.error('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 
@@ -57,8 +57,7 @@ export class TasksService {
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Create FormTask - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            Logger.error('Create FormTask - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 
@@ -71,8 +70,7 @@ export class TasksService {
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
 
     }
@@ -86,8 +84,7 @@ export class TasksService {
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Claim Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Claim Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 
@@ -100,8 +97,7 @@ export class TasksService {
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Delete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Delete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 
@@ -121,8 +117,7 @@ export class TasksService {
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Get Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Get Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 
@@ -136,8 +131,7 @@ export class TasksService {
             const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
             return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Get Task Id - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Get Task Id - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 
@@ -151,8 +145,7 @@ export class TasksService {
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 
