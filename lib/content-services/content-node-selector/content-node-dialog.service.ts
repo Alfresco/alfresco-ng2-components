@@ -225,7 +225,9 @@ export class ContentNodeDialogService {
     private imageResolver(row: ShareDataRow): string | null {
         const entry: Node = row.node.entry;
         if (!this.contentService.hasAllowableOperations(entry, 'create')) {
-            return this.thumbnailService.getMimeTypeIcon('disable/folder');
+            if (this.isNodeFolder(entry)) {
+                return this.thumbnailService.getMimeTypeIcon('disable/folder');
+            }
         }
 
         return null;
