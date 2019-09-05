@@ -277,7 +277,8 @@
       "WEBSITE": "website",
       "ARCHIVE": "archive",
       "PRESENTATION": "presentation",
-      "SPREADSHEET": "spreadsheet"
+      "SPREADSHEET": "spreadsheet",
+      "MISCELLANEOUS": "miscellaneous"
     }
   },
   "USER_PROFILE": {
