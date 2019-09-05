@@ -269,7 +269,7 @@ describe('Task cloud visibility', async () => {
 
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const standaloneTaskName = StringUtil.generateRandomString(5);
-    let processName = StringUtil.generateRandomString(5);
+    const processName = StringUtil.generateRandomString(5);
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
     let testUser, groupInfo;
@@ -326,18 +326,15 @@ describe('Task cloud visibility', async () => {
     });
 
     it('[C315169] Should be able to start a process with visibility condition for number widgets', async () => {
-        const processModelWithSe = 'numbervisibilityprocess';
-        const numberVisibilityTask = 'number_visibility_task';
-        processName = StringUtil.generateRandomString(5);
 
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
-        await startProcessPage.selectFromProcessDropdown(processModelWithSe);
+        await startProcessPage.selectFromProcessDropdown('numbervisibilityprocess');
         await startProcessPage.enterProcessName(processName);
         await startProcessPage.clickStartProcessButton();
 
         await processDetailsCloudDemoPage.selectProcessTaskByName(processName);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(numberVisibilityTask);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow('number_visibility_task');
         await taskFormCloudComponent.clickClaimButton();
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number1');
@@ -358,18 +355,15 @@ describe('Task cloud visibility', async () => {
     });
 
     it('[C315232] Should be able to complete a process with visibility condition for number widgets', async () => {
-        const processModelWithSe = 'booleanvisibilityprocess';
-        const numberVisibilityTask = 'boolean_visibility_task';
-        processName = StringUtil.generateRandomString(5);
 
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
-        await startProcessPage.selectFromProcessDropdown(processModelWithSe);
+        await startProcessPage.selectFromProcessDropdown('booleanvisibilityprocess');
         await startProcessPage.enterProcessName(processName);
         await startProcessPage.clickStartProcessButton();
 
         await processDetailsCloudDemoPage.selectProcessTaskByName(processName);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(numberVisibilityTask);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow('boolean_visibility_task');
         await taskFormCloudComponent.clickClaimButton();
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Checkbox2');
