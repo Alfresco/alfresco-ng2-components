@@ -109,6 +109,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     isDisabled: boolean;
 
     private onDestroy$ = new Subject<boolean>();
+    currentTimeout: any;
 
     constructor(private identityGroupService: IdentityGroupService) { }
 
@@ -117,8 +118,11 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+
         if (changes.preSelectGroups && this.hasPreSelectGroups()) {
             this.loadPreSelectGroups();
+        } else {
+            this.searchGroupsControl.setValue('');
         }
 
         if (changes.appName && this.isAppNameChanged(changes.appName)) {
@@ -208,10 +212,19 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             this.preSelectGroups.forEach((group: IdentityGroupModel) => {
                 this.selectedGroups.push(group);
             });
+            const groups = this.removeDuplicatedGroups(this.selectedGroups);
+            this.selectedGroups = [...groups];
             this.selectedGroups$.next(this.selectedGroups);
         } else {
-            this.searchGroupsControl.setValue(this.preSelectGroups[0]);
-            this.onSelect(this.preSelectGroups[0]);
+
+            if (this.currentTimeout) {
+                clearTimeout(this.currentTimeout);
+            }
+
+            this.currentTimeout = setTimeout(() => {
+                this.searchGroupsControl.setValue(this.preSelectGroups[0]);
+                this.onSelect(this.preSelectGroups[0]);
+            }, 0);
         }
     }
 
@@ -262,6 +275,13 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         return group ? group.name : '';
     }
 
+    private removeDuplicatedGroups(groups: IdentityGroupModel[]): IdentityGroupModel[] {
+        return groups.filter((group, index, self) =>
+                    index === self.findIndex((auxGroup) => {
+                        return group.id === auxGroup.id;
+                    }));
+    }
+
     private hasPreSelectGroups(): boolean {
         return this.preSelectGroups && this.preSelectGroups.length > 0;
     }
@@ -306,6 +326,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
+        clearTimeout(this.currentTimeout);
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

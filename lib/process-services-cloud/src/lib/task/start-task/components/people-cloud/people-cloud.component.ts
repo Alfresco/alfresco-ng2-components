@@ -107,6 +107,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     isFocused: boolean;
     invalidUsers: IdentityUserModel[] = [];
 
+    currentTimeout: any;
+
     constructor(private identityUserService: IdentityUserService, private logService: LogService) {
     }
 
@@ -140,6 +142,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
+        clearTimeout(this.currentTimeout);
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
@@ -196,7 +199,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     private removeDuplicatedUsers(users: IdentityUserModel[]): IdentityUserModel[] {
         return users.filter((user, index, self) =>
-                    index === self.findIndex((auxUser) => user.id === auxUser.id));
+                    index === self.findIndex((auxUser) => {
+                        return user.id === auxUser.id && user.username === auxUser.username;
+                    }));
     }
 
     async filterPreselectUsers() {
@@ -332,22 +337,26 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.loadMultiplePreselectUsers();
         }
-        if (this.userInput) {
-            this.userInput.nativeElement.click();
-        }
     }
 
     async loadNoValidationPreselectUsers() {
         let users: IdentityUserModel[];
 
         users = this.removeDuplicatedUsers(this.preSelectUsers);
-
         this.preSelectUsers = [...users];
 
         if (this.isMultipleMode()) {
             this.selectedUsersSubject.next(this.preSelectUsers);
         } else {
-            this.searchUserCtrl.setValue(this.preSelectUsers[0]);
+
+            if (this.currentTimeout) {
+                clearTimeout(this.currentTimeout);
+            }
+
+            this.currentTimeout = setTimeout(() => {
+                this.searchUserCtrl.setValue(this.preSelectUsers[0]);
+                this.onSelect(this.preSelectUsers[0]);
+            }, 0);
         }
     }
 
