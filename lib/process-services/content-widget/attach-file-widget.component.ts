@@ -71,12 +71,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     ngOnInit() {
-        if (this.field &&
-            this.field.value &&
-            this.field.value.length > 0) {
-            this.hasFile = true;
-        }
-        this.getMultipleFileParam();
+        super.ngOnInit();
 
         this.activitiContentService.getAlfrescoRepositories(null, true).subscribe((repoList) => {
             this.repositoryList = repoList;
@@ -229,8 +224,9 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                     this.logger.error(error);
                 },
                 () => {
-                    this.field.value = filesSaved;
-                    this.field.json.value = filesSaved;
+                    const previousFiles = this.field.value;
+                    this.field.value = [ ...previousFiles, ...filesSaved ];
+                    this.field.json.value = [ ...previousFiles, ...filesSaved ];
                     this.hasFile = true;
                 });
     }
