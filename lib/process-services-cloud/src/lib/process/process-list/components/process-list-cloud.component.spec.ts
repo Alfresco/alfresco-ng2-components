@@ -259,7 +259,7 @@ describe('ProcessListCloudComponent', () => {
         it('should render the custom template', async((done) => {
             const emptyList = {list: {entries: []}};
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
-            component.success.subscribe((res) => {
+            component.success.subscribe(() => {
                 expect(fixtureEmpty.debugElement.query(By.css('#custom-id'))).not.toBeNull();
                 expect(fixtureEmpty.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
                 done();
