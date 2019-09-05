@@ -116,14 +116,16 @@
                                     </mat-icon>
                                     <ng-template #no_selected_row>
                                         <img class="adf-datatable-center-img-ie"
-                                            [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
-                                                type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
-                                            }"
-                                            alt="{{
+                                            [attr.aria-label]=" (data.getValue(row, col) | fileType) === 'disable' ?
+                                                ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate) :
+                                                'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
+                                                    type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
+                                                }"
+                                            [attr.alt]=" (data.getValue(row, col) | fileType) === 'disable' ?
+                                                ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate) :
                                                 'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
                                                         type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
-                                                    }
-                                                }}"
+                                                }"
                                             src="{{ data.getValue(row, col) }}"
                                             (error)="onImageLoadingError($event, row)">
                                     </ng-template>

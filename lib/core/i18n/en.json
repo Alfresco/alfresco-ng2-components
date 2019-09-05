@@ -261,7 +261,8 @@
       "SELECT_FILE": "Select file",
       "SORT_ASCENDING": "ascending",
       "SORT_DESCENDING": "descending",
-      "ICON_TEXT": "File type {{ type }}"
+      "ICON_TEXT": "File type {{ type }}",
+      "ICON_DISABLED": "disabled"
     },
     "FILE_TYPE": {
       "DOCUMENT": "document",
