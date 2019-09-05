@@ -81,18 +81,6 @@ export class BrowserActions {
         }
     }
 
-    static async clear(elem: ElementFinder) {
-        return new Promise(async (resolve) => {
-            setTimeout(async () => {
-            const fieldValue: any = await browser.executeScript(`return arguments[0].value;`, elem);
-            for (let i = fieldValue.length; i > 0; i--) {
-                await elem.sendKeys(protractor.Key.BACK_SPACE);
-            }
-            resolve();
-            }, 1000);
-        });
-    }
-
     static async clearSendKeys(elementFinder: ElementFinder, text: string): Promise<void> {
         await this.click(elementFinder);
         await elementFinder.sendKeys('');
