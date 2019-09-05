@@ -292,6 +292,7 @@ for more information about installing and using the source code.
 | [Folder Edit directive](content-services/directives/folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [Inherit Permission directive](content-services/directives/inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../lib/content-services/permission-manager/components/inherited-button.directive.ts) |
 | [Node Lock directive](content-services/directives/node-lock.directive.md) | Locks or unlocks a node. | [Source](../lib/content-services/directives/node-lock.directive.ts) |
+| [Toggle Icon directive](content-services/directives/toggle-icon.directive.md) | Toggle icon on mouse and keyboard event. | [Source](../lib/content-services/upload/directives/toggle-icon.directive.ts) |
 
 ### Dialogs
 

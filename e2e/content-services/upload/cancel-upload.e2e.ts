@@ -79,7 +79,7 @@ describe('Upload component', async () => {
     });
 
     it('[C272792] Should be possible to cancel upload of a big file using row cancel icon', async () => {
-        await browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 3000)');
+        await browser.executeScript('setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 3000)');
 
         await contentServicesPage.uploadFile(largeFile.location);
 

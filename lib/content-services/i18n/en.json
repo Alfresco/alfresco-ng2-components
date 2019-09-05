@@ -117,7 +117,8 @@
       "REMOVE_FILE": "Remove uploaded file"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Canceled"
+      "FILE_CANCELED_STATUS": "Canceled",
+      "FILE_DONE_STATUS": "Uploaded"
     },
     "CONFIRMATION": {
       "BUTTON": {
@@ -130,12 +131,16 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "File version",
+      "VERSION": "File version {{ version }}",
       "DIALOG": "Upload list",
       "DIALOG_MAXIMIZE": "Maximize upload dialog",
       "DIALOG_MINIMIZE": "Minimize upload dialog",
       "DIALOG_CLOSE": "Close upload dialog",
       "CANCEL_ALL": "Cancel all uploading files",
+      "REMOVE_FILE": "Remove uploaded file {{ file }}",
+      "CANCEL_FILE": "Cancel scheduled file {{ file }}",
+      "CANCEL_FILE_UPLOAD": "Cancel file upload {{ file }}",
+      "UPLOAD_FILE_ERROR": "Upload error {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Confirm cancel",
         "CONTINUE": "Continue uploading"

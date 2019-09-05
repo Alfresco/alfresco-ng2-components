@@ -36,6 +36,7 @@ backend services have been tested with each released version of ADF.
 -   [Identity group service](core/services/identity-group.service.md)
 -   [Local preference cloud service](process-services-cloud/services/local-preference-cloud.service.md)
 -   [User preference cloud service](process-services-cloud/services/user-preference-cloud.service.md)
+-   [Toggle icon directive](content-services/directives/toggle-icon.directive.md)
 
 <!--v340 end-->
 

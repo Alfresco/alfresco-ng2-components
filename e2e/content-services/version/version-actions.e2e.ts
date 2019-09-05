@@ -157,7 +157,7 @@ describe('Version component actions', () => {
     it('[C307033] Should be possible to cancel the upload of a new version', async () => {
         await browser.refresh();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
-        await browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 1000)');
+        await browser.executeScript(' setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 1000)');
 
         await BrowserActions.click(versionManagePage.showNewVersionButton);
 

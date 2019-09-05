@@ -23,6 +23,7 @@
         </button>
 
         <span
+            tabindex="0"
             class="adf-upload-dialog__title"
             *ngIf="!uploadList.isUploadCancelled()">
             {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_PROGRESS'
@@ -34,6 +35,7 @@
         </span>
 
         <span
+            tabindex="0"
             class="adf-upload-dialog__title"
             *ngIf="uploadList.isUploadCancelled()">
             {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_CANCELED' | translate }}
@@ -41,6 +43,7 @@
     </header>
 
     <section class="adf-upload-dialog__info"
+        tabindex="0"
         *ngIf="totalErrors">
         {{
             (totalErrors > 1

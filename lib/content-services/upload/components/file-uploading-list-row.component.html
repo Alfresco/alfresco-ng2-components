@@ -6,54 +6,69 @@
     <adf-icon *ngIf="mimeType !== 'default'" value="adf:{{ mimeType }}"></adf-icon>
 
     <span
+        tabindex="0"
         class="adf-file-uploading-row__name"
         title="{{ file.name }}">
         {{ file.name }}
     </span>
 
-    <span *ngIf="isUploadVersion()" class="adf-file-uploading-row__version">
-        <mat-chip color="primary" [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.VERSION' | translate" [title]="'version' + versionNumber" disabled>{{
-            versionNumber
+    <span *ngIf="isUploadVersion()" class="adf-file-uploading-row__version" tabindex="0" >
+        <mat-chip color="primary"
+            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.VERSION' | translate: { version:  versionNumber }"
+            [title]="'version' + versionNumber" disabled>{{
+                versionNumber
         }}</mat-chip>
     </span>
 
     <div
-        *ngIf="file.status === FileUploadStatus.Progress || file.status === FileUploadStatus.Starting"
+        tabindex="0"
+        role="button"
+        #toggleIcon="toggleIcon"
+        adf-toggle-icon
+        (keyup.enter)="onCancel(file)"
         (click)="onCancel(file)"
+        data-automation-id="cancel-upload-progress"
+        *ngIf="file.status === FileUploadStatus.Progress || file.status === FileUploadStatus.Starting"
+        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CANCEL_FILE_UPLOAD' | translate: { file: file.name }"
         class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle"
         title="{{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_FILE' | translate }}">
-        <span class="adf-file-uploading-row__status">
+
+        <span class="adf-file-uploading-row__status" *ngIf="!toggleIcon.isToggled">
             {{ file.progress.loaded | adfFileSize }} / {{ file.progress.total | adfFileSize }}
         </span>
 
-        <mat-icon
-            mat-list-icon
+        <mat-icon *ngIf="toggleIcon.isToggled"
             class="adf-file-uploading-row__action adf-file-uploading-row__action--cancel">
             clear
         </mat-icon>
     </div>
 
-    <div
+    <button mat-icon-button
+        adf-toggle-icon
+        #toggleIcon="toggleIcon"
         *ngIf="file.status === FileUploadStatus.Complete && !isUploadVersion()"
         (click)="onRemove(file)"
-        class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle"
+        class="adf-file-uploading-row__group"
+        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.REMOVE_FILE' | translate: { file: file.name }"
         title="{{ 'ADF_FILE_UPLOAD.BUTTON.REMOVE_FILE' | translate }}">
-        <mat-icon
-            mat-list-icon
+
+        <mat-icon *ngIf="!toggleIcon.isToggled"
             class="adf-file-uploading-row__status adf-file-uploading-row__status--done">
             check_circle
         </mat-icon>
 
-        <mat-icon
-            mat-list-icon
+        <mat-icon *ngIf="toggleIcon.isToggled"
             class="adf-file-uploading-row__action adf-file-uploading-row__action--remove">
             remove_circle
         </mat-icon>
-    </div>
+    </button>
 
     <div
         *ngIf="file.status === FileUploadStatus.Complete && isUploadVersion()"
-        class="adf-file-uploading-row__file-version">
+        class="adf-file-uploading-row__file-version"
+        [attr.aria-label]="'ADF_FILE_UPLOAD.STATUS.FILE_DONE_STATUS' | translate"
+        role="status"
+        >
         <mat-icon
             mat-list-icon
             class="adf-file-uploading-row__status--done">
@@ -61,34 +76,44 @@
         </mat-icon>
     </div>
 
-    <div
+    <button
+        adf-toggle-icon
+        #toggleIconCancel="toggleIcon"
+        mat-icon-button
         *ngIf="file.status === FileUploadStatus.Pending"
         (click)="onCancel(file)"
-        class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle">
+        class="adf-file-uploading-row__group"
+        title="{{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_FILE' | translate }}"
+        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CANCEL_FILE' | translate: { file: file.name }">
         <mat-icon
-            mat-list-icon
+            *ngIf="!toggleIconCancel.isToggled"
             class="adf-file-uploading-row__status adf-file-uploading-row__status--pending">
             schedule
         </mat-icon>
 
         <mat-icon
-            mat-list-icon
+            *ngIf="toggleIconCancel.isToggled"
             class="adf-file-uploading-row__action adf-file-uploading-row__action--remove">
             remove_circle
         </mat-icon>
-    </div>
+    </button>
 
     <div
+        tabindex="0"
+        role="status"
         *ngIf="file.status === FileUploadStatus.Error"
         class="adf-file-uploading-row__block adf-file-uploading-row__status--error">
         <mat-icon mat-list-icon
-            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.ERROR' | translate"
+            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_FILE_ERROR' | translate: { error: file.errorCode | adfFileUploadError }"
             [matTooltip]="file.errorCode | adfFileUploadError">
             report_problem
         </mat-icon>
     </div>
 
     <div
+        tabindex="0"
+        [attr.aria-label]="'ADF_FILE_UPLOAD.STATUS.FILE_CANCELED_STATUS' | translate"
+        role="status"
         *ngIf="showCancelledStatus()"
         class="adf-file-uploading-row__block adf-file-uploading-row__status--cancelled">
         {{ 'ADF_FILE_UPLOAD.STATUS.FILE_CANCELED_STATUS' | translate }}
