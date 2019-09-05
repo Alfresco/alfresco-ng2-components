@@ -80,6 +80,20 @@ const fakeMinimalNode: Node = <Node> {
     }
 };
 
+const fakePngUpload = {
+    'id': 1166,
+    'name': 'fake-png.png',
+    'created': '2017-07-25T17:17:37.099Z',
+    'createdBy': {'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin'},
+    'relatedContent': false,
+    'contentAvailable': true,
+    'link': false,
+    'mimeType': 'image/png',
+    'simpleType': 'image',
+    'previewStatus': 'queued',
+    'thumbnailStatus': 'queued'
+};
+
 const fakePngAnswer = {
     'id': 1155,
     'name': 'a_png_file.png',
@@ -190,6 +204,38 @@ describe('AttachFileWidgetComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+            });
+        });
+    }));
+
+    it('should be able to upload more than one file from content node selector', async(() => {
+        const clickAttachFile = () => {
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
+            expect(attachButton).not.toBeNull();
+            attachButton.click();
+            fixture.detectChanges();
+        };
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
+        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValues(of(fakePngAnswer), of(fakePngUpload));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(of([fakeMinimalNode]));
+        widget.field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.UPLOAD,
+            value: []
+        });
+        widget.field.id = 'attach-file-attach';
+        widget.field.params = <FormFieldMetadata> allSourceParams;
+        widget.field.params.multiple = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            clickAttachFile();
+            fixture.debugElement.query(By.css('#attach-SHAREME')).nativeElement.click();
+            fixture.detectChanges();
+            clickAttachFile();
+            fixture.debugElement.query(By.css('#attach-GOKUSHARE')).nativeElement.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#file-1155')).not.toBeNull();
+                expect(element.querySelector('#file-1166')).not.toBeNull();
             });
         });
     }));
