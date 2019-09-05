@@ -56,14 +56,14 @@ export class BrowserActions {
     static async getText(elementFinder: ElementFinder): Promise<string> {
         const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
         if (present) {
-            return elementFinder.getText();
+            return await elementFinder.getText();
         } else {
             return '';
         }
     }
 
     static async getArrayText(elementFinders: ElementArrayFinder): Promise<string> {
-        return elementFinders.getText();
+        return await elementFinders.getText();
     }
 
     static async getColor(elementFinder: ElementFinder): Promise<string> {
@@ -101,12 +101,12 @@ export class BrowserActions {
     }
 
     static async sendKeysIfVisible(elementFinder: ElementFinder, text: string) {
-        await BrowserVisibility.waitForElementToBeVisible(elementFinder);
+        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         await elementFinder.sendKeys(text);
     }
 
     static async sendKeysIfPresent(elementFinder: ElementFinder, text: string) {
-        await BrowserVisibility.waitForElementToBePresent(elementFinder);
+        await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
         await elementFinder.sendKeys(text);
     }
 
