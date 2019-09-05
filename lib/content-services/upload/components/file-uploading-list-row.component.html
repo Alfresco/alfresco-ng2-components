@@ -27,6 +27,7 @@
         adf-toggle-icon
         (keyup.enter)="onCancel(file)"
         (click)="onCancel(file)"
+        data-automation-id="cancel-upload-progress"
         *ngIf="file.status === FileUploadStatus.Progress || file.status === FileUploadStatus.Starting"
         [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CANCEL_FILE_UPLOAD' | translate: { file: file.name }"
         class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle"
