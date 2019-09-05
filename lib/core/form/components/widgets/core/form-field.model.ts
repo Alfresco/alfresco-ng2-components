@@ -26,7 +26,7 @@ import { FormFieldTypes } from './form-field-types';
 import { NumberFieldValidator } from './form-field-validator';
 import { FormWidgetModel } from './form-widget.model';
 import { FormModel } from './form.model';
-import { TabModel } from '@alfresco/adf-core';
+import { TabModel } from './tab.model';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
