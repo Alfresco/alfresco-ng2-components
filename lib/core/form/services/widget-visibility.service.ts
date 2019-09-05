@@ -67,6 +67,9 @@ export class WidgetVisibilityService {
         const rightValue = this.getRightValue(form, visibilityObj);
         const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
 
+        if (!this.isValidFieldValue(form, visibilityObj)) {
+            return false;
+        }
         if (this.isValidOperator(visibilityObj.nextConditionOperator)) {
             accumulator.push({ value: actualResult, operator: visibilityObj.nextConditionOperator });
         }
@@ -89,6 +92,19 @@ export class WidgetVisibilityService {
         }
         return !!result;
 
+    }
+
+    private isValidFieldValue(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
+        let isValid = true;
+        if (visibilityObj.leftType === WidgetTypeEnum.field) {
+            form.getFormFields().forEach((formField: FormFieldModel) => {
+                if (this.isSearchedField(formField, visibilityObj.leftValue)) {
+                    isValid = formField.isValid;
+                    return;
+                }
+            });
+        }
+        return isValid;
     }
 
     getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
