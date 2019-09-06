@@ -272,7 +272,7 @@ describe('Start Task Form', () => {
             await startProcessPage.clickStartProcessButton();
             await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', startEventFormProcess);
 
             await browser.sleep(1000);

@@ -118,7 +118,7 @@ describe('Start Task', () => {
         await startTask.addName(unassignedTaskName);
         await startTask.clickStartButton();
         await tasksCloudDemoPage.editTaskFilterCloudComponent();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
@@ -138,7 +138,7 @@ describe('Start Task', () => {
         await startTask.checkStartButtonIsEnabled();
         await startTask.clickStartButton();
         await tasksCloudDemoPage.editTaskFilterCloudComponent();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
@@ -226,7 +226,7 @@ describe('Start Task', () => {
         await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
         await startTask.clickStartButton();
 
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
 

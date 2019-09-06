@@ -27,6 +27,7 @@ export class EditProcessFilterCloudComponentPage {
     saveButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-save"]'));
     saveAsButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-saveAs"]'));
     deleteButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-delete"]'));
+    filter: ElementFinder = element(by.css(`adf-cloud-edit-process-filter mat-expansion-panel-header`));
 
     editProcessFilterDialogPage = new EditProcessFilterDialogPage();
 
@@ -34,7 +35,11 @@ export class EditProcessFilterCloudComponentPage {
         return this.editProcessFilterDialogPage;
     }
 
-    async clickCustomiseFilterHeader(): Promise<void> {
+    async isFilterDisplayed(): Promise<Boolean> {
+        return await BrowserVisibility.waitUntilElementIsPresent(this.filter);
+    }
+
+    async openFilter(): Promise<void> {
         await BrowserActions.click(this.customiseFilter);
         await browser.driver.sleep(1000);
     }
@@ -107,6 +112,11 @@ export class EditProcessFilterCloudComponentPage {
         await this.clickOnDropDownArrow('appName');
         const dropdownOptions = element.all(by.css('.mat-select-panel mat-option'));
         return dropdownOptions.count();
+    }
+
+    async isApplicationListLoaded(): Promise<Boolean> {
+        const emptyList = element(by.css(`[data-automation-id='adf-cloud-edit-process-property-appName'] .mat-select-placeholder`));
+        return await BrowserVisibility.waitUntilElementIsNotVisible(emptyList);
     }
 
     async setProcessInstanceId(option): Promise<void> {

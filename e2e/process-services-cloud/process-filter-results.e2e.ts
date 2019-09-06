@@ -156,7 +156,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C306887] Should be able to filter by appName', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
 
@@ -166,7 +166,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C306889] Should be able to see "No process found" when using an app with no processes in the appName field', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown('subprocessapp');
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
 
@@ -175,7 +175,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C306890] Should be able to filter by initiator', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
 
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
@@ -184,7 +184,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C306891] Should be able to see "No process found" when providing an initiator whitout processes', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', anotherUser.username);
 
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
@@ -192,7 +192,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C311315] Should be able to filter by process definition id', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processDefinitionId', processDefinition.entry.id);
 
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
@@ -205,7 +205,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C311316] Should be able to filter by process definition key', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processDefinitionKey', processDefinition.entry.key);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
@@ -217,7 +217,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C311317] Should be able to filter by process instance id', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', runningProcessInstance.entry.id);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
@@ -233,7 +233,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C311321] Should be able to filter by process name', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', runningProcessInstance.entry.name);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
@@ -245,7 +245,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C306892] Should be able to filter by process status - Running', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING');
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
@@ -255,7 +255,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C306892] Should be able to filter by process status - Completed', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('COMPLETED');
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(completedProcess.entry.name);
@@ -265,7 +265,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C306892] Should be able to filter by process status - Suspended', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('SUSPENDED');
 
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
@@ -276,7 +276,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C306892] Should be able to filter by process status - All', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('ALL');
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
@@ -286,49 +286,49 @@ describe('Process filters cloud', () => {
     });
 
     it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = currentDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedFrom', currentDate);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = beforeDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedFrom', beforeDate);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311318] Should be able to filter by lastModifiedFrom - does not display record when date = afterDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedFrom', afterDate);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = currentDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', currentDate);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311319] Should be able to filter by lastModifiedTo - does not display record when date = beforeDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', beforeDate);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = afterDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', afterDate);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311319] Should not display any processes when the lastModifiedFrom and lastModifiedTo are set to a future date', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedFrom', afterDate);
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', afterDate);
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();

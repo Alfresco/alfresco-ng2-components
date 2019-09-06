@@ -68,7 +68,7 @@ describe('Edit process filters cloud', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             await processCloudDemoPage.clickOnProcessFilters();
             const editProcessFilterCloud = processCloudDemoPage.editProcessFilterCloudComponent();
-            await editProcessFilterCloud.clickCustomiseFilterHeader();
+            await editProcessFilterCloud.openFilter();
             await editProcessFilterCloud.checkCustomiseFilterHeaderIsExpanded();
             await processCloudDemoPage.allProcessesFilter().clickProcessFilter();
         });
@@ -82,7 +82,7 @@ describe('Edit process filters cloud', () => {
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         });
 
         it('[C291805] New process filter is added when clicking Save As button', async () => {
@@ -96,7 +96,7 @@ describe('Edit process filters cloud', () => {
             await browser.driver.sleep(1000);
 
             await expect(await processCloudDemoPage.getActiveFilterName()).toBe('New');
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
@@ -116,7 +116,7 @@ describe('Edit process filters cloud', () => {
 
             await browser.driver.sleep(1000);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().checkCustomiseFilterHeaderIsExpanded();
             await expect(await processCloudDemoPage.getActiveFilterName()).toBe('New');
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
@@ -126,7 +126,7 @@ describe('Edit process filters cloud', () => {
 
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New');
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnSaveButton();
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().checkCustomiseFilterHeaderIsExpanded();
 
             await browser.driver.sleep(1000);
@@ -138,7 +138,7 @@ describe('Edit process filters cloud', () => {
             await browser.driver.sleep(1000);
 
             await processCloudDemoPage.customProcessFilter('custom-new').clickProcessFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().checkCustomiseFilterHeaderIsExpanded();
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             await processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
@@ -154,13 +154,13 @@ describe('Edit process filters cloud', () => {
             await browser.driver.sleep(1000);
 
             await expect(await processCloudDemoPage.getActiveFilterName()).toBe('New');
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().checkCustomiseFilterHeaderIsExpanded();
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             await processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Name');
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveButton();
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().checkCustomiseFilterHeaderIsExpanded();
 
             await browser.driver.sleep(1000);
@@ -179,7 +179,7 @@ describe('Edit process filters cloud', () => {
             await browser.driver.sleep(1000);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnSaveButton();
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await expect(await processCloudDemoPage.getActiveFilterName()).toBe('New');
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             await processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
@@ -201,11 +201,11 @@ describe('Edit process filters cloud', () => {
             await expect(await processCloudDemoPage.getActiveFilterName()).toEqual('All Processes');
             await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             await expect(await processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.allProcessesFilter().clickProcessFilter();
             await expect(await processCloudDemoPage.getActiveFilterName()).toEqual('All Processes');
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('StartDate');
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         });
 
         it('[C291811] Save button of process filter dialog should be disabled when process name is empty', async () => {
@@ -219,7 +219,7 @@ describe('Edit process filters cloud', () => {
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().checkCancelButtonIsEnabled()).toEqual(true);
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnCancelButton();
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().checkCustomiseFilterHeaderIsExpanded();
             await processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('StartDate');
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('StartDate');

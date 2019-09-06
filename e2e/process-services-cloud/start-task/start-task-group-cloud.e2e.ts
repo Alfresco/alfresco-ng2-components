@@ -139,7 +139,7 @@ describe('Start Task - Group Cloud Component', () => {
         await appListCloudComponent.goToApp(simpleApp);
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
 
@@ -171,7 +171,7 @@ describe('Start Task - Group Cloud Component', () => {
         await appListCloudComponent.goToApp(simpleApp);
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
 
