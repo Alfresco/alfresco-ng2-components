@@ -22,6 +22,7 @@ export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
         try {
+            await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
             await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
             await elementFinder.click();
         } catch (clickErr) {
@@ -46,14 +47,14 @@ export class BrowserActions {
     static async getText(elementFinder: ElementFinder): Promise<string> {
         const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
         if (present) {
-            return await elementFinder.getText();
+            return elementFinder.getText();
         } else {
             return '';
         }
     }
 
     static async getArrayText(elementFinders: ElementArrayFinder): Promise<string> {
-        return await elementFinders.getText();
+        return elementFinders.getText();
     }
 
     static async getColor(elementFinder: ElementFinder): Promise<string> {

@@ -152,7 +152,7 @@ describe('Edit task filters and task list properties', () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
             await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
         });
 
@@ -381,7 +381,7 @@ describe('Edit task filters and task list properties', () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
             await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
 
         });

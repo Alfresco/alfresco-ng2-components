@@ -132,7 +132,7 @@ describe('Process list cloud', () => {
 
         it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
             const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
-            await editProcessFilterCloudComponent.clickCustomiseFilterHeader();
+            await editProcessFilterCloudComponent.openFilter();
             await editProcessFilterCloudComponent.setStatusFilterDropDown('RUNNING');
             await editProcessFilterCloudComponent.setSortFilterDropDown('Name');
             await editProcessFilterCloudComponent.setOrderFilterDropDown('ASC');
@@ -147,7 +147,7 @@ describe('Process list cloud', () => {
 
         it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
             const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
-            await editProcessFilterCloudComponent.clickCustomiseFilterHeader();
+            await editProcessFilterCloudComponent.openFilter();
             await editProcessFilterCloudComponent.setStatusFilterDropDown('RUNNING');
             await editProcessFilterCloudComponent.setSortFilterDropDown('Id');
             await editProcessFilterCloudComponent.setOrderFilterDropDown('ASC');
@@ -161,7 +161,7 @@ describe('Process list cloud', () => {
 
         it('[C305054] Should display processes ordered by status when Status is selected from sort dropdown', async () => {
             const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
-            await editProcessFilterCloudComponent.clickCustomiseFilterHeader();
+            await editProcessFilterCloudComponent.openFilter();
             await editProcessFilterCloudComponent.setStatusFilterDropDown('ALL');
             await editProcessFilterCloudComponent.setSortFilterDropDown('Status');
             await editProcessFilterCloudComponent.setOrderFilterDropDown('ASC');
@@ -174,7 +174,7 @@ describe('Process list cloud', () => {
 
         it('[C305054] Should display processes ordered by initiator when Initiator is selected from sort dropdown', async () => {
             const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
-            await editProcessFilterCloudComponent.clickCustomiseFilterHeader();
+            await editProcessFilterCloudComponent.openFilter();
             await editProcessFilterCloudComponent.setStatusFilterDropDown('ALL');
             await editProcessFilterCloudComponent.setSortFilterDropDown('Initiator');
             await editProcessFilterCloudComponent.setOrderFilterDropDown('ASC');
@@ -187,7 +187,7 @@ describe('Process list cloud', () => {
 
         it('[C305054] Should display processes ordered by processdefinitionid date when ProcessDefinitionId is selected from sort dropdown', async () => {
             const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
-            await editProcessFilterCloudComponent.clickCustomiseFilterHeader();
+            await editProcessFilterCloudComponent.openFilter();
             await editProcessFilterCloudComponent.setStatusFilterDropDown('ALL');
             await editProcessFilterCloudComponent.setSortFilterDropDown('ProcessDefinitionId');
             await editProcessFilterCloudComponent.setOrderFilterDropDown('ASC');
@@ -200,7 +200,7 @@ describe('Process list cloud', () => {
 
         it('[C305054] Should display processes ordered by processdefinitionkey date when ProcessDefinitionKey is selected from sort dropdown', async () => {
             const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
-            await editProcessFilterCloudComponent.clickCustomiseFilterHeader();
+            await editProcessFilterCloudComponent.openFilter();
             await editProcessFilterCloudComponent.setStatusFilterDropDown('ALL');
             await editProcessFilterCloudComponent.setSortFilterDropDown('ProcessDefinitionKey');
             await editProcessFilterCloudComponent.setOrderFilterDropDown('ASC');
@@ -213,7 +213,7 @@ describe('Process list cloud', () => {
 
         it('[C305054] Should display processes ordered by last modified date when Last Modified is selected from sort dropdown', async () => {
             const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
-            await editProcessFilterCloudComponent.clickCustomiseFilterHeader();
+            await editProcessFilterCloudComponent.openFilter();
             await editProcessFilterCloudComponent.setStatusFilterDropDown('ALL');
             await editProcessFilterCloudComponent.setSortFilterDropDown('LastModified');
             await editProcessFilterCloudComponent.setOrderFilterDropDown('ASC');
@@ -226,7 +226,7 @@ describe('Process list cloud', () => {
 
         it('[C305054] Should display processes ordered by business key date when BusinessKey is selected from sort dropdown', async () => {
             const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
-            await editProcessFilterCloudComponent.clickCustomiseFilterHeader();
+            await editProcessFilterCloudComponent.openFilter();
             await editProcessFilterCloudComponent.setStatusFilterDropDown('ALL');
             await editProcessFilterCloudComponent.setSortFilterDropDown('BusinessKey');
             await editProcessFilterCloudComponent.setOrderFilterDropDown('ASC');
@@ -241,7 +241,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.allProcessesFilter().clickProcessFilter();
             await processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             await expect(await processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
 
             const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
 
@@ -251,7 +251,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C297697] The value of the filter should be preserved when saving it', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessInstanceId(completedProcess.entry.id);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
@@ -263,13 +263,13 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
             await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().numberOfRows()).toBe(1);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
 
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(completedProcess.entry.id);
         });
 
         it('[C297646] Should display the filter dropdown fine , after switching between saved filters', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             noOfApps = await processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions();
 
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
@@ -288,7 +288,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnSaveButton();
             await expect(await processCloudDemoPage.getActiveFilterName()).toBe('SavedFilter');
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING');
@@ -301,7 +301,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnSaveButton();
             await expect(await processCloudDemoPage.getActiveFilterName()).toBe('SwitchFilter');
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
@@ -329,7 +329,7 @@ describe('Process list cloud', () => {
                 await processCloudDemoPage.allProcessesFilter().clickProcessFilter();
                 await processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
                 await expect(await processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
-                await processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+                await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
                 await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed();
                 await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveAsButtonIsDisplayed();
                 await processCloudDemoPage.editProcessFilterCloudComponent().checkDeleteButtonIsNotDisplayed();
