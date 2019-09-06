@@ -1032,16 +1032,13 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('form should be valid when a tab with invalid values is not visibile', () => {
+            tabVisibilityJsonModel.tabs[0].isVisible = false;
             tabVisibilityJsonModel.getFieldById('Number1').value = 'invalid';
-            tabVisibilityJsonModel.getFieldById('Number1').updateForm();
-
-            tabVisibilityJsonModel.getFieldById('Text1').value = 'hidetab';
-            tabVisibilityJsonModel.getFieldById('Text1').updateForm();
 
             tabVisibilityJsonModel.validateForm();
             expect(tabVisibilityJsonModel.isValid).toBeTruthy();
 
-            tabVisibilityJsonModel.getFieldById('Text1').value = 'showtab';
+            tabVisibilityJsonModel.tabs[0].isVisible = true;
             tabVisibilityJsonModel.validateForm();
             expect(tabVisibilityJsonModel.isValid).toBeFalsy();
         });
