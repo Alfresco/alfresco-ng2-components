@@ -116,6 +116,58 @@ export let fakeFormJson = {
     ]
 };
 
+export let fakeVisibilityFormJson = {
+    id:   '9999',
+    name:   'FORM_VISIBILITY',
+    processDefinitionId:   'PROCESS_TEST:  9:  9999',
+    processDefinitionName:   'PROCESS_TEST',
+    processDefinitionKey:   'PROCESS_TEST',
+    taskId:   '999',
+    taskName:   'TEST',
+    fields:   [
+        {
+            fieldType:   'ContainerRepresentation',
+            id:   '000000000000000000',
+            name:   'Label',
+            type:   'container',
+            value:   null,
+            numberOfColumns:   2,
+            fields:   {
+                1:   [
+                    {
+                        fieldType:   'FormFieldRepresentation',
+                        id:   'FIELD_TEST',
+                        name:   'FIELD_TEST',
+                        type:   'text',
+                        value:   'RIGHT_FORM_FIELD_VALUE',
+                        visibilityCondition:   {
+                            leftFormFieldId:   'NUMBER_FIELD',
+                            leftRestResponseId:   null,
+                            operator:   '<',
+                            rightValue:   '60',
+                            rightType:   'value',
+                            rightFormFieldId:   '',
+                            rightRestResponseId:   '',
+                            nextConditionOperator:   '',
+                            nextCondition:   null
+                        },
+                        isVisible:   true
+                    },
+                    {
+                        fieldType:   'FormFieldRepresentation',
+                        id:   'NUMBER_FIELD',
+                        name:   'FIELD_WITH_CONDITION',
+                        type:   'integer',
+                        value:   '59',
+                        visibilityCondition:   null,
+                        isVisible:   true
+                    }
+                ]
+            }
+        }
+    ]
+};
+
 export let complexVisibilityJsonVisible = {
     'id':   47591,
     'name':   'Test-visibility',

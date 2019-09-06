@@ -32,7 +32,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { fakeTaskProcessVariableModels,
-        fakeFormJson, formTest,
+        fakeFormJson, formTest, fakeVisibilityFormJson,
         formValues, complexVisibilityJsonVisible,
         complexVisibilityJsonNotVisible, tabVisibilityJsonMock,
         tabInvalidFormVisibility } from 'core/mock/form/widget-visibility.service.mock';
@@ -930,6 +930,7 @@ describe('WidgetVisibilityService', () => {
     describe('Visibility based on form variables', () => {
 
         let fakeFormWithVariables = new FormModel(fakeFormJson);
+        const fakeFormWithVisibility = new FormModel(fakeVisibilityFormJson);
         const fakeTabVisibilityModel = new FormModel(tabVisibilityJsonMock);
         const complexVisibilityModel = new FormModel(complexVisibilityJsonVisible);
         const complexVisibilityJsonNotVisibleModel = new FormModel(complexVisibilityJsonNotVisible);
@@ -1044,5 +1045,19 @@ describe('WidgetVisibilityService', () => {
             invalidTabVisibilityJsonModel.validateForm();
             expect(invalidTabVisibilityJsonModel.isValid).toBeTruthy();
         });
+        it('should set visibility to false if the left form field has an invalid', () => {
+            visibilityObjTest.leftFormFieldId = 'NUMBER_FIELD';
+            visibilityObjTest.operator = '<';
+            visibilityObjTest.leftType = 'field';
+            visibilityObjTest.rightType = 'value';
+            visibilityObjTest.rightValue = '60';
+            let isVisible = service.isFieldVisible(fakeFormWithVisibility, visibilityObjTest);
+            expect(isVisible).toBeTruthy();
+
+            fakeFormWithVisibility.getFieldById('NUMBER_FIELD').value = '59.5';
+            isVisible = service.isFieldVisible(fakeFormWithVisibility, visibilityObjTest);
+            expect(isVisible).toBeFalsy();
+        });
+
     });
 });

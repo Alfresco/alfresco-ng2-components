@@ -98,7 +98,7 @@ export class WidgetVisibilityService {
         let isValid = true;
         if (visibilityObj.leftType === WidgetTypeEnum.field) {
             form.getFormFields().forEach((formField: FormFieldModel) => {
-                if (this.isSearchedField(formField, visibilityObj.leftValue)) {
+                if (this.isSearchedField(formField, visibilityObj.leftFormFieldId)) {
                     isValid = formField.isValid;
                     return;
                 }
