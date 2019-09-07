@@ -83,6 +83,8 @@ import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confi
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { environment } from '../environments/environment';
 import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
+import { DemoErrorComponent } from './components/error/demo-error.component';
+
 import {
     UserPreferenceCloudService,
     PROCESS_FILTERS_SERVICE_TOKEN,
@@ -171,6 +173,7 @@ registerLocaleData(localeSv);
         SharedLinkViewComponent,
         FormLoadingComponent,
         DemoPermissionComponent,
+        DemoErrorComponent,
         FormLoadingComponent,
         ReportIssueComponent,
         TreeViewSampleComponent,

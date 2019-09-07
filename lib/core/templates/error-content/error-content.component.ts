@@ -20,10 +20,9 @@ import {
     ChangeDetectionStrategy,
     Input,
     ViewEncapsulation,
-    OnInit,
-    AfterContentChecked
+    OnInit
 } from '@angular/core';
-import { Params, ActivatedRoute, Router } from '@angular/router';
+import { Params, ActivatedRoute } from '@angular/router';
 import { TranslationService } from '../../services/translation.service';
 
 @Component({
@@ -34,26 +33,15 @@ import { TranslationService } from '../../services/translation.service';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-error-content' }
 })
-export class ErrorContentComponent implements OnInit, AfterContentChecked {
+export class ErrorContentComponent implements OnInit {
 
     static UNKNOWN_ERROR = 'UNKNOWN';
-
-    /** Target URL for the secondary button. */
-    @Input()
-    secondaryButtonUrl: string = 'report-issue';
-
-    /** Target URL for the return button. */
-    @Input()
-    returnButtonUrl: string = '/';
 
     /** Error code associated with this error. */
     @Input()
     errorCode: string = ErrorContentComponent.UNKNOWN_ERROR;
 
-    hasSecondButton: boolean;
-
     constructor(private route: ActivatedRoute,
-                private router: Router,
                 private translateService: TranslationService) {
     }
 
@@ -72,20 +60,4 @@ export class ErrorContentComponent implements OnInit, AfterContentChecked {
         return errorMessage !== ('ERROR_CONTENT.' + errorCode);
     }
 
-    getTranslations() {
-        this.hasSecondButton = this.translateService.instant(
-            'ERROR_CONTENT.' + this.errorCode + '.SECONDARY_BUTTON.TEXT') ? true : false;
-    }
-
-    ngAfterContentChecked() {
-        this.getTranslations();
-    }
-
-    onSecondButton() {
-        this.router.navigate(['/' + this.secondaryButtonUrl]);
-    }
-
-    onReturnButton() {
-        this.router.navigate(['/' + this.returnButtonUrl]);
-    }
 }

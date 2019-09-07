@@ -25,16 +25,6 @@ export class ErrorPage {
     errorPageCode: ElementFinder = element(by.css('adf-error-content .adf-error-content-code'));
     errorPageTitle: ElementFinder = element(by.css('adf-error-content .adf-error-content-title'));
     errorPageDescription: ElementFinder = element(by.css('adf-error-content .adf-error-content-description'));
-    backButton: ElementFinder = element(by.id('adf-return-button'));
-    secondButton: ElementFinder = element(by.id('adf-secondary-button'));
-
-    async clickBackButton(): Promise<void> {
-        await BrowserActions.click(this.backButton);
-    }
-
-    async clickSecondButton(): Promise<void> {
-        await BrowserActions.click(this.secondButton);
-    }
 
     async checkErrorCode(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.errorPageCode);
