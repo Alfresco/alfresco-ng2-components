@@ -82,6 +82,7 @@
         mat-icon-button
         *ngIf="file.status === FileUploadStatus.Pending"
         (click)="onCancel(file)"
+        data-automation-id="cancel-upload-queue"
         class="adf-file-uploading-row__group"
         title="{{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_FILE' | translate }}"
         [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CANCEL_FILE' | translate: { file: file.name }">
