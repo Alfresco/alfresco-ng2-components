@@ -16,6 +16,7 @@
  */
 
 import { ApiService } from '../../core/actions/api.service';
+import { Logger } from '../../core/utils/logger';
 
 export class ProcessInstancesService {
 
@@ -40,7 +41,7 @@ export class ProcessInstancesService {
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('create process-instances Service not working', error.message);
+            Logger.error('create process-instances Service not working', error.message);
         }
 
     }
@@ -56,7 +57,7 @@ export class ProcessInstancesService {
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('suspend process-instances Service not working', error.message);
+            Logger.error('suspend process-instances Service not working', error.message);
         }
     }
 
@@ -71,7 +72,7 @@ export class ProcessInstancesService {
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('delete process-instances Service not working', error.message);
+            Logger.error('delete process-instances Service not working', error.message);
         }
     }
 
@@ -87,7 +88,7 @@ export class ProcessInstancesService {
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('complete process-instances Service not working', error.message);
+            Logger.error('complete process-instances Service not working', error.message);
         }
     }
 }

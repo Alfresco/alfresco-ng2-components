@@ -16,6 +16,7 @@
  */
 
 import { ApiService } from '../api.service';
+import { Logger } from '../../utils/logger';
 
 export class ApplicationsService {
 
@@ -34,8 +35,7 @@ export class ApplicationsService {
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Get Applications - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Get Applications - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 

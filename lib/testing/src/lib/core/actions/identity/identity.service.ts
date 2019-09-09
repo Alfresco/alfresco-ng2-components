@@ -19,6 +19,7 @@ import { ApiService } from '../api.service';
 import { UserModel } from '../../models/user.model';
 import { PersonBodyCreate } from '@alfresco/js-api';
 import { RolesService } from './roles.service';
+import { Logger } from '../../utils/logger';
 
 export class IdentityService {
 
@@ -101,8 +102,7 @@ export class IdentityService {
 
             return this.api.performIdentityOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Create User - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Create User - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 
@@ -140,8 +140,7 @@ export class IdentityService {
 
             return this.api.performIdentityOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Add User To Group - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            Logger.error('Add User To Group - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 

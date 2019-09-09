@@ -19,6 +19,8 @@ export interface TestConfiguration {
 
     appConfig: any;
 
+    log: boolean;
+
     identityAdmin: {
         email: string,
         password: string

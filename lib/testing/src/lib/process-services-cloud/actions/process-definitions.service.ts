@@ -16,6 +16,7 @@
  */
 
 import { ApiService } from '../../core/actions/api.service';
+import { Logger } from '../../core/utils/logger';
 
 export class ProcessDefinitionsService {
 
@@ -35,11 +36,9 @@ export class ProcessDefinitionsService {
             return this.api.performBpmOperation(path, method, queryParams, {});
         } catch (error) {
             if (error.status === 404) {
-                // tslint:disable-next-line:no-console
-                console.log(`${appName} not present`);
+                Logger.error(`${appName} not present`);
             } else if (error.status === 403) {
-                // tslint:disable-next-line:no-console
-                console.log(`Access to the requested resource has been denied ${appName}`);
+                Logger.error(`Access to the requested resource has been denied ${appName}`);
             }
         }
     }
