@@ -36,7 +36,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async isFilterDisplayed(): Promise<Boolean> {
-        return await BrowserVisibility.waitUntilElementIsPresent(this.filter);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
     async openFilter(): Promise<void> {
@@ -96,6 +96,11 @@ export class EditProcessFilterCloudComponentPage {
 
         const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
         await BrowserActions.click(appNameElement);
+    }
+
+    async getApplicationSelected(): Promise<String> {
+        const applicationDropdown = element(by.css(`[data-automation-id='adf-cloud-edit-process-property-appName']`));
+        return await applicationDropdown.getText();
     }
 
     async checkAppNamesAreUnique(): Promise<boolean> {

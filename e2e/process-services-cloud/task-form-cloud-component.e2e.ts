@@ -136,7 +136,7 @@ describe('Task form cloud component', () => {
         await appListCloudComponent.goToApp(simpleApp);
         await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         await expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
 

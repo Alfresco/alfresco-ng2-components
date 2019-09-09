@@ -89,16 +89,6 @@ export class BrowserActions {
         await elementFinder.sendKeys(text);
     }
 
-    static async sendKeysIfVisible(elementFinder: ElementFinder, text: string) {
-        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        await elementFinder.sendKeys(text);
-    }
-
-    static async sendKeysIfPresent(elementFinder: ElementFinder, text: string) {
-        await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
-        await elementFinder.sendKeys(text);
-    }
-
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         const valueCheck = await elementFinder.getAttribute('disabled');
