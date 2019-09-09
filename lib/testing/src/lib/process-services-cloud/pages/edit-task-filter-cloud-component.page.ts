@@ -47,7 +47,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async isFilterDisplayed(): Promise<Boolean> {
-        return await BrowserVisibility.waitUntilElementIsPresent(this.filter);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
     async openFilter(): Promise<void> {
