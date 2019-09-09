@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
-export * from './about.component';
+export * from './about-application-configuration/about-application-configuration.component';
+export * from './about-product-version/about-product-version.component';
+export * from './about-modules/about-application-modules.component';
 
 export * from './about.module';

@@ -15,63 +15,28 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
-import { AuthenticationService } from '../services/authentication.service';
-import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
-import { DiscoveryApiService } from '../services/discovery-api.service';
-import { ObjectDataTableAdapter } from '../datatable/data/object-datatable-adapter';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { Observable } from 'rxjs';
-import { ExtensionRef, AppExtensionService } from '@alfresco/adf-extensions';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { BpmProductVersionModel, EcmProductVersionModel } from '../../models/product-version.model';
+import { ObjectDataTableAdapter } from '../../datatable/data/object-datatable-adapter';
+import { AuthenticationService } from '../../services/authentication.service';
+import { DiscoveryApiService } from '../../services/discovery-api.service';
 
 @Component({
-    selector: 'adf-about',
-    templateUrl: './about.component.html',
-    styleUrls: ['./about.component.scss'],
+    selector: 'adf-about-product-version',
+    templateUrl: './about-product-version.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class AboutComponent implements OnInit {
-
-    dependencyEntries: ObjectDataTableAdapter;
-    status: ObjectDataTableAdapter;
-    license: ObjectDataTableAdapter;
-    modules: ObjectDataTableAdapter;
-    extensionColumns: string[] = ['$id', '$name', '$version', '$vendor', '$license', '$runtime', '$description'];
-    extensions$: Observable<ExtensionRef[]>;
-
-    /** Commit corresponding to the version of ADF to be used. */
-    @Input()
-    githubUrlCommitAlpha = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
-
-    /** Toggles showing/hiding of extensions block. */
-    @Input()
-    showExtensions = true;
-
-    /** Regular expression for filtering dependencies packages. */
-    @Input() regexp = '^(@alfresco)';
-
-    /** Current version of the app running */
-    @Input() version: string;
-
-    /** Current version of the app running */
-    @Input() dependencies: any;
-
-    ecmHost = '';
-    bpmHost = '';
-    application: string;
+export class AboutProductVersionComponent implements OnInit {
 
     ecmVersion: EcmProductVersionModel = null;
     bpmVersion: BpmProductVersionModel = null;
 
-    constructor(private appConfig: AppConfigService,
-                private authService: AuthenticationService,
-                private discovery: DiscoveryApiService,
-                appExtensions: AppExtensionService) {
-        this.extensions$ = appExtensions.references$;
-        this.ecmHost = this.appConfig.get<string>(AppConfigValues.ECMHOST);
-        this.bpmHost = this.appConfig.get<string>(AppConfigValues.BPMHOST);
-        this.application = this.appConfig.get<string>('application.name');
-    }
+    status: ObjectDataTableAdapter;
+    license: ObjectDataTableAdapter;
+    modules: ObjectDataTableAdapter;
+
+    constructor(private authService: AuthenticationService,
+                private discovery: DiscoveryApiService) {}
 
     ngOnInit() {
         if (this.authService.isEcmLoggedIn()) {
@@ -79,25 +44,8 @@ export class AboutComponent implements OnInit {
         }
 
         if (this.authService.isBpmLoggedIn()) {
-           this.setBPMInfo();
+            this.setBPMInfo();
         }
-
-        const alfrescoPackages = Object.keys(this.dependencies).filter((val) => {
-            return new RegExp(this.regexp).test(val);
-        });
-
-        const alfrescoPackagesTableRepresentation = [];
-        alfrescoPackages.forEach((val) => {
-            alfrescoPackagesTableRepresentation.push({
-                name: val,
-                version: (this.dependencies[val])
-            });
-        });
-
-        this.dependencyEntries = new ObjectDataTableAdapter(alfrescoPackagesTableRepresentation, [
-            { type: 'text', key: 'name', title: 'Name', sortable: true },
-            { type: 'text', key: 'version', title: 'Version', sortable: true }
-        ]);
     }
 
     setECMInfo() {

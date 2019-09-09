@@ -28,6 +28,7 @@ export class AboutComponent {
     githubUrlCommitAlpha = `https://github.com/Alfresco/${name}/commits/${commit}`;
     version = version;
     dependencies = dependencies;
+    showExtensions = true;
 
     constructor() {
 
