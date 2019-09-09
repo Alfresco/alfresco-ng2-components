@@ -62,10 +62,24 @@ describe('FileUploadingListComponent', () => {
     });
 
     describe('cancelFile()', () => {
-        it('should call uploadService api when cancelling a file', () => {
+        it('should call cancelUpload service when cancelling a file', () => {
             component.cancelFile(file);
 
             expect(uploadService.cancelUpload).toHaveBeenCalledWith(file);
+        });
+
+        it('should not call cancelUpload service when file has `Pending` status', () => {
+            file.status = FileUploadStatus.Pending;
+            component.cancelFile(file);
+
+            expect(uploadService.cancelUpload).not.toHaveBeenCalledWith(file);
+        });
+
+        it('should set `Cancelled` status on `Pending` file', () => {
+            file.status = FileUploadStatus.Pending;
+            component.cancelFile(file);
+
+            expect(file.status).toBe(FileUploadStatus.Cancelled);
         });
     });
 
@@ -104,6 +118,40 @@ describe('FileUploadingListComponent', () => {
             fixture.detectChanges();
 
             expect(uploadService.cancelUpload).toHaveBeenCalled();
+        });
+
+        it('should set `Deleted` status on file version instances when original is removed', () => {
+            component.files = <any> [
+                {
+                    data: {
+                        entry: { id: 'nodeId' }
+                    },
+                    name: 'file',
+                    status: FileUploadStatus.Complete,
+                    options: {
+                        newVersion: false
+                    }
+                },
+                {
+                    data: {
+                        entry: { id: 'nodeId' }
+                    },
+                    name: 'file_v1',
+                    status: FileUploadStatus.Complete,
+                    options: {
+                        newVersion: true
+                    }
+                }
+            ];
+
+            spyOn(nodesApiService, 'deleteNode').and.returnValue(of(component.files[0]));
+
+            component.removeFile(component.files[0]);
+            fixture.detectChanges();
+
+            expect(nodesApiService.deleteNode).toHaveBeenCalledTimes(1);
+            expect(component.files[0].status).toBe(FileUploadStatus.Deleted);
+            expect(component.files[1].status).toBe(FileUploadStatus.Deleted);
         });
 
         describe('Events', () => {
