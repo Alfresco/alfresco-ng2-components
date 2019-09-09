@@ -7,7 +7,7 @@ cd $DIR/../../../
 rm -rf tmp && mkdir tmp;
 
 npm install @alfresco/adf-cli@alpha
-./node_modules/@alfresco/adf-cli/bin/adf-cli update-commit-sha --pointer "HEAD" --pathPackage "$(pwd)"
+npx @alfresco/adf-cli update-commit-sha --pointer "HEAD" --pathPackage "$(pwd)"
 
 if [[ $TRAVIS_PULL_REQUEST == "false" ]];
 then
@@ -27,7 +27,7 @@ then
 
     ./scripts/npm-build-all.sh || exit 1;
 else
-    ./node_modules/@alfresco/adf-cli/bin/adf-cli update-version --alpha --pathPackage "$(pwd)"
+    npx @alfresco/adf-cli update-version --alpha --pathPackage "$(pwd)"
 
     npm install;
 
