@@ -35,7 +35,6 @@ import { PeopleWidget } from './peopleWidget';
 import { Tab } from './tab';
 import { DocumentWidget } from './documentWidget';
 import { AttachFileWidgetCloud } from './attachFileWidgetCloud';
-import { Tab } from './tab';
 
 export class Widget {
 
