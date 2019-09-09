@@ -136,7 +136,7 @@ describe('Task form cloud component', () => {
         await appListCloudComponent.goToApp(simpleApp);
         await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         await expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
 
@@ -237,7 +237,7 @@ describe('Task form cloud component', () => {
         it('[C307095] Task can not be completed by owner user', async () => {
             await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
 
             await browser.driver.sleep(1000);
 

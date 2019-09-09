@@ -21,9 +21,18 @@ import { BrowserVisibility } from '../utils/browser-visibility';
 export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
-        await elementFinder.click();
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+            await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
+            await elementFinder.click();
+        } catch (clickErr) {
+          try {
+            await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
+            await browser.executeScript(`arguments[0].click();`, elementFinder);
+          } catch (jsErr) {
+            throw jsErr;
+          }
+        }
     }
 
     static async waitUntilActionMenuIsVisible(): Promise<void> {

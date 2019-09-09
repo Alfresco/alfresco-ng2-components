@@ -38,6 +38,7 @@ export class EditTaskFilterCloudComponentPage {
     saveButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-save"]'));
     saveAsButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
     deleteButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
+    filter: ElementFinder = element(by.css(`adf-cloud-edit-task-filter mat-expansion-panel-header`));
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
 
@@ -45,7 +46,11 @@ export class EditTaskFilterCloudComponentPage {
         return this.editTaskFilterDialogPage;
     }
 
-    async clickCustomiseFilterHeader(): Promise<void> {
+    async isFilterDisplayed(): Promise<Boolean> {
+        return await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+    }
+
+    async openFilter(): Promise<void> {
         await BrowserActions.click(this.customiseFilter);
         await browser.driver.sleep(1000);
     }
