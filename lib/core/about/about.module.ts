@@ -23,7 +23,7 @@ import { DataTableModule } from '../datatable/datatable.module';
 import { DataColumnModule } from '../data-column/data-column.module';
 import { AboutApplicationModulesComponent } from './about-application-modules/about-application-modules.component';
 import { AboutProductVersionComponent } from './about-product-version/about-product-version.component';
-import { AboutApplicationConfigurationComponent } from './about-application-configuration/about-application-configuration.component';
+import { AboutGithubLinkComponent } from './about-github-link/about-github-link.component';
 
 @NgModule({
     imports: [
@@ -36,12 +36,12 @@ import { AboutApplicationConfigurationComponent } from './about-application-conf
     declarations: [
         AboutApplicationModulesComponent,
         AboutProductVersionComponent,
-        AboutApplicationConfigurationComponent
+        AboutGithubLinkComponent
     ],
     exports: [
         AboutApplicationModulesComponent,
         AboutProductVersionComponent,
-        AboutApplicationConfigurationComponent
+        AboutGithubLinkComponent
     ]
 })
 export class AboutModule {}

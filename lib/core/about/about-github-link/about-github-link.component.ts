@@ -19,11 +19,11 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 
 @Component({
-    selector: 'adf-about-application-configuration',
-    templateUrl: './about-application-configuration.component.html',
+    selector: 'adf-about-github-link',
+    templateUrl: './about-github-link.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class AboutApplicationConfigurationComponent {
+export class AboutGithubLinkComponent {
 
     /** Commit corresponding to the version of ADF to be used. */
     @Input()

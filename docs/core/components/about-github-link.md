@@ -1,11 +1,11 @@
 ---
-Title: About Application Configuration Component
+Title: About Github Link Component
 Added: v1.0.0
 Status: Experimental
 Last reviewed: 2019-09-09
 ---
 
-# [About Application Configuration Component](../../../lib/core/about/about-application-configuration/about-application-configuration.component.ts "Defined in about-application-configuration.component.ts")
+# [About Github Link Component](../../../lib/core/about/about-github-link/about-github-link.component.ts "Defined in about-github-link.component.ts")
 
 Shows which version of the application you are running based on the latest commit.
 Shows the server settings of the application that you are running.
@@ -15,16 +15,16 @@ Shows the server settings of the application that you are running.
 With default input values
 
 ```html
-<adf-about-application-configuration></adf-about-application-configuration>
+<adf-about-github-link></adf-about-github-link>
 ```
 
 With custom input values:
 
 ```html
-<adf-about-application-configuration
+<adf-about-github-link
     githubUrlCommitAlpha="YourUrl"
     version="YourVersion">
-</adf-about-application-configuration>
+</adf-about-github-link>
 
 ```
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export * from './about-application-configuration/about-application-configuration.component';
+export * from './about-github-link/about-github-link.component';
 export * from './about-product-version/about-product-version.component';
 export * from './about-application-modules/about-application-modules.component';
 
