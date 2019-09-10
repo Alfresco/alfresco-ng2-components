@@ -36,7 +36,7 @@ import { PeopleSearchTitleDirective } from './directives/people-search-title.dir
         ReactiveFormsModule,
         MaterialModule,
         CommonModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [
         PeopleComponent,

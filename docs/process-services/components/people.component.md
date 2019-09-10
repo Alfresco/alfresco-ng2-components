@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [People Component](../../../lib/process-services/people/components/people/people.component.ts "Defined in people.component.ts")
+# [People Component](../../../lib/process-services/src/lib/people/components/people/people.component.ts "Defined in people.component.ts")
 
 Displays users involved with a specified task
 

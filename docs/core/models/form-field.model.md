@@ -7,7 +7,7 @@ Last reviewed: 2018-03-20
 
 # [Form Field model](../../../lib/core/form/components/widgets/core/form-field.model.ts "Defined in form-field.model.ts")
 
-Contains the value and metadata for a field of a [`Form`](../../../lib/process-services/task-list/models/form.model.ts) component.
+Contains the value and metadata for a field of a [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) component.
 
 ## Properties
 
@@ -67,7 +67,7 @@ example, the `currency` property holds the currency symbol to be displayed next 
 
 ### Validation
 
-A [`Form`](../../../lib/process-services/task-list/models/form.model.ts) or [Task Details](../../process-services/components/task-details.component.md) component can
+A [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) or [Task Details](../../process-services/components/task-details.component.md) component can
 be supplied with a set of validator objects. Each validator applies a particular kind of
 check to a field. A number of [`FormFieldModel`](../../core/models/form-field.model.md) properties are used by validators. For
 example, `minValue` and `maxValue` are used to check that a numeric value falls within an

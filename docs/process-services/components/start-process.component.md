@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Start Process component](../../../lib/process-services/process-list/components/start-process.component.ts "Defined in start-process.component.ts")
+# [Start Process component](../../../lib/process-services/src/lib/process-list/components/start-process.component.ts "Defined in start-process.component.ts")
 
 Starts a process.
 
@@ -44,15 +44,15 @@ Starts a process.
 | processFilterSelector | `boolean` | true | (optional) Parameter to enable selection of process when filtering. |
 | showSelectProcessDropdown | `boolean` | true | Hide or show the process selection dropdown. |
 | values | [`FormValues`](../../../lib/core/form/components/widgets/core/form-values.ts) |  | Parameter to pass form field values in the start form if one is associated. |
-| variables | [`ProcessInstanceVariable`](../../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]` |  | Variables in the input to the process [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/RestVariable.md). |
+| variables | [`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]` |  | Variables in the input to the process [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/RestVariable.md). |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when the process is canceled. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when an error occurs. |
-| start | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when the process starts. |
+| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when the process is canceled. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when an error occurs. |
+| start | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when the process starts. |
 
 ## Details
 

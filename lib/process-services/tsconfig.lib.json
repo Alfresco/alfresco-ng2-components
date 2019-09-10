@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../dist/process-services/"
+    "outDir": "../dist/process-services/",
+    "baseUrl": "src"
   }
 }

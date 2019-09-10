@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Task Attachment List Component](../../../lib/process-services/attachment/task-attachment-list.component.ts "Defined in task-attachment-list.component.ts")
+# [Task Attachment List Component](../../../lib/process-services/src/lib/attachment/task-attachment-list.component.ts "Defined in task-attachment-list.component.ts")
 
 Displays documents attached to a specified task.
 
@@ -100,7 +100,7 @@ import { UploadService } from '@alfresco/adf-core';
 import { TaskUploadService } from '@alfresco/adf-process-services';
 ```
 
-Make sure you override the [`UploadService`](../../core/services/upload.service.md) with the [`TaskUploadService`](../../../lib/process-services/task-list/services/task-upload.service.ts)
+Make sure you override the [`UploadService`](../../core/services/upload.service.md) with the [`TaskUploadService`](../../../lib/process-services/src/lib/task-list/services/task-upload.service.ts)
 
 ```ts
 @Component({

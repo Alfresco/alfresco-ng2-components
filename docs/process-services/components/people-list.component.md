@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [People list component](../../../lib/process-services/people/components/people-list/people-list.component.ts "Defined in people-list.component.ts")
+# [People list component](../../../lib/process-services/src/lib/people/components/people-list/people-list.component.ts "Defined in people-list.component.ts")
 
 Shows a list of users (people).
 
@@ -85,5 +85,5 @@ You can use column templates with the [people list component](people-list.compon
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| clickAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserEventModel`](../../../lib/process-services/task-list/models/user-event.model.ts)`>` | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
+| clickAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserEventModel`](../../../lib/process-services/src/lib/task-list/models/user-event.model.ts)`>` | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
 | clickRow | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`>` | Emitted when the user clicks a row in the people list. |

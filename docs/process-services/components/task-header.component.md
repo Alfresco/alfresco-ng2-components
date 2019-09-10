@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Task Header component](../../../lib/process-services/task-list/components/task-header.component.ts "Defined in task-header.component.ts")
+# [Task Header component](../../../lib/process-services/src/lib/task-list/components/task-header.component.ts "Defined in task-header.component.ts")
 
 Shows all the information related to a task.
 
@@ -26,7 +26,7 @@ Shows all the information related to a task.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | formName | `string` | null | The name of the form. |
-| taskDetails | [`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts) |  | (required) Details related to the task. |
+| taskDetails | [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts) |  | (required) Details related to the task. |
 
 ### Events
 

@@ -18,8 +18,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../../core/mock';
-import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock } from '../../core/mock';
+import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from './start-form.component.mock';
+import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock } from './start-form.component.mock';
 import { StartFormComponent } from './start-form.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormService, WidgetVisibilityService, setupTestBed, CoreModule, FormModel, FormOutcomeModel } from '@alfresco/adf-core';

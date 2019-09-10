@@ -46,7 +46,7 @@ import { FormModule } from '../form/form.module';
         FormsModule,
         FormModule,
         ReactiveFormsModule,
-        CoreModule.forChild(),
+        CoreModule,
         PeopleModule,
         ProcessCommentsModule,
         ContentWidgetModule

@@ -6,7 +6,7 @@ Status: Active
 
 # [FormFieldValidator interface](../../../lib/core/form/components/widgets/core/form-field-validator.ts "Defined in form-field-validator.ts")
 
-Defines how the input fields of [`Form`](../../../lib/process-services/task-list/models/form.model.ts) and Task Details components are validated.
+Defines how the input fields of [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) and Task Details components are validated.
 
 ## Basic Usage
 
@@ -73,7 +73,7 @@ Several validator classes are predefined for you to use:
 | [`MinDateFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Date within a field occurs after a certain starting point |
 | [`MaxDateFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Date within a field occurs before a certain end point |
 
-The `FORM_FIELD_VALIDATORS` array contains an instance of each of these classes. You can assign this to the `fieldValidators` property of a [`Form`](../../../lib/process-services/task-list/models/form.model.ts) or [Task Details component](../../process-services/components/task-details.component.md) to enable standard validation.
+The `FORM_FIELD_VALIDATORS` array contains an instance of each of these classes. You can assign this to the `fieldValidators` property of a [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) or [Task Details component](../../process-services/components/task-details.component.md) to enable standard validation.
 
 ### Custom validators
 
@@ -128,7 +128,7 @@ export class AppComponent {
 }
 ```
 
-You can now use the 'fieldValidators' property of the [`Form`](../../../lib/process-services/task-list/models/form.model.ts) or Task Details components to assign your
+You can now use the 'fieldValidators' property of the [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) or Task Details components to assign your
 custom validator set:
 
 ```html

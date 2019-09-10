@@ -15,33 +15,35 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
+import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
 
-import { AppsListComponent } from './apps-list.component';
-import { SelectAppsDialogComponent } from './select-apps-dialog-component';
+import { AttachFileWidgetComponent } from './attach-file-widget.component';
+import { AttachFolderWidgetComponent } from './attach-folder-widget.component';
+import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
 
 @NgModule({
     imports: [
-        CommonModule,
-        MaterialModule,
-        FlexLayoutModule,
-        CoreModule.forChild()
-    ],
-    declarations: [
-        AppsListComponent,
-        SelectAppsDialogComponent
-    ],
-    exports: [
-        AppsListComponent,
-        SelectAppsDialogComponent
+        CoreModule,
+        ContentNodeSelectorModule,
+        MaterialModule
     ],
     entryComponents: [
-        SelectAppsDialogComponent
+        AttachFileWidgetComponent,
+        AttachFolderWidgetComponent,
+        AttachFileWidgetDialogComponent
+    ],
+    declarations: [
+        AttachFileWidgetComponent,
+        AttachFolderWidgetComponent,
+        AttachFileWidgetDialogComponent
+    ],
+    exports: [
+        AttachFileWidgetComponent,
+        AttachFolderWidgetComponent,
+        AttachFileWidgetDialogComponent
     ]
 })
-export class AppsListModule {
-}
+export class ContentWidgetModule {}

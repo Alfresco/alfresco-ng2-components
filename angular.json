@@ -318,7 +318,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/process-services/i18n",
+                "input": "lib/process-services/src/lib/i18n",
                 "output": "/assets/adf-process-services/i18n"
               },
               {
@@ -493,7 +493,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/process-services/i18n",
+                "input": "lib/process-services/src/lib/i18n",
                 "output": "/assets/adf-process-services/i18n"
               },
               {
@@ -676,7 +676,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "lib/process-services/test.ts",
+            "main": "lib/process-services/src/test.ts",
             "tsConfig": "lib/process-services/tsconfig.spec.json",
             "karmaConfig": "lib/process-services/karma.conf.js",
             "codeCoverage": true,
@@ -688,7 +688,7 @@
           "options": {
             "tsConfig": [
               "lib/process-services/tsconfig.lib.json",
-              "lib/process-services/tsconfig.lib.json"
+              "lib/process-services/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

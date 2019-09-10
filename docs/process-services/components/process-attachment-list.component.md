@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Process Attachment List component](../../../lib/process-services/attachment/process-attachment-list.component.ts "Defined in process-attachment-list.component.ts")
+# [Process Attachment List component](../../../lib/process-services/src/lib/attachment/process-attachment-list.component.ts "Defined in process-attachment-list.component.ts")
 
 Displays documents attached to a specified process instance.
 
@@ -20,7 +20,7 @@ Displays documents attached to a specified process instance.
 </adf-process-attachment-list>
 ```
 
-Make sure to override the [`UploadService`](../../core/services/upload.service.md) with the [`ProcessUploadService`](../../../lib/process-services/task-list/services/process-upload.service.ts)
+Make sure to override the [`UploadService`](../../core/services/upload.service.md) with the [`ProcessUploadService`](../../../lib/process-services/src/lib/task-list/services/process-upload.service.ts)
 
 ```ts
 import { UploadService } from '@alfresco/adf-core';

@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Form component](../../../lib/process-services/form/form.component.ts "Defined in form.component.ts")
+# [Form component](../../../lib/process-services/src/lib/form/form.component.ts "Defined in form.component.ts")
 
-Shows a [`Form`](../../../lib/process-services/task-list/models/form.model.ts) from APS
+Shows a [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) from APS
 
 (See it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
 
@@ -178,7 +178,7 @@ The `nameNode` parameter is optional.
 </adf-form>
 ```
 
-Here, the node metadata is shown in an APS [`Form`](../../../lib/process-services/task-list/models/form.model.ts)
+Here, the node metadata is shown in an APS [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts)
 with the form fields themselves saved as metadata. The `nameNode` parameter is optional.
 
 ### Controlling outcome execution behaviour
@@ -349,7 +349,7 @@ In the CSS, you can target any outcome ID and change the style as in this exampl
 APS allows you to configure where to store files and folders in your on-site Alfresco repositories.
 
 If you have your repositories configured like this, you can use the attach file/folder
-form widget to get a file from those repositories and attach it to the [`Form`](../../../lib/process-services/task-list/models/form.model.ts).
+form widget to get a file from those repositories and attach it to the [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts).
 
 **Note:** your repositories could be configured to be on different servers from the one
 where your front-end is deployed.  Make sure you are using the right Proxy or configuration,

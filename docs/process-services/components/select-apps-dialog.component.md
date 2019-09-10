@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Select App Component](../../../lib/process-services/app-list/select-apps-dialog-component.ts "Defined in select-apps-dialog-component.ts")
+# [Select App Component](../../../lib/process-services/src/lib/app-list/select-apps-dialog-component.ts "Defined in select-apps-dialog-component.ts")
 
 Shows all available apps and returns the selected app.
 
