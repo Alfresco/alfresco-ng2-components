@@ -170,7 +170,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
         await expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
         await expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(appModel.definition.models[0].name);
+        await expect(await taskPage.taskDetails().getParentName()).toEqual(appModel.definition.models[1].name);
         await expect(await taskPage.taskDetails().getDuration()).toEqual('');
         await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
         await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
@@ -204,7 +204,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
         await expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
         await expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(appModel.definition.models[0].name);
+        await expect(await taskPage.taskDetails().getParentName()).toEqual(appModel.definition.models[1].name);
         await expect(await taskPage.taskDetails().getDuration()).toEqual('');
         await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
         await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
