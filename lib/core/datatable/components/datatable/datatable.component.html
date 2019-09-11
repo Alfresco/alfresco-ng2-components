@@ -157,7 +157,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-location-cell>
                             </div>
-                            <div *ngSwitchCase="'fileSize'" class="adf-cell-value"
+                            <div *ngSwitchCase="'fileSize'" [attr.tabindex]="data.getValue(row, col)? 0 : -1" class="adf-cell-value"
                                  [attr.data-automation-id]="'fileSize_' + data.getValue(row, col)">
                                 <adf-filesize-cell class="adf-datatable-center-size-column-ie"
                                     [data]="data"
