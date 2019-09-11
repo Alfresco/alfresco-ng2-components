@@ -189,7 +189,7 @@
     "rxjs-tslint-rules": "^4.10.0",
     "sass-loader": "7.1.0",
     "scss-bundle": "2.3.2",
-    "selenium-webdriver": "4.0.0-alpha.4",
+    "selenium-webdriver": "4.0.0-alpha.5",
     "spdx-license-list": "^5.0.0",
     "stylelint": "^9.7.1",
     "ts-node": "~4.1.0",
