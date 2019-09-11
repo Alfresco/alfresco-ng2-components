@@ -49,7 +49,7 @@
             <div *ngIf="multiselect">
                 {{ 'SETTINGS_CLOUD.SELECTED_ROWS' | translate }}:
                 <ul>
-                    <li *ngFor="let row of selectedRows" [attr.data-automation-id]="row.id">{{ row.id }}</li>
+                    <li *ngFor="let row of selectedRows" [attr.data-automation-id]="row.id">{{ row.name }}</li>
                 </ul>
             </div>
             <div *ngIf="actionMenu">
