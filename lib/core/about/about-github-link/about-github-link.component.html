@@ -6,10 +6,10 @@
         <mat-card>
             <p *ngIf="version">{{ 'ABOUT.VERSION' | translate }}: {{ version }}</p>
 
-            <div *ngIf="githubUrlCommitAlpha">
+            <div *ngIf="url">
                 <small>{{ 'ABOUT.SOURCE_CODE.DESCRIPTION' | translate }}</small>
                 <div>
-                    <a [href]="githubUrlCommitAlpha" target="_blank">{{githubUrlCommitAlpha}}</a>
+                    <a [href]="url" target="_blank">{{url}}</a>
                 </div>
             </div>
         </mat-card>

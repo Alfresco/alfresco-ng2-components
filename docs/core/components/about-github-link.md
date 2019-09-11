@@ -22,8 +22,8 @@ With custom input values:
 
 ```html
 <adf-about-github-link
-    githubUrlCommitAlpha="YourUrl"
-    version="YourVersion">
+    [url]="YourUrl"
+    [version]="YourVersion">
 </adf-about-github-link>
 
 ```
@@ -32,7 +32,7 @@ With custom input values:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| githubUrlCommitAlpha | `string` |  | Commit corresponding to the version of ADF to be used. |
+| url | `string` |  | Commit corresponding to the version of ADF to be used. |
 | version | `string` | "3.x.x" | Version number defining which is the version of ADF to be used |
 
 ## Details

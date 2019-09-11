@@ -25,7 +25,7 @@ import { name, version, commit, dependencies } from '../../../../../package.json
 })
 export class AboutComponent {
 
-    githubUrlCommitAlpha = `https://github.com/Alfresco/${name}/commits/${commit}`;
+    url = `https://github.com/Alfresco/${name}/commits/${commit}`;
     version = version;
     dependencies = dependencies;
     showExtensions = true;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 
 @Component({
@@ -23,11 +23,11 @@ import { AppConfigService, AppConfigValues } from '../../app-config/app-config.s
     templateUrl: './about-github-link.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class AboutGithubLinkComponent {
+export class AboutGithubLinkComponent implements OnInit {
 
     /** Commit corresponding to the version of ADF to be used. */
     @Input()
-    githubUrlCommitAlpha = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
+    url = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
 
     /** Current version of the app running */
     @Input() version: string;
@@ -36,7 +36,9 @@ export class AboutGithubLinkComponent {
     bpmHost = '';
     application: string;
 
-    constructor(private appConfig: AppConfigService) {
+    constructor(private appConfig: AppConfigService) {}
+
+    ngOnInit() {
         this.ecmHost = this.appConfig.get<string>(AppConfigValues.ECMHOST);
         this.bpmHost = this.appConfig.get<string>(AppConfigValues.BPMHOST);
         this.application = this.appConfig.get<string>('application.name');
