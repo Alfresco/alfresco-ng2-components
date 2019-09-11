@@ -16,6 +16,7 @@
  */
 
 import { browser, by, element, ElementFinder, protractor } from 'protractor';
+import { Logger } from './logger';
 
 const until = protractor.ExpectedConditions;
 const DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 40000;
@@ -29,14 +30,28 @@ export class BrowserVisibility {
      * Wait for element to be visible
      */
     static async waitUntilElementIsVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = 'Element is not visible'): Promise<any> {
-        return browser.wait(until.visibilityOf(elementToCheck), waitTimeout, message + elementToCheck.locator());
+        // return browser.wait(until.visibilityOf(elementToCheck), waitTimeout, message + elementToCheck.locator());
+        try {
+            return await browser.wait(until.visibilityOf(elementToCheck), waitTimeout);
+        } catch (error) {
+            const elementLocator = elementToCheck.locator();
+            Logger.error(message + elementLocator, error);
+            throw error;
+        }
     }
 
     /*
      * Wait for element to be clickable
      */
     static async waitUntilElementIsClickable(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(until.elementToBeClickable(elementToCheck), waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
+        // return browser.wait(until.elementToBeClickable(elementToCheck), waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
+        try {
+            return await browser.wait(until.visibilityOf(elementToCheck), waitTimeout);
+        } catch (error) {
+            const elementLocator = elementToCheck.locator();
+            Logger.error(`Element '${elementLocator}' is not visible. \n`, error);
+            throw error;
+        }
     }
 
     /*
