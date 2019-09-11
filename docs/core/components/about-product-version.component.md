@@ -7,12 +7,11 @@ Last reviewed: 2019-09-09
 
 # [About Product Version Component](../../../lib/core/about/about-product-version/about-product-version.component.ts "Defined in about-product-version.component.ts")
 
-Shows which version of BPM and ECM your application is running.
-Shows the License information, application status and alfresco modules that your application is running.
+Shows which version of Process Services (BPM) and Content Services (ECM) an application is running. It also shows the relevant license information, application status and Alfresco modules running in an application.
 
 ## Basic Usage
 
-With default input values
+With default input values:
 
 ```html
 <adf-about-product-version></adf-about-product-version>
@@ -20,5 +19,4 @@ With default input values
 
 ## Details
 
-Use this component to get an overview of which BPM, ECM version you are running as long as 
-information about the license, the status and the modules you are running.
+Use this component to display an overview of which version of Process Services and Content Services an application is running as well as the associated license information. It also displays application status and any modules running.

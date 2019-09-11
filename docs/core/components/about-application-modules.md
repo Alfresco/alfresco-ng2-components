@@ -7,12 +7,11 @@ Last reviewed: 2019-09-09
 
 # [About Application Modules Component](../../../lib/core/about/about-application-modules/about-application-modules.component.ts "Defined in about-application-modules.component.ts")
 
-Shows which ADF libraries your application is using.
-Shows which Plugins your application is using.
+Shows which ADF libraries and plugins an application is using.
 
 ## Basic Usage
 
-With default input values
+With default input values:
 
 ```html
 <adf-about-application-modules></adf-about-application-modules>
@@ -22,7 +21,7 @@ With custom input values:
 
 ```html
 <adf-about-application-modules
-    [dependencies]="dependencies"
+    [dependencies]="yourDependencies"
     [showExtensions]="true"
     [regexp]="^(@alfresco)">
 </adf-about-application-modules>
@@ -32,10 +31,10 @@ With custom input values:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| dependencies | `any` |  | dependencies defined in the package.json |
+| dependencies | `any` |  | The dependencies value defined in the package.json |
 | showExtensions | `boolean` | true | Toggles showing/hiding of extensions block. |
 | regexp | `string` | "^(@alfresco)" | Regular expression for filtering dependencies packages. |
 
 ## Details
 
-Use this component to get an overview of the dependencies and the plugins used by the application you are running.
+Use this component to display an overview of the dependencies and plugins used by an application.
