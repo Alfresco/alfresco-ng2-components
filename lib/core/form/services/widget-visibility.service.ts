@@ -167,10 +167,10 @@ export class WidgetVisibilityService {
     }
 
     isParentTabVisible(form: FormModel, currentFormField: FormFieldModel | TabModel): boolean {
-        const containers = form.fields.filter( field => field.type === 'container' && field.tab );
+        const containers = this.getFormTabContainers(form);
         let isVisible: boolean = true;
         containers.map( (container: ContainerModel) => {
-            if ( !!this.getCurrentFieldFromTab(container, currentFormField) ) {
+            if ( !!this.getCurrentFieldFromTabById(container, currentFormField.id) ) {
                 const currentTab = form.tabs.find( (tab: TabModel) => tab.id === container.tab );
                 if (!!currentTab) {
                     isVisible = currentTab.isVisible;
@@ -180,17 +180,24 @@ export class WidgetVisibilityService {
         return isVisible;
     }
 
-    private getCurrentFieldFromTab(container: ContainerModel, field: FormFieldModel | TabModel): FormFieldModel {
+    private getCurrentFieldFromTabById(container: ContainerModel, fieldId: string): FormFieldModel {
         const tabFields: FormFieldModel[][] = Object.keys(container.field.fields).map( key => container.field.fields[key]);
         let currentField: FormFieldModel;
 
         for (const tabField of tabFields) {
-            currentField = tabField.find( (tab: FormFieldModel) => tab.id === field.id );
+            currentField = tabField.find( (tab: FormFieldModel) => tab.id === fieldId );
             if (currentField) {
                 return currentField;
             }
         }
         return null;
+    }
+
+    private getFormTabContainers(form: FormModel): ContainerModel[] {
+        if (!!form) {
+            return <ContainerModel[]> form.fields.filter(field => field.type === 'container' && field.tab);
+        }
+        return [];
     }
 
     private getObjectValue(field: FormFieldModel, fieldId: string): string {
