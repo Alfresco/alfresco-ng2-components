@@ -262,7 +262,8 @@
       "SORT_ASCENDING": "ascending",
       "SORT_DESCENDING": "descending",
       "ICON_TEXT": "File type {{ type }}",
-      "ICON_DISABLED": "disabled"
+      "ICON_DISABLED": "disabled",
+      "ROW_OPTION_BUTTON": "Actions menu"
     },
     "FILE_TYPE": {
       "DOCUMENT": "document",

@@ -204,6 +204,7 @@
                      role="gridcell"
                      class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
+                            [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ROW_OPTION_BUTTON' | translate"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_right_' + idx"
                             [attr.data-automation-id]="'action_menu_' + idx">
