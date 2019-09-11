@@ -20,7 +20,7 @@ import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment-es6';
 import { Observable, from, throwError } from 'rxjs';
-import { FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
+import { FormFieldModel, FormModel, TabModel, ContainerModel } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
@@ -31,12 +31,14 @@ import { map, catchError } from 'rxjs/operators';
 export class WidgetVisibilityService {
 
     private processVarList: TaskProcessVariableModel[];
+    private form: FormModel;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
     }
 
     public refreshVisibility(form: FormModel) {
+        this.form = form;
         if (form && form.tabs && form.tabs.length > 0) {
             form.tabs.map((tabModel) => this.refreshEntityVisibility(tabModel));
         }
@@ -48,7 +50,7 @@ export class WidgetVisibilityService {
 
     refreshEntityVisibility(element: FormFieldModel | TabModel) {
         const visible = this.evaluateVisibility(element.form, element.visibilityCondition);
-        element.isVisible = visible;
+        element.isVisible = visible && this.isParentTabVisible(this.form, element);
     }
 
     evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
@@ -162,6 +164,33 @@ export class WidgetVisibilityService {
             }
         });
         return fieldValue;
+    }
+
+    isParentTabVisible(form: FormModel, currentFormField: FormFieldModel | TabModel): boolean {
+        const containers = form.fields.filter( field => field.type === 'container' && field.tab );
+        let isVisible: boolean = true;
+        containers.map( (container: ContainerModel) => {
+            if ( !!this.getCurrentFieldFromTab(container, currentFormField) ) {
+                const currentTab = form.tabs.find( (tab: TabModel) => tab.id === container.tab );
+                if (!!currentTab) {
+                    isVisible = currentTab.isVisible;
+                }
+            }
+        });
+        return isVisible;
+    }
+
+    private getCurrentFieldFromTab(container: ContainerModel, field: FormFieldModel | TabModel): FormFieldModel {
+        const tabFields: FormFieldModel[][] = Object.keys(container.field.fields).map( key => container.field.fields[key]);
+        let currentField: FormFieldModel;
+
+        for (const tabField of tabFields) {
+            currentField = tabField.find( (tab: FormFieldModel) => tab.id === field.id );
+            if (currentField) {
+                return currentField;
+            }
+        }
+        return null;
     }
 
     private getObjectValue(field: FormFieldModel, fieldId: string): string {

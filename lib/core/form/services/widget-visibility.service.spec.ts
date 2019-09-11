@@ -933,12 +933,12 @@ describe('WidgetVisibilityService', () => {
         const fakeTabVisibilityModel = new FormModel(tabVisibilityJsonMock);
         const complexVisibilityModel = new FormModel(complexVisibilityJsonVisible);
         const complexVisibilityJsonNotVisibleModel = new FormModel(complexVisibilityJsonNotVisible);
-        let tabVisibilityJsonModel: FormModel;
+        let invalidTabVisibilityJsonModel: FormModel;
         let visibilityObjTest: WidgetVisibilityModel;
 
         beforeEach(() => {
             visibilityObjTest = new WidgetVisibilityModel();
-            tabVisibilityJsonModel = new FormModel(tabInvalidFormVisibility);
+            invalidTabVisibilityJsonModel = new FormModel(tabInvalidFormVisibility);
             fakeFormWithVariables = new FormModel(fakeFormJson);
         });
 
@@ -1032,15 +1032,17 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('form should be valid when a tab with invalid values is not visibile', () => {
-            tabVisibilityJsonModel.tabs[0].isVisible = false;
-            tabVisibilityJsonModel.getFieldById('Number1').value = 'invalid';
+            invalidTabVisibilityJsonModel.getFieldById('Number1').value = 'invalidField';
+            invalidTabVisibilityJsonModel.getFieldById('Text1').value = 'showtab';
 
-            tabVisibilityJsonModel.validateForm();
-            expect(tabVisibilityJsonModel.isValid).toBeTruthy();
+            service.refreshVisibility(invalidTabVisibilityJsonModel);
+            invalidTabVisibilityJsonModel.validateForm();
+            expect(invalidTabVisibilityJsonModel.isValid).toBeFalsy();
 
-            tabVisibilityJsonModel.tabs[0].isVisible = true;
-            tabVisibilityJsonModel.validateForm();
-            expect(tabVisibilityJsonModel.isValid).toBeFalsy();
+            invalidTabVisibilityJsonModel.getFieldById('Text1').value = 'hidetab';
+            service.refreshVisibility(invalidTabVisibilityJsonModel);
+            invalidTabVisibilityJsonModel.validateForm();
+            expect(invalidTabVisibilityJsonModel.isValid).toBeTruthy();
         });
     });
 });
