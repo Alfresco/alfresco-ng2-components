@@ -13,6 +13,7 @@ const projectRoot = path.resolve(__dirname);
 const width = 1366, height = 768;
 
 let ENV_FILE = process.env.ENV_FILE;
+let GROUP_SUFFIX = process.env.PREFIX;
 
 if (ENV_FILE) {
     require('dotenv').config({ path: ENV_FILE });
@@ -101,6 +102,7 @@ exports.config = {
     params: {
         testConfig: TestConfig,
         config: TestConfig.appConfig,
+        groupSuffix: GROUP_SUFFIX,
         identityAdmin: TestConfig.identityAdmin,
         identityUser: TestConfig.identityUser,
         rootPath: __dirname
