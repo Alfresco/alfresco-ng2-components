@@ -384,6 +384,7 @@
                 min-height: inherit;
                 align-items: center;
                 display: flex;
+                width: 100%;
             }
 
             .adf-datatable-cell-value {
@@ -411,6 +412,7 @@
             min-height: inherit;
             align-items: center;
             word-break: break-all;
+            width: 100%;
         }
 
         .adf-datatable__actions-cell, .adf-datatable-cell--image {
@@ -480,6 +482,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+            padding: 0 4px;
 
             &.adf-datatable-cell-header,
             .adf-datatable-content-cell {
