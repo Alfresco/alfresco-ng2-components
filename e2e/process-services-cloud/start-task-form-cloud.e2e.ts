@@ -361,7 +361,7 @@ describe('Start Task Form', () => {
             await contentFileWidget.checkUploadContentButtonIsDisplayed('Attachsinglecontentfile');
         });
 
-        it('[C315292] Should be able to view, download and remove attached file from acs repository', async () => {
+        it('[C315292] Should be able to view and download attached file from acs repository\n', async () => {
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadContentFileProcess.entry.name);
             await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadContentFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
@@ -386,10 +386,6 @@ describe('Start Task Form', () => {
             await contentFileWidget.viewFile(testFileModel.name);
             await viewer.checkFileIsLoaded();
             await viewer.checkFileNameIsDisplayed(testFileModel.name);
-
-            await browser.navigate().back();
-            await contentFileWidget.removeFile(testFileModel.name);
-            await contentFileWidget.checkFileIsNotAttached(testFileModel.name);
         });
 
         it('[C311287] Content node selector default location when attaching a file to a form from acs repository', async () => {
