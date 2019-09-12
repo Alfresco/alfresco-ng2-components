@@ -18,7 +18,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, from, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-
 import {
     IdentityUserModel,
     IdentityUserQueryResponse,
