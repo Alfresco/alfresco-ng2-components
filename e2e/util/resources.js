@@ -541,11 +541,11 @@ exports.ACTIVITI7_APPS = {
         forms: {
             tabVisibilityFields: {
                 name: "tabvisibilitywithfields",
-                id: "form-a81d4541-95eb-4154-a3f4-12dad0a669f9"
+                id: "form-26b01063-4fb0-455f-b3ba-90172e013678"
             },
             tabVisibilityVars: {
                 name: "tabvisibilitywithvars",
-                id: "form-08649360-2964-4479-a003-257074e21f59"
+                id: "form-7bf363d2-83c9-4b00-853e-373d0d59963c"
             }
         }
     },

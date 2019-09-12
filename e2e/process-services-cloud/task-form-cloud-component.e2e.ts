@@ -328,7 +328,7 @@ describe('Task form cloud component', () => {
         });
     });
 
-    describe('Complete task - cloud directive', () => {
+    describe('Complete task with form - cloud directive', () => {
 
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -376,7 +376,6 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
             await widget.textWidget().isWidgetVisible(widgets.textOneId);
-            await widget.textWidget().isWidgetNotVisible(widgets.numberOneId);
 
             await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
             await widget.textWidget().setValue(widgets.textThreeId, value.displayTab);
@@ -412,7 +411,7 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldVar);
             await widget.textWidget().isWidgetVisible(widgets.textOneId);
-            await widget.textWidget().isWidgetNotVisible(widgets.textTwoId);
+            await widget.textWidget().isWidgetNotVisible(widgets.textFourId);
 
             await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldVar);
@@ -470,9 +469,8 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabVarField);
             await widget.textWidget().isWidgetVisible(widgets.textOneId);
-            await widget.textWidget().isWidgetNotVisible(widgets.textTwoId);
+            await widget.textWidget().isWidgetNotVisible(widgets.numberOneId);
 
-            await widget.tab().clickTabByLabel(tab.tabWithFields);
             await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarField);
 
@@ -493,7 +491,6 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
             await widget.textWidget().isWidgetVisible(widgets.textOneId);
-            await widget.textWidget().isWidgetNotVisible(widgets.textTwoId);
 
             await widget.tab().clickTabByLabel(tab.tabVarVar);
             await widget.textWidget().setValue(widgets.textThreeId, value.displayTab);
@@ -506,7 +503,7 @@ describe('Task form cloud component', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[5].entry.name);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[5].entry.name);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabVarValue);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
         });
 
     });
