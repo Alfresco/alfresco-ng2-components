@@ -105,13 +105,13 @@ describe('ProcessInstanceDetailsComponent', () => {
             });
         }));
 
-        it('should fetch new process details when processInstanceId changed', () => {
+        // tslint:disable-next-line: ban
+        xit('should fetch new process details when processInstanceId changed', () => {
             component.ngOnChanges({ 'processInstanceId': change });
             expect(getProcessSpy).toHaveBeenCalledWith('456');
         });
 
-        // tslint:disable-next-line: ban
-        xit('should NOT fetch new process details when empty changeset made', () => {
+        it('should NOT fetch new process details when empty changeset made', () => {
             component.ngOnChanges({});
             expect(getProcessSpy).not.toHaveBeenCalled();
         });
