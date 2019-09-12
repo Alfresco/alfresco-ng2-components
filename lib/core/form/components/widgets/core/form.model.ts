@@ -48,6 +48,7 @@ export interface FormRepresentationModel {
     tabs?: any[];
     outcomes?: any[];
     formDefinition?: {
+        [key: string]: any;
         fields?: any[];
     };
 }
