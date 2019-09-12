@@ -9,8 +9,6 @@ const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRew
 const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
 
-process.env.CHROME_BIN = require('puppeteer').executablePath();
-
 const projectRoot = path.resolve(__dirname);
 const width = 1366, height = 768;
 
