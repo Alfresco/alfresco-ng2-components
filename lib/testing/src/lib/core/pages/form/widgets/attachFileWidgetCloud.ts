@@ -75,14 +75,14 @@ export class AttachFileWidgetCloud {
         return fileAttached.getAttribute('id');
     }
 
-    async clickActionMenu(fileName: string, actionName: string) {
+    async clickActionMenu(fileName: string, actionName: string): Promise<void> {
         const fileId = await this.getFileId(fileName);
         const optionMenu = this.widget.element(by.css(`button[id='${fileId}-option-menu']`));
         await BrowserActions.click(optionMenu);
         await BrowserActions.waitUntilActionMenuIsVisible();
-        const menuButton = element(by.css(`button#${fileId}-${actionName}`));
-        await BrowserActions.click(menuButton);
-        await BrowserVisibility.waitUntilElementIsNotVisible(menuButton);
+        const actionButton = element(by.css(`button#${fileId}-${actionName}`));
+        await BrowserActions.click(actionButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(actionButton);
     }
 
     async removeFile(fileName: string): Promise<void> {
