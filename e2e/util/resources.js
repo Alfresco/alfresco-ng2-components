@@ -535,7 +535,7 @@ exports.ACTIVITI7_APPS = {
         file_location: "/resources/activiti7/simpleapp.zip",
         processes: {
             processwithvariables: "processwithvariables",
-            simpleProcess: "simpleProcess",
+            simpleProcess: "simpleprocess",
             dropdownrestprocess: "dropdownrestprocess"
         }
     },

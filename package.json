@@ -182,6 +182,7 @@
     "protractor-browser-logs": "^1.0.423",
     "protractor-html-reporter-2": "^1.0.4",
     "protractor-retry": "^1.2.0",
+    "puppeteer": "1.17.0",
     "raw-loader": "0.5.1",
     "remark": "^9.0.0",
     "remark-frontmatter": "^1.2.0",

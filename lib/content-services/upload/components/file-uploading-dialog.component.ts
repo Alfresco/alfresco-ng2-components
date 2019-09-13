@@ -84,7 +84,10 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
                 takeUntil(this.onDestroy$)
             )
             .subscribe(() => {
-                this.elementRef.nativeElement.querySelector('#upload-dialog').focus();
+                const element: any = this.elementRef.nativeElement.querySelector('#upload-dialog');
+                if (element) {
+                    element.focus();
+                }
             });
 
         this.listSubscription = this.uploadService.queueChanged
