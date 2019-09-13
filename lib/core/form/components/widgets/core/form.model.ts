@@ -67,7 +67,7 @@ export class FormModel {
     readonly processDefinitionId: string;
     readonly selectedOutcome: string;
 
-    json: FormRepresentationModel;
+    json: any;
     nodeId: string;
     contentHost: string;
     values: FormValues = {};
@@ -83,7 +83,7 @@ export class FormModel {
     processVariables: ProcessVariableModel[] = [];
     variables: FormVariableModel[] = [];
 
-    constructor(json?: FormRepresentationModel, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
+    constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
         this.readOnly = readOnly;
         this.json = json;
 
