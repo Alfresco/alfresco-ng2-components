@@ -23,7 +23,9 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class TaskFilterCloudService {
     private filtersSubject: BehaviorSubject<TaskFilterCloudModel[]>;
     filters$: Observable<TaskFilterCloudModel[]>;

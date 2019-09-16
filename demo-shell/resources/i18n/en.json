@@ -321,6 +321,7 @@
       "KEY": "Key",
       "TITLE": "Title",
       "ICON": "Icon",
+      "TASK_ID": "Task Id",
       "PROCESS_ID": "ProcessInstanceId",
       "ACTION_TYPE": "Action Type"
     }

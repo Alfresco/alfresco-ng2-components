@@ -53,6 +53,9 @@ when the task list is empty:
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` | "" | The name of the application. |
 | assignee | `string` | "" | The assignee of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
+| actions | `boolean` | false | Toggles the data actions column. |
+| actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
+| contextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | createdDate | `string` | "" | Filter the tasks. Display only tasks created on the supplied date. |
 | dueDate | `string` | "" | Filter the tasks. Display only tasks with dueDate equal to the supplied date. |
 | id | `string` | "" | Filter the tasks. Display only tasks with id equal to the supplied value. |
@@ -80,6 +83,9 @@ when the task list is empty:
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a task in the list is clicked |
 | rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task list is loaded |
+| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/datatable/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
+| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
 
 ## Details
 
@@ -214,6 +220,116 @@ typical tasklist.
 ### DataColumn Features
 
 You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) page for more information about these features.
+
+#### showRowContextMenu event
+
+Emitted before the context menu is displayed for a row.
+
+Note that the TaskListCloudComponent itself does not populate the context menu with items.
+You can provide all necessary content via the handler.
+
+```html
+<adf-cloud-task-list
+    [contextMenu]="true"
+    (showRowContextMenu)="onShowRowContextMenu($event)">
+</adf-cloud-task-list>
+```
+
+Event properties:
+
+```ts
+value: {
+    row: DataRow,
+    col: DataColumn,
+    actions: []
+}
+```
+
+Handler example:
+
+```ts
+onShowRowContextMenu(event: DataCellEvent) {
+    event.value.actions = [
+        {  title: 'Hello Context Action' },
+        { ... }
+    ]
+}
+```
+![](../../docassets/images/task-list-cloud-context-menu.png)
+
+This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
+
+The TaskListCloudComponent will automatically render the supplied menu items.
+
+See the [ContextMenu](https://www.npmjs.com/package/ng2-alfresco-core)
+documentation for more details on the format and behavior of context actions.
+
+#### showRowActionsMenu event
+
+Emitted before the actions menu is displayed for a row.
+Requires the `actions` property to be set to `true`.
+
+Event properties:
+
+```ts
+value: {
+    row: DataRow,
+    action: any
+}
+```
+
+Note that the TaskListCloudComponent itself does not populate the action menu with items.
+You can provide all necessary content via the handler.
+
+This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
+
+#### executeRowAction event
+
+Emitted when the user executes a row action.
+
+This usually accompanies a `showRowActionsMenu` event.
+The TaskListCloudComponent itself does not execute actions but provides support for external
+integration. If actions are provided using the `showRowActionsMenu` event
+then `executeRowAction` will be automatically executed when the user clicks a
+corresponding menu item.
+
+```html
+<adf-cloud-task-list
+    [actions]="true"
+    (showRowActionsMenu)="onShowRowActionsMenu($event)"
+    (executeRowAction)="onExecuteRowAction($event)">
+</adf-cloud-task-list>
+```
+
+```ts
+import { DataCellEvent, DataRowActionEvent } from '@alfresco/adf-core';
+
+onShowRowActionsMenu(event: DataCellEvent) {
+    let myAction = {
+        title: 'Hello Action'
+        // your custom metadata needed for onExecuteRowAction
+    };
+    event.value.actions = [
+        myAction
+    ];
+}
+
+onExecuteRowAction(event: DataRowActionEvent) {
+    let args = event.value;
+    console.log(args.row);
+    console.log(args.action);
+    window.alert(`My custom action: ${args.action.title}`);
+}
+```
+
+![](../../docassets/images/task-list-cloud-action-menu.png)
+
+You can use any payloads for row actions. The only requirement for the objects is that they
+must have a `title` property.
+
+When an action is selected in the dropdown menu, the TaskListCloudComponent invokes the `executeRowAction` event.
+Use this to handle the response, inspect the action payload (and all custom properties defined
+earlier), and perform the corresponding actions.
 
 ## See also
 

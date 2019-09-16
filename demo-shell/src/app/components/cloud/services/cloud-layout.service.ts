@@ -41,7 +41,7 @@ export class ActionMenuModel {
         public icon: string,
         public title: string,
         public visible?: boolean,
-        public disable?: boolean
+        public disabled?: boolean
       ) {  }
 
 }
