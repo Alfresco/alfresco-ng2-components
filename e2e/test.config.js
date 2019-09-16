@@ -20,9 +20,6 @@ const IDENTITY_HOST = process.env.URL_HOST_IDENTITY || "identity";
 const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";
 const IDENTITY_ADMIN_PASSWORD = process.env.IDENTITY_ADMIN_PASSWORD || "defaultadminpassword";
 
-const IDENTITY_USER_EMAIL = process.env.IDENTITY_USER_EMAIL || "defaultuser";
-const IDENTITY_USER_PASSWORD = process.env.IDENTITY_USER_PASSWORD || "defaultuserpassword";
-
 const USERNAME_ADF = process.env.USERNAME_ADF || process.env.IDENTITY_USERNAME_ADF || "defaultuser";
 const PASSWORD_ADF = process.env.PASSWORD_ADF || process.env.IDENTITY_PASSWORD_ADF || "defaultuserpassword";
 const EMAIL = process.env.EMAIL_ADF || USERNAME_ADF;
@@ -74,8 +71,8 @@ module.exports = {
     },
 
     identityUser: {
-        email: IDENTITY_USER_EMAIL,
-        password: IDENTITY_USER_PASSWORD
+        email: USERNAME_ADF,
+        password: PASSWORD_ADF
     },
 
     adf: {
