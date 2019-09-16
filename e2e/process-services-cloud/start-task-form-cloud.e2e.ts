@@ -361,14 +361,13 @@ describe('Start Task Form', () => {
             await contentFileWidget.checkUploadContentButtonIsDisplayed('Attachsinglecontentfile');
         });
 
-        it('[C315292] Should be able to view and download attached file from acs repository\n', async () => {
+        it('[C315292] Should be able to view and download attached file from acs repository', async () => {
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadContentFileProcess.entry.name);
             await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadContentFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
-            await taskFormCloudComponent.clickClaimButton();
 
-            const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
             await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
@@ -386,6 +385,7 @@ describe('Start Task Form', () => {
             await contentFileWidget.viewFile(testFileModel.name);
             await viewer.checkFileIsLoaded();
             await viewer.checkFileNameIsDisplayed(testFileModel.name);
+            await viewer.clickCloseButton();
         });
 
         it('[C311287] Content node selector default location when attaching a file to a form from acs repository', async () => {
