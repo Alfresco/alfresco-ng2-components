@@ -124,14 +124,6 @@ describe('Task form cloud component', () => {
         await browser.executeScript('window.localStorage.clear();');
     });
 
-    it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
-        await appListCloudComponent.goToApp(candidateBaseApp);
-        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
-        await expect(await taskFormCloudComponent.getReleaseButtonText()).toBe('RELEASE');
-    });
-
     it('[C310366] Should refresh buttons and form after an action is complete', async () => {
         await appListCloudComponent.goToApp(simpleApp);
         await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
@@ -168,60 +160,64 @@ describe('Task form cloud component', () => {
         await taskFormCloudComponent.checkCancelButtonIsDisplayed();
     });
 
-    it('[C310142] Empty content is displayed when having a task without form', async () => {
-        await appListCloudComponent.goToApp(candidateBaseApp);
-        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
-        await taskFormCloudComponent.checkFormIsNotDisplayed();
-        await expect(await taskFormCloudComponent.getFormTitle()).toBe(assigneeTask.entry.name);
-        await taskFormCloudComponent.checkFormContentIsEmpty();
-        await expect(await taskFormCloudComponent.getEmptyFormContentTitle()).toBe(`No form available`);
-        await expect(await taskFormCloudComponent.getEmptyFormContentSubtitle()).toBe(`Attach a form that can be viewed later`);
-    });
-
-    it('[C310199] Should not be able to complete a task when required field is empty or invalid data is added to a field', async () => {
-        await appListCloudComponent.goToApp(candidateBaseApp);
-        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(formValidationsTask.entry.name);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(formValidationsTask.entry.name);
-        await taskFormCloudComponent.checkFormIsDisplayed();
-        await taskFormCloudComponent.formFields().checkFormIsDisplayed();
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Text0tma8h');
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Date0m1moq');
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number0klykr');
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Amount0mtp1h');
-
-        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
-        await widget.textWidget().setValue('Text0tma8h', 'Some random text');
-        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
-
-        await widget.dateWidget().setDateInput('Date0m1moq', 'invalid date');
-        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
-
-        await widget.dateWidget().setDateInput('Date0m1moq', '20-10-2018');
-        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
-
-        await widget.numberWidget().setFieldValue('Number0klykr', 'invalid number');
-        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
-
-        await widget.numberWidget().setFieldValue('Number0klykr', '26');
-        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
-
-        await widget.amountWidget().setFieldValue('Amount0mtp1h', 'invalid amount');
-        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(false);
-
-        await widget.amountWidget().setFieldValue('Amount0mtp1h', '660');
-        await expect(await (await taskFormCloudComponent.getCompleteButton()).isEnabled()).toBe(true);
-
-    });
-
-    describe('Complete task - cloud directive', () => {
+    describe('Candidate Base App', () => {
 
         beforeEach(async () => {
             await appListCloudComponent.goToApp(candidateBaseApp);
+        });
+
+        it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
+            await expect(await taskFormCloudComponent.getReleaseButtonText()).toBe('RELEASE');
+        });
+
+        it('[C310142] Empty content is displayed when having a task without form', async () => {
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
+            await taskFormCloudComponent.checkFormIsNotDisplayed();
+            await expect(await taskFormCloudComponent.getFormTitle()).toBe(assigneeTask.entry.name);
+            await taskFormCloudComponent.checkFormContentIsEmpty();
+            await expect(await taskFormCloudComponent.getEmptyFormContentTitle()).toBe(`No form available`);
+            await expect(await taskFormCloudComponent.getEmptyFormContentSubtitle()).toBe(`Attach a form that can be viewed later`);
+        });
+
+        it('[C310199] Should not be able to complete a task when required field is empty or invalid data is added to a field', async () => {
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(formValidationsTask.entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(formValidationsTask.entry.name);
+            await taskFormCloudComponent.checkFormIsDisplayed();
+            await taskFormCloudComponent.formFields().checkFormIsDisplayed();
+            await taskFormCloudComponent.formFields().checkWidgetIsVisible('Text0tma8h');
+            await taskFormCloudComponent.formFields().checkWidgetIsVisible('Date0m1moq');
+            await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number0klykr');
+            await taskFormCloudComponent.formFields().checkWidgetIsVisible('Amount0mtp1h');
+
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
+            await widget.textWidget().setValue('Text0tma8h', 'Some random text');
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
+
+            await widget.dateWidget().setDateInput('Date0m1moq', 'invalid date');
+            await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
+
+            await widget.dateWidget().setDateInput('Date0m1moq', '20-10-2018');
+            await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
+
+            await widget.numberWidget().setFieldValue('Number0klykr', 'invalid number');
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
+
+            await widget.numberWidget().setFieldValue('Number0klykr', '26');
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
+
+            await widget.amountWidget().setFieldValue('Amount0mtp1h', 'invalid amount');
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
+
+            await widget.amountWidget().setFieldValue('Amount0mtp1h', '660');
+            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
 
         });
 

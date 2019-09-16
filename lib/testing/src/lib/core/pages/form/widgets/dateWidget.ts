@@ -55,6 +55,11 @@ export class DateWidget {
         await BrowserActions.click(form);
     }
 
+    async checkErrorMessageIsNotDisplayed(fieldId): Promise<void> {
+        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
+        await BrowserVisibility.waitUntilElementIsNotVisible(errorMessage);
+    }
+
     async getErrorMessage(fieldId): Promise<string> {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         return BrowserActions.getText(errorMessage);
