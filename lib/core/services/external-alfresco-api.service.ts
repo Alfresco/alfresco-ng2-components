@@ -19,14 +19,20 @@ import { Injectable } from '@angular/core';
 import {
     AlfrescoApiCompatibility,
     ContentApi,
-    Core
+    Core,
+    Node
 } from '@alfresco/js-api';
-/* tslint:disable:adf-file-name */
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ExternalAlfrescoApiService {
+
+    /**
+     * Publish/subscribe to events related to node updates.
+     */
+    nodeUpdated = new Subject<Node>();
 
     protected alfrescoApi: AlfrescoApiCompatibility;
 
