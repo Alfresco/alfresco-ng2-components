@@ -34,7 +34,8 @@ import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { fakeTaskProcessVariableModels,
         fakeFormJson, formTest,
         formValues, complexVisibilityJsonVisible,
-        complexVisibilityJsonNotVisible, tabVisibilityJsonMock } from 'core/mock/form/widget-visibility.service.mock';
+        complexVisibilityJsonNotVisible, tabVisibilityJsonMock,
+        tabInvalidFormVisibility } from 'core/mock/form/widget-visibility.service.mock';
 
 declare let jasmine: any;
 
@@ -932,10 +933,12 @@ describe('WidgetVisibilityService', () => {
         const fakeTabVisibilityModel = new FormModel(tabVisibilityJsonMock);
         const complexVisibilityModel = new FormModel(complexVisibilityJsonVisible);
         const complexVisibilityJsonNotVisibleModel = new FormModel(complexVisibilityJsonNotVisible);
+        let invalidTabVisibilityJsonModel: FormModel;
         let visibilityObjTest: WidgetVisibilityModel;
 
         beforeEach(() => {
             visibilityObjTest = new WidgetVisibilityModel();
+            invalidTabVisibilityJsonModel = new FormModel(tabInvalidFormVisibility);
             fakeFormWithVariables = new FormModel(fakeFormJson);
         });
 
@@ -1028,5 +1031,18 @@ describe('WidgetVisibilityService', () => {
             expect(fakeTabVisibilityModel.tabs[1].isVisible).toBeTruthy();
         });
 
+        it('form should be valid when a tab with invalid values is not visibile', () => {
+            invalidTabVisibilityJsonModel.getFieldById('Number1').value = 'invalidField';
+            invalidTabVisibilityJsonModel.getFieldById('Text1').value = 'showtab';
+
+            service.refreshVisibility(invalidTabVisibilityJsonModel);
+            invalidTabVisibilityJsonModel.validateForm();
+            expect(invalidTabVisibilityJsonModel.isValid).toBeFalsy();
+
+            invalidTabVisibilityJsonModel.getFieldById('Text1').value = 'hidetab';
+            service.refreshVisibility(invalidTabVisibilityJsonModel);
+            invalidTabVisibilityJsonModel.validateForm();
+            expect(invalidTabVisibilityJsonModel.isValid).toBeTruthy();
+        });
     });
 });

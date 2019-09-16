@@ -129,7 +129,6 @@ export class FormFieldModel extends FormWidgetModel {
                 }
             }
         }
-
         this._isValid = true;
         return this._isValid;
     }

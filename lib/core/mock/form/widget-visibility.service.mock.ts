@@ -999,3 +999,133 @@ export let tabVisibilityJsonMock = {
        'gridsterForm': false
     }
  };
+
+export const tabInvalidFormVisibility = {
+    'id': 'form-0668939d-34b2-440c-ab4d-01ab8b05a881',
+    'name': 'tab-visibility',
+    'description': '',
+    'version': 0,
+    'standAlone': true,
+    'tabs': [
+        {
+            'id': 'a8a4718d-5019-4852-9645-bba9b8253d86',
+            'title': 'tab1',
+            'visibilityCondition': {
+                'leftType': 'field',
+                'leftValue': 'Text1',
+                'operator': '==',
+                'rightValue': 'showtab',
+                'rightType': 'value',
+                'nextConditionOperator': '',
+                'nextCondition': null
+            }
+        },
+        {
+            'id': 'bb9033ca-55ef-432a-8120-bffc8a179ebb',
+            'title': 'tab2',
+            'visibilityCondition': null
+        }
+    ],
+    'formDefinition': {
+        'fields': [
+            {
+                'id': '093270a5-6e28-4cf0-a72a-09731c0d59fd',
+                'name': 'Label',
+                'type': 'container',
+                'tab': 'a8a4718d-5019-4852-9645-bba9b8253d86',
+                'numberOfColumns': 2,
+                'fields': {
+                    '1': [
+                        {
+                            'id': 'Number1',
+                            'name': 'Number1',
+                            'type': 'integer',
+                            'colspan': 1,
+                            'placeholder': null,
+                            'minValue': null,
+                            'maxValue': null,
+                            'required': false,
+                            'visibilityCondition': null,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2
+                            }
+                        },
+                        {
+                            'id': 'Number2',
+                            'name': 'Number2',
+                            'type': 'integer',
+                            'colspan': 1,
+                            'placeholder': null,
+                            'minValue': null,
+                            'maxValue': null,
+                            'required': false,
+                            'visibilityCondition': {
+                                'leftType': 'field',
+                                'leftValue': 'Text2',
+                                'operator': '==',
+                                'rightValue': 'shownumber',
+                                'rightType': 'value',
+                                'nextConditionOperator': '',
+                                'nextCondition': null
+                            },
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2
+                            }
+                        }
+                    ],
+                    '2': [
+                        {
+                            'id': 'Text2',
+                            'name': 'Text2',
+                            'type': 'text',
+                            'required': false,
+                            'colspan': 1,
+                            'placeholder': null,
+                            'minLength': 0,
+                            'maxLength': 0,
+                            'regexPattern': null,
+                            'visibilityCondition': null,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                'id': 'c33579eb-3514-42cc-832d-2998d06a3eab',
+                'name': 'Label',
+                'type': 'container',
+                'tab': 'bb9033ca-55ef-432a-8120-bffc8a179ebb',
+                'numberOfColumns': 2,
+                'fields': {
+                    '1': [
+                        {
+                            'id': 'Text1',
+                            'name': 'Text1',
+                            'type': 'text',
+                            'required': false,
+                            'colspan': 1,
+                            'placeholder': null,
+                            'minLength': 0,
+                            'maxLength': 0,
+                            'regexPattern': null,
+                            'visibilityCondition': null,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2
+                            }
+                        }
+                    ],
+                    '2': []
+                }
+            }
+        ],
+        'outcomes': [],
+        'metadata': {},
+        'variables': []
+    }
+};
