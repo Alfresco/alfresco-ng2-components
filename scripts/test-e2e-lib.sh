@@ -132,6 +132,11 @@ set_env(){
     export ENV_FILE=$1
 }
 
+set_prefix(){
+    PREFIX=$1
+    export PREFIX=$PREFIX
+}
+
 lint(){
     EXECLINT=true
 }
@@ -174,6 +179,7 @@ while [[ $1 == -* ]]; do
       -env|--env)   set_env $2; shift 2;;
       -dev|--dev)  set_development; shift;;
       -s|--specs)  set_specs $2; shift 2;;
+      -prefix|--prefix)  set_prefix $2; shift 2;;
       -db|--debug) debug; shift;;
       -ud|--use-dist)  lite_server; shift;;
       -save)   set_save_screenshot; shift;;

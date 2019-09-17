@@ -17,6 +17,7 @@
 
 import { ApiService } from '../api.service';
 import { StringUtil } from '../../utils/string.util';
+import { browser } from 'protractor';
 
 export class GroupIdentityService {
 
@@ -40,7 +41,7 @@ export class GroupIdentityService {
         const path = '/groups';
         const method = 'POST';
         const queryParams = {}, postBody = {
-            name: groupName + 'TestGroup'
+            name: `${groupName}-${browser.params.groupSuffix}`
         };
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
