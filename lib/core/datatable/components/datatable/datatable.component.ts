@@ -238,6 +238,13 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
+    isColumnSortActive(column: DataColumn): boolean {
+        if (!column) {
+            return false;
+        }
+        return column.key === this.data.getSorting().key;
+    }
+
     ngDoCheck() {
         const changes = this.differ.diff(this.rows);
         if (changes) {

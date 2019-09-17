@@ -750,6 +750,23 @@ describe('DataTable', () => {
 
     });
 
+    it('should indicate column that has sorting applied', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [ { name: '1' }, { name: '2' } ],
+            [
+                new ObjectDataColumn({ key: 'name', sortable: true }),
+                new ObjectDataColumn({ key: 'other', sortable: true  })
+            ]
+        );
+
+        const [col1, col2] =  dataTable.getSortableColumns();
+
+        dataTable.onColumnHeaderClick(col2);
+
+        expect(dataTable.isColumnSortActive(col1)).toBe(false);
+        expect(dataTable.isColumnSortActive(col2)).toBe(true);
+    });
+
     it('should invert "select all" status', () => {
         expect(dataTable.isSelectAllChecked).toBeFalsy();
         dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
