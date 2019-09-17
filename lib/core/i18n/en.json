@@ -72,6 +72,10 @@
           "CANCEL": "Cancel"
         },
         "TITLE": "Adding files to zip, this could take a few minutes"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Close",
+        "UPDATE": "Update"
       }
     },
     "FILE_DIALOG": {

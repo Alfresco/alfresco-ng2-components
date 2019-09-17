@@ -17,10 +17,8 @@
 
  /* tslint:disable:component-selector no-input-rename  */
 
-import { DataColumn } from '@alfresco/adf-core';
-import { LogService } from '@alfresco/adf-core';
+import { DataColumn, DataColumnType, LogService } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
-
 import { ContentColumnListComponent } from './content-column-list.component';
 
 @Component({
@@ -33,7 +31,7 @@ export class ContentColumnComponent implements OnInit, AfterContentInit, DataCol
     key: string;
 
     @Input()
-    type: string = 'text';
+    type: DataColumnType = 'text';
 
     @Input()
     format: string;

@@ -17,23 +17,20 @@
 
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { DataTableCellComponent } from './datatable-cell.component';
+import { MatDialog } from '@angular/material';
+import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
+import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 
 @Component({
     selector: 'adf-json-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container>
-            <span *ngIf="copyContent; else defaultJsonTemplate" class="adf-datatable-cell-value">
-                <pre
-                    class="adf-datatable-json-cell"
-                    [adf-clipboard]="'CLIPBOARD.CLICK_TO_COPY'"
-                    [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'">{{ value$ | async | json }}</pre>
-            </span>
+        <ng-container *ngIf="value$ | async as value; else editEmpty">
+            <button mat-button color="primary" (click)="view()">json</button>
         </ng-container>
-        <ng-template #defaultJsonTemplate>
-            <span class="adf-datatable-cell-value">
-                <pre class="adf-datatable-json-cell">{{ value$ | async | json }}</pre>
-            </span>
+
+        <ng-template #editEmpty>
+            <button *ngIf="editable" mat-button color="primary" (click)="view()">json</button>
         </ng-template>
     `,
     styleUrls: ['./json-cell.component.scss'],
@@ -42,13 +39,44 @@ import { DataTableCellComponent } from './datatable-cell.component';
 })
 export class JsonCellComponent extends DataTableCellComponent implements OnInit {
 
-     /** Enables/disables a Clipboard directive to allow copying of the cell's content. */
-     @Input()
-     copyContent: boolean;
+    @Input()
+    editable: boolean = false;
+
+    constructor(
+        private dialog: MatDialog,
+        alfrescoApiService: AlfrescoApiService
+    ) {
+        super(alfrescoApiService);
+    }
 
     ngOnInit() {
         if (this.column && this.column.key && this.row && this.data) {
             this.value$.next(this.data.getValue(this.row, this.column));
         }
+    }
+
+    view() {
+        const rawValue: string | object = this.data.getValue(this.row, this.column);
+        const value = typeof rawValue === 'object'
+            ? JSON.stringify(rawValue || {}, null, 2)
+            : rawValue;
+
+        const settings: EditJsonDialogSettings = {
+            title: this.column.title,
+            editable: this.editable,
+            value
+        };
+
+        this.dialog.open(EditJsonDialogComponent, {
+            data: settings,
+            minWidth: '50%',
+            minHeight: '50%'
+        }).afterClosed().subscribe((/*result: string*/) => {
+            if (typeof rawValue === 'object') {
+                // todo: update cell value as object
+            } else {
+                // todo: update cell value as string
+            }
+        });
     }
 }

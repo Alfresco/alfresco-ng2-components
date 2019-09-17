@@ -16,7 +16,7 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { LogService, DataColumn, DataRow } from '@alfresco/adf-core';
+import { DataColumn, DataRow } from '@alfresco/adf-core';
 import { DataCellEvent, DataRowActionEvent, DataSorting, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 
 export class FilteredDataAdapter extends ObjectDataTableAdapter {
@@ -71,7 +71,7 @@ export class DataTableComponent {
         email: 'admin@alfresco.com'
     };
 
-    constructor(private logService: LogService) {
+    constructor() {
         this.reset();
     }
 
@@ -209,17 +209,7 @@ export class DataTableComponent {
 
     onExecuteRowAction(event: DataRowActionEvent) {
         const args = event.value;
-        this.logService.log(args.row);
-        this.logService.log(args.action);
         window.alert(`My custom action: ${args.action.title}`);
-    }
-
-    onRowClick(event) {
-        this.logService.log(event);
-    }
-
-    onRowDblClick(event) {
-        this.logService.log(event);
     }
 
     toggleStickyHeader() {
