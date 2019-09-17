@@ -365,7 +365,6 @@ describe('Task form cloud component', () => {
         });
 
         it('[C315177] Should be able to complete a standalone task with invisible tab with invalid value for field', async () => {
-            // ACTIVITI-3746
             await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
