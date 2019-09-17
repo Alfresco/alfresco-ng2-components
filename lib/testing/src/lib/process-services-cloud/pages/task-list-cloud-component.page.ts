@@ -158,17 +158,25 @@ export class TaskListCloudComponentPage {
         return BrowserActions.getText(locator);
     }
 
-    async clickOnCustomActionMenu(content: string, action: string): Promise<void> {
+    async clickOptionsButton(content: string) {
         await BrowserActions.closeMenuAndDialogs();
         const row: ElementFinder = this.dataTable.getRow('Id', content);
         await BrowserActions.click(row.element(this.optionButton));
         await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
+    }
+
+    async clickOnCustomActionMenu(action: string): Promise<void> {
         const actionButton = element(by.css(`button[data-automation-id*="${action}"]`));
         await BrowserActions.click(actionButton);
     }
 
-    async rightClickOnRow(processInstance: string): Promise<void> {
-        await this.dataTable.rightClickOnRow('Id', processInstance);
+    async isCustomActionEnabled(action: string): Promise<boolean> {
+        const actionButton = element(by.css(`button[data-automation-id*="${action}"]`));
+        return actionButton.isEnabled();
+    }
+
+    async rightClickOnRow(taskId: string): Promise<void> {
+        await this.dataTable.rightClickOnRow('Id', taskId);
     }
 
     async clickContextMenuActionNamed(actionName): Promise<void> {

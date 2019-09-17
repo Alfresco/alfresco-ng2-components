@@ -86,10 +86,12 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableActionMenu();
             await tasksCloudDemoPage.enableContextMenu();
             await tasksCloudDemoPage.addActionIsDisplayed();
-            await tasksCloudDemoPage.addAction('edit');
+            await tasksCloudDemoPage.addAction('edit', false);
             await tasksCloudDemoPage.actionAdded('edit');
-            await tasksCloudDemoPage.addAction('delete');
+            await tasksCloudDemoPage.addAction('delete', false);
             await tasksCloudDemoPage.actionAdded('delete');
+            await tasksCloudDemoPage.addAction('disabledaction', true);
+            await tasksCloudDemoPage.actionAdded('disabledaction');
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.clickOnProcessFilters();
             await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
@@ -99,9 +101,12 @@ describe('Process list cloud', () => {
             await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(editProcess.entry.id);
-            await processCloudDemoPage.processListCloudComponent().clickOnCustomActionMenu(editProcess.entry.id, 'edit');
+            await processCloudDemoPage.processListCloudComponent().clickOptionsButton(editProcess.entry.id);
+            await expect(await processCloudDemoPage.processListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
+            await processCloudDemoPage.processListCloudComponent().clickOnCustomActionMenu('edit');
             await processCloudDemoPage.checkActionExecuted(editProcess.entry.id, 'edit');
             await processCloudDemoPage.processListCloudComponent().rightClickOnRow(deleteProcess.entry.id);
+            await expect(await processCloudDemoPage.processListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
             await processCloudDemoPage.processListCloudComponent().clickContextMenuActionNamed('delete');
             await processCloudDemoPage.checkActionExecuted(deleteProcess.entry.id, 'delete');
         });

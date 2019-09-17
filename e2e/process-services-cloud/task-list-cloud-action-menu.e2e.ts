@@ -16,8 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { GroupIdentityService, IdentityService, LoginSSOPage, QueryService, SettingsPage } from '@alfresco/adf-testing';
-import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
+import { GroupIdentityService, IdentityService, LoginSSOPage, QueryService, SettingsPage, TasksService } from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -32,7 +31,6 @@ describe('Process list cloud', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
-        const processCloudDemoPage = new ProcessCloudDemoPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const settingsPage = new SettingsPage();
 
@@ -41,6 +39,7 @@ describe('Process list cloud', () => {
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
         let queryService: QueryService;
+        let tasksService: TasksService;
         let testUser, groupInfo, editProcess, deleteProcess, editTask, deleteTask;
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
@@ -67,6 +66,9 @@ describe('Process list cloud', () => {
 
             editTask = await queryService.getProcessInstanceTasks(editProcess.entry.id, simpleApp);
             deleteTask = await queryService.getProcessInstanceTasks(deleteProcess.entry.id, simpleApp);
+            tasksService = new TasksService(apiService);
+            await tasksService.claimTask(editTask.list.entries[0].entry.id, simpleApp);
+            await tasksService.claimTask(deleteTask.list.entries[0].entry.id, simpleApp);
 
             await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
@@ -91,24 +93,29 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableActionMenu();
             await tasksCloudDemoPage.enableContextMenu();
             await tasksCloudDemoPage.addActionIsDisplayed();
-            await tasksCloudDemoPage.addAction('edit');
+            await tasksCloudDemoPage.addAction('edit', false);
             await tasksCloudDemoPage.actionAdded('edit');
-            await tasksCloudDemoPage.addAction('delete');
+            await tasksCloudDemoPage.addAction('delete', false);
             await tasksCloudDemoPage.actionAdded('delete');
+            await tasksCloudDemoPage.addAction('disabledaction', true);
+            await tasksCloudDemoPage.actionAdded('disabledaction');
             await tasksCloudDemoPage.clickAppButton();
-            // await processCloudDemoPage.clickOnProcessFilters();
-            // await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
+            await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
         });
 
-        it('[C315236] Should be able to see and execute custom action menu', async () => {
+        it('[C315723] Should be able to see and execute custom action menu', async () => {
             await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(editTask.list.entries[0].entry.id);
-            await tasksCloudDemoPage.taskListCloudComponent().clickOnCustomActionMenu(editTask.list.entries[0].entry.id, 'edit');
-            await processCloudDemoPage.checkActionExecuted(editTask.list.entries[0].entry.id, 'edit');
+            await tasksCloudDemoPage.taskListCloudComponent().clickOptionsButton(editTask.list.entries[0].entry.id);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
+            await tasksCloudDemoPage.taskListCloudComponent().clickOnCustomActionMenu('edit');
+            await tasksCloudDemoPage.checkActionExecuted(editTask.list.entries[0].entry.id, 'edit');
             await tasksCloudDemoPage.taskListCloudComponent().rightClickOnRow(deleteTask.list.entries[0].entry.id);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
             await tasksCloudDemoPage.taskListCloudComponent().clickContextMenuActionNamed('delete');
-            await processCloudDemoPage.checkActionExecuted(deleteTask.list.entries[0].entry.id, 'delete');
+            await tasksCloudDemoPage.checkActionExecuted(deleteTask.list.entries[0].entry.id, 'delete');
         });
 
     });
