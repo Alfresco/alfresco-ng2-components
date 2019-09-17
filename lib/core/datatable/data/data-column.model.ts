@@ -24,6 +24,7 @@ export interface DataColumnTypes {
     json: string;
     icon: string;
     fileSize: string;
+    location: string;
 }
 
 export type DataColumnType = keyof DataColumnTypes;
