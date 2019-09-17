@@ -23,6 +23,7 @@ import { CommentProcessService, setupTestBed } from '@alfresco/adf-core';
 
 import { ProcessCommentsComponent } from './process-comments.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
+import { mockProcessInstanceComments } from '../mock/process/process-comments.mock';
 
 describe('ProcessCommentsComponent', () => {
 
@@ -41,11 +42,7 @@ describe('ProcessCommentsComponent', () => {
         component = fixture.componentInstance;
         commentProcessService = TestBed.get(CommentProcessService);
 
-        getCommentsSpy = spyOn(commentProcessService, 'getProcessInstanceComments').and.returnValue(of([
-            { message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
-            { message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
-            { message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }
-        ]));
+        getCommentsSpy = spyOn(commentProcessService, 'getProcessInstanceComments').and.returnValue(of(mockProcessInstanceComments));
     });
 
     it('should load comments when processInstanceId specified', () => {

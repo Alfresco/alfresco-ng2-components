@@ -65,6 +65,19 @@ export let processEnded = new ProcessInstance({
     ended: '2016-11-11T03:37:30.010+0000'
 });
 
+export let mockRunningProcess = new ProcessInstance({
+    id: '123',
+    name: 'Process 123',
+    started: '2016-11-10T03:37:30.010+0000',
+    startedBy: {
+        id: 1001,
+        firstName: 'Bob',
+        lastName: 'Jones',
+        email: 'bob@app.activiti.com'
+    },
+    ended: null
+});
+
 export let exampleProcessNoName = new ProcessInstance({
     id: '123',
     name: null,

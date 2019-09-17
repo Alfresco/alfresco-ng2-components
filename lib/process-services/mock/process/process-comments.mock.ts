@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-export * from './process/process-instances-list.mock';
-export * from './process/process.service.mock';
-export * from './process/start-process.component.mock';
-export * from './process/process.model.mock';
-export * from './process/process-comments.mock';
-
-export * from './task/start-task.mock';
-export * from './task/task-details.mock';
-export * from './task/task-details.component.mock';
-export * from './task/task-list.mock';
-export * from './task/tasklist-service.mock';
+export let mockProcessInstanceComments = [
+    { message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
+    { message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
+    { message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }
+];
