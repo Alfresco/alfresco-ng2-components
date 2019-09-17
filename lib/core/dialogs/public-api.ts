@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
-export * from './download-zip.dialog';
+export * from './download-zip/download-zip.dialog';
 
 export * from './dialog.module';
