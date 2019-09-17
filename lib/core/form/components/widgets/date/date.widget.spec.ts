@@ -81,23 +81,6 @@ describe('DateWidgetComponent', () => {
         expect(widget.maxDate.isSame(expected)).toBeTruthy();
     });
 
-    it('should eval visibility on date changed', () => {
-        spyOn(widget, 'onFieldChanged').and.callThrough();
-
-        const field = new FormFieldModel(new FormModel(), {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '9-9-9999',
-            type: 'date',
-            readOnly: 'false'
-        });
-
-        widget.field = field;
-
-        widget.onDateChanged({ value: moment('12/12/2012') });
-        expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
-    });
-
     describe('template check', () => {
 
         afterEach(() => {
