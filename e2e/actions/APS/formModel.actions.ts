@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- import { FormRepresentation } from '@alfresco/js-api';
+import { FormRepresentation } from '@alfresco/js-api';
 
 export class FormModelActions {
 
