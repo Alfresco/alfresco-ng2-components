@@ -18,7 +18,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { LogService } from '../services/log.service';
-import { NotificationService } from '../services/notification.service';
+import { NotificationService } from '../notifications/services/notification.service';
 
 @Injectable()
 export class ClipboardService {

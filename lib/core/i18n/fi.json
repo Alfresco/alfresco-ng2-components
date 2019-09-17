@@ -5,9 +5,9 @@
   "CLAIM": "Varaa",
   "UNCLAIM": "Vapauta",
   "START PROCESS": "Käynnistä prosessi",
-  "NOTIFICATION_HISTORY": {
+  "NOTIFICATIONS": {
     "NO_MESSAGE": "Ei viestejä",
-    "NOTIFICATIONS": "Ilmoitukset",
+    "TITLE": "Ilmoitukset",
     "MARK_AS_READ": "Merkitse kaikki luetuiksi"
   },
   "FORM": {

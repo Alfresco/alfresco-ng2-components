@@ -15,7 +15,21 @@
  * limitations under the License.
  */
 
-export interface NotificationModel {
-    dateTime: Date;
-    message: string;
+export enum NOTIFICATION_TYPE {
+    INFO = 'info',
+    WARN = 'warning',
+    ERROR = 'error'
+}
+
+export interface NotificationInitiator {
+    key: string | Symbol;
+    displayName: string;
+    extra?: any;
+}
+
+export interface Notification {
+    type: NOTIFICATION_TYPE;
+    initiator: NotificationInitiator;
+    datetime: Date;
+    messages: string[];
 }

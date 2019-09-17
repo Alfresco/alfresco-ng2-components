@@ -23,10 +23,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBar, MatSnackBarModule, MatSnackBarConfig } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationService } from './notification.service';
-import { TranslationMock } from '../mock/translation.service.mock';
-import { TranslationService } from './translation.service';
+import { TranslationMock } from '../../mock/translation.service.mock';
+import { TranslationService } from '../../services/translation.service';
 import { HttpClientModule } from '@angular/common/http';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setupTestBed';
 
 @Component({
     template: '',

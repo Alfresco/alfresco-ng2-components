@@ -5,9 +5,9 @@
   "CLAIM": "担当する",
   "UNCLAIM": "担当解除",
   "START PROCESS": "プロセスの開始",
-  "NOTIFICATION_HISTORY": {
+  "NOTIFICATIONS": {
     "NO_MESSAGE": "メッセージなし",
-    "NOTIFICATIONS": "通知",
+    "TITLE": "通知",
     "MARK_AS_READ": "すべて既読にする"
   },
   "FORM": {

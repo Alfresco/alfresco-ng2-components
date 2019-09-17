@@ -5,9 +5,9 @@
   "CLAIM": "Reivindicar",
   "UNCLAIM": "Liberar",
   "START PROCESS": "Iniciar processo",
-  "NOTIFICATION_HISTORY": {
+  "NOTIFICATIONS": {
     "NO_MESSAGE": "Não há mensagens",
-    "NOTIFICATIONS": "Notificações",
+    "TITLE": "Notificações",
     "MARK_AS_READ": "Marcar todas como lidas"
   },
   "FORM": {

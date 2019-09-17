@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
-import { NotificationHistoryComponent } from './notification-history.component';
+import { NotificationHistoryComponent } from './components/notification-history.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({

@@ -15,5 +15,8 @@
  * limitations under the License.
  */
 
-export * from './notification-history.component';
+export * from './components/notification-history.component';
+export * from './helpers/notification.factory';
+export * from './models/notification.model';
+export * from './services/notification.service';
 export * from './notification-history.module';

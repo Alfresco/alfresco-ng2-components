@@ -5,9 +5,9 @@
   "CLAIM": "Převzít",
   "UNCLAIM": "Vzdát se",
   "START PROCESS": "Zahájit proces",
-  "NOTIFICATION_HISTORY": {
+  "NOTIFICATIONS": {
     "NO_MESSAGE": "Žádné zprávy",
-    "NOTIFICATIONS": "Upozornění",
+    "TITLE": "Upozornění",
     "MARK_AS_READ": "Označit všechny jako přečtené"
   },
   "FORM": {

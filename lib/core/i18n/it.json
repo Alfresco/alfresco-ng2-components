@@ -5,9 +5,9 @@
   "CLAIM": "Richiedi",
   "UNCLAIM": "Restituisci",
   "START PROCESS": "Avvia processo",
-  "NOTIFICATION_HISTORY": {
+  "NOTIFICATIONS": {
     "NO_MESSAGE": "Nessun messaggio",
-    "NOTIFICATIONS": "Notifiche",
+    "TITLE": "Notifiche",
     "MARK_AS_READ": "Seleziona tutti come già letti"
   },
   "FORM": {
