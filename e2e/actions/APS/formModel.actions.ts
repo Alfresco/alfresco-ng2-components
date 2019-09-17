@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
+ import { FormRepresentation } from '@alfresco/js-api';
+
 export class FormModelActions {
 
-    async getFormByName(alfrescoJsApi, name) {
+    async getFormByName(alfrescoJsApi: any, name: String): Promise<FormRepresentation> {
 
         const forms = await alfrescoJsApi.activiti.editorApi.getForms();
 
