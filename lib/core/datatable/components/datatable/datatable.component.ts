@@ -712,6 +712,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         const name = this.getNameColumnValue();
         return name ? row.getValue(name.key) : '';
     }
+
+    getAriaSort(column: DataColumn): string {
+        if (!this.isColumnSortActive(column)) {
+            return 'ADF-DATATABLE.ACCESSIBILITY.SORT_NONE';
+        }
+
+        return this.isColumnSorted(column, 'asc') ?
+            'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING' :
+            'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING';
+    }
 }
 
 export interface DataTableDropEvent {
