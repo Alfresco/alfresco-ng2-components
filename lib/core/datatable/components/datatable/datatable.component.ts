@@ -238,6 +238,13 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
+    isColumnSortActive(column: DataColumn): boolean {
+        if (!column || !this.data.getSorting()) {
+            return false;
+        }
+        return column.key === this.data.getSorting().key;
+    }
+
     ngDoCheck() {
         const changes = this.differ.diff(this.rows);
         if (changes) {
@@ -704,6 +711,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     getAutomationValue(row: DataRow): any {
         const name = this.getNameColumnValue();
         return name ? row.getValue(name.key) : '';
+    }
+
+    getAriaSort(column: DataColumn): string {
+        if (!this.isColumnSortActive(column)) {
+            return 'ADF-DATATABLE.ACCESSIBILITY.SORT_NONE';
+        }
+
+        return this.isColumnSorted(column, 'asc') ?
+            'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING' :
+            'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING';
     }
 }
 

@@ -25,11 +25,7 @@
                  (keyup.enter)="onColumnHeaderClick(col)"
                  role="columnheader"
                  tabindex="0"
-                 [attr.aria-sort]="col.sortable ?
-                    ((isColumnSorted(col, 'asc') ?
-                        'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING':
-                        'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING') | translate) :
-                     null"
+                 [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
                  title="{{ col.title | translate }}"
                  adf-drop-zone dropTarget="header" [dropColumn]="col">
                 <span *ngIf="col.srTitle" class="adf-sr-only">{{ col.srTitle | translate }}</span>
