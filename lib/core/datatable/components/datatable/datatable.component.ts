@@ -239,7 +239,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     isColumnSortActive(column: DataColumn): boolean {
-        if (!column) {
+        if (!column || !this.data.getSorting()) {
             return false;
         }
         return column.key === this.data.getSorting().key;
