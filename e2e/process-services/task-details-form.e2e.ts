@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil, Widget } from '@alfresco/adf-testing';
 import CONSTANTS = require('../util/constants');
 
 import { LoginPage } from '@alfresco/adf-testing';
@@ -25,18 +25,23 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
 import { FiltersPage } from '../pages/adf/process-services/filtersPage';
+import { AppsActions } from '../actions/APS/apps.actions';
 
 import { StandaloneTask } from '../models/APS/standaloneTask';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
+import { FormModelActions } from '../actions/APS/formModel.actions';
+import resources = require('../util/resources');
 
 describe('Task Details - Form', () => {
     const loginPage = new LoginPage();
     const tasksListPage = new TasksListPage();
     const taskDetailsPage = new TaskDetailsPage();
     const filtersPage = new FiltersPage();
+    const widget = new Widget();
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
+    let newTask;
 
     beforeAll(async () => {
         const users = new UsersActions();
@@ -154,5 +159,201 @@ describe('Task Details - Form', () => {
 
         await tasksListPage.selectRow(otherTask.name);
         await taskDetailsPage.checkFormIsAttached(otherAttachedForm.name);
+    });
+
+    describe('Task Details - Complete form with visibility conditions on tabs', () => {
+
+        const widgets = {
+            textOneId: 'textone',
+            textTwoId: 'texttwo',
+            textThreeId: 'textthree',
+            textFourId: 'textfour',
+            numberOneId: 'numberone'
+        };
+
+        const value = {
+            displayTab: 'showTab',
+            notDisplayTab: 'anythingElse'
+        };
+
+        const tab = {
+            tabWithFields: 'tabWithFields',
+            tabFieldValue: 'tabBasicFieldValue',
+            tabFieldField: 'tabBasicFieldField',
+            tabFieldVar: 'tabBasicFieldVar'
+        };
+
+        const formActions = new FormModelActions();
+
+        beforeAll(async () => {
+            const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+            const apps = new AppsActions();
+            await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        });
+
+        beforeEach(async () => {
+            newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: StringUtil.generateRandomString() });
+            const form = await formActions.getFormByName(this.alfrescoJsApi,
+                resources.Files.SIMPLE_APP_WITH_USER_FORM.visibilityTabForm.formName);
+            await this.alfrescoJsApi.activiti.taskApi.attachForm(newTask.id, { 'formId': form.id });
+
+            await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
+            await tasksListPage.checkTaskListIsLoaded();
+            await filtersPage.goToFilter('Involved Tasks');
+            await tasksListPage.checkTaskListIsLoaded();
+        });
+
+        it('[C315190] Should be able to complete a standalone task with visible tab with empty value for field', async () => {
+            await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldValue);
+
+            await widget.textWidget().isWidgetVisible(widgets.textOneId);
+            await widget.textWidget().isWidgetNotVisible(widgets.textThreeId);
+
+            await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
+
+            await taskDetailsPage.checkCompleteFormButtonIsDisplayed();
+            await taskDetailsPage.clickCompleteFormTask();
+            await tasksListPage.checkContentIsNotDisplayed(newTask.name);
+
+            await tasksListPage.checkTaskListIsLoaded();
+            await filtersPage.goToFilter('Completed Tasks');
+            await tasksListPage.checkTaskListIsLoaded();
+            await tasksListPage.checkContentIsDisplayed(newTask.name);
+            await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
+        });
+
+        it('[C315191] Should be able to complete a standalone task with invisible tab with empty value for field', async () => {
+            await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldValue);
+
+            await widget.textWidget().isWidgetVisible(widgets.textOneId);
+            await widget.textWidget().isWidgetNotVisible(widgets.textThreeId);
+
+            await taskDetailsPage.checkCompleteFormButtonIsDisplayed();
+            await taskDetailsPage.clickCompleteFormTask();
+            await tasksListPage.checkContentIsNotDisplayed(newTask.name);
+
+            await tasksListPage.checkTaskListIsLoaded();
+            await filtersPage.goToFilter('Completed Tasks');
+            await tasksListPage.checkTaskListIsLoaded();
+            await tasksListPage.checkContentIsDisplayed(newTask.name);
+            await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldValue);
+        });
+
+        it('[C315192] Should not be able to complete a standalone task with visible tab with invalid value for field', async () => {
+            await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
+
+            await widget.textWidget().isWidgetVisible(widgets.textOneId);
+            await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
+            await widget.textWidget().setValue(widgets.textTwoId, value.displayTab);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
+
+            await widget.tab().clickTabByLabel(tab.tabFieldField);
+            await widget.textWidget().setValue(widgets.numberOneId, value.displayTab);
+
+            await expect(await taskDetailsPage.isCompleteButtonWithFormEnabled()).toEqual(false);
+        });
+
+        it('[C315193] Should be able to complete a standalone task with invisible tab with invalid value for field', async () => {
+            // ACTIVITI-3746
+            await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
+
+            await widget.textWidget().isWidgetVisible(widgets.textOneId);
+            await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
+            await widget.textWidget().setValue(widgets.textTwoId, value.displayTab);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
+
+            await widget.tab().clickTabByLabel(tab.tabFieldField);
+            await widget.textWidget().setValue(widgets.numberOneId, value.displayTab);
+
+            await widget.tab().clickTabByLabel(tab.tabWithFields);
+            await widget.textWidget().setValue(widgets.textOneId, value.notDisplayTab);
+            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldField);
+
+            await taskDetailsPage.checkCompleteFormButtonIsDisplayed();
+            await taskDetailsPage.clickCompleteFormTask();
+            await tasksListPage.checkContentIsNotDisplayed(newTask.name);
+
+            await tasksListPage.checkTaskListIsLoaded();
+            await filtersPage.goToFilter('Completed Tasks');
+            await tasksListPage.checkTaskListIsLoaded();
+            await tasksListPage.checkContentIsDisplayed(newTask.name);
+            await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldValue);
+        });
+
+        it('[C315194] Should be able to complete a standalone task with invisible tab with valid value', async () => {
+            await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
+
+            await widget.textWidget().isWidgetVisible(widgets.textOneId);
+            await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
+            await widget.textWidget().setValue(widgets.textTwoId, value.displayTab);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
+
+            await widget.tab().clickTabByLabel(tab.tabFieldField);
+            await widget.textWidget().setValue(widgets.numberOneId, '123');
+
+            await widget.tab().clickTabByLabel(tab.tabWithFields);
+            await widget.textWidget().setValue(widgets.textOneId, value.notDisplayTab);
+            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldField);
+
+            await taskDetailsPage.checkCompleteFormButtonIsDisplayed();
+            await taskDetailsPage.clickCompleteFormTask();
+            await tasksListPage.checkContentIsNotDisplayed(newTask.name);
+
+            await tasksListPage.checkTaskListIsLoaded();
+            await filtersPage.goToFilter('Completed Tasks');
+            await tasksListPage.checkTaskListIsLoaded();
+            await tasksListPage.checkContentIsDisplayed(newTask.name);
+            await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldValue);
+        });
+
+        it('[C315195] Should be able to complete a standalone task with visible tab with valid value for field', async () => {
+            await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
+
+            await widget.textWidget().isWidgetVisible(widgets.textOneId);
+            await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
+            await widget.textWidget().setValue(widgets.textTwoId, value.displayTab);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
+
+            await widget.tab().clickTabByLabel(tab.tabFieldField);
+            await widget.textWidget().setValue(widgets.numberOneId, '123');
+
+            await taskDetailsPage.checkCompleteFormButtonIsDisplayed();
+            await taskDetailsPage.clickCompleteFormTask();
+            await tasksListPage.checkContentIsNotDisplayed(newTask.name);
+
+            await tasksListPage.checkTaskListIsLoaded();
+            await filtersPage.goToFilter('Completed Tasks');
+            await tasksListPage.checkTaskListIsLoaded();
+            await tasksListPage.checkContentIsDisplayed(newTask.name);
+            await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
+        });
     });
 });

@@ -371,4 +371,8 @@ export class TaskDetailsPage {
         return BrowserActions.getText(this.emptyTaskDetails);
     }
 
+    async isCompleteButtonWithFormEnabled(): Promise<boolean> {
+        return await this.completeFormTask.isEnabled();
+    }
+
 }

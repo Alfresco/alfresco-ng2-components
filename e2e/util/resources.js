@@ -82,7 +82,10 @@ exports.Files = {
             text_field: "activiti-textfield",
             form_fieldId: "textfield",
             text_field_value: "Hi tester, from Rest call"
-        }
+        },
+        visibilityTabForm: {
+            formName: "visibilityTabWithFields"
+        },
     },
 
     WIDGETS_SMOKE_TEST: {
