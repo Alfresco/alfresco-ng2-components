@@ -18,7 +18,7 @@
 import {
     NotificationInitiator,
     NOTIFICATION_TYPE,
-    Notification
+    NotificationModel
 } from '../models/notification.model';
 
 export const rootInitiator: NotificationInitiator  = {
@@ -26,7 +26,7 @@ export const rootInitiator: NotificationInitiator  = {
     displayName: 'NOTIFICATIONS.SYSTEM'
 };
 
-export function info(messages: string | string[], initiator: NotificationInitiator = rootInitiator): Notification {
+export function info(messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel {
     return {
         type: NOTIFICATION_TYPE.INFO,
         datetime: new Date(),
@@ -35,7 +35,7 @@ export function info(messages: string | string[], initiator: NotificationInitiat
     };
 }
 
-export function warning(messages: string | string[], initiator: NotificationInitiator = rootInitiator): Notification {
+export function warning(messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel {
     return {
         type: NOTIFICATION_TYPE.WARN,
         datetime: new Date(),
@@ -44,7 +44,7 @@ export function warning(messages: string | string[], initiator: NotificationInit
     };
 }
 
-export function error(messages: string | string[], initiator: NotificationInitiator = rootInitiator): Notification {
+export function error(messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel {
     return {
         type: NOTIFICATION_TYPE.ERROR,
         datetime: new Date(),

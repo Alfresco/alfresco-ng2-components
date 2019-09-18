@@ -17,7 +17,7 @@
 
 import { Component, Input, ViewChild, OnDestroy } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
-import { Notification } from '../models/notification.model';
+import { NotificationModel } from '../models/notification.model';
 import { MatMenuTrigger } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -31,7 +31,7 @@ export class NotificationHistoryComponent implements OnDestroy {
 
     onDestroy$ = new Subject<boolean>();
 
-    notifications: Notification[] = [];
+    notifications: NotificationModel[] = [];
 
     @ViewChild(MatMenuTrigger)
     trigger: MatMenuTrigger;

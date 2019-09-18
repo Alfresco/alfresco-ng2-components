@@ -16,9 +16,10 @@
 
             <mat-list>
                 <mat-list-item *ngFor="let notification of notifications">
-                    <mat-icon mat-list-icon>{{notification.info ? notification.info: 'info'}}</mat-icon>
+                    <mat-icon mat-list-icon>{{ notification | noticicationIcon }}</mat-icon>
                     <h4 *ngFor="let message of notification.messages" mat-line>{{ message }}</h4>
                     <p mat-line> {{notification.datetime | date}} </p>
+                    <p mat-line> {{notification.initiator.displayName | translate}} </p>
                 </mat-list-item>
                 <mat-list-item *ngIf="isEmptyNotification()" id="adf-notification-history-component-no-message">
                     <h4 mat-line>{{ 'NOTIFICATIONS.NO_MESSAGE' | translate }}</h4>

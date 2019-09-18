@@ -4,6 +4,7 @@ bundles
 workspace.xml
 .idea/
 .env.*
+.env
 dist/
 e2e/.env.cloud
 tmp

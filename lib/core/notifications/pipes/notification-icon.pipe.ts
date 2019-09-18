@@ -15,21 +15,22 @@
  * limitations under the License.
  */
 
-export enum NOTIFICATION_TYPE {
-    INFO = 'info',
-    WARN = 'warning',
-    ERROR = 'error'
-}
+import { Pipe, PipeTransform } from '@angular/core';
+import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
 
-export interface NotificationInitiator {
-    key: string | Symbol;
-    displayName: string;
-    extra?: any;
-}
+@Pipe({
+    name: 'noticicationIcon'
+})
+export class NotificationIconPipe implements PipeTransform {
 
-export interface NotificationModel {
-    type: NOTIFICATION_TYPE;
-    initiator: NotificationInitiator;
-    datetime: Date;
-    messages: string[];
+    transform(notification: NotificationModel): string {
+        switch (notification.type) {
+            case NOTIFICATION_TYPE.ERROR:
+                return 'error';
+            case NOTIFICATION_TYPE.WARN:
+                return 'warning';
+            default:
+                return 'info';
+        }
+    }
 }

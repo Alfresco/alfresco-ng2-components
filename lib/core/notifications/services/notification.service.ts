@@ -20,7 +20,7 @@ import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/materia
 import { TranslationService } from '../../services/translation.service';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { Subject } from 'rxjs';
-import { Notification } from '../models/notification.model';
+import { NotificationModel } from '../models/notification.model';
 import { info, warning, error } from '../helpers/notification.factory';
 
 const INFO_SNACK_CLASS = 'adf-info-snackbar';
@@ -34,7 +34,7 @@ export class NotificationService {
 
     DEFAULT_DURATION_MESSAGE: number = 5000;
 
-    notifications$: Subject<Notification> = new Subject();
+    notifications$: Subject<NotificationModel> = new Subject();
 
     constructor(private snackBar: MatSnackBar,
                 private translationService: TranslationService,
@@ -115,7 +115,10 @@ export class NotificationService {
     }
 
     private getNotificationCreator(config?: number | MatSnackBarConfig) {
-        const panelClass: string = config && (<MatSnackBarConfig> config).panelClass && (<MatSnackBarConfig> config).panelClass[0] || '';
+        let panelClass: string = null;
+        if (typeof config === 'object') {
+            panelClass = Array.isArray(config.panelClass) ? config.panelClass[0] : config.panelClass;
+        }
 
         switch (panelClass) {
             case ERROR_SNACK_CLASS:
