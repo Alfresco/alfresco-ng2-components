@@ -20,9 +20,7 @@ import { AppsActions } from '../../actions/APS/apps.actions';
 import { UsersActions } from '../../actions/users.actions';
 import { LoginPage, BrowserActions, Widget } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasksPage';
-
 import CONSTANTS = require('../../util/constants');
-import resources = require('../../util/resources');
 import { browser } from 'protractor';
 
 describe('Amount Widget', () => {
@@ -35,7 +33,7 @@ describe('Amount Widget', () => {
     let alfrescoJsApi;
     const appsActions = new AppsActions();
     let appModel;
-    const app = resources.Files.WIDGET_CHECK_APP.AMOUNT;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.AMOUNT;
     let deployedApp, process;
 
     beforeAll(async () => {
@@ -51,7 +49,7 @@ describe('Amount Widget', () => {
         processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
+        appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, browser.params.resources.Files.WIDGET_CHECK_APP.file_location);
 
         const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {

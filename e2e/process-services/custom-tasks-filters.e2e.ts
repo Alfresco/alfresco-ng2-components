@@ -20,13 +20,9 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/taskListDemoPage';
 import { PaginationPage, DateUtil } from '@alfresco/adf-testing';
 import moment = require('moment');
-
 import { Tenant } from '../models/APS/tenant';
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
 import { Util } from '../util/util';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { AppsRuntimeActions } from '../actions/APS/appsRuntime.actions';
@@ -39,9 +35,9 @@ describe('Start Task - Custom App', () => {
     const taskListSinglePage = new TaskListDemoPage();
     const paginationPage = new PaginationPage();
     let processUserModel;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let appRuntime, secondAppRuntime;
-    const secondApp = resources.Files.WIDGETS_SMOKE_TEST;
+    const secondApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
     let appModel, secondAppModel;
     const completedTasks = [];
     const paginationTasksName = ['t01', 't02', 't03', 't04', 't05', 't06', 't07', 't08', 't09', 't10', 't11', 't12', 't13', 'taskOne', 'taskTwo', 'taskOne'];

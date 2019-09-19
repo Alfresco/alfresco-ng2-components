@@ -21,9 +21,6 @@ import { ProcessDetailsPage } from '../pages/adf/process-services/processDetails
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
 import { ViewerPage } from '../pages/adf/viewerPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -38,10 +35,10 @@ describe('Attachment list action menu for processes', () => {
     const attachmentListPage = new AttachmentListPage();
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const pngFile = new FileModel({
-        location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
-        name: resources.Files.ADF_DOCUMENTS.PNG.file_name
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
     const downloadedPngFile = pngFile.name;

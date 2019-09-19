@@ -19,12 +19,8 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { PaginationPage } from '@alfresco/adf-testing';
-
 import CONSTANTS = require('../util/constants');
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -37,7 +33,7 @@ describe('Task List Pagination', () => {
     const paginationPage = new PaginationPage();
 
     let processUserModel, processUserModelEmpty;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let currentPage = 1;
     const nrOfTasks = 20;
     let totalPages;

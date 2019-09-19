@@ -31,7 +31,6 @@ import {
     SettingsPage,
     GroupIdentityService, RolesService
 } from '@alfresco/adf-testing';
-import resources = require('../../util/resources');
 
 describe('Start Task - Group Cloud Component', () => {
 
@@ -51,7 +50,7 @@ describe('Start Task - Group Cloud Component', () => {
     const bothGroupsTaskName = StringUtil.generateRandomString(5);
     const oneGroupTaskName = StringUtil.generateRandomString(5);
     let apsUser, testUser, hrGroup, testGroup;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;

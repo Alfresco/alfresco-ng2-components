@@ -20,7 +20,6 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 import { LoginPage, UploadActions, BrowserVisibility, FileBrowserUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FolderModel } from '../../models/ACS/folderModel';
@@ -36,27 +35,27 @@ describe('Version component actions', () => {
 
     const txtFileComma = new FileModel({
         name: 'comma,name',
-        location: resources.Files.ADF_DOCUMENTS.TXT.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
     const txtFileModel = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        location: resources.Files.ADF_DOCUMENTS.TXT.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
     const file0BytesModel = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        location: resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     const folderInfo = new FolderModel({
         name: 'myFolder',
-        location: resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
     const folderSecond = new FolderModel({
         name: 'myrSecondFolder',
-        location: resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
     this.alfrescoJsApi = new AlfrescoApi({

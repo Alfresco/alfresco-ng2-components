@@ -26,10 +26,8 @@ import {
 } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
-
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
-import resources = require('../util/resources');
 
 describe('Process list cloud', () => {
 
@@ -47,7 +45,7 @@ describe('Process list cloud', () => {
         let groupIdentityService: GroupIdentityService;
         let testUser, groupInfo;
 
-        const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+        const candidateBaseApp = browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
         let jsonFile;
         let runningProcess;
 
@@ -63,7 +61,7 @@ describe('Process list cloud', () => {
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+                .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);

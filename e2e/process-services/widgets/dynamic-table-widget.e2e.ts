@@ -22,7 +22,6 @@ import { LoginPage, BrowserActions, Widget } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasksPage';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 
 describe('Dynamic Table widget ', () => {
 
@@ -36,7 +35,7 @@ describe('Dynamic Table widget ', () => {
     let deployedApp, process;
 
     describe('with Date Time Widget App', () => {
-        const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
+        const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
         beforeAll(async () => {
             const users = new UsersActions();
@@ -51,7 +50,7 @@ describe('Dynamic Table widget ', () => {
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-            appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
+            appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, browser.params.resources.Files.WIDGET_CHECK_APP.file_location);
 
             const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {
@@ -97,7 +96,7 @@ describe('Dynamic Table widget ', () => {
 
     describe('with People Widget App', () => {
 
-        const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
+        const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
 
         beforeAll(async () => {
             const users = new UsersActions();
@@ -112,7 +111,7 @@ describe('Dynamic Table widget ', () => {
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-            appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
+            appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, browser.params.resources.Files.WIDGET_CHECK_APP.file_location);
 
             const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {

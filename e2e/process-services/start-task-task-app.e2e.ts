@@ -15,22 +15,15 @@
  * limitations under the License.
  */
 
-import { by } from 'protractor';
-
+import { by, browser } from 'protractor';
 import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
 import CONSTANTS = require('../util/constants');
-
 import { Tenant } from '../models/APS/tenant';
 import { FileModel } from '../models/ACS/fileModel';
-
-import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { StringUtil } from '@alfresco/adf-testing';
@@ -46,7 +39,7 @@ describe('Start Task - Task App', () => {
     const navigationBarPage = new NavigationBarPage();
 
     let processUserModel, assigneeUserModel;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const formTextField = app.form_fields.form_fieldId;
     const formFieldValue = 'First value ';
     const taskPage = new TasksPage();
@@ -57,8 +50,8 @@ describe('Start Task - Task App', () => {
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     const showHeaderTask = 'Show Header';
     const jpgFile = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
 
     beforeAll(async () => {

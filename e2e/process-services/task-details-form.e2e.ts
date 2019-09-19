@@ -26,13 +26,10 @@ import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
 import { FiltersPage } from '../pages/adf/process-services/filtersPage';
 import { AppsActions } from '../actions/APS/apps.actions';
-
 import { StandaloneTask } from '../models/APS/standaloneTask';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { FormModelActions } from '../actions/APS/formModel.actions';
-import resources = require('../util/resources');
 
 describe('Task Details - Form', () => {
     const loginPage = new LoginPage();
@@ -186,7 +183,7 @@ describe('Task Details - Form', () => {
         const formActions = new FormModelActions();
 
         beforeAll(async () => {
-            const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+            const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
             const apps = new AppsActions();
             await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         });
@@ -194,7 +191,7 @@ describe('Task Details - Form', () => {
         beforeEach(async () => {
             newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: StringUtil.generateRandomString() });
             const form = await formActions.getFormByName(this.alfrescoJsApi,
-                resources.Files.SIMPLE_APP_WITH_USER_FORM.visibilityTabForm.formName);
+                browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM.visibilityTabForm.formName);
             await this.alfrescoJsApi.activiti.taskApi.attachForm(newTask.id, { 'formId': form.id });
 
             await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();

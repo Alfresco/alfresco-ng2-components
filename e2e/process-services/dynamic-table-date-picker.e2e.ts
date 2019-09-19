@@ -19,10 +19,7 @@ import { LoginPage, Widget, DatePickerPage, DateUtil } from '@alfresco/adf-testi
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -62,7 +59,7 @@ describe('Dynamic Table', () => {
     });
 
     describe('Date Picker', () => {
-        const app = resources.Files.DYNAMIC_TABLE_APP;
+        const app = browser.params.resources.Files.DYNAMIC_TABLE_APP;
 
         const randomText = {
             date: '12/12/2012',
@@ -136,7 +133,7 @@ describe('Dynamic Table', () => {
     });
 
     describe('Required Dropdown', () => {
-        const app = resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
+        const app = browser.params.resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
         const dropdown = widget.dropdown();
 
         beforeAll(async () => {

@@ -20,11 +20,9 @@ import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { DropActions } from '../../actions/drop.actions';
-import resources = require('../../util/resources');
 import { FileModel } from '../../models/ACS/fileModel';
 
 describe('Datatable component', () => {
@@ -39,8 +37,8 @@ describe('Datatable component', () => {
     const notificationHistoryPage = new NotificationHistoryPage();
     const dragAndDrop = new DropActions();
     const pngFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async () => {

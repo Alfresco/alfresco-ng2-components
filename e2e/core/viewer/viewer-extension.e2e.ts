@@ -22,7 +22,6 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { MonacoExtensionPage } from '../../pages/adf/demo-shell/monacoExtensionPage';
 import CONSTANTS = require('../../util/constants');
-import resources = require('../../util/resources');
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -44,8 +43,8 @@ describe('Viewer', () => {
 
     let jsFileUploaded;
     const jsFileInfo = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.JS.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.JS.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.JS.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.JS.file_location
     });
 
     beforeAll(async () => {

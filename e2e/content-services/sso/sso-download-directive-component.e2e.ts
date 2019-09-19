@@ -30,7 +30,6 @@ import {
 } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/fileModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
-import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
@@ -45,13 +44,13 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     let implicitFlow;
 
     const firstPdfFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
     });
 
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     let pdfUploadedFile, pngUploadedFile, folder;

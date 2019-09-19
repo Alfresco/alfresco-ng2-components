@@ -24,7 +24,6 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
 
 describe('Search Slider Filter', () => {
@@ -40,8 +39,8 @@ describe('Search Slider Filter', () => {
     const acsUser = new AcsUserModel();
 
     const file2BytesModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location
     });
 
     let file2Bytes;

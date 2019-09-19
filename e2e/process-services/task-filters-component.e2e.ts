@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import resources = require('../util/resources');
-
 import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
@@ -26,7 +24,6 @@ import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { AppSettingsToggles } from '../pages/adf/process-services/dialog/appSettingsToggles';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/taskFiltersDemoPage';
-
 import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -44,7 +41,7 @@ describe('Task', () => {
         const taskDetailsPage = new TaskDetailsPage();
         const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
-        const app = resources.Files.APP_WITH_DATE_FIELD_FORM;
+        const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
         let appId, tenantId;
 
         beforeAll(async () => {
@@ -229,7 +226,7 @@ describe('Task', () => {
 
         let taskFilterId;
 
-        const app = resources.Files.APP_WITH_PROCESSES;
+        const app = browser.params.resources.Files.APP_WITH_PROCESSES;
 
         beforeAll(async () => {
             const apps = new AppsActions();

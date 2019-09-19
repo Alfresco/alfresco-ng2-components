@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import resources = require('../../util/resources');
+import { browser } from 'protractor';
 import ContentModel = require('./contentModel');
 import ContentPropertiesModel = require('./contentProperties');
 import { CreatedByModel } from './createdByModel';
@@ -26,13 +26,13 @@ export class FileModel {
     id = StringUtil.generateRandomString();
     name = StringUtil.generateRandomString();
     shortName = this.name;
-    location = resources.Files.ADF_DOCUMENTS.PDF.file_location;
+    location = browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location;
     tooltip = this.name;
     version = '';
-    firstPageText = resources.Files.ADF_DOCUMENTS.PDF.first_page_text;
-    lastPageText = resources.Files.ADF_DOCUMENTS.PDF.last_page_text;
-    secondPageText = resources.Files.ADF_DOCUMENTS.PDF.second_page_text;
-    lastPageNumber = resources.Files.ADF_DOCUMENTS.PDF.last_page_number;
+    firstPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.first_page_text;
+    lastPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_text;
+    secondPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.second_page_text;
+    lastPageNumber = browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_number;
     createdAt = '';
     password = '';
     createdByUser = new CreatedByModel();

@@ -19,11 +19,9 @@ import CONSTANTS = require('../util/constants');
 import { ApiService, StringUtil, SettingsPage, IdentityService, GroupIdentityService, LocalStorageUtil } from '@alfresco/adf-testing';
 import moment = require('moment');
 import { browser } from 'protractor';
-
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { LoginSSOPage, AppListCloudPage, TaskHeaderCloudPage, TasksService } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import resources = require('../util/resources');
 
 describe('Task Header cloud component', () => {
     const basicCreatedTaskName = StringUtil.generateRandomString();
@@ -37,7 +35,7 @@ describe('Task Header cloud component', () => {
     let completedEndDate;
     let defaultDate;
     let groupInfo, testUser;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const priority = 30;
     const description = 'descriptionTask';
     const formatDate = 'MMM D, YYYY';

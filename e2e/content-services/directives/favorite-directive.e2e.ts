@@ -22,7 +22,6 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/fileModel';
-import resources = require('../../util/resources');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
 import { TrashcanPage } from '../../pages/adf/trashcanPage';
@@ -43,8 +42,8 @@ describe('Favorite directive', () => {
         hostEcm: browser.params.testConfig.adf_acs.host
     });
     const pdfFile = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: resources.Files.ADF_DOCUMENTS.PDF.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);

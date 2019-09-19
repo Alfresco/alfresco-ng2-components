@@ -16,7 +16,6 @@
  */
 
 import { browser } from 'protractor';
-import resources = require('../util/resources');
 import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
@@ -24,7 +23,6 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/processFilters
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { ProcessListPage } from '../pages/adf/process-services/processListPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -39,8 +37,8 @@ describe('Empty Process List Test', () => {
     const processListPage = new ProcessListPage();
     const startProcessPage = new StartProcessPage();
 
-    const appA = resources.Files.APP_WITH_PROCESSES;
-    const appB = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const appA = browser.params.resources.Files.APP_WITH_PROCESSES;
+    const appB = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     let user;
 

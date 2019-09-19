@@ -19,7 +19,6 @@ import { LoginPage, LikePage, RatePage, UploadActions } from '@alfresco/adf-test
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-import resources = require('../../util/resources');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SocialPage } from '../../pages/adf/demo-shell/socialPage';
 import { browser } from 'protractor';
@@ -48,8 +47,8 @@ describe('Social component', () => {
     let emptyFile;
 
     const emptyFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     beforeAll(async () => {

@@ -17,10 +17,7 @@
 
 import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/processListDemoPage';
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -30,8 +27,8 @@ describe('Process List Test', () => {
     const loginPage = new LoginPage();
     const processListDemoPage = new ProcessListDemoPage();
 
-    const appWithDateField = resources.Files.APP_WITH_DATE_FIELD_FORM;
-    const appWithUserWidget = resources.Files.APP_WITH_USER_WIDGET;
+    const appWithDateField = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
+    const appWithUserWidget = browser.params.resources.Files.APP_WITH_USER_WIDGET;
     let appDateModel, appUserWidgetModel, user;
 
     const processList = ['Process With Date', 'Process With Date 2', 'Process With User Widget', 'Process With User Widget 2'];

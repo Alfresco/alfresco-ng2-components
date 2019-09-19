@@ -30,7 +30,6 @@ import { NodeActions } from '../../actions/ACS/node.actions';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
 
 describe('Search Sorting Picker', () => {
@@ -46,13 +45,13 @@ describe('Search Sorting Picker', () => {
     const acsUser = new AcsUserModel();
 
     const pngAModel = {
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     };
 
     const pngDModel = {
-        'name': resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG_D.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_location
     };
 
     let pngA, pngD;

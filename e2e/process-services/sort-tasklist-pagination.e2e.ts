@@ -19,11 +19,8 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { PaginationPage } from '@alfresco/adf-testing';
-
 import CONSTANTS = require('../util/constants');
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
 import { Util } from '../util/util';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -36,7 +33,7 @@ describe('Task List Pagination - Sorting', () => {
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
 
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const nrOfTasks = 20;
     let processUserModel;
     const taskNameBase = 'Task';

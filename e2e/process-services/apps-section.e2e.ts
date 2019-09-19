@@ -19,11 +19,7 @@ import { browser } from 'protractor';
 import { LoginPage } from '@alfresco/adf-testing';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
 import CONSTANTS = require('../util/constants');
-
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -34,9 +30,9 @@ describe('Modify applications', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
-    const app = resources.Files.APP_WITH_PROCESSES;
-    const appToBeDeleted = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    const replacingApp = resources.Files.WIDGETS_SMOKE_TEST;
+    const app = browser.params.resources.Files.APP_WITH_PROCESSES;
+    const appToBeDeleted = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const replacingApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
     const apps = new AppsActions();
     const modelActions = new ModelsActions();
     let firstApp, appVersionToBeDeleted;

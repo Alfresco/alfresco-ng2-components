@@ -16,16 +16,10 @@
  */
 
 import { LoginPage, Widget } from '@alfresco/adf-testing';
-
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
-
 import CONSTANTS = require('../util/constants');
-
 import { FileModel } from '../models/ACS/fileModel';
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { ViewerPage } from '../pages/adf/viewerPage';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -41,8 +35,8 @@ describe('Start Task - Task App', () => {
     const navigationBarPage = new NavigationBarPage();
 
     let processUserModel;
-    const app = resources.Files.WIDGETS_SMOKE_TEST;
-    const pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+    const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const appFields = app.form_fields;
 
     beforeAll(async () => {

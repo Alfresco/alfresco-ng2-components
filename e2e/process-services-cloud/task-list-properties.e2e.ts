@@ -25,10 +25,7 @@ import {
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { TaskListCloudConfiguration } from './config/task-list-cloud.config';
-
 import moment = require('moment');
-
-import resources = require('../util/resources');
 
 describe('Edit task filters and task list properties', () => {
 
@@ -45,8 +42,8 @@ describe('Edit task filters and task list properties', () => {
     let groupIdentityService: GroupIdentityService;
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
 
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
-    const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+    const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    const candidateBaseApp = browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
     const noTasksFoundMessage = 'No Tasks Found';
     let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask,
         otherOwnerTask, testUser, groupInfo;
@@ -86,7 +83,7 @@ describe('Edit task filters and task list properties', () => {
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
         processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);

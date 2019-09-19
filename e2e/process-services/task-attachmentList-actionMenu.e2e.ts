@@ -16,20 +16,14 @@
  */
 
 import { browser } from 'protractor';
-
 import { LoginPage, FileBrowserUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
 import { ViewerPage } from '../pages/adf/viewerPage';
-
 import CONSTANTS = require('../util/constants');
-
-import resources = require('../util/resources');
-
 import path = require('path');
 import fs = require('fs');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -42,10 +36,10 @@ describe('Attachment list action menu for tasks', () => {
     const taskPage = new TasksPage();
     const attachmentListPage = new AttachmentListPage();
     const viewerPage = new ViewerPage();
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const pngFile = new FileModel({
-        location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
-        name: resources.Files.ADF_DOCUMENTS.PNG.file_name
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
     const downloadedPngFile = pngFile.name;
     let tenantId, appId, relatedContent, relatedContentId;
@@ -62,10 +56,10 @@ describe('Attachment list action menu for tasks', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
+            hostBpm: browser.params.resources.wser.params.testConfig.adf_aps.host
         });
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.resources.wser.params.testConfig.adf.adminEmail, browser.params.resources.wser.params.testConfig.adf.adminPassword);
 
         const user = await users.createTenantAndUser(this.alfrescoJsApi);
 
@@ -82,7 +76,7 @@ describe('Attachment list action menu for tasks', () => {
 
     afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.resources.wser.params.testConfig.adf.adminEmail, browser.params.resources.wser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
 
     });
@@ -108,7 +102,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await attachmentListPage.downloadFile(pngFile.name);
 
-        await browser.sleep(1000);
+        await browser.params.resources.wser.sleep(1000);
 
         await expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true);
 
@@ -139,7 +133,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await attachmentListPage.downloadFile(pngFile.name);
 
-        await browser.sleep(1000);
+        await browser.params.resources.wser.sleep(1000);
 
         await expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true);
 
@@ -178,7 +172,7 @@ describe('Attachment list action menu for tasks', () => {
     it('[C260234] Should be able to attache a file on a task on APS and check on ADF', async () => {
         const newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: 'SHARE KNOWLEDGE' });
         const newTaskId = newTask.id;
-        const filePath = path.join(browser.params.testConfig.main.rootPath + pngFile.location);
+        const filePath = path.join(browser.params.resources.wser.params.testConfig.main.rootPath + pngFile.location);
         const file = fs.createReadStream(filePath);
 
         relatedContent = await this.alfrescoJsApi.activiti.contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });

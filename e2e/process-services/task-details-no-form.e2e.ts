@@ -18,14 +18,9 @@
 import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
-
 import CONSTANTS = require('../util/constants');
-
 import { Tenant } from '../models/APS/tenant';
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -35,7 +30,7 @@ describe('Task Details - No form', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     let processUserModel;
-    const app = resources.Files.NO_FORM_APP;
+    const app = browser.params.resources.Files.NO_FORM_APP;
     const taskPage = new TasksPage();
     const noFormMessage = 'No forms attached';
     const apps = new AppsActions();

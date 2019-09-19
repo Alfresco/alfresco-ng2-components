@@ -17,7 +17,6 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { StringUtil, UploadActions, LoginPage } from '@alfresco/adf-testing';
-import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
@@ -47,11 +46,11 @@ describe('Search Component - Multi-Select Facet', () => {
 
         const randomName = StringUtil.generateRandomString();
         const jpgFileInfo = new FileModel({
-            'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
             'name': `${randomName}.jpg`
         });
         const txtFileInfo = new FileModel({
-            'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
             'name': `${randomName}.txt`
         });
 
@@ -137,11 +136,11 @@ describe('Search Component - Multi-Select Facet', () => {
 
         const randomName = StringUtil.generateRandomString();
         const jpgFileInfo = new FileModel({
-            'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
             'name': `${randomName}.jpg`
         });
         const txtFileInfo = new FileModel({
-            'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
             'name': `${randomName}.txt`
         });
 
@@ -199,7 +198,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
         const randomName = StringUtil.generateRandomString();
         const txtFileInfo = new FileModel({
-            'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
             'name': `${randomName}.txt`
         });
 

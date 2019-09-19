@@ -23,7 +23,6 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, protractor } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FileModel } from '../../models/ACS/fileModel';
-import resources = require('../../util/resources');
 
 describe('Edit folder directive', () => {
 
@@ -41,8 +40,8 @@ describe('Edit folder directive', () => {
     });
 
     const pdfFile = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: resources.Files.ADF_DOCUMENTS.PDF.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);

@@ -19,7 +19,6 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -63,20 +62,20 @@ describe('Document List Component', () => {
 
         let folderName;
         const pdfFileModel = new FileModel({
-            name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
-            location: resources.Files.ADF_DOCUMENTS.PDF.file_location
+            name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
         });
         const docxFileModel = new FileModel({
-            name: resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-            location: resources.Files.ADF_DOCUMENTS.DOCX.file_location
+            name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
         });
         const timeAgoFileModel = new FileModel({
-            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
         const mediumFileModel = new FileModel({
-            name: resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-            location: resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+            name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
         });
 
         let pdfUploadedNode, docxUploadedNode, timeAgoUploadedNode, mediumDateUploadedNode;
@@ -163,17 +162,17 @@ describe('Document List Component', () => {
 
         const fakeFileA = new FileModel({
             name: 'A',
-            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
         const fakeFileB = new FileModel({
             name: 'B',
-            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
         const fakeFileC = new FileModel({
             name: 'C',
-            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
         let fileANode, fileBNode, fileCNode;
@@ -252,8 +251,8 @@ describe('Document List Component', () => {
 
     it('[C272775] Should be able to upload a file in new folder', async () => {
         const testFile = new FileModel({
-            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
         acsUser = new AcsUserModel();
         /* cspell:disable-next-line */
@@ -306,12 +305,12 @@ describe('Document List Component', () => {
 
     it('[C269086] Should display Islocked field for files', async () => {
         const testFileA = new FileModel({
-            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
         const testFileB = new FileModel({
-            name: resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-            location: resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+            name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
         });
         acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -365,8 +364,8 @@ describe('Document List Component', () => {
     describe('Column Template', () => {
 
         const file0BytesModel = new FileModel({
-            name: resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-            location: resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+            name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
         });
 
         let file;

@@ -19,7 +19,6 @@ import { browser } from 'protractor';
 import { LoginPage, UploadActions } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import resources = require('../../util/resources');
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -40,8 +39,8 @@ describe('Viewer', () => {
     let txtFileUploaded;
 
     const txtFileInfo = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
     beforeAll(async () => {

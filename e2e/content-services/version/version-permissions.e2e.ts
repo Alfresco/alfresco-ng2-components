@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
-
+import { element, by, browser } from 'protractor';
 import { LoginPage, BrowserActions, UploadActions, StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
@@ -24,8 +23,6 @@ import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NodeActions } from '../../actions/ACS/node.actions';
 import CONSTANTS = require('../../util/constants');
@@ -48,18 +45,18 @@ describe('Version component permissions', () => {
     const fileCreatorUser = new AcsUserModel();
 
     const newVersionFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG_B.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
     const lockFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG_C.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_location
     });
 
     const differentCreatorFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG_D.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_location
     });
 
     this.alfrescoJsApi = new AlfrescoApi({
@@ -122,8 +119,8 @@ describe('Version component permissions', () => {
     describe('Manager', () => {
 
         const sameCreatorFile = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+            'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
 
         beforeAll(async () => {
@@ -197,8 +194,8 @@ describe('Version component permissions', () => {
 
     describe('Contributor', () => {
         const sameCreatorFile = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+            'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
 
         beforeAll(async () => {
@@ -253,8 +250,8 @@ describe('Version component permissions', () => {
 
     describe('Collaborator', () => {
         const sameCreatorFile = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+            'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
 
         beforeAll(async () => {

@@ -23,7 +23,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage, LocalStorageUtil } from '@alfresco/adf-testing';
-import resources = require('../util/resources');
 import { browser } from 'protractor';
 import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
 import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
@@ -60,8 +59,8 @@ describe('Process filters cloud', () => {
     let completedProcess, runningProcessInstance, suspendProcessInstance, testUser, anotherUser, groupInfo,
         anotherProcessInstance, processDefinition, anotherProcessDefinition,
         differentAppUserProcessInstance, simpleAppProcessDefinition;
-    const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    const candidateBaseApp = browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+    const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll(async () => {
 
@@ -79,7 +78,7 @@ describe('Process filters cloud', () => {
         await apiService.login(anotherUser.email, anotherUser.password);
         processDefinitionService = new ProcessDefinitionsService(apiService);
         simpleAppProcessDefinition = await processDefinitionService
-            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
         differentAppUserProcessInstance = await processInstancesService.createProcessInstance(simpleAppProcessDefinition.entry.key, simpleApp, {
@@ -89,10 +88,10 @@ describe('Process filters cloud', () => {
 
         await apiService.login(testUser.email, testUser.password);
         processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
         anotherProcessDefinition = await processDefinitionService
-            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess, candidateBaseApp);
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess, candidateBaseApp);
 
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
             'name': StringUtil.generateRandomString(),

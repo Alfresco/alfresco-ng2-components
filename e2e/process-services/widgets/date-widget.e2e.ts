@@ -22,7 +22,6 @@ import { LoginPage, BrowserActions, Widget, FormPage } from '@alfresco/adf-testi
 import { TasksPage } from '../../pages/adf/process-services/tasksPage';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import { FormDemoPage } from '../../pages/adf/demo-shell/process-services/formDemoPage';
 import { customDateFormAPS1 } from '../../resources/forms/custom-date-form';
 
@@ -36,7 +35,7 @@ describe('Date widget', () => {
     let alfrescoJsApi;
     const appsActions = new AppsActions();
     let appModel;
-    const app = resources.Files.WIDGET_CHECK_APP.DATE;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.DATE;
     let deployedApp, process;
 
     beforeAll(async () => {
@@ -52,7 +51,7 @@ describe('Date widget', () => {
         processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
+        appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, browser.params.resources.Files.WIDGET_CHECK_APP.file_location);
 
         const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {
