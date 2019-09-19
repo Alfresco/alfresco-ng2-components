@@ -52,6 +52,7 @@ export class TasksCloudDemoPage {
     titleInputField: ElementFinder = element(by.css('input[placeholder="Title"]'));
     iconInputField: ElementFinder = element(by.css('input[placeholder="Icon"]'));
     addActionButton: ElementFinder = element(by.cssContainingText('button span', 'Add'));
+    disableCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='disabled']`));
 
     formControllersPage: FormControllersPage = new FormControllersPage();
 
@@ -164,8 +165,23 @@ export class TasksCloudDemoPage {
         await BrowserActions.click(this.addActionButton);
     }
 
+    async addDisabledAction(text: string): Promise<void> {
+        await BrowserActions.clearSendKeys(this.keyInputField, text);
+        await BrowserActions.clearSendKeys(this.titleInputField, text);
+        await BrowserActions.clearSendKeys(this.iconInputField, text);
+        await BrowserActions.click(this.disableCheckbox);
+        await BrowserActions.click(this.addActionButton);
+    }
+
     async actionAdded(action: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`mat-chip`, action)));
+    }
+
+    async checkActionExecuted(taskId: string, action: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Action Menu:')));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Context Menu:')));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Task Id: ' + taskId)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Action Type: ' + action)));
     }
 
 }
