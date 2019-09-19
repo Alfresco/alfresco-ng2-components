@@ -158,13 +158,18 @@ export class TasksCloudDemoPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.addActionTitle);
     }
 
-    async addAction(text: string, disable: boolean): Promise<void> {
+    async addAction(text: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.keyInputField, text);
         await BrowserActions.clearSendKeys(this.titleInputField, text);
         await BrowserActions.clearSendKeys(this.iconInputField, text);
-        if (disable) {
-            await BrowserActions.click(this.disableCheckbox);
-        }
+        await BrowserActions.click(this.addActionButton);
+    }
+
+    async addDisabledAction(text: string): Promise<void> {
+        await BrowserActions.clearSendKeys(this.keyInputField, text);
+        await BrowserActions.clearSendKeys(this.titleInputField, text);
+        await BrowserActions.clearSendKeys(this.iconInputField, text);
+        await BrowserActions.click(this.disableCheckbox);
         await BrowserActions.click(this.addActionButton);
     }
 

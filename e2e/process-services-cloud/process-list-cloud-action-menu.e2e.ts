@@ -86,11 +86,11 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableActionMenu();
             await tasksCloudDemoPage.enableContextMenu();
             await tasksCloudDemoPage.addActionIsDisplayed();
-            await tasksCloudDemoPage.addAction('edit', false);
+            await tasksCloudDemoPage.addAction('edit');
             await tasksCloudDemoPage.actionAdded('edit');
-            await tasksCloudDemoPage.addAction('delete', false);
+            await tasksCloudDemoPage.addAction('delete');
             await tasksCloudDemoPage.actionAdded('delete');
-            await tasksCloudDemoPage.addAction('disabledaction', true);
+            await tasksCloudDemoPage.addDisabledAction('disabledaction');
             await tasksCloudDemoPage.actionAdded('disabledaction');
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.clickOnProcessFilters();
