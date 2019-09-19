@@ -36,7 +36,7 @@ export class FormRenderingService extends DynamicComponentMapper {
         'amount': DynamicComponentResolver.fromType(widgets.AmountWidgetComponent),
         'radio-buttons': DynamicComponentResolver.fromType(widgets.RadioButtonsWidgetComponent),
         'hyperlink': DynamicComponentResolver.fromType(widgets.HyperlinkWidgetComponent),
-        'readonly-text': DynamicComponentResolver.fromType(widgets.DisplayTextWidgetComponentComponent),
+        'readonly-text': DynamicComponentResolver.fromType(widgets.DisplayTextWidgetComponent),
         'json': DynamicComponentResolver.fromType(widgets.JsonWidgetComponent),
         'readonly': DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
         'typeahead': DynamicComponentResolver.fromType(widgets.TypeaheadWidgetComponent),

@@ -22,7 +22,7 @@ import { UnknownWidgetComponent } from './unknown/unknown.widget';
 import { AmountWidgetComponent } from './amount/amount.widget';
 import { CheckboxWidgetComponent } from './checkbox/checkbox.widget';
 import { DateWidgetComponent } from './date/date.widget';
-import { DisplayTextWidgetComponentComponent } from './display-text/display-text.widget';
+import { DisplayTextWidgetComponent } from './display-text/display-text.widget';
 import { DocumentWidgetComponent } from './document/document.widget';
 import { DropdownWidgetComponent } from './dropdown/dropdown.widget';
 import { DynamicTableWidgetComponent } from './dynamic-table/dynamic-table.widget';
@@ -97,7 +97,7 @@ export const WIDGET_DIRECTIVES: any[] = [
     DropdownWidgetComponent,
     HyperlinkWidgetComponent,
     RadioButtonsWidgetComponent,
-    DisplayTextWidgetComponentComponent,
+    DisplayTextWidgetComponent,
     UploadWidgetComponent,
     TypeaheadWidgetComponent,
     FunctionalGroupWidgetComponent,

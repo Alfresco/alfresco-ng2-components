@@ -28,7 +28,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class DisplayTextWidgetComponentComponent extends WidgetComponent {
+export class DisplayTextWidgetComponent extends WidgetComponent {
 
     constructor(public formService: FormService) {
          super(formService);

@@ -21,10 +21,10 @@ import {
     FormFieldTypes,
     UnknownWidgetComponent,
     UploadWidgetComponent,
-    TextWidgetComponent
+    TextWidgetComponent,
+    JsonWidgetComponent
 } from './../components/widgets/index';
 import { FormRenderingService } from './form-rendering.service';
-import { DisplayTextWidgetComponentComponent } from '../components/widgets';
 
 describe('FormRenderingService', () => {
 
@@ -126,7 +126,7 @@ describe('FormRenderingService', () => {
     it('should resolve Display Text Widget for JSON field type', () => {
         const resolver = service.getComponentTypeResolver('json');
         const type = resolver(null);
-        expect(type).toBe(DisplayTextWidgetComponentComponent);
+        expect(type).toBe(JsonWidgetComponent);
     });
 
 });
