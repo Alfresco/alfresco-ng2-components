@@ -180,17 +180,6 @@ describe('Datatable component', () => {
             await expect(await dataTablePage.getClipboardInputText()).toEqual('1');
         });
 
-        // tslint:disable-next-line: ban
-        xit('[C307101] A column value of type json and with copyContent set to true is copied when clicking on it', async () => {
-            const jsonValue = `{   "id": 4 }`;
-            await copyContentDataTablePage.mouseOverJsonColumn(2);
-            await expect(await copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
-            await copyContentDataTablePage.clickOnJsonColumn(2);
-            await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
-            await copyContentDataTablePage.pasteClipboard();
-            await expect(await copyContentDataTablePage.getClipboardInputText()).toContain(jsonValue);
-        });
-
         afterAll(async () => {
             await navigationBarPage.clickHomeButton();
         });
