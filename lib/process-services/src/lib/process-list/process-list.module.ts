@@ -42,7 +42,7 @@ import { FormModule } from '../form/form.module';
         FlexLayoutModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule.forChild(),
+        CoreModule,
         TaskListModule,
         PeopleModule,
         ContentWidgetModule,

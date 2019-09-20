@@ -11,14 +11,14 @@ Represents a UI field in a form.
 
 ## Basic Usage
 
-All form field editors (aka widgets) on a [`Form`](../../../lib/process-services/task-list/models/form.model.ts) are rendered by means of a [`FormFieldComponent`](../../core/components/form-field.component.md)
+All form field editors (aka widgets) on a [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) are rendered by means of a [`FormFieldComponent`](../../core/components/form-field.component.md)
 that takes an instance of a [`FormFieldModel`](../../core/models/form-field.model.md):
 
 ```html
 <adf-form-field [field]="field"></adf-form-field>
 ```
 
-This component depends on the [`FormRenderingService`](../../core/services/form-rendering.service.md) to map the [`FormFieldModel`](../../core/models/form-field.model.md) to a [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Field UI component
+This component depends on the [`FormRenderingService`](../../core/services/form-rendering.service.md) to map the [`FormFieldModel`](../../core/models/form-field.model.md) to a [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Field UI component
 based on the field type or the metadata information.
 
 ## Class members
@@ -38,7 +38,7 @@ uses `<adf-form-field>` components to render the form fields.
 
 Forms defined in APS have the following default mappings for the form fields:
 
-| _APS [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Designer_ Widget | Field Type | Component Type |
+| _APS [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Designer_ Widget | Field Type | Component Type |
 | -------------------------------------------------------------------------------------------- | ---------- | -------------- |
 | Text | text | [`TextWidgetComponent`](../../../lib/core/form/components/widgets/text/text.widget.ts) |
 | Multi-line text | multi-line-text | [`MultilineTextWidgetComponentComponent`](../../../lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts) |

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# [Tasklist Service](../../../lib/process-services/task-list/services/tasklist.service.ts "Defined in tasklist.service.ts")
+# [Tasklist Service](../../../lib/process-services/src/lib/task-list/services/tasklist.service.ts "Defined in tasklist.service.ts")
 
 Manages Task Instances.
 
@@ -13,45 +13,45 @@ Manages Task Instances.
 
 ### Methods
 
--   **addTask**(task: [`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
+-   **addTask**(task: [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Adds a subtask (ie, a checklist task) to a parent task.
-    -   _task:_ [`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)  - The task to add
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - The subtask that was added
--   **assignTask**(taskId: `string`, requestNode: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
+    -   _task:_ [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)  - The task to add
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - The subtask that was added
+-   **assignTask**(taskId: `string`, requestNode: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Assigns a task to a user or group.
     -   _taskId:_ `string`  - The task to assign
     -   _requestNode:_ `any`  - User or group to assign the task to
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - Details of the assigned task
--   **assignTaskByUserId**(taskId: `string`, userId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Details of the assigned task
+-   **assignTaskByUserId**(taskId: `string`, userId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Assigns a task to a user.
     -   _taskId:_ `string`  - ID of the task to assign
     -   _userId:_ `string`  - ID of the user to assign the task to
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - Details of the assigned task
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Details of the assigned task
 -   **attachFormToATask**(taskId: `string`, formId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Attaches a form to a task.
     -   _taskId:_ `string`  - ID of the target task
     -   _formId:_ `number`  - ID of the form to add
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null response notifying when the operation is complete
--   **claimTask**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
+-   **claimTask**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Claims a task for the current user.
     -   _taskId:_ `string`  - ID of the task to claim
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - Details of the claimed task
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Details of the claimed task
 -   **completeTask**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gives completed status to a task.
     -   _taskId:_ `string`  - ID of the target task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null response notifying when the operation is complete
--   **createNewTask**(task: [`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
+-   **createNewTask**(task: [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Creates a new standalone task.
-    -   _task:_ [`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)  - Details of the new task
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - Details of the newly created task
--   **deleteForm**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
+    -   _task:_ [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)  - Details of the new task
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Details of the newly created task
+-   **deleteForm**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Deletes a form from a task.
     -   _taskId:_ `string`  - Task id related to form
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - Null response notifying when the operation is complete
--   **deleteTask**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Null response notifying when the operation is complete
+-   **deleteTask**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Deletes a subtask (ie, a checklist task) from a parent task.
     -   _taskId:_ `string`  - The task to delete
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - Null response notifying when the operation is complete
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Null response notifying when the operation is complete
 -   **fetchTaskAuditJsonById**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Fetch the Task Audit information in JSON format
     -   _taskId:_ `string`  - ID of the target task
@@ -60,64 +60,64 @@ Manages Task Instances.
     Fetches the Task Audit information in PDF format.
     -   _taskId:_ `string`  - ID of the target task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary PDF data
--   **findAllTaskByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/task-list/models/task-list.model.ts)`>`<br/>
+-   **findAllTaskByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
     Gets all tasks matching a query and state value.
-    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)  - Query to search for tasks.
+    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/ask-list/models/filter.model.ts)  - Query to search for tasks.
     -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed".
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/task-list/models/task-list.model.ts)`>` - List of tasks
--   **findAllTasksWithoutState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/task-list/models/task-list.model.ts)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
+-   **findAllTasksWithoutState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
     Gets all tasks matching the supplied query but ignoring the task state.
-    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)  - Query to search for tasks
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/task-list/models/task-list.model.ts)`>` - List of tasks
--   **findTasksByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/task-list/models/task-list.model.ts)`>`<br/>
+    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
+-   **findTasksByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
     Gets tasks matching a query and state value.
-    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)  - Query to search for tasks
+    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
     -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed".
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/task-list/models/task-list.model.ts)`>` - List of tasks
--   **getFilterForTaskById**(taskId: `string`, filterList: [`FilterRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
+-   **getFilterForTaskById**(taskId: `string`, filterList: [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>`<br/>
     Gets all the filters in the list that belong to a task.
     -   _taskId:_ `string`  - ID of the target task
-    -   _filterList:_ [`FilterRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)`[]`  - List of filters to search through
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)`>` - Filters belonging to the task
--   **getFormList**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Form`](../../../lib/process-services/task-list/models/form.model.ts)`[]>`<br/>
+    -   _filterList:_ [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`[]`  - List of filters to search through
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` - Filters belonging to the task
+-   **getFormList**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts)`[]>`<br/>
     Gets all available reusable forms.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Form`](../../../lib/process-services/task-list/models/form.model.ts)`[]>` - Array of form details
--   **getTaskChecklist**(id: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`[]>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts)`[]>` - Array of form details
+-   **getTaskChecklist**(id: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`[]>`<br/>
     Gets the checklist for a task.
     -   _id:_ `string`  - ID of the target task
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`[]>` - Array of checklist task details
--   **getTaskDetails**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`[]>` - Array of checklist task details
+-   **getTaskDetails**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Gets details for a task.
     -   _taskId:_ `string`  - ID of the target task.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - Task details
--   **getTasks**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/task-list/models/task-list.model.ts)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Task details
+-   **getTasks**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
     Gets all the tasks matching the supplied query.
-    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)  - Query to search for tasks
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/task-list/models/task-list.model.ts)`>` - List of tasks
--   **getTotalTasks**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
+-   **getTotalTasks**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets the total number of the tasks found by a query.
-    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)  - Query to search for tasks
+    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Number of tasks
--   **isTaskRelatedToFilter**(taskId: `string`, filterModel: [`FilterRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)`>`<br/>
+-   **isTaskRelatedToFilter**(taskId: `string`, filterModel: [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>`<br/>
     Checks if a taskId is filtered with the given filter.
     -   _taskId:_ `string`  - ID of the target task
-    -   _filterModel:_ [`FilterRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)  - The filter you want to check
+    -   _filterModel:_ [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - The filter you want to check
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)`>` - The filter if it is related or null otherwise
--   **unclaimTask**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
+-   **unclaimTask**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Un-claims a task for the current user.
     -   _taskId:_ `string`  - ID of the task to unclaim
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - Null response notifying when the operation is complete
--   **updateTask**(taskId: `any`, updated: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Null response notifying when the operation is complete
+-   **updateTask**(taskId: `any`, updated: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Updates the details (name, description, due date) for a task.
     -   _taskId:_ `any`  - ID of the task to update
     -   _updated:_ `any`  - Data to update the task (as a [`TaskUpdateRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/TaskUpdateRepresentation.md) instance).
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - Updated task details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Updated task details
 
 ## Details
 
 ### Task details
 
-Several of the methods return one or more [`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts) instances corresponding
+Several of the methods return one or more [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts) instances corresponding
 to tasks or subtasks matched by a query of some kind. For example, `getTaskDetails`
 could be used as shown below:
 
@@ -130,7 +130,7 @@ this.tasklistService.getTaskDetails(taskInstanceId).subscribe( (taskInstance: Ta
 });
 ```
 
-The resulting [`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts) object contains information like the following:
+The resulting [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts) object contains information like the following:
 
         adhocTaskCanBeReassigned: false
         assignee: UserProcessModel {pictureId: null, id: 1, email: "admin@app.activiti.com", firstName: null, lastName: "Administrator"}
@@ -166,7 +166,7 @@ The resulting [`TaskDetailsModel`](../../../lib/process-services/task-list/model
 
 ### Queries
 
-Some of the methods run a search query contained in a [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts) and
+Some of the methods run a search query contained in a [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) and
 return the matched tasks. Below is an example of how you might run a query using `getTasks`:
 
 ```ts
@@ -205,8 +205,8 @@ The `assignment` property filters tasks based on how they are assigned (or not a
 Use `assignee` if you are interested in tasks that are assigned to a user. If you want to see 
 pooled tasks (i.e. tasks that needs to be claimed by a user), then use `candidate`.
 
-A successful query returns a [`TaskListModel`](../../../lib/process-services/task-list/models/task-list.model.ts) with the `data` property set to an array of
-[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts):
+A successful query returns a [`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts) with the `data` property set to an array of
+[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts):
 
     data:
         0: {id: "75010", name: "Approve Invoice  - Invoice-10202.pdf", description: null, category: null, assignee: {…}, …}

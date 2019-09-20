@@ -32,7 +32,7 @@ import { FormModule } from './form/form.module';
 
 @NgModule({
     imports: [
-        CoreModule.forChild(),
+        CoreModule,
         CommonModule,
         ProcessCommentsModule,
         FormsModule,
@@ -94,7 +94,7 @@ export class ProcessModule {
 
 @NgModule({
     imports: [
-        CoreModule.forChild(),
+        CoreModule,
         CommonModule,
         ProcessCommentsModule,
         FormsModule,

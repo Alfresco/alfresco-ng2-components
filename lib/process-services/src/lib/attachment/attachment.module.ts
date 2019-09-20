@@ -26,7 +26,7 @@ import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
-        CoreModule.forChild(),
+        CoreModule,
         MaterialModule
     ],
     declarations: [

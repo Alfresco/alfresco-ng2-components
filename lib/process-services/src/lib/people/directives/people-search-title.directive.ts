@@ -15,24 +15,10 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { CoreModule } from '@alfresco/adf-core';
-import { FormComponent } from './form.component';
-import { StartFormComponent } from './start-form.component';
+import { Directive } from '@angular/core';
 
-@NgModule({
-    imports: [
-        CoreModule.forChild(),
-        MaterialModule
-    ],
-    declarations: [
-        FormComponent,
-        StartFormComponent
-    ],
-    exports: [
-        FormComponent,
-        StartFormComponent
-    ]
-})
-export class FormModule {}
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
+@Directive({ selector: '[adf-people-search-title]' })
+export class PeopleSearchTitleDirective { }

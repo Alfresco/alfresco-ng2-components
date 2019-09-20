@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-16
 ---
 
-# [Task Filters component](../../../lib/process-services/task-list/components/task-filters.component.ts "Defined in task-filters.component.ts")
+# [Task Filters component](../../../lib/process-services/src/lib/task-list/components/task-filters.component.ts "Defined in task-filters.component.ts")
 
 Shows all available filters.
 
@@ -23,7 +23,7 @@ Shows all available filters.
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
 | appName | `string` |  | Display filters available to the current user for the application with the specified name. |
-| filterParam | [`FilterParamsModel`](../../../lib/process-services/task-list/models/filter.model.ts) |  | Parameters to use for the task filter. If there is no match then the default filter (the first one the list) is selected. |
+| filterParam | [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) |  | Parameters to use for the task filter. If there is no match then the default filter (the first one the list) is selected. |
 | showIcon | `boolean` |  | Toggles display of the filter's icon. |
 
 ### Events
@@ -31,7 +31,7 @@ Shows all available filters.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during loading. |
-| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)`>` | Emitted when a filter in the list is clicked. |
+| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when a filter in the list is clicked. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the list is loaded. |
 
 ## Details
@@ -46,7 +46,7 @@ Use the `filterParam` property to restrict the range of filters that are shown:
 </adf-task-filters>
 ```
 
-You can use properties from [`FilterParamsModel`](../../../lib/process-services/task-list/models/filter.model.ts)
+You can use properties from [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)
 as the value of `filterParam` as shown in the table below:
 
 | Name | Type | Description |

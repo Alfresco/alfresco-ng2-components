@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# [People Search component](../../../lib/process-services/people/components/people-search/people-search.component.ts "Defined in people-search.component.ts")
+# [People Search component](../../../lib/process-services/src/lib/people/components/people-search/people-search.component.ts "Defined in people-search.component.ts")
 
 Searches users/people.
 

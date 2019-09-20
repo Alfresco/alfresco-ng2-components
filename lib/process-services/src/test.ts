@@ -15,10 +15,24 @@
  * limitations under the License.
  */
 
-import { Directive } from '@angular/core';
+import 'core-js/es7/reflect';
+import 'zone.js/dist/zone';
+import 'zone.js/dist/zone-testing';
+import { getTestBed } from '@angular/core/testing';
+import {
+    BrowserDynamicTestingModule,
+    platformBrowserDynamicTesting
+} from '@angular/platform-browser-dynamic/testing';
 
-/**
- * Directive selectors without adf- prefix will be deprecated on 3.0.0
- */
-@Directive({ selector: 'adf-people-search-title, people-search-title' })
-export class PeopleSearchTitleDirective { }
+declare const require: any;
+
+// First, initialize the Angular testing environment.
+getTestBed().initTestEnvironment(
+    BrowserDynamicTestingModule,
+    platformBrowserDynamicTesting()
+);
+
+// Then we find all the tests.
+const context = require.context('./', true, /\.spec\.ts$/);
+// And load the modules.
+context.keys().map(context);

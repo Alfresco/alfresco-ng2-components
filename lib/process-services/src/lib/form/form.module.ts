@@ -18,32 +18,21 @@
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
-import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
-
-import { AttachFileWidgetComponent } from './attach-file-widget.component';
-import { AttachFolderWidgetComponent } from './attach-folder-widget.component';
-import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
+import { FormComponent } from './form.component';
+import { StartFormComponent } from './start-form.component';
 
 @NgModule({
     imports: [
-        CoreModule.forChild(),
-        ContentNodeSelectorModule,
+        CoreModule,
         MaterialModule
     ],
-    entryComponents: [
-        AttachFileWidgetComponent,
-        AttachFolderWidgetComponent,
-        AttachFileWidgetDialogComponent
-    ],
     declarations: [
-        AttachFileWidgetComponent,
-        AttachFolderWidgetComponent,
-        AttachFileWidgetDialogComponent
+        FormComponent,
+        StartFormComponent
     ],
     exports: [
-        AttachFileWidgetComponent,
-        AttachFolderWidgetComponent,
-        AttachFileWidgetDialogComponent
+        FormComponent,
+        StartFormComponent
     ]
 })
-export class ContentWidgetModule {}
+export class FormModule {}

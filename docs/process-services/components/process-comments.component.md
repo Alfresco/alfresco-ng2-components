@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [Process Instance Comments component](../../../lib/process-services/process-comments/process-comments.component.ts "Defined in process-comments.component.ts")
+# [Process Instance Comments component](../../../lib/process-services/src/lib/process-comments/process-comments.component.ts "Defined in process-comments.component.ts")
 
 Displays comments associated with a particular process instance and allows the user to add new comments.
 

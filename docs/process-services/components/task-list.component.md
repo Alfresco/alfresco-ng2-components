@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-02-08
 ---
 
-# [Task List component](../../../lib/process-services/task-list/components/task-list.component.ts "Defined in task-list.component.ts")
+# [Task List component](../../../lib/process-services/src/lib/task-list/components/task-list.component.ts "Defined in task-list.component.ts")
 
 Renders a list containing all the tasks matched by the parameters specified.
 
@@ -91,7 +91,7 @@ renders details of any chosen instance.
 ### Setting the column schema
 
 You can configure the list to show any of the properties of the
-[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)
+[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)
 class. The example below shows how to set up the column schema from HTML:
 
 ```html

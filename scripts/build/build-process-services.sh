@@ -13,10 +13,10 @@ node ./lib/config/bundle-process-services-scss.js || exit 1
 
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/process-services/bundles/assets/adf-process-services/i18n
-cp -R ./lib/process-services/i18n/* ./lib/dist/process-services/bundles/assets/adf-process-services/i18n
+cp -R ./lib/process-services/src/lib/i18n/* ./lib/dist/process-services/bundles/assets/adf-process-services/i18n
 
 echo "====== Copy assets ======"
-cp -R ./lib/process-services/assets/* ./lib/dist/process-services/bundles/assets
+cp -R ./lib/process-services/src/lib/assets/* ./lib/dist/process-services/bundles/assets
 
 echo "====== Move to node_modules ======"
 rm -rf ./node_modules/@alfresco/adf-process-services/ && \

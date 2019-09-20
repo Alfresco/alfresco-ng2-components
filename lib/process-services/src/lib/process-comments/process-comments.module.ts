@@ -29,7 +29,7 @@ import { ProcessCommentsComponent } from './process-comments.component';
         ReactiveFormsModule,
         MaterialModule,
         CommonModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [
         ProcessCommentsComponent

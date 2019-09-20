@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Create Task Attachment Component](../../../lib/process-services/attachment/create-task-attachment.component.ts "Defined in create-task-attachment.component.ts")
+# [Create Task Attachment Component](../../../lib/process-services/src/lib/attachment/create-task-attachment.component.ts "Defined in create-task-attachment.component.ts")
 
 Displays an Upload Component (Drag and Click) to upload the attachment to a specified task.
 

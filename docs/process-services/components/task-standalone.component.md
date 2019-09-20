@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [Task Standalone component](../../../lib/process-services/task-list/components/task-standalone.component.ts "Defined in task-standalone.component.ts")
+# [Task Standalone component](../../../lib/process-services/src/lib/task-list/components/task-standalone.component.ts "Defined in task-standalone.component.ts")
 
 This component can be used when the task doesn't belong to any processes.
 
