@@ -69,9 +69,6 @@ export class CloudSettingsComponent implements OnInit, OnDestroy {
     setCurrentSettings(settings) {
         if (settings) {
             this.multiselect = settings.multiselect;
-            this.actionMenu = this.actionMenu;
-            this.contextMenu = this.contextMenu;
-            this.actions = this.actions;
             this.testingMode = settings.testingMode;
             this.selectionMode = settings.selectionMode;
             this.taskDetailsRedirection = settings.taskDetailsRedirection;

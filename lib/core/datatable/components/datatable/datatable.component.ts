@@ -573,7 +573,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             this.rowMenuCache[id] = event.value.actions;
         }
 
-        return this.rowMenuCache[id];
+        return this.rowMenuCache[id].filter((action) => action.visible);
     }
 
     onExecuteRowAction(row: DataRow, action: any) {
