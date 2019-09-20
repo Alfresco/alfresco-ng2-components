@@ -25,7 +25,6 @@
               "demo-shell/src/assets",
               "demo-shell/src/favicon-96x96.png",
               "demo-shell/src/app.config.json",
-              "demo-shell/src/versions.json",
               {
                 "glob": "**/*",
                 "input": "demo-shell/resources",
@@ -166,7 +165,6 @@
               "demo-shell/src/assets",
               "demo-shell/src/favicon-96x96.png",
               "demo-shell/src/app.config.json",
-              "demo-shell/src/versions.json",
               {
                 "glob": "**/*",
                 "input": "demo-shell/resources",
@@ -255,7 +253,6 @@
             "assets": [
               "demo-shell/src/assets",
               "demo-shell/src/app.config.json",
-              "demo-shell/src/versions.json",
               {
                 "glob": "**/*",
                 "input": "demo-shell/src/assets",
@@ -263,11 +260,6 @@
               },
               {
                 "glob": "app.config.json",
-                "input": "demo-shell/src",
-                "output": "/"
-              },
-              {
-                "glob": "versions.json",
                 "input": "demo-shell/src",
                 "output": "/"
               },
@@ -430,7 +422,6 @@
             "assets": [
               "demo-shell/src/assets",
               "demo-shell/src/app.config.json",
-              "demo-shell/src/versions.json",
               {
                 "glob": "**/*",
                 "input": "demo-shell/src/assets",
@@ -438,11 +429,6 @@
               },
               {
                 "glob": "app.config.json",
-                "input": "demo-shell/src",
-                "output": "/"
-              },
-              {
-                "glob": "versions.json",
                 "input": "demo-shell/src",
                 "output": "/"
               },
