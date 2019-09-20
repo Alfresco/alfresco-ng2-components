@@ -72,12 +72,10 @@ describe('JsonCellComponent', () => {
         });
     });
 
-    it('should render json object inside cell', () => {
+    it('should render json button inside cell', () => {
         fixture.detectChanges();
-        const spanElement: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable-cell-value');
-        const unFormatedContent: string = spanElement.textContent.replace(/\n/g, '').replace(/\s/g, '');
-        const rowDataStringify: string = JSON.stringify(rowData.entity).replace(/\s/g, '');
-        expect(unFormatedContent).toBe(rowDataStringify);
+        const button: HTMLElement = fixture.debugElement.nativeElement.querySelector('.mat-button');
+        expect(button).toBeDefined();
     });
 
     it('should not setup cell when has no data', () => {

@@ -51,7 +51,17 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | sortable | `boolean` | true | Toggles ability to sort by this column, for example by clicking the column header. |
 | srTitle | `string` |  | Title to be used for screen readers. |
 | title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
-| type | `string` | "text" | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize', 'location', and 'json'. |
+| type | `string` | "text" | Value type for the column. |
+
+Supported `type` values:
+
+- text
+- image
+- date
+- icon
+- fileSize
+- location
+- json (v3.4.0+)
 
 ## Details
 

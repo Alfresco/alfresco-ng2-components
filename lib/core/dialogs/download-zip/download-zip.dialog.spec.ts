@@ -19,9 +19,9 @@ import { TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
-import { setupTestBed } from '../testing/setupTestBed';
-import { CoreTestingModule } from '../testing/core.testing.module';
-import { DownloadZipService } from '../services/download-zip.service';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
+import { DownloadZipService } from '../../services/download-zip.service';
 import { Observable } from 'rxjs/index';
 
 describe('DownloadZipDialogComponent', () => {

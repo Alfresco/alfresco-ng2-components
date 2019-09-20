@@ -17,27 +17,29 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { MaterialModule } from '../material.module';
-import { DownloadZipDialogComponent } from './download-zip/download-zip.dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { PipeModule } from '../pipes/pipe.module';
+import { EditJsonDialogComponent } from './edit-json.dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
         TranslateModule.forChild(),
-        PipeModule
+        MatDialogModule,
+        MatButtonModule
     ],
     declarations: [
-        DownloadZipDialogComponent
+        EditJsonDialogComponent
     ],
     exports: [
-        DownloadZipDialogComponent
+        EditJsonDialogComponent
     ],
     entryComponents: [
-        DownloadZipDialogComponent
+        EditJsonDialogComponent
     ]
 })
-export class DialogModule {}
+export class EditJsonDialogModule {}

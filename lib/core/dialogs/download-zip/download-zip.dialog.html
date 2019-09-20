@@ -2,9 +2,8 @@
 <div mat-dialog-content>
     <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
 </div>
-<div mat-dialog-actions>
-    <span class="adf-spacer"></span>
+<mat-dialog-actions align="end">
     <button mat-button color="primary" id="cancel-button" (click)="cancelDownload()">
         {{ 'CORE.DIALOG.DOWNLOAD_ZIP.ACTIONS.CANCEL' | translate }}
     </button>
-</div>
+</mat-dialog-actions>
