@@ -32,7 +32,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import {
-    fakeFormJson, fakeTaskProcessVariableModels,
+    fakeFormJson, fakeTaskProcessVariableModels, fakeVisibilityFormJson,
     formTest, formValues, complexVisibilityJsonVisible,
     nextConditionForm, complexVisibilityJsonNotVisible,
     headerVisibilityCond } from 'core/mock/form/widget-visibility-cloud.service.mock';
@@ -363,6 +363,7 @@ describe('WidgetVisibilityCloudService', () => {
     describe('should return the value of the field', () => {
         let visibilityObjTest: WidgetVisibilityModel;
         let fakeFormWithField = new FormModel(fakeFormJson);
+        const fakeFormWithVisibility = new FormModel(fakeVisibilityFormJson);
         const jsonFieldFake = {
             id: 'FAKE_FORM_FIELD_ID',
             value: 'FAKE_FORM_FIELD_VALUE',
@@ -550,6 +551,20 @@ describe('WidgetVisibilityCloudService', () => {
             const isVisible = service.evaluateVisibility(formTest, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
+        });
+
+        it('should set visibility to false if the left form field has an invalid value', () => {
+            visibilityObjTest.leftValue = 'NUMBER_FIELD';
+            visibilityObjTest.operator = '<';
+            visibilityObjTest.leftType = 'field';
+            visibilityObjTest.rightType = 'value';
+            visibilityObjTest.rightValue = '60';
+            let isVisible = service.isFieldVisible(fakeFormWithVisibility, visibilityObjTest);
+            expect(isVisible).toBeTruthy();
+
+            fakeFormWithVisibility.getFieldById('NUMBER_FIELD').value = '59.5';
+            isVisible = service.isFieldVisible(fakeFormWithVisibility, visibilityObjTest);
+            expect(isVisible).toBeFalsy();
         });
 
         it('should return always true when field does not have a visibility condition', () => {
