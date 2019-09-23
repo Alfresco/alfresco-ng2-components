@@ -344,7 +344,7 @@ describe('Start Task Form', () => {
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
             await taskFormCloudComponent.clickClaimButton();
 
-            const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
             await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
@@ -395,7 +395,7 @@ describe('Start Task Form', () => {
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
             await taskFormCloudComponent.clickClaimButton();
 
-            const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
             await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
             await expect(await breadCrumbDropdownPage.getTextOfCurrentFolder()).toBe(testUser.username);
@@ -419,7 +419,7 @@ describe('Start Task Form', () => {
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
             await taskFormCloudComponent.clickClaimButton();
 
-            const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
             await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
@@ -440,7 +440,7 @@ describe('Start Task Form', () => {
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
 
-            const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
             await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
@@ -461,7 +461,7 @@ describe('Start Task Form', () => {
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
 
-            const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
             await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
@@ -486,7 +486,7 @@ describe('Start Task Form', () => {
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
 
-            const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
             await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
@@ -511,7 +511,7 @@ describe('Start Task Form', () => {
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
             await taskFormCloudComponent.clickClaimButton();
 
-            const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
             await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
