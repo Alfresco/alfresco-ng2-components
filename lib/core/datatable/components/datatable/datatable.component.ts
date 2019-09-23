@@ -568,7 +568,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             const event = new DataCellEvent(row, col, []);
             this.showRowActionsMenu.emit(event);
             if (!this.rowMenuCacheEnabled) {
-                return event.value.actions;
+                return event.value.actions.filter((action) => action.visible);
             }
             this.rowMenuCache[id] = event.value.actions;
         }

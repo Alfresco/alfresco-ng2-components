@@ -73,6 +73,9 @@ export class CloudSettingsComponent implements OnInit, OnDestroy {
             this.selectionMode = settings.selectionMode;
             this.taskDetailsRedirection = settings.taskDetailsRedirection;
             this.processDetailsRedirection = settings.processDetailsRedirection;
+            this.actionMenu = settings.actionMenu;
+            this.contextMenu = settings.contextMenu;
+            this.actions = settings.actions;
         }
     }
 
