@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { IdentityUserModel } from './../userinfo/models/identity-user.model';
-import { IdentityRoleModel } from './../userinfo/models/identity-role.model';
-import { IdentityGroupModel } from './../userinfo/models/identity-group.model';
+import { IdentityUserModel } from '../models/identity-user.model';
+import { IdentityRoleModel } from '../models/identity-role.model';
+import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityJoinGroupRequestModel } from '../services/identity-user.service';
 
 export let  mockIdentityUser1 = new IdentityUserModel(

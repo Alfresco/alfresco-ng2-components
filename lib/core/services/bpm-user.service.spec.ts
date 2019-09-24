@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { BpmUserModel } from '../userinfo/models/bpm-user.model';
+import { BpmUserModel } from '../models/bpm-user.model';
 import { BpmUserService } from '../services/bpm-user.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';

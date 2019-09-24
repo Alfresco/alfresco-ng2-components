@@ -27,8 +27,8 @@ import {
     IdentityGroupModel,
     IdentityGroupQueryResponse,
     IdentityGroupCountModel
-} from '../userinfo/models/identity-group.model';
-import { IdentityRoleModel } from '../userinfo/models/identity-role.model';
+} from '../models/identity-group.model';
+import { IdentityRoleModel } from '../models/identity-role.model';
 
 @Injectable({
   providedIn: 'root'

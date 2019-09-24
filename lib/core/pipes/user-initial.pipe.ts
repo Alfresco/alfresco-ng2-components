@@ -18,7 +18,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserProcessModel } from '../models/user-process.model';
-import { EcmUserModel } from '../userinfo/models/ecm-user.model';
+import { EcmUserModel } from '../models/ecm-user.model';
 
 @Pipe({
     name: 'usernameInitials'
@@ -37,7 +37,7 @@ export class InitialUsernamePipe implements PipeTransform {
         return safeHtml;
     }
 
-    getInitialUserName(firstName: string, lastName: string, delimiter: string) {
+    getInitialUserName(firstName: string, lastName: string, delimiter: string): string {
         firstName = (firstName ? firstName[0] : '');
         lastName = (lastName ? lastName[0] : '');
         return firstName + delimiter + lastName;

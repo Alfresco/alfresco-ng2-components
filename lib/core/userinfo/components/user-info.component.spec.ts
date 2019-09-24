@@ -24,13 +24,13 @@ import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../../mock/e
 import { BpmUserService } from '../../services/bpm-user.service';
 import { EcmUserService } from '../../services/ecm-user.service';
 import { IdentityUserService } from '../../services/identity-user.service';
-import { BpmUserModel } from './../models/bpm-user.model';
-import { EcmUserModel } from './../models/ecm-user.model';
+import { BpmUserModel } from '../../models/bpm-user.model';
+import { EcmUserModel } from '../../models/ecm-user.model';
 import { UserInfoComponent } from './user-info.component';
 import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { IdentityUserModel } from '../models/identity-user.model';
+import { IdentityUserModel } from '../../models/identity-user.model';
 
 class FakeSanitizer extends DomSanitizer {
 

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { IdentityGroupModel, IdentityGroupCountModel } from '../userinfo/models/identity-group.model';
-import { IdentityRoleModel } from '../userinfo/models/identity-role.model';
+import { IdentityGroupModel, IdentityGroupCountModel } from '../models/identity-group.model';
+import { IdentityRoleModel } from '../models/identity-role.model';
 
 export let mockIdentityGroup1 = new IdentityGroupModel({
     id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []

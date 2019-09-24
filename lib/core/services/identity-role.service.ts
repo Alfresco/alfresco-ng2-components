@@ -20,7 +20,7 @@ import { HttpClient } from '@angular/common/http';
 import { throwError as observableThrowError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Pagination } from '@alfresco/js-api';
-import { IdentityRoleModel } from '../userinfo/models/identity-role.model';
+import { IdentityRoleModel } from '../models/identity-role.model';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LogService } from './log.service';
 

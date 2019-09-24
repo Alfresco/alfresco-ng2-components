@@ -17,9 +17,9 @@
 
 import { Component, Input, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-import { BpmUserModel } from './../models/bpm-user.model';
-import { EcmUserModel } from './../models/ecm-user.model';
-import { IdentityUserModel } from './../models/identity-user.model';
+import { BpmUserModel } from '../../models/bpm-user.model';
+import { EcmUserModel } from '../../models/ecm-user.model';
+import { IdentityUserModel } from '../../models/identity-user.model';
 import { BpmUserService } from '../../services/bpm-user.service';
 import { EcmUserService } from '../../services/ecm-user.service';
 import { IdentityUserService } from '../../services/identity-user.service';
