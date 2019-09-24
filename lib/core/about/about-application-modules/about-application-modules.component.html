@@ -3,9 +3,9 @@
     <small>{{ 'ABOUT.PACKAGES.DESCRIPTION' | translate }}</small>
     <adf-datatable [data]="dependencyEntries"></adf-datatable>
 
-    <div class="adf-extension-details-container" *ngIf="showExtensions && extensions$">
+    <div class="adf-extension-details-container" *ngIf="showExtensions && extensions.length">
         <h3>{{ 'ABOUT.EXTENSIONS.TITLE' | translate }}</h3>
-        <mat-table [dataSource]="extensions$ | async">
+        <mat-table [dataSource]="extensions">
             <!-- $id Column -->
             <ng-container matColumnDef="$id">
                 <mat-header-cell
