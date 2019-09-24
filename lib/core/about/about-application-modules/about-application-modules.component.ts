@@ -15,16 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ObjectDataTableAdapter } from '../../datatable/data/object-datatable-adapter';
 import { AppExtensionService, ExtensionRef } from '@alfresco/adf-extensions';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-about-application-modules',
     templateUrl: './about-application-modules.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class AboutApplicationModulesComponent implements OnInit {
+export class AboutApplicationModulesComponent implements OnInit, OnDestroy {
 
     extensionColumns: string[] = ['$id', '$name', '$version', '$vendor', '$license', '$runtime', '$description'];
 
@@ -41,8 +43,9 @@ export class AboutApplicationModulesComponent implements OnInit {
     /** Current version of the app running */
     @Input() dependencies: any;
 
-    constructor(appExtensions: AppExtensionService) {
-        appExtensions.references$.subscribe((extensions) => this.extensions = extensions);
+    private onDestroy$ = new Subject<boolean>();
+
+    constructor(private appExtensions: AppExtensionService) {
     }
 
     ngOnInit() {
@@ -62,5 +65,14 @@ export class AboutApplicationModulesComponent implements OnInit {
             { type: 'text', key: 'name', title: 'Name', sortable: true },
             { type: 'text', key: 'version', title: 'Version', sortable: true }
         ]);
+
+        this.appExtensions.references$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((extensions) => this.extensions = extensions);
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }
