@@ -224,7 +224,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                     this.logger.error(error);
                 },
                 () => {
-                    const previousFiles = this.field.value;
+                    const previousFiles = this.field.value ? this.field.value : [];
                     this.field.value = [ ...previousFiles, ...filesSaved ];
                     this.field.json.value = [ ...previousFiles, ...filesSaved ];
                     this.hasFile = true;
