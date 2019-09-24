@@ -38,13 +38,13 @@ import {
     mockJoinGroupRequest
 } from 'core/mock/identity-user.service.mock';
 import { IdentityUserService } from '../services/identity-user.service';
-import { setupTestBed } from '../../testing/setupTestBed';
-import { CoreModule } from '../../core.module';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { mockToken } from './../../mock/jwt-helper.service.spec';
-import { IdentityUserModel, IdentityUserQueryCloudRequestModel } from '../models/identity-user.model';
-import { IdentityRoleModel } from '../models/identity-role.model';
-import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { mockToken } from '../mock/jwt-helper.service.spec';
+import { IdentityUserModel, IdentityUserQueryCloudRequestModel } from '../userinfo/models/identity-user.model';
+import { IdentityRoleModel } from '../userinfo/models/identity-role.model';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 describe('IdentityUserService', () => {
 

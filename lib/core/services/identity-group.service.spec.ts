@@ -44,7 +44,7 @@ import {
     updateGroupMappingApi,
     deleteGroupMappingApi,
     mockIdentityGroupsCount
-} from '../../mock/identity-group.service.mock';
+} from '../mock/identity-group.service.mock';
 
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;

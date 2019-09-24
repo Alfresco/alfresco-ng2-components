@@ -25,13 +25,13 @@ import {
     IdentityUserQueryCloudRequestModel,
     IdentityUserPasswordModel,
     IdentityJoinGroupRequestModel
-} from '../models/identity-user.model';
-import { JwtHelperService } from '../../services/jwt-helper.service';
-import { LogService } from '../../services/log.service';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { IdentityRoleModel } from '../models/identity-role.model';
-import { IdentityGroupModel } from '../models/identity-group.model';
+} from '../userinfo/models/identity-user.model';
+import { JwtHelperService } from './jwt-helper.service';
+import { LogService } from './log.service';
+import { AppConfigService } from '../app-config/app-config.service';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { IdentityRoleModel } from '../userinfo/models/identity-role.model';
+import { IdentityGroupModel } from '../userinfo/models/identity-group.model';
 
 @Injectable({
     providedIn: 'root'

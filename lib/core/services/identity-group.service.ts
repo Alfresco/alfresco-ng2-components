@@ -18,17 +18,17 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, from, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { LogService } from '../../services/log.service';
+import { AppConfigService } from '../app-config/app-config.service';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { LogService } from './log.service';
 import {
     IdentityGroupSearchParam,
     IdentityGroupQueryCloudRequestModel,
     IdentityGroupModel,
     IdentityGroupQueryResponse,
     IdentityGroupCountModel
-} from '../models/identity-group.model';
-import { IdentityRoleModel } from '../models/identity-role.model';
+} from '../userinfo/models/identity-group.model';
+import { IdentityRoleModel } from '../userinfo/models/identity-role.model';
 
 @Injectable({
   providedIn: 'root'

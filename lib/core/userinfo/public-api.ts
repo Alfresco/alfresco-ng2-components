@@ -16,10 +16,6 @@
  */
 
 export * from './components/user-info.component';
-export * from './services/bpm-user.service';
-export * from './services/ecm-user.service';
-export * from './services/identity-user.service';
-export * from './services/identity-group.service';
 export * from './models/bpm-user.model';
 export * from './models/ecm-user.model';
 export * from './models/identity-group.model';

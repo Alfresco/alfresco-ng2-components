@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { CommentModel } from '../models/comment.model';
-import { EcmUserService } from '../userinfo/services/ecm-user.service';
+import { EcmUserService } from '../services/ecm-user.service';
 import { PeopleProcessService } from '../services/people-process.service';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 import { Subject } from 'rxjs';

@@ -18,10 +18,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { ContentService } from '../../services/content.service';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { LogService } from '../../services/log.service';
-import { EcmUserModel } from '../models/ecm-user.model';
+import { ContentService } from './content.service';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { LogService } from './log.service';
+import { EcmUserModel } from '../userinfo/models/ecm-user.model';
 import { PersonEntry } from '@alfresco/js-api';
 
 @Injectable({
