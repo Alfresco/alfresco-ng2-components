@@ -45,6 +45,10 @@ export class IdentityRoleService {
         this.identityHost = this.appConfig.get('identityHost');
     }
 
+    /**
+     * Ret all roles
+     * @returns List of roles
+     */
     getRoles(
         skipCount: number = 0,
         size: number = 5
@@ -57,7 +61,7 @@ export class IdentityRoleService {
         );
     }
 
-    preparePaginationWithRoles(
+    private preparePaginationWithRoles(
         roles: IdentityRoleModel[],
         skipCount: number = 0,
         size: number = 5
@@ -74,6 +78,11 @@ export class IdentityRoleService {
         };
     }
 
+    /**
+     * Add new role
+     * @param newRole Role model
+     * @returns Server result payload
+     */
     addRole(newRole: IdentityRoleModel): Observable<any> {
         if (newRole) {
             const request = newRole;
@@ -83,12 +92,23 @@ export class IdentityRoleService {
         }
     }
 
+    /**
+     * Delete existing role
+     * @param deletedRole Role model
+     * @returns Server result payload
+     */
     deleteRole(deletedRole: IdentityRoleModel): Observable<any> {
         return this.http
             .delete(`${this.identityHost}/roles-by-id/${deletedRole.id}`)
             .pipe(catchError(error => this.handleError(error)));
     }
 
+    /**
+     * Update existing role
+     * @param updatedRole Role model
+     * @param roleId Role id
+     * @returns Server result payload
+     */
     updateRole(
         updatedRole: IdentityRoleModel,
         roleId: string
