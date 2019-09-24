@@ -1,4 +1,4 @@
-<div class="adf-about-container">
+<div class="adf-about-container" *ngIf="bpmVersion || ecmVersion">
     <h3>{{ 'ABOUT.VERSIONS.TITLE' | translate }}</h3>
     <div *ngIf="bpmVersion">
         <mat-card>

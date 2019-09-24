@@ -17,7 +17,6 @@
 
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { ObjectDataTableAdapter } from '../../datatable/data/object-datatable-adapter';
-import { Observable } from 'rxjs';
 import { AppExtensionService, ExtensionRef } from '@alfresco/adf-extensions';
 
 @Component({
@@ -30,7 +29,7 @@ export class AboutApplicationModulesComponent implements OnInit {
     extensionColumns: string[] = ['$id', '$name', '$version', '$vendor', '$license', '$runtime', '$description'];
 
     dependencyEntries: ObjectDataTableAdapter;
-    extensions$: Observable<ExtensionRef[]>;
+    extensions: ExtensionRef[];
 
     /** Toggles showing/hiding of extensions block. */
     @Input()
@@ -43,7 +42,7 @@ export class AboutApplicationModulesComponent implements OnInit {
     @Input() dependencies: any;
 
     constructor(appExtensions: AppExtensionService) {
-        this.extensions$ = appExtensions.references$;
+        appExtensions.references$.subscribe((extensions) => this.extensions = extensions);
     }
 
     ngOnInit() {
