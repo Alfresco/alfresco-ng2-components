@@ -49,7 +49,11 @@ git checkout -b $BRANCH
 
 npm install @alfresco/adf-cli@alpha
 if $GNU; then
-    npx adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION
+    if [[ $NAME_REPO == 'Alfresco/generator-ng2-alfresco-app']] || [[$NAME_REPO == 'Alfresco/alfresco-modeler-app']]; then
+        ./scripts/update-version.sh -gnu -v $VERSION -vj $JS_VERSION
+    else
+        npx adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION
+    fi
 else
     npx adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION --skipGnu
 fi
