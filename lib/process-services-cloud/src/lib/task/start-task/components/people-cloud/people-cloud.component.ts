@@ -73,7 +73,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** FormControl to search the user */
     @Input()
-    searchUserCtrl: FormControl = new FormControl();
+    searchUserCtrl = new FormControl();
 
     /** Placeholder translation key
      */
@@ -82,15 +82,15 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when a user is selected. */
     @Output()
-    selectUser: EventEmitter<IdentityUserModel> = new EventEmitter<IdentityUserModel>();
+    selectUser = new EventEmitter<IdentityUserModel>();
 
     /** Emitted when a selected user is removed in multi selection mode. */
     @Output()
-    removeUser: EventEmitter<IdentityUserModel> = new EventEmitter<IdentityUserModel>();
+    removeUser = new EventEmitter<IdentityUserModel>();
 
     /** Emitted when an warning occurs. */
     @Output()
-    warning: EventEmitter<any> = new EventEmitter<any>();
+    warning = new EventEmitter<any>();
 
     @ViewChild('userInput')
     private userInput: ElementRef<HTMLInputElement>;
@@ -214,7 +214,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 this.logService.error(error);
             }
             const isUserValid: boolean = this.userExists(result);
-            return isUserValid ? new IdentityUserModel(result) : null;
+            return isUserValid ? result : null;
         });
         return await Promise.all(promiseBatch);
     }

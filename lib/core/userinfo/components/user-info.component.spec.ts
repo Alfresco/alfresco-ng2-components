@@ -30,7 +30,6 @@ import { UserInfoComponent } from './user-info.component';
 import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { IdentityUserModel } from '../../models/identity-user.model';
 
 class FakeSanitizer extends DomSanitizer {
 
@@ -556,7 +555,7 @@ describe('User info component', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                component.identityUser$.subscribe((response: IdentityUserModel) => {
+                component.identityUser$.subscribe(response => {
                     expect(response).toBeDefined();
                     expect(response.firstName).toBe('fake-identity-first-name');
                     expect(response.lastName).toBe('fake-identity-last-name');
@@ -583,8 +582,7 @@ describe('User info component', () => {
 
         it('should show last name if first name is null', async(() => {
             fixture.detectChanges();
-            const fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutFirstNameMock);
-            getCurrentUserInfoStub.and.returnValue(fakeIdentityUser);
+            getCurrentUserInfoStub.and.returnValue(identityUserWithOutFirstNameMock);
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -598,8 +596,7 @@ describe('User info component', () => {
         }));
 
         it('should not show first name if it is null string', async(() => {
-            const fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutFirstNameMock);
-            getCurrentUserInfoStub.and.returnValue(of(fakeIdentityUser));
+            getCurrentUserInfoStub.and.returnValue(of(identityUserWithOutFirstNameMock));
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -613,8 +610,7 @@ describe('User info component', () => {
         }));
 
         it('should not show last name if it is null string', async(() => {
-            const fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutLastNameMock);
-            getCurrentUserInfoStub.and.returnValue(of(fakeIdentityUser));
+            getCurrentUserInfoStub.and.returnValue(of(identityUserWithOutLastNameMock));
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {

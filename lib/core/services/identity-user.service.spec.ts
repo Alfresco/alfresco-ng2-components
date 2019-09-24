@@ -42,7 +42,6 @@ import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
-import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
@@ -97,7 +96,7 @@ describe('IdentityUserService', () => {
     it('should fetch users ', (done) => {
         spyOn(service, 'getUsers').and.returnValue(of(mockIdentityUsers));
         service.getUsers().subscribe(
-            (res: IdentityUserModel[]) => {
+            res => {
                 expect(res).toBeDefined();
                 expect(res[0].id).toEqual('mock-user-id-1');
                 expect(res[0].username).toEqual('userName1');
@@ -171,7 +170,7 @@ describe('IdentityUserService', () => {
         spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
 
         service.getUsersByRolesWithCurrentUser([mockRoles[0].name]).then(
-            (res: IdentityUserModel[]) => {
+            res => {
                 expect(res).toBeDefined();
                 expect(res[0].id).toEqual('mock-user-id-1');
                 expect(res[0].username).toEqual('userName1');
@@ -209,7 +208,7 @@ describe('IdentityUserService', () => {
         spyOn(service, 'getCurrentUserInfo').and.returnValue(mockIdentityUsers[0]);
 
         service.getUsersByRolesWithoutCurrentUser([mockRoles[0].name]).then(
-            (res: IdentityUserModel[]) => {
+            res => {
                 expect(res).toBeDefined();
                 expect(res[0].id).toEqual('mock-user-id-2');
                 expect(res[0].username).toEqual('userName2');

@@ -15,26 +15,13 @@
  * limitations under the License.
  */
 
-export class IdentityUserModel {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    username: string;
+export interface IdentityUserModel {
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    username?: string;
     createdTimestamp?: any;
     emailVerified?: boolean;
     enabled?: boolean;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.firstName = obj.firstName || null;
-            this.lastName = obj.lastName || null;
-            this.email = obj.email || null;
-            this.username = obj.username || null;
-            this.createdTimestamp = obj.createdTimestamp || null;
-            this.emailVerified = obj.emailVerified || null;
-            this.enabled = obj.enabled || null;
-        }
-    }
 }

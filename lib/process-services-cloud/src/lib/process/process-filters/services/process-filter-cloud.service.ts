@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
+import { IdentityUserService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
@@ -226,7 +226,7 @@ export class ProcessFilterCloudService {
      * @returns String of process instance filters preference key
      */
     private prepareKey(appName: string): string {
-        const user: IdentityUserModel = this.identityUserService.getCurrentUserInfo();
+        const user = this.identityUserService.getCurrentUserInfo();
         return `process-filters-${appName}-${user.username}`;
     }
 

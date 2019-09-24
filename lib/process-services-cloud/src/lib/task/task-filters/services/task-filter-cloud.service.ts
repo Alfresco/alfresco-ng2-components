@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
+import { IdentityUserService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
@@ -231,7 +231,7 @@ export class TaskFilterCloudService {
      * @returns Username string
      */
     getUsername(): string {
-        const user: IdentityUserModel = this.identityUserService.getCurrentUserInfo();
+        const user = this.identityUserService.getCurrentUserInfo();
         return user.username;
     }
 

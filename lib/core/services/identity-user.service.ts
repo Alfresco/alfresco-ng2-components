@@ -70,8 +70,7 @@ export class IdentityUserService {
         const givenName = this.jwtHelperService.getValueFromLocalAccessToken<string>(JwtHelperService.GIVEN_NAME);
         const email = this.jwtHelperService.getValueFromLocalAccessToken<string>(JwtHelperService.USER_EMAIL);
         const username = this.jwtHelperService.getValueFromLocalAccessToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
-        const user = { firstName: givenName, lastName: familyName, email: email, username: username };
-        return new IdentityUserModel(user);
+        return { firstName: givenName, lastName: familyName, email: email, username: username };
     }
 
     /**
