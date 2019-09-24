@@ -15,23 +15,40 @@
  * limitations under the License.
  */
 
+import { Pagination } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Observable, of, from, throwError } from 'rxjs';
+import { from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-
-import {
-    IdentityUserModel,
-    IdentityUserQueryResponse,
-    IdentityUserQueryCloudRequestModel,
-    IdentityUserPasswordModel,
-    IdentityJoinGroupRequestModel
-} from '../userinfo/models/identity-user.model';
+import { AppConfigService } from '../app-config/app-config.service';
+import { IdentityGroupModel } from '../userinfo/models/identity-group.model';
+import { IdentityRoleModel } from '../userinfo/models/identity-role.model';
+import { IdentityUserModel } from '../userinfo/models/identity-user.model';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { LogService } from './log.service';
-import { AppConfigService } from '../app-config/app-config.service';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { IdentityRoleModel } from '../userinfo/models/identity-role.model';
-import { IdentityGroupModel } from '../userinfo/models/identity-group.model';
+
+export interface IdentityUserQueryResponse {
+
+    entries: IdentityUserModel[];
+    pagination: Pagination;
+}
+
+export interface IdentityUserPasswordModel {
+    type?: string;
+    value?: string;
+    temporary?: boolean;
+}
+
+export interface IdentityUserQueryCloudRequestModel {
+    first: number;
+    max: number;
+}
+
+export interface IdentityJoinGroupRequestModel {
+    realm: string;
+    userId: string;
+    groupId: string;
+}
 
 @Injectable({
     providedIn: 'root'
