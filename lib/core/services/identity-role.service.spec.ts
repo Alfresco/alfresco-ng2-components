@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
+import { setupTestBed } from '@alfresco/adf-core';
+import { HttpClientModule, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-
-import { IdentityRoleService, IdentityRoleResponseModel } from './identity-role.service';
-import { HttpResponse, HttpErrorResponse, HttpClientModule } from '@angular/common/http';
-import { setupTestBed } from '@alfresco/adf-core';
+import { IdentityRoleResponseModel, IdentityRoleService } from './identity-role.service';
 
 export let mockIdentityRole1 = {
     id: 'mock-id-1', name: 'Mock_Role_1', description: 'Mock desc1',  clientRole: true, composite: false
