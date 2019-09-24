@@ -11,9 +11,9 @@ Adds authentication with Content Services to a route within the app.
 
 ## Details
 
-The Auth Guard Bpm service implements an Angular
+The Auth Guard Ecm service implements an Angular
 [route guard](https://angular.io/guide/router#milestone-5-route-guards)
-to check the user is logged into Process Services. This is typically used with the
+to check the user is logged into Content Services. This is typically used with the
 `canActivate` guard check in the route definition:
 
 ```ts
@@ -22,7 +22,7 @@ const appRoutes: Routes = [
     {
         path: 'examplepath',
         component: ExampleComponent,
-        canActivate: [ AuthGuardBpm ]      // <- Requires authentication for this route.
+        canActivate: [ AuthGuardEcm ]      // <- Requires authentication for this route.
     },
     ...
 ]
