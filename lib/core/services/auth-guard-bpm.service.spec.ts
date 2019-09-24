@@ -103,6 +103,17 @@ describe('AuthGuardService BPM', () => {
         expect(authService.ssoImplicitLogin).toHaveBeenCalled();
     }));
 
+    it('should redirect url if NOT logged in and isOAuth but no silentLogin configured', async(() => {
+        spyOn(router, 'navigateByUrl').and.stub();
+        spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
+        spyOn(authService, 'isOauth').and.returnValue(true);
+        appConfigService.config.oauth2.silentLogin = undefined;
+        const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
+
+        expect(authGuard.canActivate(null, route)).toBeFalsy();
+        expect(router.navigateByUrl).toHaveBeenCalled();
+    }));
+
     it('should set redirect url', async(() => {
         spyOn(authService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
