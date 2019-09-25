@@ -4,17 +4,9 @@ Localization is the process of making something local in character or restrictin
 
 Dates are not written the same around the world. That is where localizing a date comes in handy. ADF lets you dynamically change the way dates are written in your app so that they can adapt to to a specific region.
 
-## Contents
-
--   [Setting up the configuration in your app](#setting-up-the-configuration-in-your-app)
--   [Adding language support](#adding-language-support)
--   [Using the localized date pipe](#using-the-localized-date-pipe)
--   [Using the time ago pipe](#using-the-time-ago-pipe)
--   [Using the decimal number pipe](#using-the-decimal-number-pipe)
-
 ## Setting up the configuration in your app
 
-You can overwrite the default values of this pipe by adding these properties to your ```app.config.json```:
+You can overwrite the default values of this pipe by adding these properties to your `app.config.json`:
 
 ```json
  "dateValues": {
@@ -30,8 +22,7 @@ You can overwrite the default values of this pipe by adding these properties to 
 | defaultDateTimeFormat | string | The format to apply to date-time values |
 | defaultLocale | string | The locale id to apply |
 
-
-This configuration overwrites the values in the localized date pipe as well as other components to have more consistency across your app. However, you can still overwrite these values any time by using the pipe in your code. 
+This configuration overwrites the values in the [localized date pipe](../core/pipes/localized-date.pipe.md) as well as other components to have more consistency across your app. However, you can still overwrite these values any time by using the pipe in your code. 
 
 ## Adding language support
 
@@ -81,6 +72,7 @@ Localizes the punctuation marks of a given number.
     {{ number | adfDecimalNumber }}
 
 <!-- {% endraw %} -->
+
 `Input:` 1999.12
 `Output (english locale):` 1,999.12
 `Output (italian locale):` 1.999,12

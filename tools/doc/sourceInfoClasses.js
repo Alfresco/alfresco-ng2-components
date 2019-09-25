@@ -91,7 +91,7 @@ var MethodSigInfo = /** @class */ (function () {
         this.name = sourceData.name;
         this.docText = sourceData.summary || '';
         this.docText = this.docText.replace(/[\n\r]+/g, ' ').trim();
-        if (!this.docText) {
+        if (!this.docText && this.name.indexOf('service') > 0) {
             this.errorMessages.push("Warning: method \"" + sourceData.name + "\" has no doc text.");
         }
         this.returnType = sourceData.syntax['return'].type || '';
@@ -101,7 +101,7 @@ var MethodSigInfo = /** @class */ (function () {
         if (this.returnDocText.toLowerCase() === 'nothing') {
             this.returnsSomething = false;
         }
-        if (this.returnsSomething && !this.returnDocText) {
+        if (this.returnsSomething && !this.returnDocText && this.name.indexOf('service') > 0) {
             this.errorMessages.push("Warning: Return value of method \"" + sourceData.name + "\" has no doc text.");
         }
         this.isDeprecated = false;
@@ -116,7 +116,7 @@ var MethodSigInfo = /** @class */ (function () {
         var paramStrings = [];
         if (sourceData.syntax.parameters) {
             sourceData.syntax.parameters.forEach(function (rawParam) {
-                if (!rawParam.description) {
+                if (rawParam.name && !rawParam.description && !rawParam.name.startWith('on')) {
                     _this.errorMessages.push("Warning: parameter \"" + rawParam.name + "\" of method \"" + sourceData.name + "\" has no doc text.");
                 }
                 var param = new ParamInfo(rawParam);

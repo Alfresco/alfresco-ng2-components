@@ -29,7 +29,7 @@ Allows a user to add "likes" to an item.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| changeVote | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the "vote" gets changed. |
+| changeVote | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the "vote" gets changed. |
 
 ## See also
 

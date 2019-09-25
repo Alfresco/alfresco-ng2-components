@@ -23,14 +23,14 @@ import { Observable, of } from 'rxjs';
 @Injectable()
 export class LocalPreferenceCloudService implements PreferenceCloudServiceInterface {
 
-  constructor(private storage: StorageService) { }
+    constructor(private storage: StorageService) {
+    }
 
     /**
      * Gets local preferences
-     * @param appName Name of the target app
      * @returns List of local preferences
      */
-    getPreferences(_: string, key: string): Observable<any> {
+    getPreferences(key: string): Observable<any> {
         if (key || key === '') {
             return of(this.prepareLocalPreferenceResponse(key));
         }
@@ -38,22 +38,20 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Gets local preference.
-     * @param appName Name of the target app
      * @param key Key of the target preference
      * @returns Observable of local preference
      */
-    getPreferenceByKey(_: string, key: string): Observable<any> {
+    getPreferenceByKey(key: string): Observable<any> {
         return of(JSON.parse(this.storage.getItem(key)) || []);
     }
 
     /**
      * Creates local preference.
-     * @param appName Name of the target app
      * @param key Key of the target preference
-     * @newPreference Details of new local preference
+     * @param newPreference Details of new local preference
      * @returns Observable of created local preferences
      */
-    createPreference(_: string, key: string, newPreference: any): Observable<any> {
+    createPreference(key: string, newPreference: any): Observable<any> {
         const storedFilters = JSON.parse(this.storage.getItem(key) || '[]');
         storedFilters.push(...newPreference);
         this.storage.setItem(key, JSON.stringify(storedFilters));
@@ -62,12 +60,11 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Updates local preference.
-     * @param appName Name of the target app
      * @param key Key of the target preference
      * @param updatedPreference Details of updated preference
      * @returns Observable of updated local preferences
      */
-    updatePreference(_: string, key: string, updatedPreference: any): Observable<any> {
+    updatePreference(key: string, updatedPreference: any): Observable<any> {
         if (key) {
             this.storage.setItem(key, JSON.stringify(updatedPreference));
             return of(updatedPreference);
@@ -76,7 +73,6 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Deletes local preference by given preference key.
-     * @param appName Name of the target app
      * @param key Key of the target preference
      * @param preferences Details of updated preferences
      * @returns Observable of preferences without deleted preference
@@ -88,7 +84,7 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
         }
     }
 
-    prepareLocalPreferenceResponse(key: string): any {
+    private prepareLocalPreferenceResponse(key: string): any {
         return {
             'list': {
                 'entries': [

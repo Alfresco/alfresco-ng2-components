@@ -29,7 +29,7 @@ Shows the content preview.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| contentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the content is clicked. |
+| contentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the content is clicked. |
 | contentLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the content has loaded. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 | thumbnailLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the thumbnail has loaded. |

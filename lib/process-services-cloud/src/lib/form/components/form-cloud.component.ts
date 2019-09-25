@@ -73,6 +73,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     data: TaskVariableCloud[];
 
+    /** FormFieldValidator allow to override the form field validators provided. */
     @Input()
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
 
@@ -92,6 +93,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Output()
     formDataRefreshed = new EventEmitter<FormModel>();
 
+    /** Emitted when form content is clicked. */
     @Output()
     formContentClicked = new EventEmitter<string>();
 

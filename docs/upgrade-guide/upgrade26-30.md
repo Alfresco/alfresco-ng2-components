@@ -252,7 +252,7 @@ The following classes have been moved from their original libraries to the Core
 library. You should modify your code to import these classes from
 `@alfresco/adf-core`.
 
--   [`DownloadZipDialogComponent`](../../lib/core/dialogs/download-zip.dialog.ts) (formerly Content Services)
+-   [`DownloadZipDialogComponent`](../../lib/core/dialogs/download-zip/download-zip.dialog.ts) (formerly Content Services)
 -   [`NodeDownloadDirective`](../core/directives/node-download.directive.md) (formerly Content Services)
 -   [`CommentsModule`](../../lib/core/comments/comments.module.ts) (formerly Process Services)
 -   [`CommentListComponent`](../core/components/comment-list.component.md) (formerly Process Services)

@@ -15,7 +15,7 @@ Manage Process Filters, which are pre-configured Process Instance queries.
 
 -   **addProcessFilter**(filter: [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>`<br/>
     Adds a filter.
-    -   _filter:_ [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/src/lib/process-list/models/filter-process.model.ts)  - The filter to add
+    -   _filter:_ [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)  - The filter to add
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>` - The filter just added
 -   **callApiProcessFilters**(appId?: `number`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ResultListDataRepresentationUserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/ResultListDataRepresentation%C2%ABUserProcessInstanceFilterRepresentation%C2%BB.md)`>`<br/>
     Calls `getUserProcessInstanceFilters` from the Alfresco JS API.

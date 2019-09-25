@@ -57,8 +57,8 @@ Below the most relevant features of this release.
 -   Process and [Task attachment list component](../process-services/components/task-attachment-list.component.md)
 -   Add [people Component](../process-services/components/people.component.md)
 -   Breadcrumb root path personalisation
--   [`Form`](../../lib/process-services/task-list/models/form.model.ts) events bus
--   [`Form`](../../lib/process-services/task-list/models/form.model.ts) render independent from APS
+-   [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) events bus
+-   [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) render independent from APS
 -   Application settings (server-side)
 -   Proxy settings and CORS
 -   Login restyling
@@ -255,7 +255,7 @@ for further details.
 
 ### 11. Form render independent from APS
 
-The 1.6.1 release lays a foundation for making a [`Form`](../../lib/process-services/task-list/models/form.model.ts) renderer independent from the backend and APS services to allow more granular control of how it works and where takes/stores its data.
+The 1.6.1 release lays a foundation for making a [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) renderer independent from the backend and APS services to allow more granular control of how it works and where takes/stores its data.
 
 #### Binding "form" definition
 
@@ -279,7 +279,7 @@ And the underlying component controller code can be as follows:
 
 #### Parsing form definitions
 
-The [`FormService`](../core/services/form.service.md) got a new API to parse form definitions from JSON into the [`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts) instances without using [`Form`](../../lib/process-services/task-list/models/form.model.ts) Component like it was previously.
+The [`FormService`](../core/services/form.service.md) got a new API to parse form definitions from JSON into the [`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts) instances without using [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) Component like it was previously.
 
     formService.parseForm(formDefinitionJSON)
 
@@ -374,7 +374,7 @@ Below you can find a detailed list of tickets addressed in the new release. For 
 -   \[[ADF-713](https://issues.alfresco.com/jira/browse/ADF-713)] - Process Attachment - Provide a way to attach a new content
 -   \[[ADF-793](https://issues.alfresco.com/jira/browse/ADF-793)] - Convert to PDF the document that the [renditions service](../core/services/renditions.service.md) provide
 -   \[[ADF-804](https://issues.alfresco.com/jira/browse/ADF-804)] - Add proxy configuration in demo shell
--   \[[ADF-843](https://issues.alfresco.com/jira/browse/ADF-843)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) events bus
+-   \[[ADF-843](https://issues.alfresco.com/jira/browse/ADF-843)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) events bus
 -   \[[ADF-845](https://issues.alfresco.com/jira/browse/ADF-845)] - Breadcrumb path personalisation
 -   \[[ADF-847](https://issues.alfresco.com/jira/browse/ADF-847)] - Use application settings file instead of local storage for server URLs
 

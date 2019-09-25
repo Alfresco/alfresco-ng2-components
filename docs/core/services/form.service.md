@@ -95,11 +95,11 @@ class MyComponent {
     -   `formValues` - [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Values
     -   `outcome` - (Optional) [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Outcome
 -   `getTaskForm(taskId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
-    Get [`Form`](../../../lib/process-services/task-list/models/form.model.ts) related to a taskId  
+    Get [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) related to a taskId  
     -   `taskId` - Task Id
 -   `getFormDefinitionById(formId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
-    Get [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Definition  
-    -   `formId` - [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Id
+    Get [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Definition  
+    -   `formId` - [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Id
 -   `getFormDefinitionByName(name: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Returns form definition with a given name.  
     -   `name` - The form name
@@ -137,7 +137,7 @@ class MyComponent {
     Gets a list of workflow users.  
     -   `filter` - Filter to select specific users
     -   `groupId` - (Optional) Group ID for the search
--   [`getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]>`](../../../lib/process-services-cloud/src/lib/group/models/group.model.ts)  
+-   [`getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]>`](../../../lib/core/form/components/widgets/core/group.model.ts)  
     Gets a list of groups in a workflow.  
     -   `filter` - Filter to select specific groups
     -   `groupId` - (Optional) Group ID for the search

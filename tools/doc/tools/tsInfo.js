@@ -143,10 +143,11 @@ function getMDMethodParams(methItem) {
             paramName = paramNameNode.text().item.value.replace(/:/, '');
         }
         else {
-            paramName = paramListItem.childNav
-                .paragraph().childNav
-                .strong().childNav
-                .text().item.value;
+            var item = paramListItem.childNav.paragraph().childNav
+                .strong().childNav.text();
+            if (paramName) {
+                paramName = item.value;
+            }
         }
         var paramDoc = paramListItem.childNav
             .paragraph().childNav

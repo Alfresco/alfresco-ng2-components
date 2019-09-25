@@ -17,11 +17,11 @@ versions of ADF.
 
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
-    -   [Form visibility](#form-field-visibility)
+    -   [Form field visibility](#form-field-visibility)
     -   [Start a process with a form](#start-a-process-with-a-form)
     -   [Multilingual support for forms](#multilingual-support-for-forms)
     -   [Form validation](#form-validation)
-    -   [Forms variables](#form-variables)
+    -   [Form variables](#form-variables)
     -   [REST source for dropdown menu on forms](#rest-source-for-dropdown-menu-on-forms)
     -   [Date format localization](#date-format-localization)
 -   [Localisation](#localisation)
@@ -42,7 +42,7 @@ This is the third minor release since of ADF since February 2019 when version 3 
 
 This release continues to provide additional support for [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti.
 
-The functionality and enhancements of this release are focused on forms. Form field visibility has been improved, form validation has been implemented and it is now possible to use form variables. Multilingual support for forms has been enhanced and dropdown menus reading from a REST source have been updated. From an end-user perspective, a process can now be started using a form when the start event contains a valid form. 
+The functionality and enhancements of this release are focused on forms. [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) field visibility has been improved, form validation has been implemented and it is now possible to use form variables. Multilingual support for forms has been enhanced and dropdown menus reading from a REST source have been updated. From an end-user perspective, a process can now be started using a form when the start event contains a valid form. 
 
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
 
@@ -58,29 +58,29 @@ The following are the most important features of this release:
 
 ### Form field visibility
 
-Form field visibility has been improved to respect the visibility conditions configured for each field in the Modelling Application.
+[`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) field visibility has been improved to respect the visibility conditions configured for each field in the Modelling Application.
 
 ### Start a process with a form
 
-The ```adf-cloud-start-process``` component now contains the functionality to start a process using a form. 
+The `adf-cloud-start-process` component now contains the functionality to start a process using a form. 
 
 It is possible start a process with a form and variables:
 
- ```html
- <adf-cloud-start-process 
-      [appId]="YOUR_APP_ID"
-      [variables]="{ 'my-key1' : 'myvalue', 'my-key2' : 'myvalue2'}">
- </adf-cloud-start-process>
- ```
+```html
+<adf-cloud-start-process 
+     [appId]="YOUR_APP_ID"
+     [variables]="{ 'my-key1' : 'myvalue', 'my-key2' : 'myvalue2'}">
+</adf-cloud-start-process>
+```
 
 It is also possible to start a process with a form and pass in the form values at the same time:
 
- ```html
- <adf-cloud-start-process 
-      [appId]="YOUR_APP_ID"
-      [values]="[{'name': 'firstName', 'value': 'MyName'}, {'name': 'lastName', 'value': 'MyLastName'}]">
- </adf-cloud-start-process>
- ```
+```html
+<adf-cloud-start-process 
+     [appId]="YOUR_APP_ID"
+     [values]="[{'name': 'firstName', 'value': 'MyName'}, {'name': 'lastName', 'value': 'MyLastName'}]">
+</adf-cloud-start-process>
+```
 
 ### Multilingual support for forms
 
@@ -106,17 +106,18 @@ and in your `it.json`:
     "LASTNAME": "Cognome"
   }
 }
-```                                                                                                             
+```
+
 Your app will now change the label of the form using the translations files.                   
 
 ### Form validation
 
-Form validation will now display whether a form is valid or invalid. 
+[`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) validation will now display whether a form is valid or invalid. 
 
 ### Form variables
 
-Form variables can now assigned to forms. When creating an application that contains a form, variables can be assigned and will correctly display as the appropriate values when the form is launched.
-                                                                         
+[`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) variables can now assigned to forms. When creating an application that contains a form, variables can be assigned and will correctly display as the appropriate values when the form is launched.
+
 ### REST source for dropdown menu on forms
 
 It is now possible to create a form that contains a dropdown widget that is configured to use a REST Service to populate its values.
@@ -148,7 +149,6 @@ Please refer to the [official documentation](http://docs.alfresco.com/) for furt
 ## Issues addressed
 
 The following is the list of JIRA issues that were closed for this release:
-
 
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-4618'>ADF-4618</a>] -         Update the tutorial on RTL languages support
@@ -459,7 +459,6 @@ The following is the list of JIRA issues that were closed for this release:
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-4613'>ADF-4613</a>] -         Fix tag-component
 </li>
 </ul>
-
 
 Please refer to the [Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have any questions about the release, please contact us using [Gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
 

@@ -39,7 +39,7 @@ uses `<adf-form-field>` components to render the form fields.
 Forms defined in APS have the following default mappings for the form fields:
 
 | _APS [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Designer_ Widget | Field Type | Component Type |
-| -------------------------------------------------------------------------------------------- | ---------- | -------------- |
+| ---------------------------------------------------------------------------------------------------- | ---------- | -------------- |
 | Text | text | [`TextWidgetComponent`](../../../lib/core/form/components/widgets/text/text.widget.ts) |
 | Multi-line text | multi-line-text | [`MultilineTextWidgetComponentComponent`](../../../lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts) |
 | Number | integer | [`NumberWidgetComponent`](../../../lib/core/form/components/widgets/number/number.widget.ts) |
@@ -58,4 +58,4 @@ Forms defined in APS have the following default mappings for the form fields:
 | Display value | readonly | [`TextWidgetComponent`](../../../lib/core/form/components/widgets/text/text.widget.ts) |
 | Display text | readonly-text | [`DisplayTextWidgetComponent`](../../../lib/core/form/components/widgets/display-text/display-text.widget.ts) |
 | N/A | container | [`ContainerWidgetComponent`](../../../lib/core/form/components/widgets/container/container.widget.ts) (layout component) |
-| N/A | N/A | [`UnknownWidgetComponent`](../../../lib/core/form/components/widgets/unknown/unknown.widget.ts) |
+| N/A | N/A | [`UnknownWidgetComponent`](../../../lib/core/form/components/widgets//.widget.ts) |

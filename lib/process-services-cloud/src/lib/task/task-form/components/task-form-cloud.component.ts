@@ -89,6 +89,7 @@ export class TaskFormCloudComponent implements OnChanges {
     @Output()
     error = new EventEmitter<any>();
 
+    /** Emitted when form content is clicked. */
     @Output()
     formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter();
 

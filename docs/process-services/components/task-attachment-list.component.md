@@ -61,9 +61,9 @@ A default "no content" template is displayed if you don't supply one to override
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| attachmentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment is double-clicked or a view option is selected from the context menu by the user from within the component. Returns a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) representing the clicked object. |
+| attachmentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the attachment is double-clicked or a view option is selected from the context menu by the user from within the component. Returns a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) representing the clicked object. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while fetching the attachments. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment list has fetched all the attachments. Returns a list of attachments. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the attachment list has fetched all the attachments. Returns a list of attachments. |
 
 ## Details
 

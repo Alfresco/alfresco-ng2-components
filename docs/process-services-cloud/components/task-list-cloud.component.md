@@ -51,11 +51,9 @@ when the task list is empty:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
 | appName | `string` | "" | The name of the application. |
 | assignee | `string` | "" | The assignee of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
-| actions | `boolean` | false | Toggles the data actions column. |
-| actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
-| contextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | createdDate | `string` | "" | Filter the tasks. Display only tasks created on the supplied date. |
 | dueDate | `string` | "" | Filter the tasks. Display only tasks with dueDate equal to the supplied date. |
 | id | `string` | "" | Filter the tasks. Display only tasks with id equal to the supplied value. |
@@ -70,6 +68,8 @@ when the task list is empty:
 | processDefinitionId | `string` | "" | Filter the tasks. Display only tasks with processDefinitionId equal to the supplied value. |
 | processInstanceId | `string` | "" | Filter the tasks. Display only tasks with processInstanceId equal to the supplied value. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use the Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showActions | `boolean` | false | Toggles the data actions column. |
+| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | sorting | [`TaskListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
 | standAlone | `boolean` | false | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. |
 | status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |
@@ -80,12 +80,12 @@ when the task list is empty:
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/datatable/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a task in the list is clicked |
 | rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task list is loaded |
-| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/datatable/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
 | showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
 | showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task list is loaded |
 
 ## Details
 
@@ -225,7 +225,7 @@ You can customize the styling of a column and also add features like tooltips an
 
 Emitted before the context menu is displayed for a row.
 
-Note that the TaskListCloudComponent itself does not populate the context menu with items.
+Note that the [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) itself does not populate the context menu with items.
 You can provide all necessary content via the handler.
 
 ```html
@@ -255,11 +255,12 @@ onShowRowContextMenu(event: DataCellEvent) {
     ]
 }
 ```
+
 ![](../../docassets/images/task-list-cloud-context-menu.png)
 
 This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
 
-The TaskListCloudComponent will automatically render the supplied menu items.
+The [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) will automatically render the supplied menu items.
 
 See the [ContextMenu](https://www.npmjs.com/package/ng2-alfresco-core)
 documentation for more details on the format and behavior of context actions.
@@ -278,7 +279,7 @@ value: {
 }
 ```
 
-Note that the TaskListCloudComponent itself does not populate the action menu with items.
+Note that the [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) itself does not populate the action menu with items.
 You can provide all necessary content via the handler.
 
 This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
@@ -288,7 +289,7 @@ This event is cancellable. You can use `event.preventDefault()` to prevent the d
 Emitted when the user executes a row action.
 
 This usually accompanies a `showRowActionsMenu` event.
-The TaskListCloudComponent itself does not execute actions but provides support for external
+The [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) itself does not execute actions but provides support for external
 integration. If actions are provided using the `showRowActionsMenu` event
 then `executeRowAction` will be automatically executed when the user clicks a
 corresponding menu item.
@@ -327,7 +328,7 @@ onExecuteRowAction(event: DataRowActionEvent) {
 You can use any payloads for row actions. The only requirement for the objects is that they
 must have a `title` property.
 
-When an action is selected in the dropdown menu, the TaskListCloudComponent invokes the `executeRowAction` event.
+When an action is selected in the dropdown menu, the [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) invokes the `executeRowAction` event.
 Use this to handle the response, inspect the action payload (and all custom properties defined
 earlier), and perform the corresponding actions.
 

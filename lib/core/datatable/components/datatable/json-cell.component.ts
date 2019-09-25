@@ -39,6 +39,7 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 })
 export class JsonCellComponent extends DataTableCellComponent implements OnInit {
 
+    /** Editable JSON. */
     @Input()
     editable: boolean = false;
 

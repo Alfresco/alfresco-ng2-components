@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-04-09
 ---
 
-# [Toggle Icon directive](../../../lib/content-services/upload/directives/toggle-icon.directive.ts 'Defined in toggle-icon.directive.ts')
+# [Toggle Icon directive](../../../lib/content-services/upload/directives/toggle-icon.directive.ts "Defined in toggle-icon.directive.ts")
 
 Toggle icon on mouse or keyboard event for a selectable element.
 
@@ -25,10 +25,3 @@ Toggle icon on mouse or keyboard event for a selectable element.
 ```
 
 ## Class members
-
-### Properties
-
-| Name      | Type      | Default value | Description                                     |
-| --------- | --------- | ------------- | ----------------------------------------------- |
-| isToggled | `boolean` | false         | Is element active by mouseenter or focus event? |
-| isFocused | `boolean` | false         | Is element focused by keyboard navigation?      |

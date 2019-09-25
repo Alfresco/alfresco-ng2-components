@@ -27,7 +27,7 @@ You can select one of the three following blueprints.
 
 **Process Services**
 
-This will generate an application for Alfresco Process Services. It mainly contains the following components: Login, App List, Task List, [`Form`](../../lib/process-services/task-list/models/form.model.ts) and Start Process.
+This will generate an application for Alfresco Process Services. It mainly contains the following components: Login, App List, Task List, [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) and Start Process.
 
 **Content Services**
 

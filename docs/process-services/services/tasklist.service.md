@@ -62,7 +62,7 @@ Manages Task Instances.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary PDF data
 -   **findAllTaskByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
     Gets all tasks matching a query and state value.
-    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/ask-list/models/filter.model.ts)  - Query to search for tasks.
+    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks.
     -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed".
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
 -   **findAllTasksWithoutState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
@@ -102,7 +102,7 @@ Manages Task Instances.
     Checks if a taskId is filtered with the given filter.
     -   _taskId:_ `string`  - ID of the target task
     -   _filterModel:_ [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - The filter you want to check
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)`>` - The filter if it is related or null otherwise
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` - The filter if it is related or null otherwise
 -   **unclaimTask**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Un-claims a task for the current user.
     -   _taskId:_ `string`  - ID of the task to unclaim

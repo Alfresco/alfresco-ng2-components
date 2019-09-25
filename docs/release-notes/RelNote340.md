@@ -17,10 +17,10 @@ versions of ADF.
 
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
-    -   [Form visibility](#form-field-visibility)
+    -   [Form field visibility](#form-field-visibility)
     -   [Preference service](#preference-service)
     -   [Forms in standalone tasks](#forms-in-standalone-tasks)
-    -   [Angular Material upgrade](#angular-material-upgrade)
+    -   [Angular and Material upgrade](#angular-and-material-upgrade)
 -   [Localisation](#localisation)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -78,7 +78,7 @@ The following is an example JSON of a form definition with the new boolean prope
         "standAlone": true,
         "formDefinition": {
         ...
-``` 
+```
 
 ### Angular and Material upgrade
 
@@ -284,7 +284,6 @@ The following is the list of JIRA issues that were closed for this release:
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-4735'>ADF-4735</a>] -         Automation test visibility condition for APS1 
 </li>
 </ul>
-
 
 Please refer to the [Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have any questions about the release, please contact us using [Gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
 

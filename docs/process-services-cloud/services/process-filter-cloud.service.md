@@ -56,7 +56,6 @@ import { LocalPreferenceCloudService, PROCESS_FILTERS_SERVICE_TOKEN } from '@alf
     ]
 })
 export class ExampleModule {}
-
 ```
 
 If you would like to inject the [User Preference Cloud Service](../../process-services-cloud/services/user-preference-cloud.service.md), you can inject the service like below shown 
@@ -74,7 +73,6 @@ import { UserPreferenceCloudService, PROCESS_FILTERS_SERVICE_TOKEN } from '@alfr
     ]
 })
 export class ExampleModule {}
-
 ```
 
 ## See also

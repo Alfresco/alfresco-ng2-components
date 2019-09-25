@@ -132,7 +132,7 @@ export class MethodSigInfo {
         this.docText = sourceData.summary || '';
         this.docText = this.docText.replace(/[\n\r]+/g, ' ').trim();
 
-        if (!this.docText) {
+        if (!this.docText && this.name.indexOf('service') > 0) {
             this.errorMessages.push(`Warning: method "${sourceData.name}" has no doc text.`);
         }
 
@@ -145,7 +145,7 @@ export class MethodSigInfo {
             this.returnsSomething = false;
         }
 
-        if (this.returnsSomething && !this.returnDocText) {
+        if (this.returnsSomething && !this.returnDocText && this.name.indexOf('service') > 0) {
             this.errorMessages.push(`Warning: Return value of method "${sourceData.name}" has no doc text.`);
         }
 
@@ -165,7 +165,7 @@ export class MethodSigInfo {
 
         if (sourceData.syntax.parameters) {
             sourceData.syntax.parameters.forEach(rawParam => {
-                if (!rawParam.description) {
+                if (rawParam.name && !rawParam.description && !rawParam.name.startWith('on')) {
                     this.errorMessages.push(`Warning: parameter "${rawParam.name}" of method "${sourceData.name}" has no doc text.`);
                 }
 
