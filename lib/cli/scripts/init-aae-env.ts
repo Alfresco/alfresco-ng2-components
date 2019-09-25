@@ -33,14 +33,6 @@ export interface ConfigArgs {
 }
 
 const ACTIVITI_CLOUD_APPS: any = {
-    TEST_MAU: {
-        name: 'testmau',
-        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/mauriziovitale-test/e2e/resources/testmau.zip?raw=true',
-        security: [
-            {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']
-        }]
-    },
     CANDIDATE_BASE_APP: {
         name: 'candidatebaseapp',
         file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/development/e2e/resources/activiti7/candidatebaseapp.zip?raw=true',
