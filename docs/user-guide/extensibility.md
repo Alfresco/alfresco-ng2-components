@@ -100,7 +100,7 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 | N/A | container | [`ContainerWidgetComponent`](../../lib/core/form/components/widgets/container/container.widget.ts) (layout component) |
 | Header | group | [`ContainerWidgetComponent`](../../lib/core/form/components/widgets/container/container.widget.ts) |
 | Attach | upload | AttachWidgetComponent or [`UploadWidgetComponent`](../../lib/core/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
-| N/A | N/A | [`UnknownWidgetComponent`](../../lib/core/form/components/widgets//.widget.ts) |
+| N/A | N/A | [`UnknownWidgetComponent`](../../lib/core/form/components/widgets/unknown/unknown.widget.ts) |
 
 ## Replacing default form widgets with custom components
 
