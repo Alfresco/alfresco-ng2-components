@@ -38,7 +38,7 @@ Shows a notification message with optional feedback.
     Rase info message
     -   _message:_ `string`  - Text message or translation key for the message.
     -   _action:_ `string`  - (Optional) Action name
-    -   _interpolateArgs:_ `any`  - (Optional) (Optional) 
+    -   _interpolateArgs:_ `any`  - (Optional) 
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - 
 -   **showWarning**(message: `string`, action?: `string`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase warning message

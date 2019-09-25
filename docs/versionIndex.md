@@ -33,7 +33,10 @@ backend services have been tested with each released version of ADF.
 
 <!--v350 start-->
 
+-   [About application component](core/components/about-application.component.md)
+-   [About github link component](core/components/about-github-link.component.md)
 -   [About product version component](core/components/about-product-version.component.md)
+-   [Edit json dialog](core/dialogs/edit-json.dialog.md)
 
 <!--v350 end-->
 
@@ -117,6 +120,7 @@ backend services have been tested with each released version of ADF.
 -   [Icon component](core/components/icon.component.md)
 -   [Identity user service](core/services/identity-user.service.md)
 -   [Jwt helper service](core/services/jwt-helper.service.md)
+-   [Library dialog](content-services/dialogs/library.dialog.md)
 -   [People cloud component](process-services-cloud/components/people-cloud.component.md)
 -   [Process filter cloud service](process-services-cloud/services/process-filter-cloud.service.md)
 -   [Process filters cloud component](process-services-cloud/components/process-filters-cloud.component.md)
@@ -223,6 +227,7 @@ backend services have been tested with each released version of ADF.
 <!--v230 start-->
 
 -   [Comment content service](core/services/comment-content.service.md)
+-   [Confirm dialog](content-services/dialogs/confirm.dialog.md)
 -   [Content node share directive](content-services/directives/content-node-share.directive.md)
 -   [Custom resources service](content-services/services/custom-resources.service.md)
 -   [Inherited button directive](content-services/directives/inherited-button.directive.md)

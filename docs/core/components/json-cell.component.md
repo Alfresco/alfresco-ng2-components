@@ -44,7 +44,7 @@ You can specify the cell inside the `app.config.json` file:
 | column | [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) |  | Data that defines the column. |
 | copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of the cell's content. |
 | data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data table adapter instance. |
-| editable | `boolean` | false | Editable JSON |
+| editable | `boolean` | false | Editable JSON. |
 | row | [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts) |  | Data that defines the row. |
 | tooltip | `string` |  | Text for the cell's tooltip. |
 
