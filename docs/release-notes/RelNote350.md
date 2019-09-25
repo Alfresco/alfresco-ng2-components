@@ -18,6 +18,7 @@ versions of ADF.
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
     -   [Improved accessibility](#improved-accessibility)
+    -   [Authentication](#authentication)
 -   [Localisation](#localisation)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -41,6 +42,10 @@ Please report issues with this release in the [issue tracker](https://github.com
 ### Improved accessibility
 
 This release provides fixes for some accessibility issues and improves the overall accessibility of ADF based applications. Refer to the [list of issues](#issues-addressed) for details of the enhancements and fixes.
+
+### Authentication
+
+The SSO experience has been enhanced by providing whitelist access to public routes and support for logout requests via the Alfresco Identity Management Service.
 
 ## Localisation
 
