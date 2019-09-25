@@ -17,7 +17,7 @@ versions of ADF.
 
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
-    -   [Better accessibility](#better-accessibility)
+    -   [Improved accessibility](#improved-accessibility)
 -   [Localisation](#localisation)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -38,9 +38,9 @@ The highlights of this release include additional support for [Activiti 7](https
 
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
 
-### Better accessibility
+### Improved accessibility
 
-Following the continuos improvement, we are adding some fixes and better experience to improve the accessibility of ADF based applications. Please refer to the list of issues below for further details on the enhancements/fixes.
+This release provides fixes for some accessibility issues and improves the overall accessibility of ADF based applications. Refer to the [list of issues](#issues-addressed) for details of the enhancements and fixes.
 
 ## Localisation
 
