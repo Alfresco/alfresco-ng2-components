@@ -130,6 +130,11 @@
                     overflow: hidden;
                 }
 
+                .adf-datatable-cell-value {
+                    display: block;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
             }
 
             .adf-datatable__actions-cell {
