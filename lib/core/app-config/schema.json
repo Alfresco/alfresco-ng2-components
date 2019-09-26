@@ -969,6 +969,12 @@
         "redirectUriLogout": {
           "type": "string"
         },
+        "publicUrls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "scope": {
           "type": "string"
         }
