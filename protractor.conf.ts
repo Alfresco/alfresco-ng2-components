@@ -105,6 +105,7 @@ exports.config = {
         groupSuffix: GROUP_SUFFIX,
         identityAdmin: TestConfig.identityAdmin,
         identityUser: TestConfig.identityUser,
+        processUser: TestConfig.processUser,
         rootPath: __dirname
     },
 

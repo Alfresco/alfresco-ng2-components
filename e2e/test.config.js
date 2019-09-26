@@ -23,6 +23,8 @@ const IDENTITY_ADMIN_PASSWORD = process.env.IDENTITY_ADMIN_PASSWORD || "defaulta
 const USERNAME_ADF = process.env.USERNAME_ADF || process.env.IDENTITY_USERNAME_ADF || "defaultuser";
 const PASSWORD_ADF = process.env.PASSWORD_ADF || process.env.IDENTITY_PASSWORD_ADF || "defaultuserpassword";
 const EMAIL = process.env.EMAIL_ADF || USERNAME_ADF;
+const PROCESS_USERNAME= process.env.PROCESS_USERNAME || "defaultuser";
+const PROCESS_USER_PASSWORD = process.env.PROCESS_USER_PASSWORD || "defaultpassword";
 
 const appConfig = {
     "bpmHost": BPM_HOST,
@@ -73,6 +75,11 @@ module.exports = {
     identityUser: {
         email: USERNAME_ADF,
         password: PASSWORD_ADF
+    },
+
+    processUser: {
+        email: PROCESS_USERNAME,
+        password: PROCESS_USER_PASSWORD
     },
 
     adf: {
