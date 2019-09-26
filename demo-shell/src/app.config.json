@@ -21,7 +21,8 @@
     "silentLogin": true,
     "redirectSilentIframeUri": "{protocol}//{hostname}{:port}/assets/silent-refresh.html",
     "redirectUri": "/",
-    "redirectUriLogout": "/logout"
+    "redirectUriLogout": "/logout",
+    "publicUrls": ["**/preview/s/*", "**/settings"]
   },
   "application": {
     "storagePrefix": "ADF",
