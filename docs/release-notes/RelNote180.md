@@ -52,10 +52,10 @@ Below the most relevant features of this release:
 
 -   Theming ADF component
 -   [Info Drawer component](../core/components/info-drawer.component.md)
--   [`Form`](../../lib/process-services/task-list/models/form.model.ts) style component enhancements
+-   [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) style component enhancements
 -   Empty form template
 -   Additional data sources input for Document List
--   [`Form`](../../lib/process-services/task-list/models/form.model.ts) validation enhancements
+-   [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) validation enhancements
 -   FormFieldModel/FormModelimprovements
 -   DataTable\*\* \*\*Accessibility Improvements
 -   Copy and move component enhancements
@@ -100,12 +100,12 @@ You can now add an empty template that will be shown if no form definition are p
 
 ### 5. Form Validation Enhancements
 
-New events that allow taking control over the [`Form`](../../lib/process-services/task-list/models/form.model.ts) and Field validation:
+New events that allow taking control over the [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) and Field validation:
 
     validateForm: Subject<ValidateFormEvent>
     validateFormField: Subject<ValidateFormFieldEvent>()
 
-The [validateForm](../core/services/form.service.md) event is raised every time the entire [`Form`](../../lib/process-services/task-list/models/form.model.ts) is re-validated. This happens also every time a field value or some of the properties is changed (for example the "required" property). The [validateFormField](../core/services/form.service.md) event is raised every time a single [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field is re-validated.
+The [validateForm](../core/services/form.service.md) event is raised every time the entire [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) is re-validated. This happens also every time a field value or some of the properties is changed (for example the "required" property). The [validateFormField](../core/services/form.service.md) event is raised every time a single [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) Field is re-validated.
 
 Both events are "cancellable", that means you can apply your own validation rules, change corresponding field validation state, or even prevent the default behaviour if needed.
 
@@ -127,7 +127,7 @@ Example:
 
 #### FormFieldModel
 
-The "required" property now re-validates the corresponding Field and entire [`Form`](../../lib/process-services/task-list/models/form.model.ts) upon every change. That enables scenarios when the "required" constraint is changed dynamically for a field based on some external factors.
+The "required" property now re-validates the corresponding Field and entire [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) upon every change. That enables scenarios when the "required" constraint is changed dynamically for a field based on some external factors.
 
 #### FormModel
 
@@ -135,9 +135,9 @@ New "getFieldById" method to simplify certain scenarios when accessing multiple 
 
     getFieldById(fieldId: string): FormFieldModel
 
-The [`Form`](../../lib/process-services/task-list/models/form.model.ts) now controls all Field validators. It becomes possible managing existing validator instances, replacing them, or extending form validation with custom rules and error messages. The "adf-form" component now also supports binding custom validator sets to the underlying [FormModel,](../../lib/core/form/components/widgets/core/form.model.ts) that allows defining validation sets in your code and binding via HTML.
+The [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) now controls all Field validators. It becomes possible managing existing validator instances, replacing them, or extending form validation with custom rules and error messages. The "adf-form" component now also supports binding custom validator sets to the underlying [FormModel,](../../lib/core/form/components/widgets/core/form.model.ts) that allows defining validation sets in your code and binding via HTML.
 
-You can read more details on the new Validation layer in the [`Form`](../../lib/process-services/task-list/models/form.model.ts) readme: [Form Field Validators](../core/interfaces/form-field-validator.interface.md). The "demo shell" application has been also extended to demonstrate custom validators in action. You can check the code here: [Demo Field Validator](../core/interfaces/form-field-validator.interface.md).
+You can read more details on the new Validation layer in the [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) readme: [Form Field Validators](../core/interfaces/form-field-validator.interface.md). The "demo shell" application has been also extended to demonstrate custom validators in action. You can check the code here: [Demo Field Validator](../core/interfaces/form-field-validator.interface.md).
 
 ### 7. DataTable Accessibility Improvements
 
@@ -470,7 +470,7 @@ Release Notes - Apps Development Framework - Version 1.8.
 -   \[[ADF-1360](https://issues.alfresco.com/jira/browse/ADF-1360)] - An error appears in console when clicking on Content Services in Demo Shell
 -   \[[ADF-1368](https://issues.alfresco.com/jira/browse/ADF-1368)] - A file deleted from Document List is still displayed as uploaded in Uploader
 -   \[[ADF-1370](https://issues.alfresco.com/jira/browse/ADF-1370)] - PDF viewer not using web worker
--   \[[ADF-1384](https://issues.alfresco.com/jira/browse/ADF-1384)] - ADF [`Form`](../../lib/process-services/task-list/models/form.model.ts) - The placeholder is overlapping the label
+-   \[[ADF-1384](https://issues.alfresco.com/jira/browse/ADF-1384)] - ADF [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) - The placeholder is overlapping the label
 -   \[[ADF-1386](https://issues.alfresco.com/jira/browse/ADF-1386)] - if pagination attribute is undefined shows inconsistent range
 -   \[[ADF-1394](https://issues.alfresco.com/jira/browse/ADF-1394)] - Favorites Api not passing the "include" settings to server
 -   \[[ADF-1395](https://issues.alfresco.com/jira/browse/ADF-1395)] - The title of the reports is not aligned.
@@ -508,8 +508,8 @@ Release Notes - Apps Development Framework - Version 1.8.
 -   \[[ADF-1502](https://issues.alfresco.com/jira/browse/ADF-1502)] - AoT problems when using ADF with Angular CLI
 -   \[[ADF-1509](https://issues.alfresco.com/jira/browse/ADF-1509)] - ['Form](../../lib/process-services/task-list/models/form.model.ts) Name' displays 'No form' after editing 'Due Date' or 'Description'.
 -   \[[ADF-1510](https://issues.alfresco.com/jira/browse/ADF-1510)] - Report button tooltips are missing translation.
--   \[[ADF-1512](https://issues.alfresco.com/jira/browse/ADF-1512)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) is expanding when required label is displayed.
--   \[[ADF-1513](https://issues.alfresco.com/jira/browse/ADF-1513)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) List doesn't display form Tabs.
+-   \[[ADF-1512](https://issues.alfresco.com/jira/browse/ADF-1512)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) is expanding when required label is displayed.
+-   \[[ADF-1513](https://issues.alfresco.com/jira/browse/ADF-1513)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) List doesn't display form Tabs.
 
 ## New Feature
 
@@ -544,7 +544,7 @@ Release Notes - Apps Development Framework - Version 1.8.
 -   \[[ADF-714](https://issues.alfresco.com/jira/browse/ADF-714)] - Unify pagination across all components
 -   \[[ADF-1116](https://issues.alfresco.com/jira/browse/ADF-1116)] - Task list without any status filter
 -   \[[ADF-1139](https://issues.alfresco.com/jira/browse/ADF-1139)] - People Search - Provide a way to reset the search field when a user is selected
--   \[[ADF-852](https://issues.alfresco.com/jira/browse/ADF-852)] - [Form] Update [`Form`](../../lib/process-services/task-list/models/form.model.ts) widget to Material library
+-   \[[ADF-852](https://issues.alfresco.com/jira/browse/ADF-852)] - [Form] Update [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) widget to Material library
 -   \[[ADF-520](https://issues.alfresco.com/jira/browse/ADF-520)] - remove the debug button from [Analytics Component](../insights/components/analytics.component.md)
 -   \[[ADF-157](https://issues.alfresco.com/jira/browse/ADF-157)] - upload dialog Wrong number on File Upload Count - 1511 Github
 -   \[[ADF-569](https://issues.alfresco.com/jira/browse/ADF-569)] - Provide support to Undo uploaded files in the Upload component

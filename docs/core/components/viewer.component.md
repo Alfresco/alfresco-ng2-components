@@ -89,7 +89,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
 | displayName | `string` |  | Specifies the name of the file when it is not available from the URL. |
 | fileName | `string` |  | Content filename. |
-| maxRetries | `number` | 10 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
+| maxRetries | `number` | 30 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
 | mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension). |
 | nodeId | `string` | null | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Id of the file to load. |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
@@ -110,9 +110,9 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | ---- | ---- | ----------- |
 | extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
 | goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
-| invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the shared link used is not valid. |
-| navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
-| navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when user clicks 'Navigate Next' (">") button. |
+| invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the shared link used is not valid. |
+| navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
+| navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when user clicks 'Navigate Next' (">") button. |
 | print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
 | showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer is shown or hidden. |
 

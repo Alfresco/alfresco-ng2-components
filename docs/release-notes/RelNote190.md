@@ -262,7 +262,7 @@ Release Notes - Apps Development Framework - Version 1.9.
 -   \[[ADF-1523](https://issues.alfresco.com/jira/browse/ADF-1523)] - APS task form remains disabled when no custom outcome is provided in ADF 1.8. 
 -   \[[ADF-1525](https://issues.alfresco.com/jira/browse/ADF-1525)] - In APS forms, hyperlink fields are not rendered when configured with process variables
 -   \[[ADF-1526](https://issues.alfresco.com/jira/browse/ADF-1526)] - The [form component](../core/components/form.component.md) is not responsive in ADF 1.8. 
--   \[[ADF-1528](https://issues.alfresco.com/jira/browse/ADF-1528)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) renderer does not display generated documents - github 2303
+-   \[[ADF-1528](https://issues.alfresco.com/jira/browse/ADF-1528)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) renderer does not display generated documents - github 2303
 -   \[[ADF-1529](https://issues.alfresco.com/jira/browse/ADF-1529)] - Broken styles for toolbar buttons.
 -   \[[ADF-1530](https://issues.alfresco.com/jira/browse/ADF-1530)] - [Viewer] Extension viewer doens't work anymore
 -   \[[ADF-1533](https://issues.alfresco.com/jira/browse/ADF-1533)] - Multi-line form field contains a bug where red required warnings are shown incorrectly
@@ -323,7 +323,7 @@ Release Notes - Apps Development Framework - Version 1.9.
 -   \[[ADF-1662](https://issues.alfresco.com/jira/browse/ADF-1662)] - [User info] name is not centered
 -   \[[ADF-1664](https://issues.alfresco.com/jira/browse/ADF-1664)] - [Login component] icon show password dark theme
 -   \[[ADF-1666](https://issues.alfresco.com/jira/browse/ADF-1666)] - Comments can not be added to completed tasks and processes
--   \[[ADF-1667](https://issues.alfresco.com/jira/browse/ADF-1667)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) component displays 'Nameless Task'
+-   \[[ADF-1667](https://issues.alfresco.com/jira/browse/ADF-1667)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) component displays 'Nameless Task'
 -   \[[ADF-1668](https://issues.alfresco.com/jira/browse/ADF-1668)] - The task or process details are not loaded when double clicked
 -   \[[ADF-1669](https://issues.alfresco.com/jira/browse/ADF-1669)] - Attach File widget doesn't display file after complete.
 -   \[[ADF-1671](https://issues.alfresco.com/jira/browse/ADF-1671)] - Widgets don't display value if they have visibility conditions related to multiline text widget.
@@ -360,7 +360,7 @@ Release Notes - Apps Development Framework - Version 1.9.
 -   \[[ADF-1543](https://issues.alfresco.com/jira/browse/ADF-1543)] - Use Muli font embedded in the "index.html" page
 -   \[[ADF-1548](https://issues.alfresco.com/jira/browse/ADF-1548)] - Remove "forRoot" functions from all the component modules
 -   \[[ADF-1584](https://issues.alfresco.com/jira/browse/ADF-1584)] - Userinfo component change text color
--   \[[ADF-1608](https://issues.alfresco.com/jira/browse/ADF-1608)] - Start [`Form`](../../lib/process-services/task-list/models/form.model.ts) - Improve the unit test cases
+-   \[[ADF-1608](https://issues.alfresco.com/jira/browse/ADF-1608)] - Start [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) - Improve the unit test cases
 -   \[[ADF-1634](https://issues.alfresco.com/jira/browse/ADF-1634)] - Action toolbar for PDF viewer
 -   \[[ADF-1676](https://issues.alfresco.com/jira/browse/ADF-1676)] - Switch off all fake buttons in the Viewer
 

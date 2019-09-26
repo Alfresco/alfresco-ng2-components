@@ -87,28 +87,28 @@ function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
     const nav = new MDNav(tree);
 
     const classMemHeading = nav
-    .heading(h => {
-        return (h.children[0].type === 'text') && (h.children[0].value === 'Class members');
-    });
+        .heading(h => {
+            return (h.children[0].type === 'text') && (h.children[0].value === 'Class members');
+        });
 
     const propsTable = classMemHeading
-    .heading(h => {
-        return (h.children[0].type === 'text') && (h.children[0].value === sectionHeading);
-    }).table();
+        .heading(h => {
+            return (h.children[0].type === 'text') && (h.children[0].value === sectionHeading);
+        }).table();
 
     let propTableRow = propsTable.childNav
-    .tableRow(() => true, 1).childNav;
+        .tableRow(() => true, 1).childNav;
 
     let i = 1;
 
     while (!propTableRow.empty) {
         const propName = propTableRow
-        .tableCell().childNav
-        .text().item.value;
+            .tableCell().childNav
+            .text().item.value;
 
         const propDocText = propTableRow
-        .tableCell(() => true, docsColumn).childNav
-        .text().item;
+            .tableCell(() => true, docsColumn).childNav
+            .text().item;
 
         if (propDocText) {
             result[propName] = propDocText.value;
@@ -116,7 +116,7 @@ function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
 
         i++;
         propTableRow = propsTable.childNav
-        .tableRow(() => true, i).childNav;
+            .tableRow(() => true, i).childNav;
     }
 
     return result;
@@ -128,24 +128,24 @@ function getMethodDocsFromMD(tree) {
     const nav = new MDNav(tree);
 
     const classMemHeading = nav
-    .heading(h => {
-        return (h.children[0].type === 'text') && (h.children[0].value === 'Class members');
-    });
+        .heading(h => {
+            return (h.children[0].type === 'text') && (h.children[0].value === 'Class members');
+        });
 
     const methListItems = classMemHeading
-    .heading(h => {
-        return (h.children[0].type === 'text') && (h.children[0].value === 'Methods');
-    }).list().childNav;
+        .heading(h => {
+            return (h.children[0].type === 'text') && (h.children[0].value === 'Methods');
+        }).list().childNav;
 
     let methItem = methListItems
-    .listItem();
+        .listItem();
 
     let i = 0;
 
     while (!methItem.empty) {
         const methNameSection = methItem.childNav
-        .paragraph().childNav
-        .strong().childNav;
+            .paragraph().childNav
+            .strong().childNav;
 
         let methName = '';
 
@@ -154,9 +154,9 @@ function getMethodDocsFromMD(tree) {
             methName = methNameSection.text().item.value;
 
             const methDoc = methItem.childNav
-            .paragraph().childNav
-            .html()
-            .text().value;
+                .paragraph().childNav
+                .html()
+                .text().value;
 
             const params = getMDMethodParams(methItem);
 
@@ -169,7 +169,7 @@ function getMethodDocsFromMD(tree) {
         i++;
 
         methItem = methListItems
-        .listItem(l => true, i);
+            .listItem(l => true, i);
     }
 
     return result;
@@ -181,27 +181,30 @@ function getMDMethodParams(methItem: MDNav) {
     const paramList = methItem.childNav.list().childNav;
 
     const paramListItems = paramList
-    .listItems();
+        .listItems();
 
     paramListItems.forEach(paramListItem => {
         const paramNameNode = paramListItem.childNav
-        .paragraph().childNav
-        .emph().childNav;
+            .paragraph().childNav
+            .emph().childNav;
 
         let paramName;
 
         if (!paramNameNode.empty) {
             paramName = paramNameNode.text().item.value.replace(/:/, '');
         } else {
-            paramName = paramListItem.childNav
-            .paragraph().childNav
-            .strong().childNav
-            .text().item.value;
+            let item = paramListItem.childNav.paragraph().childNav
+                .strong().childNav.text();
+
+            if (paramName) {
+                paramName = item.value;
+            }
+
         }
 
         const paramDoc = paramListItem.childNav
-        .paragraph().childNav
-        .text(t => true, 1).value; // item.value;
+            .paragraph().childNav
+            .text(t => true, 1).value; // item.value;
 
         result[paramName] = paramDoc.replace(/^[ -]+/, '');
     });

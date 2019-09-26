@@ -347,7 +347,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2591](https://issues.alfresco.com/jira/browse/ADF-2591)] - [Document list] Selection icon is cut
 -   \[[ADF-2592](https://issues.alfresco.com/jira/browse/ADF-2592)] - Different types of tooltips appear in the viewer
 -   \[[ADF-2604](https://issues.alfresco.com/jira/browse/ADF-2604)] - Incorrect definitions for Enums
--   \[[ADF-2607](https://issues.alfresco.com/jira/browse/ADF-2607)] - Task [`Form`](../../lib/process-services/task-list/models/form.model.ts) - Number Widget placeholder no longer displayed
+-   \[[ADF-2607](https://issues.alfresco.com/jira/browse/ADF-2607)] - Task [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) - Number Widget placeholder no longer displayed
 -   \[[ADF-2624](https://issues.alfresco.com/jira/browse/ADF-2624)] - All metadata card component children display parent info drawer tooltip
 -   \[[ADF-2625](https://issues.alfresco.com/jira/browse/ADF-2625)] - [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) name not updated when changing its value in metadata component
 -   \[[ADF-2628](https://issues.alfresco.com/jira/browse/ADF-2628)] - Metadata editors miss tooltips
@@ -363,7 +363,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2682](https://issues.alfresco.com/jira/browse/ADF-2682)] - Number of page doesn't change when navigating to another folder
 -   \[[ADF-2684](https://issues.alfresco.com/jira/browse/ADF-2684)] - [Task Pagination][pagination](../../lib/content-services/document-list/models/document-library.model.ts) isn't displayed properly when 'Items per page' is 25
 -   \[[ADF-2687](https://issues.alfresco.com/jira/browse/ADF-2687)] - [Demo shell] No message is displayed when deleting a file/folder from content action
--   \[[ADF-2689](https://issues.alfresco.com/jira/browse/ADF-2689)] - Task [`Form`](../../lib/process-services/task-list/models/form.model.ts) - Text Widget placeholder no longer displayed
+-   \[[ADF-2689](https://issues.alfresco.com/jira/browse/ADF-2689)] - Task [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) - Text Widget placeholder no longer displayed
 -   \[[ADF-2690](https://issues.alfresco.com/jira/browse/ADF-2690)] - Title is not properly displayed in Metadata component - 'Properties' tab
 -   \[[ADF-2711](https://issues.alfresco.com/jira/browse/ADF-2711)] - [Involve People Widget] When scrolling down the result box scrolls with the page
 -   \[[ADF-2714](https://issues.alfresco.com/jira/browse/ADF-2714)] - [Demo shell]Not able to download a version of a file

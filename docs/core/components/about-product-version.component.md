@@ -1,6 +1,6 @@
 ---
 Title: About Product Version Component
-Added: v1.0.0
+Added: v3.5.0
 Status: Experimental
 Last reviewed: 2019-09-09
 ---

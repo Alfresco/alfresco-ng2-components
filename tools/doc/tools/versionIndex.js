@@ -49,7 +49,7 @@ function readPhase(mdCache, aggData) {
 
 function getFileData(tree, pathname, aggData) {
     var compName = pathname;
-    var angNameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))/;
+    var angNameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget)|(dialog))/;
 
     if (!compName.match(angNameRegex))
         return;

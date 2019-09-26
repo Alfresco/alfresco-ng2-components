@@ -338,7 +338,7 @@ Release Notes - Apps Development Framework - Version 2.1.
 -   \[[ADF-1734](https://issues.alfresco.com/jira/browse/ADF-1734)] - Article on how to use Forms with ACS
 -   \[[ADF-2058](https://issues.alfresco.com/jira/browse/ADF-2058)] - Search example new functionality article
 -   \[[ADF-2060](https://issues.alfresco.com/jira/browse/ADF-2060)] - sidebarTemplate missing documentation
--   \[[ADF-2122](https://issues.alfresco.com/jira/browse/ADF-2122)] - Incorrect product naming reference on [`Form`](../../lib/process-services/task-list/models/form.model.ts) Extensibility and Customisation page
+-   \[[ADF-2122](https://issues.alfresco.com/jira/browse/ADF-2122)] - Incorrect product naming reference on [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) Extensibility and Customisation page
 -   \[[ADF-2125](https://issues.alfresco.com/jira/browse/ADF-2125)] - App generator has wrong documentation
 -   \[[ADF-2160](https://issues.alfresco.com/jira/browse/ADF-2160)] - combined handler missing in [Content Action component](../content-services/components/content-action.component.md) documentation
 -   \[[ADF-2162](https://issues.alfresco.com/jira/browse/ADF-2162)] - [Notification service](../core/services/notification.service.md) missing screenshot
@@ -367,7 +367,7 @@ Release Notes - Apps Development Framework - Version 2.1.
 -   \[[ADF-1882](https://issues.alfresco.com/jira/browse/ADF-1882)] - Preview uploaded content in APS fails in form
 -   \[[ADF-1888](https://issues.alfresco.com/jira/browse/ADF-1888)] - [`ExternalContent`](../../lib/core/form/components/widgets/core/external-content.ts) is not exported in ActivitiFormModule
 -   \[[ADF-1889](https://issues.alfresco.com/jira/browse/ADF-1889)] - Viewer does not render PDF renditions unless urlFile ends with .pdf
--   \[[ADF-1926](https://issues.alfresco.com/jira/browse/ADF-1926)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) is not exported from ActivitiTaskListModule
+-   \[[ADF-1926](https://issues.alfresco.com/jira/browse/ADF-1926)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) is not exported from ActivitiTaskListModule
 -   \[[ADF-1959](https://issues.alfresco.com/jira/browse/ADF-1959)] - Apps with description appear with larger size on the Processes Services page
 -   \[[ADF-1999](https://issues.alfresco.com/jira/browse/ADF-1999)] - Size values are not translated
 -   \[[ADF-2025](https://issues.alfresco.com/jira/browse/ADF-2025)] - Task List - The pagination should be fetched from the UserPreference
@@ -436,7 +436,7 @@ Release Notes - Apps Development Framework - Version 2.1.
 -   \[[ADF-2074](https://issues.alfresco.com/jira/browse/ADF-2074)] - [Test Automation] implement uploader component - main suite.
 -   \[[ADF-2084](https://issues.alfresco.com/jira/browse/ADF-2084)] - [Test Automation] create test for datatable
 -   \[[ADF-2090](https://issues.alfresco.com/jira/browse/ADF-2090)] - [Test Automation] Review [search component](../content-services/components/search.component.md) tests
--   \[[ADF-2094](https://issues.alfresco.com/jira/browse/ADF-2094)] - Task [`Form`](../../lib/process-services/task-list/models/form.model.ts) - Doesn't follow the specification
+-   \[[ADF-2094](https://issues.alfresco.com/jira/browse/ADF-2094)] - Task [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) - Doesn't follow the specification
 -   \[[ADF-2095](https://issues.alfresco.com/jira/browse/ADF-2095)] - Start Task - The start button should have the primary colour
 -   \[[ADF-2096](https://issues.alfresco.com/jira/browse/ADF-2096)] - Info Drawer - Should use the Flex Css
 -   \[[ADF-2104](https://issues.alfresco.com/jira/browse/ADF-2104)] - Update Flex Layout to v2.0.0-beta.12

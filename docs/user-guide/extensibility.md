@@ -9,7 +9,7 @@ This page describes how you can customize ADF forms to your own specification.
 
 _Note: it is assumed you are familiar with Alfresco Process Services (powered by Activiti) form definition structure._
 
--   How components and widgets are rendered on a [`Form`](../../lib/process-services/task-list/models/form.model.ts)
+-   How components and widgets are rendered on a [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)
 -   Replacing default form widgets with custom components
 -   Replacing custom stencils with custom components
 
@@ -26,7 +26,7 @@ _Note: it is assumed you are familiar with Alfresco Process Services (powered by
 
 ## How components and widgets are rendered on a Form
 
-All form field editors (aka widgets) on a [`Form`](../../lib/process-services/task-list/models/form.model.ts) are rendered by means of [`FormFieldComponent`](../core/components/form-field.component.md)
+All form field editors (aka widgets) on a [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) are rendered by means of [`FormFieldComponent`](../core/components/form-field.component.md)
 that takes an instance of a [`FormFieldModel`](../core/models/form-field.model.md):
 
 ```html
@@ -190,7 +190,7 @@ First let's create a basic stencil and call it `Custom Stencil 01`:
 
 _Note the `internal identifier` value as it will become a `field type` value when corresponding form is rendered._
 
-Next put some simple html layout for [`Form`](../../lib/process-services/task-list/models/form.model.ts)`runtime template` and [`Form`](../../lib/process-services/task-list/models/form.model.ts)`editor template` fields:
+Next put some simple html layout for [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`runtime template` and [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`editor template` fields:
 
 ```html
 <div style="color: blue">Custom activiti stencil</div>

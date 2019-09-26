@@ -40,7 +40,7 @@ If the average is decimal number it will be rounded.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| changeVote | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the "vote" gets changed. |
+| changeVote | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the "vote" gets changed. |
 
 ## See also
 

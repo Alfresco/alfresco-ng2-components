@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-09-17
 ---
 
-# Edit JSON Dialog
+# [Edit JSON Dialog](../../../ "Defined in ")
 
 Allows a user to preview or edit a JSON content in a dialog.
 

@@ -736,7 +736,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1815](https://issues.alfresco.com/jira/browse/ADF-1815)] - Sorting content by name is not working properly
 -   \[[ADF-1818](https://issues.alfresco.com/jira/browse/ADF-1818)] - Add Missing Create person API in JS-API
 -   \[[ADF-1824](https://issues.alfresco.com/jira/browse/ADF-1824)] - Moment js security issue
--   \[[ADF-1825](https://issues.alfresco.com/jira/browse/ADF-1825)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) field in start task no aligned
+-   \[[ADF-1825](https://issues.alfresco.com/jira/browse/ADF-1825)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) field in start task no aligned
 -   \[[ADF-1827](https://issues.alfresco.com/jira/browse/ADF-1827)] - 'Object Object' displayed on search results page
 -   \[[ADF-1829](https://issues.alfresco.com/jira/browse/ADF-1829)] - [`PeopleApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/people.api.ts) - getSiteMembership wrong returned type
 -   \[[ADF-1830](https://issues.alfresco.com/jira/browse/ADF-1830)] - Cannot access processes or reports
@@ -753,7 +753,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1866](https://issues.alfresco.com/jira/browse/ADF-1866)] - Accordion Component - Doesn't allow to close the menu
 -   \[[ADF-1871](https://issues.alfresco.com/jira/browse/ADF-1871)] - Tasklist IE 11 crash
 -   \[[ADF-1872](https://issues.alfresco.com/jira/browse/ADF-1872)] - TaskList Component - Doesn't show the currentTaskId highlited
--   \[[ADF-1875](https://issues.alfresco.com/jira/browse/ADF-1875)] - [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) Component - Doesn't show the currentProcessId highlighted
+-   \[[ADF-1875](https://issues.alfresco.com/jira/browse/ADF-1875)] - [`ProcessList`](../../lib/process-services/src/lib/mock/process/process.model.mock.ts) Component - Doesn't show the currentProcessId highlighted
 -   \[[ADF-1877](https://issues.alfresco.com/jira/browse/ADF-1877)] - Layout demo shell not localized
 -   \[[ADF-1878](https://issues.alfresco.com/jira/browse/ADF-1878)] - [Translation service](../core/services/translation.service.md) not using fallback language for unsupported locale
 -   \[[ADF-1879](https://issues.alfresco.com/jira/browse/ADF-1879)] - ADF Process Services is not working properly
@@ -766,7 +766,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1902](https://issues.alfresco.com/jira/browse/ADF-1902)] - Buttons of the Create / Edit folder dialog do not match design
 -   \[[ADF-1907](https://issues.alfresco.com/jira/browse/ADF-1907)] - [`UploadService`](../core/services/upload.service.md) is not exported from [`UploadModule`](../../lib/content-services/upload/upload.module.ts)
 -   \[[ADF-1908](https://issues.alfresco.com/jira/browse/ADF-1908)] - Not able to select a form on Start Task
--   \[[ADF-1909](https://issues.alfresco.com/jira/browse/ADF-1909)] - [`TaskListModel`](../../lib/process-services/task-list/models/task-list.model.ts) is not exported from ActivitiTaskListModule
+-   \[[ADF-1909](https://issues.alfresco.com/jira/browse/ADF-1909)] - [`TaskListModel`](../../lib/process-services/src/lib/task-list/models/task-list.model.ts) is not exported from ActivitiTaskListModule
 -   \[[ADF-1911](https://issues.alfresco.com/jira/browse/ADF-1911)] - Content can be uploaded on Search Result Page when no results are found
 -   \[[ADF-1912](https://issues.alfresco.com/jira/browse/ADF-1912)] - Not able to re-login with a valid user after login out.
 -   \[[ADF-1914](https://issues.alfresco.com/jira/browse/ADF-1914)] - Custom toolbar is displayed on Search Results page when no results are found
@@ -774,7 +774,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1916](https://issues.alfresco.com/jira/browse/ADF-1916)] - Not able to add a file to the Attachment List.
 -   \[[ADF-1920](https://issues.alfresco.com/jira/browse/ADF-1920)] - Diagram is not displayed after clicking 'Show Diagram' option.
 -   \[[ADF-1921](https://issues.alfresco.com/jira/browse/ADF-1921)] - Dynamic Table widget is being duplicated after editing.
--   \[[ADF-1922](https://issues.alfresco.com/jira/browse/ADF-1922)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) page is not displayed.
+-   \[[ADF-1922](https://issues.alfresco.com/jira/browse/ADF-1922)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) page is not displayed.
 -   \[[ADF-1924](https://issues.alfresco.com/jira/browse/ADF-1924)] - Some issues related to search bar
 -   \[[ADF-1945](https://issues.alfresco.com/jira/browse/ADF-1945)] - Profile image has Initials displayed behind it
 -   \[[ADF-1948](https://issues.alfresco.com/jira/browse/ADF-1948)] - Not able to involve people into a task.
@@ -818,7 +818,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-2014](https://issues.alfresco.com/jira/browse/ADF-2014)] - Document List file cannot be deleted
 -   \[[ADF-2016](https://issues.alfresco.com/jira/browse/ADF-2016)] - Paginator integration with other components
 -   \[[ADF-2017](https://issues.alfresco.com/jira/browse/ADF-2017)] - Continous loading of process details if process list is empty
--   \[[ADF-2019](https://issues.alfresco.com/jira/browse/ADF-2019)] - [Demo Shell] When clicking refresh for button on [`Form`](../../lib/process-services/task-list/models/form.model.ts) component the whole page reloads
+-   \[[ADF-2019](https://issues.alfresco.com/jira/browse/ADF-2019)] - [Demo Shell] When clicking refresh for button on [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) component the whole page reloads
 -   \[[ADF-2020](https://issues.alfresco.com/jira/browse/ADF-2020)] - The upload button is not disabled when the 'enable upload' checkbox is not checked
 -   \[[ADF-2022](https://issues.alfresco.com/jira/browse/ADF-2022)] - Excluded files can be uploaded
 -   \[[ADF-2023](https://issues.alfresco.com/jira/browse/ADF-2023)] - Files can be drag and drop when allowDropFiles property is set to false

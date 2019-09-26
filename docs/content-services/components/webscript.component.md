@@ -75,7 +75,7 @@ export class AppComponent {
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the operation succeeds. You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the operation succeeds. You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application. |
 
 ## Details
 

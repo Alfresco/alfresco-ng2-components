@@ -50,9 +50,9 @@ to enrich the features and decrease the restrictions currently applied to node v
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../../lib/content-services/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when an error occurs. |
 | permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionModel`](../../../lib/content-services/document-list/models/permissions.model.ts)`>` | Emitted when create permission is missing. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the file is uploaded successfully. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the file is uploaded successfully. |
 
 ## Details
 

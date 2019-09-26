@@ -272,7 +272,7 @@ Release Notes - Apps Development Framework - Version 2.5.0
     ] - Upgrade Angular Material Design
 -   \[
     [ADF-3308](https://issues.alfresco.com/jira/browse/ADF-3308)
-    ] - [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) Component - Provide a way to filter the list by fields
+    ] - [`ProcessList`](../../lib/process-services/src/lib/mock/process/process.model.mock.ts) Component - Provide a way to filter the list by fields
 -   \[
     [ADF-3366](https://issues.alfresco.com/jira/browse/ADF-3366)
     ] - Update Site details
@@ -314,7 +314,7 @@ Release Notes - Apps Development Framework - Version 2.5.0
     ] - [Demo shell] User is not redirected to active process when completing the first task as initiator
 -   \[
     [ADF-2876](https://issues.alfresco.com/jira/browse/ADF-2876)
-    ] - Activiti [`Form`](../../lib/process-services/task-list/models/form.model.ts) - Complete button does not get enabled when logged in as Active Directory users.
+    ] - Activiti [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) - Complete button does not get enabled when logged in as Active Directory users.
 -   \[
     [ADF-2962](https://issues.alfresco.com/jira/browse/ADF-2962)
     ] - Can't reach the Hide/Show password icon using tab key
@@ -533,7 +533,7 @@ Release Notes - Apps Development Framework - Version 2.5.0
     ] - Required fields on a form are not displayed on a read-only mode.
 -   \[
     [ADF-3413](https://issues.alfresco.com/jira/browse/ADF-3413)
-    ] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) name still displayed after removing form
+    ] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) name still displayed after removing form
 
 ### Feature (Task)
 

@@ -42,17 +42,17 @@ Performs CRUD operations on identity groups.
     -   _searchParams:_ [`IdentityGroupSearchParam`](../../../lib/core/userinfo/models/identity-group.model.ts)  - Object containing the name filter string
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - List of group information
 -   **getClientIdByApplicationName**(applicationName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string>`<br/>
-    Gets the client ID using the app name.
+    Gets the client Id using the app name.
     -   _applicationName:_ `string`  - Name of the app
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string>` - client ID string
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string>` - client Id string
 -   **getClientRoles**(groupId: `string`, clientId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/userinfo/models/identity-role.model.ts)`[]>`<br/>
     Gets client roles.
-    -   _groupId:_ `string`  - ID of the target group
-    -   _clientId:_ `string`  - ID of the client
+    -   _groupId:_ `string`  - Id of the target group
+    -   _clientId:_ `string`  - Id of the client
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/userinfo/models/identity-role.model.ts)`[]>` - List of roles
 -   **getGroupRoles**(groupId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/userinfo/models/identity-role.model.ts)`[]>`<br/>
     Gets details for a specified group.
-    -   _groupId:_ `string`  - ID of the target group
+    -   _groupId:_ `string`  - Id of the target group
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/userinfo/models/identity-role.model.ts)`[]>` - Group details
 -   **getGroups**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/core/userinfo/models/identity-group.model.ts)`[]>`<br/>
     Gets all groups.

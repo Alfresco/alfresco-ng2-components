@@ -21,11 +21,11 @@ Manages task filters.
     Deletes a task filter
     -   _deletedFilter:_ [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`[]>` - Observable of task instance filters without deleted filter
--   **getTaskFilterById**(appName: `string`, id: `string`): `any`<br/>
+-   **getTaskFilterById**(appName: `string`, id: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>`<br/>
     Gets a task filter.
     -   _appName:_ `string`  - Name of the target app
     -   _id:_ `string`  - ID of the task
-    -   **Returns** `any` - Details of the task filter
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` - Details of the task filter
 -   **getTaskListFilters**(appName?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`[]>`<br/>
     Gets all task filters for a task app.
     -   _appName:_ `string`  - (Optional) Name of the target app
@@ -74,10 +74,9 @@ import { LocalPreferenceCloudService, TASK_FILTERS_SERVICE_TOKEN } from '@alfres
     ]
 })
 export class ExampleModule {}
-
 ```
 
-If you would like to inject the [UserPreferenceCloudService](../../process-services-cloud/services/user-preference-cloud.service.md),  you can inject the service like below shown 
+If you would like to inject the [`UserPreferenceCloudService`](../../process-services-cloud/services/user-preference-cloud.service.md),  you can inject the service like below shown 
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -92,7 +91,6 @@ import { UserPreferenceCloudService, TASK_FILTERS_SERVICE_TOKEN } from '@alfresc
     ]
 })
 export class ExampleModule {}
-
 ```
 
 ## See also

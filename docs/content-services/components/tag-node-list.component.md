@@ -32,4 +32,4 @@ Shows tags for a node.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| results | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a tag is selected. |
+| results | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when a tag is selected. |

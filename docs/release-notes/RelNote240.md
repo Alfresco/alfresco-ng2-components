@@ -59,7 +59,7 @@ Below are the most important new features of this release:
 -   File Versioning enhancements
 -   Empty Page Component
 -   TaskList Empty Page
--   [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) Empty Page
+-   [`ProcessList`](../../lib/process-services/src/lib/mock/process/process.model.mock.ts) Empty Page
 -   Error Page Component
 -   Search Improvements 
 -   [App config pipe](../core/pipes/app-config.pipe.md)
@@ -123,7 +123,7 @@ You can still override it from the parent component using `<ng-template>`.
 
 ### ProcessList Empty Page
 
-In the version 2.4, the [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) uses the empty state component if there are no available processes.  
+In the version 2.4, the [`ProcessList`](../../lib/process-services/src/lib/mock/process/process.model.mock.ts) uses the empty state component if there are no available processes.  
 You can still override it from the parent component using `<ng-template>`.
 
 ![Process list Empty Page](images/Screen+Shot+2018-06-25+at+11.16.57.png)
@@ -238,7 +238,7 @@ Release Notes - Apps Development Framework - Version 2.4.0
 -   \[[ADF-2789](https://issues.alfresco.com/jira/browse/ADF-2789)] - alfresco-js-api downlaodapi
 -   \[[ADF-2847](https://issues.alfresco.com/jira/browse/ADF-2847)] - Update all doc file structures to match script requirements
 -   \[[ADF-2969](https://issues.alfresco.com/jira/browse/ADF-2969)] - Move doc tools into the new tools folder
--   \[[ADF-2989](https://issues.alfresco.com/jira/browse/ADF-2989)] - Pre-populating Start Process [`Form`](../../lib/process-services/task-list/models/form.model.ts) with multiple files from ACS doesn't work
+-   \[[ADF-2989](https://issues.alfresco.com/jira/browse/ADF-2989)] - Pre-populating Start Process [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) with multiple files from ACS doesn't work
 -   \[[ADF-3049](https://issues.alfresco.com/jira/browse/ADF-3049)] - Release Note 2.4.0
 -   \[[ADF-3087](https://issues.alfresco.com/jira/browse/ADF-3087)] - Better explanation of replacing i18n keys in the user guide
 -   \[[ADF-3142](https://issues.alfresco.com/jira/browse/ADF-3142)] - [Login component](../core/components/login.component.md) should explain what "remember me" is for
@@ -267,7 +267,7 @@ Release Notes - Apps Development Framework - Version 2.4.0
 -   \[[ADF-2984](https://issues.alfresco.com/jira/browse/ADF-2984)] - Show date invalid message on search date range picker
 -   \[[ADF-3028](https://issues.alfresco.com/jira/browse/ADF-3028)] - [Page Title Service](../core/services/page-title.service.md) should support i18n
 -   \[[ADF-3041](https://issues.alfresco.com/jira/browse/ADF-3041)] - TaskList Component - Empty State issue.
--   \[[ADF-3066](https://issues.alfresco.com/jira/browse/ADF-3066)] - [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) Component - Empty State issue.
+-   \[[ADF-3066](https://issues.alfresco.com/jira/browse/ADF-3066)] - [`ProcessList`](../../lib/process-services/src/lib/mock/process/process.model.mock.ts) Component - Empty State issue.
 -   \[[ADF-3095](https://issues.alfresco.com/jira/browse/ADF-3095)] - Upload and DragArea component events to intercept uploads
 -   \[[ADF-3118](https://issues.alfresco.com/jira/browse/ADF-3118)] - [Notification Service](../core/services/notification.service.md) should support i18n resource keys
 
@@ -307,7 +307,7 @@ Release Notes - Apps Development Framework - Version 2.4.0
 -   \[[ADF-2685](https://issues.alfresco.com/jira/browse/ADF-2685)] - [Demo shell] The Gallery view is changed after navigating to another folder
 -   \[[ADF-2692](https://issues.alfresco.com/jira/browse/ADF-2692)] - Process Filters doesn't update immediately after completing the last task of the process.
 -   \[[ADF-2699](https://issues.alfresco.com/jira/browse/ADF-2699)] - dataTimeAgo Pipe is not localized
--   \[[ADF-2702](https://issues.alfresco.com/jira/browse/ADF-2702)] - Try to open an unknown type with the viewer returns an error
+-   \[[ADF-2702](https://issues.alfresco.com/jira/browse/ADF-2702)] - Try to open an  type with the viewer returns an error
 -   \[[ADF-2703](https://issues.alfresco.com/jira/browse/ADF-2703)] - Info Drawer - Header does not navigate to name of default tab
 -   \[[ADF-2710](https://issues.alfresco.com/jira/browse/ADF-2710)] - Share toggle gets enabled when clicking on Share icon
 -   \[[ADF-2717](https://issues.alfresco.com/jira/browse/ADF-2717)] - [Lock file] Long file name overflow
