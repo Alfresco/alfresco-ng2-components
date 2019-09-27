@@ -36,6 +36,7 @@ import { ContentWidgetComponent } from './components/widgets/content/content.wid
 import { WidgetComponent } from './components/widgets/widget.component';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { FormRendererComponent } from './components/form-renderer.component';
+import { EditJsonDialogModule } from '../dialogs/edit-json/edit-json.dialog.module';
 
 @NgModule({
     imports: [
@@ -49,7 +50,8 @@ import { FormRendererComponent } from './components/form-renderer.component';
         DataColumnModule,
         PipeModule,
         MatDatetimepickerModule,
-        MatNativeDatetimeModule
+        MatNativeDatetimeModule,
+        EditJsonDialogModule
     ],
     declarations: [
         ContentWidgetComponent,
