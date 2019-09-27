@@ -266,7 +266,7 @@
       "SORT_ASCENDING": "ascending",
       "SORT_DESCENDING": "descending",
       "SORT_NONE": "none",
-      "ICON_TEXT": "File type {{ type }}",
+      "ICON_TEXT": "Item type {{ type }}",
       "ICON_DISABLED": "disabled",
       "ROW_OPTION_BUTTON": "Actions menu"
     },
