@@ -39,11 +39,6 @@ describe('Login component - SSO', () => {
 
             await loginPage.waitForElements();
 
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
-                browser.params.testConfig.adf.hostSso,
-                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
-            browser.ignoreSynchronization = true;
-
             await loginPage.enterUsername(browser.params.testConfig.adf.adminEmail);
             await loginPage.enterPassword(browser.params.testConfig.adf.adminPassword);
             await loginPage.clickSignInButton();
