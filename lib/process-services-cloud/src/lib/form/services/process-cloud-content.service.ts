@@ -18,47 +18,64 @@
 import { Injectable } from '@angular/core';
 import { throwError, Observable, from } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AlfrescoApiService, LogService, ContentService } from '@alfresco/adf-core';
+import {
+    AlfrescoApiService,
+    LogService,
+    ContentService
+} from '@alfresco/adf-core';
+import { Node } from '@alfresco/js-api';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ProcessCloudContentService {
+    constructor(
+        private apiService: AlfrescoApiService,
+        private logService: LogService,
+        public contentService: ContentService
+    ) {}
 
-  constructor(
-    private apiService: AlfrescoApiService,
-    private logService: LogService,
-    public contentService: ContentService
-  ) { }
+    createTemporaryRawRelatedContent(
+        file: File,
+        nodeId: string,
+        contentHost: string
+    ): Observable<Node> {
+        const changedConfig = this.apiService.lastConfig;
 
-  createTemporaryRawRelatedContent(file, nodeId, contentHost): Observable<any> {
-    const changedConfig = this.apiService.lastConfig;
-    changedConfig.provider = 'ALL';
-    changedConfig.hostEcm = contentHost.replace('/alfresco', '');
-    this.apiService.getInstance().setConfig(changedConfig);
-    return from(this.apiService.getInstance().upload.uploadFile(
-      file, '', nodeId, '', { overwrite: true })).pipe(
-        map((res: any) => {
-          return (res.entry);
-        }),
-        catchError((err) => this.handleError(err))
-      );
-  }
+        changedConfig.provider = 'ALL';
+        changedConfig.hostEcm = contentHost.replace('/alfresco', '');
 
-  getRawContentNode(nodeId: string, contentHost: string): Observable<any> {
-    const changedConfig = this.apiService.lastConfig;
-    changedConfig.provider = 'ALL';
-    changedConfig.hostEcm = contentHost.replace('/alfresco', '');
-    this.apiService.getInstance().setConfig(changedConfig);
-    return this.contentService.getNodeContent(nodeId);
-  }
+        this.apiService.getInstance().setConfig(changedConfig);
 
-  downloadNodeContent(blob: Blob, fileName: string): void {
-    this.contentService.downloadBlob(blob, fileName);
-  }
+        return from(
+            this.apiService
+                .getInstance()
+                .upload.uploadFile(file, '', nodeId, '', { overwrite: true })
+        ).pipe(
+            map((res: any) => {
+                return {
+                    ...res.entry,
+                    nodeId: res.entry.id
+                };
+            }),
+            catchError(err => this.handleError(err))
+        );
+    }
 
-  private handleError(error: any) {
-    this.logService.error(error);
-    return throwError(error || 'Server error');
-  }
+    getRawContentNode(nodeId: string, contentHost: string): Observable<any> {
+        const changedConfig = this.apiService.lastConfig;
+        changedConfig.provider = 'ALL';
+        changedConfig.hostEcm = contentHost.replace('/alfresco', '');
+        this.apiService.getInstance().setConfig(changedConfig);
+        return this.contentService.getNodeContent(nodeId);
+    }
+
+    downloadNodeContent(blob: Blob, fileName: string): void {
+        this.contentService.downloadBlob(blob, fileName);
+    }
+
+    private handleError(error: any) {
+        this.logService.error(error);
+        return throwError(error || 'Server error');
+    }
 }

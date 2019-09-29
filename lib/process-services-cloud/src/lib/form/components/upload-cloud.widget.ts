@@ -18,9 +18,10 @@
 /* tslint:disable:component-selector  */
 
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Node } from '@alfresco/js-api';
 import { Observable, from } from 'rxjs';
-import { mergeMap, map, catchError } from 'rxjs/operators';
-import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ContentLinkModel } from '@alfresco/adf-core';
+import { mergeMap } from 'rxjs/operators';
+import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ContentLinkModel, NotificationService } from '@alfresco/adf-core';
 import { ProcessCloudContentService } from '../services/process-cloud-content.service';
 
 @Component({
@@ -44,6 +45,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         public formService: FormService,
         private thumbnailService: ThumbnailService,
         public processCloudContentService: ProcessCloudContentService,
+        private notificationService: NotificationService,
         private logService: LogService) {
         super(formService);
     }
@@ -53,6 +55,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
             this.field.value &&
             this.field.value.length > 0) {
             this.hasFile = true;
+            this.fixIncompatibilityFromPreviousAndNewForm([]);
         }
         this.getMultipleFileParam();
     }
@@ -64,8 +67,16 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     onFileChanged(event: any) {
-        const files = event.target.files;
-        const filesSaved = [];
+        const files: File[] = [];
+        const filesSaved: Node[] = [];
+
+        for (const file of Array.from<File>(event.target.files)) {
+            if (!this.isUploaded(file)) {
+                files.push(file);
+            } else {
+                this.notificationService.showWarning('FORM.FIELD.FILE_ALREADY_UPLOADED');
+            }
+        }
 
         if (files && files.length > 0) {
             from(files)
@@ -83,34 +94,29 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         }
     }
 
-    fixIncompatibilityFromPreviousAndNewForm(filesSaved) {
-        this.field.value = filesSaved;
-        this.field.form.values[this.field.id] = filesSaved;
-        this.hasFile = true;
+    private isUploaded(file: File): boolean {
+        const current: Node[] = this.field.value || [];
+        return current.some(entry => entry.name === file.name);
     }
 
-    getIcon(mimeType) {
+    protected fixIncompatibilityFromPreviousAndNewForm(filesSaved: Node[]) {
+        const value: Node[] = [...this.field.value || []];
+        value.push(...filesSaved || []);
+
+        this.field.value = value;
+        this.field.form.values[this.field.id] = value;
+
+        this.hasFile = value.length > 0;
+    }
+
+    getIcon(mimeType: string): string {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
-    private uploadRawContent(file): Observable<any> {
-        return this.processCloudContentService.createTemporaryRawRelatedContent(file, this.field.form.nodeId, this.field.form.contentHost)
-            .pipe(
-                map((response: any) => {
-                    this.logService.info(response);
-                    return {
-                        nodeId: response.id,
-                        name: response.name,
-                        content: response.content,
-                        createdAt: response.createdAt
-                    };
-                }),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    private handleError(error: any): any {
-        return this.logService.error(error || 'Server error');
+    private uploadRawContent(file: File): Observable<Node> {
+        return this.processCloudContentService.createTemporaryRawRelatedContent(
+            file, this.field.form.nodeId, this.field.form.contentHost
+        );
     }
 
     getMultipleFileParam() {
@@ -121,17 +127,17 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         }
     }
 
-    private removeElementFromList(file) {
-        const savedValues = this.field.form.values[this.field.id]
-                            ? this.field.form.values[this.field.id] : this.field.value;
-        const index = savedValues.indexOf(file);
-        if (index !== -1) {
-            const filteredValues = savedValues.filter((value: any) => value.nodeId !== file.nodeId);
-            this.resetFormValues(filteredValues);
-        }
+    get uploadedFiles(): Node[] {
+        const result = this.field.value || this.field.form.values[this.field.id];
+        return result || [];
     }
 
-    private resetFormValues(values) {
+    private removeElementFromList(file: Node) {
+        const filteredValues = this.uploadedFiles.filter(value => value.id !== file.id);
+        this.resetFormValues(filteredValues);
+    }
+
+    private resetFormValues(values: Node[]) {
         if (values && values.length > 0) {
             this.field.value = values;
             this.field.form.values[this.field.id] = values;

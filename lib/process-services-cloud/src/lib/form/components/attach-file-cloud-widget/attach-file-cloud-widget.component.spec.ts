@@ -45,6 +45,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     let formService: FormService;
 
     const fakePngAnswer = {
+        id: 1155,
         nodeId: 1155,
         name: 'a_png_file.png',
         created: '2017-07-25T17:17:37.099Z',
@@ -86,6 +87,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     const fakeLocalPngAnswer = {
         id: 1155,
+        nodeId: 1155,
         name: 'a_png_file.png',
         created: '2017-07-25T17:17:37.099Z',
         createdBy: {
