@@ -198,6 +198,10 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private saveOAuthValues(values: any) {
+        if (values.oauthConfig.publicUrls) {
+            values.oauthConfig.publicUrls = values.oauthConfig.publicUrls.split(',')
+        }
+
         this.storageService.setItem(AppConfigValues.OAUTHCONFIG, JSON.stringify(values.oauthConfig));
         this.storageService.setItem(AppConfigValues.IDENTITY_HOST, values.identityHost);
     }
