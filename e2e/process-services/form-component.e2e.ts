@@ -47,7 +47,7 @@ describe('Form Component', () => {
         errorLabel: 'Error Label4'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -65,43 +65,41 @@ describe('Form Component', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.clickFormButton();
-
-        done();
+        await navigationBarPage.navigateToProcessServicesFormPage();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
-        done();
     });
 
-    it('[C286505] Should be able to display errors under the Error Log section', () => {
-        widget.numberWidget().getNumberFieldLabel(fields.numberWidgetId);
-        widget.numberWidget().setFieldValue(fields.numberWidgetId, message.test);
-        formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
-        formPage.checkErrorLogMessage(message.errorLogNumber);
+    it('[C286505] Should be able to display errors under the Error Log section', async () => {
+        await widget.numberWidget().getNumberFieldLabel(fields.numberWidgetId);
+        await widget.numberWidget().setFieldValue(fields.numberWidgetId, message.test);
+        await formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
+        await formPage.checkErrorLogMessage(message.errorLogNumber);
 
-        widget.dateWidget().checkLabelIsVisible(fields.dateWidgetId);
-        widget.dateWidget().setDateInput(fields.dateWidgetId, message.test);
-        formPage.saveForm();
-        formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
-        formPage.checkErrorLogMessage(message.errorLogDate);
+        await widget.dateWidget().checkLabelIsVisible(fields.dateWidgetId);
+        await widget.dateWidget().setDateInput(fields.dateWidgetId, message.test);
 
-        widget.amountWidget().getAmountFieldLabel(fields.amountWidgetId);
-        widget.amountWidget().setFieldValue(fields.amountWidgetId, message.test);
-        formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
-        formPage.checkErrorLogMessage(message.errorLogAmount);
+        await formPage.saveForm();
+        await formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
+        await formPage.checkErrorLogMessage(message.errorLogDate);
 
-        widget.amountWidget().removeFromAmountWidget(fields.amountWidgetId);
-        formPage.checkErrorMessageIsNotDisplayed(message.errorLogAmount);
+        await widget.amountWidget().getAmountFieldLabel(fields.amountWidgetId);
+        await widget.amountWidget().setFieldValue(fields.amountWidgetId, message.test);
+        await formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
+        await formPage.checkErrorLogMessage(message.errorLogAmount);
 
-        widget.dateWidget().clearDateInput(fields.dateWidgetId);
-        widget.numberWidget().clearFieldValue(fields.numberWidgetId);
-        formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
-        formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
-        formPage.checkErrorLogMessage(message.errorLabel);
+        await widget.amountWidget().removeFromAmountWidget(fields.amountWidgetId);
+        await formPage.checkErrorMessageIsNotDisplayed(message.errorLogAmount);
+
+        await widget.dateWidget().clearDateInput(fields.dateWidgetId);
+        await widget.numberWidget().clearFieldValue(fields.numberWidgetId);
+        await formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
+        await formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
+        await formPage.checkErrorLogMessage(message.errorLabel);
+
     });
 });

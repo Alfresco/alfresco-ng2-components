@@ -117,7 +117,8 @@
       "REMOVE_FILE": "移除已上传文件"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "已取消"
+      "FILE_CANCELED_STATUS": "已取消",
+      "FILE_DONE_STATUS": "已上传"
     },
     "CONFIRMATION": {
       "BUTTON": {
@@ -130,7 +131,20 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "文件版本"
+      "VERSION": "文件版本 {{ version }}",
+      "DIALOG": "上传列表",
+      "DIALOG_MAXIMIZE": "最大化上传对话框",
+      "DIALOG_MINIMIZE": "最小化上传对话框",
+      "DIALOG_CLOSE": "关闭上传对话框",
+      "CANCEL_ALL": "取消所有正在上传的文件",
+      "REMOVE_FILE": "移除已上传文件 {{ file }}",
+      "CANCEL_FILE": "取消计划的文件 {{ file }}",
+      "CANCEL_FILE_UPLOAD": "取消文件上传 {{ file }}",
+      "UPLOAD_FILE_ERROR": "上传错误 {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "确认取消",
+        "CONTINUE": "继续上传"
+      }
     }
   },
   "FILE_UPLOAD": {
@@ -368,6 +382,17 @@
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "已更新库属性"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "面包屑",
+      "CURRENT_PAGE": "页面"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "打开 {{ name }}"
     }
   }
 }

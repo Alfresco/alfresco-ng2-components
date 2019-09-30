@@ -72,6 +72,10 @@
           "CANCEL": "Abbrechen"
         },
         "TITLE": "Dateien werden zu ZIP-Ordner hinzugefügt. Dies kann ein paar Minuten dauern"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Schließen",
+        "UPDATE": "Aktualisieren"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "Name",
         "VALUE": "Wert"
       },
+      "NONE": "Keine",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Verwenden Sie ein Zahlenformat",
         "INT_VALIDATION_ERROR": "Verwenden Sie ein Ganzzahlenformat"
@@ -184,6 +189,7 @@
         "EDIT": "Bearbeiten",
         "SAVE": "Speichern",
         "CANCEL": "Abbrechen",
+        "CLEAR": "Löschen",
         "TOGGLE": "Umschaltwert"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Anmelden",
       "USERNAME": "Benutzername",
       "PASSWORD": "Passwort",
       "REMEMBER": "Benutzername und Passwort speichern"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Passwort anzeigen",
+      "HIDE-PASSWORD": "Passwort verbergen"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Erforderlich",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Alle auswählen",
-      "SELECT_FILE": "Datei auswählen"
+      "SELECT_FILE": "Datei auswählen",
+      "SORT_ASCENDING": "Aufsteigend",
+      "SORT_DESCENDING": "Absteigend",
+      "SORT_NONE": "Keine",
+      "ICON_TEXT": "Dateityp {{ type }}",
+      "ICON_DISABLED": "Deaktiviert",
+      "ROW_OPTION_BUTTON": "Aktionen"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Dokument",
+      "FOLDER": "Ordner",
+      "PDF": "PDF",
+      "IMAGE": "Bild",
+      "EXCEL": "Excel-Tabelle",
+      "WORD": "Word-Dokument",
+      "POWERPOINT": "Powerpoint-Präsentation",
+      "VIDEO": "Video",
+      "AUDIO": "Audio",
+      "WEBSITE": "Website",
+      "ARCHIVE": "Archiv",
+      "PRESENTATION": "Präsentation",
+      "SPREADSHEET": "Tabelle",
+      "MISCELLANEOUS": "Verschiedenes"
     }
   },
   "USER_PROFILE": {
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Version",
     "SERVER_SETTINGS": {
       "TITLE": "Servereinstellungen",
       "DESCRIPTION": "Die unten angegebenen Wert stammen von AppConfigService",
@@ -428,6 +461,18 @@
         "MODE": "Modus",
         "CLUSTER_ENABLED": "Ist Cluster aktiviert",
         "CRYPTODOC_ENABLED": "Ist Cryptodoc aktiviert"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Plugins",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "Name",
+        "VERSION": "Version",
+        "VENDOR": "Hersteller",
+        "LICENSE": "Lizenz",
+        "RUNTIME": "Laufzeit",
+        "DESCRIPTION": "Beschreibung"
       }
     }
   },

@@ -45,6 +45,10 @@ class ProvidesNotificationServiceComponent {
         return this.notificationService.openSnackMessage('Test notification', 1000);
     }
 
+    sendMessageWithArgs() {
+        return this.notificationService.openSnackMessage('Test notification {{ arg }}', 1000, {arg: 'arg'});
+    }
+
     sendCustomMessage() {
         const matSnackBarConfig = new MatSnackBarConfig();
         matSnackBarConfig.duration = 1000;
@@ -102,6 +106,18 @@ describe('NotificationService', () => {
         const promise = fixture.componentInstance.sendMessage();
         promise.afterDismissed().subscribe(() => {
             expect(translationService.instant).toHaveBeenCalled();
+            done();
+        });
+
+        fixture.detectChanges();
+    });
+
+    it('should translate messages with args', (done) => {
+        spyOn(translationService, 'instant').and.callThrough();
+
+        const promise = fixture.componentInstance.sendMessageWithArgs();
+        promise.afterDismissed().subscribe(() => {
+            expect(translationService.instant).toHaveBeenCalledWith('Test notification {{ arg }}', {arg: 'arg'});
             done();
         });
 

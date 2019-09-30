@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
@@ -23,9 +23,6 @@ import { ViewerPage } from '../pages/adf/viewerPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import resources = require('../util/resources');
-import { Util } from '../util/util';
-
-import path = require('path');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
@@ -47,7 +44,7 @@ describe('Attachment list action menu for processes', () => {
         name: resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
-    const downloadedPngFile = path.join(__dirname, 'downloads', pngFile.name);
+    const downloadedPngFile = pngFile.name;
     let tenantId, appId;
     const processName = {
         active: 'Active Process',
@@ -57,7 +54,7 @@ describe('Attachment list action menu for processes', () => {
         dragDrop: 'Drag and Drop'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -85,107 +82,106 @@ describe('Attachment list action menu for processes', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-        done();
+
     });
 
-    it('[C260228] Should be able to access options of a file attached to an active process', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickProcessButton();
+    it('[C260228] Should be able to access options of a file attached to an active process', async () => {
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickProcessButton();
 
-        processFiltersPage.selectFromProcessList(processName.active);
+        await processFiltersPage.selectFromProcessList(processName.active);
 
-        processDetailsPage.checkProcessTitleIsDisplayed();
+        await processDetailsPage.checkProcessTitleIsDisplayed();
 
-        attachmentListPage.clickAttachFileButton(pngFile.location);
-        attachmentListPage.viewFile(pngFile.name);
+        await attachmentListPage.clickAttachFileButton(pngFile.location);
+        await attachmentListPage.viewFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(pngFile.name);
-        viewerPage.clickCloseButton();
+        await viewerPage.checkFileNameIsDisplayed(pngFile.name);
+        await viewerPage.clickCloseButton();
 
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.selectFromProcessList(processName.active);
+        await processFiltersPage.clickRunningFilterButton();
+        await processFiltersPage.selectFromProcessList(processName.active);
 
-        attachmentListPage.doubleClickFile(pngFile.name);
+        await attachmentListPage.doubleClickFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(pngFile.name);
-        viewerPage.clickCloseButton();
+        await viewerPage.checkFileNameIsDisplayed(pngFile.name);
+        await viewerPage.clickCloseButton();
 
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.selectFromProcessList(processName.active);
+        await processFiltersPage.clickRunningFilterButton();
+        await processFiltersPage.selectFromProcessList(processName.active);
 
-        attachmentListPage.downloadFile(pngFile.name);
+        await attachmentListPage.downloadFile(pngFile.name);
 
-        browser.driver.sleep(1000);
+        await browser.sleep(1000);
 
-        expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        await expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true);
 
-        attachmentListPage.removeFile(pngFile.name);
-        attachmentListPage.checkFileIsRemoved(pngFile.name);
+        await attachmentListPage.removeFile(pngFile.name);
+        await attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
-    it('[C279886] Should be able to access options of a file attached to a completed process', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickProcessButton();
+    it('[C279886] Should be able to access options of a file attached to a completed process', async () => {
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickProcessButton();
 
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.selectFromProcessList(processName.completed);
+        await processFiltersPage.clickRunningFilterButton();
+        await processFiltersPage.selectFromProcessList(processName.completed);
 
-        processDetailsPage.checkProcessTitleIsDisplayed();
+        await processDetailsPage.checkProcessTitleIsDisplayed();
 
-        attachmentListPage.clickAttachFileButton(pngFile.location);
+        await attachmentListPage.clickAttachFileButton(pngFile.location);
 
-        processDetailsPage.clickCancelProcessButton();
-        processFiltersPage.clickCompletedFilterButton();
+        await processDetailsPage.clickCancelProcessButton();
+        await processFiltersPage.clickCompletedFilterButton();
 
-        processDetailsPage.checkProcessTitleIsDisplayed();
+        await processDetailsPage.checkProcessTitleIsDisplayed();
 
-        attachmentListPage.checkAttachFileButtonIsNotDisplayed();
-        attachmentListPage.viewFile(pngFile.name);
+        await attachmentListPage.checkAttachFileButtonIsNotDisplayed();
+        await attachmentListPage.viewFile(pngFile.name);
 
-        viewerPage.checkFileNameIsDisplayed(pngFile.name);
-        viewerPage.clickCloseButton();
+        await viewerPage.checkFileNameIsDisplayed(pngFile.name);
+        await viewerPage.clickCloseButton();
 
-        processFiltersPage.clickCompletedFilterButton();
+        await processFiltersPage.clickCompletedFilterButton();
 
-        attachmentListPage.downloadFile(pngFile.name);
+        await attachmentListPage.downloadFile(pngFile.name);
 
-        browser.driver.sleep(1000);
+        await browser.sleep(1000);
 
-        expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
+        await expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true);
 
-        attachmentListPage.removeFile(pngFile.name);
-        attachmentListPage.checkFileIsRemoved(pngFile.name);
+        await attachmentListPage.removeFile(pngFile.name);
+        await attachmentListPage.checkFileIsRemoved(pngFile.name);
     });
 
-    it('[C277296] Should allow upload file when clicking on \'add\' icon', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
+    it('[C277296] Should allow upload file when clicking on \'add\' icon', async () => {
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.selectFromProcessList(processName.taskApp);
+        await processFiltersPage.clickRunningFilterButton();
+        await processFiltersPage.selectFromProcessList(processName.taskApp);
 
-        processDetailsPage.checkProcessTitleIsDisplayed();
+        await processDetailsPage.checkProcessTitleIsDisplayed();
 
-        attachmentListPage.clickAttachFileButton(pngFile.location);
-        attachmentListPage.checkFileIsAttached(pngFile.name);
+        await attachmentListPage.clickAttachFileButton(pngFile.location);
+        await attachmentListPage.checkFileIsAttached(pngFile.name);
     });
 
-    it('[C260235] Should empty list component be displayed when no file is attached', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
+    it('[C260235] Should empty list component be displayed when no file is attached', async () => {
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
-        processFiltersPage.clickRunningFilterButton();
-        processFiltersPage.selectFromProcessList(processName.emptyList);
+        await processFiltersPage.clickRunningFilterButton();
+        await processFiltersPage.selectFromProcessList(processName.emptyList);
 
-        attachmentListPage.checkEmptyAttachmentList();
-        attachmentListPage.clickAttachFileButton(pngFile.location);
-        attachmentListPage.checkFileIsAttached(pngFile.name);
-        attachmentListPage.removeFile(pngFile.name);
-        attachmentListPage.checkFileIsRemoved(pngFile.name);
-        attachmentListPage.checkEmptyAttachmentList();
+        await attachmentListPage.checkEmptyAttachmentList();
+        await attachmentListPage.clickAttachFileButton(pngFile.location);
+        await attachmentListPage.checkFileIsAttached(pngFile.name);
+        await attachmentListPage.removeFile(pngFile.name);
+        await attachmentListPage.checkFileIsRemoved(pngFile.name);
+        await attachmentListPage.checkEmptyAttachmentList();
     });
 
 });

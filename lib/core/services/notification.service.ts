@@ -41,22 +41,25 @@ export class NotificationService {
     /**
      * Opens a SnackBar notification to show a message.
      * @param message The message (or resource key) to show.
+     * @param translationArgs The interpolation parameters to add for the translation
      * @param config Time before notification disappears after being shown or MatSnackBarConfig object
      * @returns Information/control object for the SnackBar
      */
-    openSnackMessage(message: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
+    openSnackMessage(message: string, config?: number | MatSnackBarConfig, translationArgs?: any): MatSnackBarRef<any> {
+        const translatedMessage = this.translationService.instant(message, translationArgs);
+        return this.performOpening(translatedMessage, config);
+    }
+
+    private performOpening(translatedMessage: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
         if (!config) {
             config = this.DEFAULT_DURATION_MESSAGE;
         }
-
-        const translatedMessage = this.translationService.instant(message);
 
         if (typeof config === 'number') {
             config = {
                 duration: config
             };
         }
-
         this.messages.next({ message: translatedMessage, dateTime: new Date });
 
         return this.snackBar.open(translatedMessage, null, config);
@@ -94,9 +97,12 @@ export class NotificationService {
         return this.snackBar.dismiss();
     }
 
-    protected showMessage(message: string, panelClass: string, action?: string): MatSnackBarRef<any> {
-        message = this.translationService.instant(message);
+    protected showMessage(message: string, panelClass: string, action?: string, interpolateArgs?: any): MatSnackBarRef<any> {
+        message = this.translationService.instant(message, interpolateArgs);
+        return this.openMessageBar(message, panelClass, action);
+    }
 
+    private openMessageBar(message: string, panelClass: string, action?: string):  MatSnackBarRef<any> {
         this.messages.next({ message: message, dateTime: new Date });
 
         return this.snackBar.open(message, action, {
@@ -119,8 +125,8 @@ export class NotificationService {
      * @param message Text message or translation key for the message.
      * @param action Action name
      */
-    showInfo(message: string, action?: string): MatSnackBarRef<any> {
-        return this.showMessage(message, 'adf-info-snackbar', action);
+    showInfo(message: string, action?: string, interpolateArgs?: any): MatSnackBarRef<any> {
+        return this.showMessage(message, 'adf-info-snackbar', action, interpolateArgs);
     }
 
     /**

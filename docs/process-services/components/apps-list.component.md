@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Apps List Component](../../../lib/process-services/app-list/apps-list.component.ts "Defined in apps-list.component.ts")
+# [Apps List Component](../../../lib/process-services/src/lib/app-list/apps-list.component.ts "Defined in apps-list.component.ts")
 
 Shows all available apps.
 
@@ -46,7 +46,7 @@ You can show custom content when there are no apps available by supplying an
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`AppDefinitionRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)`>` | Emitted when an app entry is clicked. |
+| appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`AppDefinitionRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when an app entry is clicked. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 
 ## Details

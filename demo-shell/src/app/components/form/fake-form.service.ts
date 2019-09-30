@@ -18,35 +18,43 @@
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
-    AppConfigService, AlfrescoApiService, EcmModelService, LogService, FormService, FormOutcomeEvent
+    AlfrescoApiService,
+    EcmModelService,
+    LogService,
+    FormService,
+    FormOutcomeEvent
 } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 
 @Injectable()
 export class FakeFormService extends FormService {
-
     executeOutcome = new Subject<FormOutcomeEvent>();
 
-    constructor(appConfig: AppConfigService,
-                ecmModelService: EcmModelService,
-                apiService: AlfrescoApiService,
-                protected logService: LogService) {
+    constructor(
+        ecmModelService: EcmModelService,
+        apiService: AlfrescoApiService,
+        protected logService: LogService
+    ) {
         super(ecmModelService, apiService, logService);
     }
 
-    public getRestFieldValues(taskId: string, fieldId: string): Observable<any> {
+    public getRestFieldValues(
+        taskId: string,
+        fieldId: string
+    ): Observable<any> {
         if (fieldId === 'typeaheadField') {
             return of([
-                { 'id': '1', 'name': 'Leanne Graham' },
-                { 'id': '2', 'name': 'Ervin Howell' },
-                { 'id': '3', 'name': 'Clementine Bauch' },
-                { 'id': '4', 'name': 'Patricia Lebsack' },
-                { 'id': '5', 'name': 'Chelsey Dietrich' },
-                { 'id': '6', 'name': 'Mrs. Dennis Schulist' },
-                { 'id': '7', 'name': 'Kurtis Weissnat' },
-                { 'id': '8', 'name': 'Nicholas Runolfsdottir V' },
-                { 'id': '9', 'name': 'Glenna Reichert' },
-                { 'id': '10', 'name': 'Clementina DuBuque' }]);
+                { id: '1', name: 'Leanne Graham' },
+                { id: '2', name: 'Ervin Howell' },
+                { id: '3', name: 'Clementine Bauch' },
+                { id: '4', name: 'Patricia Lebsack' },
+                { id: '5', name: 'Chelsey Dietrich' },
+                { id: '6', name: 'Mrs. Dennis Schulist' },
+                { id: '7', name: 'Kurtis Weissnat' },
+                { id: '8', name: 'Nicholas Runolfsdottir V' },
+                { id: '9', name: 'Glenna Reichert' },
+                { id: '10', name: 'Clementina DuBuque' }
+            ]);
         } else {
             return super.getRestFieldValues(taskId, fieldId);
         }

@@ -15,146 +15,143 @@
  * limitations under the License.
  */
 
-import { by, element, protractor } from 'protractor';
+import { by, element, ElementFinder, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ProcessDetailsPage {
 
     // Process Details
-    processTitle = element(by.css('mat-card-title[class="mat-card-title"]'));
-    processDetailsMessage = element(by.css('adf-process-instance-details div[class="ng-star-inserted"]'));
-    processStatusField = element(by.css('span[data-automation-id="card-textitem-value-status"]'));
-    processEndDateField = element(by.css('span[data-automation-id="card-dateitem-ended"]'));
-    processCategoryField = element(by.css('span[data-automation-id="card-textitem-value-category"]'));
-    processBusinessKeyField = element(by.css('span[data-automation-id="card-textitem-value-businessKey"]'));
-    processCreatedByField = element(by.css('span[data-automation-id="card-textitem-value-assignee"]'));
-    processCreatedField = element(by.css('span[data-automation-id="card-dateitem-created"]'));
-    processIdField = element(by.css('span[data-automation-id="card-textitem-value-id"]'));
-    processDescription = element(by.css('span[data-automation-id="card-textitem-value-description"]'));
-    showDiagramButtonDisabled = element(by.css('button[id="show-diagram-button"][disabled]'));
-    propertiesList = element(by.css('div[class="adf-property-list"]'));
+    processTitle: ElementFinder = element(by.css('mat-card-title[class="mat-card-title"]'));
+    processDetailsMessage: ElementFinder = element(by.css('adf-process-instance-details div[class="ng-star-inserted"]'));
+    processStatusField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-status"]'));
+    processEndDateField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-ended"]'));
+    processCategoryField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-category"]'));
+    processBusinessKeyField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-businessKey"]'));
+    processCreatedByField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-assignee"]'));
+    processCreatedField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-created"]'));
+    processIdField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-id"]'));
+    processDescription: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-description"]'));
+    showDiagramButtonDisabled: ElementFinder = element(by.css('button[id="show-diagram-button"][disabled]'));
+    propertiesList: ElementFinder = element(by.css('div[class="adf-property-list"]'));
     // Show Diagram
-    showDiagramButton = element(by.id('show-diagram-button'));
-    diagramCanvas = element(by.css('svg[xmlns="http://www.w3.org/2000/svg"]'));
-    backButton = element(by.css('app-show-diagram button[class="mat-mini-fab mat-accent"]'));
+    showDiagramButton: ElementFinder = element(by.id('show-diagram-button'));
+    diagramCanvas: ElementFinder = element(by.css('svg[xmlns="http://www.w3.org/2000/svg"]'));
+    backButton: ElementFinder = element(by.css('app-show-diagram button[class="mat-mini-fab mat-accent"]'));
     // Comments
-    commentInput = element(by.id('comment-input'));
+    commentInput: ElementFinder = element(by.id('comment-input'));
     // Audit Log
-    auditLogButton = element(by.css('button[adf-process-audit]'));
+    auditLogButton: ElementFinder = element(by.css('button[adf-process-audit]'));
     // Cancel Process button
-    cancelProcessButton = element(by.css('div[data-automation-id="header-status"] > button'));
+    cancelProcessButton: ElementFinder = element(by.css('div[data-automation-id="header-status"] > button'));
     // Tasks
-    activeTask = element(by.css('div[data-automation-id="active-tasks"]'));
-    startForm = element(by.css('div[data-automation-id="start-form"]'));
-    completedTask = element(by.css('div[data-automation-id="completed-tasks"]'));
-    taskTitle = element(by.css('h2[class="adf-activiti-task-details__header"]'));
+    activeTask: ElementFinder = element(by.css('div[data-automation-id="active-tasks"]'));
+    startForm: ElementFinder = element(by.css('div[data-automation-id="start-form"]'));
+    completedTask: ElementFinder = element(by.css('div[data-automation-id="completed-tasks"]'));
+    taskTitle: ElementFinder = element(by.css('h2[class="adf-activiti-task-details__header"]'));
 
-    checkDetailsAreDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processStatusField);
-        BrowserVisibility.waitUntilElementIsVisible(this.processEndDateField);
-        BrowserVisibility.waitUntilElementIsVisible(this.processCategoryField);
-        BrowserVisibility.waitUntilElementIsVisible(this.processBusinessKeyField);
-        BrowserVisibility.waitUntilElementIsVisible(this.processCreatedByField);
-        BrowserVisibility.waitUntilElementIsVisible(this.processCreatedField);
-        BrowserVisibility.waitUntilElementIsVisible(this.processIdField);
-        BrowserVisibility.waitUntilElementIsVisible(this.processDescription);
-        BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.activeTask);
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelProcessButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
-        BrowserVisibility.waitUntilElementIsVisible(this.auditLogButton);
-        return this;
+    async checkDetailsAreDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.processStatusField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.processEndDateField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.processCategoryField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.processBusinessKeyField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.processCreatedByField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.processCreatedField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.processIdField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.processDescription);
+        await BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.activeTask);
+        await BrowserVisibility.waitUntilElementIsVisible(this.cancelProcessButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
+        await BrowserVisibility.waitUntilElementIsVisible(this.auditLogButton);
     }
 
-    checkProcessTitleIsDisplayed() {
+    checkProcessTitleIsDisplayed(): Promise<string> {
         return BrowserActions.getText(this.processTitle);
     }
 
-    checkProcessDetailsMessage() {
+    checkProcessDetailsMessage(): Promise<string> {
         return BrowserActions.getText(this.processDetailsMessage);
     }
 
-    getProcessStatus() {
+    getProcessStatus(): Promise<string> {
         return BrowserActions.getText(this.processStatusField);
     }
 
-    getEndDate() {
+    getEndDate(): Promise<string> {
         return BrowserActions.getText(this.processEndDateField);
     }
 
-    getProcessCategory() {
+    getProcessCategory(): Promise<string> {
         return BrowserActions.getText(this.processCategoryField);
     }
 
-    getBusinessKey() {
+    getBusinessKey(): Promise<string> {
         return BrowserActions.getText(this.processBusinessKeyField);
     }
 
-    getCreatedBy() {
+    getCreatedBy(): Promise<string> {
         return BrowserActions.getText(this.processCreatedByField);
     }
 
-    getCreated() {
+    getCreated(): Promise<string> {
         return BrowserActions.getText(this.processCreatedField);
     }
 
-    getId() {
+    getId(): Promise<string> {
         return BrowserActions.getText(this.processIdField);
     }
 
-    getProcessDescription() {
+    getProcessDescription(): Promise<string> {
         return BrowserActions.getText(this.processDescription);
     }
 
-    clickShowDiagram() {
-        BrowserActions.click(this.showDiagramButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.diagramCanvas);
-        BrowserActions.click(this.backButton);
+    async clickShowDiagram(): Promise<void> {
+        await BrowserActions.click(this.showDiagramButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.diagramCanvas);
+        await BrowserActions.click(this.backButton);
 
     }
 
-    checkShowDiagramIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButtonDisabled);
+    async checkShowDiagramIsDisabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButtonDisabled);
     }
 
-    addComment(comment) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
-        this.commentInput.sendKeys(comment);
-        this.commentInput.sendKeys(protractor.Key.ENTER);
-        return this;
+    async addComment(comment): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
+        await this.commentInput.sendKeys(comment);
+        await this.commentInput.sendKeys(protractor.Key.ENTER);
     }
 
-    checkCommentIsDisplayed(comment) {
-        const commentInserted = element(by.cssContainingText('div[id="comment-message"]', comment));
-        BrowserVisibility.waitUntilElementIsVisible(commentInserted);
-        return this;
+    async checkCommentIsDisplayed(comment): Promise<void> {
+        const commentInserted: ElementFinder = element(by.cssContainingText('div[id="comment-message"]', comment));
+        await BrowserVisibility.waitUntilElementIsVisible(commentInserted);
     }
 
-    clickAuditLogButton() {
-        BrowserActions.click(this.auditLogButton);
+    async clickAuditLogButton(): Promise<void> {
+        await BrowserActions.click(this.auditLogButton);
     }
 
-    clickCancelProcessButton() {
-        BrowserActions.click(this.cancelProcessButton);
+    async clickCancelProcessButton(): Promise<void> {
+        await BrowserActions.click(this.cancelProcessButton);
     }
 
-    clickOnActiveTask() {
-        return BrowserActions.click(this.activeTask);
+    async clickOnActiveTask(): Promise<void> {
+        await BrowserActions.click(this.activeTask);
     }
 
-    clickOnStartForm() {
-        return BrowserActions.click(this.startForm);
+    async clickOnStartForm(): Promise<void> {
+        await BrowserActions.click(this.startForm);
     }
 
-    clickOnCompletedTask() {
-        return BrowserActions.click(this.completedTask);
+    async clickOnCompletedTask(): Promise<void> {
+        await BrowserActions.click(this.completedTask);
     }
 
-    checkActiveTaskTitleIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskTitle);
+    async checkActiveTaskTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.taskTitle);
     }
 
-    checkProcessDetailsCard() {
-        BrowserVisibility.waitUntilElementIsVisible(this.propertiesList);
+    async checkProcessDetailsCard(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.propertiesList);
     }
 }

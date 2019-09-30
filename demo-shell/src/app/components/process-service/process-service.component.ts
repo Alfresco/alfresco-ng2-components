@@ -30,7 +30,6 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-    ProcessInstanceFilterRepresentation,
     Pagination,
     UserProcessInstanceFilterRepresentation
 } from '@alfresco/js-api';
@@ -306,7 +305,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.report = event;
     }
 
-    onSuccessTaskFilterList(event: any): void {
+    onSuccessTaskFilterList(): void {
         this.applyTaskFilter(this.activitiFilter.getCurrentFilter());
     }
 
@@ -329,7 +328,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.reloadTaskFilters();
     }
 
-    onSuccessTaskList(event: FilterRepresentationModel) {
+    onSuccessTaskList() {
         this.currentTaskId = this.taskList.getCurrentId();
     }
 
@@ -343,15 +342,15 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.processPage = 0;
     }
 
-    onSuccessProcessFilterList(event: ProcessInstanceFilterRepresentation[]): void {
+    onSuccessProcessFilterList(): void {
         this.processFilter = this.activitiProcessFilter.getCurrentFilter();
     }
 
-    onSuccessProcessList(event: any): void {
+    onSuccessProcessList(): void {
         this.currentProcessInstanceId = this.processList.getCurrentId();
     }
 
-    onTaskRowClick(taskId): void {
+    onTaskRowClick(taskId: string): void {
         this.currentTaskId = taskId;
     }
 
@@ -365,15 +364,15 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.currentProcessInstanceId = processInstanceId;
     }
 
-    onProcessRowClick(processInstanceId): void {
+    onProcessRowClick(processInstanceId: string): void {
         this.currentProcessInstanceId = processInstanceId;
     }
 
-    onEditReport(name: string): void {
+    onEditReport(): void {
         this.analyticsReportList.reload();
     }
 
-    onReportSaved(reportId): void {
+    onReportSaved(reportId: number): void {
         this.analyticsReportList.reload(reportId);
     }
 
@@ -409,12 +408,12 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         return this.currentTaskId === currentTaskIdNew;
     }
 
-    processCancelled(data: any): void {
+    processCancelled(): void {
         this.currentProcessInstanceId = null;
         this.processList.reload();
     }
 
-    onFormCompleted(form): void {
+    onFormCompleted(): void {
         this.currentTaskId = null;
         if (this.taskListPagination) {
             this.taskPage = this.taskListPagination.current - 1;
@@ -468,7 +467,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.taskList.reload();
     }
 
-    onTaskDeleted(data: any): void {
+    onTaskDeleted(): void {
         this.taskList.reload();
     }
 

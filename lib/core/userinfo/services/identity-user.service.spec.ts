@@ -330,7 +330,7 @@ describe('IdentityUserService', () => {
 
     it('should be able to create user', (done) => {
         const createCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(createUserMockApi);
-        service.createUser(mockIdentityUser1).subscribe((res) => {
+        service.createUser(mockIdentityUser1).subscribe(() => {
             expect(createCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -360,7 +360,7 @@ describe('IdentityUserService', () => {
 
     it('should be able to update user', (done) => {
         const updateCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(updateUserMockApi);
-        service.updateUser('mock-id-2', mockIdentityUser2).subscribe((res) => {
+        service.updateUser('mock-id-2', mockIdentityUser2).subscribe(() => {
             expect(updateCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -390,7 +390,7 @@ describe('IdentityUserService', () => {
 
     it('should be able to delete group', (done) => {
         const deleteCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(deleteUserMockApi);
-        service.deleteUser('mock-user-id').subscribe((res) => {
+        service.deleteUser('mock-user-id').subscribe(() => {
             expect(deleteCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -456,7 +456,7 @@ describe('IdentityUserService', () => {
 
     it('should be able to join the group', (done) => {
         const joinGroupCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(joinGroupMockApi);
-        service.joinGroup(mockJoinGroupRequest).subscribe((res) => {
+        service.joinGroup(mockJoinGroupRequest).subscribe(() => {
             expect(joinGroupCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -486,7 +486,7 @@ describe('IdentityUserService', () => {
 
     it('should be able to leave the group', (done) => {
         const leaveGroupCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(leaveGroupMockApi);
-        service.leaveGroup('mock-user-id', 'mock-group-id').subscribe((res) => {
+        service.leaveGroup('mock-user-id', 'mock-group-id').subscribe(() => {
             expect(leaveGroupCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -630,7 +630,7 @@ describe('IdentityUserService', () => {
 
     it('should be able to assign roles to the user', (done) => {
         const assignRolesCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(assignRolesMockApi);
-        service.assignRoles('mock-user-id', [mockIdentityRole]).subscribe((res) => {
+        service.assignRoles('mock-user-id', [mockIdentityRole]).subscribe(() => {
             expect(assignRolesCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -660,7 +660,7 @@ describe('IdentityUserService', () => {
 
     it('should be able to remove roles', (done) => {
         const removeRolesCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(removeRolesMockApi);
-        service.removeRoles('mock-user-id', [mockIdentityRole]).subscribe((res) => {
+        service.removeRoles('mock-user-id', [mockIdentityRole]).subscribe(() => {
             expect(removeRolesCustomApiSpy).toHaveBeenCalled();
             done();
         });

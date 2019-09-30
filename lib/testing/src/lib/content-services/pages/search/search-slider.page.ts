@@ -15,62 +15,64 @@
  * limitations under the License.
  */
 
-import { browser, by } from 'protractor';
+import { browser, by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
+import { BrowserActions } from '../../../core/utils/browser-actions';
 
 export class SearchSliderPage {
 
-    filter;
-    slider = by.css('mat-slider[data-automation-id="slider-range"]');
-    clearButton = by.css('button[data-automation-id="slider-btn-clear"]');
-    sliderWithThumbLabel = by.css('mat-slider[data-automation-id="slider-range"][class*="mat-slider-thumb-label-showing"]');
+    filter: ElementFinder;
+    slider: Locator = by.css('mat-slider[data-automation-id="slider-range"]');
+    clearButton: Locator = by.css('button[data-automation-id="slider-btn-clear"]');
+    sliderWithThumbLabel: Locator = by.css('mat-slider[data-automation-id="slider-range"][class*="mat-slider-thumb-label-showing"]');
 
-    constructor(filter) {
+    constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 
-    getMaxValue() {
-        return this.filter.element(this.slider).getAttribute('aria-valuemax');
+    async getMaxValue() {
+        return await this.filter.element(this.slider).getAttribute('aria-valuemax');
     }
 
-    getMinValue() {
-        return this.filter.element(this.slider).getAttribute('aria-valuemin');
+    async getMinValue() {
+        return await this.filter.element(this.slider).getAttribute('aria-valuemin');
     }
 
-    getValue() {
-        return this.filter.element(this.slider).getAttribute('aria-valuenow');
+    async getValue() {
+        return await this.filter.element(this.slider).getAttribute('aria-valuenow');
     }
 
-    setValue(value: number) {
-        browser.actions().dragAndDrop(
-            this.filter.element(this.slider).element(by.css('div[class="mat-slider-thumb"]')),
-            { x: value * 10, y: 0 }
-        ).perform();
-        return this;
+    async setValue(value: number): Promise<void> {
+        const elem = this.filter.element(this.slider).element(by.css('div[class="mat-slider-wrapper"]'));
+        await browser.actions().mouseMove(elem, { x: 0, y: 0 }).perform();
+        await browser.actions().mouseDown().mouseMove({x: value * 10, y: 0}).mouseUp().perform();
     }
 
-    checkSliderIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.slider));
-        return this;
+    async checkSliderIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.slider));
     }
 
-    checkSliderWithThumbLabelIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.sliderWithThumbLabel));
-        return this;
+    async checkSliderIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.slider));
     }
 
-    clickClearButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.clearButton));
-        this.filter.element(this.clearButton).click();
-        return this;
+    async checkSliderWithThumbLabelIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.sliderWithThumbLabel));
     }
 
-    checkClearButtonIsEnabled() {
-        return this.filter.element(this.clearButton).isEnabled();
+    async clickClearButton(): Promise<void> {
+        await BrowserActions.click(this.filter.element(this.clearButton));
     }
 
-    checkClearButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
-        return this;
+    async checkClearButtonIsEnabled() {
+        return await this.filter.element(this.clearButton).isEnabled();
+    }
+
+    async checkClearButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
+    }
+
+    async checkClearButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.clearButton));
     }
 }

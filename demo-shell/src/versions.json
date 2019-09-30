@@ -1,0 +1,1264 @@
+{
+  "name": "alfresco-components",
+  "version": "3.4.0",
+  "problems": [
+    "missing: @alfresco/adf-content-services@3.4.0, required by alfresco-components@3.4.0",
+    "missing: @alfresco/adf-core@3.4.0, required by alfresco-components@3.4.0",
+    "missing: @alfresco/adf-extensions@3.4.0, required by alfresco-components@3.4.0",
+    "missing: @alfresco/adf-insights@3.4.0, required by alfresco-components@3.4.0",
+    "missing: @alfresco/adf-process-services@3.4.0, required by alfresco-components@3.4.0",
+    "missing: @alfresco/adf-process-services-cloud@3.4.0, required by alfresco-components@3.4.0",
+    "missing: @alfresco/adf-testing@3.4.0, required by alfresco-components@3.4.0",
+    "peer dep missing: @angular/cdk@^6.3.3, required by @mat-datetimepicker/core@2.0.1",
+    "peer dep missing: @angular/core@^6.0.7, required by @mat-datetimepicker/core@2.0.1",
+    "peer dep missing: @angular/material@^6.3.3, required by @mat-datetimepicker/core@2.0.1",
+    "peer dep missing: @angular/material@^6.3.3, required by @mat-datetimepicker/moment@2.0.1",
+    "peer dep missing: @angular/material-moment-adapter@^6.3.3, required by @mat-datetimepicker/moment@2.0.1",
+    "peer dep missing: @mat-datetimepicker/core@2.0.0, required by @mat-datetimepicker/moment@2.0.1",
+    "peer dep missing: ngx-monaco-editor@^6.0.0, required by adf-monaco-extension@0.0.8"
+  ],
+  "dependencies": {
+    "@alfresco/adf-content-services": {
+      "version": "3.4.0",
+      "from": "@alfresco/adf-content-services@3.4.0",
+      "resolved": "https://registry.npmjs.org/@alfresco/adf-content-services/-/adf-content-services-3.4.0.tgz",
+      "dependencies": {
+        "tslib": {
+          "version": "1.10.0",
+          "from": "tslib@^1.9.0",
+          "resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz"
+        }
+      }
+    },
+    "@alfresco/adf-core": {
+      "version": "3.4.0",
+      "from": "@alfresco/adf-core@3.4.0",
+      "resolved": "https://registry.npmjs.org/@alfresco/adf-core/-/adf-core-3.4.0.tgz",
+      "dependencies": {
+        "tslib": {
+          "version": "1.10.0",
+          "from": "tslib@^1.9.0",
+          "resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz"
+        }
+      }
+    },
+    "@alfresco/adf-extensions": {
+      "version": "3.4.0",
+      "from": "@alfresco/adf-extensions@3.4.0",
+      "resolved": "https://registry.npmjs.org/@alfresco/adf-extensions/-/adf-extensions-3.4.0.tgz",
+      "dependencies": {
+        "tslib": {
+          "version": "1.10.0",
+          "from": "tslib@^1.9.0",
+          "resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz"
+        }
+      }
+    },
+    "@alfresco/adf-insights": {
+      "version": "3.4.0",
+      "from": "@alfresco/adf-insights@3.4.0",
+      "resolved": "https://registry.npmjs.org/@alfresco/adf-insights/-/adf-insights-3.4.0.tgz",
+      "dependencies": {
+        "tslib": {
+          "version": "1.10.0",
+          "from": "tslib@^1.9.0",
+          "resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz"
+        }
+      }
+    },
+    "@alfresco/adf-process-services": {
+      "version": "3.4.0",
+      "from": "@alfresco/adf-process-services@3.4.0",
+      "resolved": "https://registry.npmjs.org/@alfresco/adf-process-services/-/adf-process-services-3.4.0.tgz",
+      "dependencies": {
+        "tslib": {
+          "version": "1.10.0",
+          "from": "tslib@^1.9.0",
+          "resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz"
+        }
+      }
+    },
+    "@alfresco/adf-process-services-cloud": {
+      "version": "3.4.0",
+      "from": "@alfresco/adf-process-services-cloud@3.4.0",
+      "resolved": "https://registry.npmjs.org/@alfresco/adf-process-services-cloud/-/adf-process-services-cloud-3.4.0.tgz",
+      "dependencies": {
+        "tslib": {
+          "version": "1.10.0",
+          "from": "tslib@^1.9.0",
+          "resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz"
+        }
+      }
+    },
+    "@alfresco/adf-testing": {
+      "version": "3.4.0",
+      "from": "@alfresco/adf-testing@3.4.0",
+      "resolved": "https://registry.npmjs.org/@alfresco/adf-testing/-/adf-testing-3.4.0.tgz",
+      "dependencies": {
+        "tslib": {
+          "version": "1.10.0",
+          "from": "tslib@^1.9.0",
+          "resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz"
+        }
+      }
+    },
+    "@alfresco/js-api": {
+      "version": "3.4.0",
+      "from": "@alfresco/js-api@3.4.0",
+      "resolved": "https://registry.npmjs.org/@alfresco/js-api/-/js-api-3.4.0.tgz"
+    },
+    "@angular/animations": {
+      "version": "7.2.15",
+      "from": "@angular/animations@^7.2.15",
+      "resolved": "https://registry.npmjs.org/@angular/animations/-/animations-7.2.15.tgz"
+    },
+    "@angular/cdk": {
+      "required": {
+        "_from": "@angular/cdk@7.3.7",
+        "_id": "@angular/cdk@7.3.7",
+        "_integrity": "sha512-xbXxhHHKGkVuW6K7pzPmvpJXIwpl0ykBnvA2g+/7Sgy5Pd35wCC+UtHD9RYczDM/mkygNxMQtagyCErwFnDtQA==",
+        "_location": "/@angular/cdk",
+        "_phantomChildren": {},
+        "_requested": {
+          "type": "version",
+          "registry": true,
+          "raw": "@angular/cdk@7.3.7",
+          "name": "@angular/cdk",
+          "escapedName": "@angular%2fcdk",
+          "scope": "@angular",
+          "rawSpec": "7.3.7",
+          "saveSpec": null,
+          "fetchSpec": "7.3.7"
+        },
+        "_requiredBy": [
+          "/"
+        ],
+        "_resolved": "https://registry.npmjs.org/@angular/cdk/-/cdk-7.3.7.tgz",
+        "_shasum": "ce1ad53ba04beb9c8e950acc5691ea0143753764",
+        "_spec": "7.3.7",
+        "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+        "bugs": {
+          "url": "https://github.com/angular/material2/issues"
+        },
+        "bundleDependencies": false,
+        "dependencies": {
+          "parse5": {
+            "_from": "parse5@^5.0.0",
+            "_id": "parse5@5.1.0",
+            "_integrity": "sha512-fxNG2sQjHvlVAYmzBZS9YlDp6PTSSDwa98vkD4QgVDDCAo84z5X1t5XyJQ62ImdLXx5NdIIfihey6xpum9/gRQ==",
+            "_location": "/parse5",
+            "_phantomChildren": {},
+            "_requested": {
+              "type": "version",
+              "registry": true,
+              "raw": "parse5@5.1.0",
+              "name": "parse5",
+              "escapedName": "parse5",
+              "rawSpec": "5.1.0",
+              "saveSpec": "[Circular]",
+              "fetchSpec": "5.1.0"
+            },
+            "_requiredBy": [
+              "/@angular/cdk"
+            ],
+            "_resolved": "https://registry.npmjs.org/parse5/-/parse5-5.1.0.tgz",
+            "_shasum": "c59341c9723f414c452975564c7c00a68d58acd2",
+            "_spec": "5.1.0",
+            "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+            "author": {
+              "name": "Ivan Nikulin",
+              "email": "ifaaan@gmail.com",
+              "url": "https://github.com/inikulin"
+            },
+            "bugs": {
+              "url": "https://github.com/inikulin/parse5/issues"
+            },
+            "bundleDependencies": false,
+            "contributors": "https://github.com/inikulin/parse5/graphs/contributors",
+            "deprecated": false,
+            "description": "HTML parser and serializer.",
+            "files": [
+              "lib"
+            ],
+            "homepage": "https://github.com/inikulin/parse5",
+            "keywords": [
+              "html",
+              "parser",
+              "html5",
+              "WHATWG",
+              "specification",
+              "fast",
+              "html parser",
+              "html5 parser",
+              "htmlparser",
+              "parse5",
+              "serializer",
+              "html serializer",
+              "htmlserializer",
+              "parse",
+              "serialize"
+            ],
+            "license": "MIT",
+            "main": "./lib/index.js",
+            "name": "parse5",
+            "repository": {
+              "type": "git",
+              "url": "git://github.com/inikulin/parse5.git"
+            },
+            "version": "5.1.0",
+            "readme": "<p align=\"center\">\n    <a href=\"https://github.com/inikulin/parse5\">\n        <img src=\"https://raw.github.com/inikulin/parse5/master/media/logo.png\" alt=\"parse5\" />\n    </a>\n</p>\n\n<div align=\"center\">\n<h1>parse5</h1>\n<i><b>HTML parser and serializer.</b></i>\n</div>\n<br>\n\n<div align=\"center\">\n<code>npm install --save parse5</code>\n</div>\n<br>\n\n<p align=\"center\">\n  📖 <a href=\"https://github.com/inikulin/parse5/tree/master/packages/parse5/docs/index.md\"><b>Documentation</b></a> 📖\n</p>\n\n---\n\n<p align=\"center\">\n  <a href=\"https://github.com/inikulin/parse5/tree/master/docs/list-of-packages.md\">List of parse5 toolset packages</a>\n</p>\n\n<p align=\"center\">\n    <a href=\"https://github.com/inikulin/parse5\">GitHub</a>\n</p>\n\n<p align=\"center\">\n  <a href=\"http://astexplorer.net/#/1CHlCXc4n4\">Online playground</a>\n</p>\n\n<p align=\"center\">\n    <a href=\"https://github.com/inikulin/parse5/tree/master/docs/version-history.md\">Version history</a>\n</p>\n",
+            "readmeFilename": "README.md",
+            "_optional": true,
+            "_args": [
+              [
+                "parse5@5.1.0",
+                "/Users/eromano/Projects/alfresco-ng2-components"
+              ]
+            ],
+            "dependencies": {},
+            "devDependencies": {},
+            "optionalDependencies": {},
+            "_dependencies": {},
+            "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/parse5",
+            "error": "[Circular]",
+            "extraneous": false
+          },
+          "tslib": {
+            "_from": "tslib@^1.9.0",
+            "_id": "tslib@1.10.0",
+            "_integrity": "sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==",
+            "_location": "/tslib",
+            "_phantomChildren": {},
+            "_requested": {
+              "type": "version",
+              "registry": true,
+              "raw": "tslib@1.10.0",
+              "name": "tslib",
+              "escapedName": "tslib",
+              "rawSpec": "1.10.0",
+              "saveSpec": "[Circular]",
+              "fetchSpec": "1.10.0"
+            },
+            "_requiredBy": [
+              "#DEV:/",
+              "/@alfresco/adf-content-services",
+              "/@alfresco/adf-core",
+              "/@alfresco/adf-extensions",
+              "/@alfresco/adf-insights",
+              "/@alfresco/adf-process-services",
+              "/@alfresco/adf-process-services-cloud",
+              "/@alfresco/adf-testing",
+              "/@angular-devkit/architect/rxjs",
+              "/@angular-devkit/build-angular/rxjs",
+              "/@angular-devkit/build-ng-packagr/rxjs",
+              "/@angular-devkit/build-webpack/rxjs",
+              "/@angular-devkit/core/rxjs",
+              "/@angular-devkit/schematics/rxjs",
+              "/@angular/animations",
+              "/@angular/cdk",
+              "/@angular/common",
+              "/@angular/compiler",
+              "/@angular/compiler-cli",
+              "/@angular/core",
+              "/@angular/flex-layout",
+              "/@angular/forms",
+              "/@angular/http",
+              "/@angular/material",
+              "/@angular/material-moment-adapter",
+              "/@angular/platform-browser",
+              "/@angular/platform-browser-dynamic",
+              "/@angular/router",
+              "/@fimbul/bifrost",
+              "/@fimbul/ymir",
+              "/@mat-datetimepicker/core",
+              "/@mat-datetimepicker/moment",
+              "/@ngtools/webpack/rxjs",
+              "/@ngx-translate/core",
+              "/@schematics/update/rxjs",
+              "/adf-monaco-extension",
+              "/chrome-trace-event",
+              "/ngx-monaco-editor",
+              "/rxjs",
+              "/rxjs-tslint-rules",
+              "/tslint",
+              "/tslint-consistent-codestyle",
+              "/tslint-consistent-codestyle/tsutils",
+              "/tslint/tsutils",
+              "/tsutils"
+            ],
+            "_resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz",
+            "_shasum": "c3c19f95973fb0a62973fb09d90d961ee43e5c8a",
+            "_spec": "1.10.0",
+            "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+            "author": {
+              "name": "Microsoft Corp."
+            },
+            "bugs": {
+              "url": "https://github.com/Microsoft/TypeScript/issues"
+            },
+            "bundleDependencies": false,
+            "deprecated": false,
+            "description": "Runtime library for TypeScript helper functions",
+            "homepage": "http://typescriptlang.org/",
+            "jsnext:main": "tslib.es6.js",
+            "keywords": [
+              "TypeScript",
+              "Microsoft",
+              "compiler",
+              "language",
+              "javascript",
+              "tslib",
+              "runtime"
+            ],
+            "license": "Apache-2.0",
+            "main": "tslib.js",
+            "module": "tslib.es6.js",
+            "name": "tslib",
+            "repository": {
+              "type": "git",
+              "url": "git+https://github.com/Microsoft/tslib.git"
+            },
+            "typings": "tslib.d.ts",
+            "version": "1.10.0",
+            "readme": "# tslib\r\n\r\nThis is a runtime library for [TypeScript](http://www.typescriptlang.org/) that contains all of the TypeScript helper functions.\r\n\r\nThis library is primarily used by the `--importHelpers` flag in TypeScript.\r\nWhen using `--importHelpers`, a module that uses helper functions like `__extends` and `__assign` in the following emitted file:\r\n\r\n```ts\r\nvar __assign = (this && this.__assign) || Object.assign || function(t) {\r\n    for (var s, i = 1, n = arguments.length; i < n; i++) {\r\n        s = arguments[i];\r\n        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\r\n            t[p] = s[p];\r\n    }\r\n    return t;\r\n};\r\nexports.x = {};\r\nexports.y = __assign({}, exports.x);\r\n\r\n```\r\n\r\nwill instead be emitted as something like the following:\r\n\r\n```ts\r\nvar tslib_1 = require(\"tslib\");\r\nexports.x = {};\r\nexports.y = tslib_1.__assign({}, exports.x);\r\n```\r\n\r\nBecause this can avoid duplicate declarations of things like `__extends`, `__assign`, etc., this means delivering users smaller files on average, as well as less runtime overhead.\r\nFor optimized bundles with TypeScript, you should absolutely consider using `tslib` and `--importHelpers`.\r\n\r\n# Installing\r\n\r\nFor the latest stable version, run:\r\n\r\n## npm\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nnpm install --save tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nnpm install --save tslib@1.6.1\r\n```\r\n\r\n## bower\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nbower install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nbower install tslib@1.6.1\r\n```\r\n\r\n## JSPM\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\njspm install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\njspm install tslib@1.6.1\r\n```\r\n\r\n# Usage\r\n\r\nSet the `importHelpers` compiler option on the command line:\r\n\r\n```\r\ntsc --importHelpers file.ts\r\n```\r\n\r\nor in your tsconfig.json:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"importHelpers\": true\r\n    }\r\n}\r\n```\r\n\r\n#### For bower and JSPM users\r\n\r\nYou will need to add a `paths` mapping for `tslib`, e.g. For Bower users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"amd\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"bower_components/tslib/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\nFor JSPM users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"system\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"jspm_packages/npm/tslib@1.10.0/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n# Contribute\r\n\r\nThere are many ways to [contribute](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md) to TypeScript.\r\n\r\n* [Submit bugs](https://github.com/Microsoft/TypeScript/issues) and help us verify fixes as they are checked in.\r\n* Review the [source code changes](https://github.com/Microsoft/TypeScript/pulls).\r\n* Engage with other TypeScript users and developers on [StackOverflow](http://stackoverflow.com/questions/tagged/typescript).\r\n* Join the [#typescript](http://twitter.com/#!/search/realtime/%23typescript) discussion on Twitter.\r\n* [Contribute bug fixes](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md).\r\n* Read the language specification ([docx](http://go.microsoft.com/fwlink/?LinkId=267121), [pdf](http://go.microsoft.com/fwlink/?LinkId=267238)).\r\n\r\n# Documentation\r\n\r\n* [Quick tutorial](http://www.typescriptlang.org/Tutorial)\r\n* [Programming handbook](http://www.typescriptlang.org/Handbook)\r\n* [Language specification](https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md)\r\n* [Homepage](http://www.typescriptlang.org/)\r\n",
+            "readmeFilename": "README.md",
+            "_args": [
+              [
+                "tslib@1.10.0",
+                "/Users/eromano/Projects/alfresco-ng2-components"
+              ]
+            ],
+            "dependencies": {},
+            "devDependencies": {},
+            "optionalDependencies": {},
+            "_dependencies": {},
+            "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/tslib",
+            "error": "[Circular]",
+            "extraneous": false,
+            "_deduped": "tslib"
+          }
+        },
+        "deprecated": false,
+        "description": "Angular Material Component Development Kit",
+        "es2015": "./esm2015/cdk.js",
+        "homepage": "https://github.com/angular/material2#readme",
+        "keywords": [
+          "angular",
+          "cdk",
+          "component",
+          "development",
+          "kit"
+        ],
+        "license": "MIT",
+        "main": "./bundles/cdk.umd.js",
+        "module": "./esm5/cdk.es5.js",
+        "name": "@angular/cdk",
+        "ng-update": {
+          "migrations": "./schematics/migration.json"
+        },
+        "optionalDependencies": {
+          "parse5": "^5.0.0"
+        },
+        "peerDependencies": {
+          "@angular/core": ">=7.0.0",
+          "@angular/common": ">=7.0.0"
+        },
+        "releaseGitBranch": "7.3.x",
+        "releaseGitCommitSha": "994d3abf36bae8202a967d4ff232e405adeb8128",
+        "releaseGitUser": "Jeremy Elbourn <jelbourn@google.com>",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/angular/material2.git"
+        },
+        "schematics": "./schematics/collection.json",
+        "sideEffects": false,
+        "typings": "./cdk.d.ts",
+        "version": "7.3.7",
+        "readme": "Angular Material\n=======\n\nThe sources for this package are in the main [Angular Material](https://github.com/angular/material2) repo. Please file issues and pull requests against that repo.\n\nLicense: MIT",
+        "readmeFilename": "README.md",
+        "_args": [
+          [
+            "@angular/cdk@7.3.7",
+            "/Users/eromano/Projects/alfresco-ng2-components"
+          ]
+        ],
+        "devDependencies": {},
+        "_dependencies": {
+          "parse5": "^5.0.0",
+          "tslib": "^1.7.1"
+        },
+        "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/@angular/cdk",
+        "error": "[Circular]",
+        "extraneous": false,
+        "peerMissing": [
+          {
+            "requiredBy": "@mat-datetimepicker/core@2.0.1",
+            "requires": "@angular/cdk@^6.3.3"
+          }
+        ]
+      },
+      "peerMissing": true
+    },
+    "@angular/common": {
+      "version": "7.2.15",
+      "from": "@angular/common@^7.2.15",
+      "resolved": "https://registry.npmjs.org/@angular/common/-/common-7.2.15.tgz"
+    },
+    "@angular/compiler": {
+      "version": "7.2.15",
+      "from": "@angular/compiler@^7.2.15",
+      "resolved": "https://registry.npmjs.org/@angular/compiler/-/compiler-7.2.15.tgz"
+    },
+    "@angular/core": {
+      "required": {
+        "_from": "@angular/core@^7.2.15",
+        "_id": "@angular/core@7.2.15",
+        "_integrity": "sha512-XsuYm0jEU/mOqwDOk2utThv8J9kESkAerfuCHClE9rB2TtHUOGCfekF7lJWqjjypu6/J9ygoPFo7hdAE058ZGg==",
+        "_location": "/@angular/core",
+        "_phantomChildren": {},
+        "_requested": {
+          "type": "version",
+          "registry": true,
+          "raw": "@angular/core@7.2.15",
+          "name": "@angular/core",
+          "escapedName": "@angular%2fcore",
+          "scope": "@angular",
+          "rawSpec": "7.2.15",
+          "saveSpec": "[Circular]",
+          "fetchSpec": "7.2.15"
+        },
+        "_requiredBy": [
+          "/"
+        ],
+        "_resolved": "https://registry.npmjs.org/@angular/core/-/core-7.2.15.tgz",
+        "_shasum": "c00d4be0ebe95b70f7631154169509cc97934e9a",
+        "_spec": "7.2.15",
+        "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+        "author": {
+          "name": "angular"
+        },
+        "bugs": {
+          "url": "https://github.com/angular/angular/issues"
+        },
+        "bundleDependencies": false,
+        "dependencies": {
+          "tslib": {
+            "_from": "tslib@^1.9.0",
+            "_id": "tslib@1.10.0",
+            "_integrity": "sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==",
+            "_location": "/tslib",
+            "_phantomChildren": "[Circular]",
+            "_requested": {
+              "type": "version",
+              "registry": true,
+              "raw": "tslib@1.10.0",
+              "name": "tslib",
+              "escapedName": "tslib",
+              "rawSpec": "1.10.0",
+              "saveSpec": "[Circular]",
+              "fetchSpec": "1.10.0"
+            },
+            "_requiredBy": "[Circular]",
+            "_resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz",
+            "_shasum": "c3c19f95973fb0a62973fb09d90d961ee43e5c8a",
+            "_spec": "1.10.0",
+            "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+            "author": "[Circular]",
+            "bugs": "[Circular]",
+            "bundleDependencies": false,
+            "deprecated": false,
+            "description": "Runtime library for TypeScript helper functions",
+            "homepage": "http://typescriptlang.org/",
+            "jsnext:main": "tslib.es6.js",
+            "keywords": "[Circular]",
+            "license": "Apache-2.0",
+            "main": "tslib.js",
+            "module": "tslib.es6.js",
+            "name": "tslib",
+            "repository": "[Circular]",
+            "typings": "tslib.d.ts",
+            "version": "1.10.0",
+            "readme": "# tslib\r\n\r\nThis is a runtime library for [TypeScript](http://www.typescriptlang.org/) that contains all of the TypeScript helper functions.\r\n\r\nThis library is primarily used by the `--importHelpers` flag in TypeScript.\r\nWhen using `--importHelpers`, a module that uses helper functions like `__extends` and `__assign` in the following emitted file:\r\n\r\n```ts\r\nvar __assign = (this && this.__assign) || Object.assign || function(t) {\r\n    for (var s, i = 1, n = arguments.length; i < n; i++) {\r\n        s = arguments[i];\r\n        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\r\n            t[p] = s[p];\r\n    }\r\n    return t;\r\n};\r\nexports.x = {};\r\nexports.y = __assign({}, exports.x);\r\n\r\n```\r\n\r\nwill instead be emitted as something like the following:\r\n\r\n```ts\r\nvar tslib_1 = require(\"tslib\");\r\nexports.x = {};\r\nexports.y = tslib_1.__assign({}, exports.x);\r\n```\r\n\r\nBecause this can avoid duplicate declarations of things like `__extends`, `__assign`, etc., this means delivering users smaller files on average, as well as less runtime overhead.\r\nFor optimized bundles with TypeScript, you should absolutely consider using `tslib` and `--importHelpers`.\r\n\r\n# Installing\r\n\r\nFor the latest stable version, run:\r\n\r\n## npm\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nnpm install --save tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nnpm install --save tslib@1.6.1\r\n```\r\n\r\n## bower\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nbower install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nbower install tslib@1.6.1\r\n```\r\n\r\n## JSPM\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\njspm install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\njspm install tslib@1.6.1\r\n```\r\n\r\n# Usage\r\n\r\nSet the `importHelpers` compiler option on the command line:\r\n\r\n```\r\ntsc --importHelpers file.ts\r\n```\r\n\r\nor in your tsconfig.json:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"importHelpers\": true\r\n    }\r\n}\r\n```\r\n\r\n#### For bower and JSPM users\r\n\r\nYou will need to add a `paths` mapping for `tslib`, e.g. For Bower users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"amd\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"bower_components/tslib/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\nFor JSPM users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"system\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"jspm_packages/npm/tslib@1.10.0/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n# Contribute\r\n\r\nThere are many ways to [contribute](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md) to TypeScript.\r\n\r\n* [Submit bugs](https://github.com/Microsoft/TypeScript/issues) and help us verify fixes as they are checked in.\r\n* Review the [source code changes](https://github.com/Microsoft/TypeScript/pulls).\r\n* Engage with other TypeScript users and developers on [StackOverflow](http://stackoverflow.com/questions/tagged/typescript).\r\n* Join the [#typescript](http://twitter.com/#!/search/realtime/%23typescript) discussion on Twitter.\r\n* [Contribute bug fixes](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md).\r\n* Read the language specification ([docx](http://go.microsoft.com/fwlink/?LinkId=267121), [pdf](http://go.microsoft.com/fwlink/?LinkId=267238)).\r\n\r\n# Documentation\r\n\r\n* [Quick tutorial](http://www.typescriptlang.org/Tutorial)\r\n* [Programming handbook](http://www.typescriptlang.org/Handbook)\r\n* [Language specification](https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md)\r\n* [Homepage](http://www.typescriptlang.org/)\r\n",
+            "readmeFilename": "README.md",
+            "_args": "[Circular]",
+            "dependencies": {},
+            "devDependencies": "[Circular]",
+            "optionalDependencies": "[Circular]",
+            "_dependencies": "[Circular]",
+            "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/tslib",
+            "error": "[Circular]",
+            "extraneous": false,
+            "_deduped": "tslib"
+          }
+        },
+        "deprecated": false,
+        "description": "Angular - the core framework",
+        "es2015": "./fesm2015/core.js",
+        "esm2015": "./esm2015/core.js",
+        "esm5": "./esm5/core.js",
+        "fesm2015": "./fesm2015/core.js",
+        "fesm5": "./fesm5/core.js",
+        "homepage": "https://github.com/angular/angular#readme",
+        "license": "MIT",
+        "main": "./bundles/core.umd.js",
+        "module": "./fesm5/core.js",
+        "name": "@angular/core",
+        "ng-update": {
+          "packageGroup": [
+            "@angular/core",
+            "@angular/bazel",
+            "@angular/common",
+            "@angular/compiler",
+            "@angular/compiler-cli",
+            "@angular/animations",
+            "@angular/elements",
+            "@angular/platform-browser",
+            "@angular/platform-browser-dynamic",
+            "@angular/forms",
+            "@angular/http",
+            "@angular/platform-server",
+            "@angular/platform-webworker",
+            "@angular/platform-webworker-dynamic",
+            "@angular/upgrade",
+            "@angular/router",
+            "@angular/language-service",
+            "@angular/service-worker"
+          ]
+        },
+        "peerDependencies": {
+          "rxjs": "^6.0.0",
+          "zone.js": "~0.8.26"
+        },
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/angular/angular.git"
+        },
+        "sideEffects": false,
+        "typings": "./core.d.ts",
+        "version": "7.2.15",
+        "readme": "Angular\n=======\n\nThe sources for this package are in the main [Angular](https://github.com/angular/angular) repo. Please file issues and pull requests against that repo.\n\nLicense: MIT\n",
+        "readmeFilename": "README.md",
+        "_args": [
+          [
+            "@angular/core@7.2.15",
+            "/Users/eromano/Projects/alfresco-ng2-components"
+          ]
+        ],
+        "devDependencies": {},
+        "optionalDependencies": {},
+        "_dependencies": {
+          "tslib": "^1.9.0"
+        },
+        "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/@angular/core",
+        "error": "[Circular]",
+        "extraneous": false,
+        "peerMissing": [
+          {
+            "requiredBy": "@mat-datetimepicker/core@2.0.1",
+            "requires": "@angular/core@^6.0.7"
+          }
+        ]
+      },
+      "peerMissing": true
+    },
+    "@angular/flex-layout": {
+      "version": "7.0.0-beta.24",
+      "from": "@angular/flex-layout@^7.0.0-beta.24",
+      "resolved": "https://registry.npmjs.org/@angular/flex-layout/-/flex-layout-7.0.0-beta.24.tgz"
+    },
+    "@angular/forms": {
+      "version": "7.2.15",
+      "from": "@angular/forms@^7.2.15",
+      "resolved": "https://registry.npmjs.org/@angular/forms/-/forms-7.2.15.tgz"
+    },
+    "@angular/http": {
+      "version": "7.2.15",
+      "from": "@angular/http@^7.2.15",
+      "resolved": "https://registry.npmjs.org/@angular/http/-/http-7.2.15.tgz"
+    },
+    "@angular/material": {
+      "required": {
+        "_from": "@angular/material@^7.3.7",
+        "_id": "@angular/material@7.3.7",
+        "_integrity": "sha512-Eq+7frkeNGkLOfEtmkmJgR+AgoWajOipXZWWfCSamNfpCcPof82DwvGOpAmgGni9FuN2XFQdqP5MoaffQzIvUA==",
+        "_location": "/@angular/material",
+        "_phantomChildren": {},
+        "_requested": {
+          "type": "version",
+          "registry": true,
+          "raw": "@angular/material@7.3.7",
+          "name": "@angular/material",
+          "escapedName": "@angular%2fmaterial",
+          "scope": "@angular",
+          "rawSpec": "7.3.7",
+          "saveSpec": "[Circular]",
+          "fetchSpec": "7.3.7"
+        },
+        "_requiredBy": [
+          "/"
+        ],
+        "_resolved": "https://registry.npmjs.org/@angular/material/-/material-7.3.7.tgz",
+        "_shasum": "dcd95e6618ba6254c5880efee1aad349cf5b9140",
+        "_spec": "7.3.7",
+        "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+        "bugs": {
+          "url": "https://github.com/angular/material2/issues"
+        },
+        "bundleDependencies": false,
+        "dependencies": {
+          "tslib": {
+            "_from": "tslib@^1.9.0",
+            "_id": "tslib@1.10.0",
+            "_integrity": "sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==",
+            "_location": "/tslib",
+            "_phantomChildren": "[Circular]",
+            "_requested": {
+              "type": "version",
+              "registry": true,
+              "raw": "tslib@1.10.0",
+              "name": "tslib",
+              "escapedName": "tslib",
+              "rawSpec": "1.10.0",
+              "saveSpec": "[Circular]",
+              "fetchSpec": "1.10.0"
+            },
+            "_requiredBy": "[Circular]",
+            "_resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz",
+            "_shasum": "c3c19f95973fb0a62973fb09d90d961ee43e5c8a",
+            "_spec": "1.10.0",
+            "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+            "author": "[Circular]",
+            "bugs": "[Circular]",
+            "bundleDependencies": false,
+            "deprecated": false,
+            "description": "Runtime library for TypeScript helper functions",
+            "homepage": "http://typescriptlang.org/",
+            "jsnext:main": "tslib.es6.js",
+            "keywords": "[Circular]",
+            "license": "Apache-2.0",
+            "main": "tslib.js",
+            "module": "tslib.es6.js",
+            "name": "tslib",
+            "repository": "[Circular]",
+            "typings": "tslib.d.ts",
+            "version": "1.10.0",
+            "readme": "# tslib\r\n\r\nThis is a runtime library for [TypeScript](http://www.typescriptlang.org/) that contains all of the TypeScript helper functions.\r\n\r\nThis library is primarily used by the `--importHelpers` flag in TypeScript.\r\nWhen using `--importHelpers`, a module that uses helper functions like `__extends` and `__assign` in the following emitted file:\r\n\r\n```ts\r\nvar __assign = (this && this.__assign) || Object.assign || function(t) {\r\n    for (var s, i = 1, n = arguments.length; i < n; i++) {\r\n        s = arguments[i];\r\n        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\r\n            t[p] = s[p];\r\n    }\r\n    return t;\r\n};\r\nexports.x = {};\r\nexports.y = __assign({}, exports.x);\r\n\r\n```\r\n\r\nwill instead be emitted as something like the following:\r\n\r\n```ts\r\nvar tslib_1 = require(\"tslib\");\r\nexports.x = {};\r\nexports.y = tslib_1.__assign({}, exports.x);\r\n```\r\n\r\nBecause this can avoid duplicate declarations of things like `__extends`, `__assign`, etc., this means delivering users smaller files on average, as well as less runtime overhead.\r\nFor optimized bundles with TypeScript, you should absolutely consider using `tslib` and `--importHelpers`.\r\n\r\n# Installing\r\n\r\nFor the latest stable version, run:\r\n\r\n## npm\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nnpm install --save tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nnpm install --save tslib@1.6.1\r\n```\r\n\r\n## bower\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nbower install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nbower install tslib@1.6.1\r\n```\r\n\r\n## JSPM\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\njspm install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\njspm install tslib@1.6.1\r\n```\r\n\r\n# Usage\r\n\r\nSet the `importHelpers` compiler option on the command line:\r\n\r\n```\r\ntsc --importHelpers file.ts\r\n```\r\n\r\nor in your tsconfig.json:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"importHelpers\": true\r\n    }\r\n}\r\n```\r\n\r\n#### For bower and JSPM users\r\n\r\nYou will need to add a `paths` mapping for `tslib`, e.g. For Bower users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"amd\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"bower_components/tslib/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\nFor JSPM users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"system\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"jspm_packages/npm/tslib@1.10.0/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n# Contribute\r\n\r\nThere are many ways to [contribute](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md) to TypeScript.\r\n\r\n* [Submit bugs](https://github.com/Microsoft/TypeScript/issues) and help us verify fixes as they are checked in.\r\n* Review the [source code changes](https://github.com/Microsoft/TypeScript/pulls).\r\n* Engage with other TypeScript users and developers on [StackOverflow](http://stackoverflow.com/questions/tagged/typescript).\r\n* Join the [#typescript](http://twitter.com/#!/search/realtime/%23typescript) discussion on Twitter.\r\n* [Contribute bug fixes](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md).\r\n* Read the language specification ([docx](http://go.microsoft.com/fwlink/?LinkId=267121), [pdf](http://go.microsoft.com/fwlink/?LinkId=267238)).\r\n\r\n# Documentation\r\n\r\n* [Quick tutorial](http://www.typescriptlang.org/Tutorial)\r\n* [Programming handbook](http://www.typescriptlang.org/Handbook)\r\n* [Language specification](https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md)\r\n* [Homepage](http://www.typescriptlang.org/)\r\n",
+            "readmeFilename": "README.md",
+            "_args": "[Circular]",
+            "dependencies": {},
+            "devDependencies": "[Circular]",
+            "optionalDependencies": "[Circular]",
+            "_dependencies": "[Circular]",
+            "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/tslib",
+            "error": "[Circular]",
+            "extraneous": false,
+            "_deduped": "tslib"
+          }
+        },
+        "deprecated": false,
+        "description": "Angular Material",
+        "es2015": "./esm2015/material.js",
+        "homepage": "https://github.com/angular/material2#readme",
+        "keywords": [
+          "angular",
+          "material",
+          "material design",
+          "components"
+        ],
+        "license": "MIT",
+        "main": "./bundles/material.umd.js",
+        "module": "./esm5/material.es5.js",
+        "name": "@angular/material",
+        "ng-update": {
+          "migrations": "./schematics/migration.json",
+          "packageGroup": [
+            "@angular/material",
+            "@angular/cdk",
+            "@angular/material-moment-adapter"
+          ]
+        },
+        "peerDependencies": {
+          "@angular/animations": ">=7.0.0",
+          "@angular/cdk": "7.3.7",
+          "@angular/core": ">=7.0.0",
+          "@angular/common": ">=7.0.0"
+        },
+        "releaseGitBranch": "7.3.x",
+        "releaseGitCommitSha": "994d3abf36bae8202a967d4ff232e405adeb8128",
+        "releaseGitUser": "Jeremy Elbourn <jelbourn@google.com>",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/angular/material2.git"
+        },
+        "schematics": "./schematics/collection.json",
+        "sideEffects": false,
+        "typings": "./material.d.ts",
+        "version": "7.3.7",
+        "readme": "Angular Material\n=======\n\nThe sources for this package are in the main [Angular Material](https://github.com/angular/material2) repo. Please file issues and pull requests against that repo.\n\nLicense: MIT",
+        "readmeFilename": "README.md",
+        "_args": [
+          [
+            "@angular/material@7.3.7",
+            "/Users/eromano/Projects/alfresco-ng2-components"
+          ]
+        ],
+        "devDependencies": {},
+        "optionalDependencies": {},
+        "_dependencies": {
+          "tslib": "^1.7.1"
+        },
+        "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/@angular/material",
+        "error": "[Circular]",
+        "extraneous": false,
+        "peerMissing": [
+          {
+            "requiredBy": "@mat-datetimepicker/core@2.0.1",
+            "requires": "@angular/material@^6.3.3"
+          },
+          {
+            "requiredBy": "@mat-datetimepicker/moment@2.0.1",
+            "requires": "@angular/material@^6.3.3"
+          }
+        ]
+      },
+      "peerMissing": true
+    },
+    "@angular/material-moment-adapter": {
+      "required": {
+        "_from": "@angular/material-moment-adapter@^7.3.7",
+        "_id": "@angular/material-moment-adapter@7.3.7",
+        "_integrity": "sha512-Nb8hZkF6zcni7Jb+FXcTKKmbp8PhhFAhJSkch9FnKcFs1Py+sCNTLIH/cI53nPrTglkJwlVLwMW7fxj4w9I1CQ==",
+        "_location": "/@angular/material-moment-adapter",
+        "_phantomChildren": {},
+        "_requested": {
+          "type": "version",
+          "registry": true,
+          "raw": "@angular/material-moment-adapter@7.3.7",
+          "name": "@angular/material-moment-adapter",
+          "escapedName": "@angular%2fmaterial-moment-adapter",
+          "scope": "@angular",
+          "rawSpec": "7.3.7",
+          "saveSpec": "[Circular]",
+          "fetchSpec": "7.3.7"
+        },
+        "_requiredBy": [
+          "/"
+        ],
+        "_resolved": "https://registry.npmjs.org/@angular/material-moment-adapter/-/material-moment-adapter-7.3.7.tgz",
+        "_shasum": "8ad991a1035764fffc5a433dc4038e2ea8c93104",
+        "_spec": "7.3.7",
+        "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+        "bugs": {
+          "url": "https://github.com/angular/material2/issues"
+        },
+        "bundleDependencies": false,
+        "dependencies": {
+          "tslib": {
+            "_from": "tslib@^1.9.0",
+            "_id": "tslib@1.10.0",
+            "_integrity": "sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==",
+            "_location": "/tslib",
+            "_phantomChildren": "[Circular]",
+            "_requested": {
+              "type": "version",
+              "registry": true,
+              "raw": "tslib@1.10.0",
+              "name": "tslib",
+              "escapedName": "tslib",
+              "rawSpec": "1.10.0",
+              "saveSpec": "[Circular]",
+              "fetchSpec": "1.10.0"
+            },
+            "_requiredBy": "[Circular]",
+            "_resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz",
+            "_shasum": "c3c19f95973fb0a62973fb09d90d961ee43e5c8a",
+            "_spec": "1.10.0",
+            "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+            "author": "[Circular]",
+            "bugs": "[Circular]",
+            "bundleDependencies": false,
+            "deprecated": false,
+            "description": "Runtime library for TypeScript helper functions",
+            "homepage": "http://typescriptlang.org/",
+            "jsnext:main": "tslib.es6.js",
+            "keywords": "[Circular]",
+            "license": "Apache-2.0",
+            "main": "tslib.js",
+            "module": "tslib.es6.js",
+            "name": "tslib",
+            "repository": "[Circular]",
+            "typings": "tslib.d.ts",
+            "version": "1.10.0",
+            "readme": "# tslib\r\n\r\nThis is a runtime library for [TypeScript](http://www.typescriptlang.org/) that contains all of the TypeScript helper functions.\r\n\r\nThis library is primarily used by the `--importHelpers` flag in TypeScript.\r\nWhen using `--importHelpers`, a module that uses helper functions like `__extends` and `__assign` in the following emitted file:\r\n\r\n```ts\r\nvar __assign = (this && this.__assign) || Object.assign || function(t) {\r\n    for (var s, i = 1, n = arguments.length; i < n; i++) {\r\n        s = arguments[i];\r\n        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\r\n            t[p] = s[p];\r\n    }\r\n    return t;\r\n};\r\nexports.x = {};\r\nexports.y = __assign({}, exports.x);\r\n\r\n```\r\n\r\nwill instead be emitted as something like the following:\r\n\r\n```ts\r\nvar tslib_1 = require(\"tslib\");\r\nexports.x = {};\r\nexports.y = tslib_1.__assign({}, exports.x);\r\n```\r\n\r\nBecause this can avoid duplicate declarations of things like `__extends`, `__assign`, etc., this means delivering users smaller files on average, as well as less runtime overhead.\r\nFor optimized bundles with TypeScript, you should absolutely consider using `tslib` and `--importHelpers`.\r\n\r\n# Installing\r\n\r\nFor the latest stable version, run:\r\n\r\n## npm\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nnpm install --save tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nnpm install --save tslib@1.6.1\r\n```\r\n\r\n## bower\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nbower install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nbower install tslib@1.6.1\r\n```\r\n\r\n## JSPM\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\njspm install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\njspm install tslib@1.6.1\r\n```\r\n\r\n# Usage\r\n\r\nSet the `importHelpers` compiler option on the command line:\r\n\r\n```\r\ntsc --importHelpers file.ts\r\n```\r\n\r\nor in your tsconfig.json:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"importHelpers\": true\r\n    }\r\n}\r\n```\r\n\r\n#### For bower and JSPM users\r\n\r\nYou will need to add a `paths` mapping for `tslib`, e.g. For Bower users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"amd\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"bower_components/tslib/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\nFor JSPM users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"system\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"jspm_packages/npm/tslib@1.10.0/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n# Contribute\r\n\r\nThere are many ways to [contribute](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md) to TypeScript.\r\n\r\n* [Submit bugs](https://github.com/Microsoft/TypeScript/issues) and help us verify fixes as they are checked in.\r\n* Review the [source code changes](https://github.com/Microsoft/TypeScript/pulls).\r\n* Engage with other TypeScript users and developers on [StackOverflow](http://stackoverflow.com/questions/tagged/typescript).\r\n* Join the [#typescript](http://twitter.com/#!/search/realtime/%23typescript) discussion on Twitter.\r\n* [Contribute bug fixes](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md).\r\n* Read the language specification ([docx](http://go.microsoft.com/fwlink/?LinkId=267121), [pdf](http://go.microsoft.com/fwlink/?LinkId=267238)).\r\n\r\n# Documentation\r\n\r\n* [Quick tutorial](http://www.typescriptlang.org/Tutorial)\r\n* [Programming handbook](http://www.typescriptlang.org/Handbook)\r\n* [Language specification](https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md)\r\n* [Homepage](http://www.typescriptlang.org/)\r\n",
+            "readmeFilename": "README.md",
+            "_args": "[Circular]",
+            "dependencies": {},
+            "devDependencies": "[Circular]",
+            "optionalDependencies": "[Circular]",
+            "_dependencies": "[Circular]",
+            "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/tslib",
+            "error": "[Circular]",
+            "extraneous": false,
+            "_deduped": "tslib"
+          }
+        },
+        "deprecated": false,
+        "description": "Angular Material Moment Adapter",
+        "es2015": "./esm2015/material-moment-adapter.js",
+        "homepage": "https://github.com/angular/material2#readme",
+        "license": "MIT",
+        "main": "./bundles/material-moment-adapter.umd.js",
+        "module": "./esm5/material-moment-adapter.es5.js",
+        "name": "@angular/material-moment-adapter",
+        "ng-update": {
+          "packageGroup": [
+            "@angular/material",
+            "@angular/cdk",
+            "@angular/material-moment-adapter"
+          ]
+        },
+        "peerDependencies": {
+          "@angular/material": "7.3.7",
+          "@angular/core": ">=7.0.0",
+          "moment": "^2.18.1"
+        },
+        "releaseGitBranch": "7.3.x",
+        "releaseGitCommitSha": "994d3abf36bae8202a967d4ff232e405adeb8128",
+        "releaseGitUser": "Jeremy Elbourn <jelbourn@google.com>",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/angular/material2.git"
+        },
+        "typings": "./material-moment-adapter.d.ts",
+        "version": "7.3.7",
+        "readme": "Angular Material\n=======\n\nThe sources for this package are in the main [Angular Material](https://github.com/angular/material2) repo. Please file issues and pull requests against that repo.\n\nLicense: MIT",
+        "readmeFilename": "README.md",
+        "_args": [
+          [
+            "@angular/material-moment-adapter@7.3.7",
+            "/Users/eromano/Projects/alfresco-ng2-components"
+          ]
+        ],
+        "devDependencies": {},
+        "optionalDependencies": {},
+        "_dependencies": {
+          "tslib": "^1.7.1"
+        },
+        "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/@angular/material-moment-adapter",
+        "error": "[Circular]",
+        "extraneous": false,
+        "peerMissing": [
+          {
+            "requiredBy": "@mat-datetimepicker/moment@2.0.1",
+            "requires": "@angular/material-moment-adapter@^6.3.3"
+          }
+        ]
+      },
+      "peerMissing": true
+    },
+    "@angular/platform-browser": {
+      "version": "7.2.15",
+      "from": "@angular/platform-browser@^7.2.15",
+      "resolved": "https://registry.npmjs.org/@angular/platform-browser/-/platform-browser-7.2.15.tgz"
+    },
+    "@angular/platform-browser-dynamic": {
+      "version": "7.2.15",
+      "from": "@angular/platform-browser-dynamic@^7.2.15",
+      "resolved": "https://registry.npmjs.org/@angular/platform-browser-dynamic/-/platform-browser-dynamic-7.2.15.tgz"
+    },
+    "@angular/router": {
+      "version": "7.2.15",
+      "from": "@angular/router@^7.2.15",
+      "resolved": "https://registry.npmjs.org/@angular/router/-/router-7.2.15.tgz"
+    },
+    "@mat-datetimepicker/core": {
+      "required": {
+        "_from": "@mat-datetimepicker/core@^2.0.1",
+        "_id": "@mat-datetimepicker/core@2.0.1",
+        "_integrity": "sha1-4NsdtdTPe6Vrck7AQIF8totXdfI=",
+        "_location": "/@mat-datetimepicker/core",
+        "_phantomChildren": {},
+        "_requested": {
+          "type": "version",
+          "registry": true,
+          "raw": "@mat-datetimepicker/core@2.0.1",
+          "name": "@mat-datetimepicker/core",
+          "escapedName": "@mat-datetimepicker%2fcore",
+          "scope": "@mat-datetimepicker",
+          "rawSpec": "2.0.1",
+          "saveSpec": "[Circular]",
+          "fetchSpec": "2.0.1"
+        },
+        "_requiredBy": [
+          "/"
+        ],
+        "_resolved": "https://registry.npmjs.org/@mat-datetimepicker/core/-/core-2.0.1.tgz",
+        "_shasum": "e0db1db5d4cf7ba56b724ec040817cb68b5775f2",
+        "_spec": "2.0.1",
+        "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+        "author": {
+          "name": "PL",
+          "email": "kuhnroyal@gmail.com"
+        },
+        "bugs": {
+          "url": "https://github.com/kuhnroyal/mat-datetimepicker/issues"
+        },
+        "bundleDependencies": false,
+        "dependencies": {
+          "tslib": {
+            "_from": "tslib@^1.9.0",
+            "_id": "tslib@1.10.0",
+            "_integrity": "sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==",
+            "_location": "/tslib",
+            "_phantomChildren": "[Circular]",
+            "_requested": {
+              "type": "version",
+              "registry": true,
+              "raw": "tslib@1.10.0",
+              "name": "tslib",
+              "escapedName": "tslib",
+              "rawSpec": "1.10.0",
+              "saveSpec": "[Circular]",
+              "fetchSpec": "1.10.0"
+            },
+            "_requiredBy": "[Circular]",
+            "_resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz",
+            "_shasum": "c3c19f95973fb0a62973fb09d90d961ee43e5c8a",
+            "_spec": "1.10.0",
+            "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+            "author": "[Circular]",
+            "bugs": "[Circular]",
+            "bundleDependencies": false,
+            "deprecated": false,
+            "description": "Runtime library for TypeScript helper functions",
+            "homepage": "http://typescriptlang.org/",
+            "jsnext:main": "tslib.es6.js",
+            "keywords": "[Circular]",
+            "license": "Apache-2.0",
+            "main": "tslib.js",
+            "module": "tslib.es6.js",
+            "name": "tslib",
+            "repository": "[Circular]",
+            "typings": "tslib.d.ts",
+            "version": "1.10.0",
+            "readme": "# tslib\r\n\r\nThis is a runtime library for [TypeScript](http://www.typescriptlang.org/) that contains all of the TypeScript helper functions.\r\n\r\nThis library is primarily used by the `--importHelpers` flag in TypeScript.\r\nWhen using `--importHelpers`, a module that uses helper functions like `__extends` and `__assign` in the following emitted file:\r\n\r\n```ts\r\nvar __assign = (this && this.__assign) || Object.assign || function(t) {\r\n    for (var s, i = 1, n = arguments.length; i < n; i++) {\r\n        s = arguments[i];\r\n        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\r\n            t[p] = s[p];\r\n    }\r\n    return t;\r\n};\r\nexports.x = {};\r\nexports.y = __assign({}, exports.x);\r\n\r\n```\r\n\r\nwill instead be emitted as something like the following:\r\n\r\n```ts\r\nvar tslib_1 = require(\"tslib\");\r\nexports.x = {};\r\nexports.y = tslib_1.__assign({}, exports.x);\r\n```\r\n\r\nBecause this can avoid duplicate declarations of things like `__extends`, `__assign`, etc., this means delivering users smaller files on average, as well as less runtime overhead.\r\nFor optimized bundles with TypeScript, you should absolutely consider using `tslib` and `--importHelpers`.\r\n\r\n# Installing\r\n\r\nFor the latest stable version, run:\r\n\r\n## npm\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nnpm install --save tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nnpm install --save tslib@1.6.1\r\n```\r\n\r\n## bower\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nbower install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nbower install tslib@1.6.1\r\n```\r\n\r\n## JSPM\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\njspm install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\njspm install tslib@1.6.1\r\n```\r\n\r\n# Usage\r\n\r\nSet the `importHelpers` compiler option on the command line:\r\n\r\n```\r\ntsc --importHelpers file.ts\r\n```\r\n\r\nor in your tsconfig.json:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"importHelpers\": true\r\n    }\r\n}\r\n```\r\n\r\n#### For bower and JSPM users\r\n\r\nYou will need to add a `paths` mapping for `tslib`, e.g. For Bower users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"amd\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"bower_components/tslib/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\nFor JSPM users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"system\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"jspm_packages/npm/tslib@1.10.0/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n# Contribute\r\n\r\nThere are many ways to [contribute](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md) to TypeScript.\r\n\r\n* [Submit bugs](https://github.com/Microsoft/TypeScript/issues) and help us verify fixes as they are checked in.\r\n* Review the [source code changes](https://github.com/Microsoft/TypeScript/pulls).\r\n* Engage with other TypeScript users and developers on [StackOverflow](http://stackoverflow.com/questions/tagged/typescript).\r\n* Join the [#typescript](http://twitter.com/#!/search/realtime/%23typescript) discussion on Twitter.\r\n* [Contribute bug fixes](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md).\r\n* Read the language specification ([docx](http://go.microsoft.com/fwlink/?LinkId=267121), [pdf](http://go.microsoft.com/fwlink/?LinkId=267238)).\r\n\r\n# Documentation\r\n\r\n* [Quick tutorial](http://www.typescriptlang.org/Tutorial)\r\n* [Programming handbook](http://www.typescriptlang.org/Handbook)\r\n* [Language specification](https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md)\r\n* [Homepage](http://www.typescriptlang.org/)\r\n",
+            "readmeFilename": "README.md",
+            "_args": "[Circular]",
+            "dependencies": {},
+            "devDependencies": "[Circular]",
+            "optionalDependencies": "[Circular]",
+            "_dependencies": "[Circular]",
+            "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/tslib",
+            "error": "[Circular]",
+            "extraneous": false,
+            "_deduped": "tslib"
+          }
+        },
+        "deprecated": false,
+        "description": "This is the main branch for @angular/material 6.x.",
+        "es2015": "fesm2015/mat-datetimepicker-core.js",
+        "esm2015": "esm2015/mat-datetimepicker-core.js",
+        "esm5": "esm5/mat-datetimepicker-core.js",
+        "fesm2015": "fesm2015/mat-datetimepicker-core.js",
+        "fesm5": "fesm5/mat-datetimepicker-core.js",
+        "homepage": "https://github.com/kuhnroyal/mat-datetimepicker#readme",
+        "license": "MIT",
+        "main": "bundles/mat-datetimepicker-core.umd.js",
+        "metadata": "mat-datetimepicker-core.metadata.json",
+        "module": "fesm5/mat-datetimepicker-core.js",
+        "name": "@mat-datetimepicker/core",
+        "peerDependencies": {
+          "@angular/core": "^6.0.7",
+          "@angular/material": "^6.3.3",
+          "@angular/cdk": "^6.3.3"
+        },
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/kuhnroyal/mat-datetimepicker.git"
+        },
+        "sideEffects": false,
+        "typings": "mat-datetimepicker-core.d.ts",
+        "version": "2.0.1",
+        "readme": "# Material Datetimepicker for @angular/material 6.x\n\nThis is the main branch for @angular/material 6.x.\n\nYou can find the Angular 5 version on the `1.x` branch.\n\n### Description\n\nThe datetimepicker is taken from [Promact/md2](https://github.com/Promact/md2) and modified to use @angular/material as base and added theming support.\n\nLike the @angular/material datepicker it contains a native-datetime-adapter as well as a moment-datetime-adapter.\n\n[![Latest Stable Version](https://img.shields.io/npm/v/@mat-datetimepicker/core.svg)](https://www.npmjs.com/package/@mat-datetimepicker/core)\n[![License](https://img.shields.io/npm/l/@mat-datetimepicker/core.svg)](https://www.npmjs.com/package/@mat-datetimepicker/core)\n[![NPM Downloads](https://img.shields.io/npm/dm/@mat-datetimepicker/core.svg)](https://www.npmjs.com/package/@mat-datetimepicker/core)\n\n### Installation\nInstall:\n```\nyarn install @mat-datetimepicker/core\n```\nAnd for the moment adapter:\n```\nyarn install @angular/material-moment-adapter\nyarn install @mat-datetimepicker/moment\n``` \n\n### Performing a local build\n```\nyarn install\nyarn build\n``` \n\n### Using the local build in some project\n```\ncd my-project\n``` \nAdd the dependencies to your `package.json`:\n```\n\"dependencies\": {\n    \"@mat-datetimepicker/core\": \"2.0.0\",\n    \"@mat-datetimepicker/moment\": \"2.0.0\",\n}\n```\nLink the local built modules:\n```\nyarn link \"@mat-datetimepicker/core\"\nyarn link \"@mat-datetimepicker/moment\"\n``` \n\n### Import  & configuration\nBasically the same way the @angular/material datepicker is configured and imported.\n\n```\nimports: [\n  ...\n  MatDatepickerModule,\n  // use this if you want to use native javascript dates and INTL API if available\n  // MatNativeDatetimeModule,\n  MatMomentDatetimeModule,\n  MatDatetimepickerModule\n]\n```\n\n@see [src/app/app.module.ts](src/app/app.module.ts)\n\n### Usage\n```\n<form [formGroup]=\"group\">\n  <mat-form-field>\n    <mat-placeholder>Start DateTime</mat-placeholder>\n    <mat-datetimepicker-toggle [for]=\"datetimePicker\" matSuffix></mat-datetimepicker-toggle>\n    <mat-datetimepicker #datetimePicker type=\"datetime\" openOnFocus=\"true\" timeInterval=\"5\"></mat-datetimepicker>\n    <input matInput formControlName=\"start\" [matDatetimepicker]=\"datetimePicker\" required autocomplete=\"false\">\n  </mat-form-field>\n</form>\n```\n### Theming\n```\n@import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';\n\n// Using the $theme variable from the pre-built theme you can call the theming function\n@include mat-datetimepicker-theme($theme);\n```\n@see [src/styles.scss](src/styles.scss)\n\n",
+        "readmeFilename": "README.md",
+        "_args": [
+          [
+            "@mat-datetimepicker/core@2.0.1",
+            "/Users/eromano/Projects/alfresco-ng2-components"
+          ]
+        ],
+        "devDependencies": {},
+        "optionalDependencies": {},
+        "_dependencies": {
+          "tslib": "^1.9.0"
+        },
+        "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/@mat-datetimepicker/core",
+        "error": "[Circular]",
+        "extraneous": false,
+        "peerMissing": [
+          {
+            "requiredBy": "@mat-datetimepicker/moment@2.0.1",
+            "requires": "@mat-datetimepicker/core@2.0.0"
+          }
+        ]
+      },
+      "peerMissing": true
+    },
+    "@mat-datetimepicker/moment": {
+      "version": "2.0.1",
+      "from": "@mat-datetimepicker/moment@^2.0.1",
+      "resolved": "https://registry.npmjs.org/@mat-datetimepicker/moment/-/moment-2.0.1.tgz"
+    },
+    "@ngx-translate/core": {
+      "version": "11.0.1",
+      "from": "@ngx-translate/core@^11.0.0",
+      "resolved": "https://registry.npmjs.org/@ngx-translate/core/-/core-11.0.1.tgz"
+    },
+    "adf-monaco-extension": {
+      "version": "0.0.8",
+      "from": "adf-monaco-extension@0.0.8",
+      "resolved": "https://registry.npmjs.org/adf-monaco-extension/-/adf-monaco-extension-0.0.8.tgz"
+    },
+    "adf-tslint-rules": {
+      "version": "0.0.6",
+      "from": "adf-tslint-rules@0.0.6",
+      "resolved": "https://registry.npmjs.org/adf-tslint-rules/-/adf-tslint-rules-0.0.6.tgz"
+    },
+    "chart.js": {
+      "version": "2.5.0",
+      "from": "chart.js@2.5.0",
+      "resolved": "https://registry.npmjs.org/chart.js/-/chart.js-2.5.0.tgz"
+    },
+    "classlist.js": {
+      "version": "1.1.20150312",
+      "from": "classlist.js@1.1.20150312",
+      "resolved": "https://registry.npmjs.org/classlist.js/-/classlist.js-1.1.20150312.tgz"
+    },
+    "core-js": {
+      "version": "2.6.9",
+      "from": "core-js@^2.5.4",
+      "resolved": "https://registry.npmjs.org/core-js/-/core-js-2.6.9.tgz"
+    },
+    "custom-event-polyfill": {
+      "version": "0.3.0",
+      "from": "custom-event-polyfill@0.3.0",
+      "resolved": "https://registry.npmjs.org/custom-event-polyfill/-/custom-event-polyfill-0.3.0.tgz"
+    },
+    "hammerjs": {
+      "version": "2.0.8",
+      "from": "hammerjs@2.0.8",
+      "resolved": "https://registry.npmjs.org/hammerjs/-/hammerjs-2.0.8.tgz"
+    },
+    "minimatch-browser": {
+      "version": "1.0.0",
+      "from": "minimatch-browser@1.0.0",
+      "resolved": "https://registry.npmjs.org/minimatch-browser/-/minimatch-browser-1.0.0.tgz"
+    },
+    "moment": {
+      "version": "2.22.2",
+      "from": "moment@2.22.2",
+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.22.2.tgz"
+    },
+    "moment-es6": {
+      "version": "1.0.0",
+      "from": "moment-es6@^1.0.0",
+      "resolved": "https://registry.npmjs.org/moment-es6/-/moment-es6-1.0.0.tgz"
+    },
+    "ng2-charts": {
+      "version": "1.6.0",
+      "from": "ng2-charts@1.6.0",
+      "resolved": "https://registry.npmjs.org/ng2-charts/-/ng2-charts-1.6.0.tgz"
+    },
+    "ngx-monaco-editor": {
+      "required": {
+        "_from": "ngx-monaco-editor@7.0.0",
+        "_id": "ngx-monaco-editor@7.0.0",
+        "_integrity": "sha512-vzPXTgeZEuRapuiANtrUjNCMdU5MmsJvQVyKgZS042VdXayAn6gPxvIVQp4ipUzX5JzVOfjkL2t+s9+ihMT5Eg==",
+        "_location": "/ngx-monaco-editor",
+        "_phantomChildren": {},
+        "_requested": {
+          "type": "version",
+          "registry": true,
+          "raw": "ngx-monaco-editor@7.0.0",
+          "name": "ngx-monaco-editor",
+          "escapedName": "ngx-monaco-editor",
+          "rawSpec": "7.0.0",
+          "saveSpec": "[Circular]",
+          "fetchSpec": "7.0.0"
+        },
+        "_requiredBy": [
+          "/"
+        ],
+        "_resolved": "https://registry.npmjs.org/ngx-monaco-editor/-/ngx-monaco-editor-7.0.0.tgz",
+        "_shasum": "3c422502def5c5ff0771a4ff518352d0215de698",
+        "_spec": "7.0.0",
+        "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+        "author": {
+          "name": "Atul Kumar"
+        },
+        "bugs": {
+          "url": "https://github.com/atularen/ngx-monaco-editor/issues"
+        },
+        "bundleDependencies": false,
+        "contributors": [
+          {
+            "name": "Atul Kumar",
+            "email": "atulaggarwal4288@gmail.com"
+          }
+        ],
+        "dependencies": {
+          "tslib": {
+            "_from": "tslib@^1.9.0",
+            "_id": "tslib@1.10.0",
+            "_integrity": "sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==",
+            "_location": "/tslib",
+            "_phantomChildren": "[Circular]",
+            "_requested": {
+              "type": "version",
+              "registry": true,
+              "raw": "tslib@1.10.0",
+              "name": "tslib",
+              "escapedName": "tslib",
+              "rawSpec": "1.10.0",
+              "saveSpec": "[Circular]",
+              "fetchSpec": "1.10.0"
+            },
+            "_requiredBy": "[Circular]",
+            "_resolved": "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz",
+            "_shasum": "c3c19f95973fb0a62973fb09d90d961ee43e5c8a",
+            "_spec": "1.10.0",
+            "_where": "/Users/eromano/Projects/alfresco-ng2-components",
+            "author": "[Circular]",
+            "bugs": "[Circular]",
+            "bundleDependencies": false,
+            "deprecated": false,
+            "description": "Runtime library for TypeScript helper functions",
+            "homepage": "http://typescriptlang.org/",
+            "jsnext:main": "tslib.es6.js",
+            "keywords": "[Circular]",
+            "license": "Apache-2.0",
+            "main": "tslib.js",
+            "module": "tslib.es6.js",
+            "name": "tslib",
+            "repository": "[Circular]",
+            "typings": "tslib.d.ts",
+            "version": "1.10.0",
+            "readme": "# tslib\r\n\r\nThis is a runtime library for [TypeScript](http://www.typescriptlang.org/) that contains all of the TypeScript helper functions.\r\n\r\nThis library is primarily used by the `--importHelpers` flag in TypeScript.\r\nWhen using `--importHelpers`, a module that uses helper functions like `__extends` and `__assign` in the following emitted file:\r\n\r\n```ts\r\nvar __assign = (this && this.__assign) || Object.assign || function(t) {\r\n    for (var s, i = 1, n = arguments.length; i < n; i++) {\r\n        s = arguments[i];\r\n        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\r\n            t[p] = s[p];\r\n    }\r\n    return t;\r\n};\r\nexports.x = {};\r\nexports.y = __assign({}, exports.x);\r\n\r\n```\r\n\r\nwill instead be emitted as something like the following:\r\n\r\n```ts\r\nvar tslib_1 = require(\"tslib\");\r\nexports.x = {};\r\nexports.y = tslib_1.__assign({}, exports.x);\r\n```\r\n\r\nBecause this can avoid duplicate declarations of things like `__extends`, `__assign`, etc., this means delivering users smaller files on average, as well as less runtime overhead.\r\nFor optimized bundles with TypeScript, you should absolutely consider using `tslib` and `--importHelpers`.\r\n\r\n# Installing\r\n\r\nFor the latest stable version, run:\r\n\r\n## npm\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nnpm install --save tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nnpm install --save tslib@1.6.1\r\n```\r\n\r\n## bower\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\nbower install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\nbower install tslib@1.6.1\r\n```\r\n\r\n## JSPM\r\n\r\n```sh\r\n# TypeScript 2.3.3 or later\r\njspm install tslib\r\n\r\n# TypeScript 2.3.2 or earlier\r\njspm install tslib@1.6.1\r\n```\r\n\r\n# Usage\r\n\r\nSet the `importHelpers` compiler option on the command line:\r\n\r\n```\r\ntsc --importHelpers file.ts\r\n```\r\n\r\nor in your tsconfig.json:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"importHelpers\": true\r\n    }\r\n}\r\n```\r\n\r\n#### For bower and JSPM users\r\n\r\nYou will need to add a `paths` mapping for `tslib`, e.g. For Bower users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"amd\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"bower_components/tslib/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\nFor JSPM users:\r\n\r\n```json\r\n{\r\n    \"compilerOptions\": {\r\n        \"module\": \"system\",\r\n        \"importHelpers\": true,\r\n        \"baseUrl\": \"./\",\r\n        \"paths\": {\r\n            \"tslib\" : [\"jspm_packages/npm/tslib@1.10.0/tslib.d.ts\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n# Contribute\r\n\r\nThere are many ways to [contribute](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md) to TypeScript.\r\n\r\n* [Submit bugs](https://github.com/Microsoft/TypeScript/issues) and help us verify fixes as they are checked in.\r\n* Review the [source code changes](https://github.com/Microsoft/TypeScript/pulls).\r\n* Engage with other TypeScript users and developers on [StackOverflow](http://stackoverflow.com/questions/tagged/typescript).\r\n* Join the [#typescript](http://twitter.com/#!/search/realtime/%23typescript) discussion on Twitter.\r\n* [Contribute bug fixes](https://github.com/Microsoft/TypeScript/blob/master/CONTRIBUTING.md).\r\n* Read the language specification ([docx](http://go.microsoft.com/fwlink/?LinkId=267121), [pdf](http://go.microsoft.com/fwlink/?LinkId=267238)).\r\n\r\n# Documentation\r\n\r\n* [Quick tutorial](http://www.typescriptlang.org/Tutorial)\r\n* [Programming handbook](http://www.typescriptlang.org/Handbook)\r\n* [Language specification](https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md)\r\n* [Homepage](http://www.typescriptlang.org/)\r\n",
+            "readmeFilename": "README.md",
+            "_args": "[Circular]",
+            "dependencies": {},
+            "devDependencies": "[Circular]",
+            "optionalDependencies": "[Circular]",
+            "_dependencies": "[Circular]",
+            "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/tslib",
+            "error": "[Circular]",
+            "extraneous": false,
+            "_deduped": "tslib"
+          }
+        },
+        "deprecated": false,
+        "description": "Monaco Code Editor for Angular",
+        "es2015": "fesm2015/ngx-monaco-editor.js",
+        "esm2015": "esm2015/ngx-monaco-editor.js",
+        "esm5": "esm5/ngx-monaco-editor.js",
+        "fesm2015": "fesm2015/ngx-monaco-editor.js",
+        "fesm5": "fesm5/ngx-monaco-editor.js",
+        "homepage": "https://github.com/atularen/ngx-monaco-editor#readme",
+        "keywords": [
+          "angular",
+          "angular 2+",
+          "angular 2",
+          "angular 4",
+          "angular 5",
+          "angular 6",
+          "angular 7",
+          "monaco",
+          "monaco-editor",
+          "code",
+          "editor",
+          "reusable"
+        ],
+        "license": "MIT",
+        "main": "bundles/ngx-monaco-editor.umd.js",
+        "metadata": "ngx-monaco-editor.metadata.json",
+        "module": "fesm5/ngx-monaco-editor.js",
+        "name": "ngx-monaco-editor",
+        "peerDependencies": {
+          "@angular/common": ">= 2.0.0",
+          "@angular/core": ">= 2.0.0"
+        },
+        "private": false,
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/atularen/ngx-monaco-editor.git"
+        },
+        "sideEffects": false,
+        "typings": "ngx-monaco-editor.d.ts",
+        "version": "7.0.0",
+        "readme": "# Monaco Editor Component for Angular 2 and above.\n\n - Angular <= 4: v3.x.x\n - Angular 5: v5.x.x\n - Angular 6: v6.x.x\n - Angular 7: v7.x.x\n\nUsing this Module you can utilize the Monaco Editor as an Angular Component. Feel free to contribute, raise feature requests and make it better.\n\nSupports all the options available in monaco-editor [Monaco Editor Options](https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html)\n\n## Setup\n\n### Installation\n\nInstall from npm repository:\n```\nnpm install ngx-monaco-editor --save\n ```\n \nFor angular version 6 use v6.x.x\n```\nnpm install ngx-monaco-editor@6.0.0 --save\n ```\n \nAdd the glob to assets in .angular-cli.json (to make monaco-editor lib available to the app):\n```typescript\n{\n  \"apps\": [\n    {\n      \"assets\": [\n        { \"glob\": \"**/*\", \"input\": \"../node_modules/ngx-monaco-editor/assets/monaco\", \"output\": \"./assets/monaco/\" }\n      ],\n      ...\n    }\n    ...\n  ],\n  ...\n}\n ```\n\n### Sample\nInclude MonacoEditorModule in Main Module and Feature Modules where you want to use the editor component.(eg: app.module.ts): \n```typescript\nimport { BrowserModule } from '@angular/platform-browser';\nimport { NgModule } from '@angular/core';\nimport { FormsModule } from '@angular/forms';\n\nimport { AppComponent } from './app.component';\nimport { MonacoEditorModule } from 'ngx-monaco-editor';\n\n@NgModule({\n  declarations: [\n    AppComponent\n  ],\n  imports: [\n    BrowserModule,\n    FormsModule,\n    MonacoEditorModule.forRoot() // use forRoot() in main app module only.\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule {\n}\n```\n\nCreate Editor options in component.(eg: app.component.ts)\n```typescript\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html'\n})\nexport class AppComponent {\n  editorOptions = {theme: 'vs-dark', language: 'javascript'};\n  code: string= 'function x() {\\nconsole.log(\"Hello world!\");\\n}';\n}\n```\nInclude editor in html with options and ngModel bindings.(eg: app.component.html)\n```html\n<ngx-monaco-editor [options]=\"editorOptions\" [(ngModel)]=\"code\"></ngx-monaco-editor>\n```\n\nInclude diff-editor in html with options.(eg: app.component.html)\n```html\n<ngx-monaco-diff-editor [options]=\"options\" [originalModel]=\"originalModel\" [modifiedModel]=\"modifiedModel\"></ngx-monaco-diff-editor>\n```\n```typescript\nimport { Component } from '@angular/core';\nimport { DiffEditorModel } from 'ngx-monaco-editor';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html'\n})\nexport class AppComponent {\n  options = {\n    theme: 'vs-dark'\n  };\n  originalModel: DiffEditorModel = {\n    code: 'heLLo world!',\n    language: 'text/plain'\n  };\n\n  modifiedModel: DiffEditorModel = {\n    code: 'hello orlando!',\n    language: 'text/plain'\n  };\n}\n```\n\n### Styling\nAdd class to editor tag. (eg. class=\"my-code-editor\")\n```html\n<ngx-monaco-editor class=\"my-code-editor\" [options]=\"editorOptions\" [(ngModel)]=\"code\"></ngx-monaco-editor>\n```\nAdd styling in css/scss file:\n```scss\n.my-code-editor {\n  .editorContainer {\n    height: calc(100vh - 100px);\n  }\n}\n```\nSet automaticLayout option to adjust editor size dynamically. Recommended when using in modal dialog or tabs where editor is not visible initially.\n\n### Events\nOutput event (onInit) expose editor instance that can be used for performing custom operations on the editor. \n```html\n<ngx-monaco-editor [options]=\"editorOptions\" [(ngModel)]=\"code\" (onInit)=\"onInit($event)\"></ngx-monaco-editor>\n```\n\n```typescript\nexport class AppComponent {\n  editorOptions = {theme: 'vs-dark', language: 'javascript'};\n  code: string= 'function x() {\\nconsole.log(\"Hello world!\");\\n}';\n  onInit(editor) {\n      let line = editor.getPosition();\n      console.log(line);\n    }\n}\n```\n\n## Configurations\n`forRoot()` method of MonacoEditorModule accepts config of type `NgxMonacoEditorConfig`.\n```typescript\nimport { NgModule } from '@angular/core';\nimport { FormsModule } from '@angular/forms';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor';\nimport { AppComponent } from './app.component';\n\nconst monacoConfig: NgxMonacoEditorConfig = {\n  baseUrl: 'app-name/assets', // configure base path for monaco editor\n  defaultOptions: { scrollBeyondLastLine: false }, // pass default options to be used\n  onMonacoLoad: () => { console.log((<any>window).monaco); } // here monaco object will be available as window.monaco use this function to extend monaco editor functionalities.\n};\n\n@NgModule({\n  declarations: [\n    AppComponent\n  ],\n  imports: [\n    BrowserModule,\n    FormsModule,\n    MonacoEditorModule.forRoot(monacoConfig)\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule {\n}\n```\n\n### Configure JSON Defaults\n`onMonacoLoad` property of `NgxMonacoEditorConfig` can be used to configure JSON default.\n```typescript\nimport { NgModule } from '@angular/core';\nimport { FormsModule } from '@angular/forms';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor';\nimport { AppComponent } from './app.component';\n\nconst monacoConfig: NgxMonacoEditorConfig = {\n  baseUrl: 'assets',\n  defaultOptions: { scrollBeyondLastLine: false },\n  onMonacoLoad: () => {\n    console.log((window as any).monaco);\n    const uri = monaco.Uri.parse('a://b/foo.json');\n    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({\n      validate: true,\n      schemas: [{\n        uri: 'http://myserver/foo-schema.json',\n        fileMatch: [uri.toString()],\n        schema: {\n          type: 'object',\n          properties: {\n            p1: {\n              enum: ['v1', 'v2']\n            },\n            p2: {\n              $ref: 'http://myserver/bar-schema.json'\n            }\n          }\n        }\n      }, {\n        uri: 'http://myserver/bar-schema.json',\n        fileMatch: [uri.toString()],\n        schema: {\n          type: 'object',\n          properties: {\n            q1: {\n              enum: ['x1', 'x2']\n            }\n          }\n        }\n      }]\n    });\n  } \n};\n\n@NgModule({\n  declarations: [\n    AppComponent\n  ],\n  imports: [\n    BrowserModule,\n    FormsModule,\n    MonacoEditorModule.forRoot(monacoConfig)\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule {\n}\n```\n\nNow pass model config of type `NgxEditorModel` to Editor Component\n```typescript\n@Component({\n  selector: 'app-root',\n  template: `<ngx-monaco-editor [options]=\"options\" [model]=\"model\"></ngx-monaco-editor>`,\n  styles: []\n})\nexport class AppComponent {\n  options = {\n    theme: 'vs-dark'\n  };\n  \n  jsonCode = [\n    '{',\n    '    \"p1\": \"v3\",',\n    '    \"p2\": false',\n    '}'\n  ].join('\\n');\n\n  model: NgxEditorModel = {\n    value: this.jsonCode,\n    language: 'json',\n    uri: monaco.Uri.parse('a://b/foo.json')\n  };\n}\n```\n\n## Links\n[Monaco Editor](https://github.com/Microsoft/monaco-editor/)<br/>\n[Monaco Editor Options](https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html)\n\n## License\n\nMIT © [Atul Kumar](https://github.com/atularen)\n",
+        "readmeFilename": "README.md",
+        "_args": [
+          [
+            "ngx-monaco-editor@7.0.0",
+            "/Users/eromano/Projects/alfresco-ng2-components"
+          ]
+        ],
+        "devDependencies": {},
+        "optionalDependencies": {},
+        "_dependencies": {
+          "tslib": "^1.9.0"
+        },
+        "path": "/Users/eromano/Projects/alfresco-ng2-components/node_modules/ngx-monaco-editor",
+        "error": "[Circular]",
+        "extraneous": false,
+        "peerMissing": [
+          {
+            "requiredBy": "adf-monaco-extension@0.0.8",
+            "requires": "ngx-monaco-editor@^6.0.0"
+          }
+        ]
+      },
+      "peerMissing": true
+    },
+    "pdfjs-dist": {
+      "version": "2.0.489",
+      "from": "pdfjs-dist@2.0.489",
+      "resolved": "https://registry.npmjs.org/pdfjs-dist/-/pdfjs-dist-2.0.489.tgz"
+    },
+    "raphael": {
+      "version": "2.2.7",
+      "from": "raphael@2.2.7",
+      "resolved": "https://registry.npmjs.org/raphael/-/raphael-2.2.7.tgz"
+    },
+    "reflect-metadata": {
+      "version": "0.1.13",
+      "from": "reflect-metadata@0.1.13",
+      "resolved": "https://registry.npmjs.org/reflect-metadata/-/reflect-metadata-0.1.13.tgz"
+    },
+    "remark-validate-links": {
+      "version": "8.0.3",
+      "from": "remark-validate-links@^8.0.0",
+      "resolved": "https://registry.npmjs.org/remark-validate-links/-/remark-validate-links-8.0.3.tgz"
+    },
+    "rxjs": {
+      "version": "6.5.2",
+      "from": "rxjs@^6.2.2",
+      "resolved": "https://registry.npmjs.org/rxjs/-/rxjs-6.5.2.tgz"
+    },
+    "systemjs": {
+      "version": "0.19.27",
+      "from": "systemjs@0.19.27",
+      "resolved": "https://registry.npmjs.org/systemjs/-/systemjs-0.19.27.tgz"
+    },
+    "web-animations-js": {
+      "version": "2.3.1",
+      "from": "web-animations-js@2.3.1",
+      "resolved": "https://registry.npmjs.org/web-animations-js/-/web-animations-js-2.3.1.tgz"
+    },
+    "zone.js": {
+      "version": "0.8.29",
+      "from": "zone.js@~0.8.26",
+      "resolved": "https://registry.npmjs.org/zone.js/-/zone.js-0.8.29.tgz"
+    }
+  }
+}

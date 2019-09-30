@@ -17,9 +17,21 @@
 
 import { TemplateRef } from '@angular/core';
 
+export interface DataColumnTypes {
+    text: string;
+    image: string;
+    date: string;
+    json: string;
+    icon: string;
+    fileSize: string;
+    location: string;
+}
+
+export type DataColumnType = keyof DataColumnTypes;
+
 export interface DataColumn {
     key: string;
-    type: string; // text|image|date
+    type: DataColumnType;
     format?: string;
     sortable?: boolean;
     title?: string;
@@ -28,4 +40,5 @@ export interface DataColumn {
     template?: TemplateRef<any>;
     formatTooltip?: Function;
     copyContent?: boolean;
+    editable?: boolean;
 }

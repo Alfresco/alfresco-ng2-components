@@ -17,47 +17,48 @@
 
 import { element, by } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { ElementFinder } from 'protractor';
 
 export class ProcessHeaderCloudPage {
 
-    idField = element.all(by.css('span[data-automation-id*="id"] span')).first();
-    nameField = element.all(by.css('span[data-automation-id*="name"] span')).first();
-    statusField = element(by.css('span[data-automation-id*="status"] span'));
-    initiatorField = element(by.css('span[data-automation-id*="initiator"] span'));
-    startDateField = element.all(by.css('span[data-automation-id*="startDate"] span')).first();
-    lastModifiedField = element.all(by.css('span[data-automation-id*="lastModified"] span')).first();
-    parentIdField = element(by.css('span[data-automation-id*="parentId"] span'));
-    businessKeyField = element.all(by.css('span[data-automation-id*="businessKey"] span')).first();
+    idField: ElementFinder = element.all(by.css('span[data-automation-id*="id"] span')).first();
+    nameField: ElementFinder = element.all(by.css('span[data-automation-id*="name"] span')).first();
+    statusField: ElementFinder = element(by.css('span[data-automation-id*="status"] span'));
+    initiatorField: ElementFinder = element(by.css('span[data-automation-id*="initiator"] span'));
+    startDateField: ElementFinder = element.all(by.css('span[data-automation-id*="startDate"] span')).first();
+    lastModifiedField: ElementFinder = element.all(by.css('span[data-automation-id*="lastModified"] span')).first();
+    parentIdField: ElementFinder = element(by.css('span[data-automation-id*="parentId"] span'));
+    businessKeyField: ElementFinder = element.all(by.css('span[data-automation-id*="businessKey"] span')).first();
 
-    getId() {
+    async getId(): Promise<string> {
         return BrowserActions.getText(this.idField);
     }
 
-    getName() {
+    async getName(): Promise<string> {
         return BrowserActions.getText(this.nameField);
     }
 
-    getStatus() {
+    async getStatus(): Promise<string> {
         return BrowserActions.getText(this.statusField);
     }
 
-    getInitiator() {
+    async getInitiator(): Promise<string> {
         return BrowserActions.getText(this.initiatorField);
     }
 
-    getStartDate() {
+    async getStartDate(): Promise<string> {
         return BrowserActions.getText(this.startDateField);
     }
 
-    getLastModified() {
+    async getLastModified(): Promise<string> {
         return BrowserActions.getText(this.lastModifiedField);
     }
 
-    getParentId() {
+    async getParentId(): Promise<string> {
         return BrowserActions.getText(this.parentIdField);
     }
 
-    getBusinessKey() {
+    async getBusinessKey(): Promise<string> {
         return BrowserActions.getText(this.businessKeyField);
     }
 

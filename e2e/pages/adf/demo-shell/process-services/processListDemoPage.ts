@@ -17,96 +17,88 @@
 
 import { BrowserVisibility } from '@alfresco/adf-testing';
 import { DataTableComponentPage, BrowserActions } from '@alfresco/adf-testing';
-import { element, by, protractor } from 'protractor';
+import { element, by, protractor, ElementFinder } from 'protractor';
 
 export class ProcessListDemoPage {
 
-    appIdInput = element(by.css('input[data-automation-id="app-id"]'));
-    resetButton = element(by.cssContainingText('button span', 'Reset'));
-    emptyProcessContent = element(by.css('div[class="adf-empty-content"]'));
-    processDefinitionInput = element(by.css('input[data-automation-id="process-definition-id"]'));
-    processInstanceInput = element(by.css('input[data-automation-id="process-instance-id"]'));
-    stateSelector = element(by.css('mat-select[data-automation-id="state"'));
-    sortSelector = element(by.css('mat-select[data-automation-id="sort"'));
+    appIdInput: ElementFinder = element(by.css('input[data-automation-id="app-id"]'));
+    resetButton: ElementFinder = element(by.cssContainingText('button span', 'Reset'));
+    emptyProcessContent: ElementFinder = element(by.css('div[class="adf-empty-content"]'));
+    processDefinitionInput: ElementFinder = element(by.css('input[data-automation-id="process-definition-id"]'));
+    processInstanceInput: ElementFinder = element(by.css('input[data-automation-id="process-instance-id"]'));
+    stateSelector: ElementFinder = element(by.css('mat-select[data-automation-id="state"'));
+    sortSelector: ElementFinder = element(by.css('mat-select[data-automation-id="sort"'));
 
-    dataTable = new DataTableComponentPage();
+    dataTable: DataTableComponentPage = new DataTableComponentPage();
 
-    getDisplayedProcessesNames() {
+    getDisplayedProcessesNames(): Promise<any> {
         return this.dataTable.getAllRowsColumnValues('Name');
     }
 
-    selectSorting(sort) {
-        BrowserActions.click(this.sortSelector);
-        const sortLocator = element(by.cssContainingText('mat-option span', sort));
-        BrowserActions.click(sortLocator);
-        return this;
+    async selectSorting(sort): Promise<void> {
+        await BrowserActions.click(this.sortSelector);
+        const sortLocator: ElementFinder = element(by.cssContainingText('mat-option span', sort));
+        await BrowserActions.click(sortLocator);
     }
 
-    selectStateFilter(state) {
-        BrowserActions.click(this.stateSelector);
-        const stateLocator = element(by.cssContainingText('mat-option span', state));
-        BrowserActions.click(stateLocator);
-        return this;
+    async selectStateFilter(state): Promise<void> {
+        await BrowserActions.click(this.stateSelector);
+        const stateLocator: ElementFinder = element(by.cssContainingText('mat-option span', state));
+        await BrowserActions.click(stateLocator);
     }
 
-    addAppId(appId) {
-        BrowserActions.click(this.appIdInput);
-        this.appIdInput.sendKeys(protractor.Key.ENTER);
-        this.appIdInput.clear();
-        return this.appIdInput.sendKeys(appId);
+    async addAppId(appId): Promise<void> {
+        await BrowserActions.click(this.appIdInput);
+        await this.appIdInput.sendKeys(protractor.Key.ENTER);
+        await this.appIdInput.clear();
+        await this.appIdInput.sendKeys(appId);
     }
 
-    clickResetButton() {
-        return BrowserActions.click(this.resetButton);
+    async clickResetButton(): Promise<void> {
+        await BrowserActions.click(this.resetButton);
 
     }
 
-    checkErrorMessageIsDisplayed(error) {
-        const errorMessage = element(by.cssContainingText('mat-error', error));
-        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
+    async checkErrorMessageIsDisplayed(error): Promise<void> {
+        const errorMessage: ElementFinder = element(by.cssContainingText('mat-error', error));
+        await BrowserVisibility.waitUntilElementIsVisible(errorMessage);
     }
 
-    checkNoProcessFoundIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.emptyProcessContent);
+    async checkNoProcessFoundIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.emptyProcessContent);
     }
 
-    checkProcessIsNotDisplayed(processName) {
-        return this.dataTable.checkContentIsNotDisplayed('Name', processName);
+    async checkProcessIsNotDisplayed(processName): Promise<void> {
+        await this.dataTable.checkContentIsNotDisplayed('Name', processName);
     }
 
-    checkProcessIsDisplayed(processName) {
-        return this.dataTable.checkContentIsDisplayed('Name', processName);
+    async checkProcessIsDisplayed(processName): Promise<void> {
+        await this.dataTable.checkContentIsDisplayed('Name', processName);
     }
 
-    checkAppIdFieldIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.appIdInput);
-        return this;
+    async checkAppIdFieldIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.appIdInput);
     }
 
-    checkProcessInstanceIdFieldIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processInstanceInput);
-        return this;
+    async checkProcessInstanceIdFieldIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceInput);
     }
 
-    checkStateFieldIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
-        return this;
+    async checkStateFieldIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
     }
 
-    checkSortFieldIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.sortSelector);
-        return this;
+    async checkSortFieldIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.sortSelector);
     }
 
-    addProcessDefinitionId(procDefinitionId) {
-        BrowserActions.click(this.processDefinitionInput);
-        this.processDefinitionInput.clear();
-        return this.processDefinitionInput.sendKeys(procDefinitionId);
+    async addProcessDefinitionId(procDefinitionId): Promise<void> {
+        await BrowserActions.click(this.processDefinitionInput);
+        await BrowserActions.clearSendKeys(this.processDefinitionInput, procDefinitionId);
     }
 
-    addProcessInstanceId(procInstanceId) {
-        BrowserActions.click(this.processInstanceInput);
-        this.processInstanceInput.clear();
-        return this.processInstanceInput.sendKeys(procInstanceId);
+    async addProcessInstanceId(procInstanceId): Promise<void> {
+        await BrowserActions.click(this.processInstanceInput);
+        await BrowserActions.clearSendKeys(this.processInstanceInput, procInstanceId);
     }
 }

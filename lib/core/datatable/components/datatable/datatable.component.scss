@@ -10,6 +10,7 @@
     $data-table-header-sorted-color: mat-color($foreground, text) !default;
     $data-table-header-sorted-icon-hover-color: mat-color($foreground, disabled-text) !default;
     $data-table-cell-text-color: mat-color($foreground, text) !default;
+    $data-table-cell-link-color: mat-color($foreground, text) !default;
     $data-table-cell-link-hover-color: mat-color($alfresco-ecm-blue, 500) !default;
     $data-table-cell-outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
     $data-table-divider-color: mat-color($foreground, text, 0.07) !default;
@@ -129,6 +130,11 @@
                     overflow: hidden;
                 }
 
+                .adf-datatable-cell-value {
+                    display: block;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
             }
 
             .adf-datatable__actions-cell {
@@ -279,7 +285,8 @@
                 text-align: right;
             }
 
-            &--image {
+            &--image,
+            &--icon {
                 padding-left: 24px;
                 padding-right: 24px;
                 width: $data-table-thumbnail-width;
@@ -382,6 +389,7 @@
                 min-height: inherit;
                 align-items: center;
                 display: flex;
+                width: 100%;
             }
 
             .adf-datatable-cell-value {
@@ -397,11 +405,6 @@
             &--fileSize .adf-datatable-cell-value {
                 padding: 0;
             }
-
-            &:focus {
-                outline-offset: -1px;
-                outline: $data-table-cell-outline;
-            }
         }
 
         .adf-cell-value {
@@ -409,6 +412,12 @@
             min-height: inherit;
             align-items: center;
             word-break: break-all;
+            width: 100%;
+
+            &:focus {
+                outline-offset: -1px;
+                outline: $data-table-cell-outline;
+            }
         }
 
         .adf-datatable__actions-cell, .adf-datatable-cell--image {
@@ -423,7 +432,7 @@
         .adf-location-cell {
             a {
                 text-decoration: none;
-                color: $data-table-cell-text-color;
+                color: $data-table-cell-link-color;
 
                 &:hover {
                     color: $data-table-cell-link-hover-color;
@@ -450,7 +459,7 @@
 
         .adf-datatable-link {
             text-decoration: none;
-            color: $data-table-cell-text-color;
+            color: $data-table-cell-link-color;
 
             &:hover {
                 color: $data-table-cell-link-hover-color;
@@ -478,6 +487,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+            padding: 0 4px;
 
             &.adf-datatable-cell-header,
             .adf-datatable-content-cell {

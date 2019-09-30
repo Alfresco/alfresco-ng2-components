@@ -435,13 +435,13 @@ export class IdentityUserService {
         const httpMethod = 'POST', pathParams = {}, queryParams = {}, bodyParam = request, headerParams = {},
         formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-        url, httpMethod, pathParams, queryParams,
-        headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
+        return from(
+            this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
+                url, httpMethod, pathParams, queryParams,
+                headerParams, formParams, bodyParam,
+                contentTypes, accepts, null, null, null
+                )
+        ).pipe(catchError(error => this.handleError(error)));
     }
 
     /**
@@ -667,19 +667,19 @@ export class IdentityUserService {
         );
     }
 
-    private buildUserUrl(): any {
+    private buildUserUrl(): string {
         return `${this.appConfigService.get('identityHost')}/users`;
     }
 
-    private buildUserClientRoleMapping(userId: string, clientId: string): any {
-        return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/clients/${clientId}`;
+    private buildUserClientRoleMapping(userId: string, clientId: string): string {
+        return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/clients/${clientId}/composite`;
     }
 
-    private buildRolesUrl(userId: string): any {
+    private buildRolesUrl(userId: string): string {
         return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/realm/composite`;
     }
 
-    private buildGetClientsUrl() {
+    private buildGetClientsUrl(): string {
         return `${this.appConfigService.get('identityHost')}/clients`;
     }
 

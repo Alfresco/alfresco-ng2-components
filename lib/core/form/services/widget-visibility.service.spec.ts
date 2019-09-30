@@ -34,7 +34,8 @@ import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { fakeTaskProcessVariableModels,
         fakeFormJson, formTest,
         formValues, complexVisibilityJsonVisible,
-        complexVisibilityJsonNotVisible } from 'core/mock/form/widget-visibility.service.mock';
+        complexVisibilityJsonNotVisible, tabVisibilityJsonMock,
+        tabInvalidFormVisibility } from 'core/mock/form/widget-visibility.service.mock';
 
 declare let jasmine: any;
 
@@ -252,7 +253,7 @@ describe('WidgetVisibilityService', () => {
 
         it('should retrieve the value for the right field when it is a process variable', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
-                (res: TaskProcessVariableModel[]) => {
+                () => {
                     visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
                     const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
@@ -270,7 +271,7 @@ describe('WidgetVisibilityService', () => {
 
         it('should retrieve the value for the left field when it is a process variable', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
-                (res: TaskProcessVariableModel[]) => {
+                () => {
                     visibilityObjTest.leftRestResponseId = 'TEST_VAR_2';
                     const leftValue = service.getLeftValue(formTest, visibilityObjTest);
 
@@ -288,7 +289,7 @@ describe('WidgetVisibilityService', () => {
 
         it('should evaluate the visibility for the field between form value and process var', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
-                (res: TaskProcessVariableModel[]) => {
+                () => {
                     visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
                     visibilityObjTest.operator = '!=';
                     visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
@@ -307,7 +308,7 @@ describe('WidgetVisibilityService', () => {
 
         it('should evaluate visibility with multiple conditions', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
-                (res: TaskProcessVariableModel[]) => {
+                () => {
                     visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
                     visibilityObjTest.operator = '!=';
                     visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
@@ -929,12 +930,15 @@ describe('WidgetVisibilityService', () => {
     describe('Visibility based on form variables', () => {
 
         let fakeFormWithVariables = new FormModel(fakeFormJson);
+        const fakeTabVisibilityModel = new FormModel(tabVisibilityJsonMock);
         const complexVisibilityModel = new FormModel(complexVisibilityJsonVisible);
         const complexVisibilityJsonNotVisibleModel = new FormModel(complexVisibilityJsonNotVisible);
+        let invalidTabVisibilityJsonModel: FormModel;
         let visibilityObjTest: WidgetVisibilityModel;
 
         beforeEach(() => {
             visibilityObjTest = new WidgetVisibilityModel();
+            invalidTabVisibilityJsonModel = new FormModel(tabInvalidFormVisibility);
             fakeFormWithVariables = new FormModel(fakeFormJson);
         });
 
@@ -1014,5 +1018,31 @@ describe('WidgetVisibilityService', () => {
             expect(isVisible).toBeTruthy();
         });
 
+        it('should validate visiblity for multiple tabs', () => {
+            visibilityObjTest.leftFormFieldId = 'label';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightValue = 'text';
+
+            service.refreshVisibility(fakeTabVisibilityModel);
+            expect(fakeTabVisibilityModel.tabs[1].isVisible).toBeFalsy();
+
+            fakeTabVisibilityModel.getFieldById('label').value = 'text';
+            service.refreshVisibility(fakeTabVisibilityModel);
+            expect(fakeTabVisibilityModel.tabs[1].isVisible).toBeTruthy();
+        });
+
+        it('form should be valid when a tab with invalid values is not visibile', () => {
+            invalidTabVisibilityJsonModel.getFieldById('Number1').value = 'invalidField';
+            invalidTabVisibilityJsonModel.getFieldById('Text1').value = 'showtab';
+
+            service.refreshVisibility(invalidTabVisibilityJsonModel);
+            invalidTabVisibilityJsonModel.validateForm();
+            expect(invalidTabVisibilityJsonModel.isValid).toBeFalsy();
+
+            invalidTabVisibilityJsonModel.getFieldById('Text1').value = 'hidetab';
+            service.refreshVisibility(invalidTabVisibilityJsonModel);
+            invalidTabVisibilityJsonModel.validateForm();
+            expect(invalidTabVisibilityJsonModel.isValid).toBeTruthy();
+        });
     });
 });

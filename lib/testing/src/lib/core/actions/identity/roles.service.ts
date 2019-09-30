@@ -25,7 +25,25 @@ export class RolesService {
         this.api = api;
     }
 
-    async getRoleIdByRoleName(roleName) {
+    async createRole(roleName: string): Promise<any> {
+        const path = '/roles';
+        const method = 'POST';
+        const queryParams = {}, postBody = {
+            name: roleName + 'TestRole'
+        };
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
+    async deleteRole(roleId): Promise<any> {
+        const path = `/roles-by-id/${roleId}`;
+        const method = 'DELETE';
+        const queryParams = {}, postBody = {};
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
+    async getRoleIdByRoleName(roleName): Promise<any> {
         const path = `/roles`;
         const method = 'GET';
         let roleId;
@@ -40,7 +58,7 @@ export class RolesService {
         return roleId;
     }
 
-    async getClientRoleIdByRoleName(groupId, clientId, clientRoleName) {
+    async getClientRoleIdByRoleName(groupId, clientId, clientRoleName): Promise<any> {
         const path = `/groups/${groupId}/role-mappings/clients/${clientId}/available`;
         const method = 'GET';
         let clientRoleId;

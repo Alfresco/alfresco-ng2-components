@@ -74,7 +74,7 @@ Below are the most important new features of this release:
 -   Task Header - Make it customizable from the config file
 -   Process List - Provide a way to support custom html template and static columns at same time
 -   Date Time Widget
--   [`Form`](../../lib/process-services/task-list/models/form.model.ts) Upload Widget Actions menu
+-   [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) Upload Widget Actions menu
 -   Search custom empty template
 
 ### Data table/Document list gallery view
@@ -353,7 +353,7 @@ Release Notes - Apps Development Framework - Version 2.2.
 -   \[[ADF-2242](https://issues.alfresco.com/jira/browse/ADF-2242)] - Search on custom sources is not working.
 -   \[[ADF-2243](https://issues.alfresco.com/jira/browse/ADF-2243)] - Translation is missing for the 'Extended Search'.
 -   \[[ADF-2246](https://issues.alfresco.com/jira/browse/ADF-2246)] - [Destination Picker] The selection from the dropdown is ignored after 'Clear' action
--   \[[ADF-2251](https://issues.alfresco.com/jira/browse/ADF-2251)] - [`ContentWidgetModule`](../../lib/process-services/content-widget/content-widget.module.ts) is not exposed from ADF
+-   \[[ADF-2251](https://issues.alfresco.com/jira/browse/ADF-2251)] - [`ContentWidgetModule`](../../lib/process-services/src/lib/content-widget/content-widget.module.ts) is not exposed from ADF
 -   \[[ADF-2254](https://issues.alfresco.com/jira/browse/ADF-2254)] - Viewer does not update top menu on "fileNodeId" changes
 -   \[[ADF-2255](https://issues.alfresco.com/jira/browse/ADF-2255)] - SelectBox field does not render the data in ADF form
 -   \[[ADF-2260](https://issues.alfresco.com/jira/browse/ADF-2260)] - Action menu translation is missing when right clicking on a file/folder

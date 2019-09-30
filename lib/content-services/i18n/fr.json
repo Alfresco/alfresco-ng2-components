@@ -117,7 +117,8 @@
       "REMOVE_FILE": "Supprimer le fichier importé"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Annulé"
+      "FILE_CANCELED_STATUS": "Annulé",
+      "FILE_DONE_STATUS": "Importé"
     },
     "CONFIRMATION": {
       "BUTTON": {
@@ -130,7 +131,20 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Version du fichier"
+      "VERSION": "Version du fichier {{ version }}",
+      "DIALOG": "Liste des éléments à importer",
+      "DIALOG_MAXIMIZE": "Agrandir la boîte de dialogue d'importation",
+      "DIALOG_MINIMIZE": "Réduire la boîte de dialogue d'importation",
+      "DIALOG_CLOSE": "Fermer la boîte de dialogue d'importation",
+      "CANCEL_ALL": "Annuler l'importation de tous les fichiers",
+      "REMOVE_FILE": "Supprimer le fichier importé {{ file }}",
+      "CANCEL_FILE": "Annuler le fichier planifié {{ file }}",
+      "CANCEL_FILE_UPLOAD": "Annuler l'importation du fichier {{ file }}",
+      "UPLOAD_FILE_ERROR": "Erreur d'importation {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "Confirmer l'annulation",
+        "CONTINUE": "Continuer l'importation"
+      }
     }
   },
   "FILE_UPLOAD": {
@@ -200,7 +214,7 @@
         "CLEAR-ALL": "Supprimer tout",
         "SHOW-MORE": "Afficher plus",
         "SHOW-LESS": "Montrer moins",
-        "FILTER-CATEGORY": "Filtrer la catégorie"
+        "FILTER-CATEGORY": "Filtrer par catégorie"
       },
       "BUTTONS": {
         "CLEAR-ALL": {
@@ -368,6 +382,17 @@
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Les propriétés de la bibliothèque ont été mises à jour"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Fil d'Ariane",
+      "CURRENT_PAGE": "Page"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Ouvrir {{ name }}"
     }
   }
 }

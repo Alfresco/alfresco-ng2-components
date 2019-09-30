@@ -3,15 +3,7 @@
  * @class config.test.config
  */
 
-let load_env_file = function () {
-    let ENV_FILE = process.env.ENV_FILE;
-
-    if (ENV_FILE) {
-        require('dotenv').config({path: ENV_FILE});
-    }
-};
-
-load_env_file();
+require('dotenv').config({path: process.env.ENV_FILE});
 
 const HOST = process.env.URL_HOST_ADF;
 const HOST_BPM = process.env.URL_HOST_BPM_ADF;
@@ -62,9 +54,11 @@ if (LOG) {
 
 module.exports = {
 
-    projectName :'ADF',
+    projectName: 'ADF',
 
     appConfig: appConfig,
+
+    log: LOG,
 
     main: {
         timeout: TIMEOUT,
@@ -211,4 +205,5 @@ module.exports = {
 
         clientIdSso: "activiti"
     }
+
 };

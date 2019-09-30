@@ -33,7 +33,7 @@ export class AuthGuardBpm extends AuthGuardBase {
         super(authenticationService, router, appConfigService);
     }
 
-    checkLogin(activeRoute: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
+    checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
         if (this.authenticationService.isBpmLoggedIn() || this.withCredentials) {
             return true;
         }

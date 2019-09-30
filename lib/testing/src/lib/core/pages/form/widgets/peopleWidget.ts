@@ -16,61 +16,59 @@
  */
 
 import { FormFields } from '../formFields';
-import { by, element } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class PeopleWidget {
 
-    peopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
-    firstResult = element(by.id('adf-people-widget-user-0'));
+    peopleField: ElementFinder = element(by.css('input[data-automation-id="adf-people-search-input"]'));
+    firstResult: ElementFinder = element(by.id('adf-people-widget-user-0'));
+    formFields: FormFields = new FormFields();
+    labelLocator: Locator = by.css('div[class*="display-text-widget"]');
+    inputLocator: Locator = by.id('involvepeople');
+    peopleDropDownList: Locator = by.css('div[class*="adf-people-widget-list"]');
 
-    formFields = new FormFields();
-    labelLocator = by.css('div[class*="display-text-widget"]');
-    inputLocator = by.id('involvepeople');
-    peopleDropDownList = by.css('div[class*="adf-people-widget-list"]');
-
-    getFieldLabel(fieldId) {
+    getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
     }
 
-    getFieldValue(fieldId) {
+    getFieldValue(fieldId): Promise<string> {
         return this.formFields.getFieldValue(fieldId, this.inputLocator);
     }
 
-    getFieldText(fieldId) {
+    getFieldText(fieldId): Promise<string> {
         return this.formFields.getFieldText(fieldId, this.labelLocator);
     }
 
-    insertUser(fieldId, value) {
+    insertUser(fieldId, value): Promise<void> {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
-    checkDropDownListIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(element(this.peopleDropDownList));
+    async checkDropDownListIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(this.peopleDropDownList));
     }
 
-    checkUserIsListed(userName) {
+    async checkUserIsListed(userName): Promise<void> {
         const user = element(by.cssContainingText('.adf-people-label-name', userName));
-        return BrowserVisibility.waitUntilElementIsVisible(user);
+        await BrowserVisibility.waitUntilElementIsVisible(user);
     }
 
-    selectUserFromDropDown(userName) {
+    async selectUserFromDropDown(userName): Promise<void> {
         const user = element(by.cssContainingText('.adf-people-label-name', userName));
-        BrowserActions.click(user);
-        return this;
+        await BrowserActions.click(user);
     }
 
-    checkPeopleFieldIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.peopleField);
+    async checkPeopleFieldIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleField);
     }
 
-    fillPeopleField(value) {
-        BrowserVisibility.waitUntilElementIsClickable(this.peopleField);
-        return this.peopleField.sendKeys(value);
+    async fillPeopleField(value): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsClickable(this.peopleField);
+        await this.peopleField.sendKeys(value);
     }
 
-    selectUserFromDropdown() {
-        BrowserVisibility.waitUntilElementIsVisible(this.firstResult);
-        return this.firstResult.click();
+    async selectUserFromDropdown(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.firstResult);
+        await BrowserActions.click(this.firstResult);
     }
 }

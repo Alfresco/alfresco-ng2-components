@@ -17,7 +17,7 @@
 
 import {
     Component, ContentChild, EventEmitter, HostListener, ElementRef,
-    Input, OnChanges, Output, SimpleChanges, TemplateRef,
+    Input, OnChanges, Output, TemplateRef,
     ViewEncapsulation, OnInit, OnDestroy
 } from '@angular/core';
 import { RenditionPaging, SharedLinkEntry, Node, RenditionEntry, NodeEntry } from '@alfresco/js-api';
@@ -278,7 +278,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         if (this.showViewer) {
             if (!this.isSourceDefined()) {
                 throw new Error('A content source attribute value is missing.');
@@ -299,7 +299,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                             this.isLoading = false;
                         });
                     },
-                    (error) => {
+                    () => {
                         this.isLoading = false;
                         this.logService.error('This node does not exist');
                     }

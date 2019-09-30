@@ -52,8 +52,8 @@ describe('permissions', () => {
     let site;
 
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -61,7 +61,7 @@ describe('permissions', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -91,7 +91,6 @@ describe('permissions', () => {
 
         await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
 
-        done();
     });
 
     afterAll(async () => {
@@ -102,52 +101,52 @@ describe('permissions', () => {
     it('[C274692] Should not be possible edit metadata properties when the user is a consumer user', async () => {
         await loginPage.loginToContentServicesUsingUserModel(consumerUser);
 
-        navigationBarPage.openContentServicesFolder(site.entry.guid);
+        await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
-        metadataViewPage.editIconIsNotDisplayed();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.editIconIsNotDisplayed();
     });
 
     it('[C279971] Should be possible edit metadata properties when the user is a collaborator user', async () => {
         await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
 
-        navigationBarPage.openContentServicesFolder(site.entry.guid);
+        await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
-        metadataViewPage.editIconIsDisplayed();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.editIconIsDisplayed();
 
-        expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
+        await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
-        metadataViewPage.clickOnInformationButton();
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.clickMetadataGroup('EXIF');
+        await metadataViewPage.clickMetadataGroup('EXIF');
 
-        metadataViewPage.editIconIsDisplayed();
+        await metadataViewPage.editIconIsDisplayed();
     });
 
     it('[C279972] Should be possible edit metadata properties when the user is a contributor user', async () => {
         await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
 
-        navigationBarPage.openContentServicesFolder(site.entry.guid);
+        await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
-        metadataViewPage.editIconIsDisplayed();
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.editIconIsDisplayed();
 
-        expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
+        await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
-        metadataViewPage.clickOnInformationButton();
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.clickMetadataGroup('EXIF');
+        await metadataViewPage.clickMetadataGroup('EXIF');
 
-        metadataViewPage.editIconIsDisplayed();
+        await metadataViewPage.editIconIsDisplayed();
     });
 });

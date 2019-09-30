@@ -17,60 +17,36 @@
 
 import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../services/dynamic-component-mapper.service';
 import { Injectable, Type } from '@angular/core';
-
-import {
-    AmountWidgetComponent,
-    CheckboxWidgetComponent,
-    ContainerWidgetComponent,
-    DateWidgetComponent,
-    DisplayTextWidgetComponentComponent,
-    DocumentWidgetComponent,
-    DropdownWidgetComponent,
-    DynamicTableWidgetComponent,
-    FunctionalGroupWidgetComponent,
-    HyperlinkWidgetComponent,
-    MultilineTextWidgetComponentComponent,
-    NumberWidgetComponent,
-    PeopleWidgetComponent,
-    RadioButtonsWidgetComponent,
-    TextWidgetComponent,
-    TypeaheadWidgetComponent,
-    UnknownWidgetComponent,
-    UploadWidgetComponent,
-    DateTimeWidgetComponent
-} from './../components/widgets/index';
+import * as widgets from './../components/widgets/index';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FormRenderingService extends DynamicComponentMapper {
 
-    protected defaultValue: Type<{}> = UnknownWidgetComponent;
+    protected defaultValue: Type<{}> = widgets.UnknownWidgetComponent;
     protected types: { [key: string]: DynamicComponentResolveFunction } = {
-        'text': DynamicComponentResolver.fromType(TextWidgetComponent),
-        'string': DynamicComponentResolver.fromType(TextWidgetComponent),
-        'integer': DynamicComponentResolver.fromType(NumberWidgetComponent),
-        'multi-line-text': DynamicComponentResolver.fromType(MultilineTextWidgetComponentComponent),
-        'boolean': DynamicComponentResolver.fromType(CheckboxWidgetComponent),
-        'dropdown': DynamicComponentResolver.fromType(DropdownWidgetComponent),
-        'date': DynamicComponentResolver.fromType(DateWidgetComponent),
-        'amount': DynamicComponentResolver.fromType(AmountWidgetComponent),
-        'radio-buttons': DynamicComponentResolver.fromType(RadioButtonsWidgetComponent),
-        'hyperlink': DynamicComponentResolver.fromType(HyperlinkWidgetComponent),
-        'readonly-text': DynamicComponentResolver.fromType(DisplayTextWidgetComponentComponent),
-        'readonly': DynamicComponentResolver.fromType(TextWidgetComponent),
-        'typeahead': DynamicComponentResolver.fromType(TypeaheadWidgetComponent),
-        'people': DynamicComponentResolver.fromType(PeopleWidgetComponent),
-        'functional-group': DynamicComponentResolver.fromType(FunctionalGroupWidgetComponent),
-        'dynamic-table': DynamicComponentResolver.fromType(DynamicTableWidgetComponent),
-        'container': DynamicComponentResolver.fromType(ContainerWidgetComponent),
-        'group': DynamicComponentResolver.fromType(ContainerWidgetComponent),
-        'document': DynamicComponentResolver.fromType(DocumentWidgetComponent),
-        'upload':  DynamicComponentResolver.fromType(UploadWidgetComponent),
-        'datetime':  DynamicComponentResolver.fromType(DateTimeWidgetComponent)
+        'text': DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
+        'string': DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
+        'integer': DynamicComponentResolver.fromType(widgets.NumberWidgetComponent),
+        'multi-line-text': DynamicComponentResolver.fromType(widgets.MultilineTextWidgetComponentComponent),
+        'boolean': DynamicComponentResolver.fromType(widgets.CheckboxWidgetComponent),
+        'dropdown': DynamicComponentResolver.fromType(widgets.DropdownWidgetComponent),
+        'date': DynamicComponentResolver.fromType(widgets.DateWidgetComponent),
+        'amount': DynamicComponentResolver.fromType(widgets.AmountWidgetComponent),
+        'radio-buttons': DynamicComponentResolver.fromType(widgets.RadioButtonsWidgetComponent),
+        'hyperlink': DynamicComponentResolver.fromType(widgets.HyperlinkWidgetComponent),
+        'readonly-text': DynamicComponentResolver.fromType(widgets.DisplayTextWidgetComponent),
+        'json': DynamicComponentResolver.fromType(widgets.JsonWidgetComponent),
+        'readonly': DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
+        'typeahead': DynamicComponentResolver.fromType(widgets.TypeaheadWidgetComponent),
+        'people': DynamicComponentResolver.fromType(widgets.PeopleWidgetComponent),
+        'functional-group': DynamicComponentResolver.fromType(widgets.FunctionalGroupWidgetComponent),
+        'dynamic-table': DynamicComponentResolver.fromType(widgets.DynamicTableWidgetComponent),
+        'container': DynamicComponentResolver.fromType(widgets.ContainerWidgetComponent),
+        'group': DynamicComponentResolver.fromType(widgets.ContainerWidgetComponent),
+        'document': DynamicComponentResolver.fromType(widgets.DocumentWidgetComponent),
+        'upload':  DynamicComponentResolver.fromType(widgets.UploadWidgetComponent),
+        'datetime':  DynamicComponentResolver.fromType(widgets.DateTimeWidgetComponent)
     };
-
-    constructor() {
-        super();
-    }
 }

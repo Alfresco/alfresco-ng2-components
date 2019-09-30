@@ -15,182 +15,207 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
-import { ElementFinder } from 'protractor/built/element';
 
 export class CardViewComponentPage {
 
-    addButton = element(by.className('adf-card-view__key-value-pairs__add-btn'));
-    keyValueRow = 'card-view__key-value-pairs__row';
+    addButton: ElementFinder = element(by.className('adf-card-view__key-value-pairs__add-btn'));
     selectValue = 'mat-option';
-    textField = element(by.css(`input[data-automation-id='card-textitem-editinput-name']`));
-    intField = element(by.css(`input[data-automation-id='card-textitem-editinput-int']`));
-    floatField = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
-    valueInputField = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Value']`));
-    nameInputField = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Name']`));
-    consoleLog = element(by.className('adf-console'));
-    deleteButton = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
-    select = element(by.css('mat-select[data-automation-class="select-box"]'));
-    checkbox = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));
-    resetButton = element(by.css(`#adf-reset-card-log`));
-    listContent = element(by.css('.mat-select-panel'));
-    editableSwitch = element(by.id('adf-toggle-editable'));
+    textField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-name']`));
+    intField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-int']`));
+    floatField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
+    valueInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Value']`));
+    nameInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Name']`));
+    consoleLog: ElementFinder = element(by.className('adf-console'));
+    deleteButton: ElementFinder = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
+    select: ElementFinder = element(by.css('mat-select[data-automation-class="select-box"]'));
+    checkbox: ElementFinder = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));
+    resetButton: ElementFinder = element(by.css(`#adf-reset-card-log`));
+    listContent: ElementFinder = element(by.css('.mat-select-panel'));
+    editableSwitch: ElementFinder = element(by.id('adf-toggle-editable'));
+    clearDateSwitch: ElementFinder = element(by.id('adf-toggle-clear-date'));
+    noneOptionSwitch: ElementFinder = element(by.id('adf-toggle-none-option'));
 
-    clickOnAddButton() {
-        BrowserActions.click(this.addButton);
-        return this;
+    async clickOnAddButton(): Promise<void> {
+        await BrowserActions.click(this.addButton);
     }
 
-    clickOnResetButton() {
-        BrowserActions.click(this.resetButton);
-        return this;
+    async clickOnResetButton(): Promise<void> {
+        await BrowserActions.click(this.resetButton);
     }
 
-    clickOnTextField() {
-        const toggleText = element(by.css(`div[data-automation-id='card-textitem-edit-toggle-name']`));
-        BrowserActions.click(toggleText);
-        BrowserVisibility.waitUntilElementIsVisible(this.textField);
-        return this;
+    async clickOnTextField(): Promise<void> {
+        const toggleText: ElementFinder = element(by.css(`div[data-automation-id='card-textitem-edit-toggle-name']`));
+        await BrowserActions.click(toggleText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.textField);
     }
 
-    clickOnTextClearIcon() {
-        const clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-name"]`));
-        BrowserActions.click(clearIcon);
+    async clickOnTextClearIcon(): Promise<void> {
+        const clearIcon: ElementFinder = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-name"]`));
+        await BrowserActions.click(clearIcon);
     }
 
-    clickOnTextSaveIcon() {
-        const saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-name"]`));
-        BrowserActions.click(saveIcon);
+    async clickOnTextSaveIcon(): Promise<void> {
+        const saveIcon: ElementFinder = element(by.css(`mat-icon[data-automation-id="card-textitem-update-name"]`));
+        await BrowserActions.click(saveIcon);
     }
 
-    getTextFieldText() {
-        const textField = element(by.css(`span[data-automation-id="card-textitem-value-name"]`));
+    getTextFieldText(): Promise<string> {
+        const textField: ElementFinder = element(by.css(`span[data-automation-id="card-textitem-value-name"]`));
         return BrowserActions.getText(textField);
     }
 
-    enterTextField(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.textField);
-        BrowserActions.clearSendKeys(this.textField, text);
-        return this;
+    async enterTextField(text: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.textField);
+        await BrowserActions.clearSendKeys(this.textField, text);
     }
 
-    clickOnIntField() {
-        const toggleText = element(by.css('div[data-automation-id="card-textitem-edit-toggle-int"]'));
-        BrowserActions.click(toggleText);
-        BrowserVisibility.waitUntilElementIsVisible(this.intField);
-        return this;
+    async clickOnIntField(): Promise<void> {
+        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-edit-toggle-int"]'));
+        await BrowserActions.click(toggleText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.intField);
     }
 
-    clickOnIntClearIcon() {
-        const clearIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-int"]'));
-        BrowserActions.click(clearIcon);
+    async clickOnIntClearIcon(): Promise<void> {
+        const clearIcon: ElementFinder = element(by.css('mat-icon[data-automation-id="card-textitem-reset-int"]'));
+        await BrowserActions.click(clearIcon);
     }
 
-    clickOnIntSaveIcon() {
-        const saveIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-int"]'));
-        BrowserActions.click(saveIcon);
+    async clickOnIntSaveIcon(): Promise<void> {
+        const saveIcon: ElementFinder = element(by.css('mat-icon[data-automation-id="card-textitem-update-int"]'));
+        await BrowserActions.click(saveIcon);
     }
 
-    enterIntField(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.intField);
-        BrowserActions.clearSendKeys(this.intField, text);
-        return this;
+    async enterIntField(text): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.intField);
+        await BrowserActions.clearSendKeys(this.intField, text);
     }
 
-    getIntFieldText() {
-        const textField = element(by.css('span[data-automation-id="card-textitem-value-int"]'));
+    getIntFieldText(): Promise<string> {
+        const textField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-int"]'));
         return BrowserActions.getText(textField);
     }
 
-    getErrorInt() {
-        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
+    getErrorInt(): Promise<string> {
+        const errorElement: ElementFinder = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
         return BrowserActions.getText(errorElement);
     }
 
-    clickOnFloatField() {
-        const toggleText = element(by.css('div[data-automation-id="card-textitem-edit-toggle-float"]'));
-        BrowserActions.click(toggleText);
-        BrowserVisibility.waitUntilElementIsVisible(this.floatField);
-        return this;
+    async clickOnFloatField(): Promise<void> {
+        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-edit-toggle-float"]'));
+        await BrowserActions.click(toggleText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.floatField);
     }
 
-    clickOnFloatClearIcon() {
-        const clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-float"]`));
-        BrowserActions.click(clearIcon);
+    async clickOnFloatClearIcon(): Promise<void> {
+        const clearIcon: ElementFinder = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-float"]`));
+        await BrowserActions.click(clearIcon);
     }
 
-    clickOnFloatSaveIcon() {
-        const saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-float"]`));
-        BrowserActions.click(saveIcon);
+    async clickOnFloatSaveIcon(): Promise<void> {
+        const saveIcon: ElementFinder = element(by.css(`mat-icon[data-automation-id="card-textitem-update-float"]`));
+        await BrowserActions.click(saveIcon);
     }
 
-    enterFloatField(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.floatField);
-        BrowserActions.clearSendKeys(this.floatField, text);
-        return this;
+    async enterFloatField(text): Promise<void> {
+        await BrowserActions.clearSendKeys(this.floatField, text);
     }
 
-    getFloatFieldText() {
-        const textField = element(by.css('span[data-automation-id="card-textitem-value-float"]'));
+    getFloatFieldText(): Promise<string> {
+        const textField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-float"]'));
         return BrowserActions.getText(textField);
     }
 
-    getErrorFloat() {
-        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-float"]'));
+    getErrorFloat(): Promise<string> {
+        const errorElement: ElementFinder = element(by.css('mat-error[data-automation-id="card-textitem-error-float"]'));
         return BrowserActions.getText(errorElement);
     }
 
-    setName(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.nameInputField);
-        this.nameInputField.sendKeys(name);
-        return this;
+    async setName(name: string): Promise<void> {
+        await BrowserActions.clearSendKeys(this.nameInputField, name);
     }
 
-    setValue(value) {
-        BrowserVisibility.waitUntilElementIsVisible(this.valueInputField);
-        this.valueInputField.sendKeys(value);
-        return this;
+    async setValue(value): Promise<void> {
+        await BrowserActions.clearSendKeys(this.valueInputField, value);
     }
 
-    waitForOutput() {
-        BrowserVisibility.waitUntilElementIsVisible(this.consoleLog);
-        return this;
+    async waitForOutput(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.consoleLog);
     }
 
-    getOutputText(index) {
+    getOutputText(index: number): Promise<string> {
         return BrowserActions.getText(this.consoleLog.all(by.css('p')).get(index));
     }
 
-    deletePairsValues() {
-        BrowserActions.click(this.deleteButton);
-        return this;
+    async deletePairsValues(): Promise<void> {
+        await BrowserActions.click(this.deleteButton);
     }
 
-    clickSelectBox() {
-        BrowserActions.click(this.select);
-        BrowserVisibility.waitUntilElementIsVisible(this.listContent);
+    async clickSelectBox(): Promise<void> {
+        await BrowserActions.click(this.select);
+        await BrowserVisibility.waitUntilElementIsVisible(this.listContent);
     }
 
-    checkboxClick() {
-        BrowserActions.click(this.checkbox);
+    async checkboxClick(): Promise<void> {
+        await BrowserActions.click(this.checkbox);
     }
 
-    selectValueFromComboBox(index) {
+    async selectValueFromComboBox(index): Promise<void> {
         const value: ElementFinder = element.all(by.className(this.selectValue)).get(index);
-        BrowserActions.click(value);
-        return this;
+        await BrowserActions.click(value);
     }
 
-    disableEdit() {
-        BrowserVisibility.waitUntilElementIsVisible(this.editableSwitch);
+    async disableEdit(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.editableSwitch);
 
-        this.editableSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') > -1) {
-                this.editableSwitch.click();
-                expect(this.editableSwitch.getAttribute('class')).not.toContain('mat-checked');
-            }
-        });
+        const check = await this.editableSwitch.getAttribute('class');
+        if (check.indexOf('mat-checked') > -1) {
+            await BrowserActions.click(this.editableSwitch);
+            await expect(await this.editableSwitch.getAttribute('class')).not.toContain('mat-checked');
+        }
+    }
+
+    async getDateValue(): Promise<string> {
+        const dateValue = element(by.css('span[data-automation-id="card-date-value-date"]'));
+        return dateValue.getText();
+    }
+
+    async getDateTimeValue(): Promise<string> {
+        const dateTimeValue = element(by.css('span[data-automation-id="card-datetime-value-datetime"]'));
+        return dateTimeValue.getText();
+    }
+
+    async clearDateField(): Promise<void> {
+        const clearDateButton = element(by.css('mat-icon[data-automation-id="datepicker-date-clear-date"]'));
+        await BrowserActions.click(clearDateButton);
+    }
+
+    async clearDateTimeField(): Promise<void> {
+        const clearDateButton = element(by.css('mat-icon[data-automation-id="datepicker-date-clear-datetime"]'));
+        await BrowserActions.click(clearDateButton);
+    }
+
+    async enableClearDate(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.clearDateSwitch);
+
+        const switchClass = await this.clearDateSwitch.getAttribute('class');
+        if (switchClass.indexOf('mat-checked') === -1) {
+            await this.clearDateSwitch.click();
+            const clearDateChecked = element(by.css('mat-slide-toggle[id="adf-toggle-clear-date"][class*="mat-checked"]'));
+            await BrowserVisibility.waitUntilElementIsVisible(clearDateChecked);
+        }
+    }
+
+    async enableNoneOption(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noneOptionSwitch);
+
+        const switchClass = await this.noneOptionSwitch.getAttribute('class');
+        if (switchClass.indexOf('mat-checked') === -1) {
+            await this.noneOptionSwitch.click();
+            const noneOptionChecked = element(by.css('mat-slide-toggle[id="adf-toggle-none-option"][class*="mat-checked"]'));
+            await BrowserVisibility.waitUntilElementIsVisible(noneOptionChecked);
+        }
     }
 
 }

@@ -126,7 +126,7 @@ describe('TabsWidgetComponent', () => {
 
             tick(500);
 
-            tabWidgetComponent.formTabChanged.subscribe((res) => {
+            tabWidgetComponent.formTabChanged.subscribe(() => {
                 tabWidgetComponent.tabs[1].isVisible = true;
 
                 tick(500);
@@ -144,7 +144,7 @@ describe('TabsWidgetComponent', () => {
 
             tick(500);
 
-            tabWidgetComponent.formTabChanged.subscribe((res) => {
+            tabWidgetComponent.formTabChanged.subscribe(() => {
                 tabWidgetComponent.tabs[0].isVisible = false;
 
                 tick(500);

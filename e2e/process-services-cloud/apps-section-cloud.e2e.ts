@@ -16,7 +16,14 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, IdentityService, LoginSSOPage, SettingsPage, LocalStorageUtil, ApplicationsService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    IdentityService,
+    LoginSSOPage,
+    SettingsPage,
+    LocalStorageUtil,
+    ApplicationsService
+} from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import resources = require('../util/resources');
@@ -35,7 +42,7 @@ describe('Applications list', () => {
     let applications;
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER, identityService.ROLES.APS_DEVOPS_USER]);
@@ -48,39 +55,37 @@ describe('Applications list', () => {
         applicationsService = new ApplicationsService(apiService);
         applications = await applicationsService.getApplicationsByStatus('RUNNING');
 
-        applications.list.entries.forEach(async (app) => {
+        applications.list.entries.forEach(app => {
             appNames.push(app.entry.name.toLowerCase());
         });
 
         await LocalStorageUtil.setConfigField('alfresco-deployed-apps', '[]');
 
-        done();
     });
 
-    afterAll(async(done) => {
+    afterAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
+
     });
 
     it('[C310373] Should all the app with running state be displayed on dashboard when alfresco-deployed-apps is not used in config file', async () => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudPage.checkApsContainer();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudPage.checkApsContainer();
 
-        appListCloudPage.getNameOfTheApplications().then((list) => {
-            expect(JSON.stringify(list) === JSON.stringify(appNames)).toEqual(true);
-        });
+        const list = await appListCloudPage.getNameOfTheApplications();
+        await expect(JSON.stringify(list)).toEqual(JSON.stringify(appNames));
     });
 
-    it('[C289910] Should the app be displayed on dashboard when is deployed on APS', () => {
-        browser.refresh();
-        navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudPage.checkApsContainer();
+    it('[C289910] Should the app be displayed on dashboard when is deployed on APS', async () => {
+        await browser.refresh();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudPage.checkApsContainer();
 
-        appListCloudPage.checkAppIsDisplayed(simpleApp);
-        appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name);
-        appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.SUB_PROCESS_APP.name);
+        await appListCloudPage.checkAppIsDisplayed(simpleApp);
+        await appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name);
+        await appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.SUB_PROCESS_APP.name);
 
-        expect(appListCloudPage.countAllApps()).toEqual(3);
+        await expect(await appListCloudPage.countAllApps()).toEqual(3);
     });
 });

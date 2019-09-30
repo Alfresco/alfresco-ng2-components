@@ -5,8 +5,8 @@
   "CLAIM": "CLAIM",
   "UNCLAIM": "RELEASE",
   "START PROCESS": "START PROCESS",
-  "NOTIFICATION_HISTORY":{
-    "NO_MESSAGE" : "No messages",
+  "NOTIFICATION_HISTORY": {
+    "NO_MESSAGE": "No messages",
     "NOTIFICATIONS": "Notifications",
     "MARK_AS_READ": "Mark all as read"
   },
@@ -33,7 +33,8 @@
         "NOT_LESS_THAN": "Can't be less than {{ minValue }}",
         "AT_LEAST_LONG": "Enter at least {{ minLength }} characters",
         "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Nameless task"
@@ -72,6 +73,10 @@
           "CANCEL": "Cancel"
         },
         "TITLE": "Adding files to zip, this could take a few minutes"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Close",
+        "UPDATE": "Update"
       }
     },
     "FILE_DIALOG": {
@@ -153,7 +158,8 @@
       "REDIRECT_LOGOUT": "Redirect URI Logout",
       "SILENT": "Silent Login",
       "SCOPE": "Scope",
-      "CLIENT": "Client ID"
+      "CLIENT": "Client ID",
+      "PUBLIC_URLS" : "Public urls silent Login"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -208,12 +214,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Sign in",
       "USERNAME": "Username",
       "PASSWORD": "Password",
       "REMEMBER": "Remember me"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Show password",
+      "HIDE-PASSWORD": "Hide password"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Required",
@@ -253,8 +263,30 @@
       "TOOLTIP": "Content actions"
     },
     "ACCESSIBILITY": {
-        "SELECT_ALL": "Select all",
-        "SELECT_FILE": "Select file"
+      "SELECT_ALL": "Select all",
+      "SELECT_FILE": "Select file",
+      "SORT_ASCENDING": "Ascending",
+      "SORT_DESCENDING": "Descending",
+      "SORT_NONE": "None",
+      "ICON_TEXT": "File type {{ type }}",
+      "ICON_DISABLED": "Disabled",
+      "ROW_OPTION_BUTTON": "Actions"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Document",
+      "FOLDER": "Folder",
+      "PDF": "PDF",
+      "IMAGE": "Image",
+      "EXCEL": "Excel spreadsheet",
+      "WORD": "Word document",
+      "POWERPOINT": "Powerpoint presentation",
+      "VIDEO": "Video",
+      "AUDIO": "Audio",
+      "WEBSITE": "Website",
+      "ARCHIVE": "Archive",
+      "PRESENTATION": "Presentation",
+      "SPREADSHEET": "Spreadsheet",
+      "MISCELLANEOUS": "Miscellaneous"
     }
   },
   "USER_PROFILE": {
@@ -380,6 +412,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Version",
     "SERVER_SETTINGS": {
       "TITLE": "Server settings",
       "DESCRIPTION": "The values below are taken from the AppConfigService",
@@ -430,6 +463,18 @@
         "MODE": "Mode",
         "CLUSTER_ENABLED": "Is Cluster Enabled",
         "CRYPTODOC_ENABLED": "Is Cryptodoc Enabled"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Plugins",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "Name",
+        "VERSION": "Version",
+        "VENDOR": "Vendor",
+        "LICENSE": "License",
+        "RUNTIME": "Runtime",
+        "DESCRIPTION": "Description"
       }
     }
   },

@@ -89,34 +89,13 @@ describe('ErrorContentComponent', () => {
         }));
 
         it('should hide secondary button if this one has no value', async(() => {
-            spyOn(translateService, 'instant').and.callFake((inputString) => {
+            spyOn(translateService, 'instant').and.callFake(() => {
                 return '';
             });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const errorContentElement = element.querySelector('.adf-error-content-description-link');
                 expect(errorContentElement).toBeNull();
-            });
-        }));
-
-        it('should render secondary button with its value from the translate file', async(() => {
-            spyOn(translateService, 'instant').and.callFake((inputString) => {
-                return 'Secondary Button';
-            });
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const errorContentElement = element.querySelector('#adf-secondary-button');
-                expect(errorContentElement).not.toBeNull();
-                expect(errorContentElement).toBeDefined();
-                expect(errorContentElement.textContent).toContain('ERROR_CONTENT.UNKNOWN.SECONDARY_BUTTON.TEXT');
-
-            });
-        }));
-
-        it('should the default value of return button be /', async(() => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(errorContentComponent.returnButtonUrl).toBe('/');
             });
         }));
 

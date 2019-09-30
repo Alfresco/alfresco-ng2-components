@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [Checklist Component](../../../lib/process-services/task-list/components/checklist.component.ts "Defined in checklist.component.ts")
+# [Checklist Component](../../../lib/process-services/src/lib/task-list/components/checklist.component.ts "Defined in checklist.component.ts")
 
 Shows the checklist task functionality.
 
@@ -33,6 +33,6 @@ Shows the checklist task functionality.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| checklistTaskCreated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` | Emitted when a new checklist task is created. |
+| checklistTaskCreated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` | Emitted when a new checklist task is created. |
 | checklistTaskDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a checklist task is deleted. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |

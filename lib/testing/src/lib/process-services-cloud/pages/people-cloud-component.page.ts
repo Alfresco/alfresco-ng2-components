@@ -15,80 +15,67 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, ElementFinder, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class PeopleCloudComponentPage {
 
-    peopleCloudSearch = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
-    assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
+    peopleCloudSearch: ElementFinder = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
+    assigneeField: ElementFinder = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
 
-    clearAssignee() {
-        BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
-        this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
-        return this;
+    async clearAssignee(): Promise<void> {
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
+        await this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
     }
 
-    searchAssigneeAndSelect(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
-        BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
-        this.selectAssigneeFromList(name);
-        return this;
+    async searchAssigneeAndSelect(name): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
+        await this.selectAssigneeFromList(name);
     }
 
-    searchAssignee(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
-        BrowserVisibility.waitUntilElementIsClickable(this.peopleCloudSearch);
-        browser.sleep(1000);
-        BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
-        return this;
+    async searchAssignee(name): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        await BrowserVisibility.waitUntilElementIsClickable(this.peopleCloudSearch);
+        await browser.sleep(1000);
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
     }
 
-    searchAssigneeToExisting(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
-        for (let i = 0; i < name.length; i++) {
-            this.peopleCloudSearch.sendKeys(name[i]);
-        }
-        this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
-        this.peopleCloudSearch.sendKeys(name[name.length - 1]);
-        return this;
+    async searchAssigneeToExisting(name): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
     }
 
-    selectAssigneeFromList(name) {
+    async selectAssigneeFromList(name): Promise<void> {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
-        browser.sleep(2000);
-        assigneeRow.click();
-        BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
-        return this;
+        await browser.sleep(2000);
+        await BrowserActions.click(assigneeRow);
+        await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
     }
 
-    getAssignee() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+    async getAssignee(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         return this.peopleCloudSearch.getAttribute('value');
     }
 
-    checkUserIsDisplayed(name) {
+    async checkUserIsDisplayed(name): Promise<void> {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
-        return this;
+        await BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
     }
 
-    checkUserIsNotDisplayed(name) {
+    async checkUserIsNotDisplayed(name): Promise<void> {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
-        return this;
+        await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
     }
 
-    checkSelectedPeople(person) {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
-        return this;
+    async checkSelectedPeople(person): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
     }
 
-    getAssigneeFieldContent() {
-        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
-        browser.sleep(1000);
+    async getAssigneeFieldContent(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
+        await browser.sleep(1000);
         return this.assigneeField.getAttribute('value');
 
     }

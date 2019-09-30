@@ -26,4 +26,4 @@ then
     ng test process-services-cloud --watch=false || exit 1;
 fi;
 
-
+bash <(curl -s https://codecov.io/bash) -X gcov

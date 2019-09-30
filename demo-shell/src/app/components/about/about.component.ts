@@ -16,6 +16,7 @@
  */
 
 import { Component } from '@angular/core';
+import { name, version, commit, dependencies } from '../../../../../package.json';
 
 @Component({
     selector: 'app-about-page',
@@ -23,6 +24,11 @@ import { Component } from '@angular/core';
     styleUrls: ['about.component.scss']
 })
 export class AboutComponent {
+
+    url = `https://github.com/Alfresco/${name}/commits/${commit}`;
+    version = version;
+    dependencies = dependencies;
+    showExtensions = true;
 
     constructor() {
 

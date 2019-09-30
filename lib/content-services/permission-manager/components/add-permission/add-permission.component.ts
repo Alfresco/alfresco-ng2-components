@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { NodeEntry, Node } from '@alfresco/js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { NodesApiService, ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
@@ -26,7 +26,7 @@ import { NodesApiService, ContentService, AllowableOperationsEnum } from '@alfre
     styleUrls: ['./add-permission.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class AddPermissionComponent {
+export class AddPermissionComponent implements OnInit {
 
     /** ID of the target node. */
     @Input()
@@ -46,7 +46,9 @@ export class AddPermissionComponent {
 
     constructor(private nodePermissionService: NodePermissionService,
                 private nodeApiService: NodesApiService,
-                private contentService: ContentService) {
+                private contentService: ContentService) { }
+
+    ngOnInit(): void {
         this.nodeApiService.getNode(this.nodeId).subscribe((node) => this.currentNode = node);
     }
 

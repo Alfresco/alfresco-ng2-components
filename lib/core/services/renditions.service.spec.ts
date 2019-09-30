@@ -89,7 +89,7 @@ describe('RenditionsService', () => {
     });
 
     it('Create rendition service should call the server with the ID passed and the asked encoding', (done) => {
-        service.createRendition('fake-node-id', 'pdf').subscribe((res) => {
+        service.createRendition('fake-node-id', 'pdf').subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
             expect(jasmine.Ajax.requests.mostRecent().url).toContain('/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
             done();
@@ -114,8 +114,8 @@ describe('RenditionsService', () => {
     });
 
     it('Get rendition service should catch the error', (done) => {
-        service.getRenditionsListByNodeId('fake-node-id').subscribe((res) => {
-            }, (res) => {
+        service.getRenditionsListByNodeId('fake-node-id').subscribe(() => {
+            }, () => {
                 done();
             }
         );

@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { MaterialModule } from '../material.module';
-import { DownloadZipDialogComponent } from './download-zip.dialog';
+import { DownloadZipDialogComponent } from './download-zip/download-zip.dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipeModule } from '../pipes/pipe.module';
 

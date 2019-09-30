@@ -21,28 +21,27 @@ import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DropdownWidget {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
-    getSelectedOptionText(fieldId: string = 'dropdown') {
+    getSelectedOptionText(fieldId: string = 'dropdown'): Promise<string> {
         return this.formFields.getFieldText(fieldId, by.css(`mat-select[id="${fieldId}"] span span`));
     }
 
-    selectOption(option: string, locator: string = '#dropdown') {
-        this.openDropdown(locator);
+    async selectOption(option: string, locator: string = '#dropdown'): Promise<void> {
+        await this.openDropdown(locator);
         const row = element(by.cssContainingText('mat-option span', option));
-        BrowserActions.click(row);
+        await BrowserActions.click(row);
     }
 
-    openDropdown(locator: string = '#dropdown') {
-        this.checkDropdownIsDisplayed(locator);
+    async openDropdown(locator: string = '#dropdown'): Promise<void> {
+        await this.checkDropdownIsDisplayed(locator);
         const dropdown = locator ? element(by.css(`${locator}`)) : element(by.css(`#dropdown`));
-        BrowserVisibility.waitUntilElementIsClickable(dropdown);
-        return BrowserActions.click(dropdown);
+        await BrowserVisibility.waitUntilElementIsClickable(dropdown);
+        await BrowserActions.click(dropdown);
     }
 
-    checkDropdownIsDisplayed(locator: string = '#dropdown') {
+    async checkDropdownIsDisplayed(locator: string = '#dropdown'): Promise<void> {
         const dropdown = element(by.css(`${locator}`));
-        BrowserVisibility.waitUntilElementIsVisible(dropdown);
-        return dropdown;
+        await BrowserVisibility.waitUntilElementIsVisible(dropdown);
     }
 }

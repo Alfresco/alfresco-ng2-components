@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Process Audit Directive](../../../lib/process-services/process-list/components/process-audit.directive.ts "Defined in process-audit.directive.ts")
+# [Process Audit Directive](../../../lib/process-services/src/lib/process-list/components/process-audit.directive.ts "Defined in process-audit.directive.ts")
 
 Fetches the Process Audit information in PDF or JSON format.
 

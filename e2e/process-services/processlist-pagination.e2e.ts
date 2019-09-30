@@ -28,7 +28,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Process List - Pagination', function () {
+describe('Process List - Pagination', () => {
 
     const itemsPerPage = {
         five: '5',
@@ -57,7 +57,7 @@ describe('Process List - Pagination', function () {
     let totalPages;
     const processNameBase = 'process';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -76,21 +76,20 @@ describe('Process List - Pagination', function () {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    describe('Empty processes', function () {
+    describe('Empty processes', () => {
 
-        it('[C280015] Should show empty content message an no pagination when no process are present', function () {
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
-            processFiltersPage.checkNoContentMessage();
-            paginationPage.checkPaginationIsNotDisplayed();
+        it('[C280015] Should show empty content message an no pagination when no process are present',  async() => {
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await processFiltersPage.checkNoContentMessage();
+            await paginationPage.checkPaginationIsNotDisplayed();
         });
     });
 
-    describe('With processes Pagination', function () {
+    describe('With processes Pagination', () => {
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             const apps = new AppsActions();
 
             this.alfrescoJsApi = new AlfrescoApi({
@@ -104,304 +103,303 @@ describe('Process List - Pagination', function () {
                 await apps.startProcess(this.alfrescoJsApi, deployedTestApp, processNameBase + (i < 10 ? `0${i}` : i));
             }
 
-            done();
         });
 
-        beforeEach(async (done) => {
-            await navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
-            done();
+        beforeEach(async () => {
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+
         });
 
-        it('[C261042] Should display default pagination', function () {
+        it('[C261042] Should display default pagination',  async() => {
             page = 1;
             totalPages = 1;
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
 
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
-            paginationPage.checkNextPageButtonIsDisabled();
-            paginationPage.checkPreviousPageButtonIsDisabled();
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
+            await paginationPage.checkNextPageButtonIsDisabled();
+            await paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C261043] Should be possible to Items per page to 15', function () {
+        it('[C261043] Should be possible to Items per page to 15',  async() => {
             page = 1;
             totalPages = 2;
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
-            paginationPage.checkNextPageButtonIsEnabled();
-            paginationPage.checkPreviousPageButtonIsDisabled();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
+            await paginationPage.checkNextPageButtonIsEnabled();
+            await paginationPage.checkPreviousPageButtonIsDisabled();
 
             page++;
-            paginationPage.clickOnNextPage();
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
-            paginationPage.checkNextPageButtonIsDisabled();
-            paginationPage.checkPreviousPageButtonIsEnabled();
+            await paginationPage.clickOnNextPage();
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
+            await paginationPage.checkNextPageButtonIsDisabled();
+            await paginationPage.checkPreviousPageButtonIsEnabled();
 
             page = 1;
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         });
 
-        it('[C261044] Should be possible to Items per page to 10', function () {
+        it('[C261044] Should be possible to Items per page to 10',  async() => {
             page = 1;
             totalPages = 2;
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            paginationPage.selectItemsPerPage(itemsPerPage.ten);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
-            paginationPage.checkNextPageButtonIsEnabled();
-            paginationPage.checkPreviousPageButtonIsDisabled();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await paginationPage.selectItemsPerPage(itemsPerPage.ten);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * page + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            await paginationPage.checkNextPageButtonIsEnabled();
+            await paginationPage.checkPreviousPageButtonIsDisabled();
 
             page++;
-            paginationPage.clickOnNextPage();
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + nrOfProcesses + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
-            paginationPage.checkNextPageButtonIsDisabled();
-            paginationPage.checkPreviousPageButtonIsEnabled();
+            await paginationPage.clickOnNextPage();
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            await paginationPage.checkNextPageButtonIsDisabled();
+            await paginationPage.checkPreviousPageButtonIsEnabled();
 
             page = 1;
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         });
 
-        it('[C261047] Should be possible to Items per page to 20', function () {
+        it('[C261047] Should be possible to Items per page to 20',  async() => {
             page = 1;
             totalPages = 1;
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
-            paginationPage.checkNextPageButtonIsDisabled();
-            paginationPage.checkPreviousPageButtonIsDisabled();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfProcesses + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses);
+            await paginationPage.checkNextPageButtonIsDisabled();
+            await paginationPage.checkPreviousPageButtonIsDisabled();
 
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         });
 
-        it('[C261045] Should be possible to Items per page to 5', function () {
+        it('[C261045] Should be possible to Items per page to 5',  async() => {
             let showing;
             page = 1;
             totalPages = 4;
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            paginationPage.selectItemsPerPage(itemsPerPage.five);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await paginationPage.selectItemsPerPage(itemsPerPage.five);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
             showing = (itemsPerPage.fiveValue * page);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
-            paginationPage.checkNextPageButtonIsEnabled();
-            paginationPage.checkPreviousPageButtonIsDisabled();
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            await paginationPage.checkNextPageButtonIsEnabled();
+            await paginationPage.checkPreviousPageButtonIsDisabled();
 
             page++;
-            paginationPage.clickOnNextPage();
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+            await paginationPage.clickOnNextPage();
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
             showing = (itemsPerPage.fiveValue * page);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 6-' + showing + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
-            paginationPage.checkNextPageButtonIsEnabled();
-            paginationPage.checkPreviousPageButtonIsEnabled();
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            await paginationPage.checkNextPageButtonIsEnabled();
+            await paginationPage.checkPreviousPageButtonIsEnabled();
 
             page++;
-            paginationPage.clickOnNextPage();
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+            await paginationPage.clickOnNextPage();
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
             showing = (itemsPerPage.fiveValue * page);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
-            paginationPage.checkNextPageButtonIsEnabled();
-            paginationPage.checkPreviousPageButtonIsEnabled();
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            await paginationPage.checkNextPageButtonIsEnabled();
+            await paginationPage.checkPreviousPageButtonIsEnabled();
 
             page++;
-            paginationPage.clickOnNextPage();
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+            await paginationPage.clickOnNextPage();
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
             showing = (itemsPerPage.fiveValue * page);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + showing + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
-            paginationPage.checkNextPageButtonIsDisabled();
-            paginationPage.checkPreviousPageButtonIsEnabled();
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fiveValue);
+            await paginationPage.checkNextPageButtonIsDisabled();
+            await paginationPage.checkPreviousPageButtonIsEnabled();
 
             page = 1;
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         });
 
-        it('[C261049] Should be possible to open page number dropdown', function () {
+        it('[C261049] Should be possible to open page number dropdown',  async() => {
             let showing;
             page = 1;
             totalPages = 2;
-            processFiltersPage.clickRunningFilterButton();
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            paginationPage.selectItemsPerPage(itemsPerPage.ten);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await processFiltersPage.clickRunningFilterButton();
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await paginationPage.selectItemsPerPage(itemsPerPage.ten);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
 
             showing = (itemsPerPage.tenValue * page);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
-            paginationPage.checkNextPageButtonIsEnabled();
-            paginationPage.checkPreviousPageButtonIsDisabled();
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            await paginationPage.checkNextPageButtonIsEnabled();
+            await paginationPage.checkPreviousPageButtonIsDisabled();
 
-            paginationPage.clickOnPageDropdown();
-            expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
+            await paginationPage.clickOnPageDropdown();
+            await expect(await paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
             page = 2;
-            paginationPage.clickOnPageDropdownOption('2');
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await paginationPage.clickOnPageDropdownOption('2');
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
 
             showing = (itemsPerPage.tenValue * page);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
-            paginationPage.checkNextPageButtonIsDisabled();
-            paginationPage.checkPreviousPageButtonIsEnabled();
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            await paginationPage.checkNextPageButtonIsDisabled();
+            await paginationPage.checkPreviousPageButtonIsEnabled();
 
-            paginationPage.clickOnPageDropdown();
-            expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
+            await paginationPage.clickOnPageDropdown();
+            await expect(await paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
             page = 1;
-            paginationPage.clickOnPageDropdownOption('1');
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
-            expect(paginationPage.getCurrentPage()).toEqual('Page ' + page);
-            expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+            await paginationPage.clickOnPageDropdownOption('1');
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
+            await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+            await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
 
             showing = (itemsPerPage.tenValue * page);
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
-            expect(processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
-            paginationPage.checkNextPageButtonIsEnabled();
-            paginationPage.checkPreviousPageButtonIsDisabled();
+            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + showing + ' of ' + nrOfProcesses);
+            await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.tenValue);
+            await paginationPage.checkNextPageButtonIsEnabled();
+            await paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C261048] Should be possible to sort processes by name', function () {
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
+        it('[C261048] Should be possible to sort processes by name',  async() => {
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
 
-            paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
+            await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
 
-            processFiltersPage.sortByName('ASC');
-            processFiltersPage.waitForTableBody();
-            processFiltersPage.checkProcessesSortedByNameAsc();
+            await processFiltersPage.sortByName('ASC');
+            await processFiltersPage.waitForTableBody();
+            await processFiltersPage.checkProcessesSortedByNameAsc();
 
-            processFiltersPage.sortByName('DESC');
-            processFiltersPage.waitForTableBody();
-            processFiltersPage.checkProcessesSortedByNameDesc();
+            await processFiltersPage.sortByName('DESC');
+            await processFiltersPage.waitForTableBody();
+            await processFiltersPage.checkProcessesSortedByNameDesc();
         });
 
-        it('[C286260] Should keep sorting when changing \'Items per page\'', function () {
-            processFiltersPage.clickRunningFilterButton();
-            processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
+        it('[C286260] Should keep sorting when changing \'Items per page\'',  async() => {
+            await processFiltersPage.clickRunningFilterButton();
+            await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
 
-            paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-            processDetailsPage.checkProcessTitleIsDisplayed();
-            processFiltersPage.waitForTableBody();
+            await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
+            await processDetailsPage.checkProcessTitleIsDisplayed();
+            await processFiltersPage.waitForTableBody();
 
-            processFiltersPage.sortByName('ASC');
-            processFiltersPage.waitForTableBody();
-            processFiltersPage.checkProcessesSortedByNameAsc();
+            await processFiltersPage.sortByName('ASC');
+            await processFiltersPage.waitForTableBody();
+            await processFiltersPage.checkProcessesSortedByNameAsc();
 
-            paginationPage.selectItemsPerPage(itemsPerPage.five);
-            processFiltersPage.waitForTableBody();
-            processFiltersPage.checkProcessesSortedByNameAsc();
+            await paginationPage.selectItemsPerPage(itemsPerPage.five);
+            await processFiltersPage.waitForTableBody();
+            await processFiltersPage.checkProcessesSortedByNameAsc();
         });
     });
 });

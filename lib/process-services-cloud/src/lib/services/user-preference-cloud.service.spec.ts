@@ -92,7 +92,7 @@ describe('PreferenceService', () => {
     getInstanceSpy.and.returnValue(apiErrorMock);
     service.getPreferences('mock-app-name')
       .subscribe(
-        (preferences) => fail('expected an error, not preferences'),
+        () => fail('expected an error, not preferences'),
         (error) => {
           expect(error.state).toEqual(404);
           expect(error.stateText).toEqual('Not Found');
@@ -119,7 +119,7 @@ describe('PreferenceService', () => {
     getInstanceSpy.and.returnValue(apiErrorMock);
     service.getPreferenceByKey('mock-app-name', 'mock-preference-key')
       .subscribe(
-        (preference) => fail('expected an error, not preference'),
+        () => fail('expected an error, not preference'),
         (error) => {
           expect(error.state).toEqual(404);
           expect(error.stateText).toEqual('Not Found');
@@ -144,7 +144,7 @@ describe('PreferenceService', () => {
     getInstanceSpy.and.returnValue(apiErrorMock);
     service.createPreference('mock-app-name', 'mock-preference-key', createMockPreference)
       .subscribe(
-        (preference) => fail('expected an error, not to create preference'),
+        () => fail('expected an error, not to create preference'),
         (error) => {
           expect(error.state).toEqual(404);
           expect(error.stateText).toEqual('Not Found');
@@ -169,7 +169,7 @@ describe('PreferenceService', () => {
     getInstanceSpy.and.returnValue(apiErrorMock);
     service.createPreference('mock-app-name', 'mock-preference-key', updateMockPreference)
       .subscribe(
-        (preference) => fail('expected an error, not to update preference'),
+        () => fail('expected an error, not to update preference'),
         (error) => {
           expect(error.state).toEqual(404);
           expect(error.stateText).toEqual('Not Found');
@@ -190,7 +190,7 @@ describe('PreferenceService', () => {
     getInstanceSpy.and.returnValue(apiErrorMock);
     service.deletePreference('mock-app-name', 'mock-preference-key')
       .subscribe(
-        (preference) => fail('expected an error, not to delete preference'),
+        () => fail('expected an error, not to delete preference'),
         (error) => {
           expect(error.state).toEqual(404);
           expect(error.stateText).toEqual('Not Found');

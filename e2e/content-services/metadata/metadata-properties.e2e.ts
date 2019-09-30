@@ -51,8 +51,8 @@ describe('CardView Component - properties', () => {
     const acsUser = new AcsUserModel();
 
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -60,7 +60,7 @@ describe('CardView Component - properties', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -74,139 +74,133 @@ describe('CardView Component - properties', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.clickContentServicesButton();
-        contentServicesPage.waitForTableBody();
-
-        done();
-    });
-
-    afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
-    });
-
-    afterEach(() => {
-        viewerPage.clickCloseButton();
-    });
-
-    it('[C246516] Should show/hide the empty metadata when the property displayEmpty is true/false', () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
-        metadataViewPage.editIconIsDisplayed();
-
-        expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
-
-        metadataViewPage.clickOnInformationButton();
-
-        metadataViewPage.clickMetadataGroup('EXIF');
-
-        metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
-        metadataViewPage.checkPropertyIsNotVisible('properties.exif:model', 'textitem');
-
-        check(metadataViewPage.displayEmptySwitch);
-
-        metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
-        metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
-    });
-
-    it('[C260179] Should not be possible edit the basic property when readOnly is true', () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
-        metadataViewPage.editIconIsDisplayed();
-
-        check(metadataViewPage.readonlySwitch);
-
-        metadataViewPage.editIconIsNotDisplayed();
-    });
-
-    it('[C268965] Should multi property allow expand multi accordion at the same time when set', () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
-
-        metadataViewPage.clickOnInformationButton();
-
-        metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
-        metadataViewPage.checkMetadataGroupIsNotExpand('properties');
-
-        metadataViewPage.clickMetadataGroup('properties');
-
-        metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
-        metadataViewPage.checkMetadataGroupIsExpand('properties');
-
-        metadataViewPage.clickMetadataGroup('EXIF');
-
-        metadataViewPage.checkMetadataGroupIsExpand('EXIF');
-        metadataViewPage.checkMetadataGroupIsNotExpand('properties');
-
-        check(metadataViewPage.multiSwitch);
-
-        metadataViewPage.clickMetadataGroup('properties');
-
-        metadataViewPage.checkMetadataGroupIsExpand('EXIF');
-        metadataViewPage.checkMetadataGroupIsExpand('properties');
+        await navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.waitForTableBody();
 
     });
 
-    it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
-
-        uncheck(metadataViewPage.defaultPropertiesSwitch);
-
-        metadataViewPage.checkMetadataGroupIsNotPresent('properties');
-        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
-        metadataViewPage.checkMetadataGroupIsExpand('EXIF');
-
-        check(metadataViewPage.defaultPropertiesSwitch);
-
-        metadataViewPage.checkMetadataGroupIsPresent('properties');
-        metadataViewPage.checkMetadataGroupIsExpand('properties');
+    afterEach(async () => {
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C280560] Should show/hide the more properties button when displayDefaultProperties is true/false', () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
+    it('[C246516] Should show/hide the empty metadata when the property displayEmpty is true/false', async () => {
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.editIconIsDisplayed();
 
-        metadataViewPage.informationButtonIsDisplayed();
+        await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
-        uncheck(metadataViewPage.defaultPropertiesSwitch);
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.informationButtonIsNotDisplayed();
+        await metadataViewPage.clickMetadataGroup('EXIF');
+
+        await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
+        await metadataViewPage.checkPropertyIsNotVisible('properties.exif:model', 'textitem');
+
+        await check(metadataViewPage.displayEmptySwitch);
+
+        await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
+        await metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
     });
 
-    it('[C307975] Should be able to choose which aspect to show expanded in the info-drawer', () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
+    it('[C260179] Should not be possible edit the basic property when readOnly is true', async () => {
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.editIconIsDisplayed();
 
-        metadataViewPage.typeAspectName('EXIF');
-        metadataViewPage.clickApplyAspect();
+        await check(metadataViewPage.readonlySwitch);
 
-        metadataViewPage.checkMetadataGroupIsExpand('EXIF');
-        metadataViewPage.checkMetadataGroupIsNotExpand('properties');
-        check(metadataViewPage.displayEmptySwitch);
+        await metadataViewPage.editIconIsNotDisplayed();
+    });
 
-        metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
-        metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
+    it('[C268965] Should multi property allow expand multi accordion at the same time when set', async () => {
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
 
-        metadataViewPage.typeAspectName('nonexistent');
-        metadataViewPage.clickApplyAspect();
-        metadataViewPage.checkMetadataGroupIsNotPresent('nonexistent');
+        await metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.typeAspectName('Properties');
-        metadataViewPage.clickApplyAspect();
-        metadataViewPage.checkMetadataGroupIsPresent('properties');
-        metadataViewPage.checkMetadataGroupIsExpand('properties');
+        await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
+        await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
 
+        await metadataViewPage.clickMetadataGroup('properties');
+
+        await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
+        await metadataViewPage.checkMetadataGroupIsExpand('properties');
+
+        await metadataViewPage.clickMetadataGroup('EXIF');
+
+        await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+        await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
+
+        await check(metadataViewPage.multiSwitch);
+
+        await metadataViewPage.clickMetadataGroup('properties');
+
+        await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+        await metadataViewPage.checkMetadataGroupIsExpand('properties');
+
+    });
+
+    it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', async () => {
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+
+        await uncheck(metadataViewPage.defaultPropertiesSwitch);
+
+        await metadataViewPage.checkMetadataGroupIsNotPresent('properties');
+        await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
+        await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+
+        await check(metadataViewPage.defaultPropertiesSwitch);
+
+        await metadataViewPage.checkMetadataGroupIsPresent('properties');
+        await metadataViewPage.checkMetadataGroupIsExpand('properties');
+    });
+
+    it('[C280560] Should show/hide the more properties button when displayDefaultProperties is true/false', async () => {
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+
+        await metadataViewPage.informationButtonIsDisplayed();
+
+        await uncheck(metadataViewPage.defaultPropertiesSwitch);
+
+        await metadataViewPage.informationButtonIsNotDisplayed();
+    });
+
+    it('[C307975] Should be able to choose which aspect to show expanded in the info-drawer', async () => {
+        await viewerPage.viewFile(pngFileModel.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await metadataViewPage.clickOnPropertiesTab();
+
+        await metadataViewPage.typeAspectName('EXIF');
+        await metadataViewPage.clickApplyAspect();
+
+        await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+        await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
+        await check(metadataViewPage.displayEmptySwitch);
+
+        await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
+        await metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
+
+        await metadataViewPage.typeAspectName('nonexistent');
+        await metadataViewPage.clickApplyAspect();
+        await metadataViewPage.checkMetadataGroupIsNotPresent('nonexistent');
+
+        await metadataViewPage.typeAspectName('Properties');
+        await metadataViewPage.clickApplyAspect();
+        await metadataViewPage.checkMetadataGroupIsPresent('properties');
+        await metadataViewPage.checkMetadataGroupIsExpand('properties');
     });
 });

@@ -16,15 +16,15 @@
  */
 
 import { FormFields } from '../formFields';
-import { by } from 'protractor';
+import { by, Locator } from 'protractor';
 
 export class HeaderWidget {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
-    labelLocator = by.css('span[id="container-header-label"]');
+    labelLocator: Locator = by.css('span[id="container-header-label"]');
 
-    getFieldLabel(fieldId) {
+    getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
     }
 

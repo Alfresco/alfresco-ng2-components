@@ -22,7 +22,9 @@ import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ProcessFilterCloudService {
 
     private filtersSubject: BehaviorSubject<ProcessFilterCloudModel[]>;

@@ -26,7 +26,7 @@ import { taskClaimCloudMock } from '../task-header/mocks/fake-claim-task.mock';
 describe('ClaimTaskDirective', () => {
 
     @Component({
-        selector:  'adf-claim-test-component',
+        selector:  'adf-cloud-claim-test-component',
         template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameMock"></button>'
     })
     class TestComponent {
@@ -70,7 +70,7 @@ describe('ClaimTaskDirective', () => {
 describe('Claim Task Directive validation errors', () => {
 
     @Component({
-        selector:  'adf-claim-no-fields-validation-component',
+        selector:  'adf-cloud-claim-no-fields-validation-component',
         template: '<button adf-cloud-claim-task></button>'
     })
     class ClaimTestMissingInputDirectiveComponent {
@@ -84,7 +84,7 @@ describe('Claim Task Directive validation errors', () => {
     }
 
     @Component({
-        selector:  'adf-claim-no-taskid-validation-component',
+        selector:  'adf-cloud-claim-no-taskid-validation-component',
         template: '<button adf-cloud-claim-task [appName]="appName"></button>'
     })
     class ClaimTestMissingTaskIdDirectiveComponent {
@@ -96,7 +96,7 @@ describe('Claim Task Directive validation errors', () => {
     }
 
     @Component({
-        selector:  'adf-claim-undefined-appname-component',
+        selector:  'adf-cloud-claim-undefined-appname-component',
         template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameUndefined"></button>'
     })
     class ClaimTestInvalidAppNameUndefineddDirectiveComponent {
@@ -109,7 +109,7 @@ describe('Claim Task Directive validation errors', () => {
     }
 
     @Component({
-        selector:  'adf-claim-null-appname-component',
+        selector:  'adf-cloud-claim-null-appname-component',
         template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameNull"></button>'
     })
     class ClaimTestInvalidAppNameNulldDirectiveComponent {

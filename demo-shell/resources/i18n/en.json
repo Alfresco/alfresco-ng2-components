@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Filter by role",
     "PRESELECT_VALIDATION": "Preselect validation"
   },
-  "ABOUT": {
-    "TITLE": "Plugins",
-    "TABLE_HEADERS": {
-      "ID": "ID",
-      "NAME": "Name",
-      "VERSION": "Version",
-      "VENDOR": "Vendor",
-      "LICENSE": "License",
-      "RUNTIME": "Runtime",
-      "DESCRIPTION": "Description"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multiselection",
     "TESTING_MODE": "Testing Mode",
     "SELECTION_MODE": "Selection Mode",
+    "SELECTED_ROWS": "Selected Rows",
     "TASK_DETAILS_REDIRECTION": "Display task details on task click",
-    "PROCESS_DETAILS_REDIRECTION": "Display process details on process click"
+    "PROCESS_DETAILS_REDIRECTION": "Display process details on process click",
+    "ACTION": {
+      "ACTION_TITLE": "Add Action",
+      "ACTION_MENU": "Action Menu",
+      "CONTEX_MENU": "Context Menu",
+      "ACTION_VISIBLE": "Visible",
+      "ACTION_DISABLE": "Disable",
+      "ADD_BUTTON": "Add",
+      "KEY": "Key",
+      "TITLE": "Title",
+      "ICON": "Icon",
+      "TASK_ID": "Task ID",
+      "PROCESS_ID": "Process Instance ID",
+      "ACTION_TYPE": "Action Type"
+    }
   }
 }

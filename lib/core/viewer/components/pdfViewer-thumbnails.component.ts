@@ -43,8 +43,8 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     @ContentChild(TemplateRef)
     template: any;
 
-    @HostListener('window:resize', ['$event'])
-    onResize(event) {
+    @HostListener('window:resize')
+    onResize() {
         this.calculateItems();
     }
 
@@ -74,7 +74,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.pdfViewer.eventBus.off('pagechange', this.onPageChange);
     }
 
-    trackByFn(index: number, item: any): number {
+    trackByFn(_: number, item: any): number {
         return item.id;
     }
 

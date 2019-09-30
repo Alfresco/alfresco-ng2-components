@@ -72,6 +72,10 @@
           "CANCEL": "キャンセル"
         },
         "TITLE": "ファイルを圧縮 (zip) します。この処理には数分かかります"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "閉じる",
+        "UPDATE": "更新"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "名前",
         "VALUE": "値"
       },
+      "NONE": "なし",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "番号形式を使用してください",
         "INT_VALIDATION_ERROR": "整数形式を使用してください"
@@ -184,6 +189,7 @@
         "EDIT": "編集",
         "SAVE": "保存",
         "CANCEL": "キャンセル",
+        "CLEAR": "消去",
         "TOGGLE": "値の切り替え"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "サインイン",
       "USERNAME": "ユーザー名",
       "PASSWORD": "パスワード",
       "REMEMBER": "ログイン情報を保存する"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "パスワードを表示",
+      "HIDE-PASSWORD": "パスワードを非表示"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "必須",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "すべて選択",
-      "SELECT_FILE": "ファイルを選択してください"
+      "SELECT_FILE": "ファイルを選択してください",
+      "SORT_ASCENDING": "昇順",
+      "SORT_DESCENDING": "降順",
+      "SORT_NONE": "なし",
+      "ICON_TEXT": "ファイルの種類: {{ type }}",
+      "ICON_DISABLED": "無効",
+      "ROW_OPTION_BUTTON": "処理"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "文書",
+      "FOLDER": "フォルダ",
+      "PDF": "PDF",
+      "IMAGE": "画像",
+      "EXCEL": "Excel スプレッドシート",
+      "WORD": "Word 文書",
+      "POWERPOINT": "Powerpoint プレゼンテーション",
+      "VIDEO": "ビデオ",
+      "AUDIO": "オーディオ",
+      "WEBSITE": "Web サイト",
+      "ARCHIVE": "アーカイブ",
+      "PRESENTATION": "プレゼンテーション",
+      "SPREADSHEET": "スプレッドシート",
+      "MISCELLANEOUS": "その他"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "/"
     },
     "LOADING": "読み込み中",
-    "UNKNOWN_FORMAT": "プレビューを読み込めませんでした",
+    "UNKNOWN_FORMAT": "プレビューを読み込めませんでした。不明な形式です。",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "{{ pageNum }} ページ"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "バージョン",
     "SERVER_SETTINGS": {
       "TITLE": "サーバーの設定",
       "DESCRIPTION": "下の値は AppConfigService から取得されたものです",
@@ -428,6 +461,18 @@
         "MODE": "モード",
         "CLUSTER_ENABLED": "クラスタ - 有効",
         "CRYPTODOC_ENABLED": "Cryptodoc - 有効"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "プラグイン",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "名前",
+        "VERSION": "バージョン",
+        "VENDOR": "ベンダー",
+        "LICENSE": "ライセンス",
+        "RUNTIME": "ランタイム",
+        "DESCRIPTION": "説明"
       }
     }
   },

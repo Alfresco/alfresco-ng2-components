@@ -15,148 +15,129 @@
  * limitations under the License.
  */
 
-import { by, browser, protractor } from 'protractor';
+import { by, protractor, ElementFinder, Locator, element } from 'protractor';
 import { DatePickerPage } from '../../../material/pages/date-picker.page';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
+import { BrowserActions } from '../../../core/utils/browser-actions';
 
 export class DateRangeFilterPage {
 
-    fromField = by.css('input[data-automation-id="date-range-from-input"]');
-    fromDateToggle = by.css('mat-datepicker-toggle[data-automation-id="date-range-from-date-toggle"]');
-    toField = by.css('input[data-automation-id="date-range-to-input"]');
-    toDateToggle = by.css('mat-datepicker-toggle[data-automation-id="date-range-to-date-toggle"]');
-    applyButton = by.css('button[data-automation-id="date-range-apply-btn"]');
-    clearButton = by.css('button[data-automation-id="date-range-clear-btn"]');
-    fromErrorMessage = by.css('mat-error[data-automation-id="date-range-from-error"]');
-    toErrorMessage = by.css('mat-error[data-automation-id="date-range-to-error"]');
-    filter;
+    fromField: Locator = by.css('input[data-automation-id="date-range-from-input"]');
+    fromDateToggle: Locator = by.css('mat-datepicker-toggle[data-automation-id="date-range-from-date-toggle"]');
+    toField: Locator = by.css('input[data-automation-id="date-range-to-input"]');
+    toDateToggle: Locator = by.css('mat-datepicker-toggle[data-automation-id="date-range-to-date-toggle"]');
+    applyButton: Locator = by.css('button[data-automation-id="date-range-apply-btn"]');
+    clearButton: Locator = by.css('button[data-automation-id="date-range-clear-btn"]');
+    fromErrorMessage: Locator = by.css('mat-error[data-automation-id="date-range-from-error"]');
+    toErrorMessage: Locator = by.css('mat-error[data-automation-id="date-range-to-error"]');
+    filter: ElementFinder;
 
-    constructor(filter) {
+    constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 
-    getFromDate() {
-        return this.filter.element(this.fromField).getAttribute('value');
+    async getFromDate(): Promise<string> {
+        return await this.filter.element(this.fromField).getAttribute('value');
     }
 
-    putFromDate(date) {
-        this.checkFromFieldIsDisplayed();
-        this.filter.element(this.fromField).clear();
-        this.filter.element(this.fromField).sendKeys(date);
-        this.filter.element(this.fromField).sendKeys(protractor.Key.ENTER);
-        return this;
+    async putFromDate(date): Promise<void> {
+        await this.checkFromFieldIsDisplayed();
+        await BrowserActions.clearSendKeys(this.filter.element(this.fromField), date);
+        await this.filter.element(this.fromField).sendKeys(protractor.Key.ENTER);
     }
 
-    getFromCalendarSelectedDate() {
-        const selectedDate = this.openFromDatePicker().getSelectedDate();
-        new DatePickerPage().closeDatePicker();
+    async getFromCalendarSelectedDate(): Promise<string> {
+        const datePicker = await this.openFromDatePicker();
+        const selectedDate = await datePicker.getSelectedDate();
+        await datePicker.closeDatePicker();
         return selectedDate;
     }
 
-    openFromDatePicker() {
-        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromDateToggle));
-        this.filter.element(this.fromDateToggle).click();
-        return new DatePickerPage().checkDatePickerIsDisplayed();
+    async openFromDatePicker(): Promise<DatePickerPage> {
+        await BrowserActions.click(this.filter.element(this.fromDateToggle));
+
+        const datePicker = new DatePickerPage();
+        await datePicker.checkDatePickerIsDisplayed();
+        return datePicker;
     }
 
-    openToDatePicker() {
-        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toDateToggle));
-        this.filter.element(this.toDateToggle).click();
-        return new DatePickerPage().checkDatePickerIsDisplayed();
+    async openToDatePicker(): Promise<DatePickerPage> {
+        await BrowserActions.click(this.filter.element(this.toDateToggle));
+        const datePicker = new DatePickerPage();
+        await datePicker.checkDatePickerIsDisplayed();
+        return datePicker;
     }
 
-    clickFromField() {
-        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromField));
-        this.filter.element(this.fromField).click();
-        return this;
+    async clickFromField(): Promise<void> {
+        await BrowserActions.click(this.filter.element(this.fromField));
     }
 
-    checkFromErrorMessageIsDisplayed(msg: string) {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorMessage));
-        browser.controlFlow().execute(async () => {
-            await expect(this.filter.element(this.fromErrorMessage).getText()).toEqual(msg);
-        });
-        return this;
+    async checkFromErrorMessageIsDisplayed(msg: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorMessage));
+        const text = await BrowserActions.getText(this.filter.element(this.fromErrorMessage));
+        await expect(text).toEqual(msg);
     }
 
-    checkFromErrorMessageIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.fromErrorMessage));
-        return this;
+    async checkFromErrorMessageIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.fromErrorMessage));
     }
 
-    checkFromFieldIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromField));
-        return this;
+    async checkFromFieldIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromField));
     }
 
-    checkFromDateToggleIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromDateToggle));
-        return this;
+    async checkFromDateToggleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromDateToggle));
     }
 
-    getToDate() {
-        return this.filter.element(this.toField).getAttribute('value');
+    async getToDate(): Promise<string> {
+        return await this.filter.element(this.toField).getAttribute('value');
     }
 
-    putToDate(date) {
-        this.checkToFieldIsDisplayed();
-        this.filter.element(this.toField).clear();
-        this.filter.element(this.toField).sendKeys(date);
-        this.filter.element(this.toField).sendKeys(protractor.Key.ENTER);
-        return this;
+    async putToDate(date): Promise<void> {
+        await this.checkToFieldIsDisplayed();
+        await BrowserActions.clearSendKeys(element(this.toField), date);
+        await this.filter.element(this.toField).sendKeys(protractor.Key.ENTER);
     }
 
-    clickToField() {
-        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toField));
-        this.filter.element(this.toField).click();
-        return this;
+    async clickToField(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toField));
+        await BrowserActions.click(this.filter.element(this.toField));
     }
 
-    checkToErrorMessageIsDisplayed(msg) {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorMessage));
-        browser.controlFlow().execute(async () => {
-            await expect(this.filter.element(this.toErrorMessage).getText()).toEqual(msg);
-        });
-        return this;
+    async checkToErrorMessageIsDisplayed(msg): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorMessage));
+        const text = await BrowserActions.getText(this.filter.element(this.toErrorMessage));
+        await expect(text).toEqual(msg);
     }
 
-    checkToFieldIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toField));
-        return this;
+    async checkToFieldIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toField));
     }
 
-    checkToDateToggleIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toDateToggle));
-        return this;
+    async checkToDateToggleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toDateToggle));
     }
 
-    clickApplyButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.applyButton));
-        this.filter.element(this.applyButton).click();
-        return this;
+    async clickApplyButton(): Promise<void> {
+        await BrowserActions.click(this.filter.element(this.applyButton));
     }
 
-    checkApplyButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.applyButton));
-        return this;
+    async checkApplyButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.applyButton));
     }
 
-    checkApplyButtonIsEnabled() {
-        browser.controlFlow().execute(async () => {
-            await expect(this.filter.element(this.applyButton).isEnabled()).toBe(true);
-        });
-        return this;
+    async checkApplyButtonIsEnabled(): Promise<void> {
+        const isEnabled = await this.filter.element(this.applyButton).isEnabled();
+        await expect(isEnabled).toBe(true);
     }
 
-    checkApplyButtonIsDisabled() {
-        browser.controlFlow().execute(async () => {
-            await expect(this.filter.element(this.applyButton).isEnabled()).toBe(false);
-        });
-        return this;
+    async checkApplyButtonIsDisabled(): Promise<void> {
+        const isEnabled = await this.filter.element(this.applyButton).isEnabled();
+        await expect(isEnabled).toBe(false);
     }
 
-    checkClearButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
-        return this;
+    async checkClearButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
     }
 }

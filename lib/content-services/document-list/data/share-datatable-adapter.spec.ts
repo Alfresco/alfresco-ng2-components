@@ -38,19 +38,19 @@ class FakeSanitizer extends DomSanitizer {
         return value;
     }
 
-    bypassSecurityTrustStyle(value: string): any {
+    bypassSecurityTrustStyle(): any {
         return null;
     }
 
-    bypassSecurityTrustScript(value: string): any {
+    bypassSecurityTrustScript(): any {
         return null;
     }
 
-    bypassSecurityTrustUrl(value: string): any {
+    bypassSecurityTrustUrl(): any {
         return null;
     }
 
-    bypassSecurityTrustResourceUrl(value: string): any {
+    bypassSecurityTrustResourceUrl(): any {
         return null;
     }
 }
@@ -190,7 +190,7 @@ describe('ShareDataTableAdapter', () => {
 
         const col = <DataColumn> {
             key: 'createdAt',
-            type: 'string'
+            type: 'text'
         };
 
         const row = new ShareDataRow(file, contentService, null);
@@ -265,7 +265,7 @@ describe('ShareDataTableAdapter', () => {
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const row = new ShareDataRow(new SmartFolderNode(), contentService, null);
-        const col = <DataColumn> { type: 'folder', key: '$thumbnail' };
+        const col = <DataColumn> { type: 'text', key: '$thumbnail' };
 
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_smart_folder`);
@@ -278,7 +278,7 @@ describe('ShareDataTableAdapter', () => {
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const row = new ShareDataRow(new LinkFolderNode(), contentService, null);
-        const col = <DataColumn> { type: 'folder', key: '$thumbnail' };
+        const col = <DataColumn> { type: 'text', key: '$thumbnail' };
 
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_folder_shortcut_link`);
@@ -291,7 +291,7 @@ describe('ShareDataTableAdapter', () => {
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const row = new ShareDataRow(new RuleFolderNode(), contentService, null);
-        const col = <DataColumn> { type: 'folder', key: '$thumbnail' };
+        const col = <DataColumn> { type: 'text', key: '$thumbnail' };
 
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_folder_rule`);

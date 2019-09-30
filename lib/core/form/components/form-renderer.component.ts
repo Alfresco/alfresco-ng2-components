@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, Input } from '@angular/core';
-import { FormBaseModel } from './form-base.model';
+import { FormModel } from './widgets/core/form.model';
 
 @Component({
     selector: 'adf-form-renderer',
@@ -31,7 +31,7 @@ export class FormRendererComponent {
     showDebugButton: boolean = false;
 
     @Input()
-    formDefinition: FormBaseModel;
+    formDefinition: FormModel;
 
     debugMode: boolean;
 

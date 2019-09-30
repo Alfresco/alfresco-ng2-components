@@ -15,87 +15,78 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class FolderDialog {
-    folderDialog = element(by.css('adf-folder-dialog'));
-    folderNameField = this.folderDialog.element(by.id('adf-folder-name-input'));
-    folderDescriptionField = this.folderDialog.element(by.id('adf-folder-description-input'));
-    createUpdateButton = this.folderDialog.element(by.id('adf-folder-create-button'));
-    cancelButton = this.folderDialog.element(by.id('adf-folder-cancel-button'));
-    folderTitle = this.folderDialog.element((by.css('h2.mat-dialog-title')));
-    validationMessage = this.folderDialog.element(by.css('div.mat-form-field-subscript-wrapper mat-hint span'));
+    folderDialog: ElementFinder = element(by.css('adf-folder-dialog'));
+    folderNameField: ElementFinder = this.folderDialog.element(by.id('adf-folder-name-input'));
+    folderDescriptionField: ElementFinder = this.folderDialog.element(by.id('adf-folder-description-input'));
+    createUpdateButton: ElementFinder = this.folderDialog.element(by.id('adf-folder-create-button'));
+    cancelButton: ElementFinder = this.folderDialog.element(by.id('adf-folder-cancel-button'));
+    folderTitle: ElementFinder = this.folderDialog.element((by.css('h2.mat-dialog-title')));
+    validationMessage: ElementFinder = this.folderDialog.element(by.css('div.mat-form-field-subscript-wrapper mat-hint span'));
 
-    getDialogTitle() {
-        return BrowserActions.getText(this.folderTitle);
+    async getDialogTitle(): Promise<string> {
+        return await BrowserActions.getText(this.folderTitle);
     }
 
-    checkFolderDialogIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.folderDialog);
-        return this;
+    async checkFolderDialogIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.folderDialog);
     }
 
-    checkFolderDialogIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.folderDialog);
-        return this;
+    async checkFolderDialogIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.folderDialog);
     }
 
-    clickOnCreateUpdateButton() {
-        BrowserActions.click(this.createUpdateButton);
+    async clickOnCreateUpdateButton(): Promise<void> {
+        await BrowserActions.click(this.createUpdateButton);
     }
 
-    checkCreateUpdateBtnIsDisabled() {
-        BrowserActions.checkIsDisabled(this.createUpdateButton);
-        return this;
+    async checkCreateUpdateBtnIsDisabled(): Promise<void> {
+        await BrowserActions.checkIsDisabled(this.createUpdateButton);
     }
 
-    checkCreateUpdateBtnIsEnabled() {
-        this.createUpdateButton.isEnabled();
-        return this;
+    async clickOnCancelButton(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 
-    checkCancelBtnIsEnabled() {
-        this.cancelButton.isEnabled();
-        return this;
+    async addFolderName(folderName): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.folderNameField);
+        await BrowserActions.clearSendKeys(this.folderNameField, folderName);
     }
 
-    clickOnCancelButton() {
-        BrowserActions.click(this.cancelButton);
+    async addFolderDescription(folderDescription): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.folderDescriptionField);
+        await BrowserActions.clearSendKeys(this.folderDescriptionField, folderDescription);
     }
 
-    addFolderName(folderName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.folderNameField);
-        BrowserActions.clearSendKeys(this.folderNameField, folderName);
-        browser.driver.sleep(500);
-        return this;
+    async getFolderName(): Promise<string> {
+        return await this.folderNameField.getAttribute('value');
     }
 
-    addFolderDescription(folderDescription) {
-        BrowserVisibility.waitUntilElementIsVisible(this.folderDescriptionField);
-        BrowserActions.clearSendKeys(this.folderDescriptionField, folderDescription);
-        return this;
+    async getValidationMessage(): Promise<string> {
+        return await BrowserActions.getText(this.validationMessage);
     }
 
-    getFolderName() {
-        return this.folderNameField.getAttribute('value');
+    async checkValidationMessageIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.validationMessage);
     }
 
-    getValidationMessage() {
-        return BrowserActions.getText(this.validationMessage);
-    }
-
-    checkValidationMessageIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.validationMessage);
-        return this;
-    }
-
-    getFolderNameField() {
+    getFolderNameField(): ElementFinder {
         return this.folderNameField;
     }
 
-    getFolderDescriptionField() {
+    getFolderDescriptionField(): ElementFinder {
         return this.folderDescriptionField;
+    }
+
+    async checkCreateUpdateBtnIsEnabled(): Promise<void> {
+        await this.createUpdateButton.isEnabled();
+    }
+
+    async checkCancelBtnIsEnabled(): Promise<void> {
+        await this.cancelButton.isEnabled();
     }
 
 }

@@ -16,16 +16,16 @@
  */
 
 import { InitialGroupNamePipe } from './group-initial.pipe';
-import { GroupModel } from '../models/group.model';
+import { IdentityGroupModel } from '@alfresco/adf-core';
 
 describe('InitialGroupNamePipe', () => {
 
     let pipe: InitialGroupNamePipe;
-    let fakeGroup: GroupModel;
+    let fakeGroup: IdentityGroupModel;
 
     beforeEach(() => {
         pipe = new InitialGroupNamePipe();
-        fakeGroup = new GroupModel({name: 'mock'});
+        fakeGroup = new IdentityGroupModel({name: 'mock'});
     });
 
     it('should return with the group initial', () => {

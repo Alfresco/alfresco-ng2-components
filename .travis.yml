@@ -1,6 +1,7 @@
 git:
   depth: 3
   quiet: true
+
 language: node_js
 dist: trusty
 sudo: required
@@ -22,10 +23,24 @@ branches:
 
 # TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
-  - name: Warm Up Cache & Lint & Build Dist
+  - name: Lint & Build Dist
+    if: type = pull_request
+  - name: Lint & Build Dist & Release
+    if: (type = push OR type = cron) AND tag IS blank
+  - name: Check bundle
+    if: type = push AND tag IS blank
   - name: Unit test
+    if: type != cron AND tag IS blank
+  - name: Update Rancher
+    if: type = push AND tag IS blank
   - name: e2e Test
-  - name: Deploy PR
+    if: type != cron AND tag IS blank
+  - name: Update Rancher PR
+    if: type = pull_request
+  - name: Update Children Projects
+    if: branch = master AND type = push OR (tag =~ .*beta.*)
+  - name: Release beta tag
+    if: type = cron
 
 addons:
     chrome: stable
@@ -41,10 +56,25 @@ before_install:
 
 jobs:
     include:
-        - stage: Warm Up Cache & Lint & Build Dist
-          name:  Warm Up Cache & Lint & Build Dist
+        # Run Only for any PR
+        - stage: Lint & Build Dist
+          name:  Lint & Build Dist
           script:
-             ./scripts/travis/build/build.sh
+            - ./scripts/travis/build/build.sh || exit 1;
+            - ./scripts/lint.sh || exit 1;
+
+        # Run Only on Development and master
+        - stage: Lint & Build Dist & Release
+          name:  Lint & Build Dist & Release
+          script:
+            - ./scripts/travis/build/build.sh || exit 1;
+            - ./scripts/lint.sh || exit 1;
+            - ./scripts/travis/release/release.sh
+            - TAG_VERSION=$(./scripts/travis/deploy/tag-travis-branch.sh)
+            - echo "Running the docker with tag" $TAG_VERSION
+            - ./node_modules/@alfresco/adf-cli/bin/adf-cli docker-publish --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --dockerTags "$TAG_VERSION,$TAGS" --pathProject "$(pwd)"
+
+
         - stage: Unit test
           name: Unit test content
           script:  ./scripts/travis/unit-test/content.sh
@@ -54,37 +84,65 @@ jobs:
         - stage: Unit test
           name: Unit test process process-cloud insights
           script: ./scripts/travis/unit-test/process.sh
-        - stage: Deploy PR
-          name: Deploy PR
-          script:
-             ./scripts/travis/deploy/deploy.sh
-        - stage: Update children projects dependency #Update children projects dependency
-          name: Update Related Project
-          if: tag =~ .*beta.*
+
+
+        - stage: Update Children Projects
           script: ./scripts/travis/update/update-children.sh
+
+        - stage: Release beta tag
+          script: ./scripts/travis/release/git-tag-beta.sh
+
+
         - stage: e2e Test
           name: core
           script: ./scripts/travis/e2e/core-e2e.sh
         - stage: e2e Test
           name:  content
-          script:
-            ./scripts/travis/e2e/content-services-e2e.sh
+          script: ./scripts/travis/e2e/content-services-e2e.sh
         - stage: e2e Test
           name:  search
-          script:
-              ./scripts/travis/e2e/search-e2e.sh
+          script: ./scripts/travis/e2e/search-e2e.sh
         - stage: e2e Test
           name: process
-          script:
-              ./scripts/travis/e2e/process-services-e2e.sh
+          script: ./scripts/travis/e2e/process-services-e2e.sh
         - stage: e2e Test
           name: process Cloud
-          script:
-              ./scripts/travis/e2e/process-services-cloud-e2e.sh
+          script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
 
-# Send coverage data to codecov
-after_success:
-    bash <(curl -s https://codecov.io/bash) -X gcov
+
+        - stage: Check bundle
+          script:
+          - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+          - ./scripts/npm-check-bundles.sh -v ${ADF_VERSION}
+
+
+        - stage: Update Rancher
+          script:
+          - TAG_VERSION=$(./scripts/travis/deploy/tag-travis-branch.sh)
+          - echo "Update rancher with docker tag" $TAG_VERSION  --url $REPO_RANCHER --environment_name $REPO_RANCHER_ADF_NAME
+          - ./scripts/rancher-update.sh --access_key $RANCHER_TOKEN --secret_key $RANCHER_SECRET --url $REPO_RANCHER --environment_name $REPO_RANCHER_ADF_NAME --image docker:$DOCKER_REPOSITORY:$TAG_VERSION
+
+
+        - stage: Update Rancher PR
+          name: Update Rancher PR
+          script: ./scripts/travis/deploy/deploy.sh
+
+
+before_deploy:
+  # Set up git user name and tag this commit
+  - git config --local user.name "Alfresco"
+  - export TRAVIS_TAG=$(cat package.json | grep version | head -1 | awk -F= "{ print $2 }" | sed 's/[version:,\",]//g' | tr -d '[[:space:]]')
+  - echo "Create tag:" $TRAVIS_TAG
+  - git tag $TRAVIS_TAG
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  name: $TRAVIS_TAG
+  body: "Add the release note"
+  skip_cleanup: true
+  on:
+    branch: master
 
 cache:
   directories:

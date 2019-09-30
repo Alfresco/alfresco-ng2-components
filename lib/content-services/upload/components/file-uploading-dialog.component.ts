@@ -16,11 +16,11 @@
  */
 
 import { FileModel, FileUploadStatus, UploadService, UserPreferencesService } from '@alfresco/adf-core';
-import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild, HostBinding } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild, HostBinding, ElementRef } from '@angular/core';
 import { Subscription, merge, Subject } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { Direction } from '@angular/cdk/bidi';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, delay } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-file-uploading-dialog',
@@ -67,22 +67,37 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private counterSubscription: Subscription;
     private fileUploadSubscription: Subscription;
     private errorSubscription: Subscription;
+    private dialogActive = new Subject<boolean>();
 
     constructor(
         private uploadService: UploadService,
         private changeDetector: ChangeDetectorRef,
-        private userPreferencesService: UserPreferencesService
+        private userPreferencesService: UserPreferencesService,
+        private elementRef: ElementRef
         ) {
     }
 
     ngOnInit() {
+        this.dialogActive
+            .pipe(
+                delay(100),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(() => {
+                const element: any = this.elementRef.nativeElement.querySelector('#upload-dialog');
+                if (element) {
+                    element.focus();
+                }
+            });
+
         this.listSubscription = this.uploadService.queueChanged
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(fileList => {
                 this.filesUploadingList = fileList;
 
-                if (this.filesUploadingList.length) {
+                if (this.filesUploadingList.length && !this.isDialogActive) {
                     this.isDialogActive = true;
+                    this.dialogActive.next();
                 }
             });
 

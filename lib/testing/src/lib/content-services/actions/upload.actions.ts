@@ -19,32 +19,33 @@ import { browser } from 'protractor';
 import * as path from 'path';
 import * as fs from 'fs';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
 
 export class UploadActions {
-    alfrescoJsApi: any = null;
+    alfrescoJsApi: AlfrescoApi = null;
 
     constructor(alfrescoJsApi: AlfrescoApi) {
         this.alfrescoJsApi = alfrescoJsApi;
     }
 
-    async uploadFile(fileLocation, fileName, parentFolderId) {
+    async uploadFile(fileLocation, fileName, parentFolderId): Promise<any> {
         const pathFile = path.join(browser.params.rootPath + '/e2e' + fileLocation);
         const file = fs.createReadStream(pathFile);
 
-        return await this.alfrescoJsApi.upload.uploadFile(
+        return this.alfrescoJsApi.upload.uploadFile(
             file,
             '',
             parentFolderId,
             null,
             {
-                'name': fileName,
-                'nodeType': 'cm:content',
-                'renditions': 'doclib'
+                name: fileName,
+                nodeType: 'cm:content',
+                renditions: 'doclib'
             }
         );
     }
 
-    async createEmptyFiles(emptyFileNames: string[], parentFolderId) {
+    async createEmptyFiles(emptyFileNames: string[], parentFolderId): Promise<NodeEntry> {
         const filesRequest = [];
 
         for (let i = 0; i < emptyFileNames.length; i++) {
@@ -54,16 +55,14 @@ export class UploadActions {
             filesRequest.push(jsonItem);
         }
 
-        return this.alfrescoJsApi.nodes.addNode(parentFolderId, filesRequest, {}, {
-            filedata: ''
-        });
+        return this.alfrescoJsApi.nodes.addNode(parentFolderId, <any> filesRequest, {});
     }
 
-    async createFolder(folderName, parentFolderId) {
+    async createFolder(folderName, parentFolderId): Promise<NodeEntry> {
         return this.alfrescoJsApi.node.addNode(parentFolderId, {
-            'name': folderName,
-            'nodeType': 'cm:folder'
-        }, {}, {});
+            name: folderName,
+            nodeType: 'cm:folder'
+        }, {});
     }
 
     async deleteFileOrFolder(nodeId) {

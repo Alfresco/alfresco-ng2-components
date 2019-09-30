@@ -27,3 +27,5 @@ if ([ "$TRAVIS_BRANCH" = "master" ]); then
 else
    (./scripts/start.sh -dev -t -ss -si || exit 1;);
 fi;
+
+bash <(curl -s https://codecov.io/bash) -X gcov

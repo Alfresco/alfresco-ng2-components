@@ -48,7 +48,7 @@ describe('Checklist component', () => {
     const removeChecklist = ['removeFirstRunningChecklist', 'removeSecondRunningChecklist', 'removeFirstCompletedChecklist', 'removeSecondCompletedChecklist'];
     const hierarchyChecklist = ['checklistOne', 'checklistTwo', 'checklistOneChild', 'checklistTwoChild'];
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -75,124 +75,137 @@ describe('Checklist component', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    beforeEach(async (done) => {
-        navigationBarPage.clickHomeButton();
-        navigationBarPage.navigateToProcessServicesPage();
-        processServices.goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        done();
+    beforeEach(async () => {
+        await navigationBarPage.clickHomeButton();
+        await navigationBarPage.navigateToProcessServicesPage();
+        await (await processServices.goToTaskApp()).clickTasksButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+
     });
 
-    it('[C279976] Should no checklist be created when no title is typed', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-        taskPage.tasksListPage().selectRow(tasks[0]);
+    it('[C279976] Should no checklist be created when no title is typed', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        taskPage.clickOnAddChecklistButton().clickCreateChecklistButton();
-        taskPage.checkChecklistDialogIsNotDisplayed().checkNoChecklistIsDisplayed();
-        expect(taskPage.getNumberOfChecklists()).toEqual('0');
+        await (await taskPage.clickOnAddChecklistButton()).clickCreateChecklistButton();
+        await taskPage.checkChecklistDialogIsNotDisplayed();
+        await taskPage.checkNoChecklistIsDisplayed();
+        await expect(await taskPage.getNumberOfChecklists()).toEqual('0');
     });
 
-    it('[C279975] Should no checklist be created when clicking on Cancel button on checklist dialog', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-        taskPage.tasksListPage().selectRow(tasks[0]);
+    it('[C279975] Should no checklist be created when clicking on Cancel button on checklist dialog', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        taskPage.clickOnAddChecklistButton().addName(checklists[0]).clickCancelButton();
-        taskPage.checkChecklistDialogIsNotDisplayed().checkNoChecklistIsDisplayed();
-        expect(taskPage.getNumberOfChecklists()).toEqual('0');
+        await (await taskPage.clickOnAddChecklistButton()).addName(checklists[0]);
+        await checklistDialog.clickCancelButton();
+        await taskPage.checkChecklistDialogIsNotDisplayed();
+        await taskPage.checkNoChecklistIsDisplayed();
+        await expect(await taskPage.getNumberOfChecklists()).toEqual('0');
     });
 
-    it('[C261025] Should Checklist dialog be displayed when clicking on add checklist button', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-        taskPage.tasksListPage().selectRow(tasks[0]);
+    it('[C261025] Should Checklist dialog be displayed when clicking on add checklist button', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        taskPage.clickOnAddChecklistButton();
-        taskPage.checkChecklistDialogIsDisplayed();
-        expect(taskPage.usingCheckListDialog().getDialogTitle()).toEqual('New Check');
-        expect(taskPage.usingCheckListDialog().getNameFieldPlaceholder()).toEqual('Name');
-        taskPage.usingCheckListDialog().checkAddChecklistButtonIsEnabled().checkCancelButtonIsEnabled();
-        taskPage.usingCheckListDialog().clickCancelButton();
+        await (await taskPage.clickOnAddChecklistButton());
+        await taskPage.checkChecklistDialogIsDisplayed();
+        await expect(await taskPage.usingCheckListDialog().getDialogTitle()).toEqual('New Check');
+        await expect(await taskPage.usingCheckListDialog().getNameFieldPlaceholder()).toEqual('Name');
+        await taskPage.usingCheckListDialog().checkAddChecklistButtonIsEnabled();
+        await checklistDialog.checkCancelButtonIsEnabled();
+        await taskPage.usingCheckListDialog().clickCancelButton();
     });
 
-    it('[C261026] Should Checklist number increase when a new checklist is added', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
-        taskPage.tasksListPage().selectRow(tasks[1]);
+    it('[C261026] Should Checklist number increase when a new checklist is added', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
+        await taskPage.tasksListPage().selectRow(tasks[1]);
 
-        taskPage.clickOnAddChecklistButton().addName(checklists[2]).clickCreateChecklistButton();
-        taskPage.checkChecklistIsDisplayed(checklists[2]);
-        expect(taskPage.getNumberOfChecklists()).toEqual('1');
+        await (await taskPage.clickOnAddChecklistButton()).addName(checklists[2]);
+        await checklistDialog.clickCreateChecklistButton();
+        await taskPage.checkChecklistIsDisplayed(checklists[2]);
+        await expect(await taskPage.getNumberOfChecklists()).toEqual('1');
 
-        taskPage.clickOnAddChecklistButton().addName(checklists[3]).clickCreateChecklistButton();
-        taskPage.checkChecklistIsDisplayed(checklists[3]);
-        taskPage.checkChecklistIsDisplayed(checklists[2]);
-        expect(taskPage.getNumberOfChecklists()).toEqual('2');
+        await (await taskPage.clickOnAddChecklistButton()).addName(checklists[3]);
+        await checklistDialog.clickCreateChecklistButton();
+        await taskPage.checkChecklistIsDisplayed(checklists[3]);
+        await taskPage.checkChecklistIsDisplayed(checklists[2]);
+        await expect(await taskPage.getNumberOfChecklists()).toEqual('2');
     });
 
-    it('[C279980] Should checklist be removed when clicking on remove button', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
-        taskPage.tasksListPage().selectRow(tasks[2]);
+    it('[C279980] Should checklist be removed when clicking on remove button', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
+        await taskPage.tasksListPage().selectRow(tasks[2]);
 
-        taskPage.clickOnAddChecklistButton();
-        taskPage.checkChecklistDialogIsDisplayed();
-        checklistDialog.addName(removeChecklist[0]).clickCreateChecklistButton();
-        taskPage.checkChecklistIsDisplayed(removeChecklist[0]);
+        await (await taskPage.clickOnAddChecklistButton());
+        await taskPage.checkChecklistDialogIsDisplayed();
+        await checklistDialog.addName(removeChecklist[0]);
+        await checklistDialog.clickCreateChecklistButton();
+        await taskPage.checkChecklistIsDisplayed(removeChecklist[0]);
 
-        taskPage.clickOnAddChecklistButton().addName(removeChecklist[1]).clickCreateChecklistButton();
-        taskPage.checkChecklistIsDisplayed(removeChecklist[1]);
+        await (await taskPage.clickOnAddChecklistButton()).addName(removeChecklist[1]);
+        await checklistDialog.clickCreateChecklistButton();
+        await taskPage.checkChecklistIsDisplayed(removeChecklist[1]);
 
-        taskPage.removeChecklists(removeChecklist[1]);
-        taskPage.checkChecklistIsDisplayed(removeChecklist[0]);
-        taskPage.checkChecklistIsNotDisplayed(removeChecklist[1]);
+        await taskPage.removeChecklists(removeChecklist[1]);
+        await taskPage.checkChecklistIsDisplayed(removeChecklist[0]);
+        await taskPage.checkChecklistIsNotDisplayed(removeChecklist[1]);
     });
 
-    it('[C261027] Should not be able to remove a completed Checklist when clicking on remove button', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
-        taskPage.tasksListPage().selectRow(tasks[3]);
+    it('[C261027] Should not be able to remove a completed Checklist when clicking on remove button', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
+        await taskPage.tasksListPage().selectRow(tasks[3]);
 
-        taskPage.clickOnAddChecklistButton().addName(removeChecklist[2]).clickCreateChecklistButton();
-        taskPage.checkChecklistIsDisplayed(removeChecklist[2]);
+        await (await taskPage.clickOnAddChecklistButton()).addName(removeChecklist[2]);
+        await checklistDialog.clickCreateChecklistButton();
+        await taskPage.checkChecklistIsDisplayed(removeChecklist[2]);
 
-        taskPage.clickOnAddChecklistButton().addName(removeChecklist[3]).clickCreateChecklistButton();
-        taskPage.checkChecklistIsDisplayed(removeChecklist[3]);
+        await (await taskPage.clickOnAddChecklistButton()).addName(removeChecklist[3]);
+        await checklistDialog.clickCreateChecklistButton();
+        await taskPage.checkChecklistIsDisplayed(removeChecklist[3]);
 
-        taskPage.tasksListPage().selectRow(removeChecklist[3]);
-        taskPage.completeTaskNoForm();
-        taskPage.tasksListPage().checkContentIsNotDisplayed(removeChecklist[3]);
+        await taskPage.tasksListPage().selectRow(removeChecklist[3]);
+        await taskPage.completeTaskNoForm();
+        await taskPage.tasksListPage().checkContentIsNotDisplayed(removeChecklist[3]);
 
-        taskPage.tasksListPage().selectRow(tasks[3]);
-        taskPage.checkChecklistIsDisplayed(removeChecklist[2]);
-        taskPage.checkChecklistIsDisplayed(removeChecklist[3]);
-        expect(taskPage.getNumberOfChecklists()).toEqual('2');
+        await taskPage.tasksListPage().selectRow(tasks[3]);
+        await taskPage.checkChecklistIsDisplayed(removeChecklist[2]);
+        await taskPage.checkChecklistIsDisplayed(removeChecklist[3]);
+        await expect(await taskPage.getNumberOfChecklists()).toEqual('2');
 
-        taskPage.checkChecklistsRemoveButtonIsNotDisplayed(removeChecklist[3]);
+        await taskPage.checkChecklistsRemoveButtonIsNotDisplayed(removeChecklist[3]);
     });
 
-    it('[C261028] Should all checklists of a task be completed when the task is completed', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
-        taskPage.tasksListPage().selectRow(tasks[4]);
+    it('[C261028] Should all checklists of a task be completed when the task is completed', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
+        await taskPage.tasksListPage().selectRow(tasks[4]);
 
-        taskPage.clickOnAddChecklistButton().addName(hierarchyChecklist[0]).clickCreateChecklistButton();
-        taskPage.clickOnAddChecklistButton().addName(hierarchyChecklist[1]).clickCreateChecklistButton();
+        await (await taskPage.clickOnAddChecklistButton()).addName(hierarchyChecklist[0]);
+        await checklistDialog.clickCreateChecklistButton();
+        await (await taskPage.clickOnAddChecklistButton()).addName(hierarchyChecklist[1]);
+        await checklistDialog.clickCreateChecklistButton();
 
-        taskPage.tasksListPage().selectRow(hierarchyChecklist[0]);
-        taskPage.clickOnAddChecklistButton().addName(hierarchyChecklist[2]).clickCreateChecklistButton();
-        taskPage.checkChecklistIsDisplayed(hierarchyChecklist[2]);
+        await taskPage.tasksListPage().selectRow(hierarchyChecklist[0]);
+        await (await taskPage.clickOnAddChecklistButton()).addName(hierarchyChecklist[2]);
+        await checklistDialog.clickCreateChecklistButton();
+        await taskPage.checkChecklistIsDisplayed(hierarchyChecklist[2]);
 
-        taskPage.tasksListPage().selectRow(hierarchyChecklist[1]);
-        taskPage.clickOnAddChecklistButton().addName(hierarchyChecklist[3]).clickCreateChecklistButton();
-        taskPage.checkChecklistIsDisplayed(hierarchyChecklist[3]);
+        await taskPage.tasksListPage().selectRow(hierarchyChecklist[1]);
+        await (await taskPage.clickOnAddChecklistButton()).addName(hierarchyChecklist[3]);
+        await checklistDialog.clickCreateChecklistButton();
+        await taskPage.checkChecklistIsDisplayed(hierarchyChecklist[3]);
 
-        taskPage.tasksListPage().selectRow(tasks[4]);
-        taskPage.completeTaskNoForm();
+        await taskPage.tasksListPage().selectRow(tasks[4]);
+        await taskPage.completeTaskNoForm();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
-        taskPage.tasksListPage().checkContentIsDisplayed(hierarchyChecklist[0]);
-        taskPage.tasksListPage().checkContentIsDisplayed(hierarchyChecklist[1]);
-        taskPage.tasksListPage().checkContentIsDisplayed(hierarchyChecklist[2]);
-        taskPage.tasksListPage().checkContentIsDisplayed(hierarchyChecklist[3]);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
+        await taskPage.tasksListPage().checkContentIsDisplayed(hierarchyChecklist[0]);
+        await taskPage.tasksListPage().checkContentIsDisplayed(hierarchyChecklist[1]);
+        await taskPage.tasksListPage().checkContentIsDisplayed(hierarchyChecklist[2]);
+        await taskPage.tasksListPage().checkContentIsDisplayed(hierarchyChecklist[3]);
     });
 
 });

@@ -147,7 +147,8 @@ export class HostSettingsComponent implements OnInit {
             scope: [oauth.scope, Validators.required],
             secret: oauth.secret,
             silentLogin: oauth.silentLogin,
-            implicitFlow: oauth.implicitFlow
+            implicitFlow: oauth.implicitFlow,
+            publicUrls: [oauth.publicUrls]
         });
     }
 
@@ -197,6 +198,10 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private saveOAuthValues(values: any) {
+        if (values.oauthConfig.publicUrls && (typeof values.oauthConfig.publicUrls === 'string')) {
+            values.oauthConfig.publicUrls = values.oauthConfig.publicUrls.split(',');
+        }
+
         this.storageService.setItem(AppConfigValues.OAUTHCONFIG, JSON.stringify(values.oauthConfig));
         this.storageService.setItem(AppConfigValues.IDENTITY_HOST, values.identityHost);
     }
@@ -267,6 +272,10 @@ export class HostSettingsComponent implements OnInit {
 
     get redirectUri(): AbstractControl {
         return this.oauthConfig.get('redirectUri');
+    }
+
+    get publicUrls(): AbstractControl {
+        return this.oauthConfig.get('publicUrls');
     }
 
     get redirectUriLogout(): AbstractControl {

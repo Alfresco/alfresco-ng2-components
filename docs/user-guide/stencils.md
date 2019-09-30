@@ -1,6 +1,6 @@
 # Form Stencils
 
-[`Form`](../../lib/process-services/task-list/models/form.model.ts) component provides basic support for custom stencils created with Activiti stencil editor.
+[`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) component provides basic support for custom stencils created with Activiti stencil editor.
 
 ## Contents
 
@@ -67,7 +67,7 @@ This should be a valid Angular component template that you want to render in `<a
 
 ## Form editor template
 
-This can be any html layout to be rendered as a component placeholder in Activiti [`Form`](../../lib/process-services/task-list/models/form.model.ts) Designer.
+This can be any html layout to be rendered as a component placeholder in Activiti [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) Designer.
 
 ```html
 <div>
@@ -159,4 +159,4 @@ Angular Component
 Created by: Denys
 ```
 
-ADF [`Form`](../../lib/process-services/task-list/models/form.model.ts) component will automatically assemble and compile a valid Angular component on the fly.
+ADF [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) component will automatically assemble and compile a valid Angular component on the fly.

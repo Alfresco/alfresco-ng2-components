@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder, Locator } from 'protractor';
 import { StartProcessPage } from './startProcessPage';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
@@ -23,74 +23,73 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 export class ProcessFiltersPage {
 
     dataTable = new DataTableComponentPage();
-    runningFilter = element(by.css('span[data-automation-id="Running_filter"]'));
-    completedFilter = element(by.css('div[class="mat-list-text"] > span[data-automation-id="Completed_filter"]'));
-    allFilter = element(by.css('span[data-automation-id="All_filter"]'));
-    createProcessButton = element(by.css('.adf-processes-menu button[data-automation-id="create-button"] > span'));
-    newProcessButton = element(by.css('div > button[data-automation-id="btn-start-process"]'));
-    processesPage = element(by.css('div[class="adf-grid"] > div[class="adf-grid-item adf-processes-menu"]'));
-    accordionMenu = element(by.css('.adf-processes-menu mat-accordion'));
-    buttonWindow = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
-    noContentMessage = element.all(by.css('div[class="adf-empty-content__title"]')).first();
-    rows = by.css('adf-process-instance-list div[class="adf-datatable-body"] div[class*="adf-datatable-row"]');
-    tableBody = element.all(by.css('adf-datatable div[class="adf-datatable-body"]')).first();
-    nameColumn = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[title="Name"] span');
-    processIcon = by.xpath('ancestor::div[@class="mat-list-item-content"]/mat-icon');
+    runningFilter: ElementFinder = element(by.css('span[data-automation-id="Running_filter"]'));
+    completedFilter: ElementFinder = element(by.css('div[class="mat-list-text"] > span[data-automation-id="Completed_filter"]'));
+    allFilter: ElementFinder = element(by.css('span[data-automation-id="All_filter"]'));
+    createProcessButton: ElementFinder = element(by.css('.adf-processes-menu button[data-automation-id="create-button"] > span'));
+    newProcessButton: ElementFinder = element(by.css('div > button[data-automation-id="btn-start-process"]'));
+    processesPage: ElementFinder = element(by.css('div[class="adf-grid"] > div[class="adf-grid-item adf-processes-menu"]'));
+    accordionMenu: ElementFinder = element(by.css('.adf-processes-menu mat-accordion'));
+    buttonWindow: ElementFinder = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
+    noContentMessage: ElementFinder = element.all(by.css('div[class="adf-empty-content__title"]')).first();
+    rows: Locator = by.css('adf-process-instance-list div[class="adf-datatable-body"] div[class*="adf-datatable-row"]');
+    tableBody: ElementFinder = element.all(by.css('adf-datatable div[class="adf-datatable-body"]')).first();
+    nameColumn: Locator = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[title="Name"] span');
+    processIcon: Locator = by.xpath('ancestor::div[@class="mat-list-item-content"]/mat-icon');
 
-    startProcess() {
-        this.clickCreateProcessButton();
-        this.clickNewProcessDropdown();
+    async startProcess(): Promise<StartProcessPage> {
+        await this.clickCreateProcessButton();
+        await this.clickNewProcessDropdown();
         return new StartProcessPage();
     }
 
-    clickRunningFilterButton() {
-        return BrowserActions.click(this.runningFilter);
-
+    async clickRunningFilterButton(): Promise<void> {
+        await BrowserActions.click(this.runningFilter);
     }
 
-    clickCompletedFilterButton() {
-        BrowserActions.click(this.completedFilter);
-        expect(this.completedFilter.isEnabled()).toBe(true);
+    async clickCompletedFilterButton(): Promise<void> {
+        await BrowserActions.click(this.completedFilter);
+        await expect(await this.completedFilter.isEnabled()).toBe(true);
     }
 
-    clickAllFilterButton() {
-        BrowserActions.click(this.allFilter);
-        expect(this.allFilter.isEnabled()).toBe(true);
+    async clickAllFilterButton(): Promise<void> {
+        await BrowserActions.click(this.allFilter);
+        await expect(await this.allFilter.isEnabled()).toBe(true);
     }
 
-    clickCreateProcessButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserVisibility.waitUntilElementIsOnPage(this.accordionMenu);
-        BrowserVisibility.waitUntilElementIsVisible(this.processesPage);
-        BrowserActions.click(this.createProcessButton);
+    async clickCreateProcessButton(): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserVisibility.waitUntilElementIsVisible(this.accordionMenu);
+        await BrowserVisibility.waitUntilElementIsVisible(this.processesPage);
+        await BrowserActions.click(this.createProcessButton);
     }
 
-    clickNewProcessDropdown() {
-        BrowserVisibility.waitUntilElementIsOnPage(this.buttonWindow);
-        BrowserActions.click(this.newProcessButton);
+    async clickNewProcessDropdown(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.buttonWindow);
+        await BrowserActions.click(this.newProcessButton);
     }
 
-    checkNoContentMessage() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.noContentMessage);
+    async checkNoContentMessage(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noContentMessage);
     }
 
-    selectFromProcessList(title) {
-        BrowserActions.closeMenuAndDialogs();
-        const processName = element.all(by.css(`div[data-automation-id="text_${title}"]`)).first();
-        BrowserActions.click(processName);
+    async selectFromProcessList(title): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        const processName: ElementFinder = element.all(by.css(`div[data-automation-id="text_${title}"]`)).first();
+        await BrowserActions.click(processName);
     }
 
-    checkFilterIsHighlighted(filterName) {
-        const processNameHighlighted = element(by.css(`mat-list-item.adf-active span[data-automation-id='${filterName}_filter']`));
-        BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
+    async checkFilterIsHighlighted(filterName): Promise<void> {
+        const processNameHighlighted: ElementFinder = element(by.css(`mat-list-item.adf-active span[data-automation-id='${filterName}_filter']`));
+        await BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
     }
 
-    numberOfProcessRows() {
-        return element.all(this.rows).count();
+    async numberOfProcessRows(): Promise<number> {
+        return await element.all(this.rows).count();
     }
 
-    waitForTableBody() {
-        BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
+    async waitForTableBody(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
     /**
@@ -98,50 +97,48 @@ export class ProcessFiltersPage {
      *
      * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
      */
-    sortByName(sortOrder: string) {
-        this.dataTable.sortByColumn(sortOrder, 'name');
+    async sortByName(sortOrder: string) {
+        await this.dataTable.sortByColumn(sortOrder, 'name');
     }
 
-    getAllRowsNameColumn() {
-        return this.dataTable.getAllRowsColumnValues('Name');
+    async getAllRowsNameColumn() {
+        return await this.dataTable.getAllRowsColumnValues('Name');
     }
 
-    checkFilterIsDisplayed(name) {
-        const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
-        return BrowserVisibility.waitUntilElementIsVisible(filterName);
+    async checkFilterIsDisplayed(name): Promise<void> {
+        const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
+        await BrowserVisibility.waitUntilElementIsVisible(filterName);
     }
 
-    checkFilterHasNoIcon(name) {
-        const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
-        BrowserVisibility.waitUntilElementIsVisible(filterName);
-        return BrowserVisibility.waitUntilElementIsNotOnPage(filterName.element(this.processIcon));
+    async checkFilterHasNoIcon(name): Promise<void> {
+        const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
+        await BrowserVisibility.waitUntilElementIsVisible(filterName);
+        await BrowserVisibility.waitUntilElementIsNotVisible(filterName.element(this.processIcon));
     }
 
-    getFilterIcon(name) {
-        const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
-        BrowserVisibility.waitUntilElementIsVisible(filterName);
+    async getFilterIcon(name): Promise<string> {
+        const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
+        await BrowserVisibility.waitUntilElementIsVisible(filterName);
         const icon = filterName.element(this.processIcon);
-        return BrowserActions.getText(icon);
+        return await BrowserActions.getText(icon);
     }
 
-    checkFilterIsNotDisplayed(name) {
-        const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
-        return BrowserVisibility.waitUntilElementIsNotVisible(filterName);
+    async checkFilterIsNotDisplayed(name): Promise<void> {
+        const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
+        await BrowserVisibility.waitUntilElementIsNotVisible(filterName);
     }
 
-    checkProcessesSortedByNameAsc() {
-        this.getAllRowsNameColumn().then((list) => {
-            for (let i = 1; i < list.length; i++) {
-                expect(JSON.stringify(list[i]) > JSON.stringify(list[i - 1])).toEqual(true);
-            }
-        });
+    async checkProcessesSortedByNameAsc(): Promise<void> {
+        const list = await this.getAllRowsNameColumn();
+        for (let i = 1; i < list.length; i++) {
+            await expect(JSON.stringify(list[i]) > JSON.stringify(list[i - 1])).toEqual(true);
+        }
     }
 
-    checkProcessesSortedByNameDesc() {
-        this.getAllRowsNameColumn().then((list) => {
-            for (let i = 1; i < list.length; i++) {
-                expect(JSON.stringify(list[i]) < JSON.stringify(list[i - 1])).toEqual(true);
-            }
-        });
+    async checkProcessesSortedByNameDesc(): Promise<void> {
+        const list = await this.getAllRowsNameColumn();
+        for (let i = 1; i < list.length; i++) {
+            await expect(JSON.stringify(list[i]) < JSON.stringify(list[i - 1])).toEqual(true);
+        }
     }
 }

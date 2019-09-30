@@ -117,7 +117,8 @@
       "REMOVE_FILE": "Ta bort uppladdad fil"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Avbruten"
+      "FILE_CANCELED_STATUS": "Avbruten",
+      "FILE_DONE_STATUS": "Uppladdad"
     },
     "CONFIRMATION": {
       "BUTTON": {
@@ -130,7 +131,20 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Filversion"
+      "VERSION": "Filversion {{ version }}",
+      "DIALOG": "Ladda upp lista",
+      "DIALOG_MAXIMIZE": "Förstora dialogruta för uppladdning",
+      "DIALOG_MINIMIZE": "Förminska dialogruta för uppladdning",
+      "DIALOG_CLOSE": "Stäng dialogruta för uppladdning",
+      "CANCEL_ALL": "Avbryt alla filer som laddas upp",
+      "REMOVE_FILE": "Ta bort uppladdad fil {{ file }}",
+      "CANCEL_FILE": "Avbryt planerad fil {{ file }}",
+      "CANCEL_FILE_UPLOAD": "Avbryt uppladdning av fil {{ file }}",
+      "UPLOAD_FILE_ERROR": "Uppladdningsfel {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "Bekräfta avbrott",
+        "CONTINUE": "Fortsätt uppladdning"
+      }
     }
   },
   "FILE_UPLOAD": {
@@ -145,7 +159,7 @@
       }
     },
     "MESSAGES": {
-      "UPLOAD_CANCELED": "Uppladning avbruten",
+      "UPLOAD_CANCELED": "Uppladdning avbruten",
       "UPLOAD_PROGRESS": "Uppladdad {{ completed }} / {{ total }}",
       "UPLOAD_ERROR": "{{ total }} uppladdning lyckades inte",
       "UPLOAD_ERRORS": "{{ total }} uppladdningar lyckades inte",
@@ -200,7 +214,7 @@
         "CLEAR-ALL": "Rensa alla",
         "SHOW-MORE": "Visa mer",
         "SHOW-LESS": "Visa mindre",
-        "FILTER-CATEGORY": "Filterkategori"
+        "FILTER-CATEGORY": "Filtrera på kategori"
       },
       "BUTTONS": {
         "CLEAR-ALL": {
@@ -237,7 +251,7 @@
       "ft_ic_website": "Webbresurs",
       "ft_ic_archive": "Arkivfil",
       "ft_ic_presentation": "Presentationsfil",
-      "ft_ic_spreadsheet": "Kalkylarkfil"
+      "ft_ic_spreadsheet": "Kalkylbladsfil"
     },
     "DOCUMENT_LIST": {
       "COLUMNS": {
@@ -280,7 +294,7 @@
     },
     "ERRORS": {
       "GENERIC": "Fel vid uppdatering av egenskaper",
-      "409": "Duplicerat namn på barnnod är inte tillåtet [409]",
+      "409": "Duplicerat namn på underordnad är inte tillåtet [409]",
       "422": "Ogiltigt egenskapsvärde"
     }
   },
@@ -352,12 +366,12 @@
       "MODERATED": "Modererad"
     },
     "HINTS": {
-      "SITE_TITLE_EXISTS": "Biblioteknamn används redan"
+      "SITE_TITLE_EXISTS": "Biblioteksnamn används redan"
     },
     "ERRORS": {
       "GENERIC": "Vi har stött på ett problem",
-      "EXISTENT_SITE": "Det här biblioteks-ID:t är inte tillgängligt Testa ett annat Biblioteks-ID.",
-      "CONFLICT": "Det här Biblioteks-ID:t används redan. Kontrollera papperskorgen",
+      "EXISTENT_SITE": "Detta biblioteks-ID är inte tillgängligt. Testa ett annat Biblioteks-ID.",
+      "CONFLICT": "Detta Biblioteks-ID används redan. Kontrollera papperskorgen",
       "ID_TOO_LONG": "Använd 72 tecken eller färre för URL-namnet",
       "DESCRIPTION_TOO_LONG": "Använd 512 tecken eller färre till beskrivningen",
       "TITLE_TOO_LONG": "Använd 256 tecken eller färre till titeln",
@@ -368,6 +382,17 @@
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Biblioteksegenskaper uppdaterade"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Synlig sökväg",
+      "CURRENT_PAGE": "Sida"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Öppna {{ name }}"
     }
   }
 }

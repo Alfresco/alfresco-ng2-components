@@ -18,6 +18,7 @@ import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@a
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
+    // tslint:disable-next-line: directive-selector
     selector: '[adf-cloud-complete-task]'
 })
 export class CompleteTaskDirective implements OnInit {

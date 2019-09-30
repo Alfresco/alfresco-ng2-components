@@ -117,7 +117,8 @@
       "REMOVE_FILE": "Geüpload bestand verwijderen"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Geannuleerd"
+      "FILE_CANCELED_STATUS": "Geannuleerd",
+      "FILE_DONE_STATUS": "Geüpload"
     },
     "CONFIRMATION": {
       "BUTTON": {
@@ -130,7 +131,20 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Bestandsversie"
+      "VERSION": "Bestandsversie {{ version }}",
+      "DIALOG": "Lijst uploaden",
+      "DIALOG_MAXIMIZE": "Uploaddialoogvenster maximaliseren",
+      "DIALOG_MINIMIZE": "Uploaddialoogvenster minimaliseren",
+      "DIALOG_CLOSE": "Uploaddialoogvenster sluiten",
+      "CANCEL_ALL": "Alle bestanden die worden geüpload annuleren",
+      "REMOVE_FILE": "Geüpload bestand {{ file }} verwijderen",
+      "CANCEL_FILE": "Gepland bestand {{ file }} annuleren",
+      "CANCEL_FILE_UPLOAD": "Bestand uploaden {{ file }} annuleren",
+      "UPLOAD_FILE_ERROR": "Fout bij uploaden {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "Annuleren bevestigen",
+        "CONTINUE": "Doorgaan met uploaden"
+      }
     }
   },
   "FILE_UPLOAD": {
@@ -368,6 +382,17 @@
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Bibliotheekeigenschappen bijgewerkt"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Navigatiepad",
+      "CURRENT_PAGE": "Pagina"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "{{ name }} openen"
     }
   }
 }

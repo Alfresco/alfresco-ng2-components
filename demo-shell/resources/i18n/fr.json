@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Filtrer par rôle",
     "PRESELECT_VALIDATION": "Validation présélectionnée"
   },
-  "ABOUT": {
-    "TITLE": "Plugins",
-    "TABLE_HEADERS": {
-      "ID": "ID",
-      "NAME": "Nom",
-      "VERSION": "Version",
-      "VENDOR": "Fournisseur",
-      "LICENSE": "Licence",
-      "RUNTIME": "Java Runtime",
-      "DESCRIPTION": "Description"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multisélection",
     "TESTING_MODE": "Mode de test",
     "SELECTION_MODE": "Mode de sélection",
+    "SELECTED_ROWS": "Lignes sélectionnées",
     "TASK_DETAILS_REDIRECTION": "Afficher les détails de la tâche en cliquant dessus",
-    "PROCESS_DETAILS_REDIRECTION": "Afficher les détails du processus en cliquant dessus"
+    "PROCESS_DETAILS_REDIRECTION": "Afficher les détails du processus en cliquant dessus",
+    "ACTION": {
+      "ACTION_TITLE": "Ajouter une action",
+      "ACTION_MENU": "Menu Action",
+      "CONTEX_MENU": "Menu contextuel",
+      "ACTION_VISIBLE": "Visible",
+      "ACTION_DISABLE": "Désactiver",
+      "ADD_BUTTON": "Ajouter",
+      "KEY": "Clé",
+      "TITLE": "Titre",
+      "ICON": "Icône",
+      "TASK_ID": "ID de la tâche",
+      "PROCESS_ID": "ID de l'instance de processus",
+      "ACTION_TYPE": "Type d'action"
+    }
   }
 }

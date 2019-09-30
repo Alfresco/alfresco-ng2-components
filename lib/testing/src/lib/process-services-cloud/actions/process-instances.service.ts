@@ -16,6 +16,7 @@
  */
 
 import { ApiService } from '../../core/actions/api.service';
+import { Logger } from '../../core/utils/logger';
 
 export class ProcessInstancesService {
 
@@ -31,16 +32,16 @@ export class ProcessInstancesService {
             const method = 'POST';
 
             const queryParams = {}, postBody = {
-                'processDefinitionKey': processDefKey,
-                'payloadType': 'StartProcessPayload',
+                processDefinitionKey: processDefKey,
+                payloadType: 'StartProcessPayload',
                 ...options
             };
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('create process-instances Service not working', error.message);
+            Logger.error('create process-instances Service not working', error.message);
         }
 
     }
@@ -52,11 +53,11 @@ export class ProcessInstancesService {
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('suspend process-instances Service not working', error.message);
+            Logger.error('suspend process-instances Service not working', error.message);
         }
     }
 
@@ -67,11 +68,11 @@ export class ProcessInstancesService {
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('delete process-instances Service not working', error.message);
+            Logger.error('delete process-instances Service not working', error.message);
         }
     }
 
@@ -83,11 +84,11 @@ export class ProcessInstancesService {
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('complete process-instances Service not working', error.message);
+            Logger.error('complete process-instances Service not working', error.message);
         }
     }
 }

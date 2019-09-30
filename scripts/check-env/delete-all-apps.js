@@ -42,9 +42,9 @@ async function main() {
         console.log('Login error' + e);
     }
 
-    Object.keys(ACTIVITI7_APPS).forEach(async (key) => {
+    for (const key of Object.keys(ACTIVITI7_APPS)) {
         await deleteApp(alfrescoJsApi, ACTIVITI7_APPS[key].name);
-    });
+    }
 
     let notRunning = await getNotRunningApps(this.alfrescoJsApi);
 

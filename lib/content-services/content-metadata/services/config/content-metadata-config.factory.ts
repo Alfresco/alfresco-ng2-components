@@ -24,7 +24,6 @@ import {
     PresetConfig,
     ContentMetadataConfig,
     AspectOrientedConfig,
-    InDifferentConfig,
     LayoutOrientedConfig
 } from '../../interfaces/content-metadata.interfaces';
 
@@ -60,7 +59,7 @@ export class ContentMetadataConfigFactory {
         } else if (this.isAspectOrientedPreset(presetConfig)) {
             config = new AspectOrientedConfigService(<AspectOrientedConfig> presetConfig);
         } else {
-            config = new IndifferentConfigService(<InDifferentConfig> presetConfig);
+            config = new IndifferentConfigService();
         }
 
         Object.freeze(config);

@@ -202,7 +202,7 @@ describe('ContentNodeDialogService', () => {
         let testContentNodeSelectorComponentData;
 
         beforeEach(() => {
-            spyOnDialogOpen.and.callFake((contentNodeSelectorComponent: any, config: any) => {
+            spyOnDialogOpen.and.callFake((_: any, config: any) => {
                 testContentNodeSelectorComponentData = config.data;
                 return { componentInstance: {} };
             });

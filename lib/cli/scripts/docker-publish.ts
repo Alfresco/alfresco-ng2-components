@@ -19,7 +19,6 @@
 
 import { logging } from '@angular-devkit/core';
 import { spawnSync } from 'child_process';
-import * as path from 'path';
 
 export interface PublishArgs {
     tag?: string;
@@ -54,25 +53,25 @@ function _exec(command: string, args: string[], opts: { cwd?: string }, logger: 
 }
 
 function _loginPerform(args: PublishArgs, logger: logging.Logger) {
-    logger.info('Perform docker login...');
+    logger.info(`Perform docker login...${args.loginRepo}`);
     const loginDockerRes = _exec('docker', ['login', `-u=${args.loginUsername}`, `-p=${args.loginPassword}`, `${args.loginRepo}`], {}, logger);
     logger.info(loginDockerRes);
 }
 
 function _buildImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
-    logger.info('Perform docker build...');
+    logger.info(`Perform docker build...${args.dockerRepo}:${tag}`);
     const response = _exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, args.pathProject], {}, logger);
     logger.info(response);
 }
 
 function _tagImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
-    logger.info('Perform docker tag...');
+    logger.info(`Perform docker tag... ${args.dockerRepo}:${tag} on ${args.dockerRepo}:${tag}`);
     const response = _exec('docker', ['tag', `${args.dockerRepo}:${tag}`, `${args.dockerRepo}:${tag}`], {}, logger);
     logger.info(response);
 }
 
-function _pushImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
-    logger.info('Perform docker push...');
+function _pushImagePerform(args: PublishArgs, logger: logging.Logger) {
+    logger.info(`Perform docker push... ${args.dockerRepo}`);
     const response = _exec('docker', ['push', `${args.dockerRepo}`], {}, logger);
     logger.info(response);
 }
@@ -93,7 +92,7 @@ export default async function (args: PublishArgs, logger: logging.Logger) {
             logger.info(`Analyzing tag:${tag} ...`);
             _buildImagePerform(args, tag, logger);
             _tagImagePerform(args, tag, logger);
-            _pushImagePerform(args, tag, logger);
+            _pushImagePerform(args, logger);
             _cleanImagePerform(args, tag, logger);
             logger.info(`tag:${tag} done`);
         });

@@ -16,7 +16,6 @@
  */
 
 import { browser } from 'protractor';
-import fs = require('fs');
 
 export class Util {
 
@@ -51,46 +50,17 @@ export class Util {
         if (0 === subset.length) {
             return false;
         }
-        return subset.every(function (value) {
+        return subset.every(function(value) {
             return (superset.indexOf(value) >= 0);
         });
     }
 
-    static openNewTabInBrowser() {
-        browser.driver.executeScript("window.open('about: blank', '_blank');");
+    static async openNewTabInBrowser() {
+        await browser.executeScript("window.open('about: blank', '_blank');");
     }
 
-    static switchToWindowHandler(windowNumber) {
-        browser.driver.getAllWindowHandles().then((handles) => {
-            browser.waitForAngularEnabled();
-            browser.driver.switchTo().window(handles[windowNumber]);
-        });
-    }
-
-    /**
-     * Verify file exists
-     * @param filePath - absolute path to the searched file
-     * @param retries - number of retries
-     * @returns - true if file is found, false otherwise
-     */
-    static fileExists(filePath, retries) {
-        let tries = 0;
-        return new Promise(function (resolve, reject) {
-            const checkExist = setInterval(() => {
-                fs.stat(filePath, function (error, stats) {
-                    tries++;
-
-                    if (error && tries === retries) {
-                        clearInterval(checkExist);
-                        resolve(false);
-                    }
-
-                    if (!error) {
-                        clearInterval(checkExist);
-                        resolve(true);
-                    }
-                });
-            }, 2000);
-        });
+    static async switchToWindowHandler(windowNumber) {
+        const handles = await browser.getAllWindowHandles();
+        await browser.switchTo().window(handles[windowNumber]);
     }
 }

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-14
 ---
 
-# [Process Filters Component](../../../lib/process-services/process-list/components/process-filters.component.ts "Defined in process-filters.component.ts")
+# [Process Filters Component](../../../lib/process-services/src/lib/process-list/components/process-filters.component.ts "Defined in process-filters.component.ts")
 
 Collection of criteria used to filter process instances, which may be customized by users.
 
@@ -36,7 +36,7 @@ Collection of criteria used to filter process instances, which may be customized
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
 | appName | `string` |  | Display filters available to the current user for the application with the specified name. |
-| filterParam | [`FilterProcessRepresentationModel`](../../../lib/process-services/process-list/models/filter-process.model.ts) |  | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
+| filterParam | [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts) |  | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
 | showIcon | `boolean` | true | Toggle to show or hide the filter's icon. |
 
 ### Events
@@ -66,7 +66,7 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 </adf-process-instance-filters>
 ```
 
-You can use inside the filterParam one of the properties defined by [`FilterParamsModel`](../../../lib/process-services/task-list/models/filter.model.ts) (see below).
+You can use inside the filterParam one of the properties defined by [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) (see below).
 
 ### FilterParamsModel
 

@@ -20,7 +20,7 @@ Maps a form field type string onto the corresponding form [widget component](../
     -   **Returns** [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts) - Resolver function
 -   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
     Finds the component type that is needed to render a form field.
-    -   _model:_ [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/task-list/models/form.model.ts) field model for the field to render
+    -   _model:_ [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) field model for the field to render
     -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
     -   **Returns** `Type<__type>` - Component type
 -   **setComponentTypeResolver**(type: `string`, resolver: [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts), override: `boolean` = `true`)<br/>
@@ -31,9 +31,9 @@ Maps a form field type string onto the corresponding form [widget component](../
 
 ## Details
 
-The [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Field component uses this service to choose which widget to use to render an instance of a
-form field. The [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Field model stores the field type name as a string (see the table below).
-The [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Rendering service maintains a mapping between each type name and
+The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Field component uses this service to choose which widget to use to render an instance of a
+form field. The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Field model stores the field type name as a string (see the table below).
+The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Rendering service maintains a mapping between each type name and
 a corresponding [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts). The function takes a [`FormFieldModel`](../../core/models/form-field.model.md) object as its argument and
 uses the data from the object to determine which widget should be used to render the field.
 
@@ -60,7 +60,7 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 
 ### Default type mapping
 
-The [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Rendering service is initialized with the mapping shown in the table below:
+The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Rendering service is initialized with the mapping shown in the table below:
 
 | Stencil name | Field type string | Component type |
 | ------------ | ----------------- | -------------- |

@@ -25,6 +25,7 @@
                  (keyup.enter)="onColumnHeaderClick(col)"
                  role="columnheader"
                  tabindex="0"
+                 [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
                  title="{{ col.title | translate }}"
                  adf-drop-zone dropTarget="header" [dropColumn]="col">
                 <span *ngIf="col.srTitle" class="adf-sr-only">{{ col.srTitle | translate }}</span>
@@ -91,8 +92,9 @@
                      role="gridcell"
                      class=" adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
-                     [attr.data-automation-id]="getAutomationValue(row, col)"
-                     tabindex="0"
+                     [attr.data-automation-id]="getAutomationValue(row)"
+                     [attr.aria-selected]="row.isSelected ? true : false"
+                     [attr.aria-label]="col.title ? (col.title | translate) : null"
                      (click)="onRowClick(row, $event)"
                      (keydown.enter)="onEnterKeyPressed(row, $event)"
                      [adf-context-menu]="getContextMenuActions(row, col)"
@@ -100,7 +102,7 @@
                      adf-drop-zone dropTarget="cell" [dropColumn]="col" [dropRow]="row">
                     <div *ngIf="!col.template" class="adf-datatable-cell-container">
                         <ng-container [ngSwitch]="col.type">
-                            <div *ngSwitchCase="'image'" class="adf-cell-value">
+                            <div *ngSwitchCase="'image'" class="adf-cell-value" tabindex="0">
                                 <mat-icon *ngIf="isIconValue(row, col); else no_iconvalue">{{ asIconValue(row, col) }}
                                 </mat-icon>
                                 <ng-template #no_iconvalue>
@@ -109,18 +111,31 @@
                                     </mat-icon>
                                     <ng-template #no_selected_row>
                                         <img class="adf-datatable-center-img-ie"
-                                            [attr.aria-label]="data.getValue(row, col) | fileType"
-                                            alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
+                                            [attr.aria-label]=" (data.getValue(row, col) | fileType) === 'disable' ?
+                                                ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate) :
+                                                'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
+                                                    type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
+                                                }"
+                                            [attr.alt]=" (data.getValue(row, col) | fileType) === 'disable' ?
+                                                ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate) :
+                                                'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
+                                                        type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
+                                                }"
                                             src="{{ data.getValue(row, col) }}"
                                             (error)="onImageLoadingError($event, row)">
                                     </ng-template>
                                 </ng-template>
                             </div>
-                            <div *ngSwitchCase="'icon'" class="adf-cell-value">
-                                <span class="adf-sr-only">{{ iconAltTextKey(data.getValue(row, col)) | translate }}</span>
+                            <div *ngSwitchCase="'icon'" class="adf-cell-value" tabindex="0">
+                                <span class="adf-sr-only">
+                                    {{ 'ADF-DATATABLE.ACCESSIBILITY.ICON_ALT_TEXT' | translate:{
+                                            type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
+                                        }
+                                    }}
+                                </span>
                                 <mat-icon>{{ data.getValue(row, col) }}</mat-icon>
                             </div>
-                            <div *ngSwitchCase="'date'" class="adf-cell-value"
+                            <div *ngSwitchCase="'date'" class="adf-cell-value" tabindex="0"
                                  [attr.data-automation-id]="'date_' + (data.getValue(row, col) | adfLocalizedDate: 'medium') ">
                                 <adf-date-cell class="adf-datatable-center-date-column-ie"
                                     [data]="data"
@@ -129,7 +144,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-date-cell>
                             </div>
-                            <div *ngSwitchCase="'location'" class="adf-cell-value"
+                            <div *ngSwitchCase="'location'" tabindex="0" class="adf-cell-value"
                                  [attr.data-automation-id]="'location' + data.getValue(row, col)">
                                 <adf-location-cell
                                     [data]="data"
@@ -138,7 +153,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-location-cell>
                             </div>
-                            <div *ngSwitchCase="'fileSize'" class="adf-cell-value"
+                            <div *ngSwitchCase="'fileSize'" [attr.tabindex]="data.getValue(row, col)? 0 : -1" class="adf-cell-value"
                                  [attr.data-automation-id]="'fileSize_' + data.getValue(row, col)">
                                 <adf-filesize-cell class="adf-datatable-center-size-column-ie"
                                     [data]="data"
@@ -147,7 +162,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-filesize-cell>
                             </div>
-                            <div *ngSwitchCase="'text'" class="adf-cell-value"
+                            <div *ngSwitchCase="'text'" tabindex="0" class="adf-cell-value"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                                 <adf-datatable-cell
                                     [copyContent]="col.copyContent"
@@ -157,9 +172,9 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-datatable-cell>
                             </div>
-                            <div *ngSwitchCase="'json'" class="adf-cell-value">
+                            <div *ngSwitchCase="'json'" tabindex="0" class="adf-cell-value">
                                 <adf-json-cell
-                                    [copyContent]="col.copyContent"
+                                    [editable]="col.editable"
                                     [data]="data"
                                     [column]="col"
                                     [row]="row">
@@ -171,7 +186,7 @@
                         </ng-container>
                     </div>
                     <div *ngIf="col.template" class="adf-datatable-cell-container">
-                        <div class="adf-cell-value">
+                        <div class="adf-cell-value" tabindex="0">
                             <ng-container
                                 [ngTemplateOutlet]="col.template"
                                 [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col) }">
@@ -185,6 +200,7 @@
                      role="gridcell"
                      class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
+                            [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ROW_OPTION_BUTTON' | translate"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_right_' + idx"
                             [attr.data-automation-id]="'action_menu_' + idx">

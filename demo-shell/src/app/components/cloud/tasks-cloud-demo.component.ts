@@ -17,7 +17,7 @@
 
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { TaskListCloudComponent, TaskListCloudSortingModel, TaskFilterCloudModel } from '@alfresco/adf-process-services-cloud';
-import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
+import { UserPreferencesService, AppConfigService, DataCellEvent } from '@alfresco/adf-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CloudLayoutService } from './services/cloud-layout.service';
 import { Subject } from 'rxjs';
@@ -48,10 +48,16 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
     filterId;
     multiselect: boolean;
     selectedRows: string[] = [];
+    actionMenu: boolean;
+    contextMenu: boolean;
+    actions: any[] = [];
+    selectedAction: { id: number, name: string, actionType: string};
+    selectedContextAction: { id: number, name: string, actionType: string};
     testingMode: boolean;
     selectionMode: string;
     taskDetailsRedirection: boolean;
 
+    private performAction$ = new Subject<any>();
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
@@ -82,6 +88,7 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
         this.cloudLayoutService.settings$
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(settings => this.setCurrentSettings(settings));
+        this.performContextActions();
     }
 
     ngOnDestroy() {
@@ -95,6 +102,9 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
             this.testingMode = settings.testingMode;
             this.selectionMode = settings.selectionMode;
             this.taskDetailsRedirection = settings.taskDetailsRedirection;
+            this.actionMenu = settings.actionMenu;
+            this.contextMenu = settings.contextMenu;
+            this.actions = settings.actions;
         }
     }
 
@@ -127,5 +137,42 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
         if (filterAction.actionType === TasksCloudDemoComponent.ACTION_SAVE_AS) {
             this.router.navigate([`/cloud/${this.appName}/tasks/`], { queryParams: filterAction.filter });
         }
+    }
+
+    onShowRowActionsMenu(event: DataCellEvent) {
+        event.value.actions = this.actions;
+    }
+
+    onShowRowContextMenu(event: DataCellEvent) {
+        event.value.actions = this.actions.map((action) => {
+            return {
+                data: event.value.row['obj'],
+                model: action,
+                subject: this.performAction$
+
+            };
+        });
+    }
+
+    onExecuteRowAction(row: any) {
+        const value = row.value.row['obj'].entry;
+        const action = row.value.action;
+        this.selectedAction = {id: value.id, name: value.name, actionType: action.title};
+    }
+
+    performContextActions() {
+        this.performAction$
+          .pipe(takeUntil(this.onDestroy$))
+          .subscribe((action: any) => {
+            if (action) {
+              this.onExecuteContextAction(action);
+            }
+          });
+    }
+
+    onExecuteContextAction(contextAction: any) {
+        const value = contextAction.data.entry;
+        const action = contextAction.model;
+        this.selectedContextAction = {id: value.id, name: value.name, actionType: action.title};
     }
 }

@@ -23,4 +23,10 @@ export interface FormFieldMetadata {
     [key: string]: any;
     fileSource?: FormFieldFileSource;
     link?: boolean;
+    field?: {
+        id: string;
+        name: string;
+        type: string;
+    };
+    responseVariable?: boolean;
 }

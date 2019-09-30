@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Process Instance List](../../../lib/process-services/process-list/components/process-list.component.ts "Defined in process-list.component.ts")
+# [Process Instance List](../../../lib/process-services/src/lib/process-list/components/process-list.component.ts "Defined in process-list.component.ts")
 
 Renders a list containing all the process instances matched by the parameters specified.
 
@@ -70,12 +70,12 @@ when the process list is empty:
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../../lib/process-services/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../../lib/process-services/src/lib/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 
 The list can show any of the properties of the
-[`ProcessInstance`](../../../lib/process-services/process-list/models/process-instance.model.ts)
+[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)
 class. The example below shows how to define a custom schema for the list in the `app.config.json` file and access it with the `presetColumn` property:
 
 ```json

@@ -117,7 +117,8 @@
       "REMOVE_FILE": "Удалить выгруженный файл"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Oтменено"
+      "FILE_CANCELED_STATUS": "Oтменено",
+      "FILE_DONE_STATUS": "Загружено"
     },
     "CONFIRMATION": {
       "BUTTON": {
@@ -130,7 +131,20 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Версия файла"
+      "VERSION": "Версия файла {{ version }}",
+      "DIALOG": "Список загрузок",
+      "DIALOG_MAXIMIZE": "Развернуть диалоговое окно загрузки",
+      "DIALOG_MINIMIZE": "Свернуть диалоговое окно загрузки",
+      "DIALOG_CLOSE": "Закрыть диалоговое окно загрузки",
+      "CANCEL_ALL": "Отменить все загружаемые файлы",
+      "REMOVE_FILE": "Удалить загруженный файл {{ file }}",
+      "CANCEL_FILE": "Отменить запланированный файл {{ file }}",
+      "CANCEL_FILE_UPLOAD": "Отменить загрузку файла {{ file }}",
+      "UPLOAD_FILE_ERROR": "Ошибка загрузки {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "Подтвердить отмену",
+        "CONTINUE": "Продолжить загрузку"
+      }
     }
   },
   "FILE_UPLOAD": {
@@ -368,6 +382,17 @@
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Свойства библиотеки обновлены"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Иерархия",
+      "CURRENT_PAGE": "Страница"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Открыть {{ name }}"
     }
   }
 }

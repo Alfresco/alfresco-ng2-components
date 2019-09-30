@@ -209,7 +209,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[BPM] should return an BPM ticket after the login done', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe((response) => {
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 // cspell: disable-next
                 expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
@@ -247,7 +247,7 @@ describe('AuthenticationService', () => {
 
         it('[BPM] should return an error when the logout return error', (done) => {
             authService.logout().subscribe(
-                (res) => {
+                () => {
                 },
                 (err: any) => {
                     expect(err).toBeDefined();
@@ -344,9 +344,8 @@ describe('AuthenticationService', () => {
 
         it('[ECM] should not save the remember me cookie after failed login', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                (res) => {
-                },
-                (err: any) => {
+                () => {},
+                () => {
                     expect(cookie['ALFRESCO_REMEMBER_ME']).toBeUndefined();
                     disposableLogin.unsubscribe();
                     done();
@@ -401,9 +400,8 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return login fail if only ECM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                (res) => {
-                },
-                (err: any) => {
+                () => {},
+                () => {
                     expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
                     expect(authService.getTicketEcm()).toBe(null, 'getTicketEcm');
                     // cspell: disable-next
@@ -424,9 +422,8 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return login fail if only BPM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                (res) => {
-                },
-                (err: any) => {
+                () => {},
+                () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
                     expect(authService.getTicketBpm()).toBe(null);
@@ -448,9 +445,8 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                (res) => {
-                },
-                (err: any) => {
+                () => {},
+                () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
                     expect(authService.getTicketBpm()).toBe(null);

@@ -17,7 +17,7 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
-import { element, by } from 'protractor';
+import { element, by, ElementFinder, Locator } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 const column = {
@@ -36,125 +36,151 @@ export class TaskListCloudComponentPage {
 
     taskList = element(by.css('adf-cloud-task-list'));
     noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
+    actionMenu: ElementFinder = element(by.css('div[role="menu"]'));
+    optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
 
     dataTable = new DataTableComponentPage(this.taskList);
 
-    getDataTable() {
+    getDataTable(): DataTableComponentPage {
         return this.dataTable;
     }
 
-    clickCheckbox(taskName) {
+    clickCheckbox(taskName): Promise<void> {
         return this.dataTable.clickCheckbox(column.name, taskName);
     }
 
-    checkRowIsNotChecked(taskName) {
+    checkRowIsNotChecked(taskName): Promise<void> {
         return this.dataTable.checkRowIsNotChecked(column.name, taskName);
     }
 
-    checkRowIsChecked(taskName) {
+    checkRowIsChecked(taskName): Promise<void> {
         return this.dataTable.checkRowIsChecked(column.name, taskName);
     }
 
-    getRowsWithSameName(taskName) {
+    getRowsWithSameName(taskName): Promise<string> {
         return this.dataTable.getRowsWithSameColumnValues(column.name, taskName);
     }
 
-    getRowsWithSameId(taskId) {
+    getRowsWithSameId(taskId): Promise<string> {
         return this.dataTable.getRowsWithSameColumnValues('Id', taskId);
     }
 
-    checkRowIsSelected(taskName) {
+    checkRowIsSelected(taskName): Promise<void> {
         return this.dataTable.checkRowIsSelected(column.name, taskName);
     }
 
-    checkRowIsNotSelected(taskName) {
+    checkRowIsNotSelected(taskName): Promise<void> {
         return this.dataTable.checkRowIsNotSelected(column.name, taskName);
     }
 
-    selectRowWithKeyboard(taskName) {
+    selectRowWithKeyboard(taskName): Promise<void> {
         return this.dataTable.selectRowWithKeyboard(column.name, taskName);
     }
 
-    selectRow(taskName) {
+    selectRow(taskName): Promise<void> {
         return this.dataTable.selectRow(column.name, taskName);
     }
 
-    selectRowByTaskId(taskId: string) {
+    selectRowByTaskId(taskId: string): Promise<void> {
         return this.dataTable.selectRow(column.id, taskId);
     }
 
-    getRow(taskName) {
+    getRow(taskName): ElementFinder {
         return this.dataTable.getCellElementByValue(column.name, taskName);
     }
 
-    checkContentIsDisplayedById(taskId) {
+    checkContentIsDisplayedById(taskId): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(column.id, taskId);
     }
 
-    checkContentIsNotDisplayedById(taskId) {
+    async checkContentIsNotDisplayedById(taskId): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(column.id, taskId);
     }
 
-    checkContentIsDisplayedByProcessInstanceId(taskName) {
+    async checkContentIsDisplayedByProcessInstanceId(taskName): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(column.processInstanceId, taskName);
     }
 
-    checkContentIsDisplayedByName(taskName) {
+    async checkContentIsDisplayedByName(taskName): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(column.name, taskName);
     }
 
-    checkContentIsNotDisplayedByName(taskName) {
+    async checkContentIsNotDisplayedByName(taskName): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(column.name, taskName);
     }
 
-    checkTaskListIsLoaded() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskList);
-        return this;
+    async checkTaskListIsLoaded(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.taskList);
     }
 
-    getNoTasksFoundMessage() {
+    async getNoTasksFoundMessage(): Promise<string> {
         return BrowserActions.getText(this.noTasksFound);
     }
 
-    getAllRowsNameColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.name);
+    async getAllRowsNameColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.name);
     }
 
-    getAllRowsByIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.id);
+    async getAllRowsByIdColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.id);
     }
 
-    getAllRowsByProcessDefIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.processDefinitionId);
+    async getAllRowsByProcessDefIdColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.processDefinitionId);
     }
 
-    getAllRowsByProcessInstanceIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.processInstanceId);
+    async getAllRowsByProcessInstanceIdColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.processInstanceId);
     }
 
-    getAllRowsByAssigneeColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.assignee);
+    async getAllRowsByAssigneeColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.assignee);
     }
 
-    getAllRowsByParentTaskIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.parentTaskId);
+    async getAllRowsByParentTaskIdColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.parentTaskId);
     }
 
-    getAllRowsByPriorityColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.priority);
+    async getAllRowsByPriorityColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.priority);
     }
 
-    getAllRowsByStandAloneColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.standAlone);
+    async getAllRowsByStandAloneColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.standAlone);
     }
 
-    getAllRowsByOwnerColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.owner);
+    async getAllRowsByOwnerColumn() {
+        return await this.dataTable.getAllRowsColumnValues(column.owner);
     }
 
-    getIdCellValue(rowName) {
+    async getIdCellValue(rowName): Promise<string> {
         const locator = new DataTableComponentPage().getCellByRowContentAndColumn(column.name, rowName, column.id);
         return BrowserActions.getText(locator);
+    }
+
+    async clickOptionsButton(content: string) {
+        await BrowserActions.closeMenuAndDialogs();
+        const row: ElementFinder = this.dataTable.getRow('Id', content);
+        await BrowserActions.click(row.element(this.optionButton));
+        await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
+    }
+
+    async clickOnCustomActionMenu(action: string): Promise<void> {
+        const actionButton = element(by.css(`button[data-automation-id*="${action}"]`));
+        await BrowserActions.click(actionButton);
+    }
+
+    async isCustomActionEnabled(action: string): Promise<boolean> {
+        const actionButton = element(by.css(`button[data-automation-id*="${action}"]`));
+        return actionButton.isEnabled();
+    }
+
+    async rightClickOnRow(taskId: string): Promise<void> {
+        await this.dataTable.rightClickOnRow('Id', taskId);
+    }
+
+    async clickContextMenuActionNamed(actionName): Promise<void> {
+        await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 
 }

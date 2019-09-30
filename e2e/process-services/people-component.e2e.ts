@@ -44,7 +44,7 @@ describe('People component', () => {
 
     const tasks = ['no people involved task', 'remove people task', 'can not complete task', 'multiple users', 'completed filter'];
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -75,151 +75,166 @@ describe('People component', () => {
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[3] });
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[4] });
 
-        done();
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        navigationBarPage.navigateToProcessServicesPage();
-        processServices.goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        done();
+        await navigationBarPage.navigateToProcessServicesPage();
+        await (await processServices.goToTaskApp()).clickTasksButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+
     });
 
-    it('[C279989] Should no people be involved when no user is typed', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-        taskPage.tasksListPage().selectRow(tasks[0]);
+    it('[C279989] Should no people be involved when no user is typed', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        taskPage.taskDetails().clickInvolvePeopleButton();
-        taskPage.taskDetails().clickAddInvolvedUserButton();
-        taskPage.taskDetails().checkNoPeopleIsInvolved();
+        await taskPage.taskDetails().clickInvolvePeopleButton();
+        await taskPage.taskDetails().clickAddInvolvedUserButton();
+        await taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
-    it('[C279990] Should no people be involved when clicking on Cancel button', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-        taskPage.tasksListPage().selectRow(tasks[0]);
+    it('[C279990] Should no people be involved when clicking on Cancel button', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        taskPage.taskDetails().clickInvolvePeopleButton()
-            .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.taskDetails().clickCancelInvolvePeopleButton();
-        taskPage.taskDetails().checkNoPeopleIsInvolved();
+        const taskDetails = await taskPage.taskDetails();
+
+        await taskDetails.clickInvolvePeopleButton();
+        await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+
+        await taskPage.taskDetails().clickCancelInvolvePeopleButton();
+        await taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
-    it('[C261029] Should People dialog be displayed when clicking on add people button', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-        taskPage.tasksListPage().selectRow(tasks[0]);
+    it('[C261029] Should People dialog be displayed when clicking on add people button', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        taskPage.taskDetails().clickInvolvePeopleButton();
-        expect(taskPage.taskDetails().getInvolvePeopleHeader()).toEqual('Add people and groups');
-        expect(taskPage.taskDetails().getInvolvePeoplePlaceholder()).toEqual('Search user');
-        taskPage.taskDetails().checkAddPeopleButtonIsEnabled().checkCancelButtonIsEnabled();
-        taskPage.taskDetails().clickCancelInvolvePeopleButton();
+        const taskDetails = await taskPage.taskDetails();
+
+        await taskDetails.clickInvolvePeopleButton();
+        await expect(await taskPage.taskDetails().getInvolvePeopleHeader()).toEqual('Add people and groups');
+        await expect(await taskPage.taskDetails().getInvolvePeoplePlaceholder()).toEqual('Search user');
+
+        await taskDetails.checkAddPeopleButtonIsEnabled();
+        await taskDetails.checkCancelButtonIsEnabled();
+        await taskDetails.clickCancelInvolvePeopleButton();
     });
 
-    it('[C279991] Should not be able to involve a user when is the creator of the task', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-        taskPage.tasksListPage().selectRow(tasks[0]);
+    it('[C279991] Should not be able to involve a user when is the creator of the task', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        taskPage.taskDetails().clickInvolvePeopleButton()
-            .typeUser(processUserModel.firstName + ' ' + processUserModel.lastName)
-            .noUserIsDisplayedInSearchInvolvePeople(processUserModel.firstName + ' ' + processUserModel.lastName);
-        taskPage.taskDetails().clickAddInvolvedUserButton();
-        taskPage.taskDetails().checkNoPeopleIsInvolved();
+        const taskDetails = await taskPage.taskDetails();
+        await taskDetails.clickInvolvePeopleButton();
+        await taskDetails.typeUser(processUserModel.firstName + ' ' + processUserModel.lastName);
+        await taskDetails.noUserIsDisplayedInSearchInvolvePeople(processUserModel.firstName + ' ' + processUserModel.lastName);
+        await taskPage.taskDetails().clickAddInvolvedUserButton();
+        await taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
-    it('[C261030] Should involved user be removed when clicking on remove button', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-        taskPage.tasksListPage().selectRow(tasks[0]);
+    it('[C261030] Should involved user be removed when clicking on remove button', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        taskPage.taskDetails().clickInvolvePeopleButton()
-            .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.taskDetails().clickAddInvolvedUserButton();
+        const taskDetails = await taskPage.taskDetails();
+        await taskDetails.clickInvolvePeopleButton();
+        await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
 
-        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        await taskPage.taskDetails().clickAddInvolvedUserButton();
+
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
-        taskPage.taskDetails().removeInvolvedUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.taskDetails().checkNoPeopleIsInvolved();
+        await taskPage.taskDetails().removeInvolvedUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
     it('[C280013] Should not be able to complete a task by a involved user', async () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
-        taskPage.tasksListPage().selectRow(tasks[1]);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
+        await taskPage.tasksListPage().selectRow(tasks[1]);
 
-        taskPage.taskDetails().clickInvolvePeopleButton()
-            .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.taskDetails().clickAddInvolvedUserButton();
+        const taskDetails = await taskPage.taskDetails();
+        await taskDetails.clickInvolvePeopleButton();
+        await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
         await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
-        taskPage.tasksListPage().selectRow(tasks[1]);
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
+        await taskPage.tasksListPage().selectRow(tasks[1]);
 
-        taskPage.completeTaskNoFormNotDisplayed();
+        await taskPage.completeTaskNoFormNotDisplayed();
     });
 
-    it('[C261031] Should be able to involve multiple users to a task', () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
-        taskPage.tasksListPage().selectRow(tasks[2]);
+    it('[C261031] Should be able to involve multiple users to a task', async () => {
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
+        await taskPage.tasksListPage().selectRow(tasks[2]);
 
-        taskPage.taskDetails().clickInvolvePeopleButton()
-            .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.taskDetails().clickAddInvolvedUserButton();
+        const taskDetails = await taskPage.taskDetails();
+        await taskPage.taskDetails().clickInvolvePeopleButton();
+        await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
-        expect(taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(1)');
+        await expect(await taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(1)');
 
-        taskPage.taskDetails().clickInvolvePeopleButton()
-            .typeUser(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName)
-            .selectUserToInvolve(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName)
-            .checkUserIsSelected(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName);
-        taskPage.taskDetails().clickAddInvolvedUserButton();
+        const taskDetails2 = await taskPage.taskDetails();
+        await taskDetails2.clickInvolvePeopleButton();
+        await taskDetails2.typeUser(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName);
+        await taskDetails2.selectUserToInvolve(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName);
+        await taskDetails2.checkUserIsSelected(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName);
 
-        expect(taskPage.taskDetails().getInvolvedUserEmail(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
+        await taskPage.taskDetails().clickAddInvolvedUserButton();
+
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
             .toEqual(secondAssigneeUserModel.email);
-        expect(taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(2)');
+        await expect(await taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(2)');
     });
 
     it('[C280014] Should involved user see the task in completed filters when the task is completed', async () => {
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
-        taskPage.tasksListPage().selectRow(tasks[3]);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
+        await taskPage.tasksListPage().selectRow(tasks[3]);
 
-        taskPage.taskDetails().clickInvolvePeopleButton()
-            .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-            .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-        taskPage.taskDetails().clickAddInvolvedUserButton();
+        const taskDetails = await taskPage.taskDetails();
+        await taskDetails.clickInvolvePeopleButton();
+        await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        await taskDetails.checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
 
-        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        await taskPage.taskDetails().clickAddInvolvedUserButton();
+
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
-        taskPage.completeTaskNoForm();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectRow(tasks[3]);
-        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+        await taskPage.completeTaskNoForm();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        await taskPage.tasksListPage().selectRow(tasks[3]);
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
         await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
-        taskPage.tasksListPage().selectRow(tasks[3]);
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
+        await taskPage.tasksListPage().selectRow(tasks[3]);
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
     });
 
 });

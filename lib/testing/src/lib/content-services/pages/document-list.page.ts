@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder, browser } from 'protractor';
+import { by, element, ElementFinder, browser, Locator } from 'protractor';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -23,8 +23,7 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class DocumentListPage {
 
     rootElement: ElementFinder;
-    actionMenu = element(by.css('div[role="menu"]'));
-    optionButton = by.css('button[data-automation-id*="action_menu_"]');
+    optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
     tableBody: ElementFinder;
     dataTable: DataTableComponentPage;
 
@@ -34,60 +33,55 @@ export class DocumentListPage {
         this.tableBody = rootElement.all(by.css('div[class="adf-datatable-body"]')).first();
     }
 
-    checkLockedIcon(content) {
+    async checkLockedIcon(content: string): Promise<void> {
         const row = this.dataTable.getRow('Display name', content);
         const lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock'));
-        BrowserVisibility.waitUntilElementIsVisible(lockIcon);
-        return this;
+        await BrowserVisibility.waitUntilElementIsVisible(lockIcon);
     }
 
-    checkUnlockedIcon(content) {
+    async checkUnlockedIcon(content: string): Promise<void> {
         const row = this.dataTable.getRow('Display name', content);
         const lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock_open'));
-        BrowserVisibility.waitUntilElementIsVisible(lockIcon);
-        return this;
+        await BrowserVisibility.waitUntilElementIsVisible(lockIcon);
     }
 
-    waitForTableBody() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
+    async waitForTableBody(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
-    getTooltip(nodeName) {
-        return this.dataTable.getTooltip('Display name', nodeName);
+    async getTooltip(nodeName: string): Promise<string> {
+        return await this.dataTable.getTooltip('Display name', nodeName);
     }
 
-    selectRow(nodeName) {
-        return this.dataTable.selectRow('Display name', nodeName);
+    async selectRow(nodeName: string): Promise<void> {
+        await this.dataTable.selectRow('Display name', nodeName);
     }
 
-    rightClickOnRow(nodeName) {
-        return this.dataTable.rightClickOnRow('Display name', nodeName);
+    async rightClickOnRow(nodeName: string): Promise<void> {
+        await this.dataTable.rightClickOnRow('Display name', nodeName);
     }
 
-    clickOnActionMenu(content) {
-        BrowserActions.closeMenuAndDialogs();
-        const row = this.dataTable.getRow('Display name', content);
-        BrowserActions.click(row.element(this.optionButton));
-        BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
-        browser.sleep(500);
-        return this;
+    async clickOnActionMenu(content: string): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        const row: ElementFinder = this.dataTable.getRow('Display name', content);
+        await BrowserActions.click(row.element(this.optionButton));
+        await BrowserActions.waitUntilActionMenuIsVisible();
+        await browser.sleep(500);
     }
 
-    checkActionMenuIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.actionMenu);
-        return this;
+    async checkActionMenuIsNotDisplayed(): Promise<void> {
+        await BrowserActions.waitUntilActionMenuIsNotVisible();
     }
 
-    dataTablePage() {
+    dataTablePage(): DataTableComponentPage {
         return new DataTableComponentPage(this.rootElement);
     }
 
-    getAllRowsColumnValues(column) {
-        return this.dataTable.getAllRowsColumnValues(column);
+    async getAllRowsColumnValues(column: string) {
+        return await this.dataTable.getAllRowsColumnValues(column);
     }
 
-    doubleClickRow(nodeName) {
-        this.dataTable.doubleClickRow('Display name', nodeName);
-        return this;
+    async doubleClickRow(nodeName: string): Promise<void> {
+        await this.dataTable.doubleClickRow('Display name', nodeName);
     }
 }

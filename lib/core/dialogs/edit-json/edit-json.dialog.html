@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{ title | translate }}</h1>
+<mat-dialog-content>
+    <textarea [(ngModel)]="value" [attr.readonly]="!editable ? true : null"></textarea>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close cdkFocusInitial>
+        {{ 'CORE.DIALOG.EDIT_JSON.CLOSE' | translate }}
+    </button>
+    <button *ngIf="editable" mat-button [mat-dialog-close]="value">
+        {{ 'CORE.DIALOG.EDIT_JSON.UPDATE' | translate }}
+    </button>
+</mat-dialog-actions>

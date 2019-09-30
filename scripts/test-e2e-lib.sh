@@ -7,8 +7,7 @@ DEVELOPMENT=false
 EXECLINT=false
 LITESERVER=false
 EXEC_VERSION_JSAPI=false
-TIMEOUT=15000
-SELENIUM_PROMISE_MANAGER=1
+TIMEOUT=120000
 DEBUG=false
 eval GNU=false
 
@@ -40,7 +39,6 @@ show_help() {
     echo "-l --lint enable lint"
     echo "-m --maxInstances max instances parallel for tests"
     echo "-log or --log print all the browser log"
-    echo "-disable-control-flow disable control flow"
     echo "-db or --debug run the debugger"
     echo "-vjsapi install different version from npm of JS-API defined in the package.json"
     echo "-gnu for gnu"
@@ -134,6 +132,11 @@ set_env(){
     export ENV_FILE=$1
 }
 
+set_prefix(){
+    PREFIX=$1
+    export PREFIX=$PREFIX
+}
+
 lint(){
     EXECLINT=true
 }
@@ -148,11 +151,6 @@ lite_server(){
 
 max_instances(){
     export MAXINSTANCES=$1
-}
-
-disable_control_flow(){
-    echo "====== disable control flow ====="
-    SELENIUM_PROMISE_MANAGER=0
 }
 
 version_js_api() {
@@ -181,6 +179,7 @@ while [[ $1 == -* ]]; do
       -env|--env)   set_env $2; shift 2;;
       -dev|--dev)  set_development; shift;;
       -s|--specs)  set_specs $2; shift 2;;
+      -prefix|--prefix)  set_prefix $2; shift 2;;
       -db|--debug) debug; shift;;
       -ud|--use-dist)  lite_server; shift;;
       -save)   set_save_screenshot; shift;;
@@ -194,7 +193,6 @@ while [[ $1 == -* ]]; do
       -l|--lint)  lint; shift;;
       -m|--maxInstances)  max_instances $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
-      -disable-control-flow|--disable-control-flow)  disable_control_flow; shift;;
       -gnu) gnu_mode; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
@@ -210,8 +208,6 @@ rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/screenshots/
 
 export TIMEOUT=$TIMEOUT
-
-export SELENIUM_PROMISE_MANAGER=$SELENIUM_PROMISE_MANAGER
 
 if $EXEC_VERSION_JSAPI == true; then
   echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="

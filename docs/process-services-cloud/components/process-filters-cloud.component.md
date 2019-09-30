@@ -25,7 +25,7 @@ Lists all available process filters and allows to select a filter.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | (required) The application name |
-| filterParam | [`FilterParamsModel`](../../../lib/process-services/task-list/models/filter.model.ts) |  | (optional) The filter to be selected by default |
+| filterParam | [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) |  | (optional) The filter to be selected by default |
 | showIcons | `boolean` | false | (optional) Toggles showing an icon by the side of each filter |
 
 ### Events

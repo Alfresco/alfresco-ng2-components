@@ -36,9 +36,9 @@ describe('Upload component', () => {
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const navigationBarPage = new NavigationBarPage();
 
@@ -67,7 +67,7 @@ describe('Upload component', () => {
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -75,259 +75,255 @@ describe('Upload component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        contentServicesPage.goToDocumentList();
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
 
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        done();
     });
 
-    beforeEach(() => {
-        contentServicesPage.goToDocumentList();
+    beforeEach(async () => {
+        await contentServicesPage.goToDocumentList();
     });
 
     describe('', () => {
 
-        beforeEach(() => {
-            contentServicesPage.goToDocumentList();
+        afterEach(async () => {
+            const nodeList = await contentServicesPage.getElementsDisplayedId();
+            for (const node of nodeList) {
+                try {
+                    await uploadActions.deleteFileOrFolder(node);
+                } catch (error) {
+                }
+            }
         });
 
-        afterEach(async (done) => {
+        it('[C272788] Should display upload button', async () => {
+            await expect(await contentServicesPage.getSingleFileButtonTooltip()).toEqual('Custom tooltip');
 
-            contentServicesPage.getElementsDisplayedId().then((nodeList) => {
-                nodeList.forEach(async (currentNode) => {
-                    await uploadActions.deleteFileOrFolder(currentNode);
-                });
-            });
-
-            done();
+            await contentServicesPage.checkUploadButton();
+            await contentServicesPage.checkContentIsDisplayed(firstPdfFileModel.name);
         });
 
-        it('[C272788] Should display upload button', () => {
-            expect(contentServicesPage.getSingleFileButtonTooltip()).toEqual('Custom tooltip');
+        it('[C272789] Should be able to upload PDF file', async () => {
+            await contentServicesPage.uploadFile(pdfFileModel.location);
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
 
-            contentServicesPage
-                .checkUploadButton()
-                .checkContentIsDisplayed(firstPdfFileModel.name);
+            await uploadDialog.fileIsUploaded(pdfFileModel.name);
+
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
         });
 
-        it('[C272789] Should be able to upload PDF file', () => {
-            contentServicesPage
-                .uploadFile(pdfFileModel.location)
-                .checkContentIsDisplayed(pdfFileModel.name);
+        it('[C272790] Should be able to upload text file', async () => {
+            await contentServicesPage.uploadFile(docxFileModel.location);
+            await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
-            uploadDialog.fileIsUploaded(pdfFileModel.name);
-
-            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+            await uploadDialog.fileIsUploaded(docxFileModel.name);
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
         });
 
-        it('[C272790] Should be able to upload text file', () => {
-            contentServicesPage
-                .uploadFile(docxFileModel.location)
-                .checkContentIsDisplayed(docxFileModel.name);
+        it('[C260141] Should be possible to upload PNG file', async () => {
+            await contentServicesPage.uploadFile(pngFileModel.location);
+            await contentServicesPage.checkContentIsDisplayed(pngFileModel.name);
 
-            uploadDialog.fileIsUploaded(docxFileModel.name);
-            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+            await uploadDialog.fileIsUploaded(pngFileModel.name);
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
         });
 
-        it('[C260141] Should be possible to upload PNG file', () => {
-            contentServicesPage
-                .uploadFile(pngFileModel.location)
-                .checkContentIsDisplayed(pngFileModel.name);
+        it('[C260143] Should be possible to maximize/minimize the upload dialog', async () => {
+            await contentServicesPage.uploadFile(docxFileModel.location);
+            await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
-            uploadDialog.fileIsUploaded(pngFileModel.name);
-            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+            await uploadDialog.fileIsUploaded(docxFileModel.name);
+            await uploadDialog.checkCloseButtonIsDisplayed();
+            await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+            await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+            await uploadDialog.minimizeUploadDialog();
+            await uploadDialog.dialogIsMinimized();
+            await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+            await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+            await uploadDialog.maximizeUploadDialog();
+            await uploadDialog.dialogIsDisplayed();
+            await uploadDialog.fileIsUploaded(docxFileModel.name);
+            await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+            await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+            await uploadDialog.checkCloseButtonIsDisplayed();
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
         });
 
-        it('[C260143] Should be possible to maximize/minimize the upload dialog', () => {
-            contentServicesPage
-                .uploadFile(docxFileModel.location)
-                .checkContentIsDisplayed(docxFileModel.name);
-
-            uploadDialog.fileIsUploaded(docxFileModel.name).checkCloseButtonIsDisplayed();
-            expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-            expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
-            uploadDialog.minimizeUploadDialog().dialogIsMinimized();
-            expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-            expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
-            uploadDialog.maximizeUploadDialog().dialogIsDisplayed().fileIsUploaded(docxFileModel.name);
-            expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-            expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
-            uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
+        it('[C272794] Should display tooltip for uploading files', async () => {
+            await uploadToggles.enableMultipleFileUpload();
+            await uploadToggles.checkMultipleFileUploadToggleIsEnabled();
+            await expect(await contentServicesPage.getMultipleFileButtonTooltip()).toEqual('Custom tooltip');
+            await uploadToggles.disableMultipleFileUpload();
         });
 
-        it('[C272794] Should display tooltip for uploading files', () => {
-            uploadToggles.enableMultipleFileUpload();
-            uploadToggles.checkMultipleFileUploadToggleIsEnabled();
-
-            browser.driver.sleep(1000);
-            expect(contentServicesPage.getMultipleFileButtonTooltip()).toEqual('Custom tooltip');
-            uploadToggles.disableMultipleFileUpload();
-        });
-
-        it('[C279920] Should rename a file uploaded twice', () => {
-            contentServicesPage
-                .uploadFile(pdfFileModel.location)
-                .checkContentIsDisplayed(pdfFileModel.name);
+        it('[C279920] Should rename a file uploaded twice', async () => {
+            await contentServicesPage.uploadFile(pdfFileModel.location);
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
 
             pdfFileModel.setVersion('1');
 
-            contentServicesPage
-                .uploadFile(pdfFileModel.location)
-                .checkContentIsDisplayed(pdfFileModel.getVersionName());
+            await contentServicesPage.uploadFile(pdfFileModel.location);
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.getVersionName());
 
-            uploadDialog
-                .clickOnCloseButton()
-                .dialogIsNotDisplayed();
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
 
             pdfFileModel.setVersion('');
         });
 
-        it('[C260172] Should be possible to enable versioning', () => {
-            uploadToggles.enableVersioning();
-            uploadToggles.checkVersioningToggleIsEnabled();
+        it('[C260172] Should be possible to enable versioning', async () => {
+            await uploadToggles.enableVersioning();
+            await uploadToggles.checkVersioningToggleIsEnabled();
 
-            contentServicesPage
-                .uploadFile(pdfFileModel.location)
-                .checkContentIsDisplayed(pdfFileModel.name);
+            await contentServicesPage.uploadFile(pdfFileModel.location);
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
 
             pdfFileModel.setVersion('1');
 
-            contentServicesPage
-                .uploadFile(pdfFileModel.location)
-                .checkContentIsDisplayed(pdfFileModel.name);
+            await contentServicesPage.uploadFile(pdfFileModel.location);
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
 
-            uploadDialog
-                .fileIsUploaded(pdfFileModel.name);
+            await uploadDialog.fileIsUploaded(pdfFileModel.name);
 
-            uploadDialog
-                .clickOnCloseButton()
-                .dialogIsNotDisplayed();
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
 
-            contentServicesPage
-                .checkContentIsNotDisplayed(pdfFileModel.getVersionName());
+            await contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.getVersionName());
 
             pdfFileModel.setVersion('');
-            uploadToggles.disableVersioning();
+            await uploadToggles.disableVersioning();
         });
 
-        it('[C260174] Should be possible to set a max size', () => {
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.checkAcsContainer();
-            uploadToggles.enableMaxSize();
-            uploadToggles.checkMaxSizeToggleIsEnabled();
-            uploadToggles.addMaxSize('400');
-            contentServicesPage.uploadFile(fileWithSpecificSize.location);
-            uploadDialog.fileIsUploaded(fileWithSpecificSize.name).clickOnCloseButton().dialogIsNotDisplayed();
-            contentServicesPage.deleteContent(fileWithSpecificSize.name);
-            contentServicesPage.checkContentIsNotDisplayed(fileWithSpecificSize.name);
-            uploadToggles.addMaxSize('399');
-            contentServicesPage.uploadFile(fileWithSpecificSize.location);
+        it('[C260174] Should be possible to set a max size', async () => {
+            await contentServicesPage.goToDocumentList();
+            await contentServicesPage.checkAcsContainer();
+            await uploadToggles.enableMaxSize();
+            await uploadToggles.checkMaxSizeToggleIsEnabled();
+            await uploadToggles.addMaxSize('400');
+            await contentServicesPage.uploadFile(fileWithSpecificSize.location);
+            await uploadDialog.fileIsUploaded(fileWithSpecificSize.name);
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
+            await contentServicesPage.deleteContent(fileWithSpecificSize.name);
+            await contentServicesPage.checkContentIsNotDisplayed(fileWithSpecificSize.name);
+            await uploadToggles.addMaxSize('399');
+            await contentServicesPage.uploadFile(fileWithSpecificSize.location);
 
-            //  expect(contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
+            //  await expect(await contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
 
-            contentServicesPage.checkContentIsNotDisplayed(fileWithSpecificSize.name);
-            uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
-            contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
-            uploadDialog.fileIsUploaded(emptyFile.name).clickOnCloseButton().dialogIsNotDisplayed();
+            await contentServicesPage.checkContentIsNotDisplayed(fileWithSpecificSize.name);
+            await uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
+            await contentServicesPage.uploadFile(emptyFile.location);
+            await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
+            await uploadDialog.fileIsUploaded(emptyFile.name);
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
 
-            uploadToggles.disableMaxSize();
+            await uploadToggles.disableMaxSize();
         });
 
-        it('[C272796] Should be possible to set max size to 0', () => {
-            contentServicesPage.goToDocumentList();
-            uploadToggles.enableMaxSize();
-            uploadToggles.checkMaxSizeToggleIsEnabled();
-            uploadToggles.addMaxSize('0');
-            contentServicesPage.uploadFile(fileWithSpecificSize.location);
-            // expect(contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
+        it('[C272796] Should be possible to set max size to 0', async () => {
+            await contentServicesPage.goToDocumentList();
+            await uploadToggles.enableMaxSize();
+            await uploadToggles.checkMaxSizeToggleIsEnabled();
+            await uploadToggles.addMaxSize('0');
+            await contentServicesPage.uploadFile(fileWithSpecificSize.location);
+            // await expect(await contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
 
-            uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
-            contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
-            uploadDialog.fileIsUploaded(emptyFile.name).clickOnCloseButton().dialogIsNotDisplayed();
+            await uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
+            await contentServicesPage.uploadFile(emptyFile.location);
+            await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
+            await uploadDialog.fileIsUploaded(emptyFile.name);
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
 
-            uploadToggles.disableMaxSize();
+            await uploadToggles.disableMaxSize();
         });
 
-        it('[C272797] Should be possible to set max size to 1', () => {
-            uploadToggles.enableMaxSize();
-            uploadToggles.checkMaxSizeToggleIsEnabled();
-            browser.driver.sleep(1000);
-            uploadToggles.addMaxSize('1');
-            uploadToggles.disableMaxSize();
-            contentServicesPage.uploadFile(fileWithSpecificSize.location);
-            uploadDialog.fileIsUploaded(fileWithSpecificSize.name).clickOnCloseButton().dialogIsNotDisplayed();
-            contentServicesPage.checkContentIsDisplayed(fileWithSpecificSize.name);
+        it('[C272797] Should be possible to set max size to 1', async () => {
+            await uploadToggles.enableMaxSize();
+            await uploadToggles.checkMaxSizeToggleIsEnabled();
+            await browser.sleep(1000);
+            await uploadToggles.addMaxSize('1');
+            await uploadToggles.disableMaxSize();
+            await contentServicesPage.uploadFile(fileWithSpecificSize.location);
+            await uploadDialog.fileIsUploaded(fileWithSpecificSize.name);
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
+            await contentServicesPage.checkContentIsDisplayed(fileWithSpecificSize.name);
         });
 
-        it('[C91318] Should Enable/Disable upload button when change the disable property', () => {
-            uploadToggles.clickCheckboxDisableUpload();
-            expect(contentServicesPage.uploadButtonIsEnabled()).toBeFalsy();
+        it('[C91318] Should Enable/Disable upload button when change the disable property', async () => {
+            await uploadToggles.clickCheckboxDisableUpload();
+            await expect(await contentServicesPage.uploadButtonIsEnabled()).toBe(false, 'Upload button is enabled');
 
-            uploadToggles.clickCheckboxDisableUpload();
-            expect(contentServicesPage.uploadButtonIsEnabled()).toBeTruthy();
+            await uploadToggles.clickCheckboxDisableUpload();
+            await expect(await contentServicesPage.uploadButtonIsEnabled()).toBe(true, 'Upload button not enabled');
         });
     });
 
-    it('[C260171] Should upload only the extension filter allowed when Enable extension filter is enabled', () => {
-        uploadToggles.enableExtensionFilter();
-        browser.driver.sleep(1000);
-        uploadToggles.addExtension('.docx');
-        contentServicesPage.uploadFile(docxFileModel.location).checkContentIsDisplayed(docxFileModel.name);
-        uploadDialog.removeUploadedFile(docxFileModel.name).fileIsCancelled(docxFileModel.name);
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.uploadFile(pngFileModel.location).checkContentIsNotDisplayed(pngFileModel.name);
-        uploadDialog.dialogIsNotDisplayed();
-        uploadToggles.disableExtensionFilter();
+    it('[C260171] Should upload only the extension filter allowed when Enable extension filter is enabled', async () => {
+        await uploadToggles.enableExtensionFilter();
+        await browser.sleep(1000);
+        await uploadToggles.addExtension('.docx');
+        await contentServicesPage.uploadFile(docxFileModel.location);
+        await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+        await uploadDialog.removeUploadedFile(docxFileModel.name);
+        await uploadDialog.fileIsCancelled(docxFileModel.name);
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+        await contentServicesPage.uploadFile(pngFileModel.location);
+        await contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name);
+        await uploadDialog.dialogIsNotDisplayed();
+        await uploadToggles.disableExtensionFilter();
     });
 
-    it('[C274687] Should upload with drag and drop only the extension filter allowed when Enable extension filter is enabled', () => {
-        uploadToggles.enableExtensionFilter();
-        browser.driver.sleep(1000);
-        uploadToggles.addExtension('.docx');
+    it('[C274687] Should upload with drag and drop only the extension filter allowed when Enable extension filter is enabled', async () => {
+        await uploadToggles.enableExtensionFilter();
+        await browser.sleep(1000);
+        await uploadToggles.addExtension('.docx');
 
         const dragAndDrop = new DropActions();
         const dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
 
-        dragAndDrop.dropFile(dragAndDropArea, docxFileModel.location);
-        contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+        await dragAndDrop.dropFile(dragAndDropArea, docxFileModel.location);
+        await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
-        uploadDialog.removeUploadedFile(docxFileModel.name).fileIsCancelled(docxFileModel.name);
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+        await uploadDialog.removeUploadedFile(docxFileModel.name);
+        await uploadDialog.fileIsCancelled(docxFileModel.name);
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
 
-        dragAndDrop.dropFile(dragAndDropArea, pngFileModel.location);
-        contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name);
-        uploadDialog.dialogIsNotDisplayed();
-        uploadToggles.disableExtensionFilter();
+        await dragAndDrop.dropFile(dragAndDropArea, pngFileModel.location);
+        await contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name);
+        await uploadDialog.dialogIsNotDisplayed();
+        await uploadToggles.disableExtensionFilter();
     });
 
     it('[C291921] Should display tooltip for uploading files on a not found location', async () => {
         const folderName = StringUtil.generateRandomString(8);
 
-        const folderUploadedModel = await browser.controlFlow().execute(async () => {
-            return await uploadActions.createFolder(folderName, '-my-');
-        });
+        const folderUploadedModel = await uploadActions.createFolder(folderName, '-my-');
+        await navigationBarPage.openContentServicesFolder(folderUploadedModel.entry.id);
+        await contentServicesPage.checkUploadButton();
 
-        navigationBarPage.openContentServicesFolder(folderUploadedModel.entry.id);
-        contentServicesPage.checkUploadButton();
+        await uploadActions.deleteFileOrFolder(folderUploadedModel.entry.id);
 
-        browser.controlFlow().execute(async () => {
-            await uploadActions.deleteFileOrFolder(folderUploadedModel.entry.id);
-        });
+        await contentServicesPage.uploadFile(pdfFileModel.location);
 
-        contentServicesPage.uploadFile(pdfFileModel.location);
-
-        uploadDialog.displayTooltip();
-        expect(uploadDialog.getTooltip()).toEqual('Upload location no longer exists [404]');
+        await uploadDialog.displayTooltip();
+        await expect(await uploadDialog.getTooltip()).toEqual('Upload location no longer exists [404]');
     });
 
 });

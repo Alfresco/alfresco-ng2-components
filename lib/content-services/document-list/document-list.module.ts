@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, EditJsonDialogModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from '../material.module';
 import { UploadModule } from '../upload/upload.module';
@@ -41,7 +41,8 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         CommonModule,
         FlexLayoutModule,
         MaterialModule,
-        UploadModule
+        UploadModule,
+        EditJsonDialogModule
     ],
     declarations: [
         DocumentListComponent,

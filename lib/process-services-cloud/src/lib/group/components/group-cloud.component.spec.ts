@@ -22,17 +22,20 @@ import { ProcessServiceCloudTestingModule } from './../../testing/process-servic
 
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
-import { GroupCloudService } from '../services/group-cloud.service';
-import { setupTestBed, AlfrescoApiServiceMock } from '@alfresco/adf-core';
-import { mockGroups } from '../mock/group-cloud.mock';
-import { GroupModel } from '../models/group.model';
+import {
+    setupTestBed,
+    AlfrescoApiServiceMock,
+    IdentityGroupService,
+    IdentityGroupModel,
+    mockIdentityGroups
+} from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 
 describe('GroupCloudComponent', () => {
     let component: GroupCloudComponent;
     let fixture: ComponentFixture<GroupCloudComponent>;
     let element: HTMLElement;
-    let service: GroupCloudService;
+    let service: IdentityGroupService;
     let findGroupsByNameSpy: jasmine.Spy;
     let getClientIdByApplicationNameSpy: jasmine.Spy;
     let checkGroupHasAccessSpy: jasmine.Spy;
@@ -40,15 +43,15 @@ describe('GroupCloudComponent', () => {
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, GroupCloudModule],
-        providers: [AlfrescoApiServiceMock, GroupCloudService]
+        providers: [AlfrescoApiServiceMock, IdentityGroupService]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(GroupCloudComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-        service = TestBed.get(GroupCloudService);
-        findGroupsByNameSpy = spyOn(service, 'findGroupsByName').and.returnValue(of(mockGroups));
+        service = TestBed.get(IdentityGroupService);
+        findGroupsByNameSpy = spyOn(service, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
         getClientIdByApplicationNameSpy = spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
         checkGroupHasAccessSpy = spyOn(service, 'checkGroupHasClientApp').and.returnValue(of(true));
         checkGroupHasGivenRoleSpy = spyOn(service, 'checkGroupHasRole').and.returnValue(of(true));
@@ -72,7 +75,7 @@ describe('GroupCloudComponent', () => {
 
     it('should show the groups if the typed result match', async(() => {
         fixture.detectChanges();
-        component.searchGroups$ = of(<GroupModel[]> mockGroups);
+        component.searchGroups$.next(<IdentityGroupModel[]> mockIdentityGroups);
         const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -103,7 +106,7 @@ describe('GroupCloudComponent', () => {
     it('should emit selectedGroup if option is valid', async(() => {
         fixture.detectChanges();
         const selectEmitSpy = spyOn(component.selectGroup, 'emit');
-        component.onSelect(new GroupModel({ name: 'group name'}));
+        component.onSelect(new IdentityGroupModel({ name: 'group name'}));
         fixture.whenStable().then(() => {
             expect(selectEmitSpy).toHaveBeenCalled();
         });
@@ -147,7 +150,7 @@ describe('GroupCloudComponent', () => {
 
     it('should pre-select all preSelectGroups when mode=multiple', async(() => {
         component.mode = 'multiple';
-        component.preSelectGroups = <any> [{id: mockGroups[1].id}, {id: mockGroups[2].id}];
+        component.preSelectGroups = <any> [{id: mockIdentityGroups[1].id}, {id: mockIdentityGroups[2].id}];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -168,11 +171,11 @@ describe('GroupCloudComponent', () => {
 
     it('should pre-select preSelectGroups[0] when mode=single', async(() => {
         component.mode = 'single';
-        component.preSelectGroups = <any> [{id: mockGroups[1].id}, {id: mockGroups[2].id}];
+        component.preSelectGroups = <any> [{id: mockIdentityGroups[1].id}, {id: mockIdentityGroups[2].id}];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const selectedGroup = component.searchGroupsControl.value;
-            expect(selectedGroup.id).toBe(mockGroups[1].id);
+            expect(selectedGroup.id).toBe(mockIdentityGroups[1].id);
         });
     }));
 
@@ -189,7 +192,7 @@ describe('GroupCloudComponent', () => {
         const removeGroupSpy = spyOn(component.removeGroup, 'emit');
 
         component.mode = 'multiple';
-        component.preSelectGroups = <any> [{id: mockGroups[1].id}, {id: mockGroups[2].id}];
+        component.preSelectGroups = <any> [{id: mockIdentityGroups[1].id}, {id: mockIdentityGroups[2].id}];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -197,7 +200,7 @@ describe('GroupCloudComponent', () => {
             const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
             removeIcon.nativeElement.click();
 
-            expect(removeGroupSpy).toHaveBeenCalledWith({ id: mockGroups[1].id });
+            expect(removeGroupSpy).toHaveBeenCalledWith({ id: mockIdentityGroups[1].id });
         });
 
     }));
@@ -213,7 +216,7 @@ describe('GroupCloudComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             const groupsList = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(groupsList.length).toBe(mockGroups.length);
+            expect(groupsList.length).toBe(mockIdentityGroups.length);
         });
     }));
 
@@ -246,7 +249,7 @@ describe('GroupCloudComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             const groupsList = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(groupsList.length).toBe(mockGroups.length);
+            expect(groupsList.length).toBe(mockIdentityGroups.length);
             expect(checkGroupHasGivenRoleSpy).toHaveBeenCalled();
         });
     }));
@@ -263,13 +266,13 @@ describe('GroupCloudComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             const groupsList = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(groupsList.length).toBe(mockGroups.length);
+            expect(groupsList.length).toBe(mockIdentityGroups.length);
             expect(checkGroupHasGivenRoleSpy).not.toHaveBeenCalled();
         });
     }));
 
     it('should validate access to the app when appName is specified', async(() => {
-        findGroupsByNameSpy.and.returnValue(of(mockGroups));
+        findGroupsByNameSpy.and.returnValue(of(mockIdentityGroups));
         checkGroupHasAccessSpy.and.returnValue(of(true));
         fixture.detectChanges();
         const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
@@ -279,7 +282,7 @@ describe('GroupCloudComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(checkGroupHasAccessSpy).toHaveBeenCalledTimes(mockGroups.length);
+            expect(checkGroupHasAccessSpy).toHaveBeenCalledTimes(mockIdentityGroups.length);
         });
     }));
 

@@ -72,6 +72,10 @@
           "CANCEL": "Cancelar"
         },
         "TITLE": "Añadiendo ficheros al zip; esto puede tardar unos minutos"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Cerrar",
+        "UPDATE": "Actualizar"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "Nombre",
         "VALUE": "Valor"
       },
+      "NONE": "Ninguno",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizar un formato de número",
         "INT_VALIDATION_ERROR": "Utilizar un formato de entero"
@@ -184,6 +189,7 @@
         "EDIT": "Editar",
         "SAVE": "Guardar",
         "CANCEL": "Cancelar",
+        "CLEAR": "Borrar",
         "TOGGLE": "Alternar valor"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Iniciar sesión",
       "USERNAME": "Nombre de usuario",
       "PASSWORD": "Contraseña",
       "REMEMBER": "Recordarme"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Mostrar contraseña",
+      "HIDE-PASSWORD": "Ocultar contraseña"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Requerido",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Seleccionar todo",
-      "SELECT_FILE": "Seleccionar un fichero"
+      "SELECT_FILE": "Seleccionar un fichero",
+      "SORT_ASCENDING": "Ascendente",
+      "SORT_DESCENDING": "Descendente",
+      "SORT_NONE": "Ninguno",
+      "ICON_TEXT": "Tipo de fichero {{ type }}",
+      "ICON_DISABLED": "Desactivado",
+      "ROW_OPTION_BUTTON": "Acciones"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Documento",
+      "FOLDER": "Carpeta",
+      "PDF": "PDF",
+      "IMAGE": "Imagen",
+      "EXCEL": "Hoja de Excel",
+      "WORD": "Documento de Word",
+      "POWERPOINT": "Presentación de Powerpoint",
+      "VIDEO": "Vídeo",
+      "AUDIO": "Audio",
+      "WEBSITE": "Sitio web",
+      "ARCHIVE": "Archivo",
+      "PRESENTATION": "Presentación",
+      "SPREADSHEET": "Hoja de cálculo",
+      "MISCELLANEOUS": "Varios"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "de"
     },
     "LOADING": "Cargando",
-    "UNKNOWN_FORMAT": "No se ha podido cargar la vista previa",
+    "UNKNOWN_FORMAT": "No se ha podido cargar la vista previa. Formato desconocido.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Página {{ pageNum }}"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Versión",
     "SERVER_SETTINGS": {
       "TITLE": "Configuración del servidor",
       "DESCRIPTION": "Los valores siguientes se han tomado de AppConfigService",
@@ -428,6 +461,18 @@
         "MODE": "Modo",
         "CLUSTER_ENABLED": "Compatible con clústeres",
         "CRYPTODOC_ENABLED": "Compatible con Cryptodoc"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Complementos",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "Nombre",
+        "VERSION": "Versión",
+        "VENDOR": "Proveedor",
+        "LICENSE": "Licencia",
+        "RUNTIME": "Tiempo de ejecución",
+        "DESCRIPTION": "Descripción"
       }
     }
   },

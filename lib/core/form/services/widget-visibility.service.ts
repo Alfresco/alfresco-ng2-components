@@ -20,7 +20,7 @@ import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment-es6';
 import { Observable, from, throwError } from 'rxjs';
-import { FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
+import { FormFieldModel, FormModel, TabModel, ContainerModel } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
@@ -31,12 +31,14 @@ import { map, catchError } from 'rxjs/operators';
 export class WidgetVisibilityService {
 
     private processVarList: TaskProcessVariableModel[];
+    private form: FormModel;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
     }
 
     public refreshVisibility(form: FormModel) {
+        this.form = form;
         if (form && form.tabs && form.tabs.length > 0) {
             form.tabs.map((tabModel) => this.refreshEntityVisibility(tabModel));
         }
@@ -48,7 +50,7 @@ export class WidgetVisibilityService {
 
     refreshEntityVisibility(element: FormFieldModel | TabModel) {
         const visible = this.evaluateVisibility(element.form, element.visibilityCondition);
-        element.isVisible = visible;
+        element.isVisible = visible && this.isParentTabVisible(this.form, element);
     }
 
     evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
@@ -164,6 +166,40 @@ export class WidgetVisibilityService {
         return fieldValue;
     }
 
+    isParentTabVisible(form: FormModel, currentFormField: FormFieldModel | TabModel): boolean {
+        const containers = this.getFormTabContainers(form);
+        let isVisible: boolean = true;
+        containers.map( (container: ContainerModel) => {
+            if ( !!this.getCurrentFieldFromTabById(container, currentFormField.id) ) {
+                const currentTab = form.tabs.find( (tab: TabModel) => tab.id === container.tab );
+                if (!!currentTab) {
+                    isVisible = currentTab.isVisible;
+                }
+            }
+        });
+        return isVisible;
+    }
+
+    private getCurrentFieldFromTabById(container: ContainerModel, fieldId: string): FormFieldModel {
+        const tabFields: FormFieldModel[][] = Object.keys(container.field.fields).map( key => container.field.fields[key]);
+        let currentField: FormFieldModel;
+
+        for (const tabField of tabFields) {
+            currentField = tabField.find( (tab: FormFieldModel) => tab.id === fieldId );
+            if (currentField) {
+                return currentField;
+            }
+        }
+        return null;
+    }
+
+    private getFormTabContainers(form: FormModel): ContainerModel[] {
+        if (!!form) {
+            return <ContainerModel[]> form.fields.filter(field => field.type === 'container' && field.tab);
+        }
+        return [];
+    }
+
     private getObjectValue(field: FormFieldModel, fieldId: string): string {
         let value = '';
         if (field.value && field.value.name) {
@@ -193,40 +229,24 @@ export class WidgetVisibilityService {
 
     getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {
         const processVariableValue = this.getProcessVariableValue(name, processVarList);
-        const variableDefaultValue = this.getFormVariableDefaultValue(form, name);
+        const variableDefaultValue = form.getFormVariableValue(name);
+
         return (processVariableValue === undefined) ? variableDefaultValue : processVariableValue;
-    }
-
-    private getFormVariableDefaultValue(form: FormModel, identifier: string): string {
-        const variables = this.getFormVariables(form);
-        if (variables) {
-            const formVariable = variables.find((formVar) => {
-                return formVar.name === identifier || formVar.id === identifier;
-            });
-
-            let value;
-            if (formVariable) {
-                value = formVariable.value;
-                if (formVariable.type === 'date') {
-                    value += 'T00:00:00.000Z';
-                }
-            }
-            return value;
-        }
-    }
-
-    private getFormVariables(form: FormModel): any[] {
-        return  form.json.variables;
     }
 
     private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]): string {
         if (processVarList) {
-            const processVariable = processVarList.find((variable) => variable.id === name);
+            const processVariable = processVarList.find(
+                variable =>
+                    variable.id === name ||
+                    variable.id === `variables.${name}`
+            );
+
             if (processVariable) {
                 return processVariable.value;
             }
         }
-
+        return undefined;
     }
 
     evaluateLogicalOperation(logicOp, previousValue, newValue): boolean {
@@ -282,7 +302,7 @@ export class WidgetVisibilityService {
                     this.processVarList = <TaskProcessVariableModel[]> jsonRes;
                     return jsonRes;
                 }),
-                catchError((err) => this.handleError(err))
+                catchError(() => this.handleError())
             );
     }
 
@@ -298,7 +318,7 @@ export class WidgetVisibilityService {
         return !!(condition && condition.operator);
     }
 
-    private handleError(err) {
+    private handleError() {
         this.logService.error('Error while performing a call');
         return throwError('Error while performing a call - Server error');
     }

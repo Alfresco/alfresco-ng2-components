@@ -33,7 +33,7 @@ class FakeDataRow implements DataRow {
     isDropTarget = false;
     isSelected = true;
 
-    hasValue(key: any) {
+    hasValue() {
         return true;
     }
 
@@ -374,7 +374,7 @@ describe('DataTable', () => {
 
         dataTable.ngOnChanges({});
 
-        dataTable.rowClick.subscribe((event) => {
+        dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeFalsy();
             expect(rows[1].isSelected).toBeTruthy();
             done();
@@ -396,7 +396,7 @@ describe('DataTable', () => {
 
         dataTable.ngOnChanges({});
 
-        dataTable.rowClick.subscribe((event) => {
+        dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeFalsy();
             expect(rows[1].isSelected).toBeTruthy();
             done();
@@ -463,7 +463,7 @@ describe('DataTable', () => {
         const rows = dataTable.data.getRows();
         dataTable.ngOnChanges({});
 
-        dataTable.rowClick.subscribe((event) => {
+        dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeTruthy();
             expect(rows[1].isSelected).toBeFalsy();
             done();
@@ -750,6 +750,38 @@ describe('DataTable', () => {
 
     });
 
+    it('should indicate column that has sorting applied', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [ { name: '1' }, { name: '2' } ],
+            [
+                new ObjectDataColumn({ key: 'name', sortable: true }),
+                new ObjectDataColumn({ key: 'other', sortable: true  })
+            ]
+        );
+
+        const [col1, col2] =  dataTable.getSortableColumns();
+
+        dataTable.onColumnHeaderClick(col2);
+
+        expect(dataTable.isColumnSortActive(col1)).toBe(false);
+        expect(dataTable.isColumnSortActive(col2)).toBe(true);
+    });
+
+    it('should return false for columns that have no sorting', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [ { name: '1' }, { name: '2' } ],
+            [
+                new ObjectDataColumn({ key: 'name', sortable: false }),
+                new ObjectDataColumn({ key: 'other', sortable: false  })
+            ]
+        );
+
+        const [col1, col2] =  dataTable.getSortableColumns();
+
+        expect(dataTable.isColumnSortActive(col1)).toBe(false);
+        expect(dataTable.isColumnSortActive(col2)).toBe(false);
+    });
+
     it('should invert "select all" status', () => {
         expect(dataTable.isSelectAllChecked).toBeFalsy();
         dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
@@ -827,49 +859,49 @@ describe('DataTable', () => {
     it('should use special material url scheme', () => {
         const column = <DataColumn> {};
 
-        const row = {
-            getValue: function (key: string) {
+        const row: any = {
+            getValue: function () {
                 return 'material-icons://android';
             }
         };
 
-        expect(dataTable.isIconValue(<DataRow> row, column)).toBeTruthy();
+        expect(dataTable.isIconValue(row, column)).toBeTruthy();
     });
 
     it('should not use special material url scheme', () => {
         const column = <DataColumn> {};
 
-        const row = {
-            getValue: function (key: string) {
+        const row: any = {
+            getValue: function () {
                 return 'http://www.google.com';
             }
         };
 
-        expect(dataTable.isIconValue(<DataRow> row, column)).toBeFalsy();
+        expect(dataTable.isIconValue(row, column)).toBeFalsy();
     });
 
     it('should parse icon value', () => {
         const column = <DataColumn> {};
 
-        const row = {
-            getValue: function (key: string) {
+        const row: any = {
+            getValue: function () {
                 return 'material-icons://android';
             }
         };
 
-        expect(dataTable.asIconValue(<DataRow> row, column)).toBe('android');
+        expect(dataTable.asIconValue(row, column)).toBe('android');
     });
 
     it('should not parse icon value', () => {
         const column = <DataColumn> {};
 
-        const row = {
-            getValue: function (key: string) {
+        const row: any = {
+            getValue: function () {
                 return 'http://www.google.com';
             }
         };
 
-        expect(dataTable.asIconValue(<DataRow> row, column)).toBe(null);
+        expect(dataTable.asIconValue(row, column)).toBe(null);
     });
 
     it('should parse icon values to a valid i18n key', () => {
@@ -966,8 +998,8 @@ describe('DataTable', () => {
         });
 
         const column = <DataColumn> {};
-        const row = <DataRow> {
-            getValue: function (key: string) {
+        const row: any = {
+            getValue: function () {
                 return 'id';
             }
         };
@@ -1101,5 +1133,34 @@ describe('Accesibility', () => {
         expect(datatableBodyAttributes.getNamedItem('role').value).toEqual('rowgroup');
         expect(datatableBodyRowAttributes.getNamedItem('role').value).toEqual('row');
         expect(datatableBodyCellAttributes.getNamedItem('role').value).toEqual('gridcell');
+    });
+
+    describe('aria-sort', () => {
+        let column: DataColumn;
+
+        beforeEach(() => {
+            column  = new ObjectDataColumn({ key: 'key' });
+        });
+
+        it('should return correct translation key when no sort is applied', () => {
+            spyOn(dataTable, 'isColumnSortActive').and.returnValue(false);
+            expect(dataTable.getAriaSort(column)).toBe('ADF-DATATABLE.ACCESSIBILITY.SORT_NONE');
+        });
+
+        it('should return translation key when column sort is ascending', () => {
+            const isColumnSortedAsc = true;
+            spyOn(dataTable, 'isColumnSortActive').and.returnValue(true);
+            spyOn(dataTable, 'isColumnSorted').and.returnValue(isColumnSortedAsc);
+
+            expect(dataTable.getAriaSort(column)).toBe('ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING');
+        });
+
+        it('should return translation key when column sort is descending', () => {
+            const isColumnSortedAsc = false;
+            spyOn(dataTable, 'isColumnSortActive').and.returnValue(true);
+            spyOn(dataTable, 'isColumnSorted').and.returnValue(isColumnSortedAsc);
+
+            expect(dataTable.getAriaSort(column)).toBe('ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING');
+        });
     });
 });

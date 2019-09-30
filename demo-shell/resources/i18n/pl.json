@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Filtruj według roli",
     "PRESELECT_VALIDATION": "Sprawdzanie poprawności wstępnego wyboru"
   },
-  "ABOUT": {
-    "TITLE": "Dodatki typu plugin",
-    "TABLE_HEADERS": {
-      "ID": "Identyfikator",
-      "NAME": "Nazwa",
-      "VERSION": "Wersja",
-      "VENDOR": "Sprzedawca",
-      "LICENSE": "Licencja",
-      "RUNTIME": "Środowisko uruchomieniowe",
-      "DESCRIPTION": "Opis"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Wybór wielokrotny",
     "TESTING_MODE": "Tryb testowania",
     "SELECTION_MODE": "Tryb wyboru",
+    "SELECTED_ROWS": "Wybrane wiersze",
     "TASK_DETAILS_REDIRECTION": "Wyświetlaj szczegóły zadania po kliknięciu zadania",
-    "PROCESS_DETAILS_REDIRECTION": "Wyświetlaj szczegóły procesu po kliknięciu procesu"
+    "PROCESS_DETAILS_REDIRECTION": "Wyświetlaj szczegóły procesu po kliknięciu procesu",
+    "ACTION": {
+      "ACTION_TITLE": "Dodaj czynność",
+      "ACTION_MENU": "Menu czynności",
+      "CONTEX_MENU": "Menu kontekstowe",
+      "ACTION_VISIBLE": "Widoczne",
+      "ACTION_DISABLE": "Wyłącz",
+      "ADD_BUTTON": "Dodaj",
+      "KEY": "Klucz",
+      "TITLE": "Tytuł",
+      "ICON": "Ikona",
+      "TASK_ID": "Identyfikator zadania",
+      "PROCESS_ID": "Identyfikator wystąpienia procesu",
+      "ACTION_TYPE": "Typ czynności"
+    }
   }
 }

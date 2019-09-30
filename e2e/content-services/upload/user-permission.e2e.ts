@@ -56,14 +56,14 @@ describe('Upload - User permission', () => {
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
-    beforeAll(() => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
         });
     });
 
-    beforeEach(async (done) => {
+    beforeEach(async () => {
         acsUser = new AcsUserModel();
         acsUserTwo = new AcsUserModel();
 
@@ -95,106 +95,99 @@ describe('Upload - User permission', () => {
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        done();
-    });
-
-    afterAll(async (done) => {
-        await navigationBarPage.clickLogoutButton();
-        done();
     });
 
     describe('Consumer permissions', () => {
 
-        beforeEach(async (done) => {
-            contentServicesPage.goToDocumentList();
+        beforeEach(async () => {
+            await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        it('[C291921] Should display tooltip for uploading files without permissions', () => {
-            navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
+        it('[C291921] Should display tooltip for uploading files without permissions', async () => {
+            await navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
-            contentServicesPage.checkDragAndDropDIsDisplayed();
+            await contentServicesPage.checkDragAndDropDIsDisplayed();
 
-            contentServicesPage.dragAndDropFile(emptyFile.location);
+            await contentServicesPage.dragAndDropFile(emptyFile.location);
 
-            uploadDialog.fileIsError(emptyFile.name);
+            await uploadDialog.fileIsError(emptyFile.name);
 
-            uploadDialog.displayTooltip();
+            await uploadDialog.displayTooltip();
 
-            expect(uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
+            await expect(await uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
         });
 
-        it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', () => {
-            contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
+        it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', async () => {
+            await contentServicesPage.uploadFile(emptyFile.location);
+            await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
-            uploadDialog.fileIsUploaded(emptyFile.name);
+            await uploadDialog.fileIsUploaded(emptyFile.name);
 
-            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
 
-            navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
+            await navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
-            browser.sleep(3000);
+            await browser.sleep(3000);
 
-            contentServicesPage.uploadFile(emptyFile.location);
+            await contentServicesPage.uploadFile(emptyFile.location);
 
-            notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
     });
 
     describe('full permissions', () => {
 
-        beforeEach(async (done) => {
-            navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
+        beforeEach(async () => {
+            await navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
 
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        it('[C279917] Should be allowed to upload a file in a folder with manager permissions', () => {
-            contentServicesPage.uploadFile(emptyFile.location);
+        it('[C279917] Should be allowed to upload a file in a folder with manager permissions', async () => {
+            await contentServicesPage.uploadFile(emptyFile.location);
 
-            uploadDialog.fileIsUploaded(emptyFile.name);
+            await uploadDialog.fileIsUploaded(emptyFile.name);
         });
 
     });
 
     describe('multiple users', () => {
 
-        beforeEach(async (done) => {
-            contentServicesPage.goToDocumentList();
+        beforeEach(async () => {
+            await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
         it('[C260175] Should two different user upload files in the proper User Home', async () => {
-            contentServicesPage.uploadFile(emptyFile.location);
+            await contentServicesPage.uploadFile(emptyFile.location);
 
-            uploadDialog.fileIsUploaded(emptyFile.name);
+            await uploadDialog.fileIsUploaded(emptyFile.name);
 
-            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
+            await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
-            navigationBarPage.clickLoginButton();
+            await navigationBarPage.clickLoginButton();
             await loginPage.loginToContentServicesUsingUserModel(acsUserTwo);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
-            contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
+            await contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
 
-            contentServicesPage.uploadFile(pngFile.location);
+            await contentServicesPage.uploadFile(pngFile.location);
 
-            contentServicesPage.checkContentIsDisplayed(pngFile.name);
+            await contentServicesPage.checkContentIsDisplayed(pngFile.name);
 
-            navigationBarPage.clickLoginButton();
+            await navigationBarPage.clickLoginButton();
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
-            contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
+            await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
 
-            contentServicesPage.uploadFile(pdfFile.location);
+            await contentServicesPage.uploadFile(pdfFile.location);
 
-            contentServicesPage.checkContentIsDisplayed(pdfFile.name);
+            await contentServicesPage.checkContentIsDisplayed(pdfFile.name);
         });
     });
 

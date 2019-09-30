@@ -32,7 +32,7 @@ export class Polyline {
     isDefaultConditionAvailable: any = false;
     closePath: any = false;
 
-    constructor(uuid, points, strokeWidth, paper) {
+    constructor(_uuid, points, strokeWidth, paper) {
         /* Array on coordinates:
          * points: [{x: 410, y: 110}, 1
          *			{x: 570, y: 110}, 1 2
@@ -192,7 +192,7 @@ export class Polyline {
         return null;
     }
 
-    addNewPoint(position, x, y) {
+    addNewPoint(_position, x, y) {
         //
         for (var i = 0; i < this.getLinesCount(); i++) {
             var line = this.getLine(i);

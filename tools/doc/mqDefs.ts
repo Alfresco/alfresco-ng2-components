@@ -1,7 +1,6 @@
 import { MDAST } from 'mdast';
 import { UNIST } from 'unist';
 import * as mdToString from 'mdast-util-to-string';
-
 import * as jsyaml from 'js-yaml';
 
 export let schema = `
@@ -107,7 +106,6 @@ export class Node {
     }
 }
 
-
 export class Parent {
 
     constructor(protected orig: UNIST.Parent) {}
@@ -161,43 +159,43 @@ export class Parent {
 
 export class Root extends Parent {
     _meta: {};
-    public id: string
+    id: string;
 
     type(): string {
         return 'root';
     }
 
     folder(args): string {
-        let depth = args['depth'];
+        const depth = args['depth'];
+        const relPath = this.id.substring(this.id.indexOf('docs'));
+        const pathSegments = relPath.split(/[\\\/]/);
 
-        let relPath = this.id.substring(this.id.indexOf('docs'));
-        let pathSegments = relPath.split(/[\\\/]/);
         return pathSegments[depth];
     }
 
     metadata(args): string {
         if (!this._meta) {
-            let yamlElement: MDAST.YAML = this.orig.children.find(
+            const yamlElement: any = this.orig.children.find(
                 (ch: UNIST.Node) => (ch.type === 'yaml')
             );
 
             if (yamlElement) {
-                this._meta = jsyaml.safeLoad(yamlElement.value)
+                this._meta = jsyaml.safeLoad(yamlElement.value);
             } else {
                 this._meta = {};
             }
         }
 
         if (this._meta[args['key']]) {
-            return this._meta[args['key']]
+            return this._meta[args['key']];
         } else {
             return '';
         }
     }
 
     heading(args): Heading {
-        let depth = args['depth'];
-        
+        const depth = args['depth'];
+
         return new Heading(<MDAST.Heading> this.orig.children.find(
             (ch: UNIST.Node) =>
                 (ch.type === 'heading') &&
@@ -205,32 +203,28 @@ export class Root extends Parent {
         ));
     }
 
-    
     headings(args): Heading[] {
-        let depth = args['depth'];
+        const depth = args['depth'];
 
         return this.orig.children.filter(
             (ch: UNIST.Node) =>
                  (ch.type === 'heading') &&
                 ((depth === 0) || (depth === (<MDAST.Heading> ch).depth)))
         .map(ch => new Heading(<MDAST.Heading> ch));
-    }    
+    }
 }
 
 export class Heading extends Parent {
-
     depth(): number {
         return (<MDAST.Heading> this.orig).depth;
     }
 }
 
-
 export class Paragraph extends Parent {
 }
 
-
 export class Link extends Parent {
-    
+
     title(): string {
         return (<MDAST.Link> this.orig).title;
     }
@@ -248,9 +242,7 @@ export class Text {
     }
 }
 
-
-let libNamesRegex = /content-services|core|extensions|insights|process-services|process-services-cloud/;
-
+const libNamesRegex = /content-services|core|extensions|insights|process-services|process-services-cloud/;
 
 export class Docset {
     public docs: Root[];
@@ -258,14 +250,14 @@ export class Docset {
     constructor(mdCache) {
         this.docs = [];
 
-        let pathnames = Object.keys(mdCache);
+        const pathnames = Object.keys(mdCache);
 
         pathnames.forEach(pathname => {
 
             if (!pathname.match(/README/) &&
                 pathname.match(libNamesRegex)
             ) {
-                let doc = new Root(mdCache[pathname].mdInTree);
+                const doc = new Root(mdCache[pathname].mdInTree);
                 doc.id = pathname.replace(/\\/g, '/');
                 this.docs.push(doc);
             }

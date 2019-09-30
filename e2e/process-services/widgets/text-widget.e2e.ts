@@ -36,7 +36,7 @@ describe('Text widget', () => {
     const app = resources.Files.WIDGET_CHECK_APP.TEXT;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -57,64 +57,64 @@ describe('Text widget', () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
+
     });
 
     it('[C268157] Should be able to set general properties for Text widget', async () => {
-        const label = widget.textWidget().getFieldLabel(app.FIELD.simpleText);
-        expect(label).toBe('textSimple*');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        const placeHolder = widget.textWidget().getFieldPlaceHolder(app.FIELD.simpleText);
-        expect(placeHolder).toBe('Type something...');
-        widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        const label = await widget.textWidget().getFieldLabel(app.FIELD.simpleText);
+        await expect(label).toBe('textSimple*');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        const placeHolder = await widget.textWidget().getFieldPlaceHolder(app.FIELD.simpleText);
+        await expect(placeHolder).toBe('Type something...');
+        await widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C268170] Min-max length properties', async () => {
-        widget.textWidget().setValue(app.FIELD.textMinMax, 'A');
-        expect(widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toBe('Enter at least 4 characters');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        widget.textWidget().setValue(app.FIELD.textMinMax, 'AAAAAAAAAAA');
-        expect(widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toBe('Enter no more than 10 characters');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.textWidget().setValue(app.FIELD.textMinMax, 'A');
+        await expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter at least 4 characters');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await widget.textWidget().setValue(app.FIELD.textMinMax, 'AAAAAAAAAAA');
+        await expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter no more than 10 characters');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
     });
 
     it('[C268171] Input mask reversed checkbox properties', async () => {
-        widget.textWidget().setValue(app.FIELD.textMask, '18951523');
-        expect(widget.textWidget().getFieldValue(app.FIELD.textMask)).toBe('1895-1523');
+        await widget.textWidget().setValue(app.FIELD.textMask, '18951523');
+        await expect(await widget.textWidget().getFieldValue(app.FIELD.textMask)).toBe('1895-1523');
     });
 
     it('[C268171] Input mask reversed checkbox properties', async () => {
-        widget.textWidget().setValue(app.FIELD.textMaskReversed, '1234567899');
-        expect(widget.textWidget().getFieldValue(app.FIELD.textMaskReversed)).toBe('3456-7899');
+        await widget.textWidget().setValue(app.FIELD.textMaskReversed, '1234567899');
+        await expect(await widget.textWidget().getFieldValue(app.FIELD.textMaskReversed)).toBe('3456-7899');
     });
 
     it('[C268177] Should be able to set Regex Pattern property for Text widget', async () => {
-        widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
-        widget.textWidget().setValue(app.FIELD.textRegexp, 'T');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        expect(widget.textWidget().getErrorMessage(app.FIELD.textRegexp)).toBe('Enter a different value');
-        widget.textWidget().setValue(app.FIELD.textRegexp, 'TE');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
+        await widget.textWidget().setValue(app.FIELD.textRegexp, 'T');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await widget.textWidget().getErrorMessage(app.FIELD.textRegexp)).toContain('Enter a different value');
+        await widget.textWidget().setValue(app.FIELD.textRegexp, 'TE');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C274712] Should be able to set visibility properties for Text widget ', async () => {
-        widget.textWidget().isWidgetNotVisible(app.FIELD.textHidden);
-        widget.textWidget().setValue(app.FIELD.showHiddenText, '1');
-        widget.textWidget().isWidgetVisible(app.FIELD.textHidden);
+        await widget.textWidget().isWidgetNotVisible(app.FIELD.textHidden);
+        await widget.textWidget().setValue(app.FIELD.showHiddenText, '1');
+        await widget.textWidget().isWidgetVisible(app.FIELD.textHidden);
     });
 });

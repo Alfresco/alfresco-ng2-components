@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Task Attachment List Component](../../../lib/process-services/attachment/task-attachment-list.component.ts "Defined in task-attachment-list.component.ts")
+# [Task Attachment List Component](../../../lib/process-services/src/lib/attachment/task-attachment-list.component.ts "Defined in task-attachment-list.component.ts")
 
 Displays documents attached to a specified task.
 
@@ -61,9 +61,9 @@ A default "no content" template is displayed if you don't supply one to override
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| attachmentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment is double-clicked or a view option is selected from the context menu by the user from within the component. Returns a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) representing the clicked object. |
+| attachmentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the attachment is double-clicked or a view option is selected from the context menu by the user from within the component. Returns a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) representing the clicked object. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while fetching the attachments. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment list has fetched all the attachments. Returns a list of attachments. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the attachment list has fetched all the attachments. Returns a list of attachments. |
 
 ## Details
 
@@ -100,7 +100,7 @@ import { UploadService } from '@alfresco/adf-core';
 import { TaskUploadService } from '@alfresco/adf-process-services';
 ```
 
-Make sure you override the [`UploadService`](../../core/services/upload.service.md) with the [`TaskUploadService`](../../../lib/process-services/task-list/services/task-upload.service.ts)
+Make sure you override the [`UploadService`](../../core/services/upload.service.md) with the [`TaskUploadService`](../../../lib/process-services/src/lib/task-list/services/task-upload.service.ts)
 
 ```ts
 @Component({

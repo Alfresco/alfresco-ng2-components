@@ -63,7 +63,7 @@ describe('Search component - Search Page', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, search.active.base, search.active.extension);
         const adminFileNames = Util.generateSequenceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
         search.active.firstFile = fileNames[0];
@@ -91,84 +91,83 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.createEmptyFiles(adminFileNames, newFolderModelUploaded.entry.id);
 
-        browser.driver.sleep(15000);
+        await browser.sleep(15000);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    it('[C260264] Should display message when no results are found', () => {
+    it('[C260264] Should display message when no results are found', async() => {
         const notExistentFileName = StringUtil.generateRandomString();
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
-            .enterTextAndPressEnter(notExistentFileName);
-        searchResultPage.checkNoResultMessageIsDisplayed();
+        await searchDialog.checkSearchBarIsNotVisible();
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(notExistentFileName);
+        await searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C272810] Should display only files corresponding to search', () => {
-        searchDialog
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search.active.firstFile);
+    it('[C272810] Should display only files corresponding to search', async () => {
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(search.active.firstFile);
 
-        searchResultPage.checkContentIsDisplayed(search.active.firstFile);
-        expect(searchResultPage.numberOfResultsDisplayed()).toBe(1);
+        await searchResultPage.checkContentIsDisplayed(search.active.firstFile);
+        await expect(await searchResultPage.numberOfResultsDisplayed()).toBe(1);
     });
 
-    it('[C260267] Should display content when opening a folder from search results', () => {
-        searchDialog
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(emptyFolderModel.name);
+    it('[C260267] Should display content when opening a folder from search results', async () => {
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(emptyFolderModel.name);
 
-        searchResultPage.checkNoResultMessageIsNotDisplayed();
-        searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
-        searchResultPage.navigateToFolder(emptyFolderModel.name);
-        contentServicesPage.currentFolderName().then((result) => {
-            expect(result).toEqual(emptyFolderModel.name);
-        });
+        await searchResultPage.checkNoResultMessageIsNotDisplayed();
+        await searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
+        await searchResultPage.navigateToFolder(emptyFolderModel.name);
+        const result = await contentServicesPage.currentFolderName();
+        await expect(result).toEqual(emptyFolderModel.name);
     });
 
-    it('[C260261] Should be able to delete a file from search results', () => {
-        searchDialog
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search.active.firstFile);
+    it('[C260261] Should be able to delete a file from search results', async () => {
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(search.active.firstFile);
 
-        searchResultPage.checkContentIsDisplayed(search.active.firstFile);
+        await searchResultPage.checkContentIsDisplayed(search.active.firstFile);
 
-        searchResultPage.deleteContent(search.active.firstFile);
+        await searchResultPage.deleteContent(search.active.firstFile);
 
-        searchResultPage.checkNoResultMessageIsDisplayed();
-        searchResultPage.checkContentIsNotDisplayed(search.active.firstFile);
+        await searchResultPage.checkNoResultMessageIsDisplayed();
+        await searchResultPage.checkContentIsNotDisplayed(search.active.firstFile);
 
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
-            .enterTextAndPressEnter(search.active.firstFile);
-        searchResultPage.checkNoResultMessageIsDisplayed();
+        await searchDialog.checkSearchBarIsNotVisible();
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(search.active.firstFile);
+        await searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C272809] Should be able to delete a folder from search results', () => {
-        searchDialog
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(emptyFolderModel.name);
+    it('[C272809] Should be able to delete a folder from search results', async () => {
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(emptyFolderModel.name);
 
-        searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
-        searchResultPage.checkNoResultMessageIsNotDisplayed();
-        searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
-        searchResultPage.deleteContent(emptyFolderModel.name);
-        searchResultPage.checkNoResultMessageIsDisplayed();
+        await searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
+        await searchResultPage.checkNoResultMessageIsNotDisplayed();
+        await searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
+        await searchResultPage.deleteContent(emptyFolderModel.name);
+        await searchResultPage.checkNoResultMessageIsDisplayed();
 
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
-            .enterTextAndPressEnter(emptyFolderModel.name);
-        searchResultPage.checkNoResultMessageIsDisplayed();
+        await searchDialog.checkSearchBarIsNotVisible();
+        await searchDialog.checkSearchIconIsVisible();
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter(emptyFolderModel.name);
+        await searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C286675] Should display results when searching for all elements', () => {
-        searchDialog
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter('*');
+    it('[C286675] Should display results when searching for all elements', async () => {
+        await searchDialog.clickOnSearchIcon();
+        await searchDialog.enterTextAndPressEnter('*');
 
-        searchResultPage.checkNoResultMessageIsNotDisplayed();
+        await searchResultPage.checkNoResultMessageIsNotDisplayed();
     });
 });

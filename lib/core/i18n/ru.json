@@ -72,6 +72,10 @@
           "CANCEL": "Отмена"
         },
         "TITLE": "Добавление файлов в архив, это может занять несколько минут"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Закрыть",
+        "UPDATE": "Обновить"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "Имя",
         "VALUE": "Значение"
       },
+      "NONE": "Нет",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Использовать формат числа",
         "INT_VALIDATION_ERROR": "Использовать формат целого числа"
@@ -184,6 +189,7 @@
         "EDIT": "Редактировать",
         "SAVE": "Сохранить",
         "CANCEL": "Отмена",
+        "CLEAR": "Очистить",
         "TOGGLE": "Переключить значение"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Войти",
       "USERNAME": "Имя пользователя",
       "PASSWORD": "Пароль",
       "REMEMBER": "Запомнить меня"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Показать пароль",
+      "HIDE-PASSWORD": "Спрятать пароль"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Обязательное поле",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Выбрать все",
-      "SELECT_FILE": "Выбрать файл"
+      "SELECT_FILE": "Выбрать файл",
+      "SORT_ASCENDING": "По возрастанию",
+      "SORT_DESCENDING": "По убыванию",
+      "SORT_NONE": "Нет",
+      "ICON_TEXT": "Тип файла {{ type }}",
+      "ICON_DISABLED": "Отменено",
+      "ROW_OPTION_BUTTON": "Действия"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Документ",
+      "FOLDER": "Папка",
+      "PDF": "PDF",
+      "IMAGE": "Изображение",
+      "EXCEL": "Таблица Excel",
+      "WORD": "Документ Word",
+      "POWERPOINT": "Презентация Powerpoint",
+      "VIDEO": "Видео",
+      "AUDIO": "Аудио",
+      "WEBSITE": "Веб-сайт",
+      "ARCHIVE": "Архив",
+      "PRESENTATION": "Презентация",
+      "SPREADSHEET": "Таблица",
+      "MISCELLANEOUS": "Разное"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "из"
     },
     "LOADING": "Загружается",
-    "UNKNOWN_FORMAT": "Не удалось загрузить предварительный просмотр",
+    "UNKNOWN_FORMAT": "Не удалось загрузить предварительный просмотр. Неизвестный формат.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Страница {{ pageNum }}"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Версия",
     "SERVER_SETTINGS": {
       "TITLE": "Параметры сервера",
       "DESCRIPTION": "Значения ниже получены из AppConfigService",
@@ -428,6 +461,18 @@
         "MODE": "Режим",
         "CLUSTER_ENABLED": "Кластер включен",
         "CRYPTODOC_ENABLED": "Cryptodoc включен"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Подключаемые модули",
+      "TABLE_HEADERS": {
+        "ID": "Идентификатор",
+        "NAME": "Имя",
+        "VERSION": "Версия",
+        "VENDOR": "Поставщик",
+        "LICENSE": "Лицензия",
+        "RUNTIME": "Среда выполнения",
+        "DESCRIPTION": "Описание"
       }
     }
   },

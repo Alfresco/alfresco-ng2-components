@@ -15,22 +15,21 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchSortingPickerPage {
 
-    sortingSelector = element(by.css('adf-sorting-picker div[class="mat-select-arrow"]'));
-    orderArrow = element(by.css('adf-sorting-picker button mat-icon'));
-    optionsDropdown = element(by.css('div[class*="mat-select-panel"]'));
+    sortingSelector: ElementFinder = element(by.css('adf-sorting-picker div[class="mat-select-arrow"]'));
+    orderArrow: ElementFinder = element(by.css('adf-sorting-picker button mat-icon'));
+    optionsDropdown: ElementFinder = element(by.css('div .mat-select-panel'));
 
-    sortBy(sortOrder: string, sortType: string | RegExp) {
-        BrowserActions.click(this.sortingSelector);
+    async sortBy(sortOrder: string, sortType: string | RegExp): Promise<void> {
+        await BrowserActions.click(this.sortingSelector);
         const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
-        BrowserActions.click(selectedSortingOption);
-
-        this.sortByOrder(sortOrder);
+        await BrowserActions.click(selectedSortingOption);
+        await this.sortByOrder(sortOrder);
     }
 
     /**
@@ -38,66 +37,57 @@ export class SearchSortingPickerPage {
      *
      * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
      */
-    sortByOrder(sortOrder: string) {
-        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
-        this.orderArrow.getText().then((result) => {
-            if (sortOrder.toLocaleLowerCase() === 'asc') {
-                if (result !== 'arrow_upward') {
-                    browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
-                }
-            } else {
-                if (result === 'arrow_upward') {
-                    browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
-                }
+    async sortByOrder(sortOrder: string): Promise<any> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
+
+        const result = await BrowserActions.getText(this.orderArrow);
+        if (sortOrder.toLocaleLowerCase() === 'asc') {
+            if (result !== 'arrow_upward') {
+                await browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
             }
-        });
+        } else {
+            if (result === 'arrow_upward') {
+                await browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
+            }
+        }
     }
 
-    clickSortingOption(option) {
+    async clickSortingOption(option): Promise<void> {
         const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', option));
-        BrowserActions.click(selectedSortingOption);
-        return this;
+        await BrowserActions.click(selectedSortingOption);
     }
 
-    clickSortingSelector() {
-        BrowserActions.click(this.sortingSelector);
-        return this;
+    async clickSortingSelector(): Promise<void> {
+        await BrowserActions.click(this.sortingSelector);
     }
 
-    checkOptionIsDisplayed(option) {
+    async checkOptionIsDisplayed(option): Promise<void> {
         const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
-        BrowserVisibility.waitUntilElementIsVisible(optionSelector);
-        return this;
+        await BrowserVisibility.waitUntilElementIsVisible(optionSelector);
     }
 
-    checkOptionIsNotDisplayed(option) {
+    async checkOptionIsNotDisplayed(option): Promise<void> {
         const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
-        BrowserVisibility.waitUntilElementIsNotVisible(optionSelector);
-        return this;
+        await BrowserVisibility.waitUntilElementIsNotVisible(optionSelector);
     }
 
-    checkOptionsDropdownIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.optionsDropdown);
-        return this;
+    async checkOptionsDropdownIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.optionsDropdown);
     }
 
-    checkSortingSelectorIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.sortingSelector);
-        return this;
+    async checkSortingSelectorIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.sortingSelector);
     }
 
-    checkOrderArrowIsDownward() {
-        const deferred = protractor.promise.defer();
-        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
-        this.orderArrow.getText().then((result) => {
-            deferred.fulfill(result !== 'arrow_upward');
-        });
-        return deferred.promise;
+    async checkOrderArrowIsDownward(): Promise<boolean> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
+
+        const result = await BrowserActions.getText(this.orderArrow);
+        return result !== 'arrow_upward';
     }
 
-    checkOrderArrowIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
-        return this;
+    async checkOrderArrowIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
     }
 
 }

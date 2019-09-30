@@ -15,63 +15,62 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AttachFormPage {
 
-    noFormMessage = element(by.id('adf-no-form-message'));
-    attachFormButton = element(by.id('adf-no-form-attach-form-button'));
-    completeButton = element(by.id('adf-no-form-complete-button'));
-    formDropdown = element(by.id('form_id'));
-    cancelButton = element(by.id('adf-no-form-cancel-button'));
-    defaultTitle = element(by.css('mat-card-title[class="mat-card-title mat-card-title"]'));
-    attachFormDropdown = element(by.css("div[class='adf-attach-form-row']"));
+    noFormMessage: ElementFinder = element(by.id('adf-no-form-message'));
+    attachFormButton: ElementFinder = element(by.id('adf-no-form-attach-form-button'));
+    completeButton: ElementFinder = element(by.id('adf-no-form-complete-button'));
+    formDropdown: ElementFinder = element(by.id('form_id'));
+    cancelButton: ElementFinder = element(by.id('adf-no-form-cancel-button'));
+    defaultTitle: ElementFinder = element(by.css('mat-card-title[class="mat-card-title mat-card-title"]'));
+    attachFormDropdown: ElementFinder = element(by.css("div[class='adf-attach-form-row']"));
 
-    checkNoFormMessageIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.noFormMessage);
+    async checkNoFormMessageIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noFormMessage);
     }
 
-    checkAttachFormButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
+    async checkAttachFormButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
     }
 
-    checkCompleteButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+    async checkCompleteButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
     }
 
-    clickAttachFormButton() {
-        BrowserActions.click(this.attachFormButton);
+    async clickAttachFormButton(): Promise<void> {
+        await BrowserActions.click(this.attachFormButton);
     }
 
-    checkDefaultFormTitleIsDisplayed(formTitle) {
-        this.defaultTitle.getText().then((result) => {
-            expect(result).toEqual(formTitle);
-        });
+    async checkDefaultFormTitleIsDisplayed(formTitle): Promise<void> {
+        const result = await BrowserActions.getText(this.defaultTitle);
+        await expect(result).toEqual(formTitle);
     }
 
-    checkFormDropdownIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.formDropdown);
+    async checkFormDropdownIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.formDropdown);
     }
 
-    checkCancelButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
+    async checkCancelButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
 
-    clickAttachFormDropdown() {
-        BrowserActions.click(this.attachFormDropdown);
+    async clickAttachFormDropdown(): Promise<void> {
+        await BrowserActions.click(this.attachFormDropdown);
     }
 
-    selectAttachFormOption(option) {
-        BrowserVisibility.waitUntilElementIsClickable(element(by.cssContainingText("mat-option[role='option']", option)));
-        return element(by.cssContainingText("mat-option[role='option']", option)).click();
+    async selectAttachFormOption(option): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsClickable(element(by.cssContainingText("mat-option[role='option']", option)));
+        await BrowserActions.click(element(by.cssContainingText("mat-option[role='option']", option)));
     }
 
-    clickCancelButton() {
-        BrowserActions.click(this.cancelButton);
+    async clickCancelButton(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 
-    checkAttachFormButtonIsDisabled() {
-        return BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="adf-no-form-attach-form-button"][disabled]')));
+    async checkAttachFormButtonIsDisabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="adf-no-form-attach-form-button"][disabled]')));
     }
 }

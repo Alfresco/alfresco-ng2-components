@@ -19,7 +19,7 @@ import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, 
 import { AppConfigService, UserPreferencesService,
          DataTableSchema, UserPreferenceValues,
          PaginatedComponent, PaginationModel,
-         DataRowEvent, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
+         DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -117,11 +117,39 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     multiselect: boolean = false;
 
+    /** Toggles the sticky header mode. */
+    @Input()
+    stickyHeader: boolean = false;
+
     /**
      * Specifies how the table should be sorted. The parameters are for BE sorting.
      */
     @Input()
     sorting: TaskListCloudSortingModel[];
+
+    /** Toggles the data actions column. */
+    @Input()
+    showActions: boolean = false;
+
+    /** Position of the actions dropdown menu. Can be "left" or "right". */
+    @Input()
+    actionsPosition: string = 'right'; // left|right
+
+    /** Toggles custom context menu for the component. */
+    @Input()
+    showContextMenu: boolean = false;
+
+    /** Emitted before the context menu is displayed for a row. */
+    @Output()
+    showRowContextMenu = new EventEmitter<DataCellEvent>();
+
+    /** Emitted before the actions menu is displayed for a row. */
+    @Output()
+    showRowActionsMenu = new EventEmitter<DataCellEvent>();
+
+    /** Emitted when the user executes a row action. */
+    @Output()
+    executeRowAction = new EventEmitter<DataRowActionEvent>();
 
     /** Emitted when a task in the list is clicked */
     @Output()
@@ -146,7 +174,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     size: number;
     skipCount: number = 0;
     currentInstanceId: any;
-    isLoading = false;
+    isLoading = true;
     selectedInstances: any[];
 
     private onDestroy$ = new Subject<boolean>();
@@ -258,6 +286,18 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             this.currentInstanceId = event.detail.row.getValue('entry.id');
             this.rowClick.emit(this.currentInstanceId);
         }
+    }
+
+    onShowRowActionsMenu(event: DataCellEvent) {
+        this.showRowActionsMenu.emit(event);
+    }
+
+    onShowRowContextMenu(event: DataCellEvent) {
+        this.showRowContextMenu.emit(event);
+    }
+
+    onExecuteRowAction(row: DataRowActionEvent) {
+        this.executeRowAction.emit(row);
     }
 
     private createRequestNode() {

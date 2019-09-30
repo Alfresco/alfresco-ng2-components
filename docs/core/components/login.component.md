@@ -334,6 +334,18 @@ must contain the full URI value:
 > In the default ADF application configurations the `silent-refresh.html` file
 > gets automatically copied to the application output when building for production.
 
+#### Public urls
+
+To enable public accessible urls, that don't need authentication, these must be defined using `publicUrls` property. The list supports absolute urls or partial urls that are valid [minimatch](https://github.com/isaacs/minimatch#readme) patterns
+
+```json
+{
+    ...
+    "publicUrls": ["http://<ADDRESS>/my-app/some/path", "**/my-app/*/path"]
+    ...
+}
+```
+
 ### Kerberos
 
 Setting the `withCredentials` property to true in the `auth` section of

@@ -16,33 +16,33 @@
  */
 
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
-import { element, by, browser } from 'protractor';
+import { element, by, browser, ElementFinder } from 'protractor';
 
 export class ProcessServiceTabBarPage {
 
-    tasksButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Tasks')).first();
-    processButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Process')).first();
-    reportsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Reports')).first();
-    settingsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
-    reportsButtonSelected = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div[aria-selected="true"]', 'Reports')).first();
+    tasksButton: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Tasks')).first();
+    processButton: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Process')).first();
+    reportsButton: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Reports')).first();
+    settingsButton: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
+    reportsButtonSelected: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div[aria-selected="true"]', 'Reports')).first();
 
-    clickTasksButton() {
-        BrowserActions.click(this.tasksButton);
-        browser.sleep(700);
+    async clickTasksButton(): Promise<void> {
+        await BrowserActions.click(this.tasksButton);
+        await browser.sleep(300);
     }
 
-    clickProcessButton() {
-        BrowserActions.click(this.processButton);
-        browser.sleep(700);
+    async clickProcessButton(): Promise<void> {
+        await BrowserActions.click(this.processButton);
+        await browser.sleep(300);
     }
 
-    clickSettingsButton() {
-        BrowserActions.click(this.settingsButton);
-        browser.sleep(700);
+    async clickSettingsButton(): Promise<void> {
+        await BrowserActions.click(this.settingsButton);
+        await browser.sleep(300);
     }
 
-    clickReportsButton() {
-        BrowserActions.click(this.reportsButton);
-        return BrowserVisibility.waitUntilElementIsVisible(this.reportsButtonSelected);
+    async clickReportsButton(): Promise<void> {
+        await BrowserActions.click(this.reportsButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.reportsButtonSelected);
     }
 }

@@ -53,7 +53,7 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -70,7 +70,7 @@ describe('Viewer', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, site.entry.guid);
-        done();
+
     });
 
     afterAll(async () => {
@@ -80,14 +80,14 @@ describe('Viewer', () => {
     it('[C272813] Should be redirected to site when opening and closing a file in a site', async () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.goToSite(site);
-        contentServicesPage.checkAcsContainer();
+        await navigationBarPage.goToSite(site);
+        await contentServicesPage.checkAcsContainer();
 
-        viewerPage.viewFile(pngFileUploaded.entry.name);
+        await viewerPage.viewFile(pngFileUploaded.entry.name);
 
-        viewerPage.checkImgViewerIsDisplayed();
+        await viewerPage.checkImgViewerIsDisplayed();
 
-        viewerPage.clickCloseButton();
+        await viewerPage.clickCloseButton();
     });
 
     describe('Other Folder Uploaded', () => {
@@ -95,32 +95,30 @@ describe('Viewer', () => {
         let uploadedOthers;
         let otherFolderUploaded;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             otherFolderUploaded = await uploadActions.createFolder(otherFolderInfo.name, '-my-');
 
             uploadedOthers = await uploadActions.uploadFolder(otherFolderInfo.location, otherFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
+            await contentServicesPage.goToDocumentList();
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await uploadActions.deleteFileOrFolder(otherFolderUploaded.entry.id);
-            done();
+
         });
 
-        it('[C280012] Should be possible to open any other Document supported extension', () => {
-            contentServicesPage.doubleClickRow('other');
-
-            uploadedOthers.forEach((currentFile) => {
-                if (currentFile.entry.name !== '.DS_Store') {
-                    contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkFileIsLoaded();
-                    viewerPage.clickCloseButton();
+        it('[C280012] Should be possible to open any other Document supported extension', async () => {
+            await contentServicesPage.doubleClickRow('other');
+            for (const file of uploadedOthers) {
+                if (file.entry.name !== '.DS_Store') {
+                    await contentServicesPage.doubleClickRow(file.entry.name);
+                    await viewerPage.checkFileIsLoaded();
+                    await viewerPage.clickCloseButton();
                 }
-            });
+            }
         });
 
     });

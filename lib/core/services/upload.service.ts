@@ -222,8 +222,7 @@ export class UploadService {
                     emitter.emit({ value: data });
                 }
             })
-            .catch((err) => {
-            });
+            .catch(() => {});
 
         return promise;
     }

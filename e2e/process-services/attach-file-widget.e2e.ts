@@ -45,7 +45,7 @@ describe('Start Task - Task App', () => {
     const pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const appFields = app.form_fields;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
         const apps = new AppsActions();
 
@@ -64,10 +64,9 @@ describe('Start Task - Task App', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -77,28 +76,26 @@ describe('Start Task - Task App', () => {
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
 
-        done();
     });
 
-    it('[C274690] Should be able to open a file attached to a start form', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+    it('[C274690] Should be able to open a file attached to a start form', async () => {
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        taskPage
-            .createNewTask()
-            .addName('View file')
-            .addForm(app.formName)
-            .clickStartButton();
+        const newTask = await taskPage.createNewTask();
+        await newTask.addName('View file');
+        await newTask.addForm(app.formName);
+        await newTask.clickStartButton();
 
-        widget.attachFileWidget().attachFile(appFields.attachFile_id, browser.params.testConfig.main.rootPath + pdfFile.location);
-        widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
+        await widget.attachFileWidget().attachFile(appFields.attachFile_id, browser.params.testConfig.main.rootPath + pdfFile.location);
+        await widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
 
-        widget.attachFileWidget().viewFile(pdfFile.name);
-        viewerPage.checkFileContent('1', pdfFile.firstPageText);
-        viewerPage.checkCloseButtonIsDisplayed();
-        viewerPage.clickCloseButton();
-        taskPage.tasksListPage().checkContentIsDisplayed('View file');
+        await widget.attachFileWidget().viewFile(pdfFile.name);
+        await viewerPage.checkFileContent('1', pdfFile.firstPageText);
+        await viewerPage.checkCloseButtonIsDisplayed();
+        await viewerPage.clickCloseButton();
+        await taskPage.tasksListPage().checkContentIsDisplayed('View file');
     });
 
 });

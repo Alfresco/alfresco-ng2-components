@@ -65,7 +65,11 @@ export class FileUploadingListComponent {
      * @memberOf FileUploadingListComponent
      */
     cancelFile(file: FileModel): void {
-        this.uploadService.cancelUpload(file);
+        if (file.status === FileUploadStatus.Pending) {
+            file.status = FileUploadStatus.Cancelled;
+        } else {
+            this.uploadService.cancelUpload(file);
+        }
     }
 
     /**
@@ -161,8 +165,9 @@ export class FileUploadingListComponent {
         this.files
             .filter(
                 (item) =>
-                    item.data.entry.id === file.data.entry.id &&
-                    item.options.newVersion
+                    item.options.newVersion &&
+                    item.data.entry.id === file.data.entry.id
+
             )
             .map((item) => {
                 item.status = FileUploadStatus.Deleted;

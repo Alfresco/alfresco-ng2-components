@@ -68,7 +68,7 @@ describe('Process Header cloud component', () => {
 
         let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
 
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
@@ -101,63 +101,63 @@ describe('Process Header cloud component', () => {
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            done();
+
         });
 
-        afterAll(async(done) => {
+        afterAll(async() => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-            done();
+
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
-            appListCloudComponent.checkApsContainer();
+        beforeEach(async () => {
+            await navigationBarPage.navigateToProcessServicesCloudPage();
+            await appListCloudComponent.checkApsContainer();
         });
 
-        it('[C305010] Should display process details for running process', () => {
-            appListCloudComponent.goToApp(simpleApp);
-            tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-            processCloudDemoPage.clickOnProcessFilters();
+        it('[C305010] Should display process details for running process', async () => {
+            await appListCloudComponent.goToApp(simpleApp);
+            await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
+            await processCloudDemoPage.clickOnProcessFilters();
 
-            processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
-            processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcess.entry.name);
+            await processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
+            await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcess.entry.name);
 
-            processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
-            processCloudDemoPage.processListCloudComponent().selectRow(runningProcess.entry.name);
-            expect(processHeaderCloudPage.getId()).toEqual(runningProcess.entry.id);
-            expect(processHeaderCloudPage.getName()).toEqual(runningProcess.entry.name);
-            expect(processHeaderCloudPage.getStatus()).toEqual(runningProcess.entry.status);
-            expect(processHeaderCloudPage.getInitiator()).toEqual(runningProcess.entry.initiator);
-            expect(processHeaderCloudPage.getStartDate()).toEqual(runningCreatedDate);
-            expect(processHeaderCloudPage.getParentId()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_PARENT);
-            expect(processHeaderCloudPage.getBusinessKey()).toEqual(runningProcess.entry.businessKey);
-            expect(processHeaderCloudPage.getLastModified()).toEqual(runningCreatedDate);
+            await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
+            await processCloudDemoPage.processListCloudComponent().selectRow(runningProcess.entry.name);
+            await expect(await processHeaderCloudPage.getId()).toEqual(runningProcess.entry.id);
+            await expect(await processHeaderCloudPage.getName()).toEqual(runningProcess.entry.name);
+            await expect(await processHeaderCloudPage.getStatus()).toEqual(runningProcess.entry.status);
+            await expect(await processHeaderCloudPage.getInitiator()).toEqual(runningProcess.entry.initiator);
+            await expect(await processHeaderCloudPage.getStartDate()).toEqual(runningCreatedDate);
+            await expect(await processHeaderCloudPage.getParentId()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_PARENT);
+            await expect(await processHeaderCloudPage.getBusinessKey()).toEqual(runningProcess.entry.businessKey);
+            await expect(await processHeaderCloudPage.getLastModified()).toEqual(runningCreatedDate);
         });
 
-        it('[C305008] Should display process details for completed process', () => {
-            appListCloudComponent.goToApp(subProcessApp);
-            tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-            processCloudDemoPage.clickOnProcessFilters();
+        it('[C305008] Should display process details for completed process', async () => {
+            await appListCloudComponent.goToApp(subProcessApp);
+            await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
+            await processCloudDemoPage.clickOnProcessFilters();
 
-            processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
-            processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('Completed Processes');
-            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(childCompleteProcess.entry.name);
+            await processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
+            await processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
+            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Completed Processes');
+            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(childCompleteProcess.entry.name);
 
-            processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
-            processCloudDemoPage.processListCloudComponent().selectRowById(childCompleteProcess.entry.id);
+            await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
+            await processCloudDemoPage.processListCloudComponent().selectRowById(childCompleteProcess.entry.id);
 
-            expect(processHeaderCloudPage.getId()).toEqual(childCompleteProcess.entry.id);
-            expect(processHeaderCloudPage.getName()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_NAME);
-            expect(processHeaderCloudPage.getStatus()).toEqual(childCompleteProcess.entry.status);
-            expect(processHeaderCloudPage.getInitiator()).toEqual(childCompleteProcess.entry.initiator);
-            expect(processHeaderCloudPage.getStartDate()).toEqual(completedCreatedDate);
-            expect(processHeaderCloudPage.getParentId()).toEqual(childCompleteProcess.entry.parentId);
-            expect(processHeaderCloudPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_BUSINESS_KEY);
-            expect(processHeaderCloudPage.getLastModified()).toEqual(completedCreatedDate);
+            await expect(await processHeaderCloudPage.getId()).toEqual(childCompleteProcess.entry.id);
+            await expect(await processHeaderCloudPage.getName()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_NAME);
+            await expect(await processHeaderCloudPage.getStatus()).toEqual(childCompleteProcess.entry.status);
+            await expect(await processHeaderCloudPage.getInitiator()).toEqual(childCompleteProcess.entry.initiator);
+            await expect(await processHeaderCloudPage.getStartDate()).toEqual(completedCreatedDate);
+            await expect(await processHeaderCloudPage.getParentId()).toEqual(childCompleteProcess.entry.parentId);
+            await expect(await processHeaderCloudPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_BUSINESS_KEY);
+            await expect(await processHeaderCloudPage.getLastModified()).toEqual(completedCreatedDate);
         });
 
     });

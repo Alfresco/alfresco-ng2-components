@@ -117,7 +117,8 @@
       "REMOVE_FILE": "Eliminar fichero cargado"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Cancelado"
+      "FILE_CANCELED_STATUS": "Cancelado",
+      "FILE_DONE_STATUS": "Cargado"
     },
     "CONFIRMATION": {
       "BUTTON": {
@@ -130,7 +131,20 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Versión del fichero"
+      "VERSION": "Versión del fichero  {{ version }}",
+      "DIALOG": "Lista de carga",
+      "DIALOG_MAXIMIZE": "Maximizar diálogo de carga",
+      "DIALOG_MINIMIZE": "Minimizar diálogo de carga",
+      "DIALOG_CLOSE": "Cerrar diálogo de carga",
+      "CANCEL_ALL": "Cancelar todos los ficheros en carga",
+      "REMOVE_FILE": "Quitar fichero cargado {{ file }}",
+      "CANCEL_FILE": "Cancelar fichero programado {{ file }}",
+      "CANCEL_FILE_UPLOAD": "Cancelar carga de fichero {{ file }}",
+      "UPLOAD_FILE_ERROR": "Error de carga {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "Confirmar cancelación",
+        "CONTINUE": "Continuar carga"
+      }
     }
   },
   "FILE_UPLOAD": {
@@ -200,7 +214,7 @@
         "CLEAR-ALL": "Borrar todo",
         "SHOW-MORE": "Mostrar más",
         "SHOW-LESS": "Mostrar menos",
-        "FILTER-CATEGORY": "Filtrar categoría"
+        "FILTER-CATEGORY": "Filtrar por categoría"
       },
       "BUTTONS": {
         "CLEAR-ALL": {
@@ -368,6 +382,17 @@
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Propiedades de la biblioteca actualizadas"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Ruta de navegación",
+      "CURRENT_PAGE": "Página"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Abrir {{ name }}"
     }
   }
 }

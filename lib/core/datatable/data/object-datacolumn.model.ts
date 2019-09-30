@@ -16,13 +16,13 @@
  */
 
 import { TemplateRef } from '@angular/core';
-import { DataColumn } from './data-column.model';
+import { DataColumn, DataColumnType } from './data-column.model';
 
 // Simple implementation of the DataColumn interface.
 export class ObjectDataColumn implements DataColumn {
 
     key: string;
-    type: string; // text|image
+    type: DataColumnType;
     format: string;
     sortable: boolean;
     title: string;

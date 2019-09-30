@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule, TranslationService } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 
 import { LazyLoadingRoutes } from './lazy-loading.routes';
 import { LazyLoadingComponent } from './lazy-loading.component';
@@ -30,7 +30,4 @@ import { LazyLoadingComponent } from './lazy-loading.component';
         LazyLoadingComponent
     ]
 })
-export class LazyLoadingModule {
-    constructor(translation: TranslationService) {
-    }
-}
+export class LazyLoadingModule {}

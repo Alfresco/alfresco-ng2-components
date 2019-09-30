@@ -15,102 +15,88 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, ElementFinder, Locator, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class SearchDialog {
 
-    searchIcon = element(by.css(`button[class*='adf-search-button']`));
-    searchBar = element(by.css(`adf-search-control input`));
-    searchBarExpanded = element(by.css(`adf-search-control mat-form-field[class*="mat-focused"] input`));
-    noResultMessage = element(by.css(`p[class*='adf-search-fixed-text']`));
-    rowsAuthor = by.css(`div[class='mat-list-text'] p[class*='adf-search-fixed-text']`);
-    completeName = by.css(`h4[class*='adf-search-fixed-text']`);
-    highlightName = by.css(`.adf-highlight`);
-    searchDialog = element(by.css(`mat-list[id='autocomplete-search-result-list']`));
+    searchIcon: ElementFinder = element(by.css(`button[class*='adf-search-button']`));
+    searchBar: ElementFinder = element(by.css(`adf-search-control input`));
+    searchBarExpanded: ElementFinder = element(by.css(`adf-search-control mat-form-field[class*="mat-focused"] input`));
+    noResultMessage: ElementFinder = element(by.css(`p[class*='adf-search-fixed-text']`));
+    rowsAuthor: Locator = by.css(`div[class='mat-list-text'] p[class*='adf-search-fixed-text']`);
+    completeName: Locator = by.css(`h4[class*='adf-search-fixed-text']`);
+    highlightName: Locator = by.css(`.adf-highlight`);
+    searchDialog: ElementFinder = element(by.css(`mat-list[id='autocomplete-search-result-list']`));
 
-    pressDownArrowAndEnter() {
-        element(by.css(`adf-search-control div input`)).sendKeys(protractor.Key.ARROW_DOWN);
-        return browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    async pressDownArrowAndEnter(): Promise<void> {
+        await element(by.css(`adf-search-control div input`)).sendKeys(protractor.Key.ARROW_DOWN);
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    clickOnSearchIcon() {
-        BrowserActions.click(this.searchIcon);
-        return this;
+    async clickOnSearchIcon(): Promise<void> {
+        await BrowserActions.click(this.searchIcon);
     }
 
-    checkSearchIconIsVisible() {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchIcon);
-        return this;
+    async checkSearchIconIsVisible(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchIcon);
     }
 
-    checkSearchBarIsVisible() {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
-        return this;
+    async checkSearchBarIsVisible(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
     }
 
-    checkSearchBarIsNotVisible() {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
-        BrowserVisibility.waitUntilElementIsNotVisible(this.searchBarExpanded);
-        return this;
+    async checkSearchBarIsNotVisible(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.searchBarExpanded);
     }
 
-    checkNoResultMessageIsDisplayed() {
-        browser.driver.sleep(500);
-        BrowserVisibility.waitUntilElementIsVisible(this.noResultMessage);
-        return this;
+    async checkNoResultMessageIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noResultMessage);
     }
 
-    checkNoResultMessageIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.noResultMessage);
-        return this;
+    async checkNoResultMessageIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.noResultMessage);
     }
 
-    enterText(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
-        BrowserActions.clickExecuteScript('adf-search-control input');
-        this.searchBar.sendKeys(text);
-        return this;
+    async enterText(text): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
+        await this.searchBar.sendKeys(text);
     }
 
-    enterTextAndPressEnter(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
-        BrowserActions.clickExecuteScript('adf-search-control input');
-        this.searchBar.sendKeys(text);
-        this.searchBar.sendKeys(protractor.Key.ENTER);
-        return this;
+    async enterTextAndPressEnter(text): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
+        await this.searchBar.sendKeys(text);
+        await this.searchBar.sendKeys(protractor.Key.ENTER);
     }
 
-    resultTableContainsRow(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchDialog);
-        BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(name));
-        return this;
+    async resultTableContainsRow(name): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchDialog);
+        await BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(name));
     }
 
-    clickOnSpecificRow(name) {
-        this.resultTableContainsRow(name);
-        this.getRowByRowName(name).click();
-        return this;
+    async clickOnSpecificRow(name): Promise<void> {
+        await this.resultTableContainsRow(name);
+        await BrowserActions.click(this.getRowByRowName(name));
     }
 
-    getRowByRowName(name) {
+    getRowByRowName(name): ElementFinder {
         return element(by.css(`mat-list-item[data-automation-id='autocomplete_for_${name}']`));
     }
 
-    getSpecificRowsHighlightName(name) {
-        return BrowserActions.getText(this.getRowByRowName(name).element(this.highlightName));
+    async getSpecificRowsHighlightName(name): Promise<string> {
+        return await BrowserActions.getText(this.getRowByRowName(name).element(this.highlightName));
     }
 
-    getSpecificRowsCompleteName(name) {
-        return BrowserActions.getText(this.getRowByRowName(name).element(this.completeName));
+    async getSpecificRowsCompleteName(name): Promise<string> {
+        return await BrowserActions.getText(this.getRowByRowName(name).element(this.completeName));
     }
 
-    getSpecificRowsAuthor(name) {
-        return BrowserActions.getText(this.getRowByRowName(name).element(this.rowsAuthor));
+    async getSpecificRowsAuthor(name): Promise<string> {
+        return await BrowserActions.getText(this.getRowByRowName(name).element(this.rowsAuthor));
     }
 
-    clearText() {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
-        return this.searchBar.clear();
+    async clearText(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
+        await this.searchBar.clear();
     }
 }

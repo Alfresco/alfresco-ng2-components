@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [Process Instance Tasks component](../../../lib/process-services/process-list/components/process-instance-tasks.component.ts "Defined in process-instance-tasks.component.ts")
+# [Process Instance Tasks component](../../../lib/process-services/src/lib/process-list/components/process-instance-tasks.component.ts "Defined in process-instance-tasks.component.ts")
 
 Lists both the active and completed tasks associated with a particular process instance
 
@@ -24,7 +24,7 @@ Lists both the active and completed tasks associated with a particular process i
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| processInstanceDetails | [`ProcessInstance`](../../../lib/process-services/process-list/models/process-instance.model.ts) |  | (**required**) The ID of the process instance to display tasks for. |
+| processInstanceDetails | [`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts) |  | (**required**) The ID of the process instance to display tasks for. |
 | showRefreshButton | `boolean` | true | Toggles whether to show a refresh button next to the list of tasks to allow it to be updated from the server. |
 
 ### Events
@@ -32,4 +32,4 @@ Lists both the active and completed tasks associated with a particular process i
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| taskClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsEvent`](../../../lib/process-services/task-list/models/task-details.event.ts)`>` | Emitted when a task is clicked. |
+| taskClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsEvent`](../../../lib/process-services/src/lib/task-list/models/task-details.event.ts)`>` | Emitted when a task is clicked. |

@@ -18,58 +18,59 @@
 import { element, by, browser } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
+import { ElementFinder } from 'protractor';
 
 export class SearchRadioPage {
 
-    filter;
-    showMoreButton = element(by.css('adf-search-radio button[title="Show more"]'));
-    showLessButton = element(by.css('adf-search-radio button[title="Show less"]'));
+    filter: ElementFinder;
+    showMoreButton: ElementFinder = element(by.css('adf-search-radio button[title="Show more"]'));
+    showLessButton: ElementFinder = element(by.css('adf-search-radio button[title="Show less"]'));
 
-    constructor(filter) {
+    constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 
-    checkFilterRadioButtonIsDisplayed(filterName: string) {
+    async checkFilterRadioButtonIsDisplayed(filterName: string): Promise<void> {
         const filterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"]'));
-        return BrowserVisibility.waitUntilElementIsVisible(filterType);
+        await BrowserVisibility.waitUntilElementIsVisible(filterType);
     }
 
-    checkFilterRadioButtonIsChecked(filterName: string) {
+    async checkFilterRadioButtonIsChecked(filterName: string): Promise<void> {
         const selectedFilterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"][class*="checked"]'));
-        return BrowserVisibility.waitUntilElementIsVisible(selectedFilterType);
+        await BrowserVisibility.waitUntilElementIsVisible(selectedFilterType);
     }
 
-    clickFilterRadioButton(filterName: string) {
-        browser.executeScript(`document.querySelector('[data-automation-id="search-radio-${filterName}"] input').click();`);
+    async clickFilterRadioButton(filterName: string): Promise<void> {
+        await browser.executeScript(`document.querySelector('[data-automation-id="search-radio-${filterName}"] input').click();`);
     }
 
-    getRadioButtonsNumberOnPage() {
+    async getRadioButtonsNumberOnPage(): Promise<number> {
         const radioButtons = element.all(by.css('mat-radio-button'));
         return radioButtons.count();
     }
 
-    checkShowMoreButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.showMoreButton);
+    async checkShowMoreButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.showMoreButton);
     }
 
-    checkShowLessButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.showLessButton);
+    async checkShowLessButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.showLessButton);
     }
 
-    checkShowMoreButtonIsNotDisplayed() {
-        return BrowserVisibility.waitUntilElementIsNotVisible(this.showMoreButton);
+    async checkShowMoreButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.showMoreButton);
     }
 
-    checkShowLessButtonIsNotDisplayed() {
-        return BrowserVisibility.waitUntilElementIsNotVisible(this.showLessButton);
+    async checkShowLessButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.showLessButton);
     }
 
-    clickShowMoreButton() {
-        return BrowserActions.click(this.showMoreButton);
+    async clickShowMoreButton(): Promise<void> {
+        await BrowserActions.click(this.showMoreButton);
     }
 
-    clickShowLessButton() {
-        return BrowserActions.click(this.showLessButton);
+    async clickShowLessButton(): Promise<void> {
+        await BrowserActions.click(this.showLessButton);
     }
 
 }

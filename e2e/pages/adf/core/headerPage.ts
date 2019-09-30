@@ -15,117 +15,116 @@
  * limitations under the License.
  */
 
-import { element, by, protractor } from 'protractor';
+import { element, by, protractor, ElementFinder } from 'protractor';
 
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class HeaderPage {
 
-    checkBox = element(by.cssContainingText('.mat-checkbox-label', 'Show menu button'));
-    headerColor = element(by.css('option[value="primary"]'));
-    titleInput = element(by.css('input[name="title"]'));
-    iconInput = element(by.css('input[placeholder="URL path"]'));
-    hexColorInput = element(by.css('input[placeholder="hex color code"]'));
-    logoHyperlinkInput = element(by.css('input[placeholder="Redirect URL"]'));
-    logoTooltipInput = element(by.css('input[placeholder="Tooltip text"]'));
-    positionStart = element.all(by.css('mat-radio-button[value="start"]')).first();
-    positionEnd = element.all(by.css('mat-radio-button[value="end"]')).first();
-    sideBarPositionRight = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));
-    sideBarPositionLeft = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
+    checkBox: ElementFinder = element(by.cssContainingText('.mat-checkbox-label', 'Show menu button'));
+    headerColor: ElementFinder = element(by.css('option[value="primary"]'));
+    titleInput: ElementFinder = element(by.css('input[name="title"]'));
+    iconInput: ElementFinder = element(by.css('input[placeholder="URL path"]'));
+    hexColorInput: ElementFinder = element(by.css('input[placeholder="hex color code"]'));
+    logoHyperlinkInput: ElementFinder = element(by.css('input[placeholder="Redirect URL"]'));
+    logoTooltipInput: ElementFinder = element(by.css('input[placeholder="Tooltip text"]'));
+    positionStart: ElementFinder = element.all(by.css('mat-radio-button[value="start"]')).first();
+    positionEnd: ElementFinder = element.all(by.css('mat-radio-button[value="end"]')).first();
+    sideBarPositionRight: ElementFinder = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));
+    sideBarPositionLeft: ElementFinder = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
 
-    checkShowMenuCheckBoxIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
+    async checkShowMenuCheckBoxIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
     }
 
-    checkChooseHeaderColourIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.headerColor);
+    async checkChooseHeaderColourIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.headerColor);
     }
 
-    checkChangeTitleIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
+    async checkChangeTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
     }
 
-    checkChangeUrlPathIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
+    async checkChangeUrlPathIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
     }
 
-    clickShowMenuButton() {
-        const checkBox = element(by.css('mat-checkbox'));
-        BrowserVisibility.waitUntilElementIsVisible(checkBox);
-        return checkBox.get(0).click();
+    async clickShowMenuButton(): Promise<void> {
+        const checkBox: ElementFinder = element(by.css('mat-checkbox'));
+        await BrowserActions.click(checkBox.get(0));
     }
 
-    changeHeaderColor(color) {
-        const headerColor = element(by.css('option[value="' + color + '"]'));
-        BrowserActions.click(headerColor);
+    async changeHeaderColor(color): Promise<void> {
+        const headerColor: ElementFinder = element(by.css('option[value="' + color + '"]'));
+        await BrowserActions.click(headerColor);
     }
 
-    checkAppTitle(name) {
-        const title = element(by.cssContainingText('.adf-app-title', name));
-        return BrowserVisibility.waitUntilElementIsVisible(title);
+    async checkAppTitle(name): Promise<void> {
+        const title: ElementFinder = element(by.cssContainingText('.adf-app-title', name));
+        await BrowserVisibility.waitUntilElementIsVisible(title);
     }
 
-    addTitle(title) {
-        BrowserActions.click(this.titleInput);
-        this.titleInput.sendKeys(title);
-        this.titleInput.sendKeys(protractor.Key.ENTER);
+    async addTitle(title): Promise<void> {
+        await BrowserActions.click(this.titleInput);
+        await BrowserActions.clearSendKeys(this.titleInput, title);
+        await this.titleInput.sendKeys(protractor.Key.ENTER);
     }
 
-    checkIconIsDisplayed(url) {
-        const icon = element(by.css('img[src="' + url + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(icon);
+    async checkIconIsDisplayed(url): Promise<void> {
+        const icon: ElementFinder = element(by.css('img[src="' + url + '"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(icon);
     }
 
-    addIcon(url) {
-        BrowserActions.click(this.iconInput);
-        this.iconInput.sendKeys(url);
-        this.iconInput.sendKeys(protractor.Key.ENTER);
+    async addIcon(url): Promise<void> {
+        await BrowserActions.click(this.iconInput);
+        await BrowserActions.clearSendKeys(this.iconInput, url);
+        await this.iconInput.sendKeys(protractor.Key.ENTER);
     }
 
-    checkHexColorInputIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
+    async checkHexColorInputIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
     }
 
-    checkLogoHyperlinkInputIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
+    async checkLogoHyperlinkInputIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
     }
 
-    checkLogoTooltipInputIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
+    async checkLogoTooltipInputIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
     }
 
-    addHexCodeColor(hexCode) {
-        BrowserActions.click(this.hexColorInput);
-        this.hexColorInput.sendKeys(hexCode);
-        return this.hexColorInput.sendKeys(protractor.Key.ENTER);
+    async addHexCodeColor(hexCode): Promise<void> {
+        await BrowserActions.click(this.hexColorInput);
+        await this.hexColorInput.sendKeys(hexCode);
+        await this.hexColorInput.sendKeys(protractor.Key.ENTER);
     }
 
-    addLogoHyperlink(hyperlink) {
-        BrowserActions.click(this.logoHyperlinkInput);
-        this.logoHyperlinkInput.sendKeys(hyperlink);
-        return this.logoHyperlinkInput.sendKeys(protractor.Key.ENTER);
+    async addLogoHyperlink(hyperlink): Promise<void> {
+        await BrowserActions.click(this.logoHyperlinkInput);
+        await this.logoHyperlinkInput.sendKeys(hyperlink);
+        await this.logoHyperlinkInput.sendKeys(protractor.Key.ENTER);
     }
 
-    addLogoTooltip(tooltip) {
-        BrowserActions.click(this.logoTooltipInput);
-        this.logoTooltipInput.sendKeys(tooltip);
-        return this.logoTooltipInput.sendKeys(protractor.Key.ENTER);
+    async addLogoTooltip(tooltip): Promise<void> {
+        await BrowserActions.click(this.logoTooltipInput);
+        await this.logoTooltipInput.sendKeys(tooltip);
+        await this.logoTooltipInput.sendKeys(protractor.Key.ENTER);
     }
 
-    sideBarPositionStart() {
-        BrowserActions.click(this.positionStart);
+    async sideBarPositionStart(): Promise<void> {
+        await BrowserActions.click(this.positionStart);
     }
 
-    sideBarPositionEnd() {
-        BrowserActions.click(this.positionEnd);
+    async sideBarPositionEnd(): Promise<void> {
+        await BrowserActions.click(this.positionEnd);
     }
 
-    checkSidebarPositionStart() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
+    async checkSidebarPositionStart(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
     }
 
-    checkSidebarPositionEnd() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
+    async checkSidebarPositionEnd(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
     }
 
 }

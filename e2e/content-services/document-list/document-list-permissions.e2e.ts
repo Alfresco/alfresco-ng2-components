@@ -40,9 +40,9 @@ describe('Document List Component', () => {
         });
     });
 
-    describe('Permission Message', async () => {
+    describe('Permission Message', () => {
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             acsUser = new AcsUserModel();
             const siteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
             const privateSiteBody = { visibility: 'PRIVATE', title: siteName };
@@ -55,36 +55,35 @@ describe('Document List Component', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            done();
         });
 
-        afterAll(async (done) => {
+        afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
             await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
-            navBar.openLanguageMenu();
-            navBar.chooseLanguage('English');
-            done();
+            await navBar.openLanguageMenu();
+            await navBar.chooseLanguage('English');
+
         });
 
-        it('[C217334] Should display a message when accessing file without permissions', () => {
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
-            expect(errorPage.getErrorCode()).toBe('403');
-            expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
+        it('[C217334] Should display a message when accessing file without permissions', async () => {
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await expect(await errorPage.getErrorCode()).toBe('403');
+            await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
 
-        it('[C279924] Should display custom message when accessing a file without permissions', () => {
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.enableCustomPermissionMessage();
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
-            expect(errorPage.getErrorCode()).toBe('403');
+        it('[C279924] Should display custom message when accessing a file without permissions', async () => {
+            await contentServicesPage.goToDocumentList();
+            await contentServicesPage.enableCustomPermissionMessage();
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await expect(await errorPage.getErrorCode()).toBe('403');
         });
 
-        it('[C279925] Should display translated message when accessing a file without permissions if language is changed', () => {
-            navBar.openLanguageMenu();
-            navBar.chooseLanguage('Italiano');
-            browser.sleep(2000);
-            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
-            expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
+        it('[C279925] Should display translated message when accessing a file without permissions if language is changed', async () => {
+            await navBar.openLanguageMenu();
+            await navBar.chooseLanguage('Italiano');
+            await browser.sleep(2000);
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await expect(await errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
         });
 
     });

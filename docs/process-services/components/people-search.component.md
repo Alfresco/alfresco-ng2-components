@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# [People Search component](../../../lib/process-services/people/components/people-search/people-search.component.ts "Defined in people-search.component.ts")
+# [People Search component](../../../lib/process-services/src/lib/people/components/people-search/people-search.component.ts "Defined in people-search.component.ts")
 
 Searches users/people.
 
@@ -39,7 +39,7 @@ special sub-components in the body of the `<adf-people-search>` element:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| closeSearch | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the "close" button is clicked. |
+| closeSearch | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the "close" button is clicked. |
 | searchPeople | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a search is performed with a new keyword. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`>` | Emitted when a user is selected and the action button is clicked. |
 

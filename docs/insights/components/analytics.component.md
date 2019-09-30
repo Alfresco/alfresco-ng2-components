@@ -33,6 +33,6 @@ Shows the charts related to the reportId passed as input
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| editReport | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |
-| reportDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |
-| reportSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |
+| editReport | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
+| reportDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
+| reportSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |

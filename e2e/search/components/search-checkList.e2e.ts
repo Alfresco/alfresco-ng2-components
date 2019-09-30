@@ -54,7 +54,7 @@ describe('Search Checklist Component', () => {
 
     let createdFile, createdFolder;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -64,16 +64,18 @@ describe('Search Checklist Component', () => {
         createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', { name: nodeNames.folder, nodeType: 'cm:folder' });
         createdFile = await this.alfrescoJsApi.nodes.addNode('-my-', { name: nodeNames.document, nodeType: 'cm:content' });
 
-        await browser.driver.sleep(15000);
+        await browser.sleep(15000);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName + '');
-
-        done();
     });
 
-    afterAll(async (done) => {
+    beforeEach(async () => {
+        await navigationBarPage.clickContentServicesButton();
+        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=${randomName}`);
+    });
+
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
@@ -81,45 +83,44 @@ describe('Search Checklist Component', () => {
 
         await navigationBarPage.clickLogoutButton();
 
-        done();
     });
 
-    it('[C276991] Should be able to click between options and Clear All button', () => {
-        searchFiltersPage.checkCheckListFilterIsDisplayed();
-        searchFiltersPage.checkCheckListFilterIsCollapsed();
-        searchFiltersPage.clickCheckListFilter();
+    it('[C276991] Should be able to click between options and Clear All button', async() => {
+        await searchFiltersPage.checkCheckListFilterIsDisplayed();
+        await searchFiltersPage.checkCheckListFilterIsCollapsed();
+        await searchFiltersPage.clickCheckListFilter();
 
-        searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.folder);
-        searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.document);
-        searchFiltersPage.checkListFiltersPage().checkClearAllButtonIsDisplayed();
-        searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
-        searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.document);
-        searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
-        searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
+        await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.folder);
+        await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.document);
+        await searchFiltersPage.checkListFiltersPage().checkClearAllButtonIsDisplayed();
+        await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
+        await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.document);
+        await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
+        await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
 
-        searchResults.checkContentIsDisplayed(nodeNames.folder);
-        searchResults.checkContentIsNotDisplayed(nodeNames.document);
+        await searchResults.checkContentIsDisplayed(nodeNames.folder);
+        await searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
-        searchFiltersPage.checkListFiltersPage().clickClearAllButton();
-        searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
+        await searchFiltersPage.checkListFiltersPage().clickClearAllButton();
+        await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
 
-        searchResults.checkContentIsDisplayed(nodeNames.folder);
-        searchResults.checkContentIsDisplayed(nodeNames.document);
+        await searchResults.checkContentIsDisplayed(nodeNames.folder);
+        await searchResults.checkContentIsDisplayed(nodeNames.document);
 
-        searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
-        searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
-        searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
-        searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
+        await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
+        await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
+        await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
+        await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
 
-        searchResults.checkContentIsDisplayed(nodeNames.folder);
-        searchResults.checkContentIsDisplayed(nodeNames.document);
+        await searchResults.checkContentIsDisplayed(nodeNames.folder);
+        await searchResults.checkContentIsDisplayed(nodeNames.document);
 
-        searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
-        searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
-        searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
+        await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
+        await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
+        await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
 
-        searchResults.checkContentIsDisplayed(nodeNames.document);
-        searchResults.checkContentIsNotDisplayed(nodeNames.folder);
+        await searchResults.checkContentIsDisplayed(nodeNames.document);
+        await searchResults.checkContentIsNotDisplayed(nodeNames.folder);
     });
 
     describe('configuration change', () => {
@@ -130,7 +131,7 @@ describe('Search Checklist Component', () => {
         });
 
         it('[C277143] Should be able to click show more/less button with pageSize set as default', async () => {
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({
@@ -140,32 +141,33 @@ describe('Search Checklist Component', () => {
             }
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-            browser.sleep(2000);
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickCheckListFilter();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickCheckListFilter();
 
-            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
-            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
-            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-            searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
+            await searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
-            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
-            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
 
-            searchFiltersPage.checkListFiltersPage().clickShowLessButton();
+            await searchFiltersPage.checkListFiltersPage().clickShowLessButton();
 
-            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
-            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
-            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
         });
 
         it('[C277144] Should be able to click show more/less button with pageSize set with a custom value', async () => {
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[1].component.settings.pageSize = 10;
 
@@ -178,41 +180,47 @@ describe('Search Checklist Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickCheckListFilter();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickCheckListFilter();
 
-            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
-            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             jsonFile.categories[1].component.settings.pageSize = 11;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickCheckListFilter();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickCheckListFilter();
 
-            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
-            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[1].component.settings.pageSize = 9;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickCheckListFilter();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickCheckListFilter();
 
-            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(9);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(9);
 
-            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
         });
 
         it('[C277145] Should be able to click show more/less button with pageSize set to zero', async () => {
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[1].component.settings.pageSize = 0;
 
@@ -225,41 +233,45 @@ describe('Search Checklist Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickCheckListFilter();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickCheckListFilter();
 
-            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
-            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
-            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-            searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
+            await searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
-            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
-            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             delete jsonFile.categories[1].component.settings.pageSize;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickCheckListFilter();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickCheckListFilter();
 
-            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
-            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
-            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-            searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
+            await searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
-            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
-            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
         });
 
     });
@@ -272,36 +284,37 @@ describe('Search Checklist Component', () => {
             jsonFile = SearchConfiguration.getConfiguration();
         });
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            done();
         });
 
         it('[C277018] Should be able to change the operator', async () => {
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[1].component.settings.operator = 'AND';
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickCheckListFilter();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickCheckListFilter();
 
-            searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
-            searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
+            await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
+            await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
 
-            searchResults.checkContentIsDisplayed(nodeNames.folder);
-            searchResults.checkContentIsNotDisplayed(nodeNames.document);
+            await searchResults.checkContentIsDisplayed(nodeNames.folder);
+            await searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
-            searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
+            await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
 
-            searchResults.checkContentIsNotDisplayed(nodeNames.folder);
-            searchResults.checkContentIsNotDisplayed(nodeNames.document);
+            await searchResults.checkContentIsNotDisplayed(nodeNames.folder);
+            await searchResults.checkContentIsNotDisplayed(nodeNames.document);
         });
 
         it('[C277019] Should be able to add new properties with different types', async () => {
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[1].component.settings.options.push({
                 'name': filterType.custom,
@@ -310,23 +323,25 @@ describe('Search Checklist Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickCheckListFilter();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickCheckListFilter();
 
-            searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.folder);
-            searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.document);
-            searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.custom);
+            await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.folder);
+            await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.document);
+            await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.custom);
 
-            searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.custom);
+            await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.custom);
 
-            searchResults.checkContentIsNotDisplayed(nodeNames.folder);
-            searchResults.checkContentIsNotDisplayed(nodeNames.document);
+            await searchResults.checkContentIsNotDisplayed(nodeNames.folder);
+            await searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
-            searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
-            searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
+            await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
+            await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
 
-            searchResults.checkContentIsDisplayed(nodeNames.folder);
-            searchResults.checkContentIsDisplayed(nodeNames.document);
+            await searchResults.checkContentIsDisplayed(nodeNames.folder);
+            await searchResults.checkContentIsDisplayed(nodeNames.document);
         });
     });
 

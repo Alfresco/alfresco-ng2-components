@@ -16,22 +16,22 @@
  */
 
 import { BrowserActions } from '@alfresco/adf-testing';
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { TaskFiltersPage } from '../../process-services/taskFiltersPage';
 
 export class TaskFiltersDemoPage {
 
-    myTasks = element(by.css('span[data-automation-id="My Tasks_filter"]'));
-    queuedTask = element(by.css('span[data-automation-id="Queued Tasks_filter"]'));
-    completedTask = element(by.css('span[data-automation-id="Completed Tasks_filter"]'));
-    involvedTask = element(by.css('span[data-automation-id="Involved Tasks_filter"]'));
-    activeFilter = element(by.css("mat-list-item[class*='active']"));
+    myTasks: ElementFinder = element(by.css('span[data-automation-id="My Tasks_filter"]'));
+    queuedTask: ElementFinder = element(by.css('span[data-automation-id="Queued Tasks_filter"]'));
+    completedTask: ElementFinder = element(by.css('span[data-automation-id="Completed Tasks_filter"]'));
+    involvedTask: ElementFinder = element(by.css('span[data-automation-id="Involved Tasks_filter"]'));
+    activeFilter: ElementFinder = element(by.css("mat-list-item[class*='active']"));
 
-    myTasksFilter() {
+    myTasksFilter(): TaskFiltersPage {
         return new TaskFiltersPage(this.myTasks);
     }
 
-    queuedTasksFilter() {
+    queuedTasksFilter(): TaskFiltersPage {
         return new TaskFiltersPage(this.queuedTask);
     }
 
@@ -39,15 +39,15 @@ export class TaskFiltersDemoPage {
         return new TaskFiltersPage(this.completedTask);
     }
 
-    involvedTasksFilter() {
+    involvedTasksFilter(): TaskFiltersPage {
         return new TaskFiltersPage(this.involvedTask);
     }
 
-    customTaskFilter(filterName) {
+    customTaskFilter(filterName): TaskFiltersPage {
         return new TaskFiltersPage(element(by.css(`span[data-automation-id="${filterName}_filter"]`)));
     }
 
-    checkActiveFilterActive () {
+    async checkActiveFilterActive(): Promise<string> {
         return BrowserActions.getText(this.activeFilter);
     }
 

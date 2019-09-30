@@ -107,7 +107,7 @@ A configurable delete button has been added to the **Tag [`Node`](https://github
 
 ### Validation summary support for form component
 
-The **[`Form`](../../lib/process-services/task-list/models/form.model.ts) Component** will now use the **formError** event to send a validation summary for all the fields with errors. This will be useful particularly with big forms for showing which fields are in error without scrolling the whole form by creating a summary.
+The **[`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) Component** will now use the **formError** event to send a validation summary for all the fields with errors. This will be useful particularly with big forms for showing which fields are in error without scrolling the whole form by creating a summary.
 
     <div class="form-container">
     <adf-form
@@ -176,10 +176,10 @@ Release Notes - Apps Development Framework - Version 2.6.
 
 ### Feature
 
--   \[[ADF-584](https://issues.alfresco.com/jira/browse/ADF-584)] - Validation summary support for [`Form`](../../lib/process-services/task-list/models/form.model.ts) component
+-   \[[ADF-584](https://issues.alfresco.com/jira/browse/ADF-584)] - Validation summary support for [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) component
 -   \[[ADF-2640](https://issues.alfresco.com/jira/browse/ADF-2640)] - adf-tag-node-list with remove option configurable
 -   \[[ADF-2921](https://issues.alfresco.com/jira/browse/ADF-2921)] - Icons for smart folders, links and folders with rules
--   \[[ADF-3308](https://issues.alfresco.com/jira/browse/ADF-3308)] - [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) Component - Provide a way to filter the list by fields
+-   \[[ADF-3308](https://issues.alfresco.com/jira/browse/ADF-3308)] - [`ProcessList`](../../lib/process-services/src/lib/mock/process/process.model.mock.ts) Component - Provide a way to filter the list by fields
 -   \[[ADF-3352](https://issues.alfresco.com/jira/browse/ADF-3352)] - [Viewer Component](../core/components/viewer.component.md) - Allow multiple side bar
 -   \[[ADF-3382](https://issues.alfresco.com/jira/browse/ADF-3382)] - Start a Process - Change the process definition from a dropdown to autocomplete
 -   \[[ADF-3397](https://issues.alfresco.com/jira/browse/ADF-3397)] - Task Filter - Doesn't show the right icon
@@ -192,7 +192,7 @@ Release Notes - Apps Development Framework - Version 2.6.
 -   \[[ADF-3512](https://issues.alfresco.com/jira/browse/ADF-3512)] - [`SidenavLayoutComponent`](../core/components/sidenav-layout.component.md) option to show the sidebar on the right
 -   \[[ADF-3553](https://issues.alfresco.com/jira/browse/ADF-3553)] - Cache management for application configuration file
 -   \[[ADF-3570](https://issues.alfresco.com/jira/browse/ADF-3570)] - Migration to APS2 - Add a interceptor to be able to use APS2 API
--   \[[ADF-3607](https://issues.alfresco.com/jira/browse/ADF-3607)] - [Demo shell] JSON Editor in [`Form`](../../lib/process-services/task-list/models/form.model.ts) Page
+-   \[[ADF-3607](https://issues.alfresco.com/jira/browse/ADF-3607)] - [Demo shell] JSON Editor in [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) Page
 
 ### Bug
 
@@ -262,7 +262,7 @@ Release Notes - Apps Development Framework - Version 2.6.
 
 ### Feature Bug
 
--   \[[ADF-3413](https://issues.alfresco.com/jira/browse/ADF-3413)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) name still displayed after removing form
+-   \[[ADF-3413](https://issues.alfresco.com/jira/browse/ADF-3413)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) name still displayed after removing form
 -   \[[ADF-3567](https://issues.alfresco.com/jira/browse/ADF-3567)] - The default items per page value is not displayed
 -   \[[ADF-3571](https://issues.alfresco.com/jira/browse/ADF-3571)] - Due After field not working as expected
 -   \[[ADF-3573](https://issues.alfresco.com/jira/browse/ADF-3573)] - Showing NaN-20 of 20 is displayed instead of 20
@@ -294,6 +294,6 @@ Release Notes - Apps Development Framework - Version 2.6.
 -   \[[ADF-3563](https://issues.alfresco.com/jira/browse/ADF-3563)] - Automated test for Show More/Less button in Search Filters
 -   \[[ADF-3594](https://issues.alfresco.com/jira/browse/ADF-3594)] - Create automated test for Show more/ less button on Tag component.
 -   \[[ADF-3596](https://issues.alfresco.com/jira/browse/ADF-3596)] - Automated tests for start a process
--   \[[ADF-3597](https://issues.alfresco.com/jira/browse/ADF-3597)] - Create automated test to cover Error Log on [`Form`](../../lib/process-services/task-list/models/form.model.ts) component
+-   \[[ADF-3597](https://issues.alfresco.com/jira/browse/ADF-3597)] - Create automated test to cover Error Log on [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) component
 
 Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have any questions about the release, please contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).

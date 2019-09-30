@@ -22,16 +22,15 @@ describe('Login component - Remember Me', () => {
     const settingsPage = new SettingsPage();
     const loginPage = new LoginPage();
 
-    beforeAll((done) => {
-        loginPage.goToLoginPage();
-        loginPage.clickSettingsIcon();
-        settingsPage.setProviderEcmBpm();
-        done();
+    beforeAll(async () => {
+        await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
     });
 
-    it('[C260501] Should Remember me checkbox not be present in the login if the property showRememberMe is false', () => {
-        loginPage.checkRememberIsDisplayed();
-        loginPage.disableRememberMe();
-        loginPage.checkRememberIsNotDisplayed();
+    it('[C260501] Should Remember me checkbox not be present in the login if the property showRememberMe is false', async () => {
+        await loginPage.checkRememberIsDisplayed();
+        await loginPage.disableRememberMe();
+        await loginPage.checkRememberIsNotDisplayed();
     });
 });

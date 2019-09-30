@@ -1,0 +1,39 @@
+<div class="adf-about-container" *ngIf="bpmVersion || ecmVersion">
+    <h3>{{ 'ABOUT.VERSIONS.TITLE' | translate }}</h3>
+    <div *ngIf="bpmVersion">
+        <mat-card>
+            <div *ngIf="bpmVersion">
+                <h3>{{ 'ABOUT.VERSIONS.PROCESS_SERVICE' | translate }}</h3>
+                <p>
+                    {{ 'ABOUT.VERSIONS.LABELS.EDITION' | translate }}: {{ bpmVersion.edition }}
+                </p>
+                <p>
+                    {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{ bpmVersion.majorVersion }}.{{
+                    bpmVersion.minorVersion }}.{{ bpmVersion.revisionVersion }}
+                </p>
+            </div>
+
+            <div *ngIf="ecmVersion">
+                <h3>{{ 'ABOUT.VERSIONS.CONTENT_SERVICE' | translate }}</h3>
+                <p>
+                    {{ 'ABOUT.VERSIONS.LABELS.EDITION' | translate }}: {{ ecmVersion.edition }}
+                </p>
+                <p>
+                    {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{ ecmVersion.version.display }}
+                </p>
+
+            </div>
+        </mat-card>
+    </div>
+
+    <div *ngIf="ecmVersion">
+        <h3>{{ 'ABOUT.VERSIONS.LABELS.LICENSE' | translate }}</h3>
+        <adf-datatable [data]="license"></adf-datatable>
+
+        <h3> {{ 'ABOUT.VERSIONS.LABELS.STATUS' | translate }}</h3>
+        <adf-datatable [data]="status"></adf-datatable>
+
+        <h3>{{ 'ABOUT.VERSIONS.LABELS.MODULES' | translate }}</h3>
+        <adf-datatable [data]="modules"></adf-datatable>
+    </div>
+</div>

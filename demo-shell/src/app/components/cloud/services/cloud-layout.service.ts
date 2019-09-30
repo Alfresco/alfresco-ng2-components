@@ -20,16 +20,30 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface CloudServiceSettings {
     multiselect: boolean;
+    actionMenu: boolean;
+    contextMenu: boolean;
     testingMode: boolean;
     taskDetailsRedirection: boolean;
     processDetailsRedirection: boolean;
     selectionMode: string;
+    actions: any[];
 }
 
 export interface FilterSettings {
     id?: string;
     index?: number;
     key?: string;
+}
+
+export class ActionMenuModel {
+    constructor(
+        public key: string,
+        public icon: string,
+        public title: string,
+        public visible?: boolean,
+        public disabled?: boolean
+      ) {  }
+
 }
 
 @Injectable({
@@ -39,10 +53,13 @@ export class CloudLayoutService {
 
     private settings: CloudServiceSettings = {
         multiselect: false,
+        actionMenu: false,
+        contextMenu: false,
         testingMode: false,
         taskDetailsRedirection: true,
         processDetailsRedirection: true,
-        selectionMode: 'single'
+        selectionMode: 'single',
+        actions: []
     };
 
     taskFilter$ = new BehaviorSubject<FilterSettings>({index: 0});

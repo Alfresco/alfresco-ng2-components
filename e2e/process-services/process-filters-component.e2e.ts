@@ -56,7 +56,7 @@ describe('Process Filters Test', () => {
         completed: 'Completed'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -75,67 +75,66 @@ describe('Process Filters Test', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        done();
     });
 
     beforeEach(async () => {
-        navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
+        await navigationBarPage.navigateToProcessServicesPage();
+        await processServicesPage.checkApsContainer();
     });
 
-    it('[C260387] Should the running process be displayed when clicking on Running filter', () => {
-        processServicesPage.goToApp(app.title);
-        processServiceTabBarPage.clickProcessButton();
-        processListPage.checkProcessListIsDisplayed();
+    it('[C260387] Should the running process be displayed when clicking on Running filter', async () => {
+        await processServicesPage.goToApp(app.title);
+        await processServiceTabBarPage.clickProcessButton();
+        await processListPage.checkProcessListIsDisplayed();
 
-        processFiltersPage.clickCreateProcessButton();
-        processFiltersPage.clickNewProcessDropdown();
+        await processFiltersPage.clickCreateProcessButton();
+        await processFiltersPage.clickNewProcessDropdown();
 
-        startProcessPage.enterProcessName(processTitle.completed);
-        startProcessPage.selectFromProcessDropdown(app.process_title);
-        startProcessPage.clickFormStartProcessButton();
+        await startProcessPage.enterProcessName(processTitle.completed);
+        await startProcessPage.selectFromProcessDropdown(app.process_title);
+        await startProcessPage.clickFormStartProcessButton();
 
-        processDetailsPage.clickCancelProcessButton();
-        navigationBarPage.navigateToProcessServicesPage();
+        await processDetailsPage.clickCancelProcessButton();
+        await navigationBarPage.navigateToProcessServicesPage();
 
-        processServicesPage.goToApp(app.title);
+        await processServicesPage.goToApp(app.title);
 
-        processServiceTabBarPage.clickProcessButton();
+        await processServiceTabBarPage.clickProcessButton();
 
-        processFiltersPage.clickCreateProcessButton();
-        processFiltersPage.clickNewProcessDropdown();
+        await processFiltersPage.clickCreateProcessButton();
+        await processFiltersPage.clickNewProcessDropdown();
 
-        startProcessPage.enterProcessName(processTitle.running);
-        startProcessPage.selectFromProcessDropdown(app.process_title);
-        startProcessPage.clickFormStartProcessButton();
+        await startProcessPage.enterProcessName(processTitle.running);
+        await startProcessPage.selectFromProcessDropdown(app.process_title);
+        await startProcessPage.clickFormStartProcessButton();
 
-        processFiltersPage.checkFilterIsHighlighted(processFilter.running);
-        processFiltersPage.selectFromProcessList(processTitle.running);
+        await processFiltersPage.checkFilterIsHighlighted(processFilter.running);
+        await processFiltersPage.selectFromProcessList(processTitle.running);
 
-        processDetailsPage.checkProcessDetailsCard();
+        await processDetailsPage.checkProcessDetailsCard();
     });
 
-    it('[C280063] Should both the new created process and a completed one to be displayed when clicking on All filter', () => {
-        processServicesPage.goToApp(app.title);
-        processServiceTabBarPage.clickProcessButton();
-        processListPage.checkProcessListIsDisplayed();
+    it('[C280063] Should both the new created process and a completed one to be displayed when clicking on All filter', async () => {
+        await processServicesPage.goToApp(app.title);
+        await processServiceTabBarPage.clickProcessButton();
+        await processListPage.checkProcessListIsDisplayed();
 
-        processFiltersPage.clickAllFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilter.all);
-        processFiltersPage.selectFromProcessList(processTitle.running);
-        processFiltersPage.selectFromProcessList(processTitle.completed);
-        processDetailsPage.checkProcessDetailsCard();
+        await processFiltersPage.clickAllFilterButton();
+        await processFiltersPage.checkFilterIsHighlighted(processFilter.all);
+        await processFiltersPage.selectFromProcessList(processTitle.running);
+        await processFiltersPage.selectFromProcessList(processTitle.completed);
+        await processDetailsPage.checkProcessDetailsCard();
     });
 
-    it('[C280064] Should the completed process be displayed when clicking on Completed filter', () => {
-        processServicesPage.goToApp(app.title);
-        processServiceTabBarPage.clickProcessButton();
-        processListPage.checkProcessListIsDisplayed();
+    it('[C280064] Should the completed process be displayed when clicking on Completed filter', async () => {
+        await processServicesPage.goToApp(app.title);
+        await processServiceTabBarPage.clickProcessButton();
+        await processListPage.checkProcessListIsDisplayed();
 
-        processFiltersPage.clickCompletedFilterButton();
-        processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
-        processFiltersPage.selectFromProcessList(processTitle.completed);
-        processDetailsPage.checkProcessDetailsCard();
+        await processFiltersPage.clickCompletedFilterButton();
+        await processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
+        await processFiltersPage.selectFromProcessList(processTitle.completed);
+        await processDetailsPage.checkProcessDetailsCard();
     });
 
     it('[C280407] Should be able to access the filters with URL', async () => {
@@ -143,30 +142,27 @@ describe('Process Filters Test', () => {
         const defaultFiltersNumber = 3;
         let deployedApp, processFilterUrl;
 
-        const taskAppFilters = await browser.controlFlow().execute(async() => {
+        const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
 
-            const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        deployedApp = appDefinitions.data.find((currentApp) => {
 
-            deployedApp = appDefinitions.data.find((currentApp) => {
-
-                    return currentApp.modelId === appModel.id;
-            });
-
-            processFilterUrl = browser.params.testConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
-
-            return this.alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({appId: deployedApp.id});
+            return currentApp.modelId === appModel.id;
         });
 
-        processServicesPage.goToApp(app.title);
-        processServiceTabBarPage.clickProcessButton();
-        processListPage.checkProcessListIsDisplayed();
+        processFilterUrl = browser.params.testConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
 
-        expect(taskAppFilters.size).toBe(defaultFiltersNumber);
+        const taskAppFilters = await this.alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
 
-        taskAppFilters.data.forEach((filter) => {
-            BrowserActions.getUrl(processFilterUrl + filter.id);
-            processListPage.checkProcessListIsDisplayed();
-            processFiltersPage.checkFilterIsHighlighted(filter.name);
-        });
+        await processServicesPage.goToApp(app.title);
+        await processServiceTabBarPage.clickProcessButton();
+        await processListPage.checkProcessListIsDisplayed();
+
+        await expect(taskAppFilters.size).toBe(defaultFiltersNumber);
+
+        for (const filter of taskAppFilters) {
+            await BrowserActions.getUrl(processFilterUrl + filter.id);
+            await processListPage.checkProcessListIsDisplayed();
+            await processFiltersPage.checkFilterIsHighlighted(filter.name);
+        }
     });
 });

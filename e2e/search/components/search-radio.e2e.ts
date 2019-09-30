@@ -56,7 +56,7 @@ describe('Search Radio Component', () => {
 
     let createdFile, createdFolder;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -71,16 +71,15 @@ describe('Search Radio Component', () => {
             nodeType: 'cm:content'
         });
 
-        await browser.driver.sleep(15000);
+        await browser.sleep(15000);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName);
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
@@ -88,41 +87,40 @@ describe('Search Radio Component', () => {
 
         await navigationBarPage.clickLogoutButton();
 
-        done();
     });
 
-    it('[C277039] Should be able to choose only one option at a time', () => {
-        searchFiltersPage.checkTypeFilterIsDisplayed();
-        searchFiltersPage.checkTypeFilterIsCollapsed();
-        searchFiltersPage.clickTypeFilterHeader();
+    it('[C277039] Should be able to choose only one option at a time', async () => {
+        await searchFiltersPage.checkTypeFilterIsDisplayed();
+        await searchFiltersPage.checkTypeFilterIsCollapsed();
+        await searchFiltersPage.clickTypeFilterHeader();
 
-        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.none);
-        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.all);
-        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.folder);
-        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.document);
+        await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.none);
+        await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.all);
+        await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.folder);
+        await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.document);
 
-        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.none);
+        await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.none);
 
-        searchResults.checkContentIsDisplayed(nodeNames.folder);
-        searchResults.checkContentIsDisplayed(nodeNames.document);
+        await searchResults.checkContentIsDisplayed(nodeNames.folder);
+        await searchResults.checkContentIsDisplayed(nodeNames.document);
 
-        searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.folder);
-        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.folder);
+        await searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.folder);
+        await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.folder);
 
-        searchResults.checkContentIsDisplayed(nodeNames.folder);
-        searchResults.checkContentIsNotDisplayed(nodeNames.document);
+        await searchResults.checkContentIsDisplayed(nodeNames.folder);
+        await searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
-        searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.document);
-        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.document);
+        await searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.document);
+        await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.document);
 
-        searchResults.checkContentIsDisplayed(nodeNames.document);
-        searchResults.checkContentIsNotDisplayed(nodeNames.folder);
+        await searchResults.checkContentIsDisplayed(nodeNames.document);
+        await searchResults.checkContentIsNotDisplayed(nodeNames.folder);
 
-        searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.all);
-        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.all);
+        await searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.all);
+        await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.all);
 
-        searchResults.checkContentIsDisplayed(nodeNames.folder);
-        searchResults.checkContentIsDisplayed(nodeNames.document);
+        await searchResults.checkContentIsDisplayed(nodeNames.folder);
+        await searchResults.checkContentIsDisplayed(nodeNames.document);
     });
 
     describe('configuration change', () => {
@@ -134,7 +132,7 @@ describe('Search Radio Component', () => {
         });
 
         it('[C277147] Should be able to customise the pageSize value', async () => {
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[5].component.settings.pageSize = 10;
 
@@ -147,40 +145,46 @@ describe('Search Radio Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickTypeFilterHeader();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickTypeFilterHeader();
 
-            expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[5].component.settings.pageSize = 11;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickTypeFilterHeader();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickTypeFilterHeader();
 
-            expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             jsonFile.categories[5].component.settings.pageSize = 9;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickTypeFilterHeader();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickTypeFilterHeader();
 
-            expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(9);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(9);
 
-            searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
-            searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-            browser.refresh();
+            await browser.refresh();
         });
 
         it('[C277148] Should be able to click show more/less button', async () => {
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[5].component.settings.pageSize = 0;
 
@@ -193,54 +197,58 @@ describe('Search Radio Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickTypeFilterHeader();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickTypeFilterHeader();
 
-            expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
 
-            searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
-            searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-            searchFiltersPage.typeFiltersPage().clickShowMoreButton();
+            await searchFiltersPage.typeFiltersPage().clickShowMoreButton();
 
-            expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
-            searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsNotDisplayed();
-            searchFiltersPage.typeFiltersPage().checkShowLessButtonIsDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsDisplayed();
 
-            searchFiltersPage.typeFiltersPage().clickShowLessButton();
+            await searchFiltersPage.typeFiltersPage().clickShowLessButton();
 
-            expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
 
-            searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
-            searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
             delete jsonFile.categories[5].component.settings.pageSize;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickTypeFilterHeader();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickTypeFilterHeader();
 
-            expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
 
-            searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
-            searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-            searchFiltersPage.typeFiltersPage().clickShowMoreButton();
+            await searchFiltersPage.typeFiltersPage().clickShowMoreButton();
 
-            expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
-            searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsNotDisplayed();
-            searchFiltersPage.typeFiltersPage().checkShowLessButtonIsDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsDisplayed();
 
-            searchFiltersPage.typeFiltersPage().clickShowLessButton();
+            await searchFiltersPage.typeFiltersPage().clickShowLessButton();
 
-            expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
 
-            searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
-            searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
+            await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
         });
 
     });
@@ -253,14 +261,13 @@ describe('Search Radio Component', () => {
             jsonFile = SearchConfiguration.getConfiguration();
         });
 
-        beforeAll(async (done) => {
+        beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            done();
         });
 
         it('[C277033] Should be able to add a new option', async () => {
-            navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[5].component.settings.options.push({
                 'name': filterType.custom,
@@ -269,20 +276,22 @@ describe('Search Radio Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
-            searchFiltersPage.clickTypeFilterHeader();
+            await searchDialog.clickOnSearchIcon();
+            await searchDialog.checkSearchBarIsVisible();
+            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchFiltersPage.clickTypeFilterHeader();
 
-            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.none);
-            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.all);
-            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.folder);
-            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.document);
-            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.custom);
-            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.none);
+            await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.none);
+            await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.all);
+            await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.folder);
+            await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.document);
+            await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.custom);
+            await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.none);
 
-            searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.custom);
+            await searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.custom);
 
-            searchResults.checkContentIsDisplayed(nodeNames.document);
-            searchResults.checkContentIsNotDisplayed(nodeNames.folder);
+            await searchResults.checkContentIsDisplayed(nodeNames.document);
+            await searchResults.checkContentIsNotDisplayed(nodeNames.folder);
         });
 
     });

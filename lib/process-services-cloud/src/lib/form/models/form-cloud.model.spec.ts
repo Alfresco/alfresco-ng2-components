@@ -15,22 +15,14 @@
  * limitations under the License.
  */
 
-import { FormCloudService } from '../services/form-cloud.service';
-import { FormCloud } from './form-cloud.model';
-import { TabModel, FormFieldModel, ContainerModel, FormOutcomeModel, FormFieldTypes, AppConfigService } from '@alfresco/adf-core';
+import { TabModel, FormFieldModel, ContainerModel, FormOutcomeModel, FormFieldTypes, FormModel } from '@alfresco/adf-core';
 import { FormCloudRepresentation } from './form-cloud-representation.model';
 
 describe('FormCloud', () => {
 
-    let formCloudService: FormCloudService;
-
-    beforeEach(() => {
-        formCloudService = new FormCloudService(null, new AppConfigService(null), null);
-    });
-
     it('should store original json', () => {
         const formRepresentation = {fields: []};
-        const form = new FormCloud(formRepresentation);
+        const form = new FormModel(formRepresentation);
         expect(form.json).toEqual(formRepresentation);
     });
 
@@ -41,7 +33,7 @@ describe('FormCloud', () => {
             taskId: '<task-id>',
             taskName: '<task-name>'
         };
-        const form = new FormCloud(formRepresentation);
+        const form = new FormModel(formRepresentation);
 
         Object.keys(formRepresentation).forEach((key) => {
             expect(form[key]).toEqual(form[key]);
@@ -54,17 +46,17 @@ describe('FormCloud', () => {
             name: '<name>',
             formDefinition: {}
         };
-        const form = new FormCloud(formRepresentation);
+        const form = new FormModel(formRepresentation);
         expect(form.taskName).toBe(formRepresentation.name);
     });
 
     it('should set readonly state from params', () => {
-        const form = new FormCloud({}, null, true);
+        const form = new FormModel({}, null, true);
         expect(form.readOnly).toBeTruthy();
     });
 
     it('should check tabs', () => {
-        const form = new FormCloud();
+        const form = new FormModel();
 
         form.tabs = null;
         expect(form.hasTabs()).toBeFalsy();
@@ -77,7 +69,7 @@ describe('FormCloud', () => {
     });
 
     it('should check fields', () => {
-        const form = new FormCloud();
+        const form = new FormModel();
 
         form.fields = null;
         expect(form.hasFields()).toBeFalsy();
@@ -91,7 +83,7 @@ describe('FormCloud', () => {
     });
 
     it('should check outcomes', () => {
-        const form = new FormCloud();
+        const form = new FormModel();
 
         form.outcomes = null;
         expect(form.hasOutcomes()).toBeFalsy();
@@ -111,7 +103,7 @@ describe('FormCloud', () => {
             ]
         };
 
-        const form = new FormCloud(formRepresentation);
+        const form = new FormModel(formRepresentation);
         expect(form.tabs.length).toBe(2);
         expect(form.tabs[0].id).toBe('tab1');
         expect(form.tabs[1].id).toBe('tab2');
@@ -131,7 +123,7 @@ describe('FormCloud', () => {
             ]
         };
 
-        const form = new FormCloud(formRepresentation);
+        const form = new FormModel(formRepresentation);
         expect(form.fields.length).toBe(2);
         expect(form.fields[0].id).toBe('field1');
         expect(form.fields[1].id).toBe('field2');
@@ -142,7 +134,7 @@ describe('FormCloud', () => {
             fields: null
         };
 
-        const form = new FormCloud(formRepresentation);
+        const form = new FormModel(formRepresentation);
         expect(form.fields).toBeDefined();
         expect(form.fields.length).toBe(0);
     });
@@ -161,7 +153,7 @@ describe('FormCloud', () => {
             ]
         };
 
-        const form = new FormCloud(formRepresentation);
+        const form = new FormModel(formRepresentation);
         expect(form.tabs.length).toBe(2);
         expect(form.fields.length).toBe(4);
 
@@ -182,16 +174,16 @@ describe('FormCloud', () => {
             ]
         };
 
-        const form = new FormCloud(formRepresentation);
+        const form = new FormModel(formRepresentation);
         expect(form.outcomes.length).toBe(3);
 
-        expect(form.outcomes[0].id).toBe(FormCloud.SAVE_OUTCOME);
+        expect(form.outcomes[0].id).toBe(FormModel.SAVE_OUTCOME);
         expect(form.outcomes[0].isSystem).toBeTruthy();
 
-        expect(form.outcomes[1].id).toBe(FormCloud.COMPLETE_OUTCOME);
+        expect(form.outcomes[1].id).toBe(FormModel.COMPLETE_OUTCOME);
         expect(form.outcomes[1].isSystem).toBeTruthy();
 
-        expect(form.outcomes[2].id).toBe(FormCloud.START_PROCESS_OUTCOME);
+        expect(form.outcomes[2].id).toBe(FormModel.START_PROCESS_OUTCOME);
         expect(form.outcomes[2].isSystem).toBeTruthy();
     });
 
@@ -199,7 +191,7 @@ describe('FormCloud', () => {
         const formRepresentation = {
             fields: null
         };
-        const form = new FormCloud(formRepresentation);
+        const form = new FormModel(formRepresentation);
         expect(form.outcomes.length).toBe(0);
     });
 
@@ -213,10 +205,10 @@ describe('FormCloud', () => {
             ]
         };
 
-        const form = new FormCloud(formRepresentation);
+        const form = new FormModel(formRepresentation);
         expect(form.outcomes.length).toBe(2);
 
-        expect(form.outcomes[0].id).toBe(FormCloud.SAVE_OUTCOME);
+        expect(form.outcomes[0].id).toBe(FormModel.SAVE_OUTCOME);
         expect(form.outcomes[0].isSystem).toBeTruthy();
 
         expect(form.outcomes[1].id).toBe('custom-1');
@@ -224,7 +216,7 @@ describe('FormCloud', () => {
     });
 
     it('should get field by id', () => {
-        const form = new FormCloud({}, null, false, formCloudService);
+        const form = new FormModel({}, null, false);
         const field: any = { id: 'field1' };
         spyOn(form, 'getFormFields').and.returnValue([field]);
 

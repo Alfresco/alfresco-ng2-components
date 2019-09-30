@@ -82,7 +82,10 @@ exports.Files = {
             text_field: "activiti-textfield",
             form_fieldId: "textfield",
             text_field_value: "Hi tester, from Rest call"
-        }
+        },
+        visibilityTabForm: {
+            formName: "visibilityTabWithFields"
+        },
     },
 
     WIDGETS_SMOKE_TEST: {
@@ -108,7 +111,7 @@ exports.Files = {
             dateTime_id: "dateandtime",
             checkbox_id: "checkbox",
             dropdown_id: "dropdown",
-            dropdown_value: "mat-select[id='dropdown'] span span",
+            drofpdown_value: "mat-select[id='dropdown'] span span",
             radioButtons_id: "radiobuttons",
             dynamicTable_id: "dynamictable"
         }
@@ -535,8 +538,18 @@ exports.ACTIVITI7_APPS = {
         file_location: "/resources/activiti7/simpleapp.zip",
         processes: {
             processwithvariables: "processwithvariables",
-            simpleProcess: "simpleProcess",
+            simpleProcess: "simpleprocess",
             dropdownrestprocess: "dropdownrestprocess"
+        },
+        forms: {
+            tabVisibilityFields: {
+                name: "tabvisibilitywithfields",
+                id: "form-26b01063-4fb0-455f-b3ba-90172e013678"
+            },
+            tabVisibilityVars: {
+                name: "tabvisibilitywithvars",
+                id: "form-7bf363d2-83c9-4b00-853e-373d0d59963c"
+            }
         }
     },
     SUB_PROCESS_APP: {

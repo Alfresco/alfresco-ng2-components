@@ -16,117 +16,117 @@
  */
 
 import { FormFields } from '../formFields';
-import { by, element, protractor } from 'protractor';
+import { by, element, ElementArrayFinder, ElementFinder, Locator, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DynamicTableWidget {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
-    labelLocator = by.css('dynamic-table-widget div div');
-    columnNameLocator = by.css('table[id*="dynamic-table"] th');
-    addButton = element(by.id('label-add-row'));
-    cancelButton = element(by.cssContainingText('button span', 'Cancel'));
-    editButton = element(by.cssContainingText('button span', 'edit'));
-    addRow = element(by.id('dynamictable-add-row'));
-    columnDateTime = element(by.id('columnDateTime'));
-    columnDate = element(by.id('columnDate'));
-    calendarHeader = element(by.css('div[class="mat-datetimepicker-calendar-header-date-time"]'));
-    calendarContent = element(by.css('div[class="mat-datetimepicker-calendar-content"]'));
-    saveButton = element(by.cssContainingText('button span', 'Save'));
-    errorMessage = element(by.css('div[class="adf-error-text"]'));
-    dateWidget = element.all(by.css('mat-datepicker-toggle button')).first();
-    tableRow = element.all(by.css('tbody tr'));
-    dataTableInput = element(by.id('id'));
+    labelLocator: Locator = by.css('dynamic-table-widget div div');
+    columnNameLocator: Locator = by.css('table[id*="dynamic-table"] th');
+    addButton: ElementFinder = element(by.id('label-add-row'));
+    cancelButton: ElementFinder = element(by.cssContainingText('button span', 'Cancel'));
+    editButton: ElementFinder = element(by.cssContainingText('button span', 'edit'));
+    addRow: ElementFinder = element(by.id('dynamictable-add-row'));
+    columnDateTime: ElementFinder = element(by.id('columnDateTime'));
+    columnDate: ElementFinder = element(by.id('columnDate'));
+    calendarHeader: ElementFinder = element(by.css('div[class="mat-datetimepicker-calendar-header-date-time"]'));
+    calendarContent: ElementFinder = element(by.css('div[class="mat-datetimepicker-calendar-content"]'));
+    saveButton: ElementFinder = element(by.cssContainingText('button span', 'Save'));
+    errorMessage: ElementFinder = element(by.css('div[class="adf-error-text"]'));
+    dateWidget: ElementFinder = element.all(by.css('mat-datepicker-toggle button')).first();
+    tableRow: ElementArrayFinder = element.all(by.css('tbody tr'));
+    dataTableInput: ElementFinder = element(by.id('id'));
 
-    getFieldLabel(fieldId) {
+    getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
     }
 
-    getColumnName(fieldId) {
+    getColumnName(fieldId): Promise<string> {
         return this.formFields.getFieldText(fieldId, this.columnNameLocator);
     }
 
-    clickAddButton() {
-        BrowserActions.click(this.addButton);
+    async clickAddButton(): Promise<void> {
+        await BrowserActions.click(this.addButton);
     }
 
-    clickAddRow() {
-        BrowserActions.click(this.addRow);
+    async clickAddRow(): Promise<void> {
+        await BrowserActions.click(this.addRow);
     }
 
-    clickTableRow(rowNumber) {
+    async clickTableRow(rowNumber): Promise<void> {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        BrowserActions.click(tableRowByIndex);
+        await BrowserActions.click(tableRowByIndex);
     }
 
-    clickEditButton() {
-        BrowserActions.click(this.editButton);
+    async clickEditButton(): Promise<void> {
+        await BrowserActions.click(this.editButton);
     }
 
-    clickCancelButton() {
-        BrowserActions.click(this.cancelButton);
+    async clickCancelButton(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 
-    setDatatableInput(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.dataTableInput);
-        this.dataTableInput.clear();
-        return this.dataTableInput.sendKeys(text);
+    async setDatatableInput(text): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.dataTableInput);
+        await this.dataTableInput.clear();
+        await this.dataTableInput.sendKeys(text);
     }
 
-    getTableRowText(rowNumber) {
+    async getTableRowText(rowNumber): Promise<string> {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
         return BrowserActions.getText(tableRowByIndex);
     }
 
-    checkTableRowIsNotVisible(rowNumber) {
+    async checkTableRowIsNotVisible(rowNumber): Promise<void> {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        return BrowserVisibility.waitUntilElementIsNotVisible(tableRowByIndex);
+        await BrowserVisibility.waitUntilElementIsNotVisible(tableRowByIndex);
     }
 
-    clickColumnDateTime() {
-        BrowserActions.click(this.columnDateTime);
-        BrowserVisibility.waitUntilElementIsVisible(this.calendarHeader);
-        BrowserVisibility.waitUntilElementIsVisible(this.calendarContent);
-        BrowserActions.closeMenuAndDialogs();
+    async clickColumnDateTime(): Promise<void> {
+        await BrowserActions.click(this.columnDateTime);
+        await BrowserVisibility.waitUntilElementIsVisible(this.calendarHeader);
+        await BrowserVisibility.waitUntilElementIsVisible(this.calendarContent);
+        await BrowserActions.closeMenuAndDialogs();
     }
 
-    addRandomStringOnDateTime(randomText) {
-        BrowserActions.click(this.columnDateTime);
-        BrowserActions.closeMenuAndDialogs();
-        this.columnDateTime.sendKeys(randomText);
-        this.columnDateTime.sendKeys(protractor.Key.ENTER);
+    async addRandomStringOnDateTime(randomText): Promise<string> {
+        await BrowserActions.click(this.columnDateTime);
+        await BrowserActions.closeMenuAndDialogs();
+        await this.columnDateTime.sendKeys(randomText);
+        await this.columnDateTime.sendKeys(protractor.Key.ENTER);
         return this.columnDateTime.getAttribute('value');
     }
 
-    addRandomStringOnDate(randomText) {
-        BrowserActions.click(this.columnDate);
-        return this.columnDate.sendKeys(randomText);
+    async addRandomStringOnDate(randomText): Promise<void> {
+        await BrowserActions.click(this.columnDate);
+        await this.columnDate.sendKeys(randomText);
     }
 
-    clickSaveButton() {
-        BrowserActions.click(this.saveButton);
+    async clickSaveButton(): Promise<void> {
+        await BrowserActions.click(this.saveButton);
     }
 
-    checkErrorMessage() {
+    async checkErrorMessage(): Promise<string> {
         return BrowserActions.getText(this.errorMessage);
     }
 
-    clickDateWidget() {
-        BrowserActions.click(this.dateWidget);
+    async clickDateWidget(): Promise<void> {
+        await BrowserActions.click(this.dateWidget);
     }
 
-    getTableRow(rowNumber) {
-        return BrowserVisibility.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
+    async getTableRow(rowNumber): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
     }
 
-    getTableCellText(rowNumber: number, columnNumber: number) {
+    async getTableCellText(rowNumber: number, columnNumber: number): Promise<string> {
         return BrowserActions.getText(this.tableRow.get(rowNumber).element(by.xpath(`td[${columnNumber}]`)));
     }
 
-    checkItemIsPresent(item) {
+    async checkItemIsPresent(item): Promise<void> {
         const row = element(by.cssContainingText('table tbody tr td span', item));
-        const present = BrowserVisibility.waitUntilElementIsVisible(row);
-        expect(present).toBe(true);
+        const present = await BrowserVisibility.waitUntilElementIsVisible(row);
+        await expect(present).toBe(true);
     }
 }

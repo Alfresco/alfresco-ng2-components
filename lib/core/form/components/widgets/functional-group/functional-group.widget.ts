@@ -60,7 +60,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
             if (this.value) {
                 this.formService
                     .getWorkflowGroups(this.value, this.groupId)
-                    .subscribe((groupModel: GroupModel[]) => this.groups = groupModel || []);
+                    .subscribe(groups => this.groups = groups || []);
             }
         }
     }
@@ -69,10 +69,9 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         if (this.value && this.value.length >= this.minTermLength  && this.oldValue !== this.value) {
             if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
                 this.oldValue = this.value;
-                this.formService.getWorkflowGroups(this.value, this.groupId)
-                    .subscribe((group: GroupModel[]) => {
-                        this.groups = group || [];
-                    });
+                this.formService
+                    .getWorkflowGroups(this.value, this.groupId)
+                    .subscribe(groups => this.groups = groups || []);
             }
         }
     }

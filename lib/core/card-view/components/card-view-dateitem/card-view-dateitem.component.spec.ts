@@ -200,7 +200,7 @@ describe('CardViewDateItemComponent', () => {
         component.onDateChanged({ value: expectedDate });
 
         fixture.whenStable().then(
-            (updateNotification) => {
+            () => {
                 expect(component.property.value).toEqual(expectedDate.toDate());
             }
         );
@@ -246,7 +246,7 @@ describe('CardViewDateItemComponent', () => {
         component.onDateClear();
 
         fixture.whenStable().then(
-            (updateNotification) => {
+            () => {
                 expect(component.property.value).toBeNull();
             }
         );
@@ -261,7 +261,7 @@ describe('CardViewDateItemComponent', () => {
         component.onDateClear();
 
         fixture.whenStable().then(
-            (updateNotification) => {
+            () => {
                 expect(component.property.default).toBeNull();
             }
         );
@@ -277,7 +277,7 @@ describe('CardViewDateItemComponent', () => {
         component.onDateClear();
 
         fixture.whenStable().then(
-            (updateNotification) => {
+            () => {
                 expect(component.property.value).toBeNull();
                 expect(component.property.default).toBeNull();
             }

@@ -18,3 +18,6 @@ if grep "envalfresco" . -R --exclude-dir={node_modules,.history,.idea,scripts,di
     echo not permitted word
     exit 1
 fi
+
+echo "====== License Check ====="
+npm run license-checker || exit 1

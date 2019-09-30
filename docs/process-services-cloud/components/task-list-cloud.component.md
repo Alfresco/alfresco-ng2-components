@@ -51,6 +51,7 @@ when the task list is empty:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
 | appName | `string` | "" | The name of the application. |
 | assignee | `string` | "" | The assignee of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
 | createdDate | `string` | "" | Filter the tasks. Display only tasks created on the supplied date. |
@@ -67,17 +68,23 @@ when the task list is empty:
 | processDefinitionId | `string` | "" | Filter the tasks. Display only tasks with processDefinitionId equal to the supplied value. |
 | processInstanceId | `string` | "" | Filter the tasks. Display only tasks with processInstanceId equal to the supplied value. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use the Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showActions | `boolean` | false | Toggles the data actions column. |
+| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | sorting | [`TaskListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
 | standAlone | `boolean` | false | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. |
 | status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |
+| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/datatable/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a task in the list is clicked |
 | rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected |
+| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task list is loaded |
 
 ## Details
@@ -213,6 +220,117 @@ typical tasklist.
 ### DataColumn Features
 
 You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) page for more information about these features.
+
+#### showRowContextMenu event
+
+Emitted before the context menu is displayed for a row.
+
+Note that the [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) itself does not populate the context menu with items.
+You can provide all necessary content via the handler.
+
+```html
+<adf-cloud-task-list
+    [contextMenu]="true"
+    (showRowContextMenu)="onShowRowContextMenu($event)">
+</adf-cloud-task-list>
+```
+
+Event properties:
+
+```ts
+value: {
+    row: DataRow,
+    col: DataColumn,
+    actions: []
+}
+```
+
+Handler example:
+
+```ts
+onShowRowContextMenu(event: DataCellEvent) {
+    event.value.actions = [
+        {  title: 'Hello Context Action' },
+        { ... }
+    ]
+}
+```
+
+![](../../docassets/images/task-list-cloud-context-menu.png)
+
+This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
+
+The [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) will automatically render the supplied menu items.
+
+See the [ContextMenu](https://www.npmjs.com/package/ng2-alfresco-core)
+documentation for more details on the format and behavior of context actions.
+
+#### showRowActionsMenu event
+
+Emitted before the actions menu is displayed for a row.
+Requires the `actions` property to be set to `true`.
+
+Event properties:
+
+```ts
+value: {
+    row: DataRow,
+    action: any
+}
+```
+
+Note that the [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) itself does not populate the action menu with items.
+You can provide all necessary content via the handler.
+
+This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
+
+#### executeRowAction event
+
+Emitted when the user executes a row action.
+
+This usually accompanies a `showRowActionsMenu` event.
+The [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) itself does not execute actions but provides support for external
+integration. If actions are provided using the `showRowActionsMenu` event
+then `executeRowAction` will be automatically executed when the user clicks a
+corresponding menu item.
+
+```html
+<adf-cloud-task-list
+    [actions]="true"
+    (showRowActionsMenu)="onShowRowActionsMenu($event)"
+    (executeRowAction)="onExecuteRowAction($event)">
+</adf-cloud-task-list>
+```
+
+```ts
+import { DataCellEvent, DataRowActionEvent } from '@alfresco/adf-core';
+
+onShowRowActionsMenu(event: DataCellEvent) {
+    let myAction = {
+        title: 'Hello Action'
+        // your custom metadata needed for onExecuteRowAction
+    };
+    event.value.actions = [
+        myAction
+    ];
+}
+
+onExecuteRowAction(event: DataRowActionEvent) {
+    let args = event.value;
+    console.log(args.row);
+    console.log(args.action);
+    window.alert(`My custom action: ${args.action.title}`);
+}
+```
+
+![](../../docassets/images/task-list-cloud-action-menu.png)
+
+You can use any payloads for row actions. The only requirement for the objects is that they
+must have a `title` property.
+
+When an action is selected in the dropdown menu, the [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) invokes the `executeRowAction` event.
+Use this to handle the response, inspect the action payload (and all custom properties defined
+earlier), and perform the corresponding actions.
 
 ## See also
 

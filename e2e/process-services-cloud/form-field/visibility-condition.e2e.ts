@@ -21,7 +21,8 @@ import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
-import { checkboxVisibilityForm } from '../../resources/forms/checkbox-visibility-condition';
+import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
+import { multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
 
 describe('Visibility conditions - cloud', () => {
 
@@ -30,14 +31,16 @@ describe('Visibility conditions - cloud', () => {
 
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudDemoPage();
-    const checkboxVisibilityFormJson = JSON.parse(checkboxVisibilityForm);
     const widget = new Widget();
 
     let visibleCheckbox;
 
     const widgets = {
         textOneId: 'textOne',
-        textTwoId: 'textTwo'
+        textTwoId: 'textTwo',
+        textThreeId: 'textThree',
+        checkboxBasicVariable: 'CheckboxBasicVariableField',
+        checkboxBasicField: 'CheckboxBasicFieldValue'
     };
 
     const value = {
@@ -51,10 +54,11 @@ describe('Visibility conditions - cloud', () => {
         checkboxFieldVariable: 'CheckboxFieldVariable',
         checkboxFieldField: 'CheckboxFieldField',
         checkboxVariableValue: 'CheckboxVariableValue',
-        checkboxVariableVariable: 'CheckboxVariableVariable'
+        checkboxVariableVariable: 'CheckboxVariableVariable',
+        checkbox1: 'Checkbox1'
     };
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
@@ -66,100 +70,181 @@ describe('Visibility conditions - cloud', () => {
             browser.params.config.identityHost);
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        navigationBarPage.clickFormCloudButton();
+        await navigationBarPage.navigateToFormCloudPage();
 
-        formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
-
-        done();
+        await formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
     });
 
-    it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', () => {
+    it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', async () => {
 
-        widget.textWidget().isWidgetVisible(widgets.textOneId);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldValue);
-        widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
-        widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldValue);
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldValue);
+        await widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldValue);
 
-        widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldValue);
+        await widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldValue);
     });
 
-    it('[C309648] Should be able to see Checkbox widget when visibility condition refers to a form variable and a field', () => {
+    it('[C309648] Should be able to see Checkbox widget when visibility condition refers to a form variable and a field', async () => {
 
-        widget.textWidget().isWidgetVisible(widgets.textOneId);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
 
-        widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
-        widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableField);
+        await widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableField);
 
-        widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
+        await widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
     });
 
-    it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a field and a form variable', () => {
+    it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a field and a form variable', async () => {
 
-        widget.textWidget().isWidgetVisible(widgets.textOneId);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
 
-        widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
-        expect(widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldVariable)).toBe(true);
+        await widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldVariable);
 
-        widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
+        await widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
     });
 
-    it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', () => {
+    it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', async () => {
 
-        widget.textWidget().isWidgetVisible(widgets.textOneId);
-        widget.textWidget().isWidgetVisible(widgets.textTwoId);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField);
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+        await widget.textWidget().isWidgetVisible(widgets.textTwoId);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField);
 
-        widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField);
+        await widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField);
 
-        widget.textWidget().setValue(widgets.textTwoId, value.displayCheckbox);
-        widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField);
+        await widget.textWidget().setValue(widgets.textTwoId, value.displayCheckbox);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField);
 
-        widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField);
+        await widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField);
     });
 
-    it('[C311424] Should be able to see Checkbox widget when visibility condition refers to a variable with specific value', () => {
-        formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
+    it('[C311424] Should be able to see Checkbox widget when visibility condition refers to a variable with specific value', async () => {
+        await formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
 
-        widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableValue);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableValue);
 
         visibleCheckbox = checkboxVisibilityFormJson;
         visibleCheckbox.formRepresentation.formDefinition.variables[0].value = value.notDisplayCheckbox;
-        formCloudDemoPage.setConfigToEditor(visibleCheckbox);
+        await formCloudDemoPage.setConfigToEditor(visibleCheckbox);
 
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableValue);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableValue);
 
         visibleCheckbox = checkboxVisibilityFormJson;
         visibleCheckbox.formRepresentation.formDefinition.variables[0].value = value.displayCheckbox;
-        formCloudDemoPage.setConfigToEditor(visibleCheckbox);
+        await formCloudDemoPage.setConfigToEditor(visibleCheckbox);
     });
 
-    it('[C311426] Should be able to see Checkbox widget when visibility condition refers to form variable and another form variable', () => {
-        formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
+    it('[C311426] Should be able to see Checkbox widget when visibility condition refers to form variable and another form variable', async () => {
+        await formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
 
-        widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableVariable);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableVariable);
 
         visibleCheckbox = checkboxVisibilityFormJson;
         visibleCheckbox.formRepresentation.formDefinition.variables[0].value = value.notDisplayCheckbox;
-        formCloudDemoPage.setConfigToEditor(visibleCheckbox);
+        await formCloudDemoPage.setConfigToEditor(visibleCheckbox);
 
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableVariable);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableVariable);
 
         visibleCheckbox = checkboxVisibilityFormJson;
         visibleCheckbox.formRepresentation.formDefinition.variables[1].value = value.notDisplayCheckbox;
-        formCloudDemoPage.setConfigToEditor(visibleCheckbox);
+        await formCloudDemoPage.setConfigToEditor(visibleCheckbox);
 
-        widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableVariable);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableVariable);
 
         visibleCheckbox = checkboxVisibilityFormJson;
         visibleCheckbox.formRepresentation.formDefinition.variables[0].value = value.displayCheckbox;
         visibleCheckbox.formRepresentation.formDefinition.variables[1].value = value.displayCheckbox;
-        formCloudDemoPage.setConfigToEditor(visibleCheckbox);
+        await formCloudDemoPage.setConfigToEditor(visibleCheckbox);
+    });
+
+    it('[C312400] Should be able to see Checkbox widget when has visibility condition related to checkbox', async () => {
+        await formCloudDemoPage.setConfigToEditor(multipleCheckboxVisibilityFormJson);
+
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox3');
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkbox1);
+
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkbox1);
+
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox3');
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkbox1);
+
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkbox1);
+
+    });
+
+    it('[C309650] Should be able to see Checkbox widget when has multiple visibility conditions and next condition operators', async () => {
+        let text1, text2;
+
+        await formCloudDemoPage.setConfigToEditor(multipleVisibilityFormJson);
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+        text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
+        text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
+
+        await expect(text1).toEqual('');
+        await expect(text2).toEqual('');
+
+        await widget.textWidget().setValue(widgets.textOneId, 'aaa');
+        text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
+        text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
+
+        await expect(text1).toEqual('aaa');
+        await expect(text2).toEqual('');
+        await widget.textWidget().isWidgetVisible(widgets.checkboxBasicVariable);
+
+        await widget.textWidget().setValue(widgets.textOneId, 'bbb');
+        text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
+        text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
+
+        await expect(text1).toEqual('bbb');
+        await expect(text2).toEqual('');
+        await widget.textWidget().isWidgetVisible(widgets.checkboxBasicField);
+
+        await widget.textWidget().setValue(widgets.textTwoId, 'aaa');
+        text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
+        text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
+
+        await expect(text1).toEqual('bbb');
+        await expect(text2).toEqual('aaa');
+        await widget.textWidget().isWidgetNotVisible(widgets.checkboxBasicField);
+
+        await widget.textWidget().setValue(widgets.textOneId, 'aaa');
+        text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
+        text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
+
+        await expect(text1).toEqual('aaa');
+        await expect(text2).toEqual('aaa');
+        await widget.textWidget().isWidgetNotVisible(widgets.checkboxBasicField);
+    });
+
+    it('[C312443] Should be able to see Checkbox widget when has multiple visibility conditions and OR NOT next condition operators', async () => {
+        await formCloudDemoPage.setConfigToEditor(multipleVisibilityFormJson);
+
+        await widget.textWidget().setValue(widgets.textTwoId, 'test');
+        await widget.textWidget().setValue(widgets.textThreeId, 'test');
+        await widget.textWidget().isWidgetNotVisible(widgets.textOneId);
+
+        await widget.textWidget().setValue(widgets.textTwoId, 'test');
+        await widget.textWidget().setValue(widgets.textThreeId, 'something');
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+
+        await widget.textWidget().setValue(widgets.textTwoId, 'something');
+        await widget.textWidget().setValue(widgets.textThreeId, 'test');
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+
+        await widget.textWidget().setValue(widgets.textTwoId, 'something');
+        await widget.textWidget().setValue(widgets.textThreeId, 'something');
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
     });
 });

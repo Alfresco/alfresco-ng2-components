@@ -17,50 +17,47 @@
 
 import { BrowserActions, BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder, Locator } from 'protractor';
 
 export class TrashcanPage {
 
-    contentList = new DocumentListPage(element(by.css('adf-document-list')));
-    rows = by.css('adf-document-list div[class*="adf-datatable-body"] div[class*="adf-datatable-row"]');
-    tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
-    pagination = element(by.css('adf-pagination'));
-    emptyTrashcan = element(by.css('adf-empty-content'));
-    restoreButton = element(by.css(`button[title='Restore']`));
+    contentList: DocumentListPage = new DocumentListPage(element(by.css('adf-document-list')));
+    rows: Locator = by.css('adf-document-list div[class*="adf-datatable-body"] div[class*="adf-datatable-row"]');
+    tableBody: ElementFinder = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
+    pagination: ElementFinder = element(by.css('adf-pagination'));
+    emptyTrashcan: ElementFinder = element(by.css('adf-empty-content'));
+    restoreButton: ElementFinder = element(by.css(`button[title='Restore']`));
 
-    numberOfResultsDisplayed() {
-        return element.all(this.rows).count();
+    async numberOfResultsDisplayed(): Promise<number> {
+        return await element.all(this.rows).count();
     }
 
-    waitForTableBody() {
-        BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
+    async waitForTableBody(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
-    waitForPagination() {
-        BrowserVisibility.waitUntilElementIsVisible(this.pagination);
+    async waitForPagination(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.pagination);
     }
 
-    checkTrashcanIsEmpty() {
-        BrowserVisibility.waitUntilElementIsVisible(this.emptyTrashcan);
+    async checkTrashcanIsEmpty(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.emptyTrashcan);
     }
 
-    getDocumentList() {
+    getDocumentList(): DocumentListPage {
         return this.contentList;
     }
 
-    clickRestore() {
-        BrowserActions.click(this.restoreButton);
-        return this;
+    async clickRestore(): Promise<void> {
+        await BrowserActions.click(this.restoreButton);
     }
 
-    checkRestoreButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.restoreButton);
-        return this;
+    async checkRestoreButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.restoreButton);
     }
 
-    checkRestoreButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.restoreButton);
-        return this;
+    async checkRestoreButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.restoreButton);
     }
 
 }

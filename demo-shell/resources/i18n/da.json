@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Filtrer efter rolle",
     "PRESELECT_VALIDATION": "Forudvælg validering"
   },
-  "ABOUT": {
-    "TITLE": "Plug-ins",
-    "TABLE_HEADERS": {
-      "ID": "Id",
-      "NAME": "Navn",
-      "VERSION": "Version",
-      "VENDOR": "Leverandør",
-      "LICENSE": "Licens",
-      "RUNTIME": "Kørselstidspunkt",
-      "DESCRIPTION": "Beskrivelse"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multivalg",
     "TESTING_MODE": "Testtilstand",
     "SELECTION_MODE": "Valgtilstand",
+    "SELECTED_ROWS": "Valgte rækker",
     "TASK_DETAILS_REDIRECTION": "Vis opgavedetaljer på opgave ved at klikke",
-    "PROCESS_DETAILS_REDIRECTION": "Vis behandlingsdetaljer for processen ved at klikke"
+    "PROCESS_DETAILS_REDIRECTION": "Vis behandlingsdetaljer for processen ved at klikke",
+    "ACTION": {
+      "ACTION_TITLE": "Tilføj handling",
+      "ACTION_MENU": "Menuen Handling",
+      "CONTEX_MENU": "Genvejsmenu",
+      "ACTION_VISIBLE": "Synlig",
+      "ACTION_DISABLE": "Deaktiver",
+      "ADD_BUTTON": "Tilføj",
+      "KEY": "Nøgle",
+      "TITLE": "Titel",
+      "ICON": "Ikon",
+      "TASK_ID": "Opgave-id",
+      "PROCESS_ID": "Procesforekomst-id",
+      "ACTION_TYPE": "Handlingstype"
+    }
   }
 }

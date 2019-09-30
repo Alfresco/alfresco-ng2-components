@@ -24,27 +24,27 @@ export class LikePage {
     likeButton = element(by.css(`span[class="adf-like-grey"]`));
     unlikeButton = element(by.css(`span[class="adf-like-select"]`));
 
-    getLikeCounter() {
+    async getLikeCounter(): Promise<string> {
         return BrowserActions.getText(this.likeCounter);
     }
 
-    clickLike() {
-        return BrowserActions.click(this.likeButton);
+    async clickLike(): Promise<void> {
+        await BrowserActions.click(this.likeButton);
     }
 
-    clickUnlike() {
-        return BrowserActions.click(this.unlikeButton);
+    async clickUnlike(): Promise<void> {
+        await BrowserActions.click(this.unlikeButton);
     }
 
-    removeHoverFromLikeButton() {
-        browser.actions().mouseMove({x: 200, y: 200}).click().perform();
+    async removeHoverFromLikeButton(): Promise<void> {
+        await browser.actions().mouseMove({ x: 200, y: 200 }).click().perform();
     }
 
-    getLikedIconColor() {
+    async getLikedIconColor(): Promise<string> {
         return BrowserActions.getColor(this.unlikeButton);
     }
 
-    getUnLikedIconColor() {
+    async getUnLikedIconColor(): Promise<string> {
         return BrowserActions.getColor(this.likeButton);
     }
 }

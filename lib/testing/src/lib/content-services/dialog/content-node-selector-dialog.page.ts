@@ -15,90 +15,87 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ContentNodeSelectorDialogPage {
-    dialog = element(by.css(`adf-content-node-selector`));
-    header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
-    searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
-    searchLabel = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
-    siteListDropdown = this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
-    cancelButton = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
-    moveCopyButton = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
-    contentList = new DocumentListPage(this.dialog);
+    dialog: ElementFinder = element(by.css(`adf-content-node-selector`));
+    header: ElementFinder = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
+    searchInputElement: ElementFinder = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
+    searchLabel: ElementFinder = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
+    siteListDropdown: ElementFinder = this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
+    cancelButton: ElementFinder = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
+    moveCopyButton: ElementFinder = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
+    contentList: DocumentListPage = new DocumentListPage(this.dialog);
 
-    checkDialogIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dialog);
-        return this;
+    async checkDialogIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
     }
 
-    checkDialogIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
-        return this;
+    async checkDialogIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.dialog);
     }
 
-    getDialogHeaderText() {
-        return BrowserActions.getText(this.header);
+    async getDialogHeaderText(): Promise<string> {
+        return await BrowserActions.getText(this.header);
     }
 
-    checkSearchInputIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
-        return this;
+    async checkSearchInputIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
     }
 
-    getSearchLabel() {
-        return BrowserActions.getText(this.searchLabel);
+    async getSearchLabel(): Promise<string> {
+        return await BrowserActions.getText(this.searchLabel);
     }
 
-    checkSelectedSiteIsDisplayed(siteName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
+    async checkSelectedSiteIsDisplayed(siteName): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
     }
 
-    checkCancelButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
+    async checkCancelButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
 
-    clickCancelButton() {
-        return BrowserActions.click(this.cancelButton);
+    async clickCancelButton(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 
-    checkCancelButtonIsEnabled() {
-        return this.cancelButton.isEnabled();
+    async checkCancelButtonIsEnabled(): Promise<boolean> {
+        return await this.cancelButton.isEnabled();
     }
 
-    checkCopyMoveButtonIsEnabled() {
-        return this.moveCopyButton.isEnabled();
+    async checkCopyMoveButtonIsEnabled(): Promise<boolean> {
+        return await this.moveCopyButton.isEnabled();
     }
 
-    checkMoveCopyButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.moveCopyButton);
+    async checkMoveCopyButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.moveCopyButton);
     }
 
-    getMoveCopyButtonText() {
-        return BrowserActions.getText(this.moveCopyButton);
+    async getMoveCopyButtonText(): Promise<string> {
+        return await BrowserActions.getText(this.moveCopyButton);
     }
 
-    clickMoveCopyButton() {
-        return BrowserActions.click(this.moveCopyButton);
+    async clickMoveCopyButton(): Promise<void> {
+        await BrowserActions.click(this.moveCopyButton);
     }
 
-    numberOfResultsDisplayed() {
-        return this.contentList.dataTablePage().numberOfRows();
+    async numberOfResultsDisplayed(): Promise<number> {
+        return await this.contentList.dataTablePage().numberOfRows();
     }
 
-    typeIntoNodeSelectorSearchField(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
-        this.searchInputElement.sendKeys(text);
+    async typeIntoNodeSelectorSearchField(text): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
+        await BrowserActions.clearSendKeys(this.searchInputElement, text);
     }
 
-    clickContentNodeSelectorResult(name) {
-        this.contentList.dataTablePage().clickRowByContent(name);
+    async clickContentNodeSelectorResult(name): Promise<void> {
+        await this.contentList.dataTablePage().clickRowByContent(name);
     }
 
-    contentListPage() {
+    contentListPage(): DocumentListPage {
         return this.contentList;
     }
 }

@@ -16,7 +16,7 @@
  */
 
 import { BrowserVisibility } from '@alfresco/adf-testing';
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { DataTableComponentPage, BrowserActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../navigationBarPage';
 
@@ -38,49 +38,48 @@ const column = {
 
 export class CustomSources {
 
-    dataTable = new DataTableComponentPage();
-    navigationBarPage = new NavigationBarPage();
+    dataTable: DataTableComponentPage = new DataTableComponentPage();
+    navigationBarPage: NavigationBarPage = new NavigationBarPage();
 
-    toolbar = element(by.css('app-custom-sources .adf-toolbar-title'));
-    sourceTypeDropdown = element(by.css('div[class*="select-arrow"]>div'));
+    toolbar: ElementFinder = element(by.css('app-custom-sources .adf-toolbar-title'));
+    sourceTypeDropdown: ElementFinder = element(by.css('div[class*="select-arrow"]>div'));
 
-    getSourceType(option) {
+    getSourceType(option): ElementFinder {
         return element(by.cssContainingText('.cdk-overlay-pane span', `${option}`));
     }
 
-    waitForToolbarToBeVisible() {
-        BrowserVisibility.waitUntilElementIsVisible(this.toolbar);
-        return this;
+    async waitForToolbarToBeVisible(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.toolbar);
     }
 
-    navigateToCustomSources() {
-        this.navigationBarPage.navigateToCustomSources();
-        this.waitForToolbarToBeVisible();
+    async navigateToCustomSources(): Promise<void> {
+        await this.navigationBarPage.clickCustomSources();
+        await this.waitForToolbarToBeVisible();
     }
 
-    clickOnSourceType() {
-        BrowserActions.click(this.sourceTypeDropdown);
+    async clickOnSourceType(): Promise<void> {
+        await BrowserActions.click(this.sourceTypeDropdown);
     }
 
-    selectMySitesSourceType() {
-        this.clickOnSourceType();
-        BrowserActions.click(this.getSourceType(source.mySites));
+    async selectMySitesSourceType(): Promise<void> {
+        await this.clickOnSourceType();
+        await BrowserActions.click(this.getSourceType(source.mySites));
     }
 
-    selectFavoritesSourceType() {
-        this.clickOnSourceType();
-        BrowserActions.click(this.getSourceType(source.favorites));
+    async selectFavoritesSourceType(): Promise<void> {
+        await this.clickOnSourceType();
+        await BrowserActions.click(this.getSourceType(source.favorites));
     }
 
-    checkRowIsDisplayed(rowName) {
+    checkRowIsDisplayed(rowName): Promise<void> {
         return this.dataTable.checkContentIsDisplayed('Name', rowName);
     }
 
-    checkRowIsNotDisplayed(rowName) {
+    checkRowIsNotDisplayed(rowName): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed('Name', rowName);
     }
 
-    getStatusCell(rowName) {
+    async getStatusCell(rowName): Promise<string> {
         const cell = this.dataTable.getCellByRowContentAndColumn('Name', rowName, column.status);
         return BrowserActions.getText(cell);
     }

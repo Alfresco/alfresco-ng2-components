@@ -195,7 +195,7 @@ describe('ContentWidgetComponent', () => {
             const change = new SimpleChange(null, contentId, true);
             component.ngOnChanges({ 'id': change });
 
-            component.contentLoaded.subscribe((res) => {
+            component.contentLoaded.subscribe(() => {
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {

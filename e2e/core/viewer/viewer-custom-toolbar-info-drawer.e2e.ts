@@ -44,7 +44,7 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -54,41 +54,40 @@ describe('Viewer', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await uploadActions.deleteFileOrFolder(txtFileUploaded.entry.id);
         await navigationBarPage.clickLogoutButton();
-        done();
+
     });
 
-    beforeEach(() => {
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.doubleClickRow(txtFileUploaded.entry.name);
+    beforeEach(async () => {
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.doubleClickRow(txtFileUploaded.entry.name);
     });
 
-    afterEach(() => {
-        viewerPage.clickCloseButton();
+    afterEach(async () => {
+        await viewerPage.clickCloseButton();
     });
 
-    it('[C260096] Should the Viewer able to accept a customToolbar', () => {
-        viewerPage.clickLeftSidebarButton();
-        viewerPage.checkLeftSideBarIsDisplayed();
-        viewerPage.checkToolbarIsDisplayed();
-        viewerPage.enableCustomToolbar();
-        viewerPage.checkCustomToolbarIsDisplayed();
-        viewerPage.disableCustomToolbar();
+    it('[C260096] Should the Viewer able to accept a customToolbar', async () => {
+        await viewerPage.clickLeftSidebarButton();
+        await viewerPage.checkLeftSideBarIsDisplayed();
+        await viewerPage.checkToolbarIsDisplayed();
+        await viewerPage.enableCustomToolbar();
+        await viewerPage.checkCustomToolbarIsDisplayed();
+        await viewerPage.disableCustomToolbar();
     });
 
-    it('[C260097] Should the viewer able to show a custom info-drawer when the sidebarTemplate is set', () => {
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        viewerPage.clickOnTab('Comments');
-        viewerPage.checkTabIsActive('Comments');
-        viewerPage.clickOnTab('Properties');
-        viewerPage.checkTabIsActive('Properties');
-        viewerPage.clickOnTab('Versions');
-        viewerPage.checkTabIsActive('Versions');
+    it('[C260097] Should the viewer able to show a custom info-drawer when the sidebarTemplate is set', async () => {
+        await viewerPage.clickInfoButton();
+        await viewerPage.checkInfoSideBarIsDisplayed();
+        await viewerPage.clickOnTab('Comments');
+        await viewerPage.checkTabIsActive('Comments');
+        await viewerPage.clickOnTab('Properties');
+        await viewerPage.checkTabIsActive('Properties');
+        await viewerPage.clickOnTab('Versions');
+        await viewerPage.checkTabIsActive('Versions');
     });
 });

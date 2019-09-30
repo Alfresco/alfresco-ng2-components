@@ -316,7 +316,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should create an empty valid form when there are no parameters definitions', () => {
-            component.success.subscribe((res) => {
+            component.success.subscribe(() => {
                 expect(component.reportForm).toBeDefined();
                 expect(component.reportForm.valid).toEqual(true);
                 expect(component.reportForm.controls).toEqual({});

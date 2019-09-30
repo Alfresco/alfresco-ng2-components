@@ -317,7 +317,7 @@ Release Notes - Apps Development Framework - Version 1.7.
 
 ### Feature
 
--   \[[ADF-914](https://issues.alfresco.com/jira/browse/ADF-914)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) section in the demo shell
+-   \[[ADF-914](https://issues.alfresco.com/jira/browse/ADF-914)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) section in the demo shell
 -   \[[ADF-918](https://issues.alfresco.com/jira/browse/ADF-918)] - Activiti Start Task - Refactoring
 -   \[[ADF-920](https://issues.alfresco.com/jira/browse/ADF-920)] - Process Header Component - Use the CardView component
 -   \[[ADF-970](https://issues.alfresco.com/jira/browse/ADF-970)] - Attachment Task/process list - add template for empty list
@@ -345,7 +345,7 @@ Release Notes - Apps Development Framework - Version 1.7.
 -   \[[ADF-939](https://issues.alfresco.com/jira/browse/ADF-939)] - [Login] Sign in button does not stay at the bottom
 -   \[[ADF-943](https://issues.alfresco.com/jira/browse/ADF-943)] - APS [`ContentApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/content.api.ts) is not present on index.d.ts and [`SitesApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/sites.api.ts) is not complete
 -   \[[ADF-945](https://issues.alfresco.com/jira/browse/ADF-945)] - 'Undefined' is displayed in 'attach file' widget after restore.
--   \[[ADF-950](https://issues.alfresco.com/jira/browse/ADF-950)] - when the [`Form`](../../lib/process-services/task-list/models/form.model.ts) in readonly mode you can edit the date
+-   \[[ADF-950](https://issues.alfresco.com/jira/browse/ADF-950)] - when the [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) in readonly mode you can edit the date
 -   \[[ADF-957](https://issues.alfresco.com/jira/browse/ADF-957)] - Duplicate Rest calls are made for fields where Rest end points are given
 -   \[[ADF-966](https://issues.alfresco.com/jira/browse/ADF-966)] - Data table doesn't update on async loading
 -   \[[ADF-978](https://issues.alfresco.com/jira/browse/ADF-978)] - No warning message is displayed to the user when minor changes are made on Settings.
@@ -356,7 +356,7 @@ Release Notes - Apps Development Framework - Version 1.7.
 -   \[[ADF-1026](https://issues.alfresco.com/jira/browse/ADF-1026)] - Default "empty" document list view should be translatable.
 -   \[[ADF-1047](https://issues.alfresco.com/jira/browse/ADF-1047)] - AlfrescoSettingsService defaults to 'ALL' on page reload
 -   \[[ADF-1048](https://issues.alfresco.com/jira/browse/ADF-1048)] - Multiple files attached to a task within a form are not displayed
--   \[[ADF-1056](https://issues.alfresco.com/jira/browse/ADF-1056)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) List Component does not display the forms of the user
+-   \[[ADF-1056](https://issues.alfresco.com/jira/browse/ADF-1056)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) List Component does not display the forms of the user
 -   \[[ADF-1068](https://issues.alfresco.com/jira/browse/ADF-1068)] - Files can be uploaded using drag and drop when 'enable file' is unchecked
 -   \[[ADF-1070](https://issues.alfresco.com/jira/browse/ADF-1070)] - [User preferences service](../core/services/user-preferences.service.md) does not restore prefix on page reload.
 -   \[[ADF-1072](https://issues.alfresco.com/jira/browse/ADF-1072)] - Unsupported type of file attached to a task or process can not be converted to pdf
@@ -365,16 +365,16 @@ Release Notes - Apps Development Framework - Version 1.7.
 -   \[[ADF-1081](https://issues.alfresco.com/jira/browse/ADF-1081)] - Scroll bar is missing in [comments component](../core/components/comments.component.md)
 -   \[[ADF-1097](https://issues.alfresco.com/jira/browse/ADF-1097)] - File with unaccepted extension is uploaded when 'Format' is set to 'All files'
 -   \[[ADF-1134](https://issues.alfresco.com/jira/browse/ADF-1134)] - [Document List] Selection events not raised for certain scenarios
--   \[[ADF-1138](https://issues.alfresco.com/jira/browse/ADF-1138)] - Start Task [`Form`](../../lib/process-services/task-list/models/form.model.ts) Assignee dropdown show null value inside
+-   \[[ADF-1138](https://issues.alfresco.com/jira/browse/ADF-1138)] - Start Task [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) Assignee dropdown show null value inside
 -   \[[ADF-1140](https://issues.alfresco.com/jira/browse/ADF-1140)] - Task header - Wrong parent name key
 -   \[[ADF-1142](https://issues.alfresco.com/jira/browse/ADF-1142)] - Cannot add comment into a process.
 -   \[[ADF-1143](https://issues.alfresco.com/jira/browse/ADF-1143)] - [TaskList] - Not able to start a task when changing the assignee from the 'Start Task' form.
--   \[[ADF-1147](https://issues.alfresco.com/jira/browse/ADF-1147)] - [Processes] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) is not rendered properly when starting a new process.
+-   \[[ADF-1147](https://issues.alfresco.com/jira/browse/ADF-1147)] - [Processes] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) is not rendered properly when starting a new process.
 -   \[[ADF-1148](https://issues.alfresco.com/jira/browse/ADF-1148)] - [TaskList] - 'Description' is not rendered.
 -   \[[ADF-1149](https://issues.alfresco.com/jira/browse/ADF-1149)] - 'Remove' involved people of a task button is displayed behind the dialog
 -   \[[ADF-1151](https://issues.alfresco.com/jira/browse/ADF-1151)] - [Processes] - 'Show Diagram' option is not displayed.
 -   \[[ADF-1155](https://issues.alfresco.com/jira/browse/ADF-1155)] - The Process and Task filters are not displayed properly in ADF for applications created in APS
--   \[[ADF-1162](https://issues.alfresco.com/jira/browse/ADF-1162)] - List with forms is not displayed inside [`Form`](../../lib/process-services/task-list/models/form.model.ts) List.
+-   \[[ADF-1162](https://issues.alfresco.com/jira/browse/ADF-1162)] - List with forms is not displayed inside [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) List.
 -   \[[ADF-1168](https://issues.alfresco.com/jira/browse/ADF-1168)] - Tasks header component and Processes header component have different margins
 -   \[[ADF-1169](https://issues.alfresco.com/jira/browse/ADF-1169)] - [Start Task] - Missing date validation
 -   \[[ADF-1175](https://issues.alfresco.com/jira/browse/ADF-1175)] - Start Process and Start Task Forms don't close when Cancel button is clicked

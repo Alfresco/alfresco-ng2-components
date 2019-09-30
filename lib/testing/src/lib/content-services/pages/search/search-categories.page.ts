@@ -27,60 +27,51 @@ import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchCategoriesPage {
 
-    checkListFiltersPage(filter: ElementFinder) {
+    static checkListFiltersPage(filter: ElementFinder): SearchCheckListPage {
         return new SearchCheckListPage(filter);
     }
 
-    textFiltersPage(filter: ElementFinder) {
+    static textFiltersPage(filter: ElementFinder): SearchTextPage {
         return new SearchTextPage(filter);
     }
 
-    radioFiltersPage(filter: ElementFinder) {
+    static radioFiltersPage(filter: ElementFinder): SearchRadioPage {
         return new SearchRadioPage(filter);
     }
 
-    dateRangeFilter(filter: ElementFinder) {
+    static dateRangeFilter(filter: ElementFinder): DateRangeFilterPage {
         return new DateRangeFilterPage(filter);
     }
 
-    numberRangeFilter(filter: ElementFinder) {
+    static numberRangeFilter(filter: ElementFinder): NumberRangeFilterPage {
         return new NumberRangeFilterPage(filter);
     }
 
-    sliderFilter(filter: ElementFinder) {
+    static sliderFilter(filter: ElementFinder): SearchSliderPage {
         return new SearchSliderPage(filter);
     }
 
-    checkFilterIsDisplayed(filter: ElementFinder) {
-        BrowserVisibility.waitUntilElementIsVisible(filter);
-        return this;
+    async checkFilterIsDisplayed(filter: ElementFinder): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(filter);
     }
 
-    clickFilter(filter: ElementFinder) {
-        BrowserVisibility.waitUntilElementIsVisible(filter);
-        filter.element(by.css('mat-expansion-panel-header')).click();
-        return this;
+    async clickFilter(filter: ElementFinder): Promise<void> {
+        await BrowserActions.click(filter.element(by.css('mat-expansion-panel-header')));
     }
 
-    clickFilterHeader(filter: ElementFinder) {
+    async clickFilterHeader(filter: ElementFinder): Promise<void> {
         const fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
-        BrowserVisibility.waitUntilElementIsClickable(fileSizeFilterHeader);
-        BrowserActions.click(fileSizeFilterHeader);
-        return this;
+        await BrowserActions.click(fileSizeFilterHeader);
     }
 
-    checkFilterIsCollapsed(filter: ElementFinder) {
-        filter.getAttribute('class').then((elementClass) => {
-            expect(elementClass).not.toContain('mat-expanded');
-        });
-        return this;
+    async checkFilterIsCollapsed(filter: ElementFinder): Promise<void> {
+        const elementClass = await filter.getAttribute('class');
+        await expect(elementClass).not.toContain('mat-expanded');
     }
 
-    checkFilterIsExpanded(filter: ElementFinder) {
-        filter.getAttribute('class').then((elementClass) => {
-            expect(elementClass).toContain('mat-expanded');
-        });
-        return this;
+    async checkFilterIsExpanded(filter: ElementFinder): Promise<void> {
+        const elementClass = await filter.getAttribute('class');
+        await expect(elementClass).toContain('mat-expanded');
     }
 
 }

@@ -15,666 +15,619 @@
  * limitations under the License.
  */
 
-import { TabsPage } from '@alfresco/adf-testing';
-import { FormControllersPage } from '@alfresco/adf-testing';
-import { element, by, browser, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { TabsPage, FormControllersPage, BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { element, by, browser, protractor, ElementFinder } from 'protractor';
 
 export class ViewerPage {
 
-    tabsPage = new TabsPage();
-    formControllersPage = new FormControllersPage();
+    tabsPage: TabsPage = new TabsPage();
+    formControllersPage: FormControllersPage = new FormControllersPage();
 
-    closeButton = element(by.css('button[data-automation-id="adf-toolbar-back"]'));
-    fileName = element(by.id('adf-viewer-display-name'));
-    infoButton = element(by.css('button[data-automation-id="adf-toolbar-sidebar"]'));
-    leftSideBarButton = element(by.css('button[data-automation-id="adf-toolbar-left-sidebar"]'));
-    previousPageButton = element(by.id('viewer-previous-page-button'));
-    nextPageButton = element(by.id('viewer-next-page-button'));
-    zoomInButton = element(by.id('viewer-zoom-in-button'));
-    zoomOutButton = element(by.id('viewer-zoom-out-button'));
-    scalePageButton = element(by.id('viewer-scale-page-button'));
-    fullScreenButton = element(by.css('button[data-automation-id="adf-toolbar-fullscreen"]'));
-    rotateLeft = element(by.css('button[id="viewer-rotate-left-button"]'));
-    rotateRight = element(by.css('button[id="viewer-rotate-right-button"]'));
-    scaleImg = element(by.css('button[id="viewer-reset-button"]'));
-    fileThumbnail = element(by.css('img[data-automation-id="adf-file-thumbnail"]'));
-    pageSelectorInput = element(by.css('input[data-automation-id="adf-page-selector"]'));
-    imgContainer = element(by.css('div[data-automation-id="adf-image-container"]'));
-    mediaContainer = element(by.css('adf-media-player[class="adf-media-player ng-star-inserted"]'));
-    percentage = element(by.css('div[data-automation-id="adf-page-scale"'));
-    thumbnailsBtn = element(by.css('button[data-automation-id="adf-thumbnails-button"]'));
-    thumbnailsContent = element(by.css('div[data-automation-id="adf-thumbnails-content"]'));
-    thumbnailsClose = element(by.css('button[data-automation-id="adf-thumbnails-close"]'));
-    secondThumbnail = element(by.css('adf-pdf-thumb > img[title="Page 2"'));
-    lastThumbnailDisplayed = element.all(by.css('adf-pdf-thumb')).last();
-    passwordDialog = element(by.css('adf-pdf-viewer-password-dialog'));
-    passwordSubmit = element(by.css('button[data-automation-id="adf-password-dialog-submit"]'));
-    passwordDialogClose = element(by.css('button[data-automation-id="adf-password-dialog-close"]'));
-    passwordSubmitDisabled = element(by.css('button[data-automation-id="adf-password-dialog-submit"][disabled]'));
-    passwordInput = element(by.css('input[data-automation-id="adf-password-dialog-input"]'));
-    passwordError = element(by.css('mat-error[data-automation-id="adf-password-dialog-error"]'));
-    infoSideBar = element(by.id('adf-right-sidebar'));
-    leftSideBar = element(by.id('adf-left-sidebar'));
-    viewer = element(by.css('adf-viewer'));
-    pdfViewer = element(by.css('adf-pdf-viewer'));
-    imgViewer = element(by.css('adf-img-viewer'));
-    activeTab = element(by.css('div[class*="mat-tab-label-active"]'));
-    toolbarSwitch = element(by.id('adf-switch-toolbar'));
-    toolbar = element(by.id('adf-viewer-toolbar'));
-    lastButton = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]')).last();
-    goBackSwitch = element(by.id('adf-switch-goback'));
-    canvasLayer = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
+    closeButton: ElementFinder = element(by.css('button[data-automation-id="adf-toolbar-back"]'));
+    fileName: ElementFinder = element(by.id('adf-viewer-display-name'));
+    infoButton: ElementFinder = element(by.css('button[data-automation-id="adf-toolbar-sidebar"]'));
+    leftSideBarButton: ElementFinder = element(by.css('button[data-automation-id="adf-toolbar-left-sidebar"]'));
+    previousPageButton: ElementFinder = element(by.id('viewer-previous-page-button'));
+    nextPageButton: ElementFinder = element(by.id('viewer-next-page-button'));
+    zoomInButton: ElementFinder = element(by.id('viewer-zoom-in-button'));
+    zoomOutButton: ElementFinder = element(by.id('viewer-zoom-out-button'));
+    scalePageButton: ElementFinder = element(by.id('viewer-scale-page-button'));
+    fullScreenButton: ElementFinder = element(by.css('button[data-automation-id="adf-toolbar-fullscreen"]'));
+    rotateLeft: ElementFinder = element(by.css('button[id="viewer-rotate-left-button"]'));
+    rotateRight: ElementFinder = element(by.css('button[id="viewer-rotate-right-button"]'));
+    scaleImg: ElementFinder = element(by.css('button[id="viewer-reset-button"]'));
+    fileThumbnail: ElementFinder = element(by.css('img[data-automation-id="adf-file-thumbnail"]'));
+    pageSelectorInput: ElementFinder = element(by.css('input[data-automation-id="adf-page-selector"]'));
+    imgContainer: ElementFinder = element(by.css('div[data-automation-id="adf-image-container"]'));
+    mediaContainer: ElementFinder = element(by.css('adf-media-player[class="adf-media-player ng-star-inserted"]'));
+    percentage: ElementFinder = element(by.css('div[data-automation-id="adf-page-scale"'));
+    thumbnailsBtn: ElementFinder = element(by.css('button[data-automation-id="adf-thumbnails-button"]'));
+    thumbnailsContent: ElementFinder = element(by.css('div[data-automation-id="adf-thumbnails-content"]'));
+    thumbnailsClose: ElementFinder = element(by.css('button[data-automation-id="adf-thumbnails-close"]'));
+    secondThumbnail: ElementFinder = element(by.css('adf-pdf-thumb > img[title="Page 2"'));
+    lastThumbnailDisplayed: ElementFinder = element.all(by.css('adf-pdf-thumb')).last();
+    passwordDialog: ElementFinder = element(by.css('adf-pdf-viewer-password-dialog'));
+    passwordSubmit: ElementFinder = element(by.css('button[data-automation-id="adf-password-dialog-submit"]'));
+    passwordDialogClose: ElementFinder = element(by.css('button[data-automation-id="adf-password-dialog-close"]'));
+    passwordSubmitDisabled: ElementFinder = element(by.css('button[data-automation-id="adf-password-dialog-submit"][disabled]'));
+    passwordInput: ElementFinder = element(by.css('input[data-automation-id="adf-password-dialog-input"]'));
+    passwordError: ElementFinder = element(by.css('mat-error[data-automation-id="adf-password-dialog-error"]'));
+    infoSideBar: ElementFinder = element(by.id('adf-right-sidebar'));
+    leftSideBar: ElementFinder = element(by.id('adf-left-sidebar'));
+    viewer: ElementFinder = element(by.css('adf-viewer'));
+    pdfViewer: ElementFinder = element(by.css('adf-pdf-viewer'));
+    imgViewer: ElementFinder = element(by.css('adf-img-viewer'));
+    activeTab: ElementFinder = element(by.css('div[class*="mat-tab-label-active"]'));
+    toolbarSwitch: ElementFinder = element(by.id('adf-switch-toolbar'));
+    toolbar: ElementFinder = element(by.id('adf-viewer-toolbar'));
+    lastButton: ElementFinder = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]')).last();
+    goBackSwitch: ElementFinder = element(by.id('adf-switch-goback'));
+    canvasLayer: ElementFinder = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
 
-    openWithSwitch = element(by.id('adf-switch-openwith'));
-    openWith = element(by.id('adf-viewer-openwith'));
+    openWithSwitch: ElementFinder = element(by.id('adf-switch-openwith'));
+    openWith: ElementFinder = element(by.id('adf-viewer-openwith'));
 
-    moreActionsMenuSwitch = element(by.id('adf-switch-moreactionsmenu'));
-    moreActionsMenu = element(by.css('button[data-automation-id="adf-toolbar-more-actions"]'));
+    moreActionsMenuSwitch: ElementFinder = element(by.id('adf-switch-moreactionsmenu'));
+    moreActionsMenu: ElementFinder = element(by.css('button[data-automation-id="adf-toolbar-more-actions"]'));
 
-    customNameSwitch = element(by.id('adf-switch-custoname'));
-    customToolbarToggle = element(by.id('adf-toggle-custom-toolbar'));
-    customToolbar = element(by.css('adf-viewer-toolbar[data-automation-id="adf-viewer-custom-toolbar"]'));
+    customNameSwitch: ElementFinder = element(by.id('adf-switch-custoname'));
+    customToolbarToggle: ElementFinder = element(by.id('adf-toggle-custom-toolbar'));
+    customToolbar: ElementFinder = element(by.css('adf-viewer-toolbar[data-automation-id="adf-viewer-custom-toolbar"]'));
 
-    showRightSidebarSwitch = element(by.id('adf-switch-showrightsidebar'));
-    showLeftSidebarSwitch = element(by.id('adf-switch-showleftsidebar'));
+    showRightSidebarSwitch: ElementFinder = element(by.id('adf-switch-showrightsidebar'));
+    showLeftSidebarSwitch: ElementFinder = element(by.id('adf-switch-showleftsidebar'));
 
-    moreActionsSwitch = element(by.id('adf-switch-moreactions'));
-    pdfPageLoaded = element(by.css('[data-page-number="1"][data-loaded="true"], adf-img-viewer, adf-txt-viewer'));
+    moreActionsSwitch: ElementFinder = element(by.id('adf-switch-moreactions'));
+    pdfPageLoaded: ElementFinder = element(by.css('[data-page-number="1"][data-loaded="true"], adf-img-viewer, adf-txt-viewer'));
 
-    downloadSwitch = element(by.id('adf-switch-download'));
-    downloadButton = element(by.id('adf-viewer-download'));
+    downloadSwitch: ElementFinder = element(by.id('adf-switch-download'));
+    downloadButton: ElementFinder = element(by.id('adf-viewer-download'));
 
-    printSwitch = element(by.id('adf-switch-print'));
-    printButton = element(by.id('adf-viewer-print'));
+    printSwitch: ElementFinder = element(by.id('adf-switch-print'));
+    printButton: ElementFinder = element(by.id('adf-viewer-print'));
 
-    allowSidebarSwitch = element(by.id('adf-switch-allowsidebar'));
-    allowLeftSidebarSwitch = element(by.id('adf-switch-allowLeftSidebar'));
+    allowSidebarSwitch: ElementFinder = element(by.id('adf-switch-allowsidebar'));
+    allowLeftSidebarSwitch: ElementFinder = element(by.id('adf-switch-allowLeftSidebar'));
 
-    uploadButton = element(by.id('adf-viewer-upload'));
-    timeButton = element(by.id('adf-viewer-time'));
-    bugButton = element(by.id('adf-viewer-bug'));
+    uploadButton: ElementFinder = element(by.id('adf-viewer-upload'));
+    timeButton: ElementFinder = element(by.id('adf-viewer-time'));
+    bugButton: ElementFinder = element(by.id('adf-viewer-bug'));
 
-    codeViewer = element(by.id('adf-monaco-file-editor'));
-    moveRightChevron = element(by.css('.mat-tab-header-pagination-after .mat-tab-header-pagination-chevron'));
+    codeViewer: ElementFinder = element(by.id('adf-monaco-file-editor'));
 
-    showTabWithIconSwitch = element(by.id('adf-tab-with-icon'));
-    showTabWithIconAndLabelSwitch = element(by.id('adf-icon-and-label-tab'));
-    unknownFormat = element(by.css(`adf-viewer-unknown-format .adf-viewer__unknown-format-view`));
+    showTabWithIconSwitch: ElementFinder = element(by.id('adf-tab-with-icon'));
+    showTabWithIconAndLabelSwitch: ElementFinder = element(by.id('adf-icon-and-label-tab'));
+    unknownFormat: ElementFinder = element(by.css(`adf-viewer-unknown-format .adf-viewer__unknown-format-view`));
 
-    checkCodeViewerIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
+    async checkCodeViewerIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
     }
 
-    viewFile(fileName) {
-        BrowserActions.closeMenuAndDialogs();
-        const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
-        BrowserActions.click(fileView);
-        browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    async viewFile(fileName): Promise<void> {
+        const fileView: ElementFinder = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
+        await BrowserActions.click(fileView);
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    clearPageNumber() {
-        BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
-        this.pageSelectorInput.clear();
-        this.pageSelectorInput.sendKeys(protractor.Key.ENTER);
+    async clearPageNumber(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
+        await BrowserActions.clearSendKeys(this.pageSelectorInput, protractor.Key.ENTER);
     }
 
-    getZoom() {
-        return BrowserActions.getText(this.percentage);
+    async getZoom(): Promise<string> {
+        return await BrowserActions.getText(this.percentage);
     }
 
-    getCanvasWidth() {
-        return this.canvasLayer.getAttribute(`width`);
+    async getCanvasWidth(): Promise<string> {
+        return await this.canvasLayer.getAttribute(`width`);
     }
 
-    getCanvasHeight() {
-        return this.canvasLayer.getAttribute(`height`);
+    async getCanvasHeight(): Promise<string> {
+        return await this.canvasLayer.getAttribute(`height`);
     }
 
-    getDisplayedFileName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.fileName);
-        return this.fileName.getText();
+    async getDisplayedFileName(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.fileName);
+        return await BrowserActions.getText(this.fileName);
     }
 
-    exitFullScreen() {
+    async exitFullScreen(): Promise<void> {
         const jsCode = 'document.exitFullscreen?document.exitFullscreen():document.webkitExitFullscreen&&document.webkitExitFullscreen();';
-        browser.executeScript(jsCode);
+        await browser.executeScript(jsCode);
     }
 
-    enterPassword(password) {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordInput);
-        this.passwordInput.clear();
-        this.passwordInput.sendKeys(password);
+    async enterPassword(password): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.passwordInput);
+        await BrowserActions.clearSendKeys(this.passwordInput, password);
     }
 
-    checkFileIsLoaded(fileName?: string) {
-        BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 30000, `not loaded ${fileName}`);
+    async checkFileIsLoaded(fileName?: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 30000, `${fileName} not loaded`);
     }
 
-    clickClosePasswordDialog() {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordDialogClose);
-        this.passwordDialogClose.click();
+    async clickClosePasswordDialog(): Promise<void> {
+        await BrowserActions.click(this.passwordDialogClose);
     }
 
-    checkImgViewerIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsOnPage(this.imgViewer);
+    async checkImgViewerIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.imgViewer);
     }
 
-    checkPasswordErrorIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordError);
+    async checkPasswordErrorIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.passwordError);
     }
 
-    checkPasswordInputIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordInput);
+    async checkPasswordInputIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.passwordInput);
     }
 
-    checkPasswordSubmitDisabledIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordSubmitDisabled);
+    async checkPasswordSubmitDisabledIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.passwordSubmitDisabled);
     }
 
-    checkPasswordDialogIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordDialog);
+    async checkPasswordDialogIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.passwordDialog);
     }
 
-    checkAllThumbnailsDisplayed(nbPages) {
+    async checkAllThumbnailsDisplayed(nbPages): Promise<void> {
         const defaultThumbnailHeight = 143;
-        expect(this.thumbnailsContent.getAttribute('style')).toEqual('height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);');
+        await expect(await this.thumbnailsContent.getAttribute('style')).toEqual('height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);');
     }
 
-    checkCurrentThumbnailIsSelected() {
-        const selectedThumbnail = element(by.css('adf-pdf-thumb[class="adf-pdf-thumbnails__thumb ng-star-inserted adf-pdf-thumbnails__thumb--selected"] > img'));
-        this.pageSelectorInput.getAttribute('value').then((pageNumber) => {
-            browser.controlFlow().execute(async () => {
-                expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
-            });
-        });
+    async checkCurrentThumbnailIsSelected(): Promise<void> {
+        const selectedThumbnail: ElementFinder = element(by.css('adf-pdf-thumb[class="adf-pdf-thumbnails__thumb ng-star-inserted adf-pdf-thumbnails__thumb--selected"] > img'));
+        const pageNumber = await this.pageSelectorInput.getAttribute('value');
+
+        await expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
     }
 
-    checkThumbnailsCloseIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsClose);
+    async checkThumbnailsCloseIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsClose);
     }
 
-    checkThumbnailsBtnIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsBtn);
+    async checkThumbnailsBtnIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsBtn);
     }
 
-    checkThumbnailsBtnIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id="adf-thumbnails-button"]:disabled')));
-        return this;
+    async checkThumbnailsBtnIsDisabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id="adf-thumbnails-button"]:disabled')));
     }
 
-    checkThumbnailsContentIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsContent);
+    async checkThumbnailsContentIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsContent);
     }
 
-    checkThumbnailsContentIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.thumbnailsContent);
+    async checkThumbnailsContentIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.thumbnailsContent);
     }
 
-    checkCloseButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
+    async checkCloseButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
     }
 
-    getLastButtonTitle() {
-        return this.lastButton.getAttribute('title');
+    async getLastButtonTitle(): Promise<string> {
+        return await this.lastButton.getAttribute('title');
     }
 
-    getMoreActionsMenuTitle() {
-        return this.moreActionsMenu.getAttribute('title');
+    async getMoreActionsMenuTitle(): Promise<string> {
+        return await this.moreActionsMenu.getAttribute('title');
     }
 
-    checkDownloadButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
+    async checkDownloadButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
     }
 
-    checkInfoButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.infoButton);
+    async checkInfoButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.infoButton);
     }
 
-    checkInfoButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.infoButton);
+    async checkInfoButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.infoButton);
     }
 
-    checkFileThumbnailIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.fileThumbnail);
+    async checkFileThumbnailIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.fileThumbnail);
     }
 
-    checkFileNameIsDisplayed(file) {
-        BrowserVisibility.waitUntilElementIsVisible(this.fileName);
-        expect(this.fileName.getText()).toEqual(file);
+    async checkFileNameIsDisplayed(file): Promise<void> {
+        await expect(await BrowserActions.getText(this.fileName)).toEqual(file);
     }
 
-    checkPreviousPageButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.previousPageButton);
+    async checkPreviousPageButtonIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.previousPageButton);
     }
 
-    checkNextPageButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
+    async checkNextPageButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
     }
 
-    checkZoomInButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.zoomInButton);
+    async checkZoomInButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.zoomInButton);
     }
 
-    checkZoomInButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.zoomInButton);
+    async checkZoomInButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.zoomInButton);
     }
 
-    checkZoomOutButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.zoomOutButton);
+    async checkZoomOutButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.zoomOutButton);
     }
 
-    checkScalePageButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.scalePageButton);
+    async checkScalePageButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.scalePageButton);
     }
 
-    checkPageSelectorInputIsDisplayed(checkNumber) {
-        BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
-        this.pageSelectorInput.getAttribute('value').then((pageNumber) => {
-            expect(pageNumber).toEqual(checkNumber);
-        });
+    async checkPageSelectorInputIsDisplayed(checkNumber): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
+        await expect(await this.pageSelectorInput.getAttribute('value')).toEqual(checkNumber);
     }
 
-    checkImgContainerIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.imgContainer);
+    async checkImgContainerIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.imgContainer);
     }
 
-    checkMediaPlayerContainerIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.mediaContainer);
+    async checkMediaPlayerContainerIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.mediaContainer);
     }
 
-    async checkFileContent(pageNumber, text) {
+    async checkFileContent(pageNumber: string, text: string): Promise<void> {
         const allPages = this.canvasLayer;
-        const pageLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
-        const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]')).first();
-        const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]', text)).first();
+        const pageLoaded: ElementFinder = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
+        const textLayerLoaded: ElementFinder = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]')).first();
+        const specificText: ElementFinder = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]', text)).first();
 
-        BrowserVisibility.waitUntilElementIsVisible(allPages);
-        BrowserVisibility.waitUntilElementIsVisible(pageLoaded);
-        BrowserVisibility.waitUntilElementIsVisible(textLayerLoaded);
-        BrowserVisibility.waitUntilElementIsVisible(specificText);
+        await BrowserVisibility.waitUntilElementIsVisible(allPages);
+        await BrowserVisibility.waitUntilElementIsVisible(pageLoaded);
+        await BrowserVisibility.waitUntilElementIsVisible(textLayerLoaded);
+        await BrowserVisibility.waitUntilElementIsVisible(specificText);
     }
 
-    checkFullScreenButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.fullScreenButton);
+    async checkFullScreenButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.fullScreenButton);
     }
 
-    checkFullScreenButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.fullScreenButton);
+    async checkFullScreenButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.fullScreenButton);
     }
 
-    checkPercentageIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.percentage);
+    async checkPercentageIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.percentage);
     }
 
-    checkZoomedIn(zoom) {
-        expect(this.percentage.getText()).toBeGreaterThan(zoom);
+    async checkZoomedIn(zoom): Promise<void> {
+        await expect(await BrowserActions.getText(this.percentage)).toBeGreaterThan(zoom);
     }
 
-    checkZoomedOut(zoom) {
-        expect(this.percentage.getText()).toBeLessThan(zoom);
+    async checkZoomedOut(zoom): Promise<void> {
+        await expect(await BrowserActions.getText(this.percentage)).toBeLessThan(zoom);
     }
 
-    checkRotateLeftButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.rotateLeft);
+    async checkRotateLeftButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.rotateLeft);
     }
 
-    checkRotateRightButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.rotateRight);
+    async checkRotateRightButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.rotateRight);
     }
 
-    checkScaleImgButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.scaleImg);
+    async checkScaleImgButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.scaleImg);
     }
 
-    checkRotation(text) {
-        const rotation = this.imgContainer.getAttribute('style');
-        expect(rotation).toEqual(text);
+    async checkRotation(text): Promise<void> {
+        const rotation = await this.imgContainer.getAttribute('style');
+        await expect(rotation).toEqual(text);
     }
 
-    checkInfoSideBarIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.infoSideBar);
+    async checkInfoSideBarIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.infoSideBar);
     }
 
-    checkInfoSideBarIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.infoSideBar);
+    async checkInfoSideBarIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.infoSideBar);
     }
 
-    checkLeftSideBarButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.leftSideBarButton);
+    async checkLeftSideBarButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.leftSideBarButton);
     }
 
-    checkLeftSideBarButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsOnPage(this.leftSideBarButton);
+    async checkLeftSideBarButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.leftSideBarButton);
     }
 
-    clickInfoButton() {
-        BrowserActions.clickExecuteScript('button[data-automation-id="adf-toolbar-sidebar"]');
+    async clickInfoButton(): Promise<void> {
+        await BrowserActions.clickExecuteScript('button[data-automation-id="adf-toolbar-sidebar"]');
     }
 
-    clickOnTab(tabName) {
-        this.tabsPage.clickTabByTitle(tabName);
-        return this;
+    async clickOnTab(tabName): Promise<void> {
+        await this.tabsPage.clickTabByTitle(tabName);
     }
 
-    checkTabIsActive(tabName) {
-        const tab = element(by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName));
-        BrowserVisibility.waitUntilElementIsVisible(tab);
-        return this;
+    async checkTabIsActive(tabName): Promise<void> {
+        const tab: ElementFinder = element(by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName));
+        await BrowserVisibility.waitUntilElementIsVisible(tab);
     }
 
-    clickLeftSidebarButton() {
-        BrowserActions.click(this.leftSideBarButton);
+    async clickLeftSidebarButton(): Promise<void> {
+        await BrowserActions.click(this.leftSideBarButton);
     }
 
-    checkLeftSideBarIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.leftSideBar);
+    async checkLeftSideBarIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.leftSideBar);
     }
 
-    checkLeftSideBarIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.leftSideBar);
+    async checkLeftSideBarIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.leftSideBar);
     }
 
-    clickPasswordSubmit() {
-        BrowserActions.click(this.passwordSubmit);
+    async clickPasswordSubmit(): Promise<void> {
+        await BrowserActions.click(this.passwordSubmit);
     }
 
-    clickSecondThumbnail() {
-        BrowserActions.click(this.secondThumbnail);
+    async clickSecondThumbnail(): Promise<void> {
+        await BrowserActions.click(this.secondThumbnail);
     }
 
-    clickLastThumbnailDisplayed() {
-        BrowserActions.click(this.lastThumbnailDisplayed);
+    async clickLastThumbnailDisplayed(): Promise<void> {
+        await BrowserActions.click(this.lastThumbnailDisplayed);
     }
 
-    clickThumbnailsClose() {
-        BrowserActions.click(this.thumbnailsClose);
+    async clickThumbnailsClose(): Promise<void> {
+        await BrowserActions.click(this.thumbnailsClose);
     }
 
-    clickThumbnailsBtn() {
-        BrowserActions.click(this.thumbnailsBtn);
+    async clickThumbnailsBtn(): Promise<void> {
+        await BrowserActions.click(this.thumbnailsBtn);
     }
 
-    clickScaleImgButton() {
-        BrowserActions.click(this.scaleImg);
+    async clickScaleImgButton(): Promise<void> {
+        await BrowserActions.click(this.scaleImg);
     }
 
-    clickDownloadButton() {
-        BrowserActions.click(this.downloadButton);
+    async clickDownloadButton(): Promise<void> {
+        await BrowserActions.click(this.downloadButton);
     }
 
-    clickCloseButton() {
-        BrowserActions.clickExecuteScript('button[data-automation-id="adf-toolbar-back"]');
+    async clickCloseButton(): Promise<void> {
+        await BrowserActions.click(this.closeButton);
     }
 
-    clickPreviousPageButton() {
-        BrowserActions.click(this.previousPageButton);
+    async clickPreviousPageButton(): Promise<void> {
+        await BrowserActions.click(this.previousPageButton);
     }
 
-    clickNextPageButton() {
-        BrowserActions.click(this.nextPageButton);
+    async clickNextPageButton(): Promise<void> {
+        await BrowserActions.click(this.nextPageButton);
     }
 
-    clickZoomInButton() {
-        BrowserActions.click(this.zoomInButton);
+    async clickZoomInButton(): Promise<void> {
+        await BrowserActions.click(this.zoomInButton);
     }
 
-    clickZoomOutButton() {
-        BrowserActions.click(this.zoomOutButton);
+    async clickZoomOutButton(): Promise<void> {
+        await BrowserActions.click(this.zoomOutButton);
     }
 
-    clickActualSize() {
-        BrowserActions.click(this.scalePageButton);
+    async clickActualSize(): Promise<void> {
+        await BrowserActions.click(this.scalePageButton);
     }
 
-    clickFullScreenButton() {
-        BrowserActions.click(this.fullScreenButton);
+    async clickFullScreenButton(): Promise<void> {
+        await BrowserActions.click(this.fullScreenButton);
     }
 
-    clickRotateLeftButton() {
-        BrowserActions.click(this.rotateLeft);
+    async clickRotateLeftButton(): Promise<void> {
+        await BrowserActions.click(this.rotateLeft);
     }
 
-    clickRotateRightButton() {
-        BrowserActions.click(this.rotateRight);
+    async clickRotateRightButton(): Promise<void> {
+        await BrowserActions.click(this.rotateRight);
     }
 
-    getActiveTab() {
-        return BrowserActions.getText(this.activeTab);
+    async getActiveTab(): Promise<string> {
+        return await BrowserActions.getText(this.activeTab);
     }
 
-    clickOnCommentsTab() {
-        this.tabsPage.clickTabByTitle('Comments');
-        return this;
+    async clickOnCommentsTab(): Promise<void> {
+        await this.tabsPage.clickTabByTitle('Comments');
     }
 
-    disableToolbar() {
-        this.formControllersPage.disableToggle(this.toolbarSwitch);
+    async disableToolbar(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.toolbarSwitch);
     }
 
-    enableToolbar() {
-        this.formControllersPage.enableToggle(this.toolbarSwitch);
+    async enableToolbar(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.toolbarSwitch);
     }
 
-    checkToolbarIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.toolbar);
-        return this;
+    async checkToolbarIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.toolbar);
     }
 
-    checkToolbarIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.toolbar);
-        return this;
+    async checkToolbarIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.toolbar);
     }
 
-    disableGoBack() {
-        this.formControllersPage.disableToggle(this.goBackSwitch);
+    async disableGoBack(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.goBackSwitch);
     }
 
-    enableGoBack() {
-        this.formControllersPage.enableToggle(this.goBackSwitch);
+    async enableGoBack(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.goBackSwitch);
     }
 
-    checkGoBackIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
-        return this;
+    async checkGoBackIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
     }
 
-    checkGoBackIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.closeButton);
-        return this;
+    async checkGoBackIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.closeButton);
     }
 
-    disableToolbarOptions() {
-        this.formControllersPage.disableToggle(this.openWithSwitch);
+    async disableToolbarOptions(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.openWithSwitch);
     }
 
-    enableToolbarOptions() {
-        this.formControllersPage.enableToggle(this.openWithSwitch);
+    async enableToolbarOptions() {
+        await this.formControllersPage.enableToggle(this.openWithSwitch);
     }
 
-    checkToolbarOptionsIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.openWith);
-        return this;
+    async checkToolbarOptionsIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.openWith);
     }
 
-    checkToolbarOptionsIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.openWith);
-        return this;
+    async checkToolbarOptionsIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.openWith);
     }
 
-    disableDownload() {
-        this.formControllersPage.disableToggle(this.downloadSwitch);
+    async disableDownload(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.downloadSwitch);
     }
 
-    enableDownload() {
-        this.formControllersPage.enableToggle(this.openWithSwitch);
+    async enableDownload(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.openWithSwitch);
     }
 
-    disableShowTabWithIcon() {
-        this.formControllersPage.disableToggle(this.showTabWithIconSwitch);
+    async enableShowTabWithIcon(): Promise<void> {
+        await browser.executeScript('arguments[0].scrollIntoView()', this.showTabWithIconSwitch);
+        await this.formControllersPage.enableToggle(this.showTabWithIconSwitch);
     }
 
-    enableShowTabWithIcon() {
-        browser.executeScript('arguments[0].scrollIntoView()', this.showTabWithIconSwitch);
-        this.formControllersPage.enableToggle(this.showTabWithIconSwitch);
+    async enableShowTabWithIconAndLabel(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.showTabWithIconAndLabelSwitch);
     }
 
-    disableShowTabWithIconAndLabel() {
-        this.formControllersPage.disableToggle(this.showTabWithIconAndLabelSwitch);
+    async checkDownloadButtonDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
     }
 
-    enableShowTabWithIconAndLabel() {
-        this.formControllersPage.enableToggle(this.showTabWithIconAndLabelSwitch);
+    async checkDownloadButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.downloadButton);
     }
 
-    checkDownloadButtonDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
-        return this;
+    async disablePrint(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.printSwitch);
     }
 
-    checkDownloadButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.downloadButton);
-        return this;
+    async enablePrint(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.printSwitch);
     }
 
-    disablePrint() {
-        this.formControllersPage.disableToggle(this.printSwitch);
+    async checkPrintButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.printButton);
     }
 
-    enablePrint() {
-        this.formControllersPage.enableToggle(this.printSwitch);
+    async checkPrintButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.printButton);
     }
 
-    checkPrintButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.printButton);
-        return this;
+    async disableAllowSidebar(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.allowSidebarSwitch);
     }
 
-    checkPrintButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.printButton);
-        return this;
+    async disableAllowLeftSidebar(): Promise<void> {
+        await browser.executeScript('arguments[0].scrollIntoView()', this.allowLeftSidebarSwitch);
+        await this.formControllersPage.disableToggle(this.allowLeftSidebarSwitch);
     }
 
-    disableAllowSidebar() {
-        this.formControllersPage.disableToggle(this.allowSidebarSwitch);
+    async checkMoreActionsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.bugButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.timeButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.uploadButton);
     }
 
-    disableAllowLeftSidebar() {
-        browser.executeScript('arguments[0].scrollIntoView()', this.allowLeftSidebarSwitch);
-        this.formControllersPage.disableToggle(this.allowLeftSidebarSwitch);
+    async checkMoreActionsIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.bugButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.timeButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.uploadButton);
     }
 
-    checkMoreActionsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.bugButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.timeButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.uploadButton);
-        return this;
+    async disableMoreActions(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.moreActionsSwitch);
     }
 
-    checkMoreActionsIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.bugButton);
-        BrowserVisibility.waitUntilElementIsNotVisible(this.timeButton);
-        BrowserVisibility.waitUntilElementIsNotVisible(this.uploadButton);
-        return this;
+    async enableMoreActions(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.moreActionsSwitch);
     }
 
-    disableMoreActions() {
-        this.formControllersPage.disableToggle(this.moreActionsSwitch);
+    async enableMoreActionsMenu(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.moreActionsMenuSwitch);
     }
 
-    enableMoreActions() {
-        this.formControllersPage.enableToggle(this.moreActionsSwitch);
+    async disableCustomToolbar(): Promise<void> {
+        await browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
+        await this.formControllersPage.disableToggle(this.customToolbarToggle);
     }
 
-    enableMoreActionsMenu() {
-        this.formControllersPage.enableToggle(this.moreActionsMenuSwitch);
+    async enableCustomToolbar(): Promise<void> {
+        await browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
+        await this.formControllersPage.enableToggle(this.customToolbarToggle);
     }
 
-    disableCustomToolbar() {
-        browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
-        this.formControllersPage.disableToggle(this.customToolbarToggle);
-        return this;
+    async checkCustomToolbarIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.customToolbar);
     }
 
-    enableCustomToolbar() {
-        browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
-        this.formControllersPage.enableToggle(this.customToolbarToggle);
-        return this;
+    async disableCustomName(): Promise<void> {
+        await this.formControllersPage.disableToggle(this.customNameSwitch);
     }
 
-    checkCustomToolbarIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.customToolbar);
-        return this;
+    async enableCustomName(): Promise<void> {
+        await this.formControllersPage.enableToggle(this.customNameSwitch);
     }
 
-    disableCustomName() {
-        this.formControllersPage.disableToggle(this.customNameSwitch);
+    async clickToggleRightSidebar(): Promise<void> {
+        await BrowserActions.click(this.showRightSidebarSwitch);
     }
 
-    enableCustomName() {
-        this.formControllersPage.enableToggle(this.customNameSwitch);
+    async clickToggleLeftSidebar(): Promise<void> {
+        await BrowserActions.click(this.showLeftSidebarSwitch);
     }
 
-    clickToggleRightSidebar() {
-        BrowserActions.click(this.showRightSidebarSwitch);
+    async enterCustomName(text: string): Promise<void> {
+        const textField: ElementFinder = element(by.css('input[data-automation-id="adf-text-custom-name"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(textField);
+        await BrowserActions.clearSendKeys(textField, text);
     }
 
-    clickToggleLeftSidebar() {
-        BrowserActions.click(this.showLeftSidebarSwitch);
+    async disableOverlay(): Promise<void> {
+        await this.formControllersPage.disableToggle(element(by.id('adf-viewer-overlay')));
     }
 
-    enterCustomName(text) {
-        const textField = element(by.css('input[data-automation-id="adf-text-custom-name"]'));
-        BrowserVisibility.waitUntilElementIsVisible(textField);
-        textField.sendKeys('');
-        textField.clear();
-        textField.sendKeys(text);
-        return this;
+    async checkOverlayViewerIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-overlay-container"]')));
     }
 
-    disableOverlay() {
-        this.formControllersPage.disableToggle(element(by.id('adf-viewer-overlay')));
-        return this;
+    async checkInlineViewerIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-inline-container"]')));
     }
 
-    checkOverlayViewerIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-overlay-container"]')));
-        return this;
+    async checkTabHasNoIcon(index: number): Promise<void> {
+        const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        await BrowserVisibility.waitUntilElementIsNotVisible(tab);
     }
 
-    checkInlineViewerIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-inline-container"]')));
-        return this;
+    async checkTabHasNoLabel(index: number): Promise<void> {
+        const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
+        await BrowserVisibility.waitUntilElementIsNotVisible(tab);
     }
 
-    checkTabHasNoIcon(index: number) {
-        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
-        BrowserVisibility.waitUntilElementIsNotVisible(tab);
-        return this;
+    async getTabLabelById(index: number): Promise<string> {
+        const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
+        return await BrowserActions.getText(tab);
     }
 
-    checkTabHasNoLabel(index: number) {
-        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
-        BrowserVisibility.waitUntilElementIsNotVisible(tab);
-        return this;
+    async getTabIconById(index: number): Promise<string> {
+        const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        return await BrowserActions.getText(tab);
     }
 
-    getTabLabelById(index: number) {
-        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
-        return BrowserActions.getText(tab);
+    async checkUnknownFormatIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.unknownFormat);
     }
 
-    getTabIconById(index: number) {
-        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
-        return BrowserActions.getText(tab);
-    }
-
-    checkUnknownFormatIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.unknownFormat);
-    }
-
-    getUnknownFormatMessage() {
+    async getUnknownFormatMessage(): Promise<string> {
         const unknownFormatLabel = this.unknownFormat.element(by.css(`.label`));
-        return BrowserActions.getText(unknownFormatLabel);
+        return await BrowserActions.getText(unknownFormatLabel);
     }
 }

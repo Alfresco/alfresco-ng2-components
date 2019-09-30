@@ -2,6 +2,12 @@
     <mat-slide-toggle [color]="'primary'" [checked]="multiselect" (change)="toggleMultiselect()" data-automation-id="multiSelection">
         {{ 'SETTINGS_CLOUD.MULTISELECTION' | translate }}
     </mat-slide-toggle>
+    <mat-slide-toggle [color]="'primary'" [checked]="actionMenu" (change)="toggleActionMenu()" data-automation-id="actionmenu">
+        {{ 'SETTINGS_CLOUD.ACTION.ACTION_MENU' | translate }}
+    </mat-slide-toggle>
+    <mat-slide-toggle [color]="'primary'" [checked]="contextMenu" (change)="toggleContextMenu()" data-automation-id="contextmenu">
+        {{ 'SETTINGS_CLOUD.ACTION.CONTEX_MENU' | translate }}
+    </mat-slide-toggle>
     <mat-slide-toggle [color]="'primary'" [checked]="testingMode" (change)="toggleTestingMode()" data-automation-id="testingMode">
         {{ 'SETTINGS_CLOUD.TESTING_MODE' | translate }}
     </mat-slide-toggle>
@@ -21,4 +27,45 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+    <mat-card *ngIf="actionMenu || contextMenu">
+        <mat-card-header>
+          <mat-card-title>{{ 'SETTINGS_CLOUD.ACTION.ACTION_TITLE' | translate }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="actionMenuForm" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
+                <mat-form-field fxFlex="23%">
+                    <input matInput formControlName="key" placeholder="{{ 'SETTINGS_CLOUD.ACTION.KEY' | translate }}">
+                </mat-form-field>
+
+                <mat-form-field fxFlex="23%">
+                    <input matInput formControlName="title" placeholder="{{ 'SETTINGS_CLOUD.ACTION.TITLE' | translate }}">
+                </mat-form-field>
+
+                <mat-form-field fxFlex="23%">
+                    <input matInput formControlName="icon" placeholder="{{ 'SETTINGS_CLOUD.ACTION.ICON' | translate }}"I>
+                </mat-form-field>
+                <mat-checkbox formControlName="visible">
+                    {{ 'SETTINGS_CLOUD.ACTION.ACTION_VISIBLE' | translate }}
+                </mat-checkbox>
+                <mat-checkbox formControlName="disabled">
+                    {{ 'SETTINGS_CLOUD.ACTION.ACTION_DISABLE' | translate }}
+                </mat-checkbox>
+                <button mat-raised-button (click)="addAction()">
+                        {{ 'SETTINGS_CLOUD.ACTION.ADD_BUTTON' | translate }}
+                </button>
+            </form>
+            <div *ngIf="actions.length > 0">
+                <mat-chip-list #chipList>
+                    <mat-chip *ngFor="let action of actions" [removable]="true">
+                        {{action.title}}
+                        <mat-icon
+                            matChipRemove
+                            (click)="removeAction(action)">
+                            cancel
+                        </mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>

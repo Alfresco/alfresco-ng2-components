@@ -17,10 +17,10 @@
 
 import { ApiService, GroupIdentityService, IdentityService, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { AppListCloudPage, StartProcessCloudPage } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
+import { browser, protractor } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil, BrowserActions } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
 describe('Start Process', () => {
@@ -46,7 +46,7 @@ describe('Start Process', () => {
     let groupIdentityService: GroupIdentityService;
     let testUser, groupInfo;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
@@ -59,59 +59,61 @@ describe('Start Process', () => {
             browser.params.config.identityHost);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
-        navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
-        done();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudComponent.checkApsContainer();
+
     });
 
-    afterAll(async(done) => {
+    afterAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
+
     });
 
-    afterEach((done) => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
-        done();
+    afterEach(async () => {
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudComponent.checkApsContainer();
     });
 
-    it('[C291857] Should be possible to cancel a process', () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
-        startProcessPage.clearField(startProcessPage.processNameInput);
-        startProcessPage.blur(startProcessPage.processNameInput);
-        startProcessPage.checkValidationErrorIsDisplayed(requiredError);
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
-        startProcessPage.clickCancelProcessButton();
+    it('[C291857] Should be possible to cancel a process', async () => {
+        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        await appListCloudComponent.goToApp(simpleApp);
+        await processCloudDemoPage.openNewProcessForm();
+        await startProcessPage.clearField(startProcessPage.processNameInput);
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+
+        await startProcessPage.checkValidationErrorIsDisplayed(requiredError);
+        await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+
+        await BrowserActions.closeMenuAndDialogs();
+        await startProcessPage.clickCancelProcessButton();
     });
 
-    it('[C291842] Should be displayed an error message if process name exceed 255 characters', () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
-        startProcessPage.enterProcessName(processName255Characters);
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
+    it('[C291842] Should be displayed an error message if process name exceed 255 characters', async () => {
+        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        await appListCloudComponent.goToApp(simpleApp);
+        await processCloudDemoPage.openNewProcessForm();
+        await startProcessPage.enterProcessName(processName255Characters);
+        await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
 
-        startProcessPage.enterProcessName(processNameBiggerThen255Characters);
-        startProcessPage.blur(startProcessPage.processNameInput);
-        startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+        await startProcessPage.enterProcessName(processNameBiggerThen255Characters);
+        await startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
+        await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
     });
 
-    it('[C291860] Should be able to start a process', () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
-        startProcessPage.clearField(startProcessPage.processNameInput);
-        startProcessPage.enterProcessName(processName);
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
-        startProcessPage.clickStartProcessButton();
+    it('[C291860] Should be able to start a process', async () => {
+        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        await appListCloudComponent.goToApp(simpleApp);
+        await processCloudDemoPage.openNewProcessForm();
+        await startProcessPage.clearField(startProcessPage.processNameInput);
+        await startProcessPage.enterProcessName(processName);
+        await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
+        await startProcessPage.clickStartProcessButton();
+        await processCloudDemoPage.clickOnProcessFilters();
 
-        processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-        expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
+        await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+        await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
 
     });
 

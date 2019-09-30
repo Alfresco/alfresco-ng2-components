@@ -66,28 +66,28 @@ describe('Upload component', () => {
     const filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
     const filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
-        done();
+
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        done();
+
     });
 
-    beforeEach(() => {
-        contentServicesPage.goToDocumentList();
+    beforeEach(async () => {
+        await contentServicesPage.goToDocumentList();
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
         const nbResults = await contentServicesPage.numberOfResultsDisplayed();
         if (nbResults > 1) {
             const nodesPromise = await contentServicesPage.getElementsDisplayedId();
@@ -97,80 +97,99 @@ describe('Upload component', () => {
                 await uploadActions.deleteFileOrFolder(nodeId);
             });
         }
-
-        done();
     });
 
-    it('[C260143] Should be possible to maximize/minimize the upload dialog', () => {
-        contentServicesPage
-            .uploadFile(docxFileModel.location)
-            .checkContentIsDisplayed(docxFileModel.name);
+    it('[C260143] Should be possible to maximize/minimize the upload dialog', async () => {
+        await contentServicesPage.uploadFile(docxFileModel.location);
 
-        uploadDialog.fileIsUploaded(docxFileModel.name).checkCloseButtonIsDisplayed();
-        expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-        expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
-        uploadDialog.minimizeUploadDialog().dialogIsMinimized();
-        expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-        expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
-        uploadDialog.maximizeUploadDialog().dialogIsDisplayed().fileIsUploaded(docxFileModel.name);
-        expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-        expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
-        uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
+        await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+
+        await uploadDialog.fileIsUploaded(docxFileModel.name);
+        await uploadDialog.checkCloseButtonIsDisplayed();
+        await expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+        await expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+        await uploadDialog.minimizeUploadDialog();
+        await uploadDialog.dialogIsMinimized();
+        await expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+        await expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+        await uploadDialog.maximizeUploadDialog();
+        await uploadDialog.dialogIsDisplayed();
+        await uploadDialog.fileIsUploaded(docxFileModel.name);
+        await expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+        await expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+        await uploadDialog.checkCloseButtonIsDisplayed();
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
     });
 
-    it('[C291902] Should be shown upload counter display in dialog box', () => {
-        contentServicesPage
-            .uploadFile(docxFileModel.location)
-            .checkContentIsDisplayed(docxFileModel.name);
+    it('[C291902] Should be shown upload counter display in dialog box', async () => {
+        await contentServicesPage
+            .uploadFile(docxFileModel.location);
+        await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
-        uploadDialog.fileIsUploaded(docxFileModel.name).checkCloseButtonIsDisplayed();
-        expect(uploadDialog.getTitleText()).toEqual('Uploaded 1 / 1');
-        uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
+        await uploadDialog.fileIsUploaded(docxFileModel.name);
+        await uploadDialog.checkCloseButtonIsDisplayed();
+        await expect(uploadDialog.getTitleText()).toEqual('Uploaded 1 / 1');
+        await uploadDialog.checkCloseButtonIsDisplayed();
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
     });
 
-    it('[C260168] Should be possible to cancel upload using dialog icon', () => {
-        contentServicesPage.uploadFile(pdfFileModel.location)
-            .checkContentIsDisplayed(pdfFileModel.name);
-        uploadDialog.removeUploadedFile(pdfFileModel.name).fileIsCancelled(pdfFileModel.name);
-        expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
+    it('[C260168] Should be possible to cancel upload using dialog icon', async () => {
+        await contentServicesPage.uploadFile(pdfFileModel.location);
+        await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+        await uploadDialog.removeUploadedFile(pdfFileModel.name);
+        await uploadDialog.fileIsCancelled(pdfFileModel.name);
+        await expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+        await contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
     });
 
-    it('[C260176] Should remove files from upload dialog box when closed', () => {
-        contentServicesPage.uploadFile(pngFileModelTwo.location).checkContentIsDisplayed(pngFileModelTwo.name);
+    it('[C260176] Should remove files from upload dialog box when closed', async () => {
+        await contentServicesPage.uploadFile(pngFileModelTwo.location);
+        await contentServicesPage.checkContentIsDisplayed(pngFileModelTwo.name);
 
-        uploadDialog.fileIsUploaded(pngFileModelTwo.name);
-        contentServicesPage.uploadFile(pngFileModel.location).checkContentIsDisplayed(pngFileModel.name);
-        uploadDialog.fileIsUploaded(pngFileModel.name).fileIsUploaded(pngFileModelTwo.name);
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
-        uploadDialog.fileIsUploaded(pdfFileModel.name).fileIsNotDisplayedInDialog(pngFileModel.name).fileIsNotDisplayedInDialog(pngFileModelTwo.name);
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+        await uploadDialog.fileIsUploaded(pngFileModelTwo.name);
+        await contentServicesPage.uploadFile(pngFileModel.location);
+        await contentServicesPage.checkContentIsDisplayed(pngFileModel.name);
+        await uploadDialog.fileIsUploaded(pngFileModel.name);
+        await uploadDialog.fileIsUploaded(pngFileModelTwo.name);
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+        await contentServicesPage.uploadFile(pdfFileModel.location);
+        await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+        await uploadDialog.fileIsUploaded(pdfFileModel.name);
+        await uploadDialog.fileIsNotDisplayedInDialog(pngFileModel.name);
+        await uploadDialog.fileIsNotDisplayedInDialog(pngFileModelTwo.name);
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
     });
 
-    it('[C260170] Should be possible to upload multiple files', () => {
-        contentServicesPage.checkAcsContainer();
-        uploadToggles.enableMultipleFileUpload();
-        contentServicesPage.uploadMultipleFile(filesLocation).checkContentsAreDisplayed(filesName);
-        uploadDialog.filesAreUploaded(filesName);
-        expect(uploadDialog.getTitleText()).toEqual('Uploaded 4 / 4');
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        uploadToggles.disableMultipleFileUpload();
+    it('[C260170] Should be possible to upload multiple files', async () => {
+        await contentServicesPage.checkAcsContainer();
+        await uploadToggles.enableMultipleFileUpload();
+        await contentServicesPage.uploadMultipleFile(filesLocation);
+        await contentServicesPage.checkContentsAreDisplayed(filesName);
+        await uploadDialog.filesAreUploaded(filesName);
+        await expect(uploadDialog.getTitleText()).toEqual('Uploaded 4 / 4');
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+        await uploadToggles.disableMultipleFileUpload();
     });
 
-    it('[C311305] Should NOT be able to remove uploaded version', () => {
-        contentServicesPage.uploadFile(docxFileModel.location);
-        uploadDialog.fileIsUploaded(docxFileModel.name);
-        contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+    it('[C311305] Should NOT be able to remove uploaded version', async () => {
+        await contentServicesPage.uploadFile(docxFileModel.location);
+        await uploadDialog.fileIsUploaded(docxFileModel.name);
+        await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
-        contentServicesPage.versionManagerContent(docxFileModel.name);
-        BrowserActions.click(versionManagePage.showNewVersionButton);
-        versionManagePage.uploadNewVersionFile(
+        await contentServicesPage.versionManagerContent(docxFileModel.name);
+        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.uploadNewVersionFile(
             pngFileModel.location
         );
-        versionManagePage.closeVersionDialog();
-        uploadDialog.removeUploadedFile(pngFileModel.name);
-        contentServicesPage.checkContentIsDisplayed(pngFileModel.name);
+        await versionManagePage.closeVersionDialog();
+        await uploadDialog.removeUploadedFile(pngFileModel.name);
+        await contentServicesPage.checkContentIsDisplayed(pngFileModel.name);
     });
 });

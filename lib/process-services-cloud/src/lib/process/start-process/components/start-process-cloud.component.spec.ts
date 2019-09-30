@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { SimpleChange, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
@@ -27,6 +27,7 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { ProcessCloudModule } from '../../process-cloud.module';
 import { fakeProcessDefinitions, fakeStartForm, fakeStartFormNotValid,
     fakeProcessInstance, fakeProcessPayload, fakeNoNameProcessDefinitions } from '../mock/start-process.component.mock';
+import { By } from '@angular/platform-browser';
 
 describe('StartProcessCloudComponent', () => {
 
@@ -36,6 +37,19 @@ describe('StartProcessCloudComponent', () => {
     let formCloudService: FormCloudService;
     let getDefinitionsSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
+
+    const selectOptionByName = (name: string) => {
+
+        const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
+        selectElement.click();
+        fixture.detectChanges();
+        const options: any = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+        const currentOption = options.find( (option: DebugElement) => option.nativeElement.innerHTML.trim() === name );
+
+        if (currentOption) {
+            currentOption.nativeElement.click();
+        }
+    };
 
     setupTestBed({
         imports: [
@@ -315,6 +329,18 @@ describe('StartProcessCloudComponent', () => {
             });
         }));
 
+        it('should select the right process when the processKey begins with the name', async(() => {
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            component.name = 'My new process';
+            component.processDefinitionName = 'process';
+            selectOptionByName('process');
+
+            fixture.whenStable().then(() => {
+                expect(component.processDefinitionCurrent.name).toBe(JSON.parse(JSON.stringify(fakeProcessDefinitions[3])).name);
+                expect(component.processDefinitionCurrent.key).toBe(JSON.parse(JSON.stringify(fakeProcessDefinitions[3])).key);
+            });
+        }));
+
         describe('dropdown', () => {
 
             it('should hide the process dropdown button if showSelectProcessDropdown is false', async(() => {
@@ -396,7 +422,7 @@ describe('StartProcessCloudComponent', () => {
             component.processForm.controls['processDefinition'].setValue('process');
             fixture.detectChanges();
             tick(3000);
-            expect(component.filteredProcesses.length).toEqual(3);
+            expect(component.filteredProcesses.length).toEqual(4);
 
             component.processForm.controls['processDefinition'].setValue('processwithfo');
             fixture.detectChanges();

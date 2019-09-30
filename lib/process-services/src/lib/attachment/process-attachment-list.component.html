@@ -1,0 +1,35 @@
+<adf-datatable  [rows]="attachments"
+                [actions]="true"
+                [loading]="isLoading"
+                (rowDblClick)="openContent($event)"
+                (showRowActionsMenu)="onShowRowActionsMenu($event)"
+                (executeRowAction)="onExecuteRowAction($event)">
+
+                <adf-no-content-template>
+                    <ng-template>
+                        <ng-content *ngIf="hasCustomTemplate; else defaulEmptyList" class="adf-custom-empty-template"></ng-content>
+                        <ng-template #defaulEmptyList>
+                            <adf-empty-list>
+                                <div adf-empty-list-header class="adf-empty-list-header">
+                                    {{'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER' | translate}}
+                                </div>
+                            </adf-empty-list>
+                        </ng-template>
+                    </ng-template>
+                </adf-no-content-template>
+
+    <data-columns>
+        <data-column key="icon" type="image" srTitle="ADF_PROCESS_LIST.PROPERTIES.THUMBNAIL" [sortable]="false"></data-column>
+        <data-column key="name" type="text" title="{{'ADF_PROCESS_LIST.PROPERTIES.NAME' | translate}}" class="adf-full-width adf-ellipsis-cell" [sortable]="true"></data-column>
+        <data-column key="created" type="date" format="shortDate" title="{{'ADF_PROCESS_LIST.PROPERTIES.CREATED' | translate}}"></data-column>
+    </data-columns>
+
+    <adf-loading-content-template>
+        <ng-template>
+            <!--Add your custom loading template here-->
+            <mat-progress-spinner class="adf-attachment-list-loading-margin" [color]="'primary'" [mode]="'indeterminate'">
+            </mat-progress-spinner>
+        </ng-template>
+    </adf-loading-content-template>
+
+</adf-datatable>

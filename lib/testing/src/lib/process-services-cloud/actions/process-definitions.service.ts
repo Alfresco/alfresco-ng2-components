@@ -16,6 +16,7 @@
  */
 
 import { ApiService } from '../../core/actions/api.service';
+import { Logger } from '../../core/utils/logger';
 
 export class ProcessDefinitionsService {
 
@@ -25,22 +26,19 @@ export class ProcessDefinitionsService {
         this.api = api;
     }
 
-    async getProcessDefinitions(appName) {
+    async getProcessDefinitions(appName): Promise<any> {
         const path = '/' + appName + '/rb/v1/process-definitions';
         const method = 'GET';
 
         const queryParams = {};
 
         try {
-            const data = await this.api.performBpmOperation(path, method, queryParams, {});
-            return data;
+            return this.api.performBpmOperation(path, method, queryParams, {});
         } catch (error) {
             if (error.status === 404) {
-                // tslint:disable-next-line:no-console
-                console.log(`${appName} not present`);
+                Logger.error(`${appName} not present`);
             } else if (error.status === 403) {
-                // tslint:disable-next-line:no-console
-                console.log(`Access to the requested resource has been denied ${appName}`);
+                Logger.error(`Access to the requested resource has been denied ${appName}`);
             }
         }
     }
@@ -50,6 +48,7 @@ export class ProcessDefinitionsService {
         return processDefinitions.list.entries.find((el) => {
             if (el.entry.name === processDefinitionName) {
                 return el;
-            }});
+            }
+        });
     }
 }

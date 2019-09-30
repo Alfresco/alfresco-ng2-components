@@ -65,7 +65,7 @@ describe('LibraryDialogComponent', () => {
     it('should set library id automatically on title input', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-            return new Promise((resolve, reject) => reject());
+            return Promise.reject();
         });
 
         fixture.detectChanges();
@@ -80,7 +80,7 @@ describe('LibraryDialogComponent', () => {
     it('should translate library title space character to dash for library id', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-            return new Promise((resolve, reject) => reject());
+            return Promise.reject();
         });
 
         fixture.detectChanges();
@@ -95,7 +95,7 @@ describe('LibraryDialogComponent', () => {
     it('should not change custom library id on title input', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-            return new Promise((resolve, reject) => reject());
+            return Promise.reject();
         });
 
         fixture.detectChanges();
@@ -134,7 +134,7 @@ describe('LibraryDialogComponent', () => {
             Promise.resolve()
         );
         spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-            return new Promise((resolve, reject) => reject());
+            return Promise.reject();
         });
 
         fixture.detectChanges();
@@ -194,10 +194,10 @@ describe('LibraryDialogComponent', () => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         const error = { message: '{ "error": { "statusCode": 409 } }' };
         spyOn(alfrescoApi.sitesApi, 'createSite').and.callFake(() => {
-            return new Promise((resolve, reject) => reject(error));
+            return Promise.reject(error);
         });
         spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-            return new Promise((resolve, reject) => reject());
+            return Promise.reject();
         });
 
         fixture.detectChanges();
@@ -218,7 +218,7 @@ describe('LibraryDialogComponent', () => {
     it('should not translate library title if value is not a valid id', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-            return new Promise((resolve, reject) => reject());
+            return Promise.reject();
         });
 
         fixture.detectChanges();
@@ -233,7 +233,7 @@ describe('LibraryDialogComponent', () => {
     it('should translate library title partially for library id', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-            return new Promise((resolve, reject) => reject());
+            return Promise.reject();
         });
 
         fixture.detectChanges();
@@ -248,7 +248,7 @@ describe('LibraryDialogComponent', () => {
     it('should translate library title multiple space character to one dash for library id', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-            return new Promise((resolve, reject) => reject());
+            return Promise.reject();
         });
 
         fixture.detectChanges();
@@ -263,7 +263,7 @@ describe('LibraryDialogComponent', () => {
     it('should invalidate library title if is too short', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-            return new Promise((resolve, reject) => reject());
+            return Promise.reject();
         });
 
         fixture.detectChanges();

@@ -30,6 +30,6 @@ Shows a list of all available reports
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
 | reportClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ReportParametersModel`](../../../lib/insights/diagram/models/report/reportParameters.model.ts)`>` |  |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` |  |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |

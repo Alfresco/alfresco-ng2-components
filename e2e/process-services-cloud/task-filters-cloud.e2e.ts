@@ -38,7 +38,7 @@ describe('Task filters cloud', () => {
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
-        beforeAll(async(done) => {
+        beforeAll(async() => {
 
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
@@ -53,24 +53,24 @@ describe('Task filters cloud', () => {
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            done();
+
         });
 
-        afterAll(async(done) => {
+        afterAll(async() => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-            done();
+
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
-            appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(simpleApp);
+        beforeEach(async () => {
+            await navigationBarPage.navigateToProcessServicesCloudPage();
+            await appListCloudComponent.checkApsContainer();
+            await appListCloudComponent.goToApp(simpleApp);
         });
 
-        it('[C290011] Should display default filters when an app is deployed', () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            tasksCloudDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
+        it('[C290011] Should display default filters when an app is deployed', async () => {
+            await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            await tasksCloudDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
         });
 
         it('[C290009] Should display default filters and created task', async () => {
@@ -79,14 +79,14 @@ describe('Task filters cloud', () => {
             const task = await tasksService.createStandaloneTask(newTask, simpleApp);
             await tasksService.claimTask(task.entry.id, simpleApp);
 
-            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(newTask);
+            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(newTask);
 
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(newTask);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(newTask);
         });
 
         it('[C289955] Should display task in Complete Tasks List when task is completed', async () => {
@@ -96,19 +96,19 @@ describe('Task filters cloud', () => {
             await tasksService.claimTask(toBeCompletedTask.entry.id, simpleApp);
             await tasksService.completeTask(toBeCompletedTask.entry.id, simpleApp);
 
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTask);
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTask);
 
-            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
+            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask);
         });
 
-        it('[C291792] Should select the first task filter from the list as default', () => {
+        it('[C291792] Should select the first task filter from the list as default', async () => {
 
-            expect(tasksCloudDemoPage.firstFilterIsActive()).toBe(true);
+            await expect(await tasksCloudDemoPage.firstFilterIsActive()).toBe(true);
         });
 
     });

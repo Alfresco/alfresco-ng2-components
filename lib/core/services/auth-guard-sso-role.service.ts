@@ -17,14 +17,14 @@
 
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from './jwt-helper.service';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardSsoRoleService implements CanActivate {
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    canActivate(route: ActivatedRouteSnapshot): boolean {
         let hasRole;
         let hasRealmRole = false;
         let hasClientRole = true;

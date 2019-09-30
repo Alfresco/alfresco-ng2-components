@@ -21,37 +21,37 @@ import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class NumberWidget {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
-    getNumberFieldLabel(fieldId) {
+    async getNumberFieldLabel(fieldId): Promise<string> {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }
 
-    getFieldValue(fieldId) {
+    getFieldValue(fieldId): Promise<string> {
         return this.formFields.getFieldValue(fieldId);
     }
 
-    setFieldValue(fieldId, value) {
+    setFieldValue(fieldId, value): Promise<void> {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
-    clearFieldValue(fieldId) {
+    async clearFieldValue(fieldId): Promise<void> {
         const numberField = element(by.id(fieldId));
-        BrowserVisibility.waitUntilElementIsVisible(numberField);
-        return numberField.clear();
+        await BrowserVisibility.waitUntilElementIsVisible(numberField);
+        await numberField.clear();
     }
 
-    checkWidgetIsVisible(fieldId) {
+    checkWidgetIsVisible(fieldId): Promise<void> {
         return this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    getErrorMessage(fieldId) {
+    async getErrorMessage(fieldId): Promise<string> {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         return BrowserActions.getText(errorMessage);
     }
 
-    getPlaceholder(fieldId) {
+    getPlaceholder(fieldId): Promise<string> {
         return this.formFields.getFieldPlaceHolder(fieldId);
     }
 }

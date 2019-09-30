@@ -41,7 +41,7 @@ describe('Task Details - No form', () => {
     const apps = new AppsActions();
     let importedApp;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -63,20 +63,20 @@ describe('Task Details - No form', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
-    it('[C289311] Should attach form and complete buttons to be displayed when no form is attached', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+    it('[C289311] Should attach form and complete buttons to be displayed when no form is attached', async () => {
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        taskPage.tasksListPage().checkContentIsDisplayed(app.taskName);
-        taskPage.tasksListPage().selectRow(app.taskName);
-        taskPage.taskDetails().noFormIsDisplayed();
-        taskPage.taskDetails().checkCompleteTaskButtonIsDisplayed().checkCompleteTaskButtonIsEnabled();
-        taskPage.taskDetails().checkAttachFormButtonIsNotDisplayed();
-        expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        expect(taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
+        await taskPage.tasksListPage().checkContentIsDisplayed(app.taskName);
+        await taskPage.tasksListPage().selectRow(app.taskName);
+        await taskPage.taskDetails().noFormIsDisplayed();
+        await taskPage.taskDetails().checkCompleteTaskButtonIsDisplayed();
+        await taskPage.taskDetails().checkCompleteTaskButtonIsEnabled();
+        await taskPage.taskDetails().checkAttachFormButtonIsNotDisplayed();
+        await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
 
     });
 

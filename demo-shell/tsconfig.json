@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "resolveJsonModule": true,
     "outDir": "./dist/out-tsc",
     "baseUrl": "src",
     "sourceMap": true,
@@ -10,6 +11,7 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "target": "es5",
     "allowSyntheticDefaultImports": true,
     "typeRoots": [

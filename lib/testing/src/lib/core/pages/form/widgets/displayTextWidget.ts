@@ -16,23 +16,23 @@
  */
 
 import { FormFields } from '../formFields';
-import { by } from 'protractor';
+import { by, Locator } from 'protractor';
 
 export class DisplayTextWidget {
 
-    formFields = new FormFields();
-    labelLocator = by.css('div[class*="adf-display-text-widget"]');
-    inputLocator = by.css('input');
+    formFields: FormFields = new FormFields();
+    labelLocator: Locator = by.css('div[class*="adf-display-text-widget"]');
+    inputLocator: Locator = by.css('input');
 
-    getFieldLabel(fieldId) {
+    getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
     }
 
-    getFieldValue(fieldId) {
+    getFieldValue(fieldId): Promise<string> {
         return this.formFields.getFieldValue(fieldId, this.inputLocator);
     }
 
-    getFieldText(fieldId) {
+    getFieldText(fieldId): Promise<string> {
         return this.formFields.getFieldText(fieldId, this.labelLocator);
     }
 

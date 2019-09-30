@@ -16,18 +16,18 @@
  */
 
 import { FormFields } from '../formFields';
-import { by } from 'protractor';
+import { by, Locator } from 'protractor';
 
 export class DocumentWidget {
 
-    formFields = new FormFields();
-    fileLocator = by.css("div [class*='upload-widget__content-text']");
+    formFields: FormFields = new FormFields();
+    fileLocator: Locator = by.css("div [class*='upload-widget__content-text']");
 
-    getFieldText(fieldId) {
+    getFieldText(fieldId): Promise<string> {
         return this.formFields.getFieldText(fieldId, this.fileLocator);
     }
 
-    getFileName(fieldId) {
+    getFileName(fieldId): Promise<string> {
         return this.formFields.getFieldText(fieldId, this.fileLocator);
     }
 }

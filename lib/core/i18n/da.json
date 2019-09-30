@@ -72,6 +72,10 @@
           "CANCEL": "Annuller"
         },
         "TITLE": "Føjer filer til zip-filen. Dette kan tage nogle minutter"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Luk",
+        "UPDATE": "Opdater"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "Navn",
         "VALUE": "Værdi"
       },
+      "NONE": "Ingen",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Brug et talformat",
         "INT_VALIDATION_ERROR": "Brug et heltalsformat"
@@ -184,6 +189,7 @@
         "EDIT": "Rediger",
         "SAVE": "Gem",
         "CANCEL": "Annuller",
+        "CLEAR": "Ryd",
         "TOGGLE": "Slå værdi til/fra"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Log ind",
       "USERNAME": "Brugernavn",
       "PASSWORD": "Adgangskode",
       "REMEMBER": "Husk mig"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Vis adgangskode",
+      "HIDE-PASSWORD": "Skjul adgangskode"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Påkrævet",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Vælg alle",
-      "SELECT_FILE": "Vælg fil"
+      "SELECT_FILE": "Vælg fil",
+      "SORT_ASCENDING": "Stigende",
+      "SORT_DESCENDING": "Faldende",
+      "SORT_NONE": "Ingen",
+      "ICON_TEXT": "Filtype {{ type }}",
+      "ICON_DISABLED": "Deaktiveret",
+      "ROW_OPTION_BUTTON": "Handlinger"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Dokument",
+      "FOLDER": "Mappe",
+      "PDF": "PDF",
+      "IMAGE": "Billede",
+      "EXCEL": "Excel-regneark",
+      "WORD": "Word-dokument",
+      "POWERPOINT": "PowerPoint-præsentation",
+      "VIDEO": "Video",
+      "AUDIO": "Lyd",
+      "WEBSITE": "Websted",
+      "ARCHIVE": "Arkiv",
+      "PRESENTATION": "Præsentation",
+      "SPREADSHEET": "Regneark",
+      "MISCELLANEOUS": "Diverse"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "af"
     },
     "LOADING": "Indlæser",
-    "UNKNOWN_FORMAT": "Forhåndsvisningen kunne ikke indlæses",
+    "UNKNOWN_FORMAT": "Forhåndsvisningen kunne ikke indlæses. Ukendt format.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Side {{ pageNum }}"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Version",
     "SERVER_SETTINGS": {
       "TITLE": "Serverindstillinger",
       "DESCRIPTION": "Nedenstående værdier er taget fra AppConfigService",
@@ -428,6 +461,18 @@
         "MODE": "Tilstand",
         "CLUSTER_ENABLED": "Er aktiveret til klynge",
         "CRYPTODOC_ENABLED": "Er aktiveret til kryptodok"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Plug-ins",
+      "TABLE_HEADERS": {
+        "ID": "Id",
+        "NAME": "Navn",
+        "VERSION": "Version",
+        "VENDOR": "Leverandør",
+        "LICENSE": "Licens",
+        "RUNTIME": "Kørselstidspunkt",
+        "DESCRIPTION": "Beskrivelse"
       }
     }
   },

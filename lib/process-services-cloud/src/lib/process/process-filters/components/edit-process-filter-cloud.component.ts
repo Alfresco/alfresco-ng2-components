@@ -395,11 +395,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this.showFilterActions;
     }
 
-    onExpand(event: any) {
+    onExpand() {
         this.toggleFilterActions = true;
     }
 
-    onClose(event: any) {
+    onClose() {
         this.toggleFilterActions = false;
     }
 

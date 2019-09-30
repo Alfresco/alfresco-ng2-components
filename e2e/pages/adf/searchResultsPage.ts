@@ -16,85 +16,75 @@
  */
 
 import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { ContentServicesPage } from './contentServicesPage';
 import { BrowserVisibility, SearchSortingPickerPage } from '@alfresco/adf-testing';
 
 export class SearchResultsPage {
 
-    noResultsMessage = element(by.css('div[class="adf-no-result-message"]'));
-    dataTable = new DataTableComponentPage();
-    searchSortingPicker = new SearchSortingPickerPage();
-    contentServices = new ContentServicesPage();
+    noResultsMessage: ElementFinder = element(by.css('div[class="adf-no-result-message"]'));
+    dataTable: DataTableComponentPage = new DataTableComponentPage();
+    searchSortingPicker: SearchSortingPickerPage = new SearchSortingPickerPage();
+    contentServices: ContentServicesPage = new ContentServicesPage();
 
     getNodeHighlight(content) {
         return this.dataTable.getCellByRowContentAndColumn('Display name', content, 'Search');
     }
 
-    tableIsLoaded() {
-        this.dataTable.tableIsLoaded();
+    async tableIsLoaded(): Promise<void> {
+        await this.dataTable.tableIsLoaded();
     }
 
-    checkContentIsDisplayed(content) {
-        this.dataTable.checkContentIsDisplayed('Display name', content);
-        return this;
+    async checkContentIsDisplayed(content): Promise<void> {
+        await this.dataTable.checkContentIsDisplayed('Display name', content);
     }
 
-    numberOfResultsDisplayed() {
-        return this.dataTable.numberOfRows();
+    async numberOfResultsDisplayed(): Promise<number> {
+        return await this.dataTable.numberOfRows();
     }
 
-    checkContentIsNotDisplayed(content) {
-        this.dataTable.checkContentIsNotDisplayed('Display name', content);
-        return this;
+    async checkContentIsNotDisplayed(content): Promise<void> {
+        await this.dataTable.checkContentIsNotDisplayed('Display name', content);
     }
 
-    checkNoResultMessageIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.noResultsMessage);
-        return this;
+    async checkNoResultMessageIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noResultsMessage);
     }
 
-    checkNoResultMessageIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.noResultsMessage);
-        return this;
+    async checkNoResultMessageIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.noResultsMessage);
     }
 
-    navigateToFolder(content) {
-        this.dataTable.doubleClickRow('Display name', content);
-        return this;
+    async navigateToFolder(content): Promise<void> {
+        await this.dataTable.doubleClickRow('Display name', content);
     }
 
-    deleteContent(content) {
-        this.contentServices.deleteContent(content);
+    async deleteContent(content): Promise<void> {
+        await this.contentServices.deleteContent(content);
     }
 
-    sortByName(sortOrder: string) {
-        this.searchSortingPicker.sortBy(sortOrder, 'Name');
+    async sortByName(sortOrder: string): Promise<void> {
+        await this.searchSortingPicker.sortBy(sortOrder, 'Name');
     }
 
-    sortByAuthor(sortOrder: string) {
-        this.searchSortingPicker.sortBy(sortOrder, 'Author');
+    async sortByAuthor(sortOrder: string): Promise<void> {
+        await this.searchSortingPicker.sortBy(sortOrder, 'Author');
     }
 
-    sortByCreated(sortOrder: string) {
-        this.searchSortingPicker.sortBy(sortOrder, 'Created');
+    async sortByCreated(sortOrder: string): Promise<void> {
+        await this.searchSortingPicker.sortBy(sortOrder, 'Created');
     }
 
-    sortBySize(sortOrder: string) {
-        this.searchSortingPicker.sortBy(sortOrder, 'Size');
-        return this;
+    async sortBySize(sortOrder: string): Promise<void> {
+        await this.searchSortingPicker.sortBy(sortOrder, 'Size');
     }
 
-    async checkListIsOrderedByNameAsc() {
+    async checkListIsOrderedByNameAsc(): Promise<any> {
         return this.contentServices.contentList.dataTablePage().checkListIsSorted('ASC', 'Display name');
     }
 
-    async checkListIsOrderedByNameDesc() {
+    async checkListIsOrderedByNameDesc(): Promise<any> {
         return this.contentServices.contentList.dataTablePage().checkListIsSorted('DESC', 'Display name');
-    }
-
-    async checkListIsOrderedByAuthorAsc() {
-        return this.contentServices.contentList.dataTablePage().checkListIsSorted('ASC', 'Created by');
     }
 
 }

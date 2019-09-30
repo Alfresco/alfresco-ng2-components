@@ -39,8 +39,7 @@ export class PdfThumbComponent implements OnInit {
     private getThumb(page): Promise<string> {
         const viewport = page.getViewport(1);
 
-        const pageRatio = viewport.width / viewport.height;
-        const canvas = this.getCanvas(pageRatio);
+        const canvas = this.getCanvas();
         const scale = Math.min((canvas.height / viewport.height), (canvas.width / viewport.width));
 
         return page.render({
@@ -53,7 +52,7 @@ export class PdfThumbComponent implements OnInit {
         });
     }
 
-    private getCanvas(pageRatio): HTMLCanvasElement {
+    private getCanvas(): HTMLCanvasElement {
         const canvas = document.createElement('canvas');
         canvas.width = this.page.getWidth();
         canvas.height = this.page.getHeight();

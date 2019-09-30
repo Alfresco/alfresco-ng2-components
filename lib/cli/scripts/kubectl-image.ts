@@ -83,7 +83,7 @@ function _setImage(args: KubeArgs, logger: logging.Logger) {
     logger.info(response);
 }
 
-function _installPerform(args: KubeArgs, logger: logging.Logger) {
+function _installPerform(logger: logging.Logger) {
     logger.info('Perform install...');
     const responseK8sStable = _exec('curl', [`-s`, `https://storage.googleapis.com/kubernetes-release/release/stable.txt`], {}, logger).trim();
     const k8sRelease = `https://storage.googleapis.com/kubernetes-release/release/${responseK8sStable}/bin/linux/amd64/kubectl`;
@@ -92,7 +92,7 @@ function _installPerform(args: KubeArgs, logger: logging.Logger) {
 
 export default async function (args: KubeArgs, logger: logging.Logger) {
     if (args.installCheck === true) {
-        _installPerform(args, logger);
+        _installPerform(logger);
     }
     if (args.tag !== undefined) {
         _setCluster(args, logger);

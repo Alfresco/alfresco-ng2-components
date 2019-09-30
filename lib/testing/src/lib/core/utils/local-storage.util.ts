@@ -19,37 +19,37 @@ import { browser } from 'protractor';
 
 export class LocalStorageUtil {
 
-    static async setConfigField(field: string, value: string) {
+    static async setConfigField(field: string, value: string): Promise<void> {
         await browser.executeScript(
             'window.adf.setConfigField(`' + field + '`, `' + value + '`);'
         );
     }
 
-    static async setStorageItem(field: string, value: string) {
+    static async setStorageItem(field: string, value: string): Promise<void> {
         await browser.executeScript(
             'window.adf.setStorageItem(`' + field + '`, `' + value + '`);'
         );
     }
 
-    static async removeStorageItem(field: string) {
+    static async removeStorageItem(field: string): Promise<void> {
         await browser.executeScript(
             'window.adf.removeStorageItem(`' + field + '`);'
         );
     }
 
-    static async setUserPreference(field: string, value: any) {
+    static async setUserPreference(field: string, value: any): Promise<void> {
         await browser.executeScript(
             'window.adf.setUserPreference(`' + field + '`, `' + value + '`);'
         );
     }
 
-    static async clearStorage() {
+    static async clearStorage(): Promise<void> {
         await browser.executeScript(
             'window.adf.clearStorage();'
         );
     }
 
-    static async apiReset() {
+    static async apiReset(): Promise<void> {
         await browser.executeScript(
             `window.adf.apiReset();`
         );

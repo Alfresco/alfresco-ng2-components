@@ -152,7 +152,7 @@ export let errorJson = {
         this.message = event;
     }
 
-    elementClicked(event: any) {
+    elementClicked() {
         this.message = 'element clicked';
     }
 

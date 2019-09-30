@@ -19,9 +19,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { AboutComponent } from './about.component';
 import { DataTableModule } from '../datatable/datatable.module';
 import { DataColumnModule } from '../data-column/data-column.module';
+import { AboutApplicationModulesComponent } from './about-application-modules/about-application-modules.component';
+import { AboutProductVersionComponent } from './about-product-version/about-product-version.component';
+import { AboutGithubLinkComponent } from './about-github-link/about-github-link.component';
 
 @NgModule({
     imports: [
@@ -32,10 +34,14 @@ import { DataColumnModule } from '../data-column/data-column.module';
         DataColumnModule
     ],
     declarations: [
-        AboutComponent
+        AboutApplicationModulesComponent,
+        AboutProductVersionComponent,
+        AboutGithubLinkComponent
     ],
     exports: [
-        AboutComponent
+        AboutApplicationModulesComponent,
+        AboutProductVersionComponent,
+        AboutGithubLinkComponent
     ]
 })
 export class AboutModule {}

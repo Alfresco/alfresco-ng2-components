@@ -29,7 +29,7 @@ import { TranslationMock } from '../mock/translation.service.mock';
 @Component({
     template: `
         <div id="delete-component" [adf-delete]="selection"
-             (delete)="onDelete($event)">
+             (delete)="onDelete()">
         </div>`
 })
 class TestComponent {
@@ -38,7 +38,7 @@ class TestComponent {
     @ViewChild(NodeDeleteDirective)
     deleteDirective: NodeDeleteDirective;
 
-    onDelete(event) {
+    onDelete() {
     }
 }
 

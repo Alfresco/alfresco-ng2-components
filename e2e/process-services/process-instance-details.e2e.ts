@@ -42,7 +42,7 @@ describe('Process Instance Details', () => {
     const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const PROCESS_DATE_FORMAT = 'mmm d, yyyy';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
@@ -62,30 +62,26 @@ describe('Process Instance Details', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.navigateToProcessServicesPage();
-        processServicesPage.checkApsContainer();
-        processServicesPage.goToApp(app.title);
-        processServiceTabBarPage.clickProcessButton();
-        processListPage.checkProcessListIsDisplayed();
+        await navigationBarPage.navigateToProcessServicesPage();
+        await processServicesPage.checkApsContainer();
+        await processServicesPage.goToApp(app.title);
+        await processServiceTabBarPage.clickProcessButton();
+        await processListPage.checkProcessListIsDisplayed();
 
         process = await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processModel.id);
 
-        done();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appModel.id);
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
 
-        done();
     });
 
-    it('[C307031] Should display the created date in the default format', () => {
-        processDetailsPage.checkDetailsAreDisplayed();
-        expect(processDetailsPage.getCreated()).toEqual(dateFormat(process.started, PROCESS_DATE_FORMAT));
+    it('[C307031] Should display the created date in the default format', async () => {
+        await processDetailsPage.checkDetailsAreDisplayed();
+        await expect(await processDetailsPage.getCreated()).toEqual(dateFormat(process.started, PROCESS_DATE_FORMAT));
     });
 
 });

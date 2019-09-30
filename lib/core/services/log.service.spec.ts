@@ -179,7 +179,7 @@ describe('Log Service', () => {
         appConfigService.config['logLevel'] = 'trace';
         providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
 
-        providesLogComponent.componentInstance.logService.onMessage.subscribe((message) => {
+        providesLogComponent.componentInstance.logService.onMessage.subscribe(() => {
             done();
         });
 

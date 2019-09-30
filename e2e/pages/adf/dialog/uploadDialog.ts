@@ -15,176 +15,144 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser } from 'protractor';
+import { element, by, browser, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class UploadDialog {
 
-    closeButton = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]')));
-    dialog = element(by.css('div[id="upload-dialog"]'));
-    minimizedDialog = element(by.css('div[class*="upload-dialog--minimized"]'));
-    uploadedStatusIcon = by.css('mat-icon[class*="status--done"]');
-    cancelledStatusIcon = by.css('div[class*="status--cancelled"]');
+    closeButton: ElementFinder = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]')));
+    dialog: ElementFinder = element(by.css('div[id="upload-dialog"]'));
+    minimizedDialog: ElementFinder = element(by.css('div[class*="upload-dialog--minimized"]'));
+    uploadedStatusIcon: Locator = by.css('mat-icon[class*="status--done"]');
+    cancelledStatusIcon: Locator = by.css('div[class*="status--cancelled"]');
     errorStatusIcon = by.css('div[class*="status--error"] mat-icon');
-    errorTooltip = element(by.css('div.mat-tooltip'));
+    errorTooltip: ElementFinder = element(by.css('div.mat-tooltip'));
     rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
-    title = element(by.css('span[class*="upload-dialog__title"]'));
-    minimizeButton = element(by.css('mat-icon[title="Minimize"]'));
-    maximizeButton = element(by.css('mat-icon[title="Maximize"]'));
-    canUploadConfirmationTitle = element(by.css('p[class="upload-dialog__confirmation--title"]'));
-    canUploadConfirmationDescription = element(by.css('p[class="upload-dialog__confirmation--text"]'));
-    confirmationDialogNoButton = element(by.partialButtonText('No'));
-    confirmationDialogYesButton = element(by.partialButtonText('Yes'));
-    cancelUploadsElement = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]')));
+    title: ElementFinder = element(by.css('span[class*="upload-dialog__title"]'));
+    minimizeButton: ElementFinder = element(by.css('mat-icon[title="Minimize"]'));
+    maximizeButton: ElementFinder = element(by.css('mat-icon[title="Maximize"]'));
+    canUploadConfirmationTitle: ElementFinder = element(by.css('p[class="upload-dialog__confirmation--title"]'));
+    canUploadConfirmationDescription: ElementFinder = element(by.css('p[class="upload-dialog__confirmation--text"]'));
+    confirmationDialogNoButton: ElementFinder = element(by.partialButtonText('No'));
+    confirmationDialogYesButton: ElementFinder = element(by.partialButtonText('Yes'));
+    cancelUploadsElement: ElementFinder = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]')));
 
-    clickOnCloseButton() {
-        this.checkCloseButtonIsDisplayed();
-        BrowserActions.click(this.closeButton);
-        return this;
+    async clickOnCloseButton(): Promise<void> {
+        await this.checkCloseButtonIsDisplayed();
+        await BrowserActions.clickExecuteScript('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]');
     }
 
-    checkCloseButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
-        return this;
+    async checkCloseButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
     }
 
-    dialogIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dialog);
-        return this;
+    async dialogIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
     }
 
-    dialogIsMinimized() {
-        BrowserVisibility.waitUntilElementIsVisible(this.minimizedDialog);
-        return this;
+    async dialogIsMinimized(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.minimizedDialog);
     }
 
-    dialogIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
-        return this;
+    async dialogIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.dialog);
     }
 
     getRowsName(content) {
-        const row = element.all(by.css(`div[class*='uploading-row'] span[title="${content}"]`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(row);
+        const row: ElementFinder = element.all(by.css(`div[class*='uploading-row'] span[title="${content}"]`)).first();
         return row;
     }
 
     getRowByRowName(content) {
-        return this.getRowsName(content).element(this.rowByRowName);
+        const rows = this.getRowsName(content);
+        return rows.element(this.rowByRowName);
     }
 
-    fileIsUploaded(content) {
-        BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.uploadedStatusIcon));
-        return this;
+    async fileIsUploaded(content): Promise<void> {
+        const row = await this.getRowByRowName(content);
+        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.uploadedStatusIcon));
     }
 
-    fileIsError(content) {
-        BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.errorStatusIcon));
-        return this;
+    async fileIsError(content) {
+        const row = await this.getRowByRowName(content);
+        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.errorStatusIcon));
     }
 
-    filesAreUploaded(content) {
+    async filesAreUploaded(content): Promise<void> {
         for (let i = 0; i < content.length; i++) {
-            this.fileIsUploaded(content[i]);
+            await this.fileIsUploaded(content[i]);
         }
-        return this;
     }
 
-    fileIsNotDisplayedInDialog(content) {
-        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`div[class*='uploading-row'] span[title="${content}"]`)));
-        return this;
+    async fileIsNotDisplayedInDialog(content): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`div[class*='uploading-row'] span[title="${content}"]`)));
     }
 
-    cancelUploads() {
-        BrowserActions.click(this.cancelUploadsElement);
-        return this;
+    async cancelUploads(): Promise<void> {
+        await BrowserActions.click(this.cancelUploadsElement);
     }
 
-    fileIsCancelled(content) {
-        BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.cancelledStatusIcon));
-        return this;
+    async fileIsCancelled(content): Promise<void> {
+        const row = await this.getRowByRowName(content);
+        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.cancelledStatusIcon));
     }
 
-    removeUploadedFile(content) {
-        BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.uploadedStatusIcon));
-        this.getRowByRowName(content).element(this.uploadedStatusIcon).click();
-        return this;
+    async removeUploadedFile(content): Promise<void> {
+        const row = await this.getRowByRowName(content);
+        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.uploadedStatusIcon));
+        const elementRow = await this.getRowByRowName(content);
+        await BrowserActions.click(elementRow.element(this.uploadedStatusIcon));
+
     }
 
-    getTitleText() {
-        BrowserVisibility.waitUntilElementIsVisible(this.title);
-        const deferred = protractor.promise.defer();
-        this.title.getText().then((text) => {
-            deferred.fulfill(text);
-        });
-        return deferred.promise;
+    async getTitleText(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.title);
+        return await this.title.getText();
     }
 
-    getConfirmationDialogTitleText() {
-        BrowserVisibility.waitUntilElementIsVisible(this.canUploadConfirmationTitle);
-        const deferred = protractor.promise.defer();
-        this.canUploadConfirmationTitle.getText().then((text) => {
-            deferred.fulfill(text);
-        });
-        return deferred.promise;
+    async getConfirmationDialogTitleText(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.canUploadConfirmationTitle);
+        return this.canUploadConfirmationTitle.getText();
     }
 
-    getConfirmationDialogDescriptionText() {
-        BrowserVisibility.waitUntilElementIsVisible(this.canUploadConfirmationDescription);
-        const deferred = protractor.promise.defer();
-        this.canUploadConfirmationDescription.getText().then((text) => {
-            deferred.fulfill(text);
-        });
-        return deferred.promise;
+    async getConfirmationDialogDescriptionText(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.canUploadConfirmationDescription);
+        return this.canUploadConfirmationDescription.getText();
     }
 
-    clickOnConfirmationDialogYesButton() {
-        BrowserActions.click(this.confirmationDialogYesButton);
-        return this;
+    async clickOnConfirmationDialogYesButton(): Promise<void> {
+        await BrowserActions.click(this.confirmationDialogYesButton);
     }
 
-    clickOnConfirmationDialogNoButton() {
-        BrowserActions.click(this.confirmationDialogNoButton);
-        return this;
+    async clickOnConfirmationDialogNoButton(): Promise<void> {
+        await BrowserActions.click(this.confirmationDialogNoButton);
     }
 
-    async checkUploadCompleted() {
-        return (await this.numberOfCurrentFilesUploaded()) === (await this.numberOfInitialFilesUploaded());
+    async numberOfCurrentFilesUploaded(): Promise<string> {
+        const text = await this.getTitleText();
+        return text.split('Uploaded ')[1].split(' / ')[0];
     }
 
-    numberOfCurrentFilesUploaded() {
-        const deferred = protractor.promise.defer();
-        this.getTitleText().then((text: any) => {
-            deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[0]);
-        });
-        return deferred.promise;
+    async numberOfInitialFilesUploaded(): Promise<string> {
+        const text = await this.getTitleText();
+        return text.split('Uploaded ')[1].split(' / ')[1];
     }
 
-    numberOfInitialFilesUploaded() {
-        const deferred = protractor.promise.defer();
-        this.getTitleText().then((text: any) => {
-            deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[1]);
-        });
-        return deferred.promise;
+    async minimizeUploadDialog(): Promise<void> {
+        await BrowserActions.click(this.minimizeButton);
     }
 
-    minimizeUploadDialog() {
-        BrowserActions.click(this.minimizeButton);
-        return this;
+    async maximizeUploadDialog(): Promise<void> {
+        await BrowserActions.click(this.maximizeButton);
     }
 
-    maximizeUploadDialog() {
-        BrowserActions.click(this.maximizeButton);
-        return this;
+    async displayTooltip(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(this.errorStatusIcon));
+        await browser.actions().mouseMove(element(this.errorStatusIcon)).perform();
     }
 
-    displayTooltip() {
-        BrowserVisibility.waitUntilElementIsVisible(element(this.errorStatusIcon));
-        browser.actions().mouseMove(element(this.errorStatusIcon)).perform();
-    }
-
-    getTooltip() {
-        return BrowserActions.getText(this.errorTooltip);
+    async getTooltip(): Promise<string> {
+        return await BrowserActions.getText(this.errorTooltip);
     }
 
 }

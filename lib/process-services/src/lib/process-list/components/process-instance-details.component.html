@@ -1,0 +1,45 @@
+<div *ngIf="!processInstanceDetails">{{ 'ADF_PROCESS_LIST.DETAILS.MESSAGES.NONE'|translate }}</div>
+<mat-card *ngIf="processInstanceDetails">
+    <mat-card-header>
+        <mat-card-title>{{ getProcessNameOrDescription('medium') }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <adf-process-instance-header
+            #processInstanceHeader
+            [processInstance]="processInstanceDetails"
+            (showProcessDiagram)="onShowProcessDiagram()">
+        </adf-process-instance-header>
+
+        <button
+            class="adf-in-medias-res-button"
+            mat-button id="show-diagram-button"
+            type="button"
+            mat-button mat-raised-button
+            [disabled]="!isRunning()"
+            (click)="onShowProcessDiagram()">{{ 'ADF_PROCESS_LIST.DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}</button>
+
+        <mat-card>
+            <mat-card-content>
+                <adf-process-instance-tasks
+                    #processInstanceTasks
+                    [processInstanceDetails]="processInstanceDetails"
+                    (taskClick)="onTaskClicked($event)">
+                </adf-process-instance-tasks>
+            </mat-card-content>
+        </mat-card>
+
+        <div data-automation-id="header-status" *ngIf="isRunning()" class="adf-in-medias-res-button">
+            <button mat-button type="button" (click)="cancelProcess()">{{ 'ADF_PROCESS_LIST.DETAILS.BUTTON.CANCEL' | translate }}</button>
+        </div>
+
+        <mat-card>
+            <mat-card-content>
+                <adf-process-instance-comments #activitiComments
+                    [readOnly]="false"
+                    [processInstanceId]="processInstanceDetails.id">
+                </adf-process-instance-comments>
+            </mat-card-content>
+        </mat-card>
+
+    </mat-card-content>
+</mat-card>

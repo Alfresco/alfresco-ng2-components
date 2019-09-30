@@ -16,6 +16,7 @@
  */
 
 import { ApiService } from '../api.service';
+import { Logger } from '../../utils/logger';
 
 export class ApplicationsService {
 
@@ -25,17 +26,16 @@ export class ApplicationsService {
         this.api = api;
     }
 
-    async getApplicationsByStatus(status) {
+    async getApplicationsByStatus(status): Promise<any> {
         try {
             const path = '/deployment-service/v1/applications';
             const method = 'GET';
 
-            const queryParams = {'status': status}, postBody = {};
+            const queryParams = { status: status }, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.log('Get Applications - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Get Applications - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 

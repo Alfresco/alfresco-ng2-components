@@ -53,15 +53,15 @@ class MyComponent {
 ### Methods
 
 -   `parseForm(json: any, data?:`[`FormValues,`](../../../lib/core/form/components/widgets/core/form-values.ts)`readOnly: boolean = false):`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)  
-    Parses JSON data to create a corresponding [`Form`](../../../lib/process-services/task-list/models/form.model.ts) model.  
+    Parses JSON data to create a corresponding [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) model.
     -   `json` - JSON to create the form
     -   `data` - (Optional) Values for the form fields
     -   `readOnly` - Should the form fields be read-only?
 -   `createFormFromANode(formName: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
-    Create a [`Form`](../../../lib/process-services/task-list/models/form.model.ts) with a field for each metadata property.  
+    Create a [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) with a field for each metadata property.
     -   `formName` - Name of the new form
 -   `createForm(formName: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
-    Create a [`Form`](../../../lib/process-services/task-list/models/form.model.ts).  
+    Create a [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts).
     -   `formName` - Name of the new form
 -   `saveForm(formId: string, formModel: FormDefinitionModel):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Saves a form.  
@@ -86,20 +86,20 @@ class MyComponent {
     Gets a task.  
     -   `taskId` - Task Id
 -   `saveTaskForm(taskId: string, formValues: FormValues):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
-    Save Task [`Form`](../../../lib/process-services/task-list/models/form.model.ts).  
+    Save Task [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts).
     -   `taskId` - Task Id
-    -   `formValues` - [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Values
+    -   `formValues` - [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Values
 -   `completeTaskForm(taskId: string, formValues:`[`FormValues,`](../../../lib/core/form/components/widgets/core/form-values.ts)`outcome?: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
-    Complete Task [`Form`](../../../lib/process-services/task-list/models/form.model.ts)  
+    Complete Task [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts)
     -   `taskId` - Task Id
-    -   `formValues` - [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Values
-    -   `outcome` - (Optional) [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Outcome
+    -   `formValues` - [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Values
+    -   `outcome` - (Optional) [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Outcome
 -   `getTaskForm(taskId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
-    Get [`Form`](../../../lib/process-services/task-list/models/form.model.ts) related to a taskId  
+    Get [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) related to a taskId  
     -   `taskId` - Task Id
 -   `getFormDefinitionById(formId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
-    Get [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Definition  
-    -   `formId` - [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Id
+    Get [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Definition  
+    -   `formId` - [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Id
 -   `getFormDefinitionByName(name: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Returns form definition with a given name.  
     -   `name` - The form name
@@ -137,7 +137,7 @@ class MyComponent {
     Gets a list of workflow users.  
     -   `filter` - Filter to select specific users
     -   `groupId` - (Optional) Group ID for the search
--   [`getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]>`](../../../lib/process-services-cloud/src/lib/group/models/group.model.ts)  
+-   [`getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]>`](../../../lib/core/form/components/widgets/core/group.model.ts)  
     Gets a list of groups in a workflow.  
     -   `filter` - Filter to select specific groups
     -   `groupId` - (Optional) Group ID for the search

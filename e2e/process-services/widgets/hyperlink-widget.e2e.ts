@@ -36,7 +36,7 @@ describe('Hyperlink widget', () => {
     const app = resources.Files.WIDGET_CHECK_APP.HYPERLINK;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -57,29 +57,29 @@ describe('Hyperlink widget', () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
+
     });
 
-    it('[C276728] Should be able to set visibility properties for Hyperlink widget', () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.hyperlink_id);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.hyperlink_id);
+    it('[C276728] Should be able to set visibility properties for Hyperlink widget', async () => {
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.hyperlink_id);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.hyperlink_id);
 
-        expect(widget.hyperlink().getFieldLabel(app.FIELD.hyperlink_id)).toBe('Hyperlink');
-        expect(widget.hyperlink().getFieldText(app.FIELD.hyperlink_id)).toBe('https://www.google.com/');
+        await expect(await widget.hyperlink().getFieldLabel(app.FIELD.hyperlink_id)).toBe('Hyperlink');
+        await expect(await widget.hyperlink().getFieldText(app.FIELD.hyperlink_id)).toBe('https://www.google.com/');
     });
 });

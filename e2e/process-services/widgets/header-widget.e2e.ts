@@ -24,7 +24,7 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
-describe('Header widget', () => {
+describe('Header widget', async () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -36,7 +36,7 @@ describe('Header widget', () => {
     const app = resources.Files.WIDGET_CHECK_APP.HEADER;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -57,29 +57,29 @@ describe('Header widget', () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        done();
+
     });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
+
     });
 
-    it('[C276737] Should be able to set general and visibility properties for Header widget', () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.header_id);
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        taskPage.formFields().checkWidgetIsVisible(app.FIELD.header_id);
+    it('[C276737] Should be able to set general and visibility properties for Header widget', async () => {
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.header_id);
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await taskPage.formFields().checkWidgetIsVisible(app.FIELD.header_id);
 
-        expect(widget.headerWidget().getFieldLabel(app.FIELD.header_id)).toBe('Header');
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await widget.headerWidget().getFieldLabel(app.FIELD.header_id)).toBe('Header');
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 });

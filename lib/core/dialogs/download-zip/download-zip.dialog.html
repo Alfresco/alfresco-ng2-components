@@ -1,0 +1,9 @@
+<h1 matDialogTitle>{{ 'CORE.DIALOG.DOWNLOAD_ZIP.TITLE' | translate }}</h1>
+<div mat-dialog-content>
+    <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button color="primary" id="cancel-button" (click)="cancelDownload()">
+        {{ 'CORE.DIALOG.DOWNLOAD_ZIP.ACTIONS.CANCEL' | translate }}
+    </button>
+</mat-dialog-actions>

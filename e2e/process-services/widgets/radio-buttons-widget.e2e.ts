@@ -36,7 +36,7 @@ describe('Radio Buttons Widget', () => {
     const app = resources.Files.WIDGET_CHECK_APP.RADIO_BUTTONS;
     let deployedApp, process;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
@@ -59,35 +59,34 @@ describe('Radio Buttons Widget', () => {
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        done();
     });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.formFields().checkFormIsDisplayed();
     });
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        done();
+
     });
 
-    it('[C277316] Should display empty radio buttons when no preselection is configured', () => {
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        widget.radioWidget().isSelectionClean(app.FIELD.radio_buttons_id);
+    it('[C277316] Should display empty radio buttons when no preselection is configured', async () => {
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await widget.radioWidget().isSelectionClean(app.FIELD.radio_buttons_id);
     });
 
-    it('[C274704] Should be able to set visibility properties for Radio Button widget', () => {
-        taskPage.formFields().checkWidgetIsHidden(app.FIELD.radio_buttons_id);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+    it('[C274704] Should be able to set visibility properties for Radio Button widget', async () => {
+        await taskPage.formFields().checkWidgetIsHidden(app.FIELD.radio_buttons_id);
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        expect(widget.radioWidget().getRadioWidgetLabel(app.FIELD.radio_buttons_id)).toContain('Radio posts');
-        widget.radioWidget().selectOption(app.FIELD.radio_buttons_id, 1);
-        expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        await expect(await widget.radioWidget().getRadioWidgetLabel(app.FIELD.radio_buttons_id)).toContain('Radio posts');
+        await widget.radioWidget().selectOption(app.FIELD.radio_buttons_id, 1);
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 });

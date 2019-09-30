@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [Process Details component](../../../lib/process-services/process-list/components/process-instance-details.component.ts "Defined in process-instance-details.component.ts")
+# [Process Details component](../../../lib/process-services/src/lib/process-list/components/process-instance-details.component.ts "Defined in process-instance-details.component.ts")
 
 Displays detailed information about a specified process instance
 
@@ -34,4 +34,4 @@ Displays detailed information about a specified process instance
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 | processCancelled | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the current process is cancelled by the user from within the component. |
 | showProcessDiagram | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the "show diagram" button is clicked. |
-| taskClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsEvent`](../../../lib/process-services/task-list/models/task-details.event.ts)`>` | Emitted when a task is clicked. |
+| taskClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsEvent`](../../../lib/process-services/src/lib/task-list/models/task-details.event.ts)`>` | Emitted when a task is clicked. |
