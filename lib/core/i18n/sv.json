@@ -72,6 +72,10 @@
           "CANCEL": "Avbryt"
         },
         "TITLE": "Lägg till filer till zip, det här kan ta några minuter"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Stäng",
+        "UPDATE": "Uppdatera"
       }
     },
     "FILE_DIALOG": {
@@ -136,7 +140,7 @@
     },
     "HOST_SETTINGS": {
       "TYPE-AUTH": "Autentiseringstyp",
-      "BASIC": "Grundläggande autenticering",
+      "BASIC": "Grundläggande autentisering",
       "SSO": "SSO",
       "IMPLICIT-FLOW": "Implicit flöde",
       "PROVIDER": "Leverantör",
@@ -161,6 +165,7 @@
         "NAME": "Namn",
         "VALUE": "Värde"
       },
+      "NONE": "Ingen",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Använd ett nummerformat",
         "INT_VALIDATION_ERROR": "Använd ett heltalsformat"
@@ -184,6 +189,7 @@
         "EDIT": "Redigera",
         "SAVE": "Spara",
         "CANCEL": "Avbryt",
+        "CLEAR": "Rensa",
         "TOGGLE": "Växla värde"
       }
     }
@@ -206,23 +212,27 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Logga in",
       "USERNAME": "Användarnamn",
       "PASSWORD": "Lösenord",
       "REMEMBER": "Kom ihåg mig"
     },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Visa lösenord",
+      "HIDE-PASSWORD": "Dölj lösenord"
+    },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Obligatorisk",
-      "USERNAME-MIN": "Ditt användarmna måste vara minst {{ minLength }} tecken.",
+      "USERNAME-MIN": "Ditt användarna måste vara minst {{ minLength }} tecken.",
       "PASSWORD-REQUIRED": "Ange ditt lösenord för att logga in",
       "LOGIN-ERROR-CREDENTIALS": "Du har angett ett okänt användarnamn eller lösenord",
       "LOGIN-ERROR-PROVIDERS": "Leverantörer kan inte avdefinieras",
       "LOGIN-ERROR-CORS": "CORS-undantag, kontrollera din serverkonfiguration",
       "LOGIN-ERROR-CSRF": "CSRF-undantag, ställ in [disableCsrf]=\"true\" i login.component",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services-datakatalog är i skrivskyddat läge",
-      "SSO-WRONG-CONFIGURATION": "SSO-autenticeringsserver kan inte nås"
+      "SSO-WRONG-CONFIGURATION": "SSO-autentiseringsserver kan inte nås"
     },
     "BUTTON": {
       "LOGIN": "Logga in",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Välj alla",
-      "SELECT_FILE": "Välj fil"
+      "SELECT_FILE": "Välj fil",
+      "SORT_ASCENDING": "Stigande",
+      "SORT_DESCENDING": "Sjunkande",
+      "SORT_NONE": "Ingen",
+      "ICON_TEXT": "Filtyp {{ type }}",
+      "ICON_DISABLED": "Avaktiverad",
+      "ROW_OPTION_BUTTON": "Åtgärder"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Dokument",
+      "FOLDER": "Mapp",
+      "PDF": "PDF",
+      "IMAGE": "Bild",
+      "EXCEL": "Excel-kalkylblad",
+      "WORD": "Word-dokument",
+      "POWERPOINT": "Powerpoint-presentation",
+      "VIDEO": "Video",
+      "AUDIO": "Ljud",
+      "WEBSITE": "Webbplats",
+      "ARCHIVE": "Arkiv",
+      "PRESENTATION": "Presentation",
+      "SPREADSHEET": "Kalkylblad",
+      "MISCELLANEOUS": "Övrigt"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "av"
     },
     "LOADING": "Läser in",
-    "UNKNOWN_FORMAT": "Kunde inte läsa in förhandsgranskning",
+    "UNKNOWN_FORMAT": "Kunde inte läsa in förhandsgranskning. Okänt format.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Sida {{ pageNum }}"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Version",
     "SERVER_SETTINGS": {
       "TITLE": "Serverinställningar",
       "DESCRIPTION": "Värdena nedan tas från AppConfigService",
@@ -428,6 +461,18 @@
         "MODE": "Läge",
         "CLUSTER_ENABLED": "Är Kluster aktiverat",
         "CRYPTODOC_ENABLED": "Är Cryptodoc aktiverat"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Plugins",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "Namn",
+        "VERSION": "Version",
+        "VENDOR": "Tillverkare",
+        "LICENSE": "Licens",
+        "RUNTIME": "Runtime",
+        "DESCRIPTION": "Beskrivning"
       }
     }
   },

@@ -308,7 +308,7 @@
     "MULTISELECTION": "Multiselection",
     "TESTING_MODE": "Testing Mode",
     "SELECTION_MODE": "Selection Mode",
-    "SELECTED_ROWS": "Selected rows",
+    "SELECTED_ROWS": "Selected Rows",
     "TASK_DETAILS_REDIRECTION": "Display task details on task click",
     "PROCESS_DETAILS_REDIRECTION": "Display process details on process click",
     "ACTION": {
@@ -321,8 +321,8 @@
       "KEY": "Key",
       "TITLE": "Title",
       "ICON": "Icon",
-      "TASK_ID": "Task Id",
-      "PROCESS_ID": "ProcessInstanceId",
+      "TASK_ID": "Task ID",
+      "PROCESS_ID": "Process Instance ID",
       "ACTION_TYPE": "Action Type"
     }
   }

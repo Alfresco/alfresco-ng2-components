@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "التصفية حسب الدور",
     "PRESELECT_VALIDATION": "التحديد المسبق للتحقق من الصحة"
   },
-  "ABOUT": {
-    "TITLE": "مكونات إضافية",
-    "TABLE_HEADERS": {
-      "ID": "المعرف",
-      "NAME": "الاسم",
-      "VERSION": "الإصدار",
-      "VENDOR": "المورد",
-      "LICENSE": "الترخيص",
-      "RUNTIME": "وقت التشغيل",
-      "DESCRIPTION": "الوصف"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "تحديد متعدد",
     "TESTING_MODE": "وضع الاختبار",
     "SELECTION_MODE": "وضع التحديد",
+    "SELECTED_ROWS": "الصفوف المحدّدة",
     "TASK_DETAILS_REDIRECTION": "عرض تفاصيل المهمة عند النقر فوق المهمة",
-    "PROCESS_DETAILS_REDIRECTION": "عرض تفاصيل العملية عند النقر على العملية"
+    "PROCESS_DETAILS_REDIRECTION": "عرض تفاصيل العملية عند النقر على العملية",
+    "ACTION": {
+      "ACTION_TITLE": "إضافة إجراء",
+      "ACTION_MENU": "قائمة الإجراءات",
+      "CONTEX_MENU": "قائمة السياق",
+      "ACTION_VISIBLE": "مرئي",
+      "ACTION_DISABLE": "معطّل",
+      "ADD_BUTTON": "إضافة",
+      "KEY": "المفتاح",
+      "TITLE": "العنوان",
+      "ICON": "أيقونة",
+      "TASK_ID": "معرف المهمة",
+      "PROCESS_ID": "معرّف مثيل المعالجة",
+      "ACTION_TYPE": "نوع الإجراء"
+    }
   }
 }

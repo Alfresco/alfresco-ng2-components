@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Filtrar por función",
     "PRESELECT_VALIDATION": "Preseleccionar validación"
   },
-  "ABOUT": {
-    "TITLE": "Complementos",
-    "TABLE_HEADERS": {
-      "ID": "ID",
-      "NAME": "Nombre",
-      "VERSION": "Versión",
-      "VENDOR": "Proveedor",
-      "LICENSE": "Licencia",
-      "RUNTIME": "Tiempo de ejecución",
-      "DESCRIPTION": "Descripción"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Selección múltiple",
     "TESTING_MODE": "Modo de prueba",
     "SELECTION_MODE": "Modo de selección",
+    "SELECTED_ROWS": "Filas seleccionadas",
     "TASK_DETAILS_REDIRECTION": "Mostrar detalles de la tarea haciendo clic en la tarea",
-    "PROCESS_DETAILS_REDIRECTION": "Mostrar detalles del proceso al hacer clic en el proceso"
+    "PROCESS_DETAILS_REDIRECTION": "Mostrar detalles del proceso al hacer clic en el proceso",
+    "ACTION": {
+      "ACTION_TITLE": "Añadir acción",
+      "ACTION_MENU": "Menú de acción",
+      "CONTEX_MENU": "Menú de contexto",
+      "ACTION_VISIBLE": "Visible",
+      "ACTION_DISABLE": "Desactivar",
+      "ADD_BUTTON": "Añadir",
+      "KEY": "Clave",
+      "TITLE": "Título",
+      "ICON": "Icono",
+      "TASK_ID": "ID de tarea",
+      "PROCESS_ID": "ID de instancia del proceso",
+      "ACTION_TYPE": "Tipo de acción"
+    }
   }
 }

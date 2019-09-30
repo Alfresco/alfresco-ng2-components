@@ -72,6 +72,10 @@
           "CANCEL": "Peruuta"
         },
         "TITLE": "Tiedostoja lisätään zip-kansioon. Tämä voi kestää muutaman minuutin."
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Sulje",
+        "UPDATE": "Päivitä"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "Nimi",
         "VALUE": "Arvo"
       },
+      "NONE": "Ei mitään",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Käytä numeromuotoa",
         "INT_VALIDATION_ERROR": "Käytä kokonaislukumuotoa"
@@ -184,6 +189,7 @@
         "EDIT": "Muokkaa",
         "SAVE": "Tallenna",
         "CANCEL": "Peruuta",
+        "CLEAR": "Tyhjennä",
         "TOGGLE": "Vaihda arvoa"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Kirjaudu sisään",
       "USERNAME": "Käyttäjänimi",
       "PASSWORD": "Salasana",
       "REMEMBER": "Muista minut"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Näytä salasana",
+      "HIDE-PASSWORD": "Piilota salasana"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Pakollinen",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Valitse kaikki",
-      "SELECT_FILE": "Valitse tiedosto"
+      "SELECT_FILE": "Valitse tiedosto",
+      "SORT_ASCENDING": "Nouseva",
+      "SORT_DESCENDING": "Laskeva",
+      "SORT_NONE": "Ei mitään",
+      "ICON_TEXT": "Tiedostotyyppi {{ type }}",
+      "ICON_DISABLED": "Poistettu käytöstä",
+      "ROW_OPTION_BUTTON": "Toiminnot"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Asiakirja",
+      "FOLDER": "Kansio",
+      "PDF": "PDF",
+      "IMAGE": "Kuva",
+      "EXCEL": "Excel-taulukko",
+      "WORD": "Word-asiakirja",
+      "POWERPOINT": "Powerpoint-esitys",
+      "VIDEO": "Video",
+      "AUDIO": "Ääni",
+      "WEBSITE": "Verkkosivusto",
+      "ARCHIVE": "Arkisto",
+      "PRESENTATION": "Esitys",
+      "SPREADSHEET": "Laskentataulukko",
+      "MISCELLANEOUS": "Sekalainen"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "/"
     },
     "LOADING": "Ladataan",
-    "UNKNOWN_FORMAT": "Esikatselun lataaminen ei onnistu",
+    "UNKNOWN_FORMAT": "Esikatselun lataaminen epäonnistui. Tuntematon muoto.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Sivu {{ pageNum }}"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Versio",
     "SERVER_SETTINGS": {
       "TITLE": "Palvelinasetukset",
       "DESCRIPTION": "Alla olevat arvot on otettu sovellusmäärityspalvelusta",
@@ -428,6 +461,18 @@
         "MODE": "Tila",
         "CLUSTER_ENABLED": "Klusteri on käytössä",
         "CRYPTODOC_ENABLED": "Asiakirjasalaus on käytössä"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Lisäosat",
+      "TABLE_HEADERS": {
+        "ID": "Tunnus",
+        "NAME": "Nimi",
+        "VERSION": "Versio",
+        "VENDOR": "Toimittaja",
+        "LICENSE": "Käyttöoikeus",
+        "RUNTIME": "Suorituspalvelu",
+        "DESCRIPTION": "Kuvaus"
       }
     }
   },

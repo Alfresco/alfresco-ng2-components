@@ -72,6 +72,10 @@
           "CANCEL": "Annuleren"
         },
         "TITLE": "Bestanden toevoegen aan .zip-bestand, dit kan een paar minuten duren"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Sluiten",
+        "UPDATE": "Bijwerken"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "Naam",
         "VALUE": "Waarde"
       },
+      "NONE": "Geen",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Gebruik een getalnotatie",
         "INT_VALIDATION_ERROR": "Gebruik een notatie voor gehele getallen"
@@ -184,6 +189,7 @@
         "EDIT": "Bewerken",
         "SAVE": "Opslaan",
         "CANCEL": "Annuleren",
+        "CLEAR": "Wissen",
         "TOGGLE": "Waarde in-/uitschakelen"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Aanmelden",
       "USERNAME": "Gebruikersnaam",
       "PASSWORD": "Wachtwoord",
       "REMEMBER": "Mij onthouden"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Wachtwoord weergeven",
+      "HIDE-PASSWORD": "Wachtwoord verbergen"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Vereist",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Alles selecteren",
-      "SELECT_FILE": "een bestand selecteren"
+      "SELECT_FILE": "een bestand selecteren",
+      "SORT_ASCENDING": "Oplopend",
+      "SORT_DESCENDING": "Aflopend",
+      "SORT_NONE": "Geen",
+      "ICON_TEXT": "Bestandstype {{ type }}",
+      "ICON_DISABLED": "Uitgeschakeld",
+      "ROW_OPTION_BUTTON": "Acties"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Document",
+      "FOLDER": "Map",
+      "PDF": "PDF",
+      "IMAGE": "Afbeelding",
+      "EXCEL": "Excel-werkblad",
+      "WORD": "Word-document",
+      "POWERPOINT": "Powerpoint-presentatie",
+      "VIDEO": "Video",
+      "AUDIO": "Audio",
+      "WEBSITE": "Website",
+      "ARCHIVE": "Archief",
+      "PRESENTATION": "Presentatie",
+      "SPREADSHEET": "Werkblad",
+      "MISCELLANEOUS": "Overig"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "van"
     },
     "LOADING": "Wordt geladen",
-    "UNKNOWN_FORMAT": "Kan voorbeeld niet laden",
+    "UNKNOWN_FORMAT": "Kan voorbeeld niet laden. Onbekende indeling.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Pagina {{ pageNum }}"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Versie",
     "SERVER_SETTINGS": {
       "TITLE": "Serverinstellingen",
       "DESCRIPTION": "De onderstaande waarden zijn afkomstig uit de AppConfigService",
@@ -428,6 +461,18 @@
         "MODE": "Modus",
         "CLUSTER_ENABLED": "Is ingeschakeld voor clusters",
         "CRYPTODOC_ENABLED": "Is ingeschakeld voor Cryptodoc"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Plug-ins",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "Naam",
+        "VERSION": "Versie",
+        "VENDOR": "Leverancier",
+        "LICENSE": "Licentie",
+        "RUNTIME": "Runtime",
+        "DESCRIPTION": "Beschrijving"
       }
     }
   },

@@ -72,6 +72,10 @@
           "CANCEL": "取消"
         },
         "TITLE": "添加文件至 zip，此操作需要数分钟时间"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "关闭",
+        "UPDATE": "更新"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "名称",
         "VALUE": "值"
       },
+      "NONE": "无",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "使用数字格式",
         "INT_VALIDATION_ERROR": "使用整数格式"
@@ -184,6 +189,7 @@
         "EDIT": "编辑",
         "SAVE": "保存",
         "CANCEL": "取消",
+        "CLEAR": "清除",
         "TOGGLE": "切换值"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "登录",
       "USERNAME": "用户名",
       "PASSWORD": "密码",
       "REMEMBER": "记住用户名和密码"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "显示密码",
+      "HIDE-PASSWORD": "隐藏密码"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "必需",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "全选",
-      "SELECT_FILE": "选择文件"
+      "SELECT_FILE": "选择文件",
+      "SORT_ASCENDING": "升序",
+      "SORT_DESCENDING": "降序",
+      "SORT_NONE": "无",
+      "ICON_TEXT": "文件类型 {{ type }}",
+      "ICON_DISABLED": "禁用",
+      "ROW_OPTION_BUTTON": "操作"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "文档",
+      "FOLDER": "文件夹",
+      "PDF": "PDF",
+      "IMAGE": "图像(&I)",
+      "EXCEL": "Excel 电子表格",
+      "WORD": "Word 文档",
+      "POWERPOINT": "PowerPoint 演示文稿",
+      "VIDEO": "视频",
+      "AUDIO": "音频",
+      "WEBSITE": "网站",
+      "ARCHIVE": "存档",
+      "PRESENTATION": "演示文稿",
+      "SPREADSHEET": "电子表格",
+      "MISCELLANEOUS": "其他"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "/"
     },
     "LOADING": "正在加载",
-    "UNKNOWN_FORMAT": "无法加载预览",
+    "UNKNOWN_FORMAT": "无法加载预览。未知格式。",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "第 {{ pageNum }} 页"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "版本",
     "SERVER_SETTINGS": {
       "TITLE": "服务器设置",
       "DESCRIPTION": "以下值均取自 AppConfigService",
@@ -428,6 +461,18 @@
         "MODE": "模式",
         "CLUSTER_ENABLED": "是否已启用群集",
         "CRYPTODOC_ENABLED": "是否已启用 Cryptodoc"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "插件",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "名称",
+        "VERSION": "版本",
+        "VENDOR": "供应商",
+        "LICENSE": "许可证",
+        "RUNTIME": "运行时",
+        "DESCRIPTION": "说明"
       }
     }
   },

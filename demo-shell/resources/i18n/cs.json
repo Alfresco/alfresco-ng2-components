@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Filtrovat podle role",
     "PRESELECT_VALIDATION": "Ověření předvolené hodnoty"
   },
-  "ABOUT": {
-    "TITLE": "Doplňky",
-    "TABLE_HEADERS": {
-      "ID": "ID",
-      "NAME": "Název",
-      "VERSION": "Verze",
-      "VENDOR": "Dodavatel",
-      "LICENSE": "Licence",
-      "RUNTIME": "Délka",
-      "DESCRIPTION": "Popis"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Hromadný výběr",
     "TESTING_MODE": "Testovací režim",
     "SELECTION_MODE": "Režim výběru",
+    "SELECTED_ROWS": "Vybrané řádky",
     "TASK_DETAILS_REDIRECTION": "Zobrazit podrobnosti o úkolu při kliknutí na úkol",
-    "PROCESS_DETAILS_REDIRECTION": "Zobrazit podrobnosti o průběhu při kliknutí na proces"
+    "PROCESS_DETAILS_REDIRECTION": "Zobrazit podrobnosti o průběhu při kliknutí na proces",
+    "ACTION": {
+      "ACTION_TITLE": "Přidat akci",
+      "ACTION_MENU": "Nabídka akcí",
+      "CONTEX_MENU": "Místní nabídka",
+      "ACTION_VISIBLE": "Viditelné",
+      "ACTION_DISABLE": "Zakázat",
+      "ADD_BUTTON": "Přidat",
+      "KEY": "Klíč",
+      "TITLE": "Označení",
+      "ICON": "Ikona",
+      "TASK_ID": "ID úkolu",
+      "PROCESS_ID": "ID instance procesu",
+      "ACTION_TYPE": "Typ akce"
+    }
   }
 }

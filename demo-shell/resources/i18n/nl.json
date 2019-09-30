@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Filteren op rol",
     "PRESELECT_VALIDATION": "Validatie voorselecteren"
   },
-  "ABOUT": {
-    "TITLE": "Plug-ins",
-    "TABLE_HEADERS": {
-      "ID": "Id",
-      "NAME": "Naam",
-      "VERSION": "Versie",
-      "VENDOR": "Leverancier",
-      "LICENSE": "Licentie",
-      "RUNTIME": "Runtime",
-      "DESCRIPTION": "Beschrijving"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multiselectie",
     "TESTING_MODE": "Testmodus",
     "SELECTION_MODE": "Selectiemodus",
+    "SELECTED_ROWS": "Geselecteerde rijen",
     "TASK_DETAILS_REDIRECTION": "Taakdetails weergeven bij klikken op taak",
-    "PROCESS_DETAILS_REDIRECTION": "Procesdetails weergeven bij klikken op proces"
+    "PROCESS_DETAILS_REDIRECTION": "Procesdetails weergeven bij klikken op proces",
+    "ACTION": {
+      "ACTION_TITLE": "Actie toevoegen",
+      "ACTION_MENU": "Actiemenu",
+      "CONTEX_MENU": "Contextmenu",
+      "ACTION_VISIBLE": "Zichtbaar",
+      "ACTION_DISABLE": "Uitschakelen",
+      "ADD_BUTTON": "Toevoegen",
+      "KEY": "Key",
+      "TITLE": "Titel",
+      "ICON": "Pictogram",
+      "TASK_ID": "Taak-ID",
+      "PROCESS_ID": "Procesinstantie-ID",
+      "ACTION_TYPE": "Actietype"
+    }
   }
 }

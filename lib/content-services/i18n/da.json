@@ -117,7 +117,8 @@
       "REMOVE_FILE": "Fjern den uploadede fil"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Annulleret"
+      "FILE_CANCELED_STATUS": "Annulleret",
+      "FILE_DONE_STATUS": "Uploadet"
     },
     "CONFIRMATION": {
       "BUTTON": {
@@ -130,7 +131,20 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Filversion"
+      "VERSION": "Filversion {{ version }}",
+      "DIALOG": "Upload liste",
+      "DIALOG_MAXIMIZE": "Maksimer dialogboksen Upload",
+      "DIALOG_MINIMIZE": "Minimer dialogboksen Upload",
+      "DIALOG_CLOSE": "Luk dialogboksen Upload",
+      "CANCEL_ALL": "Annuller alle filer, der uploades",
+      "REMOVE_FILE": "Fjern den uploadede fil {{ file }}",
+      "CANCEL_FILE": "Annuller den planlagte fil {{ file }}",
+      "CANCEL_FILE_UPLOAD": "Annuller filupload {{ file }}",
+      "UPLOAD_FILE_ERROR": "Uploadfejl {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "Bekræft annullering",
+        "CONTINUE": "Fortsæt upload"
+      }
     }
   },
   "FILE_UPLOAD": {
@@ -368,6 +382,17 @@
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Egenskaberne for biblioteket er blevet opdateret"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Brødkrumme",
+      "CURRENT_PAGE": "Side"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Åbn {{ name }}"
     }
   }
 }

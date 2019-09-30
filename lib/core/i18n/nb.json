@@ -72,6 +72,10 @@
           "CANCEL": "Avbryt"
         },
         "TITLE": "Legger til filer som skal komprimeres, dette kan ta noen minutter"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Lukk",
+        "UPDATE": "Oppdater"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "Navn",
         "VALUE": "Verdi"
       },
+      "NONE": "Ingen",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Bruk et nummerformat",
         "INT_VALIDATION_ERROR": "Bruk heltall"
@@ -184,6 +189,7 @@
         "EDIT": "Rediger",
         "SAVE": "Lagre",
         "CANCEL": "Avbryt",
+        "CLEAR": "Fjern",
         "TOGGLE": "Bytt verdi"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Logg på",
       "USERNAME": "Brukernavn",
       "PASSWORD": "Passord",
       "REMEMBER": "Husk meg"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Vis passord",
+      "HIDE-PASSWORD": "Skjul passord"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Påkrevd",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Velg alle",
-      "SELECT_FILE": "Velg fil"
+      "SELECT_FILE": "Velg fil",
+      "SORT_ASCENDING": "Stigende",
+      "SORT_DESCENDING": "Synkende",
+      "SORT_NONE": "Ingen",
+      "ICON_TEXT": "Filtype {{ type }}",
+      "ICON_DISABLED": "Deaktivert",
+      "ROW_OPTION_BUTTON": "Handlinger"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Dokument",
+      "FOLDER": "Mappe",
+      "PDF": "PDF",
+      "IMAGE": "Bilde",
+      "EXCEL": "Excel-regneark",
+      "WORD": "Word-dokument",
+      "POWERPOINT": "Powerpoint-presentasjon",
+      "VIDEO": "Video",
+      "AUDIO": "Lyd",
+      "WEBSITE": "Nettsted",
+      "ARCHIVE": "Arkiv",
+      "PRESENTATION": "Presentasjon",
+      "SPREADSHEET": "Regneark",
+      "MISCELLANEOUS": "Diverse"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "av"
     },
     "LOADING": "Laster",
-    "UNKNOWN_FORMAT": "Kan ikke laste forhåndsvisning",
+    "UNKNOWN_FORMAT": "Kan ikke laste forhåndsvisning. Ukjent format.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Side {{ pageNum }}"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Versjon",
     "SERVER_SETTINGS": {
       "TITLE": "Serverinnstillinger",
       "DESCRIPTION": "Verdiene nedenfor er tatt fra AppConfigService",
@@ -428,6 +461,18 @@
         "MODE": "Modus",
         "CLUSTER_ENABLED": "Er klyngeaktivert",
         "CRYPTODOC_ENABLED": "Er Cryptodoc-aktivert"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Plugin-moduler",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "Navn",
+        "VERSION": "Versjon",
+        "VENDOR": "Leverandør",
+        "LICENSE": "Lisens",
+        "RUNTIME": "Kjøretid",
+        "DESCRIPTION": "Beskrivelse"
       }
     }
   },

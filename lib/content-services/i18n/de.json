@@ -117,7 +117,8 @@
       "REMOVE_FILE": "Hochgeladene Datei entfernen"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Abgebrochen"
+      "FILE_CANCELED_STATUS": "Abgebrochen",
+      "FILE_DONE_STATUS": "Hochgeladen"
     },
     "CONFIRMATION": {
       "BUTTON": {
@@ -130,7 +131,20 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Dateiversion"
+      "VERSION": "Dateiversion",
+      "DIALOG": "Upload-Liste",
+      "DIALOG_MAXIMIZE": "Upload-Dialog maximieren",
+      "DIALOG_MINIMIZE": "Upload-Dialog minimieren",
+      "DIALOG_CLOSE": "Upload-Dialog schließen",
+      "CANCEL_ALL": "Alle Datei-Uploads abbrechen",
+      "REMOVE_FILE": "Hochgeladene Datei {{ file }} entfernen",
+      "CANCEL_FILE": "Geplantes Hochladen der Datei {{ file }} abbrechen",
+      "CANCEL_FILE_UPLOAD": "Hochladen der Datei {{ file }} abbrechen",
+      "UPLOAD_FILE_ERROR": "Upload-Fehler {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "Abbruch bestätigen",
+        "CONTINUE": "Upload fortsetzen"
+      }
     }
   },
   "FILE_UPLOAD": {
@@ -368,6 +382,17 @@
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Bibliothekseigenschaften aktualisiert"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Breadcrumb",
+      "CURRENT_PAGE": "Seite"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "{{ name }} öffnen"
     }
   }
 }

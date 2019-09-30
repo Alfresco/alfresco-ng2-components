@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Фильтровать по роли",
     "PRESELECT_VALIDATION": "Проверка предварительного выбора"
   },
-  "ABOUT": {
-    "TITLE": "Подключаемые модули",
-    "TABLE_HEADERS": {
-      "ID": "Идентификатор",
-      "NAME": "Имя",
-      "VERSION": "Версия",
-      "VENDOR": "Поставщик",
-      "LICENSE": "Лицензия",
-      "RUNTIME": "Среда выполнения",
-      "DESCRIPTION": "Описание"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Выбор нескольких",
     "TESTING_MODE": "Режим тестирования",
     "SELECTION_MODE": "Режим выбора",
+    "SELECTED_ROWS": "Выбранные ряды",
     "TASK_DETAILS_REDIRECTION": "Отображать подробные сведения о задаче при нажатии на задачу",
-    "PROCESS_DETAILS_REDIRECTION": "Показывать сведения о процессе при нажатии на процессе"
+    "PROCESS_DETAILS_REDIRECTION": "Показывать сведения о процессе при нажатии на процессе",
+    "ACTION": {
+      "ACTION_TITLE": "Добавить действие",
+      "ACTION_MENU": "Меню действий",
+      "CONTEX_MENU": "Контекстное меню",
+      "ACTION_VISIBLE": "Видимый",
+      "ACTION_DISABLE": "Отключить",
+      "ADD_BUTTON": "Добавить",
+      "KEY": "Ключ",
+      "TITLE": "Заголовок",
+      "ICON": "Значок",
+      "TASK_ID": "ИД задачи",
+      "PROCESS_ID": "Идентификатор экземпляра процесса",
+      "ACTION_TYPE": "Тип действия"
+    }
   }
 }

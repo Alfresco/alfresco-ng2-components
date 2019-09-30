@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "按角色筛选",
     "PRESELECT_VALIDATION": "预先选择验证"
   },
-  "ABOUT": {
-    "TITLE": "插件",
-    "TABLE_HEADERS": {
-      "ID": "ID",
-      "NAME": "名称",
-      "VERSION": "版本",
-      "VENDOR": "供应商",
-      "LICENSE": "许可证",
-      "RUNTIME": "运行时",
-      "DESCRIPTION": "说明"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "多重选择",
     "TESTING_MODE": "测试模式",
     "SELECTION_MODE": "选择模式",
+    "SELECTED_ROWS": "选定行",
     "TASK_DETAILS_REDIRECTION": "单击任务时显示任务详情",
-    "PROCESS_DETAILS_REDIRECTION": "单击流程时显示流程详细信息"
+    "PROCESS_DETAILS_REDIRECTION": "单击流程时显示流程详细信息",
+    "ACTION": {
+      "ACTION_TITLE": "添加操作",
+      "ACTION_MENU": "操作菜单",
+      "CONTEX_MENU": "上下文菜单",
+      "ACTION_VISIBLE": "可见",
+      "ACTION_DISABLE": "禁用",
+      "ADD_BUTTON": "添加",
+      "KEY": "Key",
+      "TITLE": "标题",
+      "ICON": "图标",
+      "TASK_ID": "任务 ID",
+      "PROCESS_ID": "流程实例 ID",
+      "ACTION_TYPE": "操作类型"
+    }
   }
 }
