@@ -405,11 +405,6 @@
             &--fileSize .adf-datatable-cell-value {
                 padding: 0;
             }
-
-            &:focus {
-                outline-offset: -1px;
-                outline: $data-table-cell-outline;
-            }
         }
 
         .adf-cell-value {
@@ -418,6 +413,11 @@
             align-items: center;
             word-break: break-all;
             width: 100%;
+
+            &:focus {
+                outline-offset: -1px;
+                outline: $data-table-cell-outline;
+            }
         }
 
         .adf-datatable__actions-cell, .adf-datatable-cell--image {
