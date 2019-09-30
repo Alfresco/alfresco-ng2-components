@@ -12,6 +12,8 @@ show_help() {
     echo ""
     echo "-t or --token  Github ouath token"
     echo "-n or --name  Github name of the project"
+    echo "-v or --version  ADF version if not passed will use the beta"
+    echo "-vjs or --vjs  JS API version if not passed will use the beta"
     echo "-gnu for gnu"
 }
 
@@ -24,6 +26,14 @@ token() {
     TOKEN=$1
 }
 
+vjs() {
+    JS_VERSION=$1
+}
+
+version() {
+    VERSION=$1
+}
+
 name_repo() {
     NAME_REPO=$1
 }
@@ -34,6 +44,8 @@ while [[ $1 == -* ]]; do
       -n|--name|-\?)  name_repo $2; shift 2;;
       -gnu) gnu_mode; shift;;
       -t|--token)  token $2; shift 2;;
+      -v|--version)  version $2; shift 2;;
+      -vjs|--vjs)  vjs $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
 done
