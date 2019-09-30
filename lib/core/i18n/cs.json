@@ -72,6 +72,10 @@
           "CANCEL": "Zrušit"
         },
         "TITLE": "Probíhá vkládání souborů do archivu ZIP. Akce může několik minut trvat."
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Zavřít",
+        "UPDATE": "Aktualizovat"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "Název",
         "VALUE": "Hodnota"
       },
+      "NONE": "Žádný",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Použít formát čísla",
         "INT_VALIDATION_ERROR": "Použít formát celého čísla"
@@ -184,6 +189,7 @@
         "EDIT": "Upravit",
         "SAVE": "Uložit",
         "CANCEL": "Zrušit",
+        "CLEAR": "Vymazat",
         "TOGGLE": "Přepnout hodnotu"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Přihlásit se",
       "USERNAME": "Uživatelské jméno",
       "PASSWORD": "Heslo",
       "REMEMBER": "Zapamatovat přihlášení"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Zobrazit heslo",
+      "HIDE-PASSWORD": "Skrýt heslo"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Požadováno",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Vybrat vše",
-      "SELECT_FILE": "Vybrat soubor"
+      "SELECT_FILE": "Vybrat soubor",
+      "SORT_ASCENDING": "Vzestupně",
+      "SORT_DESCENDING": "Sestupně",
+      "SORT_NONE": "Žádný",
+      "ICON_TEXT": "Typ souboru {{ type }}",
+      "ICON_DISABLED": "Zakázáno",
+      "ROW_OPTION_BUTTON": "Akce"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Dokument",
+      "FOLDER": "Složka",
+      "PDF": "PDF",
+      "IMAGE": "Obraz",
+      "EXCEL": "Tabulka Excel",
+      "WORD": "Dokument Word",
+      "POWERPOINT": "Prezentace Powerpoint",
+      "VIDEO": "Video",
+      "AUDIO": "Audio",
+      "WEBSITE": "Webová stránka",
+      "ARCHIVE": "Archiv",
+      "PRESENTATION": "Prezentace",
+      "SPREADSHEET": "Tabulka",
+      "MISCELLANEOUS": "Různé"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "z"
     },
     "LOADING": "Načítání",
-    "UNKNOWN_FORMAT": "Náhled se nepodařilo načíst",
+    "UNKNOWN_FORMAT": "Náhled se nepodařilo načíst. Neznámý formát.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Stránka {{ pageNum }}"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Verze",
     "SERVER_SETTINGS": {
       "TITLE": "Nastavení serveru",
       "DESCRIPTION": "Následující hodnoty pochází z AppConfigService",
@@ -428,6 +461,18 @@
         "MODE": "Režim",
         "CLUSTER_ENABLED": "Je povolen cluster",
         "CRYPTODOC_ENABLED": "Je povolen Cryptodoc"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Doplňky",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "Název",
+        "VERSION": "Verze",
+        "VENDOR": "Dodavatel",
+        "LICENSE": "Licence",
+        "RUNTIME": "Délka",
+        "DESCRIPTION": "Popis"
       }
     }
   },

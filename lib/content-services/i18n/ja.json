@@ -117,7 +117,8 @@
       "REMOVE_FILE": "アップロードしたファイルを削除"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "キャンセルされました"
+      "FILE_CANCELED_STATUS": "キャンセルされました",
+      "FILE_DONE_STATUS": "アップロード済み"
     },
     "CONFIRMATION": {
       "BUTTON": {
@@ -130,7 +131,20 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "ファイルのバージョン"
+      "VERSION": "ファイルのバージョン: {{ version }}",
+      "DIALOG": "リストのアップロード",
+      "DIALOG_MAXIMIZE": "アップロードダイアログを最大化",
+      "DIALOG_MINIMIZE": "アップロードダイアログを最小化",
+      "DIALOG_CLOSE": "アップロードダイアログを閉じる",
+      "CANCEL_ALL": "ファイルのアップロードをすべてキャンセル",
+      "REMOVE_FILE": "アップロード済みのファイル {{ file }} を削除",
+      "CANCEL_FILE": "スケジュール済みのファイル {{ file }} をキャンセル",
+      "CANCEL_FILE_UPLOAD": "ファイル {{ file }} のアップロードをキャンセル",
+      "UPLOAD_FILE_ERROR": "アップロードエラー: {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "キャンセルを確定",
+        "CONTINUE": "アップロードを続行"
+      }
     }
   },
   "FILE_UPLOAD": {
@@ -368,6 +382,17 @@
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "ライブラリのプロパティが更新されました"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "階層リンク",
+      "CURRENT_PAGE": "ページ"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "{{ name }} を開く"
     }
   }
 }

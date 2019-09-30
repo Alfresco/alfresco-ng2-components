@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Suodata roolin perusteella",
     "PRESELECT_VALIDATION": "Vahvistus esivalittu"
   },
-  "ABOUT": {
-    "TITLE": "Lisäosat",
-    "TABLE_HEADERS": {
-      "ID": "Tunnus",
-      "NAME": "Nimi",
-      "VERSION": "Versio",
-      "VENDOR": "Toimittaja",
-      "LICENSE": "Käyttöoikeus",
-      "RUNTIME": "Suorituspalvelu",
-      "DESCRIPTION": "Kuvaus"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Monivalinta",
     "TESTING_MODE": "Testaustila",
     "SELECTION_MODE": "Valintatila",
+    "SELECTED_ROWS": "Valitut rivit",
     "TASK_DETAILS_REDIRECTION": "Näytä tehtävätiedot tehtävää napsauttamalla",
-    "PROCESS_DETAILS_REDIRECTION": "Näyttää prosessin tiedot prosessia napsautettaessa"
+    "PROCESS_DETAILS_REDIRECTION": "Näyttää prosessin tiedot prosessia napsautettaessa",
+    "ACTION": {
+      "ACTION_TITLE": "Lisää toiminto",
+      "ACTION_MENU": "Toiminnon valikko",
+      "CONTEX_MENU": "Pikavalikko",
+      "ACTION_VISIBLE": "Näkyvissä",
+      "ACTION_DISABLE": "Poista käytöstä",
+      "ADD_BUTTON": "Lisää",
+      "KEY": "Avain",
+      "TITLE": "Otsikko",
+      "ICON": "Kuvake",
+      "TASK_ID": "Tehtävätunnus",
+      "PROCESS_ID": "Prosessiesiintymätunnus",
+      "ACTION_TYPE": "Toiminnon tyyppi"
+    }
   }
 }

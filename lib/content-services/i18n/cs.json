@@ -117,7 +117,8 @@
       "REMOVE_FILE": "Odebrat odeslaný soubor"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Zrušeno"
+      "FILE_CANCELED_STATUS": "Zrušeno",
+      "FILE_DONE_STATUS": "Odeslané"
     },
     "CONFIRMATION": {
       "BUTTON": {
@@ -130,7 +131,20 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Verze souboru"
+      "VERSION": "Verze souboru",
+      "DIALOG": "Odeslat seznam",
+      "DIALOG_MAXIMIZE": "Maximalizovat dialog pro odeslání",
+      "DIALOG_MINIMIZE": "Minimalizovat dialog pro odeslání",
+      "DIALOG_CLOSE": "Zavřít dialog pro odeslání",
+      "CANCEL_ALL": "Zrušit všechny odesílané soubory",
+      "REMOVE_FILE": "Odebrat odeslaný soubor {{ file }}",
+      "CANCEL_FILE": "Zrušit naplánovaný soubor {{ file }}",
+      "CANCEL_FILE_UPLOAD": "Zrušit odesílání souboru {{ file }}",
+      "UPLOAD_FILE_ERROR": "Chyba při odesílání {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "Potvrdit zrušení",
+        "CONTINUE": "Pokračovat v odesílání"
+      }
     }
   },
   "FILE_UPLOAD": {
@@ -368,6 +382,17 @@
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Vlastnosti knihovny byly upraveny"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Popis cesty",
+      "CURRENT_PAGE": "Strana"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Otevřít {{ name }}"
     }
   }
 }

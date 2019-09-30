@@ -72,6 +72,10 @@
           "CANCEL": "Anuluj"
         },
         "TITLE": "Trwa dodawanie plików do archiwum zip. Może to potrwać kilka minut."
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Zamknij",
+        "UPDATE": "Aktualizuj"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "Nazwa",
         "VALUE": "Wartość"
       },
+      "NONE": "Brak",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Użyj formatu liczby",
         "INT_VALIDATION_ERROR": "Użyj formatu liczby całkowitej"
@@ -184,6 +189,7 @@
         "EDIT": "Edytuj",
         "SAVE": "Zapisz",
         "CANCEL": "Anuluj",
+        "CLEAR": "Wyczyść",
         "TOGGLE": "Przełącz wartość"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Zaloguj się",
       "USERNAME": "Nazwa użytkownika",
       "PASSWORD": "Hasło",
       "REMEMBER": "Zapamiętaj mnie"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Pokaż hasło",
+      "HIDE-PASSWORD": "Ukryj hasło"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Wymagane",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Wybierz wszystko",
-      "SELECT_FILE": "Wybierz plik"
+      "SELECT_FILE": "Wybierz plik",
+      "SORT_ASCENDING": "Rosnąco",
+      "SORT_DESCENDING": "Malejąco",
+      "SORT_NONE": "Brak",
+      "ICON_TEXT": "Typ pliku: {{ type }}",
+      "ICON_DISABLED": "Wyłączone",
+      "ROW_OPTION_BUTTON": "Czynności"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Dokument",
+      "FOLDER": "Folder",
+      "PDF": "PDF",
+      "IMAGE": "Obraz",
+      "EXCEL": "Arkusz kalkulacyjny Excel",
+      "WORD": "Dokument Word",
+      "POWERPOINT": "Prezentacja Powerpoint",
+      "VIDEO": "Wideo",
+      "AUDIO": "Dźwięk",
+      "WEBSITE": "Witryna",
+      "ARCHIVE": "Archiwum",
+      "PRESENTATION": "Prezentacja",
+      "SPREADSHEET": "Arkusz kalkulacyjny",
+      "MISCELLANEOUS": "Różne"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "z"
     },
     "LOADING": "Wczytywanie",
-    "UNKNOWN_FORMAT": "Nie można wczytać podglądu.",
+    "UNKNOWN_FORMAT": "Nie można wczytać podglądu. Nieznany format.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Strona {{ pageNum }}"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Wersja",
     "SERVER_SETTINGS": {
       "TITLE": "Ustawienia serwera",
       "DESCRIPTION": "Wartości widoczne poniżej pochodzą z usługi AppConfigService",
@@ -428,6 +461,18 @@
         "MODE": "Tryb",
         "CLUSTER_ENABLED": "Czy klaster jest włączony",
         "CRYPTODOC_ENABLED": "Czy funkcja Cryptodoc jest włączona"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Dodatki typu plugin",
+      "TABLE_HEADERS": {
+        "ID": "Identyfikator",
+        "NAME": "Nazwa",
+        "VERSION": "Wersja",
+        "VENDOR": "Sprzedawca",
+        "LICENSE": "Licencja",
+        "RUNTIME": "Środowisko uruchomieniowe",
+        "DESCRIPTION": "Opis"
       }
     }
   },

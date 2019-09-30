@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "役割でフィルタ",
     "PRESELECT_VALIDATION": "事前選択の検証"
   },
-  "ABOUT": {
-    "TITLE": "プラグイン",
-    "TABLE_HEADERS": {
-      "ID": "ID",
-      "NAME": "名前",
-      "VERSION": "バージョン",
-      "VENDOR": "ベンダー",
-      "LICENSE": "ライセンス",
-      "RUNTIME": "ランタイム",
-      "DESCRIPTION": "説明"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "複数選択",
     "TESTING_MODE": "テストモード",
     "SELECTION_MODE": "選択モード",
+    "SELECTED_ROWS": "選択した行",
     "TASK_DETAILS_REDIRECTION": "タスクのクリック時にタスクの詳細を表示",
-    "PROCESS_DETAILS_REDIRECTION": "プロセスのクリックでプロセスの詳細を表示"
+    "PROCESS_DETAILS_REDIRECTION": "プロセスのクリックでプロセスの詳細を表示",
+    "ACTION": {
+      "ACTION_TITLE": "処理の追加",
+      "ACTION_MENU": "処理メニュー",
+      "CONTEX_MENU": "コンテキストメニュー",
+      "ACTION_VISIBLE": "表示",
+      "ACTION_DISABLE": "無効",
+      "ADD_BUTTON": "追加",
+      "KEY": "キー",
+      "TITLE": "タイトル",
+      "ICON": "アイコン",
+      "TASK_ID": "タスク ID",
+      "PROCESS_ID": "プロセスインスタンス ID",
+      "ACTION_TYPE": "処理のタイプ"
+    }
   }
 }

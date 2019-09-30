@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Nach Rolle filtern",
     "PRESELECT_VALIDATION": "Vorauswahl-Prüfung"
   },
-  "ABOUT": {
-    "TITLE": "Plugins",
-    "TABLE_HEADERS": {
-      "ID": "ID",
-      "NAME": "Name",
-      "VERSION": "Version",
-      "VENDOR": "Hersteller",
-      "LICENSE": "Lizenz",
-      "RUNTIME": "Laufzeit",
-      "DESCRIPTION": "Beschreibung"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Mehrfachauswahl",
     "TESTING_MODE": "Testmodus",
     "SELECTION_MODE": "Auswahlmodus",
+    "SELECTED_ROWS": "Ausgewählte Zeilen",
     "TASK_DETAILS_REDIRECTION": "Bei Klicken auf Aufgabe Aufgabendetails einblenden",
-    "PROCESS_DETAILS_REDIRECTION": "Bei Klicken auf Prozess Prozessdetails anzeigen"
+    "PROCESS_DETAILS_REDIRECTION": "Bei Klicken auf Prozess Prozessdetails anzeigen",
+    "ACTION": {
+      "ACTION_TITLE": "Aktion hinzufügen",
+      "ACTION_MENU": "Aktionsmenü",
+      "CONTEX_MENU": "Kontextmenü",
+      "ACTION_VISIBLE": "Sichtbar",
+      "ACTION_DISABLE": "Deaktivieren",
+      "ADD_BUTTON": "Hinzufügen",
+      "KEY": "Schlüssel",
+      "TITLE": "Titel",
+      "ICON": "Symbol",
+      "TASK_ID": "Aufgaben-ID",
+      "PROCESS_ID": "Prozessinstanz-ID",
+      "ACTION_TYPE": "Aktionstyp"
+    }
   }
 }

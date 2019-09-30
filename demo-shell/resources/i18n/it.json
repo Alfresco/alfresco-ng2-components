@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Filtra per ruolo",
     "PRESELECT_VALIDATION": "Convalida preselezione"
   },
-  "ABOUT": {
-    "TITLE": "Plug-in",
-    "TABLE_HEADERS": {
-      "ID": "ID",
-      "NAME": "Nome",
-      "VERSION": "Versione",
-      "VENDOR": "Fornitore",
-      "LICENSE": "Licenza",
-      "RUNTIME": "Runtime",
-      "DESCRIPTION": "Descrizione"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Selezione multipla",
     "TESTING_MODE": "Modalità di test",
     "SELECTION_MODE": "Modalità di selezione",
+    "SELECTED_ROWS": "Righe selezionate",
     "TASK_DETAILS_REDIRECTION": "Mostra dettagli compito dopo clic su compito",
-    "PROCESS_DETAILS_REDIRECTION": "Mostra i dettagli dopo il clic sul processo"
+    "PROCESS_DETAILS_REDIRECTION": "Mostra i dettagli dopo il clic sul processo",
+    "ACTION": {
+      "ACTION_TITLE": "Aggiungi azione",
+      "ACTION_MENU": "Menu azione",
+      "CONTEX_MENU": "Menu contestuale",
+      "ACTION_VISIBLE": "Visibile",
+      "ACTION_DISABLE": "Disattiva",
+      "ADD_BUTTON": "Aggiungi",
+      "KEY": "Chiave",
+      "TITLE": "Titolo",
+      "ICON": "Icona",
+      "TASK_ID": "ID compito",
+      "PROCESS_ID": "ID istanza di processo",
+      "ACTION_TYPE": "Tipo di azione"
+    }
   }
 }

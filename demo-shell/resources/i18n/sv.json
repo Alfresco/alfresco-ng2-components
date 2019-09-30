@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Filtrera på roll",
     "PRESELECT_VALIDATION": "Förval validering"
   },
-  "ABOUT": {
-    "TITLE": "Plugins",
-    "TABLE_HEADERS": {
-      "ID": "ID",
-      "NAME": "Namn",
-      "VERSION": "Version",
-      "VENDOR": "Säljare",
-      "LICENSE": "Licens",
-      "RUNTIME": "Runtime",
-      "DESCRIPTION": "Beskrivning"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Flerval",
     "TESTING_MODE": "Testläge",
     "SELECTION_MODE": "Urvalsläge",
+    "SELECTED_ROWS": "Valda rader",
     "TASK_DETAILS_REDIRECTION": "Visa uppgiftsdetaljer vid klick på uppgift",
-    "PROCESS_DETAILS_REDIRECTION": "Visa processinformation vid processklick"
+    "PROCESS_DETAILS_REDIRECTION": "Visa processinformation vid processklick",
+    "ACTION": {
+      "ACTION_TITLE": "Lägg till åtgärd",
+      "ACTION_MENU": "Åtgärdsmeny",
+      "CONTEX_MENU": "Innehållsmeny",
+      "ACTION_VISIBLE": "Synlig",
+      "ACTION_DISABLE": "Avaktivera",
+      "ADD_BUTTON": "Lägg till",
+      "KEY": "Nyckel",
+      "TITLE": "Titel",
+      "ICON": "Ikon",
+      "TASK_ID": "Uppgifts-ID",
+      "PROCESS_ID": "Processinstans-ID",
+      "ACTION_TYPE": "Åtgärdstyp"
+    }
   }
 }

@@ -143,7 +143,7 @@
       "UPLOAD_FILE_ERROR": "Upload error {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Confirm cancel",
-        "CONTINUE": "Continue uploading"
+        "CONTINUE": "Continue upload"
       }
     }
   },
@@ -387,7 +387,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Breadcrumb",
-      "CURRENT_PAGE": "page"
+      "CURRENT_PAGE": "Page"
     }
   },
   "NAME_COLUMN_LINK": {

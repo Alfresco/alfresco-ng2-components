@@ -72,6 +72,10 @@
           "CANCEL": "Annulla"
         },
         "TITLE": "Aggiunta dei file allo zip in corso. Questa operazione potrebbe richiedere alcuni minuti"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "Chiudi",
+        "UPDATE": "Aggiorna"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "Nome",
         "VALUE": "Valore"
       },
+      "NONE": "Nessuno",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizzare un formato numerico",
         "INT_VALIDATION_ERROR": "Utilizzare numeri interi"
@@ -184,6 +189,7 @@
         "EDIT": "Modifica",
         "SAVE": "Salva",
         "CANCEL": "Annulla",
+        "CLEAR": "Cancella",
         "TOGGLE": "Cambiare valore"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "Accedi",
       "USERNAME": "Nome utente",
       "PASSWORD": "Password",
       "REMEMBER": "Ricordami"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "Mostra password",
+      "HIDE-PASSWORD": "Nascondi password"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Campo obbligatorio",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "Seleziona tutto",
-      "SELECT_FILE": "Selezionare un file"
+      "SELECT_FILE": "Selezionare un file",
+      "SORT_ASCENDING": "Ascendente",
+      "SORT_DESCENDING": "Discendente",
+      "SORT_NONE": "Nessuno",
+      "ICON_TEXT": "Tipo di file {{ type }}",
+      "ICON_DISABLED": "Disattivato",
+      "ROW_OPTION_BUTTON": "Azioni"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "Documento",
+      "FOLDER": "Cartella",
+      "PDF": "PDF",
+      "IMAGE": "Immagine",
+      "EXCEL": "Foglio di calcolo Excel",
+      "WORD": "Documento Word",
+      "POWERPOINT": "Presentazione Powerpoint",
+      "VIDEO": "Video",
+      "AUDIO": "Audio",
+      "WEBSITE": "Sito web",
+      "ARCHIVE": "Archivio",
+      "PRESENTATION": "Presentazione",
+      "SPREADSHEET": "Foglio di calcolo",
+      "MISCELLANEOUS": "Vari"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "di"
     },
     "LOADING": "Caricamento in corso",
-    "UNKNOWN_FORMAT": "Impossibile caricare l'anteprima",
+    "UNKNOWN_FORMAT": "Impossibile caricare l'anteprima. Formato sconosciuto.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Pagina {{ pageNum }}"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "Versione",
     "SERVER_SETTINGS": {
       "TITLE": "Impostazioni server",
       "DESCRIPTION": "I valori seguenti sono stati recuperati dal servizio di configurazione dell'applicazione",
@@ -428,6 +461,18 @@
         "MODE": "Modo",
         "CLUSTER_ENABLED": "Cluster abilitato",
         "CRYPTODOC_ENABLED": "Crittografia documenti abilitata"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "Plug-in",
+      "TABLE_HEADERS": {
+        "ID": "ID",
+        "NAME": "Nome",
+        "VERSION": "Versione",
+        "VENDOR": "Fornitore",
+        "LICENSE": "Licenza",
+        "RUNTIME": "Runtime",
+        "DESCRIPTION": "Descrizione"
       }
     }
   },

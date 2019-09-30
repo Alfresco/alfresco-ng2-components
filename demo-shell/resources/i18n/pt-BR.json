@@ -97,7 +97,7 @@
     "PEOPLE_CLOUD": "Componente da Nuvem de Pessoas",
     "GROUPS_CLOUD": "Componente da Nuvem de Grupos",
     "CONFIRM-DIALOG": "Caixa de diálogo de confirmação",
-    "COMMUNITY": "Community"
+    "COMMUNITY": "Comunidade"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -304,23 +304,26 @@
     "ROLE_FILTER_MODE": "Filtrar por função",
     "PRESELECT_VALIDATION": "Validação de pré-seleção"
   },
-  "ABOUT": {
-    "TITLE": "Plugins",
-    "TABLE_HEADERS": {
-      "ID": "ID",
-      "NAME": "Nome",
-      "VERSION": "Versão",
-      "VENDOR": "Fornecedor",
-      "LICENSE": "Licença",
-      "RUNTIME": "Tempo de execução",
-      "DESCRIPTION": "Descrição"
-    }
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Seleção Múltipla",
     "TESTING_MODE": "Modo de Teste",
     "SELECTION_MODE": "Modo de Seleção",
+    "SELECTED_ROWS": "Linhas selecionadas",
     "TASK_DETAILS_REDIRECTION": "Exibir detalhes da tarefa ao clicar na tarefa",
-    "PROCESS_DETAILS_REDIRECTION": "Exibir detalhes do processo ao clicar no processo"
+    "PROCESS_DETAILS_REDIRECTION": "Exibir detalhes do processo ao clicar no processo",
+    "ACTION": {
+      "ACTION_TITLE": "Adicionar ação",
+      "ACTION_MENU": "Menu de ação",
+      "CONTEX_MENU": "Menu de contexto",
+      "ACTION_VISIBLE": "Visível",
+      "ACTION_DISABLE": "Desativar",
+      "ADD_BUTTON": "Adicionar",
+      "KEY": "Chave",
+      "TITLE": "Título",
+      "ICON": "Ícone",
+      "TASK_ID": "ID de tarefa",
+      "PROCESS_ID": "ID de instância de processo",
+      "ACTION_TYPE": "Tipo de ação"
+    }
   }
 }

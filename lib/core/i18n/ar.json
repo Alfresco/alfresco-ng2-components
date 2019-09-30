@@ -72,6 +72,10 @@
           "CANCEL": "إلغاء"
         },
         "TITLE": "إضافة الملفات إلى الضغط، قد يستغرق هذا بضع دقائق"
+      },
+      "EDIT_JSON": {
+        "CLOSE": "إغلاق",
+        "UPDATE": "تحديث"
       }
     },
     "FILE_DIALOG": {
@@ -161,6 +165,7 @@
         "NAME": "الاسم",
         "VALUE": "القيمة"
       },
+      "NONE": "بلا",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "استخدام تنسيق رقم",
         "INT_VALIDATION_ERROR": "استخدام تنسيق عدد صحيح"
@@ -184,6 +189,7 @@
         "EDIT": "تحرير",
         "SAVE": "حفظ",
         "CANCEL": "إلغاء",
+        "CLEAR": "مسح",
         "TOGGLE": "تبديل القيمة"
       }
     }
@@ -206,12 +212,16 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco",
+    "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "تسجيل دخول",
       "USERNAME": "اسم مستخدم",
       "PASSWORD": "كلمة سر",
       "REMEMBER": "تذكرني"
+    },
+    "ARIA-LABEL": {
+      "SHOW-PASSWORD": "عرض كلمة المرور",
+      "HIDE-PASSWORD": "إخفاء كلمة المرور"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "مطلوب",
@@ -252,7 +262,29 @@
     },
     "ACCESSIBILITY": {
       "SELECT_ALL": "تحديد الكل",
-      "SELECT_FILE": "تحديد ملف"
+      "SELECT_FILE": "تحديد ملف",
+      "SORT_ASCENDING": "تصاعدي",
+      "SORT_DESCENDING": "تنازلي",
+      "SORT_NONE": "بلا",
+      "ICON_TEXT": "نوع الملف {{ type }}",
+      "ICON_DISABLED": "معطّل",
+      "ROW_OPTION_BUTTON": "إجراءات"
+    },
+    "FILE_TYPE": {
+      "DOCUMENT": "مستند",
+      "FOLDER": "مجلد",
+      "PDF": "PDF",
+      "IMAGE": "الصورة",
+      "EXCEL": "جدول بيانات Excel",
+      "WORD": "مستند Word",
+      "POWERPOINT": "عرض تقديمي Powerpoint",
+      "VIDEO": "فيديو",
+      "AUDIO": "صوت",
+      "WEBSITE": "موقع ويب",
+      "ARCHIVE": "أرشيف",
+      "PRESENTATION": "عرض تقديمي",
+      "SPREADSHEET": "جدول بيانات",
+      "MISCELLANEOUS": "متنوع"
     }
   },
   "USER_PROFILE": {
@@ -298,7 +330,7 @@
       "OF": "من"
     },
     "LOADING": "تحميل",
-    "UNKNOWN_FORMAT": "تعذر تحميل المعاينة",
+    "UNKNOWN_FORMAT": "تعذر تحميل المعاينة. تنسيق غير معروف",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "الصفحة{{ pageNum }}"
@@ -378,6 +410,7 @@
     }
   },
   "ABOUT": {
+    "VERSION": "الإصدار",
     "SERVER_SETTINGS": {
       "TITLE": "إعدادات الخادم",
       "DESCRIPTION": "تم أخذ القيم أدناه من AppConfigService",
@@ -428,6 +461,18 @@
         "MODE": "الوضع",
         "CLUSTER_ENABLED": "تم تمكين الكتلة",
         "CRYPTODOC_ENABLED": "تم تمكين مستند تشفير"
+      }
+    },
+    "EXTENSIONS": {
+      "TITLE": "مكونات إضافية",
+      "TABLE_HEADERS": {
+        "ID": "المعرف",
+        "NAME": "الاسم",
+        "VERSION": "الإصدار",
+        "VENDOR": "المورد",
+        "LICENSE": "الترخيص",
+        "RUNTIME": "وقت التشغيل",
+        "DESCRIPTION": "الوصف"
       }
     }
   },
