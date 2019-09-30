@@ -147,7 +147,8 @@ export class HostSettingsComponent implements OnInit {
             scope: [oauth.scope, Validators.required],
             secret: oauth.secret,
             silentLogin: oauth.silentLogin,
-            implicitFlow: oauth.implicitFlow
+            implicitFlow: oauth.implicitFlow,
+            publicUrls: [oauth.publicUrls]
         });
     }
 
@@ -267,6 +268,10 @@ export class HostSettingsComponent implements OnInit {
 
     get redirectUri(): AbstractControl {
         return this.oauthConfig.get('redirectUri');
+    }
+
+    get publicUrls(): AbstractControl {
+        return this.oauthConfig.get('publicUrls');
     }
 
     get redirectUriLogout(): AbstractControl {

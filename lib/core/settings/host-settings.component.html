@@ -128,6 +128,13 @@
                         <input id="logout-url" matInput placeholder="{{ 'CORE.HOST_SETTINGS.REDIRECT_LOGOUT'| translate }}"
                                name="redirectUriLogout" formControlName="redirectUriLogout">
                     </mat-form-field>
+
+                    <mat-form-field class="adf-full-width" floatLabel="Public Urls">
+                        <mat-label>{{ 'CORE.HOST_SETTINGS.PUBLIC_URLS'| translate }}</mat-label>
+                        <input id="public-url" matInput placeholder="{{ 'CORE.HOST_SETTINGS.PUBLIC_URLS'| translate }}"
+                               name="publicUrls" formControlName="publicUrls">
+                    </mat-form-field>
+
                 </div>
             </ng-container>
             <mat-card-actions class="adf-actions">

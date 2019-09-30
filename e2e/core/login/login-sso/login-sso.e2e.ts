@@ -29,30 +29,6 @@ describe('Login component - SSO', () => {
     const silentLogin = false;
     let implicitFlow;
 
-    describe('Login component - SSO Grant type password (implicit flow false)', () => {
-
-        it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', async () => {
-            implicitFlow = false;
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
-                browser.params.testConfig.adf.hostSso,
-                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
-
-            await loginPage.waitForElements();
-
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
-                browser.params.testConfig.adf.hostSso,
-                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
-            browser.ignoreSynchronization = true;
-
-            await loginPage.enterUsername(browser.params.testConfig.adf.adminEmail);
-            await loginPage.enterPassword(browser.params.testConfig.adf.adminPassword);
-            await loginPage.clickSignInButton();
-
-            await BrowserVisibility.waitUntilElementIsVisible(loginPage.sidenavLayout);
-
-        });
-    });
-
     describe('Login component - SSO implicit Flow', () => {
 
         afterEach(async () => {
@@ -79,4 +55,22 @@ describe('Login component - SSO', () => {
 
     });
 
+    describe('Login component - SSO Grant type password (implicit flow false)', () => {
+
+        it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', async () => {
+            implicitFlow = false;
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
+                browser.params.testConfig.adf.hostSso,
+                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
+
+            await loginPage.waitForElements();
+
+            await loginPage.enterUsername(browser.params.testConfig.adf.adminEmail);
+            await loginPage.enterPassword(browser.params.testConfig.adf.adminPassword);
+            await loginPage.clickSignInButton();
+
+            await BrowserVisibility.waitUntilElementIsVisible(loginPage.sidenavLayout);
+
+        });
+    });
 });

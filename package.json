@@ -74,6 +74,7 @@
     "process services-cloud"
   ],
   "dependencies": {
+    "@alfresco/adf-cli": "3.5.0-7ebd28772876fa4144c347fd4fca956a27bce493",
     "@alfresco/adf-content-services": "3.4.0",
     "@alfresco/adf-core": "3.4.0",
     "@alfresco/adf-extensions": "3.4.0",
@@ -81,7 +82,7 @@
     "@alfresco/adf-process-services": "3.4.0",
     "@alfresco/adf-process-services-cloud": "3.4.0",
     "@alfresco/adf-testing": "3.4.0",
-    "@alfresco/js-api": "3.5.0-ad32604b4aa8abd17291d58bb77a989ac57fdbb6",
+    "@alfresco/js-api": "3.5.0-00a7b1b556070818a4c689ae63aa21e0b6e26f9f",
     "@angular/animations": "^7.2.15",
     "@angular/cdk": "7.3.7",
     "@angular/common": "^7.2.15",

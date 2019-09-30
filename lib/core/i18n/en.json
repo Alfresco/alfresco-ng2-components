@@ -158,7 +158,8 @@
       "REDIRECT_LOGOUT": "Redirect URI Logout",
       "SILENT": "Silent Login",
       "SCOPE": "Scope",
-      "CLIENT": "Client ID"
+      "CLIENT": "Client ID",
+      "PUBLIC_URLS" : "Public urls silent Login"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
