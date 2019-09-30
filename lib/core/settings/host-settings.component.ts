@@ -198,7 +198,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private saveOAuthValues(values: any) {
-        if (values.oauthConfig.publicUrls && !Array.isArray(values.oauthConfig.publicUrls)) {
+        if (values.oauthConfig.publicUrls && (typeof values.oauthConfig.publicUrls === 'string')) {
             values.oauthConfig.publicUrls = values.oauthConfig.publicUrls.split(',');
         }
 
