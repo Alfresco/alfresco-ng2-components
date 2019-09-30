@@ -54,6 +54,13 @@ export let fakeProcessDefinitions: ProcessDefinitionCloud[] = [
         id: 'd00c0237-8772-11e9-859a-428f83d5904f',
         key: 'process-5151ad1d-f992-4ee6-9742-3a04617469fe',
         name: 'processwithform'
+    }),
+    new ProcessDefinitionCloud({
+        appName: 'startformwithoutupload',
+        formKey: 'form-a5d50817-5183-4850-802d-17af54b2632f',
+        id: 'd00c0237-8772-11e9-859a-428f83d5904f',
+        key: 'process-51251ad1d-f992-4ee6-9742-3a04617469f1',
+        name: 'process'
     })
 ];
 

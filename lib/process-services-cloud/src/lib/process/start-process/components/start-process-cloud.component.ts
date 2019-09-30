@@ -109,12 +109,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             .pipe(debounceTime(300))
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDefinitionName) => {
-                this.processPayloadCloud.processDefinitionKey = null;
-                if (this.processDefinition.valid) {
-                    this.setProcessDefinitionOnForm(processDefinitionName);
-                } else {
-                    this.filteredProcesses = this.getProcessDefinitionList(processDefinitionName);
-                }
+                this.filteredProcesses = this.getProcessDefinitionList(processDefinitionName);
             });
     }
 
@@ -139,12 +134,12 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             StartProcessCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
     }
 
-    setProcessDefinitionOnForm(processDefinition: string) {
-        this.filteredProcesses = this.getProcessDefinitionList(processDefinition);
-        const selectedProcess = this.getProcessIfExists(processDefinition);
-        this.processDefinitionCurrent = selectedProcess;
+    setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
+        this.processDefinitionCurrent = this.filteredProcesses.find( (process: ProcessDefinitionCloud) =>
+            process.name === selectedProcessDefinitionName || process.key === selectedProcessDefinitionName );
+
         this.isFormCloudLoaded = false;
-        this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
+        this.processPayloadCloud.processDefinitionKey = this.processDefinitionCurrent.key;
     }
 
     private getProcessDefinitionList(processDefinition: string): ProcessDefinitionCloud[] {
