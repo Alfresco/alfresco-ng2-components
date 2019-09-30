@@ -191,7 +191,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     (data) => {
                         this.data = data[1];
                         this.formCloudRepresentationJSON = data[0];
-                        // this.formCloudRepresentationJSON.processVariables = data[1];
                         const parsedForm = this.parseForm(this.formCloudRepresentationJSON);
                         this.visibilityService.refreshVisibility(<any> parsedForm);
                         parsedForm.validateForm();
