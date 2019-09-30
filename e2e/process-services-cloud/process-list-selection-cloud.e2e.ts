@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { GroupIdentityService, IdentityService, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -38,6 +38,9 @@ describe('Process list cloud', () => {
 
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
+        let testUser, groupInfo;
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
@@ -45,7 +48,15 @@ describe('Process list cloud', () => {
         const processInstances = [];
 
         beforeAll(async () => {
-            await apiService.login(browser.params.processUser.email, browser.params.processUser.password);
+
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+
+            await apiService.login(testUser.email, testUser.password);
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
@@ -60,12 +71,14 @@ describe('Process list cloud', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            await loginSSOPage.loginSSOIdentityService(browser.params.processUser.email, browser.params.processUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
         });
 
         afterAll(async() => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
+
         });
 
         beforeEach(async () => {
