@@ -77,7 +77,7 @@ Uninstall previous versions with:
 
 ## Alfresco Example Content Application (optional)
 
-In some tutorials your might be required to use the [Alfresco Example Content Application](https://github.com/Alfresco/alfresco-content-app) available in a public repository on GitHub named [`alfresco-content-app`](https://github.com/Alfresco/alfresco-content-app). The Alfresco Example Content Application is an example application and it is used in the tutorial as a starting point to customise the behaviour and show the development, avoiding to loose time in building apps from scratch.
+In some tutorials you might be required to use the [Alfresco Example Content Application](https://github.com/Alfresco/alfresco-content-app) available in a public repository on GitHub named [`alfresco-content-app`](https://github.com/Alfresco/alfresco-content-app). The Alfresco Example Content Application is an example application used in the tutorials as a starting point to customise behaviour and aid development. The Alfresco Example Conten Application avoids loosing time in building apps from scratch.
 
 The Alfresco Example Content Application requires an instance of Alfresco Content Services up and running, to work properly. If you don't have it already, follow the instructions above in the `Alfresco Content Services (optional)` paragraph.
 
