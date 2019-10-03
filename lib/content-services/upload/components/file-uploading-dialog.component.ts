@@ -98,6 +98,8 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
                 if (this.filesUploadingList.length && !this.isDialogActive) {
                     this.isDialogActive = true;
                     this.dialogActive.next();
+                } else {
+                    this.dialogActive.next();
                 }
             });
 

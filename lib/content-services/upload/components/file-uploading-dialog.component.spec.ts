@@ -88,6 +88,26 @@ describe('FileUploadingDialogComponent', () => {
             expect(document.activeElement.id).toBe('upload-dialog');
         }));
 
+        it('should refocus on dialog when uploading another file', fakeAsync(() => {
+            uploadService.addToQueue(...fileList);
+            uploadService.uploadFilesInTheQueue(emitter);
+
+            fixture.detectChanges();
+            tick(100);
+
+            (document.querySelector('#upload-dialog') as HTMLElement).blur();
+
+            expect(document.activeElement.id).not.toBe('upload-dialog');
+
+            uploadService.addToQueue(...fileList);
+            uploadService.uploadFilesInTheQueue(emitter);
+
+            fixture.detectChanges();
+            tick(100);
+
+            expect(document.activeElement.id).toBe('upload-dialog');
+        }));
+
         it('should update uploading file list', () => {
             uploadService.addToQueue(...fileList);
             uploadService.uploadFilesInTheQueue(emitter);
