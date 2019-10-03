@@ -147,6 +147,42 @@ describe('Test Img viewer component ', () => {
             expect(component.isDragged).toBeFalsy();
         });
 
+        it('should update offset on keydown ArrowDown event', () => {
+            const arrowDownEvent = new KeyboardEvent('keydown', { key : 'ArrowDown' });
+            component.onKeyDown(arrowDownEvent);
+            expect(component.offsetY).toBe(4);
+
+            component.onKeyDown(arrowDownEvent);
+            expect(component.offsetY).toBe(8);
+        });
+
+        it('should update offset on keydown ArrowUp event', () => {
+            const arrowUpEvent = new KeyboardEvent('keydown', { key : 'ArrowUp' });
+            component.onKeyDown(arrowUpEvent);
+            expect(component.offsetY).toBe(-4);
+
+            component.onKeyDown(arrowUpEvent);
+            expect(component.offsetY).toBe(-8);
+        });
+
+        it('should update offset on keydown ArrowLeft event', () => {
+            const arrowLeftEvent = new KeyboardEvent('keydown', { key : 'ArrowLeft' });
+            component.onKeyDown(arrowLeftEvent);
+            expect(component.offsetX).toBe(-4);
+
+            component.onKeyDown(arrowLeftEvent);
+            expect(component.offsetX).toBe(-8);
+        });
+
+        it('should update offset on keydown ArrowRight event', () => {
+            const arrowRightEvent = new KeyboardEvent('keydown', { key : 'ArrowRight' });
+            component.onKeyDown(arrowRightEvent);
+            expect(component.offsetX).toBe(4);
+
+            component.onKeyDown(arrowRightEvent);
+            expect(component.offsetX).toBe(8);
+        });
+
         it('should update scales on zoom in', () => {
             component.scaleX = 1.0;
 
