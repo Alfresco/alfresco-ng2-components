@@ -75,8 +75,6 @@ export class AuthGuard extends AuthGuardBase {
         }
         if (this.isOAuthWithSilentLogin()) {
             this.authenticationService.ssoImplicitLogin();
-        } else {
-            this.redirectToUrl('ALL', redirectUrl);
         }
 
         return false;

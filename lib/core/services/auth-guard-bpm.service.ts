@@ -44,8 +44,6 @@ export class AuthGuardBpm extends AuthGuardBase {
 
         if (this.isOAuthWithSilentLogin()) {
             this.authenticationService.ssoImplicitLogin();
-        } else {
-            this.redirectToUrl('BPM', redirectUrl);
         }
 
         return false;
