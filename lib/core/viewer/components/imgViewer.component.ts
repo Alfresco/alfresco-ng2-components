@@ -55,6 +55,7 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
     scaleY: number = 1.0;
     offsetX: number = 0;
     offsetY: number = 0;
+    step: number = 4;
     isDragged: boolean = false;
 
     private drag = { x: 0, y: 0 };
@@ -105,6 +106,27 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
             this.element.removeEventListener('mouseleave', this.onMouseLeave);
             this.element.removeEventListener('mouseout', this.onMouseOut);
             this.element.removeEventListener('mousemove', this.onMouseMove);
+        }
+    }
+
+    onKeyDown(event: KeyboardEvent) {
+        const scaleX = (this.scaleX !== 0 ? this.scaleX : 1.0);
+        const scaleY = (this.scaleY !== 0 ? this.scaleY : 1.0);
+
+        if (event.key === 'ArrowDown') {
+            this.offsetY += (this.step / scaleY);
+        }
+
+        if (event.key === 'ArrowUp') {
+            this.offsetY -= (this.step / scaleY);
+        }
+
+        if (event.key === 'ArrowRight') {
+            this.offsetX += (this.step / scaleX);
+        }
+
+        if (event.key === 'ArrowLeft') {
+            this.offsetX -= (this.step / scaleX);
         }
     }
 
