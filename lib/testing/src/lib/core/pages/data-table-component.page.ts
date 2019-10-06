@@ -322,7 +322,7 @@ export class DataTableComponentPage {
     }
 
     async checkRowContentIsDisabled(content: string): Promise<void> {
-        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}'] div.adf-cell-value img[aria-label='disabled']`)).first();
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}'] div.adf-cell-value img[aria-label='Disabled']`)).first();
         await BrowserVisibility.waitUntilElementIsVisible(resultElement);
     }
 
