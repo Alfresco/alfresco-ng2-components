@@ -42,6 +42,7 @@ import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actions.component';
 import { DirectiveModule } from '../directives/directive.module';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @NgModule({
     imports: [
@@ -54,7 +55,8 @@ import { DirectiveModule } from '../directives/directive.module';
         ToolbarModule,
         PipeModule,
         FlexLayoutModule,
-        DirectiveModule
+        DirectiveModule,
+        A11yModule
     ],
     declarations: [
         PdfPasswordDialogComponent,
