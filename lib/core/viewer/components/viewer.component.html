@@ -13,6 +13,7 @@
                     <ng-container *ngIf="allowLeftSidebar">
                         <button
                             mat-icon-button
+                            [attr.aria-expanded]="showLeftSidebar"
                             title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                             data-automation-id="adf-toolbar-left-sidebar"
                             [color]="showLeftSidebar ? 'accent' : 'default'"
@@ -105,6 +106,7 @@
 
                     <button
                         mat-icon-button
+                        [attr.aria-expanded]="showRightSidebar"
                         title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                         data-automation-id="adf-toolbar-sidebar"
                         [color]="showRightSidebar ? 'accent' : 'default'"
