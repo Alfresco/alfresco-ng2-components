@@ -54,7 +54,8 @@ export class CommentsComponent implements OnChanges {
 
     beingAdded: boolean = false;
 
-    constructor(private commentProcessService: CommentProcessService, private commentContentService: CommentContentService) {
+    constructor(private commentProcessService: CommentProcessService,
+                private commentContentService: CommentContentService) {
         this.comment$ = new Observable<CommentModel>((observer) => this.commentObserver = observer)
             .pipe(share());
         this.comment$.subscribe((comment: CommentModel) => {
