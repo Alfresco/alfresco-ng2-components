@@ -9,13 +9,13 @@
                 [taskId]="taskId"
                 (attachmentClick)="onAttachmentClick($event)">
                 <adf-empty-list>
-                    <div adf-empty-list-header class="adf-empty-list-header">{{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}}
+                    <div adf-empty-list-header class="app-empty-list-header">{{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}}
                     </div>
                     <div adf-empty-list-body>
-                        <div fxHide.lt-md="true" class="adf-empty-list-drag_drop">
+                        <div fxHide.lt-md="true" class="app-empty-list-drag_drop">
                             {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE' | translate}}
                         </div>
-                        <div fxHide.lt-md="true" class="adf-empty-list__any-files-here-to-add">
+                        <div fxHide.lt-md="true" class="app-empty-list__any-files-here-to-add">
                             {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate}}
                         </div>
                     </div>

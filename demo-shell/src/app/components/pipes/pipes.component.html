@@ -11,11 +11,11 @@
             </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <mat-form-field class="adf-input-field">
+        <mat-form-field class="app-input-field">
             <input matInput placeholder="Format" [(ngModel)]="format">
         </mat-form-field>
 
-        <mat-form-field class="adf-input-field">
+        <mat-form-field class="app-input-field">
             <mat-select placeholder="Locale dropdown" [(ngModel)]="locale">
                 <mat-option *ngFor="let language of languages" [value]="language.key">
                     {{language.label}}
@@ -43,11 +43,11 @@
             </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <mat-form-field class="adf-input-field">
+        <mat-form-field class="app-input-field">
             <input matInput placeholder="Format" [(ngModel)]="format">
         </mat-form-field>
 
-        <mat-form-field class="adf-input-field">
+        <mat-form-field class="app-input-field">
             <mat-select placeholder="Locale dropdown" [(ngModel)]="locale">
                 <mat-option *ngFor="let language of languages" [value]="language.key">
                     {{language.label}}
@@ -71,20 +71,20 @@
             </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <mat-form-field class="adf-input-field">
+        <mat-form-field class="app-input-field">
             <input matInput placeholder="Number" [(ngModel)]="number">
         </mat-form-field>
-        <mat-form-field class="adf-input-field">
+        <mat-form-field class="app-input-field">
             <input matInput placeholder="Min Integer Digits" [(ngModel)]="decimalValues.minIntegerDigits">
         </mat-form-field>
-        <mat-form-field class="adf-input-field">
+        <mat-form-field class="app-input-field">
             <input matInput placeholder="Min Fraction Digits" [(ngModel)]="decimalValues.minFractionDigits">
         </mat-form-field>
-        <mat-form-field class="adf-input-field">
+        <mat-form-field class="app-input-field">
             <input matInput placeholder="Max Fraction Digits" [(ngModel)]="decimalValues.maxFractionDigits">
         </mat-form-field>
 
-        <mat-form-field class="adf-input-field">
+        <mat-form-field class="app-input-field">
             <mat-select placeholder="Locale dropdown" [(ngModel)]="locale">
                 <mat-option *ngFor="let language of languages" [value]="language.key">
                     {{language.label}}

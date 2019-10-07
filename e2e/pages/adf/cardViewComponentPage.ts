@@ -33,9 +33,9 @@ export class CardViewComponentPage {
     checkbox: ElementFinder = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));
     resetButton: ElementFinder = element(by.css(`#adf-reset-card-log`));
     listContent: ElementFinder = element(by.css('.mat-select-panel'));
-    editableSwitch: ElementFinder = element(by.id('adf-toggle-editable'));
-    clearDateSwitch: ElementFinder = element(by.id('adf-toggle-clear-date'));
-    noneOptionSwitch: ElementFinder = element(by.id('adf-toggle-none-option'));
+    editableSwitch: ElementFinder = element(by.id('app-toggle-editable'));
+    clearDateSwitch: ElementFinder = element(by.id('app-toggle-clear-date'));
+    noneOptionSwitch: ElementFinder = element(by.id('app-toggle-none-option'));
 
     async clickOnAddButton(): Promise<void> {
         await BrowserActions.click(this.addButton);

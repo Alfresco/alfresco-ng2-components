@@ -43,7 +43,7 @@ export class ContentServicesPage {
 
     multipleFileUploadToggle: ElementFinder = element(by.id('adf-document-list-enable-drop-files'));
     uploadBorder: ElementFinder = element(by.id('document-list-container'));
-    contentServices: ElementFinder = element(by.css('.adf-sidenav-link[data-automation-id="Content Services"]'));
+    contentServices: ElementFinder = element(by.css('.app-sidenav-link[data-automation-id="Content Services"]'));
     currentFolder: ElementFinder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
     createFolderButton: ElementFinder = element(by.css('button[data-automation-id="create-new-folder"]'));
     editFolderButton: ElementFinder = element(by.css('button[data-automation-id="edit-folder"]'));

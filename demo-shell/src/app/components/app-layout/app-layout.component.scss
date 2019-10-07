@@ -1,4 +1,4 @@
-@mixin adf-app-layout-theme($theme) {
+@mixin app-layout-theme($theme) {
     $primary: map-get($theme, primary);
     $minimumAppWidth: 320px;
 
@@ -14,17 +14,17 @@
         }
     }
 
-    .adf-app-layout {
+    .app-layout {
         display: flex;
         flex: 1;
         min-width: $minimumAppWidth;
         height: 100%;
 
-        .adf-sidenav-link--active {
+        .app-sidenav-link--active {
             color: mat-color($primary);
         }
 
-        .adf-sidenav-link {
+        .app-sidenav-link {
             .mat-list-text {
                 font-size: 14px;
                 white-space: nowrap;
@@ -33,7 +33,7 @@
             }
         }
 
-        .mat-nav-list .mat-list-item.adf-sidenav-link {
+        .mat-nav-list .mat-list-item.app-sidenav-link {
             height: 40px;
         }
 
@@ -47,7 +47,7 @@
             display: none;
         }
 
-        .adf-menu {
+        .app-menu {
             padding-top: 0;
         }
     }
@@ -63,7 +63,7 @@
         }
     }
 
-    [dir='rtl'] .adf-sidenav-link__expand-button {
+    [dir='rtl'] .app-sidenav-link__expand-button {
         transform: rotateY(180deg);
     }
 }

@@ -20,23 +20,23 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class PeopleGroupCloudComponentPage {
 
-    peopleCloudSingleSelectionChecked: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"][class*="mat-radio-checked"]'));
-    peopleCloudMultipleSelectionChecked: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"][class*="mat-radio-checked"]'));
-    peopleCloudSingleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"]'));
-    peopleCloudMultipleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"]'));
-    peopleCloudFilterRole: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-people-filter-role"]'));
-    groupCloudSingleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-group-single-mode"]'));
-    groupCloudMultipleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-group-multiple-mode"]'));
-    groupCloudFilterRole: ElementFinder = element(by.css('mat-radio-button[data-automation-id="adf-group-filter-role"]'));
-    peopleRoleInput: ElementFinder = element(by.css('input[data-automation-id="adf-people-roles-input"]'));
-    peopleAppInput: ElementFinder = element(by.css('input[data-automation-id="adf-people-app-input"]'));
-    peoplePreselect: ElementFinder = element(by.css('input[data-automation-id="adf-people-preselect-input"]'));
-    groupRoleInput: ElementFinder = element(by.css('input[data-automation-id="adf-group-roles-input"]'));
-    groupAppInput: ElementFinder = element(by.css('input[data-automation-id="adf-group-app-input"]'));
+    peopleCloudSingleSelectionChecked: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-people-single-mode"][class*="mat-radio-checked"]'));
+    peopleCloudMultipleSelectionChecked: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-people-multiple-mode"][class*="mat-radio-checked"]'));
+    peopleCloudSingleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-people-single-mode"]'));
+    peopleCloudMultipleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-people-multiple-mode"]'));
+    peopleCloudFilterRole: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-people-filter-role"]'));
+    groupCloudSingleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-group-single-mode"]'));
+    groupCloudMultipleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-group-multiple-mode"]'));
+    groupCloudFilterRole: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-group-filter-role"]'));
+    peopleRoleInput: ElementFinder = element(by.css('input[data-automation-id="app-people-roles-input"]'));
+    peopleAppInput: ElementFinder = element(by.css('input[data-automation-id="app-people-app-input"]'));
+    peoplePreselect: ElementFinder = element(by.css('input[data-automation-id="app-people-preselect-input"]'));
+    groupRoleInput: ElementFinder = element(by.css('input[data-automation-id="app-group-roles-input"]'));
+    groupAppInput: ElementFinder = element(by.css('input[data-automation-id="app-group-app-input"]'));
     peopleCloudComponentTitle: ElementFinder = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle: ElementFinder = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
-    preselectValidation: ElementFinder = element(by.css('mat-checkbox.adf-preselect-value'));
-    preselectValidationStatus: ElementFinder = element(by.css('mat-checkbox.adf-preselect-value label input'));
+    preselectValidation: ElementFinder = element(by.css('mat-checkbox.app-preselect-value'));
+    preselectValidationStatus: ElementFinder = element(by.css('mat-checkbox.app-preselect-value label input'));
     peopleFilterByAppName: ElementFinder = element(by.css('.people-control-options mat-radio-button[value="appName"]'));
     groupFilterByAppName: ElementFinder = element(by.css('.groups-control-options mat-radio-button[value="appName"]'));
 

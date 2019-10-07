@@ -1,8 +1,8 @@
-.adf-search-results {
+.app-search-results {
     display: flex;
     margin-left: 5px;
 
-    .adf-search-settings {
+    .app-search-settings {
         width: 260px;
         border: 1px solid #eee;
     }
@@ -20,23 +20,23 @@
     }
 }
 
-div.adf-search-results-container {
+div.app-search-results-container {
     padding: 0 20px 20px;
 }
 
-.adf-search-title {
+.app-search-title {
     font-size: 22px;
     padding: 15px 0;
 }
 
 @media screen and (max-width: 600px) {
-    :host .adf-col-display-name {
+    :host .app-col-display-name {
         min-width: 100px;
     }
-    :host .adf-col-modified-at, :host .adf-col-modified-by {
+    :host .app-col-modified-at, :host .app-col-modified-by {
         display: none;
     }
-    :host div.adf-search-results-container table {
+    :host div.app-search-results-container table {
         width: 100%;
     }
 }

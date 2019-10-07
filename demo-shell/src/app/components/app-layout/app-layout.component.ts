@@ -25,7 +25,7 @@ import { takeUntil } from 'rxjs/operators';
     templateUrl: 'app-layout.component.html',
     styleUrls: ['app-layout.component.scss'],
     host: {
-        'class': 'adf-app-layout'
+        'class': 'app-layout'
     },
     encapsulation: ViewEncapsulation.None
 })

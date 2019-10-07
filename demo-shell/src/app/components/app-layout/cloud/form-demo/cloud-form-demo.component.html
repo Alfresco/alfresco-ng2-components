@@ -2,7 +2,7 @@
 
     <mat-tab-group>
         <mat-tab label="Form" class="form-cloud-render">
-            <div class="adf-form-container">
+            <div class="app-form-container">
                 <adf-cloud-form
                     [showRefreshButton]="false"
                     [form]="form"
@@ -11,7 +11,7 @@
                 </adf-cloud-form>
             </div>
 
-            <div class="adf-console" #console>
+            <div class="app-console" #console>
                 <h3>Error log:</h3>
                 <p *ngFor="let error of errorFields">Error {{ error.name }} {{error.validationSummary.message |
                     translate}}</p>
@@ -20,20 +20,20 @@
         <mat-tab label="Editor" class="form-cloud-editor">
             <ngx-monaco-editor
                 id="adf-form-config-editor"
-                class="adf-form-config-editor"
+                class="app-form-config-editor"
                 [options]="editorOptions"
                 [(ngModel)]="formConfig"
                 (onInit)="onInitFormEditor($event)">
             </ngx-monaco-editor>
-            <div class="adf-form-editor-buttons">
-                <button mat-raised-button id="adf-form-config-save" (click)="onSaveFormConfig()" color="primary">Save
+            <div class="app-form-editor-buttons">
+                <button mat-raised-button id="app-form-config-save" (click)="onSaveFormConfig()" color="primary">Save
                     form config
                 </button>
-                <button mat-raised-button id="adf-form-config-clear" (click)="onClearFormConfig()" color="primary">Clear
+                <button mat-raised-button id="app-form-config-clear" (click)="onClearFormConfig()" color="primary">Clear
                     form config
                 </button>
             </div>
-            <div class="adf-upload-config-button">
+            <div class="app-upload-config-button">
                 <a mat-raised-button color="primary" >
                     <mat-icon>file_upload</mat-icon>
                     <label for="upload-config-file">Upload JSON File</label>

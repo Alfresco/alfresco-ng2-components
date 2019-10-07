@@ -21,11 +21,11 @@ import { CloudLayoutService } from '../services/cloud-layout.service';
 
 @Component({
     templateUrl: './community-cloud.component.html',
-    styles: [`.adf-cloud-layout-overflow {
+    styles: [`.app-cloud-layout-overflow {
         overflow: auto;
       }
 
-      .adf-cloud-layout-tab-body .mat-tab-body-wrapper {
+      .app-cloud-layout-tab-body .mat-tab-body-wrapper {
         height: 100% !important;
       }
       `],
