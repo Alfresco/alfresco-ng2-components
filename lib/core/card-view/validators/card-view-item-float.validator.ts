@@ -22,6 +22,6 @@ export class CardViewItemFloatValidator implements CardViewItemValidator {
     message = 'CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR';
 
     isValid(value: any): boolean {
-        return !isNaN(parseFloat(value)) && isFinite(value);
+        return !value || !isNaN(parseFloat(value)) && isFinite(value);
     }
 }
