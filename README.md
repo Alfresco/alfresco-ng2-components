@@ -1,13 +1,15 @@
 # Alfresco Application Development Framework (ADF)
 
+| branch | status |
+| --- | --- |
+| master | [![Build Status](https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master)](https://travis-ci.com/Alfresco/alfresco-modeler-app) |
+| development | [![Build Status](https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=development)](https://travis-ci.com/Alfresco/alfresco-modeler-app) |
+
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d9eb873741da403bb3284778102372e7)](https://www.codacy.com/app/Alfresco/alfresco-ng2-components?utm_source=github.com&utm_medium=referral&utm_content=Alfresco/alfresco-ng2-components&utm_campaign=badger)
 [![Join the chat at https://gitter.im/Alfresco/alfresco-ng2-components](https://badges.gitter.im/Alfresco/alfresco-ng2-components.svg)](https://gitter.im/Alfresco/alfresco-ng2-components?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 <p>
-  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
-    <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
-    Status' />
-  </a>
   <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
     <img src='http://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
   </a>
