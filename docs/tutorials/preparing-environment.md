@@ -77,15 +77,15 @@ Uninstall previous versions with:
 
 ## Alfresco Example Content Application (optional)
 
-In some tutorials your might be required to use the [Alfresco Example Content Application](https://github.com/Alfresco/alfresco-content-app) available in a public repository on GitHub named [`alfresco-content-app`](https://github.com/Alfresco/alfresco-content-app). The Alfresco Example Content Application is an example application and it is used in the tutorial as a starting point to customise the behaviour and show the development, avoiding to loose time in building apps from scratch.
+In some tutorials you might be required to use the [Alfresco Example Content Application](https://github.com/Alfresco/alfresco-content-app) available in a public repository on GitHub named [`alfresco-content-app`](https://github.com/Alfresco/alfresco-content-app). The Alfresco Example Content Application is an example application that is used as a starting point for development.
 
 The Alfresco Example Content Application requires an instance of Alfresco Content Services up and running, to work properly. If you don't have it already, follow the instructions above in the `Alfresco Content Services (optional)` paragraph.
 
-To make the Alfresco Example Content Application works into your development environment, clone the [`alfresco-content-app` GitHub repository](https://github.com/Alfresco/alfresco-content-app) using the following command into a terminal.
+To make the Alfresco Example Content Application work in your development environment, clone the [`alfresco-content-app` GitHub repository](https://github.com/Alfresco/alfresco-content-app) using the following command in a terminal.
 
     git clone https://github.com/Alfresco/alfresco-content-app
 
-Once completed, edit the `proxy.conf.js` file into the root of the project and change the `target` property according to the Alfresco Content Services instance. Below the setup if you are using the [Alfresco Content Services Community Deployment](https://github.com/Alfresco/acs-community-deployment.git) project on GitHub.
+Once completed, edit the `proxy.conf.js` file into the root of the project and change the `target` property according to the Alfresco Content Services instance. Below is the setup if you are using the [Alfresco Content Services Community Deployment](https://github.com/Alfresco/acs-community-deployment.git) project on GitHub.
 
     module.exports = {
         "/alfresco": {
