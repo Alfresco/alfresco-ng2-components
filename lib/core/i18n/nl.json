@@ -5,9 +5,9 @@
   "CLAIM": "Claimen",
   "UNCLAIM": "Vrijgeven",
   "START PROCESS": "Proces starten",
-  "NOTIFICATION_HISTORY": {
+  "NOTIFICATIONS": {
     "NO_MESSAGE": "Geen berichten",
-    "NOTIFICATIONS": "Meldingen",
+    "TITLE": "Meldingen",
     "MARK_AS_READ": "Alles markeren als gelezen"
   },
   "FORM": {

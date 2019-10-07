@@ -15,24 +15,22 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
+import { Pipe, PipeTransform } from '@angular/core';
+import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
 
-import { NotificationHistoryComponent } from './notification-history.component';
-import { TranslateModule } from '@ngx-translate/core';
-
-@NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        TranslateModule.forChild()
-    ],
-    declarations: [
-        NotificationHistoryComponent
-    ],
-    exports: [
-        NotificationHistoryComponent
-    ]
+@Pipe({
+    name: 'noticicationIcon'
 })
-export class NotificationHistoryModule {}
+export class NotificationIconPipe implements PipeTransform {
+
+    transform(notification: NotificationModel): string {
+        switch (notification.type) {
+            case NOTIFICATION_TYPE.ERROR:
+                return 'error';
+            case NOTIFICATION_TYPE.WARN:
+                return 'warning';
+            default:
+                return 'info';
+        }
+    }
+}

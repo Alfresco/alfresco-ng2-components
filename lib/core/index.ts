@@ -41,7 +41,7 @@ export * from './directives/index';
 export * from './clipboard/index';
 export * from './dialogs/index';
 export * from './icon/index';
-export * from './notification-history/index';
+export * from './notifications/index';
 
 export * from './utils/index';
 export * from './interface/index';

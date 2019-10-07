@@ -5,10 +5,11 @@
   "CLAIM": "CLAIM",
   "UNCLAIM": "RELEASE",
   "START PROCESS": "START PROCESS",
-  "NOTIFICATION_HISTORY": {
+  "NOTIFICATIONS": {
     "NO_MESSAGE": "No messages",
-    "NOTIFICATIONS": "Notifications",
-    "MARK_AS_READ": "Mark all as read"
+    "TITLE": "Notifications",
+    "MARK_AS_READ": "Mark all as read",
+    "SYSTEM": "System"
   },
   "FORM": {
     "START_FORM": {

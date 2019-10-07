@@ -46,7 +46,7 @@ export class NotificationHistoryComponent implements OnDestroy {
 
     constructor(
         private notificationService: NotificationService) {
-        this.notificationService.messages
+        this.notificationService.notifications$
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((message) => {
             this.notifications.push(message);

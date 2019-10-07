@@ -16,11 +16,11 @@
  */
 
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { NotificationService } from '../services';
-import { setupTestBed } from '../testing/setupTestBed';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { setupTestBed } from '../../testing/setupTestBed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 import { NotificationHistoryComponent } from './notification-history.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { NotificationService } from '../services/notification.service';
 
 describe('Notification History Component', () => {
 

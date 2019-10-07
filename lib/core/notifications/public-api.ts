@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-export interface NotificationModel {
-    dateTime: Date;
-    message: string;
-}
+export * from './components/notification-history.component';
+export * from './helpers/notification.factory';
+export * from './models/notification.model';
+export * from './services/notification.service';
+export * from './notification-history.module';

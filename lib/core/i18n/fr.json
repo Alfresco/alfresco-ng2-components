@@ -5,9 +5,9 @@
   "CLAIM": "S'attribuer",
   "UNCLAIM": "Libérer",
   "START PROCESS": "Démarrer le processus",
-  "NOTIFICATION_HISTORY": {
+  "NOTIFICATIONS": {
     "NO_MESSAGE": "Aucun message",
-    "NOTIFICATIONS": "Notifications",
+    "TITLE": "Notifications",
     "MARK_AS_READ": "Marquer tout comme lu"
   },
   "FORM": {

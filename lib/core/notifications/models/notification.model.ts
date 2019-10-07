@@ -15,5 +15,21 @@
  * limitations under the License.
  */
 
-export * from './notification-history.component';
-export * from './notification-history.module';
+export enum NOTIFICATION_TYPE {
+    INFO = 'info',
+    WARN = 'warning',
+    ERROR = 'error'
+}
+
+export interface NotificationInitiator {
+    key: string | Symbol;
+    displayName: string;
+    extra?: any;
+}
+
+export interface NotificationModel {
+    type: NOTIFICATION_TYPE;
+    initiator: NotificationInitiator;
+    datetime: Date;
+    messages: string[];
+}

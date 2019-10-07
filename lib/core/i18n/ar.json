@@ -5,9 +5,9 @@
   "CLAIM": "مطالبة",
   "UNCLAIM": "تحرير",
   "START PROCESS": "بدء العملية",
-  "NOTIFICATION_HISTORY": {
+  "NOTIFICATIONS": {
     "NO_MESSAGE": "لا توجد رسائل",
-    "NOTIFICATIONS": "إعلامات",
+    "TITLE": "إعلامات",
     "MARK_AS_READ": "وضع علامة على الكل كغير مقروءة"
   },
   "FORM": {

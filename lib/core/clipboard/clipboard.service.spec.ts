@@ -16,7 +16,7 @@
  */
 
 import { LogService } from '../services/log.service';
-import { NotificationService } from '../services/notification.service';
+import { NotificationService } from '../notifications/services/notification.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { TestBed } from '@angular/core/testing';
 import { ClipboardModule } from './clipboard.module';

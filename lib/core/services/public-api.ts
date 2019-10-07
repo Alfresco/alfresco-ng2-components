@@ -28,7 +28,6 @@ export * from './page-title.service';
 export * from './storage.service';
 export * from './cookie.service';
 export * from './renditions.service';
-export * from './notification.service';
 export * from './log.service';
 export * from './translation.service';
 export * from './translate-loader.service';

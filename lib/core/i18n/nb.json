@@ -5,9 +5,9 @@
   "CLAIM": "Krev",
   "UNCLAIM": "Frigi",
   "START PROCESS": "Start prosess",
-  "NOTIFICATION_HISTORY": {
+  "NOTIFICATIONS": {
     "NO_MESSAGE": "Ingen meldinger",
-    "NOTIFICATIONS": "Varsler",
+    "TITLE": "Varsler",
     "MARK_AS_READ": "Merk alle som lest"
   },
   "FORM": {
