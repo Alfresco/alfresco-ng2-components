@@ -281,6 +281,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         it('should download file when download is clicked', (done) => {
             spyOn(processCloudContentService, 'getRawContentNode').and.returnValue(of(new Blob()));
+            spyOn(processCloudContentService, 'getAuthTicket').and.returnValue(Promise.resolve('ticket'));
             spyOn(downloadService, 'downloadUrl').and.stub();
 
             fixture.detectChanges();

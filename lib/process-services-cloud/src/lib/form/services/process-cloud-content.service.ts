@@ -71,18 +71,31 @@ export class ProcessCloudContentService {
     async downloadFile(nodeId: string, contentHost: string) {
         this.updateConfig(contentHost);
 
-        const { auth } = this.apiService.getInstance();
-        const ticket = await auth.authenticationApi.getTicket();
-        const url = this.contentService.getContentUrl(nodeId, true, ticket.entry.id);
+        const ticket = await this.getAuthTicket();
+        const url = this.contentService.getContentUrl(nodeId, true, ticket);
 
         this.downloadService.downloadUrl(url, nodeId);
+    }
+
+    async getAuthTicket(): Promise<string> {
+        const { auth } = this.apiService.getInstance();
+        const ticket = await auth.authenticationApi.getTicket();
+
+        if (ticket && ticket.entry) {
+            return ticket.entry.id || '';
+        }
+
+        return '';
     }
 
     private updateConfig(contentHost: string) {
         const changedConfig = this.apiService.lastConfig;
 
         changedConfig.provider = 'ALL';
-        changedConfig.hostEcm = contentHost.replace('/alfresco', '');
+
+        if (contentHost) {
+            changedConfig.hostEcm = contentHost.replace('/alfresco', '');
+        }
 
         this.apiService.getInstance().setConfig(changedConfig);
     }
