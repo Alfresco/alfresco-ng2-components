@@ -37,6 +37,8 @@
 
         <ng-container *ngIf="allowThumbnails">
             <button mat-icon-button
+                    [attr.aria-label]="'ADF_VIEWER.ARIA.THUMBNAILS' | translate"
+                    [attr.aria-expanded]="showThumbnails"
                     data-automation-id="adf-thumbnails-button"
                     [disabled]="isPanelDisabled"
                     (click)="toggleThumbnails()">

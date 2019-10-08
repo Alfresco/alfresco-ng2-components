@@ -326,7 +326,8 @@
       "FIT_PAGE": "Fit page",
       "ROTATE_LEFT": "Rotate left",
       "ROTATE_RIGHT": "Rotate right",
-      "RESET": "Reset"
+      "RESET": "Reset",
+      "THUMBNAILS": "Document thumbnails"
     },
     "PAGE_LABEL": {
       "SHOWING": "Showing",
