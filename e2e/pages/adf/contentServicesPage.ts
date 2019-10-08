@@ -61,15 +61,15 @@ export class ContentServicesPage {
     sizeHeader: ElementFinder = element(by.css('div[data-automation-id="auto_id_content.sizeInBytes"] > span'));
     createdByHeader: ElementFinder = element(by.css('div[data-automation-id="auto_id_createdByUser.displayName"] > span'));
     createdHeader: ElementFinder = element(by.css('div[data-automation-id="auto_id_createdAt"] > span'));
-    recentFiles: ElementFinder = element(by.css('.adf-container-recent'));
-    recentFilesExpanded: ElementFinder = element(by.css('.adf-container-recent mat-expansion-panel-header.mat-expanded'));
-    recentFilesClosed: ElementFinder = element(by.css('.adf-container-recent mat-expansion-panel-header'));
-    recentFileIcon: ElementFinder = element(by.css('.adf-container-recent mat-expansion-panel-header mat-icon'));
+    recentFiles: ElementFinder = element(by.css('.app-container-recent'));
+    recentFilesExpanded: ElementFinder = element(by.css('.app-container-recent mat-expansion-panel-header.mat-expanded'));
+    recentFilesClosed: ElementFinder = element(by.css('.app-container-recent mat-expansion-panel-header'));
+    recentFileIcon: ElementFinder = element(by.css('.app-container-recent mat-expansion-panel-header mat-icon'));
     emptyFolder: ElementFinder = element(by.css('.adf-empty-folder-this-space-is-empty'));
     emptyFolderImage: ElementFinder = element(by.css('.adf-empty-folder-image'));
-    emptyRecent: ElementFinder = element(by.css('.adf-container-recent .adf-empty-list__title'));
+    emptyRecent: ElementFinder = element(by.css('.app-container-recent .adf-empty-list__title'));
     gridViewButton: ElementFinder = element(by.css('button[data-automation-id="document-list-grid-view"]'));
-    cardViewContainer: ElementFinder = element(by.css('div.adf-document-list-container div.adf-datatable-card'));
+    cardViewContainer: ElementFinder = element(by.css('div.app-document-list-container div.adf-datatable-card'));
     shareNodeButton: ElementFinder = element(by.cssContainingText('mat-icon', ' share '));
     nameColumnHeader = 'name';
     createdByColumnHeader = 'createdByUser.displayName';
@@ -520,7 +520,7 @@ export class ContentServicesPage {
     }
 
     async getRowIconImageUrl(fileName): Promise<string> {
-        const iconRow: ElementFinder = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`));
+        const iconRow: ElementFinder = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`));
         await BrowserVisibility.waitUntilElementIsVisible(iconRow);
         return await iconRow.getAttribute('src');
     }
@@ -540,21 +540,21 @@ export class ContentServicesPage {
 
     async getCardElementShowedInPage(): Promise<number> {
         await BrowserVisibility.waitUntilElementIsVisible(this.cardViewContainer);
-        return $$('div.adf-document-list-container div.adf-datatable-card div.adf-cell-value img').count();
+        return $$('div.app-document-list-container div.adf-datatable-card div.adf-cell-value img').count();
     }
 
     async getDocumentCardIconForElement(elementName): Promise<string> {
-        const elementIcon: ElementFinder = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`));
+        const elementIcon: ElementFinder = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`));
         return await elementIcon.getAttribute('src');
     }
 
     async checkDocumentCardPropertyIsShowed(elementName, propertyName): Promise<void> {
-        const elementProperty: ElementFinder = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`));
+        const elementProperty: ElementFinder = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`));
         await BrowserVisibility.waitUntilElementIsVisible(elementProperty);
     }
 
     async getAttributeValueForElement(elementName, propertyName): Promise<string> {
-        const elementSize = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`));
+        const elementSize = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`));
         return await BrowserActions.getText(elementSize);
     }
 
@@ -565,7 +565,7 @@ export class ContentServicesPage {
 
     async navigateToCardFolder(folderName): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        const folderCard: ElementFinder = element(by.css(`.adf-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
+        const folderCard: ElementFinder = element(by.css(`.app-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
         await BrowserActions.click(folderCard);
         const folderSelected: ElementFinder = element(by.css(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`));
         await BrowserVisibility.waitUntilElementIsVisible(folderSelected);

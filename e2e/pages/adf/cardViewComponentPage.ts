@@ -27,7 +27,7 @@ export class CardViewComponentPage {
     floatField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
     valueInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Value']`));
     nameInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Name']`));
-    consoleLog: ElementFinder = element(by.className('adf-console'));
+    consoleLog: ElementFinder = element(by.className('app-console'));
     deleteButton: ElementFinder = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
     select: ElementFinder = element(by.css('mat-select[data-automation-class="select-box"]'));
     checkbox: ElementFinder = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));

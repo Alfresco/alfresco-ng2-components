@@ -23,7 +23,7 @@ export class ProcessListDemoPage {
 
     appIdInput: ElementFinder = element(by.css('input[data-automation-id="app-id"]'));
     resetButton: ElementFinder = element(by.cssContainingText('button span', 'Reset'));
-    emptyProcessContent: ElementFinder = element(by.css('div[class="app-empty-content"]'));
+    emptyProcessContent: ElementFinder = element(by.css('div[class="adf-empty-content"]'));
     processDefinitionInput: ElementFinder = element(by.css('input[data-automation-id="process-definition-id"]'));
     processInstanceInput: ElementFinder = element(by.css('input[data-automation-id="process-instance-id"]'));
     stateSelector: ElementFinder = element(by.css('mat-select[data-automation-id="state"'));

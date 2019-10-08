@@ -1,9 +1,9 @@
 <mat-tab-group [(selectedIndex)]="activeTab" (selectedTabChange)="onTabChange($event)"
                data-automation-id="navigation-bar">
-    <mat-tab id="adf-tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
+    <mat-tab id="app-tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
         <div class="app-page-content" *ngIf="showTaskTab">
             <div class="app-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-                <div class="app-grid-item adf-tasks-menu" fxFlex.gt-md="265px">
+                <div class="app-grid-item app-tasks-menu" fxFlex.gt-md="265px">
                     <div class="app-list-buttons">
                         <adf-sidebar-action-menu [expanded]="true" [width]="205"
                                                  title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
@@ -33,7 +33,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                 </div>
-                <div class="app-grid-item adf-tasks-list" fxFlex.gt-md="380px"
+                <div class="app-grid-item app-tasks-list" fxFlex.gt-md="380px"
                      [ngClass.gt-md]="{'adf-small-pagination': true}"
                      *ngIf="taskFilter && !isStartTaskMode()">
                     <adf-tasklist
@@ -69,8 +69,8 @@
                         #taskListPagination>
                     </adf-pagination>
                 </div>
-                <div class="app-grid-item adf-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto"
-                     data-automation-id="adf-tasks-details">
+                <div class="app-grid-item app-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto"
+                     data-automation-id="app-tasks-details">
                     <adf-task-details #activitiDetails
                                       [debugMode]="true"
                                       [taskId]="currentTaskId"
@@ -100,7 +100,7 @@
                         </mat-card-content>
                     </mat-card>
                 </div>
-                <div class="app-grid-item adf-tasks-start" *ngIf="isStartTaskMode()" fxFlex.gt-md="1 1 auto">
+                <div class="app-grid-item app-tasks-start" *ngIf="isStartTaskMode()" fxFlex.gt-md="1 1 auto">
                     <adf-start-task
                         [appId]="appId"
                         [name]="defaultTaskName"
@@ -115,7 +115,7 @@
              label="{{'PS-TAB.PROCESSES-TAB' | translate}}">
         <div class="app-page-content" *ngIf="showProcessTab">
             <div class="app-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-                <div class="app-grid-item adf-processes-menu" fxFlex.gt-md="225px">
+                <div class="app-grid-item app-processes-menu" fxFlex.gt-md="225px">
                     <div class="app-list-buttons">
                         <adf-sidebar-action-menu [expanded]="true" [width]="205"
                                                  title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
@@ -149,7 +149,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                 </div>
-                <div class="app-grid-item adf-processes-list adf-list" fxFlex.gt-md="380px"
+                <div class="app-grid-item app-processes-list app-list" fxFlex.gt-md="380px"
                      [ngClass.gt-md]="{'adf-small-pagination': true}"
                      *ngIf="processFilter && !isStartProcessMode()">
                     <adf-process-instance-list
@@ -180,7 +180,7 @@
                         #processListPagination>
                     </adf-pagination>
                 </div>
-                <div class="app-grid-item adf-processes-details" *ngIf="!isStartProcessMode()" fxFlex.gt-md="1 1 auto">
+                <div class="app-grid-item app-processes-details" *ngIf="!isStartProcessMode()" fxFlex.gt-md="1 1 auto">
                     <adf-process-instance-details
                         #activitiProcessDetails
                         [processInstanceId]="currentProcessInstanceId"
@@ -208,7 +208,7 @@
                         </mat-card-content>
                     </mat-card>
                 </div>
-                <div class="app-grid-item adf-processes-start" fxFlex.gt-md="1 1 auto"
+                <div class="app-grid-item app-processes-start" fxFlex.gt-md="1 1 auto"
                      *ngIf="isStartProcessMode()">
                     <adf-start-process
                         #activitiStartProcess
@@ -226,7 +226,7 @@
     <mat-tab id="report-header" href="#report"
              label="{{'PS-TAB.REPORTS-TAB' | translate}}">
         <div class="app-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-            <div class="app-grid-item adf-reports-menu" fxFlex.gt-md="300px">
+            <div class="app-grid-item app-reports-menu" fxFlex.gt-md="300px">
                 <span><h5>Report List</h5></span>
                 <mat-divider></mat-divider>
                 <adf-analytics-report-list
@@ -236,7 +236,7 @@
                     #analyticsReportList>
                 </adf-analytics-report-list>
             </div>
-            <div class="app-grid-item adf-reports-details" fxFlex.gt-md="1 1 auto">
+            <div class="app-grid-item app-reports-details" fxFlex.gt-md="1 1 auto">
                 <adf-analytics
                     *ngIf="report"
                     [appId]="appId"
@@ -255,10 +255,10 @@
     <mat-tab id="settings-header" href="#settings"
              label="{{'PS-TAB.SETTINGS-TAB' | translate}}">
         <div class="app-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-            <div class="app-grid-item adf-settings-menu" fxFlex.gt-md="300px">
+            <div class="app-grid-item app-settings-menu" fxFlex.gt-md="300px">
                 <span><h3>Settings Menu</h3></span>
             </div>
-            <div class="app-grid-item adf-settings-details" fxFlex.gt-md="1 1 auto">
+            <div class="app-grid-item app-settings-details" fxFlex.gt-md="1 1 auto">
                 <div>
                     <mat-slide-toggle id="adf-show-task-filter-icon" [(ngModel)]="showTaskFilterIcon">Show task filters icons
                     </mat-slide-toggle>

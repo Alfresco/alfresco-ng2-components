@@ -37,8 +37,8 @@ export class PeopleGroupCloudComponentPage {
     groupCloudComponentTitle: ElementFinder = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
     preselectValidation: ElementFinder = element(by.css('mat-checkbox.app-preselect-value'));
     preselectValidationStatus: ElementFinder = element(by.css('mat-checkbox.app-preselect-value label input'));
-    peopleFilterByAppName: ElementFinder = element(by.css('.people-control-options mat-radio-button[value="appName"]'));
-    groupFilterByAppName: ElementFinder = element(by.css('.groups-control-options mat-radio-button[value="appName"]'));
+    peopleFilterByAppName: ElementFinder = element(by.css('.app-people-control-options mat-radio-button[value="appName"]'));
+    groupFilterByAppName: ElementFinder = element(by.css('.app-groups-control-options mat-radio-button[value="appName"]'));
 
     async checkPeopleCloudComponentTitleIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);

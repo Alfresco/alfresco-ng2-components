@@ -22,7 +22,7 @@ import { BrowserVisibility, SearchSortingPickerPage } from '@alfresco/adf-testin
 
 export class SearchResultsPage {
 
-    noResultsMessage: ElementFinder = element(by.css('div[class="adf-no-result-message"]'));
+    noResultsMessage: ElementFinder = element(by.css('div[class="app-no-result-message"]'));
     dataTable: DataTableComponentPage = new DataTableComponentPage();
     searchSortingPicker: SearchSortingPickerPage = new SearchSortingPickerPage();
     contentServices: ContentServicesPage = new ContentServicesPage();
