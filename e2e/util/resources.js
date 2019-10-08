@@ -527,10 +527,10 @@ exports.ACTIVITI7_APPS = {
         name: "candidatebaseapp",
         file_location: "/resources/activiti7/candidatebaseapp.zip",
         processes: {
-            candidateUserProcess: "candidateUserProcess",
-            candidateGroupProcess: "candidateGroupProcess",
-            anotherCandidateGroupProcess: "anotherCandidateGroupProcess",
-            uploadFileProcess: "uploadFileProcess"
+            candidateUserProcess: "candidateuserprocess",
+            candidateGroupProcess: "candidategroupprocess",
+            anotherCandidateGroupProcess: "anothercandidategroup",
+            uploadFileProcess: "uploadfileprocess"
         }
     },
     SIMPLE_APP: {
