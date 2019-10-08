@@ -97,7 +97,7 @@ export class ProcessCloudDemoPage {
     async checkActionExecuted(processInstanceId: string, action: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Action Menu:')));
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Context Menu:')));
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'ProcessInstanceId: ' + processInstanceId)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Process Instance ID: ' + processInstanceId)));
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Action Type: ' + action)));
     }
 }

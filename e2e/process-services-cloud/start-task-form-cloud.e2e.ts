@@ -192,7 +192,7 @@ describe('Start Task Form', () => {
             await tasksCloudDemoPage.openNewTaskForm();
             await startTask.checkFormIsDisplayed();
             await startTask.addName(standaloneTaskName);
-            await startTask.selectFormDefinition('StartEventForm');
+            await startTask.selectFormDefinition(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.starteventform);
             await startTask.clickStartButton();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
@@ -224,9 +224,9 @@ describe('Start Task Form', () => {
         it('[C311428] Should display the Standalone forms based on the flag set', async () => {
             await tasksCloudDemoPage.openNewTaskForm();
             await startTask.checkFormIsDisplayed();
-            await startTask.checkFormDefinitionIsNotDisplayed('UploadFileForm');
-            await startTask.checkFormDefinitionIsDisplayed('StartEventForm');
-            await startTask.checkFormDefinitionIsDisplayed('FormToTestValidations');
+            await startTask.checkFormDefinitionIsNotDisplayed('uploadfileform');
+            await startTask.checkFormDefinitionIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.starteventform);
+            await startTask.checkFormDefinitionIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
         });
 
     });

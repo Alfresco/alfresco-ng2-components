@@ -531,6 +531,10 @@ exports.ACTIVITI7_APPS = {
             candidateGroupProcess: "candidategroupprocess",
             anotherCandidateGroupProcess: "anothercandidategroup",
             uploadFileProcess: "uploadfileprocess"
+        },
+        forms: {
+            starteventform: "starteventform",
+            formtotestvalidations: "formtotestvalidations"
         }
     },
     SIMPLE_APP: {
