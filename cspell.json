@@ -129,7 +129,9 @@
     "processwithvariables",
     "dropdownrestprocess",
     "devops",
-    "mouseenter"
+    "mouseenter",
+    "starteventform",
+    "formtotestvalidations"
   ],
   "dictionaries": [
     "html",
