@@ -14,6 +14,7 @@
                         <button
                             mat-icon-button
                             [attr.aria-expanded]="showLeftSidebar"
+                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"
                             title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                             data-automation-id="adf-toolbar-left-sidebar"
                             [color]="showLeftSidebar ? 'accent' : 'default'"
@@ -25,6 +26,7 @@
                     <button *ngIf="allowGoBack"
                             class="adf-viewer-close-button"
                             data-automation-id="adf-toolbar-back"
+                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
                             mat-icon-button
                             title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
                             (click)="onBackButtonClick()">
@@ -37,6 +39,7 @@
                         *ngIf="allowNavigate && canNavigateBefore"
                         data-automation-id="adf-toolbar-pref-file"
                         mat-icon-button
+                        [attr.aria-label]="'ADF_VIEWER.ACTIONS.PREV_FILE' | translate"
                         title="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
                         (click)="onNavigateBeforeClick()">
                         <mat-icon>navigate_before</mat-icon>
@@ -47,6 +50,7 @@
                         *ngIf="allowNavigate && canNavigateNext"
                         data-automation-id="adf-toolbar-next-file"
                         mat-icon-button
+                        [attr.aria-label]="'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate"
                         title="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
                         (click)="onNavigateNextClick()">
                         <mat-icon>navigate_next</mat-icon>
@@ -75,6 +79,7 @@
                     id="adf-viewer-download"
                     *ngIf="allowDownload"
                     mat-icon-button
+                    [attr.aria-label]="'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate"
                     title="{{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}"
                     data-automation-id="adf-toolbar-download"
                     [adfNodeDownload]="nodeEntry">
@@ -85,6 +90,7 @@
                     id="adf-viewer-print"
                     *ngIf="allowPrint"
                     mat-icon-button
+                    [attr.aria-label]="'ADF_VIEWER.ACTIONS.PRINT' | translate"
                     title="{{ 'ADF_VIEWER.ACTIONS.PRINT' | translate }}"
                     data-automation-id="adf-toolbar-print"
                     (click)="printContent()">
@@ -95,6 +101,7 @@
                     id="adf-viewer-fullscreen"
                     *ngIf="viewerType !== 'media' && allowFullScreen"
                     mat-icon-button
+                    [attr.aria-label]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate"
                     title="{{ 'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate }}"
                     data-automation-id="adf-toolbar-fullscreen"
                     (click)="enterFullScreen()">
@@ -107,6 +114,7 @@
                     <button
                         mat-icon-button
                         [attr.aria-expanded]="showRightSidebar"
+                        [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"
                         title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                         data-automation-id="adf-toolbar-sidebar"
                         [color]="showRightSidebar ? 'accent' : 'default'"
@@ -121,6 +129,7 @@
                         id="adf-viewer-moreactions"
                         mat-icon-button
                         [matMenuTriggerFor]="mnuMoreActions"
+                        [attr.aria-label]="'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate"
                         title="{{ 'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate }}"
                         data-automation-id="adf-toolbar-more-actions">
                         <mat-icon>more_vert</mat-icon>
