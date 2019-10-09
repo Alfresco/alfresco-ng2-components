@@ -91,7 +91,6 @@ describe('Task list cloud - selection', () => {
         it('[C291914] Should not be able to select any row when selection mode is set to None', async () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.selectSelectionMode('None');
-            await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
@@ -104,7 +103,6 @@ describe('Task list cloud - selection', () => {
         it('[C291918] Should be able to select only one row when selection mode is set to Single', async () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.selectSelectionMode('Single');
-            await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
@@ -122,8 +120,7 @@ describe('Task list cloud - selection', () => {
 
         it('[C291919] Should be able to select only one row when selection mode is set to Multiple', async () => {
             await tasksCloudDemoPage.clickSettingsButton();
-            await tasksCloudDemoPage.selectSelectionMode('Multiple');
-            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
@@ -140,8 +137,6 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C291916] Should be able to select multiple row when multiselect is true', async () => {
-            await tasksCloudDemoPage.clickSettingsButton();
-            await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();
@@ -164,8 +159,6 @@ describe('Task list cloud - selection', () => {
 
         it('[C291915] Should be possible select all the rows when multiselect is true', async () => {
             await tasksCloudDemoPage.clickSettingsButton();
-            await tasksCloudDemoPage.enableMultiSelection();
-            await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
@@ -178,8 +171,6 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C297472] Should be able to see selected tasks with Multiselection and Testing switched on', async () => {
-            await tasksCloudDemoPage.clickSettingsButton();
-            await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.enableTestingMode();
             await tasksCloudDemoPage.clickAppButton();

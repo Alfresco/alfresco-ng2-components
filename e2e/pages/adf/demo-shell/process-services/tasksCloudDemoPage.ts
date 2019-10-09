@@ -45,8 +45,8 @@ export class TasksCloudDemoPage {
     contextMenuToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="contextmenu"]'));
     multiSelectionToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
     testingModeToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="testingMode"]'));
-    selectedRows: ElementFinder = element(by.xpath("//div[text()=' Selected rows: ']"));
-    noOfSelectedRows: ElementArrayFinder = element.all(by.xpath("//div[text()=' Selected rows: ']//li"));
+    selectedRows: ElementFinder = element(by.xpath("//div[text()=' Selected Rows: ']"));
+    noOfSelectedRows: ElementArrayFinder = element.all(by.xpath("//div[text()=' Selected Rows: ']//li"));
     addActionTitle: ElementFinder = element(by.cssContainingText('.mat-card-title', 'Add Action'));
     keyInputField: ElementFinder = element(by.css('input[placeholder="Key"]'));
     titleInputField: ElementFinder = element(by.css('input[placeholder="Title"]'));
@@ -150,7 +150,7 @@ export class TasksCloudDemoPage {
 
     async getSelectedTaskRowText(rowNo: string): Promise<string> {
         await this.checkSelectedRowsIsDisplayed();
-        const row: ElementFinder = element(by.xpath(`//div[text()=' Selected rows: ']//li[${rowNo}]`));
+        const row: ElementFinder = element(by.xpath(`//div[text()=' Selected Rows: ']//li[${rowNo}]`));
         return await BrowserActions.getText(row);
     }
 
@@ -180,8 +180,7 @@ export class TasksCloudDemoPage {
     async checkActionExecuted(taskId: string, action: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Action Menu:')));
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Context Menu:')));
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Task Id: ' + taskId)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Task ID: ' + taskId)));
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Action Type: ' + action)));
     }
-
 }
