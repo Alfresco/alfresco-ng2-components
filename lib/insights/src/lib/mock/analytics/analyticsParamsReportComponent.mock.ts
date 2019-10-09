@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ReportParameterDetailsModel } from '../../diagram';
+import { ReportParameterDetailsModel } from '../../diagram/models/report/reportParameterDetails.model';
 
 export let reportDefParamStatus = {
     'id': 2005,

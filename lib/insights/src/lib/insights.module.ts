@@ -40,7 +40,7 @@ export function providers() {
 
 @NgModule({
     imports: [
-        CoreModule.forChild(),
+        CoreModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -95,7 +95,7 @@ export class InsightsModule {
 
 @NgModule({
     imports: [
-        CoreModule.forChild(),
+        CoreModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

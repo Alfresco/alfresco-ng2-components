@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DiagramTooltipComponent } from './diagram-tooltip.component';
-import { setupTestBed } from '../../../../core/testing/setupTestBed';
+import { setupTestBed } from '@alfresco/adf-core';
 
 @Component({
     template: `

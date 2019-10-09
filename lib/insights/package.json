@@ -28,7 +28,6 @@
     "@alfresco/js-api": "3.5.0",
     "rxjs": ">=6.2.2",
     "@alfresco/adf-core": "3.5.0",
-    "@alfresco/adf-content-services": "3.5.0",
     "@ngx-translate/core": ">=11.0.0",
     "chart.js": ">=2.5.0",
     "core-js": ">=2.5.4",

@@ -15,4 +15,7 @@
  * limitations under the License.
  */
 
-export * from './public-api';
+export * from './lib/analytics-process/public-api';
+export * from './lib/diagram/public-api';
+
+export * from './lib/insights.module';

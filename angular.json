@@ -734,7 +734,7 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "lib/extensions/tsconfig.lib.json",
+            "tsConfig": "lib/insights/tsconfig.lib.json",
             "project": "lib/insights/ng-package.json"
           },
           "configurations": {
@@ -746,8 +746,8 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "lib/insights/test.ts",
-            "tsConfig": "lib/extensions/tsconfig.spec.json",
+            "main": "lib/insights/src/test.ts",
+            "tsConfig": "lib/insights/tsconfig.spec.json",
             "karmaConfig": "lib/insights/karma.conf.js",
             "codeCoverage": true,
             "sourceMap": true
@@ -758,7 +758,7 @@
           "options": {
             "tsConfig": [
               "lib/insights/tsconfig.lib.json",
-              "lib/insights/tsconfig.lib.json"
+              "lib/insights/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

@@ -47,7 +47,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         DiagramsModule,
         MaterialModule,
         FlexLayoutModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [
         AnalyticsComponent,
