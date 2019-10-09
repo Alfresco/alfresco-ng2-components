@@ -191,7 +191,7 @@ describe('Start Task Form', () => {
             await tasksCloudDemoPage.openNewTaskForm();
             await startTask.checkFormIsDisplayed();
             await startTask.addName(standaloneTaskName);
-            await startTask.selectFormDefinition(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.starteventform);
+            await startTask.selectFormDefinition(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.starteventform);
             await startTask.clickStartButton();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
@@ -224,8 +224,8 @@ describe('Start Task Form', () => {
             await tasksCloudDemoPage.openNewTaskForm();
             await startTask.checkFormIsDisplayed();
             await startTask.checkFormDefinitionIsNotDisplayed('uploadfileform');
-            await startTask.checkFormDefinitionIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.starteventform);
-            await startTask.checkFormDefinitionIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
+            await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.starteventform);
+            await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
         });
 
     });
