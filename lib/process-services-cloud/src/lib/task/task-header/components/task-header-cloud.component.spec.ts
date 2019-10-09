@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, AppConfigService } from '@alfresco/adf-core';
+import { setupTestBed, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { assignedTaskDetailsCloudMock } from '../mocks/task-details-cloud.mock';
 import { TaskHeaderCloudModule } from '../task-header-cloud.module';
@@ -31,13 +31,17 @@ describe('TaskHeaderCloudComponent', () => {
     let fixture: ComponentFixture<TaskHeaderCloudComponent>;
     let service: TaskCloudService;
     let appConfigService: AppConfigService;
+    let identityUserService: IdentityUserService;
+
+    const identityUserMock = { username: 'testuser', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
 
     setupTestBed({
         imports: [
             ProcessServiceCloudTestingModule,
             TaskHeaderCloudModule,
             RouterTestingModule
-        ]
+        ],
+        providers: [IdentityUserService]
     });
 
     beforeEach(() => {
@@ -46,8 +50,10 @@ describe('TaskHeaderCloudComponent', () => {
         component.appName = 'myApp';
         component.taskId = assignedTaskDetailsCloudMock.id;
         service = TestBed.get(TaskCloudService);
+        identityUserService = TestBed.get(IdentityUserService);
         appConfigService = TestBed.get(AppConfigService);
         spyOn(service, 'getTaskById').and.returnValue(of(assignedTaskDetailsCloudMock));
+        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
     it('should render empty component if no task details provided', async(() => {
@@ -91,6 +97,7 @@ describe('TaskHeaderCloudComponent', () => {
 
     it('should display error if priority is not a number', async(() => {
         component.ngOnInit();
+        component.taskDetails.assignee = 'testuser';
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
