@@ -99,6 +99,7 @@
     "@mat-datetimepicker/core": "^2.0.1",
     "@mat-datetimepicker/moment": "^2.0.1",
     "@ngx-translate/core": "^11.0.0",
+    "@types/request": "^2.48.3",
     "adf-monaco-extension": "0.0.8",
     "adf-tslint-rules": "0.0.6",
     "chart.js": "2.5.0",

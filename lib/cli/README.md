@@ -114,3 +114,23 @@ Run command locally
 ```bash
 adf-cli update-commit-sha --pathProject "$(pwd)" --skipGnu
 ```
+
+### Initialize activiti cloud env
+
+The following command is in charge of Initializing the activiti cloud env with the default apps:
+
+```bash
+adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --username "username" --password "password"
+```
+
+If you want to add a new app the schema needs to be:
+```
+TEST_APP: {
+        name: 'testapp',
+        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/branch/e2e/resources/testapp.zip?raw=true',
+        security: [
+            {'role': 'APS_ADMIN', 'groups': ['myadmingroup'], 'users': ['myadminuser']},
+            {'role': 'APS_USER', 'groups': ['myusergroup'], 'users': ['myuser']
+        }]
+    },
+```
