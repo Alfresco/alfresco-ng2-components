@@ -22,7 +22,7 @@ then
 else if [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
     then
         HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
-        LIST_SPECS="$(git diff --name-only $HEAD_SHA_BRANCH HEAD | grep "^e2e/$CONTEXT_ENV" | paste -sd , -)"
+        LIST_SPECS="$(git diff --name-only $HEAD_SHA_BRANCH HEAD | grep "^e2e/$CONTEXT_ENV/" | paste -sd , -)"
         node ./scripts/check-env/check-activiti-env.js --host "$E2E_HOST_BPM" --oauth "$E2E_HOST_SSO" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --client 'activiti' || exit 1
         if [[ $LIST_SPECS != "" ]];
         then
