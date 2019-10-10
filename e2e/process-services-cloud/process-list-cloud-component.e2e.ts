@@ -45,7 +45,7 @@ describe('Process list cloud', () => {
         let groupIdentityService: GroupIdentityService;
         let testUser, groupInfo;
 
-        const candidateBaseApp = browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+        const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
         let jsonFile;
         let runningProcess;
 
@@ -61,7 +61,7 @@ describe('Process list cloud', () => {
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+                .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);

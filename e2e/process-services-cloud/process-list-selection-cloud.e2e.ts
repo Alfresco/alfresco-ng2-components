@@ -40,7 +40,7 @@ describe('Process list cloud', () => {
         let groupIdentityService: GroupIdentityService;
         let testUser, groupInfo;
 
-        const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
         const noOfProcesses = 3;
         const processInstances = [];
@@ -57,7 +57,7 @@ describe('Process list cloud', () => {
             await apiService.login(testUser.email, testUser.password);
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
+                .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             for (let i = 0; i < noOfProcesses; i++) {

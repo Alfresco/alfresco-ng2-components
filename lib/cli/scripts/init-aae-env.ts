@@ -18,6 +18,8 @@
  */
 
 import { logging } from '@angular-devkit/core';
+import { ACTIVITI_CLOUD_APPS } from '@alfresco/adf-process-services-cloud';
+
 /* tslint:disable */
 const alfrescoApi = require('@alfresco/js-api');
 /* tslint:enable */
@@ -31,54 +33,6 @@ export interface ConfigArgs {
     oauth: string;
     identityHost: boolean;
 }
-
-const ACTIVITI_CLOUD_APPS: any = {
-    CANDIDATE_BASE_APP: {
-        name: 'candidatebaseapp',
-        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/development/e2e/resources/activiti7/candidatebaseapp.zip?raw=true',
-        processes: {
-            candidateUserProcess: 'candidateUserProcess',
-            candidateGroupProcess: 'candidateGroupProcess',
-            anotherCandidateGroupProcess: 'anotherCandidateGroupProcess',
-            uploadFileProcess: 'uploadFileProcess'
-        },
-        security: [
-            {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']
-        }]
-    },
-    SIMPLE_APP: {
-        name: 'simpleapp',
-        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/development/e2e/resources/activiti7/simpleapp.zip?raw=true',
-        processes: {
-            processwithvariables: 'processwithvariables',
-            simpleProcess: 'simpleprocess',
-            dropdownrestprocess: 'dropdownrestprocess'
-        },
-        forms: {
-            tabVisibilityFields: {
-                name: 'tabvisibilitywithfields',
-                id: 'form-26b01063-4fb0-455f-b3ba-90172e013678'
-            },
-            tabVisibilityVars: {
-                name: 'tabvisibilitywithvars',
-                id: 'form-7bf363d2-83c9-4b00-853e-373d0d59963c'
-            }
-        },
-        security: [
-            {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']
-        }]
-    },
-    SUB_PROCESS_APP: {
-        name: 'subprocessapp',
-        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/development/e2e/resources/activiti7/subprocessapp.zip?raw=true',
-        security: [
-            {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']
-        }]
-    }
-};
 
 async function getDeployedApplicationsByStatus(args: ConfigArgs, apiService: any, status: string, logger: logging.Logger) {
     const url = `${args.host}/deployment-service/v1/applications`;

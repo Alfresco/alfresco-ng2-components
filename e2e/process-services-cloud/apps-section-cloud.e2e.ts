@@ -33,7 +33,7 @@ describe('Applications list', () => {
     const navigationBarPage = new NavigationBarPage();
     const settingsPage = new SettingsPage();
     const appListCloudPage = new AppListCloudPage();
-    const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     let identityService: IdentityService;
     let applicationsService: ApplicationsService;
     let testUser;
@@ -82,8 +82,8 @@ describe('Applications list', () => {
         await appListCloudPage.checkApsContainer();
 
         await appListCloudPage.checkAppIsDisplayed(simpleApp);
-        await appListCloudPage.checkAppIsDisplayed(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name);
-        await appListCloudPage.checkAppIsDisplayed(browser.params.resources.ACTIVITI7_APPS.SUB_PROCESS_APP.name);
+        await appListCloudPage.checkAppIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name);
+        await appListCloudPage.checkAppIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.name);
 
         await expect(await appListCloudPage.countAllApps()).toEqual(3);
     });
