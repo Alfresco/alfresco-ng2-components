@@ -557,7 +557,7 @@ describe('DataTable', () => {
     it('should show only visible actions', () => {
         const unfilteredActions = [
             { title: 'action1', name: 'view1', visible: true },
-            { title: 'action2', name: 'view2', visible: false},
+            { title: 'action2', name: 'view2', visible: false },
             { title: 'action3', name: 'view3', visible: null },
             { title: 'action4', name: 'view4' }
         ];
