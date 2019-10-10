@@ -15,5 +15,13 @@
  * limitations under the License.
  */
 
-export * from './components/user-info.component';
-export * from './userinfo.module';
+export interface IdentityUserModel {
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    username?: string;
+    createdTimestamp?: any;
+    emailVerified?: boolean;
+    enabled?: boolean;
+}

@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentModel, UserProcessModel } from '../models';
 import { CommentListComponent } from './comment-list.component';
 import { By } from '@angular/platform-browser';
-import { EcmUserService } from '../userinfo/services/ecm-user.service';
+import { EcmUserService } from '../services/ecm-user.service';
 import { PeopleProcessService } from '../services/people-process.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';

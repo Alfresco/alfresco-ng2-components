@@ -17,8 +17,7 @@
 
 import { PeopleCloudComponent } from './people-cloud.component';
 import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
-import { IdentityUserService, AlfrescoApiService,
-    CoreModule, IdentityUserModel, setupTestBed } from '@alfresco/adf-core';
+import { IdentityUserService, AlfrescoApiService, CoreModule, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
 import { mockUsers } from '../../mock/user-cloud.mock';
@@ -111,7 +110,7 @@ describe('PeopleCloudComponent', () => {
         it('should emit selectedUser if option is valid', (done) => {
             fixture.detectChanges();
             const selectEmitSpy = spyOn(component.selectUser, 'emit');
-            component.onSelect(new IdentityUserModel({ username: 'username' }));
+            component.onSelect({ username: 'username' });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(selectEmitSpy).toHaveBeenCalled();

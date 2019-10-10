@@ -38,13 +38,12 @@ import {
     mockJoinGroupRequest
 } from 'core/mock/identity-user.service.mock';
 import { IdentityUserService } from '../services/identity-user.service';
-import { setupTestBed } from '../../testing/setupTestBed';
-import { CoreModule } from '../../core.module';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { mockToken } from './../../mock/jwt-helper.service.spec';
-import { IdentityUserModel, IdentityUserQueryCloudRequestModel } from '../models/identity-user.model';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { mockToken } from '../mock/jwt-helper.service.spec';
 import { IdentityRoleModel } from '../models/identity-role.model';
-import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 describe('IdentityUserService', () => {
 
@@ -97,7 +96,7 @@ describe('IdentityUserService', () => {
     it('should fetch users ', (done) => {
         spyOn(service, 'getUsers').and.returnValue(of(mockIdentityUsers));
         service.getUsers().subscribe(
-            (res: IdentityUserModel[]) => {
+            res => {
                 expect(res).toBeDefined();
                 expect(res[0].id).toEqual('mock-user-id-1');
                 expect(res[0].username).toEqual('userName1');
@@ -171,7 +170,7 @@ describe('IdentityUserService', () => {
         spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
 
         service.getUsersByRolesWithCurrentUser([mockRoles[0].name]).then(
-            (res: IdentityUserModel[]) => {
+            res => {
                 expect(res).toBeDefined();
                 expect(res[0].id).toEqual('mock-user-id-1');
                 expect(res[0].username).toEqual('userName1');
@@ -209,7 +208,7 @@ describe('IdentityUserService', () => {
         spyOn(service, 'getCurrentUserInfo').and.returnValue(mockIdentityUsers[0]);
 
         service.getUsersByRolesWithoutCurrentUser([mockRoles[0].name]).then(
-            (res: IdentityUserModel[]) => {
+            res => {
                 expect(res).toBeDefined();
                 expect(res[0].id).toEqual('mock-user-id-2');
                 expect(res[0].username).toEqual('userName2');
@@ -292,7 +291,7 @@ describe('IdentityUserService', () => {
 
     it('should be able to query users based on query params (first & max params)', (done) => {
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(queryUsersMockApi);
-        service.queryUsers(new IdentityUserQueryCloudRequestModel({first: 0, max: 5})).subscribe((res) => {
+        service.queryUsers({first: 0, max: 5}).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.entries.length).toBe(5);
@@ -314,7 +313,7 @@ describe('IdentityUserService', () => {
 
         spyOn(service, 'queryUsers').and.returnValue(throwError(errorResponse));
 
-        service.queryUsers(new IdentityUserQueryCloudRequestModel({first: 0, max: 5}))
+        service.queryUsers({first: 0, max: 5})
             .subscribe(
                 () => {
                     fail('expected an error, not users');

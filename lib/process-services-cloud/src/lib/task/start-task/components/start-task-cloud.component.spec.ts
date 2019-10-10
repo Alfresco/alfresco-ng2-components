@@ -52,7 +52,7 @@ describe('StartTaskCloudComponent', () => {
         }
     };
 
-    const mockUser = new IdentityUserModel({username: 'currentUser', firstName: 'Test', lastName: 'User', email: 'currentUser@test.com'});
+    const mockUser: IdentityUserModel = {username: 'currentUser', firstName: 'Test', lastName: 'User', email: 'currentUser@test.com'};
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],

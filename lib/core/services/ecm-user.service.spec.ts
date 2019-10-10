@@ -16,12 +16,12 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AuthenticationService, ContentService, AlfrescoApiService  } from '../../services';
-import { fakeEcmUser } from '../../mock/ecm-user.service.mock';
+import { AuthenticationService, ContentService, AlfrescoApiService  } from '.';
+import { fakeEcmUser } from '../mock/ecm-user.service.mock';
 import { EcmUserService } from '../services/ecm-user.service';
-import { setupTestBed } from '../../testing/setupTestBed';
-import { CoreModule } from '../../core.module';
-import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 

@@ -56,3 +56,8 @@ export * from './lock.service';
 export * from './automation.service';
 export * from './automation.service';
 export * from './download.service';
+export * from './bpm-user.service';
+export * from './ecm-user.service';
+export * from './identity-user.service';
+export * from './identity-group.service';
+export * from './identity-role.service';
