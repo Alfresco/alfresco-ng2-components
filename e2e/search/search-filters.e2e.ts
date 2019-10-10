@@ -30,7 +30,6 @@ import {
     UploadActions,
     BrowserActions
 } from '@alfresco/adf-testing';
-import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
@@ -63,22 +62,22 @@ describe('Search Filters', () => {
     });
 
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const txtFileModel1 = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
         'name': `${uniqueFileName1}.txt`
     });
 
     const jpgFileModel = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': `${uniqueFileName2}.jpg`
     });
 
     const txtFileModel2 = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
         'name': `${uniqueFileName3}.txt`
     });
 

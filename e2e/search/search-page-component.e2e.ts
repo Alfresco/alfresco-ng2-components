@@ -26,7 +26,6 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FolderModel } from '../models/ACS/folderModel';
 import { FileModel } from '../models/ACS/fileModel';
 import { Util } from '../util/util';
-import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
@@ -72,7 +71,7 @@ describe('Search component - Search Page', () => {
 
         firstFileModel = new FileModel({
             'name': search.active.firstFile,
-            'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);

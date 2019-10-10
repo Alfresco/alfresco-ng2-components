@@ -29,8 +29,6 @@ import {
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 
-import resources = require('../util/resources');
-
 describe('Edit task filters cloud', () => {
 
     describe('Edit Task Filters', () => {
@@ -45,7 +43,7 @@ describe('Edit task filters cloud', () => {
         let testUser, groupInfo;
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const completedTaskName = StringUtil.generateRandomString(),
             assignedTaskName = StringUtil.generateRandomString();
 

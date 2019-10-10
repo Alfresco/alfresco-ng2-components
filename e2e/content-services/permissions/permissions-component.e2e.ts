@@ -18,7 +18,6 @@
 import { PermissionsPage } from '../../pages/adf/permissionsPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import { StringUtil, BrowserActions, NotificationHistoryPage, LoginPage, UploadActions } from '@alfresco/adf-testing';
@@ -48,18 +47,18 @@ describe('Permissions Component', () => {
     const uploadDialog = new UploadDialog();
     let fileOwnerUser, filePermissionUser, file;
     const fileModel = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        location: resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     const testFileModel = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        location: resources.Files.ADF_DOCUMENTS.TEST.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
     const pngFileModel = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const groupBody = {

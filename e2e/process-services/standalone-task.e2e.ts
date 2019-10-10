@@ -20,14 +20,9 @@ import { browser } from 'protractor';
 import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
 import CONSTANTS = require('../util/constants');
-
 import { Tenant } from '../models/APS/tenant';
 import Task = require('../models/APS/Task');
-
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
@@ -38,7 +33,7 @@ describe('Start Task - Task App', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     let processUserModel;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const taskPage = new TasksPage();
     const tasks = ['Standalone task', 'Completed standalone task', 'Add a form', 'Remove form'];
     const noFormMessage = 'No forms attached';

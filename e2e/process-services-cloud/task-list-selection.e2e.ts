@@ -22,7 +22,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { StringUtil } from '@alfresco/adf-testing';
-import resources = require('../util/resources');
 
 describe('Task list cloud - selection', () => {
 
@@ -41,7 +40,7 @@ describe('Task list cloud - selection', () => {
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
 
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const noOfTasks = 3;
         let response, testUser, groupInfo;
         const tasks = [];

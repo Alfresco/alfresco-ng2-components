@@ -17,15 +17,10 @@
 
 import { LoginPage, BrowserActions, Widget } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
-
 import CONSTANTS = require('../util/constants');
-
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -42,7 +37,7 @@ describe('Form widgets', () => {
     const widget = new Widget();
 
     describe('Form widgets', () => {
-        const app = resources.Files.WIDGETS_SMOKE_TEST;
+        const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
         const appFields = app.form_fields;
 
         beforeAll(async () => {
@@ -201,7 +196,7 @@ describe('Form widgets', () => {
     describe('with fields involving other people', () => {
 
         const appsActions = new AppsActions();
-        const app = resources.Files.FORM_ADF;
+        const app = browser.params.resources.Files.FORM_ADF;
         let deployedApp, process;
         const appFields = app.form_fields;
 

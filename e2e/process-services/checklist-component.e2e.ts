@@ -20,14 +20,9 @@ import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { ChecklistDialog } from '../pages/adf/process-services/dialog/createChecklistDialog';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
 import CONSTANTS = require('../util/constants');
-
 import { Tenant } from '../models/APS/tenant';
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
@@ -37,7 +32,7 @@ describe('Checklist component', () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
     const checklistDialog = new ChecklistDialog();

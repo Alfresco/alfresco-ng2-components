@@ -22,7 +22,6 @@ import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
@@ -41,24 +40,24 @@ describe('Upload component', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const firstPdfFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
     });
     const docxFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const pdfFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
     const pngFileModelTwo = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG_B.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
     const filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
     const filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];

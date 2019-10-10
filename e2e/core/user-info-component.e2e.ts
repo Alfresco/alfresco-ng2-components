@@ -17,15 +17,10 @@
 
 import { LoginPage } from '@alfresco/adf-testing';
 import { UserInfoPage } from '@alfresco/adf-testing';
-
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
-
 import PeopleAPI = require('../restAPI/ACS/PeopleAPI');
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -38,12 +33,12 @@ describe('User Info component', () => {
     const navigationBarPage = new NavigationBarPage();
 
     const acsAvatarFileModel = new FileModel({
-        'name': resources.Files.PROFILE_IMAGES.ECM.file_name,
-        'location': resources.Files.PROFILE_IMAGES.ECM.file_location
+        'name': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_name,
+        'location': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_location
     });
     const apsAvatarFileModel = new FileModel({
-        'name': resources.Files.PROFILE_IMAGES.BPM.file_name,
-        'location': resources.Files.PROFILE_IMAGES.BPM.file_location
+        'name': browser.params.resources.Files.PROFILE_IMAGES.BPM.file_name,
+        'location': browser.params.resources.Files.PROFILE_IMAGES.BPM.file_location
     });
 
     beforeAll(async () => {

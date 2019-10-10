@@ -18,7 +18,6 @@
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -62,18 +61,18 @@ describe('Document List Component', () => {
     describe('Thumbnails and tooltips', () => {
 
         const pdfFile = new FileModel({
-            name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
-            location: resources.Files.ADF_DOCUMENTS.PDF.file_location
+            name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
         });
 
         const testFile = new FileModel({
-            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
         const docxFile = new FileModel({
-            name: resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-            location: resources.Files.ADF_DOCUMENTS.DOCX.file_location
+            name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
         });
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         let filePdfNode, fileTestNode, fileDocxNode, folderNode;

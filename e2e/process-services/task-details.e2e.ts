@@ -23,11 +23,8 @@ import TaskModel = require('../models/APS/TaskModel');
 import FormModel = require('../models/APS/FormModel');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-
-import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import dateFormat = require('dateformat');
-
 import { LoginPage, BrowserActions, StringUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { browser } from 'protractor';
@@ -36,7 +33,7 @@ describe('Task Details component', () => {
 
     const processServices = new ProcessServicesPage();
     let processUserModel, appModel;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     const TASK_DATE_FORMAT = 'mmm d, yyyy';
     let formModel;

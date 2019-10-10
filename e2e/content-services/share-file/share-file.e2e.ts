@@ -29,7 +29,6 @@ import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Share file', () => {
@@ -48,8 +47,8 @@ describe('Share file', () => {
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const pngFileModel = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     let nodeId;

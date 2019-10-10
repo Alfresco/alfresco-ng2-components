@@ -23,7 +23,6 @@ import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-import resources = require('../../util/resources');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { DropActions } from '../../actions/drop.actions';
@@ -43,44 +42,37 @@ describe('Upload component', () => {
     const navigationBarPage = new NavigationBarPage();
 
     const firstPdfFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
     });
     const docxFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const pdfFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
     const pngFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
     const fileWithSpecificSize = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TXT_400B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TXT_400B.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_400B.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_400B.file_location
     });
     const emptyFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     beforeAll(async () => {
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
-
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
-
     });
 
     afterAll(async () => {

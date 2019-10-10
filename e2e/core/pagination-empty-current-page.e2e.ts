@@ -19,16 +19,12 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { PaginationPage } from '@alfresco/adf-testing';
 import { ViewerPage } from '../pages/adf/viewerPage';
-
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FolderModel } from '../models/ACS/folderModel';
 import { FileModel } from '../models/ACS/fileModel';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '@alfresco/adf-testing';
-
 import { Util } from '../util/util';
-import resources = require('../util/resources');
 import { browser } from 'protractor';
 
 describe('Pagination - returns to previous page when current is empty', () => {
@@ -61,8 +57,8 @@ describe('Pagination - returns to previous page when current is empty', () => {
     };
 
     const pngFileInfo = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async () => {

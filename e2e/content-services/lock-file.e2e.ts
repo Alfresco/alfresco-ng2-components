@@ -23,7 +23,6 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
-import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Lock File', () => {
@@ -41,13 +40,13 @@ describe('Lock File', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const pngFileModel = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const pngFileToLock = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        location: resources.Files.ADF_DOCUMENTS.PNG_B.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
     let nodeId, site, documentLibrary, lockedFileNodeId;

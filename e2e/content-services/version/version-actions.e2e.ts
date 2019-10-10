@@ -16,16 +16,11 @@
  */
 
 import { browser, by, element } from 'protractor';
-
 import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-
-import resources = require('../../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -43,19 +38,19 @@ describe('Version component actions', () => {
     const acsUser = new AcsUserModel();
 
     const txtFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
     const fileModelVersionTwo = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
     let uploadActions;
 
     const bigFileToCancel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
     });
 
     beforeAll(async () => {

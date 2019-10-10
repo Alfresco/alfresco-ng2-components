@@ -19,14 +19,10 @@ import { LoginPage, LocalStorageUtil, BrowserActions, UploadActions } from '@alf
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import dateFormat = require('dateformat');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
@@ -56,8 +52,8 @@ describe('Metadata component', () => {
     const folderName = 'Metadata Folder';
 
     const pngFileModel = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     this.alfrescoJsApi = new AlfrescoApi({
@@ -176,7 +172,7 @@ describe('Metadata component', () => {
 
             await metadataViewPage.enterPropertyText('name', 'exampleText');
             await metadataViewPage.clickClearPropertyIcon('name');
-            await expect(await metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
+            await expect(await metadataViewPage.getPropertyText('name')).toEqual(browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
 
             await metadataViewPage.clickEditPropertyIcons('name');
             await metadataViewPage.enterPropertyText('name', 'exampleText.png');
@@ -208,9 +204,9 @@ describe('Metadata component', () => {
 
             await metadataViewPage.editIconClick();
             await metadataViewPage.clickEditPropertyIcons('name');
-            await metadataViewPage.enterPropertyText('name', resources.Files.ADF_DOCUMENTS.PNG.file_name);
+            await metadataViewPage.enterPropertyText('name', browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
             await metadataViewPage.clickUpdatePropertyIcon('name');
-            await expect(await metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
+            await expect(await metadataViewPage.getPropertyText('name')).toEqual(browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
         });
 
         it('[C260181] Should be possible edit all the metadata aspect', async () => {

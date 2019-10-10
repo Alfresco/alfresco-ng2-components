@@ -21,11 +21,7 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { CommentsPage } from '../pages/adf/commentsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
 import CONSTANTS = require('../util/constants');
-
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -37,7 +33,7 @@ describe('Comment component for Processes', () => {
     const taskPage = new TasksPage();
     const commentsPage = new CommentsPage();
 
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let user, tenantId, appId, secondUser, newTaskId;
 
     const taskName = {

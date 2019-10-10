@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import resources = require('../util/resources');
 import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
@@ -44,7 +42,7 @@ describe('Process Filters Test', () => {
     const processDetailsPage = new ProcessDetailsPage();
     let appModel;
 
-    const app = resources.Files.APP_WITH_DATE_FIELD_FORM;
+    const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
 
     const processTitle = {
         running: 'Test_running',

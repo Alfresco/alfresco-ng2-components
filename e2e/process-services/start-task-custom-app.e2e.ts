@@ -22,14 +22,9 @@ import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
 import { Tenant } from '../models/APS/tenant';
-
 import { FileModel } from '../models/ACS/fileModel';
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -44,7 +39,7 @@ describe('Start Task - Custom App', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
 
     let processUserModel, assigneeUserModel;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const formTextField = app.form_fields.form_fieldId;
     const formFieldValue = 'First value ';
     const taskPage = new TasksPage();
@@ -53,8 +48,8 @@ describe('Start Task - Custom App', () => {
     const showHeaderTask = 'Show Header';
     let appModel;
     const pngFile = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
     beforeAll(async () => {

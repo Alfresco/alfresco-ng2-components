@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import resources = require('../util/resources');
 import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
@@ -23,7 +22,6 @@ import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/taskFiltersDemoPage';
-
 import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -43,7 +41,7 @@ describe('Task Filters Sorting', () => {
     let appId;
     let importedApp;
 
-    const app = resources.Files.APP_WITH_PROCESSES;
+    const app = browser.params.resources.Files.APP_WITH_PROCESSES;
 
     const tasks = [
         { name: 'Task 1 Completed', dueDate: '01/01/2019' },

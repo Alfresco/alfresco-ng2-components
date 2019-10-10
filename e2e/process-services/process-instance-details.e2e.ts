@@ -16,11 +16,9 @@
  */
 
 import { browser } from 'protractor';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-import resources = require('../util/resources');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -39,7 +37,7 @@ describe('Process Instance Details', () => {
     const processDetailsPage = new ProcessDetailsPage();
 
     let appModel, process, user;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const PROCESS_DATE_FORMAT = 'mmm d, yyyy';
 
     beforeAll(async () => {

@@ -18,7 +18,6 @@
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { LoginPage, Widget, BrowserActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import { UsersActions } from '../../actions/users.actions';
 import CONSTANTS = require('../../util/constants');
 import { AppsActions } from '../../actions/APS/apps.actions';
@@ -56,7 +55,7 @@ describe('Process-Services - Visibility conditions', () => {
     let alfrescoJsApi;
     const appsActions = new AppsActions();
     let appModel;
-    const app = resources.Files.WIDGET_CHECK_APP.VISIBILITY;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.VISIBILITY;
     let deployedApp, process;
 
     beforeAll(async () => {
@@ -72,7 +71,7 @@ describe('Process-Services - Visibility conditions', () => {
         processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
+        appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, browser.params.resources.Files.WIDGET_CHECK_APP.file_location);
 
         const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {

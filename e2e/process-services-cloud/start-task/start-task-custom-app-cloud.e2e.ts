@@ -31,7 +31,6 @@ import {
     SettingsPage,
     GroupIdentityService
 } from '@alfresco/adf-testing';
-import resources = require('../../util/resources');
 
 describe('Start Task', () => {
 
@@ -57,7 +56,7 @@ describe('Start Task', () => {
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
     let apsUser, testUser, activitiUser, groupInfo;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;

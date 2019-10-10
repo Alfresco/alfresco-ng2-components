@@ -33,7 +33,6 @@ import {
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
-import resources = require('../../util/resources');
 import { browser } from 'protractor';
 
 describe('Form Field Component - Dropdown Widget', () => {
@@ -60,7 +59,7 @@ describe('Form Field Component - Dropdown Widget', () => {
     let queryService: QueryService;
 
     let runningProcessInstance, testUser, groupInfo, tasklist, task;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll(async () => {
 
@@ -75,7 +74,7 @@ describe('Form Field Component - Dropdown Widget', () => {
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
         const processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);

@@ -16,12 +16,10 @@
  */
 
 import { browser } from 'protractor';
-
 import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../../pages/adf/viewerPage';
 import { ContentServicesPage } from '../../../pages/adf/contentServicesPage';
 import CONSTANTS = require('../../../util/constants');
-import resources = require('../../../util/resources');
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -43,8 +41,8 @@ describe('Viewer', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const archiveFolderInfo = new FolderModel({
-        'name': resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_name,
-        'location': resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_location
     });
 
     beforeAll(async () => {

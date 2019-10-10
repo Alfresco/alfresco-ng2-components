@@ -16,11 +16,9 @@
  */
 
 import { browser } from 'protractor';
-
 import { LoginPage, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
-import resources = require('../../util/resources');
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -36,40 +34,40 @@ describe('Content Services Viewer', () => {
     let zoom;
 
     const pdfFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'firstPageText': resources.Files.ADF_DOCUMENTS.PDF.first_page_text,
-        'secondPageText': resources.Files.ADF_DOCUMENTS.PDF.second_page_text,
-        'lastPageNumber': resources.Files.ADF_DOCUMENTS.PDF.last_page_number
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF.first_page_text,
+        'secondPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF.second_page_text,
+        'lastPageNumber': browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_number
     });
     const protectedFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_name,
-        'firstPageText': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.first_page_text,
-        'secondPageText': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.second_page_text,
-        'lastPageNumber': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.last_page_number,
-        'password': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.password,
-        'location': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_name,
+        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.first_page_text,
+        'secondPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.second_page_text,
+        'lastPageNumber': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.last_page_number,
+        'password': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.password,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_location
     });
     const docxFile = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_name,
-        'firstPageText': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.first_page_text
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_location,
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_name,
+        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.first_page_text
     });
     const jpgFile = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
     const mp4File = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.MP4.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.MP4.file_name
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.MP4.file_location,
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.MP4.file_name
     });
     const unsupportedFile = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location,
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
     });
     const pptFile = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.PPT.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.PPT.file_name,
-        'firstPageText': resources.Files.ADF_DOCUMENTS.PPT.first_page_text
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_location,
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_name,
+        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PPT.first_page_text
     });
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',

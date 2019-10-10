@@ -18,14 +18,9 @@
 import { LoginPage, BrowserActions, FileBrowserUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-
 import CONSTANTS = require('../util/constants');
-
 import { Tenant } from '../models/APS/tenant';
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -34,7 +29,7 @@ describe('Task Audit', () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
     const taskTaskApp = 'Audit task task app';

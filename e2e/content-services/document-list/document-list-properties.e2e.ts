@@ -20,7 +20,6 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { DropActions } from '../../actions/drop.actions';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -40,8 +39,8 @@ describe('Document List Component - Properties', () => {
     let acsUser = null;
 
     const pngFile = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     describe('Allow drop files property', () => {

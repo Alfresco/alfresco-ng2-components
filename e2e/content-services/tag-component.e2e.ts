@@ -20,7 +20,6 @@ import { FileModel } from '../models/ACS/fileModel';
 import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 import { TagPage } from '../pages/adf/tagPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
@@ -36,7 +35,7 @@ describe('Tag component', () => {
         hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
-    const pdfFileModel = new FileModel({ name: resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const pdfFileModel = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const deleteFile = new FileModel({ name: StringUtil.generateRandomString() });
     const sameTag = StringUtil.generateRandomString().toLowerCase();
 

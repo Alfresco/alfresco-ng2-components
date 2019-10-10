@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import { LoginPage, StartProcessDialog, Widget, FileBrowserUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -27,13 +26,10 @@ import { ProcessDetailsPage } from '../pages/adf/process-services/processDetails
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { browser } from 'protractor';
-
 import { User } from '../models/APS/user';
 import { Tenant } from '../models/APS/tenant';
-
 import { FileModel } from '../models/ACS/fileModel';
 import dateFormat = require('dateformat');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { StringUtil } from '@alfresco/adf-testing';
 
@@ -50,9 +46,9 @@ describe('Start Process Component', () => {
     const startProcessDialog = new StartProcessDialog();
     const apps = new AppsActions();
     const widget = new Widget();
-    const app = resources.Files.APP_WITH_PROCESSES;
-    const simpleApp = resources.Files.WIDGETS_SMOKE_TEST;
-    const dateFormApp = resources.Files.APP_WITH_DATE_FIELD_FORM;
+    const app = browser.params.resources.Files.APP_WITH_PROCESSES;
+    const simpleApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+    const dateFormApp = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
     let appId, procUserModel, secondProcUserModel, tenantId, simpleAppCreated, dateFormAppCreated;
     const processModelWithSe = 'process_with_se', processModelWithoutSe = 'process_without_se';
     const processName255Characters = StringUtil.generateRandomString(255);
@@ -62,8 +58,8 @@ describe('Start Process Component', () => {
     const auditLogFile = 'Audit.pdf';
 
     const jpgFile = new FileModel({
-        'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
-        'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
 
     beforeAll(async () => {

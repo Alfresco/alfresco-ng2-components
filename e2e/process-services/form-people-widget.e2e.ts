@@ -21,9 +21,6 @@ import { StartProcessPage } from '../pages/adf/process-services/startProcessPage
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -34,7 +31,7 @@ describe('Form widgets - People', () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
-    const app = resources.Files.APP_WITH_USER_WIDGET;
+    const app = browser.params.resources.Files.APP_WITH_USER_WIDGET;
     const processFiltersPage = new ProcessFiltersPage();
     let appModel;
     let alfrescoJsApi;

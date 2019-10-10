@@ -23,7 +23,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
-import resources = require('../util/resources');
 import { browser } from 'protractor';
 import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
 import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
@@ -55,7 +54,7 @@ describe('Process list cloud', () => {
 
         let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, groupInfo,
             anotherProcessInstance;
-        const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+        const candidateBaseApp = browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
 
         beforeAll(async () => {
 
@@ -70,10 +69,10 @@ describe('Process list cloud', () => {
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+                .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
             const anotherProcessDefinition = await processDefinitionService
-                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess, candidateBaseApp);
+                .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess, candidateBaseApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);

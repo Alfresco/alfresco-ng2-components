@@ -22,7 +22,6 @@ import { LoginPage, BrowserActions, Widget } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasksPage';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 
 describe('Document Template widget', () => {
 
@@ -33,7 +32,7 @@ describe('Document Template widget', () => {
     let alfrescoJsApi;
     const appsActions = new AppsActions();
     let appModel;
-    const app = resources.Files.FILE_FORM_ADF;
+    const app = browser.params.resources.Files.FILE_FORM_ADF;
     let deployedApp, process;
 
     beforeAll(async () => {

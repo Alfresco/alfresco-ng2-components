@@ -4,6 +4,7 @@ const retry = require('protractor-retry').retry;
 const tsConfig = require('./e2e/tsconfig.e2e.json');
 const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 const TestConfig = require('./e2e/test.config');
+const RESOURCES = require('./e2e/util/resources');
 const failFast = require('./e2e/protractor/fail-fast');
 const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
 const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protractor/save-remote');
@@ -105,7 +106,8 @@ exports.config = {
         groupSuffix: GROUP_SUFFIX,
         identityAdmin: TestConfig.identityAdmin,
         identityUser: TestConfig.identityUser,
-        rootPath: __dirname
+        rootPath: __dirname,
+        resources: RESOURCES
     },
 
     framework: 'jasmine2',

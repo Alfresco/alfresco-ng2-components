@@ -20,10 +20,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { PaginationPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
-
 import { browser } from 'protractor';
-import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -51,7 +48,7 @@ describe('Process List - Pagination', () => {
     const processDetailsPage = new ProcessDetailsPage();
     let deployedTestApp;
     let processUserModel;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const nrOfProcesses = 20;
     let page;
     let totalPages;

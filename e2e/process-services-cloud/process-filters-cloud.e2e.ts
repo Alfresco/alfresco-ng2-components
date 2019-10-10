@@ -31,7 +31,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
-import resources = require('../util/resources');
 
 describe('Process filters cloud', () => {
 
@@ -55,7 +54,7 @@ describe('Process filters cloud', () => {
         let queryService: QueryService;
 
         let runningProcess, completedProcess, testUser, groupInfo;
-        const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+        const candidateBaseApp = browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
 
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
@@ -69,7 +68,7 @@ describe('Process filters cloud', () => {
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+                .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);

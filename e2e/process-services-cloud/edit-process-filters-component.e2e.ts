@@ -21,7 +21,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
-import resources = require('../util/resources');
 
 describe('Edit process filters cloud', () => {
 
@@ -33,7 +32,7 @@ describe('Edit process filters cloud', () => {
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const settingsPage = new SettingsPage();
 
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
         let testUser, groupInfo;

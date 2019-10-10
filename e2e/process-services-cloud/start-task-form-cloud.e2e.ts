@@ -39,7 +39,6 @@ import {
     ProcessInstancesService,
     ProcessDefinitionsService
 } from '@alfresco/adf-testing';
-import resources = require('../util/resources');
 import { StartProcessCloudConfiguration } from './config/start-process-cloud.config';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/processDetailsCloudDemoPage';
@@ -85,15 +84,15 @@ describe('Start Task Form', () => {
     let processInstancesService: ProcessInstancesService;
     let processDefinition, uploadLocalFileProcess, uploadContentFileProcess, uploadDefaultFileProcess,
         cancelUploadFileProcess, completeUploadFileProcess;
-    const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
-    const pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const candidateBaseApp = browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+    const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const pdfFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
     const testFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
     let identityService: IdentityService;
@@ -114,7 +113,7 @@ describe('Start Task Form', () => {
         processDefinitionService = new ProcessDefinitionsService(apiService);
         processInstancesService = new ProcessInstancesService(apiService);
         processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.uploadFileProcess, candidateBaseApp);
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.uploadFileProcess, candidateBaseApp);
 
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
@@ -192,7 +191,7 @@ describe('Start Task Form', () => {
             await tasksCloudDemoPage.openNewTaskForm();
             await startTask.checkFormIsDisplayed();
             await startTask.addName(standaloneTaskName);
-            await startTask.selectFormDefinition(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.starteventform);
+            await startTask.selectFormDefinition(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.starteventform);
             await startTask.clickStartButton();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
@@ -225,8 +224,8 @@ describe('Start Task Form', () => {
             await tasksCloudDemoPage.openNewTaskForm();
             await startTask.checkFormIsDisplayed();
             await startTask.checkFormDefinitionIsNotDisplayed('uploadfileform');
-            await startTask.checkFormDefinitionIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.starteventform);
-            await startTask.checkFormDefinitionIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
+            await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.starteventform);
+            await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
         });
 
     });

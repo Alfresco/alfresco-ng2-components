@@ -22,7 +22,6 @@ import { LoginPage, BrowserActions, Widget } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasksPage';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
-import resources = require('../../util/resources');
 
 describe('Multi-line Widget', () => {
 
@@ -33,7 +32,7 @@ describe('Multi-line Widget', () => {
     let alfrescoJsApi;
     const appsActions = new AppsActions();
     let appModel;
-    const app = resources.Files.WIDGET_CHECK_APP.MULTILINE_TEXT;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.MULTILINE_TEXT;
     let deployedApp, process;
 
     beforeAll(async () => {
@@ -49,7 +48,7 @@ describe('Multi-line Widget', () => {
         processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
+        appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, browser.params.resources.Files.WIDGET_CHECK_APP.file_location);
 
         const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {

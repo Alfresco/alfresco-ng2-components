@@ -23,7 +23,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import CONSTANTS = require('../util/constants');
 
 import { browser } from 'protractor';
-import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
@@ -38,7 +37,7 @@ describe('Attach Form Component', () => {
     const formFields = new FormFields();
     const navigationBarPage = new NavigationBarPage();
 
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const formTextField = app.form_fields.form_fieldId;
     let user, tenantId, appId;
 

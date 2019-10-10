@@ -23,7 +23,6 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 
 import { ProcessDefinitionsService, ApiService } from '@alfresco/adf-testing';
 import { ProcessInstancesService } from '@alfresco/adf-testing';
-import resources = require('../util/resources');
 
 describe('Process list cloud', () => {
 
@@ -42,7 +41,7 @@ describe('Process list cloud', () => {
         let tasksService: TasksService;
         let testUser, groupInfo, editProcess, deleteProcess, editTask, deleteTask;
 
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
         beforeAll(async () => {
@@ -57,7 +56,7 @@ describe('Process list cloud', () => {
             await apiService.login(testUser.email, testUser.password);
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+                .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);

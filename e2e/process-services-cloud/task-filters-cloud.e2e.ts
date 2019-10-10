@@ -19,7 +19,6 @@ import { browser } from 'protractor';
 import { LoginSSOPage, TasksService, ApiService, AppListCloudPage, StringUtil, SettingsPage, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import resources = require('../util/resources');
 
 describe('Task filters cloud', () => {
 
@@ -36,7 +35,7 @@ describe('Task filters cloud', () => {
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
         beforeAll(async() => {
 

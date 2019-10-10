@@ -21,7 +21,6 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/fileModel';
-import resources = require('../../util/resources');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { TrashcanPage } from '../../pages/adf/trashcanPage';
 import { LoginPage, NotificationHistoryPage, StringUtil, UploadActions, BrowserActions } from '@alfresco/adf-testing';
@@ -44,18 +43,18 @@ describe('Restore content directive', () => {
     });
 
     const pdfFileModel = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: resources.Files.ADF_DOCUMENTS.PDF.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
     const testFileModel = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        location: resources.Files.ADF_DOCUMENTS.TEST.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
     const pngFileModel = new FileModel({
-        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const folderName = StringUtil.generateRandomString(5);
