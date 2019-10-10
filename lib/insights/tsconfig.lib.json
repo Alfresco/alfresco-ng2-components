@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../dist/insights/"
+    "outDir": "../dist/insights/",
+    "baseUrl": "src"
   }
 }

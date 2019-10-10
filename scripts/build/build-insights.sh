@@ -13,7 +13,7 @@ node ./lib/config/bundle-insights-scss.js || exit 1
 
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/insights/bundles/assets/adf-insights/i18n
-cp -R ./lib/insights/i18n/* ./lib/dist/insights/bundles/assets/adf-insights/i18n
+cp -R ./lib/insights/src/lib/i18n/* ./lib/dist/insights/bundles/assets/adf-insights/i18n
 
 echo "====== Move to node_modules ======"
 rm -rf ./node_modules/@alfresco/adf-insights/ && \

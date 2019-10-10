@@ -114,7 +114,7 @@ import { CoreModule } from '@alfresco/adf-core';
 @NgModule({
     imports: [
         CommonModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [
         DiagramComponent,
