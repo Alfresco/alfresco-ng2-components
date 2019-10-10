@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/* cSpell:disable */
 export const ACTIVITI_CLOUD_APPS: any = {
     CANDIDATE_BASE_APP: {
         name: 'candidatebaseapp',
@@ -36,7 +37,9 @@ export const ACTIVITI_CLOUD_APPS: any = {
         processes: {
             processwithvariables: 'processwithvariables',
             simpleProcess: 'simpleprocess',
-            dropdownrestprocess: 'dropdownrestprocess'
+            dropdownrestprocess: 'dropdownrestprocess',
+            multilingualprocess: 'multilingualprocess',
+            processWithTabVisibility: 'processwithtabvisibility'
         },
         forms: {
             tabVisibilityFields: {
