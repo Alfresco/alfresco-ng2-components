@@ -15,7 +15,8 @@ RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2
 
 if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" || $TRAVIS_PULL_REQUEST == "false"  ]];
 then
-    node ./scripts/check-env/check-activiti-env.js --host "$E2E_HOST_BPM" --oauth "$E2E_HOST_SSO" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --client 'activiti' || exit 1
+    npm install @alfresco/adf-cli@alpha
+    adf-cli init-aae-env --host "$E2E_HOST_BPM" --oauth "$E2E_HOST_SSO" --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --clientId 'activiti' || exit 1
     node ./scripts/check-env/check-cs-env.js --host "$E2E_HOST_BPM" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1
 
     $RUN_E2E --folder $CONTEXT_ENV

@@ -29,6 +29,7 @@ import * as fs from 'fs';
 export interface ConfigArgs {
     username: string;
     password: string;
+    clientId: string;
     host: string;
     oauth: string;
     identityHost: boolean;
@@ -60,7 +61,7 @@ function getAlfrescoJsApiInstance(args: ConfigArgs) {
         authType: 'OAUTH',
         oauth2: {
             host: `${args.oauth}`,
-            clientId: 'activiti',
+            clientId: `${args.clientId}`,
             scope: 'openid',
             secret: '',
             implicitFlow: false,
