@@ -23,7 +23,8 @@ import {
   LogService,
   ThumbnailService,
   ContentLinkModel,
-  NotificationService
+  NotificationService,
+  baseHost
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../services/content-cloud-node-selector.service';
@@ -34,17 +35,7 @@ import { UploadCloudWidgetComponent } from '../upload-cloud.widget';
     selector: 'adf-cloud-attach-file-cloud-widget',
     templateUrl: './attach-file-cloud-widget.component.html',
     styleUrls: ['./attach-file-cloud-widget.component.scss'],
-    host: {
-        '(click)': 'event($event)',
-        '(blur)': 'event($event)',
-        '(change)': 'event($event)',
-        '(focus)': 'event($event)',
-        '(focusin)': 'event($event)',
-        '(focusout)': 'event($event)',
-        '(input)': 'event($event)',
-        '(invalid)': 'event($event)',
-        '(select)': 'event($event)'
-    },
+    host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
@@ -52,12 +43,12 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
     static ACS_SERVICE = 'alfresco-content';
 
     constructor(
-        public formService: FormService,
-        public logger: LogService,
-        public thumbnails: ThumbnailService,
-        public processCloudContentService: ProcessCloudContentService,
-        public contentNodeSelectorService: ContentCloudNodeSelectorService,
-        notificationService: NotificationService
+        formService: FormService,
+        logger: LogService,
+        thumbnails: ThumbnailService,
+        processCloudContentService: ProcessCloudContentService,
+        notificationService: NotificationService,
+        private contentNodeSelectorService: ContentCloudNodeSelectorService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
     }
@@ -127,30 +118,20 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
     }
 
     downloadContent(file: Node): void {
-        this.processCloudContentService
-            .getRawContentNode(file.id, this.field.form.contentHost)
-            .subscribe(
-                (blob: Blob) => {
-                    this.processCloudContentService.downloadNodeContent(
-                        blob,
-                        file.name
-                    );
-                },
-                () => {
-                    this.logger.error(
-                        'Impossible retrieve content for download'
-                    );
-                }
-            );
+        this.processCloudContentService.downloadFile(
+            file.id,
+            this.field.form.contentHost
+        );
     }
 
     onAttachFileClicked(file: ContentLinkModel) {
         this.processCloudContentService
-        .getRawContentNode(file.nodeId, this.field.form.contentHost)
-        .subscribe(
-            (blob: Blob) => {
-                file.contentBlob = blob;
-                this.fileClicked(file);
-            });
+            .getRawContentNode(file.nodeId, this.field.form.contentHost)
+            .subscribe(
+                blob => {
+                    file.contentBlob = blob;
+                    this.fileClicked(file);
+                }
+            );
     }
 }

@@ -21,7 +21,8 @@ import { catchError, map } from 'rxjs/operators';
 import {
     AlfrescoApiService,
     LogService,
-    ContentService
+    ContentService,
+    DownloadService
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 
@@ -32,7 +33,8 @@ export class ProcessCloudContentService {
     constructor(
         private apiService: AlfrescoApiService,
         private logService: LogService,
-        public contentService: ContentService
+        public contentService: ContentService,
+        private downloadService: DownloadService
     ) {}
 
     createTemporaryRawRelatedContent(
@@ -40,12 +42,7 @@ export class ProcessCloudContentService {
         nodeId: string,
         contentHost: string
     ): Observable<Node> {
-        const changedConfig = this.apiService.lastConfig;
-
-        changedConfig.provider = 'ALL';
-        changedConfig.hostEcm = contentHost.replace('/alfresco', '');
-
-        this.apiService.getInstance().setConfig(changedConfig);
+        this.updateConfig(contentHost);
 
         return from(
             this.apiService
@@ -62,16 +59,45 @@ export class ProcessCloudContentService {
         );
     }
 
-    getRawContentNode(nodeId: string, contentHost: string): Observable<any> {
-        const changedConfig = this.apiService.lastConfig;
-        changedConfig.provider = 'ALL';
-        changedConfig.hostEcm = contentHost.replace('/alfresco', '');
-        this.apiService.getInstance().setConfig(changedConfig);
+    getRawContentNode(nodeId: string, contentHost: string): Observable<Blob> {
+        this.updateConfig(contentHost);
         return this.contentService.getNodeContent(nodeId);
     }
 
     downloadNodeContent(blob: Blob, fileName: string): void {
         this.contentService.downloadBlob(blob, fileName);
+    }
+
+    async downloadFile(nodeId: string, contentHost: string) {
+        this.updateConfig(contentHost);
+
+        const ticket = await this.getAuthTicket();
+        const url = this.contentService.getContentUrl(nodeId, true, ticket);
+
+        this.downloadService.downloadUrl(url, nodeId);
+    }
+
+    async getAuthTicket(): Promise<string> {
+        const { auth } = this.apiService.getInstance();
+        const ticket = await auth.authenticationApi.getTicket();
+
+        if (ticket && ticket.entry) {
+            return ticket.entry.id || '';
+        }
+
+        return '';
+    }
+
+    private updateConfig(contentHost: string) {
+        const changedConfig = this.apiService.lastConfig;
+
+        changedConfig.provider = 'ALL';
+
+        if (contentHost) {
+            changedConfig.hostEcm = contentHost.replace('/alfresco', '');
+        }
+
+        this.apiService.getInstance().setConfig(changedConfig);
     }
 
     private handleError(error: any) {

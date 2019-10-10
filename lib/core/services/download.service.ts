@@ -86,4 +86,23 @@ export class DownloadService {
     downloadJSON(json: any, fileName: string): void {
         this.saveData(json, 'json', fileName);
     }
+
+    /**
+     * Invokes the download of the file by its URL address.
+     * @param url Url address pointing to the file.
+     * @param fileName Name of the file download.
+     */
+    downloadUrl(url: string, fileName: string): void {
+        if (url && fileName) {
+            const link = document.createElement('a');
+
+            link.style.display = 'none';
+            link.download = fileName;
+            link.href = url;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
 }

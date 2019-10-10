@@ -20,17 +20,18 @@ import { MatDialog } from '@angular/material';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { DownloadZipDialogComponent } from '../dialogs/download-zip/download-zip.dialog';
 import { NodeEntry } from '@alfresco/js-api';
+import { DownloadService } from '../services/download.service';
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: '[adf-node-download], [adfNodeDownload]'
+    // tslint:disable-next-line: directive-selector
+    selector: '[adfNodeDownload]'
 })
 export class NodeDownloadDirective {
 
     /** Nodes to download. */
-    // tslint:disable-next-line:no-input-rename
     @Input('adfNodeDownload')
     nodes: NodeEntry | NodeEntry[];
 
@@ -41,6 +42,7 @@ export class NodeDownloadDirective {
 
     constructor(
         private apiService: AlfrescoApiService,
+        private downloadService: DownloadService,
         private dialog: MatDialog) {
     }
 
@@ -102,7 +104,7 @@ export class NodeDownloadDirective {
             const url = contentApi.getContentUrl(id, true);
             const fileName = node.entry.name;
 
-            this.download(url, fileName);
+            this.downloadService.downloadUrl(url, fileName);
         }
     }
 
@@ -118,20 +120,6 @@ export class NodeDownloadDirective {
                     nodeIds
                 }
             });
-        }
-    }
-
-    private download(url: string, fileName: string) {
-        if (url && fileName) {
-            const link = document.createElement('a');
-
-            link.style.display = 'none';
-            link.download = fileName;
-            link.href = url;
-
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
         }
     }
 }

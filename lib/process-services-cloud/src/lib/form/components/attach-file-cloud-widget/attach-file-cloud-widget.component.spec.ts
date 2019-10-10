@@ -26,7 +26,8 @@ import {
     FormModel,
     FormFieldTypes,
     FormFieldMetadata,
-    FormService
+    FormService,
+    DownloadService
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -43,6 +44,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     let contentCloudNodeSelectorService: ContentCloudNodeSelectorService;
     let processCloudContentService: ProcessCloudContentService;
     let formService: FormService;
+    let downloadService: DownloadService;
 
     const fakePngAnswer = {
         id: 1155,
@@ -116,6 +118,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     });
 
     beforeEach(async(() => {
+        downloadService = TestBed.get(DownloadService);
         fixture = TestBed.createComponent(AttachFileCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -278,22 +281,29 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         it('should download file when download is clicked', (done) => {
             spyOn(processCloudContentService, 'getRawContentNode').and.returnValue(of(new Blob()));
-            spyOn(processCloudContentService, 'downloadNodeContent').and.stub();
+            spyOn(processCloudContentService, 'getAuthTicket').and.returnValue(Promise.resolve('ticket'));
+            spyOn(downloadService, 'downloadUrl').and.stub();
+
             fixture.detectChanges();
+
             const menuButton: HTMLButtonElement = <HTMLButtonElement> (
                 fixture.debugElement.query(By.css('#file-1155-option-menu'))
                     .nativeElement
             );
+
             menuButton.click();
             fixture.detectChanges();
+
             const downloadOption: HTMLButtonElement = <HTMLButtonElement> (
                 fixture.debugElement.query(By.css('#file-1155-download-file'))
                     .nativeElement
             );
+
             downloadOption.click();
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                expect(processCloudContentService.downloadNodeContent).toHaveBeenCalled();
+                expect(downloadService.downloadUrl).toHaveBeenCalled();
                 done();
             });
         });

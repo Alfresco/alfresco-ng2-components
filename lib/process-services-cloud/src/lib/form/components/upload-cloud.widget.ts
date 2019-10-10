@@ -42,11 +42,11 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     fileInput: ElementRef;
 
     constructor(
-        public formService: FormService,
+        formService: FormService,
         private thumbnailService: ThumbnailService,
-        public processCloudContentService: ProcessCloudContentService,
-        private notificationService: NotificationService,
-        private logService: LogService) {
+        protected processCloudContentService: ProcessCloudContentService,
+        protected notificationService: NotificationService,
+        protected logService: LogService) {
         super(formService);
     }
 
