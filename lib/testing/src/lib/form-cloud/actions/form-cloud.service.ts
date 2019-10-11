@@ -32,9 +32,9 @@ export class FormCloudService {
             const method = 'POST';
 
             const queryParams = {}, postBody = {
-                "values": values,
-                "taskId": taskId,
-                "processInstanceId": processInstanceId
+                'values': values,
+                'taskId': taskId,
+                'processInstanceId': processInstanceId
             };
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
