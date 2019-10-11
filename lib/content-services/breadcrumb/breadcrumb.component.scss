@@ -6,6 +6,7 @@
     $background: map-get($theme, background);
 
     $breadcrumb-chevron-spacer: 2px;
+    $breadcrumb-outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
 
     .adf-breadcrumb {
         display: flex;
@@ -88,7 +89,7 @@
             font-weight: 600;
             letter-spacing: -0.2px;
             text-align: left;
-            opacity: 0.6;
+            color: mat-color($foreground, text, 0.54);
             flex: 0 1 auto;
             min-width: 35px;
             margin-top: auto;
@@ -96,7 +97,7 @@
 
             &:hover,
             &.adf-active {
-                opacity: 1;
+                color: mat-color($foreground, text, 0.64);
             }
 
             &.adf-active {
@@ -131,6 +132,13 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
                 flex: 0 1 auto;
+                padding: 0 2px;
+                text-align: center;
+
+                &:focus {
+                    outline: $breadcrumb-outline;
+                    outline-offset: -1px;
+                }
             }
 
             &-current {
