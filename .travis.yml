@@ -62,6 +62,8 @@ jobs:
           script:
             - ./scripts/travis/build/build.sh || exit 1;
             - ./scripts/lint.sh || exit 1;
+            - cd ./node_modules/@alfresco/adf-process-services-cloud && cat lib/resources/resources.d.ts && cat esm2015/lib/resources/resources.js
+            - cd ../../../
 
         # Run Only on Development and master
         - stage: Lint & Build Dist & Release
@@ -107,7 +109,11 @@ jobs:
           script: ./scripts/travis/e2e/process-services-e2e.sh
         - stage: e2e Test
           name: process Cloud
-          script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
+          script:
+            - cd ./node_modules/@alfresco/adf-process-services-cloud && cat lib/resources/resources.d.ts && cat esm2015/lib/resources/resources.js
+            - cd ../../../
+            - ./scripts/travis/e2e/process-services-cloud-e2e.sh
+
 
 
         - stage: Check bundle

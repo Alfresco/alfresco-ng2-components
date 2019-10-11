@@ -18,7 +18,7 @@ let ENV_FILE = process.env.ENV_FILE;
 let GROUP_SUFFIX = process.env.PREFIX;
 
 RESOURCES.ACTIVITI_CLOUD_APPS = RESOURCES_CLOUD.ACTIVITI_CLOUD_APPS;
-
+console.log('Test:' + RESOURCES_CLOUD.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
 if (ENV_FILE) {
     require('dotenv').config({ path: ENV_FILE });
 }
