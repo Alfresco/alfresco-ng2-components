@@ -32,9 +32,9 @@ export class MessageEventsService {
             const method = 'POST';
 
             const queryParams = {}, postBody = {
-                "name": startMessage,
-                "variables": {},
-                "payloadType": "StartMessagePayload",
+                'name': startMessage,
+                'variables': {},
+                'payloadType': 'StartMessagePayload',
                 ...options
             };
 
@@ -53,10 +53,10 @@ export class MessageEventsService {
             const method = 'PUT';
 
             const queryParams = {}, postBody = {
-                "correlationKey": correlationKey,
-                "name": receiveMessage,
-                "variables": {},
-                "payloadType": "ReceiveMessagePayload",
+                'correlationKey': correlationKey,
+                'name': receiveMessage,
+                'variables': {},
+                'payloadType': 'ReceiveMessagePayload',
                 ...options
             };
 
