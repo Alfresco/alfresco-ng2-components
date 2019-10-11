@@ -39,6 +39,19 @@ export class QueryService {
         }
     }
 
+    async getProcessInstance(processInstanceId, appName): Promise<any> {
+        try {
+            const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId;
+            const method = 'GET';
+
+            const queryParams = {}, postBody = {};
+
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
+        } catch (error) {
+            Logger.error('get process-instance Service error');
+        }
+    }
+
     async getProcessInstanceSubProcesses(processInstanceId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/subprocesses';
