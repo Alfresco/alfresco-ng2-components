@@ -304,7 +304,7 @@ describe('Task cloud visibility', async () => {
         await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
     });
 
-    it('[C312400] Should validate visibility condition for required number widgets', async () => {
+    it('[C315170] Should be able to complete a task with a form with required number widgets', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
         await startTask.addName(standaloneTaskName);
@@ -354,7 +354,7 @@ describe('Task cloud visibility', async () => {
         await taskFormCloudComponent.clickCompleteButton();
     });
 
-    it('[C315232] Should be able to complete a process with visibility condition for number widgets', async () => {
+    it('[C315232] Should be able to complete a process with visibility condition for boolean widgets', async () => {
 
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
