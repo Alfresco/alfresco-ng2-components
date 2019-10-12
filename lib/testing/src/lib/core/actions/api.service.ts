@@ -63,7 +63,7 @@ export class ApiService {
         return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
             contentTypes, accepts, Object)
             .catch((error) => {
-                throw (error);
+                return (error);
             });
     }
 
