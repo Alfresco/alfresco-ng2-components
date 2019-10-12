@@ -153,6 +153,10 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     toggleConfirmation() {
         this.isConfirmation = !this.isConfirmation;
 
+        if (!this.isConfirmation) {
+            this.dialogActive.next();
+        }
+
         if (this.isDialogMinimized) {
             this.isDialogMinimized = false;
         }
@@ -163,7 +167,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
      */
     cancelAllUploads() {
         this.toggleConfirmation();
-
+        this.dialogActive.next();
         this.uploadList.cancelAllFiles();
     }
 
