@@ -28,12 +28,14 @@ import { FileUploadErrorPipe } from './pipes/file-upload-error.pipe';
 import { CoreModule } from '@alfresco/adf-core';
 import { FileDraggableDirective } from './directives/file-draggable.directive';
 import { ToggleIconDirective } from './directives/toggle-icon.directive';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @NgModule({
     imports: [
         CoreModule.forChild(),
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        A11yModule
     ],
     declarations: [
         FileDraggableDirective,

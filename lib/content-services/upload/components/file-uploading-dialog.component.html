@@ -107,7 +107,7 @@
     </footer>
 
     <footer class="adf-upload-dialog__actions"
-            *ngIf="isConfirmation">
+            *ngIf="isConfirmation" cdkTrapFocus cdkTrapFocusAutoCapture>
         <button
             id="adf-upload-dialog-cancel"
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CONFIRMATION.CANCEL' | translate"
