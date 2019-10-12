@@ -164,6 +164,26 @@ describe('FileUploadingDialogComponent', () => {
 
             expect(component.isDialogMinimized).toBe(false);
         });
+
+        it('should focus on dialog when coming from confirmation', fakeAsync(() => {
+            uploadService.addToQueue(...fileList);
+            uploadService.uploadFilesInTheQueue(emitter);
+
+            fixture.detectChanges();
+            tick(100);
+
+            component.toggleConfirmation();
+            fixture.detectChanges();
+            tick(100);
+
+            expect(document.activeElement.id).not.toBe('upload-dialog');
+
+            component.toggleConfirmation();
+            fixture.detectChanges();
+            tick(100);
+
+            expect(document.activeElement.id).toBe('upload-dialog');
+        }));
     });
 
     describe('cancelAllUploads()', () => {
