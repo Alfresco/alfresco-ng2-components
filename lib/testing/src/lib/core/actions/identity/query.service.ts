@@ -73,7 +73,7 @@ export class QueryService {
             const queryParams = {}, postBody = {};
 
             const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-            for (let i=0; i < data.list.entries.length; i++) {
+            for (let i = 0; i < data.list.entries.length; i++) {
                 if (data.list.entries[i].entry.name === taskName) {
                     return data.list.entries[i];
                 }
