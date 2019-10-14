@@ -29,7 +29,7 @@ else if [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
         if [[ $LIST_SPECS != "" ]];
         then
             echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
-            cd ./node_modules/@alfresco/adf-process-services-cloud && cat lib/resources/resources.d.ts && cat esm2015/lib/resources/resources.js
+            cd ./node_modules/@alfresco/adf-testing && cat lib/process-services-cloud/resources/resources.d.ts && cat esm2015/lib/process-services-cloud/resources/resources.js
             cd ../../../
             $RUN_E2E --specs "$LIST_SPECS"
         fi
