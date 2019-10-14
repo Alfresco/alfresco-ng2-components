@@ -10,7 +10,6 @@
         "noLib": false,
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
-        "strict": true,
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         "noImplicitAny": false,
