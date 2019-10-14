@@ -436,7 +436,7 @@ export class FormService {
      * @param userId ID of the target user
      * @returns URL string
      */
-    getUserProfileImageApi(userId: number): string {
+    getUserProfileImageApi(userId: string): string {
         return this.apiService.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
     }
 
@@ -453,9 +453,9 @@ export class FormService {
         }
         return from(this.usersWorkflowApi.getUsers(option))
             .pipe(
-                switchMap((response: any) => <UserProcessModel[]> response.data || []),
-                map((user: any) => {
-                    user.userImage = this.getUserProfileImageApi(user.id);
+                switchMap(response => <UserProcessModel[]> response.data || []),
+                map((user) => {
+                    user.userImage = this.getUserProfileImageApi(user.id.toString());
                     return of(user);
                 }),
                 combineAll(),
