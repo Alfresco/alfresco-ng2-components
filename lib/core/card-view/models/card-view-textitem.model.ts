@@ -39,7 +39,7 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
         }
     }
 
-    get displayValue() {
+    get displayValue(): string {
         if (this.pipes.length) {
             this.value = this.pipes.reduce((accumulator, { pipe, params = [] }) => {
                 return pipe.transform(accumulator, ...params);

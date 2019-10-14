@@ -22,6 +22,6 @@ export class CardViewItemIntValidator implements CardViewItemValidator {
     message = 'CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR';
 
     isValid(value: any): boolean {
-        return !value || !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value));
+        return !value || !isNaN(value) && Number.isInteger(value);
     }
 }
