@@ -18,7 +18,6 @@
 import { StringUtil } from '../utils/string.util';
 import { browser } from 'protractor';
 
-
 export class UserModel {
 
     EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
