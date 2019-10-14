@@ -576,7 +576,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return this.getVisibleActions(this.rowMenuCache[id]);
     }
 
-    getVisibleActions(actions: any[]) {
+    getVisibleActions(actions: any[]): any[] {
         return actions.filter((action) => action.visible || action.visible === undefined);
     }
 
