@@ -18,7 +18,7 @@
  */
 
 import { logging } from '@angular-devkit/core';
-import { ACTIVITI_CLOUD_APPS } from '@alfresco/adf-process-services-cloud';
+import { ACTIVITI_CLOUD_APPS } from '@alfresco/adf-testing';
 
 /* tslint:disable */
 const alfrescoApi = require('@alfresco/js-api');

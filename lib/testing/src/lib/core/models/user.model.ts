@@ -18,14 +18,15 @@
 import { StringUtil } from '../utils/string.util';
 import { browser } from 'protractor';
 
-const EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
 
 export class UserModel {
+
+    EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
 
     firstName: string = StringUtil.generateRandomString();
     lastName: string = StringUtil.generateRandomString();
     password: string = StringUtil.generateRandomString();
-    email: string = StringUtil.generateRandomEmail(`@${EMAIL_DOMAIN}.com`);
+    email: string = StringUtil.generateRandomEmail(`@${this.EMAIL_DOMAIN}.com`);
     username: string = StringUtil.generateRandomString().toLowerCase();
     idIdentityService: string;
 

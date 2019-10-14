@@ -17,51 +17,50 @@
 
 import { browser, by, element, ElementFinder, protractor } from 'protractor';
 
-const until = protractor.ExpectedConditions;
 const DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 40000;
 
 export class BrowserVisibility {
 
     static async waitUntilElementIsPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
+        return browser.wait(protractor.ExpectedConditions.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
     }
     /*
      * Wait for element to be visible
      */
     static async waitUntilElementIsVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = 'Element is not visible'): Promise<any> {
-        return browser.wait(until.visibilityOf(elementToCheck), waitTimeout, message + elementToCheck.locator());
+        return browser.wait(protractor.ExpectedConditions.visibilityOf(elementToCheck), waitTimeout, message + elementToCheck.locator());
     }
 
     /*
      * Wait for element to be clickable
      */
     static async waitUntilElementIsClickable(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(until.elementToBeClickable(elementToCheck), waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
+        return browser.wait(protractor.ExpectedConditions.elementToBeClickable(elementToCheck), waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
     }
 
     /*
     * Wait for element to not be present on the page
     */
     static async waitUntilElementIsStale(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(until.stalenessOf(elementToCheck), waitTimeout, 'Element is not in stale ' + elementToCheck.locator());
+        return browser.wait(protractor.ExpectedConditions.stalenessOf(elementToCheck), waitTimeout, 'Element is not in stale ' + elementToCheck.locator());
     }
 
     /*
      * Wait for element to not be visible
      */
     static async waitUntilElementIsNotVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(until.invisibilityOf(elementToCheck), waitTimeout, 'Element is Visible and it should not' + elementToCheck.locator());
+        return browser.wait(protractor.ExpectedConditions.invisibilityOf(elementToCheck), waitTimeout, 'Element is Visible and it should not' + elementToCheck.locator());
     }
 
     /*
      * Wait for element to have value
      */
     static async waitUntilElementHasValue(elementToCheck: ElementFinder, elementValue, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(until.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, 'Element doesn\'t have a value ' + elementToCheck.locator());
+        return browser.wait(protractor.ExpectedConditions.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, 'Element doesn\'t have a value ' + elementToCheck.locator());
     }
 
     static async waitUntilElementIsNotPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
-        return browser.wait(until.stalenessOf(elementToCheck), waitTimeout, 'Element is present ' + elementToCheck.locator());
+        return browser.wait(protractor.ExpectedConditions.stalenessOf(elementToCheck), waitTimeout, 'Element is present ' + elementToCheck.locator());
     }
 
     static async waitUntilDialogIsClose(): Promise<any> {
