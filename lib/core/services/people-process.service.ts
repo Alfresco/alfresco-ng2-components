@@ -52,7 +52,7 @@ export class PeopleProcessService {
      * @returns Profile picture URL
      */
     getUserImage(user: UserProcessModel): string {
-        return this.getUserProfileImageApi(user.id);
+        return this.getUserProfileImageApi(user.id.toString());
     }
 
     /**
@@ -95,7 +95,7 @@ export class PeopleProcessService {
         return this.alfrescoJsApi.getInstance().activiti.taskActionsApi.removeInvolvedUser(taskId, node);
     }
 
-    private getUserProfileImageApi(userId: number) {
+    private getUserProfileImageApi(userId: string): string {
         return this.alfrescoJsApi.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
     }
 
