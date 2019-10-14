@@ -18,7 +18,7 @@
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, from, throwError, of } from 'rxjs';
 import { ParameterValueModel } from '../../diagram/models/report/parameterValue.model';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
 import { BarChart } from '../../diagram/models/chart/barChart.model';
@@ -40,7 +40,7 @@ export class AnalyticsService {
     /**
      * Retrieve all the Deployed app
      */
-    getReportList(appId: number): Observable<any> {
+    getReportList(appId: number): Observable<ReportParametersModel[]> {
         return from(this.apiService.getInstance().activiti.reportApi.getReportList())
             .pipe(
                 map((res: any) => {
@@ -79,7 +79,7 @@ export class AnalyticsService {
         return isValid;
     }
 
-    getReportParams(reportId: string): Observable<any> {
+    getReportParams(reportId: string): Observable<ReportParametersModel> {
         return from(this.apiService.getInstance().activiti.reportApi.getReportParams(reportId))
             .pipe(
                 map((res: any) => {
@@ -89,7 +89,7 @@ export class AnalyticsService {
             );
     }
 
-    getParamValuesByType(type: string, appId: number, reportId?: string, processDefinitionId?: string) {
+    getParamValuesByType(type: string, appId: number, reportId?: string, processDefinitionId?: string): Observable<ParameterValueModel[]> {
         if (type === 'status') {
             return this.getProcessStatusValues();
         } else if (type === 'processDefinition') {
@@ -103,27 +103,21 @@ export class AnalyticsService {
         } else if (type === 'task' && reportId && processDefinitionId) {
             return this.getTasksByProcessDefinitionId(reportId, processDefinitionId);
         } else {
-            return new Observable((observer) => {
-                observer.next(null);
-                observer.complete();
-            });
+            return of(null);
         }
     }
 
-    getProcessStatusValues(): Observable<any> {
+    getProcessStatusValues(): Observable<ParameterValueModel[]> {
         const paramOptions: ParameterValueModel[] = [];
 
         paramOptions.push(new ParameterValueModel({ id: 'All', name: 'All' }));
         paramOptions.push(new ParameterValueModel({ id: 'Active', name: 'Active' }));
         paramOptions.push(new ParameterValueModel({ id: 'Complete', name: 'Complete' }));
 
-        return new Observable((observer) => {
-            observer.next(paramOptions);
-            observer.complete();
-        });
+        return of(paramOptions);
     }
 
-    getDateIntervalValues(): Observable<any> {
+    getDateIntervalValues(): Observable<ParameterValueModel[]> {
         const paramOptions: ParameterValueModel[] = [];
 
         paramOptions.push(new ParameterValueModel({ id: 'byHour', name: 'By hour' }));
@@ -132,26 +126,20 @@ export class AnalyticsService {
         paramOptions.push(new ParameterValueModel({ id: 'byMonth', name: 'By month' }));
         paramOptions.push(new ParameterValueModel({ id: 'byYear', name: 'By year' }));
 
-        return new Observable((observer) => {
-            observer.next(paramOptions);
-            observer.complete();
-        });
+        return of(paramOptions);
     }
 
-    getMetricValues(): Observable<any> {
+    getMetricValues(): Observable<ParameterValueModel[]> {
         const paramOptions: ParameterValueModel[] = [];
 
         paramOptions.push(new ParameterValueModel({ id: 'totalCount', name: 'Number of times a step is executed' }));
         paramOptions.push(new ParameterValueModel({ id: 'totalTime', name: 'Total time spent in a process step' }));
         paramOptions.push(new ParameterValueModel({ id: 'avgTime', name: 'Average time spent in a process step' }));
 
-        return new Observable((observer) => {
-            observer.next(paramOptions);
-            observer.complete();
-        });
+        return of(paramOptions);
     }
 
-    getProcessDefinitionsValuesNoApp(): Observable<any> {
+    getProcessDefinitionsValuesNoApp(): Observable<ParameterValueModel[]> {
         return from(this.apiService.getInstance().activiti.reportApi.getProcessDefinitions())
             .pipe(
                 map((res: any) => {
@@ -165,7 +153,7 @@ export class AnalyticsService {
             );
     }
 
-    getProcessDefinitionsValues(appId: number): Observable<any> {
+    getProcessDefinitionsValues(appId: number): Observable<ParameterValueModel[]> {
         const options = { 'appDefinitionId': appId };
         return from(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(options))
             .pipe(
@@ -180,7 +168,7 @@ export class AnalyticsService {
             );
     }
 
-    getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<any> {
+    getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<ParameterValueModel[]> {
         return from(this.apiService.getInstance().activiti.reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId))
             .pipe(
                 map((res: any) => {
