@@ -214,20 +214,6 @@ describe('EditTaskFilterCloudComponent', () => {
             });
         }));
 
-        it('should display status drop down', async(() => {
-            fixture.detectChanges();
-            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            fixture.detectChanges();
-            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-status"] .mat-select-trigger');
-            stateElement.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const statusOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(statusOptions.length).toEqual(5);
-            });
-        }));
-
         it('should display all the statuses that are defined in the task filter', async(() => {
 
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
