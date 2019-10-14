@@ -242,9 +242,9 @@ describe('EditTaskFilterCloudComponent', () => {
 
             expect(statusOptions[0].nativeElement.textContent.trim()).toBe('ALL');
             expect(statusOptions[1].nativeElement.textContent.trim()).toBe('CREATED');
-            expect(statusOptions[2].nativeElement.textContent.trim()).toBe('SUSPENDED');
-            expect(statusOptions[3].nativeElement.textContent.trim()).toBe('CANCELLED');
-            expect(statusOptions[4].nativeElement.textContent.trim()).toBe('ASSIGNED');
+            expect(statusOptions[2].nativeElement.textContent.trim()).toBe('ASSIGNED');
+            expect(statusOptions[3].nativeElement.textContent.trim()).toBe('SUSPENDED');
+            expect(statusOptions[4].nativeElement.textContent.trim()).toBe('CANCELLED');
             expect(statusOptions[5].nativeElement.textContent.trim()).toBe('COMPLETED');
         }));
 
