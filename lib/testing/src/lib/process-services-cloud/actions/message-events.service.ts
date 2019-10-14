@@ -41,7 +41,6 @@ export class MessageEventsService {
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
-            // tslint:disable-next-line:no-console
             Logger.error('Start Message Event Service not working', error.message);
         }
 
@@ -62,7 +61,6 @@ export class MessageEventsService {
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
-            // tslint:disable-next-line:no-console
             Logger.error('Receive Message Event Service not working', error.message);
         }
     }
