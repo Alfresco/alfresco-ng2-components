@@ -35,7 +35,7 @@ import {
     AppConfigValues
 } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../../models/oauth-config.model';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -362,7 +362,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         event.target.value = event.target.value.trim();
     }
 
-    getBackgroundUrlImageUrl() {
+    getBackgroundUrlImageUrl(): SafeStyle {
         return  this.sanitizer.bypassSecurityTrustStyle(`url(${this.backgroundImageUrl})`);
     }
 
