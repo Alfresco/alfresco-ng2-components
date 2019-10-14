@@ -46,7 +46,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
             nonintboundaryevent: 'nonint-boundary-event',
             intboundarysubprocess: 'int-boundary-subprocess',
             intstartmessageevent: 'int-start-message-event',
-            nonintstartmessageevent: 'nonint-start-message-event',
+            nonintstartmessageevent: 'nonint-start-message-event'
         },
         forms: {
             tabVisibilityFields: {
