@@ -212,7 +212,7 @@ export class AnalyticsService {
     createDefaultReports(): Observable<any> {
         return from(this.apiService.getInstance().activiti.reportApi.createDefaultReports())
             .pipe(
-                map(this.toJson),
+                map(res => res || {}),
                 catchError((err) => this.handleError(err))
             );
     }
@@ -259,9 +259,5 @@ export class AnalyticsService {
     private handleError(error: Response) {
         this.logService.error(error);
         return throwError(error || 'Server error');
-    }
-
-    toJson(res: any) {
-        return res || {};
     }
 }
