@@ -315,7 +315,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     public editTitle() {
         this.analyticsService
-            .updateReport(this.reportParameters.id, this.reportParameters.name)
+            .updateReport(`${this.reportParameters.id}`, this.reportParameters.name)
             .subscribe(
                 () => {
                     this.editDisable();

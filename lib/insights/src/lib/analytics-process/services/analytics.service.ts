@@ -182,7 +182,7 @@ export class AnalyticsService {
             );
     }
 
-    getReportsByParams(reportId: number, paramsQuery: any): Observable<any> {
+    getReportsByParams(reportId: string, paramsQuery: any): Observable<any> {
         return from(this.apiService.getInstance().activiti.reportApi.getReportsByParams(reportId, paramsQuery))
             .pipe(
                 map((res: any) => {
@@ -217,7 +217,7 @@ export class AnalyticsService {
             );
     }
 
-    updateReport(reportId: number, name: string): Observable<any> {
+    updateReport(reportId: string, name: string): Observable<any> {
         return from(this.apiService.getInstance().activiti.reportApi.updateReport(reportId, name))
             .pipe(
                 map(() => this.logService.info('upload')),

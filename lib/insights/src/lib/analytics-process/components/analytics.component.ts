@@ -54,8 +54,8 @@ export class AnalyticsComponent implements OnChanges {
         this.analyticsGenerator.reset();
     }
 
-    public showReport($event) {
-        this.analyticsGenerator.generateReport(this.reportId, $event);
+    public showReport($event: any) {
+        this.analyticsGenerator.generateReport(`${this.reportId}`, $event);
     }
 
     public reset() {
