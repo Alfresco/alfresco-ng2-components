@@ -543,7 +543,9 @@ exports.ACTIVITI7_APPS = {
         processes: {
             processwithvariables: "processwithvariables",
             simpleProcess: "simpleprocess",
-            dropdownrestprocess: "dropdownrestprocess"
+            dropdownrestprocess: "dropdownrestprocess",
+            startEventForm: "start-visibility-form",
+            startEventTaskForm: "start-task-visibility-form"
         },
         forms: {
             tabVisibilityFields: {
@@ -553,6 +555,10 @@ exports.ACTIVITI7_APPS = {
             tabVisibilityVars: {
                 name: "tabvisibilitywithvars",
                 id: "form-7bf363d2-83c9-4b00-853e-373d0d59963c"
+            },
+            fieldVisibility: {
+                name: "form-visibility",
+                id: "form-30418ed3-2beb-464f-ad51-4ca5da02f6d8"
             }
         }
     },
