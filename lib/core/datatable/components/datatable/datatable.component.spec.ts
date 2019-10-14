@@ -554,6 +554,20 @@ describe('DataTable', () => {
         expect(actions.length).toBe(4);
     });
 
+    it('should show only visible actions', () => {
+        const unfilteredActions = [
+            { title: 'action1', name: 'view1', visible: true },
+            { title: 'action2', name: 'view2', visible: false },
+            { title: 'action3', name: 'view3', visible: null },
+            { title: 'action4', name: 'view4' }
+        ];
+
+        const actions = dataTable.getVisibleActions(unfilteredActions);
+        expect(actions.length).toBe(2);
+        expect(actions[0].title).toBe('action1');
+        expect(actions[1].title).toBe('action4');
+    });
+
     it('should initialize default adapter', () => {
         const table = new DataTableComponent(null, null);
         expect(table.data).toBeUndefined();
@@ -591,8 +605,8 @@ describe('DataTable', () => {
 
         dataTable.onRowClick(row, null);
         setTimeout(() => {
-                dataTable.onRowClick(row, null);
-            }
+            dataTable.onRowClick(row, null);
+        }
             , 240);
 
     });
@@ -609,9 +623,9 @@ describe('DataTable', () => {
         dataTable.onRowClick(row, null);
         setTimeout(() => {
 
-                dataTable.onRowClick(row, null);
-                dataTable.onRowClick(row, null);
-            }
+            dataTable.onRowClick(row, null);
+            dataTable.onRowClick(row, null);
+        }
             , 240);
 
     });
@@ -632,8 +646,8 @@ describe('DataTable', () => {
 
         dataTable.onRowClick(row, null);
         setTimeout(() => {
-                dataTable.onRowClick(row, null);
-            }
+            dataTable.onRowClick(row, null);
+        }
             , 260);
     });
 
@@ -752,14 +766,14 @@ describe('DataTable', () => {
 
     it('should indicate column that has sorting applied', () => {
         dataTable.data = new ObjectDataTableAdapter(
-            [ { name: '1' }, { name: '2' } ],
+            [{ name: '1' }, { name: '2' }],
             [
                 new ObjectDataColumn({ key: 'name', sortable: true }),
-                new ObjectDataColumn({ key: 'other', sortable: true  })
+                new ObjectDataColumn({ key: 'other', sortable: true })
             ]
         );
 
-        const [col1, col2] =  dataTable.getSortableColumns();
+        const [col1, col2] = dataTable.getSortableColumns();
 
         dataTable.onColumnHeaderClick(col2);
 
@@ -769,14 +783,14 @@ describe('DataTable', () => {
 
     it('should return false for columns that have no sorting', () => {
         dataTable.data = new ObjectDataTableAdapter(
-            [ { name: '1' }, { name: '2' } ],
+            [{ name: '1' }, { name: '2' }],
             [
                 new ObjectDataColumn({ key: 'name', sortable: false }),
-                new ObjectDataColumn({ key: 'other', sortable: false  })
+                new ObjectDataColumn({ key: 'other', sortable: false })
             ]
         );
 
-        const [col1, col2] =  dataTable.getSortableColumns();
+        const [col1, col2] = dataTable.getSortableColumns();
 
         expect(dataTable.isColumnSortActive(col1)).toBe(false);
         expect(dataTable.isColumnSortActive(col2)).toBe(false);
@@ -796,7 +810,7 @@ describe('DataTable', () => {
         dataTable.data = data;
         dataTable.multiselect = true;
         dataTable.ngAfterContentInit();
-        dataTable.onSelectAllClick(<MatCheckboxChange> {checked: true });
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
 
         expect(dataTable.selection.every((entry) => entry.isSelected));
 
@@ -814,13 +828,13 @@ describe('DataTable', () => {
         dataTable.multiselect = true;
         dataTable.ngAfterContentInit();
 
-        dataTable.onSelectAllClick(<MatCheckboxChange> {checked: true });
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
         expect(dataTable.isSelectAllChecked).toBe(true);
         for (let i = 0; i < rows.length; i++) {
             expect(rows[i].isSelected).toBe(true);
         }
 
-        dataTable.onSelectAllClick(<MatCheckboxChange> {checked: false });
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: false });
         expect(dataTable.isSelectAllChecked).toBe(false);
         for (let i = 0; i < rows.length; i++) {
             expect(rows[i].isSelected).toBe(false);
@@ -831,7 +845,7 @@ describe('DataTable', () => {
         dataTable.multiselect = true;
         dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
 
-        dataTable.onSelectAllClick(<MatCheckboxChange> {checked: true });
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
         expect(dataTable.isSelectAllChecked).toBe(true);
     });
 
@@ -843,7 +857,7 @@ describe('DataTable', () => {
         dataTable.multiselect = false;
         dataTable.ngAfterContentInit();
 
-        dataTable.onSelectAllClick(<MatCheckboxChange> {checked: true });
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
         expect(dataTable.isSelectAllChecked).toBe(true);
         for (let i = 0; i < rows.length; i++) {
             expect(rows[i].isSelected).toBe(false);
@@ -1139,7 +1153,7 @@ describe('Accesibility', () => {
         let column: DataColumn;
 
         beforeEach(() => {
-            column  = new ObjectDataColumn({ key: 'key' });
+            column = new ObjectDataColumn({ key: 'key' });
         });
 
         it('should return correct translation key when no sort is applied', () => {
