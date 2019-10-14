@@ -31,7 +31,7 @@ import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
-import { fakeFilter, fakeAllTaskFilter } from '../mock/task-filters-cloud.mock';
+import { fakeFilter } from '../mock/task-filters-cloud.mock';
 import { AbstractControl } from '@angular/forms';
 import moment from 'moment-es6';
 
@@ -74,7 +74,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
     it('should fetch task filter by taskId', () => {
         const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-        component.ngOnChanges({ 'id': taskFilterIdChange});
+        component.ngOnChanges({ 'id': taskFilterIdChange });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(getTaskFilterSpy).toHaveBeenCalled();
@@ -88,7 +88,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
     it('should display filter name as title', async(() => {
         const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-        component.ngOnChanges({ 'id': taskFilterIdChange});
+        component.ngOnChanges({ 'id': taskFilterIdChange });
         fixture.detectChanges();
         const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-task-filter-title-id');
         const subTitle = fixture.debugElement.nativeElement.querySelector('#adf-edit-task-filter-sub-title-id');
@@ -132,12 +132,12 @@ describe('EditTaskFilterCloudComponent', () => {
 
         beforeEach(() => {
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({'id': taskFilterIdChange});
+            component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
         });
 
         it('should defined editTaskFilter form ', () => {
-             expect(component.editTaskFilterForm).toBeDefined();
+            expect(component.editTaskFilterForm).toBeDefined();
         });
 
         it('should create editTaskFilter form with default properties', async(() => {
@@ -228,13 +228,7 @@ describe('EditTaskFilterCloudComponent', () => {
             });
         }));
 
-        it('should select \'All\' option in Task Status if All filter is set', async(() => {
-
-            getTaskFilterSpy.and.returnValue(of(fakeAllTaskFilter));
-
-            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange});
-            fixture.detectChanges();
+        it('should display all the statuses that are defined in the task filter', async(() => {
 
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -244,9 +238,14 @@ describe('EditTaskFilterCloudComponent', () => {
             stateElement.click();
             fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                expect(stateElement.textContent.trim()).toBe('ALL');
-            });
+            const statusOptions = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-edit-task-property-options-status"]'));
+
+            expect(statusOptions[0].nativeElement.textContent.trim()).toBe('ALL');
+            expect(statusOptions[1].nativeElement.textContent.trim()).toBe('CREATED');
+            expect(statusOptions[2].nativeElement.textContent.trim()).toBe('CANCELLED');
+            expect(statusOptions[3].nativeElement.textContent.trim()).toBe('ASSIGNED');
+            expect(statusOptions[4].nativeElement.textContent.trim()).toBe('COMPLETED');
+            expect(statusOptions[5].nativeElement.textContent.trim()).toBe('SUSPENDED');
         }));
 
         it('should display sort drop down', async(() => {
@@ -279,7 +278,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should able to build a editTaskFilter form with default properties if input is empty', async(() => {
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange});
+            component.ngOnChanges({ 'id': taskFilterIdChange });
             component.filterProperties = [];
             fixture.detectChanges();
             const stateController = component.editTaskFilterForm.get('status');
@@ -303,7 +302,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.filterProperties = ['appName', 'processInstanceId', 'priority'];
             fixture.detectChanges();
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange});
+            component.ngOnChanges({ 'id': taskFilterIdChange });
             const appController = component.editTaskFilterForm.get('appName');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -318,7 +317,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should display default sort properties', async(() => {
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange});
+            component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -344,7 +343,7 @@ describe('EditTaskFilterCloudComponent', () => {
             }));
             fixture.detectChanges();
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange});
+            component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -365,7 +364,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should display default sort properties if input is empty', async(() => {
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange});
+            component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
             component.sortProperties = [];
             fixture.detectChanges();
@@ -390,7 +389,7 @@ describe('EditTaskFilterCloudComponent', () => {
         it('should display default filter actions', async(() => {
             component.toggleFilterActions = true;
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange});
+            component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -414,7 +413,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.actions = ['save'];
             fixture.detectChanges();
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange});
+            component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
             component.toggleFilterActions = true;
             fixture.detectChanges();
@@ -434,7 +433,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.toggleFilterActions = true;
             component.actions = [];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange});
+            component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -458,7 +457,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'lastModified'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange});
+            component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
 
             const lastModifiedToControl: AbstractControl = component.editTaskFilterForm.get('lastModifiedTo');
@@ -482,7 +481,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         beforeEach(() => {
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange});
+            component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
 
         });
