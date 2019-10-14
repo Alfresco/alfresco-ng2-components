@@ -47,13 +47,12 @@ export class MessageEventsService {
 
     }
 
-    async receiveMessageEvent(receiveMessage, correlationKey, appName, options?: any) {
+    async receiveMessageEvent(receiveMessage, appName, options?: any) {
         try {
             const path = '/' + appName + '/rb/v1/process-instances/message';
             const method = 'PUT';
 
             const queryParams = {}, postBody = {
-                'correlationKey': correlationKey,
                 'name': receiveMessage,
                 'variables': {},
                 'payloadType': 'ReceiveMessagePayload',
