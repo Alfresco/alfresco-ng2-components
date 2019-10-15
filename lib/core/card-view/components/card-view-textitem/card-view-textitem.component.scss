@@ -13,7 +13,7 @@
             color: mat-color($foreground, text, 0.25);
         }
 
-        &-textitem-action:hover, &-textitem-action:focus  {
+        &-textitem-action:hover, &-textitem-action:focus {
             color: mat-color($foreground, text);
         }
 
@@ -30,7 +30,7 @@
         }
 
         &-textitem-clickable {
-            &:hover .adf-textitem-action{
+            &:hover .adf-textitem-action {
                 color: mat-color($foreground, text);
             }
         }
