@@ -14,8 +14,11 @@
     </span>
     <span *ngIf="isEditable()">
         <div *ngIf="!inEdit" role="button"
+            tabindex="0"
             [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-            (click)="setEditMode(true)" class="adf-textitem-readonly"
+            (click)="setEditMode(true)"
+            (keydown.enter)="setEditMode(true)"
+            class="adf-textitem-readonly"
             [attr.data-automation-id]="'card-textitem-edit-toggle-' + property.key"
             fxLayout="row" fxLayoutAlign="space-between center">
             <span [attr.data-automation-id]="'card-textitem-value-' + property.key">
