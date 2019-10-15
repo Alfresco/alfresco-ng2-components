@@ -22,9 +22,9 @@ export const ACTIVITI_CLOUD_APPS: any = {
         file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/development/e2e/resources/activiti7/candidatebaseapp.zip?raw=true',
         processes: {
             candidateUserProcess: 'candidateUserProcess',
-            candidateGroupProcess: 'candidateGroupProcess',
-            anotherCandidateGroupProcess: 'anotherCandidateGroupProcess',
-            uploadFileProcess: 'uploadFileProcess'
+            candidateGroupProcess: 'candidategroupprocess',
+            anotherCandidateGroupProcess: 'anothercandidategroup',
+            uploadFileProcess: 'uploadfileprocess'
         },
         security: [
             {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},

@@ -221,6 +221,11 @@ fi
 echo "====== Update webdriver-manager ====="
 ./node_modules/protractor/bin/webdriver-manager update --gecko=false
 
+export DEBUG_OPTION=''
+if [[  $DEBUG == "true" ]]; then
+  DEBUG_OPTION=' node --inspect-brk '
+fi
+
 if [[  $DEVELOPMENT == "true" ]]; then
     echo "====== Run against local development  ====="
     npm run e2e-lib || exit 1
@@ -243,14 +248,8 @@ else
           sed  -e "s/\"ecmHost\": \".*\"/\"ecmHost\": \"${encoded}\"/g"  "${sedi[@]}"  demo-shell/dist/app.config.json
         fi
 
-        npm run lite-server-e2e>/dev/null & ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
+        npm run lite-server-e2e>/dev/null & $DEBUG_OPTION ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
      else
-        if [[  $DEBUG == "true" ]]; then
-            echo "====== DEBUG   npm run lite-server-e2e>/dev/null & ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
-     else====="
-            node --inspect-brk ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
-        else
-            ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
-        fi
+        $DEBUG_OPTION  ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
     fi
 fi
