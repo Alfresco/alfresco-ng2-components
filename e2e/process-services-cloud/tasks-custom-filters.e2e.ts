@@ -178,7 +178,7 @@ describe('Task filters cloud', () => {
 
             const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
-            const taskAssigned = await queryService.getProcessInstanceTasks(processInstance.entry.id,simpleApp);
+            const taskAssigned = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
 
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
 
