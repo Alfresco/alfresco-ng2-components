@@ -34,6 +34,8 @@ export class NotificationHistoryComponent implements OnDestroy {
 
     notifications: NotificationModel[] = [];
 
+    MAX_NOTIFICATION_STACK_LENGTH = 100;
+
     @ViewChild(MatMenuTrigger)
     trigger: MatMenuTrigger;
 
@@ -52,6 +54,11 @@ export class NotificationHistoryComponent implements OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((message) => {
                 this.notifications.push(message);
+
+                if(this.notifications.length > this.MAX_NOTIFICATION_STACK_LENGTH) {
+                    this.notifications.shift();
+                }
+                
                 storageService.setItem('notifications', JSON.stringify(this.notifications));
             });
     }
