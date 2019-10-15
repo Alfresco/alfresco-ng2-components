@@ -30,7 +30,7 @@ import {
     ViewEncapsulation,
     OnDestroy
 } from '@angular/core';
-import { NodePaging } from '@alfresco/js-api';
+import { NodePaging, ResultSetPaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
@@ -165,9 +165,9 @@ export class SearchComponent implements AfterContentInit, OnChanges, OnDestroy {
         }
     }
 
-    onSearchDataLoaded(nodePaging: NodePaging) {
-        if (nodePaging) {
-            this.results = nodePaging;
+    onSearchDataLoaded(resultSetPaging: ResultSetPaging) {
+        if (resultSetPaging) {
+            this.results = <NodePaging> resultSetPaging;
             this.resultLoaded.emit(this.results);
             this.isOpen = true;
             this.setVisibility();

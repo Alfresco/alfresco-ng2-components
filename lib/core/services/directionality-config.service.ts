@@ -18,7 +18,7 @@
 import { Injectable, Inject, Renderer2, RendererFactory2 } from '@angular/core';
 import { Directionality, Direction } from '@angular/cdk/bidi';
 import { UserPreferencesService } from '../services/user-preferences.service';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
     providedIn: 'root'

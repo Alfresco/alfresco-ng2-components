@@ -16,7 +16,7 @@
  */
 
 import { Injectable, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 import { LogService } from '../services/log.service';
 import { NotificationService } from '../notifications/services/notification.service';
 

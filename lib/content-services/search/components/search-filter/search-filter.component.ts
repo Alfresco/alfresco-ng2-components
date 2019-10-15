@@ -23,7 +23,7 @@ import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 import { FacetField } from '../../facet-field.interface';
 import { SearchFilterList } from './models/search-filter-list.model';
 import { takeUntil } from 'rxjs/operators';
-import { GenericBucket, GenericFacetResponse, ResultSetContext } from '@alfresco/js-api';
+import { GenericBucket, GenericFacetResponse, ResultSetContext, ResultSetPaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -78,7 +78,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         if (this.queryBuilder) {
             this.queryBuilder.executed
                 .pipe(takeUntil(this.onDestroy$))
-                .subscribe(resultSetPaging => {
+                .subscribe((resultSetPaging: ResultSetPaging) => {
                     this.onDataLoaded(resultSetPaging);
                     this.searchService.dataLoaded.next(resultSetPaging);
                 });
@@ -328,7 +328,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         };
     }
 
-    private getCorrespondingFilterQuery (configFacetItem: FacetField, bucketLabel: string): string {
+    private getCorrespondingFilterQuery(configFacetItem: FacetField, bucketLabel: string): string {
         let filterQuery = null;
 
         if (configFacetItem.field && bucketLabel) {
@@ -397,7 +397,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         });
     }
 
-    private getBucketFilterFunction (bucketList) {
+    private getBucketFilterFunction(bucketList) {
         return (bucket: FacetFieldBucket): boolean => {
             if (bucket && bucketList.filterText) {
                 const pattern = (bucketList.filterText || '').toLowerCase();

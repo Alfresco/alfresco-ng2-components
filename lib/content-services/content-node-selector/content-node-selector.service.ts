@@ -17,7 +17,7 @@
 
 import { SearchService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { NodePaging } from '@alfresco/js-api';
+import { ResultSetPaging } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 
 /**
@@ -42,7 +42,7 @@ export class ContentNodeSelectorService {
      * the rootNodeId is one of the supported aliases (e.g. '-my-', '-root-', '-mysites-', etc.)
      * and search is not supported for that alias, but can be performed on its corresponding nodes.
      */
-    public search(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[]): Observable<NodePaging> {
+    public search(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[]): Observable<ResultSetPaging> {
 
         let extraParentFiltering = '';
 

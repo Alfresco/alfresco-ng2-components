@@ -20,6 +20,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from, forkJoin, throwError } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { map, catchError } from 'rxjs/operators';
+import { ResultListDataRepresentationUserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -190,7 +191,7 @@ export class ProcessFilterService {
      * @param appId ID of the target app
      * @returns List of filter details
      */
-    callApiProcessFilters(appId?: number) {
+    callApiProcessFilters(appId?: number): Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation> {
         if (appId) {
             return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });
         } else {
