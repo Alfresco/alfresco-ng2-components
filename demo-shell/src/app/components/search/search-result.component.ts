@@ -17,7 +17,7 @@
 
 import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { NodePaging, Pagination, ResultSetPaging } from '@alfresco/js-api';
+import { Pagination, ResultSetPaging } from '@alfresco/js-api';
 import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
 import { UserPreferencesService, SearchService, AppConfigService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
@@ -33,7 +33,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
 
     queryParamName = 'q';
     searchedWord = '';
-    data: NodePaging;
+    data: ResultSetPaging;
     pagination: Pagination;
     isLoading = true;
 
