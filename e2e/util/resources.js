@@ -519,45 +519,4 @@ exports.Files = {
             file_name: "activiti_profile_pic.png"
         }
     }
-
-};
-
-exports.ACTIVITI7_APPS = {
-    CANDIDATE_BASE_APP: {
-        name: "candidatebaseapp",
-        file_location: "/resources/activiti7/candidatebaseapp.zip",
-        processes: {
-            candidateUserProcess: "candidateuserprocess",
-            candidateGroupProcess: "candidategroupprocess",
-            anotherCandidateGroupProcess: "anothercandidategroup",
-            uploadFileProcess: "uploadfileprocess"
-        },
-        forms: {
-            starteventform: "starteventform",
-            formtotestvalidations: "formtotestvalidations"
-        }
-    },
-    SIMPLE_APP: {
-        name: "simpleapp",
-        file_location: "/resources/activiti7/simpleapp.zip",
-        processes: {
-            processwithvariables: "processwithvariables",
-            simpleProcess: "simpleprocess",
-            dropdownrestprocess: "dropdownrestprocess"
-        },
-        forms: {
-            tabVisibilityFields: {
-                name: "tabvisibilitywithfields",
-                id: "form-26b01063-4fb0-455f-b3ba-90172e013678"
-            },
-            tabVisibilityVars: {
-                name: "tabvisibilitywithvars",
-                id: "form-7bf363d2-83c9-4b00-853e-373d0d59963c"
-            }
-        }
-    },
-    SUB_PROCESS_APP: {
-        name: "subprocessapp",
-        file_location: "/resources/activiti7/subprocessapp.zip",
-    }
 };

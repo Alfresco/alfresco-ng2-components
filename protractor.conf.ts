@@ -9,6 +9,8 @@ const failFast = require('./e2e/protractor/fail-fast');
 const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
 const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
+const { ACTIVITI_CLOUD_APPS } = require('@alfresco/adf-testing');
+
 
 const projectRoot = path.resolve(__dirname);
 const width = 1366, height = 768;
@@ -107,7 +109,8 @@ exports.config = {
         identityAdmin: TestConfig.identityAdmin,
         identityUser: TestConfig.identityUser,
         rootPath: __dirname,
-        resources: RESOURCES
+        resources: RESOURCES,
+        ACTIVITI_CLOUD_APPS: ACTIVITI_CLOUD_APPS
     },
 
     framework: 'jasmine2',
