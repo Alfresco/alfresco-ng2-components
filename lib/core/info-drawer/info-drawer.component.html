@@ -1,5 +1,5 @@
 <adf-info-drawer-layout>
-    <div *ngIf="title" info-drawer-title>{{ title | translate }}</div>
+    <div role="heading" aria-level="1" *ngIf="title" info-drawer-title>{{ title | translate }}</div>
     <ng-content *ngIf="!title" info-drawer-title select="[info-drawer-title]"></ng-content>
 
     <ng-content info-drawer-buttons select="[info-drawer-buttons]"></ng-content>
