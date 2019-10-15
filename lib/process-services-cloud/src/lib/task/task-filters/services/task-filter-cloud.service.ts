@@ -201,13 +201,14 @@ export class TaskFilterCloudService {
     deleteFilter(deletedFilter: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
         const key = this.prepareKey(deletedFilter.appName);
         return this.getTaskFiltersByKey(deletedFilter.appName, key).pipe(
-            switchMap((filters: any) => {
+            switchMap(filters => {
                 if (filters && filters.length > 0) {
-                    filters = filters.filter((filter: TaskFilterCloudModel) => filter.id !== deletedFilter.id);
+                    filters = filters.filter(filter => filter.id !== deletedFilter.id);
                     return this.updateTaskFilters(deletedFilter.appName, key, filters);
                 }
+                return [];
             }),
-            map((filters: TaskFilterCloudModel[]) => {
+            map(filters => {
                 this.addFiltersToStream(filters);
                 return filters;
             }),

@@ -249,7 +249,7 @@ export class WidgetVisibilityService {
         return undefined;
     }
 
-    evaluateLogicalOperation(logicOp: string, previousValue: any, newValue: any): boolean {
+    evaluateLogicalOperation(logicOp: string, previousValue: any, newValue: any): boolean | undefined {
         switch (logicOp) {
             case 'and':
                 return previousValue && newValue;
@@ -260,12 +260,11 @@ export class WidgetVisibilityService {
             case 'or-not':
                 return previousValue || !newValue;
             default:
-                this.logService.error('NO valid operation! wrong op request : ' + logicOp);
-                break;
+                throw new Error(`Invalid operator: ${logicOp}`);
         }
     }
 
-    evaluateCondition(leftValue, rightValue, operator): boolean {
+    evaluateCondition(leftValue: any, rightValue: any, operator: string): boolean {
         switch (operator) {
             case '==':
                 return leftValue + '' === rightValue + '';
@@ -284,10 +283,8 @@ export class WidgetVisibilityService {
             case '!empty':
                 return leftValue ? leftValue !== '' : false;
             default:
-                this.logService.error('NO valid operation!');
-                break;
+                throw new Error(`Invalid operator: ${operator}`);
         }
-        return;
     }
 
     cleanProcessVariable() {

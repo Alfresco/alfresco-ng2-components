@@ -34,6 +34,7 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
         if (key || key === '') {
             return of(this.prepareLocalPreferenceResponse(key));
         }
+        return of(null);
     }
 
     /**
@@ -70,8 +71,8 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
     updatePreference(_: string, key: string, updatedPreference: any): Observable<any> {
         if (key) {
             this.storage.setItem(key, JSON.stringify(updatedPreference));
-            return of(updatedPreference);
         }
+        return of(updatedPreference);
     }
 
     /**
