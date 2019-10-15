@@ -9,7 +9,7 @@ const OAUTH_HOST = process.env.OAUTH_HOST || "keycloak";
 const IDENTITY_HOST = process.env.IDENTITY_HOST || "identity";
 const NOTIFICATION_LAST = process.env.NOTIFICATION_LAST || 8000;
 
-const configPath = './dist/app/app.config.json';
+const configPath = './demo-shell/dist/app.config.json';
 
 fs.readFile(configPath, (err, appConfigString) => {
     if (err) throw err;
