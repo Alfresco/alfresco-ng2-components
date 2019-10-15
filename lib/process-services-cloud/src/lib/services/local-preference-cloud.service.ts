@@ -34,7 +34,13 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
         if (key || key === '') {
             return of(this.prepareLocalPreferenceResponse(key));
         }
-        return of(null);
+        return of(
+            {
+                'list': {
+                    'entries': []
+                }
+            }
+        );
     }
 
     /**
