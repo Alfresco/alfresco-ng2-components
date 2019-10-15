@@ -15,21 +15,19 @@ RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2
 
 if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" || $TRAVIS_PULL_REQUEST == "false"  ]];
 then
-    echo "Case 1";
+    echo "Case 1 - adf-testing has been changed";
     ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env --host "$E2E_HOST_BPM" --oauth "$E2E_HOST_SSO" --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --clientId 'activiti' || exit 1
 
     $RUN_E2E --folder $CONTEXT_ENV
 else if [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
     then
-        echo "Case 2";
+        echo "Case 2 - e2e/$CONTEXT_ENV folder has been changed";
         HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
         LIST_SPECS="$(git diff --name-only $HEAD_SHA_BRANCH HEAD | grep "^e2e/$CONTEXT_ENV/" | paste -sd , -)"
         ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env --host "$E2E_HOST_BPM" --oauth "$E2E_HOST_SSO" --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --clientId 'activiti' || exit 1
         if [[ $LIST_SPECS != "" ]];
         then
             echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
-            cd ./node_modules/@alfresco/adf-testing && cat lib/process-services-cloud/resources/resources.d.ts && cat esm2015/lib/process-services-cloud/resources/resources.js
-            cd ../../../
             $RUN_E2E --specs "$LIST_SPECS"
         fi
     fi

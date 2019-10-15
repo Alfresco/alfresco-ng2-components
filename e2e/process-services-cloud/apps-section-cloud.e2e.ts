@@ -34,8 +34,6 @@ describe('Applications list', () => {
     const settingsPage = new SettingsPage();
     const appListCloudPage = new AppListCloudPage();
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-    // tslint:disable-next-line:no-console
-    console.log('Stampo' + simpleApp);
 
     let identityService: IdentityService;
     let applicationsService: ApplicationsService;
