@@ -84,8 +84,8 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
     deletePreference(key: string, preferences: any): Observable<any> {
         if (key) {
             this.storage.setItem(key, JSON.stringify(preferences));
-            return of(preferences);
         }
+        return of(preferences);
     }
 
     prepareLocalPreferenceResponse(key: string): any {

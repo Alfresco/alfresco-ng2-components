@@ -197,7 +197,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      * @param values
      * @param event
      */
-    onSubmit(values: any) {
+    onSubmit(values: any): void {
         this.disableError();
 
         if (this.authService.isOauth() && !this.authService.isSSODiscoveryConfigured()) {
@@ -209,9 +209,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             });
             this.executeSubmit.emit(args);
 
-            if (args.defaultPrevented) {
-                return false;
-            } else {
+            if (!args.defaultPrevented) {
                 this.performLogin(values);
             }
         }

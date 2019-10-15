@@ -386,7 +386,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return node && node.list && node.list.entries.length === 0;
     }
 
-    onContentActionError(errors) {
+    onContentActionError(errors: any) {
         const errorStatusCode = JSON.parse(errors.message).error.statusCode;
         let translatedErrorMessage: any;
 
@@ -404,24 +404,24 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.openSnackMessage(translatedErrorMessage);
     }
 
-    onContentActionSuccess(message) {
+    onContentActionSuccess(message: string) {
         const translatedMessage: any = this.translateService.instant(message);
         this.openSnackMessage(translatedMessage);
         this.documentList.reload();
     }
 
-    onDeleteActionSuccess(message) {
+    onDeleteActionSuccess(message: string) {
         this.uploadService.fileDeleted.next(message);
         this.deleteElementSuccess.emit();
         this.documentList.reload();
         this.openSnackMessage(message);
     }
 
-    onPermissionRequested(node) {
+    onPermissionRequested(node: any) {
         this.router.navigate(['/permissions', node.value.entry.id]);
     }
 
-    onManageVersions(event) {
+    onManageVersions(event: any) {
         const contentEntry = event.value.entry;
         const showComments = this.showVersionComments;
         const allowDownload = this.allowVersionDownload;
@@ -438,7 +438,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    onManageMetadata(event) {
+    onManageMetadata(event: any) {
         const contentEntry = event.value.entry;
 
         if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
@@ -499,7 +499,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return false;
     }
 
-    startProcessAction($event) {
+    startProcessAction($event: any) {
         this.formValues['file'] = $event.value.entry;
 
         const dialogRef = this.dialog.open(SelectAppsDialogComponent, {
@@ -588,15 +588,15 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return true;
     }
 
-    runCustomAction(event) {
+    runCustomAction(event: any) {
         this.logService.log(event);
     }
 
-    getFileFiltering() {
+    getFileFiltering(): string {
         return this.acceptedFilesTypeShow ? this.acceptedFilesType : '*';
     }
 
-    createLibrary() {
+    createLibrary(): void {
         const dialogInstance: any = this.dialog.open(LibraryDialogComponent, {
             width: '400px'
         });
@@ -610,5 +610,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         if (search && search.highlight) {
             return search.highlight.map((currentHighlight) => currentHighlight.snippets).join(', ');
         }
+        return '';
     }
 }
