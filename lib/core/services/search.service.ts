@@ -26,7 +26,7 @@ import { SearchConfigurationService } from './search-configuration.service';
 })
 export class SearchService {
 
-    dataLoaded: Subject<NodePaging> = new Subject();
+    dataLoaded: Subject<ResultSetPaging> = new Subject();
 
     constructor(private apiService: AlfrescoApiService,
                 private searchConfigurationService: SearchConfigurationService) {
