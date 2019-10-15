@@ -79,7 +79,7 @@ export class QueryService {
                 }
             }
         } catch (error) {
-            Logger.error('Get Task By Name - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Get Task By Name - Service error');
         }
     }
 
