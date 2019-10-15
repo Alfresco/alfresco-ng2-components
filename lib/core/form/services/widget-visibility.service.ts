@@ -260,11 +260,12 @@ export class WidgetVisibilityService {
             case 'or-not':
                 return previousValue || !newValue;
             default:
-                throw new Error(`Invalid operator: ${logicOp}`);
+                this.logService.error(`Invalid operator: ${logicOp}`);
+                return undefined;
         }
     }
 
-    evaluateCondition(leftValue: any, rightValue: any, operator: string): boolean {
+    evaluateCondition(leftValue: any, rightValue: any, operator: string): boolean | undefined {
         switch (operator) {
             case '==':
                 return leftValue + '' === rightValue + '';
@@ -283,7 +284,8 @@ export class WidgetVisibilityService {
             case '!empty':
                 return leftValue ? leftValue !== '' : false;
             default:
-                throw new Error(`Invalid operator: ${operator}`);
+                this.logService.error(`Invalid operator: ${operator}`);
+                return undefined;
         }
     }
 
