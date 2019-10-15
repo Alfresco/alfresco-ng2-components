@@ -96,7 +96,9 @@ export class NodeDeleteDirective implements OnChanges {
                     const processedItems: ProcessStatus = this.processStatus(data);
                     const message = this.getMessage(processedItems);
 
-                    this.delete.emit(message);
+                    if (message) {
+                        this.delete.emit(message);
+                    }
                 });
         }
     }
@@ -108,7 +110,7 @@ export class NodeDeleteDirective implements OnChanges {
     private deleteNode(node: NodeEntry | DeletedNodeEntity): Observable<ProcessedNodeData> {
         const id = (<any> node.entry).nodeId || node.entry.id;
 
-        let promise;
+        let promise: Promise<any>;
 
         if (node.entry.hasOwnProperty('archivedAt') && node.entry['archivedAt']) {
             promise = this.alfrescoApiService.nodesApi.purgeDeletedNode(id);
@@ -166,7 +168,7 @@ export class NodeDeleteDirective implements OnChanges {
         );
     }
 
-    private getMessage(status): string {
+    private getMessage(status: ProcessStatus): string | null {
         if (status.allFailed && !status.oneFailed) {
             return this.translation.instant(
                 'CORE.DELETE_NODE.ERROR_PLURAL',
@@ -214,5 +216,7 @@ export class NodeDeleteDirective implements OnChanges {
                 { name: status.success[0].entry.name }
             );
         }
+
+        return null;
     }
 }

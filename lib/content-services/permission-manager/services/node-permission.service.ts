@@ -148,10 +148,13 @@ export class NodePermissionService {
     removePermission(node: Node, permissionToRemove: PermissionElement): Observable<Node> {
         const permissionBody = { permissions: { locallySet: [] } };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(permissionToRemove.authorityId);
+
         if (index !== -1) {
             node.permissions.locallySet.splice(index, 1);
             permissionBody.permissions.locallySet = node.permissions.locallySet;
             return this.nodeService.updateNode(node.id, permissionBody);
+        } else {
+            return of(node);
         }
     }
 

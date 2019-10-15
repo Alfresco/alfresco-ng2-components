@@ -249,7 +249,7 @@ export class WidgetVisibilityService {
         return undefined;
     }
 
-    evaluateLogicalOperation(logicOp, previousValue, newValue): boolean {
+    evaluateLogicalOperation(logicOp: string, previousValue: any, newValue: any): boolean {
         switch (logicOp) {
             case 'and':
                 return previousValue && newValue;

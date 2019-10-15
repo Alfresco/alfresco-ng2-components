@@ -49,7 +49,7 @@ export class FileUploadingListComponent {
 
     /** Emitted when a file in the list has an error. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter();
+    error = new EventEmitter<any>();
 
     constructor(
         private uploadService: UploadService,
@@ -161,7 +161,7 @@ export class FileUploadingListComponent {
         );
     }
 
-    private cancelNodeVersionInstances(file) {
+    private cancelNodeVersionInstances(file: FileModel) {
         this.files
             .filter(
                 (item) =>
@@ -192,15 +192,12 @@ export class FileUploadingListComponent {
         this.error.emit(messageError);
     }
 
-    private getUploadingFiles() {
-        return this.files.filter((item) => {
-            if (
+    private getUploadingFiles(): FileModel[] {
+        return this.files.filter(
+            item =>
                 item.status === FileUploadStatus.Pending ||
                 item.status === FileUploadStatus.Progress ||
                 item.status === FileUploadStatus.Starting
-            ) {
-                return item;
-            }
-        });
+        );
     }
 }

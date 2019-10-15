@@ -242,11 +242,11 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         return this.filterProperties.indexOf(EditTaskFilterCloudComponent.SORT) >= 0;
     }
 
-    removeOrderProperty(filteredProperties: TaskFilterProperties[]) {
+    removeOrderProperty(filteredProperties: TaskFilterProperties[]): TaskFilterProperties[] {
         if (filteredProperties && filteredProperties.length > 0) {
-            const propertiesWithOutOrderProperty = filteredProperties.filter((property: TaskFilterProperties) => { return property.key !== EditTaskFilterCloudComponent.ORDER; });
-            return propertiesWithOutOrderProperty;
+            return filteredProperties.filter(property => property.key !== EditTaskFilterCloudComponent.ORDER);
         }
+        return [];
     }
 
     hasLastModifiedProperty(): boolean {
@@ -261,19 +261,19 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         return sortProperties;
     }
 
-    checkMandatorySortProperties() {
+    checkMandatorySortProperties(): void {
         if (this.sortProperties === undefined || this.sortProperties.length === 0) {
             this.sortProperties = EditTaskFilterCloudComponent.DEFAULT_SORT_PROPERTIES;
         }
     }
 
-    createAndFilterActions() {
+    createAndFilterActions(): TaskFilterAction[] {
         this.checkMandatoryActions();
-        const allActions = this.createFilterActions();
-        return allActions.filter((action: TaskFilterAction) => this.isValidAction(this.actions, action));
+        return this.createFilterActions()
+            .filter(action => this.isValidAction(this.actions, action));
     }
 
-    checkMandatoryActions() {
+    checkMandatoryActions(): void {
         if (this.actions === undefined || this.actions.length === 0) {
             this.actions = EditTaskFilterCloudComponent.DEFAULT_ACTIONS;
         }
@@ -316,9 +316,11 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
-    getRunningApplications() {
-        this.appsProcessCloudService.getDeployedApplicationsByStatus(EditTaskFilterCloudComponent.APP_RUNNING_STATUS)
-        .pipe(takeUntil(this.onDestroy$)).subscribe((applications: ApplicationInstanceModel[]) => {
+    getRunningApplications(): void {
+        this.appsProcessCloudService
+            .getDeployedApplicationsByStatus(EditTaskFilterCloudComponent.APP_RUNNING_STATUS)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((applications: ApplicationInstanceModel[]) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
                         this.applicationNames.push({ label: application.name, value: application.name });
@@ -337,24 +339,28 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         }
     }
 
-    save(saveAction: TaskFilterAction) {
-        this.taskFilterCloudService.updateFilter(this.changedTaskFilter)
-        .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            saveAction.filter = this.changedTaskFilter;
-            this.action.emit(saveAction);
-            this.formHasBeenChanged = this.compareFilters(this.changedTaskFilter, this.taskFilter);
-        });
+    save(saveAction: TaskFilterAction): void {
+        this.taskFilterCloudService
+            .updateFilter(this.changedTaskFilter)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
+                saveAction.filter = this.changedTaskFilter;
+                this.action.emit(saveAction);
+                this.formHasBeenChanged = this.compareFilters(this.changedTaskFilter, this.taskFilter);
+            });
     }
 
-    delete(deleteAction: TaskFilterAction) {
-        this.taskFilterCloudService.deleteFilter(this.taskFilter)
-        .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            deleteAction.filter = this.taskFilter;
-            this.action.emit(deleteAction);
-        });
+    delete(deleteAction: TaskFilterAction): void {
+        this.taskFilterCloudService
+            .deleteFilter(this.taskFilter)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
+                deleteAction.filter = this.taskFilter;
+                this.action.emit(deleteAction);
+            });
     }
 
-    saveAs(saveAsAction: TaskFilterAction) {
+    saveAs(saveAsAction: TaskFilterAction): void {
         const dialogRef = this.dialog.open(TaskFilterDialogCloudComponent, {
             data: {
                 name: this.translateService.instant(this.taskFilter.name)
@@ -404,11 +410,11 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         return this.showFilterActions;
     }
 
-    onExpand() {
+    onExpand(): void {
         this.toggleFilterActions = true;
     }
 
-    onClose() {
+    onClose(): void {
         this.toggleFilterActions = false;
     }
 
@@ -438,6 +444,8 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         if (action.actionType === EditTaskFilterCloudComponent.ACTION_DELETE) {
             return false;
         }
+
+        return false;
     }
 
     createFilterActions(): TaskFilterAction[] {

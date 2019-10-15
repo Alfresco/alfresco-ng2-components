@@ -59,14 +59,18 @@ export class LockService {
         return node.properties['cm:lockType'] === 'WRITE_LOCK' && node.properties['cm:lockLifetime'] === 'PERSISTENT';
     }
 
-    private getLockExpiryTime(node: Node): Moment {
+    private getLockExpiryTime(node: Node): Moment | undefined {
         if (node.properties['cm:expiryDate']) {
             return moment(node.properties['cm:expiryDate'], 'yyyy-MM-ddThh:mm:ssZ');
         }
+        return undefined;
     }
 
     private isLockExpired(node: Node): boolean {
         const expiryLockTime = this.getLockExpiryTime(node);
-        return moment().isAfter(expiryLockTime);
+        if (expiryLockTime) {
+            return moment().isAfter(expiryLockTime);
+        }
+        return false;
     }
 }

@@ -52,21 +52,21 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
 
     /** Emitted when the current process is cancelled by the user from within the component. */
     @Output()
-    processCancelled: EventEmitter<any> = new EventEmitter<any>();
+    processCancelled = new EventEmitter<any>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /** Emitted when a task is clicked. */
     @Output()
-    taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
+    taskClick = new EventEmitter<TaskDetailsEvent>();
 
     processInstanceDetails: ProcessInstance;
 
     /** Emitted when the "show diagram" button is clicked. */
     @Output()
-    showProcessDiagram: EventEmitter<any> = new EventEmitter<any>();
+    showProcessDiagram = new EventEmitter<any>();
 
     /**
      * Constructor
@@ -124,7 +124,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         this.taskClick.emit(event);
     }
 
-    getProcessNameOrDescription(dateFormat): string {
+    getProcessNameOrDescription(dateFormat: string): string {
         let name = '';
         if (this.processInstanceDetails) {
             name = this.processInstanceDetails.name ||
@@ -133,7 +133,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         return name;
     }
 
-    getFormatDate(value, format: string) {
+    getFormatDate(value: any, format: string): any {
         const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);

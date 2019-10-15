@@ -109,7 +109,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    buildForm() {
+    buildForm(): void {
         this.taskForm = this.formBuilder.group({
             name: new FormControl(this.taskDetailsModel.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength), this.whitespaceValidator]),
             description: new FormControl('', [this.whitespaceValidator]),
@@ -121,25 +121,26 @@ export class StartTaskComponent implements OnInit, OnDestroy {
             .subscribe(taskFormValues => this.setTaskDetails(taskFormValues));
     }
 
-    public whitespaceValidator(control: FormControl) {
+    whitespaceValidator(control: FormControl): any {
         if (control.value) {
             const isWhitespace = (control.value || '').trim().length === 0;
             const isValid =  control.value.length === 0 || !isWhitespace;
             return isValid ? null : { 'whitespace': true };
         }
+        return null;
     }
 
-    setTaskDetails(form) {
+    setTaskDetails(form: any) {
         this.taskDetailsModel.name = form.name;
         this.taskDetailsModel.description = form.description;
         this.taskDetailsModel.formKey = form.formKey ? form.formKey.toString() : null;
     }
 
-    isFormValid() {
+    isFormValid(): boolean {
         return this.taskForm.valid && !this.dateError && !this.loading;
     }
 
-    public saveTask(): void {
+    saveTask(): void {
         this.loading = true;
         if (this.appId) {
             this.taskDetailsModel.category = this.appId.toString();
@@ -169,7 +170,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
                 });
     }
 
-    getAssigneeId(userId) {
+    getAssigneeId(userId: number): void {
         this.assigneeId = userId;
     }
 
@@ -189,7 +190,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         return response;
     }
 
-    public onCancel(): void {
+    onCancel(): void {
         this.cancel.emit();
     }
 
@@ -197,7 +198,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.forms$ = this.taskService.getFormList();
     }
 
-    public isUserNameEmpty(user: UserProcessModel): boolean {
+    isUserNameEmpty(user: UserProcessModel): boolean {
         return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
     }
 
@@ -205,7 +206,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         return data === undefined || data === null || data.trim().length === 0;
     }
 
-    public getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
+    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
         firstName = (firstName !== null ? firstName : '');
         lastName = (lastName !== null ? lastName : '');
         return firstName + delimiter + lastName;
@@ -215,7 +216,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.dateError = false;
 
         if (newDateValue) {
-            let momentDate;
+            let momentDate: moment.Moment;
 
             if (typeof newDateValue === 'string') {
                 momentDate = moment(newDateValue, this.FORMAT_DATE, true);

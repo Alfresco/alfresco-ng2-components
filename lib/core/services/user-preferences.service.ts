@@ -139,9 +139,9 @@ export class UserPreferencesService {
      * @param property Name of the property
      * @returns True if the item is present, false otherwise
      */
-    hasItem(property: string) {
+    hasItem(property: string): boolean {
         if (!property) {
-            return;
+            return false;
         }
         return this.storage.hasItem(
             this.getPropertyKey(property)

@@ -18,7 +18,7 @@
 import { ContentService, TranslationService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
-import { Observable, Subject, throwError } from 'rxjs';
+import { Observable, Subject, throwError, of } from 'rxjs';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
@@ -102,7 +102,7 @@ export class FolderActionsService {
         return actionObservable;
     }
 
-    private prepareHandlers(actionObservable, target?: any): void {
+    private prepareHandlers(actionObservable: Observable<any>, target?: any): void {
         actionObservable.subscribe(
             (fileOperationMessage) => {
                 if (target && typeof target.reload === 'function') {
@@ -115,11 +115,9 @@ export class FolderActionsService {
     }
 
     private deleteNode(node: NodeEntry, target?: any, permission?: string): Observable<any> {
-        let handlerObservable: Observable<any>;
-
         if (this.canExecuteAction(node)) {
             if (this.contentService.hasAllowableOperations(node.entry, permission)) {
-                handlerObservable = this.documentListService.deleteNode(node.entry.id);
+                const handlerObservable = this.documentListService.deleteNode(node.entry.id);
                 handlerObservable.subscribe(() => {
                     if (target && typeof target.reload === 'function') {
                         target.reload();
@@ -138,5 +136,7 @@ export class FolderActionsService {
                 return throwError(new Error('No permission to delete'));
             }
         }
+
+        return of();
     }
 }
