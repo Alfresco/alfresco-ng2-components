@@ -171,5 +171,23 @@ describe('Task filters cloud', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
         });
+
+        it('[C317658] Should display only tasks with Suspended status when SUSPENDED is selected from status dropdown', async () => {
+            const processDefinition = await processDefinitionService
+                .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+
+            const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+
+            const taskAssigned = await queryService.getProcessInstanceTasks(processInstance.entry.id,simpleApp);
+
+            await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
+
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('SUSPENDED');
+
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskAssigned.list.entries[0].entry.name);
+
+        });
     });
 });
