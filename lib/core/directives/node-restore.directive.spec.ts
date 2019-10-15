@@ -177,6 +177,8 @@ describe('NodeRestoreDirective', () => {
                 if (id === '3') {
                     return Promise.reject(error);
                 }
+
+                return Promise.resolve();
             });
 
             component.selection = [
@@ -247,7 +249,7 @@ describe('NodeRestoreDirective', () => {
 
         it('should notify success when restore multiple nodes', (done) => {
 
-            directiveInstance.restore.subscribe((event) => {
+            directiveInstance.restore.subscribe((event: any) => {
                 expect(event.message).toEqual('CORE.RESTORE_NODE.PLURAL');
 
                 done();
@@ -261,6 +263,8 @@ describe('NodeRestoreDirective', () => {
                 if (id === '2') {
                     return Promise.resolve();
                 }
+
+                return Promise.resolve();
             });
 
             component.selection = [

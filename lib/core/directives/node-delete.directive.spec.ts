@@ -265,6 +265,8 @@ describe('NodeDeleteDirective', () => {
                 if (id === '3') {
                     return Promise.resolve();
                 }
+
+                return Promise.resolve();
             });
 
             component.selection = [
