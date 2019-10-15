@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodePaging, QueryBody } from '@alfresco/js-api';
+import { NodePaging, QueryBody, ResultSetPaging } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SearchConfigurationService } from './search-configuration.service';
@@ -55,7 +55,7 @@ export class SearchService {
      * @param skipCount Number of higher-ranked items to skip over in the list
      * @returns List of search results
      */
-    search(searchTerm: string, maxResults: number, skipCount: number): Observable<NodePaging> {
+    search(searchTerm: string, maxResults: number, skipCount: number): Observable<ResultSetPaging> {
         const searchQuery = Object.assign(this.searchConfigurationService.generateQueryBody(searchTerm, maxResults, skipCount));
         const promise = this.apiService.getInstance().search.searchApi.search(searchQuery);
 
@@ -71,7 +71,7 @@ export class SearchService {
      * @param queryBody Object containing the search parameters
      * @returns List of search results
      */
-    searchByQueryBody(queryBody: QueryBody): Observable<NodePaging> {
+    searchByQueryBody(queryBody: QueryBody): Observable<ResultSetPaging> {
         const promise = this.apiService.getInstance().search.searchApi.search(queryBody);
 
         promise.then((nodePaging: NodePaging) => {
