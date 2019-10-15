@@ -40,7 +40,6 @@ export class FormCloudService {
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
-            // tslint:disable-next-line:no-console
             Logger.error('Form Submit Service not working', error.message);
         }
 
