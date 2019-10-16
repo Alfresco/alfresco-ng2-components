@@ -22,12 +22,12 @@ import { Injectable } from '@angular/core';
 })
 export class CookieService {
 
-    cookieEnabled =false;
+    cookieEnabled = false;
 
-    constructor(){
+    constructor() {
         // for certain scenarios Chrome may say 'true' but have cookies still disabled
         if (navigator.cookieEnabled === false) {
-            this.cookieEnabled =  false;
+            this.cookieEnabled = false;
         }
 
         this.setItem('test-cookie');
@@ -61,7 +61,7 @@ export class CookieService {
      * @param expiration Expiration date of the data
      * @param path "Pathname" to store the cookie
      */
-    setItem(key: string, data: string, expiration: Date | null, path: string | null): void {
+    setItem(key: string, data: string, expiration: Date | null = null, path: string | null = null): void {
         document.cookie = `${key}=${data}` +
             (expiration ? ';expires=' + expiration.toUTCString() : '') +
             (path ? `;path=${path}` : ';path=/');
