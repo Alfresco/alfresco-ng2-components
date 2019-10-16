@@ -26,6 +26,10 @@ export const ACTIVITI_CLOUD_APPS: any = {
             anotherCandidateGroupProcess: 'anothercandidategroup',
             uploadFileProcess: 'uploadfileprocess'
         },
+        forms: {
+            starteventform: 'starteventform',
+            formtotestvalidations: 'formtotestvalidations'
+        },
         security: [
             {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
             {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']
