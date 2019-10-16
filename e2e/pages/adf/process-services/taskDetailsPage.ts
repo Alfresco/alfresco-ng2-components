@@ -75,12 +75,12 @@ export class TaskDetailsPage {
     }
 
     async checkEditDescriptionButtonIsNotDisplayed(): Promise<void> {
-        const editDescriptionButton = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-description"]'));
+        const editDescriptionButton = element(by.css('button[data-automation-id="card-textitem-edit-icon-description"]'));
         await BrowserVisibility.waitUntilElementIsNotVisible(editDescriptionButton);
     }
 
     async checkEditPriorityButtonIsNotDisplayed(): Promise<void> {
-        const editPriorityButton = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-priority"]'));
+        const editPriorityButton = element(by.css('button[data-automation-id="card-textitem-edit-icon-priority"]'));
         await BrowserVisibility.waitUntilElementIsNotVisible(editPriorityButton);
     }
 

@@ -28,12 +28,10 @@
             <button mat-icon-button fxFlex="0 0 auto"
                 class="adf-textitem-action"
                 [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate">
+                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                [attr.data-automation-id]="'card-textitem-edit-icon-' + property.key">
 
-                <mat-icon
-                    class="adf-textitem-icon"
-                    [attr.data-automation-id]="'card-textitem-edit-icon-' + property.key">
-                create</mat-icon>
+                <mat-icon class="adf-textitem-icon"> create</mat-icon>
             </button>
         </div>
         <div *ngIf="inEdit" class="adf-textitem-editable">

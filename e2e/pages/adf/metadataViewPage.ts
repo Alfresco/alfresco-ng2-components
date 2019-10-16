@@ -136,22 +136,22 @@ export class MetadataViewPage {
     }
 
     async editPropertyIconIsDisplayed(propertyName: string) {
-        const editPropertyIcon: ElementFinder = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
+        const editPropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
         await BrowserVisibility.waitUntilElementIsPresent(editPropertyIcon);
     }
 
     async updatePropertyIconIsDisplayed(propertyName: string) {
-        const updatePropertyIcon: ElementFinder = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
+        const updatePropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-update-' + propertyName + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(updatePropertyIcon);
     }
 
     async clickUpdatePropertyIcon(propertyName: string): Promise<void> {
-        const updatePropertyIcon: ElementFinder = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
+        const updatePropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-update-' + propertyName + '"]'));
         await BrowserActions.click(updatePropertyIcon);
     }
 
     async clickClearPropertyIcon(propertyName: string): Promise<void> {
-        const clearPropertyIcon: ElementFinder = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
+        const clearPropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
         await BrowserActions.click(clearPropertyIcon);
     }
 
