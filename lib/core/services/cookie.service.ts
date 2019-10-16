@@ -22,21 +22,25 @@ import { Injectable } from '@angular/core';
 })
 export class CookieService {
 
+    cookieEnabled =false;
+
+    constructor(){
+        // for certain scenarios Chrome may say 'true' but have cookies still disabled
+        if (navigator.cookieEnabled === false) {
+            this.cookieEnabled =  false;
+        }
+
+        this.setItem('test-cookie');
+        this.cookieEnabled = document.cookie.indexOf('test-cookie') >= 0;
+        this.deleteCookie('test-cookie');
+    }
+
     /**
      * Checks if cookies are enabled.
      * @returns True if enabled, false otherwise
      */
     isEnabled(): boolean {
-        // for certain scenarios Chrome may say 'true' but have cookies still disabled
-        if (navigator.cookieEnabled === false) {
-            return false;
-        }
-
-        document.cookie = 'test-cookie';
-        const cookieEnabled = document.cookie.indexOf('test-cookie') >= 0;
-        this.deleteCookie('test-cookie');
-
-        return cookieEnabled;
+        return this.cookieEnabled;
     }
 
     /**
