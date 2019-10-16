@@ -15,6 +15,11 @@
             line-height: 1.6;
             letter-spacing: -0.5px;
             color: mat-color($foreground, text, 0.87);
+
+            h2 {
+                margin: unset;
+                font-size: unset;
+            }
         }
 
         .mat-dialog-container {
