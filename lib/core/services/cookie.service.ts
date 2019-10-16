@@ -67,8 +67,8 @@ export class CookieService {
      * Delete a cookie Key.
      * @param key Key to identify the cookie
      */
-    deleteCookie(name: string): void {
-        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    deleteCookie(key: string): void {
+        document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
     /** Placeholder for testing purposes - do not use. */
