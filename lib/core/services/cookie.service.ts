@@ -30,7 +30,7 @@ export class CookieService {
             this.cookieEnabled = false;
         }
 
-        this.setItem('test-cookie');
+        this.setItem('test-cookie', 'test');
         this.cookieEnabled = document.cookie.indexOf('test-cookie') >= 0;
         this.deleteCookie('test-cookie');
     }
