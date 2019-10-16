@@ -99,12 +99,16 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         this._columns = columns || [];
     }
 
-    getValue(row: DataRow, col: DataColumn): any {
+    getValue(row: DataRow, col: DataColumn, resolver?: (row: DataRow, col: DataColumn) => any ): any {
         if (!row) {
             throw new Error('Row not found');
         }
         if (!col) {
             throw new Error('Column not found');
+        }
+
+        if (resolver) {
+            return resolver(row, col);
         }
 
         const value = row.getValue(col.key);
