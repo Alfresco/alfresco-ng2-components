@@ -1,6 +1,13 @@
 @mixin adf-content-metadata-theme($theme) {
+    $background: map-get($theme, background);
+    $panel-header-hover: mat-color($background, hover);
+
     .adf {
         &-metadata-properties {
+            .mat-expansion-panel-header.mat-expanded:hover,
+            .mat-expansion-panel-header.mat-expanded:focus {
+                background: $panel-header-hover;
+            }
 
             mat-expansion-panel-header {
                 height: 64px;
