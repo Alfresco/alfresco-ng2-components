@@ -39,6 +39,19 @@ export class QueryService {
         }
     }
 
+    async getProcessInstance(processInstanceId, appName): Promise<any> {
+        try {
+            const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId;
+            const method = 'GET';
+
+            const queryParams = {}, postBody = {};
+
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
+        } catch (error) {
+            Logger.error('get process-instance Service error');
+        }
+    }
+
     async getProcessInstanceSubProcesses(processInstanceId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/subprocesses';
@@ -49,6 +62,24 @@ export class QueryService {
             return this.api.performBpmOperation(path, method, queryParams, {});
         } catch (error) {
             Logger.error('get subprocesses process-instances Service error');
+        }
+    }
+
+    async getTaskByName(taskName, processInstanceId, appName): Promise<any> {
+        try {
+            const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
+            const method = 'GET';
+
+            const queryParams = {}, postBody = {};
+
+            const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+            for (let i = 0; i < data.list.entries.length; i++) {
+                if (data.list.entries[i].entry.name === taskName) {
+                    return data.list.entries[i];
+                }
+            }
+        } catch (error) {
+            Logger.error('Get Task By Name - Service error');
         }
     }
 
