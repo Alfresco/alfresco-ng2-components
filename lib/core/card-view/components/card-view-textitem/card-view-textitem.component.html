@@ -36,7 +36,10 @@
         </div>
         <div *ngIf="inEdit" class="adf-textitem-editable">
             <div class="adf-textitem-editable-controls">
-                <mat-form-field floatPlaceholder="never" class="adf-input-container">
+                <mat-form-field floatPlaceholder="never"
+                                class="adf-input-container"
+                                (keyup.escape)="reset()"
+                                (keyup.enter)="update()">
                     <input *ngIf="!property.multiline" #editorInput
                         matInput
                         class="adf-input"
