@@ -59,10 +59,10 @@
                 <button mat-icon-button class="adf-textitem-action" (click)="update()"
                     [attr.aria-label]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                     [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
-                    [disabled]="hasErrors()">
+                    [disabled]="hasErrors()"
+                    [attr.data-automation-id]="'card-textitem-update-' + property.key">
 
-                    <mat-icon [attr.data-automation-id]="'card-textitem-update-' + property.key"
-                        class="adf-textitem-icon">done</mat-icon>
+                    <mat-icon class="adf-textitem-icon">done</mat-icon>
                 </button>
 
                 <button mat-icon-button (click)="reset()" class="adf-textitem-action"
