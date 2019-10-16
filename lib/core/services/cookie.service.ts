@@ -33,7 +33,7 @@ export class CookieService {
         }
 
         document.cookie = 'test-cookie';
-        cookieEnabled = document.cookie.indexOf('test-cookie') >= 0;
+        const cookieEnabled = document.cookie.indexOf('test-cookie') >= 0;
         this.deleteCookie('test-cookie');
 
         return cookieEnabled;
