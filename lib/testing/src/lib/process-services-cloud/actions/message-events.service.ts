@@ -26,7 +26,7 @@ export class MessageEventsService {
         this.api = api;
     }
 
-    async startMessageEvent(startMessage, appName, options?: any) {
+    async startMessageEvent(startMessage, appName, options?: any): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/process-instances/message';
             const method = 'POST';
@@ -46,7 +46,7 @@ export class MessageEventsService {
 
     }
 
-    async receiveMessageEvent(receiveMessage, appName, options?: any) {
+    async receiveMessageEvent(receiveMessage, appName, options?: any): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/process-instances/message';
             const method = 'PUT';
