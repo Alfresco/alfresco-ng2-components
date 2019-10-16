@@ -326,12 +326,13 @@ describe('WidgetVisibilityCloudService', () => {
             service.getTaskProcessVariable('9999').subscribe(
                 () => {
                     visibilityObjTest.leftType = 'field';
-                    visibilityObjTest.leftValue = 'TEST_VAR_2';
+                    visibilityObjTest.leftValue = 'FIELD_TEST';
                     visibilityObjTest.operator = '!=';
-                    visibilityObjTest.rightValue = 'TEST_VAR_2';
+                    visibilityObjTest.rightType = 'field';
+                    visibilityObjTest.rightValue = 'FIELD_WITH_CONDITION';
                     visibilityObjTest.nextConditionOperator = 'and';
                     chainedVisibilityObj.leftType = 'field';
-                    chainedVisibilityObj.leftValue = 'TEST_VAR_2';
+                    chainedVisibilityObj.leftValue = 'FIELD_TEST';
                     chainedVisibilityObj.operator = '!empty';
                     visibilityObjTest.nextCondition = chainedVisibilityObj;
 
@@ -489,21 +490,21 @@ describe('WidgetVisibilityCloudService', () => {
 
         it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
             visibilityObjTest.leftType = WidgetTypeEnum.field;
-            visibilityObjTest.leftValue = 'test_1';
+            visibilityObjTest.leftValue = 'FIELD_TEST';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightType = WidgetTypeEnum.field;
-            visibilityObjTest.rightValue = 'test_3';
-            const isVisible = service.isFieldVisible(formTest, visibilityObjTest);
+            visibilityObjTest.rightValue = 'FIELD_TEST_VISIBILITY';
+            const isVisible = service.isFieldVisible(fakeFormWithField, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
         });
 
         it('should evaluate true visibility for the field with single visibility condition between a field and a value', () => {
             visibilityObjTest.leftType = WidgetTypeEnum.field;
-            visibilityObjTest.leftValue = 'test_1';
+            visibilityObjTest.leftValue = 'FIELD_TEST';
             visibilityObjTest.operator = '==';
-            visibilityObjTest.rightValue = 'value_1';
-            const isVisible = service.isFieldVisible(formTest, visibilityObjTest);
+            visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_VALUE';
+            const isVisible = service.isFieldVisible(fakeFormWithField, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
         });
@@ -521,11 +522,11 @@ describe('WidgetVisibilityCloudService', () => {
 
         it('should refresh the visibility for a form field object', () => {
             visibilityObjTest.leftType = WidgetTypeEnum.field;
-            visibilityObjTest.leftValue = 'test_1';
+            visibilityObjTest.leftValue = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightType = WidgetTypeEnum.field;
-            visibilityObjTest.rightValue = 'test_3';
-            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
+            visibilityObjTest.rightValue = 'FIELD_TEST_VISIBILITY';
+            const fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
             service.refreshEntityVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeFalsy();
@@ -624,12 +625,12 @@ describe('WidgetVisibilityCloudService', () => {
         });
 
         it('should be able to evaluate condition with a dropdown <id>', () => {
-            visibilityObjTest.rightType = 'field';
             visibilityObjTest.leftType = 'field';
-            visibilityObjTest.leftValue = 'test_4';
+            visibilityObjTest.leftValue = 'FIELD_TEST';
             visibilityObjTest.operator = '==';
+            visibilityObjTest.rightType = 'field';
             visibilityObjTest.rightValue = 'dropdown';
-            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
+            const fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
             service.refreshEntityVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeTruthy();
@@ -1086,9 +1087,10 @@ describe('WidgetVisibilityCloudService', () => {
         });
 
         it('should validate visiblity for form fields by finding the field with id', () => {
-            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftType = WidgetTypeEnum.variable;
             visibilityObjTest.leftValue = '0207b649-ff07-4f3a-a589-d10afa507b9b';
             visibilityObjTest.operator = '==';
+            visibilityObjTest.rightType = WidgetTypeEnum.value;
             visibilityObjTest.rightValue = '2019-05-13';
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
 

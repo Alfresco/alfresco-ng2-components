@@ -468,19 +468,19 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
-            visibilityObjTest.leftFormFieldId = 'test_1';
+            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '==';
-            visibilityObjTest.rightFormFieldId = 'test_3';
-            const isVisible = service.isFieldVisible(formTest, visibilityObjTest);
+            visibilityObjTest.rightFormFieldId = 'FIELD_TEST_VISIBILITY';
+            const isVisible = service.isFieldVisible(fakeFormWithField, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
         });
 
         it('should evaluate true visibility for the field with single visibility condition between a field and a value', () => {
-            visibilityObjTest.leftFormFieldId = 'test_1';
+            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '==';
-            visibilityObjTest.rightValue = 'value_1';
-            const isVisible = service.isFieldVisible(formTest, visibilityObjTest);
+            visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_VALUE';
+            const isVisible = service.isFieldVisible(fakeFormWithField, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
         });
@@ -503,10 +503,10 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should refresh the visibility for a form field object', () => {
-            visibilityObjTest.leftFormFieldId = 'test_1';
+            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
-            visibilityObjTest.rightFormFieldId = 'test_3';
-            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
+            visibilityObjTest.rightFormFieldId = 'FIELD_TEST_VISIBILITY';
+            const fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
             service.refreshEntityVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeFalsy();
@@ -607,21 +607,11 @@ describe('WidgetVisibilityService', () => {
             expect(rightValue).toBe('dropdown_label');
         });
 
-        it('should be able to evaluate condition with a dropdown <label>', () => {
-            visibilityObjTest.leftFormFieldId = 'test_5';
-            visibilityObjTest.operator = '==';
-            visibilityObjTest.rightFormFieldId = 'dropdown_LABEL';
-            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
-            service.refreshEntityVisibility(fakeFormField);
-
-            expect(fakeFormField.isVisible).toBeTruthy();
-        });
-
-        it('should be able to evaluate condition with a dropdown <id>', () => {
-            visibilityObjTest.leftFormFieldId = 'test_4';
+        it('should be able to evaluate condition with a dropdown', () => {
+            visibilityObjTest.leftFormFieldId = 'FIELD_TEST_VISIBILITY';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightFormFieldId = 'dropdown';
-            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
+            const fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
             service.refreshEntityVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeTruthy();
@@ -916,10 +906,10 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should not set null value when the field is not visibile', () => {
-            visibilityObjTest.leftFormFieldId = 'test_4';
+            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
-            visibilityObjTest.rightFormFieldId = 'dropdown';
-            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
+            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            const fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
 
             service.refreshEntityVisibility(fakeFormField);
             expect(fakeFormField.isVisible).toBeFalsy();

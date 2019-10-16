@@ -78,6 +78,24 @@ export let fakeFormJson = {
                         value: 'LEFT_FORM_FIELD_VALUE',
                         visibilityCondition: null,
                         isVisible: true
+                    },
+                    {
+                        fieldType: 'FormFieldRepresentation',
+                        id: 'FIELD_TEST_VISIBILITY',
+                        name: 'FIELD_TEST_VISIBILITY',
+                        type: 'text',
+                        value: 'RIGHT_FORM_FIELD_VALUE',
+                        visibilityCondition: null,
+                        isVisible: true
+                    },
+                    {
+                        fieldType: 'FormFieldRepresentation',
+                        id: 'dropdown',
+                        name: 'Dropdown',
+                        type: 'dropdown',
+                        value: 'RIGHT_FORM_FIELD_VALUE',
+                        options: [],
+                        visibilityCondition: null
                     }
                 ],
                 2: [
