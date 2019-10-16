@@ -26,7 +26,7 @@ export class FormCloudService {
         this.api = api;
     }
 
-    async submitForm(formId, appName, taskId, processInstanceId, values) {
+    async submitForm(formId, appName, taskId, processInstanceId, values): Promise<any> {
         try {
             const path = '/' + appName + '/form/v1/forms/' + formId + '/submit';
             const method = 'POST';
