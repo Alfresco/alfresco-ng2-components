@@ -17,7 +17,7 @@
 
 export class DemoForm {
 
-    easyForm = {
+    easyForm: any = {
         'id': 1001,
         'name': 'ISSUE_FORM',
         'tabs': [],
@@ -365,7 +365,7 @@ export class DemoForm {
         'globalDateFormat': 'D-M-YYYY'
     };
 
-    formDefinition = {
+    formDefinition: any = {
         'id': 3003,
         'name': 'demo-01',
         'taskId': '7501',
@@ -1482,7 +1482,7 @@ export class DemoForm {
         'globalDateFormat': 'D-M-YYYY'
     };
 
-    simpleFormDefinition = {
+    simpleFormDefinition: any = {
         'id': 1001,
         'name': 'SIMPLE_FORM_EXAMPLE',
         'description': '',
@@ -1765,7 +1765,7 @@ export class DemoForm {
         }
     };
 
-    cloudFormDefinition = {
+    cloudFormDefinition: any = {
         'formRepresentation': {
             'id': 'text-form',
             'name': 'test-start-form',

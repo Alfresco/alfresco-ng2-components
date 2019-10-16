@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let formDefinitionTwoTextFields = {
+export const formDefinitionTwoTextFields: any = {
     id: 20,
     name: 'formTextDefinition',
     processDefinitionId: 'textDefinition:1:153',
@@ -160,7 +160,7 @@ export let formDefinitionTwoTextFields = {
     globalDateFormat: 'D-M-YYYY'
 };
 
-export let formDefinitionDropdownField = {
+export const formDefinitionDropdownField: any = {
     id: 21,
     name: 'dropdownDefinition',
     processDefinitionId: 'textDefinition:2:163',
@@ -282,7 +282,7 @@ export let formDefinitionDropdownField = {
     globalDateFormat: 'D-M-YYYY'
 };
 
-export let formDefinitionRequiredField = {
+export const formDefinitionRequiredField: any = {
     id: 21,
     name: 'dropdownDefinition',
     processDefinitionId: 'textDefinition:2:163',

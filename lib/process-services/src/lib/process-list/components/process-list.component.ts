@@ -292,7 +292,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
         return instances;
     }
 
-    getProcessNameOrDescription(processInstance, dateFormat): string {
+    getProcessNameOrDescription(processInstance, dateFormat: string): string {
         let name = '';
         if (processInstance) {
             name = processInstance.name ||
@@ -301,7 +301,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
         return name;
     }
 
-    getFormatDate(value, format: string) {
+    getFormatDate(value: any, format: string) {
         const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);
@@ -310,7 +310,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
         }
     }
 
-    private createRequestNode() {
+    private createRequestNode(): ProcessFilterParamRepresentationModel {
         const requestNode = {
             appDefinitionId: this.appId,
             processDefinitionId: this.processDefinitionId,

@@ -25,7 +25,8 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListModel } from '../models/task-list.model';
 import {
     TaskQueryRepresentation,
-    AssigneeIdentifierRepresentation
+    AssigneeIdentifierRepresentation,
+    TaskUpdateRepresentation
 } from '@alfresco/js-api';
 
 @Injectable({
@@ -363,7 +364,7 @@ export class TaskListService {
      * @param updated Data to update the task (as a `TaskUpdateRepresentation` instance).
      * @returns Updated task details
      */
-    updateTask(taskId: any, updated): Observable<TaskDetailsModel> {
+    updateTask(taskId: any, updated: TaskUpdateRepresentation): Observable<TaskDetailsModel> {
         return from(this.apiService.taskApi.updateTask(taskId, updated))
             .pipe(
                 map((result) => <TaskDetailsModel> result),

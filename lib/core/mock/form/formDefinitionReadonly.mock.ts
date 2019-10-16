@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let formReadonlyTwoTextFields = {
+export const formReadonlyTwoTextFields: any = {
     id: 22,
     name: 'formTextDefinition',
     processDefinitionId: 'textDefinition:3:182',

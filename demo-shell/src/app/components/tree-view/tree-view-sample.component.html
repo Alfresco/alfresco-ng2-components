@@ -8,12 +8,12 @@
     CLICKED NODE: {{clickedNodeName}}
 </span>
 
-<adf-tree-view-list *ngIf="!errorMessage; else erroOccurred"
+<adf-tree-view-list *ngIf="!errorMessage; else errorOccurred"
         [nodeId]="nodeIdSample"
         (nodeClicked)="onClick($event)"
         (error)="onErrorOccurred($event)">
 </adf-tree-view-list>
-<ng-template #erroOccurred>
+<ng-template #errorOccurred>
     <span>An Error Occurred </span>
     <span>{{errorMessage}}</span>
 </ng-template>
