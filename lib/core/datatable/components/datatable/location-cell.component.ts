@@ -52,7 +52,8 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
         if (this.column && this.column.key && this.row && this.data) {
             const path: PathInfoEntity = this.data.getValue(
                 this.row,
-                this.column
+                this.column,
+                this.resolverFn
             );
 
             if (path && path.name && path.elements) {

@@ -354,6 +354,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row. |
 | noPermission | `boolean` | false | Flag that indicates if the datatable should show the "no permission" template. |
+| resolverFn | `Function` |  | Custom resolver function which is used to parse dynamic column objects. see [Resolver Function](#resolver-function)|
 | rowMenuCacheEnabled | `boolean` | true | Should the items for the row actions menu be cached for reuse after they are loaded the first time? |
 | rowStyle | `string` |  | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
 | rowStyleClass | `string` | "" | The CSS class to apply to every row. |
@@ -753,6 +754,73 @@ the total height of all rows exceeds the fixed height of the parent element.
 Once set up, the sticky header behaves as shown in the image below:
 
 ![](../../docassets/images/datatable-sticky-header.png)
+
+## Resolver Function
+
+If you have a table with complex object, you might want to parse it before to display. you can do this using following steps.
+
+# what is resolver
+Resolver is a pure function which gets executed on each row and columns.
+
+# purpose
+It helps to parse the complex object in the data table.
+
+# example
+Assume we want to merge two properties and show them in a text format
+
+```json
+                {
+                    name: 'I am using custom resolver',
+                    users: [
+                        {
+                            firstName: 'Captain',
+                            lastName: 'America'
+                        },
+                        {
+                            firstName: 'John',
+                            lastName: 'Wick'
+                        }
+                    ],
+                    status: [
+                        'I am here to save the world.. By world means AMERICA',
+                        'That nobody is John Wick…'
+                    ]
+                }
+```
+
+
+here is the sample resolver which merge the users property and status and it will show in one column
+
+```javascript
+    resolver(row: DataRow, col: DataColumn): any {
+        const value = row.getValue(col.key);
+
+        // Desired parsing logic
+        if (col.key === 'status') {
+            const users = row.getValue('users');
+            return (value || []).map((status, index) => `name - ${users[index].firstName} ${users[index].lastName} status: ${status}` ).toString();
+        }
+
+        return value;
+    }
+```
+
+```html
+    <adf-datatable
+        [data]="data"
+        [resolverFn]="resolver">
+        <data-columns>
+            <data-column type="text" key="name" title="Name"></data-column>
+            <data-column type="text" key="users" title="Users"></data-column>
+            <data-column type="text" key="status" title="Status"></data-column>
+        </data-columns>
+    </adf-datatable>
+```
+
+ ![](../../docassets/images/custom-data-table-resolver.png)
+
+
+
 
 ## See also
 

@@ -141,6 +141,7 @@
                                     [data]="data"
                                     [column]="col"
                                     [row]="row"
+                                    [resolverFn]="resolverFn"
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-date-cell>
                             </div>
@@ -150,6 +151,7 @@
                                     [data]="data"
                                     [column]="col"
                                     [row]="row"
+                                    [resolverFn]="resolverFn"
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-location-cell>
                             </div>
@@ -159,6 +161,7 @@
                                     [data]="data"
                                     [column]="col"
                                     [row]="row"
+                                    [resolverFn]="resolverFn"
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-filesize-cell>
                             </div>
@@ -169,6 +172,7 @@
                                     [data]="data"
                                     [column]="col"
                                     [row]="row"
+                                    [resolverFn]="resolverFn"
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-datatable-cell>
                             </div>
@@ -177,6 +181,7 @@
                                     [editable]="col.editable"
                                     [data]="data"
                                     [column]="col"
+                                    [resolverFn]="resolverFn"
                                     [row]="row">
                                 </adf-json-cell>
                             </div>
@@ -189,7 +194,7 @@
                         <div class="adf-cell-value" tabindex="0">
                             <ng-container
                                 [ngTemplateOutlet]="col.template"
-                                [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col) }">
+                                [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col, resolverFn) }">
                             </ng-container>
                         </div>
                     </div>

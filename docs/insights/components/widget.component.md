@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-03-29
 ---
 
-# [Widget component](../../../lib/insights/analytics-process/components/widgets/widget.component.ts "Defined in widget.component.ts")
+# [Widget component](../../../lib/insights/src/lib/analytics-process/components/widgets/widget.component.ts "Defined in widget.component.ts")
 
 Base class for standard and custom widget classes.
 

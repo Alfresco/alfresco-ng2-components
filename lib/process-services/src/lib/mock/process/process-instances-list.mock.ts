@@ -45,7 +45,12 @@ export let fakeProcessInstance = {
             graphicalNotationDefined: true,
             startFormDefined: false,
             suspended: false,
-            variables: []
+            variables: [
+                {
+                    name: 'initiator',
+                    value: 'fake-user-1'
+                }
+            ]
         },
         {
             id: '2',
@@ -70,7 +75,12 @@ export let fakeProcessInstance = {
             graphicalNotationDefined: true,
             startFormDefined: false,
             suspended: false,
-            variables: []
+            variables: [
+                {
+                    name: 'initiator',
+                    value: 'fake-user-2'
+                }
+            ]
         }
     ]
 };
