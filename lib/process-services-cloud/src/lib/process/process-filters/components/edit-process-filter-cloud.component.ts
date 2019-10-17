@@ -221,17 +221,16 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this.filterProperties.indexOf(EditProcessFilterCloudComponent.LAST_MODIFIED) >= 0;
     }
 
-    removeOrderProperty(filteredProperties: ProcessFilterProperties[]) {
+    removeOrderProperty(filteredProperties: ProcessFilterProperties[]): ProcessFilterProperties[] {
         if (filteredProperties && filteredProperties.length > 0) {
-            const propertiesWithOutOrderProperty = filteredProperties.filter(
-                (property: ProcessFilterProperties) => {
-                    return property.key !== EditProcessFilterCloudComponent.ORDER;
-                });
-            return propertiesWithOutOrderProperty;
+            return filteredProperties.filter(
+                property =>  property.key !== EditProcessFilterCloudComponent.ORDER
+            );
         }
+        return [];
     }
 
-    get createSortProperties(): any {
+    get createSortProperties(): ProcessFilterOptions[] {
         this.checkMandatorySortProperties();
         const sortProperties = this.sortProperties.map((property: string) => {
             return <ProcessFilterOptions> { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
@@ -425,6 +424,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         if (action.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
             return false;
         }
+
+        return false;
     }
 
     private setLastModifiedToFilter(formValues: ProcessFilterCloudModel) {

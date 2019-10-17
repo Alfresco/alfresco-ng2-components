@@ -37,12 +37,13 @@ describe('NameLocationCellComponent', () => {
         component = fixture.componentInstance;
 
         rowData = <DataRow> {
-            getValue(key) {
+            getValue(key): any {
                 if (key === 'name') {
                     return 'file-name';
                 } else if (key === 'path') {
                     return { name: '/path/to/location' };
                 }
+                return undefined;
             }
         };
         component.row = rowData;

@@ -145,7 +145,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      * Pass the selected filter as next
      * @param filter
      */
-    public selectFilter(filter: ProcessInstanceFilterRepresentation) {
+    selectFilter(filter: ProcessInstanceFilterRepresentation) {
         this.currentFilter = filter;
         this.filterClick.emit(filter);
     }
@@ -153,7 +153,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     /**
      * Select the first filter of a list if present
      */
-    public selectProcessFilter(filterParam: FilterProcessRepresentationModel) {
+    selectProcessFilter(filterParam: FilterProcessRepresentationModel) {
         if (filterParam) {
             this.filters.filter((processFilter: UserProcessInstanceFilterRepresentation, index) => {
                 if (filterParam.name && filterParam.name.toLowerCase() === processFilter.name.toLowerCase() ||
@@ -172,14 +172,14 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     /**
      * Select the Running filter
      */
-    public selectRunningFilter() {
+    selectRunningFilter() {
         this.selectProcessFilter(this.processFilterService.getRunningFilterInstance(null));
     }
 
     /**
      * Select as default task filter the first in the list
      */
-    public selectDefaultTaskFilter() {
+    selectDefaultTaskFilter() {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
             this.filterSelected.emit(this.filters[0]);
@@ -215,7 +215,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     /**
      * Return current filter icon
      */
-    getFilterIcon(icon): string {
+    getFilterIcon(icon: string): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
 }

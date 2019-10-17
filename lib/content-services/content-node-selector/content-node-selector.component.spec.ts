@@ -37,11 +37,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
         title: 'Move along citizen...',
         actionName: 'move',
         select: new EventEmitter<Node>(),
-        rowFilter: (shareDataRow: ShareDataRow) => {
-            if (shareDataRow.node.entry.name === 'impossible-name') {
-                return true;
-            }
-        },
+        rowFilter: (shareDataRow: ShareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
         imageResolver: () => 'piccolo',
         currentFolderId: 'cat-girl-nuku-nuku'
     };

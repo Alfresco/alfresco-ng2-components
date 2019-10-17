@@ -258,13 +258,7 @@ describe('NodeDeleteDirective', () => {
                     return Promise.reject(null);
                 }
 
-                if (id === '2') {
-                    return Promise.resolve();
-                }
-
-                if (id === '3') {
-                    return Promise.resolve();
-                }
+                return Promise.resolve();
             });
 
             component.selection = [

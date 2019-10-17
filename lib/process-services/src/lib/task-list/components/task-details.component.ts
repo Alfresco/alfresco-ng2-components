@@ -335,11 +335,11 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
             this.isExternalIdEqual(this.taskDetails.assignee.externalId, this.currentLoggedUser.externalId);
     }
 
-    private isEmailEqual(assigneeMail, currentLoggedEmail): boolean {
+    private isEmailEqual(assigneeMail: string, currentLoggedEmail: string): boolean {
         return assigneeMail.toLocaleLowerCase() === currentLoggedEmail.toLocaleLowerCase();
     }
 
-    private isExternalIdEqual(assigneeExternalId, currentUserExternalId): boolean {
+    private isExternalIdEqual(assigneeExternalId: string, currentUserExternalId: string): boolean {
         return assigneeExternalId.toLocaleLowerCase() === currentUserExternalId.toLocaleLowerCase();
     }
 

@@ -182,7 +182,7 @@ export class NodeRestoreDirective {
         );
     }
 
-    private getRestoreMessage(): string {
+    private getRestoreMessage(): string | null {
         const { restoreProcessStatus: status } = this;
 
         if (status.someFailed && !status.oneFailed) {
@@ -233,6 +233,8 @@ export class NodeRestoreDirective {
                 }
             );
         }
+
+        return null;
     }
 
     private notification(): void {

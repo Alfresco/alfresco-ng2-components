@@ -126,6 +126,8 @@ export class ViewUtilService {
                 return await this.waitRendition(nodeId, renditionId, retries);
             }
         }
+
+        return Promise.resolve(null);
     }
 
     getViewerTypeByMimeType(mimeType: string): string {

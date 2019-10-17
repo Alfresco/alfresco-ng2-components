@@ -18,7 +18,7 @@
 import { ContentService, TranslationService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
-import { Observable, Subject, throwError } from 'rxjs';
+import { Observable, Subject, throwError, of } from 'rxjs';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
@@ -119,11 +119,9 @@ export class DocumentActionsService {
     }
 
     private deleteNode(node: NodeEntry, _target?: any, permission?: string): Observable<any> {
-        let handlerObservable;
-
         if (this.canExecuteAction(node)) {
             if (this.contentService.hasAllowableOperations(node.entry, permission)) {
-                handlerObservable = this.documentListService.deleteNode(node.entry.id);
+                const handlerObservable = this.documentListService.deleteNode(node.entry.id);
                 handlerObservable.subscribe(() => {
                     const message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });
                     this.success.next(message);
@@ -141,5 +139,7 @@ export class DocumentActionsService {
                 return throwError(new Error('No permission to delete'));
             }
         }
+
+        return of();
     }
 }

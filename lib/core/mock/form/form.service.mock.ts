@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let formModelTabs = {
+export const formModelTabs: any = {
     id: 16,
     name: 'start event',
     description: '',

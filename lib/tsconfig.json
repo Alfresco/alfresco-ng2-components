@@ -13,7 +13,7 @@
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         "noImplicitAny": false,
-        "noImplicitReturns": false,
+        "noImplicitReturns": true,
         "noImplicitUseStrict": false,
         "noFallthroughCasesInSwitch": true,
         "removeComments": true,

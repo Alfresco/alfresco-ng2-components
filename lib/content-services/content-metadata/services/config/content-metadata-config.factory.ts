@@ -38,7 +38,7 @@ export class ContentMetadataConfigFactory {
     constructor(private appConfigService: AppConfigService, private logService: LogService) {}
 
     public get(presetName: string = 'default'): ContentMetadataConfig {
-        let presetConfig;
+        let presetConfig: PresetConfig;
         try {
             presetConfig = this.appConfigService.config['content-metadata'].presets[presetName];
         } catch {
@@ -74,7 +74,7 @@ export class ContentMetadataConfigFactory {
         return Array.isArray(presetConfig);
     }
 
-    private isObject(x) {
+    private isObject(x: any): boolean {
         return x != null && typeof x === 'object';
     }
 }

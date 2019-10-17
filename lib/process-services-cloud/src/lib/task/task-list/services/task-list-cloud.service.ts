@@ -65,8 +65,8 @@ export class TaskListCloudService extends BaseCloudService {
         return `${this.getBasePath(requestNode.appName)}/query/v1/tasks`;
     }
 
-    private buildQueryParams(requestNode: TaskQueryCloudRequestModel) {
-        const queryParam = {};
+    private buildQueryParams(requestNode: TaskQueryCloudRequestModel): Object {
+        const queryParam: Object = {};
         for (const property in requestNode) {
             if (requestNode.hasOwnProperty(property) &&
                 !this.isExcludedField(property) &&
@@ -77,11 +77,11 @@ export class TaskListCloudService extends BaseCloudService {
         return queryParam;
     }
 
-    private isExcludedField(property) {
+    private isExcludedField(property: string): boolean {
         return property === 'appName' || property === 'sorting';
     }
 
-    private isPropertyValueValid(requestNode, property) {
+    private isPropertyValueValid(requestNode: any, property: string): boolean {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 

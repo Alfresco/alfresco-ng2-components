@@ -62,8 +62,6 @@ export class ContentCloudNodeSelectorService {
   }
 
   private isNodeFile(entry: Node): boolean {
-    if (entry) {
-      return entry.isFile;
-    }
+    return entry && entry.isFile;
   }
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let formDefVisibilitiFieldDependsOnNextOne = {
+export const formDefVisibilitiFieldDependsOnNextOne: any = {
     id: 19,
     processDefinitionId: 'visibility:1:148',
     processDefinitionName: 'visibility',
@@ -181,7 +181,7 @@ export let formDefVisibilitiFieldDependsOnNextOne = {
     globalDateFormat: 'D-M-YYYY'
 };
 
-export let formDefVisibilitiFieldDependsOnPreviousOne = {
+export const formDefVisibilitiFieldDependsOnPreviousOne: any = {
     id: 19,
     processDefinitionId: 'visibility:1:148',
     processDefinitionName: 'visibility',

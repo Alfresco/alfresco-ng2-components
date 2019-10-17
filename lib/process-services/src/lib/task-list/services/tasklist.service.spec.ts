@@ -36,6 +36,7 @@ import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './tasklist.service';
 import { AlfrescoApiServiceMock, LogService, AppConfigService } from '@alfresco/adf-core';
+import { TaskUpdateRepresentation } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
@@ -452,8 +453,11 @@ describe('Activiti TaskList Service', () => {
 
         it('should update a task', (done) => {
             const taskId = '111';
+            const updated: TaskUpdateRepresentation = {
+                name: 'someName'
+            };
 
-            service.updateTask(taskId, { property: 'value' }).subscribe(() => {
+            service.updateTask(taskId, updated).subscribe(() => {
                 done();
             });
 

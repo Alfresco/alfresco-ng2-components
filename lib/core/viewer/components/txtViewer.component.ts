@@ -55,6 +55,8 @@ export class TxtViewerComponent implements OnChanges {
         if (!this.urlFile && !this.blobFile) {
             throw new Error('Attribute urlFile or blobFile is required');
         }
+
+        return Promise.resolve();
     }
 
     private getUrlContent(url: string): Promise<any> {

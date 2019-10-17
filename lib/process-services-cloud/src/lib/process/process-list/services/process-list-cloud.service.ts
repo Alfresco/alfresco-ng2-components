@@ -57,16 +57,17 @@ export class ProcessListCloudService extends BaseCloudService {
             return throwError('Appname not configured');
         }
     }
-    private buildQueryUrl(requestNode: ProcessQueryCloudRequestModel) {
+
+    private buildQueryUrl(requestNode: ProcessQueryCloudRequestModel): string {
         this.contextRoot = this.appConfigService.get('bpmHost', '');
         return `${this.getBasePath(requestNode.appName)}/query/v1/process-instances`;
     }
 
-    private isPropertyValueValid(requestNode, property) {
+    private isPropertyValueValid(requestNode: any, property: string) {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
-    private buildQueryParams(requestNode: ProcessQueryCloudRequestModel) {
+    private buildQueryParams(requestNode: ProcessQueryCloudRequestModel): Object {
         const queryParam = {};
         for (const property in requestNode) {
             if (requestNode.hasOwnProperty(property) &&
@@ -78,7 +79,7 @@ export class ProcessListCloudService extends BaseCloudService {
         return queryParam;
     }
 
-    private isExcludedField(property) {
+    private isExcludedField(property: string): boolean {
         return property === 'appName' || property === 'sorting';
     }
 
