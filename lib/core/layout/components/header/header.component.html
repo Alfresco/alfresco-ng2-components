@@ -26,6 +26,8 @@
     </a>
 
     <span
+        role="link"
+        [attr.aria-label]="title | translate"
         [routerLink]="redirectUrl"
         fxFlex="1 1 auto"
         fxShow
