@@ -1,15 +1,20 @@
 @mixin adf-card-view-textitem-theme($theme) {
     $foreground: map-get($theme, foreground);
+    $outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
 
     .adf {
         &-textitem-icon {
             font-size: 16px;
             width: 16px;
             height: 16px;
-            position: relative;
-            top: 4px;
-            padding-left: 8px;
-            opacity: 0.3;
+        }
+
+        &-textitem-action {
+            color: mat-color($foreground, text, 0.25);
+        }
+
+        &-textitem-action:hover, &-textitem-action:focus {
+            color: mat-color($foreground, text);
         }
 
         &-update-icon {
@@ -19,14 +24,15 @@
         &-textitem-readonly {
             cursor: pointer !important;
 
-            &:hover mat-icon {
-                opacity: 1;
+            &:hover .adf-textitem-action,
+            &:focus .adf-textitem-action {
+                color: mat-color($foreground, text);
             }
         }
 
         &-textitem-clickable {
-            &:hover mat-icon {
-                opacity: 1;
+            &:hover .adf-textitem-action {
+                color: mat-color($foreground, text);
             }
         }
 
@@ -39,9 +45,10 @@
 
             &-controls {
                 display: flex;
+                align-items: center;
 
                 mat-icon:not(.adf-button-disabled):hover {
-                    opacity: 1;
+                    color: mat-color($foreground, text);
                     cursor: pointer !important;;
                 }
 
@@ -51,7 +58,7 @@
 
                 input:focus,
                 textarea:focus {
-                    border: 1px solid mat-color($foreground, text, 0.15);
+                    border: $outline;
                 }
             }
 
@@ -126,12 +133,4 @@
             display: block;
         }
     }
-
-    .mat-button.adf-update-icon {
-        min-width: 40px;
-        line-height: 0;
-        margin-top: -4px;
-        padding: 0;
-    }
-
 }

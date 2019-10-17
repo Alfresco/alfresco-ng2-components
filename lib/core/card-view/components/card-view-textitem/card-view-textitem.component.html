@@ -5,7 +5,7 @@
             <span *ngIf="showProperty()" class="adf-textitem-ellipsis">{{ property.displayValue }}</span>
         </span>
         <ng-template #elseBlock>
-            <div class="adf-textitem-clickable" (click)="clicked()" fxLayout="row" fxLayoutAlign="space-between center">
+            <div role="button" class="adf-textitem-clickable" (click)="clicked()" fxLayout="row" fxLayoutAlign="space-between center">
                 <span class="adf-textitem-clickable-value" [attr.data-automation-id]="'card-textitem-value-' + property.key">
                     <span *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
                 </span>
@@ -13,14 +13,26 @@
         </ng-template>
     </span>
     <span *ngIf="isEditable()">
-        <div *ngIf="!inEdit" (click)="setEditMode(true)" class="adf-textitem-readonly" [attr.data-automation-id]="'card-textitem-edit-toggle-' + property.key" fxLayout="row" fxLayoutAlign="space-between center">
+        <div *ngIf="!inEdit" role="button"
+            tabindex="0"
+            [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+            (click)="setEditMode(true)"
+            (keydown.enter)="setEditMode(true)"
+            class="adf-textitem-readonly"
+            [attr.data-automation-id]="'card-textitem-edit-toggle-' + property.key"
+            fxLayout="row" fxLayoutAlign="space-between center">
             <span [attr.data-automation-id]="'card-textitem-value-' + property.key">
                 <span *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
             </span>
-            <mat-icon fxFlex="0 0 auto"
-                [attr.data-automation-id]="'card-textitem-edit-icon-' + property.key"
+
+            <button mat-icon-button fxFlex="0 0 auto"
+                class="adf-textitem-action"
+                [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                class="adf-textitem-icon">create</mat-icon>
+                [attr.data-automation-id]="'card-textitem-edit-icon-' + property.key">
+
+                <mat-icon class="adf-textitem-icon"> create</mat-icon>
+            </button>
         </div>
         <div *ngIf="inEdit" class="adf-textitem-editable">
             <div class="adf-textitem-editable-controls">
@@ -42,21 +54,24 @@
                         (input)="onTextAreaInputChange()"
                         [attr.data-automation-id]="'card-textitem-edittextarea-' + property.key"></textarea>
                 </mat-form-field>
-                <mat-icon
-                    [ngClass]="{'disable': hasErrors()}"
-                    (click)="update()"
-                    [attr.data-automation-id]="'card-textitem-update-' + property.key"
-                    class="adf-textitem-icon adf-update-icon"
-                    [class.adf-button-disabled]="hasErrors()"
-                    [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate">done</mat-icon>
-                <mat-icon
-                    class="adf-textitem-icon adf-reset-icon"
-                    (click)="reset()"
-                    [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
-                    [attr.data-automation-id]="'card-textitem-reset-' + property.key">clear</mat-icon>
+                <button mat-icon-button class="adf-textitem-action" (click)="update()"
+                    [attr.aria-label]="'CORE.METADATA.ACTIONS.SAVE' | translate"
+                    [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
+                    [disabled]="hasErrors()"
+                    [attr.data-automation-id]="'card-textitem-update-' + property.key">
 
+                    <mat-icon class="adf-textitem-icon">done</mat-icon>
+                </button>
+
+                <button mat-icon-button (click)="reset()" class="adf-textitem-action"
+                    [attr.aria-label]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
+                    [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
+                    [attr.data-automation-id]="'card-textitem-reset-' + property.key">
+
+                    <mat-icon>clear</mat-icon>
+                </button>
             </div>
-            <mat-error  [attr.data-automation-id]="'card-textitem-error-' + property.key" class="adf-textitem-editable-error" *ngIf="hasErrors()">
+            <mat-error [attr.data-automation-id]="'card-textitem-error-' + property.key" class="adf-textitem-editable-error" *ngIf="hasErrors()">
                 <ul>
                     <li *ngFor="let errorMessage of errorMessages">{{ errorMessage | translate }}</li>
                 </ul>

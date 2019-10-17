@@ -52,12 +52,12 @@ export class CardViewComponentPage {
     }
 
     async clickOnTextClearIcon(): Promise<void> {
-        const clearIcon: ElementFinder = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-name"]`));
+        const clearIcon: ElementFinder = element(by.css(`button[data-automation-id="card-textitem-reset-name"]`));
         await BrowserActions.click(clearIcon);
     }
 
     async clickOnTextSaveIcon(): Promise<void> {
-        const saveIcon: ElementFinder = element(by.css(`mat-icon[data-automation-id="card-textitem-update-name"]`));
+        const saveIcon: ElementFinder = element(by.css(`button[data-automation-id="card-textitem-update-name"]`));
         await BrowserActions.click(saveIcon);
     }
 
@@ -78,12 +78,12 @@ export class CardViewComponentPage {
     }
 
     async clickOnIntClearIcon(): Promise<void> {
-        const clearIcon: ElementFinder = element(by.css('mat-icon[data-automation-id="card-textitem-reset-int"]'));
+        const clearIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-reset-int"]'));
         await BrowserActions.click(clearIcon);
     }
 
     async clickOnIntSaveIcon(): Promise<void> {
-        const saveIcon: ElementFinder = element(by.css('mat-icon[data-automation-id="card-textitem-update-int"]'));
+        const saveIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-update-int"]'));
         await BrowserActions.click(saveIcon);
     }
 
@@ -109,12 +109,12 @@ export class CardViewComponentPage {
     }
 
     async clickOnFloatClearIcon(): Promise<void> {
-        const clearIcon: ElementFinder = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-float"]`));
+        const clearIcon: ElementFinder = element(by.css(`button[data-automation-id="card-textitem-reset-float"]`));
         await BrowserActions.click(clearIcon);
     }
 
     async clickOnFloatSaveIcon(): Promise<void> {
-        const saveIcon: ElementFinder = element(by.css(`mat-icon[data-automation-id="card-textitem-update-float"]`));
+        const saveIcon: ElementFinder = element(by.css(`button[data-automation-id="card-textitem-update-float"]`));
         await BrowserActions.click(saveIcon);
     }
 
