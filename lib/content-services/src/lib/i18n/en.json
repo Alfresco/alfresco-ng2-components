@@ -37,6 +37,7 @@
     "NO_PERMISSION": "You don't have permission to view this file or folder.",
     "LAYOUT": {
       "CREATED": "Created",
+      "CREATED_BY": "Created by",
       "THUMBNAIL": "Thumbnail",
       "NAME": "Name",
       "LOCATION": "Location",

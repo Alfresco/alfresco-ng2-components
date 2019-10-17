@@ -56,7 +56,7 @@
             #documentList
             [adf-highlight]="searchTerm"
             adf-highlight-selector=".adf-name-location-cell-name"
-            [showHeader]="false"
+            [showHeader]="true"
             [node]="nodePaging"
             [maxItems]="pageSize"
             [rowFilter]="_rowFilter"
@@ -78,14 +78,14 @@
 
             <data-columns>
                 <data-column key="$thumbnail" type="image"></data-column>
-                <data-column key="name" type="text" class="adf-full-width adf-ellipsis-cell">
+                <data-column key="name" type="text" title="{{ 'ADF-DOCUMENT-LIST.LAYOUT.NAME' | translate }}" class="adf-full-width adf-ellipsis-cell">
                     <ng-template let-context>
                         <adf-name-location-cell [row]="context.row"></adf-name-location-cell>
                     </ng-template>
                 </data-column>
-                <data-column key="modifiedAt" type="date" format="timeAgo" class="adf-content-selector-modified-cell"></data-column>
-                <data-column key="createdByUser.displayName" type="text" class="adf-content-selector-modifier-cell"></data-column>
-                <data-column key="visibility" type="text" class="adf-content-selector-visibility-cell"></data-column>
+                <data-column key="modifiedAt" type="date" title="{{ 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON' | translate }}" format="timeAgo" class="adf-content-selector-modified-cell"></data-column>
+                <data-column key="createdByUser.displayName" type="text" title="{{ 'ADF-DOCUMENT-LIST.LAYOUT.CREATED_BY' | translate }}" class="adf-content-selector-modifier-cell"></data-column>
+                <data-column key="visibility" type="text" title="{{ 'ADF-DOCUMENT-LIST.LAYOUT.STATUS' | translate }}" class="adf-content-selector-visibility-cell"></data-column>
             </data-columns>
 
         </adf-document-list>
