@@ -109,12 +109,12 @@ export class CardViewComponentPage {
     }
 
     async clickOnFloatClearIcon(): Promise<void> {
-        const clearIcon: ElementFinder = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-float"]`));
+        const clearIcon: ElementFinder = element(by.css(`button[data-automation-id="card-textitem-reset-float"]`));
         await BrowserActions.click(clearIcon);
     }
 
     async clickOnFloatSaveIcon(): Promise<void> {
-        const saveIcon: ElementFinder = element(by.css(`mat-icon[data-automation-id="card-textitem-update-float"]`));
+        const saveIcon: ElementFinder = element(by.css(`button[data-automation-id="card-textitem-update-float"]`));
         await BrowserActions.click(saveIcon);
     }
 

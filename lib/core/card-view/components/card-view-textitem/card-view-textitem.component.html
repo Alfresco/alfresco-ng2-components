@@ -65,9 +65,10 @@
 
                 <button mat-icon-button (click)="reset()" class="adf-textitem-action"
                     [attr.aria-label]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
-                    [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate">
+                    [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
+                    [attr.data-automation-id]="'card-textitem-reset-' + property.key">
 
-                    <mat-icon [attr.data-automation-id]="'card-textitem-reset-' + property.key">clear</mat-icon>
+                    <mat-icon>clear</mat-icon>
                 </button>
             </div>
             <mat-error [attr.data-automation-id]="'card-textitem-error-' + property.key" class="adf-textitem-editable-error" *ngIf="hasErrors()">
