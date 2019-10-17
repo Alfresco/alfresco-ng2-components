@@ -26,10 +26,10 @@ export class ProcessFiltersPage {
     runningFilter: ElementFinder = element(by.css('span[data-automation-id="Running_filter"]'));
     completedFilter: ElementFinder = element(by.css('div[class="mat-list-text"] > span[data-automation-id="Completed_filter"]'));
     allFilter: ElementFinder = element(by.css('span[data-automation-id="All_filter"]'));
-    createProcessButton: ElementFinder = element(by.css('.adf-processes-menu button[data-automation-id="create-button"] > span'));
+    createProcessButton: ElementFinder = element(by.css('.app-processes-menu button[data-automation-id="create-button"] > span'));
     newProcessButton: ElementFinder = element(by.css('div > button[data-automation-id="btn-start-process"]'));
-    processesPage: ElementFinder = element(by.css('div[class="app-grid"] > div[class="app-grid-item adf-processes-menu"]'));
-    accordionMenu: ElementFinder = element(by.css('.adf-processes-menu mat-accordion'));
+    processesPage: ElementFinder = element(by.css('div[class="app-grid"] > div[class="app-grid-item app-processes-menu"]'));
+    accordionMenu: ElementFinder = element(by.css('.app-processes-menu mat-accordion'));
     buttonWindow: ElementFinder = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
     noContentMessage: ElementFinder = element.all(by.css('div[class="adf-empty-content__title"]')).first();
     rows: Locator = by.css('adf-process-instance-list div[class="adf-datatable-body"] div[class*="adf-datatable-row"]');

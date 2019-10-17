@@ -213,7 +213,7 @@ export class CardViewComponentPage {
         const switchClass = await this.noneOptionSwitch.getAttribute('class');
         if (switchClass.indexOf('mat-checked') === -1) {
             await this.noneOptionSwitch.click();
-            const noneOptionChecked = element(by.css('mat-slide-toggle[id="adf-toggle-none-option"][class*="mat-checked"]'));
+            const noneOptionChecked = element(by.css('mat-slide-toggle[id="app-toggle-none-option"][class*="mat-checked"]'));
             await BrowserVisibility.waitUntilElementIsVisible(noneOptionChecked);
         }
     }

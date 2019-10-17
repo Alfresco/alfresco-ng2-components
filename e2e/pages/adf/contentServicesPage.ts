@@ -67,7 +67,7 @@ export class ContentServicesPage {
     recentFileIcon: ElementFinder = element(by.css('.app-container-recent mat-expansion-panel-header mat-icon'));
     emptyFolder: ElementFinder = element(by.css('.adf-empty-folder-this-space-is-empty'));
     emptyFolderImage: ElementFinder = element(by.css('.adf-empty-folder-image'));
-    emptyRecent: ElementFinder = element(by.css('.app-container-recent .adf-empty-list__title'));
+    emptyRecent: ElementFinder = element(by.css('.app-container-recent .app-empty-list__title'));
     gridViewButton: ElementFinder = element(by.css('button[data-automation-id="document-list-grid-view"]'));
     cardViewContainer: ElementFinder = element(by.css('div.app-document-list-container div.adf-datatable-card'));
     shareNodeButton: ElementFinder = element(by.cssContainingText('mat-icon', ' share '));
