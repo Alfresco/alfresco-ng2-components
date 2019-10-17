@@ -29,7 +29,11 @@
             <data-column key="id" title="Id"></data-column>
             <data-column key="createdOn" title="Created"></data-column>
             <data-column key="name" title="Name" class="adf-full-width name-column"></data-column>
-            <data-column key="createdBy.name" title="Created By"></data-column>
+            <data-column type="text" key="createdBy.name" title="Created By"></data-column>
+            <data-column type="text" key="users" title="Users"></data-column>
+            <data-column key="status" title="Status">
+                <ng-template let-value="value">{{value | json }}</ng-template>
+            </data-column>
         </data-columns>
         -->
     </adf-datatable>

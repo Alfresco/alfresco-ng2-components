@@ -211,12 +211,12 @@ export class DataTableComponent {
                     icon: 'material-icons://person_outline',
                     users: [
                         {
-                            firstName: 'John',
-                            lastName: 'Wick'
-                        },
-                        {
                             firstName: 'Captain',
                             lastName: 'America'
+                        },
+                        {
+                            firstName: 'John',
+                            lastName: 'Wick'
                         }
                     ],
                     status: [

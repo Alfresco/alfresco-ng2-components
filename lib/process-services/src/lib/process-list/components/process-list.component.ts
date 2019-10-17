@@ -20,7 +20,9 @@ import {
     DataRowEvent,
     DataTableAdapter,
     CustomEmptyContentTemplateDirective,
-    CustomLoadingContentTemplateDirective
+    CustomLoadingContentTemplateDirective,
+    DataRow,
+    DataColumn
 } from '@alfresco/adf-core';
 import {
     AppConfigService,
@@ -111,6 +113,13 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
     /** Toggles default selection of the first row */
     @Input()
     selectFirstRow: boolean = true;
+
+    /**
+     * Resolver function is used to show dynamic complex column objects
+     * see the docs to learn how to configure a resolverFn.
+     */
+    @Input()
+    resolverFn: (row: DataRow, col: DataColumn) => any = null;
 
     /** Emitted when a row in the process list is clicked. */
     @Output()

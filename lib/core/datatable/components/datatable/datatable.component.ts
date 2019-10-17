@@ -162,7 +162,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     rowMenuCacheEnabled = true;
 
     /**
-     * Helps to parse the data
+     * Custom resolver function which is used to parse dynamic column objects
+     * see the docs to learn how to configure a resolverFn.
      */
     @Input()
     resolverFn: (row: DataRow, col: DataColumn) => any = null;
