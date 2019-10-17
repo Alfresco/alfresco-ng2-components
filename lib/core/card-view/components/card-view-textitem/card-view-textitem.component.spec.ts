@@ -77,22 +77,6 @@ describe('CardViewTextItemComponent', () => {
             expect(value.nativeElement.innerText.trim()).toBe('User Name');
         });
 
-        it('should NOT render the default as value if the value is empty, editable is false and displayEmpty is false', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                editable: false
-            });
-            component.displayEmpty = false;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('');
-        });
-
         it('should render the default as value if the value is empty, editable is false and displayEmpty is true', () => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
@@ -123,22 +107,6 @@ describe('CardViewTextItemComponent', () => {
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
-        });
-
-        it('should NOT render the default as value if the value is empty, clickable is false and displayEmpty is false', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: false
-            });
-            component.displayEmpty = false;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('');
         });
 
         it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', () => {

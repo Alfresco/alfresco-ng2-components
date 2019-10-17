@@ -34,18 +34,22 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
         this.pipes = cardViewTextItemProperties.pipes || [];
         this.clickCallBack = cardViewTextItemProperties.clickCallBack ? cardViewTextItemProperties.clickCallBack : null;
 
-        if (cardViewTextItemProperties.default && this.isEmpty()) {
-            this.value = cardViewTextItemProperties.default;
+        if (this.default && this.isEmpty()) {
+            this.value = this.default;
         }
     }
 
     get displayValue(): string {
+        return this.applyPipes(this.value);
+    }
+
+    private applyPipes(displayValue) {
         if (this.pipes.length) {
-            this.value = this.pipes.reduce((accumulator, { pipe, params = [] }) => {
+            displayValue = this.pipes.reduce((accumulator, { pipe, params = [] }) => {
                 return pipe.transform(accumulator, ...params);
-            }, this.value);
+            }, displayValue);
         }
 
-        return this.value;
+        return displayValue;
     }
 }
