@@ -111,15 +111,15 @@
                                     </mat-icon>
                                     <ng-template #no_selected_row>
                                         <img class="adf-datatable-center-img-ie"
-                                            [attr.aria-label]=" (data.getValue(row, col, resolverFn) | fileType) === 'disable' ?
+                                            [attr.aria-label]=" (data.getValue(row, col) | fileType) === 'disable' ?
                                                 ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate) :
                                                 'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
-                                                    type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col, resolverFn) | fileType | uppercase) | translate
+                                                    type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
                                                 }"
-                                            [attr.alt]=" (data.getValue(row, col, resolverFn) | fileType) === 'disable' ?
+                                            [attr.alt]=" (data.getValue(row, col) | fileType) === 'disable' ?
                                                 ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate) :
                                                 'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
-                                                        type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col, resolverFn) | fileType | uppercase) | translate
+                                                        type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
                                                 }"
                                             src="{{ data.getValue(row, col, resolverFn) }}"
                                             (error)="onImageLoadingError($event, row)">
@@ -129,14 +129,14 @@
                             <div *ngSwitchCase="'icon'" class="adf-cell-value" tabindex="0">
                                 <span class="adf-sr-only">
                                     {{ 'ADF-DATATABLE.ACCESSIBILITY.ICON_ALT_TEXT' | translate:{
-                                            type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col, resolverFn) | fileType | uppercase) | translate
+                                            type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
                                         }
                                     }}
                                 </span>
                                 <mat-icon>{{ data.getValue(row, col, resolverFn) }}</mat-icon>
                             </div>
                             <div *ngSwitchCase="'date'" class="adf-cell-value" tabindex="0"
-                                 [attr.data-automation-id]="'date_' + (data.getValue(row, col, resolverFn) | adfLocalizedDate: 'medium') ">
+                                 [attr.data-automation-id]="'date_' + (data.getValue(row, col) | adfLocalizedDate: 'medium') ">
                                 <adf-date-cell class="adf-datatable-center-date-column-ie"
                                     [data]="data"
                                     [column]="col"
@@ -146,7 +146,7 @@
                                 </adf-date-cell>
                             </div>
                             <div *ngSwitchCase="'location'" tabindex="0" class="adf-cell-value"
-                                 [attr.data-automation-id]="'location' + data.getValue(row, col, resolverFn)">
+                                 [attr.data-automation-id]="'location' + data.getValue(row, col)">
                                 <adf-location-cell
                                     [data]="data"
                                     [column]="col"
@@ -155,8 +155,8 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-location-cell>
                             </div>
-                            <div *ngSwitchCase="'fileSize'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value"
-                                 [attr.data-automation-id]="'fileSize_' + data.getValue(row, col, resolverFn)">
+                            <div *ngSwitchCase="'fileSize'" [attr.tabindex]="data.getValue(row, col)? 0 : -1" class="adf-cell-value"
+                                 [attr.data-automation-id]="'fileSize_' + data.getValue(row, col)">
                                 <adf-filesize-cell class="adf-datatable-center-size-column-ie"
                                     [data]="data"
                                     [column]="col"
@@ -166,7 +166,7 @@
                                 </adf-filesize-cell>
                             </div>
                             <div *ngSwitchCase="'text'" tabindex="0" class="adf-cell-value"
-                                 [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
+                                 [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                                 <adf-datatable-cell
                                     [copyContent]="col.copyContent"
                                     [data]="data"
