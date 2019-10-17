@@ -110,7 +110,6 @@ jobs:
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
 
 
-
         - stage: Check bundle
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
