@@ -5,6 +5,12 @@ const tsConfig = require('./e2e/tsconfig.e2e.json');
 const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 const TestConfig = require('./e2e/test.config');
 const RESOURCES = require('./e2e/util/resources');
+
+require('ts-node').register({
+    project: './lib/testing/tsconfig.lib.json'
+});
+const ACTIVITI_CLOUD_APPS = require('./lib/testing').ACTIVITI_CLOUD_APPS;
+
 const failFast = require('./e2e/protractor/fail-fast');
 const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
 const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protractor/save-remote');
@@ -16,6 +22,7 @@ const width = 1366, height = 768;
 let ENV_FILE = process.env.ENV_FILE;
 let GROUP_SUFFIX = process.env.PREFIX;
 
+RESOURCES.ACTIVITI_CLOUD_APPS = ACTIVITI_CLOUD_APPS;
 if (ENV_FILE) {
     require('dotenv').config({ path: ENV_FILE });
 }

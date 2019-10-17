@@ -51,8 +51,8 @@ describe('Task form cloud component', () => {
     let groupIdentityService: GroupIdentityService;
 
     let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, testUser, formTaskId;
-    const candidateBaseApp = browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
-    const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
 
@@ -103,13 +103,13 @@ describe('Task form cloud component', () => {
 
         for (let i = 0; i < 3; i++) {
             visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
-                simpleApp, browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.forms.tabVisibilityFields.id);
+                simpleApp, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.id);
             await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
         }
 
         for (let i = 3; i < 6; i++) {
             visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
-                simpleApp, browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.forms.tabVisibilityVars.id);
+                simpleApp, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.id);
             await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
         }
 
@@ -126,7 +126,7 @@ describe('Task form cloud component', () => {
         processDefinitionService = new ProcessDefinitionsService(apiService);
 
         let processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);

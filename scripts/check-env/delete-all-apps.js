@@ -1,6 +1,6 @@
 let alfrescoApi = require('@alfresco/js-api');
 let program = require('commander');
-let ACTIVITI7_APPS = require('../../e2e/util/resources').ACTIVITI7_APPS;
+const RESOURCES_CLOUD = require("@alfresco/adf-process-services-cloud");
 
 let config = {};
 let absentApps = [];
@@ -42,8 +42,8 @@ async function main() {
         console.log('Login error' + e);
     }
 
-    for (const key of Object.keys(ACTIVITI7_APPS)) {
-        await deleteApp(alfrescoJsApi, ACTIVITI7_APPS[key].name);
+    for (const key of Object.keys(RESOURCES_CLOUD.ACTIVITI_CLOUD_APPS)) {
+        await deleteApp(alfrescoJsApi, RESOURCES_CLOUD.ACTIVITI_CLOUD_APPS[key].name);
     }
 
     let notRunning = await getNotRunningApps(this.alfrescoJsApi);
@@ -56,10 +56,10 @@ async function main() {
 async function getNotRunningApps(alfrescoJsApi) {
     let allStatusApps = await getDeployedApplicationsByStatus(alfrescoJsApi, '');
 
-    Object.keys(ACTIVITI7_APPS).forEach((key) => {
+    Object.keys(RESOURCES_CLOUD.ACTIVITI_CLOUD_APPS).forEach((key) => {
         let isNotRunning = allStatusApps.find((currentApp) => {
             //console.log(currentApp.entry.name + '  ' +currentApp.entry.status);
-            return ACTIVITI7_APPS[key].name === currentApp.entry.name && currentApp.entry.status !== 'Running';
+            return RESOURCES_CLOUD.ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name && currentApp.entry.status !== 'Running';
         });
 
         if (isNotRunning && isNotRunning.entry.status !== 'ImagePushFailed') {

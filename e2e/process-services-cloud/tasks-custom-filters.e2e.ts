@@ -53,7 +53,7 @@ describe('Task filters cloud', () => {
         const createdTaskName = StringUtil.generateRandomString(),
             completedTaskName = StringUtil.generateRandomString(),
             assignedTaskName = StringUtil.generateRandomString(), deletedTaskName = StringUtil.generateRandomString();
-        const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
         let assignedTask, deletedTask, testUser, groupInfo;
         const orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
         let priority = 30;
@@ -84,7 +84,7 @@ describe('Task filters cloud', () => {
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
+                .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);

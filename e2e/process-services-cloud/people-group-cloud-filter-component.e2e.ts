@@ -92,7 +92,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the People Single Selection with the Application name filter', async () => {
             await peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
             await peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            await peopleGroupCloudComponentPage.enterPeopleAppName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name);
+            await peopleGroupCloudComponentPage.enterPeopleAppName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
             await peopleCloudComponent.searchAssignee(testUser.firstName);
             await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
@@ -103,7 +103,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the People Multiple Selection with the Application name filter', async () => {
             await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             await peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            await peopleGroupCloudComponentPage.enterPeopleAppName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name);
+            await peopleGroupCloudComponentPage.enterPeopleAppName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
             await peopleCloudComponent.searchAssignee(testUser.firstName);
             await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
@@ -121,7 +121,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the Groups Single Selection with the Application name filter', async () => {
             await peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
             await peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            await peopleGroupCloudComponentPage.enterGroupAppName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name);
+            await peopleGroupCloudComponentPage.enterGroupAppName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
             await groupCloudComponentPage.searchGroups(hrGroup.name);
             await groupCloudComponentPage.checkGroupIsDisplayed(hrGroup.name);
             await groupCloudComponentPage.selectGroupFromList(hrGroup.name);
@@ -131,7 +131,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', async () => {
             await peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
             await peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            await peopleGroupCloudComponentPage.enterGroupAppName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name);
+            await peopleGroupCloudComponentPage.enterGroupAppName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
             await groupCloudComponentPage.searchGroups(testGroup.name);
             await groupCloudComponentPage.checkGroupIsDisplayed(testGroup.name);
             await groupCloudComponentPage.selectGroupFromList(testGroup.name);

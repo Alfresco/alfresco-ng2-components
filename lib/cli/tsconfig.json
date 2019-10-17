@@ -1,23 +1,30 @@
 {
   "compilerOptions": {
-    "declaration": true,
+    "target": "es2018",
     "module": "commonjs",
     "moduleResolution": "node",
-    "noEmitOnError": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": false,
+    "noLib": false,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "strict": false,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "noImplicitUseStrict": false,
+    "noFallthroughCasesInSwitch": true,
+    "removeComments": true,
+    "declaration": true,
     "outDir": "./dist",
-    "rootDir": ".",
-    "skipLibCheck": true,
-    "strictNullChecks": true,
-    "target": "es2018",
     "lib": [
-      "es2018"
+      "es2016",
+      "dom"
     ],
-    "baseUrl": ".",
+    "baseUrl": "./",
     "typeRoots": [
       "./node_modules/@types"
     ],
@@ -32,6 +39,5 @@
     "./build.ts",
     "node_modules/**/*",
     "**/node_modules/**/*"
-
   ]
 }

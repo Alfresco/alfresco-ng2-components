@@ -35,7 +35,7 @@ describe('Task filters cloud', () => {
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
-        const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
         beforeAll(async() => {
 

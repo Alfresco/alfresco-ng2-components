@@ -21,10 +21,14 @@ export const ACTIVITI_CLOUD_APPS: any = {
         name: 'candidatebaseapp',
         file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/development/e2e/resources/activiti7/candidatebaseapp.zip?raw=true',
         processes: {
-            candidateUserProcess: 'candidateUserProcess',
-            candidateGroupProcess: 'candidateGroupProcess',
-            anotherCandidateGroupProcess: 'anotherCandidateGroupProcess',
-            uploadFileProcess: 'uploadFileProcess'
+            candidateUserProcess: 'candidateuserprocess',
+            candidateGroupProcess: 'candidategroupprocess',
+            anotherCandidateGroupProcess: 'anothercandidategroup',
+            uploadFileProcess: 'uploadfileprocess'
+        },
+        forms: {
+            starteventform: 'starteventform',
+            formtotestvalidations: 'formtotestvalidations'
         },
         security: [
             {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
@@ -39,7 +43,14 @@ export const ACTIVITI_CLOUD_APPS: any = {
             simpleProcess: 'simpleprocess',
             dropdownrestprocess: 'dropdownrestprocess',
             multilingualprocess: 'multilingualprocess',
-            processWithTabVisibility: 'processwithtabvisibility'
+            processWithTabVisibility: 'processwithtabvisibility',
+            startmessageevent: 'start-message-event',
+            intermediatemessageevent: 'intermediate-message-event',
+            intboundaryevent: 'int-boundary-event',
+            nonintboundaryevent: 'nonint-boundary-event',
+            intboundarysubprocess: 'int-boundary-subprocess',
+            intstartmessageevent: 'int-start-message-event',
+            nonintstartmessageevent: 'nonint-start-message-event'
         },
         forms: {
             tabVisibilityFields: {
@@ -49,6 +60,10 @@ export const ACTIVITI_CLOUD_APPS: any = {
             tabVisibilityVars: {
                 name: 'tabvisibilitywithvars',
                 id: 'form-7bf363d2-83c9-4b00-853e-373d0d59963c'
+            },
+            usertaskform: {
+                name: 'usertaskform',
+                id: 'form-056ba4aa-90c2-48eb-ba39-7013d732503b'
             }
         },
         security: [
