@@ -50,7 +50,10 @@ export const ACTIVITI_CLOUD_APPS: any = {
             nonintboundaryevent: 'nonint-boundary-event',
             intboundarysubprocess: 'int-boundary-subprocess',
             intstartmessageevent: 'int-start-message-event',
-            nonintstartmessageevent: 'nonint-start-message-event'
+            nonintstartmessageevent: 'nonint-start-message-event',
+            siblingtaskprocess: 'siblingtaskprocess',
+            startTaskVisibilityForm: 'start-task-visibility-form',
+            startVisibilityForm: 'start-visibility-form'
         },
         forms: {
             tabVisibilityFields: {
@@ -64,6 +67,18 @@ export const ACTIVITI_CLOUD_APPS: any = {
             usertaskform: {
                 name: 'usertaskform',
                 id: 'form-056ba4aa-90c2-48eb-ba39-7013d732503b'
+            },
+            dropdownform: {
+                name: 'dropdownform',
+                id: 'form-5688156c-150c-43bc-83cb-617fd045202a'
+            },
+            formVisibility: {
+                name: 'form-visibility',
+                id: 'form-30418ed3-2beb-464f-ad51-4ca5da02f6d8'
+            },
+            multilingualform: {
+                name: 'multilingualform',
+                id: 'form-fb8f1628-82d9-4e0e-b032-bf02598e7d24'
             }
         },
         security: [
