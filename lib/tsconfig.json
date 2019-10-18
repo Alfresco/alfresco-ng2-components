@@ -19,7 +19,7 @@
         "removeComments": true,
         "declaration": true,
         "outDir": "./dist",
-        "baseUrl" :  "./",
+        "baseUrl": ".",
         "types": ["jasmine"],
         "allowSyntheticDefaultImports": true,
         "paths": {
