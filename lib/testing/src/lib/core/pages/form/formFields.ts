@@ -26,6 +26,7 @@ export class FormFields {
     saveButton: ElementFinder = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
     valueLocator: Locator = by.css('input');
     labelLocator: Locator = by.css('label');
+    checkboxLocator: Locator = by.css('mat-checkbox');
     noFormMessage: ElementFinder = element(by.css('span[id*="no-form-message"]'));
     completedTaskNoFormMessage: ElementFinder = element(by.css('div[id*="completed-form-message"] p'));
     attachFormButton: ElementFinder = element(by.id('adf-no-form-attach-form-button'));
@@ -52,6 +53,16 @@ export class FormFields {
     async checkWidgetIsHidden(fieldId): Promise<void> {
         const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
         await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement);
+    }
+
+    async isWidgetChecked(fieldId): Promise<boolean> {
+        let isChecked: boolean = false;
+        const checkboxWidget: ElementFinder = await (await this.getWidget(fieldId)).element(this.checkboxLocator);
+        await BrowserVisibility.waitUntilElementIsVisible(checkboxWidget);
+        await checkboxWidget.getAttribute('class').then((attributeValue) => {
+            isChecked = attributeValue.includes('mat-checkbox-checked');
+        });
+        return isChecked;
     }
 
     async checkWidgetIsNotHidden(fieldId): Promise<void> {
