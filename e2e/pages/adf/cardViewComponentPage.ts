@@ -202,7 +202,7 @@ export class CardViewComponentPage {
         const switchClass = await this.clearDateSwitch.getAttribute('class');
         if (switchClass.indexOf('mat-checked') === -1) {
             await this.clearDateSwitch.click();
-            const clearDateChecked = element(by.css('mat-slide-toggle[id="adf-toggle-clear-date"][class*="mat-checked"]'));
+            const clearDateChecked = element(by.css('mat-slide-toggle[id="app-toggle-clear-date"][class*="mat-checked"]'));
             await BrowserVisibility.waitUntilElementIsVisible(clearDateChecked);
         }
     }

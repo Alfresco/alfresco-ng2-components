@@ -27,13 +27,13 @@ export class ConfigEditorPage {
     }
 
     async clickSaveButton(): Promise<void> {
-        const saveButton: ElementFinder = element(by.id('adf-form-config-save'));
+        const saveButton: ElementFinder = element(by.id('app-form-config-save'));
         await BrowserActions.click(saveButton);
     }
 
     async clickClearButton(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.textField);
-        const clearButton: ElementFinder = element(by.id('adf-form-config-clear'));
+        const clearButton: ElementFinder = element(by.id('app-form-config-clear'));
         await BrowserActions.click(clearButton);
     }
 
