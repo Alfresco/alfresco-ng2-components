@@ -5,7 +5,7 @@
     [class.adf-datatable-list]="display === 'list'"
     [class.adf-sticky-header]="isStickyHeaderEnabled()"
     [class.adf-datatable--empty]="!isHeaderVisible()">
-    <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup" [ngClass]="showHeader ? '' : 'adf-sr-only'">
+    <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup" [ngClass]="{ 'adf-sr-only': !showHeader }">
         <div class="adf-datatable-row" *ngIf="display === 'list'" role="row">
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-cell-header">
