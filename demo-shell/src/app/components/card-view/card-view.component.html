@@ -1,7 +1,7 @@
-<div class="adf-main-content">
+<div class="app-main-content">
     <h1>CardView Component</h1>
 
-    <mat-card class="adf-card-view">
+    <mat-card class="app-card-view">
         <adf-card-view
             [properties]="properties"
             [editable]="true"
@@ -10,30 +10,30 @@
         </adf-card-view>
     </mat-card>
 
-    <div class="adf-console" #console>
+    <div class="app-console" #console>
         <h3>Changes log:</h3>
         <p *ngFor="let log of logs">{{ log }}</p>
     </div>
 
 </div>
 
-<p class="adf-toggle">
+<p class="app-toggle">
     <mat-slide-toggle
-        id="adf-toggle-editable"
+        id="app-toggle-editable"
         [color]="'primary'"
         (change)="toggleEditable()"
         [checked]="isEditable">
         Editable
     </mat-slide-toggle><br>
     <mat-slide-toggle
-        id="adf-toggle-clear-date"
+        id="app-toggle-clear-date"
         [color]="'primary'"
         (change)="toggleClearDate()"
         [checked]="showClearDateAction">
         Show clear date icon
     </mat-slide-toggle><br>
     <mat-slide-toggle
-        id="adf-toggle-none-option"
+        id="app-toggle-none-option"
         [color]="'primary'"
         (change)="toggleNoneOption()"
         [checked]="showNoneOption">

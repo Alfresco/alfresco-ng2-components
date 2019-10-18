@@ -1,6 +1,6 @@
-<div class="adf-container">
+<div class="app-container">
 
-    <mat-accordion *ngIf="showRecentFiles" class="adf-container-recent">
+    <mat-accordion *ngIf="showRecentFiles" class="app-container-recent">
         <mat-expansion-panel hideToggle="true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -18,21 +18,21 @@
                 (preview)="showFile($event)"
                 selectionMode="null">
                 <adf-custom-empty-content-template>
-                    <div class="adf-empty-list__block">
+                    <div class="app-empty-list__block">
                         <mat-icon>history</mat-icon>
-                        <p class="adf-empty-list__title">{{ 'DOCUMENT_LIST.RECENT.EMPTY_STATE.TITLE' | translate}}</p>
+                        <p class="app-empty-list__title">{{ 'DOCUMENT_LIST.RECENT.EMPTY_STATE.TITLE' | translate}}</p>
                     </div>
                 </adf-custom-empty-content-template>
             </adf-document-list>
         </mat-expansion-panel>
     </mat-accordion>
 
-    <div *ngIf="showSitePicker" class="adf-site-container-style" id="site-container">
+    <div *ngIf="showSitePicker" class="app-site-container-style" id="site-container">
         <adf-sites-dropdown (change)="onSiteChange($event)" [hideMyFiles]="false" [relations]="'members'">
         </adf-sites-dropdown>
     </div>
 
-    <div id="document-list-container" class="adf-document-list-container" fxLayout="row" fxLayoutAlign="start stretch"
+    <div id="document-list-container" class="app-document-list-container" fxLayout="row" fxLayoutAlign="start stretch"
          fxLayoutGap="16px">
         <adf-upload-drag-area fxFlex="1 1 auto"
                               [disabled]="disableDragArea"
@@ -42,28 +42,28 @@
                               [adf-check-allowable-operation]="'create'"
                               [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []"
                               (beginUpload)="onBeginUpload($event)">
-            <div *ngIf="errorMessage" class="adf-error-message">
+            <div *ngIf="errorMessage" class="app-error-message">
                 <button (click)="resetError()" mat-icon-button>
                     <mat-icon>highlight_off</mat-icon>
                 </button>
-                <span class="adf-error-message--text">{{errorMessage}}</span>
+                <span class="app-error-message--text">{{errorMessage}}</span>
             </div>
-            <adf-toolbar *ngIf="!disableDragArea" [color]="toolbarColor" class="adf-files-toolbar">
+            <adf-toolbar *ngIf="!disableDragArea" [color]="toolbarColor" class="app-files-toolbar">
                 <adf-toolbar-title  fxFlex="0 1 auto">
                     <adf-breadcrumb fxShow fxHide.lt-sm="true"
-                                    class="adf-files-breadcrumb"
+                                    class="app-files-breadcrumb"
                                     root="APP.PERSONAL-FILES"
                                     [target]="documentList">
                     </adf-breadcrumb>
                     <adf-dropdown-breadcrumb fxHide fxShow.lt-sm="true"
-                                             class="adf-files-breadcrumb"
+                                             class="app-files-breadcrumb"
                                              [target]="documentList">
                     </adf-dropdown-breadcrumb>
                 </adf-toolbar-title>
 
                 <adf-toolbar-divider fxFlex="0 0 auto"></adf-toolbar-divider>
 
-                <div fxFlex="0 0 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
+                <div fxFlex="0 0 auto" class="app-document-action-buttons" fxShow fxHide.lt-sm="true">
                     <button
                         mat-icon-button
                         data-automation-id="document-list-grid-view"
@@ -158,7 +158,7 @@
                     <button mat-menu-item (click)="toolbarColor = 'warn'">Warn</button>
                 </mat-menu>
 
-                <button mat-icon-button (click)="showVersions = !showVersions" class="adf-show-versions-button">
+                <button mat-icon-button (click)="showVersions = !showVersions" class="app-show-versions-button">
                     <mat-icon *ngIf="!showVersions" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.SHOW_VERSION' | translate }}">
                         chevron_left
                     </mat-icon>
@@ -215,10 +215,10 @@
                 </mat-menu>
             </adf-toolbar>
 
-            <div class="adf-document-list-container" [ngClass]="{'adf-sticky-document-list': stickyHeader }">
+            <div class="app-document-list-container" [ngClass]="{'adf-sticky-document-list': stickyHeader }">
                 <adf-document-list
                 #documentList
-                class="adf-file-list-container"
+                class="app-file-list-container"
                 [permissionsStyle]="permissionsStyle"
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
@@ -245,8 +245,8 @@
                     <h1>You don't have permissions</h1>
                 </adf-custom-no-permission-template>
                 <adf-custom-empty-content-template *ngIf="disableDragArea">
-                    <div class="adf-empty_template">
-                        <div class="adf-no-result-message">{{ 'SEARCH.NO_RESULT' | translate }}</div>
+                    <div class="app-empty_template">
+                        <div class="app-no-result-message">{{ 'SEARCH.NO_RESULT' | translate }}</div>
                     </div>
                 </adf-custom-empty-content-template>
                 <data-columns>
@@ -254,13 +254,13 @@
                         key="$thumbnail"
                         type="image"
                         [sortable]="false"
-                        class="adf-image-table-cell"
+                        class="app-image-table-cell"
                         [class.adf-cell-thumbnail]="thumbnails">
                     </data-column>
                     <data-column
                         *ngIf="showNameColumn && hyperlinkNavigation"
                         key="name"
-                        class="adf-ellipsis-cell"
+                        class="app-ellipsis-cell"
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         [formatTooltip]="getNodeNameTooltip">
                         <ng-template let-context>
@@ -272,7 +272,7 @@
                         key="name"
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         [formatTooltip]="getNodeNameTooltip"
-                        class="adf-ellipsis-cell adf-expand-cell-5">
+                        class="app-ellipsis-cell adf-expand-cell-5">
                     </data-column>
                     <!-- Location column demo -->
                     <!--
@@ -287,13 +287,13 @@
                         key="content.sizeInBytes"
                         title="{{'DOCUMENT_LIST.COLUMNS.SIZE' | translate}}"
                         type="fileSize"
-                        class="adf-desktop-only adf-ellipsis-cell">
+                        class="app-desktop-only adf-ellipsis-cell">
                     </data-column>
                     <data-column
                         *ngIf="searchTerm"
                         key="search"
                         title="Search"
-                        class="adf-desktop-only adf-expand-cell-3">
+                        class="app-desktop-only adf-expand-cell-3">
                         <ng-template let-entry="$implicit">
                             <div [innerHTML]="searchResultsHighlight(entry.row.node.entry.search) | highlight:searchTerm">
                             </div>
@@ -304,23 +304,23 @@
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
                         key="id"
-                        class="adf-full-width adf-ellipsis-cell">
+                        class="app-full-width adf-ellipsis-cell">
                         <ng-template let-entry="$implicit">
                             <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
                         </ng-template>
                     </data-column>
                     -->
                     <data-column
-                        class="adf-full-width adf-ellipsis-cell adf-desktop-only"
+                        class="app-full-width adf-ellipsis-cell adf-desktop-only"
                         title="{{'DOCUMENT_LIST.COLUMNS.NODE_ID' | translate}}"
                         key="id">
                     </data-column>
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.IS_LOCKED' | translate}}"
                         key="id"
-                        class="adf-desktop-only adf-ellipsis-cell">
+                        class="app-desktop-only adf-ellipsis-cell">
                         <ng-template let-entry="$implicit">
-                            <button mat-icon-button [adf-node-lock]="entry.row.node.entry" class="adf-lock-button">
+                            <button mat-icon-button [adf-node-lock]="entry.row.node.entry" class="app-lock-button">
                                 <mat-icon *ngIf="entry.row.getValue('isLocked')">lock</mat-icon>
                                 <mat-icon *ngIf="!entry.row.getValue('isLocked')">lock_open</mat-icon>
                             </button>
@@ -329,14 +329,14 @@
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
-                        class="adf-desktop-only adf-ellipsis-cell">
+                        class="app-desktop-only adf-ellipsis-cell">
                     </data-column>
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
                         key="createdAt"
                         type="date"
                         [format]="enableMediumTimeFormat ? 'medium' : 'timeAgo'"
-                        class="adf-desktop-only adf-ellipsis-cell">
+                        class="app-desktop-only adf-ellipsis-cell">
                     </data-column>
 
                 </data-columns>
@@ -433,7 +433,7 @@
             <adf-pagination
                 #standardPagination
                 *ngIf="!infiniteScrolling"
-                class="adf-documentlist-pagination"
+                class="app-documentlist-pagination"
                 [target]="documentList"
                 (changePageSize)="onChangePageSize($event)"
                 (changePageNumber)="onChangePageNumber($event)"
@@ -448,7 +448,7 @@
             </adf-infinite-pagination>
         </adf-upload-drag-area>
 
-        <adf-info-drawer-layout *ngIf="showVersions" class="adf-manage-versions-sidebar" fxFlex="0 0 auto">
+        <adf-info-drawer-layout *ngIf="showVersions" class="app-manage-versions-sidebar" fxFlex="0 0 auto">
             <div info-drawer-content>
 
                 <adf-info-drawer [title]="'Details'" *ngIf="documentList.selection[0]">
@@ -469,14 +469,14 @@
                             </ng-container>
                         </ng-container>
                         <ng-template #choose_document_template>
-                            <div class="adf-manage-versions-empty">
-                                <mat-icon class="adf-manage-versions-empty-icon">face</mat-icon>
+                            <div class="app-manage-versions-empty">
+                                <mat-icon class="app-manage-versions-empty-icon">face</mat-icon>
                                 {{'VERSION.CHOOSE_FILE' | translate}}
                             </div>
                         </ng-template>
                         <ng-template #no_permission_to_versions>
-                            <div class="adf-manage-versions-no-permission">
-                                <mat-icon class="adf-manage-versions-no-permission-icon">warning</mat-icon>
+                            <div class="app-manage-versions-no-permission">
+                                <mat-icon class="app-manage-versions-no-permission-icon">warning</mat-icon>
                                 {{'VERSION.NO_PERMISSION' | translate}}
                             </div>
                         </ng-template>
@@ -498,11 +498,11 @@
     </adf-start-process>
 </div>
 
-<div *ngIf="showSettingsPanel" class="adf-content-service-settings">
+<div *ngIf="showSettingsPanel" class="app-content-service-settings">
 
     <p>Current folder ID: {{ documentList.currentFolderId }}</p>
 
-    <div class="adf-p-10">
+    <div class="app-p-10">
         Selected Nodes:
         <ul>
             <li *ngFor="let node of documentList.selection">
@@ -511,7 +511,7 @@
         </ul>
     </div>
 
-    <div class="adf-container">
+    <div class="app-container">
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="showNameColumn">
                 Show Name Column
@@ -679,7 +679,7 @@
         </section>
     </div>
 
-    <div class="adf-p-10">
+    <div class="app-p-10">
         <p>
             {{'DOCUMENT_LIST.MULTISELECT_DESCRIPTION' | translate}}
         </p>

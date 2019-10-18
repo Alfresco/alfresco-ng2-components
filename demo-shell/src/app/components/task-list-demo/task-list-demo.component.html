@@ -1,4 +1,4 @@
-<div class="adf-task-list-demo-inputs">
+<div class="app-task-list-demo-inputs">
 
     <form [formGroup]="taskListForm">
         <mat-form-field>
@@ -139,7 +139,7 @@
         </mat-form-field>
     </form>
 </div>
-<div class="adf-reset-button">
+<div class="app-reset-button">
     <button mat-raised-button (click)="resetTaskForm()">Reset</button>
 </div>
 
@@ -162,7 +162,7 @@
         #taskList>
         <data-columns>
             <data-column key="id" title="Id"></data-column>
-            <data-column key="assignee" title="Assignee" class="adf-full-width adf-name-column">
+            <data-column key="assignee" title="Assignee" class="adf-full-width app-name-column">
                 <ng-template let-entry="$implicit">
                     <div>{{entry.row.obj.assignee | fullName}}</div>
                 </ng-template>

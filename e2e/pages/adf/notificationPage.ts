@@ -29,7 +29,7 @@ export class NotificationPage {
     notificationSnackBar: ElementFinder = element.all(by.css('simple-snack-bar')).first();
     actionOutput: ElementFinder = element(by.css('div[data-automation-id="notification-action-output"]'));
     selectionDropDown: ElementFinder = element.all(by.css('.mat-select-panel')).first();
-    notificationsPage: ElementFinder = element(by.css('.adf-sidenav-link[data-automation-id="Notifications"]'));
+    notificationsPage: ElementFinder = element(by.css('.app-sidenav-link[data-automation-id="Notifications"]'));
     notificationConfig: ElementFinder = element(by.css('p[data-automation-id="notification-custom-object"]'));
 
     async checkNotifyContains(message): Promise<void> {

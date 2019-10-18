@@ -2,17 +2,17 @@
 <input id="nodeId" type="text" size="48" [(ngModel)]="nodeId"><br>
 
 <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-    <div class="adf-social-example-area" fxFlex.gt-md="1 1 auto">
+    <div class="app-social-example-area" fxFlex.gt-md="1 1 auto">
         <mat-card>
-            <div class="adf-social-title">
+            <div class="app-social-title">
                 {{'SOCIAL.LIKE' | translate }}
             </div>
             <adf-like [nodeId]="nodeId"></adf-like>
         </mat-card>
     </div>
-    <div class="adf-social-example-area" fxFlex.gt-md="1 1 auto">
+    <div class="app-social-example-area" fxFlex.gt-md="1 1 auto">
         <mat-card>
-            <div class="adf-social-title">
+            <div class="app-social-title">
                 {{'SOCIAL.RATING' | translate }}
             </div>
             <adf-rating [nodeId]="nodeId"></adf-rating>

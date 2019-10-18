@@ -1,13 +1,13 @@
-<div class="adf-search-results__facets">
+<div class="app-search-results__facets">
     <adf-search-chip-list [searchFilter]="searchFilter" [clearAll]="true"></adf-search-chip-list>
 </div>
 
-<div class="adf-search-results">
-    <adf-search-filter class="adf-search-settings" #searchFilter></adf-search-filter>
+<div class="app-search-results">
+    <adf-search-filter class="app-search-settings" #searchFilter></adf-search-filter>
 
-    <div class="adf-search-results__content">
+    <div class="app-search-results__content">
         <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
-        <div class="adf-search-results__sorting">
+        <div class="app-search-results__sorting">
             <adf-search-sorting-picker></adf-search-sorting-picker>
         </div>
         <app-files-component

@@ -1,5 +1,5 @@
 <div>
-    <mat-nav-list class="adf-list-confgurations">
+    <mat-nav-list class="app-list-confgurations">
 
         <mat-list-item  (click)="appConfigClick()">
             <a matLine id="adf-app-conf">App Config Editor</a>
@@ -32,12 +32,12 @@
 
     <div>
         <ngx-monaco-editor id="adf-code-configuration-editor"
-                           class="adf-file-editor"
+                           class="app-file-editor"
                            [options]="editorOptions"
                            [(ngModel)]="code"
                            (onInit)="onInit($event)">
         </ngx-monaco-editor>
-        <div class="adf-list-confgurations-buttons">
+        <div class="app-list-confgurations-buttons">
             <button mat-raised-button id="adf-configuration-save" (click)="onSave()" color="primary">
                 Save
             </button>

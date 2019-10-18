@@ -27,15 +27,15 @@ export class CardViewComponentPage {
     floatField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
     valueInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Value']`));
     nameInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Name']`));
-    consoleLog: ElementFinder = element(by.className('adf-console'));
+    consoleLog: ElementFinder = element(by.className('app-console'));
     deleteButton: ElementFinder = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
     select: ElementFinder = element(by.css('mat-select[data-automation-class="select-box"]'));
     checkbox: ElementFinder = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));
     resetButton: ElementFinder = element(by.css(`#adf-reset-card-log`));
     listContent: ElementFinder = element(by.css('.mat-select-panel'));
-    editableSwitch: ElementFinder = element(by.id('adf-toggle-editable'));
-    clearDateSwitch: ElementFinder = element(by.id('adf-toggle-clear-date'));
-    noneOptionSwitch: ElementFinder = element(by.id('adf-toggle-none-option'));
+    editableSwitch: ElementFinder = element(by.id('app-toggle-editable'));
+    clearDateSwitch: ElementFinder = element(by.id('app-toggle-clear-date'));
+    noneOptionSwitch: ElementFinder = element(by.id('app-toggle-none-option'));
 
     async clickOnAddButton(): Promise<void> {
         await BrowserActions.click(this.addButton);
@@ -202,7 +202,7 @@ export class CardViewComponentPage {
         const switchClass = await this.clearDateSwitch.getAttribute('class');
         if (switchClass.indexOf('mat-checked') === -1) {
             await this.clearDateSwitch.click();
-            const clearDateChecked = element(by.css('mat-slide-toggle[id="adf-toggle-clear-date"][class*="mat-checked"]'));
+            const clearDateChecked = element(by.css('mat-slide-toggle[id="app-toggle-clear-date"][class*="mat-checked"]'));
             await BrowserVisibility.waitUntilElementIsVisible(clearDateChecked);
         }
     }
@@ -213,7 +213,7 @@ export class CardViewComponentPage {
         const switchClass = await this.noneOptionSwitch.getAttribute('class');
         if (switchClass.indexOf('mat-checked') === -1) {
             await this.noneOptionSwitch.click();
-            const noneOptionChecked = element(by.css('mat-slide-toggle[id="adf-toggle-none-option"][class*="mat-checked"]'));
+            const noneOptionChecked = element(by.css('mat-slide-toggle[id="app-toggle-none-option"][class*="mat-checked"]'));
             await BrowserVisibility.waitUntilElementIsVisible(noneOptionChecked);
         }
     }

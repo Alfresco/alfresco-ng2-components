@@ -4,22 +4,22 @@
 
 <br>
 <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-    <div class="adf-tag-example-area" fxFlex.gt-md="1 1 auto">
+    <div class="app-tag-example-area" fxFlex.gt-md="1 1 auto">
         <mat-card>
             <adf-tag-node-actions-list [nodeId]="nodeId"></adf-tag-node-actions-list>
         </mat-card>
     </div>
-    <div class="adf-tag-example-area" fxFlex.gt-md="1 1 auto">
+    <div class="app-tag-example-area" fxFlex.gt-md="1 1 auto">
         <mat-card>
-            <div class="adf-tag-example-title">
+            <div class="app-tag-example-title">
                 {{'TAG.LIST' | translate }}
             </div>
             <adf-tag-list></adf-tag-list>
         </mat-card>
     </div>
-    <div class="adf-tag-example-area" fxFlex.gt-md="1 1 auto">
+    <div class="app-tag-example-area" fxFlex.gt-md="1 1 auto">
         <mat-card>
-            <div class="adf-tag-example-title">
+            <div class="app-tag-example-title">
                 {{'TAG.NODE_LIST' | translate }}
             </div>
             <adf-tag-node-list [showDelete]="showDelete" [nodeId]="nodeId"></adf-tag-node-list>

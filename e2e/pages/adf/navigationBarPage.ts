@@ -23,23 +23,23 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class NavigationBarPage {
 
-    linkListContainer: ElementFinder = element(by.css('.adf-sidenav-linklist'));
+    linkListContainer: ElementFinder = element(by.css('.app-sidenav-linklist'));
     linkMenuChildrenContainer: ElementFinder = element(by.css('.nestedMenu'));
-    dataTableNestedButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Datatable"]'));
-    dataTableCopyContentButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Copy Content"]'));
-    dataTableDragAndDropButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Drag and Drop"]'));
-    processServicesNestedButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="App"]'));
-    processServicesCloudHomeButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Home"]'));
+    dataTableNestedButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Datatable"]'));
+    dataTableCopyContentButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Copy Content"]'));
+    dataTableDragAndDropButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Drag and Drop"]'));
+    processServicesNestedButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="App"]'));
+    processServicesCloudHomeButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Home"]'));
     themeButton: ElementFinder = element(by.css('button[data-automation-id="theme menu"]'));
     themeMenuContent: ElementFinder = element(by.css('div[class*="mat-menu-panel"]'));
     languageMenuButton: ElementFinder = element(by.css('button[data-automation-id="language-menu-button"]'));
     appTitle: ElementFinder = element(by.css('.adf-app-title'));
     menuButton: ElementFinder = element(by.css('button[data-automation-id="adf-menu-icon"]'));
-    formButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Form"]'));
-    peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="People/Group Cloud"]'));
+    formButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Form"]'));
+    peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="People/Group Cloud"]'));
 
     async clickNavigationBarItem(title): Promise<void> {
-        const menu = element(by.css(`.adf-sidenav-link[data-automation-id="${title}"]`));
+        const menu = element(by.css(`.app-sidenav-link[data-automation-id="${title}"]`));
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(menu);
     }
@@ -176,7 +176,7 @@ export class NavigationBarPage {
 
     async clickLogoutButton(): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.clickExecuteScript('.adf-sidenav-link[adf-logout]');
+        await BrowserActions.clickExecuteScript('.app-sidenav-link[adf-logout]');
     }
 
     async clickThemeButton(): Promise<void> {

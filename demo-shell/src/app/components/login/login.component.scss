@@ -1,12 +1,12 @@
-@mixin adf-login-component-theme($theme) {
-    .adf-setting-button.mat-fab.mat-accent {
+@mixin app-login-component-theme($theme) {
+    .app-setting-button.mat-fab.mat-accent {
         position: absolute;
         right: 10px;
         top: 10px;
         z-index: 1;
     }
 
-    .adf-settings {
+    .app-settings {
         border-radius: 8px;
         position: absolute;
         background-color: papayawhip;
@@ -16,36 +16,36 @@
         z-index: 1;
     }
 
-    .adf-toggle {
+    .app-toggle {
         width: auto;
         margin: 5px;
         padding: 5px;
     }
 
-    .adf-mobile-settings, .adf-mobile-setting-button {
+    .app-mobile-settings, .app-mobile-setting-button {
         display: none;
     }
 
     @media screen and ($mat-small) {
-        .adf-settings, .adf-setting-button.mat-fab.mat-accent {
+        .app-settings, .app-setting-button.mat-fab.mat-accent {
             display: none;
         }
 
-        .adf-mobile-settings, .adf-mobile-setting-button {
+        .app-mobile-settings, .app-mobile-setting-button {
             display: block;
         }
 
-        .adf-mobile-setting-button {
+        .app-mobile-setting-button {
             width: 100%;
         }
 
-        .adf-mobile-settings {
+        .app-mobile-settings {
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
     }
 
-    .adf-settings ::ng-deep .mat-slide-toggle-thumb-container {
+    .app-settings ::ng-deep .mat-slide-toggle-thumb-container {
         cursor: pointer;
     }
 }
