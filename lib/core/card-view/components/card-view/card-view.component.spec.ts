@@ -42,7 +42,7 @@ describe('CardViewComponent', () => {
     });
 
     it('should render the label and value', async(() => {
-        component.properties = [new CardViewTextItemModel({label: 'My label', value: 'My value', key: 'some key'})];
+        component.properties = [new CardViewTextItemModel({ label: 'My label', value: 'My value', key: 'some key' })];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -90,30 +90,6 @@ describe('CardViewComponent', () => {
             const value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('6/14/17, 12:00 AM');
-        });
-    }));
-
-    it('should NOT render anything if the value is empty, not editable and displayEmpty is false', async(() => {
-        component.properties = [new CardViewTextItemModel({
-            label: 'My default label',
-            value: null,
-            default: 'default value',
-            key: 'some-key',
-            editable: false
-        })];
-        component.editable = true;
-        component.displayEmpty = false;
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-
-            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(labelValue).toBeNull();
-
-            const value = fixture.debugElement.query(By.css('.adf-property-value'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('');
         });
     }));
 
