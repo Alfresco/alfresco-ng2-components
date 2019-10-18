@@ -130,7 +130,7 @@ export class DataTableComponentPage {
                 initialList.push(text.toLowerCase());
             }
         });
-        let sortedList = initialList;
+        let sortedList = [...initialList];
         sortedList = sortedList.sort();
         if (sortOrder.toLocaleLowerCase() === 'desc') {
             sortedList = sortedList.reverse();
