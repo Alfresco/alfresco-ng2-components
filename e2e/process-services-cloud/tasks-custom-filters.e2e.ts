@@ -174,7 +174,7 @@ describe('Task filters cloud', () => {
 
         it('[C317658] Should display only tasks with Suspended status when SUSPENDED is selected from status dropdown', async () => {
             const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+                .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
             const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
