@@ -2,7 +2,7 @@ var PROXY_HOST_ADF = process.env.PROXY_HOST_ADF;
 
 module.exports = {
     "/alfresco": {
-        "target": (PROXY_HOST_ADF || "http://adfdev.envalfresco.com"),
+        "target": (PROXY_HOST_ADF || "http://localhost:8080"),
         "secure": false,
         "pathRewrite": {
             "^/alfresco/alfresco": ""
@@ -17,7 +17,7 @@ module.exports = {
         }
     },
     "/activiti-app": {
-        "target": (PROXY_HOST_ADF || "http://adfdev.envalfresco.com"),
+        "target": (PROXY_HOST_ADF || "http://localhost:8080"),
         "secure": false,
         "pathRewrite": {
             "^/activiti-app/activiti-app": ""
