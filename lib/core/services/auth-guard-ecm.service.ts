@@ -45,7 +45,7 @@ export class AuthGuardEcm extends AuthGuardBase {
         }
 
         if (this.isOAuthWithSilentLogin()) {
-            this.authenticationService.ssoImplicitLogin();
+            this.redirectToUrl('ECM', redirectUrl);
         }
 
         return false;
