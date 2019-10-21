@@ -30,11 +30,10 @@ export class IdentityService {
     }
 
     ROLES = {
-        APS_USER: 'APS_USER',
         ACTIVITI_USER: 'ACTIVITI_USER',
-        APS_ADMIN: 'APS_ADMIN',
         ACTIVITI_ADMIN: 'ACTIVITI_ADMIN',
-        APS_DEVOPS_USER: 'APS_DEVOPS'
+        ACTIVITI_DEVOPS: 'ACTIVITI_DEVOPS',
+        ACTIVITI_IDENTITY: 'ACTIVITI_IDENTITY'
     };
 
     async createIdentityUserWithRole(apiService: ApiService, roles: string[]): Promise<any> {

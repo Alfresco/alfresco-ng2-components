@@ -31,8 +31,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
             formtotestvalidations: 'formtotestvalidations'
         },
         security: [
-            {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']
+            {'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser']},
+            {'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']
         }]
     },
     SIMPLE_APP: {
@@ -95,16 +95,16 @@ export const ACTIVITI_CLOUD_APPS: any = {
             }
         },
         security: [
-            {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']
+            {'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser']},
+            {'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']
         }]
     },
     SUB_PROCESS_APP: {
         name: 'subprocessapp',
         file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/development/e2e/resources/activiti7/subprocessapp.zip?raw=true',
         security: [
-            {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']
+            {'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser']},
+            {'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']
         }]
     }
 };

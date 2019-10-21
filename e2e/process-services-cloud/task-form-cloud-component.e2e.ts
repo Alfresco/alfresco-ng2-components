@@ -89,7 +89,7 @@ describe('Task form cloud component', () => {
         const groupIdentityService = new GroupIdentityService(apiService);
         const formCloudService = new FormCloudService(apiService);
 
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
 
         const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
