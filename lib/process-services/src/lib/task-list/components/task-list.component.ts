@@ -30,6 +30,7 @@ import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
 import moment from 'moment-es6';
 import { takeUntil } from 'rxjs/operators';
+import { TaskDetailsModel } from '../models/task-details.model';
 
 @Component({
     selector: 'adf-tasklist',
@@ -353,7 +354,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * Optimize name field
      * @param instances
      */
-    private optimizeTaskDetails(instances: any[]): any[] {
+    private optimizeTaskDetails(instances: TaskDetailsModel[]): TaskDetailsModel[] {
         instances = instances.map((task) => {
             if (!task.name) {
                 task.name = 'No name';

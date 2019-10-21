@@ -47,17 +47,16 @@ import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
 import { BehaviorSubject } from 'rxjs';
 import { ProcessListModel } from '../models/process-list.model';
-import moment from 'moment-es6';
+import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-process-instance-list',
     styleUrls: ['./process-list.component.css'],
     templateUrl: './process-list.component.html'
 })
-export class ProcessInstanceListComponent extends DataTableSchema  implements OnChanges, AfterContentInit, PaginatedComponent {
+export class ProcessInstanceListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
 
     static PRESET_KEY = 'adf-process-list.presets';
-    public FORMAT_DATE: string = 'll';
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     customEmptyContent: CustomEmptyContentTemplateDirective;
@@ -75,7 +74,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
 
     /** The id of the process instance. */
     @Input()
-    processInstanceId: number|string;
+    processInstanceId: number | string;
 
     /** Defines the state of the processes. Possible values are `running`, `completed` and `all` */
     @Input()
@@ -290,18 +289,15 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
      * Optimize name field
      * @param instances
      */
-    private optimizeProcessDetails(instances: any[]): any[] {
+    private optimizeProcessDetails(instances: ProcessInstanceRepresentation[]): ProcessInstanceRepresentation[] {
         instances = instances.map((instance) => {
             instance.name = this.getProcessNameOrDescription(instance, 'medium');
-            if (instance.started) {
-                instance.started = moment(instance.started).format(this.FORMAT_DATE);
-            }
             return instance;
         });
         return instances;
     }
 
-    getProcessNameOrDescription(processInstance, dateFormat: string): string {
+    getProcessNameOrDescription(processInstance: ProcessInstanceRepresentation, dateFormat: string): string {
         let name = '';
         if (processInstance) {
             name = processInstance.name ||
@@ -310,7 +306,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
         return name;
     }
 
-    getFormatDate(value: any, format: string) {
+    getFormatDate(value: Date, format: string) {
         const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);
