@@ -46,12 +46,13 @@ describe('CardViewTextItemModel', () => {
             expect(itemModel.displayValue).toBe('Banuk');
         });
 
-        it('should return the default value if the value is not present', () => {
+        it('should return the default value if the value is not present the first time it loads', () => {
             properties.value = undefined;
             properties.default = 'default-value';
             const itemModel = new CardViewTextItemModel(properties);
-
             expect(itemModel.displayValue).toBe('default-value');
+            itemModel.value = '';
+            expect(itemModel.displayValue).toBe('');
         });
 
         it('should apply a pipe on the value if it is present', () => {
