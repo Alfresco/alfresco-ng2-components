@@ -16,14 +16,15 @@
  */
 
 import { FormFields } from '../formFields';
-import { BrowserActions } from '../../../utils/public-api';
-import { by, element } from 'protractor';
+import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
+import { by, element, Locator } from 'protractor';
 import { ElementFinder } from 'protractor';
 
 export class CheckboxWidget {
 
     formFields: FormFields = new FormFields();
     checkboxLabel: ElementFinder = element(by.css('span[class*="mat-checkbox-label"]'));
+    checkboxLocator: Locator = by.css('mat-checkbox');
 
     getCheckboxLabel(): Promise<string> {
         return BrowserActions.getText(this.checkboxLabel);
@@ -42,7 +43,13 @@ export class CheckboxWidget {
         await this.formFields.checkWidgetIsHidden(fieldId);
     }
 
-    isCheckboxChecked(fieldId): Promise<boolean> {
-        return this.formFields.isWidgetChecked(fieldId);
+    async isCheckboxChecked(fieldId): Promise<boolean> {
+        let isChecked: boolean = false;
+        const checkboxWidget: ElementFinder = await (await this.formFields.getWidget(fieldId)).element(this.checkboxLocator);
+        await BrowserVisibility.waitUntilElementIsVisible(checkboxWidget);
+        await checkboxWidget.getAttribute('class').then((attributeValue) => {
+            isChecked = attributeValue.includes('mat-checkbox-checked');
+        });
+        return isChecked;
     }
 }
