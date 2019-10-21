@@ -36,7 +36,7 @@
                 <span class="adf-sr-only">Actions</span>
             </div>
         </div>
-        <mat-form-field *ngIf="display === 'gallery'">
+        <mat-form-field *ngIf="display === 'gallery' && showHeader">
             <mat-select [value]="getSortingKey()" [attr.data-automation-id]="'grid-view-sorting'">
                 <mat-option *ngFor="let col of getSortableColumns()"
                             [value]="col.key"
