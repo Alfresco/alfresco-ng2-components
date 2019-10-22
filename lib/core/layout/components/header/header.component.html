@@ -43,7 +43,8 @@
         class="mat-icon-button adf-menu-icon"
         mat-icon-button
         (click)="toggleMenu()"
-        aria-label="Toggle Menu">
+        [attr.aria-label]="'CORE.HEADER.ACCESSIBILITY.SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL' | translate">
+    >
         <mat-icon
             class="mat-icon material-icon"
             role="img"
