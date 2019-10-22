@@ -174,7 +174,6 @@ describe('RadioButtonsWidgetComponent', () => {
                 expect(element.querySelector('display-text-widget')).toBeDefined();
             }));
 
-
         });
 
         describe('and radioButton is populated via taskId', () => {
