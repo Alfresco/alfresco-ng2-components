@@ -85,6 +85,11 @@ export class TaskDetailsCloudModel {
         return this.status === TaskStatusEnum.ASSIGNED;
     }
 
+    clickAble(): boolean {
+        const states = [TaskStatusEnum.ASSIGNED, TaskStatusEnum.CREATED, TaskStatusEnum.SUSPENDED];
+        return states.includes(this.status);
+    }
+
     canClaimTask(): boolean {
         return this.status === TaskStatusEnum.CREATED;
     }

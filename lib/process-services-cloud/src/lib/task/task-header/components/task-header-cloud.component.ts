@@ -106,6 +106,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE',
                     value: this.taskDetails.assignee,
                     key: 'assignee',
+                    clickable: this.taskDetails.clickAble(),
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT'),
                     icon: 'create'
                 }
