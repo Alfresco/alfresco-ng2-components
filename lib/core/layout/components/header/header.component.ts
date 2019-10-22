@@ -51,6 +51,8 @@ export class HeaderLayoutComponent implements OnInit {
     /** Emitted when the sidenav button is clicked. */
     @Output() clicked = new EventEmitter<boolean>();
 
+    @Input() initialSidenavExpanded: boolean = true;
+
     sidenavExpanded: boolean = true;
 
     /** The side of the page that the drawer is attached to (can be 'start' or 'end') */
@@ -69,5 +71,7 @@ export class HeaderLayoutComponent implements OnInit {
         if (!this.logo) {
             this.logo = './assets/images/logo.png';
         }
+
+        this.sidenavExpanded = this.initialSidenavExpanded;
     }
 }
