@@ -246,6 +246,60 @@ export class TaskCloudService extends BaseCloudService {
         }
     }
 
+    /**
+     * Gets candidate users of the task.
+     * @param appName Name of the app
+     * @param taskId ID of the task
+     * @returns Candidate users
+     */
+    getCandidateUsers(appName: string, taskId: string): Observable<string[]> {
+        if ((appName || appName === '') && taskId) {
+            const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/candidate-users`;
+            return from(this.apiService.getInstance()
+                .oauth2Auth.callCustomApi(queryUrl, 'GET',
+                    null, null, null,
+                    null, null,
+                    this.contentTypes, this.accepts,
+                    this.returnType, null, null)
+            ).pipe(
+                map((response: string[]) => {
+                    return response;
+                }),
+                catchError((err) => this.handleError(err))
+            );
+        } else {
+            this.logService.error('AppName and TaskId are mandatory to get candidate user');
+            return throwError('AppName/TaskId not configured');
+        }
+    }
+
+    /**
+     * Gets candidate groups of the task.
+     * @param appName Name of the app
+     * @param taskId ID of the task
+     * @returns Candidate groups
+     */
+    getCandidateGroups(appName: string, taskId: string): Observable<string[]> {
+        if ((appName || appName === '') && taskId) {
+            const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/candidate-groups`;
+            return from(this.apiService.getInstance()
+                .oauth2Auth.callCustomApi(queryUrl, 'GET',
+                    null, null, null,
+                    null, null,
+                    this.contentTypes, this.accepts,
+                    this.returnType, null, null)
+            ).pipe(
+                map((response: string[]) => {
+                    return response;
+                }),
+                catchError((err) => this.handleError(err))
+            );
+        } else {
+            this.logService.error('AppName and TaskId are mandatory to get candidate groups');
+            return throwError('AppName/TaskId not configured');
+        }
+    }
+
     private isAssignedToMe(assignee: string): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
         return assignee === currentUser;
