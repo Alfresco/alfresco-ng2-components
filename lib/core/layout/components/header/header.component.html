@@ -10,6 +10,7 @@
         class="mat-icon-button adf-menu-icon"
         mat-icon-button
         (click)="toggleMenu()"
+        [attr.aria-expanded]="isSidenavExpanded()"
         aria-label="Toggle Menu">
         <mat-icon
             class="mat-icon material-icon"
@@ -43,6 +44,7 @@
         class="mat-icon-button adf-menu-icon"
         mat-icon-button
         (click)="toggleMenu()"
+        [attr.aria-expanded]="isSidenavExpanded()"
         aria-label="Toggle Menu">
         <mat-icon
             class="mat-icon material-icon"
