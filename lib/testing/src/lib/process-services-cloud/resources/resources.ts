@@ -58,7 +58,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
             processinteger: 'processinteger',
             processboolean: 'processboolean',
             processdate: 'processdate',
-            multiprocess: 'multiprocess'
+            multiprocess: 'multiprocess',
+            terminateexclusive: 'terminate-exclusive'
         },
         forms: {
             tabVisibilityFields: {
@@ -92,6 +93,10 @@ export const ACTIVITI_CLOUD_APPS: any = {
             outputform: {
                 name: 'outputform',
                 id: 'form-eeb2174f-b25a-4386-bf73-bda4de195eee'
+            },
+            exclusiveconditionform: {
+                name: 'exclusive-condition-form',
+                id: 'form-0ea30a69-1aa3-426a-b746-716064b4422d'
             }
         },
         security: [
