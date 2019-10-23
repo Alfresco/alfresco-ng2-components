@@ -61,10 +61,6 @@ export class HeaderLayoutComponent implements OnInit {
         this.expandedSidenav = !this.expandedSidenav;
     }
 
-    isSidenavExpanded(): boolean {
-        return this.expandedSidenav;
-    }
-
     ngOnInit() {
         if (!this.logo) {
             this.logo = './assets/images/logo.png';
