@@ -6,7 +6,7 @@ cd $DIR/../..
 
 echo "====== Insights ======"
 echo "====== Build ======"
-ng build insights || exit 1
+npm run ng-packagr -- -p ./lib/insights/ || exit 1
 
 echo "====== Build style ======"
 node ./lib/config/bundle-insights-scss.js || exit 1

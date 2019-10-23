@@ -6,7 +6,7 @@ cd $DIR/../..
 
 echo "====== Content Services ======"
 echo "====== Build ======"
-ng build content-services || exit 1
+npm run ng-packagr -- -p ./lib/content-services/ || exit 1
 
 echo "====== Build style ======"
 node ./lib/config/bundle-content-services-scss.js || exit 1
