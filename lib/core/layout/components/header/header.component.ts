@@ -53,7 +53,7 @@ export class HeaderLayoutComponent implements OnInit {
 
     @Input() initialSidenavExpanded: boolean = true;
 
-    sidenavExpanded: boolean = true;
+    @Input() sidenavExpanded: boolean = true;
 
     /** The side of the page that the drawer is attached to (can be 'start' or 'end') */
     @Input() position = 'start';
