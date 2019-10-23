@@ -43,7 +43,6 @@ body of the element:
 | position | `string` | "start" | The side of the page that the drawer is attached to (can be 'start' or 'end') |
 | redirectUrl | `string \| any[]` | "/" | The router link for the application logo, when clicked. |
 | showSidenavToggle | `boolean` | true | Toggles whether the sidenav button will be displayed in the header or not. |
-| initialSidenavExpanded | `boolean` | true | Toggles whether the sidenav is initial expanded or not. |
 | title | `string` |  | Title of the application. |
 | tooltip | `string` |  | The tooltip text for the application logo. |
 
