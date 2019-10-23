@@ -6,7 +6,7 @@ cd $DIR/../..
 
 echo "====== Process Services ======"
 echo "====== Build ======"
-npm run ng-packagr -- -p ./lib/process-services/ || exit 1
+ng build process-services || exit 1
 
 echo "====== Build style ======"
 node ./lib/config/bundle-process-services-scss.js || exit 1

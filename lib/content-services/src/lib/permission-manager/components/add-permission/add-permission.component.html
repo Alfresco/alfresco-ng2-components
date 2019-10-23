@@ -1,0 +1,12 @@
+<adf-add-permission-panel
+    (select)="onSelect($event)">
+</adf-add-permission-panel>
+<div id="adf-add-permission-actions">
+   <button mat-button
+          id="adf-add-permission-action-button"
+          class="adf-permission-action"
+          [disabled]="!isAddEnabled()"
+          (click)="applySelection()">
+     {{'PERMISSION_MANAGER.ADD-PERMISSION.ADD-ACTION' | translate}}
+    </button>
+</div>

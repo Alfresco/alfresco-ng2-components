@@ -601,7 +601,7 @@
     },
     "content-services": {
       "root": "lib/content-services",
-      "sourceRoot": "lib/content-services",
+      "sourceRoot": "lib/content-services/src",
       "projectType": "library",
       "prefix": "adf",
       "architect": {
@@ -620,7 +620,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "lib/content-services/test.ts",
+            "main": "lib/content-services/src/test.ts",
             "tsConfig": "lib/content-services/tsconfig.spec.json",
             "karmaConfig": "lib/content-services/karma.conf.js",
             "codeCoverage": true,
@@ -632,7 +632,7 @@
           "options": {
             "tsConfig": [
               "lib/content-services/tsconfig.lib.json",
-              "lib/content-services/tsconfig.lib.json"
+              "lib/content-services/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

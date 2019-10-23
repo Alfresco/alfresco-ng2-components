@@ -15,4 +15,22 @@
  * limitations under the License.
  */
 
-export * from './src/public-api';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MaterialModule } from '../material.module';
+import { TreeViewComponent } from './components/tree-view.component';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        MaterialModule
+    ],
+    declarations: [
+        TreeViewComponent
+    ],
+    exports: [
+        TreeViewComponent
+    ]
+})
+export class TreeViewModule {
+}
