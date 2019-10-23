@@ -5,6 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../..
 
 echo "====== Content Services ======"
+
 echo "====== Build ======"
 npm run ng-packagr -- -p ./lib/content-services/ || exit 1
 
