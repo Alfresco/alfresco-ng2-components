@@ -98,7 +98,7 @@ export class EditProcessFilterCloudComponentPage {
         await BrowserActions.click(appNameElement);
     }
 
-    async getApplicationSelected(): Promise<String> {
+    async getApplicationSelected(): Promise<string> {
         const applicationDropdown = element(by.css(`[data-automation-id='adf-cloud-edit-process-property-appName']`));
         return await applicationDropdown.getText();
     }

@@ -75,7 +75,7 @@ describe('IdentityUserService', () => {
     beforeEach(() => {
         const store = {};
 
-        spyOn(localStorage, 'getItem').and.callFake( (key: string): String => {
+        spyOn(localStorage, 'getItem').and.callFake( (key: string): string => {
          return store[key] || null;
         });
         spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string =>  {

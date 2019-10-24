@@ -19,7 +19,7 @@ import { FormRepresentation } from '@alfresco/js-api';
 
 export class FormModelActions {
 
-    async getFormByName(alfrescoJsApi: any, name: String): Promise<FormRepresentation> {
+    async getFormByName(alfrescoJsApi: any, name: string): Promise<FormRepresentation> {
 
         const forms = await alfrescoJsApi.activiti.editorApi.getForms();
 
