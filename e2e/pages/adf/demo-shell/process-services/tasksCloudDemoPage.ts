@@ -53,6 +53,7 @@ export class TasksCloudDemoPage {
     iconInputField: ElementFinder = element(by.css('input[placeholder="Icon"]'));
     addActionButton: ElementFinder = element(by.cssContainingText('button span', 'Add'));
     disableCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='disabled']`));
+    visibleCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='visible']`));
 
     formControllersPage: FormControllersPage = new FormControllersPage();
 
@@ -170,6 +171,14 @@ export class TasksCloudDemoPage {
         await BrowserActions.clearSendKeys(this.titleInputField, text);
         await BrowserActions.clearSendKeys(this.iconInputField, text);
         await BrowserActions.click(this.disableCheckbox);
+        await BrowserActions.click(this.addActionButton);
+    }
+
+    async addInvisibleAction(text: string): Promise<void> {
+        await BrowserActions.clearSendKeys(this.keyInputField, text);
+        await BrowserActions.clearSendKeys(this.titleInputField, text);
+        await BrowserActions.clearSendKeys(this.iconInputField, text);
+        await BrowserActions.click(this.visibleCheckbox);
         await BrowserActions.click(this.addActionButton);
     }
 

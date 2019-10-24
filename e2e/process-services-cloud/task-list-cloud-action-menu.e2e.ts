@@ -98,6 +98,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.actionAdded('delete');
             await tasksCloudDemoPage.addDisabledAction('disabledaction');
             await tasksCloudDemoPage.actionAdded('disabledaction');
+            await tasksCloudDemoPage.addInvisibleAction('invisibleaction');
+            await tasksCloudDemoPage.actionAdded('invisibleaction');
             await tasksCloudDemoPage.clickAppButton();
             await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
             await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
@@ -109,10 +111,12 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(editTask.list.entries[0].entry.id);
             await tasksCloudDemoPage.taskListCloudComponent().clickOptionsButton(editTask.list.entries[0].entry.id);
             await expect(await tasksCloudDemoPage.taskListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getNumberOfOptions()).toBe(3);
             await tasksCloudDemoPage.taskListCloudComponent().clickOnCustomActionMenu('edit');
             await tasksCloudDemoPage.checkActionExecuted(editTask.list.entries[0].entry.id, 'edit');
             await tasksCloudDemoPage.taskListCloudComponent().rightClickOnRow(deleteTask.list.entries[0].entry.id);
             await expect(await tasksCloudDemoPage.taskListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getNumberOfOptions()).toBe(3);
             await tasksCloudDemoPage.taskListCloudComponent().clickContextMenuActionNamed('delete');
             await tasksCloudDemoPage.checkActionExecuted(deleteTask.list.entries[0].entry.id, 'delete');
         });
