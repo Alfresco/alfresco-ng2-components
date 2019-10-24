@@ -1,10 +1,12 @@
-<ng-container *ngIf="route.length > 0" class="adf-dropdown-breadcrumb-container">
+<nav *ngIf="route.length > 0" class="adf-dropdown-breadcrumb-container"
+     role="navigation"
+     [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.BREADCRUMB' | translate">
 
     <button
         tabindex="0"
         class="adf-dropdown-breadcrumb-trigger"
         (click)="open()"
-        aria-label="Dropdown navigation"
+        [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.DROPDOWN' | translate"
         data-automation-id="dropdown-breadcrumb-trigger">
         <mat-icon [class.adf-isRoot]="!hasPreviousNodes()">folder</mat-icon>
     </button>
@@ -33,7 +35,6 @@
         class="adf-current-folder"
         [class.adf-isRoot]="!hasPreviousNodes()"
         data-automation-id="current-folder"
-        tabindex="0"
         aria-current="location">{{ currentNode.name }}
     </span>
-</ng-container>
+</nav>
