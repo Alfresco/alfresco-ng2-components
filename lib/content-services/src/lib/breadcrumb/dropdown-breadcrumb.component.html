@@ -3,7 +3,7 @@
      [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.BREADCRUMB' | translate">
 
     <button
-        tabindex="0"
+        [tabindex]="hasPreviousNodes() ? 0 : -1"
         class="adf-dropdown-breadcrumb-trigger"
         (click)="open()"
         [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.DROPDOWN' | translate"
