@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { throwError as observableThrowError, Observable } from 'rxjs';
+import { throwError as observableThrowError, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Pagination } from '@alfresco/js-api';
 import { IdentityRoleModel } from '../models/identity-role.model';
@@ -90,6 +90,7 @@ export class IdentityRoleService {
                 .post(`${this.identityHost}/roles`, request)
                 .pipe(catchError(error => this.handleError(error)));
         }
+        return of();
     }
 
     /**
@@ -119,6 +120,7 @@ export class IdentityRoleService {
                 .put(`${this.identityHost}/roles-by-id/${roleId}`, request)
                 .pipe(catchError(error => this.handleError(error)));
         }
+        return of();
     }
 
     private handleError(error: any) {

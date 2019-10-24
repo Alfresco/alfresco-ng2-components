@@ -144,7 +144,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
         return this.processInstanceDetails && this.processInstanceDetails.startFormDefined === true;
     }
 
-    getUserFullName(user: any) {
+    getUserFullName(user: any): string {
         if (user) {
             return (user.firstName && user.firstName !== 'null'
                     ? user.firstName + ' ' : '') +
@@ -153,12 +153,13 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
         return 'Nobody';
     }
 
-    getFormatDate(value, format: string) {
+    getFormatDate(value: any, format: string): any {
         const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);
         } catch (err) {
             this.logService.error(`ProcessListInstanceTask: error parsing date ${value} to format ${format}`);
+            return value;
         }
     }
 

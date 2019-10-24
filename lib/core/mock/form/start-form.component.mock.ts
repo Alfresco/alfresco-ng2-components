@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let startFormDateWidgetMock = {
+export const startFormDateWidgetMock: any = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -38,7 +38,7 @@ export let startFormDateWidgetMock = {
         }]
 };
 
-export let startFormNumberWidgetMock = {
+export const startFormNumberWidgetMock: any = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -61,7 +61,7 @@ export let startFormNumberWidgetMock = {
         }]
 };
 
-export let startFormAmountWidgetMock = {
+export const startFormAmountWidgetMock: any = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -84,7 +84,7 @@ export let startFormAmountWidgetMock = {
         }]
 };
 
-export let startFormRadioButtonWidgetMock = {
+export const startFormRadioButtonWidgetMock: any = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -107,7 +107,7 @@ export let startFormRadioButtonWidgetMock = {
         }]
 };
 
-export let startFormTextDefinitionMock = {
+export const startFormTextDefinitionMock: any = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -130,7 +130,7 @@ export let startFormTextDefinitionMock = {
         }]
 };
 
-export let startFormDropdownDefinitionMock = {
+export const startFormDropdownDefinitionMock: any = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -179,7 +179,7 @@ export let startFormDropdownDefinitionMock = {
         }]
 };
 
-export let startMockForm = {
+export const startMockForm: any = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -593,7 +593,7 @@ export let startMockForm = {
     globalDateFormat: 'D - M - YYYY'
 };
 
-export let startMockFormWithTab = {
+export const startMockFormWithTab: any = {
     id: 4,
     taskName: 'Mock Title',
     processDefinitionId: 'ClaimReviewProcess:2: 93',

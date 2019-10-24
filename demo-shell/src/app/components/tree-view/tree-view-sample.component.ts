@@ -25,7 +25,7 @@ import { Component } from '@angular/core';
 export class TreeViewSampleComponent {
 
     clickedNodeName: string = '';
-    errorMessage = '';
+    errorMessage: string = '';
 
     nodeIdSample: string = '-my-';
 
@@ -38,7 +38,7 @@ export class TreeViewSampleComponent {
         this.errorMessage = '';
     }
 
-    onErrorOccurred(error) {
+    onErrorOccurred(error: string) {
         this.clickedNodeName = '';
         this.errorMessage = error;
     }

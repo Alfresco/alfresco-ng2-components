@@ -127,7 +127,6 @@ describe('Create folder directive', () => {
     });
 
     it('[C260159] Should not be possible create a folder with banned character', async () => {
-        await browser.refresh();
         await contentServicesPage.clickOnCreateNewFolder();
 
         await createFolderDialog.addFolderName('*');

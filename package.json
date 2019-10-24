@@ -135,7 +135,7 @@
     "@types/node": "^12.7.7",
     "@types/selenium-webdriver": "^3.0.8",
     "ajv-cli": "^3.0.0",
-    "bundlesize": "^0.17.2",
+    "bundlesize": "0.18.0",
     "chalk": "^2.3.2",
     "chrome-remote-interface": "^0.26.1",
     "codelyzer": "5.0.0",
@@ -224,7 +224,7 @@
     },
     {
       "path": "./lib/dist/core/bundles/adf-core.umd.min.js",
-      "maxSize": "120 kb"
+      "maxSize": "130 kb"
     },
     {
       "path": "./lib/dist/process-services-cloud/bundles/adf-process-services-cloud.umd.min.js",

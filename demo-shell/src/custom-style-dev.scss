@@ -20,10 +20,10 @@ $warn:    mat-palette($alfresco-warn);
 $theme:   mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
-@include adf-app-layout-theme($theme);
-@include adf-file-component-theme($theme);
-@include adf-login-component-theme($theme);
-@include adf-process-service-component-theme($theme);
+@include app-layout-theme($theme);
+@include app-file-component-theme($theme);
+@include app-login-component-theme($theme);
+@include app-process-service-component-theme($theme);
 
 
 @include adf-content-services-theme($theme);

@@ -111,8 +111,8 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
 | goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
 | invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the shared link used is not valid. |
-| navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
-| navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when user clicks 'Navigate Next' (">") button. |
+| navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<MouseEvent|KeybordEvent>` | Emitted when user clicks 'Navigate Before' ("&lt;") button or keyboard left key |
+| navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<MouseEvent|KeybordEvent>` | Emitted when user clicks 'Navigate Next' (">") button or keyboard right key. |
 | print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
 | showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer is shown or hidden. |
 

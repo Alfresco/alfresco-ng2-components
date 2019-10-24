@@ -40,7 +40,7 @@ describe('Task list cloud - selection', () => {
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
 
-        const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
         const noOfTasks = 3;
         let response, testUser, groupInfo;
         const tasks = [];

@@ -120,6 +120,7 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
         if (this.processInstance) {
             return this.isRunning() ? 'Running' : 'Completed';
         }
+        return 'Unknown';
     }
 
     getStartedByFullName(): string {

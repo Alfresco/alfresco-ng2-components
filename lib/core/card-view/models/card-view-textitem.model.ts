@@ -33,14 +33,14 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
         this.multivalued = !!cardViewTextItemProperties.multivalued;
         this.pipes = cardViewTextItemProperties.pipes || [];
         this.clickCallBack = cardViewTextItemProperties.clickCallBack ? cardViewTextItemProperties.clickCallBack : null;
+
+        if (this.default && this.isEmpty()) {
+            this.value = this.default;
+        }
     }
 
-    get displayValue() {
-        if (this.isEmpty()) {
-            return this.default;
-        } else {
-            return this.applyPipes(this.value);
-        }
+    get displayValue(): string {
+        return this.applyPipes(this.value);
     }
 
     private applyPipes(displayValue) {

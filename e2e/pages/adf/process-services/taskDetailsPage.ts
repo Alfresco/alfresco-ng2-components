@@ -45,7 +45,7 @@ export class TaskDetailsPage {
     addInvolvedUserButton: ElementFinder = element(by.css('button[id="add-people"] span'));
     emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email"]');
     taskDetailsInfoDrawer: ElementFinder = element(by.tagName('adf-info-drawer'));
-    taskDetailsSection: ElementFinder = element(by.css('div[data-automation-id="adf-tasks-details"]'));
+    taskDetailsSection: ElementFinder = element(by.css('div[data-automation-id="app-tasks-details"]'));
     taskDetailsEmptySection: ElementFinder = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
     completeTask: ElementFinder = element(by.css('button[id="adf-no-form-complete-button"]'));
     completeFormTask: ElementFinder = element(by.css('button[id="adf-form-complete"]'));
@@ -75,12 +75,12 @@ export class TaskDetailsPage {
     }
 
     async checkEditDescriptionButtonIsNotDisplayed(): Promise<void> {
-        const editDescriptionButton = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-description"]'));
+        const editDescriptionButton = element(by.css('button[data-automation-id="card-textitem-edit-icon-description"]'));
         await BrowserVisibility.waitUntilElementIsNotVisible(editDescriptionButton);
     }
 
     async checkEditPriorityButtonIsNotDisplayed(): Promise<void> {
-        const editPriorityButton = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-priority"]'));
+        const editPriorityButton = element(by.css('button[data-automation-id="card-textitem-edit-icon-priority"]'));
         await BrowserVisibility.waitUntilElementIsNotVisible(editPriorityButton);
     }
 

@@ -33,7 +33,7 @@ export class PermissionsPage {
     searchUserInput: ElementFinder = element(by.id('searchInput'));
     searchResults: ElementFinder = element(by.css('#adf-add-permission-authority-results #adf-search-results-content'));
     addButton: ElementFinder = element(by.id('add-permission-dialog-confirm-button'));
-    permissionInheritedButton: ElementFinder = element.all(by.css("div[class='adf-inherit_permission_button'] button")).first();
+    permissionInheritedButton: ElementFinder = element.all(by.css("div[class='app-inherit_permission_button'] button")).first();
     noPermissions: ElementFinder = element(by.css('div[id="adf-no-permissions-template"]'));
     deletePermissionButton: ElementFinder = element(by.css(`button[data-automation-id='adf-delete-permission-button']`));
     permissionDisplayContainer: ElementFinder = element(by.css(`div[id='adf-permission-display-container']`));

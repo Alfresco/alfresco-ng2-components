@@ -225,10 +225,11 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     /**
      * Return the process parent information
      */
-    getParentInfo() {
+    getParentInfo(): Map<string, string> {
         if (this.taskDetails.processInstanceId && this.taskDetails.processDefinitionName) {
             return new Map([[this.taskDetails.processInstanceId, this.taskDetails.processDefinitionName]]);
         }
+        return new Map();
     }
 
     /**
@@ -241,7 +242,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     /**
      * Returns true if the task is assigned to logged in user
      */
-    public isAssignedTo(userId): boolean {
+    public isAssignedTo(userId: number): boolean {
         return this.hasAssignee() ? this.taskDetails.assignee.id === userId : false;
     }
 
@@ -255,7 +256,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     /**
      * Return true if the user is a candidate member
      */
-    isCandidateMember() {
+    isCandidateMember(): boolean {
         return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
     }
 

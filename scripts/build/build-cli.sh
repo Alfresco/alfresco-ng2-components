@@ -11,6 +11,7 @@ echo "====== Build ======"
 npm run dist
 
 cd $DIR/../../
+rm -rf ./lib/dist/cli/ && \
 cp -R ./lib/cli/dist lib/dist/cli/
 
 echo "====== Move to node_modules ======"

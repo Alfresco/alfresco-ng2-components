@@ -50,7 +50,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
             case 'narrow':
                 return this.localeData.monthsShort().map((month) => month[0]);
             default :
-                return;
+                return [];
         }
     }
 
@@ -72,7 +72,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
             case 'narrow':
                 return this.localeData.weekdaysShort();
             default :
-                return;
+                return [];
         }
     }
 

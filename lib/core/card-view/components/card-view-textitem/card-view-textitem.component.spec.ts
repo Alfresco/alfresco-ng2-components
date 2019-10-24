@@ -67,7 +67,7 @@ describe('CardViewTextItemComponent', () => {
             componentWithDisplayName = fixture.componentInstance;
             componentWithDisplayName.property = new CardViewTextItemModel({
                 label: 'Name label',
-                value: {id: 123, displayName: 'User Name'},
+                value: { id: 123, displayName: 'User Name' },
                 key: 'namekey'
             });
             fixture.detectChanges();
@@ -75,22 +75,6 @@ describe('CardViewTextItemComponent', () => {
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('User Name');
-        });
-
-        it('should NOT render the default as value if the value is empty, editable is false and displayEmpty is false', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                editable: false
-            });
-            component.displayEmpty = false;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('');
         });
 
         it('should render the default as value if the value is empty, editable is false and displayEmpty is true', () => {
@@ -123,22 +107,6 @@ describe('CardViewTextItemComponent', () => {
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
-        });
-
-        it('should NOT render the default as value if the value is empty, clickable is false and displayEmpty is false', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: false
-            });
-            component.displayEmpty = false;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('');
         });
 
         it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', () => {
@@ -370,5 +338,61 @@ describe('CardViewTextItemComponent', () => {
             const updateInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
             updateInput.triggerEventHandler('click', null);
         });
+
+        it('should update the value using the enter key', async(() => {
+            component.inEdit = false;
+            component.property.isValid = () => true;
+            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const expectedText = 'changed text';
+            fixture.detectChanges();
+
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
+                (updateNotification) => {
+                    expect(updateNotification.target).toBe(component.property);
+                    expect(updateNotification.changed).toEqual({ textkey: expectedText });
+                    disposableUpdate.unsubscribe();
+                }
+            );
+
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
+            editIcon.triggerEventHandler('click', null);
+            fixture.detectChanges();
+
+            const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
+            editInput.nativeElement.value = expectedText;
+            editInput.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            const enterKeyboardEvent = new KeyboardEvent('keyup', { 'key': 'Enter' });
+            editInput.nativeElement.dispatchEvent(enterKeyboardEvent);
+            fixture.detectChanges();
+
+            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-textkey"]`));
+            expect(textItemReadOnly.nativeElement.textContent).toEqual(expectedText);
+            expect(component.property.value).toBe(expectedText);
+        }));
+
+        it('should reset the value using the escape key', async(() => {
+            component.inEdit = false;
+            component.property.isValid = () => true;
+            fixture.detectChanges();
+
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
+            editIcon.triggerEventHandler('click', null);
+            fixture.detectChanges();
+
+            const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
+            editInput.nativeElement.value = 'changed text';
+            editInput.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            const enterKeyboardEvent = new KeyboardEvent('keyup', { 'key': 'Escape' });
+            editInput.nativeElement.dispatchEvent(enterKeyboardEvent);
+            fixture.detectChanges();
+
+            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-textkey"]`));
+            expect(textItemReadOnly.nativeElement.textContent).toEqual('Lorem ipsum');
+            expect(component.property.value).toBe('Lorem ipsum');
+        }));
     });
 });

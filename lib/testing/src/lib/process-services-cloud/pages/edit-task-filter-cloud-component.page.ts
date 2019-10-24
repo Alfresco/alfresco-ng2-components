@@ -46,7 +46,7 @@ export class EditTaskFilterCloudComponentPage {
         return this.editTaskFilterDialogPage;
     }
 
-    async isFilterDisplayed(): Promise<Boolean> {
+    async isFilterDisplayed(): Promise<boolean> {
         return await BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 

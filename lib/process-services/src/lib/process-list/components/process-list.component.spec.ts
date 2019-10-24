@@ -22,7 +22,7 @@ import { By } from '@angular/platform-browser';
 
 import { ProcessInstanceListComponent } from './process-list.component';
 
-import { AppConfigService, setupTestBed, CoreModule, DataTableModule } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRow, DataColumn } from '@alfresco/adf-core';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 
 import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty } from '../../mock';
@@ -38,6 +38,13 @@ describe('ProcessInstanceListComponent', () => {
     let service: ProcessService;
     let getProcessInstancesSpy: jasmine.Spy;
     let appConfig: AppConfigService;
+    const resolverfn = (row: DataRow, col: DataColumn) => {
+        const value = row.getValue(col.key);
+        if (col.key === 'variables') {
+            return (value || []).map((processVar) => `${processVar.name} - ${processVar.value}`).toString();
+        }
+        return value;
+    };
 
     setupTestBed({
         imports: [
@@ -268,6 +275,30 @@ describe('ProcessInstanceListComponent', () => {
 
         fixture.whenStable().then(() => {
             expect(triggered).toBeFalsy();
+        });
+    }));
+
+    it('should show custom resolved value in the column', async(() => {
+        appConfig.config['adf-process-list'] = {
+            'presets': {
+                'fakeProcessCustomSchema': [
+                    {
+                        'key': 'variables',
+                        'type': 'text',
+                        'title': 'Variables'
+                    }
+                ]
+            }
+        };
+        component.presetColumn = 'fakeProcessCustomSchema';
+        component.resolverFn = resolverfn;
+        component.reload();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const customColumn = fixture.debugElement.queryAll(By.css('[title="Variables"] adf-datatable-cell'));
+            expect(customColumn[0].nativeElement.innerText).toEqual('initiator - fake-user-1');
+            expect(customColumn[1].nativeElement.innerText).toEqual('initiator - fake-user-2');
         });
     }));
 

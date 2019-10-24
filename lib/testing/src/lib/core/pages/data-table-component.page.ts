@@ -59,7 +59,7 @@ export class DataTableComponentPage {
     }
 
     async clickCheckbox(columnName: string, columnValue): Promise<void> {
-        const checkbox = this.getRowCheckbox(columnName, columnValue);
+        const checkbox = this.getRowCheckbox(columnName, columnValue).element(by.css(`input[type='checkbox']`));
         await BrowserActions.click(checkbox);
     }
 

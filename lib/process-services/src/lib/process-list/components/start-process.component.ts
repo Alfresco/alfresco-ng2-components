@@ -152,9 +152,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             }
             return filteredProcess;
         }
+
+        return [];
     }
 
-    getSelectedProcess(selectedProcess) {
+    getSelectedProcess(selectedProcess: string): ProcessDefinitionRepresentation {
         let processSelected = this.processDefinitions.find((process) => process.name.toLowerCase() === selectedProcess);
 
         if (!processSelected) {
@@ -163,7 +165,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return processSelected;
     }
 
-    public loadStartProcess() {
+    loadStartProcess(): void {
         this.resetSelectedProcessDefinition();
         this.resetErrorMessage();
 
@@ -206,7 +208,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return alfrescoRepositoryName + 'Alfresco';
     }
 
-    moveNodeFromCStoPS() {
+    moveNodeFromCStoPS(): void {
         const accountIdentifier = this.getAlfrescoRepositoryName();
 
         for (const key in this.values) {
@@ -222,7 +224,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
     }
 
-    public startProcess(outcome?: string) {
+    startProcess(outcome?: string) {
         if (this.selectedProcessDef && this.selectedProcessDef.id && this.name) {
             this.resetErrorMessage();
             const formValues = this.startForm ? this.startForm.form.values : undefined;
@@ -239,7 +241,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
     }
 
-    public cancelStartProcess() {
+    cancelStartProcess(): void {
         this.cancel.emit();
     }
 
@@ -247,8 +249,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return this.selectedProcessDef && this.selectedProcessDef.hasStartForm;
     }
 
-    isProcessDefinitionEmpty() {
-        return this.processDefinitions ? (this.processDefinitions.length > 0 || this.errorMessageId) : this.errorMessageId;
+    isProcessDefinitionEmpty(): boolean {
+        const hasErrorMessage = this.errorMessageId ? true : false;
+        return this.processDefinitions ? (this.processDefinitions.length > 0 || hasErrorMessage) : hasErrorMessage;
     }
 
     isStartFormMissingOrValid(): boolean {
@@ -279,7 +282,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.startProcess(outcome);
     }
 
-    public reset() {
+    reset(): void {
         this.resetSelectedProcessDefinition();
         this.name = '';
         if (this.startForm) {
@@ -292,7 +295,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return this.name ? true : false;
     }
 
-    displayFn(process: any) {
+    displayFn(process: any): string {
         if (process) {
             let processName = process;
             if (typeof process !== 'string') {
@@ -300,6 +303,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             }
             return processName;
         }
+        return undefined;
     }
 
     displayDropdown(event) {

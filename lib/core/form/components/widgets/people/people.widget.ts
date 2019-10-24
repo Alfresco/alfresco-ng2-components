@@ -98,7 +98,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    checkUserAndValidateForm(list, value) {
+    checkUserAndValidateForm(list: UserProcessModel[], value: string): void {
         const isValidUser = this.isValidUser(list, value);
         if (isValidUser || value === '') {
             this.field.validationSummary.message = '';
@@ -111,7 +111,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    isValidUser(users: UserProcessModel[], name: string) {
+    isValidUser(users: UserProcessModel[], name: string): boolean {
         if (users) {
             return users.find((user) => {
                 const selectedUser = this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
@@ -119,8 +119,9 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                     this.peopleSelected.emit(user && user.id || undefined);
                 }
                 return selectedUser;
-            });
+            }) ? true : false;
         }
+        return false;
     }
 
     getDisplayName(model: UserProcessModel) {

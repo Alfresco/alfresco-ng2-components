@@ -190,11 +190,11 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
-    navigateBefore = new EventEmitter();
+    navigateBefore = new EventEmitter<MouseEvent|KeyboardEvent>();
 
     /** Emitted when user clicks 'Navigate Next' (">") button. */
     @Output()
-    navigateNext = new EventEmitter();
+    navigateNext = new EventEmitter<MouseEvent|KeyboardEvent>();
 
     /** Emitted when the shared link used is not valid. */
     @Output()
@@ -477,12 +477,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.close();
     }
 
-    onNavigateBeforeClick() {
-        this.navigateBefore.next();
+    onNavigateBeforeClick(event: MouseEvent|KeyboardEvent) {
+        this.navigateBefore.next(event);
     }
 
-    onNavigateNextClick() {
-        this.navigateNext.next();
+    onNavigateNextClick(event: MouseEvent|KeyboardEvent) {
+        this.navigateNext.next(event);
     }
 
     /**
@@ -553,13 +553,13 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         // Left arrow
         if (key === 37 && this.canNavigateBefore) {
             event.preventDefault();
-            this.onNavigateBeforeClick();
+            this.onNavigateBeforeClick(event);
         }
 
         // Right arrow
         if (key === 39 && this.canNavigateNext) {
             event.preventDefault();
-            this.onNavigateNextClick();
+            this.onNavigateNextClick(event);
         }
 
         // Ctrl+F

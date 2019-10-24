@@ -21,6 +21,7 @@ import { NotificationModel } from '../models/notification.model';
 import { MatMenuTrigger } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
     selector: 'adf-notification-history',
@@ -32,6 +33,8 @@ export class NotificationHistoryComponent implements OnDestroy {
     onDestroy$ = new Subject<boolean>();
 
     notifications: NotificationModel[] = [];
+
+    MAX_NOTIFICATION_STACK_LENGTH = 100;
 
     @ViewChild(MatMenuTrigger)
     trigger: MatMenuTrigger;
@@ -45,12 +48,19 @@ export class NotificationHistoryComponent implements OnDestroy {
     menuPositionY: string = 'below';
 
     constructor(
-        private notificationService: NotificationService) {
+        private notificationService: NotificationService, public storageService: StorageService) {
+        this.notifications = JSON.parse(storageService.getItem('notifications')) || [];
         this.notificationService.notifications$
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((message) => {
-            this.notifications.push(message);
-        });
+                this.notifications.push(message);
+
+                if (this.notifications.length > this.MAX_NOTIFICATION_STACK_LENGTH) {
+                    this.notifications.shift();
+                }
+
+                storageService.setItem('notifications', JSON.stringify(this.notifications));
+            });
     }
 
     isEmptyNotification(): boolean {
@@ -62,6 +72,7 @@ export class NotificationHistoryComponent implements OnDestroy {
     }
 
     markAsRead() {
+        this.storageService.setItem('notifications', '');
         this.notifications = [];
     }
 

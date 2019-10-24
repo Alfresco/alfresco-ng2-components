@@ -608,11 +608,8 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should pass through the rowFilter to the documentList', () => {
-                const filter = (shareDataRow: ShareDataRow) => {
-                    if (shareDataRow.node.entry.name === 'impossible-name') {
-                        return true;
-                    }
-                };
+                const filter = (shareDataRow: ShareDataRow) =>
+                    shareDataRow.node.entry.name === 'impossible-name';
 
                 component.rowFilter = filter;
 

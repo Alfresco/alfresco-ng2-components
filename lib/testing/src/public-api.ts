@@ -16,6 +16,7 @@
  */
 
 export * from './lib/core/public-api';
+export * from './lib/form-cloud/public-api';
 export * from './lib/material/public-api';
 export * from './lib/content-services/public-api';
 export * from './lib/material/public-api';

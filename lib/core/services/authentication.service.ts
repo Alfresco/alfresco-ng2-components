@@ -163,6 +163,7 @@ export class AuthenticationService {
         if (this.alfrescoApi.getInstance()) {
             return this.alfrescoApi.getInstance().logout();
         }
+        return Promise.resolve();
     }
 
     /**

@@ -19,6 +19,15 @@ import { Component, Inject, ViewEncapsulation, SecurityContext } from '@angular/
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
+export interface ConfirmDialogComponentProps {
+    title?: string;
+    message?: string;
+    yesLabel?: string;
+    thirdOptionLabel?: string;
+    noLabel?: string;
+    htmlContent?: string;
+}
+
 @Component({
     selector: 'adf-confirm-dialog',
     templateUrl: './confirm.dialog.html',
@@ -35,7 +44,7 @@ export class ConfirmDialogComponent {
     thirdOptionLabel: string;
     htmlContent: string;
 
-    constructor(@Inject(MAT_DIALOG_DATA) data, private sanitizer: DomSanitizer) {
+    constructor(@Inject(MAT_DIALOG_DATA) data: ConfirmDialogComponentProps, private sanitizer: DomSanitizer) {
         data = data || {};
         this.title = data.title || 'ADF_CONFIRM_DIALOG.CONFIRM';
         this.message = data.message || 'ADF_CONFIRM_DIALOG.MESSAGE';
@@ -45,7 +54,7 @@ export class ConfirmDialogComponent {
         this.htmlContent = data.htmlContent;
     }
 
-    public sanitizedHtmlContent() {
+    sanitizedHtmlContent(): string {
         return this.sanitizer.sanitize(SecurityContext.HTML, this.htmlContent);
     }
 

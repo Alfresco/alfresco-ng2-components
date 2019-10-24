@@ -35,7 +35,7 @@ describe('Task Header cloud component', () => {
     let completedEndDate;
     let defaultDate;
     let groupInfo, testUser;
-    const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const priority = 30;
     const description = 'descriptionTask';
     const formatDate = 'MMM D, YYYY';

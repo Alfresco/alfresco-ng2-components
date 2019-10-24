@@ -28,7 +28,7 @@ export interface DataTableAdapter {
     setRows(rows: Array<DataRow>): void;
     getColumns(): Array<DataColumn>;
     setColumns(columns: Array<DataColumn>): void;
-    getValue(row: DataRow, col: DataColumn): any;
+    getValue(row: DataRow, col: DataColumn, resolverFn?: (row: DataRow, col: DataColumn) => any): any;
     getSorting(): DataSorting;
     setSorting(sorting: DataSorting): void;
     sort(key?: string, direction?: string): void;

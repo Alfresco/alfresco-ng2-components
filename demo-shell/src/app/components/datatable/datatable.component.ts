@@ -16,8 +16,16 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { DataColumn, DataRow } from '@alfresco/adf-core';
-import { DataCellEvent, DataRowActionEvent, DataSorting, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
+import {
+    DataCellEvent,
+    DataColumn,
+    DataRow,
+    DataRowActionEvent,
+    DataSorting,
+    ObjectDataColumn,
+    ObjectDataRow,
+    ObjectDataTableAdapter
+} from '@alfresco/adf-core';
 
 export class FilteredDataAdapter extends ObjectDataTableAdapter {
 
@@ -75,6 +83,20 @@ export class DataTableComponent {
         this.reset();
     }
 
+    resolver(row: DataRow, col: DataColumn): any {
+        const value = row.getValue(col.key);
+        if (col.key === 'users') {
+            return (value || []).map(user => `${user.firstName} ${user.lastName}`).toString();
+        }
+
+        if (col.key === 'status') {
+            const users = row.getValue('users');
+            return (value || []).map((status, index) => ({ 'name': `${users[index].firstName} ${users[index].lastName}`, status }));
+        }
+
+        return value;
+    }
+
     /* spellchecker: disable */
     reset() {
         this.data = new FilteredDataAdapter(
@@ -90,7 +112,21 @@ export class DataTableComponent {
                     createdOn: new Date(2016, 6, 2, 15, 8, 1),
                     createdBy: this._createdBy,
                     icon: 'material-icons://folder_open',
-                    json: null
+                    json: null,
+                    users: [
+                        {
+                            firstName: 'Super',
+                            lastName: 'Man'
+                        },
+                        {
+                            firstName: 'Iron',
+                            lastName: 'Man'
+                        }
+                    ],
+                    status: [
+                        'I am here to save the world.. By world means AMERICA',
+                        'That nobody is John Wick…'
+                    ]
                 },
                 {
                     id: 2,
@@ -98,7 +134,21 @@ export class DataTableComponent {
                     createdOn: new Date(2016, 6, 2, 15, 8, 2),
                     createdBy: this._createdBy,
                     icon: 'material-icons://accessibility',
-                    json: null
+                    json: null,
+                    users: [
+                        {
+                            firstName: 'Mister',
+                            lastName: 'Bean'
+                        },
+                        {
+                            firstName: 'Doctor',
+                            lastName: 'Strange'
+                        }
+                    ],
+                    status: [
+                        'I am here to save the world.. By world means AMERICA',
+                        'That nobody is John Wick…'
+                    ]
                 },
                 {
                     id: 3,
@@ -106,7 +156,21 @@ export class DataTableComponent {
                     createdOn: new Date(2016, 6, 2, 15, 8, 3),
                     createdBy: this._createdBy,
                     icon: 'material-icons://alarm',
-                    json: null
+                    json: null,
+                    users: [
+                        {
+                            firstName: 'Thunder',
+                            lastName: 'Thor'
+                        },
+                        {
+                            firstName: 'Marvel',
+                            lastName: 'Avenger'
+                        }
+                    ],
+                    status: [
+                        'I am here to save the world.. By world means AMERICA',
+                        'That nobody is John Wick…'
+                    ]
                 },
                 {
                     id: 4,
@@ -120,10 +184,45 @@ export class DataTableComponent {
                         createdOn: new Date(2016, 6, 2, 15, 8, 4),
                         createdBy: {
                             name: 'Felipe',
-                            lastname: 'Melo'
+                            lastName: 'Melo'
                         },
                         icon: 'material-icons://alarm'
-                    }
+                    },
+                    users: [
+                        {
+                            firstName: 'Spider',
+                            lastName: 'Man'
+                        },
+                        {
+                            firstName: '17',
+                            lastName: 'Again'
+                        }
+                    ],
+                    status: [
+                        'I am here to save the world.. By world means AMERICA',
+                        'That nobody is John Wick…'
+                    ]
+                },
+                {
+                    id: 5,
+                    name: 'I am using custom resolver',
+                    createdOn: new Date(2016, 6, 2, 15, 8, 4),
+                    createdBy: this._createdBy,
+                    icon: 'material-icons://person_outline',
+                    users: [
+                        {
+                            firstName: 'Captain',
+                            lastName: 'America'
+                        },
+                        {
+                            firstName: 'John',
+                            lastName: 'Wick'
+                        }
+                    ],
+                    status: [
+                        'I am here to save the world.. By world means AMERICA',
+                        'That nobody is John Wick…'
+                    ]
                 }
             ],
             [
@@ -132,7 +231,9 @@ export class DataTableComponent {
                 { type: 'date', key: 'createdOn', title: 'Created On', sortable: true, cssClass: 'adf-ellipsis-cell adf-expand-cell-2' },
                 { type: 'text', key: 'name', title: 'Name', cssClass: 'adf-ellipsis-cell', sortable: true },
                 { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: ''},
-                { type: 'json', key: 'json', title: 'Json', cssClass: 'adf-expand-cell-2'}
+                { type: 'json', key: 'json', title: 'Json', cssClass: 'adf-expand-cell-2'},
+                { type: 'text', key: 'users', title: 'Users', cssClass: 'adf-expand-cell-2'},
+                { type: 'json', key: 'status', title: 'Status', cssClass: 'adf-expand-cell-2'}
             ]
         );
 

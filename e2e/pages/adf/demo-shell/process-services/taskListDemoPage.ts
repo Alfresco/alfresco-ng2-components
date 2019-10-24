@@ -31,7 +31,7 @@ export class TaskListDemoPage {
     page: ElementFinder = element(by.css("input[data-automation-id='page']"));
     pageForm: ElementFinder = element(by.css("mat-form-field[data-automation-id='page']"));
     taskName: ElementFinder = element(by.css("input[data-automation-id='task name']"));
-    resetButton: ElementFinder = element(by.css("div[class='adf-reset-button'] button"));
+    resetButton: ElementFinder = element(by.css("div[class='app-reset-button'] button"));
     dueBefore: ElementFinder = element(by.css("input[data-automation-id='due before']"));
     dueAfter: ElementFinder = element(by.css("input[data-automation-id='due after']"));
     taskId: ElementFinder = element(by.css("input[data-automation-id='task id']"));

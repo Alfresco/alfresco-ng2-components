@@ -77,6 +77,10 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
     @Input()
     tooltip: string;
 
+    /** Custom resolver function which is used to parse dynamic column objects */
+    @Input()
+    resolverFn: (row: DataRow, col: DataColumn) => any  = null;
+
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(protected alfrescoApiService: AlfrescoApiService) {}
@@ -98,7 +102,7 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
 
     protected updateValue() {
         if (this.column && this.column.key && this.row && this.data) {
-            const value = this.data.getValue(this.row, this.column);
+            const value = this.data.getValue(this.row, this.column, this.resolverFn);
 
             this.value$.next(value);
 

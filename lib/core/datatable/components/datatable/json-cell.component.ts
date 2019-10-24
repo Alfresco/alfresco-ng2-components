@@ -52,12 +52,12 @@ export class JsonCellComponent extends DataTableCellComponent implements OnInit 
 
     ngOnInit() {
         if (this.column && this.column.key && this.row && this.data) {
-            this.value$.next(this.data.getValue(this.row, this.column));
+            this.value$.next(this.data.getValue(this.row, this.column, this.resolverFn));
         }
     }
 
     view() {
-        const rawValue: string | object = this.data.getValue(this.row, this.column);
+        const rawValue: string | object = this.data.getValue(this.row, this.column, this.resolverFn);
         const value = typeof rawValue === 'object'
             ? JSON.stringify(rawValue || {}, null, 2)
             : rawValue;

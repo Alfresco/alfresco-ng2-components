@@ -202,7 +202,7 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should update the form after deleted a file', async(() => {
-            spyOn(contentService, 'createTemporaryRawRelatedContent').and.callFake((file) => {
+            spyOn(contentService, 'createTemporaryRawRelatedContent').and.callFake((file: any) => {
                 if (file.name === 'file-fake.png') {
                     return of(fakePngAnswer);
                 }
@@ -210,6 +210,8 @@ describe('UploadWidgetComponent', () => {
                 if (file.name === 'file-fake.jpg') {
                     return of(fakeJpgAnswer);
                 }
+
+                return of();
             });
 
             uploadWidgetComponent.field.params.multiple = true;
@@ -230,7 +232,7 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should set has field value all the files uploaded', async(() => {
-            spyOn(contentService, 'createTemporaryRawRelatedContent').and.callFake((file) => {
+            spyOn(contentService, 'createTemporaryRawRelatedContent').and.callFake((file: any) => {
                 if (file.name === 'file-fake.png') {
                     return of(fakePngAnswer);
                 }
@@ -238,6 +240,8 @@ describe('UploadWidgetComponent', () => {
                 if (file.name === 'file-fake.jpg') {
                     return of(fakeJpgAnswer);
                 }
+
+                return of();
             });
 
             uploadWidgetComponent.field.params.multiple = true;

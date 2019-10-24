@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let fakeForm = {
+export const fakeForm: any = {
     id: 1001,
     name: 'ISSUE_FORM',
     processDefinitionId: 'ISSUE_APP:1:2504',

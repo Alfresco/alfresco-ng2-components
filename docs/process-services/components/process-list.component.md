@@ -58,6 +58,7 @@ when the process list is empty:
 | presetColumn | `string` |  | Custom preset column schema in JSON format. |
 | processDefinitionId | `string` |  | The Definition Id of the process. |
 | processInstanceId | `number \| string` |  | The id of the process instance. |
+| resolverFn | `Function` |  | Resolver function is used to show dynamic complex column objects see the [docs](../../core/interfaces/datatable-adapter.interface.md) to learn how to configure a resolverFn. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | size | `number` |  | The number of processes to fetch in each page. |

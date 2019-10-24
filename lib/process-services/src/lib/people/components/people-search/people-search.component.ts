@@ -65,7 +65,7 @@ export class PeopleSearchComponent implements OnInit {
         this.performSearch = this.performSearchCallback.bind(this);
     }
 
-    private performSearchCallback(event): Observable<UserProcessModel[]> {
+    private performSearchCallback(event: any): Observable<UserProcessModel[]> {
         this.searchPeople.emit(event);
         return this.filteredResults$;
     }

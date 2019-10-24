@@ -59,7 +59,7 @@ describe('Form Field Component - Dropdown Widget', () => {
     let queryService: QueryService;
 
     let runningProcessInstance, testUser, groupInfo, tasklist, task;
-    const simpleApp = browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     beforeAll(async () => {
 
@@ -74,7 +74,7 @@ describe('Form Field Component - Dropdown Widget', () => {
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
         const processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);

@@ -28,7 +28,7 @@ Searches Groups.
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | Name of the application. If specified this shows the users who have access to the app. |
 | mode | `string` |  | User selection mode (single/multiple). |
-| preSelectGroups | [`IdentityGroupModel`](../../../lib/core/userinfo/models/identity-group.model.ts)`[]` | \[] | Array of users to be pre-selected. This pre-selects all users in multi selection mode and only the first user of the array in single selection mode. |
+| preSelectGroups | [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]` | \[] | Array of users to be pre-selected. This pre-selects all users in multi selection mode and only the first user of the array in single selection mode. |
 | roles | `string[]` | \[] | Role names of the groups to be listed. |
 | searchGroupsControl | `FormControl` | new FormControl() | FormControl to search the group |
 | title | `string` |  | Title of the field |
@@ -37,8 +37,8 @@ Searches Groups.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| removeGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/userinfo/models/identity-group.model.ts)`>` | Emitted when a group is removed. |
-| selectGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/userinfo/models/identity-group.model.ts)`>` | Emitted when a group is selected. |
+| removeGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`>` | Emitted when a group is removed. |
+| selectGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`>` | Emitted when a group is selected. |
 
 ## Details
 

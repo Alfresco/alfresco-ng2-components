@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation, OnChanges } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation, OnChanges, SimpleChanges } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
 import { Direction } from '@angular/cdk/bidi';
@@ -80,7 +80,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
         this.mediaQueryList.removeListener(this.onMediaQueryChange);
     }
 
-    ngOnChanges(changes) {
+    ngOnChanges(changes: SimpleChanges) {
         if (changes && changes.direction) {
             this.contentAnimationState = this.toggledContentAnimation;
         }
@@ -99,17 +99,17 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
         return this.mediaQueryList.matches;
     }
 
-    getContentAnimationState() {
+    getContentAnimationState(): any {
         return this.contentAnimationState;
     }
 
-    private get toggledSidenavAnimation() {
+    private get toggledSidenavAnimation(): any {
         return this.sidenavAnimationState === this.SIDENAV_STATES.EXPANDED
             ? this.SIDENAV_STATES.COMPACT
             : this.SIDENAV_STATES.EXPANDED;
     }
 
-    private get toggledContentAnimation() {
+    private get toggledContentAnimation(): any {
         if (this.isMobileScreenSize) {
             return this.CONTENT_STATES.MOBILE;
         }
@@ -150,7 +150,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
         }
     }
 
-    private onMediaQueryChange() {
+    private onMediaQueryChange(): void {
         this.sidenavAnimationState = this.SIDENAV_STATES.EXPANDED;
         this.contentAnimationState = this.toggledContentAnimation;
     }

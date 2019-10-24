@@ -41,7 +41,7 @@
                         mat-icon-button
                         [attr.aria-label]="'ADF_VIEWER.ACTIONS.PREV_FILE' | translate"
                         title="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
-                        (click)="onNavigateBeforeClick()">
+                        (click)="onNavigateBeforeClick($event)">
                         <mat-icon>navigate_before</mat-icon>
                     </button>
                     <img class="adf-viewer__mimeicon" [alt]="mimeType" [src]="mimeType | adfMimeTypeIcon" data-automation-id="adf-file-thumbnail">
@@ -52,7 +52,7 @@
                         mat-icon-button
                         [attr.aria-label]="'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate"
                         title="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
-                        (click)="onNavigateNextClick()">
+                        (click)="onNavigateNextClick($event)">
                         <mat-icon>navigate_next</mat-icon>
                     </button>
                 </div>

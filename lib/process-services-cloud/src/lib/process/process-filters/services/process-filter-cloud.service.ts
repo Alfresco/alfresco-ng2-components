@@ -152,11 +152,14 @@ export class ProcessFilterCloudService {
      */
     deleteFilter(deletedFilter: ProcessFilterCloudModel): Observable<ProcessFilterCloudModel[]> {
         const key = this.prepareKey(deletedFilter.appName);
+
         return this.getProcessFiltersByKey(deletedFilter.appName, key).pipe(
-            switchMap((filters: any) => {
+            switchMap(filters => {
                 if (filters && filters.length > 0) {
-                    filters = filters.filter((filter: ProcessFilterCloudModel) => filter.id !== deletedFilter.id);
+                    filters = filters.filter(filter => filter.id !== deletedFilter.id);
                     return this.updateProcessFilters(deletedFilter.appName, key, filters);
+                } else {
+                    return [];
                 }
             }),
             map((filters: ProcessFilterCloudModel[]) => {

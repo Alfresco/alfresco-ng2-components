@@ -161,6 +161,13 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     rowMenuCacheEnabled = true;
 
+    /**
+     * Custom resolver function which is used to parse dynamic column objects
+     * see the docs to learn how to configure a resolverFn.
+     */
+    @Input()
+    resolverFn: (row: DataRow, col: DataColumn) => any = null;
+
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
     loadingTemplate: TemplateRef<any>;
@@ -260,10 +267,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return rows.map((row) => new ObjectDataRow(row, row.isSelected));
     }
 
-    convertToDataSorting(sorting: any[]): DataSorting {
+    convertToDataSorting(sorting: any[]): DataSorting | null {
         if (sorting && sorting.length > 0) {
             return new DataSorting(sorting[0], sorting[1]);
         }
+        return null;
     }
 
     private initAndSubscribeClickStream() {
@@ -362,7 +370,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
-    private setTableSorting(sorting) {
+    private setTableSorting(sorting: any[]) {
         if (this.data) {
             this.data.setSorting(this.convertToDataSorting(sorting));
         }
@@ -610,10 +618,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return `${row.cssClass} ${this.rowStyleClass}`;
     }
 
-    getSortingKey(): string {
+    getSortingKey(): string | null {
         if (this.data.getSorting()) {
             return this.data.getSorting().key;
         }
+
+        return null;
     }
 
     selectRow(row: DataRow, value: boolean) {

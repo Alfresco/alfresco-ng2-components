@@ -5,17 +5,18 @@
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "outDir": "./dist",
     "rootDir": ".",
     "skipLibCheck": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "target": "es2018",
     "lib": [
-      "es2018"
+      "es2018",
+      "dom"
     ],
     "baseUrl": ".",
     "typeRoots": [
@@ -30,8 +31,6 @@
   "exclude": [
     "dist/**/*",
     "./build.ts",
-    "node_modules/**/*",
-    "**/node_modules/**/*"
-
+    "node_modules/**/*"
   ]
 }

@@ -1,62 +1,61 @@
-div.adf-search-results-container {
+div.app-search-results-container {
     padding: 0 20px 20px;
 }
 
-.adf-search-title {
+.app-search-title {
     font-size: 22px;
     padding: 15px 0;
 }
 
 @media screen and (max-width: 600px) {
-    :host .adf-col-display-name {
+    :host .app-col-display-name {
         min-width: 100px;
     }
-    :host .adf-col-modified-at, :host .adf-col-modified-by {
+    :host .app-col-modified-at, :host .app-col-modified-by {
         display: none;
     }
-    :host div.adf-search-results-container table {
+    :host div.app-search-results-container table {
         width: 100%;
     }
 }
 
-.adf-search-results-content {
+.app-search-results-content {
     display: flex;
 }
 
-.adf-search-extended-input-containers {
+.app-search-extended-input-containers {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-evenly;
 }
 
-.adf-search-extended-input-textarea {
+.app-search-extended-input-textarea {
     width: 300px;
 }
 
-.adf-search-extended-label-error {
+.app-search-extended-label-error {
     display: flex;
     flex-direction: column;
 }
 
-.adf-example-card {
+.app-example-card {
     width: 200px;
     flex: 0 20%;
     margin: 15px;
-  }
+}
 
-  .adf-example-card-search-container {
+.app-example-card-search-container {
     display: flex;
     flex-wrap: wrap;
-  }
+}
 
-  .example-header-image {
-
+.example-header-image {
     background-size: cover;
     margin-bottom: 15px;
-  }
+}
 
-  .example-search-input {
-      width: 100px;
-      border: 1 solid;
-      border-color: black;
-  }
+.example-search-input {
+    width: 100px;
+    border: 1 solid;
+    border-color: black;
+}

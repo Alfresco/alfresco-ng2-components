@@ -160,23 +160,17 @@ describe('NodeRestoreDirective', () => {
         it('should notify on multiple fails', (done) => {
             const error = { message: '{ "error": {} }' };
 
-            directiveInstance.restore.subscribe((event) => {
+            directiveInstance.restore.subscribe((event: any) => {
                 expect(event.message).toEqual('CORE.RESTORE_NODE.PARTIAL_PLURAL');
                 done();
             });
 
-            restoreNodeSpy.and.callFake((id) => {
+            restoreNodeSpy.and.callFake((id: string) => {
                 if (id === '1') {
                     return Promise.resolve();
                 }
 
-                if (id === '2') {
-                    return Promise.reject(error);
-                }
-
-                if (id === '3') {
-                    return Promise.reject(error);
-                }
+                return Promise.reject(error);
             });
 
             component.selection = [
@@ -232,7 +226,7 @@ describe('NodeRestoreDirective', () => {
 
             restoreNodeSpy.and.returnValue(Promise.reject(error));
 
-            directiveInstance.restore.subscribe((event) => {
+            directiveInstance.restore.subscribe((event: any) => {
                 expect(event.message).toEqual('CORE.RESTORE_NODE.LOCATION_MISSING');
                 done();
             });
@@ -247,20 +241,14 @@ describe('NodeRestoreDirective', () => {
 
         it('should notify success when restore multiple nodes', (done) => {
 
-            directiveInstance.restore.subscribe((event) => {
+            directiveInstance.restore.subscribe((event: any) => {
                 expect(event.message).toEqual('CORE.RESTORE_NODE.PLURAL');
 
                 done();
             });
 
-            restoreNodeSpy.and.callFake((id) => {
-                if (id === '1') {
-                    return Promise.resolve();
-                }
-
-                if (id === '2') {
-                    return Promise.resolve();
-                }
+            restoreNodeSpy.and.callFake(() => {
+                return Promise.resolve();
             });
 
             component.selection = [

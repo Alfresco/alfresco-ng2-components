@@ -21,10 +21,14 @@ export const ACTIVITI_CLOUD_APPS: any = {
         name: 'candidatebaseapp',
         file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/development/e2e/resources/activiti7/candidatebaseapp.zip?raw=true',
         processes: {
-            candidateUserProcess: 'candidateUserProcess',
-            candidateGroupProcess: 'candidateGroupProcess',
-            anotherCandidateGroupProcess: 'anotherCandidateGroupProcess',
-            uploadFileProcess: 'uploadFileProcess'
+            candidateUserProcess: 'candidateuserprocess',
+            candidateGroupProcess: 'candidategroupprocess',
+            anotherCandidateGroupProcess: 'anothercandidategroup',
+            uploadFileProcess: 'uploadfileprocess'
+        },
+        forms: {
+            starteventform: 'starteventform',
+            formtotestvalidations: 'formtotestvalidations'
         },
         security: [
             {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
@@ -39,7 +43,23 @@ export const ACTIVITI_CLOUD_APPS: any = {
             simpleProcess: 'simpleprocess',
             dropdownrestprocess: 'dropdownrestprocess',
             multilingualprocess: 'multilingualprocess',
-            processWithTabVisibility: 'processwithtabvisibility'
+            processWithTabVisibility: 'processwithtabvisibility',
+            startmessageevent: 'start-message-event',
+            intermediatemessageevent: 'intermediate-message-event',
+            intboundaryevent: 'int-boundary-event',
+            nonintboundaryevent: 'nonint-boundary-event',
+            intboundarysubprocess: 'int-boundary-subprocess',
+            intstartmessageevent: 'int-start-message-event',
+            nonintstartmessageevent: 'nonint-start-message-event',
+            siblingtaskprocess: 'siblingtaskprocess',
+            startTaskVisibilityForm: 'start-task-visibility-form',
+            startVisibilityForm: 'start-visibility-form',
+            processstring: 'processstring',
+            processinteger: 'processinteger',
+            processboolean: 'processboolean',
+            processdate: 'processdate',
+            multiprocess: 'multiprocess',
+            terminateexclusive: 'terminate-exclusive'
         },
         forms: {
             tabVisibilityFields: {
@@ -49,6 +69,34 @@ export const ACTIVITI_CLOUD_APPS: any = {
             tabVisibilityVars: {
                 name: 'tabvisibilitywithvars',
                 id: 'form-7bf363d2-83c9-4b00-853e-373d0d59963c'
+            },
+            usertaskform: {
+                name: 'usertaskform',
+                id: 'form-056ba4aa-90c2-48eb-ba39-7013d732503b'
+            },
+            dropdownform: {
+                name: 'dropdownform',
+                id: 'form-5688156c-150c-43bc-83cb-617fd045202a'
+            },
+            formVisibility: {
+                name: 'form-visibility',
+                id: 'form-30418ed3-2beb-464f-ad51-4ca5da02f6d8'
+            },
+            multilingualform: {
+                name: 'multilingualform',
+                id: 'form-fb8f1628-82d9-4e0e-b032-bf02598e7d24'
+            },
+            inputform: {
+                name: 'inputform',
+                id: 'form-d69fd470-b67a-4e7c-bb70-8979fc10374f'
+            },
+            outputform: {
+                name: 'outputform',
+                id: 'form-eeb2174f-b25a-4386-bf73-bda4de195eee'
+            },
+            exclusiveconditionform: {
+                name: 'exclusive-condition-form',
+                id: 'form-0ea30a69-1aa3-426a-b746-716064b4422d'
             }
         },
         security: [

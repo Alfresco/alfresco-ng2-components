@@ -19,13 +19,13 @@ import { FormModel, FormValues } from '../../form/components/widgets/core/index'
 
 export let formTest = new FormModel({});
 
-export let fakeTaskProcessVariableModels = [
+export const fakeTaskProcessVariableModels = [
     { id:   'TEST_VAR_1', type:   'string', value:   'test_value_1' },
     { id:   'TEST_VAR_2', type:   'string', value:   'test_value_2' },
     { id:   'TEST_VAR_3', type:   'string', value:   'test_value_3' }
 ];
 
-export let formValues:   FormValues = {
+export const formValues: FormValues = {
     'test_1':   'value_1',
     'test_2':   'value_2',
     'test_3':   'value_1',
@@ -34,7 +34,7 @@ export let formValues:   FormValues = {
     'dropdown':   { 'id':   'dropdown_id', 'name':   'dropdown_label' }
 };
 
-export let fakeFormJson = {
+export const fakeFormJson: any = {
     id:   '9999',
     name:   'FORM_VISIBILITY',
     processDefinitionId:   'PROCESS_TEST:  9:  9999',
@@ -188,7 +188,7 @@ export let fakeVisibilityFormJson = {
     ]
 };
 
-export let complexVisibilityJsonVisible = {
+export const complexVisibilityJsonVisible: any = {
     'id':   47591,
     'name':   'Test-visibility',
     'description':   '',
@@ -561,7 +561,8 @@ export let complexVisibilityJsonVisible = {
         'gridsterForm':   false
     }
 };
-export let complexVisibilityJsonNotVisible = {
+
+export const complexVisibilityJsonNotVisible: any = {
     'id':   47591,
     'name':   'Test-visibility',
     'description':   '',
@@ -931,7 +932,7 @@ export let complexVisibilityJsonNotVisible = {
     }
 };
 
-export let tabVisibilityJsonMock = {
+export const tabVisibilityJsonMock: any = {
     'id': 45231,
     'name': 'visibility-form',
     'description': '',
@@ -1072,7 +1073,7 @@ export let tabVisibilityJsonMock = {
     }
  };
 
-export const tabInvalidFormVisibility = {
+export const tabInvalidFormVisibility: any = {
     'id': 'form-0668939d-34b2-440c-ab4d-01ab8b05a881',
     'name': 'tab-visibility',
     'description': '',

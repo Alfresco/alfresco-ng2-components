@@ -22,18 +22,25 @@ import { Injectable } from '@angular/core';
 })
 export class CookieService {
 
+    cookieEnabled = false;
+
+    constructor() {
+        // for certain scenarios Chrome may say 'true' but have cookies still disabled
+        if (navigator.cookieEnabled === false) {
+            this.cookieEnabled = false;
+        }
+
+        this.setItem('test-cookie', 'test');
+        this.cookieEnabled = document.cookie.indexOf('test-cookie') >= 0;
+        this.deleteCookie('test-cookie');
+    }
+
     /**
      * Checks if cookies are enabled.
      * @returns True if enabled, false otherwise
      */
     isEnabled(): boolean {
-        // for certain scenarios Chrome may say 'true' but have cookies still disabled
-        if (navigator.cookieEnabled === false) {
-            return false;
-        }
-
-        document.cookie = 'test-cookie';
-        return document.cookie.indexOf('test-cookie') >= 0;
+        return this.cookieEnabled;
     }
 
     /**
@@ -54,10 +61,18 @@ export class CookieService {
      * @param expiration Expiration date of the data
      * @param path "Pathname" to store the cookie
      */
-    setItem(key: string, data: string, expiration: Date | null, path: string | null): void {
+    setItem(key: string, data: string, expiration: Date | null = null, path: string | null = null): void {
         document.cookie = `${key}=${data}` +
             (expiration ? ';expires=' + expiration.toUTCString() : '') +
             (path ? `;path=${path}` : ';path=/');
+    }
+
+    /**
+     * Delete a cookie Key.
+     * @param key Key to identify the cookie
+     */
+    deleteCookie(key: string): void {
+        document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
     /** Placeholder for testing purposes - do not use. */

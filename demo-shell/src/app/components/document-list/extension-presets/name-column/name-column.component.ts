@@ -33,7 +33,7 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'app-name-column',
     template: `
-        <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}" (click)="onClick()">
+        <span class="app-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}" (click)="onClick()">
             {{ displayText$ | async }}
         </span>
     `,

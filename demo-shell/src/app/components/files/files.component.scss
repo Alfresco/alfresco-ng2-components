@@ -1,71 +1,71 @@
-@mixin adf-file-component-theme($theme) {
-    .adf-container {
+@mixin app-file-component-theme($theme) {
+    .app-container {
         margin: 10px !important;
     }
 
     @media screen and ($mat-xsmall) {
-        .adf-container {
+        .app-container {
             margin: 0;
         }
 
-        .adf-show-versions-button.mat-icon-button {
+        .app-show-versions-button.mat-icon-button {
             display: none;
         }
     }
 
-    .adf-error-message {
+    .app-error-message {
         text-align: left;
     }
 
-    .adf-error-message--text {
+    .app-error-message--text {
         color: #d50000;
     }
 
-    .adf-document-list-container {
+    .app-document-list-container {
         min-height: 400px;
 
-        .adf-datatable-list {
+        .app-datatable-list {
             min-height: 400px;
         }
     }
 
-    .adf-datatable-card .adf-lock-button {
+    .app-datatable-card .app-lock-button {
         top: -10px;
     }
 
-    .adf-site-container-style {
+    .app-site-container-style {
         margin-top: 10px;
         margin-bottom: 10px;
         width: 100%;
         min-width: 200px;
     }
 
-    .adf-content-service-settings {
+    .app-content-service-settings {
         padding: 16px;
     }
 
-    .adf-manage-versions-sidebar {
+    .app-manage-versions-sidebar {
         width: 360px !important;
 
-        & .adf-info-drawer-layout-header {
+        & .app-info-drawer-layout-header {
             display: none !important;
         }
     }
 
-    .adf-no-result__empty_doc_lib {
+    .app-no-result__empty_doc_lib {
         width: 565px;
         height: 161px;
         object-fit: contain;
         margin-top: 17px;
     }
 
-    .adf-empty_template {
+    .app-empty_template {
         text-align: center;
         margin-top: 20px;
         margin-bottom: 20px;
     }
 
-    .adf-no-result-message {
+    .app-no-result-message {
         height: 32px;
         opacity: 0.26;
         font-size: 24px;
@@ -73,12 +73,12 @@
         letter-spacing: -1px;
     }
 
-    .adf-container-recent {
+    .app-container-recent {
         mat-icon {
             margin-left: 20px;
         }
 
-        .adf-empty-list__block {
+        .app-empty-list__block {
             height: 100%;
             padding: 0;
             margin: 0;

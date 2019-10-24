@@ -287,9 +287,9 @@ describe('CardView Component', () => {
     it('[C279936] Should not be possible edit any parameter when editable property is false', async () => {
         await cardViewPageComponent.disableEdit();
 
-        const editIconText = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-name"]'));
-        const editIconInt = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-int"]'));
-        const editIconFloat = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-float"]'));
+        const editIconText = element(by.css('button[data-automation-id="card-textitem-edit-icon-name"]'));
+        const editIconInt = element(by.css('button[data-automation-id="card-textitem-edit-icon-int"]'));
+        const editIconFloat = element(by.css('button[data-automation-id="card-textitem-edit-icon-float"]'));
         const editIconKey = element(by.css('mat-icon[data-automation-id="card-key-value-pairs-button-key-value-pairs"]'));
         const editIconData = element(by.css('mat-datetimepicker-toggle'));
 

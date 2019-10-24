@@ -32,7 +32,7 @@ export const mockGroupProperties = [
                 'multiline': false,
                 'pipes': [],
                 'clickCallBack': null,
-                displayValue: 400
+                'displayValue': 400
             },
             {
                 'label': 'Image Height',
@@ -47,7 +47,7 @@ export const mockGroupProperties = [
                 'multiline': false,
                 'pipes': [],
                 'clickCallBack': null,
-                displayValue: 400
+                'displayValue': 400
             }
         ]
     },
@@ -67,7 +67,7 @@ export const mockGroupProperties = [
                 'multiline': false,
                 'pipes': [],
                 'clickCallBack': null,
-                displayValue: 400
+                'displayValue': 400
             }
         ]
     }
