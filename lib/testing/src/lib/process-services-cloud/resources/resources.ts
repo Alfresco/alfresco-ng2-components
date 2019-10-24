@@ -53,7 +53,13 @@ export const ACTIVITI_CLOUD_APPS: any = {
             nonintstartmessageevent: 'nonint-start-message-event',
             siblingtaskprocess: 'siblingtaskprocess',
             startTaskVisibilityForm: 'start-task-visibility-form',
-            startVisibilityForm: 'start-visibility-form'
+            startVisibilityForm: 'start-visibility-form',
+            processstring: 'processstring',
+            processinteger: 'processinteger',
+            processboolean: 'processboolean',
+            processdate: 'processdate',
+            multiprocess: 'multiprocess',
+            terminateexclusive: 'terminate-exclusive'
         },
         forms: {
             tabVisibilityFields: {
@@ -79,6 +85,18 @@ export const ACTIVITI_CLOUD_APPS: any = {
             multilingualform: {
                 name: 'multilingualform',
                 id: 'form-fb8f1628-82d9-4e0e-b032-bf02598e7d24'
+            },
+            inputform: {
+                name: 'inputform',
+                id: 'form-d69fd470-b67a-4e7c-bb70-8979fc10374f'
+            },
+            outputform: {
+                name: 'outputform',
+                id: 'form-eeb2174f-b25a-4386-bf73-bda4de195eee'
+            },
+            exclusiveconditionform: {
+                name: 'exclusive-condition-form',
+                id: 'form-0ea30a69-1aa3-426a-b746-716064b4422d'
             }
         },
         security: [

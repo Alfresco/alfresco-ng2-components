@@ -134,10 +134,15 @@ describe('RadioButtonsWidgetComponent', () => {
         let fixture: ComponentFixture<RadioButtonsWidgetComponent>;
         let element: HTMLElement;
         let stubFormService: FormService;
-        const restOption: FormFieldOption[] = [{ id: 'opt-1', name: 'opt-name-1' }, {
-            id: 'opt-2',
-            name: 'opt-name-2'
-        }];
+        const restOption: FormFieldOption[] = [
+            {
+                id: 'opt-1',
+                name: 'opt-name-1'
+            },
+            {
+                id: 'opt-2',
+                name: 'opt-name-2'
+            }];
 
         beforeEach(async(() => {
             fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
@@ -147,6 +152,28 @@ describe('RadioButtonsWidgetComponent', () => {
 
         afterEach(() => {
             fixture.destroy();
+        });
+
+        describe('and radioButton is readonly', () => {
+
+            beforeEach(async(() => {
+                stubFormService = fixture.debugElement.injector.get(FormService);
+                radioButtonWidget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }), {
+                    id: 'radio-id',
+                    name: 'radio-name',
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    readOnly: true
+                });
+                radioButtonWidget.field.isVisible = true;
+                const fakeContainer = new ContainerModel(radioButtonWidget.field);
+                radioButtonWidget.field.form.fields.push(fakeContainer);
+                fixture.detectChanges();
+            }));
+
+            it('should show radio buttons as text when is readonly', async(() => {
+                expect(element.querySelector('display-text-widget')).toBeDefined();
+            }));
+
         });
 
         describe('and radioButton is populated via taskId', () => {
