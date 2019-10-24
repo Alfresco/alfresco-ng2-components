@@ -17,7 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RatingComponent } from './rating.component';
-import { setupTestBed } from '../../core/testing';
+import { setupTestBed } from '@alfresco/adf-core';
+
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
 import { RatingService } from './services/rating.service';

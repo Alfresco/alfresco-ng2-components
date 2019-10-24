@@ -16,10 +16,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel, CoreModule, FileUploadOptions, FileUploadStatus } from '@alfresco/adf-core';
+import { FileModel, CoreModule, FileUploadOptions, FileUploadStatus, setupTestBed } from '@alfresco/adf-core';
 import { UploadModule } from '../upload.module';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
-import { setupTestBed } from '../../../core/testing/setupTestBed';
 
 describe('FileUploadingListRowComponent', () => {
     let fixture: ComponentFixture<FileUploadingListRowComponent>;

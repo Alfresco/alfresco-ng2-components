@@ -18,8 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NameLocationCellComponent } from './name-location-cell.component';
 import { By } from '@angular/platform-browser';
-import { DataRow } from '@alfresco/adf-core';
-import { setupTestBed } from '../../../core/testing/setupTestBed';
+import { DataRow, setupTestBed } from '@alfresco/adf-core';
 
 describe('NameLocationCellComponent', () => {
     let component: NameLocationCellComponent;

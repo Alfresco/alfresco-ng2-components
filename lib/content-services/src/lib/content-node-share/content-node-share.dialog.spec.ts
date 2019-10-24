@@ -27,8 +27,8 @@ import {
     RenditionsService,
     AppConfigService
 } from '@alfresco/adf-core';
-import { CoreTestingModule } from '../../core/testing/core.testing.module';
-import { AppConfigServiceMock } from '../../core/mock/app-config.service.mock';
+import { CoreModule, AppConfigServiceMock } from '@alfresco/adf-core';
+
 import { ContentNodeShareModule } from './content-node-share.module';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import moment from 'moment-es6';
@@ -49,7 +49,7 @@ describe('ShareDialogComponent', () => {
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            CoreTestingModule,
+            CoreModule.forRoot(),
             ContentNodeShareModule
         ],
         providers: [
