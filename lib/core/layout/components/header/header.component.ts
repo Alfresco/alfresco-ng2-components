@@ -49,13 +49,16 @@ export class HeaderLayoutComponent implements OnInit {
     @Input() showSidenavToggle: boolean = true;
 
     /** Emitted when the sidenav button is clicked. */
-    @Output() clicked = new EventEmitter<any>();
+    @Output() clicked = new EventEmitter<boolean>();
+
+    @Input() expandedSidenav: boolean = true;
 
     /** The side of the page that the drawer is attached to (can be 'start' or 'end') */
     @Input() position = 'start';
 
     toggleMenu() {
         this.clicked.emit(true);
+        this.expandedSidenav = !this.expandedSidenav;
     }
 
     ngOnInit() {

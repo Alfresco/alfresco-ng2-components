@@ -122,6 +122,42 @@ describe('HeaderLayoutComponent', () => {
             expect(button === null).toBeTruthy();
         });
 
+        it('if expandedSidenav is false aria expanded should be false too', () => {
+            component.expandedSidenav = false;
+            fixture.detectChanges();
+
+            const nodeAttributes = fixture.debugElement.nativeElement.querySelector('#adf-sidebar-toggle-start').attributes as NamedNodeMap;
+            expect(nodeAttributes.getNamedItem('aria-expanded').value).toEqual('false');
+        });
+
+        it('if expandedSidenav is true aria expanded should be true too', () => {
+            component.expandedSidenav = true;
+            fixture.detectChanges();
+
+            const nodeAttributes = fixture.debugElement.nativeElement.querySelector('#adf-sidebar-toggle-start').attributes as NamedNodeMap;
+            expect(nodeAttributes.getNamedItem('aria-expanded').value).toEqual('true');
+        });
+
+        it('if expandedSidenav is false than we click on the sidenav button aria expanded should be true and if click again it should be false', () => {
+            component.expandedSidenav = false;
+            fixture.detectChanges();
+
+            const button = fixture.nativeElement.querySelector('#adf-sidebar-toggle-start');
+            button.click();
+
+            fixture.detectChanges();
+
+            const nodeAttributes = button.attributes as NamedNodeMap;
+            expect(nodeAttributes.getNamedItem('aria-expanded').value).toEqual('true');
+
+            button.click();
+
+            fixture.detectChanges();
+
+            const nodeAttributes2 = button.attributes as NamedNodeMap;
+            expect(nodeAttributes2.getNamedItem('aria-expanded').value).toEqual('false');
+        });
+
         it('if position is end the button menu should be at the end', () => {
             component.position = 'end';
             fixture.detectChanges();
