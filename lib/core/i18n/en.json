@@ -43,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Company Logo"
+      "LOGO_ARIA": "Company Logo",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Toggle Menu"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "Bytes",
