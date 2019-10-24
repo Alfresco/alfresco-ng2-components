@@ -65,10 +65,10 @@ export class WidgetVisibilityService {
     isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel, accumulator: any[] = [], result: boolean = false): boolean {
         const leftValue = this.getLeftValue(form, visibilityObj);
         const rightValue = this.getRightValue(form, visibilityObj);
-        const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
+        let actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
 
-        if (!this.isFieldValueValid(form, visibilityObj)) {
-            return false;
+        if (this.checkVisibilityValue(visibilityObj, leftValue, rightValue)) {
+            actualResult = false;
         }
         if (this.isValidOperator(visibilityObj.nextConditionOperator)) {
             accumulator.push({ value: actualResult, operator: visibilityObj.nextConditionOperator });
@@ -94,15 +94,15 @@ export class WidgetVisibilityService {
 
     }
 
-    private isFieldValueValid(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
+    private isValidFieldValue(formField: FormFieldModel): boolean {
         let isValid = true;
-        if (visibilityObj.leftType === WidgetTypeEnum.field) {
-            const formField = form.getFormFields().find(
-                (field: FormFieldModel) => this.isSearchedField(field, visibilityObj.leftValue)
-            );
-            isValid = formField && formField.isValid ? true : false;
-        }
+        isValid = formField && formField.isValid ? true : false;
         return isValid;
+    }
+
+    private checkVisibilityValue(visibilityObj, leftValue, rightValue) {
+        return ((visibilityObj.leftType === WidgetTypeEnum.field && leftValue === null) ||
+                    (visibilityObj.rightType === WidgetTypeEnum.field && rightValue === null));
     }
 
     getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
@@ -136,12 +136,7 @@ export class WidgetVisibilityService {
     }
 
     getFormValue(form: FormModel, fieldId: string): any {
-        let value = this.getFieldValue(form.values, fieldId);
-
-        if (this.isInvalidValue(value)) {
-            value = this.searchValueInForm(form, fieldId);
-        }
-        return value;
+        return this.searchValueInForm(form, fieldId);
     }
 
     getFieldValue(valueList: any, fieldId: string): any {
@@ -173,6 +168,9 @@ export class WidgetVisibilityService {
                         fieldValue = formField.value.id;
                     } else if (!this.isInvalidValue(formField.value)) {
                         fieldValue = formField.value;
+                        if (!this.isValidFieldValue(formField)) {
+                            fieldValue = null;
+                        }
                     }
                 }
             }
