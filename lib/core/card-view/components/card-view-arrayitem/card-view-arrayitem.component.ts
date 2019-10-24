@@ -41,10 +41,6 @@ export class CardViewArrayItemComponent {
         return this.property.items$;
     }
 
-    isEditable() {
-        return this.editable && this.property.editable;
-    }
-
     clicked(): void {
         this.cardViewUpdateService.clicked(this.property);
     }

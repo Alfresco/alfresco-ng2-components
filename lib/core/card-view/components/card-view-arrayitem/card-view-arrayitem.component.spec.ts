@@ -102,7 +102,7 @@ describe('CardViewArrayItemComponent', () => {
 
             expect(chiplistContainer).not.toBeNull();
             expect(chip.length).toBe(3);
-            expect(chip[2].nativeElement.innerText).toBe('2 more');
+            expect(chip[2].nativeElement.innerText).toBe('2 CORE.CARDVIEW.MORE');
         });
     });
 });

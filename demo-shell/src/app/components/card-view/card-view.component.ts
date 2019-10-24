@@ -157,7 +157,6 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 key: 'array',
                 icon: 'directions_bike',
                 default: 'Empty',
-                editable: false,
                 noOfItemsToDisplay: 2
             })
         ];

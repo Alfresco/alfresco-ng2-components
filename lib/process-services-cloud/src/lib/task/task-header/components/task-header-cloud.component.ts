@@ -204,7 +204,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                     key: 'candidateUsers',
                     icon: 'person',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT'),
-                    editable: false,
                     noOfItemsToDisplay: 2
                 }
             ),
@@ -216,7 +215,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                     key: 'candidateGroups',
                     icon: 'person',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT'),
-                    editable: false,
                     noOfItemsToDisplay: 2
                 }
             )

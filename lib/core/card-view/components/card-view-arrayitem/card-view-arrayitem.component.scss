@@ -12,6 +12,18 @@
             &.mat-card {
                 box-shadow: none;
             }
+            .mat-chip {
+                cursor: pointer;
+            }
+        }
+
+        &-property-value {
+            .mat-chip-list {
+                cursor: pointer;
+            }
+            .mat-chip {
+                cursor: pointer;
+            }
         }
     }
 }
