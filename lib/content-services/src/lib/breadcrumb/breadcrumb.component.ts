@@ -179,7 +179,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onRoutePathClick(route: PathElementEntity, event?: Event): void {
-        if (event.type === 'click') {
+        if (event && event.type === 'click') {
             event.preventDefault();
         }
 

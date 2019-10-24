@@ -51,6 +51,7 @@ describe('Breadcrumb', () => {
 
     it('should prevent default click behavior', () => {
         const event = jasmine.createSpyObj('event', ['preventDefault']);
+        event.type = 'click';
         component.onRoutePathClick(null, event);
         expect(event.preventDefault).toHaveBeenCalled();
     });
