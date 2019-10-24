@@ -24,9 +24,9 @@ branches:
 # TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
   - name: Lint & Build Dist
-    if: type = pull_request OR type = api
+    if: type = pull_request
   - name: Lint & Build Dist & Release
-    if: (type = push OR type = cron) AND tag IS blank
+    if: (type = push OR type = cron OR type = api) AND tag IS blank
   - name: Check bundle
     if: type = push AND tag IS blank
   - name: Unit test
