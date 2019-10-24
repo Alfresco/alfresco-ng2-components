@@ -387,8 +387,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Breadcrumb",
-      "DROPDOWN": "Dropdown",
-      "CURRENT_PAGE": "Page"
+      "DROPDOWN": "Dropdown"
     }
   },
   "NAME_COLUMN_LINK": {

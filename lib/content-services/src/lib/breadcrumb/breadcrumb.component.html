@@ -55,7 +55,7 @@
         </a>
 
         <div *ngSwitchCase="true" class="adf-breadcrumb-item-current"
-            [attr.aria-current]="'BREADCRUMB.ARIA-LABEL.CURRENT_PAGE' | translate">
+            aria-current="location">
             {{ item.name | translate }}
         </div>
 
