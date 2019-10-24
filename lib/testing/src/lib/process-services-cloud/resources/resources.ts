@@ -98,6 +98,10 @@ export const ACTIVITI_CLOUD_APPS: any = {
             exclusiveconditionform: {
                 name: 'exclusive-condition-form',
                 id: 'form-03f56f41-c9a7-430a-a713-fc37bab070c1'
+            },
+            uploadlocalfileform: {
+                name: 'upload-localfile-form',
+                id: 'form-f4f02bc1-9cb6-43d6-9328-385db73e2762'
             }
         },
         security: [
