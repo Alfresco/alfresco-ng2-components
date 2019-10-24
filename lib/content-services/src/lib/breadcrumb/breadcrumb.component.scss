@@ -147,11 +147,5 @@
                 white-space: nowrap;
             }
         }
-
-        &-path-option {
-            &.mat-option {
-                background-color: mat-color($background, card);
-            }
-        }
     }
 }
