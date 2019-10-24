@@ -15,4 +15,24 @@
  * limitations under the License.
  */
 
-export * from './src/public-api';
+import { CoreModule } from '@alfresco/adf-core';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
+import { MaterialModule } from '../material.module';
+import { WebscriptComponent } from './webscript.component';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        MaterialModule,
+        CoreModule
+    ],
+    exports: [
+        WebscriptComponent
+    ],
+    declarations: [
+        WebscriptComponent
+    ]
+})
+export class WebScriptModule {}

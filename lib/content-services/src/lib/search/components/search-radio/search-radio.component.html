@@ -1,0 +1,30 @@
+<mat-radio-group
+    [(ngModel)]="value"
+    (change)="changeHandler($event)">
+    <mat-radio-button [attr.data-automation-id]="'search-radio-'+(option.name | translate)"
+        *ngFor="let option of options"
+        [value]="option.value"
+        class="adf-facet-filter">
+        <div
+            matTooltip="{{ option.name | translate }}"
+            matTooltipPosition="right"
+            class="filter-label">
+            {{ option.name | translate }}
+        </div>
+    </mat-radio-button>
+</mat-radio-group>
+
+<div class="adf-facet-buttons" *ngIf="!options.fitsPage">
+    <button mat-icon-button
+        *ngIf="options.canShowLessItems"
+        title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}"
+        (click)="options.showLessItems()">
+        <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+    <button mat-icon-button
+        *ngIf="options.canShowMoreItems"
+        title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}"
+        (click)="options.showMoreItems()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+</div>
