@@ -87,6 +87,14 @@ Defining properties from Typescript:
         options$: of([{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }]),
         key: 'select'
     }),
+    new CardViewArrayItemModel({
+        label: 'Array of items',
+        value: '',
+        items$: of(['One', 'Two', 'Three', 'Four']),
+        key: 'array',
+        default: 'Empty',
+        noOfItemsToDisplay: 2
+    })
     ...
 ]
 ```
@@ -116,6 +124,7 @@ You define the property list, the [`CardViewComponent`](../../core/components/ca
 -   [**CardViewFloatItemModel**](#card-float-item) - _for float items_
 -   [**CardViewKeyValuePairsItemModel**](#card-key-value-pairs-item) - _for key-value-pairs items_
 -   [**CardViewSelectItemModel**](#card-select-item) - _for select items_
+-   [**CardViewArrayItemModel**](#card-array-item) - _for array items_
 
 Each of these types implements the [Card View Item interface](../interfaces/card-view-item.interface.md):
 
@@ -335,6 +344,22 @@ const selectItemProperty = new CardViewSelectItemModel(options);
 | editable | boolean | false | Toggles whether the item is editable |
 | value | string |  | The original data value for the item |
 | options$\* | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;[`CardViewSelectItemOption`](../../../lib/core/card-view/interfaces/card-view-selectitem-properties.interface.ts)\[]> |  | The original data value for the item |
+
+#### Card Array Item
+
+[`CardViewArrayItemModel`](../../../lib/core/card-view/models/card-view-arrayitem.model.ts) is a property type for array properties.
+
+```ts
+const arrayItemProperty = new CardViewArrayItemModel(items);
+```
+
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| key\* | string |  | Identifying key (important when editing the item) |
+| editable | boolean | false | Toggles whether the item is editable |
+| value | string |  | The original data value for the item |
+| items$\* | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;`string`\[]> |  | The original data value for the item |
 
 ## See also
 

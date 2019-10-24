@@ -45,4 +45,14 @@ describe('FullNamePipe', () => {
         const user = {firstName : 'Abc', lastName : 'Xyz'};
         expect(pipe.transform(user)).toBe('Abc Xyz');
     });
+
+    it('should return username when firstName and lastName are not available', () => {
+        const user = {firstName : '', lastName : '', username: 'username'};
+        expect(pipe.transform(user)).toBe('username');
+    });
+
+    it('should return user eamil when firstName, lastName and username are not available', () => {
+        const user = {firstName : '', lastName : '', username: '', email: 'abcXyz@gmail.com'};
+        expect(pipe.transform(user)).toBe('abcXyz@gmail.com');
+    });
 });

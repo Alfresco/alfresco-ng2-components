@@ -21,6 +21,7 @@ import {
     CardViewItem,
     CardViewTextItemModel,
     CardViewBaseItemModel,
+    CardViewArrayItemModel,
     TranslationService,
     AppConfigService,
     UpdateNotification,
@@ -31,7 +32,7 @@ import { Router } from '@angular/router';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { Subject } from 'rxjs';
 import { NumericFieldValidator } from '../../../validators/numeric-field.validator';
-import { takeUntil, map } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -63,8 +64,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
     dateFormat: string;
     dateLocale: string;
     displayDateClearAction = false;
-    private candidateUsers: string;
-    private candidateGroups: string;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -82,8 +81,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
     ngOnInit() {
         if ((this.appName || this.appName === '') && this.taskId) {
             this.loadTaskDetailsById(this.appName, this.taskId);
-            this.getCandidateUsers();
-            this.getCandidateGroups();
         }
 
         this.cardViewUpdateService.itemUpdated$
@@ -199,35 +196,39 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                     editable: true
                 }
             ),
-            new CardViewTextItemModel(
+            new CardViewArrayItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USER',
-                    value: this.candidateUsers,
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS',
+                    value: '',
+                    items$: this.getCandidateUsers(),
                     key: 'candidateUsers',
-                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT')
+                    icon: 'person',
+                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT'),
+                    editable: false,
+                    noOfItemsToDisplay: 2
                 }
             ),
-            new CardViewTextItemModel(
+            new CardViewArrayItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS',
-                    value: this.candidateGroups,
+                    value: '',
+                    items$: this.getCandidateGroups(),
+                    key: 'candidateGroups',
+                    icon: 'person',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT'),
-                    key: 'candidateGroups'
+                    editable: false,
+                    noOfItemsToDisplay: 2
                 }
             )
         ];
     }
 
     private getCandidateUsers() {
-        this.taskCloudService.getCandidateUsers(this.appName, this.taskId).pipe(
-            map((users: string[]) => users && users.length > 0 ? users.join() : ''))
-            .subscribe((res) => this.candidateUsers = res);
+        return this.taskCloudService.getCandidateUsers(this.appName, this.taskId);
     }
 
     private getCandidateGroups() {
-        this.taskCloudService.getCandidateGroups(this.appName, this.taskId).pipe(
-            map((groups: string[]) => groups && groups.length > 0 ? groups.join() : ''))
-            .subscribe((res) => this.candidateGroups = res);
+        return this.taskCloudService.getCandidateGroups(this.appName, this.taskId);
     }
 
     /**

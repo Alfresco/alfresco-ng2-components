@@ -22,7 +22,8 @@ export {
     CardViewMapItemComponent,
     CardViewTextItemComponent,
     CardViewSelectItemComponent,
-    CardViewKeyValuePairsItemComponent
+    CardViewKeyValuePairsItemComponent,
+    CardViewArrayItemComponent
 } from './components/card-view.components';
 
 export * from './interfaces/card-view.interfaces';

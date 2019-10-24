@@ -1,0 +1,17 @@
+@mixin adf-card-view-array-item-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
+
+    .adf {
+        &-array-item-icon {
+            font-size: 16px;
+            padding-top: 8px;
+        }
+
+        &-array-item-more-chip-container {
+            &.mat-card {
+                box-shadow: none;
+            }
+        }
+    }
+}

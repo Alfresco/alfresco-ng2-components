@@ -26,7 +26,10 @@ import {
     MatInputModule,
     MatCheckboxModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatChipsModule,
+    MatMenuModule,
+    MatCardModule
 } from '@angular/material';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -41,6 +44,7 @@ import { CardViewMapItemComponent } from './components/card-view-mapitem/card-vi
 import { CardViewTextItemComponent } from './components/card-view-textitem/card-view-textitem.component';
 import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
 import { CardViewSelectItemComponent } from './components/card-view-selectitem/card-view-selectitem.component';
+import { CardViewArrayItemComponent } from './components/card-view-arrayitem/card-view-arrayitem.component';
 
 @NgModule({
     imports: [
@@ -56,6 +60,9 @@ import { CardViewSelectItemComponent } from './components/card-view-selectitem/c
         MatIconModule,
         MatSelectModule,
         MatButtonModule,
+        MatChipsModule,
+        MatMenuModule,
+        MatCardModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule
     ],
@@ -68,7 +75,8 @@ import { CardViewSelectItemComponent } from './components/card-view-selectitem/c
         CardViewKeyValuePairsItemComponent,
         CardViewSelectItemComponent,
         CardViewItemDispatcherComponent,
-        CardViewContentProxyDirective
+        CardViewContentProxyDirective,
+        CardViewArrayItemComponent
     ],
     entryComponents: [
         CardViewBoolItemComponent,
@@ -76,7 +84,8 @@ import { CardViewSelectItemComponent } from './components/card-view-selectitem/c
         CardViewMapItemComponent,
         CardViewTextItemComponent,
         CardViewSelectItemComponent,
-        CardViewKeyValuePairsItemComponent
+        CardViewKeyValuePairsItemComponent,
+        CardViewArrayItemComponent
     ],
     exports: [
         CardViewComponent,
@@ -85,7 +94,8 @@ import { CardViewSelectItemComponent } from './components/card-view-selectitem/c
         CardViewMapItemComponent,
         CardViewTextItemComponent,
         CardViewSelectItemComponent,
-        CardViewKeyValuePairsItemComponent
+        CardViewKeyValuePairsItemComponent,
+        CardViewArrayItemComponent
     ]
 })
 export class CardViewModule {}

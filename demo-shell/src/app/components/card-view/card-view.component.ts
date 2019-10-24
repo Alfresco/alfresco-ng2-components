@@ -28,7 +28,8 @@ import {
     CardViewUpdateService,
     CardViewMapItemModel,
     UpdateNotification,
-    DecimalNumberPipe
+    DecimalNumberPipe,
+    CardViewArrayItemModel
 } from '@alfresco/adf-core';
 import { of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -148,6 +149,16 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 clickCallBack: () => {
                     this.respondToCardClick();
                 }
+            }),
+            new CardViewArrayItemModel({
+                label: 'CardView Array of items',
+                value: '',
+                items$: of(['Zlatan', 'Lionel Messi', 'Mohamed', 'Ronaldo']),
+                key: 'array',
+                icon: 'directions_bike',
+                default: 'Empty',
+                editable: false,
+                noOfItemsToDisplay: 2
             })
         ];
     }
