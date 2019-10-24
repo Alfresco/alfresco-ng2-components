@@ -74,6 +74,10 @@
                             color: mat-color($foreground, base, 0.65);
                         }
                     }
+
+                    &:focus .mat-icon {
+                        color: mat-color($primary);
+                    }
                 }
 
                 .adf-dropdown-breadcrumb-item-chevron {
