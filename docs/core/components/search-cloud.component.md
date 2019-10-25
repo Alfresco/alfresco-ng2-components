@@ -27,7 +27,7 @@ Should manage search for cloud components
 | ---- | ---- | ------------- | ----------- |
 | type | [`SearchCloudTypesEnum`](../../../lib/core/models/search-cloud.model.ts) |  | search type ('text'). |
 | placeholder | `string` |  | placeholder content. |
-| debounceTime | `number` |  | An array of page sizes. |
+| debounceTime | `number` |  | Time in miliseconds for debounce the event. |
 
 ### Events
 
