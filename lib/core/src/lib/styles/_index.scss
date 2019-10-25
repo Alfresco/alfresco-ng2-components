@@ -32,7 +32,7 @@
 @import '../buttons-menu/buttons-menu.component';
 @import '../login/components/login-dialog.component';
 @import '../login/components/login-dialog-panel.component';
-@import '../../core/clipboard/clipboard.component';
+@import '../clipboard/clipboard.component';
 @import './snackbar';
 
 @mixin adf-core-theme($theme) {
