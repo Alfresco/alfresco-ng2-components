@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 export * from './lib/about/index';
 export * from './lib/viewer/index';
 export * from './lib/userinfo/index';
