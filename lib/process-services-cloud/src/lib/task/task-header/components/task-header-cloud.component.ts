@@ -30,7 +30,7 @@ import {
 import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/task-details-cloud.model';
 import { Router } from '@angular/router';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { NumericFieldValidator } from '../../../validators/numeric-field.validator';
 import { takeUntil } from 'rxjs/operators';
 
@@ -221,11 +221,11 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
         ];
     }
 
-    private getCandidateUsers() {
+    private getCandidateUsers(): Observable<string[]> {
         return this.taskCloudService.getCandidateUsers(this.appName, this.taskId);
     }
 
-    private getCandidateGroups() {
+    private getCandidateGroups(): Observable<string[]> {
         return this.taskCloudService.getCandidateGroups(this.appName, this.taskId);
     }
 

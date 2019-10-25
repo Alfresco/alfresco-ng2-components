@@ -35,6 +35,6 @@ export class CardViewArrayItemModel extends CardViewBaseItemModel implements Car
     }
 
     get displayValue() {
-            return this.value;
+        return this.value;
     }
 }

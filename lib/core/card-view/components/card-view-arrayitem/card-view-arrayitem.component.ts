@@ -18,6 +18,7 @@
 import { Component, Input } from '@angular/core';
 import { CardViewArrayItemModel } from '../../models/card-view-arrayitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'adf-card-view-arrayitem',
@@ -26,18 +27,13 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 })
 export class CardViewArrayItemComponent {
 
+    /** The CardViewArrayItemModel of data used to populate the cardView array items. */
     @Input()
     property: CardViewArrayItemModel;
 
-    @Input()
-    displayEmpty: boolean = true;
-
-    @Input()
-    editable: boolean;
-
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
 
-    getValues () {
+    getValues (): Observable<string[]> {
         return this.property.items$;
     }
 
@@ -49,7 +45,7 @@ export class CardViewArrayItemComponent {
         return !!this.property.icon;
     }
 
-    displayCount() {
+    displayCount(): number {
         return this.property.noOfItemsToDisplay ? this.property.noOfItemsToDisplay : 0;
     }
 }
