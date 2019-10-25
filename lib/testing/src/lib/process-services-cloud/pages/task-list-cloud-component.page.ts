@@ -36,7 +36,7 @@ export class TaskListCloudComponentPage {
 
     taskList = element(by.css('adf-cloud-task-list'));
     noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
-    actionMenu: ElementFinder = element(by.css('div[role="menu"]'));
+    actionMenu: ElementFinder = element(by.css('*[role="menu"]'));
     optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
 
     dataTable = new DataTableComponentPage(this.taskList);
@@ -181,6 +181,11 @@ export class TaskListCloudComponentPage {
 
     async clickContextMenuActionNamed(actionName): Promise<void> {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
+    }
+
+    async getNumberOfOptions(): Promise<number> {
+        const options = await this.actionMenu.all(by.css(`button`));
+        return options.length;
     }
 
 }

@@ -29,7 +29,7 @@ export class ProcessListCloudComponentPage {
 
     processList: ElementFinder = element(by.css('adf-cloud-process-list'));
     noProcessFound: ElementFinder = element.all(by.css("div[class='adf-empty-content__title']")).first();
-    actionMenu: ElementFinder = element(by.css('div[role="menu"]'));
+    actionMenu: ElementFinder = element(by.css('*[role="menu"]'));
     optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
 
     dataTable: DataTableComponentPage = new DataTableComponentPage(this.processList);
@@ -125,6 +125,11 @@ export class ProcessListCloudComponentPage {
 
     async clickContextMenuActionNamed(actionName): Promise<void> {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
+    }
+
+    async getNumberOfOptions(): Promise<number> {
+        const options = await this.actionMenu.all(by.css(`button`));
+        return options.length;
     }
 
 }
