@@ -31,7 +31,7 @@ echo "====== Run Cli ====="
 
 echo "====== Copy schema ====="
 
-cp ../../lib/core/app-config/schema.json ../../lib/dist/core/app.config.schema.json
+cp ../../lib/core/src/lib/app-config/schema.json ../../lib/dist/core/app.config.schema.json
 
 echo "====== Bundle check ====="
 
