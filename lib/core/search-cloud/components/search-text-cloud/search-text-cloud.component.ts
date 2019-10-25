@@ -24,7 +24,6 @@ import { SearchCloudService } from '../../../services/search-cloud.service';
 @Component({
     selector: 'adf-search-text-cloud',
     templateUrl: './search-text-cloud.component.html',
-    styleUrls: ['./search-text-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class SearchTextCloudComponent implements OnInit, OnDestroy {
