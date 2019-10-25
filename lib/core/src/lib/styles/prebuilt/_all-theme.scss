@@ -1,8 +1,8 @@
-@import '../../../content-services/src/lib/styles/index';
-@import '../../../process-services/src/lib/styles/index';
-@import '../../../process-services-cloud/src/lib/styles/index';
-@import '../../../core/src/lib/styles/index';
-@import '../../../insights/src/lib/styles/index';
+@import '../../../../../content-services/src/lib/styles/index';
+@import '../../../../../process-services/src/lib/styles/index';
+@import '../../../../../process-services-cloud/src/lib/styles/index';
+@import '../../../../../core/src/lib/styles/index';
+@import '../../../../../insights/src/lib/styles/index';
 
 @mixin alfresco-material-theme($theme) {
     @include adf-content-services-theme($theme);
