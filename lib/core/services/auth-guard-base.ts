@@ -91,14 +91,4 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
             this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin
         );
     }
-
-    protected isOAuthWithSilentLogin(): boolean {
-        const oauth = this.appConfigService.get<OauthConfigModel>(
-            AppConfigValues.OAUTHCONFIG,
-            null
-        );
-        return (
-            this.authenticationService.isOauth() && !!oauth && !!oauth.silentLogin
-        );
-    }
 }
