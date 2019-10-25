@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "https://github.com/Alfresco/alfresco-ng2-components/tree/master/lib/core/app-config/schema.json",
+  "id": "https://github.com/Alfresco/alfresco-ng2-components/tree/master/lib/core/src/lib/app-config/schema.json",
   "title": "ADF Application config",
   "description": "Configuration object for ADF components used by your application",
   "definitions": {

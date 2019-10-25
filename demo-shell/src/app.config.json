@@ -1,5 +1,5 @@
 {
-  "$schema": "../../lib/core/app-config/schema.json",
+  "$schema": "../../lib/core/src/lib/app-config/schema.json",
   "ecmHost": "{protocol}//{hostname}{:port}",
   "bpmHost": "{protocol}//{hostname}{:port}",
   "identityHost": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
