@@ -10,6 +10,7 @@
         tabindex="0"
         class="adf-breadcrumb-dropdown-trigger"
         (click)="open()"
+        [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.DROPDOWN' | translate"
     >
         <div class="adf-breadcrumb-dropdown-trigger-icon">
             <mat-icon [class.adf-isRoot]="!hasPreviousNodes()">folder</mat-icon>
@@ -25,13 +26,13 @@
         #dropdown
         *ngIf="hasPreviousNodes()"
         class="adf-breadcrumb-dropdown-path"
-        tabindex="0"
+        tabindex="-1"
     >
         <mat-option
             *ngFor="let node of previousNodes"
             (click)="onRoutePathClick(node, $event)"
+            (onSelectionChange)="onRoutePathClick(node, $event)"
             class="adf-breadcrumb-path-option"
-            tabindex="0"
         >
             {{ node.name | translate }}
         </mat-option>
@@ -54,7 +55,7 @@
         </a>
 
         <div *ngSwitchCase="true" class="adf-breadcrumb-item-current"
-            [attr.aria-current]="'BREADCRUMB.ARIA-LABEL.CURRENT_PAGE' | translate">
+            aria-current="location">
             {{ item.name | translate }}
         </div>
 

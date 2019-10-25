@@ -131,6 +131,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
     open(): void {
         if (this.dropdown) {
             this.dropdown.open();
+            this.dropdown.focus();
         }
     }
 
@@ -178,7 +179,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onRoutePathClick(route: PathElementEntity, event?: Event): void {
-        if (event) {
+        if (event && event.type === 'click') {
             event.preventDefault();
         }
 

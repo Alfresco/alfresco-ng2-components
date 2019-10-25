@@ -37,6 +37,7 @@
             width: 25px;
 
             &:focus {
+                color: mat-color($primary);
                 outline: none;
             }
         }

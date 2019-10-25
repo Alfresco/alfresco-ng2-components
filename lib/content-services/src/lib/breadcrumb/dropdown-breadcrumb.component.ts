@@ -54,6 +54,7 @@ export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements 
     open(): void {
         if (this.dropdown) {
             this.dropdown.open();
+            this.dropdown.focus();
         }
     }
 
