@@ -32,8 +32,8 @@
 @import '../buttons-menu/buttons-menu.component';
 @import '../login/components/login-dialog.component';
 @import '../login/components/login-dialog-panel.component';
-@import '../../core/clipboard/clipboard.component';
-@import '../../core/search-text/search-text-input.component';
+@import '../clipboard/clipboard.component';
+@import '../search-text/search-text-input.component';
 @import './snackbar';
 
 @mixin adf-core-theme($theme) {
