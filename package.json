@@ -30,7 +30,7 @@
     "lint-demo": "./node_modules/.bin/tslint -p ./demo-shell/tsconfig.json -c ./demo-shell/tslint.json",
     "lint-lib": "./node_modules/.bin/tslint -p ./lib/tsconfig.json -c ./lib/tslint.json",
     "lint-e2e": "tsc -p ./e2e/tsconfig.e2e.json && ./node_modules/.bin/tslint -p ./e2e/tsconfig.e2e.json -c ./e2e/tslint.json",
-    "validate-config": "ajv validate -s ./lib/core/app-config/schema.json -d ./demo-shell/src/app.config.json --errors=text --verbose",
+    "validate-config": "ajv validate -s ./lib/core/src/lib/app-config/schema.json -d ./demo-shell/src/app.config.json --errors=text --verbose",
     "spellcheck": "cspell 'demo-shell/{src,e2e}/**/*.ts' 'e2e/**/*.ts' 'lib/{content-services,core,extensions,insights,process-services,process-services-cloud}/**/*.ts'",
     "stylelint": "stylelint ./**/*.scss --config stylelint-config.json",
     "04": "echo -------------------------------------------- Demo Shell -----------------------------------------------",
