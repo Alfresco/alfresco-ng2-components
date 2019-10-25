@@ -559,7 +559,7 @@
     },
     "core": {
       "root": "lib/core",
-      "sourceRoot": "lib/core",
+      "sourceRoot": "lib/core/src",
       "projectType": "library",
       "prefix": "adf",
       "architect": {
@@ -578,7 +578,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "lib/core/test.ts",
+            "main": "lib/core/src/test.ts",
             "tsConfig": "lib/core/tsconfig.spec.json",
             "karmaConfig": "lib/core/karma.conf.js",
             "codeCoverage": true,
@@ -590,7 +590,7 @@
           "options": {
             "tsConfig": [
               "lib/core/tsconfig.lib.json",
-              "lib/core/tsconfig.lib.json"
+              "lib/core/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
