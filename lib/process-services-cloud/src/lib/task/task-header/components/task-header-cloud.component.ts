@@ -211,7 +211,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS',
                     value: this.getCandidateGroups(),
                     key: 'candidateGroups',
-                    icon: 'person',
+                    icon: 'group',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT'),
                     noOfItemsToDisplay: 2
                 }
