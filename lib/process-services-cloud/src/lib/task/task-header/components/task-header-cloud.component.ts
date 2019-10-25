@@ -160,14 +160,16 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME',
                     value: this.parentTaskName,
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT'),
-                    key: 'parentName'
+                    key: 'parentName',
+                    clickable: true
                 }
             ),
             new CardViewTextItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_TASK_ID',
                     value: this.taskDetails.parentTaskId,
-                    key: 'parentTaskId'
+                    key: 'parentTaskId',
+                    clickable: true
                 }
             ),
             new CardViewDateItemModel(
