@@ -1,33 +1,8 @@
 .adf-search-cloud {
-
-    &-wrapper {
-        position: relative;
-        margin: 10px;
-        width: 260px;
-
-        &.app-field-expanded {
-            mat-form-field {
-                display: block;
-                width: 220px;
-            }
-        }
-    }
-
-    &-icon {
-        fill: currentColor;
-        width: 24px;
-        height: 24px;
-        line-height: 65px;
-        float: right;
-    }
+    display: flex;
 
     mat-form-field {
-        float: right;
-        width:0;
-        margin-left: 10px;
-
-        -webkit-transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
-        transition: all 0.5s ease;
+        margin: 0 10px;
     }
 }
+ 

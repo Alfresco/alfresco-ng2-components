@@ -15,55 +15,37 @@
  * limitations under the License.
  */
 
-import { ViewEncapsulation, Component, ViewChild, ElementRef, Renderer2, OnInit } from '@angular/core';
+import { ViewEncapsulation, Component, OnInit, OnDestroy } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { SearchCloudService } from '../../../services/search-cloud.service';
-import { SearchCloudProperties, SearchCloudWidget } from '../../../models/search-cloud.model';
 
 @Component({
     selector: 'adf-search-text-cloud',
     templateUrl: './search-text-cloud.component.html',
+    styleUrls: ['./search-text-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchTextCloudComponent implements OnInit, SearchCloudWidget {
+export class SearchTextCloudComponent implements OnInit, OnDestroy {
 
-    @ViewChild('searchContainer')
-    searchInput: ElementRef;
+    placeholder: string;
 
-    properties: SearchCloudProperties = {};
+    searchField: FormControl = new FormControl();
     onDestroy$: Subject<void> = new Subject<void>();
 
-    expandedClass = 'app-field-expanded';
-
-    constructor(
-        private searchCloudService: SearchCloudService,
-        private renderer: Renderer2) {}
+    constructor(private searchCloudService: SearchCloudService) {}
 
     ngOnInit() {
-        if (!this.isExpandable()) {
-            this.renderer.addClass(this.searchInput.nativeElement, this.expandedClass);
-        }
+        this.searchField.valueChanges
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe( (value: string) => {
+            this.searchCloudService.value.next(value);
+        });
     }
 
-    onChangedHandler(event) {
-        this.searchCloudService.value.next(event.target.value);
-    }
-
-    toggle() {
-        if (!this.isExpandable()) { return; }
-
-        if (this.searchInput.nativeElement && this.searchInput.nativeElement.classList.contains(this.expandedClass)) {
-            this.renderer.removeClass(this.searchInput.nativeElement, this.expandedClass);
-        } else {
-            this.renderer.addClass(this.searchInput.nativeElement, this.expandedClass);
-        }
-    }
-
-    private isExpandable() {
-        return this.properties && this.properties.expandable;
-    }
-
-    clear() {
-        this.properties.value = '';
+    ngOnDestroy() {
+        this.onDestroy$.next();
+        this.onDestroy$.complete(); 
     }
 }
