@@ -106,7 +106,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE',
                     value: this.taskDetails.assignee,
                     key: 'assignee',
-                    clickable: this.taskDetails.clickAble(),
+                    clickable: this.isClickable(),
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT'),
                     icon: 'create'
                 }
@@ -255,6 +255,11 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
 
     isTaskEditable(): boolean {
         return this.taskCloudService.isTaskEditable(this.taskDetails);
+    }
+
+    isClickable(): boolean {
+        const states = [TaskStatusEnum.ASSIGNED, TaskStatusEnum.CREATED, TaskStatusEnum.SUSPENDED];
+        return states.includes(this.taskDetails.status);
     }
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
