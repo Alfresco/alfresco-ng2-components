@@ -16,9 +16,7 @@
  */
 
 import { CardViewItemProperties } from './card-view-item-properties.interface';
-import { Observable } from 'rxjs';
 
 export interface CardViewArrayItemProperties extends CardViewItemProperties {
-    items$?: Observable<string[]>;
     noOfItemsToDisplay?: number;
 }

@@ -337,7 +337,7 @@ describe('Task Cloud Service', () => {
         const appName = 'taskp-app';
         const taskId = '68d54a8f';
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateUsersResults);
-        service.getCandidateUsers(appName, taskId).subscribe((res: any) => {
+        service.getCandidateUsers(appName, taskId).subscribe((res: string[]) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
@@ -347,26 +347,24 @@ describe('Task Cloud Service', () => {
         });
     });
 
-    it('should throw error if appName is not defined when fetching candidate users', (done) => {
+    it('should log message and return empty array if appName is not defined when fetching candidate users', (done) => {
         const appName = null;
         const taskId = '68d54a8f';
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateUsersResults);
         service.getCandidateUsers(appName, taskId).subscribe(
-            () => { },
-            (error) => {
-                expect(error).toBe('AppName/TaskId not configured');
+            (res: any[]) => {
+                expect(res.length).toBe(0);
                 done();
             });
     });
 
-    it('should throw error if taskId is not defined when fetching candidate users', (done) => {
+    it('should log message and return empty array if taskId is not defined when fetching candidate users', (done) => {
         const appName = 'task-app';
         const taskId = null;
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateUsersResults);
         service.getCandidateUsers(appName, taskId).subscribe(
-            () => { },
-            (error) => {
-                expect(error).toBe('AppName/TaskId not configured');
+            (res: any[]) => {
+                expect(res.length).toBe(0);
                 done();
             });
     });
@@ -375,7 +373,7 @@ describe('Task Cloud Service', () => {
         const appName = 'taskp-app';
         const taskId = '68d54a8f';
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateGroupResults);
-        service.getCandidateGroups(appName, taskId).subscribe((res: any) => {
+        service.getCandidateGroups(appName, taskId).subscribe((res: string[]) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
@@ -385,26 +383,24 @@ describe('Task Cloud Service', () => {
         });
     });
 
-    it('should throw error if appName is not defined when fetching candidate groups', (done) => {
+    it('should log message and return empty array if appName is not defined when fetching candidate groups', (done) => {
         const appName = null;
         const taskId = '68d54a8f';
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateGroupResults);
         service.getCandidateGroups(appName, taskId).subscribe(
-            () => { },
-            (error) => {
-                expect(error).toBe('AppName/TaskId not configured');
+            (res: any[]) => {
+                expect(res.length).toBe(0);
                 done();
             });
     });
 
-    it('should throw error if taskId is not defined when fetching candidate groups', (done) => {
+    it('should log message and return empty array if taskId is not defined when fetching candidate groups', (done) => {
         const appName = 'task-app';
         const taskId = null;
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateGroupResults);
         service.getCandidateGroups(appName, taskId).subscribe(
-            () => { },
-            (error) => {
-                expect(error).toBe('AppName/TaskId not configured');
+            (res: any[]) => {
+                expect(res.length).toBe(0);
                 done();
             });
     });

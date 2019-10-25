@@ -18,7 +18,6 @@
 import { Component, Input } from '@angular/core';
 import { CardViewArrayItemModel } from '../../models/card-view-arrayitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'adf-card-view-arrayitem',
@@ -32,10 +31,6 @@ export class CardViewArrayItemComponent {
     property: CardViewArrayItemModel;
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
-
-    getValues (): Observable<string[]> {
-        return this.property.items$;
-    }
 
     clicked(): void {
         this.cardViewUpdateService.clicked(this.property);

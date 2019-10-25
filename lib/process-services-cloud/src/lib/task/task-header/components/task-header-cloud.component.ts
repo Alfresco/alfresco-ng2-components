@@ -199,8 +199,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
             new CardViewArrayItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS',
-                    value: '',
-                    items$: this.getCandidateUsers(),
+                    value: this.getCandidateUsers(),
                     key: 'candidateUsers',
                     icon: 'person',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT'),
@@ -210,8 +209,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
             new CardViewArrayItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS',
-                    value: '',
-                    items$: this.getCandidateGroups(),
+                    value: this.getCandidateGroups(),
                     key: 'candidateGroups',
                     icon: 'person',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT'),

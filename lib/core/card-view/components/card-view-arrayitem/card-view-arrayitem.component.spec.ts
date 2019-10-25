@@ -30,8 +30,7 @@ describe('CardViewArrayItemComponent', () => {
     const mockData = ['Zlatan', 'Lionel Messi', 'Mohamed', 'Ronaldo'];
     const mockDefaultProps = {
         label: 'Array of items',
-        value: '',
-        items$: of(mockData),
+        value: of(mockData),
         key: 'array',
         icon: 'person'
     };

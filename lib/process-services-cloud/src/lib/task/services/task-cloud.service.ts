@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
-import { from, throwError, Observable } from 'rxjs';
+import { from, throwError, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
@@ -254,7 +254,7 @@ export class TaskCloudService extends BaseCloudService {
      */
     getCandidateUsers(appName: string, taskId: string): Observable<string[]> {
         if ((appName || appName === '') && taskId) {
-            const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/candidate-users`;
+            const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-users`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,
@@ -269,7 +269,7 @@ export class TaskCloudService extends BaseCloudService {
             );
         } else {
             this.logService.error('AppName and TaskId are mandatory to get candidate user');
-            return throwError('AppName/TaskId not configured');
+            return of([]);
         }
     }
 
@@ -281,7 +281,7 @@ export class TaskCloudService extends BaseCloudService {
      */
     getCandidateGroups(appName: string, taskId: string): Observable<string[]> {
         if ((appName || appName === '') && taskId) {
-            const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/candidate-groups`;
+            const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-groups`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,
@@ -296,7 +296,7 @@ export class TaskCloudService extends BaseCloudService {
             );
         } else {
             this.logService.error('AppName and TaskId are mandatory to get candidate groups');
-            return throwError('AppName/TaskId not configured');
+            return of([]);
         }
     }
 

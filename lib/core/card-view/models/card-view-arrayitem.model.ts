@@ -24,17 +24,15 @@ import { CardViewArrayItemProperties } from '../interfaces/card-view-arrayitem-p
 export class CardViewArrayItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
 
     type: string = 'array';
-    items$: Observable<string[]>;
+    value: Observable<string[]>;
     noOfItemsToDisplay: number;
 
     constructor(cardViewArrayItemProperties: CardViewArrayItemProperties) {
         super(cardViewArrayItemProperties);
-
-        this.items$ = cardViewArrayItemProperties.items$;
         this.noOfItemsToDisplay = cardViewArrayItemProperties.noOfItemsToDisplay;
     }
 
-    get displayValue() {
+    get displayValue(): Observable<string[]> {
         return this.value;
     }
 }

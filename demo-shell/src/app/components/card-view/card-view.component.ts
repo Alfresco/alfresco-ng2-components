@@ -152,8 +152,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
             }),
             new CardViewArrayItemModel({
                 label: 'CardView Array of items',
-                value: '',
-                items$: of(['Zlatan', 'Lionel Messi', 'Mohamed', 'Ronaldo']),
+                value: of(['Zlatan', 'Lionel Messi', 'Mohamed', 'Ronaldo']),
                 key: 'array',
                 icon: 'directions_bike',
                 default: 'Empty',

@@ -358,8 +358,7 @@ const arrayItemProperty = new CardViewArrayItemModel(items);
 | label\* | string |  | Item label |
 | key\* | string |  | Identifying key (important when editing the item) |
 | editable | boolean | false | Toggles whether the item is editable |
-| value | string |  | The original data value for the item |
-| items$\* | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;`string`\[]> |  | The original data value for the item |
+| value | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;`string`\[]> |  | The original data value for the item |
 
 ## See also
 

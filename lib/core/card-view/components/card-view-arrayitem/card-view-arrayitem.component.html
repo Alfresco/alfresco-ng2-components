@@ -1,7 +1,7 @@
 
 <div [attr.data-automation-id]="'card-array-label-' + property.key" class="adf-property-label">{{ property.label | translate }}</div>
 <div class="adf-property-value" (click)="clicked()">
-    <ng-container *ngIf="(getValues() | async) as items; else elseEmptyValueBlock">
+    <ng-container *ngIf="(property.displayValue | async) as items; else elseEmptyValueBlock">
         <mat-chip-list *ngIf="items.length > 0; else elseEmptyValueBlock" data-automation-id="card-arrayitem-chip-list-container">
             <ng-container *ngIf="displayCount() > 0; else withOutDisplayCount" >
                 <mat-chip

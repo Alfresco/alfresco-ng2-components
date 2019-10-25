@@ -10,6 +10,12 @@
             &.mat-card {
                 box-shadow: none;
             }
+
+            &.mat-card {
+                max-height: 300px;
+                overflow-y: auto;
+            }
+
             .mat-chip {
                 cursor: pointer;
             }
