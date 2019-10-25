@@ -1,0 +1,195 @@
+@mixin adf-userinfo-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+
+    .adf {
+
+        &-userinfo-container {
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+        }
+
+        &-userinfo-name-right {
+            flex-direction: row-reverse;
+        }
+
+        &-userinfo-name {
+            padding: 0 5px;
+        }
+
+        &-userinfo-pic {
+            background: mat-color($primary, 300);
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 100px;
+            text-align: center;
+            font-weight: bolder;
+            font-size: 18px;
+            text-transform: uppercase;
+            vertical-align: middle;
+            line-height: 40px;
+        }
+
+        &-userinfo-profile-image {
+            background: mat-color($primary, 300);
+            text-align: center;
+            border-radius: 90%;
+            width: 40px;
+            height: 40px;
+            margin-right: 0;
+            cursor: pointer;
+            vertical-align: middle;
+            margin-left: 0;
+        }
+
+        &-userinfo-profile-container {
+            display: inline-block;
+        }
+
+        &-userinfo-menu_button.mat-button {
+            margin-right: 0;
+            border-radius: 90%;
+            padding: 0;
+            min-width: 40px;
+            height: 40px;
+        }
+
+        &-userinfo-tab .mat-tab-header {
+            align-self: center;
+            width: 100%;
+            min-width: 250px;
+        }
+
+        &-userinfo-tab .mat-tab-label {
+            flex: auto;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            line-height: 48px;
+            text-align: center;
+        }
+
+        &-userinfo-card-header {
+            align-items: center;
+            display: flex;
+            justify-content: stretch;
+            line-height: normal;
+            height: 100px;
+            box-sizing: border-box;
+        }
+
+        &-userinfo-card.mat-card {
+            padding: 0;
+        }
+
+        &-userinfo-supporting-text {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 18px;
+            overflow: hidden;
+            padding: 32px;
+            -webkit-column-count: 2;
+            -moz-column-count: 2;
+            column-count: 2;
+            display: flex;
+            justify-content: space-between;
+
+            @media screen and ($mat-xsmall) {
+                padding: 10px;
+            }
+        }
+
+        &-userinfo-title {
+            font-size: 21px;
+        }
+
+        &-userinfo__detail-profile {
+            align-items: flex-start;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 18px;
+            display: block;
+            padding: 0;
+            margin: 0;
+        }
+
+        &-userinfo__detail-title {
+            text-overflow: ellipsis;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            line-height: 20px;
+            align-items: flex-start;
+        }
+
+        &-userinfo__secondary-info {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 18px;
+            align-items: flex-end;
+        }
+
+        &-userinfo-profile-picture {
+            background: mat-color($primary, 300);
+            background-size: cover;
+            border-radius: 50%;
+            height: 80px;
+            width: 80px;
+            margin-left: 0;
+            margin-right: 8px;
+        }
+
+        &-userinfo-profile-initials {
+            text-transform: uppercase;
+            background-size: cover;
+            background: mat-color($primary, 300);
+            border-radius: 50%;
+            height: 80px;
+            width: 80px;
+            margin-left: 0;
+            margin-right: 8px;
+            font-size: 35px;
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 78px;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        &-userinfo-button-profile {
+            display: inline-block;
+            border: 0;
+            vertical-align: middle;
+        }
+
+        &-userinfo-detail {
+            text-align: left;
+        }
+
+        &-hide-tab .mat-tab-label-active {
+            display: none !important;
+        }
+
+    }
+
+    @media only screen and (min-device-width: 480px) {
+        .mat-menu-panel.adf-userinfo-menu {
+            max-height: 450px;
+            min-width: 450px;
+            overflow: auto;
+            padding: 0;
+        }
+    }
+
+    .mat-menu-panel.adf-userinfo-menu .mat-menu-content {
+        padding: 0;
+    }
+}
