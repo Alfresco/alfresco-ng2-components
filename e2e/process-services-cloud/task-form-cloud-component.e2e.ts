@@ -102,9 +102,9 @@ describe('Task form cloud component', () => {
         assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
         await tasksService.claimTask(assigneeTask.entry.id, candidateBaseApp);
 
-        let tabVisibilityFieldsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.name);
+        const tabVisibilityFieldsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.name);
 
-    let tabVisibilityVarsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.name);
+        const tabVisibilityVarsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.name);
 
         for (let i = 0; i < 3; i++) {
             visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
