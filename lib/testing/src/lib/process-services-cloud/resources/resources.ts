@@ -64,44 +64,34 @@ export const ACTIVITI_CLOUD_APPS: any = {
         },
         forms: {
             tabVisibilityFields: {
-                name: 'tabvisibilitywithfields',
-                id: 'form-26b01063-4fb0-455f-b3ba-90172e013678'
+                name: 'tabvisibilitywithfields'
             },
             tabVisibilityVars: {
-                name: 'tabvisibilitywithvars',
-                id: 'form-7bf363d2-83c9-4b00-853e-373d0d59963c'
+                name: 'tabvisibilitywithvars'
             },
             usertaskform: {
-                name: 'usertaskform',
-                id: 'form-056ba4aa-90c2-48eb-ba39-7013d732503b'
+                name: 'usertaskform'
             },
             dropdownform: {
-                name: 'dropdownform',
-                id: 'form-5688156c-150c-43bc-83cb-617fd045202a'
+                name: 'dropdownform'
             },
             formVisibility: {
-                name: 'form-visibility',
-                id: 'form-30418ed3-2beb-464f-ad51-4ca5da02f6d8'
+                name: 'form-visibility'
             },
             multilingualform: {
-                name: 'multilingualform',
-                id: 'form-fb8f1628-82d9-4e0e-b032-bf02598e7d24'
+                name: 'multilingualform'
             },
             inputform: {
-                name: 'inputform',
-                id: 'form-d69fd470-b67a-4e7c-bb70-8979fc10374f'
+                name: 'inputform'
             },
             outputform: {
-                name: 'outputform',
-                id: 'form-eeb2174f-b25a-4386-bf73-bda4de195eee'
+                name: 'outputform'
             },
             exclusiveconditionform: {
-                name: 'exclusive-condition-form',
-                id: 'form-03f56f41-c9a7-430a-a713-fc37bab070c1'
+                name: 'exclusive-condition-form'
             },
             uploadlocalfileform: {
-                name: 'upload-localfile-form',
-                id: 'form-f4f02bc1-9cb6-43d6-9328-385db73e2762'
+                name: 'upload-localfile-form'
             }
         },
         security: [
