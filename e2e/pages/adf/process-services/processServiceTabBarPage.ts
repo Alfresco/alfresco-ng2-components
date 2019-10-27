@@ -28,17 +28,17 @@ export class ProcessServiceTabBarPage {
 
     async clickTasksButton(): Promise<void> {
         await BrowserActions.click(this.tasksButton);
-        await browser.sleep(300);
+        await browser.sleep(500);
     }
 
     async clickProcessButton(): Promise<void> {
         await BrowserActions.click(this.processButton);
-        await browser.sleep(300);
+        await browser.sleep(500);
     }
 
     async clickSettingsButton(): Promise<void> {
         await BrowserActions.click(this.settingsButton);
-        await browser.sleep(300);
+        await browser.sleep(500);
     }
 
     async clickReportsButton(): Promise<void> {

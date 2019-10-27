@@ -88,7 +88,9 @@ describe('Empty Process List Test', () => {
         await processFiltersPage.clickNewProcessDropdown();
         await startProcessPage.selectFromProcessDropdown(appB.processName);
         await startProcessPage.clickStartProcessButton();
+
         await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
+
         await processDetailsPage.checkProcessDetailsCard();
     });
 
