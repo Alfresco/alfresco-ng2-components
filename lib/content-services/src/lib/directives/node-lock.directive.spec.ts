@@ -73,9 +73,7 @@ describe('NodeLock Directive', () => {
 
         fixture.detectChanges();
         element = fixture.debugElement.query(By.directive(NodeLockDirective));
-        element.triggerEventHandler('click', {
-            preventDefault: () => {}
-        });
+        element.nativeElement.dispatchEvent(new MouseEvent('click'));
 
         expect(contentNodeDialogService.openLockNodeDialog).toHaveBeenCalledWith(fakeNode);
     });
