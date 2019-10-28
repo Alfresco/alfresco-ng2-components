@@ -373,6 +373,7 @@ describe('DataTable', () => {
         const rows = dataTable.data.getRows();
 
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
 
         dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeFalsy();
@@ -395,6 +396,7 @@ describe('DataTable', () => {
         const rows = dataTable.data.getRows();
 
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
 
         dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeFalsy();
@@ -462,6 +464,7 @@ describe('DataTable', () => {
         );
         const rows = dataTable.data.getRows();
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
 
         dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeTruthy();
@@ -481,6 +484,7 @@ describe('DataTable', () => {
         rows[0].isSelected = true;
 
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
         dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeFalsy();
             done();
@@ -509,6 +513,7 @@ describe('DataTable', () => {
         });
         dataTable.selection.push(rows[0]);
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
         dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeTruthy();
             expect(rows[1].isSelected).toBeTruthy();
@@ -584,6 +589,7 @@ describe('DataTable', () => {
 
     it('should emit row click event', (done) => {
         const row = <DataRow> {};
+        dataTable.data = new ObjectDataTableAdapter([], []);
 
         dataTable.rowClick.subscribe((e) => {
             expect(e.value).toBe(row);
@@ -591,13 +597,16 @@ describe('DataTable', () => {
         });
 
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
         dataTable.onRowClick(row, null);
     });
 
     it('should emit double click if there are two single click in 250ms', (done) => {
 
         const row = <DataRow> {};
+        dataTable.data = new ObjectDataTableAdapter([], []);
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
 
         dataTable.rowDblClick.subscribe(() => {
             done();
@@ -614,7 +623,9 @@ describe('DataTable', () => {
     it('should emit double click if there are more than two single click in 250ms', (done) => {
 
         const row = <DataRow> {};
+        dataTable.data = new ObjectDataTableAdapter([], []);
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
 
         dataTable.rowDblClick.subscribe(() => {
             done();
@@ -635,7 +646,9 @@ describe('DataTable', () => {
         const row = <DataRow> {};
         let clickCount = 0;
 
+        dataTable.data = new ObjectDataTableAdapter([], []);
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
 
         dataTable.rowClick.subscribe(() => {
             clickCount += 1;
@@ -653,6 +666,7 @@ describe('DataTable', () => {
 
     it('should emit row-click dom event', (done) => {
         const row = <DataRow> {};
+        dataTable.data = new ObjectDataTableAdapter([], []);
 
         fixture.nativeElement.addEventListener('row-click', (e) => {
             expect(e.detail.value).toBe(row);
@@ -660,17 +674,20 @@ describe('DataTable', () => {
         });
 
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
         dataTable.onRowClick(row, null);
     });
 
     it('should emit row-dblclick dom event', (done) => {
         const row = <DataRow> {};
+        dataTable.data = new ObjectDataTableAdapter([], []);
 
         fixture.nativeElement.addEventListener('row-dblclick', (e) => {
             expect(e.detail.value).toBe(row);
             done();
         });
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
         dataTable.onRowClick(row, null);
         dataTable.onRowClick(row, null);
     });
@@ -1176,5 +1193,65 @@ describe('Accesibility', () => {
 
             expect(dataTable.getAriaSort(column)).toBe('ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING');
         });
+    });
+
+    it('should focus next row on ArrowDown event', () => {
+        const event = new KeyboardEvent('keyup', {
+            code: 'ArrowDown',
+            key: 'ArrowDown',
+            keyCode: 40
+        } as KeyboardEventInit );
+
+        const dataRows =
+        [ { name: 'test1'}, { name: 'test2' } ];
+
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        const rowElement = document.querySelectorAll('.adf-datatable-body .adf-datatable-row')[0];
+        const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
+
+        rowCellElement.dispatchEvent(new MouseEvent('click'));
+        fixture.debugElement.nativeElement.dispatchEvent(event);
+
+        expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-1');
+    });
+
+    it('should focus previous row on ArrowUp event', () => {
+        const event = new KeyboardEvent('keyup', {
+            code: 'ArrowDown',
+            key: 'ArrowDown',
+            keyCode: 38
+        } as KeyboardEventInit );
+
+        const dataRows =
+        [ { name: 'test1'}, { name: 'test2' } ];
+
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        const rowElement = document.querySelectorAll('.adf-datatable-body .adf-datatable-row')[1];
+        const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
+
+        rowCellElement.dispatchEvent(new MouseEvent('click'));
+        fixture.debugElement.nativeElement.dispatchEvent(event);
+
+        expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-0');
     });
 });
