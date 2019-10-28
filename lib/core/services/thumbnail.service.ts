@@ -160,7 +160,7 @@ export class ThumbnailService {
 
     apiService: AlfrescoApiService = null;
 
-    constructor(protected apiOrContentService: AlfrescoApiService | ContentService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    constructor(protected apiOrContentService: any, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
         if (apiOrContentService instanceof AlfrescoApiService ) {
             this.apiService = apiOrContentService;
         } else if (apiOrContentService instanceof ContentService) {
