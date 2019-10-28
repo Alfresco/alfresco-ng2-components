@@ -17,6 +17,7 @@
 
 import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
+import { Logger } from './logger';
 
 export class BrowserActions {
 
@@ -30,7 +31,8 @@ export class BrowserActions {
             await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
             await browser.executeScript(`arguments[0].click();`, elementFinder);
           } catch (jsErr) {
-            throw jsErr;
+              Logger.error(`click error element ${elementFinder}`);
+              throw jsErr;
           }
         }
     }

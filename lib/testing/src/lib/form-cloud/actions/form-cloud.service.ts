@@ -45,4 +45,35 @@ export class FormCloudService {
 
     }
 
+    async getForms(appName: string): Promise<any[]> {
+        try {
+            const path = '/' + appName + '/form/v1/forms';
+            const method = 'GET';
+
+            const queryParams = {}, postBody = {};
+
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
+
+        } catch (error) {
+            Logger.error('Get forms error ', error.message);
+        }
+
+        return [];
+    }
+
+    async getIdByFormName(appName: string, formName: string): Promise<string> {
+
+        const forms = await this.getForms(appName);
+
+        const formEntry = forms.find((currentForm) => {
+            return currentForm.formRepresentation.name === formName;
+        });
+
+        if (formEntry.formRepresentation) {
+            return formEntry.formRepresentation.id;
+        }
+
+        return null;
+    }
+
 }

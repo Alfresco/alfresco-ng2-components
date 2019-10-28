@@ -31,6 +31,7 @@ import {
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
+import { FormCloudService } from '../../lib/testing/src/lib/form-cloud/actions/form-cloud.service';
 
 describe('Task form cloud component', () => {
 
@@ -48,7 +49,6 @@ describe('Task form cloud component', () => {
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
     let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
 
     let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, testUser, formTaskId;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
@@ -86,7 +86,8 @@ describe('Task form cloud component', () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
+        const groupIdentityService = new GroupIdentityService(apiService);
+        const formCloudService = new FormCloudService(apiService);
 
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
 
@@ -101,15 +102,19 @@ describe('Task form cloud component', () => {
         assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
         await tasksService.claimTask(assigneeTask.entry.id, candidateBaseApp);
 
+        const tabVisibilityFieldsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.name);
+
+        const tabVisibilityVarsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.name);
+
         for (let i = 0; i < 3; i++) {
             visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
-                simpleApp, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.id);
+                simpleApp, tabVisibilityFieldsId);
             await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
         }
 
         for (let i = 3; i < 6; i++) {
             visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
-                simpleApp, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.id);
+                simpleApp, tabVisibilityVarsId);
             await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
         }
 
@@ -346,7 +351,6 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldValue);
             await widget.textWidget().isWidgetVisible(widgets.textOneId);
             await widget.textWidget().isWidgetNotVisible(widgets.textTwoId);
-
             await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
@@ -402,7 +406,9 @@ describe('Task form cloud component', () => {
             await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[2].entry.name);
+
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[2].entry.name);
+
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
@@ -419,14 +425,16 @@ describe('Task form cloud component', () => {
             await widget.tab().clickTabByLabel(tab.tabWithFields);
             await widget.textWidget().setValue(widgets.textOneId, value.notDisplayTab);
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldVar);
-
             await taskFormCloudComponent.clickCompleteButton();
+
             await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[2].entry.name);
 
             await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[2].entry.name);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[2].entry.name);
+
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldVar);
         });
