@@ -22,11 +22,11 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 @Component({
     selector: 'adf-filesize-cell',
     template: `
-        <ng-container>
+        <ng-container *ngIf="(value$ | async | adfFileSize) as fileSize">
             <span
                 [title]="tooltip"
-                [attr.aria-label]="value$ | async | adfFileSize"
-                >{{ value$ | async | adfFileSize }}</span
+                [attr.aria-label]="fileSize"
+                >{{ fileSize }}</span
             >
         </ng-container>
     `,
