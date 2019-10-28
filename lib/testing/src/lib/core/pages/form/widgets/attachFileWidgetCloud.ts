@@ -93,15 +93,4 @@ export class AttachFileWidgetCloud {
         await BrowserActions.click(showButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(showButton);
     }
-
-    async getFileTitle(): Promise<string> {
-        const fileTitle = await element(by.css(`.adf-viewer__display-name`));
-        await BrowserVisibility.waitUntilElementIsVisible(fileTitle);
-        return fileTitle.getText();
-    }
-
-    async clickViewerClose(): Promise<void> {
-        const closeButton = element(by.css(`.adf-viewer-close-button`));
-        await BrowserActions.click(closeButton);
-    }
 }

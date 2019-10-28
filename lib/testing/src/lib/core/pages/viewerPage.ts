@@ -21,7 +21,6 @@ import { FormControllersPage } from './form-controller.page';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { element, by, ElementFinder, browser, protractor } from 'protractor';
 
-
 export class ViewerPage {
 
     tabsPage: TabsPage = new TabsPage();
