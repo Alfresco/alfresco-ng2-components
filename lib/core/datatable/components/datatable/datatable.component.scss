@@ -12,7 +12,7 @@
     $data-table-cell-text-color: mat-color($foreground, text) !default;
     $data-table-cell-link-color: mat-color($foreground, text) !default;
     $data-table-cell-link-hover-color: mat-color($alfresco-ecm-blue, 500) !default;
-    $data-table-cell-outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
+    $data-table-outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
     $data-table-divider-color: mat-color($foreground, text, 0.07) !default;
     $data-table-hover-color: mat-color($background, 'hover') !default;
     $data-table-selection-color: mat-color($background, 'selected-button') !default;
@@ -238,6 +238,11 @@
                     background-color: $data-table-hover-color;
                 }
 
+                &:focus {
+                    outline-offset: -1px;
+                    outline: $data-table-outline;
+                }
+
                 &.adf-is-selected, &.adf-is-selected:hover {
                     background-color: $data-table-selection-color;
                 }
@@ -416,7 +421,7 @@
 
             &:focus {
                 outline-offset: -1px;
-                outline: $data-table-cell-outline;
+                outline: $data-table-outline;
             }
         }
 

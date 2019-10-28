@@ -16,9 +16,11 @@
  */
 
 import {
+    ViewChildren, QueryList, HostListener,
     AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
     IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy
 } from '@angular/core';
+import { FocusKeyManager } from '@angular/cdk/a11y';
 import { MatCheckboxChange } from '@angular/material';
 import { Subscription, Observable, Observer } from 'rxjs';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
@@ -27,6 +29,7 @@ import { DataRowEvent } from '../../data/data-row-event.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
+import { DataTableRowComponent } from './datatable-row.component';
 
 import { ObjectDataRow } from '../../data/object-datarow.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
@@ -47,6 +50,9 @@ export enum DisplayMode {
     host: { class: 'adf-datatable' }
 })
 export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck, OnDestroy {
+
+    @ViewChildren(DataTableRowComponent)
+    rowsList: QueryList<DataTableRowComponent>;
 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
@@ -178,6 +184,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     /** This array of fake rows fix the flex layout for the gallery view */
     fakeRows = [];
 
+    private keyManager: FocusKeyManager<DataTableRowComponent>;
     private clickObserver: Observer<DataRowEvent>;
     private click$: Observable<DataRowEvent>;
 
@@ -188,6 +195,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
     private dataRowsChanged: Subscription;
+
+    @HostListener('keyup', ['$event'])
+    onKeydown(event: KeyboardEvent): void {
+        this.keyManager.onKeydown(event);
+    }
 
     constructor(private elementRef: ElementRef,
                 differs: IterableDiffers) {
@@ -208,6 +220,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
         this.datatableLayoutFix();
         this.setTableSchema();
+    }
+
+    ngAfterViewInit() {
+        this.keyManager = new FocusKeyManager(this.rowsList).withWrap();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -390,6 +406,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
 
         if (row) {
+            this.keyManager.setActiveItem(this.data.getRows().indexOf(row));
             const dataRowEvent = new DataRowEvent(row, mouseEvent, this);
             this.clickObserver.next(dataRowEvent);
         }
