@@ -26,6 +26,7 @@ import { PipeModule } from '../pipes/pipe.module';
 
 import { DirectiveModule } from '../directives/directive.module';
 import { DataTableCellComponent } from './components/datatable/datatable-cell.component';
+import { DataTableRowComponent } from './components/datatable/datatable-row.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { DateCellComponent } from './components/datatable/date-cell.component';
 import { EmptyListBodyDirective,
@@ -62,6 +63,7 @@ import { DropZoneDirective } from './components/datatable/drop-zone.directive';
         EmptyListBodyDirective,
         EmptyListFooterDirective,
         DataTableCellComponent,
+        DataTableRowComponent,
         DateCellComponent,
         FileSizeCellComponent,
         LocationCellComponent,
@@ -81,6 +83,7 @@ import { DropZoneDirective } from './components/datatable/drop-zone.directive';
         EmptyListBodyDirective,
         EmptyListFooterDirective,
         DataTableCellComponent,
+        DataTableRowComponent,
         DateCellComponent,
         FileSizeCellComponent,
         LocationCellComponent,
