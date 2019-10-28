@@ -20,11 +20,11 @@ import {
     BrowserActions,
     LocalStorageUtil,
     NotificationHistoryPage,
-    UploadActions
+    UploadActions,
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ViewerPage } from '../../pages/adf/viewerPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';

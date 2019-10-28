@@ -15,8 +15,12 @@
  * limitations under the License.
  */
 
-import { TabsPage, FormControllersPage, BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
-import { element, by, browser, protractor, ElementFinder } from 'protractor';
+import { BrowserActions } from '../utils/browser-actions';
+import { TabsPage } from '../../../lib/material/pages/tabs.page';
+import { FormControllersPage } from './form-controller.page';
+import { BrowserVisibility } from '../utils/browser-visibility';
+import { element, by, ElementFinder, browser, protractor } from 'protractor';
+
 
 export class ViewerPage {
 

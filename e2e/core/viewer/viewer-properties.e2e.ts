@@ -16,9 +16,8 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions, DataTableComponentPage } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, DataTableComponentPage, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';

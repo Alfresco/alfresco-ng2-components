@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions, StringUtil, BrowserActions } from '@alfresco/adf-testing';
-import { ViewerPage } from '../../pages/adf/viewerPage';
+import { LoginPage, UploadActions, StringUtil, BrowserActions, ViewerPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';

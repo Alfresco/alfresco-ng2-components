@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { PaginationPage } from '@alfresco/adf-testing';
-import { ViewerPage } from '../pages/adf/viewerPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FolderModel } from '../models/ACS/folderModel';
 import { FileModel } from '../models/ACS/fileModel';
