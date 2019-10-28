@@ -21,6 +21,7 @@ import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { NodeEntry } from '@alfresco/js-api';
+import { ContentService } from './content.service';
 
 @Injectable({
     providedIn: 'root'
@@ -157,7 +158,17 @@ export class ThumbnailService {
         'selected': './assets/images/ft_ic_selected.svg'
     };
 
-    constructor(protected apiService: AlfrescoApiService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    apiService: AlfrescoApiService = null;
+
+    constructor(protected apiOrContentService: AlfrescoApiService | ContentService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+        if (apiOrContentService instanceof AlfrescoApiService ) {
+            this.apiService = apiOrContentService;
+        } else if (apiOrContentService instanceof ContentService) {
+            this.apiService = apiOrContentService.apiService;
+        } else {
+            // don't know what todo here ...
+        }
+
         Object.keys(this.mimeTypeIcons).forEach((key) => {
             const url = sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]);
 
