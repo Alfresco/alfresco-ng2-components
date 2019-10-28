@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
-import { ViewerPage } from '../../pages/adf/viewerPage';
+import { LoginPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';

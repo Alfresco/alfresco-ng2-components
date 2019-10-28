@@ -16,13 +16,12 @@
  */
 
 import { PermissionsPage } from '../../pages/adf/permissionsPage';
-import { LoginPage, BrowserActions, UploadActions, StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, UploadActions, StringUtil, NotificationHistoryPage, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
-import { ViewerPage } from '../../pages/adf/viewerPage';
 import CONSTANTS = require('../../util/constants');
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';

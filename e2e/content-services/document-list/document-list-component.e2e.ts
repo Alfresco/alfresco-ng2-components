@@ -17,9 +17,8 @@
 
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { ViewerPage } from '../../pages/adf/viewerPage';
 import { browser } from 'protractor';
-import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
+import { LoginPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import moment from 'moment-es6';

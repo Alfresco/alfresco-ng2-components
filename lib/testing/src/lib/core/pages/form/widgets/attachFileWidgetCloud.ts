@@ -84,9 +84,13 @@ export class AttachFileWidgetCloud {
         await BrowserVisibility.waitUntilElementIsNotVisible(deleteButton);
     }
 
-    async viewFile(name): Promise<void> {
-        const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        await BrowserActions.click(fileView);
-        await browser.actions().doubleClick(fileView).perform();
+    async showFile(name): Promise<void> {
+        const fileId = await this.getFileId(name);
+        const optionMenu = this.widget.element(by.css(`button[id='${fileId}-option-menu']`));
+        await BrowserActions.click(optionMenu);
+        await BrowserActions.waitUntilActionMenuIsVisible();
+        const showButton = element(by.css(`button#${fileId}-show-file`));
+        await BrowserActions.click(showButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(showButton);
     }
 }

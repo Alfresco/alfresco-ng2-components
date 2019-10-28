@@ -17,10 +17,9 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, UploadActions, StringUtil, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, StringUtil, LocalStorageUtil, BrowserActions, ViewerPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import { ViewerPage } from '../pages/adf/viewerPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';

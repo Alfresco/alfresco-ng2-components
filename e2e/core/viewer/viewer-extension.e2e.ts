@@ -16,8 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
-import { ViewerPage } from '../../pages/adf/viewerPage';
+import { LoginPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { MonacoExtensionPage } from '../../pages/adf/demo-shell/monacoExtensionPage';

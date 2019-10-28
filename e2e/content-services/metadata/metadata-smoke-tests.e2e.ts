@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil, BrowserActions, UploadActions } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil, BrowserActions, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ViewerPage } from '../../pages/adf/viewerPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';

@@ -16,11 +16,10 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, FileBrowserUtil } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil, ViewerPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
-import { ViewerPage } from '../pages/adf/viewerPage';
 import CONSTANTS = require('../util/constants');
 import path = require('path');
 import fs = require('fs');

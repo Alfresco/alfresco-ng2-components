@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget } from '@alfresco/adf-testing';
+import { LoginPage, Widget, ViewerPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import CONSTANTS = require('../util/constants');
 import { FileModel } from '../models/ACS/fileModel';
 import { browser } from 'protractor';
-import { ViewerPage } from '../pages/adf/viewerPage';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';

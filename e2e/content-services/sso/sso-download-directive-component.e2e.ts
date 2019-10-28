@@ -26,10 +26,10 @@ import {
     SettingsPage,
     StringUtil,
     UserModel,
-    FileBrowserUtil
+    FileBrowserUtil,
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/fileModel';
-import { ViewerPage } from '../../pages/adf/viewerPage';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {

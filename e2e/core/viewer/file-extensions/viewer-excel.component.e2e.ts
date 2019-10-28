@@ -16,8 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
-import { ViewerPage } from '../../../pages/adf/viewerPage';
+import { LoginPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../../pages/adf/contentServicesPage';
 import CONSTANTS = require('../../../util/constants');
 import { FolderModel } from '../../../models/ACS/folderModel';

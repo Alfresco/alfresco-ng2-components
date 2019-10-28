@@ -16,9 +16,8 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ViewerPage } from '../../pages/adf/viewerPage';
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';

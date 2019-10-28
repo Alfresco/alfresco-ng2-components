@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginPage, FileBrowserUtil } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil, ViewerPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
-import { ViewerPage } from '../pages/adf/viewerPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
