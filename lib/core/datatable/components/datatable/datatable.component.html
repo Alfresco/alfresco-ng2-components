@@ -51,14 +51,15 @@
 
     <div class="adf-datatable-body" role="rowgroup">
         <ng-container *ngIf="!loading && !noPermission">
-            <div *ngFor="let row of data.getRows(); let idx = index"
-                 class="adf-datatable-row"
-                 role="row"
-                 [class.adf-is-selected]="row.isSelected"
-                 [adf-upload]="allowDropFiles && rowAllowsDrop(row)" [adf-upload-data]="row"
-                 [ngStyle]="rowStyle"
-                 [ngClass]="getRowStyle(row)"
-                 (keyup)="onRowKeyUp(row, $event)">
+            <adf-datatable-row *ngFor="let row of data.getRows(); let idx = index"
+                [row]="row"
+                (select)="onEnterKeyPressed(row, $event)"
+                (keyup)="onRowKeyUp(row, $event)"
+                [adf-upload]="allowDropFiles && rowAllowsDrop(row)"
+                [adf-upload-data]="row"
+                [ngStyle]="rowStyle"
+                [ngClass]="getRowStyle(row)"
+                [attr.data-automation-id]="'datatable-row-' + idx">
                 <!-- Actions (left) -->
                 <div *ngIf="actions && actionsPosition === 'left'" role="gridcell" class="adf-datatable-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
@@ -90,7 +91,7 @@
                 </div>
                 <div *ngFor="let col of data.getColumns()"
                      role="gridcell"
-                     class=" adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
+                     class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
                      [attr.data-automation-id]="getAutomationValue(row)"
                      [attr.aria-selected]="row.isSelected ? true : false"
@@ -191,7 +192,7 @@
                         </ng-container>
                     </div>
                     <div *ngIf="col.template" class="adf-datatable-cell-container">
-                        <div class="adf-cell-value" tabindex="0">
+                        <div class="adf-cell-value">
                             <ng-container
                                 [ngTemplateOutlet]="col.template"
                                 [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col, resolverFn) }">
@@ -222,8 +223,7 @@
                         </button>
                     </mat-menu>
                 </div>
-
-            </div>
+            </adf-datatable-row>
             <div *ngIf="isEmpty()"
                  role="row"
                  [class.adf-datatable-row]="display === 'list'"
