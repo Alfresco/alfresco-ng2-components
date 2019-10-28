@@ -106,6 +106,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE',
                     value: this.taskDetails.assignee,
                     key: 'assignee',
+                    clickable: this.isClickable(),
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT'),
                     icon: 'create'
                 }
@@ -159,14 +160,16 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME',
                     value: this.parentTaskName,
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT'),
-                    key: 'parentName'
+                    key: 'parentName',
+                    clickable: true
                 }
             ),
             new CardViewTextItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_TASK_ID',
                     value: this.taskDetails.parentTaskId,
-                    key: 'parentTaskId'
+                    key: 'parentTaskId',
+                    clickable: true
                 }
             ),
             new CardViewDateItemModel(
@@ -252,6 +255,11 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
 
     isTaskEditable(): boolean {
         return this.taskCloudService.isTaskEditable(this.taskDetails);
+    }
+
+    isClickable(): boolean {
+        const states = [TaskStatusEnum.ASSIGNED, TaskStatusEnum.CREATED, TaskStatusEnum.SUSPENDED];
+        return states.includes(this.taskDetails.status);
     }
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
