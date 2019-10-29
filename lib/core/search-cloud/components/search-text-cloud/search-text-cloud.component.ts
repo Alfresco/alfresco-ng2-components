@@ -30,7 +30,7 @@ export class SearchTextCloudComponent implements OnInit, SearchCloudWidget {
     @ViewChild('searchContainer')
     searchInput: ElementRef;
 
-    properties: SearchCloudProperties;
+    properties: SearchCloudProperties = {};
     onDestroy$: Subject<void> = new Subject<void>();
 
     expandedClass = 'app-field-expanded';
@@ -40,7 +40,7 @@ export class SearchTextCloudComponent implements OnInit, SearchCloudWidget {
         private renderer: Renderer2) {}
 
     ngOnInit() {
-        if (!this.properties.expandable) {
+        if (!this.isExpandable()) {
             this.renderer.addClass(this.searchInput.nativeElement, this.expandedClass);
         }
     }
@@ -50,13 +50,17 @@ export class SearchTextCloudComponent implements OnInit, SearchCloudWidget {
     }
 
     toggle() {
-        if (!this.properties.expandable) { return; }
+        if (!this.isExpandable()) { return; }
 
         if (this.searchInput.nativeElement && this.searchInput.nativeElement.classList.contains(this.expandedClass)) {
             this.renderer.removeClass(this.searchInput.nativeElement, this.expandedClass);
         } else {
             this.renderer.addClass(this.searchInput.nativeElement, this.expandedClass);
         }
+    }
+
+    private isExpandable() {
+        return this.properties && this.properties.expandable;
     }
 
     clear() {
