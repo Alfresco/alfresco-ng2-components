@@ -35,7 +35,7 @@ import {
     fakeFormJson, fakeTaskProcessVariableModels,
     formTest, formValues, complexVisibilityJsonVisible,
     nextConditionForm, complexVisibilityJsonNotVisible,
-    headerVisibilityCond } from 'core/mock/form/widget-visibility-cloud.service.mock';
+    headerVisibilityCond } from '../../mock/form/widget-visibility-cloud.service.mock';
 
 declare let jasmine: any;
 

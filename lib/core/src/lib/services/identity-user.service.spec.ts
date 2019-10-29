@@ -36,7 +36,7 @@ import {
     removeRolesMockApi,
     mockIdentityUsers,
     mockJoinGroupRequest
-} from 'core/mock/identity-user.service.mock';
+} from '../mock/identity-user.service.mock';
 import { IdentityUserService } from '../services/identity-user.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
@@ -387,7 +387,7 @@ describe('IdentityUserService', () => {
             );
     });
 
-    it('should be able to delete group', (done) => {
+    it('should be able to delete user', (done) => {
         const deleteCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(deleteUserMockApi);
         service.deleteUser('mock-user-id').subscribe(() => {
             expect(deleteCustomApiSpy).toHaveBeenCalled();

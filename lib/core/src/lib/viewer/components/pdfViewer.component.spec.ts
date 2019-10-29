@@ -28,7 +28,8 @@ import { CoreModule } from '../../core.module';
 import { TranslationService } from '../../services/translation.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
 import { take } from 'rxjs/operators';
-import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { AppConfigServiceMock } from '../../mock/app-config.service.mock';
+import { AppConfigService } from '../../app-config/app-config.service';
 
 declare const pdfjsLib: any;
 
