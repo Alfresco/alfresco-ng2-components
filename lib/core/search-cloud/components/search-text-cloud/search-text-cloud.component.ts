@@ -30,7 +30,6 @@ export class SearchTextCloudComponent implements OnInit, SearchCloudWidget {
     @ViewChild('searchContainer')
     searchInput: ElementRef;
 
-    value: string;
     properties: SearchCloudProperties;
     onDestroy$: Subject<void> = new Subject<void>();
 
@@ -61,7 +60,7 @@ export class SearchTextCloudComponent implements OnInit, SearchCloudWidget {
     }
 
     clear() {
-        this.value = '';
+        this.properties.value = '';
     }
 }
  

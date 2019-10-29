@@ -18,6 +18,7 @@
  import { SearchTextCloudComponent } from '../search-cloud/components/search-text-cloud/search-text-cloud.component';
 
  export interface SearchCloudProperties {
+    value: string;
     placeholder: string;
     debounceTime: number;
     expandable: boolean;

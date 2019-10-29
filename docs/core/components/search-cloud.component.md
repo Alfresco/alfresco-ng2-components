@@ -28,6 +28,7 @@ Should manage search for cloud components
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | type | [`SearchCloudTypesEnum`](../../../lib/core/models/search-cloud.model.ts) |  | search type ('text'). |
+| value | `string` |  | preselected input value |
 | expandable | `boolean` | false | The field should expand on click when this flag is true |
 | placeholder | `string` |  | placeholder content. |
 | debounceTime | `number` | 500 | Time in miliseconds for debounce the event. |

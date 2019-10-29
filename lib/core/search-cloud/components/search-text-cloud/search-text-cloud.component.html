@@ -3,11 +3,11 @@
     <mat-form-field class="adf-search-text-cloud">
         <input
             matInput
-            [(ngModel)]="value"
+            [(ngModel)]="properties.value"
             placeholder="{{ properties?.placeholder }}"
-            (change)="onChangedHandler($event)"
+            (input)="onChangedHandler($event)"
             data-automation-id="search-project-field" />
-        <mat-icon matSuffix *ngIf="value?.length > 0" (click)="clear()">close</mat-icon>
+        <mat-icon matSuffix *ngIf="properties.value?.length > 0" (click)="clear()">close</mat-icon>
     </mat-form-field>
 
     <mat-icon class="adf-search-cloud-icon" (click)="toggle()" matSuffix>search</mat-icon>
