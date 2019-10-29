@@ -22,7 +22,7 @@ import { element, by, ElementFinder, Locator } from 'protractor';
 export class TrashcanPage {
 
     contentList: DocumentListPage = new DocumentListPage(element(by.css('adf-document-list')));
-    rows: Locator = by.css('adf-document-list div[class*="adf-datatable-body"] div[class*="adf-datatable-row"]');
+    rows: Locator = by.css('adf-document-list div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
     tableBody: ElementFinder = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
     pagination: ElementFinder = element(by.css('adf-pagination'));
     emptyTrashcan: ElementFinder = element(by.css('adf-empty-content'));

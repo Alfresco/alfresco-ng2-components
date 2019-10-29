@@ -32,9 +32,9 @@ export class ProcessFiltersPage {
     accordionMenu: ElementFinder = element(by.css('.app-processes-menu mat-accordion'));
     buttonWindow: ElementFinder = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
     noContentMessage: ElementFinder = element.all(by.css('div[class="adf-empty-content__title"]')).first();
-    rows: Locator = by.css('adf-process-instance-list div[class="adf-datatable-body"] div[class*="adf-datatable-row"]');
+    rows: Locator = by.css('adf-process-instance-list div[class="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
     tableBody: ElementFinder = element.all(by.css('adf-datatable div[class="adf-datatable-body"]')).first();
-    nameColumn: Locator = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[title="Name"] span');
+    nameColumn: Locator = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[title="Name"] span');
     processIcon: Locator = by.xpath('ancestor::div[@class="mat-list-item-content"]/mat-icon');
 
     async startProcess(): Promise<StartProcessPage> {
