@@ -52,8 +52,8 @@ describe('People Groups Cloud Component', () => {
             hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
             testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
 
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
-            apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+            testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
+            apsUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
             await identityService.addUserToGroup(testUser.idIdentityService, testGroup.id);
             await identityService.addUserToGroup(apsUser.idIdentityService, hrGroup.id);
             noRoleUser = await identityService.createIdentityUser();

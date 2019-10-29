@@ -61,7 +61,7 @@ describe('Edit task filters and task list properties', () => {
         tasksService = new TasksService(apiService);
         const settingsPage = new SettingsPage();
 
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
