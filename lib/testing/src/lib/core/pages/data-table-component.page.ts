@@ -306,7 +306,7 @@ export class DataTableComponentPage {
     }
 
     async clickRowByContentCheckbox(name: string): Promise<void> {
-        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first().element(by.xpath(`ancestor::div/div/mat-checkbox`));
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first().element(by.xpath(`ancestor::adf-datatable-row/div/mat-checkbox`));
         await browser.actions().mouseMove(resultElement);
         await BrowserActions.click(resultElement);
     }
