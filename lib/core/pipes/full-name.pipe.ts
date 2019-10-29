@@ -29,6 +29,9 @@ export class FullNamePipe implements PipeTransform {
                 fullName += fullName.length > 0 ? ' ' : '';
                 fullName += user.lastName;
             }
+            if (!fullName) {
+                fullName += user.username ? user.username : user.email ? user.email : '';
+            }
         }
         return fullName;
     }

@@ -175,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Use a number format",
         "INT_VALIDATION_ERROR": "Use an integer format"
-      }
+      },
+      "MORE": "More"
     },
     "METADATA": {
       "BASIC": {

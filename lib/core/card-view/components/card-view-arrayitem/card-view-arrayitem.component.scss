@@ -1,0 +1,33 @@
+@mixin adf-card-view-array-item-theme($theme) {
+
+    .adf {
+        &-array-item-icon {
+            font-size: 16px;
+            padding-top: 8px;
+        }
+
+        &-array-item-more-chip-container {
+            &.mat-card {
+                box-shadow: none;
+            }
+
+            &.mat-card {
+                max-height: 300px;
+                overflow-y: auto;
+            }
+
+            .mat-chip {
+                cursor: pointer;
+            }
+        }
+
+        &-property-value {
+            .mat-chip-list {
+                cursor: pointer;
+            }
+            .mat-chip {
+                cursor: pointer;
+            }
+        }
+    }
+}

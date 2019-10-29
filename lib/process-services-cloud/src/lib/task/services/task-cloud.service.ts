@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
-import { from, throwError, Observable } from 'rxjs';
+import { from, throwError, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
@@ -243,6 +243,60 @@ export class TaskCloudService extends BaseCloudService {
         } else {
             this.logService.error('AppName and TaskId are mandatory for querying a task');
             return throwError('AppName/TaskId not configured');
+        }
+    }
+
+    /**
+     * Gets candidate users of the task.
+     * @param appName Name of the app
+     * @param taskId ID of the task
+     * @returns Candidate users
+     */
+    getCandidateUsers(appName: string, taskId: string): Observable<string[]> {
+        if ((appName || appName === '') && taskId) {
+            const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-users`;
+            return from(this.apiService.getInstance()
+                .oauth2Auth.callCustomApi(queryUrl, 'GET',
+                    null, null, null,
+                    null, null,
+                    this.contentTypes, this.accepts,
+                    this.returnType, null, null)
+            ).pipe(
+                map((response: string[]) => {
+                    return response;
+                }),
+                catchError((err) => this.handleError(err))
+            );
+        } else {
+            this.logService.error('AppName and TaskId are mandatory to get candidate user');
+            return of([]);
+        }
+    }
+
+    /**
+     * Gets candidate groups of the task.
+     * @param appName Name of the app
+     * @param taskId ID of the task
+     * @returns Candidate groups
+     */
+    getCandidateGroups(appName: string, taskId: string): Observable<string[]> {
+        if ((appName || appName === '') && taskId) {
+            const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-groups`;
+            return from(this.apiService.getInstance()
+                .oauth2Auth.callCustomApi(queryUrl, 'GET',
+                    null, null, null,
+                    null, null,
+                    this.contentTypes, this.accepts,
+                    this.returnType, null, null)
+            ).pipe(
+                map((response: string[]) => {
+                    return response;
+                }),
+                catchError((err) => this.handleError(err))
+            );
+        } else {
+            this.logService.error('AppName and TaskId are mandatory to get candidate groups');
+            return of([]);
         }
     }
 

@@ -32,8 +32,12 @@ describe('TaskHeaderCloudComponent', () => {
     let service: TaskCloudService;
     let appConfigService: AppConfigService;
     let identityUserService: IdentityUserService;
+    let getCandidateGroupsSpy: jasmine.Spy;
+    let getCandidateUsersSpy: jasmine.Spy;
 
     const identityUserMock = { username: 'testuser', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
+    const mockCandidateUsers = ['mockuser1', 'mockuser2', 'mockuser3'];
+    const mockCandidateGroups = ['mockgroup1', 'mockgroup2', 'mockgroup3'];
 
     setupTestBed({
         imports: [
@@ -53,6 +57,8 @@ describe('TaskHeaderCloudComponent', () => {
         identityUserService = TestBed.get(IdentityUserService);
         appConfigService = TestBed.get(AppConfigService);
         spyOn(service, 'getTaskById').and.returnValue(of(assignedTaskDetailsCloudMock));
+        getCandidateUsersSpy = spyOn(service, 'getCandidateUsers').and.returnValue(of(mockCandidateUsers));
+        getCandidateGroupsSpy = spyOn(service, 'getCandidateGroups').and.returnValue(of(mockCandidateGroups));
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
@@ -149,6 +155,60 @@ describe('TaskHeaderCloudComponent', () => {
             const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
             expect(valueEl.nativeElement.innerText.trim()).toEqual('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT');
         });
+    }));
+
+    it('should display candidate user', async(() => {
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            const candidateUser1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockuser1"] span');
+            const candidateUser2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockuser2"] span');
+            expect(getCandidateUsersSpy).toHaveBeenCalled();
+            expect(candidateUser1.innerText).toBe('mockuser1');
+            expect(candidateUser2.innerText).toBe('mockuser2');
+        });
+    }));
+
+    it('should display placeholder if no candidate users', async(() => {
+        component.ngOnInit();
+        getCandidateUsersSpy.and.returnValue(of([]));
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            const labelValue = fixture.debugElement.query(By.css('[data-automation-id="card-array-label-candidateUsers"]'));
+            const defaultElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-default"]'));
+            expect(labelValue.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS');
+            expect(defaultElement.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT');
+        });
+
+    }));
+
+    it('should display candidate groups', async(() => {
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            const candidateGroup1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup1"] span');
+            const candidateGroup2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup2"] span');
+            expect(getCandidateGroupsSpy).toHaveBeenCalled();
+            expect(candidateGroup1.innerText).toBe('mockgroup1');
+            expect(candidateGroup2.innerText).toBe('mockgroup2');
+        });
+    }));
+
+    it('should display placeholder if no candidate groups', async(() => {
+        component.ngOnInit();
+        getCandidateGroupsSpy.and.returnValue(of([]));
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            const labelValue = fixture.debugElement.query(By.css('[data-automation-id="card-array-label-candidateGroups"]'));
+            const defaultElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-default"]'));
+            expect(labelValue.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS');
+            expect(defaultElement.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT');
+        });
+
     }));
 
     describe('Config Filtering', () => {

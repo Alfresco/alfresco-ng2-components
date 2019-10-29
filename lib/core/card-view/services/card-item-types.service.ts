@@ -23,6 +23,7 @@ import { CardViewSelectItemComponent } from '../components/card-view-selectitem/
 import { CardViewBoolItemComponent } from '../components/card-view-boolitem/card-view-boolitem.component';
 import { CardViewKeyValuePairsItemComponent } from '../components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
 import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../services/dynamic-component-mapper.service';
+import { CardViewArrayItemComponent } from '../components/card-view-arrayitem/card-view-arrayitem.component';
 
 @Injectable({
     providedIn: 'root'
@@ -40,6 +41,7 @@ export class CardItemTypeService extends DynamicComponentMapper {
         'datetime': DynamicComponentResolver.fromType(CardViewDateItemComponent),
         'bool': DynamicComponentResolver.fromType(CardViewBoolItemComponent),
         'map': DynamicComponentResolver.fromType(CardViewMapItemComponent),
-        'keyvaluepairs': DynamicComponentResolver.fromType(CardViewKeyValuePairsItemComponent)
+        'keyvaluepairs': DynamicComponentResolver.fromType(CardViewKeyValuePairsItemComponent),
+        'array': DynamicComponentResolver.fromType(CardViewArrayItemComponent)
     };
 }
