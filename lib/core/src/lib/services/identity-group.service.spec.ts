@@ -18,15 +18,16 @@
 import { async } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import {
-    AlfrescoApiServiceMock,
-    CoreModule,
-    setupTestBed,
-    AlfrescoApiService,
-    LogService,
-    IdentityGroupService,
     IdentityGroupSearchParam,
     groupAPIMockError
 } from '@alfresco/adf-core';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { LogService } from '../services/log.service';
+import { IdentityGroupService } from '../services/identity-group.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
 import {

@@ -60,7 +60,12 @@ import { SearchCloudModule } from './search-cloud/search-cloud.module';
 
 @NgModule({
     imports: [
-        TranslateModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useClass: TranslateLoaderService
+            }
+        }),
         ExtensionsModule,
         AboutModule,
         ViewerModule,

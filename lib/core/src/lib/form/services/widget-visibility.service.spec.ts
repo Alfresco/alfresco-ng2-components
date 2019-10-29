@@ -35,7 +35,7 @@ import { fakeTaskProcessVariableModels,
         fakeFormJson, formTest,
         formValues, complexVisibilityJsonVisible,
         complexVisibilityJsonNotVisible, tabVisibilityJsonMock,
-        tabInvalidFormVisibility } from 'core/mock/form/widget-visibility.service.mock';
+        tabInvalidFormVisibility } from '../../mock/form/widget-visibility.service.mock';
 
 declare let jasmine: any;
 

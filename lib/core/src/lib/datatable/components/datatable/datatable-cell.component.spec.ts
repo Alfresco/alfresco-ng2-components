@@ -17,18 +17,34 @@
 
 import { DateCellComponent } from './date-cell.component';
 import { Subject } from 'rxjs';
-import { AlfrescoApiServiceMock, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../../services/alfresco-api.service';
+import { TestBed } from '@angular/core/testing';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { setupTestBed } from '../../../testing/setupTestBed';
 import { Node } from '@alfresco/js-api';
+import { AlfrescoApiServiceMock } from '../../../mock/alfresco-api.service.mock';
+import { AppConfigServiceMock } from '../../../mock/app-config.service.mock';
+import { AppConfigService } from '../../../app-config/app-config.service';
 
 describe('DataTableCellComponent', () => {
-    let alfrescoApiService: AlfrescoApiServiceMock;
+    let alfrescoApiService: AlfrescoApiService;
+    let appConfigService: AppConfigService;
+
+    setupTestBed({
+        imports: [CoreTestingModule],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: AppConfigService, useClass: AppConfigServiceMock }
+        ]
+    });
 
     beforeEach(() => {
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        appConfigService = TestBed.get(AppConfigService);
     });
 
     it('should use medium format by default', () => {
-        const component = new DateCellComponent(null, null, new AppConfigService(null));
+        const component = new DateCellComponent(null, null, appConfigService);
         expect(component.format).toBe('medium');
     });
 

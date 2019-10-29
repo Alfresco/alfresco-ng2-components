@@ -20,21 +20,24 @@ import { LockService } from './lock.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { setupTestBed } from '../testing/setupTestBed';
 import { Node } from '@alfresco/js-api';
-import { AlfrescoApiServiceMock } from 'core/mock';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import moment from 'moment-es6';
 
 describe('PeopleProcessService', () => {
 
     let service: LockService;
-    let apiService: AlfrescoApiServiceMock;
+    let apiService: AlfrescoApiService;
 
     const fakeNodeUnlocked: Node = <Node> { name: 'unlocked', isLocked: false, isFile: true };
     const fakeFolderNode: Node = <Node> { name: 'unlocked', isLocked: false, isFile: false, isFolder: true };
     const fakeNodeNoProperty: Node = <Node> { name: 'unlocked', isLocked: true, isFile: true, properties: {} };
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [CoreTestingModule],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
     });
 
     beforeEach(() => {

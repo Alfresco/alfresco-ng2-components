@@ -20,8 +20,8 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
 import { NotificationHistoryComponent } from './components/notification-history.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { NotificationIconPipe } from './pipes/notification-icon.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
