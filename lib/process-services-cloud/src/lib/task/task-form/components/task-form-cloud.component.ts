@@ -95,8 +95,8 @@ export class TaskFormCloudComponent implements OnChanges {
 
     taskDetails: TaskDetailsCloudModel;
 
-    candidateUsers: Array<string>;
-    candidateGroups: Array<string>;
+    candidateUsers: string[] = [];
+    candidateGroups: string[] = [];
 
     loading: boolean = false;
 
@@ -130,12 +130,16 @@ export class TaskFormCloudComponent implements OnChanges {
             this.loading = false;
         });
 
-        this.taskCloudService.getCandidateUsers(this.appName, this.taskId).subscribe((users: Array<string>) => {
-            this.candidateUsers = users;
+        this.taskCloudService.getCandidateUsers(this.appName, this.taskId).subscribe((users: string[]) => {
+            if (users) {
+                this.candidateUsers = users;
+            }
         });
 
-        this.taskCloudService.getCandidateGroups(this.appName, this.taskId).subscribe((groups: Array<string>) => {
-            this.candidateGroups = groups;
+        this.taskCloudService.getCandidateGroups(this.appName, this.taskId).subscribe((groups: string[]) => {
+            if (groups) {
+                this.candidateGroups = groups;
+            }
         });
 
     }

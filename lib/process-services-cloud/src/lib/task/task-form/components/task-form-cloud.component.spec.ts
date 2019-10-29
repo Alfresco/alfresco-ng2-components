@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { DebugElement, CUSTOM_ELEMENTS_SCHEMA, SimpleChange, Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { IdentityUserService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskCloudModule } from '../../task-cloud.module';
 import { TaskDirectiveModule } from '../../directives/task-directive.module';
@@ -38,7 +38,7 @@ const taskDetails = {
     name: 'Task1',
     owner: 'admin.adf',
     standAlone: true,
-    status: 'ASSIGNED'
+    status: 'CREATED'
 };
 
 describe('TaskFormCloudComponent', () => {
@@ -64,6 +64,8 @@ describe('TaskFormCloudComponent', () => {
         getCurrentUserSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ username: 'admin.adf' });
         taskCloudService = TestBed.get(TaskCloudService);
         getTaskSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
+        spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of([]));
+        spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of([]));
 
         fixture = TestBed.createComponent(TaskFormCloudComponent);
         debugElement = fixture.debugElement;
@@ -119,15 +121,18 @@ describe('TaskFormCloudComponent', () => {
 
     describe('Claim/Unclaim buttons', () => {
 
-        it('should show unclaim button when status is ASSIGNED', async(() => {
+        it('should show release button when task has candidate users and is assigned to one of these users', async(() => {
+            spyOn(component, 'hasCandidateUsers').and.returnValue(true);
+
             component.appName = 'app1';
             component.taskId = 'task1';
 
             component.loadTask();
             fixture.detectChanges();
+
             fixture.whenStable().then(() => {
                 const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-                expect(unclaimBtn.nativeElement).toBeDefined();
+                expect(unclaimBtn).not.toBeNull();
             });
         }));
 
@@ -317,25 +322,6 @@ describe('TaskFormCloudComponent', () => {
             claimBtn.nativeElement.click();
         });
 
-        it('should emit taskUnclaimed when task is unclaimed', (done) => {
-            spyOn(taskCloudService, 'unclaimTask').and.returnValue(of({}));
-            taskDetails.status = 'ASSIGNED';
-            getTaskSpy.and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
-
-            component.appName = 'app1';
-            component.taskId = 'task1';
-
-            component.taskUnclaimed.subscribe(() => {
-                done();
-            });
-
-            component.loadTask();
-            fixture.detectChanges();
-            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-
-            unclaimBtn.nativeElement.click();
-        });
-
         it('should emit error when error occurs', (done) => {
             component.appName = 'app1';
             component.taskId = 'task1';
@@ -384,6 +370,7 @@ describe('TaskFormCloudComponent', () => {
         it('should emit taskUnclaimed when task is unclaimed', () => {
             spyOn(taskCloudService, 'unclaimTask').and.returnValue(of({}));
             const reloadSpy = spyOn(component, 'loadTask').and.callThrough();
+            spyOn(component, 'hasCandidateUsers').and.returnValue(true);
 
             taskDetails.status = 'ASSIGNED';
             getTaskSpy.and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
