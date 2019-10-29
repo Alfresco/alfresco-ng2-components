@@ -38,14 +38,15 @@ describe('People Groups Cloud Component', () => {
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
         );
 
-        let apsUser, testUser;
+        let apsUser;
+        let testUser;
         let activitiUser;
         let noRoleUser;
         let groupUser;
         let groupAdmin;
         let groupNoRole;
-        let apsUserRoleId;
-        let apsAdminRoleId;
+        let apsUserRoleId: string;
+        let apsAdminRoleId: string;
         let users = [];
         let groups = [];
 
