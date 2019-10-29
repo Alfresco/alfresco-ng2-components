@@ -25,7 +25,8 @@ import {
     TranslationService,
     AppConfigService,
     UpdateNotification,
-    CardViewUpdateService
+    CardViewUpdateService,
+    CardViewDatetimeItemModel
 } from '@alfresco/adf-core';
 import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/task-details-cloud.model';
 import { Router } from '@angular/router';
@@ -143,7 +144,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     validators: [new NumericFieldValidator()]
                 }
             ),
-            new CardViewDateItemModel(
+            new CardViewDatetimeItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE',
                     value: this.taskDetails.dueDate,
