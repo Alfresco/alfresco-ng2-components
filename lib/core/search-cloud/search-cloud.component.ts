@@ -32,7 +32,7 @@ import { SearchCloudTypesEnum, SEARCH_CLOUD_TYPES, SearchCloudProperties } from 
 })
 export class SearchCloudComponent implements OnInit, OnDestroy {
 
-    @Input() value: string;
+    @Input() value: string = '';
 
     @Input() debounceTime: number = 500;
 
