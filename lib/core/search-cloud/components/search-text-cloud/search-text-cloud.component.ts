@@ -15,36 +15,53 @@
  * limitations under the License.
  */
 
-import { ViewEncapsulation, Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { ViewEncapsulation, Component, ViewChild, ElementRef, Renderer2, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { SearchCloudService } from '../../../services/search-cloud.service';
+import { SearchCloudProperties, SearchCloudWidget } from '../../../models/search-cloud.model';
 
 @Component({
     selector: 'adf-search-text-cloud',
     templateUrl: './search-text-cloud.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class SearchTextCloudComponent implements OnInit, OnDestroy {
+export class SearchTextCloudComponent implements OnInit, SearchCloudWidget {
 
-    placeholder: string;
+    @ViewChild('searchContainer')
+    searchInput: ElementRef;
 
-    searchField: FormControl = new FormControl();
+    value: string;
+    properties: SearchCloudProperties;
     onDestroy$: Subject<void> = new Subject<void>();
 
-    constructor(private searchCloudService: SearchCloudService) {}
+    expandedClass = 'app-field-expanded';
+
+    constructor(
+        private searchCloudService: SearchCloudService,
+        private renderer: Renderer2) {}
 
     ngOnInit() {
-        this.searchField.valueChanges
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe( (value: string) => {
-            this.searchCloudService.value.next(value);
-        });
+        if (!this.properties.expandable) {
+            this.renderer.addClass(this.searchInput.nativeElement, this.expandedClass);
+        }
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete(); 
+    onChangedHandler(event) {
+        this.searchCloudService.value.next(event.target.value);
+    }
+
+    toggle() {
+        if (!this.properties.expandable) { return; }
+
+        if (this.searchInput.nativeElement && this.searchInput.nativeElement.classList.contains(this.expandedClass)) {
+            this.renderer.removeClass(this.searchInput.nativeElement, this.expandedClass);
+        } else {
+            this.renderer.addClass(this.searchInput.nativeElement, this.expandedClass);
+        }
+    }
+
+    clear() {
+        this.value = '';
     }
 }
+ 

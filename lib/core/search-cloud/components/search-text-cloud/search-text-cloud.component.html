@@ -1,7 +1,15 @@
+<div class="adf-search-cloud-wrapper" #searchContainer>
 
-<mat-form-field class="adf-search-text-cloud">
-    <input [formControl]="searchField" matInput placeholder="{{ placeholder }}"
-        data-automation-id="search-project-field" />
-    <mat-icon matSuffix>search</mat-icon>
-</mat-form-field>
+    <mat-form-field class="adf-search-text-cloud">
+        <input
+            matInput
+            [(ngModel)]="value"
+            placeholder="{{ properties?.placeholder }}"
+            (change)="onChangedHandler($event)"
+            data-automation-id="search-project-field" />
+        <mat-icon matSuffix *ngIf="value?.length > 0" (click)="clear()">close</mat-icon>
+    </mat-form-field>
+
+    <mat-icon class="adf-search-cloud-icon" (click)="toggle()" matSuffix>search</mat-icon>
+</div>
  

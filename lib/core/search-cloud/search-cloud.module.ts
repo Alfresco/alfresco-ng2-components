@@ -20,17 +20,17 @@ import { SearchCloudComponent } from './search-cloud.component';
 import { SearchTextCloudComponent } from './components/search-text-cloud/search-text-cloud.component';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
         SearchCloudComponent,
         SearchTextCloudComponent
-    ],
+    ], 
     imports: [
         CommonModule,
         MaterialModule,
-        ReactiveFormsModule
+        FormsModule
     ],
     exports: [ SearchCloudComponent],
     entryComponents: [ SearchTextCloudComponent ]

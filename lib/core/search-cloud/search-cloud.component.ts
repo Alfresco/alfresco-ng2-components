@@ -19,7 +19,7 @@ import { ViewEncapsulation, Component, OnInit, ComponentRef, ViewChild, ViewCont
 import { SearchCloudService } from '../services/search-cloud.service';
 import { Subject } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
-import { SearchCloudTypesEnum, SEARCH_CLOUD_TYPES } from '../models/search-cloud.model';
+import { SearchCloudTypesEnum, SEARCH_CLOUD_TYPES, SearchCloudProperties } from '../models/search-cloud.model';
 
 @Component({
     selector: 'adf-search-cloud',
@@ -35,6 +35,8 @@ export class SearchCloudComponent implements OnInit, OnDestroy {
     @Input() debounceTime: number = 500;
 
     @Input() placeholder: string;
+
+    @Input() expandable: boolean = false;
 
     @Input() type: SearchCloudTypesEnum;
 
@@ -72,8 +74,12 @@ export class SearchCloudComponent implements OnInit, OnDestroy {
 
     setupWidget() {
         if (this.componentRef && this.componentRef.instance) {
-            this.componentRef.instance.placeholder = this.placeholder;
-            this.componentRef.instance.debounceTime = this.debounceTime;
+            const properties: SearchCloudProperties = {
+                placeholder: this.placeholder,
+                debounceTime: this.debounceTime,
+                expandable: this.expandable
+            };
+            this.componentRef.instance.properties = properties;
         }
     }
 
