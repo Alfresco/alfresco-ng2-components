@@ -32,6 +32,8 @@ import { SearchCloudTypesEnum, SEARCH_CLOUD_TYPES, SearchCloudProperties } from 
 })
 export class SearchCloudComponent implements OnInit, OnDestroy {
 
+    @Input() value: string;
+
     @Input() debounceTime: number = 500;
 
     @Input() placeholder: string;
@@ -77,7 +79,8 @@ export class SearchCloudComponent implements OnInit, OnDestroy {
             const properties: SearchCloudProperties = {
                 placeholder: this.placeholder,
                 debounceTime: this.debounceTime,
-                expandable: this.expandable
+                expandable: this.expandable,
+                value: this.value
             };
             this.componentRef.instance.properties = properties;
         }
