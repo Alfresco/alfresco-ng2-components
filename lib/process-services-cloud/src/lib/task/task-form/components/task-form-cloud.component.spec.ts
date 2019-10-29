@@ -38,7 +38,7 @@ const taskDetails = {
     name: 'Task1',
     owner: 'admin.adf',
     standAlone: true,
-    status: 'CREATED'
+    status: 'ASSIGNED'
 };
 
 describe('TaskFormCloudComponent', () => {
