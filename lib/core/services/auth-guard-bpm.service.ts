@@ -37,11 +37,7 @@ export class AuthGuardBpm extends AuthGuardBase {
         if (this.authenticationService.isBpmLoggedIn() || this.withCredentials) {
             return true;
         }
-
-        if (!this.authenticationService.isOauth() || this.isOAuthWithoutSilentLogin()) {
-            this.redirectToUrl('BPM', redirectUrl);
-        }
-
+        this.redirectToUrl('BPM', redirectUrl);
         return false;
     }
 }

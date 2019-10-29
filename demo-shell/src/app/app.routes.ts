@@ -414,18 +414,29 @@ export const appRoutes: Routes = [
                 loadChildren: 'app/components/process-list-demo/process-list.module#AppProcessListModule'
             },
             {
-                path: 'error/:id',
-                component: DemoErrorComponent
-            },
-            {
                 path: 'error/no-authorization',
                 component: ErrorContentComponent
-            },
-            {
-                path: '**',
-                redirectTo: 'error/404'
             }
         ]
+    },
+    {
+        path: 'error',
+        component: AppLayoutComponent,
+        children: [
+            {
+                path: '',
+                redirectTo: '/error/404',
+                pathMatch: 'full'
+            },
+            {
+                path: ':id',
+                component: DemoErrorComponent
+            }
+        ]
+    },
+    {
+        path: '**',
+        redirectTo: 'error/404'
     }
 ];
 

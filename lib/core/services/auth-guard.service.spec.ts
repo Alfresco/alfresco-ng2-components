@@ -43,6 +43,7 @@ describe('AuthGuardService', () => {
         appConfigService = TestBed.get(AppConfigService);
 
         appConfigService.config.auth = {};
+        appConfigService.config.oauth2 = {};
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async(() => {
@@ -69,6 +70,36 @@ describe('AuthGuardService', () => {
         const route: RouterStateSnapshot = <RouterStateSnapshot>  { url: 'some-url' };
 
         expect(authGuard.canActivate(null, route)).toBeTruthy();
+    }));
+
+    it('should redirect url if the alfresco js api is NOT logged in and isOAuthWithoutSilentLogin', async(() => {
+        spyOn(router, 'navigateByUrl').and.stub();
+        spyOn(authService, 'isLoggedIn').and.returnValue(false);
+        spyOn(authService, 'isOauth').and.returnValue(true);
+        appConfigService.config.oauth2.silentLogin = false;
+
+        expect(authGuard.canActivate(null, state)).toBeFalsy();
+        expect(router.navigateByUrl).toHaveBeenCalled();
+    }));
+
+    it('should redirect url if the alfresco js api is NOT logged in and isOAuthWithSilentLogin', async(() => {
+        spyOn(router, 'navigateByUrl').and.stub();
+        spyOn(authService, 'isLoggedIn').and.returnValue(false);
+        spyOn(authService, 'isOauth').and.returnValue(true);
+        appConfigService.config.oauth2.silentLogin = true;
+
+        expect(authGuard.canActivate(null, state)).toBeFalsy();
+        expect(router.navigateByUrl).toHaveBeenCalled();
+    }));
+
+    it('should redirect url if NOT logged in and isOAuth but no silentLogin configured', async(() => {
+        spyOn(router, 'navigateByUrl').and.stub();
+        spyOn(authService, 'isLoggedIn').and.returnValue(false);
+        spyOn(authService, 'isOauth').and.returnValue(true);
+        appConfigService.config.oauth2.silentLogin = undefined;
+
+        expect(authGuard.canActivate(null, state)).toBeFalsy();
+        expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
     it('should set redirect url', async(() => {

@@ -70,10 +70,7 @@ export class AuthGuard extends AuthGuardBase {
         if (this.authenticationService.isLoggedIn() || this.withCredentials) {
             return true;
         }
-        if (!this.authenticationService.isOauth() || this.isOAuthWithoutSilentLogin()) {
-            this.redirectToUrl('ALL', redirectUrl);
-        }
-
+        this.redirectToUrl('ALL', redirectUrl);
         return false;
     }
 }
