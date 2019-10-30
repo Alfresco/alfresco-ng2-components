@@ -30,6 +30,7 @@ describe('Task Header cloud component', () => {
     let basicCreatedDate;
     let completedTask;
     let completedCreatedDate;
+    let dueDate;
     let subTask;
     let subTaskCreatedDate;
     let completedEndDate;
@@ -39,6 +40,7 @@ describe('Task Header cloud component', () => {
     const priority = 30;
     const description = 'descriptionTask';
     const formatDate = 'MMM D, YYYY';
+    const dateTimeFormat = 'MMM D, Y, H:mm';
     const defaultFormat = 'M/D/YY';
 
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
@@ -75,6 +77,7 @@ describe('Task Header cloud component', () => {
         await tasksService.completeTask(completedTaskId.entry.id, simpleApp);
         completedTask = await tasksService.getTask(completedTaskId.entry.id, simpleApp);
         completedCreatedDate = moment(completedTask.entry.createdDate).format(formatDate);
+        dueDate = moment(completedTask.entry.createdDate).format(dateTimeFormat);
         completedEndDate = moment(completedTask.entry.endDate).format(formatDate);
         defaultDate = moment(completedTask.entry.createdDate).format(defaultFormat);
 
@@ -130,7 +133,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!completedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.entry.category);
         await expect(await taskHeaderCloudPage.getDueDate()).toEqual(completedTask.entry.dueDate === null ?
-            CONSTANTS.TASK_DETAILS.NO_DATE : completedCreatedDate);
+            CONSTANTS.TASK_DETAILS.NO_DATE : dueDate);
         await expect(await taskHeaderCloudPage.getEndDate()).toEqual(completedEndDate);
         await expect(await taskHeaderCloudPage.getCreated()).toEqual(completedCreatedDate);
         await expect(await taskHeaderCloudPage.getAssignee()).toEqual(completedTask.entry.assignee === null ? '' : completedTask.entry.assignee);

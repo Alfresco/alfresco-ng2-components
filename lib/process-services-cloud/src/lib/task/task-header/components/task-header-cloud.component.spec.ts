@@ -25,6 +25,7 @@ import { of, throwError } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import moment = require('moment');
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
