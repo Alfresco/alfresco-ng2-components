@@ -7,6 +7,7 @@
   "main": "./index.js",
   "scripts": {
     "ng": "ng",
+    "postinstall": "webdriver-manager update --gecko=false --versions.chrome=$npm_package_config_chromeDriver",
     "concurrently": "concurrently",
     "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js",
     "webpack": "node ./node_modules/webpack/bin/webpack.js",
@@ -62,6 +63,9 @@
   },
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
+  "config": {
+    "chromeDriver": "78.0.3904.70"
   },
   "keywords": [
     "alfresco-components",
@@ -183,7 +187,7 @@
     "protractor-browser-logs": "^1.0.423",
     "protractor-html-reporter-2": "^1.0.4",
     "protractor-retry": "^1.2.0",
-    "puppeteer": "1.17.0",
+    "puppeteer": "1.20.0",
     "raw-loader": "0.5.1",
     "remark": "^9.0.0",
     "remark-frontmatter": "^1.2.0",
