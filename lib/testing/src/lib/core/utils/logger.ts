@@ -25,19 +25,19 @@ const infoColor = '\x1b[36m%s\x1b[0m',
 /* tslint:disable:no-console */
 export class Logger {
     static info(...messages): void {
-        if (browser.params.config.log) {
+        if (browser.params.config && browser.params.config.log) {
             console.log(infoColor, messages.join(''));
         }
     }
 
     static log(...messages): void {
-        if (browser.params.config.log) {
+        if (browser.params.config && browser.params.config.log) {
             console.log(logColor, messages.join(''));
         }
     }
 
     static warn(...messages): void {
-        if (browser.params.config.log) {
+        if (browser.params.config && browser.params.config.log) {
             console.log(warnColor, messages.join(''));
         }
     }
