@@ -95,14 +95,17 @@ export class TaskFormCloudComponent implements OnChanges {
 
     taskDetails: TaskDetailsCloudModel;
 
+    candidateUsers: string[] = [];
+    candidateGroups: string[] = [];
+
     loading: boolean = false;
 
     constructor(
         private taskCloudService: TaskCloudService,
         private formRenderingService: FormRenderingService) {
-            this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
-            this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
-            this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -126,6 +129,19 @@ export class TaskFormCloudComponent implements OnChanges {
             this.taskDetails = details;
             this.loading = false;
         });
+
+        this.taskCloudService.getCandidateUsers(this.appName, this.taskId).subscribe((users: string[]) => {
+            if (users) {
+                this.candidateUsers = users;
+            }
+        });
+
+        this.taskCloudService.getCandidateGroups(this.appName, this.taskId).subscribe((groups: string[]) => {
+            if (groups) {
+                this.candidateGroups = groups;
+            }
+        });
+
     }
 
     private reloadTask() {
@@ -142,6 +158,23 @@ export class TaskFormCloudComponent implements OnChanges {
 
     canClaimTask(): boolean {
         return !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails);
+    }
+
+    hasCandidateUsers(): boolean {
+        return this.candidateUsers.length !== 0;
+    }
+
+    hasCandidateGroups(): boolean {
+        return this.candidateGroups.length !== 0;
+    }
+
+    hasCandidateUsersOrGroups(): boolean {
+        let hasCandidateUsersOrGroups = false;
+
+        if (this.taskDetails.status === 'ASSIGNED') {
+            hasCandidateUsersOrGroups = this.hasCandidateUsers() || this.hasCandidateGroups();
+        }
+        return hasCandidateUsersOrGroups;
     }
 
     canUnclaimTask(): boolean {

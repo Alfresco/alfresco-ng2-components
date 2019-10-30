@@ -57,7 +57,7 @@
                 (success)="onClaimTask()">
             {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate}}
         </button>
-        <button mat-button *ngIf="canUnclaimTask()" adf-cloud-unclaim-task [appName]="appName" [taskId]="taskId"
+        <button mat-button *ngIf="hasCandidateUsersOrGroups()" adf-cloud-unclaim-task [appName]="appName" [taskId]="taskId"
                 (success)="onUnclaimTask()">
             {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM' | translate}}
         </button>
