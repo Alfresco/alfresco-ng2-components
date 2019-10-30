@@ -17,7 +17,7 @@
 
 import { SearchTextCloudComponent } from './search-text-cloud.component';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { setupTestBed } from 'core';
+import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { SearchCloudService } from '../../../services/search-cloud.service';
 

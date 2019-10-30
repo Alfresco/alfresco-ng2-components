@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { setupTestBed } from 'core';
+import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { SearchCloudComponent } from './search-cloud.component';
 import { SearchCloudTypesEnum } from '../models/search-cloud.model';
