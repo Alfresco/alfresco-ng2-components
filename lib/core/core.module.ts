@@ -56,6 +56,7 @@ import { TranslateLoaderService } from './services/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './services/directionality-config-factory';
 import { DirectionalityConfigService } from './services/directionality-config.service';
+import { SearchCloudModule } from './search-cloud/search-cloud.module';
 
 @NgModule({
     imports: [
@@ -89,7 +90,8 @@ import { DirectionalityConfigService } from './services/directionality-config.se
         TemplateModule,
         IconModule,
         SortingPickerModule,
-        NotificationHistoryModule
+        NotificationHistoryModule,
+        SearchCloudModule
     ],
     exports: [
         AboutModule,
@@ -122,7 +124,8 @@ import { DirectionalityConfigService } from './services/directionality-config.se
         TemplateModule,
         SortingPickerModule,
         IconModule,
-        NotificationHistoryModule
+        NotificationHistoryModule,
+        SearchCloudModule
     ]
 })
 export class CoreModule {
