@@ -83,7 +83,7 @@ export class ProcessCloudDemoPage {
     }
 
     async newProcessButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.newProcessButton);
+        await BrowserVisibility.waitUntilElementIsClickable(this.newProcessButton);
     }
 
     async isProcessFiltersListVisible(): Promise<void> {

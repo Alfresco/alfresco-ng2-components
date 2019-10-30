@@ -91,7 +91,7 @@ export class StartTasksCloudPage {
 
     async selectFormDefinition(option: string): Promise<void> {
         await BrowserActions.click(this.formDefinitionSelector);
-        const row = element(by.cssContainingText('mat-option span', option));
+        const row = element(by.xpath(`//mat-option/child::span [text() = '${option}']`));
         await BrowserActions.click(row);
     }
 

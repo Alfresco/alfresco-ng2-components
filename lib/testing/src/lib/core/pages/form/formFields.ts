@@ -39,6 +39,11 @@ export class FormFields {
         await BrowserActions.clearSendKeys(fieldElement, value);
     }
 
+    async clickField(locator, field): Promise<void> {
+        const fieldElement: any = element(locator(field));
+        await BrowserActions.click(fieldElement);
+    }
+
     async checkWidgetIsVisible(fieldId): Promise<void> {
         const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
         await BrowserVisibility.waitUntilElementIsVisible(fieldElement);
