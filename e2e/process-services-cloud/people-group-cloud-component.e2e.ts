@@ -23,6 +23,8 @@ import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiS
 
 describe('People Groups Cloud Component', () => {
 
+    const { adminEmail, adminPassword } = browser.params.testConfig.adf;
+
     describe('People Groups Cloud Component', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -35,12 +37,13 @@ describe('People Groups Cloud Component', () => {
         const settingsPage = new SettingsPage();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
-            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.providers
         );
 
         let apsUser;
         let testUser;
-        let activitiUser;
         let noRoleUser;
         let groupUser;
         let groupAdmin;
@@ -52,12 +55,11 @@ describe('People Groups Cloud Component', () => {
 
         beforeAll(async () => {
 
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.login(adminEmail, adminPassword);
 
             identityService = new IdentityService(apiService);
             testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
             apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
-            activitiUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
             noRoleUser = await identityService.createIdentityUser();
 
             rolesService = new RolesService(apiService);
@@ -74,19 +76,20 @@ describe('People Groups Cloud Component', () => {
 
             groupNoRole = await groupIdentityService.createIdentityGroup();
 
-            users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`, `${testUser.idIdentityService}`];
+            users = [`${apsUser.idIdentityService}`, `${noRoleUser.idIdentityService}`, `${testUser.idIdentityService}`];
             groups = [`${groupUser.id}`, `${groupAdmin.id}`, `${groupNoRole.id}`];
 
             await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+
+            await loginSSOPage.loginSSOIdentityService(adminEmail, adminPassword);
 
         });
 
         afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.login(adminEmail, adminPassword);
             for (const user of users) {
                 await identityService.deleteIdentityUser(user);
             }
