@@ -52,7 +52,7 @@ export class StartProcessCloudPage {
 
     async getProcessName(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
-        return await this.processNameInput.getAttribute('value');
+        return this.processNameInput.getAttribute('value');
     }
 
     async selectFromProcessDropdown(name): Promise<void> {
