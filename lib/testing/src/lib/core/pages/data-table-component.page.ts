@@ -25,7 +25,7 @@ export class DataTableComponentPage {
     list: ElementArrayFinder;
     contents: ElementArrayFinder;
     tableBody: ElementFinder;
-    rows: Locator = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
+    rows: Locator = by.css(`adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`);
     allColumns: ElementArrayFinder;
     selectedRowNumber: ElementFinder;
     allSelectedRows: ElementArrayFinder;
@@ -34,12 +34,12 @@ export class DataTableComponentPage {
 
     constructor(rootElement: ElementFinder = element.all(by.css('adf-datatable')).first()) {
         this.rootElement = rootElement;
-        this.list = this.rootElement.all(by.css(`div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`));
+        this.list = this.rootElement.all(by.css(`div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`));
         this.contents = this.rootElement.all(by.css('div[class="adf-datatable-body"] span'));
         this.tableBody = this.rootElement.all(by.css(`div[class='adf-datatable-body']`)).first();
         this.allColumns = this.rootElement.all(by.css('div[data-automation-id*="auto_id_entry."]'));
-        this.selectedRowNumber = this.rootElement.element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
-        this.allSelectedRows = this.rootElement.all(by.css(`div[class*='is-selected']`));
+        this.selectedRowNumber = this.rootElement.element(by.css(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`));
+        this.allSelectedRows = this.rootElement.all(by.css(`adf-datatable-row[class*='is-selected']`));
         this.selectAll = this.rootElement.element(by.css(`div[class*='adf-datatable-header'] mat-checkbox`));
         this.copyColumnTooltip = this.rootElement.element(by.css(`adf-copy-content-tooltip span`));
     }
@@ -97,12 +97,12 @@ export class DataTableComponentPage {
     }
 
     async checkRowIsSelected(columnName, columnValue): Promise<void> {
-        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::adf-datatable-row[contains(@class, 'is-selected')]`));
         await BrowserVisibility.waitUntilElementIsVisible(selectedRow);
     }
 
     async checkRowIsNotSelected(columnName, columnValue): Promise<void> {
-        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::adf-datatable-row[contains(@class, 'is-selected')]`));
         await BrowserVisibility.waitUntilElementIsNotVisible(selectedRow);
     }
 
@@ -164,7 +164,7 @@ export class DataTableComponentPage {
     }
 
     async getAllRowsColumnValues(column: string) {
-        const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + column + "'] span");
+        const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title='" + column + "'] span");
         await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first());
         return await element.all(columnLocator)
             .filter(async (el) => await el.isPresent())
@@ -232,11 +232,11 @@ export class DataTableComponentPage {
     }
 
     getRow(columnName: string, columnValue: string): ElementFinder {
-        return this.rootElement.all(by.xpath(`//div[@title="${columnName}"]//div[@data-automation-id="text_${columnValue}"]//ancestor::div[contains(@class, 'adf-datatable-row')]`)).first();
+        return this.rootElement.all(by.xpath(`//div[@title="${columnName}"]//div[@data-automation-id="text_${columnValue}"]//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`)).first();
     }
 
     getRowByIndex(index: number): ElementFinder {
-        return this.rootElement.element(by.xpath(`//div[contains(@class,'adf-datatable-body')]//div[contains(@class,'adf-datatable-row')][${index}]`));
+        return this.rootElement.element(by.xpath(`//div[contains(@class,'adf-datatable-body')]//adf-datatable-row[contains(@class,'adf-datatable-row')][${index}]`));
     }
 
     async contentInPosition(position: number): Promise<string> {
@@ -282,21 +282,21 @@ export class DataTableComponentPage {
     }
 
     async checkRowByContentIsSelected(folderName): Promise<void> {
-        const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::adf-datatable-row[contains(@class, 'is-selected')]`));
         await BrowserVisibility.waitUntilElementIsVisible(selectedRow);
     }
 
     async checkRowByContentIsNotSelected(folderName): Promise<void> {
-        const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::adf-datatable-row[contains(@class, 'is-selected')]`));
         await BrowserVisibility.waitUntilElementIsNotVisible(selectedRow);
     }
 
     getCellByContent(content) {
-        return this.rootElement.all(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content)).first();
+        return this.rootElement.all(by.cssContainingText(`adf-datatable-row[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content)).first();
     }
 
     async checkCellByHighlightContent(content) {
-        const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name'] span.adf-highlight`, content));
+        const cell = this.rootElement.element(by.cssContainingText(`adf-datatable-row[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name'] span.adf-highlight`, content));
         await BrowserVisibility.waitUntilElementIsVisible(cell);
     }
 
@@ -306,7 +306,7 @@ export class DataTableComponentPage {
     }
 
     async clickRowByContentCheckbox(name: string): Promise<void> {
-        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first().element(by.xpath(`ancestor::div/div/mat-checkbox`));
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first().element(by.xpath(`ancestor::adf-datatable-row/div/mat-checkbox`));
         await browser.actions().mouseMove(resultElement);
         await BrowserActions.click(resultElement);
     }

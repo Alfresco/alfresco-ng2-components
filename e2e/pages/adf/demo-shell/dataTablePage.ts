@@ -36,8 +36,8 @@ export class DataTablePage {
     dataTable: DataTableComponentPage;
     multiSelect: ElementFinder = element(by.css(`div[data-automation-id='multiselect'] label > div[class='mat-checkbox-inner-container']`));
     reset: ElementFinder = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
-    allSelectedRows: ElementArrayFinder = element.all(by.css(`div[class*='is-selected']`));
-    selectedRowNumber: ElementFinder = element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
+    allSelectedRows: ElementArrayFinder = element.all(by.css(`adf-datatable-row[class*='is-selected']`));
+    selectedRowNumber: ElementFinder = element(by.css(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`));
     selectAll: ElementFinder = element(by.css(`div[class*='header'] label`));
     addRowElement: ElementFinder = element(by.xpath(`//span[contains(text(),'Add row')]/..`));
     replaceRowsElement: ElementFinder = element(by.xpath(`//span[contains(text(),'Replace rows')]/..`));
@@ -85,7 +85,7 @@ export class DataTablePage {
 
     async checkRowIsNotSelected(rowNumber: string): Promise<void> {
         const isRowSelected = this.dataTable.getCellElementByValue(this.columns.id, rowNumber)
-            .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]`));
+            .element(by.xpath(`ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]`));
         await BrowserVisibility.waitUntilElementIsNotVisible(isRowSelected);
     }
 
@@ -112,7 +112,7 @@ export class DataTablePage {
     async clickCheckbox(rowNumber: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const checkbox = this.dataTable.getCellElementByValue(this.columns.id, rowNumber)
-            .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
+            .element(by.xpath(`ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
         await BrowserActions.click(checkbox);
     }
 
@@ -134,7 +134,7 @@ export class DataTablePage {
     }
 
     getRowCheckbox(rowNumber: string): ElementFinder {
-        return this.dataTable.getCellElementByValue(this.columns.id, rowNumber).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
+        return this.dataTable.getCellElementByValue(this.columns.id, rowNumber).element(by.xpath(`ancestor::adf-datatable-row/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
     }
 
     async getCopyContentTooltip(): Promise<string> {
