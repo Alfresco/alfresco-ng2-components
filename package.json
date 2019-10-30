@@ -198,7 +198,7 @@
     "tsconfig-paths": "^3.8.0",
     "tsickle": "^0.34.0",
     "tslib": "^1.9.0",
-    "tslint": "5.9.1",
+    "tslint": "5.20.0",
     "tslint-consistent-codestyle": "^1.15.1",
     "typedoc": "^0.15.0",
     "typescript": "3.1.6",
