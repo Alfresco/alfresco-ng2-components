@@ -216,7 +216,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             const isUserValid: boolean = this.userExists(result);
             return isUserValid ? result : null;
         });
-        return await Promise.all(promiseBatch);
+        return Promise.all(promiseBatch);
     }
 
     async searchUser(user: IdentityUserModel) {
@@ -231,7 +231,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         switch (key) {
-            case 'id': return await this.identityUserService.findUserById(user[key]).toPromise();
+            case 'id': return this.identityUserService.findUserById(user[key]).toPromise();
             case 'username': return (await this.identityUserService.findUserByUsername(user[key]).toPromise())[0];
             case 'email': return (await this.identityUserService.findUserByEmail(user[key]).toPromise())[0];
             default: return of([]);

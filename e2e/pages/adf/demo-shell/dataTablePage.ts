@@ -138,7 +138,7 @@ export class DataTablePage {
     }
 
     async getCopyContentTooltip(): Promise<string> {
-        return await this.dataTable.getCopyContentTooltip();
+        return this.dataTable.getCopyContentTooltip();
     }
 
     async mouseOverNameColumn(name: string): Promise<void> {
@@ -191,6 +191,6 @@ export class DataTablePage {
 
     async getClipboardInputText(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pasteClipboardInput);
-        return await this.pasteClipboardInput.getAttribute('value');
+        return this.pasteClipboardInput.getAttribute('value');
     }
 }

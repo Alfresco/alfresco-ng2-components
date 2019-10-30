@@ -31,15 +31,15 @@ export class SearchSliderPage {
     }
 
     async getMaxValue() {
-        return await this.filter.element(this.slider).getAttribute('aria-valuemax');
+        return this.filter.element(this.slider).getAttribute('aria-valuemax');
     }
 
     async getMinValue() {
-        return await this.filter.element(this.slider).getAttribute('aria-valuemin');
+        return this.filter.element(this.slider).getAttribute('aria-valuemin');
     }
 
     async getValue() {
-        return await this.filter.element(this.slider).getAttribute('aria-valuenow');
+        return this.filter.element(this.slider).getAttribute('aria-valuenow');
     }
 
     async setValue(value: number): Promise<void> {
@@ -65,7 +65,7 @@ export class SearchSliderPage {
     }
 
     async checkClearButtonIsEnabled() {
-        return await this.filter.element(this.clearButton).isEnabled();
+        return this.filter.element(this.clearButton).isEnabled();
     }
 
     async checkClearButtonIsDisplayed(): Promise<void> {

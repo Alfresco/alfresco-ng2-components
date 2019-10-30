@@ -40,7 +40,7 @@ export class SearchResultsPage {
     }
 
     async numberOfResultsDisplayed(): Promise<number> {
-        return await this.dataTable.numberOfRows();
+        return this.dataTable.numberOfRows();
     }
 
     async checkContentIsNotDisplayed(content): Promise<void> {

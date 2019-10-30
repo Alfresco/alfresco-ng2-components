@@ -84,7 +84,7 @@ export class DropActions {
         fs.accessSync(absolutePath, fs.constants.F_OK);
         const elem = await dropArea.getWebElement();
         const input: any = await browser.executeScript(JS_BIND_INPUT, elem);
-        return await input.sendKeys(absolutePath);
+        return input.sendKeys(absolutePath);
     }
 
     async dropFolder(dropArea, folderPath) {
@@ -95,6 +95,6 @@ export class DropActions {
 
         const elem = await dropArea.getWebElement();
         const input: any = await browser.executeScript(JS_BIND_INPUT_FOLDER, elem);
-        return await input.sendKeys(absolutePath);
+        return input.sendKeys(absolutePath);
     }
 }

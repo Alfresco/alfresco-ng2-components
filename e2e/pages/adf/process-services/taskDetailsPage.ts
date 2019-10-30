@@ -372,7 +372,7 @@ export class TaskDetailsPage {
     }
 
     async isCompleteButtonWithFormEnabled(): Promise<boolean> {
-        return await this.completeFormTask.isEnabled();
+        return this.completeFormTask.isEnabled();
     }
 
 }

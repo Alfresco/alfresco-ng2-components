@@ -40,7 +40,7 @@ export class NumberRangeFilterPage {
     }
 
     async getFromNumber(): Promise<string> {
-        return await this.filter.element(this.fromInput).getAttribute('value');
+        return this.filter.element(this.fromInput).getAttribute('value');
     }
 
     async putFromNumber(value): Promise<void> {
@@ -50,7 +50,7 @@ export class NumberRangeFilterPage {
     }
 
     async getFromErrorRequired(): Promise<string> {
-        return await BrowserActions.getText(this.filter.element(this.fromErrorRequired));
+        return BrowserActions.getText(this.filter.element(this.fromErrorRequired));
     }
 
     async checkFromErrorRequiredIsDisplayed(): Promise<void> {
@@ -58,7 +58,7 @@ export class NumberRangeFilterPage {
     }
 
     async getFromErrorInvalid(): Promise<string> {
-        return await BrowserActions.getText(this.filter.element(this.fromErrorInvalid));
+        return BrowserActions.getText(this.filter.element(this.fromErrorInvalid));
     }
 
     async checkFromErrorInvalidIsDisplayed(): Promise<void> {
@@ -75,7 +75,7 @@ export class NumberRangeFilterPage {
     }
 
     async getToNumber(): Promise<string> {
-        return await this.filter.element(this.toInput).getAttribute('value');
+        return this.filter.element(this.toInput).getAttribute('value');
     }
 
     async putToNumber(value): Promise<void> {
@@ -85,7 +85,7 @@ export class NumberRangeFilterPage {
     }
 
     async getToErrorRequired(): Promise<string> {
-        return await BrowserActions.getText(this.filter.element(this.toErrorRequired));
+        return BrowserActions.getText(this.filter.element(this.toErrorRequired));
     }
 
     async checkToErrorRequiredIsDisplayed(): Promise<void> {
@@ -93,7 +93,7 @@ export class NumberRangeFilterPage {
     }
 
     async getToErrorInvalid(): Promise<string> {
-        return await BrowserActions.getText(this.filter.element(this.toErrorInvalid));
+        return BrowserActions.getText(this.filter.element(this.toErrorInvalid));
     }
 
     async checkToErrorInvalidIsDisplayed(): Promise<void> {
@@ -113,7 +113,7 @@ export class NumberRangeFilterPage {
     }
 
     async checkApplyButtonIsEnabled(): Promise<boolean> {
-        return await this.filter.element(this.applyButton).isEnabled();
+        return this.filter.element(this.applyButton).isEnabled();
     }
 
     async clickClearButton(): Promise<void> {

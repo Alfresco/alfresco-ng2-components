@@ -39,7 +39,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async getDialogHeaderText(): Promise<string> {
-        return await BrowserActions.getText(this.header);
+        return BrowserActions.getText(this.header);
     }
 
     async checkSearchInputIsDisplayed(): Promise<void> {
@@ -47,7 +47,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async getSearchLabel(): Promise<string> {
-        return await BrowserActions.getText(this.searchLabel);
+        return BrowserActions.getText(this.searchLabel);
     }
 
     async checkSelectedSiteIsDisplayed(siteName): Promise<void> {
@@ -63,11 +63,11 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async checkCancelButtonIsEnabled(): Promise<boolean> {
-        return await this.cancelButton.isEnabled();
+        return this.cancelButton.isEnabled();
     }
 
     async checkCopyMoveButtonIsEnabled(): Promise<boolean> {
-        return await this.moveCopyButton.isEnabled();
+        return this.moveCopyButton.isEnabled();
     }
 
     async checkMoveCopyButtonIsDisplayed(): Promise<void> {
@@ -75,7 +75,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async getMoveCopyButtonText(): Promise<string> {
-        return await BrowserActions.getText(this.moveCopyButton);
+        return BrowserActions.getText(this.moveCopyButton);
     }
 
     async clickMoveCopyButton(): Promise<void> {
@@ -83,7 +83,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async numberOfResultsDisplayed(): Promise<number> {
-        return await this.contentList.dataTablePage().numberOfRows();
+        return this.contentList.dataTablePage().numberOfRows();
     }
 
     async typeIntoNodeSelectorSearchField(text): Promise<void> {

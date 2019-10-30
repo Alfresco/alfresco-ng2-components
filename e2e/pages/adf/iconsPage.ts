@@ -30,7 +30,7 @@ export class IconsPage {
     async isCustomIconDisplayed(name) {
         const present = await browser.isElementPresent(this.locateCustomIcon(name));
         if (present) {
-          return await this.locateCustomIcon(name).isDisplayed();
+          return this.locateCustomIcon(name).isDisplayed();
         } else {
           return false;
         }
@@ -39,7 +39,7 @@ export class IconsPage {
     async isLigatureIconDisplayed(name) {
         const present = await browser.isElementPresent(this.locateLigatureIcon(name));
         if (present) {
-          return await this.locateLigatureIcon(name).isDisplayed();
+          return this.locateLigatureIcon(name).isDisplayed();
         } else {
           return false;
         }

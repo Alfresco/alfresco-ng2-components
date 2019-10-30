@@ -87,7 +87,7 @@ export class ProcessListCloudComponentPage {
     }
 
     async getAllRowsNameColumn() {
-        return await this.dataTable.getAllRowsColumnValues(this.columns.name);
+        return this.dataTable.getAllRowsColumnValues(this.columns.name);
     }
 
     async checkProcessListIsLoaded(): Promise<void> {

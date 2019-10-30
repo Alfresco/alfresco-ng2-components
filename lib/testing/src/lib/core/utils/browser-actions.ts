@@ -72,7 +72,7 @@ export class BrowserActions {
     static async getColor(elementFinder: ElementFinder): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         const webElem = await elementFinder.getWebElement();
-        return await webElem.getCssValue('color');
+        return webElem.getCssValue('color');
     }
 
     static async clearWithBackSpace(elementFinder: ElementFinder) {

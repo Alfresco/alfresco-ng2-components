@@ -120,11 +120,11 @@ export class SearchFiltersPage {
     }
 
     async isTypeFacetQueryGroupPresent(): Promise<boolean> {
-        return await this.facetQueriesTypeGroup.isPresent();
+        return this.facetQueriesTypeGroup.isPresent();
     }
 
     async isSizeFacetQueryGroupPresent(): Promise<boolean> {
-        return await this.facetQueriesSizeGroup.isPresent();
+        return this.facetQueriesSizeGroup.isPresent();
     }
 
     async clickCheckListFilter(): Promise<void> {

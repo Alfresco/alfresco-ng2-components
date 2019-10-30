@@ -85,7 +85,7 @@ export class ProcessFiltersPage {
     }
 
     async numberOfProcessRows(): Promise<number> {
-        return await element.all(this.rows).count();
+        return element.all(this.rows).count();
     }
 
     async waitForTableBody(): Promise<void> {
@@ -102,7 +102,7 @@ export class ProcessFiltersPage {
     }
 
     async getAllRowsNameColumn() {
-        return await this.dataTable.getAllRowsColumnValues('Name');
+        return this.dataTable.getAllRowsColumnValues('Name');
     }
 
     async checkFilterIsDisplayed(name): Promise<void> {
@@ -120,7 +120,7 @@ export class ProcessFiltersPage {
         const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
         const icon = filterName.element(this.processIcon);
-        return await BrowserActions.getText(icon);
+        return BrowserActions.getText(icon);
     }
 
     async checkFilterIsNotDisplayed(name): Promise<void> {

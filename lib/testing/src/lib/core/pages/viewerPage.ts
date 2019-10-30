@@ -118,20 +118,20 @@ export class ViewerPage {
     }
 
     async getZoom(): Promise<string> {
-        return await BrowserActions.getText(this.percentage);
+        return BrowserActions.getText(this.percentage);
     }
 
     async getCanvasWidth(): Promise<string> {
-        return await this.canvasLayer.getAttribute(`width`);
+        return this.canvasLayer.getAttribute(`width`);
     }
 
     async getCanvasHeight(): Promise<string> {
-        return await this.canvasLayer.getAttribute(`height`);
+        return this.canvasLayer.getAttribute(`height`);
     }
 
     async getDisplayedFileName(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.fileName);
-        return await BrowserActions.getText(this.fileName);
+        return BrowserActions.getText(this.fileName);
     }
 
     async exitFullScreen(): Promise<void> {
@@ -209,11 +209,11 @@ export class ViewerPage {
     }
 
     async getLastButtonTitle(): Promise<string> {
-        return await this.lastButton.getAttribute('title');
+        return this.lastButton.getAttribute('title');
     }
 
     async getMoreActionsMenuTitle(): Promise<string> {
-        return await this.moreActionsMenu.getAttribute('title');
+        return this.moreActionsMenu.getAttribute('title');
     }
 
     async checkDownloadButtonIsDisplayed(): Promise<void> {
@@ -428,7 +428,7 @@ export class ViewerPage {
     }
 
     async getActiveTab(): Promise<string> {
-        return await BrowserActions.getText(this.activeTab);
+        return BrowserActions.getText(this.activeTab);
     }
 
     async clickOnCommentsTab(): Promise<void> {
@@ -617,12 +617,12 @@ export class ViewerPage {
 
     async getTabLabelById(index: number): Promise<string> {
         const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
-        return await BrowserActions.getText(tab);
+        return BrowserActions.getText(tab);
     }
 
     async getTabIconById(index: number): Promise<string> {
         const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
-        return await BrowserActions.getText(tab);
+        return BrowserActions.getText(tab);
     }
 
     async checkUnknownFormatIsDisplayed(): Promise<void> {
@@ -631,6 +631,6 @@ export class ViewerPage {
 
     async getUnknownFormatMessage(): Promise<string> {
         const unknownFormatLabel = this.unknownFormat.element(by.css(`.label`));
-        return await BrowserActions.getText(unknownFormatLabel);
+        return BrowserActions.getText(unknownFormatLabel);
     }
 }

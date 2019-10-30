@@ -33,7 +33,7 @@ export class AppsRuntimeActions {
 
     async getRuntimeAppDefinitions(alfrescoJsApi) {
 
-        return await alfrescoJsApi.activiti.appsRuntimeApi.getAppDefinitions();
+        return alfrescoJsApi.activiti.appsRuntimeApi.getAppDefinitions();
     }
 
 }

@@ -65,7 +65,7 @@ export class AppsActions {
         const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
         const file = fs.createReadStream(pathFile);
 
-        return await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+        return alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
     }
 
     async publishDeployApp(alfrescoJsApi, appId) {
@@ -116,7 +116,7 @@ export class AppsActions {
             startProcessOptions.name = processName;
         }
 
-        return await alfrescoJsApi.activiti.processApi.startNewProcessInstance(startProcessOptions);
+        return alfrescoJsApi.activiti.processApi.startNewProcessInstance(startProcessOptions);
 
     }
 

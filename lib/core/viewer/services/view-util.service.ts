@@ -123,7 +123,7 @@ export class ViewUtilService {
             } else {
                 retries += 1;
                 await this.wait(1000);
-                return await this.waitRendition(nodeId, renditionId, retries);
+                return this.waitRendition(nodeId, renditionId, retries);
             }
         }
 

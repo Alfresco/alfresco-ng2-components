@@ -37,7 +37,7 @@ export class TagPage {
 
     async getNodeId(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.insertNodeIdElement);
-        return await this.insertNodeIdElement.getAttribute('value');
+        return this.insertNodeIdElement.getAttribute('value');
     }
 
     async insertNodeId(nodeId) {
@@ -72,17 +72,17 @@ export class TagPage {
 
     async getNewTagInput(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
-        return await this.newTagInput.getAttribute('value');
+        return this.newTagInput.getAttribute('value');
     }
 
     async getNewTagPlaceholder(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
-        return await this.newTagInput.getAttribute('placeholder');
+        return this.newTagInput.getAttribute('placeholder');
     }
 
     async addTagButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.addTagButton);
-        return await this.addTagButton.isEnabled();
+        return this.addTagButton.isEnabled();
     }
 
     async checkTagIsDisplayedInTagList(tagName): Promise<void> {
@@ -119,7 +119,7 @@ export class TagPage {
     }
 
     async getErrorMessage(): Promise<string> {
-        return await BrowserActions.getText(this.errorMessage);
+        return BrowserActions.getText(this.errorMessage);
     }
 
     async checkTagListIsOrderedAscending(): Promise<any> {
@@ -181,7 +181,7 @@ export class TagPage {
     }
 
     async checkTagsOnList(): Promise<number> {
-        return await this.tagsOnPage.count();
+        return this.tagsOnPage.count();
     }
 
     async checkShowLessButtonIsDisplayed(): Promise<void> {

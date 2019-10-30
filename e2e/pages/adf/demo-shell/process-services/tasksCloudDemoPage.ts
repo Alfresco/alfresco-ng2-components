@@ -100,7 +100,7 @@ export class TasksCloudDemoPage {
     }
 
     async getActiveFilterName(): Promise<string> {
-        return await BrowserActions.getText(this.activeFilter);
+        return BrowserActions.getText(this.activeFilter);
     }
 
     customTaskFilter(filterName): TaskFiltersCloudComponentPage {
@@ -146,13 +146,13 @@ export class TasksCloudDemoPage {
 
     async getNoOfSelectedRows(): Promise<number> {
         await this.checkSelectedRowsIsDisplayed();
-        return await this.noOfSelectedRows.count();
+        return this.noOfSelectedRows.count();
     }
 
     async getSelectedTaskRowText(rowNo: string): Promise<string> {
         await this.checkSelectedRowsIsDisplayed();
         const row: ElementFinder = element(by.xpath(`//div[text()=' Selected Rows: ']//li[${rowNo}]`));
-        return await BrowserActions.getText(row);
+        return BrowserActions.getText(row);
     }
 
     async addActionIsDisplayed(): Promise<void> {

@@ -36,7 +36,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async isFilterDisplayed(): Promise<boolean> {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        return BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
     async openFilter(): Promise<void> {
@@ -71,7 +71,7 @@ export class EditProcessFilterCloudComponentPage {
 
     async getSortFilterDropDownValue(): Promise<string> {
         const sortLocator = element.all(by.css("mat-form-field[data-automation-id='sort'] span")).first();
-        return await BrowserActions.getText(sortLocator);
+        return BrowserActions.getText(sortLocator);
     }
 
     async setOrderFilterDropDown(option): Promise<void> {
@@ -100,7 +100,7 @@ export class EditProcessFilterCloudComponentPage {
 
     async getApplicationSelected(): Promise<string> {
         const applicationDropdown = element(by.css(`[data-automation-id='adf-cloud-edit-process-property-appName']`));
-        return await applicationDropdown.getText();
+        return applicationDropdown.getText();
     }
 
     async checkAppNamesAreUnique(): Promise<boolean> {
@@ -121,7 +121,7 @@ export class EditProcessFilterCloudComponentPage {
 
     async isApplicationListLoaded(): Promise<boolean> {
         const emptyList = element(by.css(`[data-automation-id='adf-cloud-edit-process-property-appName'] .mat-select-placeholder`));
-        return await BrowserVisibility.waitUntilElementIsNotVisible(emptyList);
+        return BrowserVisibility.waitUntilElementIsNotVisible(emptyList);
     }
 
     async setProcessInstanceId(option): Promise<void> {

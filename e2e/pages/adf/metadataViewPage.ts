@@ -47,51 +47,51 @@ export class MetadataViewPage {
     applyAspect: ElementFinder = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
 
     async getTitle(): Promise<string> {
-        return await BrowserActions.getText(this.title);
+        return BrowserActions.getText(this.title);
     }
 
     async getExpandedAspectName(): Promise<string> {
-        return await BrowserActions.getText(this.expandedAspect.element(this.aspectTitle));
+        return BrowserActions.getText(this.expandedAspect.element(this.aspectTitle));
     }
 
     async getName(): Promise<string> {
-        return await BrowserActions.getText(this.name);
+        return BrowserActions.getText(this.name);
     }
 
     async getCreator(): Promise<string> {
-        return await BrowserActions.getText(this.creator);
+        return BrowserActions.getText(this.creator);
     }
 
     async getCreatedDate(): Promise<string> {
-        return await BrowserActions.getText(this.createdDate);
+        return BrowserActions.getText(this.createdDate);
     }
 
     async getModifier(): Promise<string> {
-        return await BrowserActions.getText(this.modifier);
+        return BrowserActions.getText(this.modifier);
     }
 
     async getModifiedDate(): Promise<string> {
-        return await BrowserActions.getText(this.modifiedDate);
+        return BrowserActions.getText(this.modifiedDate);
     }
 
     async getMimetypeName(): Promise<string> {
-        return await BrowserActions.getText(this.mimetypeName);
+        return BrowserActions.getText(this.mimetypeName);
     }
 
     async getSize(): Promise<string> {
-        return await BrowserActions.getText(this.size);
+        return BrowserActions.getText(this.size);
     }
 
     async getDescription(): Promise<string> {
-        return await BrowserActions.getText(this.description);
+        return BrowserActions.getText(this.description);
     }
 
     async getAuthor(): Promise<string> {
-        return await BrowserActions.getText(this.author);
+        return BrowserActions.getText(this.author);
     }
 
     async getTitleProperty(): Promise<string> {
-        return await BrowserActions.getText(this.titleProperty);
+        return BrowserActions.getText(this.titleProperty);
     }
 
     async editIconIsDisplayed(): Promise<void> {
@@ -119,11 +119,11 @@ export class MetadataViewPage {
     }
 
     async getInformationButtonText(): Promise<string> {
-        return await BrowserActions.getText(this.informationSpan);
+        return BrowserActions.getText(this.informationSpan);
     }
 
     async getInformationIconText(): Promise<string> {
-        return await BrowserActions.getText(this.informationIcon);
+        return BrowserActions.getText(this.informationIcon);
     }
 
     async clickOnPropertiesTab(): Promise<void> {
@@ -132,7 +132,7 @@ export class MetadataViewPage {
     }
 
     async getEditIconTooltip(): Promise<string> {
-        return await this.editIcon.getAttribute('title');
+        return this.editIcon.getAttribute('title');
     }
 
     async editPropertyIconIsDisplayed(propertyName: string) {
@@ -179,7 +179,7 @@ export class MetadataViewPage {
         const propertyType = type || 'textitem';
         const textField: ElementFinder = element(by.css('span[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]'));
 
-        return await BrowserActions.getText(textField);
+        return BrowserActions.getText(textField);
     }
 
     async clearPropertyIconIsDisplayed(propertyName: string): Promise<void> {
@@ -194,7 +194,7 @@ export class MetadataViewPage {
 
     async getPropertyIconTooltip(propertyName: string): Promise<string> {
         const editPropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
-        return await editPropertyIcon.getAttribute('title');
+        return editPropertyIcon.getAttribute('title');
     }
 
     async clickMetadataGroup(groupName: string): Promise<void> {
@@ -226,7 +226,7 @@ export class MetadataViewPage {
 
     async getMetadataGroupTitle(groupName: string): Promise<string> {
         const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
-        return await BrowserActions.getText(group);
+        return BrowserActions.getText(group);
     }
 
     async checkPropertyIsVisible(propertyName: string, type: string): Promise<void> {

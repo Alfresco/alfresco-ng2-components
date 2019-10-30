@@ -84,15 +84,15 @@ export class SearchDialog {
     }
 
     async getSpecificRowsHighlightName(name): Promise<string> {
-        return await BrowserActions.getText(this.getRowByRowName(name).element(this.highlightName));
+        return BrowserActions.getText(this.getRowByRowName(name).element(this.highlightName));
     }
 
     async getSpecificRowsCompleteName(name): Promise<string> {
-        return await BrowserActions.getText(this.getRowByRowName(name).element(this.completeName));
+        return BrowserActions.getText(this.getRowByRowName(name).element(this.completeName));
     }
 
     async getSpecificRowsAuthor(name): Promise<string> {
-        return await BrowserActions.getText(this.getRowByRowName(name).element(this.rowsAuthor));
+        return BrowserActions.getText(this.getRowByRowName(name).element(this.rowsAuthor));
     }
 
     async clearText(): Promise<void> {
