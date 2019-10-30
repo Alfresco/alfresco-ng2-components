@@ -100,7 +100,7 @@ export class PermissionsPage {
     }
 
     async getPermissionInheritedButtonText(): Promise<string> {
-        return await BrowserActions.getText(this.permissionInheritedButton);
+        return BrowserActions.getText(this.permissionInheritedButton);
     }
 
     async checkPermissionsDatatableIsDisplayed(): Promise<void> {
@@ -109,7 +109,7 @@ export class PermissionsPage {
 
     async getRoleCellValue(rowName): Promise<string> {
         const locator = this.dataTableComponentPage.getCellByRowContentAndColumn('Authority ID', rowName, column.role);
-        return await BrowserActions.getText(locator);
+        return BrowserActions.getText(locator);
     }
 
     async clickRoleDropdownByUserOrGroupName(name): Promise<void> {

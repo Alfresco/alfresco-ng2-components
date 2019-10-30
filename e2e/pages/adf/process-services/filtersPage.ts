@@ -38,7 +38,7 @@ export class FiltersPage {
     }
 
     async getAllRowsNameColumn() {
-        return await this.dataTable.getAllRowsColumnValues('Name');
+        return this.dataTable.getAllRowsColumnValues('Name');
     }
 
 }

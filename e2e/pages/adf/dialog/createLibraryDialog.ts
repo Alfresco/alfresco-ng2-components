@@ -35,7 +35,7 @@ export class CreateLibraryDialog {
 
     async getSelectedRadio(): Promise<string> {
         const radio: ElementFinder = element(by.css('.mat-radio-button[class*="checked"]'));
-        return await BrowserActions.getText(radio);
+        return BrowserActions.getText(radio);
     }
 
     async waitForDialogToOpen(): Promise<void> {
@@ -47,27 +47,27 @@ export class CreateLibraryDialog {
     }
 
     async isDialogOpen(): Promise<any> {
-        return await browser.isElementPresent(this.libraryDialog);
+        return browser.isElementPresent(this.libraryDialog);
     }
 
     async getTitle(): Promise<string> {
-        return await BrowserActions.getText(this.libraryTitle);
+        return BrowserActions.getText(this.libraryTitle);
     }
 
     async getLibraryIdText(): Promise<string> {
-        return await this.libraryIdField.getAttribute('value');
+        return this.libraryIdField.getAttribute('value');
     }
 
     async isErrorMessageDisplayed(): Promise<boolean> {
-        return await this.errorMessage.isDisplayed();
+        return this.errorMessage.isDisplayed();
     }
 
     async getErrorMessage(): Promise<string> {
-        return await BrowserActions.getText(this.errorMessage);
+        return BrowserActions.getText(this.errorMessage);
     }
 
     async getErrorMessages(position): Promise<string> {
-        return await BrowserActions.getText(this.errorMessages.get(position));
+        return BrowserActions.getText(this.errorMessages.get(position));
     }
 
     async waitForLibraryNameHint(): Promise<void> {
@@ -75,39 +75,39 @@ export class CreateLibraryDialog {
     }
 
     async getLibraryNameHint(): Promise<string> {
-        return await BrowserActions.getText(this.libraryNameHint);
+        return BrowserActions.getText(this.libraryNameHint);
     }
 
     async isNameDisplayed(): Promise<boolean> {
-        return await this.libraryNameField.isDisplayed();
+        return this.libraryNameField.isDisplayed();
     }
 
     async isLibraryIdDisplayed(): Promise<boolean> {
-        return await this.libraryIdField.isDisplayed();
+        return this.libraryIdField.isDisplayed();
     }
 
     async isDescriptionDisplayed(): Promise<boolean> {
-        return await this.libraryDescriptionField.isDisplayed();
+        return this.libraryDescriptionField.isDisplayed();
     }
 
     async isPublicDisplayed(): Promise<boolean> {
-        return await this.publicRadioButton.isDisplayed();
+        return this.publicRadioButton.isDisplayed();
     }
 
     async isModeratedDisplayed(): Promise<boolean> {
-        return await this.moderatedRadioButton.isDisplayed();
+        return this.moderatedRadioButton.isDisplayed();
     }
 
     async isPrivateDisplayed(): Promise<boolean> {
-        return await this.privateRadioButton.isDisplayed();
+        return this.privateRadioButton.isDisplayed();
     }
 
     async isCreateEnabled(): Promise<boolean> {
-        return await this.createButton.isEnabled();
+        return this.createButton.isEnabled();
     }
 
     async isCancelEnabled(): Promise<boolean> {
-        return await this.cancelButton.isEnabled();
+        return this.cancelButton.isEnabled();
     }
 
     async clickCreate(): Promise<void> {

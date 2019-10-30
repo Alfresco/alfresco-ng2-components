@@ -112,11 +112,11 @@ export class ContentServicesPage {
     }
 
     async checkLockedIcon(content): Promise<void> {
-        return await this.contentList.checkLockedIcon(content);
+        return this.contentList.checkLockedIcon(content);
     }
 
     async checkUnlockedIcon(content): Promise<void> {
-        return await this.contentList.checkUnlockedIcon(content);
+        return this.contentList.checkUnlockedIcon(content);
     }
 
     async checkDeleteIsDisabled(content): Promise<void> {
@@ -186,7 +186,7 @@ export class ContentServicesPage {
     }
 
     async getElementsDisplayedId() {
-        return await this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.nodeId);
+        return this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.nodeId);
     }
 
     checkElementsDateSortedAsc(elements) {
@@ -248,7 +248,7 @@ export class ContentServicesPage {
     }
 
     async getRecentFileIcon(): Promise<string> {
-        return await BrowserActions.getText(this.recentFileIcon);
+        return BrowserActions.getText(this.recentFileIcon);
     }
 
     async checkAcsContainer(): Promise<void> {
@@ -269,15 +269,15 @@ export class ContentServicesPage {
     }
 
     async numberOfResultsDisplayed(): Promise<number> {
-        return await this.contentList.dataTablePage().numberOfRows();
+        return this.contentList.dataTablePage().numberOfRows();
     }
 
     async currentFolderName(): Promise<string> {
-        return await BrowserActions.getText(this.currentFolder);
+        return BrowserActions.getText(this.currentFolder);
     }
 
     async getAllRowsNameColumn(): Promise<any> {
-        return await this.contentList.getAllRowsColumnValues(this.columns.name);
+        return this.contentList.getAllRowsColumnValues(this.columns.name);
     }
 
     async sortByName(sortOrder: string): Promise<any> {
@@ -294,33 +294,33 @@ export class ContentServicesPage {
 
     async sortAndCheckListIsOrderedByName(sortOrder: string): Promise<any> {
         await this.sortByName(sortOrder);
-        return await this.checkListIsSortedByNameColumn(sortOrder);
+        return this.checkListIsSortedByNameColumn(sortOrder);
     }
 
     async checkListIsSortedByNameColumn(sortOrder: string): Promise<any> {
-        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.name);
+        return this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.name);
     }
 
     async checkListIsSortedByCreatedColumn(sortOrder: string): Promise<any> {
-        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.created);
+        return this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.created);
     }
 
     async checkListIsSortedByAuthorColumn(sortOrder: string): Promise<any> {
-        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.createdBy);
+        return this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.createdBy);
     }
 
     async checkListIsSortedBySizeColumn(sortOrder: string): Promise<any> {
-        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.size);
+        return this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.size);
     }
 
     async sortAndCheckListIsOrderedByAuthor(sortOrder: string): Promise<any> {
         await this.sortByAuthor(sortOrder);
-        return await this.checkListIsSortedByAuthorColumn(sortOrder);
+        return this.checkListIsSortedByAuthorColumn(sortOrder);
     }
 
     async sortAndCheckListIsOrderedByCreated(sortOrder: string): Promise<any> {
         await this.sortByCreated(sortOrder);
-        return await this.checkListIsSortedByCreatedColumn(sortOrder);
+        return this.checkListIsSortedByCreatedColumn(sortOrder);
     }
 
     async doubleClickRow(nodeName): Promise<void> {
@@ -378,7 +378,7 @@ export class ContentServicesPage {
 
     async getActiveBreadcrumb(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.activeBreadcrumb);
-        return await this.activeBreadcrumb.getAttribute('title');
+        return this.activeBreadcrumb.getAttribute('title');
     }
 
     async uploadFile(fileLocation): Promise<void> {
@@ -405,17 +405,17 @@ export class ContentServicesPage {
 
     async getSingleFileButtonTooltip(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadFileButton);
-        return await this.uploadFileButtonInput.getAttribute('title');
+        return this.uploadFileButtonInput.getAttribute('title');
     }
 
     async getMultipleFileButtonTooltip(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
-        return await this.uploadMultipleFileButton.getAttribute('title');
+        return this.uploadMultipleFileButton.getAttribute('title');
     }
 
     async getFolderButtonTooltip(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadFolderButton);
-        return await this.uploadFolderButton.getAttribute('title');
+        return this.uploadFolderButton.getAttribute('title');
     }
 
     async checkUploadButton(): Promise<void> {
@@ -423,7 +423,7 @@ export class ContentServicesPage {
     }
 
     async uploadButtonIsEnabled(): Promise<boolean> {
-        return await this.uploadFileButton.isEnabled();
+        return this.uploadFileButton.isEnabled();
     }
 
     async getErrorMessage(): Promise<string> {
@@ -457,7 +457,7 @@ export class ContentServicesPage {
     async getDocumentListRowNumber(): Promise<number> {
         const documentList: ElementFinder = element(by.css('adf-upload-drag-area adf-document-list'));
         await BrowserVisibility.waitUntilElementIsVisible(documentList);
-        return await $$('adf-upload-drag-area adf-document-list .adf-datatable-row').count();
+        return $$('adf-upload-drag-area adf-document-list .adf-datatable-row').count();
     }
 
     async checkColumnNameHeader(): Promise<void> {
@@ -496,13 +496,13 @@ export class ContentServicesPage {
     }
 
     async getColumnValueForRow(file, columnName): Promise<string> {
-        return await this.contentList.dataTablePage().getColumnValueForRow(this.columns.name, file, columnName);
+        return this.contentList.dataTablePage().getColumnValueForRow(this.columns.name, file, columnName);
     }
 
     async getStyleValueForRowText(rowName, styleName): Promise<string> {
         const row: ElementFinder = element(by.css(`div.adf-datatable-cell[data-automation-id="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
         await BrowserVisibility.waitUntilElementIsVisible(row);
-        return await row.getCssValue(styleName);
+        return row.getCssValue(styleName);
     }
 
     async checkEmptyFolderTextToBe(text): Promise<void> {
@@ -522,7 +522,7 @@ export class ContentServicesPage {
     async getRowIconImageUrl(fileName): Promise<string> {
         const iconRow: ElementFinder = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`));
         await BrowserVisibility.waitUntilElementIsVisible(iconRow);
-        return await iconRow.getAttribute('src');
+        return iconRow.getAttribute('src');
     }
 
     async checkGridViewButtonIsVisible(): Promise<void> {
@@ -545,7 +545,7 @@ export class ContentServicesPage {
 
     async getDocumentCardIconForElement(elementName): Promise<string> {
         const elementIcon: ElementFinder = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`));
-        return await elementIcon.getAttribute('src');
+        return elementIcon.getAttribute('src');
     }
 
     async checkDocumentCardPropertyIsShowed(elementName, propertyName): Promise<void> {
@@ -555,7 +555,7 @@ export class ContentServicesPage {
 
     async getAttributeValueForElement(elementName, propertyName): Promise<string> {
         const elementSize = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`));
-        return await BrowserActions.getText(elementSize);
+        return BrowserActions.getText(elementSize);
     }
 
     async checkMenuIsShowedForElementIndex(elementIndex): Promise<void> {

@@ -52,7 +52,7 @@ export class VersionManagePage {
 
     async getFileVersionName(version): Promise<string> {
         const fileElement: ElementFinder = element(by.css(`[id="adf-version-list-item-name-${version}"]`));
-        return await BrowserActions.getText(fileElement);
+        return BrowserActions.getText(fileElement);
     }
 
     async checkFileVersionExist(version): Promise<void> {
@@ -67,12 +67,12 @@ export class VersionManagePage {
 
     async getFileVersionComment(version): Promise<string> {
         const fileComment: ElementFinder = element(by.id(`adf-version-list-item-comment-${version}`));
-        return await BrowserActions.getText(fileComment);
+        return BrowserActions.getText(fileComment);
     }
 
     async getFileVersionDate(version): Promise<string> {
         const fileDate: ElementFinder = element(by.id(`adf-version-list-item-date-${version}`));
-        return await BrowserActions.getText(fileDate);
+        return BrowserActions.getText(fileDate);
     }
 
     async enterCommentText(text): Promise<void> {

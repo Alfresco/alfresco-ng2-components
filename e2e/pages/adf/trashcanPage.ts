@@ -29,7 +29,7 @@ export class TrashcanPage {
     restoreButton: ElementFinder = element(by.css(`button[title='Restore']`));
 
     async numberOfResultsDisplayed(): Promise<number> {
-        return await element.all(this.rows).count();
+        return element.all(this.rows).count();
     }
 
     async waitForTableBody(): Promise<void> {

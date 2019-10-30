@@ -27,7 +27,7 @@ export class DatePickerPage {
     previousMonthButton: ElementFinder = element(by.css('button[class*="mat-calendar-previous-button"]'));
 
     async getSelectedDate(): Promise<string> {
-        return await element(by.css('td[class*="mat-calendar-body-active"]')).getAttribute('aria-label');
+        return element(by.css('td[class*="mat-calendar-body-active"]')).getAttribute('aria-label');
     }
 
     async checkDatesAfterDateAreDisabled(date): Promise<void> {

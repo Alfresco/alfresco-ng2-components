@@ -141,11 +141,11 @@ export class TasksPage {
     }
 
     async clickSortByNameAsc(): Promise<any> {
-        return await this.tasksListPage().getDataTable().sortByColumn('ASC', 'name');
+        return this.tasksListPage().getDataTable().sortByColumn('ASC', 'name');
     }
 
     async clickSortByNameDesc(): Promise<any> {
-        return await this.tasksListPage().getDataTable().sortByColumn('DESC', 'name');
+        return this.tasksListPage().getDataTable().sortByColumn('DESC', 'name');
     }
 
 }

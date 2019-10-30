@@ -60,13 +60,13 @@ export class FormFieldsPage {
         const widget: ElementFinder = await this.getWidget(fieldId);
         const value = widget.element(valueLocatorParam || this.valueLocator);
         await BrowserVisibility.waitUntilElementIsVisible(value);
-        return await value.getAttribute('value');
+        return value.getAttribute('value');
     }
 
     async getFieldLabel(fieldId, labelLocatorParam): Promise<string> {
         const widget = await this.getWidget(fieldId);
         const label = widget.all(labelLocatorParam || this.labelLocator).first();
-        return await BrowserActions.getText(label);
+        return BrowserActions.getText(label);
     }
 
     async getFieldErrorMessage(fieldId): Promise<string> {

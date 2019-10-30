@@ -81,7 +81,7 @@ export class DataTableComponentPage {
     }
 
     async getNumberOfSelectedRows(): Promise<number> {
-        return await this.allSelectedRows.count();
+        return this.allSelectedRows.count();
     }
 
     async selectRow(columnName, columnValue): Promise<void> {
@@ -110,7 +110,7 @@ export class DataTableComponentPage {
         const row = this.getRow(identifyingColumn, identifyingValue);
         await BrowserVisibility.waitUntilElementIsVisible(row);
         const rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
-        return await BrowserActions.getText(rowColumn);
+        return BrowserActions.getText(rowColumn);
     }
 
     /**
@@ -146,7 +146,7 @@ export class DataTableComponentPage {
     }
 
     async getTooltip(columnName, columnValue): Promise<string> {
-        return await this.getCellElementByValue(columnName, columnValue).getAttribute('title');
+        return this.getCellElementByValue(columnName, columnValue).getAttribute('title');
     }
 
     async rightClickOnRowByIndex(index: number): Promise<void> {
@@ -160,15 +160,15 @@ export class DataTableComponentPage {
     }
 
     async numberOfRows(): Promise<number> {
-        return await this.rootElement.all(this.rows).count();
+        return this.rootElement.all(this.rows).count();
     }
 
     async getAllRowsColumnValues(column: string) {
         const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title='" + column + "'] span");
         await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first());
-        return await element.all(columnLocator)
-            .filter(async (el) => await el.isPresent())
-            .map(async (el) => await el.getText());
+        return element.all(columnLocator)
+            .filter(async (el) => el.isPresent())
+            .map(async (el) => el.getText());
     }
 
     async getRowsWithSameColumnValues(columnName: string, columnValue) {
@@ -189,7 +189,7 @@ export class DataTableComponentPage {
 
     async getFirstElementDetail(detail: string): Promise<string> {
         const firstNode = element.all(by.css(`adf-datatable div[title="${detail}"] span`)).first();
-        return await BrowserActions.getText(firstNode);
+        return BrowserActions.getText(firstNode);
     }
 
     geCellElementDetail(detail: string): ElementArrayFinder {
@@ -241,7 +241,7 @@ export class DataTableComponentPage {
 
     async contentInPosition(position: number): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.contents.first());
-        return await BrowserActions.getText(this.contents.get(position - 1));
+        return BrowserActions.getText(this.contents.get(position - 1));
     }
 
     getCellElementByValue(columnName: string, columnValue: string): ElementFinder {
@@ -261,11 +261,11 @@ export class DataTableComponentPage {
     }
 
     async getNumberOfColumns(): Promise<number> {
-        return await this.allColumns.count();
+        return this.allColumns.count();
     }
 
     async getNumberOfRows(): Promise<number> {
-        return await this.list.count();
+        return this.list.count();
     }
 
     getCellByRowNumberAndColumnName(rowNumber, columnName): ElementFinder {
@@ -333,7 +333,7 @@ export class DataTableComponentPage {
     }
 
     async getCopyContentTooltip(): Promise<string> {
-        return await BrowserActions.getText(this.copyColumnTooltip);
+        return BrowserActions.getText(this.copyColumnTooltip);
     }
 
     async copyContentTooltipIsNotDisplayed(): Promise<void> {

@@ -28,7 +28,7 @@ export class FolderDialog {
     validationMessage: ElementFinder = this.folderDialog.element(by.css('div.mat-form-field-subscript-wrapper mat-hint span'));
 
     async getDialogTitle(): Promise<string> {
-        return await BrowserActions.getText(this.folderTitle);
+        return BrowserActions.getText(this.folderTitle);
     }
 
     async checkFolderDialogIsDisplayed(): Promise<void> {
@@ -62,11 +62,11 @@ export class FolderDialog {
     }
 
     async getFolderName(): Promise<string> {
-        return await this.folderNameField.getAttribute('value');
+        return this.folderNameField.getAttribute('value');
     }
 
     async getValidationMessage(): Promise<string> {
-        return await BrowserActions.getText(this.validationMessage);
+        return BrowserActions.getText(this.validationMessage);
     }
 
     async checkValidationMessageIsNotDisplayed(): Promise<void> {

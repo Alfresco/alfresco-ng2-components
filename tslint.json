@@ -87,6 +87,7 @@
     "no-var-keyword": true,
     "no-var-requires": true,
     "object-literal-sort-keys": false,
+    "no-return-await": true,
     "one-line": [
       true,
       "check-open-brace",

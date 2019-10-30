@@ -73,11 +73,11 @@ export class SettingsPage {
     }
 
     async getBpmHostUrl() {
-        return await this.bpmText.getAttribute('value');
+        return this.bpmText.getAttribute('value');
     }
 
     async getEcmHostUrl() {
-        return await this.ecmText.getAttribute('value');
+        return this.ecmText.getAttribute('value');
     }
 
     getBpmOption() {

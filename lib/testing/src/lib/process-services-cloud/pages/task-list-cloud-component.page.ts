@@ -118,39 +118,39 @@ export class TaskListCloudComponentPage {
     }
 
     async getAllRowsNameColumn() {
-        return await this.dataTable.getAllRowsColumnValues(column.name);
+        return this.dataTable.getAllRowsColumnValues(column.name);
     }
 
     async getAllRowsByIdColumn() {
-        return await this.dataTable.getAllRowsColumnValues(column.id);
+        return this.dataTable.getAllRowsColumnValues(column.id);
     }
 
     async getAllRowsByProcessDefIdColumn() {
-        return await this.dataTable.getAllRowsColumnValues(column.processDefinitionId);
+        return this.dataTable.getAllRowsColumnValues(column.processDefinitionId);
     }
 
     async getAllRowsByProcessInstanceIdColumn() {
-        return await this.dataTable.getAllRowsColumnValues(column.processInstanceId);
+        return this.dataTable.getAllRowsColumnValues(column.processInstanceId);
     }
 
     async getAllRowsByAssigneeColumn() {
-        return await this.dataTable.getAllRowsColumnValues(column.assignee);
+        return this.dataTable.getAllRowsColumnValues(column.assignee);
     }
 
     async getAllRowsByParentTaskIdColumn() {
-        return await this.dataTable.getAllRowsColumnValues(column.parentTaskId);
+        return this.dataTable.getAllRowsColumnValues(column.parentTaskId);
     }
 
     async getAllRowsByPriorityColumn() {
-        return await this.dataTable.getAllRowsColumnValues(column.priority);
+        return this.dataTable.getAllRowsColumnValues(column.priority);
     }
 
     async getAllRowsByStandAloneColumn() {
-        return await this.dataTable.getAllRowsColumnValues(column.standAlone);
+        return this.dataTable.getAllRowsColumnValues(column.standAlone);
     }
 
     async getAllRowsByOwnerColumn() {
-        return await this.dataTable.getAllRowsColumnValues(column.owner);
+        return this.dataTable.getAllRowsColumnValues(column.owner);
     }
 
     async getIdCellValue(rowName): Promise<string> {

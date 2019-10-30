@@ -107,7 +107,7 @@ export class UploadDialog {
 
     async getTitleText(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.title);
-        return await this.title.getText();
+        return this.title.getText();
     }
 
     async getConfirmationDialogTitleText(): Promise<string> {
@@ -152,7 +152,7 @@ export class UploadDialog {
     }
 
     async getTooltip(): Promise<string> {
-        return await BrowserActions.getText(this.errorTooltip);
+        return BrowserActions.getText(this.errorTooltip);
     }
 
 }
