@@ -66,8 +66,8 @@ describe('Start Task', () => {
 
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
-        apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER, identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+        apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_USER]);
 
         activitiUser = await identityService.createIdentityUser();
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');

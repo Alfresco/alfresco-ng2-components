@@ -28,49 +28,49 @@ export class RolesService {
     async createRole(roleName: string): Promise<any> {
         const path = '/roles';
         const method = 'POST';
-        const queryParams = {}, postBody = {
+        const queryParams = {};
+        const postBody = {
             name: roleName + 'TestRole'
         };
-        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        return data;
+
+        return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
-    async deleteRole(roleId): Promise<any> {
+    async deleteRole(roleId: string): Promise<any> {
         const path = `/roles-by-id/${roleId}`;
         const method = 'DELETE';
         const queryParams = {}, postBody = {};
-        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        return data;
+
+        return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
-    async getRoleIdByRoleName(roleName): Promise<any> {
+    async getRoleIdByRoleName(roleName: string): Promise<string> {
         const path = `/roles`;
         const method = 'GET';
-        let roleId;
         const queryParams = {}, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         for (const key in data) {
             if (data[key].name === roleName) {
-                roleId = data[key].id;
+                return data[key].id;
             }
         }
-        return roleId;
+        return undefined;
     }
 
-    async getClientRoleIdByRoleName(groupId, clientId, clientRoleName): Promise<any> {
+    async getClientRoleIdByRoleName(groupId: string, clientId: string, clientRoleName: string): Promise<any> {
         const path = `/groups/${groupId}/role-mappings/clients/${clientId}/available`;
         const method = 'GET';
-        let clientRoleId;
-        const queryParams = {}, postBody = {};
+        const queryParams = {};
+        const postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         for (const key in data) {
             if (data[key].name === clientRoleName) {
-                clientRoleId = data[key].id;
+                return data[key].id;
             }
         }
-        return clientRoleId;
+        return undefined;
     }
 
 }
