@@ -16,7 +16,6 @@
  */
 
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
-import moment = require('moment');
 
 export const assignedTaskDetailsCloudMock = new TaskDetailsCloudModel(
     {
@@ -27,7 +26,7 @@ export const assignedTaskDetailsCloudMock = new TaskDetailsCloudModel(
         'name': 'This is a new task ',
         'description': 'This is the description ',
         'createdDate': 1545048055900,
-        'dueDate': moment(new Date()).valueOf(),
+        'dueDate': Date.now(),
         'claimedDate': null,
         'priority': 5,
         'category': null,

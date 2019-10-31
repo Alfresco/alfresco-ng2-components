@@ -26,16 +26,16 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 describe('Task Header cloud component', () => {
     const basicCreatedTaskName = StringUtil.generateRandomString();
     const completedTaskName = StringUtil.generateRandomString();
-    let basicCreatedTask;
-    let basicCreatedDate;
-    let completedTask;
-    let completedCreatedDate;
-    let dueDate;
-    let subTask;
-    let subTaskCreatedDate;
-    let completedEndDate;
-    let defaultDate;
-    let groupInfo, testUser;
+    let basicCreatedTask: any;
+    let basicCreatedDate: any;
+    let completedTask: any;
+    let completedCreatedDate: string;
+    let dueDate: string;
+    let subTask: any;
+    let subTaskCreatedDate: string;
+    let completedEndDate: string;
+    let defaultDate: string;
+    let groupInfo: any, testUser: any;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const priority = 30;
     const description = 'descriptionTask';
