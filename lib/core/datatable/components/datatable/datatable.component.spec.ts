@@ -230,6 +230,8 @@ describe('DataTable', () => {
         });
 
         dataTable.ngOnChanges({});
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
         dataTable.onColumnHeaderClick(column);
     });
 
@@ -709,6 +711,8 @@ describe('DataTable', () => {
 
     it('should not sort if column is missing', () => {
         dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
         dataTable.onColumnHeaderClick(null);
@@ -717,6 +721,8 @@ describe('DataTable', () => {
 
     it('should not sort upon clicking non-sortable column header', () => {
         dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
@@ -730,6 +736,8 @@ describe('DataTable', () => {
 
     it('should set sorting upon column header clicked', () => {
         dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
@@ -749,6 +757,8 @@ describe('DataTable', () => {
 
     it('should invert sorting upon column header clicked', () => {
         dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
 
         const adapter = dataTable.data;
         const sorting = new DataSorting('column_1', 'asc');
@@ -789,6 +799,8 @@ describe('DataTable', () => {
                 new ObjectDataColumn({ key: 'other', sortable: true })
             ]
         );
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
 
         const [col1, col2] = dataTable.getSortableColumns();
 
