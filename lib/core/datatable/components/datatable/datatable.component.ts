@@ -408,7 +408,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
 
         if (row) {
-            this.keyManager.setActiveItem(this.data.getRows().indexOf(row));
+            const rowIndex = this.data.getRows().indexOf(row) + (this.isHeaderVisible() ? 1 : 0);
+            this.keyManager.setActiveItem(rowIndex);
+
             const dataRowEvent = new DataRowEvent(row, mouseEvent, this);
             this.clickObserver.next(dataRowEvent);
         }
