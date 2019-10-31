@@ -55,6 +55,14 @@ describe('DataTableRowComponent', () => {
             .not.toBe(true);
     });
 
+    it('should not have select class when row data is null', () => {
+        row.isSelected = false;
+        fixture.detectChanges();
+
+        expect(fixture.debugElement.nativeElement.classList.contains('adf-is-selected'))
+            .not.toBe(true);
+    });
+
     it('should set aria selected to true when row is selected', () => {
         row.isSelected = true;
         component.row = row;
@@ -71,12 +79,28 @@ describe('DataTableRowComponent', () => {
         expect(fixture.debugElement.nativeElement.getAttribute('aria-selected')).toBe('false');
     });
 
+    it('should set aria selected to false when row is null', () => {
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.getAttribute('aria-selected')).toBe('false');
+    });
+
     it('should set aria label', () => {
         spyOn(row, 'getValue').and.returnValue('some-name');
         component.row = row;
         fixture.detectChanges();
 
         expect(fixture.debugElement.nativeElement.getAttribute('aria-label')).toBe('some-name');
+    });
+
+    it('should set tabindex as focusable  when row is not disabled', () => {
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.getAttribute('tabindex')).toBe('0');
+    });
+
+    it('should not set tabindex when row is disabled', () => {
+        component.disabled = true;
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.getAttribute('tabindex')).toBe(null);
     });
 
     it('should focus element', () => {
