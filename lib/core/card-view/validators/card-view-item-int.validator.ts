@@ -24,6 +24,11 @@ export class CardViewItemIntValidator implements CardViewItemValidator {
     isValid(value: any): boolean {
         return value === ''
             || !isNaN(value)
-            && (function (x) { return (x | 0) === x; })(parseFloat(value));
+            && this.isIntegerNumber(value);
+    }
+
+    isIntegerNumber(value: any) {
+        const parsedNumber = parseFloat(value);
+        return (parsedNumber | 0) === parsedNumber;
     }
 }
