@@ -223,7 +223,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     ngAfterViewInit() {
-        this.keyManager = new FocusKeyManager(this.rowsList).withWrap();
+        this.keyManager = new FocusKeyManager(this.rowsList)
+            .withWrap()
+            .skipPredicate(item => item.disabled);
     }
 
     ngOnChanges(changes: SimpleChanges) {
