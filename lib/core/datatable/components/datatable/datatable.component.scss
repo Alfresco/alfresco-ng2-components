@@ -220,6 +220,24 @@
             color: $data-table-cell-text-color;
         }
 
+        .adf-datatable-row {
+            &:hover, &:focus {
+                background-color: $data-table-hover-color;
+            }
+
+            &:focus {
+                outline-offset: -1px;
+                outline: $data-table-outline;
+            }
+
+            .adf-cell-value, .adf-datatable-cell-header {
+                &:focus {
+                    outline-offset: -1px;
+                    outline: $data-table-outline;
+                }
+            }
+        }
+
         .adf-datatable-body {
             display: flex;
             flex-direction: column;
@@ -233,15 +251,6 @@
                 cursor: pointer;
 
                 @include adf-no-select;
-
-                &:hover, &:focus {
-                    background-color: $data-table-hover-color;
-                }
-
-                &:focus {
-                    outline-offset: -1px;
-                    outline: $data-table-outline;
-                }
 
                 &.adf-is-selected, &.adf-is-selected:hover {
                     background-color: $data-table-selection-color;
@@ -418,11 +427,6 @@
             align-items: center;
             word-break: break-all;
             width: 100%;
-
-            &:focus {
-                outline-offset: -1px;
-                outline: $data-table-outline;
-            }
         }
 
         .adf-datatable__actions-cell, .adf-datatable-cell--image {
