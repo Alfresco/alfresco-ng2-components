@@ -6,7 +6,12 @@
     [class.adf-sticky-header]="isStickyHeaderEnabled()"
     [class.adf-datatable--empty]="!isHeaderVisible()">
     <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup" [ngClass]="{ 'adf-sr-only': !showHeader }">
-        <div class="adf-datatable-row" *ngIf="display === 'list'" role="row">
+        <adf-datatable-row
+            data-automation-id="datatable-row-header"
+            [disabled]="!showHeader"
+            class="adf-datatable-row"
+            *ngIf="display === 'list'"
+            role="row">
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-cell-header">
                 <span class="adf-sr-only">Actions</span>
@@ -35,7 +40,7 @@
             <div *ngIf="actions && actionsPosition === 'right'" class="adf-actions-column adf-datatable-cell-header adf-datatable__actions-cell">
                 <span class="adf-sr-only">Actions</span>
             </div>
-        </div>
+        </adf-datatable-row>
         <mat-form-field *ngIf="display === 'gallery' && showHeader">
             <mat-select [value]="getSortingKey()" [attr.data-automation-id]="'grid-view-sorting'">
                 <mat-option *ngFor="let col of getSortableColumns()"
