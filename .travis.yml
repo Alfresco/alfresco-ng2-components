@@ -32,7 +32,7 @@ stages:
   - name: Unit test
     if: (type != cron AND tag IS blank) OR type = api
   - name: Update Rancher
-    if: (type = push AND tag IS blank) OR type = api
+    if: (type = push AND tag IS blank)
   - name: e2e Test
     if: (type != cron AND tag IS blank) OR type = api
   - name: Update Rancher PR
