@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnDestroy, OnChanges, OnInit } from '@angular/core';
 import {
     CardViewDateItemModel,
     CardViewItem,
@@ -30,7 +30,7 @@ import {
 import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/task-details-cloud.model';
 import { Router } from '@angular/router';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { NumericFieldValidator } from '../../../validators/numeric-field.validator';
 import { takeUntil } from 'rxjs/operators';
 
@@ -39,7 +39,7 @@ import { takeUntil } from 'rxjs/operators';
     templateUrl: './task-header-cloud.component.html',
     styleUrls: ['./task-header-cloud.component.scss']
 })
-export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
+export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 
     /** (Required) The name of the application. */
     @Input()
@@ -56,6 +56,10 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
     /** Emitted when the task is unclaimed (ie, requeued). */
     @Output()
     unclaim: EventEmitter<any> = new EventEmitter<any>();
+
+    /** Emitted when the task has not been found. */
+    @Output()
+    taskError: EventEmitter<any> = new EventEmitter<any>();
 
     taskDetails: TaskDetailsCloudModel = new TaskDetailsCloudModel();
     properties: CardViewItem[];
@@ -79,13 +83,23 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        if ((this.appName || this.appName === '') && this.taskId) {
+        this.taskCloudService.dataChangesDetected$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
             this.loadTaskDetailsById(this.appName, this.taskId);
-        }
+        });
 
         this.cardViewUpdateService.itemUpdated$
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(this.updateTaskDetails.bind(this));
+            .subscribe(this.updateTaskDetails.bind(this)
+        );
+    }
+
+    ngOnChanges() {
+        this.taskDetails = new TaskDetailsCloudModel();
+        if (this.appName && this.taskId) {
+            this.loadTaskDetailsById(this.appName, this.taskId);
+        }
     }
 
     loadTaskDetailsById(appName: string, taskId: string): any {
@@ -97,7 +111,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                 } else {
                     this.refreshData();
                 }
-            });
+            },
+            (err) => this.taskError.emit(err), () => {});
     }
 
     private initDefaultProperties() {
@@ -202,7 +217,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
             new CardViewArrayItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS',
-                    value: this.getCandidateUsers(),
+                    value: this.taskCloudService.getCandidateUsers(this.appName, this.taskId),
                     key: 'candidateUsers',
                     icon: 'person',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT'),
@@ -212,7 +227,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
             new CardViewArrayItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS',
-                    value: this.getCandidateGroups(),
+                    value: this.taskCloudService.getCandidateGroups(this.appName, this.taskId),
                     key: 'candidateGroups',
                     icon: 'group',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT'),
@@ -220,14 +235,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                 }
             )
         ];
-    }
-
-    private getCandidateUsers(): Observable<string[]> {
-        return this.taskCloudService.getCandidateUsers(this.appName, this.taskId);
-    }
-
-    private getCandidateGroups(): Observable<string[]> {
-        return this.taskCloudService.getCandidateGroups(this.appName, this.taskId);
     }
 
     /**
@@ -275,7 +282,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
     }
 
     isTaskValid(): boolean {
-        return (this.appName || this.appName === '') && !!this.taskId;
+        return (this.appName) && !!this.taskId;
     }
 
     isTaskAssigned(): boolean {

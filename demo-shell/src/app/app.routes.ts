@@ -58,6 +58,7 @@ import { TemplateDemoComponent } from './components/template-list/template-demo.
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
+import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: 'app/components/login/login.module#AppLoginModule' },
     { path: 'logout', component: LogoutComponent },
@@ -176,6 +177,10 @@ export const appRoutes: Routes = [
                     {
                         path: 'people-group-cloud',
                         component: PeopleGroupCloudDemoComponent
+                    },
+                    {
+                        path: 'task-header-cloud',
+                        component: TaskHeaderCloudDemoComponent
                     },
                     {
                         path: 'community',

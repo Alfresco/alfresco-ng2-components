@@ -48,12 +48,15 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
         { href: '/sites', icon: 'format_list_bulleted', title: 'APP_LAYOUT.SITES' },
         { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
-        { href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD', children: [
-            { href: '/cloud/', icon: 'cloud', title: 'APP_LAYOUT.HOME' },
-            { href: '/cloud/community', icon: 'cloud', title: 'APP_LAYOUT.COMMUNITY' },
-            { href: '/form-cloud', icon: 'poll', title: 'APP_LAYOUT.FORM' },
-            { href: '/cloud/people-group-cloud', icon: 'group', title: 'APP_LAYOUT.PEOPLE_GROUPS_CLOUD' }
-        ]},
+        {
+            href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD', children: [
+                { href: '/cloud/', icon: 'cloud', title: 'APP_LAYOUT.HOME' },
+                { href: '/cloud/community', icon: 'cloud', title: 'APP_LAYOUT.COMMUNITY' },
+                { href: '/form-cloud', icon: 'poll', title: 'APP_LAYOUT.FORM' },
+                { href: '/cloud/people-group-cloud', icon: 'group', title: 'APP_LAYOUT.PEOPLE_GROUPS_CLOUD' },
+                { href: '/cloud/task-header-cloud', icon: 'cloud', title: 'APP_LAYOUT.TASK_HEADER_CLOUD.COMPONENT_NAME' }
+            ]
+        },
         { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES', children: [
             { href: '/activiti', icon: 'vpn_key', title: 'APP_LAYOUT.APP' },
             { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
