@@ -17,8 +17,9 @@
  * limitations under the License.
  */
 
-import { logging } from '@angular-devkit/core';
-import { spawnSync } from 'child_process';
+import { exec } from './exec';
+import * as program from 'commander';
+import { logger } from './logger';
 
 export interface PublishArgs {
     tag?: string;
@@ -31,71 +32,70 @@ export interface PublishArgs {
     pathProject: string;
 }
 
-function _exec(command: string, args: string[], opts: { cwd?: string }, logger: logging.Logger) {
-    if (process.platform.startsWith('win')) {
-        args.unshift('/c', command);
-        command = 'cmd.exe';
-    }
-
-    const { status, error, stderr, stdout } = spawnSync(command, args, { ...opts });
-
-    if (status !== 0) {
-        logger.error(`Command failed: ${command} ${args.map((x) => JSON.stringify(x)).join(', ')}`);
-        if (error) {
-            logger.error('Error: ' + (error ? error.message : 'undefined'));
-        } else {
-            logger.error(`STDERR:\n${stderr}`);
-        }
-        throw error;
-    } else {
-        return stdout.toString();
-    }
-}
-
-function _loginPerform(args: PublishArgs, logger: logging.Logger) {
+function loginPerform(args: PublishArgs) {
     logger.info(`Perform docker login...${args.loginRepo}`);
-    const loginDockerRes = _exec('docker', ['login', `-u=${args.loginUsername}`, `-p=${args.loginPassword}`, `${args.loginRepo}`], {}, logger);
+    const loginDockerRes = exec('docker', ['login', `-u=${args.loginUsername}`, `-p=${args.loginPassword}`, `${args.loginRepo}`], {});
     logger.info(loginDockerRes);
 }
 
-function _buildImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
+function buildImagePerform(args: PublishArgs, tag: string) {
     logger.info(`Perform docker build...${args.dockerRepo}:${tag}`);
-    const response = _exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, args.pathProject], {}, logger);
+    const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, args.pathProject], {});
     logger.info(response);
 }
 
-function _tagImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
+function tagImagePerform(args: PublishArgs, tag: string) {
     logger.info(`Perform docker tag... ${args.dockerRepo}:${tag} on ${args.dockerRepo}:${tag}`);
-    const response = _exec('docker', ['tag', `${args.dockerRepo}:${tag}`, `${args.dockerRepo}:${tag}`], {}, logger);
+    const response = exec('docker', ['tag', `${args.dockerRepo}:${tag}`, `${args.dockerRepo}:${tag}`], {});
     logger.info(response);
 }
 
-function _pushImagePerform(args: PublishArgs, logger: logging.Logger) {
+function pushImagePerform(args: PublishArgs) {
     logger.info(`Perform docker push... ${args.dockerRepo}`);
-    const response = _exec('docker', ['push', `${args.dockerRepo}`], {}, logger);
+    const response = exec('docker', ['push', `${args.dockerRepo}`], {});
     logger.info(response);
 }
 
-function _cleanImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
+function cleanImagePerform(args: PublishArgs, tag: string) {
     logger.info('Perform docker clean...');
-    const response = _exec('docker', ['rmi', `-f`, `${args.dockerRepo}:${tag}`], {}, logger);
+    const response = exec('docker', ['rmi', `-f`, `${args.dockerRepo}:${tag}`], {});
     logger.info(response);
 }
 
-export default async function (args: PublishArgs, logger: logging.Logger) {
+export default function (args: PublishArgs)  {
+    main(args);
+}
+
+function main(args) {
+    program
+        .version('0.1.0')
+        .description('Move in the folder where you have your Dockerfile and run the command:\n\n' +
+            'adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)"')
+        .option('--loginRepo [type]', 'URL registry')
+        .option('--loginPassword [type]', ' password')
+        .option('--loginUsername [type]', ' username')
+        .option('--loginCheck [type]', 'perform login')
+        .option('--dockerRepo [type]', 'docker repo')
+        .option('--dockerTags [type]', ' tags')
+        .option('--pathProject [type]', 'path ptojrct')
+        .parse(process.argv);
+
+    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+        program.outputHelp();
+    }
+
     if (args.loginCheck === true) {
-        _loginPerform(args, logger);
+        loginPerform(args);
     }
 
     if (args.dockerTags !== undefined) {
         args.dockerTags.split(',').forEach( (tag) => {
             logger.info(`Analyzing tag:${tag} ...`);
-            _buildImagePerform(args, tag, logger);
-            _tagImagePerform(args, tag, logger);
-            _pushImagePerform(args, logger);
-            _cleanImagePerform(args, tag, logger);
+            buildImagePerform(args, tag);
+            tagImagePerform(args, tag);
+            pushImagePerform(args);
+            cleanImagePerform(args, tag);
             logger.info(`tag:${tag} done`);
         });
     }
-
 }
