@@ -50,6 +50,8 @@ describe('Login component - SSO', () => {
             await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
                 browser.params.testConfig.adf.hostSso,
                 browser.params.testConfig.adf.hostIdentity, true, true, browser.params.config.oauth2.clientId);
+
+            await browser.refresh();
             await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         });
 
