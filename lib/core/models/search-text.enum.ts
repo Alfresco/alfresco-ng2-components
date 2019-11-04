@@ -15,5 +15,7 @@
  * limitations under the License.
  */
 
-export * from './search-cloud.component';
-export * from './search-cloud.module';
+export enum SearchTextStateEnum {
+    expanded = 'expanded',
+    collapsed = 'collapsed'
+}

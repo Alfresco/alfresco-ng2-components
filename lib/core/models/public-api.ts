@@ -33,3 +33,4 @@ export * from './identity-group.model';
 export * from './identity-user.model';
 export * from './identity-role.model';
 export * from './identity-group.model';
+export * from './search-text.enum';

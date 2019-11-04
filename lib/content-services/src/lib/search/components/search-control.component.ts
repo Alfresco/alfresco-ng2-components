@@ -15,33 +15,23 @@
  * limitations under the License.
  */
 
-import { AuthenticationService, ThumbnailService, UserPreferencesService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
-         QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef, TemplateRef, ContentChild } from '@angular/core';
+import { AuthenticationService, ThumbnailService, SearchTextComponent } from '@alfresco/adf-core';
+import { Component, EventEmitter, Input, OnDestroy, Output,
+         QueryList, ViewEncapsulation, ViewChild, ViewChildren, TemplateRef, ContentChild } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { SearchComponent } from './search.component';
-import { searchAnimation } from './animations';
 import { MatListItem } from '@angular/material';
 import { EmptySearchResultComponent } from './empty-search-result.component';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
-import { Direction } from '@angular/cdk/bidi';
 
 @Component({
     selector: 'adf-search-control',
     templateUrl: './search-control.component.html',
     styleUrls: ['./search-control.component.scss'],
-    animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-control' }
 })
-export class SearchControlComponent implements OnInit, OnDestroy {
-
-    /** Toggles whether to use an expanding search control. If false
-     * then a regular input is used.
-     */
-    @Input()
-    expandable: boolean = true;
+export class SearchControlComponent implements OnDestroy {
 
     /** Toggles highlighting of the search term in the results. */
     @Input()
@@ -51,13 +41,19 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Input()
     inputType: string = 'text';
 
+    /** Toggles "find-as-you-type" suggestions for possible matches. */
+    @Input()
+    liveSearchEnabled: boolean = true;
+
     /** Toggles auto-completion of the search input field. */
     @Input()
     autocomplete: boolean = false;
 
-    /** Toggles "find-as-you-type" suggestions for possible matches. */
+    /** Toggles whether to use an expanding search control. If false
+     * then a regular input is used.
+     */
     @Input()
-    liveSearchEnabled: boolean = true;
+    expandable: boolean = true;
 
     /** Maximum number of results to show in the live search. */
     @Input()
@@ -81,11 +77,11 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Output()
     optionClicked: EventEmitter<any> = new EventEmitter();
 
+    @ViewChild('searchTextInput')
+    searchTextInput: SearchTextComponent;
+
     @ViewChild('search')
     searchAutocomplete: SearchComponent;
-
-    @ViewChild('searchInput')
-    searchInput: ElementRef;
 
     @ViewChildren(MatListItem)
     private listResultElement: QueryList<MatListItem>;
@@ -93,75 +89,22 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @ContentChild(EmptySearchResultComponent)
     emptySearchTemplate: EmptySearchResultComponent;
 
-    searchTerm: string = '';
-    subscriptAnimationState: any;
+    focusSubject = new Subject<FocusEvent>();
     noSearchResultTemplate: TemplateRef <any> = null;
+    searchTerm: string = '';
 
-    private toggleSearch = new Subject<any>();
-    private focusSubject = new Subject<FocusEvent>();
     private onDestroy$ = new Subject<boolean>();
-    private dir = 'ltr';
 
     constructor(
         public authService: AuthenticationService,
-        private thumbnailService: ThumbnailService,
-        private userPreferencesService: UserPreferencesService
-    ) {
-
-        this.toggleSearch
-            .pipe(
-                debounceTime(200),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe(() => {
-                if (this.expandable) {
-                    this.subscriptAnimationState = this.toggleAnimation();
-
-                    if (this.subscriptAnimationState.value === 'inactive') {
-                        this.searchTerm = '';
-                        this.searchAutocomplete.resetResults();
-                        if ( document.activeElement.id === this.searchInput.nativeElement.id) {
-                            this.searchInput.nativeElement.blur();
-                        }
-                    }
-                }
-            });
-    }
-
-    applySearchFocus(animationDoneEvent) {
-        if (animationDoneEvent.toState === 'active') {
-            this.searchInput.nativeElement.focus();
-        }
-    }
-
-    ngOnInit() {
-        this.userPreferencesService
-            .select('textOrientation')
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((direction: Direction) => {
-                this.dir = direction;
-                this.subscriptAnimationState = this.getAnimationState();
-            });
-
-        this.subscriptAnimationState = this.getAnimationState();
-        this.setupFocusEventHandlers();
-    }
+        private thumbnailService: ThumbnailService
+    ) {}
 
     isNoSearchTemplatePresent(): boolean {
         return this.emptySearchTemplate ? true : false;
     }
 
     ngOnDestroy(): void {
-        if (this.focusSubject) {
-            this.focusSubject.complete();
-            this.focusSubject = null;
-        }
-
-        if (this.toggleSearch) {
-            this.toggleSearch.complete();
-            this.toggleSearch = null;
-        }
-
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
@@ -170,17 +113,9 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         return this.authService.isEcmLoggedIn();
     }
 
-    searchSubmit(event: any) {
-        this.submit.emit(event);
-        this.toggleSearchBar();
-    }
-
-    inputChange(event: any) {
-        this.searchChange.emit(event);
-    }
-
-    getAutoComplete(): string {
-        return this.autocomplete ? 'on' : 'off';
+    inputChange(value: string) {
+        this.searchTerm = value;
+        this.searchChange.emit(value);
     }
 
     getMimeTypeIcon(node: NodeEntry): string {
@@ -200,20 +135,10 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         return mimeType;
     }
 
-    isSearchBarActive() {
-        return this.subscriptAnimationState.value === 'active' && this.liveSearchEnabled;
-    }
-
-    toggleSearchBar() {
-        if (this.toggleSearch) {
-            this.toggleSearch.next();
-        }
-    }
-
     elementClicked(item: any) {
         if (item.entry) {
             this.optionClicked.next(item);
-            this.toggleSearchBar();
+            this.focusSubject.next(new FocusEvent('blur'));
         }
     }
 
@@ -222,16 +147,13 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     onBlur($event): void {
-        this.focusSubject.next($event);
-    }
-
-    activateToolbar() {
-        if (!this.isSearchBarActive()) {
-            this.toggleSearchBar();
+        const nextElement: any = this.getNextElementSibling(<Element> $event.target);
+        if (!nextElement && !this.isListElement($event)) {
+            this.focusSubject.next($event);
         }
     }
 
-    selectFirstResult() {
+    onSelectFirstResult() {
         if ( this.listResultElement && this.listResultElement.length > 0) {
             const firstElement: MatListItem = <MatListItem> this.listResultElement.first;
             firstElement._getHostElement().focus();
@@ -250,24 +172,18 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         if (previousElement) {
             previousElement.focus();
         } else {
-            this.searchInput.nativeElement.focus();
             this.focusSubject.next(new FocusEvent('focus'));
         }
     }
 
-    private setupFocusEventHandlers() {
-        const focusEvents: Observable<FocusEvent> = this.focusSubject
-            .pipe(
-                debounceTime(50),
-                filter(($event: any) => {
-                    return this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout');
-                }),
-                takeUntil(this.onDestroy$)
-            );
+    onReset(status: boolean) {
+        if (status) {
+            this.searchAutocomplete.resetResults();
+        }
+    }
 
-        focusEvents.subscribe(() => {
-            this.toggleSearchBar();
-        });
+    private isListElement($event: any): boolean {
+        return $event.relatedTarget && $event.relatedTarget.children[0].className === 'mat-list-item-content';
     }
 
     private getNextElementSibling(node: Element): Element {
@@ -276,29 +192,5 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     private getPreviousElementSibling(node: Element): Element {
         return node.previousElementSibling;
-    }
-
-    private toggleAnimation() {
-        if (this.dir === 'ltr') {
-            return this.subscriptAnimationState.value === 'inactive' ?
-                { value: 'active', params: { 'margin-left': 13 } } :
-                { value: 'inactive', params: { 'transform': 'translateX(82%)' } };
-        } else {
-            return this.subscriptAnimationState.value === 'inactive' ?
-                { value: 'active', params: { 'margin-right': 13 } } :
-                { value: 'inactive', params: { 'transform': 'translateX(-82%)' } };
-        }
-    }
-
-    private getAnimationState() {
-        if (this.dir === 'ltr') {
-            return this.expandable ?
-                { value: 'inactive', params: { 'transform': 'translateX(82%)' } } :
-                { value: 'no-animation' };
-        } else {
-            return this.expandable ?
-                { value: 'inactive', params: { 'transform': 'translateX(-82%)' } } :
-                { value: 'no-animation' };
-        }
     }
 }

@@ -16,19 +16,19 @@
  */
 
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { async, discardPeriodicTasks, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AuthenticationService,
     SearchService,
     setupTestBed,
     CoreModule,
-    UserPreferencesService
+    UserPreferencesService,
+    SearchTextComponent
 } from '@alfresco/adf-core';
 import { ThumbnailService } from '@alfresco/adf-core';
 import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
-import { SearchTriggerDirective } from './search-trigger.directive';
 import { SearchComponent } from './search.component';
 import { EmptySearchResultComponent } from './empty-search-result.component';
 import { of } from 'rxjs';
@@ -50,6 +50,9 @@ export class SimpleSearchTestCustomEmptyComponent {
 
     @ViewChild(SearchControlComponent)
     searchComponent: SearchControlComponent;
+
+    @ViewChild(SearchTextComponent)
+    searchTextComponent: SearchTextComponent;
 
     constructor() {
     }
@@ -82,7 +85,6 @@ describe('SearchControlComponent', () => {
         declarations: [
             SearchControlComponent,
             SearchComponent,
-            SearchTriggerDirective,
             EmptySearchResultComponent,
             SimpleSearchTestCustomEmptyComponent
         ],
@@ -139,24 +141,8 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should update FAYT search when user inputs a valid term', (done) => {
-            typeWordIntoSearchInput('customSearchTerm');
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
-            searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
-
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#result_option_0')).not.toBeNull();
-                expect(element.querySelector('#result_option_1')).not.toBeNull();
-                expect(element.querySelector('#result_option_2')).not.toBeNull();
-                done();
-            });
-        });
-
         it('should NOT update FAYT term when user inputs an empty string as search term ', (done) => {
             typeWordIntoSearchInput('');
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
 
             fixture.detectChanges();
@@ -183,23 +169,6 @@ describe('SearchControlComponent', () => {
         });
     });
 
-    describe('expandable option false', () => {
-
-        beforeEach(() => {
-            component.expandable = false;
-            fixture.detectChanges();
-        });
-
-        it('search button should be hide', () => {
-            const searchButton: any = element.querySelector('#adf-search-button');
-            expect(searchButton).toBe(null);
-        });
-
-        it('should not have animation', () => {
-            expect(component.subscriptAnimationState.value).toBe('no-animation');
-        });
-    });
-
     describe('component rendering', () => {
 
         it('should display a text input field by default', async(() => {
@@ -213,18 +182,6 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
             const attr = element.querySelector('#adf-control-input').getAttribute('autocomplete');
             expect(attr).toBe('off');
-        }));
-
-        it('should display a search input field when specified', async(() => {
-            component.inputType = 'search';
-            fixture.detectChanges();
-            expect(element.querySelectorAll('input[type="search"]').length).toBe(1);
-        }));
-
-        it('should set browser autocomplete to on when configured', async(() => {
-            component.autocomplete = true;
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-control-input').getAttribute('autocomplete')).toBe('on');
         }));
 
     });
@@ -241,8 +198,8 @@ describe('SearchControlComponent', () => {
         });
 
         it('should make autocomplete list control visible when search box has focus and there is a search result', (done) => {
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
+            spyOn(component.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             fixture.detectChanges();
 
             typeWordIntoSearchInput('TEST');
@@ -255,8 +212,8 @@ describe('SearchControlComponent', () => {
             });
         });
 
-        it('should show autocomplete list noe results when search box has focus and there is search result with length 0', (done) => {
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
+        it('should show autocomplete list no results when search box has focus and there is search result with length 0', (done) => {
+            spyOn(component.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(noResult));
             fixture.detectChanges();
 
@@ -271,8 +228,8 @@ describe('SearchControlComponent', () => {
         });
 
         it('should hide autocomplete list results when the search box loses focus', (done) => {
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
+            spyOn(component.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             fixture.detectChanges();
 
             const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
@@ -292,8 +249,8 @@ describe('SearchControlComponent', () => {
         });
 
         it('should keep autocomplete list control visible when user tabs into results', (done) => {
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
+            spyOn(component.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             fixture.detectChanges();
 
             const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
@@ -313,8 +270,8 @@ describe('SearchControlComponent', () => {
         });
 
         it('should close the autocomplete when user press ESCAPE', (done) => {
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
+            spyOn(component.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             fixture.detectChanges();
 
             const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
@@ -337,7 +294,7 @@ describe('SearchControlComponent', () => {
         });
 
         it('should close the autocomplete when user press ENTER on input', (done) => {
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
+            spyOn(component.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
             fixture.detectChanges();
 
@@ -361,7 +318,7 @@ describe('SearchControlComponent', () => {
         });
 
         it('should focus input element when autocomplete list is cancelled', (done) => {
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
+
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
             fixture.detectChanges();
 
@@ -393,108 +350,10 @@ describe('SearchControlComponent', () => {
 
     });
 
-    describe('search button', () => {
-
-        it('should NOT display a autocomplete list control when configured not to', fakeAsync(() => {
-            fixture.detectChanges();
-
-            tick(100);
-
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-            component.subscriptAnimationState.value = 'active';
-            fixture.detectChanges();
-
-            tick(100);
-
-            expect(component.subscriptAnimationState.value).toBe('active');
-
-            searchButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            tick(100);
-            fixture.detectChanges();
-
-            tick(100);
-
-            expect(component.subscriptAnimationState.value).toBe('inactive');
-            discardPeriodicTasks();
-        }));
-
-        it('click on the search button should open the input box when is close', fakeAsync(() => {
-            fixture.detectChanges();
-
-            tick(100);
-
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-            searchButton.triggerEventHandler('click', null);
-
-            tick(100);
-            fixture.detectChanges();
-
-            tick(100);
-
-            expect(component.subscriptAnimationState.value).toBe('active');
-            discardPeriodicTasks();
-        }));
-
-        it('Search button should not change the input state too often', fakeAsync(() => {
-            fixture.detectChanges();
-
-            tick(100);
-
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-            component.subscriptAnimationState.value = 'active';
-            fixture.detectChanges();
-
-            tick(100);
-
-            expect(component.subscriptAnimationState.value).toBe('active');
-            searchButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            tick(100);
-
-            searchButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            tick(100);
-            fixture.detectChanges();
-
-            tick(100);
-
-            expect(component.subscriptAnimationState.value).toBe('inactive');
-            discardPeriodicTasks();
-        }));
-
-        it('Search bar should close when user press ESC button', fakeAsync(() => {
-            fixture.detectChanges();
-
-            tick(100);
-
-            const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            component.subscriptAnimationState.value = 'active';
-            fixture.detectChanges();
-
-            tick(100);
-
-            expect(component.subscriptAnimationState.value).toBe('active');
-
-            inputDebugElement.triggerEventHandler('keyup.escape', {});
-
-            tick(100);
-            fixture.detectChanges();
-
-            tick(100);
-
-            expect(component.subscriptAnimationState.value).toBe('inactive');
-            discardPeriodicTasks();
-        }));
-    });
-
     describe('option click', () => {
 
         it('should emit a option clicked event when item is clicked', (done) => {
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
+            spyOn(component.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
             const clickDisposable = component.optionClicked.subscribe((item) => {
                 expect(item.entry.id).toBe('123');
@@ -512,10 +371,10 @@ describe('SearchControlComponent', () => {
         });
 
         it('should set deactivate the search after element is clicked', (done) => {
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
+            spyOn(component.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
             const clickDisposable = component.optionClicked.subscribe(() => {
-                expect(component.subscriptAnimationState.value).toBe('inactive');
+                expect(component.searchTextInput.subscriptAnimationState.value).toBe('inactive');
                 clickDisposable.unsubscribe();
                 done();
             });
@@ -531,11 +390,11 @@ describe('SearchControlComponent', () => {
         });
 
         it('should NOT reset the search term after element is clicked', (done) => {
-            spyOn(component, 'isSearchBarActive').and.returnValue(true);
+            spyOn(component.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
             const clickDisposable = component.optionClicked.subscribe(() => {
-                expect(component.searchTerm).not.toBeFalsy();
-                expect(component.searchTerm).toBe('TEST');
+                expect(component.searchTextInput.searchTerm).not.toBeFalsy();
+                expect(component.searchTextInput.searchTerm).toBe('TEST');
                 clickDisposable.unsubscribe();
                 done();
             });
@@ -561,9 +420,9 @@ describe('SearchControlComponent', () => {
 
         it('should display the custom no results when it is configured', (done) => {
             const noResultCustomMessage = 'BANDI IS NOTHING';
-            spyOn(componentCustom.searchComponent, 'isSearchBarActive').and.returnValue(true);
-            componentCustom.setCustomMessageForNoResult(noResultCustomMessage);
+            spyOn(componentCustom.searchComponent.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(noResult));
+            componentCustom.setCustomMessageForNoResult(noResultCustomMessage);
             fixtureCustom.detectChanges();
 
             const inputDebugElement = fixtureCustom.debugElement.query(By.css('#adf-control-input'));
@@ -589,82 +448,14 @@ describe('SearchControlComponent', () => {
             it('should have positive transform translation', () => {
                 userPreferencesService.setWithoutStore('textOrientation', 'ltr');
                 fixture.detectChanges();
-                expect(component.subscriptAnimationState.params.transform).toBe('translateX(82%)');
+                expect(component.searchTextInput.subscriptAnimationState.params.transform).toBe('translateX(82%)');
             });
 
             it('should have negative transform translation ', () => {
                 userPreferencesService.setWithoutStore('textOrientation', 'rtl');
                 fixture.detectChanges();
-                expect(component.subscriptAnimationState.params.transform).toBe('translateX(-82%)');
+                expect(component.searchTextInput.subscriptAnimationState.params.transform).toBe('translateX(-82%)');
             });
-        });
-
-        describe('toggle animation', () => {
-            beforeEach(() => {
-                fixture.detectChanges();
-            });
-
-            it('should have margin-left set when active and direction is ltr', fakeAsync(() => {
-                userPreferencesService.setWithoutStore('textOrientation', 'ltr');
-                fixture.detectChanges();
-
-                const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
-                searchButton.triggerEventHandler('click', null);
-                tick(100);
-                fixture.detectChanges();
-                tick(100);
-
-                expect(component.subscriptAnimationState.params).toEqual({ 'margin-left': 13 });
-                discardPeriodicTasks();
-            }));
-
-            it('should have positive transform translateX set when inactive and direction is ltr', fakeAsync(() => {
-                userPreferencesService.setWithoutStore('textOrientation', 'ltr');
-                component.subscriptAnimationState.value = 'active';
-
-                fixture.detectChanges();
-                const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
-                searchButton.triggerEventHandler('click', null);
-                tick(100);
-                fixture.detectChanges();
-                tick(100);
-
-                expect(component.subscriptAnimationState.params).toEqual({ 'transform': 'translateX(82%)' });
-                discardPeriodicTasks();
-            }));
-
-            it('should have margin-right set when active and direction is rtl', fakeAsync(() => {
-                userPreferencesService.setWithoutStore('textOrientation', 'rtl');
-                fixture.detectChanges();
-
-                const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
-                searchButton.triggerEventHandler('click', null);
-                tick(100);
-                fixture.detectChanges();
-                tick(100);
-
-                expect(component.subscriptAnimationState.params).toEqual({ 'margin-right': 13 });
-                discardPeriodicTasks();
-            }));
-
-            it('should have negative transform translateX set when inactive and direction is rtl', fakeAsync(() => {
-                userPreferencesService.setWithoutStore('textOrientation', 'rtl');
-                component.subscriptAnimationState.value = 'active';
-
-                fixture.detectChanges();
-                const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
-                searchButton.triggerEventHandler('click', null);
-                tick(100);
-                fixture.detectChanges();
-                tick(100);
-
-                expect(component.subscriptAnimationState.params).toEqual({ 'transform': 'translateX(-82%)' });
-                discardPeriodicTasks();
-            }));
         });
     });
 });

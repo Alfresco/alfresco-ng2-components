@@ -1,0 +1,30 @@
+<div class="adf-search-container" [attr.state]="subscriptAnimationState.value">
+    <div [@transitionMessages]="subscriptAnimationState"
+         (@transitionMessages.done)="applySearchFocus($event)">
+        <button mat-icon-button
+                *ngIf="expandable"
+                id="adf-search-button"
+                class="adf-search-button"
+                [title]="'SEARCH.BUTTON.TOOLTIP' | translate"
+                (click)="toggleSearchBar()"
+                (keyup.enter)="toggleSearchBar()">
+            <mat-icon [attr.aria-label]="'SEARCH.BUTTON.ARIA-LABEL' | translate">search</mat-icon>
+        </button>
+        <mat-form-field class="adf-input-form-field-divider">
+            <input matInput
+                   #searchInput
+                   [attr.aria-label]="'SEARCH.INPUT.ARIA-LABEL' | translate"
+                   [attr.type]="inputType"
+                   [autocomplete]="getAutoComplete()"
+                   id="adf-control-input"
+                   [(ngModel)]="searchTerm"
+                   (focus)="activateToolbar()"
+                   (blur)="onBlur($event)"
+                   (keyup.escape)="toggleSearchBar()"
+                   (keyup.arrowdown)="selectFirstResult($event)"
+                   (ngModelChange)="inputChange($event)"
+                   [searchAutocomplete]="searchAutocomplete ? searchAutocomplete : null"
+                   (keyup.enter)="searchSubmit($event)">
+        </mat-form-field>
+    </div>
+</div>

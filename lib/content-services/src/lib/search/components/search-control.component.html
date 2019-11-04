@@ -1,46 +1,26 @@
-<div class="adf-search-container" [attr.state]="subscriptAnimationState.value">
-    <div *ngIf="isLoggedIn()" [@transitionMessages]="subscriptAnimationState"
-         (@transitionMessages.done)="applySearchFocus($event)">
-        <button mat-icon-button
-                *ngIf="expandable"
-                id="adf-search-button"
-                class="adf-search-button"
-                [title]="'SEARCH.BUTTON.TOOLTIP' | translate"
-                (click)="toggleSearchBar()"
-                (keyup.enter)="toggleSearchBar()">
-            <mat-icon [attr.aria-label]="'SEARCH.BUTTON.ARIA-LABEL' | translate">search</mat-icon>
-        </button>
-        <mat-form-field class="adf-input-form-field-divider">
-            <input matInput
-                   #searchInput
-                   [attr.aria-label]="'SEARCH.INPUT.ARIA-LABEL' | translate"
-                   [attr.type]="inputType"
-                   [autocomplete]="getAutoComplete()"
-                   id="adf-control-input"
-                   [(ngModel)]="searchTerm"
-                   (focus)="activateToolbar()"
-                   (blur)="onBlur($event)"
-                   (keyup.escape)="toggleSearchBar()"
-                   (keyup.arrowdown)="selectFirstResult()"
-                   (ngModelChange)="inputChange($event)"
-                   [searchAutocomplete]="auto"
-                   (keyup.enter)="searchSubmit($event)">
-        </mat-form-field>
-    </div>
-</div>
+<adf-search-text-input  #searchTextInput
+                        [searchTerm]= "searchTerm"
+                        [expandable]="expandable"
+                        [autocomplete]="autocomplete"
+                        [liveSearchEnabled]="liveSearchEnabled"
+                        [focusListener]="focusSubject.asObservable()"
+                        [searchAutocomplete]="auto"
+                        (searchChange)="inputChange($event)"
+                        (reset)="onReset($event)"
+                        (selectResult)="onSelectFirstResult()"
+                        (submit)="submit.emit($event)"></adf-search-text-input>
 
 <adf-search #search
             #auto="searchAutocomplete"
             class="adf-search-result-autocomplete"
             [maxResults]="liveSearchMaxResults">
     <ng-template let-data>
-        <mat-list *ngIf="isSearchBarActive()" id="autocomplete-search-result-list">
+        <mat-list *ngIf="searchTextInput.isSearchBarActive()" id="autocomplete-search-result-list">
             <mat-list-item
                 *ngFor="let item of data?.list?.entries; let idx = index"
                 id="result_option_{{idx}}"
                 [attr.data-automation-id]="'autocomplete_for_' + item.entry.name"
                 [tabindex]="0"
-                (focus)="onFocus($event)"
                 (blur)="onBlur($event)"
                 (keyup.arrowdown)="onRowArrowDown($event)"
                 (keyup.arrowup)="onRowArrowUp($event)"

@@ -22,8 +22,6 @@ import { MaterialModule } from '../material.module';
 
 import { CoreModule } from '@alfresco/adf-core';
 
-import { SearchTriggerDirective } from './components/search-trigger.directive';
-
 import { SearchControlComponent } from './components/search-control.component';
 import { SearchComponent } from './components/search.component';
 import { EmptySearchResultComponent } from './components/empty-search-result.component';
@@ -41,7 +39,6 @@ import { SearchSortingPickerComponent } from './components/search-sorting-picker
 export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     SearchComponent,
     SearchControlComponent,
-    SearchTriggerDirective,
     EmptySearchResultComponent,
     SearchFilterComponent,
     SearchChipListComponent
