@@ -15,5 +15,5 @@
  * limitations under the License.
  */
 
- export * from './search-text.component';
- export * from './search-text.module';
+ export * from './search-text-input.component';
+ export * from './search-text-input.module';

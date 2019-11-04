@@ -5,12 +5,12 @@ Status: Active
 Last reviewed: 2019-10-24
 ---
 
-# [Search Text Component](../../../lib/core/search-text/search-text.component.ts "Defined in search-text.component.ts")
+# [Search Text Input Component](../../../lib/core/search-text/search-text-input.component.ts "Defined in search-text-input.component.ts")
 
 Displays a input text that supports autocompletion
 
 ## Basic Usage
-
+ 
 ```html
 <adf-search-text-input
     [expandable]="expandable"

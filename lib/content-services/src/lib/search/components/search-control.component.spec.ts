@@ -24,7 +24,7 @@ import {
     setupTestBed,
     CoreModule,
     UserPreferencesService,
-    SearchTextComponent
+    SearchTextInputComponent
 } from '@alfresco/adf-core';
 import { ThumbnailService } from '@alfresco/adf-core';
 import { noResult, results } from '../../mock';
@@ -51,8 +51,8 @@ export class SimpleSearchTestCustomEmptyComponent {
     @ViewChild(SearchControlComponent)
     searchComponent: SearchControlComponent;
 
-    @ViewChild(SearchTextComponent)
-    searchTextComponent: SearchTextComponent;
+    @ViewChild(SearchTextInputComponent)
+    searchTextInputComponent: SearchTextInputComponent;
 
     constructor() {
     }

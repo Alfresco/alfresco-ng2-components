@@ -18,15 +18,15 @@
 import { ComponentFixture, TestBed, discardPeriodicTasks, fakeAsync, tick, async } from '@angular/core/testing';
 import { setupTestBed, UserPreferencesService } from 'core';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { SearchTextComponent } from './search-text.component';
+import { SearchTextInputComponent } from './search-text-input.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 
-describe('SearchTextComponent', () => {
+describe('SearchTextInputComponent', () => {
 
-    let fixture: ComponentFixture<SearchTextComponent>;
-    let component: SearchTextComponent;
+    let fixture: ComponentFixture<SearchTextInputComponent>;
+    let component: SearchTextInputComponent;
     let debugElement: DebugElement;
     let element: HTMLElement;
     let userPreferencesService: UserPreferencesService;
@@ -37,7 +37,7 @@ describe('SearchTextComponent', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SearchTextComponent);
+        fixture = TestBed.createComponent(SearchTextInputComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
         element = fixture.nativeElement;
@@ -92,7 +92,6 @@ describe('SearchTextComponent', () => {
 
             searchButton.triggerEventHandler('click', null);
             fixture.detectChanges();
-
             tick(100);
             fixture.detectChanges();
 

@@ -19,23 +19,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { FormsModule } from '@angular/forms';
-import { SearchTextComponent } from './search-text.component';
+import { SearchTextInputComponent } from './search-text-input.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchTriggerDirective } from './search-trigger.directive';
 
 @NgModule({
     declarations: [
-        SearchTextComponent,
+        SearchTextInputComponent,
         SearchTriggerDirective
     ],
     imports: [
-        CommonModule, 
+        CommonModule,
         TranslateModule.forChild(),
         MaterialModule,
         FormsModule
     ],
     exports: [
-        SearchTextComponent,
+        SearchTextInputComponent,
         SearchTriggerDirective
     ]
 })

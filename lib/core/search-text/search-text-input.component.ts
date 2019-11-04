@@ -37,15 +37,15 @@ const animationStates = {
 
 @Component({
     selector: 'adf-search-text-input',
-    templateUrl: './search-text.component.html',
-    styleUrls: ['./search-text.component.scss'],
+    templateUrl: './search-text-input.component.html',
+    styleUrls: ['./search-text-input.component.scss'],
     animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
     host: {
         'class': 'adf-search-text-input'
     }
 })
-export class SearchTextComponent implements OnInit, OnDestroy {
+export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     /** Toggles auto-completion of the search input field. */
     @Input()

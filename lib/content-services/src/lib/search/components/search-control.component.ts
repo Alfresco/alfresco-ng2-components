@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AuthenticationService, ThumbnailService, SearchTextComponent } from '@alfresco/adf-core';
+import { AuthenticationService, ThumbnailService, SearchTextInputComponent } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnDestroy, Output,
          QueryList, ViewEncapsulation, ViewChild, ViewChildren, TemplateRef, ContentChild } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
@@ -78,7 +78,7 @@ export class SearchControlComponent implements OnDestroy {
     optionClicked: EventEmitter<any> = new EventEmitter();
 
     @ViewChild('searchTextInput')
-    searchTextInput: SearchTextComponent;
+    searchTextInput: SearchTextInputComponent;
 
     @ViewChild('search')
     searchAutocomplete: SearchComponent;

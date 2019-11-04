@@ -56,7 +56,7 @@ import { TranslateLoaderService } from './services/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './services/directionality-config-factory';
 import { DirectionalityConfigService } from './services/directionality-config.service';
-import { SearchTextModule } from './search-text/search-text.module';
+import { SearchTextModule } from './search-text/search-text-input.module';
 
 @NgModule({
     imports: [
