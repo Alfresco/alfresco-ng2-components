@@ -23,18 +23,6 @@ import { searchAnimation } from './animations';
 import { UserPreferencesService } from '../services/user-preferences.service';
 import { SearchTextStateEnum } from '../models/search-text.enum';
 
-const animationStates = {
-    ltr : {
-        active: { value: 'active', params: { 'margin-left': 13 } },
-        inactive: { value: 'inactive', params: { 'transform': 'translateX(82%)' } }
-    },
-    rtl: {
-        active:  { value: 'active', params: { 'margin-right': 13 } },
-        inactive: { value: 'inactive', params: { 'transform': 'translateX(-82%)' } }
-    },
-    noAnimation:  { value: 'no-animation' }
-};
-
 @Component({
     selector: 'adf-search-text-input',
     templateUrl: './search-text-input.component.html',
@@ -105,6 +93,18 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     subscriptAnimationState: any;
 
+    animationStates = {
+        ltr : {
+            active: { value: 'active', params: { 'margin-left': 13 } },
+            inactive: { value: 'inactive', params: { 'transform': 'translateX(82%)' } }
+        },
+        rtl: {
+            active:  { value: 'active', params: { 'margin-right': 13 } },
+            inactive: { value: 'inactive', params: { 'transform': 'translateX(-82%)' } }
+        },
+        noAnimation:  { value: 'no-animation' }
+    };
+
     private dir = 'ltr';
     private onDestroy$ = new Subject<boolean>();
     private toggleSearch = new Subject<any>();
@@ -170,17 +170,24 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     private getDefaultState(dir: string): any {
-        if ( this.expandable && this.defaultState === SearchTextStateEnum.expanded) {
-            return animationStates[dir].active;
+        if (this.dir) {
+            return this.getAnimationState(dir);
+        }
+        return this.animationStates.ltr.inactive;
+    }
+
+    private getAnimationState(dir: string) {
+        if ( this.expandable && this.defaultState === SearchTextStateEnum.expanded ) {
+            return this.animationStates[dir].active;
         } else if ( this.expandable ) {
-            return animationStates[dir].inactive;
+            return this.animationStates[dir].inactive;
         } else {
-            return animationStates.noAnimation;
+            return this.animationStates.noAnimation;
         }
     }
 
     private setupFocusEventHandlers() {
-        if ( this.focusListener) {
+        if ( this.focusListener ) {
             const focusEvents: Observable<FocusEvent> = this.focusListener
             .pipe(
                 debounceTime(50),
@@ -216,7 +223,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     onBlur($event) {
         if (!$event.relatedTarget && this.defaultState === SearchTextStateEnum.collapsed) {
             this.searchTerm = '';
-            this.subscriptAnimationState = animationStates[this.dir].inactive;
+            this.subscriptAnimationState = this.animationStates[this.dir].inactive;
         }
     }
 

@@ -1,4 +1,4 @@
-@mixin adf-search-text-theme($theme) {
+@mixin adf-search-text-input-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
     $primary: map-get($theme, primary);
