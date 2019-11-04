@@ -2,7 +2,9 @@ const htmlReporter = require('protractor-html-reporter-2');
 const fs = require('fs');
 const rimraf = require('rimraf');
 const path = require('path');
-const projectRoot = path.resolve(__dirname);
+const projectRoot = path.resolve(__dirname,'../../');
+
+let FOLDER = process.env.FOLDER || '';
 
 function buildNumber() {
     let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
@@ -14,7 +16,7 @@ function buildNumber() {
 }
 
 async function uploadScreenshot(alfrescoJsApi, retryCount) {
-    let files = fs.readdirSync(path.join(__dirname, './e2e-output/screenshots'));
+    let files = fs.readdirSync(path.join(__dirname, '../../e2e-output/screenshots'));
 
     if (files && files.length > 0) {
 
@@ -38,7 +40,7 @@ async function uploadScreenshot(alfrescoJsApi, retryCount) {
         }
 
         for (const fileName of files) {
-            let pathFile = path.join(__dirname, './e2e-output/screenshots', fileName);
+            let pathFile = path.join(__dirname, '../../e2e-output/screenshots', fileName);
             let file = fs.createReadStream(pathFile);
 
             let safeFileName = fileName.replace(new RegExp('"', 'g'), '');
@@ -63,7 +65,7 @@ async function uploadScreenshot(alfrescoJsApi, retryCount) {
 }
 
 async function uploadReport(alfrescoJsApi, filenameReport) {
-    let pathFile = path.join(__dirname, './e2e-output/junit-report/html', filenameReport + '.html');
+    let pathFile = path.join(__dirname, '../../e2e-output/junit-report/html', filenameReport + '.html');
     let reportFile = fs.createReadStream(pathFile);
 
     let reportFolder;
