@@ -223,7 +223,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     ngAfterViewInit() {
-        this.keyManager = new FocusKeyManager(this.rowsList).withWrap();
+        this.keyManager = new FocusKeyManager(this.rowsList)
+            .withWrap()
+            .skipPredicate(item => item.disabled);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -406,7 +408,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
 
         if (row) {
-            this.keyManager.setActiveItem(this.data.getRows().indexOf(row));
+            const rowIndex = this.data.getRows().indexOf(row) + (this.isHeaderVisible() ? 1 : 0);
+            this.keyManager.setActiveItem(rowIndex);
+
             const dataRowEvent = new DataRowEvent(row, mouseEvent, this);
             this.clickObserver.next(dataRowEvent);
         }
@@ -511,6 +515,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             this.data.setSorting(new DataSorting(column.key, newDirection));
             this.emitSortingChangedEvent(column.key, newDirection);
         }
+
+        this.keyManager.updateActiveItemIndex(0);
     }
 
     onSelectAllClick(matCheckboxChange: MatCheckboxChange) {

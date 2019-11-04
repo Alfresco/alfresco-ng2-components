@@ -41,22 +41,38 @@ import { DataRow } from '../../data/data-row.model';
 export class DataTableRowComponent implements FocusableOption {
     @Input() row: DataRow;
 
+    @Input() disabled = false;
+
     @Output()
     select: EventEmitter<any> = new EventEmitter<any>();
 
     @HostBinding('class.adf-is-selected')
     get isSelected(): boolean {
+        if (!this.row) {
+            return false;
+        }
         return this.row.isSelected;
     }
 
     @HostBinding('attr.aria-selected')
     get isAriaSelected(): boolean {
+        if (!this.row) {
+           return false;
+        }
         return this.row.isSelected;
     }
 
     @HostBinding('attr.aria-label')
-    get ariaLabel(): boolean {
+    get ariaLabel(): string|null {
+        if (!this.row) {
+            return null;
+        }
         return this.row.getValue('name') || '';
+    }
+
+    @HostBinding('attr.tabindex')
+    get tabindex(): number|null {
+        return this.disabled ? null : 0;
     }
 
     @HostListener('keydown.space', ['$event'])
