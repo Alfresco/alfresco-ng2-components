@@ -216,7 +216,7 @@ exports.config = {
 
             let alfrescoJsApi = new AlfrescoApi({
                 provider: 'ECM',
-                hostEcm: TestConfig.adf.url
+                hostEcm: TestConfig.adf_acs.host
             });
 
             alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
