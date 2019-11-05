@@ -248,7 +248,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         return false;
     }
 
-    isSearchBarActive() {
+    isSearchBarActive(): boolean {
         return this.subscriptAnimationState.value === 'active' && this.liveSearchEnabled;
     }
 
