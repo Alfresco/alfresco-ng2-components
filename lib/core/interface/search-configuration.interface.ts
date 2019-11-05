@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-import { QueryBody } from '@alfresco/js-api';
+import { QueryBody, NodePaging } from '@alfresco/js-api';
+import { Subject } from 'rxjs';
+import { ElementRef } from '@angular/core';
 
 export interface SearchConfigurationInterface {
 
@@ -28,4 +30,18 @@ export interface SearchConfigurationInterface {
      */
     generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody;
 
+}
+
+export interface SearchComponentInterface {
+
+    panel: ElementRef;
+    showPanel: boolean;
+    results: NodePaging;
+    isOpen: boolean;
+    keyPressedStream: Subject<string>;
+    displayWith: ((value: any) => string) | null;
+
+    resetResults(): void;
+    hidePanel(): void;
+    setVisibility(): void;
 }

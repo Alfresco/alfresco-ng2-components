@@ -9,11 +9,13 @@ Last reviewed: 2019-11-06
 
 Displays a input text that supports autocompletion
 
+![Text Widget](../../docassets/images/search-text-input.png)
+
 ## Basic Usage
 
 ```html
 <adf-search-text-input
-    [expandable]="expandable"
+    [expandable]="true"
     [autocomplete]="autocomplete"
     [liveSearchEnabled]="liveSearchEnabled"
     (searchChange)="onSearchChanged($event)">
