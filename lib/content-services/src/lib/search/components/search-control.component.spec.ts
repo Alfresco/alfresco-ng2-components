@@ -106,6 +106,7 @@ describe('SearchControlComponent', () => {
         element = fixture.nativeElement;
 
         searchServiceSpy = spyOn(searchService, 'search').and.returnValue(of(''));
+        fixture.detectChanges();
     });
 
     afterEach(() => {
@@ -416,10 +417,13 @@ describe('SearchControlComponent', () => {
             fixtureCustom = TestBed.createComponent(SimpleSearchTestCustomEmptyComponent);
             componentCustom = fixtureCustom.componentInstance;
             elementCustom = fixtureCustom.nativeElement;
+            fixture.detectChanges();
         });
 
         it('should display the custom no results when it is configured', (done) => {
             const noResultCustomMessage = 'BANDI IS NOTHING';
+            spyOn(componentCustom.searchComponent, 'isLoggedIn').and.returnValue(true);
+            fixtureCustom.detectChanges();
             spyOn(componentCustom.searchComponent.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(noResult));
             componentCustom.setCustomMessageForNoResult(noResultCustomMessage);

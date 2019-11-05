@@ -1,61 +1,63 @@
-<adf-search-text-input  #searchTextInput *ngIf="isLoggedIn()"
-                        [searchTerm]= "searchTerm"
-                        [expandable]="expandable"
-                        [autocomplete]="autocomplete"
-                        [liveSearchEnabled]="liveSearchEnabled"
-                        [focusListener]="focusSubject.asObservable()"
-                        [searchAutocomplete]="auto"
-                        (searchChange)="inputChange($event)"
-                        (reset)="onReset($event)"
-                        (selectResult)="onSelectFirstResult()"
-                        (submit)="submit.emit($event)"></adf-search-text-input>
+<div *ngIf="isLoggedIn()">
+    <adf-search-text-input  #searchTextInput
+                            [searchTerm]= "searchTerm"
+                            [expandable]="expandable"
+                            [autocomplete]="autocomplete"
+                            [liveSearchEnabled]="liveSearchEnabled"
+                            [focusListener]="focusSubject.asObservable()"
+                            [searchAutocomplete]="auto"
+                            (searchChange)="inputChange($event)"
+                            (reset)="onReset($event)"
+                            (selectResult)="onSelectFirstResult()"
+                            (submit)="submit.emit($event)"></adf-search-text-input>
 
-<adf-search #search
-            #auto="searchAutocomplete"
-            class="adf-search-result-autocomplete"
-            [maxResults]="liveSearchMaxResults">
-    <ng-template let-data>
-        <mat-list *ngIf="searchTextInput?.isSearchBarActive()" id="autocomplete-search-result-list">
-            <mat-list-item
-                *ngFor="let item of data?.list?.entries; let idx = index"
-                id="result_option_{{idx}}"
-                [attr.data-automation-id]="'autocomplete_for_' + item.entry.name"
-                [tabindex]="0"
-                (blur)="onBlur($event)"
-                (keyup.arrowdown)="onRowArrowDown($event)"
-                (keyup.arrowup)="onRowArrowUp($event)"
-                class="adf-search-autocomplete-item"
-                (click)="elementClicked(item)"
-                (keyup.enter)="elementClicked(item)"
-                (touchend)="elementClicked(item)">
-                <!-- This is a comment -->
-                <mat-icon mat-list-icon>
-                    <img [alt]="getMimeType(item)" [src]="getMimeTypeIcon(item)"/>
-                </mat-icon>
-                <h4 mat-line id="result_name_{{idx}}"
-                    *ngIf="highlight; else elseBlock"
-                    class="adf-search-fixed-text"
-                    [innerHtml]="item.entry.name | highlight: searchTerm">
-                    {{ item?.entry.name }}
-                </h4>
-                <ng-template #elseBlock>
-                    <h4 class="adf-search-fixed-text" mat-line id="result_name_{{idx}}"
-                        [innerHtml]="item.entry.name"></h4>
-                </ng-template>
-                <p mat-line class="adf-search-fixed-text"> {{item?.entry.createdByUser.displayName}} </p>
-            </mat-list-item>
-            <mat-list-item id="search_no_result"
-                           data-automation-id="search_no_result_found"
-                           *ngIf="data?.list?.entries.length === 0">
-                <ng-content
-                    selector="adf-empty-search-result"
-                    *ngIf="isNoSearchTemplatePresent() else defaultNoResult">
-                </ng-content>
-                <ng-template #defaultNoResult>
-                    <p mat-line class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm:
-                        searchTerm} }}</p>
-                </ng-template>
-            </mat-list-item>
-        </mat-list>
-    </ng-template>
-</adf-search>
+    <adf-search #search
+                #auto="searchAutocomplete"
+                class="adf-search-result-autocomplete"
+                [maxResults]="liveSearchMaxResults">
+        <ng-template let-data>
+            <mat-list *ngIf="searchTextInput?.isSearchBarActive()" id="autocomplete-search-result-list">
+                <mat-list-item
+                    *ngFor="let item of data?.list?.entries; let idx = index"
+                    id="result_option_{{idx}}"
+                    [attr.data-automation-id]="'autocomplete_for_' + item.entry.name"
+                    [tabindex]="0"
+                    (blur)="onBlur($event)"
+                    (keyup.arrowdown)="onRowArrowDown($event)"
+                    (keyup.arrowup)="onRowArrowUp($event)"
+                    class="adf-search-autocomplete-item"
+                    (click)="elementClicked(item)"
+                    (keyup.enter)="elementClicked(item)"
+                    (touchend)="elementClicked(item)">
+                    <!-- This is a comment -->
+                    <mat-icon mat-list-icon>
+                        <img [alt]="getMimeType(item)" [src]="getMimeTypeIcon(item)"/>
+                    </mat-icon>
+                    <h4 mat-line id="result_name_{{idx}}"
+                        *ngIf="highlight; else elseBlock"
+                        class="adf-search-fixed-text"
+                        [innerHtml]="item.entry.name | highlight: searchTerm">
+                        {{ item?.entry.name }}
+                    </h4>
+                    <ng-template #elseBlock>
+                        <h4 class="adf-search-fixed-text" mat-line id="result_name_{{idx}}"
+                            [innerHtml]="item.entry.name"></h4>
+                    </ng-template>
+                    <p mat-line class="adf-search-fixed-text"> {{item?.entry.createdByUser.displayName}} </p>
+                </mat-list-item>
+                <mat-list-item id="search_no_result"
+                            data-automation-id="search_no_result_found"
+                            *ngIf="data?.list?.entries.length === 0">
+                    <ng-content
+                        selector="adf-empty-search-result"
+                        *ngIf="isNoSearchTemplatePresent() else defaultNoResult">
+                    </ng-content>
+                    <ng-template #defaultNoResult>
+                        <p mat-line class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm:
+                            searchTerm} }}</p>
+                    </ng-template>
+                </mat-list-item>
+            </mat-list>
+        </ng-template>
+    </adf-search>
+</div>
