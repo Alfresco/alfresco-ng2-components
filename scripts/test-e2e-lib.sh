@@ -205,6 +205,9 @@ if [[  $EXECLINT == "true" ]]; then
     npm run lint-e2e || exit 1
 fi
 
+echo "====== Update webdriver-manager ====="
+./node_modules/protractor/bin/webdriver-manager update --gecko=false
+
 export DEBUG_OPTION=''
 if [[  $DEBUG == "true" ]]; then
   DEBUG_OPTION=' node --inspect-brk '
