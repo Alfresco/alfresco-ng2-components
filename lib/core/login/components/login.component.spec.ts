@@ -660,35 +660,6 @@ describe('LoginComponent', () => {
                     expect(element.querySelector('#login-button-sso')).toBeDefined();
                 });
             }));
-
-            it('should show the SSO error when the discovery server is unreachable', async(() => {
-                spyOn(authService, 'isOauth').and.returnValue(true);
-                spyOn(authService, 'isSSODiscoveryConfigured').and.returnValue(false);
-
-                component.ngOnInit();
-                fixture.detectChanges();
-                element.querySelector('[data-automation-id="login-button-sso"]').click();
-
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.SSO-WRONG-CONFIGURATION');
-                });
-            }));
-
-            it('should not show the SSO error when the discovery server is reachable', async(() => {
-                spyOn(authService, 'isOauth').and.returnValue(true);
-                spyOn(authService, 'isSSODiscoveryConfigured').and.returnValue(true);
-                spyOn(authService, 'ssoImplicitLogin').and.stub();
-
-                component.ngOnInit();
-                fixture.detectChanges();
-                element.querySelector('[data-automation-id="login-button-sso"]').click();
-
-                fixture.whenStable().then(() => {
-                    expect(getLoginErrorMessage()).toBeUndefined();
-                });
-            }));
         });
     });
 });

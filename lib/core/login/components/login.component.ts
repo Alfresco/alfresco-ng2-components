@@ -169,7 +169,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
 
                 this.authService.setRedirect({ provider, url });
-              });
+            });
         }
 
         if (this.hasCustomFieldsValidation()) {
@@ -200,28 +200,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     onSubmit(values: any): void {
         this.disableError();
 
-        if (this.authService.isOauth() && !this.authService.isSSODiscoveryConfigured()) {
-            this.errorMsg = 'LOGIN.MESSAGES.SSO-WRONG-CONFIGURATION';
-            this.isError = true;
-        } else {
-            const args = new LoginSubmitEvent({
-                controls: { username: this.form.controls.username }
-            });
-            this.executeSubmit.emit(args);
+        const args = new LoginSubmitEvent({
+            controls: { username: this.form.controls.username }
+        });
+        this.executeSubmit.emit(args);
 
-            if (!args.defaultPrevented) {
-                this.performLogin(values);
-            }
+        if (!args.defaultPrevented) {
+            this.performLogin(values);
         }
     }
 
     implicitLogin() {
-        if (this.authService.isOauth() && !this.authService.isSSODiscoveryConfigured()) {
-            this.errorMsg = 'LOGIN.MESSAGES.SSO-WRONG-CONFIGURATION';
-            this.isError = true;
-        } else {
-            this.authService.ssoImplicitLogin();
-        }
+        this.authService.ssoImplicitLogin();
     }
 
     /**
@@ -361,7 +351,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     getBackgroundUrlImageUrl(): SafeStyle {
-        return  this.sanitizer.bypassSecurityTrustStyle(`url(${this.backgroundImageUrl})`);
+        return this.sanitizer.bypassSecurityTrustStyle(`url(${this.backgroundImageUrl})`);
     }
 
     /**
