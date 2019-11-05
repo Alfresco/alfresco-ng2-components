@@ -64,7 +64,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected redirectToUrl(provider: string, url: string) {
-        if(!this.isSilentLogin()) {
+        if (!this.isSilentLogin()) {
             this.authenticationService.setRedirect({ provider, url });
 
             const pathToLogin = this.getLoginRoute();
