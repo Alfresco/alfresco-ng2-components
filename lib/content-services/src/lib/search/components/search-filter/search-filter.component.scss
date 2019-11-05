@@ -1,5 +1,7 @@
 @mixin adf-search-filter-theme($theme) {
     $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    $panel-header-hover: mat-color($background, hover);
 
     .adf-search-filter {
 
@@ -50,6 +52,12 @@
 
             &--topSpace {
                 padding-top: 15px;
+            }
+        }
+
+        .mat-expansion-panel-header.mat-expanded {
+            &:focus, &:hover {
+                background: $panel-header-hover;
             }
         }
 
