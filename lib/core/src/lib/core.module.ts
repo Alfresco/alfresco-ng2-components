@@ -60,12 +60,7 @@ import { SearchTextModule } from './search-text/search-text-input.module';
 
 @NgModule({
     imports: [
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useClass: TranslateLoaderService
-            }
-        }),
+        TranslateModule.forChild(),
         ExtensionsModule,
         AboutModule,
         ViewerModule,
