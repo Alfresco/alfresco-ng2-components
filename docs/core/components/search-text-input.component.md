@@ -1,8 +1,8 @@
 ---
-Title: Search Cloud Component
-Added: v3.5.0
+Title: Search Text Input Component
+Added: v3.6.0
 Status: Active
-Last reviewed: 2019-10-24
+Last reviewed: 2019-11-06
 ---
 
 # [Search Text Input Component](../../../lib/core/search-text/search-text-input.component.ts "Defined in search-text-input.component.ts")
@@ -10,7 +10,7 @@ Last reviewed: 2019-10-24
 Displays a input text that supports autocompletion
 
 ## Basic Usage
- 
+
 ```html
 <adf-search-text-input
     [expandable]="expandable"
@@ -34,8 +34,8 @@ Displays a input text that supports autocompletion
 | searchAutocomplete | [`SearchTriggerDirective`](../../../lib/core/search-text/search-trigger.directive.ts) | null | Trigger autocomplete results on input change |
 | searchTerm | `string` | empty | Preselected search widget value |
 | debounceTime | `number` | 0 | Debounce time in miliseconds |
-| focusListener | [`Observable`](http://reactivex.io/documentation/observable.html)` | 0 | Listener for results-list events (focus, blur and focusout) |
-| defaultState | [`SearchTextStateEnum`](../../../lib/core/models/search-text.enum.ts) | collapsed | Default state of the search widget |
+| focusListener | [`Observable`](http://reactivex.io/documentation/observable.html) `<` [`FocusEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent) `>` | null | Listener for results-list events (focus, blur and focusout) |
+| defaultState | [`SearchTextStateEnum`](../../../lib/core/models/search-text-input.model.ts) | collapsed | Default state of the search widget |
 
 ### Events
 

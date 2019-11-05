@@ -1,4 +1,4 @@
-<adf-search-text-input  #searchTextInput
+<adf-search-text-input  #searchTextInput *ngIf="isLoggedIn()"
                         [searchTerm]= "searchTerm"
                         [expandable]="expandable"
                         [autocomplete]="autocomplete"
@@ -15,7 +15,7 @@
             class="adf-search-result-autocomplete"
             [maxResults]="liveSearchMaxResults">
     <ng-template let-data>
-        <mat-list *ngIf="searchTextInput.isSearchBarActive()" id="autocomplete-search-result-list">
+        <mat-list *ngIf="searchTextInput?.isSearchBarActive()" id="autocomplete-search-result-list">
             <mat-list-item
                 *ngFor="let item of data?.list?.entries; let idx = index"
                 id="result_option_{{idx}}"

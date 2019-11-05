@@ -184,7 +184,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         return isPanelOption;
     }
 
-    private isNoResultOption() {
+    private isNoResultOption(): boolean {
         return this.searchPanel && this.searchPanel.results.list ? this.searchPanel.results.list.entries.length === 0 : true;
     }
 

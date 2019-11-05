@@ -21,7 +21,7 @@ import { debounceTime, takeUntil, filter } from 'rxjs/operators';
 import { Direction } from '@angular/cdk/bidi';
 import { searchAnimation } from './animations';
 import { UserPreferencesService } from '../services/user-preferences.service';
-import { SearchTextStateEnum } from '../models/search-text.enum';
+import { SearchTextStateEnum, SearchAnimationState, SearchAnimationDirection } from '../models/search-text-input.model';
 
 @Component({
     selector: 'adf-search-text-input',
@@ -93,7 +93,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     subscriptAnimationState: any;
 
-    animationStates = {
+    animationStates: SearchAnimationDirection = {
         ltr : {
             active: { value: 'active', params: { 'margin-left': 13 } },
             inactive: { value: 'inactive', params: { 'transform': 'translateX(82%)' } }
@@ -101,8 +101,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         rtl: {
             active:  { value: 'active', params: { 'margin-right': 13 } },
             inactive: { value: 'inactive', params: { 'transform': 'translateX(-82%)' } }
-        },
-        noAnimation:  { value: 'no-animation' }
+        }
     };
 
     private dir = 'ltr';
@@ -169,20 +168,20 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         }
     }
 
-    private getDefaultState(dir: string): any {
+    private getDefaultState(dir: string): SearchAnimationState {
         if (this.dir) {
             return this.getAnimationState(dir);
         }
         return this.animationStates.ltr.inactive;
     }
 
-    private getAnimationState(dir: string) {
+    private getAnimationState(dir: string): SearchAnimationState {
         if ( this.expandable && this.defaultState === SearchTextStateEnum.expanded ) {
             return this.animationStates[dir].active;
         } else if ( this.expandable ) {
             return this.animationStates[dir].inactive;
         } else {
-            return this.animationStates.noAnimation;
+            return { value: 'no-animation' };
         }
     }
 
@@ -242,10 +241,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         this.toggleSearchBar();
     }
 
-    activateToolbar() {
+    activateToolbar(): boolean {
         if (!this.isSearchBarActive()) {
             this.toggleSearchBar();
         }
+        return false;
     }
 
     isSearchBarActive() {
@@ -253,7 +253,6 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-
         if (this.toggleSearch) {
             this.toggleSearch.complete();
             this.toggleSearch = null;
