@@ -3,7 +3,7 @@ node_modules
 bundles
 workspace.xml
 .idea/
-.env.*
+.env*
 .env
 dist/
 e2e/.env.cloud
