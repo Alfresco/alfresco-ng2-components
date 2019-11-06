@@ -100,6 +100,6 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
             null
         );
 
-        return oauth && oauth.silentLogin;
+        return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
     }
 }
