@@ -64,12 +64,14 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected redirectToUrl(provider: string, url: string) {
-        this.authenticationService.setRedirect({ provider, url });
+        if (!this.isSilentLogin()) {
+            this.authenticationService.setRedirect({ provider, url });
 
-        const pathToLogin = this.getLoginRoute();
-        const urlToRedirect = `/${pathToLogin}?redirectUrl=${url}`;
+            const pathToLogin = this.getLoginRoute();
+            const urlToRedirect = `/${pathToLogin}?redirectUrl=${url}`;
 
-        this.router.navigateByUrl(urlToRedirect);
+            this.router.navigateByUrl(urlToRedirect);
+        }
     }
 
     protected getLoginRoute(): string {
@@ -90,5 +92,14 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return (
             this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin
         );
+    }
+
+    protected isSilentLogin(): boolean {
+        const oauth = this.appConfigService.get<OauthConfigModel>(
+            AppConfigValues.OAUTHCONFIG,
+            null
+        );
+
+        return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
     }
 }
