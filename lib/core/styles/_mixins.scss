@@ -66,7 +66,7 @@
     overflow: hidden;
 }
 
-@mixin mat-expansion-panel-theme-get-823-fix($theme) {
+@mixin mat-expansion-panel-theme--fix($theme) {
     $background: map-get($theme, background);
 
     .mat-expansion-panel {
