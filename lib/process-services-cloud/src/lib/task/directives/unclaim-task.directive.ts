@@ -66,7 +66,7 @@ export class UnClaimTaskDirective implements OnInit {
     }
 
     isAppValid(): boolean {
-        return (this.appName && this.appName.length > 0) || (this.appName === '');
+        return (this.appName && this.appName.length > 0);
     }
 
     @HostListener('click')

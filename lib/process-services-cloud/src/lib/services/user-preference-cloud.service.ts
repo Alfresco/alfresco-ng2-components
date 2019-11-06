@@ -41,7 +41,7 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
    * @returns List of user preferences
    */
   getPreferences(appName: string): Observable<any> {
-    if (appName || appName === '') {
+    if (appName) {
       const uri = this.buildPreferenceServiceUri(appName);
       return from(this.alfrescoApiService.getInstance()
         .oauth2Auth.callCustomApi(uri, 'GET',
@@ -62,7 +62,7 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
    * @returns Observable of user preference
    */
   getPreferenceByKey(appName: string, key: string): Observable<any> {
-    if (appName || appName === '') {
+    if (appName) {
       const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
       return from(
         this.alfrescoApiService.getInstance()
@@ -85,7 +85,7 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
    * @returns Observable of created user preferences
    */
   createPreference(appName: string, key: string, newPreference: any): Observable<any> {
-    if (appName || appName === '') {
+    if (appName) {
       const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
       const requestPayload = JSON.stringify(newPreference);
       return from(this.alfrescoApiService.getInstance()
@@ -121,7 +121,7 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
    * @returns Observable of delete operation status
    */
   deletePreference(appName: string, key: string): Observable<any> {
-    if (appName || appName === '') {
+    if (appName) {
       const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
       return from(this.alfrescoApiService.getInstance()
         .oauth2Auth.callCustomApi(uri, 'DELETE',

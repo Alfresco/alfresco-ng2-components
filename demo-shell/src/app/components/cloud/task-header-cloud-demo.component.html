@@ -1,0 +1,31 @@
+<h2>{{ 'APP_LAYOUT.TASK_HEADER_CLOUD.COMPONENT_NAME' | translate }}</h2>
+
+<mat-form-field class="app-appName-input">
+    {{ 'APP_LAYOUT.TASK_HEADER_CLOUD.APP_NAME_INPUT' | translate }}
+    <input matInput
+           [type]="'text'"
+           [formControl]="appNameFormControl">
+</mat-form-field>
+
+<mat-form-field class="app-taskId-input">
+    {{ 'APP_LAYOUT.TASK_HEADER_CLOUD.TASK_ID_INPUT' | translate }}
+    <input matInput
+           [type]="'text'"
+           [formControl]="taskIdFormControl">
+</mat-form-field>
+
+<button mat-button *ngIf="appNameFormControl.value && taskIdFormControl.value"
+        class="app-find-task-button"
+        (click)="updateTaskHeader()">
+    {{ 'APP_LAYOUT.TASK_HEADER_CLOUD.FIND_TASK_BUTTON' | translate }}
+</button>
+
+<mat-error *ngIf="errorMessage">{{errorMessage}}</mat-error>
+
+<div>
+    <adf-cloud-task-header #taskHeader
+                           [appName]="appName"
+                           [taskId]="taskId"
+                           (taskError)="onError($event)">
+    </adf-cloud-task-header>
+</div>

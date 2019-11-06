@@ -60,14 +60,6 @@ export class TaskDetailsCloudDemoComponent {
         this.goBack();
     }
 
-    onTaskClaimed() {
-        this.taskHeader.ngOnInit();
-    }
-
-    onTaskUnclaimed() {
-        this.taskHeader.ngOnInit();
-    }
-
     onFormContentClicked(resourceClicked: any) {
         this.previewService.showResource(resourceClicked.nodeId);
     }

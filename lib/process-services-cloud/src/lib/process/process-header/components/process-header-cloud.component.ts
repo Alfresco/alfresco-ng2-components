@@ -50,7 +50,7 @@ export class ProcessHeaderCloudComponent implements OnChanges {
     }
 
     ngOnChanges() {
-        if ((this.appName || this.appName === '') && this.processInstanceId) {
+        if (this.appName && this.processInstanceId) {
             this.loadProcessInstanceDetails(this.appName, this.processInstanceId);
         }
     }

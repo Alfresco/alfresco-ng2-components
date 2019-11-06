@@ -94,6 +94,12 @@
     "TREE_VIEW": "Tree View",
     "ICONS": "Icons",
     "PEOPLE_GROUPS_CLOUD": "People/Group Cloud",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "Task Header Cloud",
+      "APP_NAME_INPUT": "App name",
+      "TASK_ID_INPUT": "Task id",
+      "FIND_TASK_BUTTON": "Find Task"
+    },
     "PEOPLE_CLOUD": "People Cloud Component",
     "GROUPS_CLOUD": "Groups Cloud Component",
     "CONFIRM-DIALOG": "Confirmation Dialog",

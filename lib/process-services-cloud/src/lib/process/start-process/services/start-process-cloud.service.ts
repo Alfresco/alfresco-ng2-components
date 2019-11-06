@@ -48,7 +48,7 @@ export class StartProcessCloudService extends BaseCloudService {
      */
     getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
 
-        if (appName || appName === '') {
+        if (appName) {
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
             return from(this.alfrescoApiService.getInstance()

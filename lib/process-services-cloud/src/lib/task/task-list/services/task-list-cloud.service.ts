@@ -41,7 +41,7 @@ export class TaskListCloudService extends BaseCloudService {
      */
     getTaskByRequest(requestNode: TaskQueryCloudRequestModel): Observable<any> {
 
-        if (requestNode.appName || requestNode.appName === '') {
+        if (requestNode.appName) {
             const queryUrl = this.buildQueryUrl(requestNode);
             const queryParams = this.buildQueryParams(requestNode);
             const sortingParams = this.buildSortingParam(requestNode.sorting);
