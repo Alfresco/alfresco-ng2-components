@@ -33,7 +33,7 @@ export class TaskCloudService extends BaseCloudService {
     returnType = Object;
 
     private dataChangesDetected = new Subject();
-    dataChangesDetected$: Observable<object>;
+    dataChangesDetected$: Observable<any>;
 
     constructor(
         private apiService: AlfrescoApiService,
@@ -130,6 +130,7 @@ export class TaskCloudService extends BaseCloudService {
                     this.returnType, null, null)
             ).pipe(
                 map((res: any) => {
+                    this.dataChangesDetected.next();
                     return new TaskDetailsCloudModel(res.entry);
                 }),
                 catchError((err) => this.handleError(err))
@@ -157,6 +158,7 @@ export class TaskCloudService extends BaseCloudService {
                     this.returnType, null, null)
             ).pipe(
                 map((res: any) => {
+                    this.dataChangesDetected.next();
                     return new TaskDetailsCloudModel(res.entry);
                 }),
                 catchError((err) => this.handleError(err))
@@ -184,7 +186,6 @@ export class TaskCloudService extends BaseCloudService {
                     this.returnType, null, null)
             ).pipe(
                 map((res: any) => {
-                    this.dataChangesDetected.next();
                     return new TaskDetailsCloudModel(res.entry);
                 }),
                 catchError((err) => this.handleError(err))
