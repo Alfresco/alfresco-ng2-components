@@ -82,16 +82,6 @@ describe('AuthGuardService', () => {
         expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
-    it('should redirect url if the User is NOT logged in and isOAuthWithSilentLogin', async(() => {
-        spyOn(router, 'navigateByUrl').and.stub();
-        spyOn(authService, 'isLoggedIn').and.returnValue(false);
-        spyOn(authService, 'isOauth').and.returnValue(true);
-        appConfigService.config.oauth2.silentLogin = true;
-
-        expect(authGuard.canActivate(null, state)).toBeFalsy();
-        expect(router.navigateByUrl).toHaveBeenCalled();
-    }));
-
     it('should redirect url if the User is NOT logged in and isOAuth but no silentLogin configured', async(() => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
