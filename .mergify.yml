@@ -2,7 +2,6 @@ pull_request_rules:
     - name: automatic merge for Dependabot pull requests
       conditions:
           - author=dependabot-preview[bot]
-          - status-success=bundlesize
           - status-success=continuous-integration/travis-ci/pr
           - status-success=security/snyk
       actions:
@@ -12,7 +11,6 @@ pull_request_rules:
       conditions:
           - status-success=continuous-integration/travis-ci/pr
           - status-success=security/snyk
-          - status-success=bundlesize
           - '#approved-reviews-by>=2'
           - '#review-requested=0'
           - '#changes-requested-reviews-by=0'
