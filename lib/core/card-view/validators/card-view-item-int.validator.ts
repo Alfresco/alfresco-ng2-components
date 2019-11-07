@@ -27,7 +27,7 @@ export class CardViewItemIntValidator implements CardViewItemValidator {
             && this.isIntegerNumber(value);
     }
 
-    isIntegerNumber(value: any) {
+    isIntegerNumber(value: any): boolean {
         const parsedNumber = parseFloat(value);
         return (parsedNumber | 0) === parsedNumber;
     }
