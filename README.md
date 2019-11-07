@@ -23,9 +23,7 @@ See the [Introduction page](INTRODUCTION.md) to get started with the Alfresco Ap
 
 ## Prerequisites
 
-Before you start using this development framework, make sure you have installed all required software and done all the necessary configuration. See our tutorial
-[Preparing the development environment](docs/tutorials/preparing-environment.md)
-for full details.
+Before you start using this development framework, make sure you have installed all required software and done all the necessary configuration. See our tutorial [Preparing the development environment](docs/tutorials/preparing-environment.md) for full details.
 
 ## Components
 
