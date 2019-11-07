@@ -5,7 +5,7 @@
         <ng-template let-toggleMenu="toggleMenu" let-isMenuMinimized="isMenuMinimized">
 
             <adf-layout-header id="adf-header" [title]="title | translate" [redirectUrl]="redirectUrl" [logo]="logo"
-                [tooltip]="tooltip | translate" [showSidenavToggle]="showMenu" [expandedSidenav]="isMenuMinimized() ? 'false' : 'true'"
+                [tooltip]="tooltip | translate" [showSidenavToggle]="showMenu" [expandedSidenav]="!isMenuMinimized()"
                 [color]="color" [position]="position" (clicked)=toggleMenu($event)>
 
                 <div class="app-layout-menu-spacer"></div>
