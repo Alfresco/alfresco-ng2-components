@@ -2,10 +2,10 @@
     [expandedSidenav]="expandedSidenav" (expanded)="setState($event)" [position]="position" data-automation-id="sidenav-layout">
 
     <adf-sidenav-layout-header>
-        <ng-template let-toggleMenu="toggleMenu">
+        <ng-template let-toggleMenu="toggleMenu" let-isMenuMinimized="isMenuMinimized">
 
             <adf-layout-header id="adf-header" [title]="title | translate" [redirectUrl]="redirectUrl" [logo]="logo"
-                [tooltip]="tooltip | translate" [showSidenavToggle]="showMenu" [expandedSidenav]="expandedSidenav"
+                [tooltip]="tooltip | translate" [showSidenavToggle]="showMenu" [expandedSidenav]="!isMenuMinimized()"
                 [color]="color" [position]="position" (clicked)=toggleMenu($event)>
 
                 <div class="app-layout-menu-spacer"></div>
