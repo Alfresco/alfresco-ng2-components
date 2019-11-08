@@ -39,9 +39,10 @@ export class LoginSSOPage {
         } catch (e) {
         }
 
-        if (!currentUrl || currentUrl === '') {
+        if (!currentUrl || currentUrl === '' || currentUrl === 'data:,') {
             await browser.get(this.loginURL);
         }
+
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
         await this.enterUsername(username);
         await this.enterPassword(password);
