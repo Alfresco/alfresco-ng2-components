@@ -31,7 +31,7 @@ export class BrowserActions {
             await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
             await browser.executeScript(`arguments[0].click();`, elementFinder);
           } catch (jsErr) {
-              Logger.error(`click error element ${elementFinder}`);
+              Logger.error(`click error element ${elementFinder.locator()}`);
               throw jsErr;
           }
         }
