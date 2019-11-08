@@ -78,15 +78,15 @@ export class ProcessListCloudComponentPage {
         return this.dataTable.checkContentIsDisplayed(this.columns.id, processId);
     }
 
-    checkContentIsNotDisplayedById(processId): Promise<void> {
+    checkContentIsNotDisplayedById(processId: string): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(this.columns.id, processId);
     }
 
-    selectRowWithKeyboard(processId): Promise<void> {
+    selectRowWithKeyboard(processId: string): Promise<void> {
         return this.dataTable.selectRowWithKeyboard(this.columns.id, processId);
     }
 
-    async getAllRowsNameColumn() {
+    async getAllRowsNameColumn(): Promise<string[]> {
         return this.dataTable.getAllRowsColumnValues(this.columns.name);
     }
 
@@ -98,11 +98,11 @@ export class ProcessListCloudComponentPage {
         return BrowserActions.getText(this.noProcessFound);
     }
 
-    getAllRowsByColumn(column): Promise<any> {
+    getAllRowsByColumn(column: string): Promise<string[]> {
         return this.dataTable.getAllRowsColumnValues(column);
     }
 
-    async clickOptionsButton(content: string) {
+    async clickOptionsButton(content: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const row: ElementFinder = this.dataTable.getRow('Id', content);
         await BrowserActions.click(row.element(this.optionButton));
@@ -123,7 +123,7 @@ export class ProcessListCloudComponentPage {
         await this.dataTable.rightClickOnRow('Id', processInstance);
     }
 
-    async clickContextMenuActionNamed(actionName): Promise<void> {
+    async clickContextMenuActionNamed(actionName: string): Promise<void> {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 
