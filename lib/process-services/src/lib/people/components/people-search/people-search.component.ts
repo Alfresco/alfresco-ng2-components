@@ -39,11 +39,11 @@ export class PeopleSearchComponent implements OnInit {
 
     /** Emitted when a search is performed with a new keyword. */
     @Output()
-    searchPeople: EventEmitter<any> = new EventEmitter();
+    searchPeople = new EventEmitter<any>();
 
     /** Emitted when a user is selected and the action button is clicked. */
     @Output()
-    success: EventEmitter<UserProcessModel> = new EventEmitter<UserProcessModel>();
+    success = new EventEmitter<UserProcessModel>();
 
     /** Emitted when the "close" button is clicked. */
     @Output()

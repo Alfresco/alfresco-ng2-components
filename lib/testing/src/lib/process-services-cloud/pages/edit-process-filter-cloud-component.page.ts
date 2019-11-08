@@ -51,7 +51,7 @@ export class EditProcessFilterCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(content);
     }
 
-    async setStatusFilterDropDown(option): Promise<void> {
+    async setStatusFilterDropDown(option: string): Promise<void> {
         await this.clickOnDropDownArrow('status');
 
         const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
@@ -91,7 +91,7 @@ export class EditProcessFilterCloudComponentPage {
         await BrowserActions.click(dropDownArrow);
     }
 
-    async setAppNameDropDown(option): Promise<void> {
+    async setAppNameDropDown(option: string): Promise<void> {
         await this.clickOnDropDownArrow('appName');
 
         const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
@@ -132,13 +132,13 @@ export class EditProcessFilterCloudComponentPage {
         return this.getProperty('processInstanceId');
     }
 
-    async getProperty(property): Promise<string> {
+    async getProperty(property: string): Promise<string> {
         const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         return locator.getAttribute('value');
     }
 
-    async setProperty(property, option): Promise<void> {
+    async setProperty(property: string, option: string): Promise<void> {
         const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         await locator.clear();

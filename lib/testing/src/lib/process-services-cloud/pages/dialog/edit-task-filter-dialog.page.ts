@@ -56,11 +56,11 @@ export class EditTaskFilterDialogPage {
         return this.filterNameInput.getAttribute('value');
     }
 
-    async setFilterName(filterName): Promise<void> {
+    async setFilterName(filterName: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.filterNameInput, filterName);
     }
 
-    async clearFilterName() {
+    async clearFilterName(): Promise<void> {
         await BrowserActions.clearWithBackSpace(this.filterNameInput);
     }
 

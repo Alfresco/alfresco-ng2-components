@@ -56,7 +56,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
      * (eg, following a network error).
      */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     hasCustomTemplate: boolean = false;
 
@@ -91,7 +91,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         });
     }
 
-    hasCustomEmptyTemplate() {
+    hasCustomEmptyTemplate(): boolean {
         return !!this.emptyTemplate;
     }
 

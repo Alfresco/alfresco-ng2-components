@@ -23,7 +23,7 @@ export class GroupCloudComponentPage {
 
     groupCloudSearch: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
 
-    async searchGroups(name): Promise<void> {
+    async searchGroups(name: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
         await browser.sleep(1000);
         await BrowserActions.clearSendKeys(this.groupCloudSearch, name);
@@ -40,32 +40,32 @@ export class GroupCloudComponentPage {
 
     }
 
-    async selectGroupFromList(name): Promise<void> {
+    async selectGroupFromList(name: string): Promise<void> {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         await browser.sleep(1000);
         await BrowserActions.click(groupRow);
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
     }
 
-    async checkGroupIsDisplayed(name): Promise<void> {
+    async checkGroupIsDisplayed(name: string): Promise<void> {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         await BrowserVisibility.waitUntilElementIsVisible(groupRow);
     }
 
-    async checkGroupIsNotDisplayed(name): Promise<void> {
+    async checkGroupIsNotDisplayed(name: string): Promise<void> {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
     }
 
-    async checkSelectedGroup(group): Promise<void> {
+    async checkSelectedGroup(group: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
     }
 
-    async checkGroupNotSelected(group): Promise<void> {
+    async checkGroupNotSelected(group: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
     }
 
-    async removeSelectedGroup(group): Promise<void> {
+    async removeSelectedGroup(group: string): Promise<void> {
         const locator = element(by.css(`mat-chip[data-automation-id*="adf-cloud-group-chip-${group}"] mat-icon`));
         await BrowserActions.click(locator);
     }

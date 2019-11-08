@@ -36,19 +36,19 @@ export class StartTasksCloudPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.form);
     }
 
-    async addName(userName): Promise<void> {
+    async addName(userName: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.name, userName);
     }
 
-    async addDescription(userDescription): Promise<void> {
+    async addDescription(userDescription: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.description, userDescription);
     }
 
-    async addPriority(userPriority): Promise<void> {
+    async addPriority(userPriority: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.priority, userPriority);
     }
 
-    async addDueDate(date): Promise<void> {
+    async addDueDate(date: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dueDate);
         await BrowserActions.clearSendKeys(this.dueDate, date);
     }
@@ -69,23 +69,23 @@ export class StartTasksCloudPage {
         await BrowserActions.click(this.cancelButton);
     }
 
-    async blur(locator): Promise<void> {
+    async blur(locator: ElementFinder): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         await BrowserVisibility.waitUntilElementIsClickable(locator);
         await BrowserActions.click(locator);
         await locator.sendKeys(Key.TAB);
     }
 
-    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error'): Promise<void> {
+    async checkValidationErrorIsDisplayed(error: string, elementRef = 'mat-error'): Promise<void> {
         const errorElement = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }
 
-    async validateAssignee(error): Promise<void> {
+    async validateAssignee(error: string): Promise<void> {
         await this.checkValidationErrorIsDisplayed(error, '.adf-start-task-cloud-error');
     }
 
-    async validateDate(error): Promise<void> {
+    async validateDate(error: string): Promise<void> {
         await this.checkValidationErrorIsDisplayed(error, '.adf-error-text');
     }
 
