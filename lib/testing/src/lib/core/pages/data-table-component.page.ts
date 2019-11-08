@@ -163,7 +163,7 @@ export class DataTableComponentPage {
         return this.rootElement.all(this.rows).count();
     }
 
-    async getAllRowsColumnValues(column: string): Promise<string[]> {
+    async getAllRowsColumnValues(column: string) {
         const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title='" + column + "'] span");
         await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first());
         return element.all(columnLocator)

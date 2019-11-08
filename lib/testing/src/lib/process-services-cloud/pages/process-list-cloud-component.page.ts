@@ -86,7 +86,7 @@ export class ProcessListCloudComponentPage {
         return this.dataTable.selectRowWithKeyboard(this.columns.id, processId);
     }
 
-    async getAllRowsNameColumn(): Promise<string[]> {
+    async getAllRowsNameColumn() {
         return this.dataTable.getAllRowsColumnValues(this.columns.name);
     }
 
@@ -98,7 +98,7 @@ export class ProcessListCloudComponentPage {
         return BrowserActions.getText(this.noProcessFound);
     }
 
-    getAllRowsByColumn(column: string): Promise<string[]> {
+    getAllRowsByColumn(column: string) {
         return this.dataTable.getAllRowsColumnValues(column);
     }
 
