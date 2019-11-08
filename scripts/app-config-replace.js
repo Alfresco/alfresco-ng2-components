@@ -11,6 +11,7 @@ fs.readFile(configPath, (err, appConfigString) => {
     let appConfig = JSON.parse(appConfigString);
     appConfig.providers = process.env.PROVIDERS;
     appConfig.bpmHost = process.env.PROXY_HOST_ADF;
+    appConfig.ecmHost = process.env.PROXY_HOST_ADF;
     appConfig.identityHost = process.env.URL_HOST_IDENTITY;
     appConfig.oauth2.host = process.env.URL_HOST_SSO_ADF;
     appConfig.notificationDefaultDuration = process.env.NOTIFICATION_LAST || 8000;

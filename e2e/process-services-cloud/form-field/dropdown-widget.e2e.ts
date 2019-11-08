@@ -87,7 +87,6 @@ describe('Form Field Component - Dropdown Widget', () => {
         await tasksService.claimTask(task.entry.id, simpleApp);
 
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-
     });
 
     afterAll(async () => {
