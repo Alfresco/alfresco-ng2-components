@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, LoginSSOPage, TasksService, SettingsPage, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, TasksService, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
@@ -30,7 +30,6 @@ describe('Task list cloud - selection', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const settingsPage = new SettingsPage();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -63,10 +62,6 @@ describe('Task list cloud - selection', () => {
                 tasks.push(response.entry.name);
             }
 
-            await settingsPage.setProviderBpmSso(
-                browser.params.config.bpmHost,
-                browser.params.config.oauth2.host,
-                browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
         });

@@ -22,7 +22,7 @@ import {
     LoginSSOPage,
     ApiService,
     LocalStorageUtil,
-    SettingsPage, IdentityService, GroupIdentityService
+    IdentityService, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
@@ -36,7 +36,6 @@ describe('Process list cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
-        const settingsPage = new SettingsPage();
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
         let processDefinitionService: ProcessDefinitionsService;
@@ -66,12 +65,7 @@ describe('Process list cloud', () => {
             processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-            await settingsPage.setProviderBpmSso(
-                browser.params.config.bpmHost,
-                browser.params.config.oauth2.host,
-                browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-
         });
 
         afterAll(async () => {

@@ -17,7 +17,7 @@
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage';
-import { GroupCloudComponentPage, PeopleCloudComponentPage, SettingsPage } from '@alfresco/adf-testing';
+import { GroupCloudComponentPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { LoginSSOPage, IdentityService, GroupIdentityService, ApiService } from '@alfresco/adf-testing';
 
@@ -29,7 +29,6 @@ describe('People Groups Cloud Component', () => {
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
         const peopleCloudComponent = new PeopleCloudComponentPage();
         const groupCloudComponentPage = new GroupCloudComponentPage();
-        const settingsPage = new SettingsPage();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -62,12 +61,7 @@ describe('People Groups Cloud Component', () => {
 
             users = [apsUser.idIdentityService, noRoleUser.idIdentityService, testUser.idIdentityService];
 
-            await settingsPage.setProviderBpmSso(
-                browser.params.config.bpmHost,
-                browser.params.config.oauth2.host,
-                browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
-
         });
 
         afterAll(async () => {

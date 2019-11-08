@@ -22,7 +22,6 @@ import {
     ProcessInstancesService,
     LoginSSOPage,
     ApiService,
-    SettingsPage,
     IdentityService,
     GroupIdentityService,
     Widget,
@@ -42,7 +41,6 @@ describe('Form Field Component - Dropdown Widget', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const notificationHistoryPage = new NotificationHistoryPage();
-    const settingsPage = new SettingsPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const widget = new Widget();
     const dropdown = widget.dropdown();
@@ -88,12 +86,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         tasksService = new TasksService(apiService);
         await tasksService.claimTask(task.entry.id, simpleApp);
 
-        await settingsPage.setProviderBpmSso(
-            browser.params.config.bpmHost,
-            browser.params.config.oauth2.host,
-            browser.params.config.identityHost);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-
     });
 
     afterAll(async () => {

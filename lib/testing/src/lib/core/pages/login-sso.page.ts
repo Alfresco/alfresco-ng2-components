@@ -21,6 +21,7 @@ import { BrowserActions } from '../utils/browser-actions';
 
 export class LoginSSOPage {
 
+    loginURL: string = browser.baseUrl + '/login';
     ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));
     usernameField = element(by.id('username'));
     passwordField = element(by.id('password'));
@@ -30,12 +31,25 @@ export class LoginSSOPage {
 
     async loginSSOIdentityService(username, password) {
         browser.ignoreSynchronization = true;
+
+        let currentUrl;
+
+        try {
+            currentUrl = await browser.getCurrentUrl();
+        } catch (e) {
+        }
+
+        if (!currentUrl || currentUrl === '' || currentUrl === 'data:,') {
+            await browser.get(this.loginURL);
+        }
+
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
         await this.enterUsername(username);
         await this.enterPassword(password);
         await this.clickLoginButton();
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
         await BrowserVisibility.waitUntilElementIsVisible(this.header);
+
         await browser.waitForAngular();
     }
 

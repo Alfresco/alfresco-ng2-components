@@ -23,7 +23,6 @@ import {
     ProcessInstancesService,
     LoginSSOPage,
     ApiService,
-    SettingsPage,
     IdentityService,
     GroupIdentityService
 } from '@alfresco/adf-testing';
@@ -40,7 +39,6 @@ describe('Process filters cloud', () => {
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const settingsPage = new SettingsPage();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -82,10 +80,6 @@ describe('Process filters cloud', () => {
             const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
             await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 
-            await settingsPage.setProviderBpmSso(
-                browser.params.config.bpmHost,
-                browser.params.config.oauth2.host,
-                browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
         }, 5 * 60 * 1000);
