@@ -76,7 +76,6 @@ describe('People Groups Cloud Component', () => {
             users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`, `${testUser.idIdentityService}`];
             groups = [`${groupUser.id}`, `${groupAdmin.id}`, `${groupNoRole.id}`];
 
-
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         });
 
