@@ -24,7 +24,6 @@ import {
     TasksService,
     ProcessDefinitionsService,
     ProcessInstancesService,
-    SettingsPage,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
     Widget, IdentityService, GroupIdentityService, QueryService
@@ -41,7 +40,6 @@ describe('Task form cloud component', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
-    const settingsPage = new SettingsPage();
     const widget = new Widget();
     const formToTestValidationsKey = 'form-49904910-603c-48e9-8c8c-1d442c0fa524';
 
@@ -141,10 +139,6 @@ describe('Task form cloud component', () => {
         const formTasks = await queryService.getProcessInstanceTasks(formProcess.entry.id, simpleApp);
         formTaskId = formTasks.list.entries[0].entry.id;
 
-        await settingsPage.setProviderBpmSso(
-            browser.params.config.bpmHost,
-            browser.params.config.oauth2.host,
-            browser.params.config.identityHost);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
     }, 5 * 60 * 1000);

@@ -16,7 +16,7 @@
  */
 
 import CONSTANTS = require('../util/constants');
-import { ApiService, StringUtil, SettingsPage, IdentityService, GroupIdentityService, LocalStorageUtil } from '@alfresco/adf-testing';
+import { ApiService, StringUtil, IdentityService, GroupIdentityService, LocalStorageUtil } from '@alfresco/adf-testing';
 import moment = require('moment');
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -47,7 +47,6 @@ describe('Task Header cloud component', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
-    const settingsPage = new SettingsPage();
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
     let tasksService: TasksService;
     let identityService: IdentityService;
@@ -84,10 +83,6 @@ describe('Task Header cloud component', () => {
         subTask = await tasksService.getTask(subTaskId.entry.id, simpleApp);
         subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);
 
-        await settingsPage.setProviderBpmSso(
-            browser.params.config.bpmHost,
-            browser.params.config.oauth2.host,
-            browser.params.config.identityHost);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
     });

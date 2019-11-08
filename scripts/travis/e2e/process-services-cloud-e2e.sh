@@ -5,6 +5,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../../../
 
 CONTEXT_ENV="process-services-cloud"
+export PROVIDERS="BPMN"
+export AUTH_TYPE="OAUTH"
 
 ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
 

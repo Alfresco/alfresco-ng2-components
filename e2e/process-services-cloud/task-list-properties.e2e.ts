@@ -20,7 +20,7 @@ import {
     StringUtil, TasksService,
     ProcessDefinitionsService, ProcessInstancesService,
     LoginSSOPage, ApiService,
-    AppListCloudPage, LocalStorageUtil, IdentityService, SettingsPage, GroupIdentityService, DateUtil
+    AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService, DateUtil
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -59,7 +59,6 @@ describe('Edit task filters and task list properties', () => {
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
         tasksService = new TasksService(apiService);
-        const settingsPage = new SettingsPage();
 
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
 
@@ -93,10 +92,6 @@ describe('Edit task filters and task list properties', () => {
 
         const jsonFile = new TaskListCloudConfiguration().getConfiguration();
 
-        await settingsPage.setProviderBpmSso(
-            browser.params.config.bpmHost,
-            browser.params.config.oauth2.host,
-            browser.params.config.identityHost);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
