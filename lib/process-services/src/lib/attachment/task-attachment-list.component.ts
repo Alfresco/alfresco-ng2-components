@@ -64,7 +64,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
 
     /** Emitted when an error occurs while fetching the attachments. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     hasCustomTemplate: boolean = false;
 

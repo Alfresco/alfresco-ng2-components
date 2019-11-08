@@ -17,7 +17,7 @@
 
 import { LogService, UserProcessModel } from '@alfresco/adf-core';
 import { PeopleProcessService } from '@alfresco/adf-core';
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleSearchComponent } from '../people-search/people-search.component';
@@ -28,7 +28,7 @@ import { share } from 'rxjs/operators';
     templateUrl: './people.component.html',
     styleUrls: ['./people.component.scss']
 })
-export class PeopleComponent implements OnInit, AfterViewInit {
+export class PeopleComponent {
 
     /** The array of User objects to display. */
     @Input()
@@ -55,12 +55,6 @@ export class PeopleComponent implements OnInit, AfterViewInit {
             .pipe(
                 share()
             );
-    }
-
-    ngOnInit() {
-    }
-
-    ngAfterViewInit() {
     }
 
     involveUserAndCloseSearch() {
@@ -98,9 +92,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
             .removeInvolvedUser(this.taskId, user.id.toString())
             .subscribe(
                 () => {
-                    this.people = this.people.filter((involvedUser) => {
-                        return involvedUser.id !== user.id;
-                    });
+                    this.people = this.people.filter(involvedUser => involvedUser.id !== user.id);
                 },
                 () => this.logService.error('Impossible to remove involved user from task'));
     }
@@ -122,16 +114,16 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     }
 
     onClickAction(event: UserEventModel) {
-        if (event.type === 'remove') {
+        if (event && event.value && event.type === 'remove') {
             this.removeInvolvedUser(event.value);
         }
     }
 
-    hasPeople() {
+    hasPeople(): boolean {
         return this.people && this.people.length > 0;
     }
 
-    isEditMode() {
+    isEditMode(): boolean {
         return !this.readOnly;
     }
 

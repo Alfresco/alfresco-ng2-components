@@ -18,12 +18,7 @@
 /**
  * This object represent the User Event.
  */
-export class UserEventModel {
-    type: string = '';
-    value: any = {};
-
-    constructor(obj?: any) {
-        this.type = obj && obj.type;
-        this.value = obj && obj.value || {};
-    }
+export interface UserEventModel {
+    type: string;
+    value: any;
 }

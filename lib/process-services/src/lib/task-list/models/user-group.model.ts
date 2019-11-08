@@ -19,18 +19,10 @@
  * This object represent the process service user group.*
  */
 
-export class UserGroupModel {
+export interface UserGroupModel {
     id?: number;
     name?: string;
     externalId?: string;
     status?: string;
-    groups?: any = {};
-
-    constructor(obj?: any) {
-        this.id = obj && obj.id;
-        this.name = obj && obj.name;
-        this.externalId = obj && obj.externalId;
-        this.status = obj && obj.status;
-        this.groups = obj && obj.groups;
-    }
+    groups?: any;
 }
