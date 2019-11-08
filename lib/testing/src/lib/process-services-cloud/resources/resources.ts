@@ -32,9 +32,9 @@ export const ACTIVITI_CLOUD_APPS: any = {
         },
         security: [
             {'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] },
+            {'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser', 'salesuser'] },
             {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] }
+            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser', 'salesuser'] }
         ]
     },
     SIMPLE_APP: {
