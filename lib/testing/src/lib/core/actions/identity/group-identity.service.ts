@@ -37,25 +37,27 @@ export class GroupIdentityService {
         await this.deleteGroup(groupId);
     }
 
-    async createGroup(groupName): Promise<any> {
+    async createGroup(groupName: string): Promise<any> {
         const path = '/groups';
         const method = 'POST';
-        const queryParams = {}, postBody = {
+        const queryParams = {};
+        const postBody = {
             name: `${groupName}-${browser.params.groupSuffix}`
         };
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
     }
 
-    async deleteGroup(groupId): Promise<any> {
+    async deleteGroup(groupId: string): Promise<any> {
         const path = `/groups/${groupId}`;
         const method = 'DELETE';
-        const queryParams = {}, postBody = {};
+        const queryParams = {};
+        const postBody = {};
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
     }
 
-    async getGroupInfoByGroupName(groupName): Promise<any> {
+    async getGroupInfoByGroupName(groupName: string): Promise<any> {
         const path = `/groups`;
         const method = 'GET';
         const queryParams = { search: groupName }, postBody = {};
@@ -64,11 +66,11 @@ export class GroupIdentityService {
         return data[0];
     }
 
-    async assignRole(groupId, roleId, roleName): Promise<any> {
+    async assignRole(groupId: string, roleId: string, roleName: string): Promise<any> {
         const path = `/groups/${groupId}/role-mappings/realm`;
         const method = 'POST';
-        const queryParams = {},
-            postBody = [{ id: roleId, name: roleName }];
+        const queryParams = {};
+        const postBody = [{ id: roleId, name: roleName }];
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
@@ -83,16 +85,18 @@ export class GroupIdentityService {
      */
     async addClientRole(groupId: string, clientId: string, roleId: string, roleName: string): Promise<any> {
         const path = `/groups/${groupId}/role-mappings/clients/${clientId}`;
-        const method = 'POST', queryParams = {},
-            postBody = [{
+        const method = 'POST';
+        const queryParams = {};
+        const postBody = [
+            {
                 id: roleId,
                 name: roleName,
                 composite: false,
                 clientRole: true,
                 containerId: clientId
-            }];
-        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        return data;
+            }
+        ];
+        return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
     /**
@@ -102,7 +106,9 @@ export class GroupIdentityService {
      */
     async getClientIdByApplicationName(applicationName: string): Promise<any> {
         const path = `/clients`;
-        const method = 'GET', queryParams = { clientId: applicationName }, postBody = {};
+        const method = 'GET';
+        const queryParams = { clientId: applicationName };
+        const postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0].id;

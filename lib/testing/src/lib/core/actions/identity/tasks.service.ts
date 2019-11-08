@@ -26,7 +26,7 @@ export class TasksService {
         this.api = api;
     }
 
-    async createStandaloneTask(taskName, appName, options?): Promise<any> {
+    async createStandaloneTask(taskName: string, appName: string, options?: Object): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks';
             const method = 'POST';
@@ -43,12 +43,13 @@ export class TasksService {
         }
     }
 
-    async createStandaloneTaskWithForm(taskName, appName, formKey, options?): Promise<any> {
+    async createStandaloneTaskWithForm(taskName: string, appName: string, formKey: string, options?: Object): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks';
             const method = 'POST';
 
-            const queryParams = {}, postBody = {
+            const queryParams = {};
+            const postBody = {
                 name: taskName,
                 payloadType: 'CreateTaskPayload',
                 formKey: formKey,
@@ -61,7 +62,7 @@ export class TasksService {
         }
     }
 
-    async completeTask(taskId, appName): Promise<any> {
+    async completeTask(taskId: string, appName: string): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
             const method = 'POST';
@@ -75,12 +76,13 @@ export class TasksService {
 
     }
 
-    async claimTask(taskId, appName): Promise<any> {
+    async claimTask(taskId: string, appName: string): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks/' + taskId + `/claim`;
             const method = 'POST';
 
-            const queryParams = {}, postBody = {};
+            const queryParams = {};
+            const postBody = {};
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
@@ -88,12 +90,13 @@ export class TasksService {
         }
     }
 
-    async deleteTask(taskId, appName): Promise<any> {
+    async deleteTask(taskId: string, appName: string): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks/' + taskId;
             const method = 'DELETE';
 
-            const queryParams = {}, postBody = {};
+            const queryParams = {};
+            const postBody = {};
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
@@ -101,19 +104,20 @@ export class TasksService {
         }
     }
 
-    async createAndCompleteTask(taskName, appName): Promise<any> {
+    async createAndCompleteTask(taskName: string, appName: string): Promise<any> {
         const task = await this.createStandaloneTask(taskName, appName);
         await this.claimTask(task.entry.id, appName);
         await this.completeTask(task.entry.id, appName);
         return task;
     }
 
-    async getTask(taskId, appName): Promise<any> {
+    async getTask(taskId: string, appName: string): Promise<any> {
         try {
             const path = '/' + appName + '/query/v1/tasks/' + taskId;
             const method = 'GET';
 
-            const queryParams = {}, postBody = {};
+            const queryParams = {};
+            const postBody = {};
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
@@ -121,7 +125,7 @@ export class TasksService {
         }
     }
 
-    async getTaskId(taskName, appName): Promise<any> {
+    async getTaskId(taskName: string, appName: string): Promise<any> {
         try {
             const path = '/' + appName + '/query/v1/tasks';
             const method = 'GET';
@@ -135,7 +139,7 @@ export class TasksService {
         }
     }
 
-    async createStandaloneSubtask(parentTaskId, appName, name): Promise<any> {
+    async createStandaloneSubtask(parentTaskId: string, appName: string, name: string): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks';
             const method = 'POST';

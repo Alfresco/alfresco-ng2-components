@@ -26,7 +26,7 @@ export class ProcessDefinitionsService {
         this.api = api;
     }
 
-    async getProcessDefinitions(appName): Promise<any> {
+    async getProcessDefinitions(appName: string): Promise<any> {
         const path = '/' + appName + '/rb/v1/process-definitions';
         const method = 'GET';
 

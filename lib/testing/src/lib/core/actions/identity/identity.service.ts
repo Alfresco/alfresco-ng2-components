@@ -82,7 +82,7 @@ export class IdentityService {
         await this.createIdentityUser(user);
     }
 
-    async deleteIdentityUser(userId): Promise<void> {
+    async deleteIdentityUser(userId: string): Promise<void> {
         await this.deleteUser(userId);
     }
 
@@ -105,23 +105,24 @@ export class IdentityService {
         }
     }
 
-    async deleteUser(userId): Promise<any> {
+    async deleteUser(userId: string): Promise<any> {
         const path = `/users/${userId}`;
         const method = 'DELETE';
         const queryParams = {}, postBody = {};
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
-    async getUserInfoByUsername(username): Promise<any> {
+    async getUserInfoByUsername(username: string): Promise<any> {
         const path = `/users`;
         const method = 'GET';
-        const queryParams = { username: username }, postBody = {};
+        const queryParams = { username };
+        const postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0];
     }
 
-    async resetPassword(id, password): Promise<any> {
+    async resetPassword(id: string, password: string): Promise<any> {
         const path = `/users/${id}/reset-password`;
         const method = 'PUT';
         const queryParams = {},
@@ -130,12 +131,12 @@ export class IdentityService {
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
-    async addUserToGroup(userId, groupId): Promise<any> {
+    async addUserToGroup(userId: string, groupId: string): Promise<any> {
         try {
             const path = `/users/${userId}/groups/${groupId}`;
             const method = 'PUT';
-            const queryParams = {},
-                postBody = { realm: 'alfresco', userId: userId, groupId: groupId };
+            const queryParams = {};
+            const postBody = { realm: 'alfresco', userId: userId, groupId: groupId };
 
             return this.api.performIdentityOperation(path, method, queryParams, postBody);
         } catch (error) {
@@ -143,11 +144,11 @@ export class IdentityService {
         }
     }
 
-    async assignRole(userId, roleId, roleName): Promise<any> {
+    async assignRole(userId: string, roleId: string, roleName: string): Promise<any> {
         const path = `/users/${userId}/role-mappings/realm`;
         const method = 'POST';
-        const queryParams = {},
-            postBody = [{ id: roleId, name: roleName }];
+        const queryParams = {};
+        const postBody = [{ id: roleId, name: roleName }];
 
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
