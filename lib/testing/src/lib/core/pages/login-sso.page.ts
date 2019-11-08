@@ -39,7 +39,7 @@ export class LoginSSOPage {
         } catch (e) {
         }
 
-        if (currentUrl !== this.loginURL) {
+        if (!currentUrl || currentUrl === '') {
             await browser.get(this.loginURL);
         }
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
