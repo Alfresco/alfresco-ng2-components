@@ -1,18 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
-    <title>folder-with-rule copy</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="folder-with-rule-copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="systemicon/folder-with-rules-active">
-            <g id="folder-with-rules">
-                <g id="Group">
-                    <polygon id="Fill-1" points="0 24 24 24 24 0 0 0"></polygon>
-                    <path d="M10,4 L4,4 C2.895,4 2.01,4.895 2.01,6 L2,18 C2,19.105 2.895,20 4,20 L20,20 C21.105,20 22,19.105 22,18 L22,8 C22,6.895 21.105,6 20,6 L12,6 L10,4 Z" id="Fill-2" fill="#D9E021"></path>
-                    <polygon id="Fill-1-Copy" fill="#FFFFFF" points="14.8620241 9 16.4361035 10.574375 13.4948433 13.5155 10.5501462 10.574375 12.124913 9 8 9 8 13.125 9.57476682 11.550625 12.8109092 14.78875 12.8109092 18 14.1863384 18 14.1863384 14.776375 17.4121702 11.550625 18.9862497 13.125 18.9862497 9"></polygon>
-                </g>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" version="1.1" viewBox="0 0 24 24"><title>folder-with-rule copy</title><desc>Created with Sketch.</desc><g id="folder-with-rule-copy" fill="none" fill-rule="evenodd" stroke="none" stroke-width="1"><g id="systemicon/folder-with-rules-active"><g id="folder-with-rules"><g id="Group"><polygon id="Fill-1" points="0 24 24 24 24 0 0 0"/><path id="Fill-2" fill="#D9E021" d="M10,4 L4,4 C2.895,4 2.01,4.895 2.01,6 L2,18 C2,19.105 2.895,20 4,20 L20,20 C21.105,20 22,19.105 22,18 L22,8 C22,6.895 21.105,6 20,6 L12,6 L10,4 Z"/><polygon id="Fill-1-Copy" fill="#FFF" points="14.862 9 16.436 10.574 13.495 13.515 10.55 10.574 12.125 9 8 9 8 13.125 9.575 11.551 12.811 14.789 12.811 18 14.186 18 14.186 14.776 17.412 11.551 18.986 13.125 18.986 9"/></g></g></g></g></svg>
