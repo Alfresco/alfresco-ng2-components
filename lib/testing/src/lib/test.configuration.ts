@@ -31,6 +31,11 @@ export interface TestConfiguration {
         password: string
     };
 
+    identitySalesUser: {
+        email: string,
+        password: string
+    };
+
     main: {
         timeout: number;
         rootPath: string;
