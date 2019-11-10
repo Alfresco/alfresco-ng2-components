@@ -65,3 +65,17 @@
     height: 100%;
     overflow: hidden;
 }
+
+@mixin mat-expansion-panel-theme--fix($theme) {
+    $background: map-get($theme, background);
+
+    .mat-expansion-panel {
+        & .mat-expansion-panel-header.cdk-keyboard-focused,
+        & .mat-expansion-panel-header.cdk-program-focused,
+        &:not(.mat-expanded) .mat-expansion-panel-header:hover {
+            &:not([aria-disabled='true']) {
+                background: mat-color($background, hover);
+            }
+        }
+    }
+}

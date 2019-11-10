@@ -24,7 +24,6 @@ import {
     TasksService,
     ProcessDefinitionsService,
     ProcessInstancesService,
-    SettingsPage,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
     Widget, IdentityService, GroupIdentityService, QueryService
@@ -41,7 +40,6 @@ describe('Task form cloud component', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
-    const settingsPage = new SettingsPage();
     const widget = new Widget();
     const formToTestValidationsKey = 'form-49904910-603c-48e9-8c8c-1d442c0fa524';
 
@@ -55,6 +53,7 @@ describe('Task form cloud component', () => {
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+    const apiServiceHrUser = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
 
     const visibilityConditionTasks = [];
 
@@ -87,7 +86,9 @@ describe('Task form cloud component', () => {
 
         identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
-        const formCloudService = new FormCloudService(apiService);
+
+        await apiServiceHrUser.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        const formCloudService = new FormCloudService(apiServiceHrUser);
 
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
 
@@ -95,8 +96,8 @@ describe('Task form cloud component', () => {
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
 
-        tasksService = new TasksService(apiService);
-        const queryService = new QueryService(apiService);
+        tasksService = new TasksService(apiServiceHrUser);
+        const queryService = new QueryService(apiServiceHrUser);
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
 
         assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
@@ -128,12 +129,12 @@ describe('Task form cloud component', () => {
         await tasksService.claimTask(completedTask.entry.id, candidateBaseApp);
         await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);
 
-        processDefinitionService = new ProcessDefinitionsService(apiService);
+        processDefinitionService = new ProcessDefinitionsService(apiServiceHrUser);
 
         let processDefinition = await processDefinitionService
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
 
-        processInstancesService = new ProcessInstancesService(apiService);
+        processInstancesService = new ProcessInstancesService(apiServiceHrUser);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
         processDefinition = await processDefinitionService.getProcessDefinitionByName('dropdownrestprocess', simpleApp);
@@ -141,10 +142,6 @@ describe('Task form cloud component', () => {
         const formTasks = await queryService.getProcessInstanceTasks(formProcess.entry.id, simpleApp);
         formTaskId = formTasks.list.entries[0].entry.id;
 
-        await settingsPage.setProviderBpmSso(
-            browser.params.config.bpmHost,
-            browser.params.config.oauth2.host,
-            browser.params.config.identityHost);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
     }, 5 * 60 * 1000);

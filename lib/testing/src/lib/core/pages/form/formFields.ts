@@ -40,7 +40,7 @@ export class FormFields {
     }
 
     async clickField(locator, field): Promise<void> {
-        const fieldElement: any = element(locator(field));
+        const fieldElement = element(locator(field));
         await BrowserActions.click(fieldElement);
     }
 

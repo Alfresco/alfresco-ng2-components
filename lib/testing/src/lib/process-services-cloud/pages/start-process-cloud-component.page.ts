@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, Key, protractor, browser } from 'protractor';
+import { by, element, Key, protractor, browser, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/formFields';
@@ -45,7 +45,7 @@ export class StartProcessCloudPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.processDefinitionOptionsPanel);
     }
 
-    async enterProcessName(name): Promise<void> {
+    async enterProcessName(name: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
         await BrowserActions.clearSendKeys(this.processNameInput, name);
     }
@@ -55,7 +55,7 @@ export class StartProcessCloudPage {
         return this.processNameInput.getAttribute('value');
     }
 
-    async selectFromProcessDropdown(name): Promise<void> {
+    async selectFromProcessDropdown(name: string): Promise<void> {
         await this.clickProcessDropdownArrow();
         await this.selectOption(name);
     }
@@ -64,13 +64,13 @@ export class StartProcessCloudPage {
         await BrowserActions.click(this.selectProcessDropdownArrow);
     }
 
-    async checkOptionIsDisplayed(name): Promise<void> {
+    async checkOptionIsDisplayed(name: string): Promise<void> {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         await BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
         await BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
     }
 
-    async selectOption(name): Promise<void> {
+    async selectOption(name: string): Promise<void> {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         await BrowserActions.click(selectProcessDropdown);
     }
@@ -88,17 +88,17 @@ export class StartProcessCloudPage {
         await BrowserActions.click(this.startProcessButton);
     }
 
-    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error'): Promise<void> {
+    async checkValidationErrorIsDisplayed(error: string, elementRef = 'mat-error'): Promise<void> {
         const errorElement = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }
 
-    async blur(locator): Promise<void> {
+    async blur(locator: ElementFinder): Promise<void> {
         await BrowserActions.click(locator);
         await locator.sendKeys(Key.TAB);
     }
 
-    async clearField(locator) {
+    async clearField(locator: ElementFinder) {
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         await BrowserActions.clearWithBackSpace(locator);
     }

@@ -141,7 +141,7 @@
                                 </span>
                                 <mat-icon>{{ data.getValue(row, col) }}</mat-icon>
                             </div>
-                            <div *ngSwitchCase="'date'" class="adf-cell-value" tabindex="0"
+                            <div *ngSwitchCase="'date'" class="adf-cell-value" [attr.tabindex]="data.getValue(row, col)? 0 : -1"
                                  [attr.data-automation-id]="'date_' + (data.getValue(row, col) | adfLocalizedDate: 'medium') ">
                                 <adf-date-cell class="adf-datatable-center-date-column-ie"
                                     [data]="data"
@@ -151,7 +151,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-date-cell>
                             </div>
-                            <div *ngSwitchCase="'location'" tabindex="0" class="adf-cell-value"
+                            <div *ngSwitchCase="'location'" [attr.tabindex]="data.getValue(row, col)? 0 : -1"  class="adf-cell-value"
                                  [attr.data-automation-id]="'location' + data.getValue(row, col)">
                                 <adf-location-cell
                                     [data]="data"
@@ -171,7 +171,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-filesize-cell>
                             </div>
-                            <div *ngSwitchCase="'text'" tabindex="0" class="adf-cell-value"
+                            <div *ngSwitchCase="'text'" [attr.tabindex]="data.getValue(row, col)? 0 : -1"  class="adf-cell-value"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                                 <adf-datatable-cell
                                     [copyContent]="col.copyContent"
@@ -182,7 +182,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-datatable-cell>
                             </div>
-                            <div *ngSwitchCase="'json'" tabindex="0" class="adf-cell-value">
+                            <div *ngSwitchCase="'json'" [attr.tabindex]="data.getValue(row, col)? 0 : -1" class="adf-cell-value">
                                 <adf-json-cell
                                     [editable]="col.editable"
                                     [data]="data"

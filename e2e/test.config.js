@@ -75,6 +75,11 @@ module.exports = {
         password: PASSWORD_ADF
     },
 
+    hrUser: {
+        email: process.env.HR_USER,
+        password: process.env.HR_USER_PASSWORD
+    },
+
     adf: {
         /**
          * base

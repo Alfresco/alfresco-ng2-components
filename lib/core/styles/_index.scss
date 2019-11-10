@@ -70,4 +70,5 @@
     @include adf-sidenav-layout-theme($theme);
     @include adf-clipboard-theme($theme);
     @include adf-snackbar-theme($theme);
+    @include mat-expansion-panel-theme--fix($theme);
 }

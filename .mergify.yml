@@ -1,0 +1,21 @@
+pull_request_rules:
+    - name: automatic merge for Dependabot pull requests
+      conditions:
+          - author=dependabot-preview[bot]
+          - status-success=continuous-integration/travis-ci/pr
+          - status-success=security/snyk - package.json (eromano (GitHub marketplace))
+      actions:
+          merge:
+              method: merge
+    - name: merge when all requested reviews are valid
+      conditions:
+          - status-success=continuous-integration/travis-ci/pr
+          - status-success=security/snyk - package.json (eromano (GitHub marketplace))
+          - '#approved-reviews-by>=2'
+          - '#review-requested=0'
+          - '#changes-requested-reviews-by=0'
+          - '#commented-reviews-by=0'
+          - label!="do not merge"
+      actions:
+          merge:
+              method: merge

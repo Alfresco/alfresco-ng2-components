@@ -16,6 +16,8 @@
  */
 
 export interface DataRow {
+    [key: string]: any;
+
     isSelected: boolean;
     isDropTarget?: boolean;
     cssClass?: string;

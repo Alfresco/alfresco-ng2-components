@@ -26,12 +26,13 @@ export class MessageEventsService {
         this.api = api;
     }
 
-    async startMessageEvent(startMessage, appName, options?: any): Promise<any> {
+    async startMessageEvent(startMessage: string, appName: string, options?: Object): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/process-instances/message';
             const method = 'POST';
 
-            const queryParams = {}, postBody = {
+            const queryParams = {};
+            const postBody = {
                 'name': startMessage,
                 'variables': {},
                 'payloadType': 'StartMessagePayload',
@@ -46,12 +47,13 @@ export class MessageEventsService {
 
     }
 
-    async receiveMessageEvent(receiveMessage, appName, options?: any): Promise<any> {
+    async receiveMessageEvent(receiveMessage: string, appName: string, options?: Object): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/process-instances/message';
             const method = 'PUT';
 
-            const queryParams = {}, postBody = {
+            const queryParams = {};
+            const postBody = {
                 'name': receiveMessage,
                 'variables': {},
                 'payloadType': 'ReceiveMessagePayload',

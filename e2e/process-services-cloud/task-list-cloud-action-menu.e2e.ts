@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { GroupIdentityService, IdentityService, LoginSSOPage, QueryService, SettingsPage, TasksService } from '@alfresco/adf-testing';
+import { GroupIdentityService, IdentityService, LoginSSOPage, QueryService, TasksService } from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -31,7 +31,6 @@ describe('Process list cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const settingsPage = new SettingsPage();
 
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
@@ -69,10 +68,6 @@ describe('Process list cloud', () => {
             await tasksService.claimTask(editTask.list.entries[0].entry.id, simpleApp);
             await tasksService.claimTask(deleteTask.list.entries[0].entry.id, simpleApp);
 
-            await settingsPage.setProviderBpmSso(
-                browser.params.config.bpmHost,
-                browser.params.config.oauth2.host,
-                browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
         });

@@ -27,7 +27,6 @@ import {
     ProcessDefinitionsService,
     ProcessInstancesService,
     QueryService,
-    SettingsPage,
     IdentityService,
     GroupIdentityService
 } from '@alfresco/adf-testing';
@@ -51,7 +50,6 @@ describe('Process Header cloud component', () => {
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
-        const settingsPage = new SettingsPage();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -71,12 +69,14 @@ describe('Process Header cloud component', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
+
             testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.email, testUser.password);
             processDefinitionService = new ProcessDefinitionsService(apiService);
+
             const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             const childProcessDefinition = await processDefinitionService.getProcessDefinitions(subProcessApp);
 
@@ -94,10 +94,6 @@ describe('Process Header cloud component', () => {
             childCompleteProcess = parentProcessInstance.list.entries[0];
             completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);
 
-            await settingsPage.setProviderBpmSso(
-                browser.params.config.bpmHost,
-                browser.params.config.oauth2.host,
-                browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
         });

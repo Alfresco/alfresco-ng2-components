@@ -17,7 +17,6 @@
 
 import {
     LoginSSOPage,
-    SettingsPage,
     Widget,
     BrowserActions, FormPage
 } from '@alfresco/adf-testing';
@@ -27,7 +26,6 @@ import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-c
 
 describe('Form Field Component - Dropdown Widget', () => {
     const loginSSOPage = new LoginSSOPage();
-    const settingsPage = new SettingsPage();
     const widget = new Widget();
     const dateWidget = widget.dateWidget();
 
@@ -36,11 +34,7 @@ describe('Form Field Component - Dropdown Widget', () => {
     const formPage = new FormPage();
 
     beforeAll(async () => {
-        await settingsPage.setProviderBpmSso(
-            browser.params.config.bpmHost,
-            browser.params.config.oauth2.host,
-            browser.params.config.identityHost);
-        await loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
     });
 
     beforeEach(async () => {

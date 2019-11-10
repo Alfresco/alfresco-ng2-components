@@ -22,7 +22,6 @@ import {
     ApiService,
     LoginSSOPage,
     TasksService,
-    SettingsPage,
     IdentityService,
     GroupIdentityService
 } from '@alfresco/adf-testing';
@@ -36,7 +35,6 @@ describe('Edit task filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const settingsPage = new SettingsPage();
         let tasksService: TasksService;
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
@@ -61,10 +59,6 @@ describe('Edit task filters cloud', () => {
             await tasksService.claimTask(assignedTask.entry.id, simpleApp);
             await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
 
-            await settingsPage.setProviderBpmSso(
-                browser.params.config.bpmHost,
-                browser.params.config.oauth2.host,
-                browser.params.config.identityHost);
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         });
 

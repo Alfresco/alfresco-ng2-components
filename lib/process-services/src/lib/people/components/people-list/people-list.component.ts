@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { DataTableComponent } from '@alfresco/adf-core';
+import { DataTableComponent, DataCellEvent } from '@alfresco/adf-core';
 import { DataColumnListComponent, UserProcessModel } from '@alfresco/adf-core';
-import { AfterContentInit, AfterViewInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 
 @Component({
@@ -26,9 +26,10 @@ import { UserEventModel } from '../../../task-list/models/user-event.model';
     styleUrls: ['./people-list.component.scss']
 })
 
-export class PeopleListComponent implements AfterViewInit, AfterContentInit {
+export class PeopleListComponent implements AfterContentInit {
 
-    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+    @ContentChild(DataColumnListComponent)
+    columnList: DataColumnListComponent;
 
     @ViewChild('dataTable')
     peopleDataTable: DataTableComponent;
@@ -43,19 +44,16 @@ export class PeopleListComponent implements AfterViewInit, AfterContentInit {
 
     /** Emitted when the user clicks a row in the people list. */
     @Output()
-    clickRow: EventEmitter<UserProcessModel> = new EventEmitter<UserProcessModel>();
+    clickRow = new EventEmitter<UserProcessModel>();
 
     /** Emitted when the user clicks in the 'Three Dots' drop down menu for a row. */
     @Output()
-    clickAction: EventEmitter<UserEventModel> = new EventEmitter<UserEventModel>();
+    clickAction = new EventEmitter<UserEventModel>();
 
     user: UserProcessModel;
 
     ngAfterContentInit() {
         this.peopleDataTable.columnList = this.columnList;
-    }
-
-    ngAfterViewInit() {
     }
 
     selectUser(event: any) {
@@ -67,7 +65,7 @@ export class PeopleListComponent implements AfterViewInit, AfterContentInit {
         return this.actions;
     }
 
-    onShowRowActionsMenu(event: any) {
+    onShowRowActionsMenu(event: DataCellEvent) {
 
         const removeAction = {
             title: 'Remove',
@@ -82,6 +80,6 @@ export class PeopleListComponent implements AfterViewInit, AfterContentInit {
     onExecuteRowAction(event: any) {
         const args = event.value;
         const action = args.action;
-        this.clickAction.emit(new UserEventModel({type: action.name, value: args.row.obj}));
+        this.clickAction.emit({type: action.name, value: args.row.obj});
     }
 }

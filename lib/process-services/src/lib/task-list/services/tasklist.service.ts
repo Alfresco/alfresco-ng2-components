@@ -77,7 +77,7 @@ export class TaskListService {
         const requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filterModel);
         return from(this.callApiTasksFiltered(requestNodeForFilter))
             .pipe(
-                map((res: any) => {
+                map(res => {
                     return res.data.find((element) => element.id === taskId) ? filterModel : null;
                 }),
                 catchError((err) => this.handleError(err))
@@ -155,7 +155,7 @@ export class TaskListService {
     getTaskDetails(taskId: string): Observable<TaskDetailsModel> {
         return from(this.callApiTaskDetails(taskId))
             .pipe(
-                map((details: any) => {
+                map(details => {
                     return new TaskDetailsModel(details);
                 }),
                 catchError((err) => this.handleError(err))
@@ -170,7 +170,7 @@ export class TaskListService {
     getTaskChecklist(id: string): Observable<TaskDetailsModel[]> {
         return from(this.callApiTaskChecklist(id))
             .pipe(
-                map((response: any) => {
+                map(response => {
                     const checklists: TaskDetailsModel[] = [];
                     response.data.forEach((checklist) => {
                         checklists.push(new TaskDetailsModel(checklist));
@@ -194,7 +194,7 @@ export class TaskListService {
 
         return from(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
             .pipe(
-                map((response: any) => {
+                map(response => {
                     const forms: Form[] = [];
                     response.data.forEach((form) => {
                         forms.push(new Form(form.id, form.name));
@@ -278,9 +278,6 @@ export class TaskListService {
         requestNode.size = 0;
         return from(this.callApiTasksFiltered(requestNode))
             .pipe(
-                map((res: any) => {
-                    return res;
-                }),
                 catchError((err) => this.handleError(err))
             );
     }
@@ -364,7 +361,7 @@ export class TaskListService {
      * @param updated Data to update the task (as a `TaskUpdateRepresentation` instance).
      * @returns Updated task details
      */
-    updateTask(taskId: any, updated: TaskUpdateRepresentation): Observable<TaskDetailsModel> {
+    updateTask(taskId: string, updated: TaskUpdateRepresentation): Observable<TaskDetailsModel> {
         return from(this.apiService.taskApi.updateTask(taskId, updated))
             .pipe(
                 map((result) => <TaskDetailsModel> result),

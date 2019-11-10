@@ -40,7 +40,7 @@ export class PeopleSearchFieldComponent {
     placeholder: string;
 
     @Output()
-    rowClick: EventEmitter<UserProcessModel> = new EventEmitter<UserProcessModel>();
+    rowClick = new EventEmitter<UserProcessModel>();
 
     users$: Observable<UserProcessModel[]>;
     searchUser: FormControl = new FormControl();
@@ -64,23 +64,23 @@ export class PeopleSearchFieldComponent {
         this.defaultPlaceholder = this.translationService.instant(this.defaultPlaceholder);
     }
 
-    public reset() {
+    reset() {
         this.searchUser.reset();
     }
 
-    get searchPlaceholder() {
+    get searchPlaceholder(): string {
         return this.placeholder || this.defaultPlaceholder;
     }
 
-    onRowClick(event) {
-        this.rowClick.emit(event);
+    onRowClick(model: UserProcessModel) {
+        this.rowClick.emit(model);
     }
 
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
         return getDisplayUser(firstName, lastName, delimiter);
     }
 
-    getInitialUserName(firstName: string, lastName: string) {
+    getInitialUserName(firstName: string, lastName: string): string {
         firstName = (firstName !== null && firstName !== '' ? firstName[0] : '');
         lastName = (lastName !== null && lastName !== '' ? lastName[0] : '');
         return this.getDisplayUser(firstName, lastName, '');

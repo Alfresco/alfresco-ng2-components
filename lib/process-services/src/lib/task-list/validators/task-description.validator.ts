@@ -21,7 +21,7 @@ export class TaskDescriptionValidator implements CardViewItemValidator {
 
     message: string = 'ADF_CLOUD_TASK_HEADER.FORM_VALIDATION.INVALID_FIELD';
 
-    isValid(value: any): boolean {
+    isValid(value: string): boolean {
         const isWhitespace = (value || '').trim().length === 0;
         return value.length === 0 || !isWhitespace;
     }

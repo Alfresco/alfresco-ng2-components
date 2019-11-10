@@ -28,7 +28,6 @@ import {
     TasksService,
     ApiService,
     IdentityService,
-    SettingsPage,
     GroupIdentityService
 } from '@alfresco/adf-testing';
 
@@ -41,7 +40,6 @@ describe('Start Task', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
-    const settingsPage = new SettingsPage();
     const apiService = new ApiService(
         browser.params.config.oauth2.clientId,
         browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -75,12 +73,7 @@ describe('Start Task', () => {
         await identityService.addUserToGroup(apsUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
 
-        await settingsPage.setProviderBpmSso(
-            browser.params.config.bpmHost,
-            browser.params.config.oauth2.host,
-            browser.params.config.identityHost);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-
     });
 
     afterAll(async () => {

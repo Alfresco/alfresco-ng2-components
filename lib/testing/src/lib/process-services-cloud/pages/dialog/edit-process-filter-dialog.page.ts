@@ -36,7 +36,7 @@ export class EditProcessFilterDialogPage {
         await browser.driver.sleep(1000);
     }
 
-    async checkSaveButtonIsEnabled() {
+    async checkSaveButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.componentElement.element(this.saveButtonLocator));
         return this.componentElement.element(this.saveButtonLocator).isEnabled();
     }
@@ -57,7 +57,7 @@ export class EditProcessFilterDialogPage {
         return this.filterNameInput.getAttribute('value');
     }
 
-    async setFilterName(filterName): Promise<void> {
+    async setFilterName(filterName: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.filterNameInput, filterName);
     }
 

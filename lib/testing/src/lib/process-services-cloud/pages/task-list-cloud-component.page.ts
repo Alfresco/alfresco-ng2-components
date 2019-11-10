@@ -45,39 +45,39 @@ export class TaskListCloudComponentPage {
         return this.dataTable;
     }
 
-    clickCheckbox(taskName): Promise<void> {
+    clickCheckbox(taskName: string): Promise<void> {
         return this.dataTable.clickCheckbox(column.name, taskName);
     }
 
-    checkRowIsNotChecked(taskName): Promise<void> {
+    checkRowIsNotChecked(taskName: string): Promise<void> {
         return this.dataTable.checkRowIsNotChecked(column.name, taskName);
     }
 
-    checkRowIsChecked(taskName): Promise<void> {
+    checkRowIsChecked(taskName: string): Promise<void> {
         return this.dataTable.checkRowIsChecked(column.name, taskName);
     }
 
-    getRowsWithSameName(taskName): Promise<string> {
+    getRowsWithSameName(taskName: string): Promise<string> {
         return this.dataTable.getRowsWithSameColumnValues(column.name, taskName);
     }
 
-    getRowsWithSameId(taskId): Promise<string> {
+    getRowsWithSameId(taskId: string): Promise<string> {
         return this.dataTable.getRowsWithSameColumnValues('Id', taskId);
     }
 
-    checkRowIsSelected(taskName): Promise<void> {
+    checkRowIsSelected(taskName: string): Promise<void> {
         return this.dataTable.checkRowIsSelected(column.name, taskName);
     }
 
-    checkRowIsNotSelected(taskName): Promise<void> {
+    checkRowIsNotSelected(taskName: string): Promise<void> {
         return this.dataTable.checkRowIsNotSelected(column.name, taskName);
     }
 
-    selectRowWithKeyboard(taskName): Promise<void> {
+    selectRowWithKeyboard(taskName: string): Promise<void> {
         return this.dataTable.selectRowWithKeyboard(column.name, taskName);
     }
 
-    selectRow(taskName): Promise<void> {
+    selectRow(taskName: string): Promise<void> {
         return this.dataTable.selectRow(column.name, taskName);
     }
 
@@ -89,23 +89,23 @@ export class TaskListCloudComponentPage {
         return this.dataTable.getCellElementByValue(column.name, taskName);
     }
 
-    checkContentIsDisplayedById(taskId): Promise<void> {
+    checkContentIsDisplayedById(taskId: string): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(column.id, taskId);
     }
 
-    async checkContentIsNotDisplayedById(taskId): Promise<void> {
+    async checkContentIsNotDisplayedById(taskId: string): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(column.id, taskId);
     }
 
-    async checkContentIsDisplayedByProcessInstanceId(taskName): Promise<void> {
+    async checkContentIsDisplayedByProcessInstanceId(taskName: string): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(column.processInstanceId, taskName);
     }
 
-    async checkContentIsDisplayedByName(taskName): Promise<void> {
+    async checkContentIsDisplayedByName(taskName: string): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(column.name, taskName);
     }
 
-    async checkContentIsNotDisplayedByName(taskName): Promise<void> {
+    async checkContentIsNotDisplayedByName(taskName: string): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(column.name, taskName);
     }
 
@@ -153,7 +153,7 @@ export class TaskListCloudComponentPage {
         return this.dataTable.getAllRowsColumnValues(column.owner);
     }
 
-    async getIdCellValue(rowName): Promise<string> {
+    async getIdCellValue(rowName: string): Promise<string> {
         const locator = new DataTableComponentPage().getCellByRowContentAndColumn(column.name, rowName, column.id);
         return BrowserActions.getText(locator);
     }
@@ -179,7 +179,7 @@ export class TaskListCloudComponentPage {
         await this.dataTable.rightClickOnRow('Id', taskId);
     }
 
-    async clickContextMenuActionNamed(actionName): Promise<void> {
+    async clickContextMenuActionNamed(actionName: string): Promise<void> {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 
