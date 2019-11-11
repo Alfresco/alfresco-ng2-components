@@ -239,7 +239,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                         this.data.node.entry.properties['qshare:sharedId'] = null;
                         this.data.node.entry.properties['qshare:expiryDate'] = null;
                     }
-                    this.dialogRef.close(false);
+                    this.dialogRef.close(true);
                 }
             }
         );
