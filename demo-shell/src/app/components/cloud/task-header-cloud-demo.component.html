@@ -4,21 +4,17 @@
     {{ 'APP_LAYOUT.TASK_HEADER_CLOUD.APP_NAME_INPUT' | translate }}
     <input matInput
            [type]="'text'"
-           [formControl]="appNameFormControl">
+           [formControl]="appNameFormControl"
+           (change)="updateTaskHeader()">
 </mat-form-field>
 
 <mat-form-field class="app-taskId-input">
     {{ 'APP_LAYOUT.TASK_HEADER_CLOUD.TASK_ID_INPUT' | translate }}
     <input matInput
            [type]="'text'"
-           [formControl]="taskIdFormControl">
+           [formControl]="taskIdFormControl"
+           (change)="updateTaskHeader()">
 </mat-form-field>
-
-<button mat-button *ngIf="appNameFormControl.value && taskIdFormControl.value"
-        class="app-find-task-button"
-        (click)="updateTaskHeader()">
-    {{ 'APP_LAYOUT.TASK_HEADER_CLOUD.FIND_TASK_BUTTON' | translate }}
-</button>
 
 <mat-error *ngIf="errorMessage">{{errorMessage}}</mat-error>
 
