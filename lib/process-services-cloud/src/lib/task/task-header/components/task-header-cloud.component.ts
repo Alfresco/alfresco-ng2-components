@@ -57,7 +57,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     @Output()
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when the task has not been found. */
+    /** Emitted when the given task has errors. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
