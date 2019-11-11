@@ -27,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule.forChild()
     ],
     declarations: [
         NotificationHistoryComponent,

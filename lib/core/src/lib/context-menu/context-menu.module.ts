@@ -28,7 +28,7 @@ import { ContextMenuListComponent } from './context-menu-list.component';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule.forChild()
     ],
     declarations: [
         ContextMenuHolderComponent,

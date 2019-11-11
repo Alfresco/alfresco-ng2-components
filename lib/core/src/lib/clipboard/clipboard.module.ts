@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
     imports: [
         CommonModule,
-        TranslateModule
+        TranslateModule.forChild()
     ],
     providers: [
         ClipboardService

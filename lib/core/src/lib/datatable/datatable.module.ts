@@ -50,7 +50,7 @@ import { DropZoneDirective } from './components/datatable/drop-zone.directive';
         RouterModule,
         MaterialModule,
         CommonModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         ContextMenuModule,
         PipeModule,
         DirectiveModule,

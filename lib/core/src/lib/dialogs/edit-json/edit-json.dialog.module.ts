@@ -28,7 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         MatDialogModule,
         MatButtonModule
     ],

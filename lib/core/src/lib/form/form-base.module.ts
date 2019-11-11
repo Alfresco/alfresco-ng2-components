@@ -44,7 +44,7 @@ import { EditJsonDialogModule } from '../dialogs/edit-json/edit-json.dialog.modu
         DataTableModule,
         HttpClientModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule,
         DataColumnModule,

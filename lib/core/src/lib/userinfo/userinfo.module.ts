@@ -27,7 +27,7 @@ import { UserInfoComponent } from './components/user-info.component';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         PipeModule
     ],
     declarations: [

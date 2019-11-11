@@ -35,7 +35,7 @@ import { LoginDialogPanelComponent } from './components/login-dialog-panel.compo
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
-        TranslateModule
+        TranslateModule.forChild()
     ],
     declarations: [
         LoginComponent,

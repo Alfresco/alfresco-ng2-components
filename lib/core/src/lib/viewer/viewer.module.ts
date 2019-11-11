@@ -49,7 +49,7 @@ import { A11yModule } from '@angular/cdk/a11y';
         ExtensionsModule,
         CommonModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule,
         ToolbarModule,
