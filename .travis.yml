@@ -53,6 +53,7 @@ before_install:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
     - sleep 3 # give xvfb some time to start
+    - export E2E_HOST=http://adf-s3dev.envalfresco.com
 
 jobs:
     include:
