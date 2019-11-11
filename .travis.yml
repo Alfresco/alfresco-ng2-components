@@ -47,7 +47,7 @@ addons:
 before_script:
     - "sudo chown root /opt/google/chrome/chrome-sandbox"
     - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
-    - export E2E_HOST='http://adf-s3dev.envalfresco.com"
+    - export E2E_HOST='http://adf-s3dev.envalfresco.com'
 
 before_install:
     - export CHROME_BIN=chromium-browser
