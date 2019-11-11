@@ -35,7 +35,8 @@ describe('Task Header cloud component', () => {
     let subTaskCreatedDate: string;
     let completedEndDate: string;
     let defaultDate: string;
-    let groupInfo: any, testUser: any;
+    let groupInfo: any;
+    let testUser: any;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const priority = 30;
     const description = 'descriptionTask';
