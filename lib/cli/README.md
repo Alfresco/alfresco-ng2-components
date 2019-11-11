@@ -13,6 +13,27 @@ To get started  follow these instructions:
 npm install @alfresco/adf-cli -g
 ``
 
+To know more about any command use the -h or --help option
+
+## Commands
+
+|**Commands**   	   |**Description**   	|
+|---        	   |---  	        |
+|artifact-from-s3  |Get artifact from S3 |
+|artifact-to-s3    |Get artifact to S3 |
+|docker-publish    |publish docker image|
+|init-aae-env      |Init env|
+|kubectl-delete    |delete kubectl |
+|kubectl-image     |This command allows you to update a specific service on the rancher env with a specifig tag |
+|npm-publish    | publish on npm |
+| update-commit-sha   | his command allows you to update the commit sha as part of the package.json. Your package.json must to have an existing property called "commit" |
+|update-version     |This command allows you to update the adf dependencies and js-api with different versions Update adf libs and js-api with latest alpha|
+|adf-license   |Create a 3th party license file |
+|adf-audit     |Check the security risk dependency in your package.json |
+
+
+## Examples
+
 ### License Check
 
 Move in the folder where you have your package.json and run the command:

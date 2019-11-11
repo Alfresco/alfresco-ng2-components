@@ -17,8 +17,9 @@
  * limitations under the License.
  */
 
-import { logging } from '@angular-devkit/core';
-import { spawnSync } from 'child_process';
+import { exec } from './exec';
+import * as program from 'commander';
+import { logger } from './logger';
 
 export interface CommitArgs {
     pointer: string;
@@ -26,44 +27,48 @@ export interface CommitArgs {
     skipGnu: boolean;
 }
 
-function _exec(command: string, args: string[], opts: { cwd?: string }, logger: logging.Logger) {
-    if (process.platform.startsWith('win')) {
-        args.unshift('/c', command);
-        command = 'cmd.exe';
-    }
-
-    const { status, error, stderr, stdout } = spawnSync(command, args, { ...opts });
-
-    if (status !== 0) {
-        logger.error(`Command failed: ${command} ${args.map((x) => JSON.stringify(x)).join(', ')}`);
-        if (error) {
-            logger.error('Error: ' + (error ? error.message : 'undefined'));
-        } else {
-            logger.error(`STDERR:\n${stderr}`);
-        }
-        throw error;
-    } else {
-        return stdout.toString();
-    }
-}
-
-function _commitPerform(args: CommitArgs, logger: logging.Logger): string {
+function commitPerform(args: CommitArgs): string {
     logger.info('Check commit sha...');
+
     const gitPointer = args.pointer ? args.pointer : 'HEAD';
-    return _exec('git', [`rev-parse`, `${gitPointer}`], {}, logger).trim();
+
+    return exec('git', [`rev-parse`, `${gitPointer}`], {}).trim();
 }
 
-function _replacePerform(args: CommitArgs, sha: string, logger: logging.Logger) {
+function replacePerform(args: CommitArgs, sha: string) {
     logger.info(`Replace commit ${sha} in package...`);
+
     const sedRule = `s/\"commit\": \".*\"/\"commit\": \"${sha}\"/g`;
+
     if (args.skipGnu) {
-        _exec('sed', [`-i`, '', `${sedRule}`, `${args.pathPackage}/package.json`], {}, logger);
+        exec('sed', [`-i`, '', `${sedRule}`, `${args.pathPackage}/package.json`], {});
     } else {
-        _exec('sed', [`-i`, `${sedRule}`, `${args.pathPackage}/package.json`], {}, logger);
+        exec('sed', [`-i`, `${sedRule}`, `${args.pathPackage}/package.json`], {});
     }
 }
 
-export default async function (args: CommitArgs, logger: logging.Logger) {
-    const sha = _commitPerform(args, logger);
-    _replacePerform(args, sha, logger);
+export default function (args: CommitArgs) {
+    main(args);
+}
+
+function main(args) {
+
+    program
+        .version('0.1.0')
+        .description('This command allows you to update the commit sha as part of the package.json.\n' +
+            'Your package.json must to have an existing property called "commit.\n\n' +
+    'adf-cli update-commit-sha --pointer "HEAD~1" --pathProject "$(pwd)"\n\n' +
+            'adf-cli update-commit-sha --pathProject "$(pwd)" --skipGnu')
+        .option('--pointer [type]', 'pointer')
+        .option('--pathPackage [type]', 'pathPackage')
+        .option('--skipGnu [type]', 'skipGnu')
+        .parse(process.argv);
+
+    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+        program.outputHelp();
+    }
+
+    const sha = commitPerform(args);
+
+    replacePerform(args, sha);
 }

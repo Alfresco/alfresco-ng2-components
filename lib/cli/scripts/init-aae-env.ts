@@ -17,14 +17,15 @@
  * limitations under the License.
  */
 
-import { logging } from '@angular-devkit/core';
 import { ACTIVITI_CLOUD_APPS } from '@alfresco/adf-testing';
+import * as program from 'commander';
 
 /* tslint:disable */
 const alfrescoApi = require('@alfresco/js-api');
 /* tslint:enable */
 import request = require('request');
 import * as fs from 'fs';
+import { logger } from './logger';
 
 export interface ConfigArgs {
     username: string;
@@ -35,7 +36,7 @@ export interface ConfigArgs {
     identityHost: boolean;
 }
 
-async function getDeployedApplicationsByStatus(args: ConfigArgs, apiService: any, status: string, logger: logging.Logger) {
+async function getDeployedApplicationsByStatus(args: ConfigArgs, apiService: any, status: string) {
     const url = `${args.host}/deployment-service/v1/applications`;
 
     const pathParams = {}, queryParams = {status: status},
@@ -67,33 +68,32 @@ function getAlfrescoJsApiInstance(args: ConfigArgs) {
             implicitFlow: false,
             silentLogin: false,
             redirectUri: '/'
-        },
-        identityHost: `${args.identityHost}`
+        }
     };
     return new alfrescoApi.AlfrescoApiCompatibility(config);
 }
 
-async function _login(args: ConfigArgs, alfrescoJsApi: any, logger: logging.Logger) {
+async function login(args: ConfigArgs, alfrescoJsApi: any) {
     logger.info(`Perform login...`);
     await alfrescoJsApi.login(args.username, args.password);
     return alfrescoJsApi;
 }
 
-async function _deployMissingApps(args: ConfigArgs, logger: logging.Logger) {
+async function deployMissingApps(args: ConfigArgs) {
     const alfrescoJsApi = getAlfrescoJsApiInstance(args);
-    await _login(args, alfrescoJsApi, logger);
-    const deployedApps = await getDeployedApplicationsByStatus(args, alfrescoJsApi, '', logger);
+    await login(args, alfrescoJsApi);
+    const deployedApps = await getDeployedApplicationsByStatus(args, alfrescoJsApi, '');
     const absentApps = findMissingApps(deployedApps);
 
     if (absentApps.length > 0) {
         logger.warn(`Missing apps: ${JSON.stringify(absentApps)}`);
-        await checkIfAppIsReleased(args, alfrescoJsApi, absentApps, logger);
+        await checkIfAppIsReleased(args, alfrescoJsApi, absentApps);
     } else {
         logger.warn(`All the apps are correctly deployed`);
     }
 }
 
-async function getAppProjects(args: ConfigArgs, apiService: any, logger: logging.Logger) {
+async function getAppProjects(args: ConfigArgs, apiService: any) {
     const url = `${args.host}/modeling-service/v1/projects?maxItems=200&skipCount=0`;
 
     const pathParams = {}, queryParams = {},
@@ -111,8 +111,8 @@ async function getAppProjects(args: ConfigArgs, apiService: any, logger: logging
     }
 }
 
-async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApps: any [], logger: logging.Logger) {
-    const projectList = await getAppProjects(args, apiService, logger);
+async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApps: any []) {
+    const projectList = await getAppProjects(args, apiService);
     let TIME = 5000;
     let noError = true;
     for (let i = 0; i < absentApps.length; i++) {
@@ -125,10 +125,10 @@ async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApp
         if (app === undefined) {
             logger.warn('Missing project: Create the project for ' + currentAbsentApp.name);
             try {
-                const uploadedApp = await importProjectApp(args, apiService, currentAbsentApp, logger);
+                const uploadedApp = await importProjectApp(args, apiService, currentAbsentApp);
                 logger.warn('Project imported ' + currentAbsentApp.name);
                 if (uploadedApp) {
-                    projectRelease = await releaseProject(args, apiService, uploadedApp, logger);
+                    projectRelease = await releaseProject(args, apiService, uploadedApp);
                 }
             } catch (error) {
                 if (error.status !== 409) {
@@ -143,11 +143,11 @@ async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApp
             TIME += 5000;
             logger.info('Project ' + app.entry.name + ' found');
 
-            const projectReleaseList = await getReleaseAppProjectId(args, apiService, app.entry.id, logger);
+            const projectReleaseList = await getReleaseAppProjectId(args, apiService, app.entry.id);
 
             if (projectReleaseList.list.entries.length === 0) {
                 logger.warn('Project needs release');
-                projectRelease = await releaseProject(args, apiService, app, logger);
+                projectRelease = await releaseProject(args, apiService, app);
                 logger.warn(`Project released: ${projectRelease.id}`);
             } else {
                 logger.info('Project already has release');
@@ -163,14 +163,14 @@ async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApp
             }
         }
         if (noError) {
-            await checkDescriptorExist(args, apiService, currentAbsentApp.name, logger);
-            await sleep(TIME, logger);
-            await deployApp(args, apiService, currentAbsentApp, projectRelease.entry.id, logger);
+            await checkDescriptorExist(args, apiService, currentAbsentApp.name);
+            await sleep(TIME);
+            await deployApp(args, apiService, currentAbsentApp, projectRelease.entry.id);
         }
     }
 }
 
-async function deployApp(args: ConfigArgs, apiService: any, appInfo: any, projectReleaseId: string, logger: logging.Logger) {
+async function deployApp(args: ConfigArgs, apiService: any, appInfo: any, projectReleaseId: string) {
     logger.warn(`Deploy app ${appInfo.name} with projectReleaseId ${projectReleaseId}`);
 
     const url = `${args.host}/deployment-service/v1/applications`;
@@ -197,20 +197,20 @@ async function deployApp(args: ConfigArgs, apiService: any, appInfo: any, projec
     }
 }
 
-async function checkDescriptorExist(args: ConfigArgs, apiService: any, name: string, logger: logging.Logger) {
+async function checkDescriptorExist(args: ConfigArgs, apiService: any, name: string) {
     logger.info(`Check descriptor ${name} exist in the list `);
-    const descriptorList: [] = await getDescriptorList(args, apiService, logger);
+    const descriptorList: [] = await getDescriptorList(args, apiService);
     descriptorList.forEach( async(descriptor: any) => {
         if (descriptor.entry.name === name) {
             if (descriptor.entry.deployed === false) {
-                await deleteDescriptor(args, apiService, descriptor.entry.name, logger);
+                await deleteDescriptor(args, apiService, descriptor.entry.name);
             }
         }
     });
     return false;
 }
 
-async function getDescriptorList(args: ConfigArgs, apiService: any, logger: logging.Logger) {
+async function getDescriptorList(args: ConfigArgs, apiService: any) {
     const url = `${args.host}/deployment-service/v1/descriptors?page=0&size=50&sort=lastModifiedAt,desc`;
 
     const pathParams = {}, queryParams = {},
@@ -228,7 +228,7 @@ async function getDescriptorList(args: ConfigArgs, apiService: any, logger: logg
 
 }
 
-async function deleteDescriptor(args: ConfigArgs, apiService: any, name: string, logger: logging.Logger) {
+async function deleteDescriptor(args: ConfigArgs, apiService: any, name: string) {
     logger.warn(`Delete the descriptor ${name}`);
 
     const url = `${args.host}/deployment-service/v1/descriptors/${name}`;
@@ -246,7 +246,7 @@ async function deleteDescriptor(args: ConfigArgs, apiService: any, name: string,
     }
 }
 
-async function releaseProject(args: ConfigArgs, apiService: any, app: any, logger: logging.Logger) {
+async function releaseProject(args: ConfigArgs, apiService: any, app: any) {
     const url = `${args.host}/modeling-service/v1/projects/${app.entry.id}/releases`;
 
     logger.info(`Release ID  ${app.entry.id}`);
@@ -263,7 +263,7 @@ async function releaseProject(args: ConfigArgs, apiService: any, app: any, logge
     }
 }
 
-async function getReleaseAppProjectId(args: ConfigArgs, apiService: any, projectId: string, logger: logging.Logger) {
+async function getReleaseAppProjectId(args: ConfigArgs, apiService: any, projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
@@ -280,8 +280,8 @@ async function getReleaseAppProjectId(args: ConfigArgs, apiService: any, project
 
 }
 
-async function importProjectApp(args: ConfigArgs, apiService: any, app: any, logger: logging.Logger) {
-    await getFileFromRemote(app.file_location, app.name, logger);
+async function importProjectApp(args: ConfigArgs, apiService: any, app: any) {
+    await getFileFromRemote(app.file_location, app.name);
 
     const file = fs.createReadStream(`${app.name}.zip`).on('error', () => {logger.error(`${app.name}.zip does not exist`); });
 
@@ -294,7 +294,7 @@ async function importProjectApp(args: ConfigArgs, apiService: any, app: any, log
     logger.warn(`import app ${app.file_location}`);
     const result = await apiService.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
         contentTypes, accepts);
-    deleteLocalFile(`${app.name}`, logger);
+    deleteLocalFile(`${app.name}`);
     return result;
 }
 
@@ -312,7 +312,7 @@ function findMissingApps(deployedApps: any []) {
     return absentApps;
 }
 
-async function getFileFromRemote(url: string, name: string, logger: logging.Logger) {
+async function getFileFromRemote(url: string, name: string) {
     return new Promise((resolve, reject) => {
         request(url)
         .pipe(fs.createWriteStream(`${name}.zip`))
@@ -326,18 +326,38 @@ async function getFileFromRemote(url: string, name: string, logger: logging.Logg
     });
 }
 
-async function deleteLocalFile(name: string, logger: logging.Logger) {
+async function deleteLocalFile(name: string) {
     logger.info(`Deleting local file ${name}.zip`);
     fs.unlinkSync(`${name}.zip`);
 }
 
-async function sleep(time: number, logger: logging.Logger) {
+async function sleep(time: number) {
     logger.info(`Waiting for ${time} sec...`);
     await new Promise(done => setTimeout(done, time));
     logger.info(`Done...`);
     return;
 }
 
-export default async function (args: ConfigArgs, logger: logging.Logger) {
-    await _deployMissingApps(args, logger);
+export default async function (args: ConfigArgs) {
+    await main(args);
+}
+
+async function main(args) {
+
+    program
+        .version('0.1.0')
+        .description('The following command is in charge of Initializing the activiti cloud env with the default apps' +
+            'adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --username "username" --password "password"')
+        .option('-h, --host [type]', 'Host gateway')
+        .option('-o, --oauth [type]', 'Host sso server')
+        .option('--clientId[type]', 'sso client')
+        .option('--username [type]', 'username')
+        .option('--password [type]', 'password')
+        .parse(process.argv);
+
+    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+        program.outputHelp();
+    }
+
+    await deployMissingApps(args);
 }

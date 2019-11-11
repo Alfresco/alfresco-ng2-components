@@ -20,7 +20,7 @@
     "dist": "rm -rf ./dist/ && npm run build-tsc && cp -R ./bin ./dist/ && cp ./package.json ./dist/"
   },
   "dependencies": {
-    "commander": "^2.15.1",
+    "commander": "^4.0.0",
     "license-checker": "^25.0.1",
     "npm-registry-fetch": "^3.9.0",
     "@angular-devkit/core": "^7.2.15",
