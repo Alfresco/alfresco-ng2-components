@@ -119,8 +119,8 @@ jobs:
         - stage: Update Rancher
           script:
           - TAG_VERSION=$(./scripts/travis/deploy/tag-travis-branch.sh)
-          - echo "Update rancher with docker tag" $TAG_VERSION  --url $REPO_RANCHER --environment_name adf-s3-dev
-          - ./scripts/rancher-update.sh --access_key $RANCHER_TOKEN --secret_key $RANCHER_SECRET --url $REPO_RANCHER --environment_name adf-s3-dev --image docker:$DOCKER_REPOSITORY:$TAG_VERSION
+          - echo "Update rancher with docker tag" $TAG_VERSION  --url $REPO_RANCHER --environment_name $REPO_RANCHER_ADF_NAME
+          - ./scripts/rancher-update.sh --access_key $RANCHER_TOKEN --secret_key $RANCHER_SECRET --url $REPO_RANCHER --environment_name $REPO_RANCHER_ADF_NAME --image docker:$DOCKER_REPOSITORY:$TAG_VERSION
 
 
         - stage: Update Rancher PR
