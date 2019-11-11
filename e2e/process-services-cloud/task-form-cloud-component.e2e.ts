@@ -46,7 +46,7 @@ describe('Task form cloud component', () => {
     let processInstancesService: ProcessInstancesService;
     let identityService: IdentityService;
 
-    let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, testUser, formTaskId;
+    let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, testUser, formTaskId, assigneeTaskId, assigneeReleaseTask;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
@@ -103,6 +103,11 @@ describe('Task form cloud component', () => {
         const formTasks = await queryService.getProcessInstanceTasks(formProcess.entry.id, simpleApp);
 
         formTaskId = formTasks.list.entries[0].entry.id;
+
+        const assigneeProcessDefinition = await processDefinitionService.getProcessDefinitionByName('assigneeprocess', candidateBaseApp);
+        const assigneeProcess = await processInstancesService.createProcessInstance(assigneeProcessDefinition.entry.key, candidateBaseApp);
+        assigneeReleaseTask = await queryService.getProcessInstanceTasks(assigneeProcess.entry.id, candidateBaseApp);
+        assigneeTaskId = assigneeReleaseTask.list.entries[0].entry.id;
 
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
@@ -170,6 +175,16 @@ describe('Task form cloud component', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
             await expect(await taskFormCloudComponent.getReleaseButtonText()).toBe('RELEASE');
+        });
+
+        it('[C306872] Should not be able to Release a process task which has only assignee', async () => {
+            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(assigneeTaskId);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(assigneeTaskId);
+
+            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(assigneeReleaseTask.list.entries[0].entry.assignee);
+            await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
+            await taskFormCloudComponent.checkReleaseButtonIsNotDisplayed();
         });
 
         it('[C310142] Empty content is displayed when having a task without form', async () => {
