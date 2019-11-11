@@ -12,7 +12,6 @@ pull_request_rules:
           - status-success=continuous-integration/travis-ci/pr
           - status-success=security/snyk - package.json (eromano (GitHub marketplace))
           - '#approved-reviews-by>=2'
-          - '#review-requested=0'
           - '#changes-requested-reviews-by=0'
           - '#commented-reviews-by=0'
           - label!="do not merge"
