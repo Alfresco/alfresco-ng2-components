@@ -24,7 +24,6 @@ import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-c
 import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
 import { multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import resources = require('../../util/resources');
 import { StartProcessPage } from '../../pages/adf/process-services/startProcessPage';
 import { ProcessCloudDemoPage } from '../../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { ProcessDetailsCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/processDetailsCloudDemoPage';
@@ -261,7 +260,7 @@ describe('Task cloud visibility', async () => {
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
 
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const processName = StringUtil.generateRandomString(5);
     let identityService: IdentityService;
