@@ -25,6 +25,7 @@ import { of, throwError } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import moment = require('moment');
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
@@ -138,7 +139,7 @@ describe('TaskHeaderCloudComponent', () => {
 
             fixture.whenStable().then(() => {
                 const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-                expect(valueEl.nativeElement.innerText.trim()).toBe('Dec 18, 2018');
+                expect(valueEl.nativeElement.innerText.trim()).toBe(moment(assignedTaskDetailsCloudMock.dueDate, 'x').format('MMM D, Y, H:mm'));
             });
         }));
 
