@@ -15,24 +15,5 @@
  * limitations under the License.
  */
 
- import { SearchTextCloudComponent } from '../search-cloud/components/search-text-cloud/search-text-cloud.component';
-
- export interface SearchCloudProperties {
-    value?: string;
-    placeholder?: string;
-    debounceTime?: number;
-    expandable?: boolean;
- }
-
- export enum SearchCloudTypesEnum {
-    text = 'text'
- }
-
- export const SEARCH_CLOUD_TYPES = {
-    text: SearchTextCloudComponent
- };
-
- export interface SearchCloudWidget {
-    properties: SearchCloudProperties;
-    onChangedHandler(event: any);
- }
+ export * from './search-text-input.component';
+ export * from './search-text-input.module';

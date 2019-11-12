@@ -32,8 +32,8 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { Observable, Subject, Subscription, merge, of, fromEvent } from 'rxjs';
-import { SearchComponent } from './search.component';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { SearchComponentInterface } from '../../core/interface/search-configuration.interface';
 
 export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -62,7 +62,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
     @Input('searchAutocomplete')
-    searchPanel: SearchComponent;
+    searchPanel: SearchComponentInterface;
 
     @Input()
     autocomplete: string = 'off';
@@ -161,13 +161,13 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     }
 
     handleInput(event: KeyboardEvent): void {
-        if (document.activeElement === event.target) {
+        if (document.activeElement === event.target ) {
             const inputValue: string = (event.target as HTMLInputElement).value;
             this.onChange(inputValue);
-            if (inputValue) {
+            if (inputValue && this.searchPanel) {
                 this.searchPanel.keyPressedStream.next(inputValue);
                 this.openPanel();
-            } else {
+            } else if (this.searchPanel) {
                 this.searchPanel.resetResults();
                 this.closePanel();
             }
@@ -176,7 +176,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     private isPanelOptionClicked(event: MouseEvent) {
         let isPanelOption: boolean = false;
-        if ( event ) {
+        if ( event && this.searchPanel ) {
             const clickTarget = event.target as HTMLElement;
             isPanelOption = !this.isNoResultOption() &&
                             !!this.searchPanel.panel &&
@@ -185,8 +185,8 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         return isPanelOption;
     }
 
-    private isNoResultOption() {
-        return this.searchPanel.results.list ? this.searchPanel.results.list.entries.length === 0 : true;
+    private isNoResultOption(): boolean {
+        return this.searchPanel && this.searchPanel.results.list ? this.searchPanel.results.list.entries.length === 0 : true;
     }
 
     private subscribeToClosingActions(): Subscription {

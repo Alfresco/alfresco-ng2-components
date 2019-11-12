@@ -7,37 +7,7 @@
     $mat-menu-overlay-min-width: 112px !default;   // 56 * 2
     $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
 
-    .adf-search-container {
-        overflow: hidden !important;
-    }
-
-    .adf-search-button {
-        left: -13px;
-    }
-
-    [dir='rtl'] .adf-search-button {
-        right: -13px;
-    }
-
-    [dir='ltr'] .adf-search-button {
-        left: -13px;
-    }
-
     .adf {
-
-        &-search-fixed-text {
-            line-height: normal;
-        }
-
-        &-input-form-field-divider {
-            .mat-form-field-underline {
-                background-color: mat-color($primary, 50);
-                .mat-form-field-ripple {
-                    background-color: mat-color($primary, 50);
-                }
-            }
-            font-size: 16px;
-        }
 
         &-search-result-autocomplete {
             @include mat-overridable-elevation(2);
@@ -73,9 +43,5 @@
                 opacity: 1;
             }
         }
-    }
-
-    .adf-highlight {
-        color: mat-color($primary, 900);
     }
 }
