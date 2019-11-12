@@ -44,6 +44,6 @@ export class TaskHeaderCloudDemoComponent {
     }
 
     onError(error) {
-        this.errorMessage = error.message;
+        this.errorMessage = error;
     }
 }

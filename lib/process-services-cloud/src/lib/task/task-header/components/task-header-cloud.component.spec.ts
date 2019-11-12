@@ -260,15 +260,45 @@ describe('TaskHeaderCloudComponent', () => {
             fixture = TestBed.createComponent(TaskHeaderCloudComponent);
             component = fixture.componentInstance;
             service = TestBed.get(TaskCloudService);
-            spyOn(service, 'getTaskById').and.returnValue(throwError('Task not found error'));
         });
 
-        it('should emit an error when getTaskById returns an error', async(() => {
-            const taskErrorSpy = spyOn(component.taskError, 'emit');
-            component.loadTaskDetailsById(component.appName, component.taskId);
-            fixture.detectChanges();
-            expect(taskErrorSpy).toHaveBeenCalledWith('Task not found error');
+        it('should emit an error when task can not be found', async(() => {
+            spyOn(service, 'getTaskById').and.returnValue(throwError('Task not found'));
 
+            component.error.subscribe((error) => {
+                expect(error).toEqual('Task not found');
+            });
+
+            component.appName = 'appName';
+            component.taskId = 'taskId';
+            component.ngOnChanges();
+        }));
+
+        it('should emit an error when app name and/or task id are not provided', async(() => {
+
+            component.error.subscribe((error) => {
+                expect(error).toEqual('App Name and Task Id are mandatory');
+            });
+
+            component.appName = '';
+            component.taskId = '';
+            component.ngOnChanges();
+
+            component.appName = 'app';
+            component.ngOnChanges();
+
+            component.appName = '';
+            component.taskId = 'taskId';
+            component.ngOnChanges();
+        }));
+
+        it('should call the loadTaskDetailsById when both app name and task id are provided', async(() => {
+            spyOn(component, 'loadTaskDetailsById');
+            component.appName = 'appName';
+            component.taskId = 'taskId';
+            component.ngOnChanges();
+            fixture.detectChanges();
+            expect(component.loadTaskDetailsById).toHaveBeenCalledWith(component.appName, component.taskId);
         }));
     });
 });

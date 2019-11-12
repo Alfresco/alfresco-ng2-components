@@ -57,9 +57,9 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     @Output()
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when the task has not been found. */
+    /** Emitted when the given task has errors. */
     @Output()
-    taskError: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     taskDetails: TaskDetailsCloudModel = new TaskDetailsCloudModel();
     properties: CardViewItem[];
@@ -99,6 +99,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         this.taskDetails = new TaskDetailsCloudModel();
         if (this.appName && this.taskId) {
             this.loadTaskDetailsById(this.appName, this.taskId);
+        } else {
+            this.error.emit('App Name and Task Id are mandatory');
         }
     }
 
@@ -112,7 +114,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     this.refreshData();
                 }
             },
-            (err) => this.taskError.emit(err), () => {});
+            (err) => this.error.emit(err));
     }
 
     private initDefaultProperties() {
