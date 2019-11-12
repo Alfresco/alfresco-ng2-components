@@ -17,8 +17,9 @@
  * limitations under the License.
  */
 
-import { logging } from '@angular-devkit/core';
-import { spawnSync } from 'child_process';
+import { exec } from './exec';
+import * as program from 'commander';
+import { logger } from './logger';
 
 export interface KubeArgs {
     tag?: string;
@@ -32,73 +33,76 @@ export interface KubeArgs {
     deployName?: string;
 }
 
-function _exec(command: string, args: string[], opts: { cwd?: string }, logger: logging.Logger) {
-    if (process.platform.startsWith('win')) {
-        args.unshift('/c', command);
-        command = 'cmd.exe';
-    }
-
-    const { status, error, stderr, stdout } = spawnSync(command, args, { ...opts });
-
-    if (status !== 0) {
-        logger.error(`Command failed: ${command} ${args.map((x) => JSON.stringify(x)).join(', ')}`);
-        if (error) {
-            logger.error('Error: ' + (error ? error.message : 'undefined'));
-        } else {
-            logger.error(`STDERR:\n${stderr}`);
-        }
-        throw error;
-    } else {
-        return stdout.toString();
-    }
-}
-
-function _setCluster(args: KubeArgs, logger: logging.Logger) {
+function setCluster(args: KubeArgs) {
     logger.info('Perform set-cluster...');
-    const response = _exec('kubectl', [`config`, `set-cluster`, `${args.clusterEnv}`, `--server=${args.clusterUrl}`], {}, logger);
+    const response = exec('kubectl', [`config`, `set-cluster`, `${args.clusterEnv}`, `--server=${args.clusterUrl}`], {});
     logger.info(response);
 }
 
-function _setCredentials(args: KubeArgs, logger: logging.Logger) {
+function setCredentials(args: KubeArgs) {
     logger.info('Perform set-credentials...');
-    const response = _exec('kubectl', [`config`, `set-credentials`, `${args.username}`, `--token=${args.token}`], {}, logger);
+    const response = exec('kubectl', [`config`, `set-credentials`, `${args.username}`, `--token=${args.token}`], {});
     logger.info(response);
 }
 
-function _setContext(args: KubeArgs, logger: logging.Logger) {
+function setContext(args: KubeArgs) {
     logger.info('Perform set-context...');
-    const response = _exec('kubectl', [`config`, `set-context`, `${args.clusterEnv}`, `--cluster=${args.clusterEnv}`, `--user=${args.username}`], {}, logger);
+    const response = exec('kubectl', [`config`, `set-context`, `${args.clusterEnv}`, `--cluster=${args.clusterEnv}`, `--user=${args.username}`], {});
     logger.info(response);
 }
 
-function _useContext(args: KubeArgs, logger: logging.Logger) {
+function useContext(args: KubeArgs) {
     logger.info('Perform use-context...');
-    const response = _exec('kubectl', [`config`, `use-context`, `${args.clusterEnv}`], {}, logger);
+    const response = exec('kubectl', [`config`, `use-context`, `${args.clusterEnv}`], {});
     logger.info(response);
 }
 
-function _setImage(args: KubeArgs, logger: logging.Logger) {
+function setImage(args: KubeArgs) {
     logger.info('Perform set image...');
-    const response = _exec('kubectl', [`set`, `image`, `deployment/${args.deployName}`, `${args.serviceName}=${args.dockerRepo}:${args.tag}`], {}, logger);
+    const response = exec('kubectl', [`set`, `image`, `deployment/${args.deployName}`, `${args.serviceName}=${args.dockerRepo}:${args.tag}`], {});
     logger.info(response);
 }
 
-function _installPerform(logger: logging.Logger) {
+function installPerform() {
     logger.info('Perform install...');
-    const responseK8sStable = _exec('curl', [`-s`, `https://storage.googleapis.com/kubernetes-release/release/stable.txt`], {}, logger).trim();
+    const responseK8sStable = exec('curl', [`-s`, `https://storage.googleapis.com/kubernetes-release/release/stable.txt`], {}).trim();
     const k8sRelease = `https://storage.googleapis.com/kubernetes-release/release/${responseK8sStable}/bin/linux/amd64/kubectl`;
-    _exec('curl', [`LO`, `${k8sRelease}`], {}, logger);
+    exec('curl', [`LO`, `${k8sRelease}`], {});
 }
 
-export default async function (args: KubeArgs, logger: logging.Logger) {
-    if (args.installCheck === true) {
-        _installPerform(logger);
+export default function (args: KubeArgs) {
+    main(args);
+}
+
+function main(args) {
+
+    program
+        .version('0.1.0')
+        .description('his command allows you to update a specific service on the rancher env with a specifig tag \n\n' +
+            'adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --username ${username} --token ${token} --deployName ${deployName} --dockerRepo ${dockerRepo} --tag ${tag}')
+        .option('--tag [type]', 'tag')
+        .option('--installCheck [type]', 'install kube ctl')
+        .option('--username [type]', 'username')
+        .option('--clusterEnv [type]', 'cluster Env')
+        .option('--clusterUrl [type]', 'cluster Url')
+        .option('--serviceName [type]', 'serviceName')
+        .option('--dockerRepo [type]', 'docker Repo')
+        .option('--deployName [type]', 'deploy Name')
+        .parse(process.argv);
+
+    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+        program.outputHelp();
     }
+
+    if (args.installCheck === true) {
+        installPerform();
+    }
+
     if (args.tag !== undefined) {
-        _setCluster(args, logger);
-        _setCredentials(args, logger);
-        _setContext(args, logger);
-        _useContext(args, logger);
-        _setImage(args, logger);
+        setCluster(args);
+        setCredentials(args);
+        setContext(args);
+        useContext(args);
+        setImage(args);
     }
 }

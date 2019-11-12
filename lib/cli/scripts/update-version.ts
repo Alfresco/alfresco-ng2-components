@@ -17,8 +17,9 @@
  * limitations under the License.
  */
 
-import { logging } from '@angular-devkit/core';
-import { spawnSync } from 'child_process';
+import { exec } from './exec';
+import * as program from 'commander';
+import { logger } from './logger';
 
 export interface UpdateArgs {
     pathPackage: string;
@@ -38,50 +39,29 @@ const JS_API_DEPENDENCY = '@alfresco/js-api';
 
 let projects = [''];
 
-function _exec(command: string, args: string[], opts: { cwd?: string, input?: string }, logger: logging.Logger) {
-    if (process.platform.startsWith('win')) {
-        args.unshift('/c', command);
-        command = 'cmd.exe';
-    }
-
-    const { status, error, stderr, stdout } = spawnSync(command, args, { ...opts });
-
-    if (status !== 0) {
-        logger.error(`Command failed: ${command} ${args.map((x) => JSON.stringify(x)).join(', ')}`);
-        if (error) {
-            logger.error('Error: ' + (error ? error.message : 'undefined'));
-        } else {
-            logger.error(`STDERR:\n${stderr}`);
-        }
-        throw error;
-    } else {
-        return stdout.toString();
-    }
+function latestPerform(args: UpdateArgs) {
+    tagPerform(args, LATEST);
 }
 
-function _latestPerform(args: UpdateArgs, logger: logging.Logger) {
-    _tagPerform(args, LATEST, logger);
+function versionPerform(args: UpdateArgs) {
+    updateLibsVersionPerform(args.pathPackage, args.version, args.skipGnu);
 }
 
-function _versionPerform(args: UpdateArgs, logger: logging.Logger) {
-    _updateLibsVersionPerform(args.pathPackage, args.version, args.skipGnu, logger);
+function versionJsPerform(args: UpdateArgs) {
+    updateJsAPIVersionPerform(args.pathPackage, args.vjs, args.skipGnu);
 }
 
-function _versionJsPerform(args: UpdateArgs, logger: logging.Logger) {
-    _updateJsAPIVersionPerform(args.pathPackage, args.vjs, args.skipGnu, logger);
+function alphaPerform(args: UpdateArgs) {
+    tagPerform(args, ALPHA);
 }
 
-function _alphaPerform(args: UpdateArgs, logger: logging.Logger) {
-    _tagPerform(args, ALPHA, logger);
+function betaPerform(args: UpdateArgs) {
+    tagPerform(args, BETA);
 }
 
-function _betaPerform(args: UpdateArgs, logger: logging.Logger) {
-    _tagPerform(args, BETA, logger);
-}
-
-function _findADFLibsDependencies(args: UpdateArgs, logger: logging.Logger) {
+function findADFLibsDependencies(args: UpdateArgs) {
     const prjs: any = [];
-    const result = _exec('grep', [`${ADF_LIBS_PREFIX}`, `${args.pathPackage}/package.json`], {}, logger).trim();
+    const result = exec('grep', [`${ADF_LIBS_PREFIX}`, `${args.pathPackage}/package.json`], {}).trim();
     const res = result.replace(/,\s*$/, '').split(',');
     res.forEach( (dependecy) => {
         const dep = dependecy.split(':');
@@ -91,75 +71,97 @@ function _findADFLibsDependencies(args: UpdateArgs, logger: logging.Logger) {
     return prjs;
 }
 
-function _getLatestVersionFromNpm(tag: string, project: string, logger: logging.Logger): string {
+function getLatestVersionFromNpm(tag: string, project: string): string {
     logger.info(`====== Auto find latest ${tag} version of ${project}`);
-    const latestVersion = _exec('npm', ['view', `${project}@${tag}`, `version`], {}, logger).trim();
+    const latestVersion = exec('npm', ['view', `${project}@${tag}`, `version`], {}).trim();
     logger.info(`====== version lib ${latestVersion} =====`);
     return latestVersion;
 }
 
-function _updateLibsVersionPerform(path: string, version: string, skipGnu = false, logger: logging.Logger) {
+function updateLibsVersionPerform(path: string, version: string, skipGnu = false) {
     logger.info('Perform libs version...');
     projects.forEach( (project) => {
         logger.info(`apply version ${version} on ${project} ...`);
         project = project.replace('/', '\\/');
-        _replaceVersionPerform(project, version, path, skipGnu, logger);
+        replaceVersionPerform(project, version, path, skipGnu);
     });
 }
 
-function _updateJsAPIVersionPerform(path: string, version: string, skipGnu = false, logger: logging.Logger) {
+function updateJsAPIVersionPerform(path: string, version: string, skipGnu = false) {
     logger.info('Perform js-api version...');
     logger.info(`apply version ${version} on ${JS_API_DEPENDENCY} ...`);
     const project = JS_API_DEPENDENCY.replace('/', '\\/');
-    _replaceVersionPerform(project, version, path, skipGnu, logger);
+    replaceVersionPerform(project, version, path, skipGnu);
 }
 
-function _replaceVersionPerform(project: string, version: string, path: string, skipGnu = false, logger: logging.Logger) {
+function replaceVersionPerform(project: string, version: string, path: string, skipGnu = false) {
     const rule = `s/\"${project}\": \".*\"/\"${project}\": \"${version}\"/g`;
     if (skipGnu) {
-        _exec('sed', ['-i', '', `${rule}`, `${path}/package.json`], {}, logger).trim();
+        exec('sed', ['-i', '', `${rule}`, `${path}/package.json`], {}).trim();
     } else {
-        _exec('sed', ['-i', `${rule}`, `${path}/package.json`], {}, logger).trim();
+        exec('sed', ['-i', `${rule}`, `${path}/package.json`], {}).trim();
     }
 }
 
-function _tagPerform(args: UpdateArgs, tag: string, logger: logging.Logger) {
+function tagPerform(args: UpdateArgs, tag: string) {
     logger.info(`Perform ${tag} update...`);
-    _tagLibPerform(args, tag, logger);
-    _tagJsPerform(args, tag, logger);
+    tagLibPerform(args, tag);
+    tagJsPerform(args, tag);
 }
 
-function _tagLibPerform(args: UpdateArgs, tag: string, logger: logging.Logger) {
-    const libVersion = _getLatestVersionFromNpm(tag, '@alfresco/adf-extensions', logger);
-    _updateLibsVersionPerform(args.pathPackage, libVersion, args.skipGnu, logger);
+function tagLibPerform(args: UpdateArgs, tag: string) {
+    const libVersion = getLatestVersionFromNpm(tag, '@alfresco/adf-extensions');
+    updateLibsVersionPerform(args.pathPackage, libVersion, args.skipGnu);
 }
 
-function _tagJsPerform(args: UpdateArgs, tag: string, logger: logging.Logger) {
-    const jsApiVersion = _getLatestVersionFromNpm(tag, JS_API_DEPENDENCY, logger);
-    _updateJsAPIVersionPerform(args.pathPackage, jsApiVersion, args.skipGnu, logger);
+function tagJsPerform(args: UpdateArgs, tag: string) {
+    const jsApiVersion = getLatestVersionFromNpm(tag, JS_API_DEPENDENCY);
+    updateJsAPIVersionPerform(args.pathPackage, jsApiVersion, args.skipGnu);
 }
 
-export default async function (args: UpdateArgs, logger: logging.Logger) {
+export default function (args: UpdateArgs) {
+    main(args);
+}
 
-    projects = _findADFLibsDependencies(args, logger);
+function main(args) {
+
+    program
+        .version('This command allows you to update the adf dependencies and js-api with different versions\n\n' +
+            'Update adf libs and js-api with latest alpha\n\n' +
+            'adf-cli update-version --alpha --pathPackage "$(pwd)"')
+        .description('')
+        .option('--pathPackage [type]', 'pathPackage')
+        .option('--alpha [type]', 'use alpha')
+        .option('--beta [type]', 'use beta')
+        .option('--version [type]', 'use version')
+        .option('--vjs [type]', 'vjs use version js api')
+        .option('--skipGnu [type]', 'skipGnu')
+        .parse(process.argv);
+
+    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+        program.outputHelp();
+    }
+
+    projects = findADFLibsDependencies(args);
 
     if (args.version) {
-        _versionPerform(args, logger);
+        versionPerform(args);
     }
 
     if (args.vjs) {
-        _versionJsPerform(args, logger);
+        versionJsPerform(args);
     }
 
     if (args.latest === true) {
-        _latestPerform(args, logger);
+        latestPerform(args);
     }
 
     if (args.alpha === true) {
-        _alphaPerform(args, logger);
+        alphaPerform(args);
     }
 
     if (args.beta === true) {
-        _betaPerform(args, logger);
+        betaPerform(args);
     }
+
 }

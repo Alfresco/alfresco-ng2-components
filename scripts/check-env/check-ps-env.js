@@ -38,6 +38,7 @@ async function checkEnv() {
             checkEnv();
         }
     }
+    console.log('ok');
 }
 
 

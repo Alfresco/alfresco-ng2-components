@@ -17,10 +17,11 @@
  * limitations under the License.
  */
 
-import { logging } from '@angular-devkit/core';
-import { spawnSync } from 'child_process';
 import * as path from 'path';
 import fs = require('fs');
+import { exec } from './exec';
+import * as program from 'commander';
+import { logger } from './logger';
 
 export interface PublishArgs {
     tag?: string;
@@ -40,30 +41,9 @@ const projects = [
     'extensions'
 ];
 
-function _exec(command: string, args: string[], opts: { cwd?: string }, logger: logging.Logger) {
-    if (process.platform.startsWith('win')) {
-        args.unshift('/c', command);
-        command = 'cmd.exe';
-    }
-
-    const { status, error, stderr, stdout } = spawnSync(command, args, { ...opts });
-
-    if (status !== 0) {
-        logger.error(`Command failed: ${command} ${args.map((x) => JSON.stringify(x)).join(', ')}`);
-        if (error) {
-            logger.error('Error: ' + (error ? error.message : 'undefined'));
-        } else {
-            logger.error(`STDERR:\n${stderr}`);
-        }
-        throw error;
-    } else {
-        return stdout.toString();
-    }
-}
-
-function _npmPublish(args: PublishArgs, project: string, logger: logging.Logger) {
+function npmPublish(args: PublishArgs, project: string) {
     if (args.npmRegistry) {
-        _changeRegistry(args, project, logger);
+        changeRegistry(args, project);
     }
     logger.info(`Publishing lib ${project} to npm`);
     const options = ['publish'];
@@ -71,18 +51,18 @@ function _npmPublish(args: PublishArgs, project: string, logger: logging.Logger)
         options.push('-tag');
         options.push(`${args.tag}`);
     }
-    const response = _exec('npm', options, {cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`)}, logger);
+    const response = exec('npm', options, { cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`) });
     logger.info(response);
     if (args.npmRegistry) {
-        _removeNPMRC(args, project, logger);
+        removeNPMRC(args, project);
     }
 }
 
-function _changeRegistry(args: PublishArgs, project: string, logger: logging.Logger) {
+function changeRegistry(args: PublishArgs, project: string) {
     logger.info(`Change registry... `);
     const folder = `${args.pathProject}/lib/dist/${project}`;
     const content =
-`strict-ssl=false
+        `strict-ssl=false
 registry=http://${args.npmRegistry}
 //${args.npmRegistry}/:_authToken="${args.tokenRegistry}"`;
     try {
@@ -92,15 +72,34 @@ registry=http://${args.npmRegistry}
     }
 }
 
-function _removeNPMRC(args: PublishArgs, project: string, logger: logging.Logger) {
+function removeNPMRC(args: PublishArgs, project: string) {
     logger.info(`Removing file from ${project}`);
-    const response = _exec('rm', ['.npmrc'], {cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`)}, logger);
+    const response = exec('rm', ['.npmrc'], { cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`) });
     logger.info(response);
 }
 
-export default async function (args: PublishArgs, logger: logging.Logger) {
-    projects.forEach( (project: string) => {
+export default function (args: PublishArgs) {
+
+    main(args);
+}
+
+function main(args) {
+
+    program
+        .version('0.1.0')
+        .description('Move in the folder where you have your Dockerfile and run the command \n\n adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)')
+        .option('--tag [type]', 'tag')
+        .option('--npmRegistry [type]', 'npm Registry')
+        .option('--tokenRegistry [type]', 'token Registry')
+        .option('--pathProject [type]', 'pathProject')
+        .parse(process.argv);
+
+    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+        program.outputHelp();
+    }
+
+    projects.forEach((project: string) => {
         logger.info(`========Analyzing project: ${project} ========`);
-        _npmPublish(args, project, logger);
+        npmPublish(args, project);
     });
 }
