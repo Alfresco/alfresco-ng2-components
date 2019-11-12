@@ -83,4 +83,18 @@ export class QueryService {
         }
     }
 
+    async getProcessInstanceId(processName: string, appName: string): Promise<any> {
+        try {
+            const path = '/' + appName + '/query/v1/process-instances';
+            const method = 'GET';
+
+            const queryParams = { name: processName }, postBody = {};
+
+            const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
+        } catch (error) {
+            Logger.error('Get Process Instance Id - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+        }
+    }
+
 }
