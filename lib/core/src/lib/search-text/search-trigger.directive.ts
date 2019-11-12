@@ -33,7 +33,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { Observable, Subject, Subscription, merge, of, fromEvent } from 'rxjs';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
-import { SearchComponentInterface } from '../../core/interface/search-configuration.interface';
+import { SearchComponentInterface } from '../interface/search-configuration.interface';
 
 export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
