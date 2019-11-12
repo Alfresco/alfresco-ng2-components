@@ -17,8 +17,9 @@
  * limitations under the License.
  */
 
-import { logging } from '@angular-devkit/core';
-import { spawnSync } from 'child_process';
+import { exec } from './exec';
+import * as program from 'commander';
+import { logger } from './logger';
 
 export interface KubeArgs {
     username?: string;
@@ -28,63 +29,61 @@ export interface KubeArgs {
     label?: string;
 }
 
-function _exec(command: string, args: string[], opts: { cwd?: string }, logger: logging.Logger) {
-    if (process.platform.startsWith('win')) {
-        args.unshift('/c', command);
-        command = 'cmd.exe';
-    }
-
-    const { status, error, stderr, stdout } = spawnSync(command, args, { ...opts });
-
-    if (status !== 0) {
-        logger.error(`Command failed: ${command} ${args.map((x) => JSON.stringify(x)).join(', ')}`);
-        if (error) {
-            logger.error('Error: ' + (error ? error.message : 'undefined'));
-        } else {
-            logger.error(`STDERR:\n${stderr}`);
-        }
-        throw error;
-    } else {
-        return stdout.toString();
-    }
-}
-
-function _setCluster(args: KubeArgs, logger: logging.Logger) {
+function setCluster(args: KubeArgs) {
     logger.info('Perform set-cluster...');
-    const response = _exec('kubectl', [`config`, `set-cluster`, `${args.clusterEnv}`, `--server=${args.clusterUrl}`], {}, logger);
+    const response = exec('kubectl', [`config`, `set-cluster`, `${args.clusterEnv}`, `--server=${args.clusterUrl}`], {});
     logger.info(response);
 }
 
-function _setCredentials(args: KubeArgs, logger: logging.Logger) {
+function setCredentials(args: KubeArgs) {
     logger.info('Perform set-credentials...');
-    const response = _exec('kubectl', [`config`, `set-credentials`, `${args.username}`, `--token=${args.token}`], {}, logger);
+    const response = exec('kubectl', [`config`, `set-credentials`, `${args.username}`, `--token=${args.token}`], {});
     logger.info(response);
 }
 
-function _setContext(args: KubeArgs, logger: logging.Logger) {
+function setContext(args: KubeArgs) {
     logger.info('Perform set-context...');
-    const response = _exec('kubectl', [`config`, `set-context`, `${args.clusterEnv}`, `--cluster=${args.clusterEnv}`, `--user=${args.username}`], {}, logger);
+    const response = exec('kubectl', [`config`, `set-context`, `${args.clusterEnv}`, `--cluster=${args.clusterEnv}`, `--user=${args.username}`], {});
     logger.info(response);
 }
 
-function _useContext(args: KubeArgs, logger: logging.Logger) {
+function useContext(args: KubeArgs) {
     logger.info('Perform use-context...');
-    const response = _exec('kubectl', [`config`, `use-context`, `${args.clusterEnv}`], {}, logger);
+    const response = exec('kubectl', [`config`, `use-context`, `${args.clusterEnv}`], {});
     logger.info(response);
 }
 
-function _deletePod(args: KubeArgs, logger: logging.Logger) {
+function deletePod(args: KubeArgs) {
     logger.info('Perform delete pods...');
-    const response = _exec('kubectl', [`delete`, `pods`, `--all-namespaces`, `-l`, `app=${args.label}`], {}, logger);
+    const response = exec('kubectl', [`delete`, `pods`, `--all-namespaces`, `-l`, `app=${args.label}`], {});
     logger.info(response);
 }
 
-export default async function (args: KubeArgs, logger: logging.Logger) {
+export default function (args: KubeArgs) {
+    main(args);
+}
+
+function main(args) {
+
+    program
+        .version('0.1.0')
+        .option('--username [type]', 'username')
+        .option('--password [type]', 'password')
+        .option('--token [type]', 'access token')
+        .option('--clusterEnv [type]', 'cluster Env')
+        .option('--clusterUrl [type]', 'cluster Url')
+        .option('--label [type]', 'label cluster')
+        .parse(process.argv);
+
+    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+        program.outputHelp();
+    }
+
     if (args.label !== undefined) {
-        _setCluster(args, logger);
-        _setCredentials(args, logger);
-        _setContext(args, logger);
-        _useContext(args, logger);
-        _deletePod(args, logger);
+        setCluster(args);
+        setCredentials(args);
+        setContext(args);
+        useContext(args);
+        deletePod(args);
     }
 }
