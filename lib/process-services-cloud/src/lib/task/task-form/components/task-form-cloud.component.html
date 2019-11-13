@@ -1,6 +1,7 @@
 <div *ngIf="!loading; else loadingTemplate">
     <adf-cloud-form *ngIf="hasForm(); else withoutForm"
                     [appName]="appName"
+                    [appVersion]="taskDetails.appVersion"
                     [taskId]="taskId"
                     [processInstanceId]="taskDetails.processInstanceId"
                     [readOnly]="isReadOnly()"

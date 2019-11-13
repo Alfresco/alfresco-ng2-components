@@ -21,7 +21,7 @@ export class TaskDetailsCloudModel {
     name: string;
     appName: string;
     assignee: string;
-    appVersion: string;
+    appVersion: number;
     createdDate: Date;
     claimedDate: Date;
     completedDate: Date;
