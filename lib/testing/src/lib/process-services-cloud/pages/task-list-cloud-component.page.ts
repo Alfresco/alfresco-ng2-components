@@ -45,6 +45,10 @@ export class TaskListCloudComponentPage {
         return this.dataTable;
     }
 
+    getStatusByName(taskName: string): Promise<string> {
+        return this.dataTable.getColumnValueForRow('Name', taskName, 'Status');
+    }
+
     clickCheckbox(taskName: string): Promise<void> {
         return this.dataTable.clickCheckbox(column.name, taskName);
     }
