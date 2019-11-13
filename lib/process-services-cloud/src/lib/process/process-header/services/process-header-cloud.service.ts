@@ -17,8 +17,8 @@
 
 import { AlfrescoApiService, LogService, AppConfigService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 
@@ -26,16 +26,12 @@ import { BaseCloudService } from '../../../services/base-cloud.service';
     providedIn: 'root'
 })
 export class ProcessHeaderCloudService extends BaseCloudService {
-    contextRoot: string;
-    contentTypes = ['application/json'];
-    accepts = ['application/json'];
-    returnType = Object;
 
-    constructor(private alfrescoApiService: AlfrescoApiService,
-                private appConfigService: AppConfigService,
+    constructor(apiService: AlfrescoApiService,
+                appConfigService: AppConfigService,
                 private logService: LogService) {
-        super();
-        this.contextRoot = this.appConfigService.get('bpmHost', '');
+        super(apiService);
+        this.contextRoot = appConfigService.get('bpmHost', '');
     }
 
     /**
@@ -46,27 +42,16 @@ export class ProcessHeaderCloudService extends BaseCloudService {
      */
     getProcessInstanceById(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
         if (appName && processInstanceId) {
-            const queryUrl = `${this.getBasePath(appName)}/query/v1/process-instances/${processInstanceId}`;
-            return from(this.alfrescoApiService.getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'GET',
-                    null, null, null,
-                    null, null,
-                    this.contentTypes, this.accepts,
-                    this.returnType, null, null)
-            ).pipe(
+            const url = `${this.getBasePath(appName)}/query/v1/process-instances/${processInstanceId}`;
+
+            return this.get(url).pipe(
                 map((res: any) => {
                     return new ProcessInstanceCloud(res.entry);
-                }),
-                catchError((err) => this.handleError(err))
+                })
             );
         } else {
             this.logService.error('AppName and ProcessInstanceId are mandatory for querying a task');
             return throwError('AppName/ProcessInstanceId not configured');
         }
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }

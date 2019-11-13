@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, FormValues, AppConfigService, FormOutcomeModel, FormFieldOption, FormModel } from '@alfresco/adf-core';
-import { throwError, Observable, from } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { AlfrescoApiService, FormValues, AppConfigService, FormOutcomeModel, FormFieldOption, FormModel } from '@alfresco/adf-core';
+import { Observable, from } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 import { CompleteFormRepresentation } from '@alfresco/js-api';
 import { TaskVariableCloud, ProcessStorageCloudModel } from '../models/task-variable-cloud.model';
@@ -29,18 +29,12 @@ import { BaseCloudService } from '../../services/base-cloud.service';
 })
 export class FormCloudService extends BaseCloudService {
 
-    contentTypes = ['application/json'];
-    accepts = ['application/json'];
-    returnType = Object;
-
     constructor(
-        private apiService: AlfrescoApiService,
-        private appConfigService: AppConfigService,
-        private logService: LogService
+        apiService: AlfrescoApiService,
+        appConfigService: AppConfigService
     ) {
-        super();
-
-        this.contextRoot = this.appConfigService.get('bpmHost', '');
+        super(apiService);
+        this.contextRoot = appConfigService.get('bpmHost', '');
     }
 
     /**
@@ -87,18 +81,10 @@ export class FormCloudService extends BaseCloudService {
             processInstanceId
         };
 
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'POST',
-                null, null, null,
-                null, saveFormRepresentation,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
+        return this.post(apiUrl, saveFormRepresentation).pipe(
             map((res: any) => {
                 return new TaskDetailsCloudModel(res.entry);
-            }),
-            catchError((err) => this.handleError(err))
+            })
         );
     }
 
@@ -115,10 +101,7 @@ export class FormCloudService extends BaseCloudService {
             '',
             {overwrite: true}
         )).pipe(
-            map((res: any) => {
-                return (res.entry);
-            }),
-            catchError((err) => this.handleError(err))
+            map((res: any) => res.entry)
         );
     }
 
@@ -133,23 +116,15 @@ export class FormCloudService extends BaseCloudService {
      */
     completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit`;
-        const completeFormRepresentation: any = <CompleteFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
+        const completeFormRepresentation = <CompleteFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }
 
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'POST',
-                null, null, null,
-                null, completeFormRepresentation,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
+        return this.post(apiUrl, completeFormRepresentation).pipe(
             map((res: any) => {
                 return new TaskDetailsCloudModel(res.entry);
-            }),
-            catchError((err) => this.handleError(err))
+            })
         );
     }
 
@@ -161,35 +136,21 @@ export class FormCloudService extends BaseCloudService {
      */
     getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'GET',
-                null, null, null,
-                null, null,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
+
+        return this.get(apiUrl).pipe(
             map((res: any) => {
                 return new TaskDetailsCloudModel(res.entry);
-            }),
-            catchError((err) => this.handleError(err))
+            })
         );
     }
 
     getProcessStorageFolderTask(appName: string, taskId: string, processInstanceId: string): Observable<ProcessStorageCloudModel> {
         const apiUrl = this.buildFolderTask(appName, taskId, processInstanceId);
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'GET',
-                null, null, null,
-                null, null,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
+
+        return this.get(apiUrl).pipe(
             map((res: any) => {
                 return new ProcessStorageCloudModel(res);
-            }),
-            catchError((err) => this.handleError(err))
+            })
         );
     }
 
@@ -202,18 +163,10 @@ export class FormCloudService extends BaseCloudService {
     getTaskVariables(appName: string, taskId: string): Observable<TaskVariableCloud[]> {
         const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
 
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'GET',
-                null, null, null,
-                null, null,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
+        return this.get(apiUrl).pipe(
             map((res: any) => {
                 return res.list.entries.map((variable) => new TaskVariableCloud(variable.entry));
-            }),
-            catchError((err) => this.handleError(err))
+            })
         );
     }
 
@@ -231,32 +184,7 @@ export class FormCloudService extends BaseCloudService {
             url += `/versions/${version}`;
         }
 
-        const bodyParam = {};
-        const pathParams = {};
-        const queryParams = {};
-        const headerParams = {};
-        const formParams = {};
-
-        return from(
-            this.apiService
-                .getInstance()
-                .oauth2Auth.callCustomApi(
-                    url,
-                    'GET',
-                    pathParams,
-                    queryParams,
-                    headerParams,
-                    formParams,
-                    bodyParam,
-                    this.contentTypes,
-                    this.accepts,
-                    this.returnType,
-                    null,
-                    null
-                )
-            ).pipe(
-                catchError((err) => this.handleError(err))
-            );
+        return this.get(url);
     }
 
     /**
@@ -265,18 +193,7 @@ export class FormCloudService extends BaseCloudService {
      * @returns Array of FormFieldOption object
      */
     getDropDownJsonData(url: string): Observable<FormFieldOption[]> {
-        return from(this.apiService.getInstance()
-            .oauth2Auth.callCustomApi(url, 'GET',
-                null, null, null,
-                null, null,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
-            map((res: any) => {
-                return res;
-            }),
-            catchError((err) => this.handleError(err))
-        );
+        return this.get<FormFieldOption[]>(url);
     }
 
     /**
@@ -319,10 +236,4 @@ export class FormCloudService extends BaseCloudService {
             ? `${this.getBasePath(appName)}/process-storage/v1/folders/${processInstanceId}/${taskId}`
             : `${this.getBasePath(appName)}/process-storage/v1/folders/${taskId}`;
     }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
-    }
-
 }

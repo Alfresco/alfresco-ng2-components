@@ -50,7 +50,7 @@
         <ng-container *ngIf="hasForm() else taskFormCloudButtons">
             <adf-cloud-form
                 [appName]="appName"
-                [appVersion]="appVersion"
+                [appVersion]="processDefinitionCurrent.appVersion"
                 [data]="values"
                 [formId]="processDefinitionCurrent.formKey"
                 [showSaveButton]="false"
