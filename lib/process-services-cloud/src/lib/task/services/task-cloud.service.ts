@@ -64,7 +64,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task can be completed
      */
     canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.isAssigned() && this.isAssignedToMe(taskDetails.assignee);
+        return taskDetails && taskDetails.status === 'ASSIGNED' && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
@@ -73,7 +73,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task is editable
      */
     isTaskEditable(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.isAssigned() && this.isAssignedToMe(taskDetails.assignee);
+        return taskDetails && taskDetails.status === 'ASSIGNED' && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
@@ -82,7 +82,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task can be completed
      */
     canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.canClaimTask();
+        return taskDetails && taskDetails.status === 'CREATED';
     }
 
     /**
@@ -92,7 +92,7 @@ export class TaskCloudService extends BaseCloudService {
      */
     canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails && taskDetails.canUnclaimTask(currentUser);
+        return taskDetails && taskDetails.status === 'ASSIGNED' && taskDetails.assignee === currentUser;
     }
 
     /**
@@ -109,7 +109,7 @@ export class TaskCloudService extends BaseCloudService {
             return this.post(queryUrl).pipe(
                 map((res: any) => {
                     this.dataChangesDetected$.next();
-                    return new TaskDetailsCloudModel(res.entry);
+                    return res.entry;
                 })
             );
         } else {
@@ -131,7 +131,7 @@ export class TaskCloudService extends BaseCloudService {
             return this.post(queryUrl).pipe(
                 map((res: any) => {
                     this.dataChangesDetected$.next();
-                    return new TaskDetailsCloudModel(res.entry);
+                    return res.entry;
                 })
             );
         } else {
@@ -151,9 +151,7 @@ export class TaskCloudService extends BaseCloudService {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
 
             return this.get(queryUrl).pipe(
-                map((res: any) => {
-                    return new TaskDetailsCloudModel(res.entry);
-                })
+                map((res: any) => res.entry)
             );
         } else {
             this.logService.error('AppName and TaskId are mandatory for querying a task');
@@ -170,11 +168,10 @@ export class TaskCloudService extends BaseCloudService {
         const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks`;
         const payload = JSON.stringify(new StartTaskCloudRequestModel(startTaskRequest));
 
-        return this.post(queryUrl, payload).pipe(
-            map((response: StartTaskCloudResponseModel) => {
-                return new TaskDetailsCloudModel(response.entry);
-            })
-        );
+        return this.post<any, StartTaskCloudResponseModel>(queryUrl, payload)
+            .pipe(
+                map(response => response.entry)
+            );
     }
 
     /**
@@ -190,9 +187,7 @@ export class TaskCloudService extends BaseCloudService {
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
 
             return this.put(queryUrl, payload).pipe(
-                map((res: any) => {
-                    return new TaskDetailsCloudModel(res.entry);
-                })
+                map((res: any) => res.entry)
             );
         } else {
             this.logService.error('AppName and TaskId are mandatory for querying a task');

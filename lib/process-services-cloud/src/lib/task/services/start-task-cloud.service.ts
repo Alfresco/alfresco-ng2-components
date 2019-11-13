@@ -43,10 +43,9 @@ export class StartTaskCloudService extends BaseCloudService {
         const url = `${this.getBasePath(taskDetails.appName)}/rb/v1/tasks`;
         const payload = JSON.stringify(new StartTaskCloudRequestModel(taskDetails));
 
-        return this.post(url, payload).pipe(
-            map((response: StartTaskCloudResponseModel) => {
-                return new TaskDetailsCloudModel(response.entry);
-            })
-        );
+        return this.post<any, StartTaskCloudResponseModel>(url, payload)
+            .pipe(
+                map(response => response.entry)
+            );
     }
 }

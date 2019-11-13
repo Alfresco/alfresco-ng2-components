@@ -28,7 +28,7 @@ import {
     CardViewUpdateService,
     CardViewDatetimeItemModel
 } from '@alfresco/adf-core';
-import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel, TaskStatus } from '../../start-task/models/task-details-cloud.model';
 import { Router } from '@angular/router';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { Subject } from 'rxjs';
@@ -62,7 +62,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    taskDetails: TaskDetailsCloudModel = new TaskDetailsCloudModel();
+    taskDetails: TaskDetailsCloudModel = {};
     properties: CardViewItem[];
     inEdit: boolean = false;
     parentTaskName: string;
@@ -99,7 +99,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges() {
-        this.taskDetails = new TaskDetailsCloudModel();
+        this.taskDetails = {};
         if (this.appName && this.taskId) {
             this.loadTaskDetailsById(this.appName, this.taskId);
         } else {
@@ -278,8 +278,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
             );
     }
 
-    isCompleted() {
-        return this.taskDetails && this.taskDetails.status && this.taskDetails.status.toUpperCase() === TaskStatusEnum.COMPLETED;
+    isCompleted(): boolean {
+        return this.taskDetails && this.taskDetails.status === 'COMPLETED';
     }
 
     hasAssignee(): boolean {
@@ -299,7 +299,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     isClickable(): boolean {
-        const states = [TaskStatusEnum.ASSIGNED, TaskStatusEnum.CREATED, TaskStatusEnum.SUSPENDED];
+        const states: TaskStatus[] = ['ASSIGNED', 'CREATED', 'SUSPENDED'];
         return states.includes(this.taskDetails.status);
     }
 

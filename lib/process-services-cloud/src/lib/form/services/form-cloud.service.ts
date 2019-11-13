@@ -82,9 +82,7 @@ export class FormCloudService extends BaseCloudService {
         };
 
         return this.post(apiUrl, saveFormRepresentation).pipe(
-            map((res: any) => {
-                return new TaskDetailsCloudModel(res.entry);
-            })
+            map((res: any) => res.entry)
         );
     }
 
@@ -122,9 +120,7 @@ export class FormCloudService extends BaseCloudService {
         }
 
         return this.post(apiUrl, completeFormRepresentation).pipe(
-            map((res: any) => {
-                return new TaskDetailsCloudModel(res.entry);
-            })
+            map((res: any) => res.entry)
         );
     }
 
@@ -138,9 +134,7 @@ export class FormCloudService extends BaseCloudService {
         const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
 
         return this.get(apiUrl).pipe(
-            map((res: any) => {
-                return new TaskDetailsCloudModel(res.entry);
-            })
+            map((res: any) => res.entry)
         );
     }
 

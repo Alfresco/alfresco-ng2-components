@@ -27,11 +27,11 @@ import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
 
-const taskDetails = {
+const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
     assignee: 'admin.adf',
     completedDate: null,
-    createdDate: 1555419255340,
+    createdDate: new Date(1555419255340),
     description: null,
     formKey: null,
     id: 'bd6b1741-6046-11e9-80f0-0a586460040d',
@@ -63,7 +63,7 @@ describe('TaskFormCloudComponent', () => {
         identityUserService = TestBed.get(IdentityUserService);
         getCurrentUserSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ username: 'admin.adf' });
         taskCloudService = TestBed.get(TaskCloudService);
-        getTaskSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
+        getTaskSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(taskDetails));
         spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of([]));
         spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of([]));
 
@@ -153,8 +153,8 @@ describe('TaskFormCloudComponent', () => {
         it('should not show unclaim button when status is not ASSIGNED', async(() => {
             component.appName = 'app1';
             component.taskId = 'task1';
-            taskDetails.status = '';
-            getTaskSpy.and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
+            taskDetails.status = undefined;
+            getTaskSpy.and.returnValue(of(taskDetails));
 
             component.loadTask();
             fixture.detectChanges();
@@ -168,7 +168,7 @@ describe('TaskFormCloudComponent', () => {
             component.appName = 'app1';
             component.taskId = 'task1';
             taskDetails.status = 'CREATED';
-            getTaskSpy.and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
+            getTaskSpy.and.returnValue(of(taskDetails));
 
             component.loadTask();
             fixture.detectChanges();
@@ -181,8 +181,8 @@ describe('TaskFormCloudComponent', () => {
         it('should not show claim button when status is not CREATED', async(() => {
             component.appName = 'app1';
             component.taskId = 'task1';
-            taskDetails.status = '';
-            getTaskSpy.and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
+            taskDetails.status = undefined;
+            getTaskSpy.and.returnValue(of(taskDetails));
 
             component.loadTask();
             fixture.detectChanges();
@@ -306,7 +306,7 @@ describe('TaskFormCloudComponent', () => {
         it('should emit taskClaimed when task is claimed', (done) => {
             spyOn(taskCloudService, 'claimTask').and.returnValue(of({}));
             taskDetails.status = 'CREATED';
-            getTaskSpy.and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
+            getTaskSpy.and.returnValue(of(taskDetails));
 
             component.appName = 'app1';
             component.taskId = 'task1';
@@ -354,7 +354,7 @@ describe('TaskFormCloudComponent', () => {
             const reloadSpy = spyOn(component, 'loadTask').and.callThrough();
 
             taskDetails.status = 'CREATED';
-            getTaskSpy.and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
+            getTaskSpy.and.returnValue(of(taskDetails));
 
             component.appName = 'app1';
             component.taskId = 'task1';
@@ -373,7 +373,7 @@ describe('TaskFormCloudComponent', () => {
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
 
             taskDetails.status = 'ASSIGNED';
-            getTaskSpy.and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
+            getTaskSpy.and.returnValue(of(taskDetails));
 
             component.appName = 'app1';
             component.taskId = 'task1';
