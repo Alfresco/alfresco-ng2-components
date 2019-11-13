@@ -157,12 +157,19 @@ describe('CardView Component', () => {
             await expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
         });
 
-        it('[C279949] Should not be possible have an empty value', async () => {
+        it('[C279949] Should not be possible to have a space as a value', async () => {
             await cardViewPageComponent.clickOnIntField();
             await cardViewPageComponent.enterIntField(' ');
             await cardViewPageComponent.clickOnIntSaveIcon();
 
             await expect(await cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+        });
+
+        it('[C321535] Should be able to delete the value and save the CardView Int Item', async () => {
+            await cardViewPageComponent.clickOnIntField();
+            await cardViewPageComponent.clearIntField();
+            await cardViewPageComponent.clickOnIntSaveIcon();
+            await expect(await cardViewPageComponent.isErrorNotDisplayed()).toBe(true, 'The CardView Int Item should accept an empty field, but the error message is still displayed');
         });
 
         it('[C279950] Should return an error when the value is > 2147483647', async () => {
