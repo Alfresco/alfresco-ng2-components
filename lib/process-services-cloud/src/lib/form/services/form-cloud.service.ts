@@ -20,7 +20,7 @@ import { AlfrescoApiService, LogService, FormValues, AppConfigService, FormOutco
 import { throwError, Observable, from } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
-import { SaveFormRepresentation, CompleteFormRepresentation } from '@alfresco/js-api';
+import { CompleteFormRepresentation } from '@alfresco/js-api';
 import { TaskVariableCloud, ProcessStorageCloudModel } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 
@@ -47,19 +47,23 @@ export class FormCloudService extends BaseCloudService {
      * Gets the form definition of a task.
      * @param appName Name of the app
      * @param taskId ID of the target task
+     * @param version Version of the form
      * @returns Form definition
      */
-    getTaskForm(appName: string, taskId: string): Observable<any> {
+    getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
         return this.getTask(appName, taskId).pipe(
-            switchMap((task: TaskDetailsCloudModel) => {
-                return this.getForm(appName, task.formKey).pipe(
-                    map((form: any) => {
-                        const flattenForm = {...form.formRepresentation, ...form.formRepresentation.formDefinition};
+            switchMap(task => {
+                return this.getForm(appName, task.formKey, version).pipe(
+                    map(form => {
+                        const flattenForm = {
+                            ...form.formRepresentation,
+                            ...form.formRepresentation.formDefinition,
+                            taskId: task.id,
+                            taskName: task.name,
+                            processDefinitionId: task.processDefinitionId,
+                            processInstanceId: task.processInstanceId
+                        };
                         delete flattenForm.formDefinition;
-                        flattenForm.taskId = task.id;
-                        flattenForm.taskName = task.name;
-                        flattenForm.processDefinitionId = task.processDefinitionId;
-                        flattenForm.processInstanceId = task.processInstanceId;
                         return flattenForm;
                     })
                 );
@@ -72,12 +76,17 @@ export class FormCloudService extends BaseCloudService {
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @param formId ID of the form to save
-     * @param formValues Form values object
+     * @param values Form values object
      * @returns Updated task details
      */
-    saveTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues): Observable<TaskDetailsCloudModel> {
-        const apiUrl = this.buildSaveFormUrl(appName, formId);
-        const saveFormRepresentation = <SaveFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
+    saveTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, values: FormValues): Observable<TaskDetailsCloudModel> {
+        const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/save`;
+        const saveFormRepresentation: any = {
+            values,
+            taskId,
+            processInstanceId
+        };
+
         return from(this.apiService
             .getInstance()
             .oauth2Auth.callCustomApi(apiUrl, 'POST',
@@ -123,7 +132,7 @@ export class FormCloudService extends BaseCloudService {
      * @returns Updated task details
      */
     completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string): Observable<TaskDetailsCloudModel> {
-        const apiUrl = this.buildSubmitFormUrl(appName, formId);
+        const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit`;
         const completeFormRepresentation: any = <CompleteFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
@@ -151,7 +160,7 @@ export class FormCloudService extends BaseCloudService {
      * @returns Details of the task
      */
     getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        const apiUrl = this.buildGetTaskUrl(appName, taskId);
+        const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
         return from(this.apiService
             .getInstance()
             .oauth2Auth.callCustomApi(apiUrl, 'GET',
@@ -191,7 +200,8 @@ export class FormCloudService extends BaseCloudService {
      * @returns Task variables
      */
     getTaskVariables(appName: string, taskId: string): Observable<TaskVariableCloud[]> {
-        const apiUrl = this.buildGetTaskVariablesUrl(appName, taskId);
+        const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
+
         return from(this.apiService
             .getInstance()
             .oauth2Auth.callCustomApi(apiUrl, 'GET',
@@ -211,23 +221,42 @@ export class FormCloudService extends BaseCloudService {
      * Gets a form definition.
      * @param appName Name of the app
      * @param formKey key of the target task
+     * @param version Version of the form
      * @returns Form definition
      */
-    getForm(appName: string, formKey: string): Observable<any> {
-        const apiUrl = this.buildGetFormUrl(appName, formKey);
-        const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
-            formParams = {};
+    getForm(appName: string, formKey: string, version?: number): Observable<any> {
+        let url = `${this.getBasePath(appName)}/form/v1/forms/${formKey}`;
+
+        if (version !== undefined) {
+            url += `/versions/${version}`;
+        }
+
+        const bodyParam = {};
+        const pathParams = {};
+        const queryParams = {};
+        const headerParams = {};
+        const formParams = {};
 
         return from(
             this.apiService
                 .getInstance()
                 .oauth2Auth.callCustomApi(
-                apiUrl, 'GET', pathParams, queryParams,
-                headerParams, formParams, bodyParam,
-                this.contentTypes, this.accepts, this.returnType, null, null)
-        ).pipe(
-            catchError((err) => this.handleError(err))
-        );
+                    url,
+                    'GET',
+                    pathParams,
+                    queryParams,
+                    headerParams,
+                    formParams,
+                    bodyParam,
+                    this.contentTypes,
+                    this.accepts,
+                    this.returnType,
+                    null,
+                    null
+                )
+            ).pipe(
+                catchError((err) => this.handleError(err))
+            );
     }
 
     /**
@@ -259,7 +288,10 @@ export class FormCloudService extends BaseCloudService {
      */
     parseForm(json: any, data?: TaskVariableCloud[], readOnly: boolean = false): FormModel {
         if (json) {
-            const flattenForm = {...json.formRepresentation, ...json.formRepresentation.formDefinition};
+            const flattenForm = {
+                ...json.formRepresentation,
+                ...json.formRepresentation.formDefinition
+            };
             delete flattenForm.formDefinition;
 
             const formValues: FormValues = {};
@@ -280,26 +312,6 @@ export class FormCloudService extends BaseCloudService {
             return form;
         }
         return null;
-    }
-
-    private buildGetTaskUrl(appName: string, taskId: string): string {
-        return `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
-    }
-
-    private buildGetFormUrl(appName: string, formKey: string): string {
-        return `${this.getBasePath(appName)}/form/v1/forms/${formKey}`;
-    }
-
-    private buildSaveFormUrl(appName: string, formId: string): string {
-        return `${this.getBasePath(appName)}/form/v1/forms/${formId}/save`;
-    }
-
-    private buildSubmitFormUrl(appName: string, formId: string): string {
-        return `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit`;
-    }
-
-    private buildGetTaskVariablesUrl(appName: string, taskId: string): string {
-        return `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
     }
 
     private buildFolderTask(appName: string, taskId: string, processInstanceId: string): string {

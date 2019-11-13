@@ -48,6 +48,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     @Input()
     appName: string;
 
+    @Input()
+    appVersion?: number;
+
     /** Maximum length of the process name. */
     @Input()
     maxNameLength: number = StartProcessCloudComponent.MAX_NAME_LENGTH;
