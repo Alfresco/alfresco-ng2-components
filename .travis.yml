@@ -95,13 +95,13 @@ jobs:
 
         - stage: e2e Test
           name: core
-          script: export E2E_HOST='http://adf-s3dev.envalfresco.com' && ./scripts/travis/e2e/core-e2e.sh
+          script: ./scripts/travis/e2e/core-e2e.sh
         - stage: e2e Test
           name:  content
-          script: export E2E_HOST='http://adf-s3dev.envalfresco.com' && ./scripts/travis/e2e/content-services-e2e.sh
+          script: ./scripts/travis/e2e/content-services-e2e.sh
         - stage: e2e Test
           name:  search
-          script: export E2E_HOST='http://adf-s3dev.envalfresco.com' && ./scripts/travis/e2e/search-e2e.sh
+          script: ./scripts/travis/e2e/search-e2e.sh
         - stage: e2e Test
           name: process
           script: ./scripts/travis/e2e/process-services-e2e.sh
