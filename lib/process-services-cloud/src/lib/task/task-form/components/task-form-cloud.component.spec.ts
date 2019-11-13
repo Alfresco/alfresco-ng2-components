@@ -37,7 +37,7 @@ const taskDetails = {
     id: 'bd6b1741-6046-11e9-80f0-0a586460040d',
     name: 'Task1',
     owner: 'admin.adf',
-    standAlone: true,
+    standalone: true,
     status: 'ASSIGNED'
 };
 

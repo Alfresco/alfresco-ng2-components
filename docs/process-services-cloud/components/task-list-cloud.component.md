@@ -71,7 +71,7 @@ when the task list is empty:
 | showActions | `boolean` | false | Toggles the data actions column. |
 | showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | sorting | [`TaskListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
-| standAlone | `boolean` | false | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. |
+| standalone | `boolean` | false | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. |
 | status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 

@@ -38,7 +38,7 @@ export class TaskDetailsCloudModel {
     processDefinitionId: string;
     processInstanceId: string;
     status: TaskStatusEnum;
-    standAlone: boolean;
+    standalone: boolean;
     candidateUsers: string[];
     candidateGroups: string[];
     managerOfCandidateGroup: boolean;
@@ -68,7 +68,7 @@ export class TaskDetailsCloudModel {
             this.processDefinitionId = obj.processDefinitionId || null;
             this.processInstanceId = obj.processInstanceId || null;
             this.status = obj.status || null;
-            this.standAlone = obj.standAlone || null;
+            this.standalone = obj.standalone || null;
             this.candidateUsers = obj.candidateUsers || null;
             this.candidateGroups = obj.candidateGroups || null;
             this.managerOfCandidateGroup = obj.managerOfCandidateGroup || null;
@@ -79,6 +79,10 @@ export class TaskDetailsCloudModel {
 
     isCompleted(): boolean {
         return this.status === TaskStatusEnum.COMPLETED;
+    }
+
+    isCancelled(): boolean {
+        return this.status === TaskStatusEnum.CANCELLED;
     }
 
     isAssigned(): boolean {

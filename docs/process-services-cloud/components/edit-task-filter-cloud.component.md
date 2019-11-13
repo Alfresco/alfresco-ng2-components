@@ -87,7 +87,7 @@ given below:
 | **_parentTaskId_** | ID of the task's parent task |
 | **_priority_** | Task priority |
 | **_createdDate_** | Date the task was created |
-| **_standAlone_** | Standalone status of the task |
+| **_standalone_** | Standalone status of the task |
 | **_owner_** | User ID of the task's owner |
 | **_processDefinitionId_** | Process definition ID |
 | **_processInstanceId_** | Process instance ID |

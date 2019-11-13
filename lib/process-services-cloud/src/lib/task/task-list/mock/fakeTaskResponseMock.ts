@@ -41,7 +41,7 @@ export const fakeTaskCloudList = {
                     lastModified: 1538052037711,
                     lastModifiedTo: null,
                     lastModifiedFrom: null,
-                    standAlone: true
+                    standalone: true
                 }
             },
             {
@@ -65,7 +65,7 @@ export const fakeTaskCloudList = {
                     lastModified: 1538052038286,
                     lastModifiedTo: null,
                     lastModifiedFrom: null,
-                    standAlone: true
+                    standalone: true
                 }
             }
         ],
@@ -103,7 +103,7 @@ export let fakeGlobalTask = {
                     lastModified: 1538059139420,
                     lastModifiedTo: null,
                     lastModifiedFrom: null,
-                    standAlone: true
+                    standalone: true
                 }
             }
         ],
