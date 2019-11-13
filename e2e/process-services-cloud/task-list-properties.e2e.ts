@@ -103,7 +103,7 @@ describe('Edit task filters and task list properties', () => {
                 'taskName',
                 'parentTaskId',
                 'priority',
-                'standAlone',
+                'standalone',
                 'owner',
                 'processDefinitionId',
                 'processInstanceId',
@@ -120,7 +120,7 @@ describe('Edit task filters and task list properties', () => {
                 'processInstanceId',
                 'parentTaskId',
                 'priority',
-                'standAlone',
+                'standalone',
                 'owner',
                 'assignee'
             ],
@@ -460,7 +460,7 @@ describe('Edit task filters and task list properties', () => {
 
         });
 
-        it('[C307114] Should display tasks sorted by standAlone when standAlone is selected from sort dropdown', async () => {
+        it('[C307114] Should display tasks sorted by standalone when standalone is selected from sort dropdown', async () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('StandAlone');

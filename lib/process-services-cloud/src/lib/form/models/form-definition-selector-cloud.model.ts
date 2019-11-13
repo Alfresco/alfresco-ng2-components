@@ -20,5 +20,5 @@ export interface FormDefinitionSelectorCloudModel {
     name?: string;
     description?: string;
     version?: string;
-    standAlone?: string;
+    standalone?: string;
 }

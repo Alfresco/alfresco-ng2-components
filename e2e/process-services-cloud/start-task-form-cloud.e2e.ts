@@ -170,8 +170,8 @@ describe('Start Task Form', () => {
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
         await apiService.login(testUser.email, testUser.password);
         const tasksService = new TasksService(apiService);
-        const standAloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
-        await tasksService.deleteTask(standAloneTaskId, candidateBaseApp);
+        const standaloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
+        await tasksService.deleteTask(standaloneTaskId, candidateBaseApp);
 
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);

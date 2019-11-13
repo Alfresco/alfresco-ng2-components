@@ -29,7 +29,7 @@ const responseBody = [
             name: 'Form 1',
             description: '',
             version: 0,
-            standAlone: true
+            standalone: true
         }
     },
     {
@@ -38,7 +38,7 @@ const responseBody = [
             name: 'Form 2',
             description: '',
             version: 0,
-            standAlone: false
+            standalone: false
         }
     },
     {
@@ -87,7 +87,7 @@ describe('Form Definition Selector Cloud Service', () => {
         });
     });
 
-    it('should fetch only standAlone enabled forms when getStandAloneTaskForms is called', (done) => {
+    it('should fetch only standalone enabled forms when getStandaloneTaskForms is called', (done) => {
         oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
 
         service.getStandAloneTaskForms(appName).subscribe((result) => {

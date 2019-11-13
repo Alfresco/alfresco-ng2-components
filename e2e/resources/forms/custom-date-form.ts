@@ -128,7 +128,7 @@ export const customDateFormAPS2 = `{
       "name":"APS2customDateForm",
       "description":"",
       "version":0,
-      "standAlone":true,
+      "standalone":true,
       "formDefinition":{
          "tabs":[
 
