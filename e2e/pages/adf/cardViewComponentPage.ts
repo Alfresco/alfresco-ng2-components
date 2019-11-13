@@ -219,8 +219,13 @@ export class CardViewComponentPage {
     }
 
     async isErrorNotDisplayed(): Promise<boolean> {
-        const errorElement: ElementFinder = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
-        return  BrowserVisibility.waitUntilElementIsNotVisible(errorElement);
+         const errorElement: ElementFinder = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
+         try {
+            await BrowserVisibility.waitUntilElementIsNotVisible(errorElement);
+            return true;
+            } catch {
+            return false;
+            }
     }
 
     async clearIntField(): Promise<void> {
