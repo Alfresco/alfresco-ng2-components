@@ -17,7 +17,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { TaskHeaderCloudComponent } from '@alfresco/adf-process-services-cloud';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
     templateUrl: './task-header-cloud-demo.component.html',
@@ -32,8 +32,8 @@ export class TaskHeaderCloudDemoComponent {
 
     errorMessage;
 
-    appNameFormControl = new FormControl('', Validators.required);
-    taskIdFormControl = new FormControl('', Validators.required);
+    appNameFormControl = new FormControl('');
+    taskIdFormControl = new FormControl('');
 
     constructor() {}
 
