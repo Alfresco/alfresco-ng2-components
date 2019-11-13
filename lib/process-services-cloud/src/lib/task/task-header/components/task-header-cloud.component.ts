@@ -25,7 +25,8 @@ import {
     TranslationService,
     AppConfigService,
     UpdateNotification,
-    CardViewUpdateService
+    CardViewUpdateService,
+    CardViewDatetimeItemModel
 } from '@alfresco/adf-core';
 import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/task-details-cloud.model';
 import { Router } from '@angular/router';
@@ -57,15 +58,16 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     @Output()
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when the task has not been found. */
+    /** Emitted when the given task has errors. */
     @Output()
-    taskError: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     taskDetails: TaskDetailsCloudModel = new TaskDetailsCloudModel();
     properties: CardViewItem[];
     inEdit: boolean = false;
     parentTaskName: string;
     dateFormat: string;
+    dateTimeFormat: string;
     dateLocale: string;
     displayDateClearAction = false;
 
@@ -80,6 +82,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     ) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
+        this.dateTimeFormat = this.appConfig.get('dateValue.defaultDateTimeFormat');
     }
 
     ngOnInit() {
@@ -99,6 +102,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         this.taskDetails = new TaskDetailsCloudModel();
         if (this.appName && this.taskId) {
             this.loadTaskDetailsById(this.appName, this.taskId);
+        } else {
+            this.error.emit('App Name and Task Id are mandatory');
         }
     }
 
@@ -112,7 +117,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     this.refreshData();
                 }
             },
-            (err) => this.taskError.emit(err), () => {});
+            (err) => this.error.emit(err));
     }
 
     private initDefaultProperties() {
@@ -143,14 +148,14 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     validators: [new NumericFieldValidator()]
                 }
             ),
-            new CardViewDateItemModel(
+            new CardViewDatetimeItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE',
                     value: this.taskDetails.dueDate,
                     key: 'dueDate',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT'),
                     editable: true,
-                    format: this.dateFormat,
+                    format: this.dateTimeFormat,
                     locale: this.dateLocale
                 }
             ),

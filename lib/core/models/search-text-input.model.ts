@@ -15,5 +15,22 @@
  * limitations under the License.
  */
 
-export * from './search-cloud.component';
-export * from './search-cloud.module';
+export enum SearchTextStateEnum {
+    expanded = 'expanded',
+    collapsed = 'collapsed'
+}
+
+export interface SearchAnimationState {
+    value: string;
+    params?: any;
+}
+
+export interface SearchAnimationControl {
+    active: SearchAnimationState;
+    inactive: SearchAnimationState;
+}
+
+export interface SearchAnimationDirection {
+    ltr: SearchAnimationControl;
+    rtl: SearchAnimationControl;
+}

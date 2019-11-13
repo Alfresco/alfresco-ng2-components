@@ -25,6 +25,7 @@ import { of, throwError } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import moment = require('moment');
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
@@ -138,7 +139,7 @@ describe('TaskHeaderCloudComponent', () => {
 
             fixture.whenStable().then(() => {
                 const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-                expect(valueEl.nativeElement.innerText.trim()).toBe('Dec 18, 2018');
+                expect(valueEl.nativeElement.innerText.trim()).toBe(moment(assignedTaskDetailsCloudMock.dueDate, 'x').format('MMM D, Y, H:mm'));
             });
         }));
 
@@ -260,15 +261,45 @@ describe('TaskHeaderCloudComponent', () => {
             fixture = TestBed.createComponent(TaskHeaderCloudComponent);
             component = fixture.componentInstance;
             service = TestBed.get(TaskCloudService);
-            spyOn(service, 'getTaskById').and.returnValue(throwError('Task not found error'));
         });
 
-        it('should emit an error when getTaskById returns an error', async(() => {
-            const taskErrorSpy = spyOn(component.taskError, 'emit');
-            component.loadTaskDetailsById(component.appName, component.taskId);
-            fixture.detectChanges();
-            expect(taskErrorSpy).toHaveBeenCalledWith('Task not found error');
+        it('should emit an error when task can not be found', async(() => {
+            spyOn(service, 'getTaskById').and.returnValue(throwError('Task not found'));
 
+            component.error.subscribe((error) => {
+                expect(error).toEqual('Task not found');
+            });
+
+            component.appName = 'appName';
+            component.taskId = 'taskId';
+            component.ngOnChanges();
+        }));
+
+        it('should emit an error when app name and/or task id are not provided', async(() => {
+
+            component.error.subscribe((error) => {
+                expect(error).toEqual('App Name and Task Id are mandatory');
+            });
+
+            component.appName = '';
+            component.taskId = '';
+            component.ngOnChanges();
+
+            component.appName = 'app';
+            component.ngOnChanges();
+
+            component.appName = '';
+            component.taskId = 'taskId';
+            component.ngOnChanges();
+        }));
+
+        it('should call the loadTaskDetailsById when both app name and task id are provided', async(() => {
+            spyOn(component, 'loadTaskDetailsById');
+            component.appName = 'appName';
+            component.taskId = 'taskId';
+            component.ngOnChanges();
+            fixture.detectChanges();
+            expect(component.loadTaskDetailsById).toHaveBeenCalledWith(component.appName, component.taskId);
         }));
     });
 });

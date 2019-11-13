@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchService } from '@alfresco/adf-core';
+import { SearchService, SearchComponentInterface } from '@alfresco/adf-core';
 import {
     AfterContentInit,
     Component,
@@ -45,7 +45,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
         'class': 'adf-search'
     }
 })
-export class SearchComponent implements AfterContentInit, OnChanges, OnDestroy {
+export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges, OnDestroy {
 
     @ViewChild('panel')
     panel: ElementRef;

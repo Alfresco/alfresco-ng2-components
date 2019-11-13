@@ -16,23 +16,27 @@
  */
 
 import { NgModule } from '@angular/core';
-import { SearchCloudComponent } from './search-cloud.component';
-import { SearchTextCloudComponent } from './components/search-text-cloud/search-text-cloud.component';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { FormsModule } from '@angular/forms';
+import { SearchTextInputComponent } from './search-text-input.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { SearchTriggerDirective } from './search-trigger.directive';
 
 @NgModule({
     declarations: [
-        SearchCloudComponent,
-        SearchTextCloudComponent
+        SearchTextInputComponent,
+        SearchTriggerDirective
     ],
     imports: [
         CommonModule,
+        TranslateModule.forChild(),
         MaterialModule,
         FormsModule
     ],
-    exports: [ SearchCloudComponent],
-    entryComponents: [ SearchTextCloudComponent ]
+    exports: [
+        SearchTextInputComponent,
+        SearchTriggerDirective
+    ]
 })
-export class SearchCloudModule {}
+export class SearchTextModule {}
