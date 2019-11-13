@@ -96,7 +96,7 @@ export class TaskListCloudConfiguration {
                     'sortable': true
                 },
                 {
-                    'key': 'entry.standAlone',
+                    'key': 'entry.standalone',
                     'type': 'text',
                     'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STAND_ALONE',
                     'sortable': true

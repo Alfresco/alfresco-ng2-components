@@ -129,7 +129,7 @@
       "TASK_NAME": "TaskName",
       "PARENT_TASK_ID": "ParentTaskId",
       "PRIORITY": "Priority",
-      "STAND_ALONE": "StandAlone",
+      "STAND_ALONE": "Standalone",
       "LAST_MODIFIED_FROM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "OWNER": "Owner",

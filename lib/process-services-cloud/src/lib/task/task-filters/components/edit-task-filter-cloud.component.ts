@@ -580,8 +580,8 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STAND_ALONE',
                 type: 'checkbox',
-                key: 'standAlone',
-                value: currentTaskFilter.standAlone || false
+                key: 'standalone',
+                value: currentTaskFilter.standalone || false
             })
         ];
     }
