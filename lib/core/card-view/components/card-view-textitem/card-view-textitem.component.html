@@ -38,8 +38,8 @@
             <div class="adf-textitem-editable-controls">
                 <mat-form-field floatPlaceholder="never" class="adf-input-container">
                     <input *ngIf="!property.multiline" #editorInput
-                           (keyup.escape)="reset()"
-                           (keyup.enter)="update()"
+                           (keydown.escape)="reset($event)"
+                           (keydown.enter)="update($event)"
                         matInput
                         class="adf-input"
                         [placeholder]="property.default | translate"
@@ -56,7 +56,7 @@
                         (input)="onTextAreaInputChange()"
                         [attr.data-automation-id]="'card-textitem-edittextarea-' + property.key"></textarea>
                 </mat-form-field>
-                <button mat-icon-button class="adf-textitem-action" (click)="update()"
+                <button mat-icon-button class="adf-textitem-action" (click)="update($event)"
                     [attr.aria-label]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                     [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                     [attr.data-automation-id]="'card-textitem-update-' + property.key">
@@ -64,7 +64,7 @@
                     <mat-icon class="adf-textitem-icon">done</mat-icon>
                 </button>
 
-                <button mat-icon-button (click)="reset()" class="adf-textitem-action"
+                <button mat-icon-button (click)="reset($event)" class="adf-textitem-action"
                     [attr.aria-label]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                     [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                     [attr.data-automation-id]="'card-textitem-reset-' + property.key">
