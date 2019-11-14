@@ -21,7 +21,7 @@ import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-
 import { throwError, Observable } from 'rxjs';
 import { BaseCloudService } from './base-cloud.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UserPreferenceCloudService extends BaseCloudService implements PreferenceCloudServiceInterface {
 
   constructor(
