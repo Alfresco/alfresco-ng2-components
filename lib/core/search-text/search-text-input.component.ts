@@ -66,6 +66,9 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     focusListener: Observable<FocusEvent>;
 
     @Input()
+    collapseOnSubmit: boolean = true;
+
+    @Input()
     defaultState: SearchTextStateEnum = SearchTextStateEnum.collapsed;
 
     /** Emitted when the search term is changed. The search term is provided
@@ -147,7 +150,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     applySearchFocus(animationDoneEvent) {
-        if (animationDoneEvent.toState === 'active') {
+        if (animationDoneEvent.toState === 'active' && this.defaultState !== SearchTextStateEnum.expanded) {
             this.searchInput.nativeElement.focus();
         }
     }
@@ -238,7 +241,9 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     searchSubmit(event: any) {
         this.submit.emit(event);
-        this.toggleSearchBar();
+        if (this.collapseOnSubmit) {
+            this.toggleSearchBar();
+        }
     }
 
     activateToolbar(): boolean {

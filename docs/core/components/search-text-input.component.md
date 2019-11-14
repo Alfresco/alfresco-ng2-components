@@ -36,6 +36,7 @@ Displays a input text that supports autocompletion
 | searchAutocomplete | [`SearchTriggerDirective`](../../../lib/core/search-text/search-trigger.directive.ts) | null | Trigger autocomplete results on input change |
 | searchTerm | `string` | empty | Preselected search widget value |
 | debounceTime | `number` | 0 | Debounce time in miliseconds |
+| collapseOnSubmit | `boolean` | true | Collapse search bar on submit |
 | focusListener | [`Observable`](http://reactivex.io/documentation/observable.html) `<` [`FocusEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent) `>` | null | Listener for results-list events (focus, blur and focusout) |
 | defaultState | [`SearchTextStateEnum`](../../../lib/core/models/search-text-input.model.ts) | collapsed | Default state of the search widget |
 
@@ -46,5 +47,4 @@ Displays a input text that supports autocompletion
 | searchChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when search widget value is changed. |
 | submit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when search widget is submited. |
 | selectResult | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the result list is selected |
-| reset | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the search widget is reseted |
 | reset | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the search widget is reseted |

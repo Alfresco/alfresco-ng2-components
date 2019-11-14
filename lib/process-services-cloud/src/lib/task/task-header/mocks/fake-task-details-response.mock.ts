@@ -37,6 +37,6 @@ export const fakeTaskDetailsCloud = {
         'lastModified': 1545140162601,
         'lastModifiedTo': null,
         'lastModifiedFrom': null,
-        'standAlone': true
+        'standalone': true
     }
 };

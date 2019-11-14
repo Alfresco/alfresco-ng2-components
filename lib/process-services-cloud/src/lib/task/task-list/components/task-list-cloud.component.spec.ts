@@ -167,7 +167,7 @@ describe('TaskListCloudComponent', () => {
             expect(component.rows[0].entry['lastModified']).toBe(1538059139420);
             expect(component.rows[0].entry['lastModifiedTo']).toBeNull();
             expect(component.rows[0].entry['lastModifiedFrom']).toBeNull();
-            expect(component.rows[0].entry['standAlone']).toBeTruthy();
+            expect(component.rows[0].entry['standalone']).toBeTruthy();
             done();
         });
         component.appName = appName.currentValue;

@@ -31,7 +31,7 @@ export class TaskQueryCloudRequestModel {
     name?: string;
     owner?: string;
     parentTaskId?: string;
-    standAlone?: boolean;
+    standalone?: boolean;
     priority?: number;
     processDefinitionId?: string;
     processInstanceId?: string;
@@ -55,7 +55,7 @@ export class TaskQueryCloudRequestModel {
             this.name = obj.name;
             this.owner = obj.owner;
             this.parentTaskId = obj.parentTaskId;
-            this.standAlone = obj.standAlone;
+            this.standalone = obj.standalone;
             this.priority = obj.priority;
             this.processDefinitionId = obj.processDefinitionId;
             this.processInstanceId = obj.processInstanceId;

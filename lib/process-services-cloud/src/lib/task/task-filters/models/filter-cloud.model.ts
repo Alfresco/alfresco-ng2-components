@@ -35,7 +35,7 @@ export class TaskFilterCloudModel  {
     taskId: string;
     parentTaskId: string;
     priority: number;
-    standAlone: boolean;
+    standalone: boolean;
     lastModifiedFrom: Date;
     lastModifiedTo: Date;
 
@@ -60,7 +60,7 @@ export class TaskFilterCloudModel  {
             this.taskId = obj.taskId || null;
             this.parentTaskId = obj.parentTaskId || null;
             this.priority = obj.priority || null;
-            this.standAlone = obj.standAlone || null;
+            this.standalone = obj.standalone || null;
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
             this.lastModifiedTo = obj.lastModifiedTo || null;
         }

@@ -103,7 +103,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     /** Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. */
     @Input()
-    standAlone: boolean = false;
+    standalone: boolean = false;
 
     /**
      * Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
@@ -319,7 +319,8 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             createdDate: this.createdDate,
             maxItems: this.size,
             skipCount: this.skipCount,
-            sorting: this.sorting
+            sorting: this.sorting,
+            standalone: this.standalone
         };
         return new TaskQueryCloudRequestModel(requestNode);
     }
