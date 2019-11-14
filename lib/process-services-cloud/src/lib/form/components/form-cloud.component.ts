@@ -209,7 +209,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 },
                 (error) => {
                     this.handleError(error);
-                    // reject(error);
                     resolve(null);
                 }
             );

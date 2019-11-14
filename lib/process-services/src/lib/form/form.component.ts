@@ -200,7 +200,6 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
                         },
                         (error) => {
                             this.handleError(error);
-                            // reject(error);
                             resolve(null);
                         }
                     );
