@@ -34,7 +34,6 @@ describe('FormDefinitionCloudComponent', () => {
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
-        providers: [FormDefinitionSelectorCloudService, AlfrescoApiService, AppConfigService, LogService, StorageService, UserPreferencesService],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 

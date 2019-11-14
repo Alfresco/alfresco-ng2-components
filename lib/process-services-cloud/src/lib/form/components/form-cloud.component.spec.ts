@@ -44,7 +44,7 @@ describe('FormCloudComponent', () => {
         visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
         spyOn(formRenderingService, 'setComponentTypeResolver').and.returnValue(true);
-        formCloudService = new FormCloudService(null, new AppConfigService(null), logService);
+        formCloudService = new FormCloudService(null, new AppConfigService(null));
         formService = new FormService(null, null, logService);
         formComponent = new FormCloudComponent(formCloudService, formService, null, formRenderingService, visibilityService);
 
