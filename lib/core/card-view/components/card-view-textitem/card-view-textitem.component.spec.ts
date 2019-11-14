@@ -328,7 +328,7 @@ describe('CardViewTextItemComponent', () => {
             );
 
             const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
-            editIcon.triggerEventHandler('click', null);
+            editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             fixture.detectChanges();
 
             const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
