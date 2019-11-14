@@ -35,13 +35,10 @@ describe('ContentMetadataConfigFactory', () => {
             HttpClientModule
         ],
         providers: [
-            ContentMetadataConfigFactory,
-            AppConfigService,
             {
                 provide: LogService, useValue: {
-                error: () => {
+                    error: () => {}
                 }
-            }
             }
         ]
     });
@@ -53,7 +50,7 @@ describe('ContentMetadataConfigFactory', () => {
 
     describe('get', () => {
 
-        let logService;
+        let logService: LogService;
 
         beforeEach(async(() => {
             logService = TestBed.get(LogService);

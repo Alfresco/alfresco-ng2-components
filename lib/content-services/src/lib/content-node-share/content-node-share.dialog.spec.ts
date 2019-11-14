@@ -53,8 +53,6 @@ describe('ShareDialogComponent', () => {
             ContentNodeShareModule
         ],
         providers: [
-            NodesApiService,
-            SharedLinksApiService,
             { provide: AppConfigService, useClass: AppConfigServiceMock },
             { provide: NotificationService, useValue: notificationServiceMock },
             { provide: MatDialogRef, useValue: { close: () => {}} },

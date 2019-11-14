@@ -206,9 +206,10 @@ describe('FormCloudComponent', () => {
 
         formComponent.appName = appName;
         formComponent.formId = formId;
+        formComponent.appVersion = 1;
         formComponent.loadForm();
 
-        expect(formComponent.getFormById).toHaveBeenCalledWith(appName, formId);
+        expect(formComponent.getFormById).toHaveBeenCalledWith(appName, formId, 1);
     });
 
     it('should refresh visibility when the form is loaded', () => {
@@ -218,9 +219,10 @@ describe('FormCloudComponent', () => {
 
         formComponent.appName = appName;
         formComponent.formId = formId;
+        formComponent.appVersion = 1;
         formComponent.loadForm();
 
-        expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId);
+        expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId, 1);
         expect(visibilityService.refreshVisibility).toHaveBeenCalled();
     });
 
@@ -230,10 +232,11 @@ describe('FormCloudComponent', () => {
 
         const appName = 'test-app';
         formComponent.appName = appName;
+        formComponent.appVersion = 1;
         const change = new SimpleChange(null, taskId, true);
         formComponent.ngOnChanges({ 'taskId': change });
 
-        expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(appName, taskId);
+        expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(appName, taskId, 1);
     });
 
     it('should call the process storage to retrieve the folder with only the taskId', fakeAsync(() => {
@@ -281,10 +284,11 @@ describe('FormCloudComponent', () => {
         const appName = 'test-app';
 
         formComponent.appName = appName;
+        formComponent.appVersion = 1;
         const change = new SimpleChange(null, formId, true);
         formComponent.ngOnChanges({ 'formId': change });
 
-        expect(formComponent.getFormById).toHaveBeenCalledWith(appName, formId);
+        expect(formComponent.getFormById).toHaveBeenCalledWith(appName, formId, 1);
     });
 
     it('should not get form on load', () => {
@@ -432,7 +436,7 @@ describe('FormCloudComponent', () => {
         spyOn(formCloudService, 'getTaskForm').and.returnValue(of({ taskId: taskId, selectedOutcome: 'custom-outcome' }));
 
         formComponent.formLoaded.subscribe(() => {
-            expect(formCloudService.getTaskForm).toHaveBeenCalledWith(appName, taskId);
+            expect(formCloudService.getTaskForm).toHaveBeenCalledWith(appName, taskId, 1);
             expect(formComponent.form).toBeDefined();
             expect(formComponent.form.taskId).toBe(taskId);
             done();
@@ -440,6 +444,7 @@ describe('FormCloudComponent', () => {
 
         formComponent.appName = appName;
         formComponent.taskId = taskId;
+        formComponent.appVersion = 1;
         formComponent.loadForm();
     });
 

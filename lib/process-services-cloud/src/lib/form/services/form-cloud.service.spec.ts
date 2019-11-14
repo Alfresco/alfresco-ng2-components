@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormCloudService } from './form-cloud.service';
-import { AlfrescoApiService, CoreModule, setupTestBed, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, CoreModule, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 
 declare let jasmine: any;
@@ -42,8 +42,7 @@ describe('Form Cloud service', () => {
         imports: [
             NoopAnimationsModule,
             CoreModule.forRoot()
-        ],
-        providers: [FormCloudService, AlfrescoApiService, AppConfigService]
+        ]
     });
 
     beforeEach(() => {
