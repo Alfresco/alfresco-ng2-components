@@ -16,10 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { catchError, map } from 'rxjs/operators';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { map } from 'rxjs/operators';
 import { FormDefinitionSelectorCloudModel } from '../models/form-definition-selector-cloud.model';
-import { from, Observable, throwError } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { BaseCloudService } from '../../services/base-cloud.service';
 
 @Injectable({
@@ -27,15 +27,10 @@ import { BaseCloudService } from '../../services/base-cloud.service';
 })
 export class FormDefinitionSelectorCloudService extends BaseCloudService {
 
-    contentTypes = ['application/json'];
-    accepts = ['application/json'];
-    returnType = Object;
-
-    constructor(private apiService: AlfrescoApiService,
-                private appConfigService: AppConfigService,
-                private logService: LogService) {
-        super();
-        this.contextRoot = this.appConfigService.get('bpmHost', '');
+    constructor(apiService: AlfrescoApiService,
+                appConfigService: AppConfigService) {
+        super(apiService);
+        this.contextRoot = appConfigService.get('bpmHost', '');
     }
 
     /**
@@ -44,24 +39,14 @@ export class FormDefinitionSelectorCloudService extends BaseCloudService {
      * @returns Details of the forms
      */
     getForms(appName: string): Observable<FormDefinitionSelectorCloudModel[]> {
+        const url = `${this.getBasePath(appName)}/form/v1/forms`;
 
-        const queryUrl = this.buildGetFormsUrl(appName);
-        const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
-        return from(
-            this.apiService
-                .getInstance()
-                .oauth2Auth.callCustomApi(
-                queryUrl, 'GET', pathParams, queryParams,
-                headerParams, formParams, bodyParam,
-                contentTypes, accepts, null, null)
-        ).pipe(
+        return this.get(url).pipe(
             map((data: any) => {
                 return data.map((formData: any) => {
                     return <FormDefinitionSelectorCloudModel> formData.formRepresentation;
                 });
-            }),
-            catchError((err) => this.handleError(err))
+            })
         );
     }
 
@@ -73,19 +58,8 @@ export class FormDefinitionSelectorCloudService extends BaseCloudService {
     getStandAloneTaskForms(appName: string): Observable<FormDefinitionSelectorCloudModel[]> {
         return from(this.getForms(appName)).pipe(
             map((data: any) => {
-                return data.filter((formData: any) => formData.standAlone || formData.standAlone === undefined);
-            }),
-            catchError((err) => this.handleError(err))
+                return data.filter((formData: any) => formData.standalone || formData.standalone === undefined);
+            })
         );
-
-    }
-
-    private buildGetFormsUrl(appName: string): any {
-        return `${this.getBasePath(appName)}/form/v1/forms`;
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }

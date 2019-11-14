@@ -22,7 +22,7 @@ export const checkboxVisibilityFormJson = {
 		name: 'test',
 		description: '',
 		version: 0,
-		standAlone: true,
+		standalone: true,
 		formDefinition: {
 			tabs: [],
 			fields: [
@@ -217,7 +217,7 @@ export const multipleCheckboxVisibilityFormJson = {
 		name: 'newtestform',
 		description: '',
 		version: 0,
-		standAlone: true,
+		standalone: true,
 		formDefinition: {
 			tabs: [],
 			fields: [

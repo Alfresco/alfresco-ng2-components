@@ -43,9 +43,8 @@ describe('PropertyGroupTranslatorService', () => {
         providers: [
             {
                 provide: LogService, useValue: {
-                error: () => {
+                    error: () => {}
                 }
-            }
             }
         ]
     });

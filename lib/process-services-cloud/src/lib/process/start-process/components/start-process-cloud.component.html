@@ -48,8 +48,15 @@
         </form>
 
         <ng-container *ngIf="hasForm() else taskFormCloudButtons">
-            <adf-cloud-form [appName]="appName" [data]="values" [formId]="processDefinitionCurrent.formKey"
-                [showSaveButton]="false" [showCompleteButton]="false" [showRefreshButton]="false" [showValidationIcon]="false"
+            <adf-cloud-form
+                [appName]="appName"
+                [appVersion]="processDefinitionCurrent.appVersion"
+                [data]="values"
+                [formId]="processDefinitionCurrent.formKey"
+                [showSaveButton]="false"
+                [showCompleteButton]="false"
+                [showRefreshButton]="false"
+                [showValidationIcon]="false"
                 [showTitle]="false"
                 (formLoaded)="onFormLoaded($event)">
                 <adf-cloud-form-custom-outcomes>

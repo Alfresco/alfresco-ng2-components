@@ -1006,7 +1006,7 @@ export const tabInvalidFormVisibility: any = {
     'name': 'tab-visibility',
     'description': '',
     'version': 0,
-    'standAlone': true,
+    'standalone': true,
     'tabs': [
         {
             'id': 'a8a4718d-5019-4852-9645-bba9b8253d86',

@@ -22,7 +22,7 @@ export const tabFieldValueVisibilityJson = {
         name: 'tabvisibility',
         description: '',
         version: 0,
-        standAlone: true,
+        standalone: true,
         formDefinition: {
             tabs: [
                 {
@@ -115,7 +115,7 @@ export const tabVarValueVisibilityJson = {
         name: 'tabvisibility',
         description: '',
         version: 0,
-        standAlone: true,
+        standalone: true,
         formDefinition: {
             tabs: [
                 {
@@ -181,7 +181,7 @@ export const tabVarFieldVisibilityJson = {
         name: 'tabvisibility',
         description: '',
         version: 0,
-        standAlone: true,
+        standalone: true,
         formDefinition: {
             tabs: [
                 {
@@ -280,7 +280,7 @@ export const tabFieldFieldVisibilityJson = {
         name: 'tabvisibility',
         description: '',
         version: 0,
-        standAlone: true,
+        standalone: true,
         formDefinition: {
             tabs: [
                 {
@@ -389,7 +389,7 @@ export const tabFieldVarVisibilityJson = {
         name: 'tabvisibility',
         description: '',
         version: 0,
-        standAlone: true,
+        standalone: true,
         formDefinition: {
             tabs: [
                 {
@@ -488,7 +488,7 @@ export const tabVarVarVisibilityJson = {
         name: 'tabvisibility',
         description: '',
         version: 0,
-        standAlone: true,
+        standalone: true,
         formDefinition: {
             tabs: [
                 {
@@ -560,7 +560,7 @@ export const tabNextOperatorsVisibilityJson = {
         name: 'tabvisibility',
         description: '',
         version: 0,
-        standAlone: true,
+        standalone: true,
         formDefinition: {
             tabs: [
                 {

@@ -28,7 +28,7 @@ const column = {
     assignee: 'Assignee',
     parentTaskId: 'ParentTaskId',
     priority: 'Priority',
-    standAlone: 'StandAlone',
+    standalone: 'Standalone',
     owner: 'Owner'
 };
 
@@ -149,7 +149,7 @@ export class TaskListCloudComponentPage {
     }
 
     async getAllRowsByStandAloneColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.standAlone);
+        return this.dataTable.getAllRowsColumnValues(column.standalone);
     }
 
     async getAllRowsByOwnerColumn() {

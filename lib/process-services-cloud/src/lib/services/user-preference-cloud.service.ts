@@ -18,21 +18,18 @@
 import { Injectable } from '@angular/core';
 import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { from, throwError, Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
 import { BaseCloudService } from './base-cloud.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UserPreferenceCloudService extends BaseCloudService implements PreferenceCloudServiceInterface {
 
-  contentTypes = ['application/json'];
-  accepts = ['application/json'];
-
   constructor(
-    private alfrescoApiService: AlfrescoApiService,
-    private appConfigService: AppConfigService,
+    apiService: AlfrescoApiService,
+    appConfigService: AppConfigService,
     private logService: LogService) {
-    super();
+    super(apiService);
+    this.contextRoot = appConfigService.get('bpmHost', '');
   }
 
   /**
@@ -42,13 +39,8 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
    */
   getPreferences(appName: string): Observable<any> {
     if (appName) {
-      const uri = this.buildPreferenceServiceUri(appName);
-      return from(this.alfrescoApiService.getInstance()
-        .oauth2Auth.callCustomApi(uri, 'GET',
-          null, null, null,
-          null, null, this.contentTypes,
-          this.accepts, null, null)
-      );
+      const url = `${this.getBasePath(appName)}/preference/v1/preferences`;
+      return this.get(url);
     } else {
       this.logService.error('Appname is mandatory for querying preferences');
       return throwError('Appname not configured');
@@ -63,14 +55,8 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
    */
   getPreferenceByKey(appName: string, key: string): Observable<any> {
     if (appName) {
-      const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
-      return from(
-        this.alfrescoApiService.getInstance()
-          .oauth2Auth.callCustomApi(uri, 'GET',
-            null, null, null,
-            null, null, this.contentTypes,
-            this.accepts, null, null)
-      ).pipe(catchError((error) => throwError(error)));
+      const url = `${this.getBasePath(appName)}/preference/v1/preferences/${key}`;
+      return this.get(url);
     } else {
       this.logService.error('Appname and key are mandatory for querying preference');
       return throwError('Appname not configured');
@@ -86,17 +72,10 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
    */
   createPreference(appName: string, key: string, newPreference: any): Observable<any> {
     if (appName) {
-      const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
-      const requestPayload = JSON.stringify(newPreference);
-      return from(this.alfrescoApiService.getInstance()
-        .oauth2Auth.callCustomApi(uri, 'PUT',
-          null, null,
-          null, null, requestPayload,
-          this.contentTypes, this.accepts,
-          Object, null, null)
-      ).pipe(
-        catchError((err) => this.handleProcessError(err))
-      );
+      const url = `${this.getBasePath(appName)}/preference/v1/preferences/${key}`;
+      const payload = JSON.stringify(newPreference);
+
+      return this.put(url, payload);
     } else {
       this.logService.error('Appname  and key are  mandatory for creating preference');
       return throwError('Appname not configured');
@@ -122,30 +101,11 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
    */
   deletePreference(appName: string, key: string): Observable<any> {
     if (appName) {
-      const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
-      return from(this.alfrescoApiService.getInstance()
-        .oauth2Auth.callCustomApi(uri, 'DELETE',
-          null, null, null,
-          null, null, this.contentTypes,
-          this.accepts, null, null, null)
-      );
+      const url = `${this.getBasePath(appName)}/preference/v1/preferences/${key}`;
+      return this.delete(url);
     } else {
       this.logService.error('Appname and key are mandatory to delete preference');
       return throwError('Appname not configured');
     }
-  }
-
-  /**
-   * Creates preference uri
-   * @param appName Name of the target app
-   * @returns String of preference service uri
-   */
-  private buildPreferenceServiceUri(appName: string): string {
-    this.contextRoot = this.appConfigService.get('bpmHost', '');
-    return `${this.getBasePath(appName)}/preference/v1/preferences`;
-  }
-
-  private handleProcessError(error: any) {
-    return throwError(error || 'Server error');
   }
 }

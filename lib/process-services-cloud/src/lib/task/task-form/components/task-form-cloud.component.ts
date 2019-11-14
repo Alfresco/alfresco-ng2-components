@@ -120,32 +120,25 @@ export class TaskFormCloudComponent implements OnChanges {
             this.loadTask();
             return;
         }
-
     }
 
     loadTask() {
         this.loading = true;
-        this.taskCloudService.getTaskById(this.appName, this.taskId).subscribe((details: TaskDetailsCloudModel) => {
-            this.taskDetails = details;
-            this.loading = false;
-        });
 
-        this.taskCloudService.getCandidateUsers(this.appName, this.taskId).subscribe((users: string[]) => {
-            if (users) {
-                this.candidateUsers = users;
-            }
-        });
+        this.taskCloudService
+            .getTaskById(this.appName, this.taskId)
+            .subscribe(details => {
+                this.taskDetails = details;
+                this.loading = false;
+            });
 
-        this.taskCloudService.getCandidateGroups(this.appName, this.taskId).subscribe((groups: string[]) => {
-            if (groups) {
-                this.candidateGroups = groups;
-            }
-        });
+        this.taskCloudService
+            .getCandidateUsers(this.appName, this.taskId)
+            .subscribe(users => this.candidateUsers = users || []);
 
-    }
-
-    private reloadTask() {
-        this.loadTask();
+        this.taskCloudService
+            .getCandidateGroups(this.appName, this.taskId)
+            .subscribe(groups => this.candidateGroups = groups || []);
     }
 
     hasForm(): boolean {
@@ -186,17 +179,17 @@ export class TaskFormCloudComponent implements OnChanges {
     }
 
     onCompleteTask() {
-        this.reloadTask();
+        this.loadTask();
         this.taskCompleted.emit(this.taskId);
     }
 
     onClaimTask() {
-        this.reloadTask();
+        this.loadTask();
         this.taskClaimed.emit(this.taskId);
     }
 
     onUnclaimTask() {
-        this.reloadTask();
+        this.loadTask();
         this.taskUnclaimed.emit(this.taskId);
     }
 
