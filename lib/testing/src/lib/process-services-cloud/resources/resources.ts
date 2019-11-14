@@ -62,7 +62,18 @@ export const ACTIVITI_CLOUD_APPS: any = {
             processdate: 'processdate',
             multiprocess: 'multiprocess',
             terminateexclusive: 'terminate-exclusive',
-            terminatesubprocess: 'terminate-subprocess'
+            terminatesubprocess: 'terminate-subprocess',
+            multiinstancedmnparallel: 'multiinstance-dmnparallel',
+            multiinstancecallactivity: 'multiinstance-callactivity',
+            multiinstancecollection: 'multiinstance-collection',
+            multiinstancecompletion: 'multiinstance-completion',
+            multiinstancesequential: 'multiinstance-sequential',
+            multiinstanceservicetask: 'multiinstance-servicetask',
+            multiinstanceusertask: 'multiinstance-usertask',
+            multiinstancedmnsequence: 'multiinstance-dmnsequence',
+            multiinstancemanualtask: 'multiinstance-manualtask',
+            multiinstancesubprocess: 'multiinstance-subprocess',
+            calledprocess: 'calledprocess'
         },
         forms: {
             tabVisibilityFields: {
