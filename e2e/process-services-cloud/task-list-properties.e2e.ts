@@ -463,13 +463,13 @@ describe('Edit task filters and task list properties', () => {
         it('[C307114] Should display tasks sorted by standalone when standalone is selected from sort dropdown', async () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('StandAlone');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Standalone');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('ASC');
 
-            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'StandAlone')).toBe(true);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Standalone')).toBe(true);
 
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'StandAlone')).toBe(true);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Standalone')).toBe(true);
         });
 
         it('[C307115] Should display tasks sorted by owner when owner is selected from sort dropdown', async () => {
