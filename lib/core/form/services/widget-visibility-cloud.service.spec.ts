@@ -270,6 +270,7 @@ describe('WidgetVisibilityCloudService', () => {
             service.getTaskProcessVariable('9999').subscribe(
                 () => {
                     visibilityObjTest.rightValue = 'test_value_2';
+                    spyOn(service, 'isFormFieldValid').and.returnValue(true);
                     const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
                     expect(rightValue).not.toBeNull();
@@ -411,15 +412,14 @@ describe('WidgetVisibilityCloudService', () => {
             expect(value).toBe('field_with_condition_value');
         });
 
-        it('should return empty string if the element is not present anywhere', () => {
+        it('should return undefined if the element is not present anywhere', () => {
             const formValue = service.getFormValue(fakeFormWithField, 'FIELD_MYSTERY');
-
-            expect(formValue).not.toBeUndefined();
-            expect(formValue).toEqual('');
+            expect(formValue).toBeUndefined();
         });
 
         it('should retrieve the value for the right field when it is a value', () => {
             visibilityObjTest.rightValue = '100';
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
             const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
             expect(rightValue).toBe('100');
@@ -427,6 +427,7 @@ describe('WidgetVisibilityCloudService', () => {
 
         it('should return formatted date when right value is a date', () => {
             visibilityObjTest.rightValue = '9999-12-31';
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
             const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
             expect(rightValue).toBe('9999-12-31T00:00:00.000Z');
@@ -434,6 +435,7 @@ describe('WidgetVisibilityCloudService', () => {
 
         it('should return the value when right value is not a date', () => {
             visibilityObjTest.rightValue = '9999-99-99';
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
             const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
             expect(rightValue).toBe('9999-99-99');
@@ -449,6 +451,7 @@ describe('WidgetVisibilityCloudService', () => {
         });
 
         it('should take the value from form values if it is present', () => {
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
             const formValue = service.getFormValue(formTest, 'test_1');
 
             expect(formValue).not.toBeNull();
@@ -458,6 +461,7 @@ describe('WidgetVisibilityCloudService', () => {
         it('should retrieve right value from form values if it is present', () => {
             visibilityObjTest.rightType = WidgetTypeEnum.field;
             visibilityObjTest.rightValue = 'test_2';
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
             const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
             expect(rightValue).not.toBeNull();
@@ -477,6 +481,7 @@ describe('WidgetVisibilityCloudService', () => {
         it('should retrieve left value from form values if it is present', () => {
             visibilityObjTest.leftType = WidgetTypeEnum.field;
             visibilityObjTest.leftValue = 'test_2';
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
             const leftValue = service.getLeftValue(formTest, visibilityObjTest);
 
             expect(leftValue).not.toBeNull();
@@ -494,6 +499,7 @@ describe('WidgetVisibilityCloudService', () => {
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightType = WidgetTypeEnum.field;
             visibilityObjTest.rightValue = 'test_3';
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
             const isVisible = service.isFieldVisible(formTest, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
@@ -504,6 +510,7 @@ describe('WidgetVisibilityCloudService', () => {
             visibilityObjTest.leftValue = 'test_1';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightValue = 'value_1';
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
             const isVisible = service.isFieldVisible(formTest, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
@@ -594,6 +601,7 @@ describe('WidgetVisibilityCloudService', () => {
         });
 
         it('should get the dropdown id value from a form', () => {
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
             const dropdownValue = service.getFormValue(formTest, 'dropdown');
 
             expect(dropdownValue).not.toBeNull();
@@ -604,6 +612,7 @@ describe('WidgetVisibilityCloudService', () => {
         it('should retrieve the value for the right field when it is a dropdown id', () => {
             visibilityObjTest.rightType = 'field';
             visibilityObjTest.rightValue = 'dropdown';
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
             const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
             expect(rightValue).toBeDefined();
@@ -623,6 +632,7 @@ describe('WidgetVisibilityCloudService', () => {
         });
 
         it('should be able to get value from form values', () => {
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
             const res = service.getFormValue(formTest, 'test_1');
 
             expect(res).not.toBeNull();

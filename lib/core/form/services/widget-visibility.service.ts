@@ -125,7 +125,7 @@ export class WidgetVisibilityService {
         const formField = this.getFormFieldById(form, fieldId);
         let value = undefined;
 
-        if (formField && formField.isValid) {
+        if (this.isFormFieldValid(formField)) {
             value = this.getFieldValue(form.values, fieldId);
 
             if (this.isInvalidValue(value)) {
@@ -133,6 +133,10 @@ export class WidgetVisibilityService {
             }
         }
         return value;
+    }
+
+    isFormFieldValid(formField: FormFieldModel): boolean {
+        return formField && formField.isValid;
     }
 
     getFieldValue(valueList: any, fieldId: string): any {
@@ -160,12 +164,17 @@ export class WidgetVisibilityService {
     }
 
     searchValueInForm(formField: FormFieldModel, fieldId: string): string {
-        let fieldValue = this.getObjectValue(formField, fieldId);
-        if (!fieldValue) {
-            if (formField.value && formField.value.id) {
-                fieldValue = formField.value.id;
-            } else if (!this.isInvalidValue(formField.value)) {
-                fieldValue = formField.value;
+        let fieldValue = '';
+
+        if (formField) {
+            fieldValue = this.getObjectValue(formField, fieldId);
+
+            if (!fieldValue) {
+                if (formField.value && formField.value.id) {
+                    fieldValue = formField.value.id;
+                } else if (!this.isInvalidValue(formField.value)) {
+                    fieldValue = formField.value;
+                }
             }
         }
         return fieldValue;
