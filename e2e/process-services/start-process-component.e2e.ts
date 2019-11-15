@@ -16,22 +16,21 @@
  */
 
 import CONSTANTS = require('../util/constants');
-import { LoginPage, StartProcessDialog, Widget, FileBrowserUtil } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
-import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
-import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
-import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
-import { AppsActions } from '../actions/APS/apps.actions';
-import { browser } from 'protractor';
-import { User } from '../models/APS/user';
-import { Tenant } from '../models/APS/tenant';
-import { FileModel } from '../models/ACS/fileModel';
-import dateFormat = require('dateformat');
+import { FileBrowserUtil, LoginPage, StartProcessDialog, StringUtil, Widget } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { StringUtil } from '@alfresco/adf-testing';
+import { browser } from 'protractor';
+import { AppsActions } from '../actions/APS/apps.actions';
+import { FileModel } from '../models/ACS/fileModel';
+import { Tenant } from '../models/APS/tenant';
+import { User } from '../models/APS/user';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
+import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
+import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
+import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
+import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
+import dateFormat = require('dateformat');
 
 describe('Start Process Component', () => {
 

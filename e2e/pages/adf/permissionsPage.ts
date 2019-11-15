@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
-
-import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
+import { by, element, ElementFinder } from 'protractor';
 
 const column = {
     role: 'Role'

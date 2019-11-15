@@ -17,7 +17,7 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -51,7 +51,6 @@ import { MetadataDialogAdapterComponent } from './components/files/metadata-dial
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
 
 import { routing } from './app.routes';
-import { ReactiveFormsModule } from '@angular/forms';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
@@ -63,7 +62,6 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
-import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { AppExtensionsModule } from './app-extension.module';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
@@ -85,8 +83,8 @@ import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/
 import { environment } from '../environments/environment';
 import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
 import { DemoErrorComponent } from './components/error/demo-error.component';
-
 import {
+    ProcessServicesCloudModule,
     UserPreferenceCloudService,
     PROCESS_FILTERS_SERVICE_TOKEN,
     TASK_FILTERS_SERVICE_TOKEN

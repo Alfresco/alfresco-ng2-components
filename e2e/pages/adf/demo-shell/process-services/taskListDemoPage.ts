@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
+import { BrowserActions, BrowserVisibility, PaginationPage } from '@alfresco/adf-testing';
+import { by, element, ElementFinder } from 'protractor';
 import { TasksListPage } from '../../process-services/tasksListPage';
-import { PaginationPage } from '@alfresco/adf-testing';
-import { element, by, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TaskListDemoPage {
 

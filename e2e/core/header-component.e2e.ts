@@ -14,14 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LoginPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
-import { HeaderPage, SettingsPage } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
-
+import { HeaderPage, LoginPage, SettingsPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Header Component', () => {
 

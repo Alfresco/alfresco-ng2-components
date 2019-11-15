@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
     AlfrescoApiService,
@@ -24,7 +24,6 @@ import {
     FormService,
     FormOutcomeEvent
 } from '@alfresco/adf-core';
-import { Subject } from 'rxjs';
 
 @Injectable()
 export class FakeFormService extends FormService {

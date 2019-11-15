@@ -35,7 +35,8 @@ import {
 } from '@alfresco/js-api';
 import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService,
-    DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues
+    DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues,
+    AlfrescoApiService, UserPreferencesService, LogService
 } from '@alfresco/adf-core';
 
 import { AnalyticsReportListComponent } from '@alfresco/adf-insights';
@@ -45,9 +46,7 @@ import {
     ProcessInstance,
     ProcessInstanceDetailsComponent,
     ProcessInstanceListComponent,
-    StartProcessInstanceComponent
-} from '@alfresco/adf-process-services';
-import {
+    StartProcessInstanceComponent,
     AppsListComponent,
     FilterRepresentationModel,
     TaskDetailsComponent,
@@ -55,8 +54,6 @@ import {
     TaskFiltersComponent,
     TaskListComponent
 } from '@alfresco/adf-process-services';
-import { LogService } from '@alfresco/adf-core';
-import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';

@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, ElementArrayFinder } from 'protractor';
-
-import { TabsPage } from '@alfresco/adf-testing';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, TabsPage } from '@alfresco/adf-testing';
+import { by, element, ElementArrayFinder, ElementFinder } from 'protractor';
 
 export class CommentsPage {
 

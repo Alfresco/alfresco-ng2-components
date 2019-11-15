@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
-import { UserInfoPage } from '@alfresco/adf-testing';
+import { LoginPage, UserInfoPage } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { browser } from 'protractor';
+import { UsersActions } from '../actions/users.actions';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
-import PeopleAPI = require('../restAPI/ACS/PeopleAPI');
-import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import PeopleAPI = require('../restAPI/ACS/PeopleAPI');
 
 describe('User Info component', () => {
 

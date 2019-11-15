@@ -15,20 +15,17 @@
  * limitations under the License.
  */
 
-import { by } from 'protractor';
-
 import { LoginPage } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
-import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { Tenant } from '../models/APS/tenant';
-import { FileModel } from '../models/ACS/fileModel';
-import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { browser, by } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
-
+import { FileModel } from '../models/ACS/fileModel';
+import { Tenant } from '../models/APS/tenant';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
+import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Custom App', () => {

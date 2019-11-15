@@ -15,18 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService,
-    LoginSSOPage, ApiService, IdentityService, GroupIdentityService, StringUtil, DateUtil
-} from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ApiService, AppListCloudPage, DateUtil, GroupIdentityService, IdentityService, LocalStorageUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, StringUtil, TasksService } from '@alfresco/adf-testing';
+import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage, LocalStorageUtil } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
-import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
-import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessListPage } from '../pages/adf/process-services/processListPage';
+import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
+import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
 import moment = require('moment');
 
 describe('Process filters cloud', () => {

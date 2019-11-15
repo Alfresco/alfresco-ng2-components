@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
+import { BrowserActions, DataTableComponentPage } from '@alfresco/adf-testing';
 import { by, element, ElementFinder } from 'protractor';
-import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { BrowserActions } from '@alfresco/adf-testing';
 
 export class FiltersPage {
 

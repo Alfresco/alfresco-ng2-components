@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
-import {
-    ProcessFiltersCloudComponentPage,
-    EditProcessFilterCloudComponentPage,
-    ProcessListCloudComponentPage,
-    BrowserActions
-} from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, EditProcessFilterCloudComponentPage, ProcessFiltersCloudComponentPage, ProcessListCloudComponentPage } from '@alfresco/adf-testing';
+import { by, element, ElementFinder } from 'protractor';
 
 export class ProcessCloudDemoPage {
 

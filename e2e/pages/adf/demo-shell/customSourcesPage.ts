@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from '@alfresco/adf-testing';
-import { element, by, ElementFinder } from 'protractor';
-import { DataTableComponentPage, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
+import { by, element, ElementFinder } from 'protractor';
 import { NavigationBarPage } from '../navigationBarPage';
 
 const source = {

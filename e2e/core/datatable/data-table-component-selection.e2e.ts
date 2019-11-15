@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
-import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
-import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
-
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { DataTableComponentPage, LoginPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { browser } from 'protractor';
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Datatable component - selection', () => {

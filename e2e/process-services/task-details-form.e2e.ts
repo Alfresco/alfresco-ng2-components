@@ -15,21 +15,18 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { StringUtil, Widget } from '@alfresco/adf-testing';
-import CONSTANTS = require('../util/constants');
-
-import { LoginPage } from '@alfresco/adf-testing';
-
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
-import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
-import { FiltersPage } from '../pages/adf/process-services/filtersPage';
-import { AppsActions } from '../actions/APS/apps.actions';
-import { StandaloneTask } from '../models/APS/standaloneTask';
+import { LoginPage, StringUtil, Widget } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UsersActions } from '../actions/users.actions';
+import { browser } from 'protractor';
+import { AppsActions } from '../actions/APS/apps.actions';
 import { FormModelActions } from '../actions/APS/formModel.actions';
+import { UsersActions } from '../actions/users.actions';
+import { StandaloneTask } from '../models/APS/standaloneTask';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { FiltersPage } from '../pages/adf/process-services/filtersPage';
+import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
+import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
+import CONSTANTS = require('../util/constants');
 
 describe('Task Details - Form', () => {
     const loginPage = new LoginPage();

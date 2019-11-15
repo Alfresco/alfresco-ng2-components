@@ -15,19 +15,15 @@
  * limitations under the License.
  */
 
-import { LoginPage, FormFields } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
-import { AttachFormPage } from '../pages/adf/process-services/attachFormPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
-import CONSTANTS = require('../util/constants');
-
-import { browser } from 'protractor';
-
+import { FormFields, LoginPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UsersActions } from '../actions/users.actions';
+import { browser, by } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
-import { by } from 'protractor';
+import { UsersActions } from '../actions/users.actions';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { AttachFormPage } from '../pages/adf/process-services/attachFormPage';
+import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import CONSTANTS = require('../util/constants');
 
 describe('Attach Form Component', () => {
 

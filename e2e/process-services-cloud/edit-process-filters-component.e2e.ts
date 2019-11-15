@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
+import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { ApiService, GroupIdentityService, IdentityService, LoginSSOPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
+import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Edit process filters cloud', () => {
 
