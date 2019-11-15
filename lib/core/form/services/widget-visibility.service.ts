@@ -122,10 +122,15 @@ export class WidgetVisibilityService {
     }
 
     getFormValue(form: FormModel, fieldId: string): any {
-        let value = this.getFieldValue(form.values, fieldId);
+        const formField = this.getFormFieldById(form, fieldId);
+        let value = undefined;
 
-        if (this.isInvalidValue(value)) {
-            value = this.searchValueInForm(form, fieldId);
+        if (formField && formField.isValid) {
+            value = this.getFieldValue(form.values, fieldId);
+
+            if (this.isInvalidValue(value)) {
+                value = this.searchValueInForm(formField, fieldId);
+            }
         }
         return value;
     }
@@ -149,20 +154,20 @@ export class WidgetVisibilityService {
         return value === undefined || value === null;
     }
 
-    searchValueInForm(form: FormModel, fieldId: string): string {
-        let fieldValue = '';
-        form.getFormFields().forEach((formField: FormFieldModel) => {
-            if (this.isSearchedField(formField, fieldId)) {
-                fieldValue = this.getObjectValue(formField, fieldId);
-                if (!fieldValue) {
-                    if (formField.value && formField.value.id) {
-                        fieldValue = formField.value.id;
-                    } else if (!this.isInvalidValue(formField.value)) {
-                        fieldValue = formField.value;
-                    }
-                }
+    getFormFieldById(form: FormModel, fieldId: string): FormFieldModel {
+        return form.getFormFields().
+            find( (formField: FormFieldModel) => this.isSearchedField(formField, fieldId));
+    }
+
+    searchValueInForm(formField: FormFieldModel, fieldId: string): string {
+        let fieldValue = this.getObjectValue(formField, fieldId);
+        if (!fieldValue) {
+            if (formField.value && formField.value.id) {
+                fieldValue = formField.value.id;
+            } else if (!this.isInvalidValue(formField.value)) {
+                fieldValue = formField.value;
             }
-        });
+        }
         return fieldValue;
     }
 

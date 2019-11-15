@@ -389,14 +389,16 @@ describe('WidgetVisibilityCloudService', () => {
         });
 
         it('should be able to retrieve a field value searching in the form', () => {
-            const formValue = service.searchValueInForm(stubFormWithFields, 'FIELD_WITH_CONDITION');
+            const formField = service.getFormFieldById(stubFormWithFields, 'FIELD_WITH_CONDITION');
+            const formValue = service.searchValueInForm(formField, 'FIELD_WITH_CONDITION');
 
             expect(formValue).not.toBeNull();
             expect(formValue).toBe('field_with_condition_value');
         });
 
         it('should return empty string if the field value is not in the form', () => {
-            const formValue = service.searchValueInForm(stubFormWithFields, 'FIELD_MYSTERY');
+            const formField = service.getFormFieldById(stubFormWithFields, 'FIELD_MYSTERY');
+            const formValue = service.searchValueInForm(formField, 'FIELD_MYSTERY');
 
             expect(formValue).not.toBeUndefined();
             expect(formValue).toEqual('');
