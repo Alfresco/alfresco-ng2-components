@@ -337,7 +337,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const updateInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            updateInput.triggerEventHandler('click', null);
+            updateInput.nativeElement.dispatchEvent(new MouseEvent('click'));
         });
 
         it('should update the value using the enter key', async(() => {
@@ -356,7 +356,7 @@ describe('CardViewTextItemComponent', () => {
             );
 
             const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
-            editIcon.triggerEventHandler('click', null);
+            editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             fixture.detectChanges();
 
             const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
@@ -379,7 +379,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
-            editIcon.triggerEventHandler('click', null);
+            editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             fixture.detectChanges();
 
             const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
