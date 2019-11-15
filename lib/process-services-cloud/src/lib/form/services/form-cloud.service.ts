@@ -174,7 +174,7 @@ export class FormCloudService extends BaseCloudService {
     getForm(appName: string, formKey: string, version?: number): Observable<any> {
         let url = `${this.getBasePath(appName)}/form/v1/forms/${formKey}`;
 
-        if (version !== undefined) {
+        if (version) {
             url += `/versions/${version}`;
         }
 
