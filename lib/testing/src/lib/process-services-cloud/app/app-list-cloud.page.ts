@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementArrayFinder, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { ElementArrayFinder, ElementFinder } from 'protractor';
 
 export class AppListCloudPage {
 

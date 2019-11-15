@@ -17,12 +17,12 @@
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CoreModule } from '@alfresco/adf-core';
 import { LibraryDialogComponent } from './library.dialog';
 import { TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import {
+    CoreModule,
     AlfrescoApiService,
     AlfrescoApiServiceMock,
     setupTestBed

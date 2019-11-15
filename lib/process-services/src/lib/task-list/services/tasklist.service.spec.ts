@@ -16,7 +16,7 @@
  */
 
 import { async } from '@angular/core/testing';
-import { UserProcessModel, setupTestBed, CoreModule, StorageService } from '@alfresco/adf-core';
+import { UserProcessModel, setupTestBed, CoreModule, StorageService, AlfrescoApiServiceMock, LogService, AppConfigService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import {
     fakeCompletedTaskList,
@@ -35,7 +35,6 @@ import {
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './tasklist.service';
-import { AlfrescoApiServiceMock, LogService, AppConfigService } from '@alfresco/adf-core';
 import { TaskUpdateRepresentation } from '@alfresco/js-api';
 
 declare let jasmine: any;

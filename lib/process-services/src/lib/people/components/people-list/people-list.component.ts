@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { DataTableComponent, DataCellEvent } from '@alfresco/adf-core';
-import { DataColumnListComponent, UserProcessModel } from '@alfresco/adf-core';
+import { DataTableComponent, DataCellEvent, DataColumnListComponent, UserProcessModel } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 

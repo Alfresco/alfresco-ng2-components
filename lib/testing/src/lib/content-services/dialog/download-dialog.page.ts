@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { ElementFinder } from 'protractor';
 
 export class DownloadDialogPage {
     cancelButton: ElementFinder = element(by.id(`cancel-button`));

@@ -16,9 +16,8 @@
  */
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ContentTestingModule } from '../testing/content.testing.module';

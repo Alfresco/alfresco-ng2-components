@@ -24,9 +24,9 @@ import {
     setupTestBed,
     CoreModule,
     UserPreferencesService,
-    SearchTextInputComponent
+    SearchTextInputComponent,
+    ThumbnailService
 } from '@alfresco/adf-core';
-import { ThumbnailService } from '@alfresco/adf-core';
 import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
 import { SearchComponent } from './search.component';

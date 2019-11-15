@@ -16,8 +16,7 @@
  */
 
 import { async } from '@angular/core/testing';
-import { exampleProcess, fakeProcessInstances } from '../../mock';
-import { mockError, fakeProcessDef, fakeTasksList } from '../../mock';
+import { exampleProcess, fakeProcessInstances, mockError, fakeProcessDef, fakeTasksList } from '../../mock';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';

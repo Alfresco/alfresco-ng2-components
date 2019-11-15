@@ -16,8 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserProcessModel, setupTestBed } from '@alfresco/adf-core';
-import { DataRowActionEvent, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
+import { UserProcessModel, setupTestBed, DataRowActionEvent, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';

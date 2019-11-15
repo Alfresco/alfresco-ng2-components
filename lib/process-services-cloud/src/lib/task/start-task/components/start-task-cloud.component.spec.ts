@@ -16,8 +16,8 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import {
+    setupTestBed, IdentityUserService,
     AlfrescoApiService,
     AppConfigService,
     LogService,

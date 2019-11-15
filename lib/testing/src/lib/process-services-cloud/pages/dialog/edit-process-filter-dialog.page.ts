@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { browser, by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
-import { ElementFinder } from 'protractor';
-import { Locator } from 'protractor/built/locators';
 
 export class EditProcessFilterDialogPage {
 

@@ -16,11 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { from, throwError } from 'rxjs';
+import { from, throwError, Observable } from 'rxjs';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { map, catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'

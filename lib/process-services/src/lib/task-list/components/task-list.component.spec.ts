@@ -18,8 +18,7 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, CoreModule, DataTableModule } from '@alfresco/adf-core';
-import { DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';

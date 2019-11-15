@@ -16,11 +16,10 @@
  */
 
 import { FormControllersPage } from './form-controller.page';
-import { browser, by, element } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { LocalStorageUtil } from '../utils/local-storage.util';
 import { BrowserActions } from '../utils/browser-actions';
-import { ElementFinder } from 'protractor';
 
 export class LoginPage {
 

@@ -21,9 +21,9 @@ import {
     Core,
     Activiti,
     SearchApi,
-    Node
+    Node,
+    AlfrescoApiCompatibility, AlfrescoApiConfig
 } from '@alfresco/js-api';
-import { AlfrescoApiCompatibility, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { Subject, Observable } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';

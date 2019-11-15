@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService, ThumbnailService, EmptyListComponent } from '@alfresco/adf-core';
+import { ContentService, ThumbnailService, EmptyListComponent, ProcessContentService } from '@alfresco/adf-core';
 import {
     AfterContentInit,
     ContentChild,
@@ -28,7 +28,6 @@ import {
     SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
-import { ProcessContentService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-task-attachment-list',

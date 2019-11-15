@@ -17,8 +17,7 @@
 
 import moment from 'moment-es6';
 
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { ComponentFixture } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material';
 import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { NodeBodyLock } from '@alfresco/js-api';

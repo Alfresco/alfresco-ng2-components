@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { AllowableOperationsEnum  } from '@alfresco/adf-core';
+import { AllowableOperationsEnum, FileModel, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
 import { Component, forwardRef, Input, OnChanges, ViewEncapsulation, OnInit } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { UploadButtonComponent } from './upload-button.component';
-import { FileModel, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-upload-version-button',

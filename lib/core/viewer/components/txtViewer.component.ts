@@ -16,8 +16,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
-import { SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation, SimpleChanges } from '@angular/core';
 import { AppConfigService } from './../../app-config/app-config.service';
 
 @Component({

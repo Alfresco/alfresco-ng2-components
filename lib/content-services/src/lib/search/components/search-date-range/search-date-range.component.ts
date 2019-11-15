@@ -18,14 +18,13 @@
 import { OnInit, Component, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
+import { MomentDateAdapter, MOMENT_DATE_FORMATS, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 import { SearchWidget } from '../../search-widget.interface';
 import { SearchWidgetSettings } from '../../search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Moment } from 'moment';
-import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

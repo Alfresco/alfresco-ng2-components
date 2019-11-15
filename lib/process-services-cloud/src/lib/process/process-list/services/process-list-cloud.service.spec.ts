@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 import { async } from '@angular/core/testing';
-import { setupTestBed, StorageService } from '@alfresco/adf-core';
+import { setupTestBed, StorageService, AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { fakeProcessCloudList } from '../mock/process-list-service.mock';
-import { AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { ProcessListCloudService } from './process-list-cloud.service';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 
