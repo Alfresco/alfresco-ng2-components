@@ -221,6 +221,7 @@ describe('CardViewTextItemComponent', () => {
     });
 
     describe('Update', () => {
+        const event = new MouseEvent('click');
 
         beforeEach(() => {
             component.editable = true;
@@ -234,7 +235,7 @@ describe('CardViewTextItemComponent', () => {
             spyOn(component.property, 'isValid');
             component.editedValue = 'updated-value';
 
-            component.update();
+            component.update(event);
 
             expect(component.property.isValid).toHaveBeenCalledWith('updated-value');
         });
@@ -245,7 +246,7 @@ describe('CardViewTextItemComponent', () => {
             spyOn(cardViewUpdateService, 'update');
             component.editedValue = 'updated-value';
 
-            component.update();
+            component.update(event);
 
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(component.property, 'updated-value');
         });
@@ -255,7 +256,7 @@ describe('CardViewTextItemComponent', () => {
             const cardViewUpdateService = TestBed.get(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'update');
 
-            component.update();
+            component.update(event);
 
             expect(cardViewUpdateService.update).not.toHaveBeenCalled();
         });
@@ -265,14 +266,14 @@ describe('CardViewTextItemComponent', () => {
             component.property.isValid = () => false;
             component.property.getValidationErrors = () => expectedErrorMessages;
 
-            component.update();
+            component.update(event);
 
             expect(component.errorMessages).toBe(expectedErrorMessages);
         });
 
         it('should update the property value after a successful update attempt', async(() => {
             component.property.isValid = () => true;
-            component.update();
+            component.update(event);
 
             fixture.whenStable().then(() => {
                 expect(component.property.value).toBe(component.editedValue);
@@ -281,7 +282,7 @@ describe('CardViewTextItemComponent', () => {
 
         it('should switch back to readonly mode after an update attempt', async(() => {
             component.property.isValid = () => true;
-            component.update();
+            component.update(event);
 
             fixture.whenStable().then(() => {
                 expect(component.inEdit).toBeFalsy();
@@ -327,7 +328,7 @@ describe('CardViewTextItemComponent', () => {
             );
 
             const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
-            editIcon.triggerEventHandler('click', null);
+            editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             fixture.detectChanges();
 
             const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
@@ -336,7 +337,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const updateInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            updateInput.triggerEventHandler('click', null);
+            updateInput.nativeElement.dispatchEvent(new MouseEvent('click'));
         });
 
         it('should update the value using the enter key', async(() => {
@@ -355,7 +356,7 @@ describe('CardViewTextItemComponent', () => {
             );
 
             const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
-            editIcon.triggerEventHandler('click', null);
+            editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             fixture.detectChanges();
 
             const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
@@ -363,7 +364,7 @@ describe('CardViewTextItemComponent', () => {
             editInput.nativeElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
 
-            const enterKeyboardEvent = new KeyboardEvent('keyup', { 'key': 'Enter' });
+            const enterKeyboardEvent = new KeyboardEvent('keydown', { 'key': 'Enter' });
             editInput.nativeElement.dispatchEvent(enterKeyboardEvent);
             fixture.detectChanges();
 
@@ -378,7 +379,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
-            editIcon.triggerEventHandler('click', null);
+            editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             fixture.detectChanges();
 
             const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
@@ -386,7 +387,7 @@ describe('CardViewTextItemComponent', () => {
             editInput.nativeElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
 
-            const enterKeyboardEvent = new KeyboardEvent('keyup', { 'key': 'Escape' });
+            const enterKeyboardEvent = new KeyboardEvent('keydown', { 'key': 'Escape' });
             editInput.nativeElement.dispatchEvent(enterKeyboardEvent);
             fixture.detectChanges();
 

@@ -84,7 +84,9 @@ export class CardViewTextItemComponent implements OnChanges {
         }, 0);
     }
 
-    reset(): void {
+    reset(event: MouseEvent|KeyboardEvent): void {
+        event.stopPropagation();
+
         this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
         this.setEditMode(false);
         this.resetErrorMessages();
@@ -94,7 +96,9 @@ export class CardViewTextItemComponent implements OnChanges {
         this.errorMessages = [];
     }
 
-    update(): void {
+    update(event: MouseEvent|KeyboardEvent): void {
+        event.stopPropagation();
+
         if (this.property.isValid(this.editedValue)) {
             const updatedValue = this.prepareValueForUpload(this.property, this.editedValue);
             this.cardViewUpdateService.update(this.property, updatedValue);
