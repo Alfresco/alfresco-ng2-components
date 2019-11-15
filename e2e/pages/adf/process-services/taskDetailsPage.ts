@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
+import { BrowserActions, BrowserVisibility, TabsPage } from '@alfresco/adf-testing';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
-import { element, by, browser, ElementFinder } from 'protractor';
-import { TabsPage } from '@alfresco/adf-testing';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TaskDetailsPage {
 

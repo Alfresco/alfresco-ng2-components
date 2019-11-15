@@ -19,18 +19,17 @@ import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
-
 import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
     FormService,
     setupTestBed,
-    BpmUserService
+    BpmUserService,
+    CommentProcessService, LogService, AuthenticationService,
+    UserProcessModel,
+    PeopleProcessService
 } from '@alfresco/adf-core';
-import { CommentProcessService, LogService, AuthenticationService } from '@alfresco/adf-core';
-
-import { UserProcessModel } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import {
     noDataMock,
@@ -44,7 +43,6 @@ import {
 import { TaskListService } from './../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { PeopleProcessService } from '@alfresco/adf-core';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: 'fake-id',

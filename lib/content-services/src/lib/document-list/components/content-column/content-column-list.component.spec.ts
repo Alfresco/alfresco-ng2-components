@@ -17,8 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { DataColumn, setupTestBed } from '@alfresco/adf-core';
-import { LogService } from '@alfresco/adf-core';
+import { DataColumn, setupTestBed, LogService } from '@alfresco/adf-core';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentColumnListComponent } from './content-column-list.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';

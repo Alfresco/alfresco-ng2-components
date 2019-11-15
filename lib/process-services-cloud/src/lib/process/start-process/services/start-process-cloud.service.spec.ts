@@ -16,9 +16,9 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import {
+    setupTestBed, CoreModule,
     AlfrescoApiService,
     AppConfigService,
     LogService,

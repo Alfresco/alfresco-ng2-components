@@ -19,9 +19,8 @@ import {
     Component, EventEmitter, Input, OnChanges,
     Output, SimpleChanges, OnDestroy
 } from '@angular/core';
-import { Observable, of, forkJoin, Subject } from 'rxjs';
+import { Observable, of, forkJoin, Subject, Subscription } from 'rxjs';
 import { switchMap, takeUntil, map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 import {
     FormBaseComponent,
     FormFieldModel,

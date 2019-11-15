@@ -17,8 +17,7 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, CoreModule, DataTableModule } from '@alfresco/adf-core';
-import { DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
 import { fakeProcessCloudList, fakeCustomSchema } from '../mock/process-list-service.mock';

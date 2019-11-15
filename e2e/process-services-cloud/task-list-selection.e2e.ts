@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
+import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, StringUtil, TasksService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-
-import { ApiService, LoginSSOPage, TasksService, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
-import { StringUtil } from '@alfresco/adf-testing';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Task list cloud - selection', () => {
 

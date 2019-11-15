@@ -16,8 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { LogService, setupTestBed } from '@alfresco/adf-core';
-import { UserProcessModel } from '@alfresco/adf-core';
+import { LogService, setupTestBed, UserProcessModel } from '@alfresco/adf-core';
 import { PeopleComponent } from './people.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 

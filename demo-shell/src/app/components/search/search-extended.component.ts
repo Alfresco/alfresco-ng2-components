@@ -18,8 +18,7 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Pagination, QueryBody, MinimalNodeEntity } from '@alfresco/js-api';
 import { SearchComponent } from '@alfresco/adf-content-services';
-import { ThumbnailService } from '@alfresco/adf-core';
-import { SearchService, SearchConfigurationService } from '@alfresco/adf-core';
+import { ThumbnailService, SearchService, SearchConfigurationService } from '@alfresco/adf-core';
 import { TestSearchConfigurationService } from './search-config-test.service';
 
 @Component({

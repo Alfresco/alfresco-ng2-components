@@ -16,10 +16,8 @@
  */
 
 import { Component } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { ComponentFixture } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { MatDialog } from '@angular/material';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { deployedApps } from '../mock/apps-list.mock';

@@ -15,19 +15,15 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
+import { LocalStorageUtil, LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { browser } from 'protractor';
+import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { FolderModel } from '../models/ACS/folderModel';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { InfinitePaginationPage } from '../pages/adf/core/infinitePaginationPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { FolderModel } from '../models/ACS/folderModel';
-
-import { browser } from 'protractor';
 import { Util } from '../util/util';
-
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '@alfresco/adf-testing';
 
 describe('Enable infinite scrolling', () => {
 

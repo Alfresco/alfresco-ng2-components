@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ConfirmDialogComponent } from './confirm.dialog';

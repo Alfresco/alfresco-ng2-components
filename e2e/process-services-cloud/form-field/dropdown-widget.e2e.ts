@@ -16,23 +16,14 @@
  */
 
 import {
-    TasksService,
-    QueryService,
-    ProcessDefinitionsService,
-    ProcessInstancesService,
-    LoginSSOPage,
-    ApiService,
-    IdentityService,
-    GroupIdentityService,
-    Widget,
-    NotificationHistoryPage,
-    TaskHeaderCloudPage,
-    TaskFormCloudComponent
+    ApiService, AppListCloudPage, GroupIdentityService, IdentityService,
+    LoginSSOPage, NotificationHistoryPage, ProcessDefinitionsService,
+    ProcessInstancesService, QueryService, TaskFormCloudComponent, TaskHeaderCloudPage,
+    TasksService, Widget
 } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
+import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Form Field Component - Dropdown Widget', () => {
     const loginSSOPage = new LoginSSOPage();

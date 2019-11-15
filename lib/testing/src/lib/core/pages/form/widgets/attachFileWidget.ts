@@ -18,8 +18,7 @@
 import { FormFields } from '../formFields';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import * as remote from 'selenium-webdriver/remote';
-import { element, by, browser } from 'protractor';
-import { ElementFinder } from 'protractor';
+import { element, by, browser, ElementFinder } from 'protractor';
 
 export class AttachFileWidget {
 

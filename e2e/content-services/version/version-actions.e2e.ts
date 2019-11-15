@@ -15,17 +15,15 @@
  * limitations under the License.
  */
 
+import { BrowserActions, BrowserVisibility, FileBrowserUtil, LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by, element } from 'protractor';
-import { LoginPage } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { BrowserVisibility, FileBrowserUtil, BrowserActions } from '@alfresco/adf-testing';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
 describe('Version component actions', () => {
 

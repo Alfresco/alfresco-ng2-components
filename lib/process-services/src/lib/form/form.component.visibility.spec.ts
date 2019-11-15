@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { SimpleChange } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { of } from 'rxjs';
 
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';

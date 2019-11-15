@@ -15,20 +15,14 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
-import { TrashcanPage } from '../pages/adf/trashcanPage';
-
-import { PaginationPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
+import { LoginPage, PaginationPage, UploadActions } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { browser } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FolderModel } from '../models/ACS/folderModel';
-
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { TrashcanPage } from '../pages/adf/trashcanPage';
 import { Util } from '../util/util';
-
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 
 describe('Trashcan - Pagination', () => {
     const pagination = {

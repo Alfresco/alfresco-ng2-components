@@ -15,19 +15,13 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-
-import { LoginPage, SettingsPage, ErrorPage, BrowserActions } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ProcessServicesPage } from '../../pages/adf/process-services/processServicesPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-
-import { UserInfoPage } from '@alfresco/adf-testing';
-
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-
+import { BrowserActions, ErrorPage, LoginPage, SettingsPage, UserInfoPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-
+import { browser } from 'protractor';
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { ProcessServicesPage } from '../../pages/adf/process-services/processServicesPage';
 import { Util } from '../../util/util';
 
 describe('Login component', () => {

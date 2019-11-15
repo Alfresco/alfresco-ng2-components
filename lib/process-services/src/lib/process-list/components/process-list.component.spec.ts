@@ -19,16 +19,14 @@ import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
-
 import { ProcessInstanceListComponent } from './process-list.component';
-
-import { AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRow, DataColumn } from '@alfresco/adf-core';
-import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
-
-import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty } from '../../mock';
+import {
+    AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRow, DataColumn,
+    DataRowEvent, ObjectDataRow, ObjectDataTableAdapter
+} from '@alfresco/adf-core';
+import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty, fakeProcessCustomSchema } from '../../mock';
 import { ProcessService } from '../services/process.service';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { fakeProcessCustomSchema } from '../../mock';
 import { ProcessListModule } from '../process-list.module';
 
 describe('ProcessInstanceListComponent', () => {

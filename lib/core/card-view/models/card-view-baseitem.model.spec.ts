@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { CardViewItemProperties } from '../interfaces/card-view.interfaces';
+import { CardViewItemProperties, CardViewItemValidator } from '../interfaces/card-view.interfaces';
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
-import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
 
 class CarViewCustomItemModel extends CardViewBaseItemModel {}
 

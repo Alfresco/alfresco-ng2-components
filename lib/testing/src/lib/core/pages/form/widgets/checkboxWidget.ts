@@ -17,8 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
-import { by, element, Locator } from 'protractor';
-import { ElementFinder } from 'protractor';
+import { by, element, Locator, ElementFinder } from 'protractor';
 
 export class CheckboxWidget {
 

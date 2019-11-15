@@ -17,8 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
-import { BpmUserService } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, BpmUserService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import {
     completedTaskDetailsMock,

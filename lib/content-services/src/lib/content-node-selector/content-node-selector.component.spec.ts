@@ -16,8 +16,7 @@
  */
 
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { EventEmitter } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { Node } from '@alfresco/js-api';

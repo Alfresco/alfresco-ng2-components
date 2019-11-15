@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage';
-import { GroupCloudComponentPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
+import { ApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginSSOPage, PeopleCloudComponentPage, RolesService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiService } from '@alfresco/adf-testing';
+import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('People Groups Cloud Component', () => {
 

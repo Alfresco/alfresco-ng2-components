@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { element, by, ElementFinder } from 'protractor';
+import { BrowserVisibility, DataTableComponentPage, SearchSortingPickerPage } from '@alfresco/adf-testing';
+import { by, element, ElementFinder } from 'protractor';
 import { ContentServicesPage } from './contentServicesPage';
-import { BrowserVisibility, SearchSortingPickerPage } from '@alfresco/adf-testing';
 
 export class SearchResultsPage {
 
