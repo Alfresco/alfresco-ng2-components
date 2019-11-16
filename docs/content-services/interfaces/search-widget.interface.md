@@ -49,7 +49,7 @@ implement the [Search Widget](../../../lib/content-services/search/search-widget
 
 To create a custom Search Filter [widget,](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) start by generating a blank Angular component
 that implements the
-[`SearchWidget`](../../../lib/content-services/search/search-widget.interface.ts)
+[`SearchWidget`](../../../lib/content-services/src/lib/search/search-widget.interface.ts)
 interface:
 
 ```ts

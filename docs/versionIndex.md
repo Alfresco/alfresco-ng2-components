@@ -34,8 +34,9 @@ backend services have been tested with each released version of ADF.
 
 <!--v360 start-->
 
-<!--v360 end-->
+-   [Search text input component](core/components/search-text-input.component.md)
 
+<!--v360 end-->
 
 ## v3.5.0
 

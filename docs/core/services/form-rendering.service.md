@@ -35,7 +35,7 @@ The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.t
 form field. The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Field model stores the field type name as a string (see the table below).
 The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Rendering service maintains a mapping between each type name and
 a corresponding [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts). The function takes a [`FormFieldModel`](../../core/models/form-field.model.md) object as its argument and
-uses the data from the object to determine which widget should be used to render the field.
+uses the data from the object to determine which [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) should be used to render the field.
 
 In some cases, the field type string alone is enough to determine the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) type and so the function
 just returns the type directly:
