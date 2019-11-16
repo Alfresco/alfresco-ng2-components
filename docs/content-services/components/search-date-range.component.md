@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# [Search date range component](../../../lib/content-services/search/components/search-date-range/search-date-range.component.ts "Defined in search-date-range.component.ts")
+# [Search date range component](../../../lib/content-services/src/lib/search/components/search-date-range/search-date-range.component.ts "Defined in search-date-range.component.ts")
 
-Implements a date range widget for the [Search Filter component](search-filter.component.md).
+Implements a date range [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) for the [Search Filter component](search-filter.component.md).
 
 ![Date Range Widget](../../docassets/images/search-date-range.png)
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-12
 ---
 
-# [Search widget interface](../../../lib/content-services/search/search-widget.interface.ts "Defined in search-widget.interface.ts")
+# [Search widget interface](../../../lib/content-services/src/lib/search/search-widget.interface.ts "Defined in search-widget.interface.ts")
 
 Specifies required properties for [Search filter component](../components/search-filter.component.md) widgets.
 
@@ -34,8 +34,8 @@ export interface SearchWidget {
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| id | `string` |  | Unique identifying value for the widget |
-| settings | [`SearchWidgetSettings`](../../../lib/content-services/search/search-widget-settings.interface.ts) |  | Settings for component properties |
+| id | `string` |  | Unique identifying value for the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) |
+| settings | [`SearchWidgetSettings`](../../../lib/content-services/src/lib/search/search-widget-settings.interface.ts) |  | Settings for component properties |
 | context | [`SearchQueryBuilderService`](../../content-services/services/search-query-builder.service.md) |  | Instance of the [Search Query Builder service](../services/search-query-builder.service.md) to process the query |
 
 ## Details
@@ -47,7 +47,7 @@ implement the [Search Widget](../../../lib/content-services/search/search-widget
 
 ### Implementing a custom widget
 
-To create a custom Search Filter widget, start by generating a blank Angular component
+To create a custom Search Filter [widget,](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) start by generating a blank Angular component
 that implements the
 [`SearchWidget`](../../../lib/content-services/search/search-widget.interface.ts)
 interface:
@@ -60,8 +60,8 @@ export interface SearchWidget {
 }
 ```
 
-Every widget implementation must have an `id`, and may also support external `settings`.
-At runtime, every time a new instance of the widget is created, it also receives a reference to the [Search Query Builder Service](../services/search-query-builder.service.md)
+Every [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) implementation must have an `id`, and may also support external `settings`.
+At runtime, every time a new instance of the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) is created, it also receives a reference to the [Search Query Builder Service](../services/search-query-builder.service.md)
 so that you component can access query related information, events and methods.
 
 ```ts
@@ -79,8 +79,8 @@ export class MyComponent implements SearchWidget, OnInit {
 
 ### Reading external settings
 
-At runtime, ADF provides every search filter widget with a `settings` instance,
-based on the JSON data that the administrator has provided for your widget in the
+At runtime, ADF provides every search filter [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a `settings` instance,
+based on the JSON data that the administrator has provided for your [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) in the
 `app.config.json` file.
 
 It is your responsibility to parse the `settings` property values and also to
@@ -114,7 +114,7 @@ The [Search Query Builder Service](../services/search-query-builder.service.md) 
 When the query is complete, it composes the fragments together alongside other settings
 that will be used when performing the actual query.
 
-Every query fragment is stored and retrieved using its widget `id`.
+Every query fragment is stored and retrieved using its [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) `id`.
 It is your responsibility to format the query correctly.
 
 Once your change to the query is finished, update the context and call the `update` method
@@ -157,7 +157,7 @@ export class MyAppOrComponent {
 }
 ```
 
-When you have done this, you can declare your widget in `app.config.json` 
+When you have done this, you can declare your [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) in `app.config.json` 
 and pass custom attributes, if your component supports them:
 
 ```json

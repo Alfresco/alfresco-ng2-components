@@ -46,6 +46,16 @@ Manages task cloud.
     -   _appName:_ `string`  - 
     -   **Returns** `string` - 
 
+-   **getCandidateGroups**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>`<br/>
+    Gets candidate groups of the task.
+    -   _appName:_ `string`  - Name of the app
+    -   _taskId:_ `string`  - ID of the task
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>` - Candidate groups
+-   **getCandidateUsers**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>`<br/>
+    Gets candidate users of the task.
+    -   _appName:_ `string`  - Name of the app
+    -   _taskId:_ `string`  - ID of the task
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>` - Candidate users
 -   **getTaskById**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
     Gets details of a task.
     -   _appName:_ `string`  - Name of the app
@@ -60,11 +70,11 @@ Manages task cloud.
     -   _appName:_ `string`  - Name of the app
     -   _taskId:_ `string`  - ID of the task to unclaim
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Details of the task that was unclaimed
--   **updateTask**(appName: `string`, taskId: `string`, updatePayload: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
+-   **updateTask**(appName: `string`, taskId: `string`, payload: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
     Updates the details (name, description, due date) for a task.
     -   _appName:_ `string`  - Name of the app
     -   _taskId:_ `string`  - ID of the task to update
-    -   _updatePayload:_ `any`  - Data to update the task
+    -   _payload:_ `any`  - Data to update the task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Updated task details
 
 ## Details

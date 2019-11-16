@@ -11,7 +11,7 @@ Defines the Image Resolver function used by the [Document List Component](../com
 
 ## Definitions
 
--   `type` **[`ImageResolver`](../../../lib/content-services/document-list/data/image-resolver.model.ts)** = (row: [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts), column: [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts)) => `string`
+-   `type` **[`ImageResolver`](../../../lib/content-services/src/lib/document-list/data/image-resolver.model.ts)** = (row: [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts), column: [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts)) => `string`
     -   _row:_ [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts) - Data that defines the row
     -   _column:_ [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) - Data that defines the column
     -   **Returns** File path for the image

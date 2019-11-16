@@ -222,7 +222,7 @@ update your code to use the suggested fix for each item that affects your projec
         `sidebarRightTemplate`.
     -   The `sidebarPosition` input has been removed (the other new inputs render it obsolete).
 
--   The `createFolder` event of the [`UploadBase`](../../lib/content-services/upload/components/base-upload/upload-base.ts)
+-   The `createFolder` event of the [`UploadBase`](../../lib/content-services/src/lib/upload/components/base-upload/upload-base.ts)
     class (emitted when a folder was created) has been removed. You should modify your code to use the `success` event instead.
 -   [Login component](../core/components/login.component.md): Two inputs have been removed: `disableCsrf` and `providers`. Set the
     properties with the same names in `app.config.json` to get the same effect.

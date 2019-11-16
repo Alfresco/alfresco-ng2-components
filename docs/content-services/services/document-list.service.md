@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Document List service](../../../lib/content-services/document-list/services/document-list.service.ts "Defined in document-list.service.ts")
+# [Document List service](../../../lib/content-services/src/lib/document-list/services/document-list.service.ts "Defined in document-list.service.ts")
 
 Implements node operations used by the [Document List component](../components/document-list.component.md).
 
@@ -43,13 +43,13 @@ Implements node operations used by the [Document List component](../components/d
     -   _nodeId:_ `any`  - 
     -   **Returns** `boolean` - 
 
--   **loadFolderByNodeId**(nodeId: `string`, pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]`, where?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/document-list/models/document-folder.model.ts)`>`<br/>
+-   **loadFolderByNodeId**(nodeId: `string`, pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]`, where?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/src/lib/document-list/models/document-folder.model.ts)`>`<br/>
 
     -   _nodeId:_ `string`  - 
     -   _pagination:_ [`PaginationModel`](../../../lib/core/models/pagination.model.ts)  - 
     -   _includeFields:_ `string[]`  - 
     -   _where:_ `string`  - (Optional)
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/document-list/models/document-folder.model.ts)`>` - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/src/lib/document-list/models/document-folder.model.ts)`>` - 
 
 -   **moveNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Moves a node to destination node.

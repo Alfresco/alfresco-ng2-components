@@ -39,6 +39,7 @@ body of the element:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | color | `string` |  | Background color for the header. It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'. |
+| expandedSidenav | `boolean` | true |  |
 | logo | `string` |  | Path to an image file for the application logo. |
 | position | `string` | "start" | The side of the page that the drawer is attached to (can be 'start' or 'end') |
 | redirectUrl | `string \| any[]` | "/" | The router link for the application logo, when clicked. |
@@ -50,7 +51,7 @@ body of the element:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| clicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the sidenav button is clicked. |
+| clicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the sidenav button is clicked. |
 
 ## Details
 

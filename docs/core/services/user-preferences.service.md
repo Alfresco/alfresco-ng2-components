@@ -24,7 +24,7 @@ Stores preferences for the app and for individual components.
 -   **getPropertyKey**(property: `string`): `string`<br/>
     Gets the full property key with prefix.
     -   _property:_ `string`  - The property name
-    -   **Returns** `string` - [Property](../../../lib/content-services/content-metadata/interfaces/property.interface.ts) key
+    -   **Returns** `string` - [Property](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) key
 -   **getStoragePrefix**(): `string`<br/>
     Gets the active storage prefix for preferences.
     -   **Returns** `string` - Storage prefix

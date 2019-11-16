@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Node permission dialog service](../../../lib/content-services/permission-manager/services/node-permission-dialog.service.ts "Defined in node-permission-dialog.service.ts")
+# [Node permission dialog service](../../../lib/content-services/src/lib/permission-manager/services/node-permission-dialog.service.ts "Defined in node-permission-dialog.service.ts")
 
 Displays dialogs to let the user set node permissions.
 

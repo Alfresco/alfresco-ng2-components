@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-04-09
 ---
 
-# [Toggle Icon directive](../../../lib/content-services/upload/directives/toggle-icon.directive.ts "Defined in toggle-icon.directive.ts")
+# [Toggle Icon directive](../../../lib/content-services/src/lib/upload/directives/toggle-icon.directive.ts "Defined in toggle-icon.directive.ts")
 
 Toggle icon on mouse or keyboard event for a selectable element.
 

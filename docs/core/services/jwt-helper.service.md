@@ -20,13 +20,38 @@ Decodes a JSON Web Token (JWT) to a JavaScript object.
 -   **getAccessToken**(): `string`<br/>
     Gets access token
     -   **Returns** `string` - access token
+-   **getClientRoles**(clientName: `string`): `string[]`<br/>
+    Gets Client roles.
+    -   _clientName:_ `string`  - 
+    -   **Returns** `string[]` - Array of client roles
+-   **getRealmRoles**(): `string[]`<br/>
+    Gets realm roles.
+    -   **Returns** `string[]` - Array of realm roles
 -   **getValueFromLocalAccessToken**(key: `string`)<br/>
     Gets a named value from the user access token.
     -   _key:_ `string`  - Key name of the field to retrieve
 -   **getValueFromToken**(accessToken: `string`, key: `string`)<br/>
     Gets a named value from the user access token.
     -   _accessToken:_ `string`  - 
-    -   _key:_ `string`  -
+    -   _key:_ `string`  - 
+-   **hasClientRole**(clientName: `string`, role: `string`): `boolean`<br/>
+    Checks for client role.
+    -   _clientName:_ `string`  - Targeted client name
+    -   _role:_ `string`  - Role name to check
+    -   **Returns** `boolean` - True if it contains given role, false otherwise
+-   **hasRealmRole**(role: `string`): `boolean`<br/>
+    Checks for single realm role.
+    -   _role:_ `string`  - Role name to check
+    -   **Returns** `boolean` - True if it contains given role, false otherwise
+-   **hasRealmRoles**(rolesToCheck: `string[]`): `boolean`<br/>
+    Checks for realm roles.
+    -   _rolesToCheck:_ `string[]`  - List of role names to check
+    -   **Returns** `boolean` - True if it contains at least one of the given roles, false otherwise
+-   **hasRealmRolesForClientRole**(clientName: `string`, rolesToCheck: `string[]`): `boolean`<br/>
+    Checks for client roles.
+    -   _clientName:_ `string`  - Targeted client name
+    -   _rolesToCheck:_ `string[]`  - List of role names to check
+    -   **Returns** `boolean` - True if it contains at least one of the given roles, false otherwise
 
 ## Details
 

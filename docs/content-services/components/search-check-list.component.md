@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# [Search check list component](../../../lib/content-services/search/components/search-check-list/search-check-list.component.ts "Defined in search-check-list.component.ts")
+# [Search check list component](../../../lib/content-services/src/lib/search/components/search-check-list/search-check-list.component.ts "Defined in search-check-list.component.ts")
 
-Implements a checklist widget for the [Search Filter component](search-filter.component.md).
+Implements a checklist [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) for the [Search Filter component](search-filter.component.md).
 
 ![Check list widget screenshot](../../docassets/images/search-check-list.png)
 
@@ -47,7 +47,7 @@ Implements a checklist widget for the [Search Filter component](search-filter.co
 
 ## Details
 
-This widget displays a list of checkboxes, each of which toggles a particular query fragment
+This [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) displays a list of checkboxes, each of which toggles a particular query fragment
 in the search. See the [Search filter component](search-filter.component.md) for full details of how to use the widgets
 in a search query.
 
@@ -62,10 +62,10 @@ to the query:
 
 The component can be set to split a long checklist into separate pages of checkboxes
 using the `pageSize` value as the number of boxes to show per page (default is 5).
-When there is more than one page, the widget will display "Show more" and "Show less"
+When there is more than one page, the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) will display "Show more" and "Show less"
 buttons as appropriate.
 
-A "Clear all" button is also displayed at the bottom of the widget to clear all checked
+A "Clear all" button is also displayed at the bottom of the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) to clear all checked
 items in the list.
 
 ## See also

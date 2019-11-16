@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2018-08-10
 ---
 
-# [Search radio component](../../../lib/content-services/search/components/search-radio/search-radio.component.ts "Defined in search-radio.component.ts")
+# [Search radio component](../../../lib/content-services/src/lib/search/components/search-radio/search-radio.component.ts "Defined in search-radio.component.ts")
 
-Implements a radio button list widget for the [Search Filter component](search-filter.component.md).
+Implements a radio button list [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) for the [Search Filter component](search-filter.component.md).
 
 ![Radio Widget screenshot](../../docassets/images/search-radio.png)
 
@@ -55,7 +55,7 @@ query fragment in the search. This behaviour is very similar to that of the
 
 The component can be set to split a long list of buttons into separate pages
 using the `pageSize` value as the number of buttons to show per page (default is 5).
-When there is more than one page, the widget will display "Show more" and "Show less"
+When there is more than one page, the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) will display "Show more" and "Show less"
 buttons as appropriate.
 
 ## See also

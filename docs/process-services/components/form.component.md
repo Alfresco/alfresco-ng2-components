@@ -279,7 +279,7 @@ could use this, say, to provide two alternative ways of entering the same inform
 up default values that can be edited.
 
 You can implement this in ADF using the `formFieldValueChanged` event of the
-[Form service](../../core/services/form.service.md). For example, if you had a form with a dropdown widget (id: `type`)
+[Form service](../../core/services/form.service.md). For example, if you had a form with a [dropdown widget](../../../lib/testing/src/lib/core/pages/form/widgets/dropdownWidget.ts) (id: `type`)
 and a multiline text (id:`description`), you could synchronize their values as follows:
 
 ```ts
@@ -296,7 +296,7 @@ formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
 ```
 
 The code shown above subscribes to the `formFieldValueChanged` event to check whether an event
-is emitted for the `type` widget. Then it finds the `description` widget and assigns some text
+is emitted for the `type` [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts). Then it finds the `description` [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) and assigns some text
 to its `value` property.
 
 The result should look like the following:
@@ -349,7 +349,7 @@ In the CSS, you can target any outcome ID and change the style as in this exampl
 APS allows you to configure where to store files and folders in your on-site Alfresco repositories.
 
 If you have your repositories configured like this, you can use the attach file/folder
-form widget to get a file from those repositories and attach it to the [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts).
+form [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) to get a file from those repositories and attach it to the [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts).
 
 **Note:** your repositories could be configured to be on different servers from the one
 where your front-end is deployed.  Make sure you are using the right Proxy or configuration,

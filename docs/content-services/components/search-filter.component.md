@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-03-20
 ---
 
-# [Search Filter component](../../../lib/content-services/search/components/search-filter/search-filter.component.ts "Defined in search-filter.component.ts")
+# [Search Filter component](../../../lib/content-services/src/lib/search/components/search-filter/search-filter.component.ts "Defined in search-filter.component.ts")
 
 Represents a main container component for custom search and faceted search settings.
 
@@ -230,11 +230,11 @@ The interface above also describes entries in the `search.query.categories` sect
 > so that filters and selected facets are applied.
 
 The Search Filter supports a number of widgets out of the box, each implemented
-by an ADF component. The `selector` property specifies which widget is used for
+by an ADF component. The `selector` property specifies which [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) is used for
 a category:
 
-| Widget name | Selector | Description |
-| ----------- | -------- | ----------- |
+| [Widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) name | Selector | Description |
+| ----------------------------------------------------------------------------- | -------- | ----------- |
 | [Check List](search-check-list.component.md) | `check-list` | Toggles individual query fragments for the search |
 | [Date Range](search-date-range.component.md) | `date-range` | Specifies a range f dates that a field may contain |
 | [Number Range](search-number-range.component.md) | `number-range` | Specifies a range of numeric values that a field may contain |
@@ -249,10 +249,10 @@ page for full details of how to do this.
 
 #### Widget settings
 
-Each type of widget has its own settings.
+Each type of [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) has its own settings.
 For example Number editors may parse minimum and maximum values, while Text editors can support value formats or length constraints.
 
-You can use `component.settings` to pass any information to a widget using the 
+You can use `component.settings` to pass any information to a [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) using the 
 [`SearchWidgetSettings`](../../../lib/content-services/search/search-widget-settings.interface.ts) interface:
 
 ```ts

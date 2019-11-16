@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-17
 ---
 
-# [File upload error pipe](../../../lib/content-services/upload/pipes/file-upload-error.pipe.ts "Defined in file-upload-error.pipe.ts")
+# [File upload error pipe](../../../lib/content-services/src/lib/upload/pipes/file-upload-error.pipe.ts "Defined in file-upload-error.pipe.ts")
 
 Converts an upload error code to an error message.
 

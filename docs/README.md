@@ -109,8 +109,9 @@ for more information about installing and using the source code.
 | [Login Dialog component](core/components/login-dialog.component.md) | Allows a user to perform a login via a dialog. | [Source](../lib/core/login/components/login-dialog.component.ts) |
 | [Login component](core/components/login.component.md) | Authenticates to Alfresco Content Services and Alfresco Process Services. | [Source](../lib/core/login/components/login.component.ts) |
 | [Notification History component](core/components/notification-history.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | This component is in the current status just an experimental component. |  |
-| The main purpose of the Notification history component is list all the notification received in the current session. They will disappear from the list after the refresh. | [Source](../lib/core/notification-history/notification-history.component.ts) |  |
+| The main purpose of the Notification history component is list all the notification received in the current session. They will disappear from the list after the refresh. | [Source](../lib/core/notifications/components/notification-history.component.ts) |  |
 | [Pagination Component](core/components/pagination.component.md) | Adds pagination to the component it is used with. | [Source](../lib/core/pagination/pagination.component.ts) |
+| [Search Text Input Component](core/components/search-text-input.component.md) | Displays a input text that supports autocompletion | [Source](../lib/core/search-text/search-text-input.component.ts) |
 | [Sidebar action menu component](core/components/sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav Layout component](core/components/sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../lib/core/layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Sorting Picker Component](core/components/sorting-picker.component.md) | Selects from a set of predefined sorting definitions and directions. | [Source](../lib/core/sorting-picker/sorting-picker.component.ts) |
@@ -156,8 +157,8 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Bpm User model](core/models/bpm-user.model.md) | Contains information about a Process Services user. | [Source](../lib/core/userinfo/models/bpm-user.model.ts) |
-| [Ecm User model](core/models/ecm-user.model.md) | Contains information about a Content Services user. | [Source](../lib/core/userinfo/models/ecm-user.model.ts) |
+| [Bpm User model](core/models/bpm-user.model.md) | Contains information about a Process Services user. | [Source](../lib/core/models/bpm-user.model.ts) |
+| [Ecm User model](core/models/ecm-user.model.md) | Contains information about a Content Services user. | [Source](../lib/core/models/ecm-user.model.ts) |
 | [Form Field model](core/models/form-field.model.md) | Contains the value and metadata for a field of a Form component. | [Source](../lib/core/form/components/widgets/core/form-field.model.ts) |
 | [Product Version model](core/models/product-version.model.md) | Contains version and license information classes for Alfresco products. | [Source](../lib/core/models/product-version.model.ts) |
 | [User Process model](core/models/user-process.model.md) | Represents a Process Services user. | [Source](../lib/core/models/user-process.model.ts) |
@@ -192,7 +193,7 @@ for more information about installing and using the source code.
 | [Auth Guard SSO Role service](core/services/auth-guard-sso-role.service.md) | Checks the user roles of a user. | [Source](../lib/core/services/auth-guard-sso-role.service.ts) |
 | [Auth Guard service](core/services/auth-guard.service.md) | Adds authentication to a route within the app. | [Source](../lib/core/services/auth-guard.service.ts) |
 | [Authentication Service](core/services/authentication.service.md) | Provides authentication to ACS and APS. | [Source](../lib/core/services/authentication.service.ts) |
-| [Bpm User service](core/services/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
+| [Bpm User service](core/services/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/services/bpm-user.service.ts) |
 | [Card Item Type service](core/services/card-item-types.service.md) | Maps type names to field component types for the Card View component. | [Source](../lib/core/card-view/services/card-item-types.service.ts) |
 | [Card View Update service](core/services/card-view-update.service.md) | Reports edits and clicks within fields of a Card View component. | [Source](../lib/core/card-view/services/card-view-update.service.ts) |
 | [Clipboard service](core/services/clipboard.service.md) | Copies text to the clipboard. | [Source](../lib/core/clipboard/clipboard.service.ts) |
@@ -203,20 +204,20 @@ for more information about installing and using the source code.
 | [Deleted Nodes Api service](core/services/deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/services/deleted-nodes-api.service.ts) |
 | [Discovery Api service](core/services/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/core/services/discovery-api.service.ts) |
 | [Download zip service](core/services/download-zip.service.md) | Creates and manages downloads. | [Source](../lib/core/services/download-zip.service.ts) |
-| [Ecm User service](core/services/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
+| [Ecm User service](core/services/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/services/ecm-user.service.ts) |
 | [Favorites Api service](core/services/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/core/services/favorites-api.service.ts) |
 | [Form Rendering service](core/services/form-rendering.service.md) | Maps a form field type string onto the corresponding form widget component type. | [Source](../lib/core/form/services/form-rendering.service.ts) |
 | [Form service](core/services/form.service.md) | Implements Process Services form methods | [Source](../lib/core/form/services/form.service.ts) |
 | [Highlight Transform service](core/services/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/services/highlight-transform.service.ts) |
-| [Identity Group service](core/services/identity-group.service.md) | Performs CRUD operations on identity groups. | [Source](../lib/core/userinfo/services/identity-group.service.ts) |
-| [Identity role service](core/services/identity-role.service.md) | Provides APIs for working with the Roles in Identity Services. | [Source](../lib/core/userinfo/services/identity-role.service.ts) |
-| [Identity user service](core/services/identity-user.service.md) | Gets OAuth2 personal details and roles for users and performs CRUD operations on identity users. | [Source](../lib/core/userinfo/services/identity-user.service.ts) |
+| [Identity Group service](core/services/identity-group.service.md) | Performs CRUD operations on identity groups. | [Source](../lib/core/services/identity-group.service.ts) |
+| [Identity role service](core/services/identity-role.service.md) | Provides APIs for working with the Roles in Identity Services. | [Source](../lib/core/services/identity-role.service.ts) |
+| [Identity user service](core/services/identity-user.service.md) | Gets OAuth2 personal details and roles for users and performs CRUD operations on identity users. | [Source](../lib/core/services/identity-user.service.ts) |
 | [JWT helper service](core/services/jwt-helper.service.md) | Decodes a JSON Web Token (JWT) to a JavaScript object. | [Source](../lib/core/services/jwt-helper.service.ts) |
 | [Log Service](core/services/log.service.md) | Provides log functionality. | [Source](../lib/core/services/log.service.ts) |
 | [Login Dialog service](core/services/login-dialog.service.md) | Manages login dialogs. | [Source](../lib/core/services/login-dialog.service.ts) |
 | [Node Service](core/services/node.service.md) | Gets Alfresco Repository node metadata and creates nodes with metadata. | [Source](../lib/core/form/services/node.service.ts) |
 | [Nodes Api service](core/services/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/core/services/nodes-api.service.ts) |
-| [Notification Service](core/services/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/services/notification.service.ts) |
+| [Notification Service](core/services/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/notifications/services/notification.service.ts) |
 | [Page Title service](core/services/page-title.service.md) | Sets the page title. | [Source](../lib/core/services/page-title.service.ts) |
 | [People Content service](core/services/people-content.service.md) | Gets information about a Content Services user. | [Source](../lib/core/services/people-content.service.ts) |
 | [People Process service](core/services/people-process.service.md) | Gets information about Process Services users. | [Source](../lib/core/services/people-process.service.ts) |
@@ -516,11 +517,11 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Analytics Generator Component](insights/components/analytics-generator.component.md) | Generates and shows charts | [Source](../lib/insights/analytics-process/components/analytics-generator.component.ts) |
-| [APS Analytics List Component](insights/components/analytics-report-list.component.md) | Shows a list of all available reports | [Source](../lib/insights/analytics-process/components/analytics-report-list.component.ts) |
-| [APS Analytics Component](insights/components/analytics.component.md) | Shows the charts related to the reportId passed as input | [Source](../lib/insights/analytics-process/components/analytics.component.ts) |
-| [Diagram Component](insights/components/diagram.component.md) | Displays process diagrams. | [Source](../lib/insights/diagram/components/diagram.component.ts) |
-| [Widget component](insights/components/widget.component.md) | Base class for standard and custom widget classes. | [Source](../lib/insights/analytics-process/components/widgets/widget.component.ts) |
+| [Analytics Generator Component](insights/components/analytics-generator.component.md) | Generates and shows charts | [Source](../lib/insights/src/lib/analytics-process/components/analytics-generator.component.ts) |
+| [APS Analytics List Component](insights/components/analytics-report-list.component.md) | Shows a list of all available reports | [Source](../lib/insights/src/lib/analytics-process/components/analytics-report-list.component.ts) |
+| [APS Analytics Component](insights/components/analytics.component.md) | Shows the charts related to the reportId passed as input | [Source](../lib/insights/src/lib/analytics-process/components/analytics.component.ts) |
+| [Diagram Component](insights/components/diagram.component.md) | Displays process diagrams. | [Source](../lib/insights/src/lib/diagram/components/diagram.component.ts) |
+| [Widget component](insights/components/widget.component.md) | Base class for standard and custom widget classes. | [Source](../lib/insights/src/lib/analytics-process/components/widgets/widget.component.ts) |
 
 <!--insights end-->
 

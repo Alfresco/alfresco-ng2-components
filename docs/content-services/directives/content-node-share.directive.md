@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-13
 ---
 
-# [Node Public File Share Directive](../../../lib/content-services/content-node-share/content-node-share.directive.ts "Defined in content-node-share.directive.ts")
+# [Node Public File Share Directive](../../../lib/content-services/src/lib/content-node-share/content-node-share.directive.ts "Defined in content-node-share.directive.ts")
 
 Creates and manages public shared links for files.
 
@@ -70,8 +70,8 @@ and passes it to a [Viewer component](../../core/components/viewer.component.md)
 
 ## Date and time widget
 
-Date and time widget for setting the expiration date can be configured to show only the date picker or both date and time piker.
-By default, the widget will show both date and time picker if `sharedLinkDateTimePickerType` is not present in the app.config.json.
+Date and time [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) for setting the expiration date can be configured to show only the date picker or both date and time piker.
+By default, the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) will show both date and time picker if `sharedLinkDateTimePickerType` is not present in the app.config.json.
 Possible values are `'date'` or `'datetime'`
 
 ```json
