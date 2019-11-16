@@ -122,12 +122,21 @@ export class WidgetVisibilityService {
     }
 
     getFormValue(form: FormModel, fieldId: string): any {
-        let value = this.getFieldValue(form.values, fieldId);
+        const formField = this.getFormFieldById(form, fieldId);
+        let value = undefined;
 
-        if (this.isInvalidValue(value)) {
-            value = this.searchValueInForm(form, fieldId);
+        if (this.isFormFieldValid(formField)) {
+            value = this.getFieldValue(form.values, fieldId);
+
+            if (this.isInvalidValue(value)) {
+                value = this.searchValueInForm(formField, fieldId);
+            }
         }
         return value;
+    }
+
+    isFormFieldValid(formField: FormFieldModel): boolean {
+        return formField && formField.isValid;
     }
 
     getFieldValue(valueList: any, fieldId: string): any {
@@ -149,20 +158,25 @@ export class WidgetVisibilityService {
         return value === undefined || value === null;
     }
 
-    searchValueInForm(form: FormModel, fieldId: string): string {
+    getFormFieldById(form: FormModel, fieldId: string): FormFieldModel {
+        return form.getFormFields().
+            find( (formField: FormFieldModel) => this.isSearchedField(formField, fieldId));
+    }
+
+    searchValueInForm(formField: FormFieldModel, fieldId: string): string {
         let fieldValue = '';
-        form.getFormFields().forEach((formField: FormFieldModel) => {
-            if (this.isSearchedField(formField, fieldId)) {
-                fieldValue = this.getObjectValue(formField, fieldId);
-                if (!fieldValue) {
-                    if (formField.value && formField.value.id) {
-                        fieldValue = formField.value.id;
-                    } else if (!this.isInvalidValue(formField.value)) {
-                        fieldValue = formField.value;
-                    }
+
+        if (formField) {
+            fieldValue = this.getObjectValue(formField, fieldId);
+
+            if (!fieldValue) {
+                if (formField.value && formField.value.id) {
+                    fieldValue = formField.value.id;
+                } else if (!this.isInvalidValue(formField.value)) {
+                    fieldValue = formField.value;
                 }
             }
-        });
+        }
         return fieldValue;
     }
 
