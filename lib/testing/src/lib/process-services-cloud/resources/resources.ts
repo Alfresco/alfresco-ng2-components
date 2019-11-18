@@ -24,17 +24,18 @@ export const ACTIVITI_CLOUD_APPS: any = {
             candidateUserProcess: 'candidateuserprocess',
             candidateGroupProcess: 'candidategroupprocess',
             anotherCandidateGroupProcess: 'anothercandidategroup',
-            uploadFileProcess: 'uploadfileprocess'
+            uploadFileProcess: 'uploadfileprocess',
+            processwithstarteventform: 'processwithstarteventform'
         },
         forms: {
             starteventform: 'starteventform',
             formtotestvalidations: 'formtotestvalidations'
         },
         security: [
-            {'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser', 'salesuser'] },
-            {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser', 'salesuser'] }
+            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
+            { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser', 'salesuser'] },
+            { 'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser'] },
+            { 'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser', 'salesuser'] }
         ]
     },
     SIMPLE_APP: {
@@ -73,7 +74,9 @@ export const ACTIVITI_CLOUD_APPS: any = {
             multiinstancedmnsequence: 'multiinstance-dmnsequence',
             multiinstancemanualtask: 'multiinstance-manualtask',
             multiinstancesubprocess: 'multiinstance-subprocess',
-            calledprocess: 'calledprocess'
+            calledprocess: 'calledprocess',
+            booleanvisibilityprocess: 'booleanvisibilityprocess',
+            numbervisibilityprocess: 'numbervisibilityprocess'
         },
         forms: {
             tabVisibilityFields: {
@@ -105,23 +108,29 @@ export const ACTIVITI_CLOUD_APPS: any = {
             },
             uploadlocalfileform: {
                 name: 'upload-localfile-form'
+            },
+            booleanvisibility: {
+                name: 'booleanvisibility'
+            },
+            requirednumbervisibility: {
+                name: 'requirednumbervisibility'
             }
         },
         security: [
-            {'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']},
-            {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] }
+            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
+            { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] },
+            { 'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser'] },
+            { 'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] }
         ]
     },
     SUB_PROCESS_APP: {
         name: 'subprocessapp',
         file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/development/e2e/resources/activiti7/subprocessapp.zip?raw=true',
         security: [
-            {'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser']},
-            {'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser']},
-            {'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] }
+            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
+            { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] },
+            { 'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser'] },
+            { 'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] }
         ]
     }
 };

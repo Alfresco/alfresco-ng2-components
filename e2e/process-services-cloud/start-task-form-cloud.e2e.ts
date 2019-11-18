@@ -240,7 +240,8 @@ describe('Start Task Form', () => {
             await processCloudDemoPage.openNewProcessForm();
             await startProcessPage.clearField(startProcessPage.processNameInput);
             await startProcessPage.enterProcessName(startEventFormProcess);
-            await startProcessPage.selectFromProcessDropdown('processwithstarteventform');
+            await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.processwithstarteventform);
+
             await startProcessPage.formFields().checkFormIsDisplayed();
         });
 

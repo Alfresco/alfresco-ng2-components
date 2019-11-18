@@ -277,7 +277,6 @@ describe('Task cloud visibility', async () => {
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-
     });
 
     afterAll(async () => {
@@ -297,7 +296,8 @@ describe('Task cloud visibility', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
         await startTask.addName(standaloneTaskName);
-        await startTask.selectFormDefinition('requirednumbervisibility');
+        await startTask.selectFormDefinition(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.requirednumbervisibility.name);
+
         await startTask.clickStartButton();
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
 
@@ -318,7 +318,8 @@ describe('Task cloud visibility', async () => {
 
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
-        await startProcessPage.selectFromProcessDropdown('numbervisibilityprocess');
+        await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.numbervisibilityprocess);
+
         await startProcessPage.enterProcessName(processName);
         await startProcessPage.clickStartProcessButton();
 
@@ -347,7 +348,7 @@ describe('Task cloud visibility', async () => {
 
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
-        await startProcessPage.selectFromProcessDropdown('booleanvisibilityprocess');
+        await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.booleanvisibilityprocess);
         await startProcessPage.enterProcessName(processName);
         await startProcessPage.clickStartProcessButton();
 
@@ -371,7 +372,8 @@ describe('Task cloud visibility', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
         await startTask.addName(standaloneTaskName);
-        await startTask.selectFormDefinition('booleanvisibility');
+        await startTask.selectFormDefinition(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.booleanvisibility.name);
+
         await startTask.clickStartButton();
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
 
