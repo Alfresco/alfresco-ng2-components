@@ -70,6 +70,7 @@ export class DataColumnComponent implements OnInit {
     @Input()
     copyContent: boolean;
 
+    /**  Toggles the editing support of the column data. */
     @Input()
     editable: boolean = false;
 

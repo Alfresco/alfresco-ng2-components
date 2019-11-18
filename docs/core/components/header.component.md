@@ -39,7 +39,7 @@ body of the element:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | color | `string` |  | Background color for the header. It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'. |
-| expandedSidenav | `boolean` | true |  |
+| expandedSidenav | `boolean` | true | expandedSidenav: Toggles the expanded state of the component. |
 | logo | `string` |  | Path to an image file for the application logo. |
 | position | `string` | "start" | The side of the page that the drawer is attached to (can be 'start' or 'end') |
 | redirectUrl | `string \| any[]` | "/" | The router link for the application logo, when clicked. |

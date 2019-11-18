@@ -44,13 +44,12 @@ Implements node operations used by the [Document List component](../components/d
     -   **Returns** `boolean` - 
 
 -   **loadFolderByNodeId**(nodeId: `string`, pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]`, where?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/src/lib/document-list/models/document-folder.model.ts)`>`<br/>
-
-    -   _nodeId:_ `string`  - 
+    Load a folder by Node Id.
+    -   _nodeId:_ `string`  - ID of the folder node
     -   _pagination:_ [`PaginationModel`](../../../lib/core/models/pagination.model.ts)  - 
-    -   _includeFields:_ `string[]`  - 
-    -   _where:_ `string`  - (Optional)
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/src/lib/document-list/models/document-folder.model.ts)`>` - 
-
+    -   _includeFields:_ `string[]`  - List of data field names to include in the results
+    -   _where:_ `string`  - (Optional) Optionally filter the list
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/src/lib/document-list/models/document-folder.model.ts)`>` - Details of the folder
 -   **moveNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Moves a node to destination node.
     -   _nodeId:_ `string`  - The id of the node to be moved

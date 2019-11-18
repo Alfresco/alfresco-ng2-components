@@ -19,9 +19,11 @@ import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/
 
 export class WidgetComponent implements OnChanges {
 
+    /** field. */
     @Input()
     field: any;
 
+    /** fieldChanged. */
     @Output()
     fieldChanged: EventEmitter<any> = new EventEmitter<any>();
 

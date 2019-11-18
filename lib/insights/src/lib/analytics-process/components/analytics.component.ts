@@ -27,21 +27,27 @@ import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 })
 export class AnalyticsComponent implements OnChanges {
 
+    /** appId ID of the target app. */
     @Input()
     appId: number;
 
+    /** reportId. */
     @Input()
     reportId: number;
 
+    /** hideParameters. */
     @Input()
     hideParameters: boolean = false;
 
+    /** emitted when editReport. */
     @Output()
     editReport = new EventEmitter();
 
+    /** emitted when reportSaved. */
     @Output()
     reportSaved = new EventEmitter();
 
+    /** emitted when reportDeleted. */
     @Output()
     reportDeleted = new EventEmitter();
 

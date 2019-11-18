@@ -30,13 +30,13 @@ export class CustomEditorComponent extends WidgetComponent {}
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| field | `any` |  | Data to be displayed in the field |
+| field | `any` |  | field. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| fieldChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | ( |
+| fieldChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | fieldChanged. |
 
 ## Details
 

@@ -50,30 +50,39 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     public static FORMAT_DATE_ACTIVITI: string = 'YYYY-MM-DD';
 
+    /** appId ID of the target app. */
     @Input()
     appId: number;
 
+    /** reportId. */
     @Input()
     reportId: string;
 
+    /** hideComponent. */
     @Input()
     hideComponent: boolean = false;
 
+    /** success. */
     @Output()
     success = new EventEmitter();
 
+    /** error. */
     @Output()
     error = new EventEmitter();
 
+    /** edit. */
     @Output()
     edit = new EventEmitter();
 
+    /** form Value Changed. */
     @Output()
     formValueChanged = new EventEmitter();
 
+    /** save Report Success. */
     @Output()
     saveReportSuccess = new EventEmitter();
 
+    /** delete Report Success. */
     @Output()
     deleteReportSuccess = new EventEmitter();
 
