@@ -32,21 +32,27 @@ export class AnalyticsReportListComponent implements OnInit {
     public static LAYOUT_LIST: string = 'LIST';
     public static LAYOUT_GRID: string = 'GRID';
 
+    /** layout Type LIST or GRID. */
     @Input()
     layoutType: string = AnalyticsReportListComponent.LAYOUT_LIST;
 
+    /** appId ID of the target app. */
     @Input()
     appId: number;
 
+    /** selectFirst. */
     @Input()
     selectFirst: boolean = false;
 
+    /** report Click. */
     @Output()
     reportClick: EventEmitter<ReportParametersModel> = new EventEmitter<ReportParametersModel>();
 
+    /** success. */
     @Output()
     success = new EventEmitter();
 
+    /** error. */
     @Output()
     error = new EventEmitter();
 

@@ -25,14 +25,14 @@ Shows the charts related to the reportId passed as input
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appId | `number` |  |  |
-| hideParameters | `boolean` | false |  |
-| reportId | `number` |  |  |
+| appId | `number` |  | appId ID of the target app. |
+| hideParameters | `boolean` | false | hideParameters. |
+| reportId | `number` |  | reportId. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| editReport | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
-| reportDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
-| reportSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
+| editReport | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | emitted when editReport. |
+| reportDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | emitted when reportDeleted. |
+| reportSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | emitted when reportSaved. |

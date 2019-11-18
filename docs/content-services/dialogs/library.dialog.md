@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-12-07
 ---
 
-# [Library dialog component](../../../lib/content-services/dialogs/library/library.dialog.ts "Defined in library.dialog.ts")
+# [Library dialog component](../../../lib/content-services/src/lib/dialogs/library/library.dialog.ts "Defined in library.dialog.ts")
 
 Creates a new Content Services document library/site.
 

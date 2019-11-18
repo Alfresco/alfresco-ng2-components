@@ -104,14 +104,14 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 
 ## Replacing default form widgets with custom components
 
-This is a short walkthrough on replacing a standard `Text` widget with a custom component for all APS forms
+This is a short walkthrough on replacing a standard `Text` [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a custom component for all APS forms
 rendered within `<adf-form>` component.
 
 First let's create a simple APS form with `Text` widgets:
 
 ![default text widget](../docassets/images/text-default-widget.png)
 
-Every custom widget must inherit [`WidgetComponent`](../insights/components/widget.component.md) class in order to function properly:
+Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) must inherit [`WidgetComponent`](../insights/components/widget.component.md) class in order to function properly:
 
 ```ts
 import { Component } from '@angular/core';
@@ -140,7 +140,7 @@ import { CustomEditorComponent } from './custom-editor.component';
 export class CustomEditorsModule {}
 ```
 
-Every custom widget should be added into all three module collections: `declarations`, `exports` and `entryComponents`.
+Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) should be added into all three module collections: `declarations`, `exports` and `entryComponents`.
 
 If you decided to store custom widgets in a separate dedicated module (and optionally as separate redistributable library)
 don't forget to import it into your main application one:

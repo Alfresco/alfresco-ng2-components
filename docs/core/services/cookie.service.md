@@ -15,6 +15,9 @@ Stores key-value data items as browser cookies.
 
 -   **clear**()<br/>
     Placeholder for testing purposes - do not use.
+-   **deleteCookie**(key: `string`)<br/>
+    Delete a cookie Key.
+    -   _key:_ `string`  - Key to identify the cookie
 -   **getItem**(key: `string`): `string|null`<br/>
     Retrieves a cookie by its key.
     -   _key:_ `string`  - Key to identify the cookie
@@ -22,7 +25,7 @@ Stores key-value data items as browser cookies.
 -   **isEnabled**(): `boolean`<br/>
     Checks if cookies are enabled.
     -   **Returns** `boolean` - True if enabled, false otherwise
--   **setItem**(key: `string`, data: `string`, expiration: `Date|null`, path: `string|null`)<br/>
+-   **setItem**(key: `string`, data: `string`, expiration: `Date|null` = `null`, path: `string|null` = `null`)<br/>
     Sets a cookie.
     -   _key:_ `string`  - Key to identify the cookie
     -   _data:_ `string`  - Data value to set for the cookie

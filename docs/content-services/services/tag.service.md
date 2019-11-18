@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# [Tag service](../../../lib/content-services/tag/services/tag.service.ts "Defined in tag.service.ts")
+# [Tag service](../../../lib/content-services/src/lib/tag/services/tag.service.ts "Defined in tag.service.ts")
 
 Manages tags in Content Services.
 

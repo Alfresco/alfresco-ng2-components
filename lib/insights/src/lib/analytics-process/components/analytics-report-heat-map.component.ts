@@ -25,12 +25,15 @@ import { AnalyticsService } from '../services/analytics.service';
 })
 export class AnalyticsReportHeatMapComponent implements  OnInit {
 
+    /** reportId. */
     @Input()
     report: any;
 
+    /** success. */
     @Output()
     success = new EventEmitter();
 
+    /** error. */
     @Output()
     error = new EventEmitter();
 

@@ -24,7 +24,7 @@ Gets Alfresco Repository node metadata and creates nodes with metadata.
     Create a new Node from form metadata.
     -   _nodeType:_ `string`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) type
     -   _nameSpace:_ `any`  - Namespace for properties
-    -   _data:_ `any`  - [Property](../../../lib/content-services/content-metadata/interfaces/property.interface.ts) data to store in the node under namespace
+    -   _data:_ `any`  - [Property](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) data to store in the node under namespace
     -   _path:_ `string`  - Path to the node
     -   _name:_ `string`  - (Optional) [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) name
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - The created node

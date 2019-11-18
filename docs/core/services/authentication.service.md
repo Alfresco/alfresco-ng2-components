@@ -72,9 +72,6 @@ Provides authentication to ACS and APS.
 -   **isRememberMeSet**(): `boolean`<br/>
     Checks whether the "remember me" cookie was set or not.
     -   **Returns** `boolean` - True if set, false otherwise
--   **isSSODiscoveryConfigured**(): `boolean`<br/>
-    Checks if SSO is configured correctly.
-    -   **Returns** `boolean` - True if configured correctly, false otherwise
 -   **login**(username: `string`, password: `string`, rememberMe: `boolean` = `false`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Function>`<br/>
     Logs the user in.
     -   _username:_ `string`  - Username for the login

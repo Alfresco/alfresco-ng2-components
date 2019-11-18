@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Content Node Selector component](../../../lib/content-services/content-node-selector/content-node-selector.component.ts "Defined in content-node-selector.component.ts")
+# [Content Node Selector component](../../../lib/content-services/src/lib/content-node-selector/content-node-selector.component.ts "Defined in content-node-selector.component.ts")
 
 Allows a user to select items from a Content Services repository.
 
@@ -25,7 +25,7 @@ more information).
 Unlike most components, the [Content Node Selector Component](content-node-selector.component.md) is typically shown in a dialog box
 rather than the main page and you are responsible for opening the dialog yourself. You can use the
 [Angular Material Dialog](https://material.angular.io/components/dialog/overview) for this,
-as shown in the usage example. ADF provides the [`ContentNodeSelectorComponentData`](../../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) interface
+as shown in the usage example. ADF provides the [`ContentNodeSelectorComponentData`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector.component-data.interface.ts) interface
 to work with the Dialog's
 [data option](https://material.angular.io/components/dialog/overview#sharing-data-with-the-dialog-component-):
 
@@ -55,11 +55,11 @@ The properties are described in the table below:
 | currentFolderId | `string` | `null` | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) ID of the folder currently listed. |
 | dropdownHideMyFiles | `boolean` | `false` | Hide the "My Files" option added to the site list by default. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | `null` | Custom site for site dropdown same as siteList. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
-| rowFilter | [`RowFilter`](../../../lib/content-services/document-list/data/row-filter.model.ts) | `null` | Custom row filter function. See the [Row Filter Model](../models/row-filter.model.md) page for more information. |
+| rowFilter | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts) | `null` | Custom row filter function. See the [Row Filter Model](../models/row-filter.model.md) page for more information. |
 | where | `string` | `null` | Custom _where_ filter function. See the [Document List component](document-list.component.md) for more information. |
-| imageResolver | [`ImageResolver`](../../../lib/content-services/document-list/data/image-resolver.model.ts) | `null` | Custom image resolver function. See the [Image Resolver Model](../models/image-resolver.model.md) page for more information. |
+| imageResolver | [`ImageResolver`](../../../lib/content-services/src/lib/document-list/data/image-resolver.model.ts) | `null` | Custom image resolver function. See the [Image Resolver Model](../models/image-resolver.model.md) page for more information. |
 | pageSize | `number` |  | Number of items shown per page in the list. |
-| isSelectionValid | [`ValidationFunction`](../../../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) | `defaultValidation` | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
+| isSelectionValid | [`ValidationFunction`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector-panel.component.ts) | `defaultValidation` | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | breadcrumbTransform | `(node: any) => any` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
 | select | [`Subject<Node>`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | Event emitted with the current node selection when the dialog closes |
 
@@ -107,7 +107,7 @@ openSelectorDialog() {
 }
 ```
 
-All the results will be streamed to the select [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present in the [`ContentNodeSelectorComponentData`](../../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) object passed to the dialog.
+All the results will be streamed to the select [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present in the [`ContentNodeSelectorComponentData`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector.component-data.interface.ts) object passed to the dialog.
 When the dialog action is selected by clicking, the `data.select` stream will be completed.
 
 ### RowFilter and ImageResolver
@@ -123,7 +123,7 @@ pages for more information.
 
 ### Using the breadcrumbTransform function
 
-The `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) lets you modify
+The `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector.component-data.interface.ts) lets you modify
 the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) object that is used to generate the
 list of breadcrumbs. You can use this, for example, to remove path elements that are not
 relevant to the use case. See the [Breadcrumb component](breadcrumb.component.md) page for an

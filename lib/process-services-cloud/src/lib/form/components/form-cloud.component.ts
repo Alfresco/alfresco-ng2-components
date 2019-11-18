@@ -52,6 +52,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     appName: string;
 
+    /** The application version to use when fetching data */
     @Input()
     appVersion?: number;
 

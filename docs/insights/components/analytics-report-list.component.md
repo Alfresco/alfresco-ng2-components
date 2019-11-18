@@ -22,14 +22,14 @@ Shows a list of all available reports
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appId | `number` |  |  |
-| layoutType | `string` |  |  |
-| selectFirst | `boolean` | false |  |
+| appId | `number` |  | appId ID of the target app. |
+| layoutType | `string` |  | layout Type LIST or GRID. |
+| selectFirst | `boolean` | false | selectFirst. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
-| reportClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ReportParametersModel`](../../../lib/insights/src/lib/diagram/models/report/reportParameters.model.ts)`>` |  |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | error. |
+| reportClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ReportParametersModel`](../../../lib/insights/src/lib/diagram/models/report/reportParameters.model.ts)`>` | report Click. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | success. |

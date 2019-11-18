@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# [Search number range component](../../../lib/content-services/search/components/search-number-range/search-number-range.component.ts "Defined in search-number-range.component.ts")
+# [Search number range component](../../../lib/content-services/src/lib/search/components/search-number-range/search-number-range.component.ts "Defined in search-number-range.component.ts")
 
-Implements a number range widget for the [Search Filter component](search-filter.component.md).
+Implements a number range [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) for the [Search Filter component](search-filter.component.md).
 
 ![Number Range Widget](../../docassets/images/search-number-range.png)
 

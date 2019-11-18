@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-12
 ---
 
-# [Search filter service](../../../lib/content-services/search/components/search-filter/search-filter.service.ts "Defined in search-filter.service.ts")
+# [Search filter service](../../../lib/content-services/src/lib/search/components/search-filter/search-filter.service.ts "Defined in search-filter.service.ts")
 
 Registers widgets for use with the [Search Filter component](../components/search-filter.component.md).
 

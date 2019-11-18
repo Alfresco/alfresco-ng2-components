@@ -32,17 +32,17 @@ The below component shows the diagram of a running process instance with the act
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| height | `number` | 500 |  |
-| metricColor | `any` |  |  |
-| metricPercentages | `any` |  |  |
-| metricType | `string` | "" |  |
-| processDefinitionId | `any` |  |  |
-| processInstanceId | `any` |  |  |
-| width | `number` | 1000 |  |
+| height | `number` | 500 | height. |
+| metricColor | `any` |  | metricColor. |
+| metricPercentages | `any` |  | metricPercentages. |
+| metricType | `string` | "" | metricType. |
+| processDefinitionId | `any` |  | processDefinitionId. |
+| processInstanceId | `any` |  | processInstanceId. |
+| width | `number` | 1000 | width. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | error. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | success. |

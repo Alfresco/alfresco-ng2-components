@@ -30,7 +30,7 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | roles | `string[]` |  | Role names of the users to be listed. |
 | searchUserCtrl | `FormControl` | new FormControl() | FormControl to search the user |
 | title | `string` |  | Placeholder translation key |
-| validate | `Boolean` | false | This flag enables the validation on the preSelectUsers passed as input. In case the flag is true the components call the identity service to verify the validity of the information passed as input. Otherwise, no check will be done. |
+| validate | `Boolean` | false | This flag enables the validation on the preSelectUsers passed as input. In case the flag is true the components call the [identity service](../../../lib/testing/src/lib/core/actions/identity/identity.service.ts) to verify the validity of the information passed as input. Otherwise, no check will be done. |
 
 ### Events
 

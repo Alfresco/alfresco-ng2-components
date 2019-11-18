@@ -169,6 +169,8 @@ export class ThumbnailService {
     /**
      * Gets a thumbnail URL for the given document node.
      * @param node Node or Node ID to get URL for.
+     * @param attachment Toggles whether to retrieve content as an attachment for download
+     * @param ticket Custom ticket to use for authentication
      * @returns URL string
      */
     getDocumentThumbnailUrl(node: NodeEntry | string, attachment?: boolean, ticket?: string): string {

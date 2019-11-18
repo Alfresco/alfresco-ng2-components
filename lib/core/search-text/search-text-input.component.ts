@@ -53,22 +53,28 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @Input()
     liveSearchEnabled: boolean = true;
 
+    /** Trigger autocomplete results on input change. */
     @Input()
     searchAutocomplete: any = false;
 
+    /** Search term preselected */
     @Input()
     searchTerm: string = '';
 
+    /** Debounce time in milliseconds. */
     @Input()
     debounceTime: number = 0;
 
+     /** Listener for results-list events (focus, blur and focusout). */
     @Input()
     focusListener: Observable<FocusEvent>;
 
+    /** Collapse search bar on submit. */
     @Input()
     collapseOnSubmit: boolean = true;
 
-    @Input()
+    /** Default state expanded or Collapsed. */
+     @Input()
     defaultState: SearchTextStateEnum = SearchTextStateEnum.collapsed;
 
     /** Emitted when the search term is changed. The search term is provided
@@ -85,9 +91,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @Output()
     submit: EventEmitter<any> = new EventEmitter();
 
+    /**  Emitted when the result list is selected */
     @Output()
     selectResult: EventEmitter<any> = new EventEmitter();
 
+    /**  Emitted when the result list is reset */
     @Output()
     reset: EventEmitter<boolean> = new EventEmitter();
 

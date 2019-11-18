@@ -45,7 +45,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | ---- | ---- | ------------- | ----------- |
 | copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of cell contents. |
 | cssClass | `string` |  | Additional CSS class to be applied to column (header and cells). |
-| editable | `boolean` | false |  |
+| editable | `boolean` | false | Toggles the editing support of the column data. |
 | format | `string` |  | Value format (if supported by the parent component), for example format of the date. |
 | formatTooltip | `Function` |  | Custom tooltip formatter function. |
 | key | `string` |  | Data source key. Can be either a column/property key like `title`  or a property path like `createdBy.name`. |

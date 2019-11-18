@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Breadcrumb Component](../../../lib/content-services/breadcrumb/breadcrumb.component.ts "Defined in breadcrumb.component.ts")
+# [Breadcrumb Component](../../../lib/content-services/src/lib/breadcrumb/breadcrumb.component.ts "Defined in breadcrumb.component.ts")
 
 Indicates the current position within a navigation hierarchy.
 
@@ -53,7 +53,7 @@ the list by altering the node's `path.elements` property.
 
 Below is an example of how you might do this with the
 [Content Node Selector component](content-node-selector.component.md). In this case, you pass the 
-transform function via the `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) during
+transform function via the `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector.component-data.interface.ts) during
 initialization:
 
 ```ts
