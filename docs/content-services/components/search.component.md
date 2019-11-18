@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Search component](../../../lib/content-services/search/components/search.component.ts "Defined in search.component.ts")
+# [Search component](../../../lib/content-services/src/lib/search/components/search.component.ts "Defined in search.component.ts")
 
 Searches items for supplied search terms. 
 

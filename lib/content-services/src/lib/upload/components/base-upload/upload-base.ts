@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { FileModel, FileInfo } from '@alfresco/adf-core';
+import { FileModel, FileInfo, UploadService, TranslationService } from '@alfresco/adf-core';
 import { EventEmitter, Input, Output, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { UploadService, TranslationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { UploadFilesEvent } from '../upload-files.event';
 import { takeUntil } from 'rxjs/operators';

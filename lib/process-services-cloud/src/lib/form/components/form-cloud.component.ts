@@ -19,9 +19,8 @@ import {
     Component, EventEmitter, Input, OnChanges,
     Output, SimpleChanges, OnDestroy
 } from '@angular/core';
-import { Observable, of, forkJoin, Subject } from 'rxjs';
+import { Observable, of, forkJoin, Subject, Subscription } from 'rxjs';
 import { switchMap, takeUntil, map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 import {
     FormBaseComponent,
     FormFieldModel,
@@ -52,6 +51,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     /** App id to fetch corresponding form and values. */
     @Input()
     appName: string;
+
+    /** The application version to use when fetching data */
+    @Input()
+    appVersion?: number;
 
     /** Task id to fetch corresponding form and values. */
     @Input()
@@ -122,24 +125,25 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
+
         if (appName && appName.currentValue) {
             if (this.taskId) {
                 this.getFormDefinitionWithFolderTask(this.appName, this.taskId, this.processInstanceId);
             } else if (this.formId) {
-                this.getFormById(appName.currentValue, this.formId);
+                this.getFormById(appName.currentValue, this.formId, this.appVersion);
             }
             return;
         }
 
         const formId = changes['formId'];
         if (formId && formId.currentValue && this.appName) {
-            this.getFormById(this.appName, formId.currentValue);
+            this.getFormById(this.appName, formId.currentValue, this.appVersion);
             return;
         }
 
         const taskId = changes['taskId'];
         if (taskId && taskId.currentValue && this.appName) {
-            this.getFormByTaskId(this.appName, taskId.currentValue);
+            this.getFormByTaskId(this.appName, taskId.currentValue, this.appVersion);
             return;
         }
 
@@ -159,9 +163,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     loadForm() {
         if (this.appName && this.taskId) {
-            this.getFormByTaskId(this.appName, this.taskId);
+            this.getFormByTaskId(this.appName, this.taskId, this.appVersion);
         } else if (this.appName && this.formId) {
-            this.getFormById(this.appName, this.formId);
+            this.getFormById(this.appName, this.formId, this.appVersion);
         }
 
     }
@@ -182,35 +186,38 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
     }
 
-    getFormByTaskId(appName: string, taskId: string): Promise<FormModel> {
+    getFormByTaskId(appName: string, taskId: string, version?: number): Promise<FormModel> {
         return new Promise<FormModel>(resolve => {
-            forkJoin(this.formCloudService.getTaskForm(appName, taskId),
-                this.formCloudService.getTaskVariables(appName, taskId))
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe(
-                    (data) => {
-                        this.formCloudRepresentationJSON = data[0];
-                        this.formCloudRepresentationJSON.processVariables = data[1];
-                        this.data = data[1];
-                        const parsedForm = this.parseForm(this.formCloudRepresentationJSON);
-                        this.visibilityService.refreshVisibility(<any> parsedForm);
-                        parsedForm.validateForm();
-                        this.form = parsedForm;
-                        this.onFormLoaded(this.form);
-                        resolve(this.form);
-                    },
-                    (error) => {
-                        this.handleError(error);
-                        // reject(error);
-                        resolve(null);
-                    }
-                );
+            forkJoin(
+                this.formCloudService.getTaskForm(appName, taskId, version),
+                this.formCloudService.getTaskVariables(appName, taskId)
+            )
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(
+                (data) => {
+                    this.formCloudRepresentationJSON = data[0];
+                    this.formCloudRepresentationJSON.processVariables = data[1];
+                    this.data = data[1];
+
+                    const parsedForm = this.parseForm(this.formCloudRepresentationJSON);
+                    this.visibilityService.refreshVisibility(<any> parsedForm);
+                    parsedForm.validateForm();
+                    this.form = parsedForm;
+
+                    this.onFormLoaded(this.form);
+                    resolve(this.form);
+                },
+                (error) => {
+                    this.handleError(error);
+                    resolve(null);
+                }
+            );
         });
     }
 
-    getFormById(appName: string, formId: string) {
+    getFormById(appName: string, formId: string, appVersion?: number) {
         this.formCloudService
-            .getForm(appName, formId)
+            .getForm(appName, formId, appVersion)
             .pipe(
                 map((form: any) => {
                     const flattenForm = {...form.formRepresentation, ...form.formRepresentation.formDefinition};
@@ -238,7 +245,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     async getFormDefinitionWithFolder(appName: string, taskId: string, processInstanceId: string) {
         try {
-            await this.getFormByTaskId(appName, taskId);
+            await this.getFormByTaskId(appName, taskId, this.appVersion);
 
             const hasUploadWidget = (<any> this.form).hasUpload;
             if (hasUploadWidget) {

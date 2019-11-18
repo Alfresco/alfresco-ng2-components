@@ -17,11 +17,10 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, QueryList } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { AlfrescoApiService, DataColumnListComponent, DataColumnComponent } from '@alfresco/adf-core';
-import { DataColumn, DataTableComponent } from '@alfresco/adf-core';
+import { setupTestBed, AlfrescoApiService, DataColumnListComponent, DataColumnComponent, DataColumn, DataTableComponent } from '@alfresco/adf-core';
 import { Subject, of, throwError } from 'rxjs';
-import { FileNode, FolderNode } from '../../mock';
 import {
+    FileNode, FolderNode,
     fakeNodeAnswerWithNOEntries,
     fakeNodeWithNoPermission,
     fakeGetSitesAnswer,
@@ -35,7 +34,6 @@ import { RowFilter } from './../data/row-filter.model';
 import { DocumentListService } from './../services/document-list.service';
 import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeEntry } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';

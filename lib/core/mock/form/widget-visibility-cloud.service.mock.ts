@@ -960,7 +960,7 @@ export const headerVisibilityCond: any = {
     'name': 'text_form',
     'description': '',
     'version': 0,
-    'standAlone': true,
+    'standalone': true,
     'formDefinition': {
         'tabs': [],
         'fields': [

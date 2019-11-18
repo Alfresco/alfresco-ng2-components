@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, StringUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { CreateLibraryDialog } from '../../pages/adf/dialog/createLibraryDialog';
 import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { StringUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Create library directive', () => {

@@ -25,11 +25,11 @@ import {
     ProcessInstancesService,
     LoginSSOPage,
     ApiService,
-    IdentityService, GroupIdentityService
+    IdentityService, GroupIdentityService,
+    AppListCloudPage
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
 
 describe('Task filters cloud', () => {
 

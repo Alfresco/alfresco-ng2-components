@@ -16,9 +16,8 @@
  */
 
 import path = require('path');
+import { BrowserActions, BrowserVisibility, FormControllersPage } from '@alfresco/adf-testing';
 import { browser, by, element, ElementFinder } from 'protractor';
-import { FormControllersPage } from '@alfresco/adf-testing';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class VersionManagePage {
 

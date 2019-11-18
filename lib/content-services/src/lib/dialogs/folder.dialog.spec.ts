@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material';
 import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { FolderDialogComponent } from './folder.dialog';

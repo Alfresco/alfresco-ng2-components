@@ -7,7 +7,7 @@ Last reviewed: 2018-03-29
 
 # [Widget component](../../../lib/insights/src/lib/analytics-process/components/widgets/widget.component.ts "Defined in widget.component.ts")
 
-Base class for standard and custom widget classes.
+Base class for standard and custom [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) classes.
 
 ## Basic Usage
 
@@ -30,13 +30,13 @@ export class CustomEditorComponent extends WidgetComponent {}
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| field | `any` |  | Data to be displayed in the field |
+| field | `any` |  | field. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| fieldChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | ( |
+| fieldChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | fieldChanged. |
 
 ## Details
 

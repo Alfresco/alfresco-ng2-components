@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Node Permission service](../../../lib/content-services/permission-manager/services/node-permission.service.ts "Defined in node-permission.service.ts")
+# [Node Permission service](../../../lib/content-services/src/lib/permission-manager/services/node-permission.service.ts "Defined in node-permission.service.ts")
 
 Manages role permissions for content nodes.
 

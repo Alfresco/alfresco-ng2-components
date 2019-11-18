@@ -17,8 +17,8 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
-import { from, throwError, Observable, of, Subject } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { throwError, Observable, of, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
@@ -28,22 +28,16 @@ import { StartTaskCloudRequestModel } from '../start-task/models/start-task-clou
 })
 export class TaskCloudService extends BaseCloudService {
 
-    contentTypes = ['application/json'];
-    accepts = ['application/json'];
-    returnType = Object;
-
-    private dataChangesDetected = new Subject();
-    dataChangesDetected$: Observable<any>;
+    dataChangesDetected$ = new Subject();
 
     constructor(
-        private apiService: AlfrescoApiService,
-        private appConfigService: AppConfigService,
+        apiService: AlfrescoApiService,
+        appConfigService: AppConfigService,
         private logService: LogService,
         private identityUserService: IdentityUserService
     ) {
-        super();
-        this.contextRoot = this.appConfigService.get('bpmHost', '');
-        this.dataChangesDetected$ = this.dataChangesDetected.asObservable();
+        super(apiService);
+        this.contextRoot = appConfigService.get('bpmHost', '');
     }
 
     /**
@@ -54,21 +48,10 @@ export class TaskCloudService extends BaseCloudService {
      */
     completeTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
-            const queryUrl = this.buildCompleteTaskUrl(appName, taskId);
-            const bodyParam = { 'payloadType': 'CompleteTaskPayload' };
-            const pathParams = {}, queryParams = {}, headerParams = {},
-                formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+            const url = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/complete`;
+            const payload = { 'payloadType': 'CompleteTaskPayload' };
 
-            return from(
-                this.apiService
-                    .getInstance()
-                    .oauth2Auth.callCustomApi(
-                        queryUrl, 'POST', pathParams, queryParams,
-                        headerParams, formParams, bodyParam,
-                        contentTypes, accepts, null, null)
-            ).pipe(
-                catchError((err) => this.handleError(err))
-            );
+            return this.post<any, TaskDetailsCloudModel>(url, payload);
         } else {
             this.logService.error('AppName and TaskId are mandatory for complete a task');
             return throwError('AppName/TaskId not configured');
@@ -81,7 +64,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task can be completed
      */
     canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.isAssigned() && this.isAssignedToMe(taskDetails.assignee);
+        return taskDetails && taskDetails.status === 'ASSIGNED' && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
@@ -90,7 +73,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task is editable
      */
     isTaskEditable(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.isAssigned() && this.isAssignedToMe(taskDetails.assignee);
+        return taskDetails && taskDetails.status === 'ASSIGNED' && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
@@ -99,7 +82,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task can be completed
      */
     canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.canClaimTask();
+        return taskDetails && taskDetails.status === 'CREATED';
     }
 
     /**
@@ -109,7 +92,7 @@ export class TaskCloudService extends BaseCloudService {
      */
     canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails && taskDetails.canUnclaimTask(currentUser);
+        return taskDetails && taskDetails.status === 'ASSIGNED' && taskDetails.assignee === currentUser;
     }
 
     /**
@@ -122,18 +105,12 @@ export class TaskCloudService extends BaseCloudService {
     claimTask(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
-            return from(this.apiService.getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'POST',
-                    null, null, null,
-                    null, null,
-                    this.contentTypes, this.accepts,
-                    this.returnType, null, null)
-            ).pipe(
+
+            return this.post(queryUrl).pipe(
                 map((res: any) => {
-                    this.dataChangesDetected.next();
-                    return new TaskDetailsCloudModel(res.entry);
-                }),
-                catchError((err) => this.handleError(err))
+                    this.dataChangesDetected$.next();
+                    return res.entry;
+                })
             );
         } else {
             this.logService.error('AppName and TaskId are mandatory for querying a task');
@@ -150,18 +127,12 @@ export class TaskCloudService extends BaseCloudService {
     unclaimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/release`;
-            return from(this.apiService.getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'POST',
-                    null, null, null,
-                    null, null,
-                    this.contentTypes, this.accepts,
-                    this.returnType, null, null)
-            ).pipe(
+
+            return this.post(queryUrl).pipe(
                 map((res: any) => {
-                    this.dataChangesDetected.next();
-                    return new TaskDetailsCloudModel(res.entry);
-                }),
-                catchError((err) => this.handleError(err))
+                    this.dataChangesDetected$.next();
+                    return res.entry;
+                })
             );
         } else {
             this.logService.error('AppName and TaskId are mandatory for querying a task');
@@ -178,17 +149,9 @@ export class TaskCloudService extends BaseCloudService {
     getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
-            return from(this.apiService.getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'GET',
-                    null, null, null,
-                    null, null,
-                    this.contentTypes, this.accepts,
-                    this.returnType, null, null)
-            ).pipe(
-                map((res: any) => {
-                    return new TaskDetailsCloudModel(res.entry);
-                }),
-                catchError((err) => this.handleError(err))
+
+            return this.get(queryUrl).pipe(
+                map((res: any) => res.entry)
             );
         } else {
             this.logService.error('AppName and TaskId are mandatory for querying a task');
@@ -202,23 +165,12 @@ export class TaskCloudService extends BaseCloudService {
       * @returns Details of the newly created task
       */
     createNewTask(startTaskRequest: StartTaskCloudRequestModel, appName: string): Observable<TaskDetailsCloudModel> {
-        const queryUrl = this.buildCreateTaskUrl(appName);
-        const bodyParam = JSON.stringify(this.buildRequestBody(startTaskRequest));
-        const pathParams = {}, queryParams = {}, headerParams = {},
-            formParams = {},  contentTypes = ['application/json'], accepts = ['application/json'];
+        const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks`;
+        const payload = JSON.stringify(new StartTaskCloudRequestModel(startTaskRequest));
 
-        return from(
-            this.apiService
-                .getInstance()
-                .oauth2Auth.callCustomApi(
-                    queryUrl, 'POST', pathParams, queryParams,
-                    headerParams, formParams, bodyParam,
-                    contentTypes, accepts, null, null)
-                ).pipe(
-                    map((response: StartTaskCloudResponseModel) => {
-                        return new TaskDetailsCloudModel(response.entry);
-                    }),
-                    catchError((err) => this.handleError(err))
+        return this.post<any, StartTaskCloudResponseModel>(queryUrl, payload)
+            .pipe(
+                map(response => response.entry)
             );
     }
 
@@ -226,25 +178,16 @@ export class TaskCloudService extends BaseCloudService {
      * Updates the details (name, description, due date) for a task.
      * @param appName Name of the app
      * @param taskId ID of the task to update
-     * @param updatePayload Data to update the task
+     * @param payload Data to update the task
      * @returns Updated task details
      */
-    updateTask(appName: string, taskId: string, updatePayload: any): Observable<TaskDetailsCloudModel> {
+    updateTask(appName: string, taskId: string, payload: any): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
-
-            updatePayload.payloadType = 'UpdateTaskPayload';
+            payload.payloadType = 'UpdateTaskPayload';
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
-            return from(this.apiService.getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'PUT',
-                    null, null, null,
-                    null, updatePayload,
-                    this.contentTypes, this.accepts,
-                    this.returnType, null, null)
-            ).pipe(
-                map((res: any) => {
-                    return new TaskDetailsCloudModel(res.entry);
-                }),
-                catchError((err) => this.handleError(err))
+
+            return this.put(queryUrl, payload).pipe(
+                map((res: any) => res.entry)
             );
         } else {
             this.logService.error('AppName and TaskId are mandatory for querying a task');
@@ -261,18 +204,7 @@ export class TaskCloudService extends BaseCloudService {
     getCandidateUsers(appName: string, taskId: string): Observable<string[]> {
         if (appName && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-users`;
-            return from(this.apiService.getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'GET',
-                    null, null, null,
-                    null, null,
-                    this.contentTypes, this.accepts,
-                    this.returnType, null, null)
-            ).pipe(
-                map((response: string[]) => {
-                    return response;
-                }),
-                catchError((err) => this.handleError(err))
-            );
+            return this.get<string[]>(queryUrl);
         } else {
             this.logService.error('AppName and TaskId are mandatory to get candidate user');
             return of([]);
@@ -288,18 +220,7 @@ export class TaskCloudService extends BaseCloudService {
     getCandidateGroups(appName: string, taskId: string): Observable<string[]> {
         if (appName && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-groups`;
-            return from(this.apiService.getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'GET',
-                    null, null, null,
-                    null, null,
-                    this.contentTypes, this.accepts,
-                    this.returnType, null, null)
-            ).pipe(
-                map((response: string[]) => {
-                    return response;
-                }),
-                catchError((err) => this.handleError(err))
-            );
+            return this.get<string[]>(queryUrl);
         } else {
             this.logService.error('AppName and TaskId are mandatory to get candidate groups');
             return of([]);
@@ -310,23 +231,4 @@ export class TaskCloudService extends BaseCloudService {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
         return assignee === currentUser;
     }
-
-    private buildCompleteTaskUrl(appName: string, taskId: string): string {
-        return `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/complete`;
-    }
-
-    private buildCreateTaskUrl(appName: string): string {
-        this.contextRoot = this.appConfigService.get('bpmHost');
-        return `${this.getBasePath(appName)}/rb/v1/tasks`;
-    }
-
-    private buildRequestBody(startTaskRequest: StartTaskCloudRequestModel) {
-        return new StartTaskCloudRequestModel(startTaskRequest);
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
-    }
-
 }

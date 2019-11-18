@@ -18,8 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { AlfrescoApiService } from '@alfresco/adf-core';
-import { AppConfigService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { Oauth2Auth } from '@alfresco/js-api';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 

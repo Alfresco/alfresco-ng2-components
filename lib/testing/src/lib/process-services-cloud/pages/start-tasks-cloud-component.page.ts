@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { element, by, Key } from 'protractor';
+import { element, by, Key, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { ElementFinder } from 'protractor';
 
 export class StartTasksCloudPage {
 

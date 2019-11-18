@@ -23,7 +23,7 @@ import { Location } from '@angular/common';
 
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from '@alfresco/js-api';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry } from '@alfresco/js-api';
 import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
@@ -48,7 +48,6 @@ import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.compon
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { SearchEntry } from '@alfresco/js-api';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 

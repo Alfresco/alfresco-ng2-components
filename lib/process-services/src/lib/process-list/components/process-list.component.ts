@@ -22,9 +22,7 @@ import {
     CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
     DataRow,
-    DataColumn
-} from '@alfresco/adf-core';
-import {
+    DataColumn,
     AppConfigService,
     PaginatedComponent,
     PaginationComponent,

@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { LogService, UserPreferencesService, UserPreferenceValues, UserProcessModel, FormFieldModel, FormModel } from '@alfresco/adf-core';
+import {
+    LogService, UserPreferencesService, UserPreferenceValues, UserProcessModel, FormFieldModel, FormModel,
+    MOMENT_DATE_FORMATS, MomentDateAdapter
+} from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { Observable, of, Subject } from 'rxjs';

@@ -15,19 +15,17 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { EventEmitter } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { ContentService, setupTestBed } from '@alfresco/adf-core';
 import { FileNode } from '../../../mock';
-import { ContentActionHandler } from './../../models/content-action.model';
+import { ContentActionHandler, ContentActionModel } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
 import { NodeActionsService } from './../../services/node-actions.service';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
-import { ContentActionModel } from './../../models/content-action.model';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentAction', () => {

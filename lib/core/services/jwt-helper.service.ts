@@ -27,6 +27,8 @@ export class JwtHelperService {
     static GIVEN_NAME = 'given_name';
     static USER_EMAIL = 'email';
     static USER_ACCESS_TOKEN = 'access_token';
+    static REALM_ACCESS = 'realm_access';
+    static RESOURCE_ACCESS = 'resource_access';
     static USER_PREFERRED_USERNAME = 'preferred_username';
 
     constructor() {
@@ -103,5 +105,79 @@ export class JwtHelperService {
             value = tokenPayload[key];
         }
         return <T> value;
+    }
+
+    /**
+     * Gets realm roles.
+     * @returns Array of realm roles
+     */
+    getRealmRoles(): string[] {
+        const access = this.getValueFromLocalAccessToken<any>(JwtHelperService.REALM_ACCESS);
+        return access ? access['roles'] : [];
+    }
+
+    /**
+     * Gets Client roles.
+     * @returns Array of client roles
+     */
+    getClientRoles(clientName: string): string[] {
+        const clientRole = this.getValueFromLocalAccessToken<any>(JwtHelperService.RESOURCE_ACCESS)[clientName];
+        return clientRole ? clientRole['roles'] : [];
+    }
+
+    /**
+     * Checks for single realm role.
+     * @param role Role name to check
+     * @returns True if it contains given role, false otherwise
+     */
+    hasRealmRole(role: string): boolean {
+        let hasRole = false;
+        if (this.getAccessToken()) {
+            const realmRoles = this.getRealmRoles();
+            hasRole = realmRoles.some((currentRole) => {
+                return currentRole === role;
+            });
+        }
+        return hasRole;
+    }
+
+    /**
+     * Checks for realm roles.
+     * @param rolesToCheck List of role names to check
+     * @returns True if it contains at least one of the given roles, false otherwise
+     */
+    hasRealmRoles(rolesToCheck: string []): boolean {
+        return rolesToCheck.some((currentRole) => {
+            return this.hasRealmRole(currentRole);
+        });
+    }
+
+    /**
+     * Checks for client roles.
+     * @param clientName Targeted client name
+     * @param rolesToCheck List of role names to check
+     * @returns True if it contains at least one of the given roles, false otherwise
+     */
+    hasRealmRolesForClientRole(clientName: string, rolesToCheck: string []): boolean {
+        return rolesToCheck.some((currentRole) => {
+            return this.hasClientRole(clientName, currentRole);
+        });
+    }
+
+    /**
+     * Checks for client role.
+     * @param clientName Targeted client name
+     * @param role Role name to check
+     * @returns True if it contains given role, false otherwise
+     */
+    hasClientRole(clientName: string, role: string): boolean {
+        let hasRole = false;
+        if (this.getAccessToken()) {
+            const clientRoles = this.getClientRoles(clientName);
+            hasRole = clientRoles.some((currentRole) => {
+                return currentRole === role;
+            });
+        }
+        return hasRole;
     }
 }

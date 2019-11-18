@@ -16,8 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService, StorageService } from '@alfresco/adf-core';
-import { AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
+import { setupTestBed, IdentityUserService, StorageService, AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import { assignedTaskDetailsCloudMock, createdTaskDetailsCloudMock, emptyOwnerTaskDetailsCloudMock } from '../task-header/mocks/task-details-cloud.mock';

@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
+import { AppListCloudPage, BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
 import { browser, by, element, ElementFinder } from 'protractor';
-import { ProcessServicesPage } from './process-services/processServicesPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
 import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/peopleGroupCloudComponentPage';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { ProcessServicesPage } from './process-services/processServicesPage';
 
 export class NavigationBarPage {
 

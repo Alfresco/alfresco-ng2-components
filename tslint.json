@@ -191,6 +191,7 @@
     "adf-prefix-name": true,
     "no-input-rename": true,
     "no-output-rename": true,
+    "no-duplicate-imports": true,
     "rxjs-ban-operators": {
       "severity": "error"
     },

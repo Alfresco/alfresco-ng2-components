@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
 import {
+    PeopleProcessService, UserProcessModel,
     AuthenticationService,
     CardViewUpdateService,
     ClickNotification,
     LogService,
     UpdateNotification,
-    CommentsComponent
+    CommentsComponent,
+    ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent
 } from '@alfresco/adf-core';
 import {
     Component,
@@ -36,9 +37,8 @@ import {
     ViewChild,
     OnDestroy
 } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Observer, Subject } from 'rxjs';
-import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '@alfresco/adf-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';

@@ -29,22 +29,21 @@ Displays a input text that supports autocompletion
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | autocomplete | `boolean` | false | Toggles auto-completion of the search input field. |
+| collapseOnSubmit | `boolean` | true | Collapse search bar on submit. |
+| debounceTime | `number` | 0 | Debounce time in milliseconds. |
+| defaultState | `SearchTextStateEnum` |  | Default state expanded or Collapsed. |
 | expandable | `boolean` | true | Toggles whether to use an expanding search control. If false then a regular input is used. |
-| highlight | `boolean` | false | Toggles highlighting of the search term in the results. |
+| focusListener | [`Observable`](http://reactivex.io/documentation/observable.html)`<FocusEvent>` |  | Listener for results-list events (focus, blur and focusout). |
 | inputType | `string` | "text" | Type of the input field to render, e.g. "search" or "text" (default). |
 | liveSearchEnabled | `boolean` | true | Toggles "find-as-you-type" suggestions for possible matches. |
-| searchAutocomplete | [`SearchTriggerDirective`](../../../lib/core/search-text/search-trigger.directive.ts) | null | Trigger autocomplete results on input change |
-| searchTerm | `string` | empty | Preselected search widget value |
-| debounceTime | `number` | 0 | Debounce time in miliseconds |
-| collapseOnSubmit | `boolean` | true | Collapse search bar on submit |
-| focusListener | [`Observable`](http://reactivex.io/documentation/observable.html) `<` [`FocusEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent) `>` | null | Listener for results-list events (focus, blur and focusout) |
-| defaultState | [`SearchTextStateEnum`](../../../lib/core/models/search-text-input.model.ts) | collapsed | Default state of the search widget |
+| searchAutocomplete | `any` | false | Trigger autocomplete results on input change. |
+| searchTerm | `string` | "" | Search term preselected |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| searchChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when search widget value is changed. |
-| submit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when search widget is submited. |
+| reset | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the result list is reset |
+| searchChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then it is truncated to an empty string. |
 | selectResult | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the result list is selected |
-| reset | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the search widget is reseted |
+| submit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the search is submitted by pressing the ENTER key. The search term is provided as the value of the event. |

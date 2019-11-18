@@ -45,6 +45,7 @@ You can specify the cell inside the `app.config.json` file:
 | copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of the cell's content. |
 | data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data table adapter instance. |
 | editable | `boolean` | false | Editable JSON. |
+| resolverFn | `Function` | null | Custom resolver function which is used to parse dynamic column objects |
 | row | [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts) |  | Data that defines the row. |
 | tooltip | `string` |  | Text for the cell's tooltip. |
 

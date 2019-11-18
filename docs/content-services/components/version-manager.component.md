@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-01-16
 ---
 
-# [Version Manager Component](../../../lib/content-services/version-manager/version-manager.component.ts "Defined in version-manager.component.ts")
+# [Version Manager Component](../../../lib/content-services/src/lib/version-manager/version-manager.component.ts "Defined in version-manager.component.ts")
 
 Displays the version history of a node with the ability to upload a new version.
 

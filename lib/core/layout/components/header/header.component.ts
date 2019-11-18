@@ -51,6 +51,7 @@ export class HeaderLayoutComponent implements OnInit {
     /** Emitted when the sidenav button is clicked. */
     @Output() clicked = new EventEmitter<boolean>();
 
+    /** expandedSidenav: Toggles the expanded state of the component. */
     @Input() expandedSidenav: boolean = true;
 
     /** The side of the page that the drawer is attached to (can be 'start' or 'end') */

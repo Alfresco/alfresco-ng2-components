@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-17
 ---
 
-# [Content Action component](../../../lib/content-services/document-list/components/content-action/content-action.component.ts "Defined in content-action.component.ts")
+# [Content Action component](../../../lib/content-services/src/lib/document-list/components/content-action/content-action.component.ts "Defined in content-action.component.ts")
 
 Adds options to a Document List actions menu for a particular content type.
 
@@ -121,7 +121,7 @@ will trigger the same action.) You can also add your own handler by implementing
 `execute` event.
 
 Note that you can use _both_ a built-in handler and your own `execute`
-function in the same action. The `execute` function is passed a [`NodeMinimalEntry`](../../../lib/content-services/document-list/models/document-library.model.ts) as its
+function in the same action. The `execute` function is passed a [`NodeMinimalEntry`](../../../lib/content-services/src/lib/document-list/models/document-library.model.ts) as its
 parameter. For
 example, with `handler="delete"` you could use `execute` to show a message with the name,
 type, and other details of the item just deleted:

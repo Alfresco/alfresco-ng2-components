@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
+import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
 import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
-import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class DataTablePage {
 

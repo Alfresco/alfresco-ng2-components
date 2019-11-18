@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
-import { LoginPage, ViewerPage } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import { PaginationPage } from '@alfresco/adf-testing';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { FolderModel } from '../models/ACS/folderModel';
-import { FileModel } from '../models/ACS/fileModel';
+import { LoginPage, PaginationPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '@alfresco/adf-testing';
-import { Util } from '../util/util';
 import { browser } from 'protractor';
+import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { FileModel } from '../models/ACS/fileModel';
+import { FolderModel } from '../models/ACS/folderModel';
+import { ContentServicesPage } from '../pages/adf/contentServicesPage';
+import { Util } from '../util/util';
 
 describe('Pagination - returns to previous page when current is empty', () => {
 

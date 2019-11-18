@@ -15,25 +15,13 @@
  * limitations under the License.
  */
 
+import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessHeaderCloudPage, ProcessInstancesService, QueryService, StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
+import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
+import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import CONSTANTS = require('../util/constants');
 import moment = require('moment');
-
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import {
-    ApiService,
-    StringUtil,
-    LoginSSOPage,
-    ProcessDefinitionsService,
-    ProcessInstancesService,
-    QueryService,
-    IdentityService,
-    GroupIdentityService
-} from '@alfresco/adf-testing';
-import { AppListCloudPage } from '@alfresco/adf-testing';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { ProcessHeaderCloudPage } from '@alfresco/adf-testing';
-import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 
 describe('Process Header cloud component', () => {
 

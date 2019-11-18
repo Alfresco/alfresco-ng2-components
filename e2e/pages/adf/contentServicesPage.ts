@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { FolderDialog } from './dialog/folderDialog';
-import { CreateLibraryDialog } from './dialog/createLibraryDialog';
-import { FormControllersPage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DateUtil, DocumentListPage, FormControllersPage } from '@alfresco/adf-testing';
+import { $$, browser, by, element, ElementFinder, protractor } from 'protractor';
 import { DropActions } from '../../actions/drop.actions';
-import { by, element, protractor, $$, browser, ElementFinder } from 'protractor';
+import { CreateLibraryDialog } from './dialog/createLibraryDialog';
+import { FolderDialog } from './dialog/folderDialog';
+import { NavigationBarPage } from './navigationBarPage';
 
 import path = require('path');
-import { BrowserVisibility, DocumentListPage, BrowserActions, DateUtil } from '@alfresco/adf-testing';
-import { NavigationBarPage } from './navigationBarPage';
 
 export class ContentServicesPage {
 

@@ -54,7 +54,7 @@ This document lists all the deprecated ADF v2.x components that were removed for
         [`ProcessModule`](../../lib/process-services/src/lib/process.module.ts) but now from [`CoreModule`](../../lib/core/core.module.ts). The old usage was deprecated in v2.3.0.
     -   `<adf-upload-drag-area>`:  The `parentId` input has been renamed as `rootFolderId`. The old
         name was deprecated in v2.4.0.
-    -   The `createFolder` event of the [`UploadBase`](../../lib/content-services/upload/components/base-upload/upload-base.ts) class (emitted when a folder was
+    -   The `createFolder` event of the [`UploadBase`](../../lib/content-services/src/lib/upload/components/base-upload/upload-base.ts) class (emitted when a folder was
         created) was deprecated in v2.4.0 and is no longer used by the framework
         Use the `success` event instead.
     -   `<adf-filters>` is now `<adf-task-filters>`. The old usage was deprecated in v2.4.0.

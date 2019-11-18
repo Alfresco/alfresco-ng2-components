@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-import { by, browser } from 'protractor';
-import { LoginPage } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
-import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import CONSTANTS = require('../util/constants');
-import { Tenant } from '../models/APS/tenant';
-import { FileModel } from '../models/ACS/fileModel';
+import { LoginPage, StringUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
-import { StringUtil } from '@alfresco/adf-testing';
+import { FileModel } from '../models/ACS/fileModel';
+import { Tenant } from '../models/APS/tenant';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
+import { ChecklistDialog } from '../pages/adf/process-services/dialog/createChecklistDialog';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
+import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import CONSTANTS = require('../util/constants');
 import fs = require('fs');
 import path = require('path');
-import { ChecklistDialog } from '../pages/adf/process-services/dialog/createChecklistDialog';
 
 describe('Start Task - Task App', () => {
 

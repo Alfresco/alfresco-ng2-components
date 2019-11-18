@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v3.6.0](#v360)
 -   [v3.5.0](#v350)
 -   [v3.4.0](#v340)
 -   [v3.3.0](#v330)
@@ -27,6 +28,16 @@ backend services have been tested with each released version of ADF.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
+## v3.6.0
+
+**Release:** 2019-25-11<br/>
+
+<!--v360 start-->
+
+-   [Search text input component](core/components/search-text-input.component.md)
+
+<!--v360 end-->
+
 ## v3.5.0
 
 **Release:** 2019-30-09<br/>
@@ -37,6 +48,7 @@ backend services have been tested with each released version of ADF.
 -   [About github link component](core/components/about-github-link.component.md)
 -   [About product version component](core/components/about-product-version.component.md)
 -   [Edit json dialog](core/dialogs/edit-json.dialog.md)
+-   [Identity role service](core/services/identity-role.service.md)
 
 <!--v350 end-->
 

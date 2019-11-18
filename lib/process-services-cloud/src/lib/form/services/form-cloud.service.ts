@@ -16,11 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, FormValues, AppConfigService, FormOutcomeModel, FormFieldOption, FormModel } from '@alfresco/adf-core';
-import { throwError, Observable, from } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { AlfrescoApiService, FormValues, AppConfigService, FormOutcomeModel, FormFieldOption, FormModel } from '@alfresco/adf-core';
+import { Observable, from } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
-import { SaveFormRepresentation, CompleteFormRepresentation } from '@alfresco/js-api';
+import { CompleteFormRepresentation } from '@alfresco/js-api';
 import { TaskVariableCloud, ProcessStorageCloudModel } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 
@@ -29,37 +29,35 @@ import { BaseCloudService } from '../../services/base-cloud.service';
 })
 export class FormCloudService extends BaseCloudService {
 
-    contentTypes = ['application/json'];
-    accepts = ['application/json'];
-    returnType = Object;
-
     constructor(
-        private apiService: AlfrescoApiService,
-        private appConfigService: AppConfigService,
-        private logService: LogService
+        apiService: AlfrescoApiService,
+        appConfigService: AppConfigService
     ) {
-        super();
-
-        this.contextRoot = this.appConfigService.get('bpmHost', '');
+        super(apiService);
+        this.contextRoot = appConfigService.get('bpmHost', '');
     }
 
     /**
      * Gets the form definition of a task.
      * @param appName Name of the app
      * @param taskId ID of the target task
+     * @param version Version of the form
      * @returns Form definition
      */
-    getTaskForm(appName: string, taskId: string): Observable<any> {
+    getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
         return this.getTask(appName, taskId).pipe(
-            switchMap((task: TaskDetailsCloudModel) => {
-                return this.getForm(appName, task.formKey).pipe(
-                    map((form: any) => {
-                        const flattenForm = {...form.formRepresentation, ...form.formRepresentation.formDefinition};
+            switchMap(task => {
+                return this.getForm(appName, task.formKey, version).pipe(
+                    map(form => {
+                        const flattenForm = {
+                            ...form.formRepresentation,
+                            ...form.formRepresentation.formDefinition,
+                            taskId: task.id,
+                            taskName: task.name,
+                            processDefinitionId: task.processDefinitionId,
+                            processInstanceId: task.processInstanceId
+                        };
                         delete flattenForm.formDefinition;
-                        flattenForm.taskId = task.id;
-                        flattenForm.taskName = task.name;
-                        flattenForm.processDefinitionId = task.processDefinitionId;
-                        flattenForm.processInstanceId = task.processInstanceId;
                         return flattenForm;
                     })
                 );
@@ -72,24 +70,19 @@ export class FormCloudService extends BaseCloudService {
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @param formId ID of the form to save
-     * @param formValues Form values object
+     * @param values Form values object
      * @returns Updated task details
      */
-    saveTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues): Observable<TaskDetailsCloudModel> {
-        const apiUrl = this.buildSaveFormUrl(appName, formId);
-        const saveFormRepresentation = <SaveFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'POST',
-                null, null, null,
-                null, saveFormRepresentation,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
-            map((res: any) => {
-                return new TaskDetailsCloudModel(res.entry);
-            }),
-            catchError((err) => this.handleError(err))
+    saveTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, values: FormValues): Observable<TaskDetailsCloudModel> {
+        const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/save`;
+        const saveFormRepresentation: any = {
+            values,
+            taskId,
+            processInstanceId
+        };
+
+        return this.post(apiUrl, saveFormRepresentation).pipe(
+            map((res: any) => res.entry)
         );
     }
 
@@ -106,10 +99,7 @@ export class FormCloudService extends BaseCloudService {
             '',
             {overwrite: true}
         )).pipe(
-            map((res: any) => {
-                return (res.entry);
-            }),
-            catchError((err) => this.handleError(err))
+            map((res: any) => res.entry)
         );
     }
 
@@ -123,24 +113,14 @@ export class FormCloudService extends BaseCloudService {
      * @returns Updated task details
      */
     completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string): Observable<TaskDetailsCloudModel> {
-        const apiUrl = this.buildSubmitFormUrl(appName, formId);
-        const completeFormRepresentation: any = <CompleteFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
+        const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit`;
+        const completeFormRepresentation = <CompleteFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }
 
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'POST',
-                null, null, null,
-                null, completeFormRepresentation,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
-            map((res: any) => {
-                return new TaskDetailsCloudModel(res.entry);
-            }),
-            catchError((err) => this.handleError(err))
+        return this.post(apiUrl, completeFormRepresentation).pipe(
+            map((res: any) => res.entry)
         );
     }
 
@@ -151,36 +131,20 @@ export class FormCloudService extends BaseCloudService {
      * @returns Details of the task
      */
     getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        const apiUrl = this.buildGetTaskUrl(appName, taskId);
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'GET',
-                null, null, null,
-                null, null,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
-            map((res: any) => {
-                return new TaskDetailsCloudModel(res.entry);
-            }),
-            catchError((err) => this.handleError(err))
+        const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
+
+        return this.get(apiUrl).pipe(
+            map((res: any) => res.entry)
         );
     }
 
     getProcessStorageFolderTask(appName: string, taskId: string, processInstanceId: string): Observable<ProcessStorageCloudModel> {
         const apiUrl = this.buildFolderTask(appName, taskId, processInstanceId);
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'GET',
-                null, null, null,
-                null, null,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
+
+        return this.get(apiUrl).pipe(
             map((res: any) => {
                 return new ProcessStorageCloudModel(res);
-            }),
-            catchError((err) => this.handleError(err))
+            })
         );
     }
 
@@ -191,19 +155,12 @@ export class FormCloudService extends BaseCloudService {
      * @returns Task variables
      */
     getTaskVariables(appName: string, taskId: string): Observable<TaskVariableCloud[]> {
-        const apiUrl = this.buildGetTaskVariablesUrl(appName, taskId);
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'GET',
-                null, null, null,
-                null, null,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
+        const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
+
+        return this.get(apiUrl).pipe(
             map((res: any) => {
                 return res.list.entries.map((variable) => new TaskVariableCloud(variable.entry));
-            }),
-            catchError((err) => this.handleError(err))
+            })
         );
     }
 
@@ -211,23 +168,17 @@ export class FormCloudService extends BaseCloudService {
      * Gets a form definition.
      * @param appName Name of the app
      * @param formKey key of the target task
+     * @param version Version of the form
      * @returns Form definition
      */
-    getForm(appName: string, formKey: string): Observable<any> {
-        const apiUrl = this.buildGetFormUrl(appName, formKey);
-        const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
-            formParams = {};
+    getForm(appName: string, formKey: string, version?: number): Observable<any> {
+        let url = `${this.getBasePath(appName)}/form/v1/forms/${formKey}`;
 
-        return from(
-            this.apiService
-                .getInstance()
-                .oauth2Auth.callCustomApi(
-                apiUrl, 'GET', pathParams, queryParams,
-                headerParams, formParams, bodyParam,
-                this.contentTypes, this.accepts, this.returnType, null, null)
-        ).pipe(
-            catchError((err) => this.handleError(err))
-        );
+        if (version) {
+            url += `/versions/${version}`;
+        }
+
+        return this.get(url);
     }
 
     /**
@@ -236,18 +187,7 @@ export class FormCloudService extends BaseCloudService {
      * @returns Array of FormFieldOption object
      */
     getDropDownJsonData(url: string): Observable<FormFieldOption[]> {
-        return from(this.apiService.getInstance()
-            .oauth2Auth.callCustomApi(url, 'GET',
-                null, null, null,
-                null, null,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
-            map((res: any) => {
-                return res;
-            }),
-            catchError((err) => this.handleError(err))
-        );
+        return this.get<FormFieldOption[]>(url);
     }
 
     /**
@@ -259,7 +199,10 @@ export class FormCloudService extends BaseCloudService {
      */
     parseForm(json: any, data?: TaskVariableCloud[], readOnly: boolean = false): FormModel {
         if (json) {
-            const flattenForm = {...json.formRepresentation, ...json.formRepresentation.formDefinition};
+            const flattenForm = {
+                ...json.formRepresentation,
+                ...json.formRepresentation.formDefinition
+            };
             delete flattenForm.formDefinition;
 
             const formValues: FormValues = {};
@@ -282,35 +225,9 @@ export class FormCloudService extends BaseCloudService {
         return null;
     }
 
-    private buildGetTaskUrl(appName: string, taskId: string): string {
-        return `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
-    }
-
-    private buildGetFormUrl(appName: string, formKey: string): string {
-        return `${this.getBasePath(appName)}/form/v1/forms/${formKey}`;
-    }
-
-    private buildSaveFormUrl(appName: string, formId: string): string {
-        return `${this.getBasePath(appName)}/form/v1/forms/${formId}/save`;
-    }
-
-    private buildSubmitFormUrl(appName: string, formId: string): string {
-        return `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit`;
-    }
-
-    private buildGetTaskVariablesUrl(appName: string, taskId: string): string {
-        return `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
-    }
-
     private buildFolderTask(appName: string, taskId: string, processInstanceId: string): string {
         return processInstanceId
             ? `${this.getBasePath(appName)}/process-storage/v1/folders/${processInstanceId}/${taskId}`
             : `${this.getBasePath(appName)}/process-storage/v1/folders/${taskId}`;
     }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
-    }
-
 }

@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# [Search text component](../../../lib/content-services/search/components/search-text/search-text.component.ts "Defined in search-text.component.ts")
+# [Search text component](../../../lib/content-services/src/lib/search/components/search-text/search-text.component.ts "Defined in search-text.component.ts")
 
-Implements a text input widget for the [Search Filter component](search-filter.component.md).
+Implements a text input [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) for the [Search Filter component](search-filter.component.md).
 
 ![Text Widget](../../docassets/images/search-text.png)
 
@@ -42,7 +42,7 @@ Implements a text input widget for the [Search Filter component](search-filter.c
 | ---- | ---- | ----------- |
 | field | string | Field to apply the query fragment to. Required value |
 | pattern | string | Regular expression pattern to restrict the format of the input text |
-| placeholder | string | Text displayed in the widget when the input string is empty |
+| placeholder | string | Text displayed in the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) when the input string is empty |
 
 ## Details
 

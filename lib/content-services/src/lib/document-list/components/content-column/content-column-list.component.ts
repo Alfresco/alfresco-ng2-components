@@ -17,8 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { DataColumn } from '@alfresco/adf-core';
-import { LogService } from '@alfresco/adf-core';
+import { DataColumn, LogService } from '@alfresco/adf-core';
 import { Component } from '@angular/core';
 
 import { DocumentListComponent } from './../document-list.component';

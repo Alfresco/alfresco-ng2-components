@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { ElementFinder } from 'protractor';
 
 export class ProcessHeaderCloudPage {
 

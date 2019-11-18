@@ -24,10 +24,9 @@ import {
     ElementRef,
     OnDestroy
 } from '@angular/core';
-import { NodeEntry } from '@alfresco/js-api';
+import { NodeEntry, Node } from '@alfresco/js-api';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { Node } from '@alfresco/js-api';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

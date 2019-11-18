@@ -34,8 +34,7 @@ describe('NodePermissionDialogService', () => {
     let contentService: ContentService;
 
     setupTestBed({
-        imports: [ContentTestingModule],
-        providers: [NodePermissionService]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {

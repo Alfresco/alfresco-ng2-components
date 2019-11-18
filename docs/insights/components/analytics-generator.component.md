@@ -23,12 +23,12 @@ Generates and shows charts
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| reportId | `number` |  |  |
-| reportParamQuery | [`ReportQuery`](../../../lib/insights/src/lib/diagram/models/report/reportQuery.model.ts) | undefined |  |
+| reportId | `number` |  | reportId. |
+| reportParamQuery | [`ReportQuery`](../../../lib/insights/src/lib/diagram/models/report/reportQuery.model.ts) | undefined | reportParamQuery. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` |  |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | error. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | success. |

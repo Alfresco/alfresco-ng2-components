@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
-import { PaginationPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import CONSTANTS = require('../util/constants');
+import { LoginPage, PaginationPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { browser } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
-import { browser } from 'protractor';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import CONSTANTS = require('../util/constants');
 
 describe('Items per page set to 15 and adding of tasks', () => {
 

@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
-import { BrowserVisibility, SearchCategoriesPage } from '@alfresco/adf-testing';
-import {
-    SearchCheckListPage,
-    SearchTextPage,
-    NumberRangeFilterPage,
-    DateRangeFilterPage,
-    SearchSliderPage,
-    SearchRadioPage
-} from '@alfresco/adf-testing';
+import { BrowserVisibility, DateRangeFilterPage, NumberRangeFilterPage, SearchCategoriesPage, SearchCheckListPage, SearchRadioPage, SearchSliderPage, SearchTextPage } from '@alfresco/adf-testing';
+import { by, element, ElementFinder } from 'protractor';
 
 export class SearchFiltersPage {
 

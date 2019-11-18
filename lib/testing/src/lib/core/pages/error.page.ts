@@ -16,9 +16,8 @@
  */
 
 import { BrowserVisibility } from '../utils/browser-visibility';
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions } from '../utils/browser-actions';
-import { ElementFinder } from 'protractor';
 
 export class ErrorPage {
 

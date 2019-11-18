@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject } from '@angular/core';
-import { OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 

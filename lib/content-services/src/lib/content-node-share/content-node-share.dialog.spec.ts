@@ -25,10 +25,10 @@ import {
     NodesApiService,
     NotificationService,
     RenditionsService,
-    AppConfigService
+    AppConfigService,
+    CoreModule,
+    AppConfigServiceMock
 } from '@alfresco/adf-core';
-import { CoreModule, AppConfigServiceMock } from '@alfresco/adf-core';
-
 import { ContentNodeShareModule } from './content-node-share.module';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import moment from 'moment-es6';
@@ -53,8 +53,6 @@ describe('ShareDialogComponent', () => {
             ContentNodeShareModule
         ],
         providers: [
-            NodesApiService,
-            SharedLinksApiService,
             { provide: AppConfigService, useClass: AppConfigServiceMock },
             { provide: NotificationService, useValue: notificationServiceMock },
             { provide: MatDialogRef, useValue: { close: () => {}} },

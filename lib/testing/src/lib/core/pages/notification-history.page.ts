@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../utils/browser-actions';
-import { ElementFinder } from 'protractor';
 
 export class NotificationHistoryPage {
 

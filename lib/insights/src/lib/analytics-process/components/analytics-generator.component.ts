@@ -28,15 +28,19 @@ import { AnalyticsService } from '../services/analytics.service';
 })
 export class AnalyticsGeneratorComponent implements OnChanges {
 
+    /** reportId. */
     @Input()
     reportId: number;
 
+    /** reportParamQuery. */
     @Input()
     reportParamQuery: ReportQuery = undefined;
 
+    /** success. */
     @Output()
     success = new EventEmitter();
 
+    /** error. */
     @Output()
     error = new EventEmitter();
 

@@ -28,6 +28,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
     -   [Card view](#card-view)
     -   [Using events](#using-events)
     -   [Customizing the component's styles](#customizing-the-components-styles)
+-   [Resolver Function](#resolver-function)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -354,7 +355,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row. |
 | noPermission | `boolean` | false | Flag that indicates if the datatable should show the "no permission" template. |
-| resolverFn | `Function` |  | Custom resolver function which is used to parse dynamic column objects. see [Resolver Function](#resolver-function)|
+| resolverFn | `Function` | null | Custom resolver function which is used to parse dynamic column objects see the docs to learn how to configure a resolverFn. |
 | rowMenuCacheEnabled | `boolean` | true | Should the items for the row actions menu be cached for reuse after they are loaded the first time? |
 | rowStyle | `string` |  | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
 | rowStyleClass | `string` | "" | The CSS class to apply to every row. |
@@ -760,12 +761,15 @@ Once set up, the sticky header behaves as shown in the image below:
 If you have a table with complex object, you might want to parse it before to display. you can do this using following steps.
 
 # what is resolver
+
 Resolver is a pure function which gets executed on each row and columns.
 
 # purpose
+
 It helps to parse the complex object in the data table.
 
 # example
+
 Assume we want to merge two properties and show them in a text format
 
 ```json
@@ -787,7 +791,6 @@ Assume we want to merge two properties and show them in a text format
                     ]
                 }
 ```
-
 
 here is the sample resolver which merge the users property and status and it will show in one column
 
@@ -818,9 +821,6 @@ here is the sample resolver which merge the users property and status and it wil
 ```
 
  ![](../../docassets/images/custom-data-table-resolver.png)
-
-
-
 
 ## See also
 

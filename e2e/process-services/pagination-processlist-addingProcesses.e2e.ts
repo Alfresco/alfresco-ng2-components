@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
-import { PaginationPage } from '@alfresco/adf-testing';
-import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { LoginPage, PaginationPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { browser } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
-import { browser } from 'protractor';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
+import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 
 describe('Process List - Pagination when adding processes', () => {
 

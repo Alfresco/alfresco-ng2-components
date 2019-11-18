@@ -16,12 +16,11 @@
  */
 
 import CONSTANTS = require('../util/constants');
-import { ApiService, StringUtil, IdentityService, GroupIdentityService, LocalStorageUtil } from '@alfresco/adf-testing';
-import moment = require('moment');
+import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LocalStorageUtil, LoginSSOPage, StringUtil, TaskHeaderCloudPage, TasksService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { LoginSSOPage, AppListCloudPage, TaskHeaderCloudPage, TasksService } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import moment = require('moment');
 
 describe('Task Header cloud component', () => {
     const basicCreatedTaskName = StringUtil.generateRandomString();

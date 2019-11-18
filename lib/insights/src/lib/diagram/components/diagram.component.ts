@@ -28,30 +28,40 @@ import { RaphaelService } from './raphael/raphael.service';
     templateUrl: './diagram.component.html'
 })
 export class DiagramComponent implements OnChanges {
+
+    /** processDefinitionId. */
     @Input()
     processDefinitionId: any;
 
+    /** processInstanceId. */
     @Input()
     processInstanceId: any;
 
+    /** metricPercentages. */
     @Input()
     metricPercentages: any;
 
+    /** metricColor. */
     @Input()
     metricColor: any;
 
+    /** metricType. */
     @Input()
     metricType: string = '';
 
+    /** width. */
     @Input()
     width: number = 1000;
 
+    /** height. */
     @Input()
     height: number = 500;
 
+    /** success. */
     @Output()
     success = new EventEmitter();
 
+    /** error. */
     @Output()
     error = new EventEmitter();
 

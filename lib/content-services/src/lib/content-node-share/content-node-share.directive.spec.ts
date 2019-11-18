@@ -16,13 +16,12 @@
  */
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { setupTestBed, CoreModule, SharedLinksApiService } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { ContentNodeShareModule } from './content-node-share.module';
 
 @Component({
@@ -60,9 +59,6 @@ describe('NodeSharedDirective', () => {
         ],
         declarations: [
             NodeShareTestComponent
-        ],
-        providers: [
-            SharedLinksApiService
         ]
     });
 

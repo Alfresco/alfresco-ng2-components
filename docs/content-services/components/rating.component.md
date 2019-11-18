@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Rating component](../../../lib/content-services/social/rating.component.ts "Defined in rating.component.ts")
+# [Rating component](../../../lib/content-services/src/lib/social/rating.component.ts "Defined in rating.component.ts")
 
 Allows a user to add and remove rating to an item.
 

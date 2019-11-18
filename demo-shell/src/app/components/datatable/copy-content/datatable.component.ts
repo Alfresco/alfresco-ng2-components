@@ -16,8 +16,7 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { DataColumn, DataRow } from '@alfresco/adf-core';
-import { ObjectDataTableAdapter } from '@alfresco/adf-core';
+import { DataColumn, DataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 
 export class FilteredDataAdapter extends ObjectDataTableAdapter {
 
