@@ -318,6 +318,7 @@
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.IS_LOCKED' | translate}}"
                         key="id"
+                        [focus]="false"
                         class="app-desktop-only adf-ellipsis-cell">
                         <ng-template let-entry="$implicit">
                             <button mat-icon-button [adf-node-lock]="entry.row.node.entry" class="app-lock-button">
