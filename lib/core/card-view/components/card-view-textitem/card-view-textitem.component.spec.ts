@@ -154,6 +154,54 @@ describe('CardViewTextItemComponent', () => {
             expect(value).toBeNull();
         });
 
+        it('should not render the clickable icon in case editable set to false', () => {
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                clickable: true,
+                icon: 'create'
+            });
+            component.editable = false;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            expect(value).toBeNull('icon should NOT be shown');
+        });
+
+        it('should render the defined clickable icon in case of clickable true and editable input set to true', () => {
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                clickable: true,
+                icon: 'FAKE_ICON'
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText).toBe('FAKE_ICON');
+        });
+
+        it('should not render clickable icon in case of clickable true and icon undefined', () => {
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                clickable: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            expect(value).toBeNull('icon should NOT be shown');
+        });
+
         it('should not render the edit icon in case of clickable true and icon undefined', () => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',

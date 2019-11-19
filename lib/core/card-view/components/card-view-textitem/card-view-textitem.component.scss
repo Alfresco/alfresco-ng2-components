@@ -31,6 +31,7 @@
         }
 
         &-textitem-clickable {
+            cursor: pointer !important;
             &:hover .adf-textitem-action {
                 color: mat-color($foreground, text);
             }

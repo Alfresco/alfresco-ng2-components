@@ -59,6 +59,10 @@ export class CardViewTextItemComponent implements OnChanges {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
+    showClickableIcon(): boolean {
+        return this.hasIcon() && this.editable;
+    }
+
     isEditable(): boolean {
         return this.editable && this.property.editable;
     }

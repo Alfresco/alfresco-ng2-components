@@ -9,6 +9,12 @@
                 <span class="adf-textitem-clickable-value" [attr.data-automation-id]="'card-textitem-value-' + property.key">
                     <span *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
                 </span>
+                <button mat-icon-button fxFlex="0 0 auto" *ngIf="showClickableIcon()"
+                    class="adf-textitem-action"
+                    [attr.data-automation-id]="'card-textitem-clickable-icon-' + property.key">
+
+                    <mat-icon class="adf-textitem-icon">{{property?.icon}}</mat-icon>
+                </button>
             </div>
         </ng-template>
     </span>

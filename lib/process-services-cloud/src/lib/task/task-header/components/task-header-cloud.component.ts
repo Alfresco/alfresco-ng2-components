@@ -31,7 +31,7 @@ import {
 import { TaskDetailsCloudModel, TaskStatus } from '../../start-task/models/task-details-cloud.model';
 import { Router } from '@angular/router';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { NumericFieldValidator } from '../../../validators/numeric-field.validator';
 import { takeUntil } from 'rxjs/operators';
 
@@ -63,6 +63,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     taskDetails: TaskDetailsCloudModel = {};
+    candidateUsers: string[] = [];
+    candidateGroups: string[] = [];
     properties: CardViewItem[];
     inEdit: boolean = false;
     parentTaskName: string;
@@ -107,7 +109,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         }
     }
 
-    loadTaskDetailsById(appName: string, taskId: string): any {
+    async loadTaskDetailsById(appName: string, taskId: string): Promise<void> {
+        await this.getCandidates();
         this.taskCloudService.getTaskById(appName, taskId).subscribe(
             (taskDetails) => {
                 this.taskDetails = taskDetails;
@@ -222,7 +225,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
             new CardViewArrayItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS',
-                    value: this.taskCloudService.getCandidateUsers(this.appName, this.taskId),
+                    value: of(this.candidateUsers),
                     key: 'candidateUsers',
                     icon: 'person',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT'),
@@ -232,7 +235,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
             new CardViewArrayItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS',
-                    value: this.taskCloudService.getCandidateGroups(this.appName, this.taskId),
+                    value: of(this.candidateGroups),
                     key: 'candidateGroups',
                     icon: 'group',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT'),
@@ -251,6 +254,11 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
             const filteredProperties: string[] = this.appConfig.get('adf-cloud-task-header.presets.properties');
             this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
         }
+    }
+
+    private async getCandidates() {
+        this.candidateUsers = await this.taskCloudService.getCandidateUsers(this.appName, this.taskId).toPromise();
+        this.candidateGroups = await this.taskCloudService.getCandidateGroups(this.appName, this.taskId).toPromise();
     }
 
     /**
@@ -299,7 +307,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     isClickable(): boolean {
-        const states: TaskStatus[] = ['ASSIGNED', 'CREATED', 'SUSPENDED'];
+        const states: TaskStatus[] = ['ASSIGNED', 'CREATED'];
         return states.includes(this.taskDetails.status);
     }
 
