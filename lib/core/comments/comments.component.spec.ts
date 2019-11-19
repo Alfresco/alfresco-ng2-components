@@ -277,7 +277,7 @@ describe('CommentsComponent', () => {
         }));
 
         it('should clear comment when escape key is pressed', async(() => {
-            const event = new KeyboardEvent('keyup', {'key': 'Escape'});
+            const event = new KeyboardEvent('keydown', {'key': 'Escape'});
             let element = fixture.nativeElement.querySelector('#comment-input');
             element.dispatchEvent(event);
             fixture.detectChanges();
@@ -365,7 +365,7 @@ describe('CommentsComponent', () => {
         }));
 
         it('should clear comment when escape key is pressed', async(() => {
-            const event = new KeyboardEvent('keyup', {'key': 'Escape'});
+            const event = new KeyboardEvent('keydown', {'key': 'Escape'});
             let element = fixture.nativeElement.querySelector('#comment-input');
             element.dispatchEvent(event);
             fixture.detectChanges();
