@@ -36,6 +36,12 @@ export interface ConfigArgs {
     identityHost: boolean;
 }
 
+export const AAE_MICROSERVICES = [
+    'deployment-service',
+    'modeling-service',
+    'dmn-service'
+];
+
 async function getDeployedApplicationsByStatus(args: ConfigArgs, apiService: any, status: string) {
     const url = `${args.host}/deployment-service/v1/applications`;
 
@@ -55,94 +61,25 @@ async function getDeployedApplicationsByStatus(args: ConfigArgs, apiService: any
 
 }
 
-async function healthCheckDeployment(args: ConfigArgs, apiService: any, result: any) {
-    const url = `${args.host}/deployment-service/actuator/health`;
+async function healthCheck(args: ConfigArgs, apiService: any, nameService: string, result: any) {
+    const url = `${args.host}/${nameService}/actuator/health`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
-
     try {
         const health = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
         if (health.status !== 'UP' ) {
-            logger.error(`Deployment Service is DOWN `);
+            logger.error(`${nameService} is DOWN `);
             result.isValid = false;
         } else {
-            logger.info(`Deployment Service is UP!`);
+            logger.info(`${nameService} is UP!`);
         }
     } catch (error) {
-        logger.error(`Deployment Service is not reachable ${error.status} `);
+        logger.error(`${nameService} is not reachable ${error.status} `);
         result.isValid = false;
     }
-
-}
-
-async function healthCheckModeling(args: ConfigArgs, apiService: any, result: any) {
-    const url = `${args.host}/modeling-service/actuator/health`;
-
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-
-    try {
-        const health = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-        if (health.status !== 'UP' ) {
-            logger.error(`Modeling Service is DOWN `);
-            result.isValid = false;
-        } else {
-            logger.info(`Modeling Service is UP!`);
-        }
-    } catch (error) {
-        logger.error(`Modeling Service is not reachable ${error.status} `);
-        result.isValid = false;
-    }
-
-}
-async function healthCheckDmn(args: ConfigArgs, apiService: any, result: any) {
-    const url = `${args.host}/dmn-service/actuator/health`;
-
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-
-    try {
-        const health = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-        if (health.status !== 'UP' ) {
-            logger.error(`Dmn Service is DOWN `);
-            result.isValid = false;
-        } else {
-            logger.info(`Dmn Service is UP!`);
-        }
-    } catch (error) {
-        logger.error(`Dmn Service is not reachable ${error.status} `);
-        result.isValid = false;
-    }
-
-}
-async function healthCheckIdentity(args: ConfigArgs, apiService: any, result: any) {
-    const url = `${args.identityHost}/auth/realms/alfresco`;
-
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-
-    try {
-        const health = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-        if (health.status !== 'UP' ) {
-            logger.error(`Identity Service is DOWN `);
-            result.isValid = false;
-        } else {
-            logger.info(`Identity Service is UP!`);
-        }
-    } catch (error) {
-        logger.error(`Identity Service is not reachable ${error.status} `);
-        result.isValid = false;
-    }
-
 }
 
 function getAlfrescoJsApiInstance(args: ConfigArgs) {
@@ -184,14 +121,6 @@ async function deployMissingApps(args: ConfigArgs, alfrescoJsApi: any) {
     } else {
         logger.warn(`All the apps are correctly deployed`);
     }
-}
-
-async function healthCheckMicroServices(args: ConfigArgs, alfrescoJsApi: any, result: any) {
-    await healthCheckDeployment(args, alfrescoJsApi, result);
-    await healthCheckModeling(args, alfrescoJsApi, result);
-    await healthCheckModeling(args, alfrescoJsApi, result);
-    await healthCheckDmn(args, alfrescoJsApi, result);
-    await healthCheckIdentity(args, alfrescoJsApi, result);
 }
 
 async function getAppProjects(args: ConfigArgs, apiService: any) {
@@ -461,12 +390,16 @@ async function main(args) {
     }
 
     const alfrescoJsApi = getAlfrescoJsApiInstance(args);
+    await login(args, alfrescoJsApi);
+
     const result = { isValid: true };
 
-    await login(args, alfrescoJsApi);
-    await healthCheckMicroServices(args, alfrescoJsApi, result);
+    AAE_MICROSERVICES.map(async (serviceName) => {
+        await healthCheck(args, alfrescoJsApi, serviceName, result);
+    });
 
     if (result.isValid) {
+        logger.error('The envirorment is up and running');
         await deployMissingApps(args, alfrescoJsApi);
     } else {
         logger.error('The envirorment is not up');
