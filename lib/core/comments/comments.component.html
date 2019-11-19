@@ -4,7 +4,7 @@
     </div>
     <div class="adf-comments-input-container" *ngIf="!isReadOnly()">
             <mat-form-field class="adf-full-width">
-                <textarea (keyup.escape)="clear()" matInput id="comment-input" placeholder="{{'COMMENTS.ADD' | translate}}" [(ngModel)]="message"></textarea>
+                <textarea (keydown.escape)="clear($event)" matInput id="comment-input" placeholder="{{'COMMENTS.ADD' | translate}}" [(ngModel)]="message"></textarea>
             </mat-form-field>
 
             <div class="adf-comments-input-actions">
