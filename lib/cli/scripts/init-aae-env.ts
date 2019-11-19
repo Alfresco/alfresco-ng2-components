@@ -55,6 +55,96 @@ async function getDeployedApplicationsByStatus(args: ConfigArgs, apiService: any
 
 }
 
+async function healthCheckDeployment(args: ConfigArgs, apiService: any, result: any) {
+    const url = `${args.host}/deployment-service/actuator/health`;
+
+    const pathParams = {}, queryParams = {},
+        headerParams = {}, formParams = {}, bodyParam = {},
+        contentTypes = ['application/json'], accepts = ['application/json'];
+
+    try {
+        const health = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts);
+        if (health.status !== 'UP' ) {
+            logger.error(`Deployment Service is DOWN `);
+            result.isValid = false;
+        } else {
+            logger.info(`Deployment Service is UP!`);
+        }
+    } catch (error) {
+        logger.error(`Deployment Service is not reachable ${error.status} `);
+        result.isValid = false;
+    }
+
+}
+
+async function healthCheckModeling(args: ConfigArgs, apiService: any, result: any) {
+    const url = `${args.host}/modeling-service/actuator/health`;
+
+    const pathParams = {}, queryParams = {},
+        headerParams = {}, formParams = {}, bodyParam = {},
+        contentTypes = ['application/json'], accepts = ['application/json'];
+
+    try {
+        const health = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts);
+        if (health.status !== 'UP' ) {
+            logger.error(`Modeling Service is DOWN `);
+            result.isValid = false;
+        } else {
+            logger.info(`Modeling Service is UP!`);
+        }
+    } catch (error) {
+        logger.error(`Modeling Service is not reachable ${error.status} `);
+        result.isValid = false;
+    }
+
+}
+async function healthCheckDmn(args: ConfigArgs, apiService: any, result: any) {
+    const url = `${args.host}/dmn-service/actuator/health`;
+
+    const pathParams = {}, queryParams = {},
+        headerParams = {}, formParams = {}, bodyParam = {},
+        contentTypes = ['application/json'], accepts = ['application/json'];
+
+    try {
+        const health = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts);
+        if (health.status !== 'UP' ) {
+            logger.error(`Dmn Service is DOWN `);
+            result.isValid = false;
+        } else {
+            logger.info(`Dmn Service is UP!`);
+        }
+    } catch (error) {
+        logger.error(`Dmn Service is not reachable ${error.status} `);
+        result.isValid = false;
+    }
+
+}
+async function healthCheckIdentity(args: ConfigArgs, apiService: any, result: any) {
+    const url = `${args.identityHost}/auth/realms/alfresco`;
+
+    const pathParams = {}, queryParams = {},
+        headerParams = {}, formParams = {}, bodyParam = {},
+        contentTypes = ['application/json'], accepts = ['application/json'];
+
+    try {
+        const health = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts);
+        if (health.status !== 'UP' ) {
+            logger.error(`Identity Service is DOWN `);
+            result.isValid = false;
+        } else {
+            logger.info(`Identity Service is UP!`);
+        }
+    } catch (error) {
+        logger.error(`Identity Service is not reachable ${error.status} `);
+        result.isValid = false;
+    }
+
+}
+
 function getAlfrescoJsApiInstance(args: ConfigArgs) {
     const config = {
         provider: 'BPM',
@@ -75,13 +165,16 @@ function getAlfrescoJsApiInstance(args: ConfigArgs) {
 
 async function login(args: ConfigArgs, alfrescoJsApi: any) {
     logger.info(`Perform login...`);
+    try {
     await alfrescoJsApi.login(args.username, args.password);
+    } catch (error) {
+        logger.error(`Not able to login. Credentials ${args.username}:${args.password} are not valid`);
+        process.exit(1);
+    }
     return alfrescoJsApi;
 }
 
-async function deployMissingApps(args: ConfigArgs) {
-    const alfrescoJsApi = getAlfrescoJsApiInstance(args);
-    await login(args, alfrescoJsApi);
+async function deployMissingApps(args: ConfigArgs, alfrescoJsApi: any) {
     const deployedApps = await getDeployedApplicationsByStatus(args, alfrescoJsApi, '');
     const absentApps = findMissingApps(deployedApps);
 
@@ -91,6 +184,14 @@ async function deployMissingApps(args: ConfigArgs) {
     } else {
         logger.warn(`All the apps are correctly deployed`);
     }
+}
+
+async function healthCheckMicroServices(args: ConfigArgs, alfrescoJsApi: any, result: any) {
+    await healthCheckDeployment(args, alfrescoJsApi, result);
+    await healthCheckModeling(args, alfrescoJsApi, result);
+    await healthCheckModeling(args, alfrescoJsApi, result);
+    await healthCheckDmn(args, alfrescoJsApi, result);
+    await healthCheckIdentity(args, alfrescoJsApi, result);
 }
 
 async function getAppProjects(args: ConfigArgs, apiService: any) {
@@ -359,5 +460,17 @@ async function main(args) {
         program.outputHelp();
     }
 
-    await deployMissingApps(args);
+    const alfrescoJsApi = getAlfrescoJsApiInstance(args);
+    const result = { isValid: true };
+
+    await login(args, alfrescoJsApi);
+    await healthCheckMicroServices(args, alfrescoJsApi, result);
+
+    if (result.isValid) {
+        await deployMissingApps(args, alfrescoJsApi);
+    } else {
+        logger.error('The envirorment is not up');
+        process.exit(1);
+    }
+
 }
