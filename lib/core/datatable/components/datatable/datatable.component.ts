@@ -686,7 +686,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     isHeaderVisible() {
-        return !this.loading && !this.isEmpty() && !this.noPermission;
+        return !this.loading && !this.isEmpty() &&
+               !this.noPermission && this.display === DisplayMode.List;
     }
 
     isStickyHeaderEnabled() {
