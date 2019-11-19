@@ -136,6 +136,8 @@
     "numbervisibilityprocess",
     "booleanvisibilityprocess",
     "booleanvisibility",
+    "processparent",
+    "uploadfileform",
     "processwithstarteventform"
   ],
   "dictionaries": [

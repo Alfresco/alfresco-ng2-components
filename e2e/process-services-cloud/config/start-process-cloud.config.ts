@@ -30,9 +30,9 @@ export class StartProcessCloudConfiguration {
                     'value': 17
                 }
             ],
-            'variables': {
-                'my-key1': 'myvalue',
-                'my-key2': 'myvalue2'
+            'variable': {
+                'mykey1': 'myvalue',
+                'mykey2': 'myvalue2'
             }
         };
     }

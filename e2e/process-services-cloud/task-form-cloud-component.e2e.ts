@@ -140,7 +140,7 @@ describe('Task form cloud component', () => {
         processDefinition = await processDefinitionService.getProcessDefinitionByName('dropdownrestprocess', simpleApp);
         const formProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
         const formTasks = await queryService.getProcessInstanceTasks(formProcess.entry.id, simpleApp);
-        formTaskId = formTasks.list.entries[0].entry.id;
+        formTaskId = formTasks.list.console.entry.id;
 
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 

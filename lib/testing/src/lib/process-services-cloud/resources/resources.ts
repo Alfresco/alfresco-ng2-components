@@ -29,7 +29,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
         },
         forms: {
             starteventform: 'starteventform',
-            formtotestvalidations: 'formtotestvalidations'
+            formtotestvalidations: 'formtotestvalidations',
+            uploadfileform: 'uploadfileform'
         },
         security: [
             { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
@@ -126,6 +127,10 @@ export const ACTIVITI_CLOUD_APPS: any = {
     SUB_PROCESS_APP: {
         name: 'subprocessapp',
         file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/development/e2e/resources/activiti7/subprocessapp.zip?raw=true',
+        processes: {
+            processchild: 'processchild',
+            processparent: 'processparent'
+        },
         security: [
             { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
             { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] },
