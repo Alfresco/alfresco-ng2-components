@@ -367,4 +367,3 @@ describe('Edit task filters and task list properties', () => {
 
     });
 });
-
