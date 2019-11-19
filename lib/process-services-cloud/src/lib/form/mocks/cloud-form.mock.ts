@@ -739,3 +739,22 @@ export let fakeCloudForm = {
         }
     }
 };
+
+export const emptyFormRepresentationJSON = {
+    'description': '',
+    'fields': [],
+    'id': 'form-3de070b6-63df-4058-8028-ac82283d64fa',
+    'metadata': {},
+    'name': 'form',
+    'outcomes': [],
+    'length': 0,
+    'processDefinitionId': 'ed4a6233-0ad8-11ea-8616-e6267bbdb057',
+    'processInstanceId': 'ec921948-0ad9-11ea-8616-e6267bbdb057',
+    'processVariables': [],
+    'standAlone': true,
+    'tabs': [],
+    'taskId': 'ec92194b-0ad9-11ea-8616-e6267bbdb057',
+    'taskName': null,
+    'variables': [],
+    'version': 0
+};

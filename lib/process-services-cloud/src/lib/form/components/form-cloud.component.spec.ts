@@ -26,7 +26,7 @@ import {
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudComponent } from './form-cloud.component';
-import { cloudFormMock, fakeCloudForm } from '../mocks/cloud-form.mock';
+import { cloudFormMock, emptyFormRepresentationJSON, fakeCloudForm } from '../mocks/cloud-form.mock';
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 
 describe('FormCloudComponent', () => {
@@ -641,13 +641,6 @@ describe('FormCloudComponent', () => {
         expect(form.fields[0].id).toBe('field1');
     });
 
-    it('should provide outcomes for form definition', () => {
-        spyOn(formComponent, 'getFormDefinitionOutcomes').and.callThrough();
-
-        const form = formComponent.parseForm({ id: '1' });
-        expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
-    });
-
     it('should prevent default outcome execution', () => {
 
         const outcome = new FormOutcomeModel(<any> new FormModel(), {
@@ -730,6 +723,13 @@ describe('FormCloudComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(completeOutcome)).toBeFalsy();
 
         formComponent.disableCompleteButton = false;
+        expect(formComponent.isOutcomeButtonEnabled(completeOutcome)).toBeTruthy();
+    });
+
+    it('should complete outcome button be present when the form is empty', async () => {
+        formComponent.form = formComponent.parseForm(emptyFormRepresentationJSON);
+        expect(formComponent.form.isValid).toBeTruthy();
+        const completeOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.COMPLETE_ACTION);
         expect(formComponent.isOutcomeButtonEnabled(completeOutcome)).toBeTruthy();
     });
 
