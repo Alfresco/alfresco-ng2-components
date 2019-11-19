@@ -135,7 +135,8 @@
     "requirednumbervisibility",
     "numbervisibilityprocess",
     "booleanvisibilityprocess",
-    "booleanvisibility"
+    "booleanvisibility",
+    "processwithstarteventform"
   ],
   "dictionaries": [
     "html",
