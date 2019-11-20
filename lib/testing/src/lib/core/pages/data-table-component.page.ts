@@ -121,6 +121,8 @@ export class DataTableComponentPage {
      * @return 'true' if the list is sorted as await expected and 'false' if it isn't
      */
     async checkListIsSorted(sortOrder: string, columnTitle: string): Promise<any> {
+        await browser.sleep(1000);
+
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
         // await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
