@@ -36,6 +36,12 @@ export interface ConfigArgs {
     identityHost: boolean;
 }
 
+export const AAE_MICROSERVICES = [
+    'deployment-service',
+    'modeling-service',
+    'dmn-service'
+];
+
 async function getDeployedApplicationsByStatus(args: ConfigArgs, apiService: any, status: string) {
     const url = `${args.host}/deployment-service/v1/applications`;
 
@@ -53,6 +59,27 @@ async function getDeployedApplicationsByStatus(args: ConfigArgs, apiService: any
         process.exit(1);
     }
 
+}
+
+async function healthCheck(args: ConfigArgs, apiService: any, nameService: string, result: any) {
+    const url = `${args.host}/${nameService}/actuator/health`;
+
+    const pathParams = {}, queryParams = {},
+        headerParams = {}, formParams = {}, bodyParam = {},
+        contentTypes = ['application/json'], accepts = ['application/json'];
+    try {
+        const health = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts);
+        if (health.status !== 'UP' ) {
+            logger.error(`${nameService} is DOWN `);
+            result.isValid = false;
+        } else {
+            logger.info(`${nameService} is UP!`);
+        }
+    } catch (error) {
+        logger.error(`${nameService} is not reachable ${error.status} `);
+        result.isValid = false;
+    }
 }
 
 function getAlfrescoJsApiInstance(args: ConfigArgs) {
@@ -75,13 +102,16 @@ function getAlfrescoJsApiInstance(args: ConfigArgs) {
 
 async function login(args: ConfigArgs, alfrescoJsApi: any) {
     logger.info(`Perform login...`);
+    try {
     await alfrescoJsApi.login(args.username, args.password);
+    } catch (error) {
+        logger.error(`Not able to login. Credentials ${args.username}:${args.password} are not valid`);
+        process.exit(1);
+    }
     return alfrescoJsApi;
 }
 
-async function deployMissingApps(args: ConfigArgs) {
-    const alfrescoJsApi = getAlfrescoJsApiInstance(args);
-    await login(args, alfrescoJsApi);
+async function deployMissingApps(args: ConfigArgs, alfrescoJsApi: any) {
     const deployedApps = await getDeployedApplicationsByStatus(args, alfrescoJsApi, '');
     const absentApps = findMissingApps(deployedApps);
 
@@ -359,5 +389,21 @@ async function main(args) {
         program.outputHelp();
     }
 
-    await deployMissingApps(args);
+    const alfrescoJsApi = getAlfrescoJsApiInstance(args);
+    await login(args, alfrescoJsApi);
+
+    const result = { isValid: true };
+
+    AAE_MICROSERVICES.map(async (serviceName) => {
+        await healthCheck(args, alfrescoJsApi, serviceName, result);
+    });
+
+    if (result.isValid) {
+        logger.error('The envirorment is up and running');
+        await deployMissingApps(args, alfrescoJsApi);
+    } else {
+        logger.error('The envirorment is not up');
+        process.exit(1);
+    }
+
 }
