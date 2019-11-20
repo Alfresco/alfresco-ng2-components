@@ -271,7 +271,7 @@ describe('CardView Component', () => {
 
         it('[C279962] Should be present a default value', async () => {
             await expect(await metadataViewPage.getPropertyText('date', 'date')).toEqual('12/24/83');
-            await expect(await metadataViewPage.getPropertyText('datetime', 'datetime')).toEqual('Dec 24, 1983, 10:00');
+            await expect(await metadataViewPage.getPropertyText('datetime', 'datetime')).toEqual('12/24/83, 10:00 AM');
         });
 
         it('[C312447] Should be able to clear the date field', async () => {
