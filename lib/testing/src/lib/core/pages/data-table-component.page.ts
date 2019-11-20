@@ -124,12 +124,16 @@ export class DataTableComponentPage {
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
         await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
-        await column.each(async (currentElement) => {
-            const text = await BrowserActions.getText(currentElement);
+
+        const length = await  column.count();
+
+        for (let i = 0; i < length; i++) {
+            const text = await BrowserActions.getText(column.get(i));
             if (text.length !== 0) {
                 initialList.push(text.toLowerCase());
             }
-        });
+        }
+
         let sortedList = [...initialList];
         sortedList = sortedList.sort();
         if (sortOrder.toLocaleLowerCase() === 'desc') {
@@ -139,7 +143,7 @@ export class DataTableComponentPage {
         /* tslint:disable */
         console.log('initialList' + JSON.stringify(initialList));
         console.log('sortedList' + JSON.stringify(sortedList));
-        console.log(' initialList.toString() === sortedList.toString()' + ( initialList.toString() === sortedList.toString()));
+        console.log(' initialList.toString() === sortedList.toString()' + (initialList.toString() === sortedList.toString()));
 
         return initialList.toString() === sortedList.toString();
     }
