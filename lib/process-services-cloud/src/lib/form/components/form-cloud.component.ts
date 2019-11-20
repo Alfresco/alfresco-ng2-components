@@ -316,8 +316,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
      * @param form Form definition model.
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
-        const outcome = new FormOutcomeModel(<any> form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
-        return [ outcome
+        return [
+            new FormOutcomeModel(<any> form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
         ];
     }
 
