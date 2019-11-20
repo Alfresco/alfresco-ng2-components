@@ -408,7 +408,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
 
         if (row) {
-            const rowIndex = this.data.getRows().indexOf(row) + (this.isHeaderVisible() ? 1 : 0);
+            const rowIndex = this.data.getRows().indexOf(row) + (this.isHeaderListVisible() ? 1 : 0);
             this.keyManager.setActiveItem(rowIndex);
 
             const dataRowEvent = new DataRowEvent(row, mouseEvent, this);
@@ -420,6 +420,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         if (row) {
             this.handleRowSelection(row, e);
         }
+    }
+
+    private isHeaderListVisible(): boolean {
+        return this.isHeaderVisible() && this.display === DisplayMode.List;
     }
 
     private handleRowSelection(row: DataRow, e: KeyboardEvent | MouseEvent) {
@@ -686,8 +690,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     isHeaderVisible() {
-        return !this.loading && !this.isEmpty() &&
-               !this.noPermission && this.display === DisplayMode.List;
+        return !this.loading && !this.isEmpty() && !this.noPermission;
     }
 
     isStickyHeaderEnabled() {
