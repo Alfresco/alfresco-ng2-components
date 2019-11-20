@@ -17,7 +17,7 @@ const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protr
 const argv = require('yargs').argv;
 
 const projectRoot = path.resolve(__dirname);
-const width = 1366, height = 768;
+const width = 1657, height = 1657;
 
 let ENV_FILE = process.env.ENV_FILE;
 let GROUP_SUFFIX = process.env.PREFIX;

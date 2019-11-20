@@ -41,9 +41,7 @@ describe('Task form cloud component', () => {
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const widget = new Widget();
-    const formToTestValidationsKey = 'form-49904910-603c-48e9-8c8c-1d442c0fa524';
 
-    let tasksService: TasksService;
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
     let identityService: IdentityService;
@@ -55,69 +53,29 @@ describe('Task form cloud component', () => {
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
     const apiServiceHrUser = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
 
-    const visibilityConditionTasks = [];
-
-    const tab = {
-        tabWithFields: 'tabWithFields',
-        tabFieldValue: 'tabBasicFieldValue',
-        tabVarValue: 'tabBasicVarValue',
-        tabVarField: 'tabBasicVarField',
-        tabFieldField: 'tabBasicFieldField',
-        tabVarVar: 'tabBasicVarVar',
-        tabFieldVar: 'tabBasicFieldVar',
-        tabNextOperators: 'tabNextOperators'
-    };
-
-    const widgets = {
-        textOneId: 'TextOne',
-        textTwoId: 'TextTwo',
-        textThreeId: 'TextThree',
-        textFourId: 'TextFour',
-        numberOneId: 'NumberOne'
-    };
-
-    const value = {
-        displayTab: 'showTab',
-        notDisplayTab: 'anythingElse'
-    };
-
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
 
-        await apiServiceHrUser.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
-        const formCloudService = new FormCloudService(apiServiceHrUser);
-
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
 
         const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-        await apiService.login(testUser.email, testUser.password);
 
-        tasksService = new TasksService(apiServiceHrUser);
+        await apiServiceHrUser.login(testUser.email, testUser.password);
+        const tasksService = new TasksService(apiServiceHrUser);
         const queryService = new QueryService(apiServiceHrUser);
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
 
         assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
         await tasksService.claimTask(assigneeTask.entry.id, candidateBaseApp);
 
-        const tabVisibilityFieldsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.name);
+        const formCloudService = new FormCloudService(apiServiceHrUser);
 
-        const tabVisibilityVarsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.name);
-
-        for (let i = 0; i < 3; i++) {
-            visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
-                simpleApp, tabVisibilityFieldsId);
-            await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
-        }
-
-        for (let i = 3; i < 6; i++) {
-            visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
-                simpleApp, tabVisibilityVarsId);
-            await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
-        }
+        const formToTestValidationsKey = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name,
+            browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
 
         formValidationsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(), candidateBaseApp, formToTestValidationsKey);
         await tasksService.claimTask(formValidationsTask.entry.id, candidateBaseApp);
@@ -137,10 +95,14 @@ describe('Task form cloud component', () => {
         processInstancesService = new ProcessInstancesService(apiServiceHrUser);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-        processDefinition = await processDefinitionService.getProcessDefinitionByName('dropdownrestprocess', simpleApp);
+        processDefinition = await processDefinitionService
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+
         const formProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+
         const formTasks = await queryService.getProcessInstanceTasks(formProcess.entry.id, simpleApp);
-        formTaskId = formTasks.list.console.entry.id;
+
+        formTaskId = formTasks.list.entries[0].entry.id;
 
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
@@ -326,188 +288,6 @@ describe('Task form cloud component', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask.entry.name);
             await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
-    });
-
-    describe('Complete task with form - cloud directive', () => {
-
-        beforeEach(async () => {
-            await navigationBarPage.navigateToProcessServicesCloudPage();
-            await appListCloudComponent.checkApsContainer();
-            await appListCloudComponent.goToApp(simpleApp);
-        });
-
-        it('[C315174] Should be able to complete a standalone task with visible tab with empty value for field', async () => {
-            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[0].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[0].entry.name);
-            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldValue);
-            await widget.textWidget().isWidgetVisible(widgets.textOneId);
-            await widget.textWidget().isWidgetNotVisible(widgets.textTwoId);
-            await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
-
-            await taskFormCloudComponent.clickCompleteButton();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[0].entry.name);
-
-            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[0].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[0].entry.name);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
-        });
-
-        it('[C315177] Should be able to complete a standalone task with invisible tab with invalid value for field', async () => {
-            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[1].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[1].entry.name);
-            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
-            await widget.textWidget().isWidgetVisible(widgets.textOneId);
-
-            await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
-            await widget.textWidget().setValue(widgets.textThreeId, value.displayTab);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
-            await widget.tab().clickTabByLabel(tab.tabFieldField);
-            await widget.textWidget().isWidgetVisible(widgets.numberOneId);
-            await widget.textWidget().setValue(widgets.numberOneId, value.displayTab);
-
-            await widget.tab().clickTabByLabel(tab.tabWithFields);
-            await widget.textWidget().setValue(widgets.textOneId, value.notDisplayTab);
-            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldField);
-
-            await taskFormCloudComponent.clickCompleteButton();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[1].entry.name);
-
-            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[1].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[1].entry.name);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldField);
-        });
-
-        it('[C315178] Should be able to complete a standalone task with invisible tab with valid value', async () => {
-            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[2].entry.name);
-
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[2].entry.name);
-
-            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldVar);
-            await widget.textWidget().isWidgetVisible(widgets.textOneId);
-            await widget.textWidget().isWidgetNotVisible(widgets.textFourId);
-
-            await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldVar);
-            await widget.tab().clickTabByLabel(tab.tabFieldVar);
-            await widget.textWidget().isWidgetVisible(widgets.textFourId);
-            await widget.textWidget().setValue(widgets.textFourId, value.displayTab);
-
-            await widget.tab().clickTabByLabel(tab.tabWithFields);
-            await widget.textWidget().setValue(widgets.textOneId, value.notDisplayTab);
-            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldVar);
-            await taskFormCloudComponent.clickCompleteButton();
-
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[2].entry.name);
-
-            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[2].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[2].entry.name);
-
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldVar);
-        });
-
-        it('[C315175] Should be able to complete a standalone task with invisible tab with empty value for field', async () => {
-            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[3].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[3].entry.name);
-            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabVarValue);
-            await widget.textWidget().isWidgetVisible(widgets.textOneId);
-            await widget.textWidget().isWidgetNotVisible(widgets.textTwoId);
-
-            await taskFormCloudComponent.clickCompleteButton();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[3].entry.name);
-
-            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[3].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[3].entry.name);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabVarValue);
-        });
-
-        it('[C315176] Should not be able to complete a standalone task with visible tab with invalid value for field', async () => {
-            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[4].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[4].entry.name);
-            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabVarField);
-            await widget.textWidget().isWidgetVisible(widgets.textOneId);
-            await widget.textWidget().isWidgetNotVisible(widgets.numberOneId);
-
-            await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarField);
-
-            await widget.tab().clickTabByLabel(tab.tabVarField);
-            await widget.textWidget().setValue(widgets.numberOneId, value.displayTab);
-
-            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toEqual(false);
-        });
-
-        it('[C315179] Should be able to complete a standalone task with visible tab with valid value for field', async () => {
-            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[5].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[5].entry.name);
-            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
-            await widget.textWidget().isWidgetVisible(widgets.textOneId);
-
-            await widget.tab().clickTabByLabel(tab.tabVarVar);
-            await widget.textWidget().setValue(widgets.textThreeId, value.displayTab);
-
-            await taskFormCloudComponent.clickCompleteButton();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[5].entry.name);
-
-            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[5].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[5].entry.name);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
-        });
-
     });
 
 });
