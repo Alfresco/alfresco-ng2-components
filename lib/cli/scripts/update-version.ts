@@ -126,10 +126,10 @@ export default function (args: UpdateArgs) {
 function main(args) {
 
     program
-        .version('This command allows you to update the adf dependencies and js-api with different versions\n\n' +
-            'Update adf libs and js-api with latest alpha\n\n' +
-            'adf-cli update-version --alpha --pathPackage "$(pwd)"')
-        .description('')
+        .version('0.1.0', '-vers')
+        .description('This command allows you to update the adf dependencies and js-api with different versions\n\n' +
+        'Update adf libs and js-api with latest alpha\n\n' +
+        'adf-cli update-version --alpha --pathPackage "$(pwd)"')
         .option('--pathPackage [type]', 'pathPackage')
         .option('--alpha [type]', 'use alpha')
         .option('--beta [type]', 'use beta')
