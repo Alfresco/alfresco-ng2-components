@@ -54,7 +54,9 @@
     "06s": "",
     "clean": "rimraf dist ./node_modules typings lib/dist",
     "clean-lock": "rimraf package-lock.json",
-    "lint:staged": "lint-staged"
+    "lint:staged": "lint-staged",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -112,14 +114,15 @@
     "moment-es6": "^1.0.0",
     "ng2-charts": "1.6.0",
     "ngx-monaco-editor": "7.0.0",
-    "pdfjs-dist": "2.0.489",
+    "pdfjs-dist": "2.0.943",
     "raphael": "2.2.7",
     "reflect-metadata": "0.1.13",
     "remark-validate-links": "^8.0.0",
     "rxjs": "^6.2.2",
     "systemjs": "0.19.27",
     "web-animations-js": "2.3.1",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "snyk": "^1.250.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.4",
@@ -256,5 +259,6 @@
     "hooks": {
       "pre-commit": "npm run lint:staged"
     }
-  }
+  },
+  "snyk": true
 }
