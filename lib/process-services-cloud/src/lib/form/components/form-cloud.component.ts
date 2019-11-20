@@ -300,12 +300,25 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             });
 
             const form = new FormModel(formCloudRepresentationJSON, formValues, this.readOnly);
+            if (!form) {
+                form.outcomes = this.getFormDefinitionOutcomes(form);
+            }
             if (this.fieldValidators && this.fieldValidators.length > 0) {
                 form.fieldValidators = this.fieldValidators;
             }
             return form;
         }
         return null;
+    }
+
+    /**
+     * Get custom set of outcomes for a Form Definition.
+     * @param form Form definition model.
+     */
+    getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
+        const outcome = new FormOutcomeModel(<any> form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+        return [ outcome
+        ];
     }
 
     checkVisibility(field: FormFieldModel) {
