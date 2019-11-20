@@ -121,10 +121,8 @@ export class DataTableComponentPage {
      * @return 'true' if the list is sorted as await expected and 'false' if it isn't
      */
     async checkListIsSorted(sortOrder: string, columnTitle: string): Promise<any> {
-        await browser.sleep(1000);
-
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
-        // await BrowserVisibility.waitUntilElementIsVisible(column.first());
+        await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
         await column.each(async (currentElement) => {
             const text = await BrowserActions.getText(currentElement);
@@ -137,6 +135,11 @@ export class DataTableComponentPage {
         if (sortOrder.toLocaleLowerCase() === 'desc') {
             sortedList = sortedList.reverse();
         }
+
+        /* tslint:disable */
+        console.log('initialList' + JSON.stringify(initialList));
+        console.log('sortedList' + JSON.stringify(sortedList));
+
         return initialList.toString() === sortedList.toString();
     }
 
