@@ -12,7 +12,7 @@ require('ts-node').register({
 const ACTIVITI_CLOUD_APPS = require('./lib/testing').ACTIVITI_CLOUD_APPS;
 
 const failFast = require('./e2e/protractor/fail-fast');
-// const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
+const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
 const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
 
@@ -150,10 +150,10 @@ exports.config = {
     },
 
     onPrepare() {
-        // afterEachAllRewrite();
-        // beforeEachAllRewrite();
-        // afterAllRewrite();
-        // beforeAllRewrite();
+        afterEachAllRewrite();
+        beforeEachAllRewrite();
+        afterAllRewrite();
+        beforeAllRewrite();
 
         retry.onPrepare();
 

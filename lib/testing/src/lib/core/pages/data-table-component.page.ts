@@ -140,11 +140,6 @@ export class DataTableComponentPage {
             sortedList = sortedList.reverse();
         }
 
-        /* tslint:disable */
-        console.log('initialList' + JSON.stringify(initialList));
-        console.log('sortedList' + JSON.stringify(sortedList));
-        console.log(' initialList.toString() === sortedList.toString()' + (initialList.toString() === sortedList.toString()));
-
         return initialList.toString() === sortedList.toString();
     }
 
