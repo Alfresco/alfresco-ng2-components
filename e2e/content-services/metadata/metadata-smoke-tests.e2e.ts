@@ -21,7 +21,7 @@ import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
-import dateFormat = require('dateformat');
+import moment = require('moment');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
@@ -111,9 +111,9 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getExpandedAspectName()).toEqual(METADATA.DEFAULT_ASPECT);
             await expect(await metadataViewPage.getName()).toEqual(pngFileModel.name);
             await expect(await metadataViewPage.getCreator()).toEqual(pngFileModel.getCreatedByUser().displayName);
-            await expect(await metadataViewPage.getCreatedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATA_FORMAT));
+            await expect(await metadataViewPage.getCreatedDate()).toEqual(moment(pngFileModel.createdAt).format(METADATA.DATA_FORMAT));
             await expect(await metadataViewPage.getModifier()).toEqual(pngFileModel.getCreatedByUser().displayName);
-            await expect(await metadataViewPage.getModifiedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATA_FORMAT));
+            await expect(await metadataViewPage.getModifiedDate()).toEqual(moment(pngFileModel.createdAt).format(METADATA.DATA_FORMAT));
             await expect(await metadataViewPage.getMimetypeName()).toEqual(pngFileModel.getContent().mimeTypeName);
             await expect(await metadataViewPage.getSize()).toEqual(pngFileModel.getContent().getSizeInBytes());
 
