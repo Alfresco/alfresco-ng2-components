@@ -26,7 +26,7 @@ import { StartProcessCloudComponent } from './start-process-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessCloudModule } from '../../process-cloud.module';
 import { fakeProcessDefinitions, fakeStartForm, fakeStartFormNotValid,
-    fakeProcessInstance, fakeProcessPayload, fakeNoNameProcessDefinitions } from '../mock/start-process.component.mock';
+    fakeProcessInstance, fakeProcessPayload, fakeNoNameProcessDefinitions, fakeSingleProcessDefinition } from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
 
 describe('StartProcessCloudComponent', () => {
@@ -37,6 +37,7 @@ describe('StartProcessCloudComponent', () => {
     let formCloudService: FormCloudService;
     let getDefinitionsSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
+    let formDefinitionSpy: jasmine.Spy;
 
     const selectOptionByName = (name: string) => {
 
@@ -133,8 +134,9 @@ describe('StartProcessCloudComponent', () => {
 
         it('should be able to start a process with a valid form', async(() => {
             component.processDefinitionName = 'processwithform';
+            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
             fixture.detectChanges();
-            getDefinitionsSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
+            formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
 
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ 'appName': change });
@@ -153,8 +155,9 @@ describe('StartProcessCloudComponent', () => {
 
         it('should NOT be able to start a process with a form NOT valid', async(() => {
             component.processDefinitionName = 'processwithform';
+            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
             fixture.detectChanges();
-            getDefinitionsSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartFormNotValid));
+            formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartFormNotValid));
 
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ 'appName': change });
@@ -173,9 +176,10 @@ describe('StartProcessCloudComponent', () => {
 
         it('should be able to start a process with a prefilled valid form', async(() => {
             component.processDefinitionName = 'processwithform';
+            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
             component.values = [{'name': 'firstName', 'value': 'FakeName'}, {'name': 'lastName', 'value': 'FakeLastName'}];
             fixture.detectChanges();
-            getDefinitionsSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
+            formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
 
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ 'appName': change });
@@ -196,15 +200,17 @@ describe('StartProcessCloudComponent', () => {
 
         it('should NOT be able to start a process with a prefilled NOT valid form', async(() => {
             component.processDefinitionName = 'processwithform';
+            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
             component.values = [{'name': 'firstName', 'value': 'FakeName'}, {'name': 'lastName', 'value': 'FakeLastName'}];
             fixture.detectChanges();
-            getDefinitionsSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartFormNotValid));
+            formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartFormNotValid));
 
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ 'appName': change });
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
+                expect(formDefinitionSpy).toHaveBeenCalled();
                 const firstNameEl = fixture.nativeElement.querySelector('#firstName');
                 expect(firstNameEl).toBeDefined();
                 expect(firstNameEl.value).toEqual('FakeName');
@@ -292,20 +298,6 @@ describe('StartProcessCloudComponent', () => {
                 const noProcessElement = fixture.nativeElement.querySelector('#no-process-message');
                 expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
                 expect(noProcessElement.innerText.trim()).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.NO_PROCESS_DEFINITIONS');
-            });
-        }));
-
-        it('should select processDefinition based on processDefinition input', async(() => {
-            component.name = 'My new process';
-            component.processDefinitionName = 'processwithoutform1';
-            fixture.detectChanges();
-
-            const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                expect(component.processPayloadCloud.processDefinitionKey).toBe(JSON.parse(JSON.stringify(fakeProcessDefinitions[0])).key);
             });
         }));
 
@@ -428,6 +420,16 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             tick(3000);
             expect(component.filteredProcesses.length).toEqual(1);
+        }));
+
+        it('should display the process definion field as empty if are more than one process definition in the list', async(() => {
+            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            component.ngOnChanges({ appName: change });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const processDefinitionInput = fixture.nativeElement.querySelector('#processDefinitionName');
+                expect(processDefinitionInput.textContent).toEqual('');
+            });
         }));
     });
 

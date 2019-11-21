@@ -179,7 +179,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
                 this.processDefinitionList = processDefinitionRepresentations;
-                if (processDefinitionRepresentations.length > 0) {
+                if (processDefinitionRepresentations.length === 1) {
                     this.selectDefaultProcessDefinition();
                 }
             },
