@@ -6,6 +6,7 @@
                     [id]="field.id"
                     [(ngModel)]="field.value"
                     [disabled]="field.readOnly"
+                    [compareWith]="compareDropdownValues"
                     (ngModelChange)="onFieldChanged(field)">
             <mat-option *ngFor="let opt of field.options"
                         [value]="getOptionValue(opt, field.value)"
