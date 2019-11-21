@@ -384,7 +384,7 @@ describe('UploadButtonComponent', () => {
             spyOn(contentService, 'getNode').and.returnValue(throwError('error'));
 
             component.error.subscribe((value) => {
-                expect(value).toBe('error');
+                expect(value).toBe('FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR');
                 done();
             });
 
