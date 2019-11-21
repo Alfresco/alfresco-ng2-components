@@ -11,6 +11,8 @@
                 </span>
                 <button mat-icon-button fxFlex="0 0 auto" *ngIf="showClickableIcon()"
                     class="adf-textitem-action"
+                    [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                    [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                     [attr.data-automation-id]="'card-textitem-clickable-icon-' + property.key">
 
                     <mat-icon class="adf-textitem-icon">{{property?.icon}}</mat-icon>

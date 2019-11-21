@@ -16,6 +16,8 @@
  */
 
 import { Component, Input, EventEmitter, Output, OnDestroy, OnChanges, OnInit } from '@angular/core';
+import { takeUntil, concatMap } from 'rxjs/operators';
+import { Subject, of, forkJoin } from 'rxjs';
 import {
     CardViewDateItemModel,
     CardViewItem,
@@ -31,9 +33,7 @@ import {
 import { TaskDetailsCloudModel, TaskStatus } from '../../start-task/models/task-details-cloud.model';
 import { Router } from '@angular/router';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { Subject, of } from 'rxjs';
 import { NumericFieldValidator } from '../../../validators/numeric-field.validator';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -109,11 +109,19 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         }
     }
 
-    async loadTaskDetailsById(appName: string, taskId: string): Promise<void> {
-        await this.getCandidates();
-        this.taskCloudService.getTaskById(appName, taskId).subscribe(
-            (taskDetails) => {
+    loadTaskDetailsById(appName: string, taskId: string) {
+        this.taskCloudService.getTaskById(appName, taskId).pipe(
+            concatMap((task) =>
+                forkJoin(
+                    of(task),
+                    this.taskCloudService.getCandidateUsers(this.appName, this.taskId),
+                    this.taskCloudService.getCandidateGroups(this.appName, this.taskId)
+                )
+            )
+        ).subscribe(([taskDetails, candidateUsers, candidateGroups]) => {
                 this.taskDetails = taskDetails;
+                this.candidateGroups = candidateGroups;
+                this.candidateUsers = candidateUsers;
                 if (this.taskDetails.parentTaskId) {
                     this.loadParentName(`${this.taskDetails.parentTaskId}`);
                 } else {
@@ -254,11 +262,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
             const filteredProperties: string[] = this.appConfig.get('adf-cloud-task-header.presets.properties');
             this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
         }
-    }
-
-    private async getCandidates() {
-        this.candidateUsers = await this.taskCloudService.getCandidateUsers(this.appName, this.taskId).toPromise();
-        this.candidateGroups = await this.taskCloudService.getCandidateGroups(this.appName, this.taskId).toPromise();
     }
 
     /**
