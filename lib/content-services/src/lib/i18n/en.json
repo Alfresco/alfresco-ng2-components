@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Upload file",
-      "UPLOAD_FOLDER": "Upload folder"
+      "UPLOAD_FOLDER": "Upload folder",
+      "PERMISSION_CHECK_ERROR": "Error checking permission."
     },
     "VERSION": {
       "MESSAGES": {

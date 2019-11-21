@@ -120,7 +120,13 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
             this.contentService.getNode(this.rootFolderId, opts).subscribe(
                 (res) => this.permissionValue.next(this.nodeHasPermission(res.entry, AllowableOperationsEnum.CREATE)),
-                (error) => this.error.emit(error)
+                (error: { error: Error }) => {
+                    if (error && error.error) {
+                        this.error.emit(error.error.message);
+                    } else {
+                        this.error.emit('FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR');
+                    }
+                }
             );
         }
     }

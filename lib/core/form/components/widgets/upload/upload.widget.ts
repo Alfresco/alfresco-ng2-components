@@ -108,7 +108,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    private removeElementFromList(file) {
+    private removeElementFromList(file: any) {
         const index = this.field.value.indexOf(file);
 
         if (index !== -1) {
@@ -119,17 +119,13 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
 
         this.hasFile = this.field.value.length > 0;
 
-        this.resetFormValueWithNoFiles();
-    }
-
-    private resetFormValueWithNoFiles() {
-        if (this.field.value.length === 0) {
-            this.field.value = [];
-            this.field.json.value = [];
+        if (!this.hasFile) {
+            this.field.value = null;
+            this.field.json.value = null;
         }
     }
 
-    getIcon(mimeType) {
+    getIcon(mimeType: string): string {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 

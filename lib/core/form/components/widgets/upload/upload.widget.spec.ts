@@ -134,8 +134,8 @@ describe('UploadWidgetComponent', () => {
             });
 
             uploadWidgetComponent.removeFile(uploadWidgetComponent.field.value[0]);
-            expect(uploadWidgetComponent.field.value.length).toBe(0);
-            expect(uploadWidgetComponent.field.json.value.length).toBe(0);
+            expect(uploadWidgetComponent.field.value).toBeNull();
+            expect(uploadWidgetComponent.field.json.value).toBeNull();
             expect(uploadWidgetComponent.hasFile).toBeFalsy();
         });
 

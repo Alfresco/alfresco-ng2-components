@@ -373,8 +373,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    openSnackMessage(event: any) {
-        this.notificationService.openSnackMessage(event);
+    openSnackMessage(message: string) {
+        this.notificationService.showError(message);
     }
 
     emitReadyEvent(event: NodePaging) {
