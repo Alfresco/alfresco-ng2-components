@@ -159,7 +159,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 });
             }));
 
-            it('shoud map properties if restResponsePath is set', (done) => {
+            it('should map properties if restResponsePath is set', (done) => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
@@ -188,7 +188,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 });
             });
 
-            it('shoud preselect dropdown widget value set as id ', (done) => {
+            it('should preselect dropdown widget value when Json (rest call) passed', (done) => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
@@ -228,6 +228,42 @@ describe('DropdownCloudWidgetComponent', () => {
                 });
             });
 
+            it('should preselect dropdown widget value when String (defined value) passed ', (done) => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'dropdown-id',
+                    name: 'date-name',
+                    type: 'dropdown-cloud',
+                    readOnly: 'false',
+                    restUrl: 'fake-rest-url',
+                    optionType: 'rest',
+                    value: 'opt1'
+                });
+
+                const dropdownSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(<FormFieldOption[]> [
+                    {
+                        id: 'opt1',
+                        name: 'default1_value'
+                    },
+                    {
+                        id: 2,
+                        name: 'default2_value'
+                    }
+                ]));
+
+                widget.ngOnInit();
+                fixture.detectChanges();
+
+                const dropDownElement: any = element.querySelector('#dropdown-id');
+                dropDownElement.click();
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    const optOne: any = fixture.debugElement.queryAll(By.css('[id="opt1"]'));
+                    expect(dropdownSpy).toHaveBeenCalled();
+                    expect(optOne[0].nativeElement.className).toBe('mat-option ng-star-inserted mat-active');
+                    done();
+                });
+            });
         });
     });
 });
