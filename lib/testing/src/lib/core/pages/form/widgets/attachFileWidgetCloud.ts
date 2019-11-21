@@ -45,6 +45,7 @@ export class AttachFileWidgetCloud {
     async clickAttachContentFile(fileId: string): Promise<void> {
         const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
         await BrowserActions.click(uploadButton);
+        await browser.sleep(1000);
         await BrowserActions.clickExecuteScript('button[id="attach-Alfresco Content"]');
     }
 

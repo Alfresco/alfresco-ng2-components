@@ -16,7 +16,17 @@
  */
 
 import CONSTANTS = require('../util/constants');
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LocalStorageUtil, LoginSSOPage, StringUtil, TaskHeaderCloudPage, TasksService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    AppListCloudPage,
+    GroupIdentityService,
+    IdentityService,
+    LocalStorageUtil,
+    LoginSSOPage,
+    StringUtil,
+    TaskHeaderCloudPage,
+    TasksService
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -55,6 +65,7 @@ describe('Task Header cloud component', () => {
     let groupIdentityService: GroupIdentityService;
 
     beforeAll(async () => {
+
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
@@ -67,12 +78,15 @@ describe('Task Header cloud component', () => {
         tasksService = new TasksService(apiService);
 
         const createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
+
         await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
+
         basicCreatedTask = await tasksService.getTask(createdTaskId.entry.id, simpleApp);
+
         basicCreatedDate = moment(basicCreatedTask.entry.createdDate).format(formatDate);
 
         const completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
-            simpleApp, {priority: priority, description: description, dueDate: basicCreatedTask.entry.createdDate});
+            simpleApp, { priority: priority, description: description, dueDate: basicCreatedTask.entry.createdDate });
         await tasksService.claimTask(completedTaskId.entry.id, simpleApp);
         await tasksService.completeTask(completedTaskId.entry.id, simpleApp);
         completedTask = await tasksService.getTask(completedTaskId.entry.id, simpleApp);
@@ -87,7 +101,6 @@ describe('Task Header cloud component', () => {
         subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);
 
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-
     });
 
     afterAll(async () => {
@@ -109,7 +122,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(basicCreatedTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : basicCreatedTask.entry.description);
         await expect(await taskHeaderCloudPage.getStatus()).toEqual(basicCreatedTask.entry.status);
-        await expect(await taskHeaderCloudPage.getPriority()).toEqual(basicCreatedTask.entry.priority === 0 ? '' : basicCreatedTask.entry.priority.toString());
+        await expect(await taskHeaderCloudPage.getPriority()).toEqual(basicCreatedTask.entry.priority.toString());
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!basicCreatedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : basicCreatedTask.entry.category);
         await expect(await taskHeaderCloudPage.getDueDate()).toEqual(basicCreatedTask.entry.dueDate === null ?
@@ -129,7 +142,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(completedTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.entry.description);
         await expect(await taskHeaderCloudPage.getStatus()).toEqual(completedTask.entry.status);
-        await expect(await taskHeaderCloudPage.getPriority()).toEqual(completedTask.entry.priority === '0' ? '' : completedTask.entry.priority.toString());
+        await expect(await taskHeaderCloudPage.getPriority()).toEqual(completedTask.entry.priority.toString());
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!completedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.entry.category);
         await expect(await taskHeaderCloudPage.getDueDate()).toEqual(completedTask.entry.dueDate === null ?
@@ -148,7 +161,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(subTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : subTask.entry.description);
         await expect(await taskHeaderCloudPage.getStatus()).toEqual(subTask.entry.status);
-        await expect(await taskHeaderCloudPage.getPriority()).toEqual(subTask.entry.priority === 0 ? '' : subTask.entry.priority.toString());
+        await expect(await taskHeaderCloudPage.getPriority()).toEqual(subTask.entry.priority.toString());
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!subTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : subTask.entry.category);
         await expect(await taskHeaderCloudPage.getDueDate()).toEqual(subTask.entry.dueDate === null ?

@@ -131,7 +131,14 @@
     "devops",
     "mouseenter",
     "starteventform",
-    "formtotestvalidations"
+    "formtotestvalidations",
+    "requirednumbervisibility",
+    "numbervisibilityprocess",
+    "booleanvisibilityprocess",
+    "booleanvisibility",
+    "processparent",
+    "uploadfileform",
+    "processwithstarteventform"
   ],
   "dictionaries": [
     "html",

@@ -53,7 +53,6 @@ describe('Process Header cloud component', () => {
         let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
 
         beforeAll(async () => {
-
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
@@ -63,27 +62,31 @@ describe('Process Header cloud component', () => {
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.email, testUser.password);
-            processDefinitionService = new ProcessDefinitionsService(apiService);
 
-            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-            const childProcessDefinition = await processDefinitionService.getProcessDefinitions(subProcessApp);
+            processDefinitionService = new ProcessDefinitionsService(apiService);
+            const dropdownRestProcess = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+
+            const processparent = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.processes.processparent, subProcessApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
-            runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key,
+            runningProcess = await processInstancesService.createProcessInstance(dropdownRestProcess.entry.key,
                 simpleApp, { name: StringUtil.generateRandomString(), businessKey: 'test' });
+
             runningCreatedDate = moment(runningProcess.entry.startDate).format(formatDate);
-            parentCompleteProcess = await processInstancesService.createProcessInstance(childProcessDefinition.list.entries[0].entry.key,
+
+            parentCompleteProcess = await processInstancesService.createProcessInstance(processparent.entry.key,
                 subProcessApp);
 
             queryService = new QueryService(apiService);
 
             const parentProcessInstance = await queryService.getProcessInstanceSubProcesses(parentCompleteProcess.entry.id,
                 subProcessApp);
+
             childCompleteProcess = parentProcessInstance.list.entries[0];
+
             completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);
 
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-
         });
 
         afterAll(async() => {

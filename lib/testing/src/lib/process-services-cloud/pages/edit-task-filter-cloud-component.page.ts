@@ -82,7 +82,7 @@ export class EditTaskFilterCloudComponentPage {
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
         await BrowserActions.click(orderElement);
-        await browser.sleep(1000);
+        await browser.sleep(1500);
     }
 
     getOrderFilterDropDownValue(): Promise<string> {

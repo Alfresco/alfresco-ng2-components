@@ -161,7 +161,10 @@ describe('Start Task Form', () => {
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost,
-            browser.params.config.oauth2.clientId);
+            browser.params.config.oauth2.clientId,
+            false);
+        await loginSSOPage.clickOnSSOButton();
+
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-start-process', JSON.stringify(startProcessCloudConfig));
     });
@@ -223,7 +226,7 @@ describe('Start Task Form', () => {
         it('[C311428] Should display the Standalone forms based on the flag set', async () => {
             await tasksCloudDemoPage.openNewTaskForm();
             await startTask.checkFormIsDisplayed();
-            await startTask.checkFormDefinitionIsNotDisplayed('uploadfileform');
+            await startTask.checkFormDefinitionIsNotDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.uploadfileform);
             await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.starteventform);
             await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
         });
@@ -240,7 +243,8 @@ describe('Start Task Form', () => {
             await processCloudDemoPage.openNewProcessForm();
             await startProcessPage.clearField(startProcessPage.processNameInput);
             await startProcessPage.enterProcessName(startEventFormProcess);
-            await startProcessPage.selectFromProcessDropdown('processwithstarteventform');
+            await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.processwithstarteventform);
+
             await startProcessPage.formFields().checkFormIsDisplayed();
         });
 

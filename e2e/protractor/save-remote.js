@@ -2,7 +2,7 @@ const htmlReporter = require('protractor-html-reporter-2');
 const fs = require('fs');
 const rimraf = require('rimraf');
 const path = require('path');
-const projectRoot = path.resolve(__dirname,'../../');
+const projectRoot = path.resolve(__dirname, '../../');
 
 let FOLDER = process.env.FOLDER || '';
 
@@ -115,34 +115,39 @@ async function saveReport(alfrescoJsApi, retryCount) {
     let temporaryHtmlPath = savePath + 'html/temporaryHtml/';
     let lastFileName = '';
 
-    let files = fs.readdirSync(savePath);
+    try {
+        let files = fs.readdirSync(savePath);
 
-    if (files && files.length > 0) {
-        for (const fileName of files) {
-            const testConfigReport = {
-                reportTitle: 'Protractor Test Execution Report',
-                outputPath: temporaryHtmlPath,
-                outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
-            };
+        if (files && files.length > 0) {
+            for (const fileName of files) {
+                const testConfigReport = {
+                    reportTitle: 'Protractor Test Execution Report',
+                    outputPath: temporaryHtmlPath,
+                    outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
+                };
 
-            let filePath = `${projectRoot}/e2e-output/junit-report/` + fileName;
+                let filePath = `${projectRoot}/e2e-output/junit-report/` + fileName;
 
-            new htmlReporter().from(filePath, testConfigReport);
-            lastFileName = testConfigReport.outputFilename;
+                new htmlReporter().from(filePath, testConfigReport);
+                lastFileName = testConfigReport.outputFilename;
+            }
         }
+
+        let lastHtmlFile = temporaryHtmlPath + lastFileName + '.html';
+
+        if (!(fs.lstatSync(lastHtmlFile).isDirectory())) {
+            output = output + fs.readFileSync(lastHtmlFile);
+        }
+
+        let fileName = savePath + 'html/' + filenameReport + '.html';
+
+        fs.writeFileSync(fileName, output, 'utf8');
+
+        await uploadReport(alfrescoJsApi, filenameReport);
+
+    } catch (e) {
+        console.log('Not possible upload junit report');
     }
-
-    let lastHtmlFile = temporaryHtmlPath + lastFileName + '.html';
-
-    if (!(fs.lstatSync(lastHtmlFile).isDirectory())) {
-        output = output + fs.readFileSync(lastHtmlFile);
-    }
-
-    let fileName = savePath + 'html/' + filenameReport + '.html';
-
-    fs.writeFileSync(fileName, output, 'utf8');
-
-    await uploadReport(alfrescoJsApi, filenameReport);
 
     rimraf(`${projectRoot}/e2e-output/screenshots/`, function () {
         console.log('done delete screenshot');

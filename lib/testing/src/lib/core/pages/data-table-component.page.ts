@@ -122,19 +122,24 @@ export class DataTableComponentPage {
      */
     async checkListIsSorted(sortOrder: string, columnTitle: string): Promise<any> {
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
-        // await BrowserVisibility.waitUntilElementIsVisible(column.first());
+        await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
-        await column.each(async (currentElement) => {
-            const text = await BrowserActions.getText(currentElement);
+
+        const length = await  column.count();
+
+        for (let i = 0; i < length; i++) {
+            const text = await BrowserActions.getText(column.get(i));
             if (text.length !== 0) {
                 initialList.push(text.toLowerCase());
             }
-        });
+        }
+
         let sortedList = [...initialList];
         sortedList = sortedList.sort();
         if (sortOrder.toLocaleLowerCase() === 'desc') {
             sortedList = sortedList.reverse();
         }
+
         return initialList.toString() === sortedList.toString();
     }
 

@@ -100,6 +100,7 @@ export class TasksCloudDemoPage {
     }
 
     async getActiveFilterName(): Promise<string> {
+        await browser.sleep(500);
         return BrowserActions.getText(this.activeFilter);
     }
 
