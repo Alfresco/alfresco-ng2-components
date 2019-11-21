@@ -82,10 +82,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         });
     }
 
-    compareDropdownValues(opt1: string, opt2: FormFieldOption): boolean {
-         return opt1 && opt2 && ( opt1 === opt2.id || opt1 === opt2.name);
-     }
-
      getOptionValue(option: FormFieldOption, fieldValue: string): string {
          let optionValue: string = '';
          if (option.id === 'empty' || option.name !== fieldValue) {
