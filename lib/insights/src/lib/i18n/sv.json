@@ -16,7 +16,7 @@
     "DEFAULT-REPORTS": {
       "PROCESS-DEFINITION-OVERVIEW": {
         "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Totalt antal processdefinitioner",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Totalt antal processinstancer",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Totalt antal processinstanser",
         "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Totalt antal aktiva processinstanser",
         "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Totalt antal slutförda processinstanser"
       }

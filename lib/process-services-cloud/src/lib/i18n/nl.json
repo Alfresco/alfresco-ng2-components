@@ -208,7 +208,11 @@
       "DESCRIPTION": "Beschrijving",
       "DESCRIPTION_DEFAULT": "Geen beschrijving",
       "FORM_NAME": "Formuliernaam",
-      "FORM_NAME_DEFAULT": "Geen formulier"
+      "FORM_NAME_DEFAULT": "Geen formulier",
+      "CANDIDATE_USERS": "Kandidaatgebruikers",
+      "CANDIDATE_USERS_DEFAULT": "Geen kandidaatgebruikers",
+      "CANDIDATE_GROUPS": "Kandidaatgroepen",
+      "CANDIDATE_GROUPS_DEFAULT": "Geen kandidaatgroepen"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Voer een andere waarde in"

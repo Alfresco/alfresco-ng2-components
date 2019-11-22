@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "メッセージなし",
     "TITLE": "通知",
-    "MARK_AS_READ": "すべて既読にする"
+    "MARK_AS_READ": "すべて既読にする",
+    "SYSTEM": "システム"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "{{ minValue }} より小さい値にすることはできません",
         "AT_LEAST_LONG": "{{ minLength }} 文字以上で入力してください",
         "NO_LONGER_THAN": "{{ maxLength }} 文字以内で入力してください"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "同じ名前のファイルが既にアップロードされています。"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "無名のタスク"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "会社のロゴ"
+      "LOGO_ARIA": "会社のロゴ",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "トグルメニュー"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "バイト",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "リダイレクト URI のログアウト",
       "SILENT": "サイレントログイン",
       "SCOPE": "範囲",
-      "CLIENT": "クライアント ID"
+      "CLIENT": "クライアント ID",
+      "PUBLIC_URLS": "サイレントログインのパブリック URL"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "番号形式を使用してください",
         "INT_VALIDATION_ERROR": "整数形式を使用してください"
-      }
+      },
+      "MORE": "詳細"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "昇順",
       "SORT_DESCENDING": "降順",
       "SORT_NONE": "なし",
-      "ICON_TEXT": "ファイルの種類: {{ type }}",
+      "ICON_TEXT": "アイテムタイプ {{ type }}",
       "ICON_DISABLED": "無効",
       "ROW_OPTION_BUTTON": "処理"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "ページに合わせる",
       "ROTATE_LEFT": "左に回転",
       "ROTATE_RIGHT": "右に回転",
-      "RESET": "リセット"
+      "RESET": "リセット",
+      "THUMBNAILS": "文書のサムネイル"
     },
     "PAGE_LABEL": {
       "SHOWING": "表示中",

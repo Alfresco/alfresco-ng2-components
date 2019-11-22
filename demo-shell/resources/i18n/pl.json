@@ -94,6 +94,12 @@
     "TREE_VIEW": "Widok drzewa",
     "ICONS": "Ikony",
     "PEOPLE_GROUPS_CLOUD": "Chmura dla osób/grup",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "Chmura nagłówka zadania",
+      "APP_NAME_INPUT": "Nazwa aplikacji",
+      "TASK_ID_INPUT": "Identyfikator zadania",
+      "FIND_TASK_BUTTON": "Znajdź zadanie"
+    },
     "PEOPLE_CLOUD": "Składnik Chmura dla osób",
     "GROUPS_CLOUD": "Składnik Chmura dla grup",
     "CONFIRM-DIALOG": "Okno dialogowe potwierdzenia",

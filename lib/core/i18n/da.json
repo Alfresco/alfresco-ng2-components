@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Ingen meddelelser",
     "TITLE": "Meddelelser",
-    "MARK_AS_READ": "Markér alle som læst"
+    "MARK_AS_READ": "Markér alle som læst",
+    "SYSTEM": "System"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Må ikke være mindre end {{ minValue }}",
         "AT_LEAST_LONG": "Skriv mindst {{ minLength }} tegn",
         "NO_LONGER_THAN": "Skriv højst {{ maxLength }} tegn"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "En fil med samme navn er allerede uploadet."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Opgave uden navn"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Firmalogo"
+      "LOGO_ARIA": "Firmalogo",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Slå menu til/fra"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "Byte",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "Omdiriger URI til aflogning",
       "SILENT": "Uovervåget login",
       "SCOPE": "Omfang",
-      "CLIENT": "Klient-id"
+      "CLIENT": "Klient-id",
+      "PUBLIC_URLS": "Uovervåget login til offentlige URL-adresser"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Brug et talformat",
         "INT_VALIDATION_ERROR": "Brug et heltalsformat"
-      }
+      },
+      "MORE": "Mere"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Stigende",
       "SORT_DESCENDING": "Faldende",
       "SORT_NONE": "Ingen",
-      "ICON_TEXT": "Filtype {{ type }}",
+      "ICON_TEXT": "Elementtype {{ type }}",
       "ICON_DISABLED": "Deaktiveret",
       "ROW_OPTION_BUTTON": "Handlinger"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Tilpas side",
       "ROTATE_LEFT": "Roter til venstre",
       "ROTATE_RIGHT": "Roter til højre",
-      "RESET": "Nulstil"
+      "RESET": "Nulstil",
+      "THUMBNAILS": "Dokumentminiaturer"
     },
     "PAGE_LABEL": {
       "SHOWING": "Viser",

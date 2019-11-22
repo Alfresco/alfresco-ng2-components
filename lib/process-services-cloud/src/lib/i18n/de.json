@@ -208,7 +208,11 @@
       "DESCRIPTION": "Beschreibung",
       "DESCRIPTION_DEFAULT": "Keine Beschreibung",
       "FORM_NAME": "Formularname",
-      "FORM_NAME_DEFAULT": "Kein Formular"
+      "FORM_NAME_DEFAULT": "Kein Formular",
+      "CANDIDATE_USERS": "Kandidatenbenutzer",
+      "CANDIDATE_USERS_DEFAULT": "Keine Kandidatenbenutzer",
+      "CANDIDATE_GROUPS": "Kandidatengruppen",
+      "CANDIDATE_GROUPS_DEFAULT": "Keine Kandidatengruppen"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Geben Sie einen anderen Wert ein"

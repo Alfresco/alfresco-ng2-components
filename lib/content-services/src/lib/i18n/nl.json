@@ -37,6 +37,7 @@
     "NO_PERMISSION": "U hebt geen rechten voor het weergeven van dit bestand of deze map.",
     "LAYOUT": {
       "CREATED": "Gemaakt",
+      "CREATED_BY": "Gemaakt door",
       "THUMBNAIL": "Miniatuur",
       "NAME": "Naam",
       "LOCATION": "Locatie",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Navigatiepad",
-      "CURRENT_PAGE": "Pagina"
+      "DROPDOWN": "Dropdown"
     }
   },
   "NAME_COLUMN_LINK": {

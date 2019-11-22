@@ -37,6 +37,7 @@
     "NO_PERMISSION": "Nemáte potřebná oprávněni pro zobrazení tohoto souboru nebo složky.",
     "LAYOUT": {
       "CREATED": "Vytvořeno",
+      "CREATED_BY": "Vytvořil(a)",
       "THUMBNAIL": "Miniatura",
       "NAME": "Název",
       "LOCATION": "Umístění",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Popis cesty",
-      "CURRENT_PAGE": "Strana"
+      "DROPDOWN": "Rozevírací seznam"
     }
   },
   "NAME_COLUMN_LINK": {

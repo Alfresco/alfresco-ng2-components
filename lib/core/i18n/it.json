@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Nessun messaggio",
     "TITLE": "Notifiche",
-    "MARK_AS_READ": "Seleziona tutti come già letti"
+    "MARK_AS_READ": "Seleziona tutti come già letti",
+    "SYSTEM": "Sistema"
   },
   "FORM": {
     "START_FORM": {
@@ -21,7 +22,7 @@
       "LOCALSTORAGE": "Archivio locale",
       "SOURCE": "Seleziona origine da ",
       "SHOW_FILE": "Mostra",
-      "DOWNLOAD_FILE": "Download",
+      "DOWNLOAD_FILE": "Scarica",
       "REMOVE_FILE": "Rimuovi",
       "UPLOAD": "Carica",
       "REQUIRED": "*Obbligatorio",
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Non può essere minore di {{ minValue }}",
         "AT_LEAST_LONG": "Immettere almeno {{ minLength }} caratteri",
         "NO_LONGER_THAN": "Immettere non più di {{ maxLength }} caratteri"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "È già stato caricato un file con lo stesso nome."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Compito senza nome"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Logo azienda"
+      "LOGO_ARIA": "Logo azienda",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Cambia menu"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "byte",
@@ -154,10 +159,11 @@
       "APPLY": "Applica",
       "NOT_VALID": "http(s)://host|ip:port(/path) non riconosciuto, provare un URL diverso.",
       "REDIRECT": "Reindirizza URI",
-      "REDIRECT_LOGOUT": "Reindirizza uscita URI",
-      "SILENT": "Accesso invisibile",
+      "REDIRECT_LOGOUT": "Reindirizza logout URI",
+      "SILENT": "Login invisibile",
       "SCOPE": "Ambito",
-      "CLIENT": "ID cliente"
+      "CLIENT": "ID cliente",
+      "PUBLIC_URLS": "URL pubblici per login invisibile"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizzare un formato numerico",
         "INT_VALIDATION_ERROR": "Utilizzare numeri interi"
-      }
+      },
+      "MORE": "Altro"
     },
     "METADATA": {
       "BASIC": {
@@ -224,7 +231,7 @@
       "HIDE-PASSWORD": "Nascondi password"
     },
     "MESSAGES": {
-      "USERNAME-REQUIRED": "Campo obbligatorio",
+      "USERNAME-REQUIRED": "Obbligatorio",
       "USERNAME-MIN": "Il nome utente deve essere lungo almeno {{ minLength }} caratteri.",
       "PASSWORD-REQUIRED": "Immetti la password per accedere",
       "LOGIN-ERROR-CREDENTIALS": "Nome utente o password sconosciuti",
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Ascendente",
       "SORT_DESCENDING": "Discendente",
       "SORT_NONE": "Nessuno",
-      "ICON_TEXT": "Tipo di file {{ type }}",
+      "ICON_TEXT": "Tipo di elemento {{ type }}",
       "ICON_DISABLED": "Disattivato",
       "ROW_OPTION_BUTTON": "Azioni"
     },
@@ -293,7 +300,7 @@
         "JOB_TITLE": "Professione"
       },
       "BPM": {
-        "TENANT": "Organizzazione"
+        "TENANT": "Tenant"
       }
     },
     "TAB": {
@@ -305,7 +312,7 @@
     "ACTIONS": {
       "BACK": "Indietro",
       "OPEN_WITH": "Apri con",
-      "DOWNLOAD": "Download",
+      "DOWNLOAD": "Scarica",
       "PRINT": "Stampa",
       "SHARE": "Condividi",
       "MORE_ACTIONS": "Altre azioni",
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Adatta pagina",
       "ROTATE_LEFT": "Ruota a sinistra",
       "ROTATE_RIGHT": "Ruota a destra",
-      "RESET": "Reimposta"
+      "RESET": "Reimposta",
+      "THUMBNAILS": "Miniature documento"
     },
     "PAGE_LABEL": {
       "SHOWING": "Visualizzazione di",
@@ -349,8 +357,8 @@
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Si è verificato un errore.",
-      "DESCRIPTION": "Si è verificato un errore.",
+      "TITLE": "Si è verificato un problema.",
+      "DESCRIPTION": "Sembra che si sia verificato un errore.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
@@ -359,7 +367,7 @@
       }
     },
     "403": {
-      "TITLE": "Non si dispone delle autorizzazioni per accedere al server.",
+      "TITLE": "Non si dispone dei permessi per accedere al server.",
       "DESCRIPTION": "Accesso alla risorsa sul server non consentito.",
       "SECONDARY_BUTTON": {
         "TEXT": "Segnala errore"
@@ -449,13 +457,13 @@
       },
       "STATUS": {
         "READ_ONLY": "Sola lettura",
-        "AUDIT_ENABLED": "Controllo abilitato",
+        "AUDIT_ENABLED": "Audit abilitato?",
         "QUICK_SHARE_ENABLED": "Quick Share abilitata",
         "THUMBNAIL_ENABLED": "Generazione miniatura"
       },
       "LICENSE": {
         "ISSUES_AT": "Emissione",
-        "EXPIRES_AT": "Scadenza",
+        "EXPIRES_AT": "Scade il",
         "REMAINING_DAYS": "Giorni residui",
         "HOLDER": "Titolare",
         "MODE": "Modo",
@@ -469,7 +477,7 @@
         "ID": "ID",
         "NAME": "Nome",
         "VERSION": "Versione",
-        "VENDOR": "Fornitore",
+        "VENDOR": "Venditore",
         "LICENSE": "Licenza",
         "RUNTIME": "Runtime",
         "DESCRIPTION": "Descrizione"

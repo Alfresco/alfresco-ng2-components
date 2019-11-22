@@ -37,6 +37,7 @@
     "NO_PERMISSION": "Du har ikke tilladelse til at se denne fil eller mappe.",
     "LAYOUT": {
       "CREATED": "Oprettet",
+      "CREATED_BY": "Oprettet af",
       "THUMBNAIL": "Miniaturevisning",
       "NAME": "Navn",
       "LOCATION": "Placering",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Brødkrumme",
-      "CURRENT_PAGE": "Side"
+      "DROPDOWN": "Rullemenu"
     }
   },
   "NAME_COLUMN_LINK": {

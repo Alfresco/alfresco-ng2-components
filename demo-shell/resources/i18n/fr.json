@@ -94,6 +94,12 @@
     "TREE_VIEW": "Arborescence",
     "ICONS": "Icônes",
     "PEOPLE_GROUPS_CLOUD": "Cloud des personnes/groupes",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "En-tête de la tâche du composant cloud",
+      "APP_NAME_INPUT": "Nom de l'application",
+      "TASK_ID_INPUT": "ID de la tâche",
+      "FIND_TASK_BUTTON": "Trouver la tâche"
+    },
     "PEOPLE_CLOUD": "Composant cloud des personnes",
     "GROUPS_CLOUD": "Composant cloud des groupes",
     "CONFIRM-DIALOG": "Boîte de dialogue de confirmation",

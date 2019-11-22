@@ -2,7 +2,7 @@
   "ADF_CLOUD_PROCESS_LIST": {
     "MESSAGES": {
       "TITLE": "Inga processer hittades",
-      "SUBTITLE": "Skapa en ny proces som du enkelt hittar senare",
+      "SUBTITLE": "Skapa en ny process som du enkelt hittar senare",
       "NONE": "Inget processinstansfilter valt"
     },
     "PROPERTIES": {
@@ -208,7 +208,11 @@
       "DESCRIPTION": "Beskrivning",
       "DESCRIPTION_DEFAULT": "Ingen beskrivning",
       "FORM_NAME": "Formulärnamn",
-      "FORM_NAME_DEFAULT": "Inget formulär"
+      "FORM_NAME_DEFAULT": "Inget formulär",
+      "CANDIDATE_USERS": "Kandidatanvändare",
+      "CANDIDATE_USERS_DEFAULT": "Inga kandidatanvändare",
+      "CANDIDATE_GROUPS": "Kandidatgrupper",
+      "CANDIDATE_GROUPS_DEFAULT": "Inga kandidatgrupper"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Ange ett annat värde"

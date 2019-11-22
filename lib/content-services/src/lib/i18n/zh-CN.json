@@ -37,6 +37,7 @@
     "NO_PERMISSION": "您没有查看该文件或文件夹的权限。",
     "LAYOUT": {
       "CREATED": "已创建",
+      "CREATED_BY": "创建者",
       "THUMBNAIL": "缩略图",
       "NAME": "名称",
       "LOCATION": "位置",
@@ -98,10 +99,10 @@
   },
   "TAG": {
     "LABEL": {
-      "NEWTAG": "新建标签"
+      "NEWTAG": "新建标记"
     },
     "MESSAGES": {
-      "EXIST": "标签已存在"
+      "EXIST": "标记已存在"
     },
     "BUTTON": {
       "ADD": "添加标题"
@@ -371,7 +372,7 @@
     "ERRORS": {
       "GENERIC": "我们遇到一个问题",
       "EXISTENT_SITE": "此库 ID 不可用。请尝试使用其他库 ID。",
-      "CONFLICT": "此库 ID 已被使用。请检查回收站。",
+      "CONFLICT": "此库 ID 已被使用。请检查垃圾桶。",
       "ID_TOO_LONG": "对 URL 名称使用 72 个字符或更少字符",
       "DESCRIPTION_TOO_LONG": "对描述使用 512 个字符或更少字符",
       "TITLE_TOO_LONG": "对标题使用 256 个字符或更少字符",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "面包屑",
-      "CURRENT_PAGE": "页面"
+      "DROPDOWN": "下拉列表"
     }
   },
   "NAME_COLUMN_LINK": {

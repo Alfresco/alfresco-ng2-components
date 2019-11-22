@@ -94,6 +94,12 @@
     "TREE_VIEW": "树视图",
     "ICONS": "图标",
     "PEOPLE_GROUPS_CLOUD": "人员/一组云",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "云的任务标题",
+      "APP_NAME_INPUT": "应用程序名称",
+      "TASK_ID_INPUT": "任务 id",
+      "FIND_TASK_BUTTON": "查找任务"
+    },
     "PEOPLE_CLOUD": "人员云组件",
     "GROUPS_CLOUD": "组云组件",
     "CONFIRM-DIALOG": "确认对话",
@@ -105,9 +111,9 @@
       "RESTORE": "恢复"
     },
     "EMPTY_STATE": {
-      "TITLE": "“垃圾”为空",
-      "FIRST_TEXT": "删除的项目移动到“垃圾”。",
-      "SECOND_TEXT": "清空“垃圾”以永久删除项目。"
+      "TITLE": "回收站为空",
+      "FIRST_TEXT": "您删除的项目已移至回收站。",
+      "SECOND_TEXT": "清空回收站以永久删除项目。"
     }
   },
   "DOCUMENT_LIST": {
@@ -131,7 +137,7 @@
     "COLUMNS": {
       "DISPLAY_NAME": "显示名称",
       "IS_LOCKED": "锁定",
-      "TAG": "标签",
+      "TAG": "标记",
       "NODE_ID": "节点 ID",
       "CREATED_BY": "创建者",
       "CREATED_ON": "创建日期",
@@ -247,9 +253,9 @@
     "RATING": "评分组件"
   },
   "TAG": {
-    "LIST": "列表标签 Content Services",
+    "LIST": "列表标记 Content Services",
     "INSERT": "插入节点 ID",
-    "NODE_LIST": "标签列表（按节点 ID 排序）"
+    "NODE_LIST": "标记列表（按节点 ID 排序）"
   },
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "继承权限",

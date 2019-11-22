@@ -94,6 +94,12 @@
     "TREE_VIEW": "Structuurweergave",
     "ICONS": "Pictogrammen",
     "PEOPLE_GROUPS_CLOUD": "Personen-/groepencloud",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "Taakkop cloud",
+      "APP_NAME_INPUT": "App-naam",
+      "TASK_ID_INPUT": "Taak-id",
+      "FIND_TASK_BUTTON": "Taak zoeken"
+    },
     "PEOPLE_CLOUD": "Component Personencloud",
     "GROUPS_CLOUD": "Component Groepencloud",
     "CONFIRM-DIALOG": "Bevestigingsdialoogvenster",

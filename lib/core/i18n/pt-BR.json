@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Não há mensagens",
     "TITLE": "Notificações",
-    "MARK_AS_READ": "Marcar todas como lidas"
+    "MARK_AS_READ": "Marcar todas como lidas",
+    "SYSTEM": "Sistema"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Não pode ser menor do que {{ minValue }}",
         "AT_LEAST_LONG": "Insira no mínimo {{ minLength }} caracteres",
         "NO_LONGER_THAN": "Insira no máximo {{ maxLength }} caracteres"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "Um arquivo de mesmo nome já foi carregado."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Tarefa sem nome"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Logo da empresa"
+      "LOGO_ARIA": "Logo da empresa",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Menu Alternar"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "Bytes",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "Redirecionar logout de URI",
       "SILENT": "Login silencioso",
       "SCOPE": "Escopo",
-      "CLIENT": "ID de cliente"
+      "CLIENT": "ID de cliente",
+      "PUBLIC_URLS": "Login silencioso de URLs públicas"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Use um formato de número",
         "INT_VALIDATION_ERROR": "Use um formato inteiro"
-      }
+      },
+      "MORE": "Mais"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Crescente",
       "SORT_DESCENDING": "Decrescente",
       "SORT_NONE": "Nenhum",
-      "ICON_TEXT": "Tipo de arquivo {{ type }}",
+      "ICON_TEXT": "Tipo de item {{ type }}",
       "ICON_DISABLED": "Desativar",
       "ROW_OPTION_BUTTON": "Ações"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Ajustar página",
       "ROTATE_LEFT": "Girar para a esquerda",
       "ROTATE_RIGHT": "Girar para a direita",
-      "RESET": "Redefinir"
+      "RESET": "Redefinir",
+      "THUMBNAILS": "Miniaturas do documento"
     },
     "PAGE_LABEL": {
       "SHOWING": "Mostrando",

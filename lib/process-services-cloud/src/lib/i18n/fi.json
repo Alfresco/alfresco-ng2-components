@@ -208,7 +208,11 @@
       "DESCRIPTION": "Kuvaus",
       "DESCRIPTION_DEFAULT": "Ei kuvausta",
       "FORM_NAME": "Lomakkeen nimi",
-      "FORM_NAME_DEFAULT": "Ei lomaketta"
+      "FORM_NAME_DEFAULT": "Ei lomaketta",
+      "CANDIDATE_USERS": "Potentiaaliset käyttäjät",
+      "CANDIDATE_USERS_DEFAULT": "Ei potentiaalisia käyttäjiä",
+      "CANDIDATE_GROUPS": "Potentiaaliset ryhmät",
+      "CANDIDATE_GROUPS_DEFAULT": "Ei potentiaalisia ryhmiä"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Anna toinen arvo"

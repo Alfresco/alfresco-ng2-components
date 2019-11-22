@@ -94,6 +94,12 @@
     "TREE_VIEW": "Trævisning",
     "ICONS": "Ikoner",
     "PEOPLE_GROUPS_CLOUD": "Person/gruppecloud",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "Opgaveheader for cloud",
+      "APP_NAME_INPUT": "Appnavn",
+      "TASK_ID_INPUT": "Opgave-id",
+      "FIND_TASK_BUTTON": "Find opgave"
+    },
     "PEOPLE_CLOUD": "Personcloudkomponent",
     "GROUPS_CLOUD": "Gruppecloudkomponent",
     "CONFIRM-DIALOG": "Bekræftelsesdialogboks",

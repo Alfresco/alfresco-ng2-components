@@ -89,7 +89,7 @@
     "LIST": {
       "MESSAGES": {
         "TITLE": "Nessuna attività trovata",
-        "SUBTITLE": "Crea una nuova attività da trovare facilmente più tardi",
+        "SUBTITLE": "Crea un nuovo compito da trovare facilmente più tardi",
         "NONE": "Nessun elenco compiti trovato"
       }
     }
@@ -208,7 +208,11 @@
       "DESCRIPTION": "Descrizione",
       "DESCRIPTION_DEFAULT": "Nessuna descrizione",
       "FORM_NAME": "Nome modulo",
-      "FORM_NAME_DEFAULT": "Nessun modulo"
+      "FORM_NAME_DEFAULT": "Nessun modulo",
+      "CANDIDATE_USERS": "Utenti candidati",
+      "CANDIDATE_USERS_DEFAULT": "Nessun utente candidato",
+      "CANDIDATE_GROUPS": "Gruppi candidati",
+      "CANDIDATE_GROUPS_DEFAULT": "Nessun gruppo candidato"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Immettere un altro valore"

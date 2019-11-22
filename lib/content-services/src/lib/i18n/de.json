@@ -37,6 +37,7 @@
     "NO_PERMISSION": "Sie verfügen nicht über die nötige Berechtigung, um diese Datei oder diesen Ordner anzuzeigen.",
     "LAYOUT": {
       "CREATED": "Erstellt",
+      "CREATED_BY": "Erstellt von",
       "THUMBNAIL": "Miniaturansicht",
       "NAME": "Name",
       "LOCATION": "Speicherort",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Breadcrumb",
-      "CURRENT_PAGE": "Seite"
+      "DROPDOWN": "Dropdown"
     }
   },
   "NAME_COLUMN_LINK": {

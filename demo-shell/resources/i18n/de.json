@@ -94,6 +94,12 @@
     "TREE_VIEW": "Strukturansicht",
     "ICONS": "Symbole",
     "PEOPLE_GROUPS_CLOUD": "Personen-/Gruppen-Cloud",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "Aufgaben-Header für Cloud",
+      "APP_NAME_INPUT": "Anwendungsname",
+      "TASK_ID_INPUT": "Aufgaben-ID",
+      "FIND_TASK_BUTTON": "Aufgabe suchen"
+    },
     "PEOPLE_CLOUD": "Personen-Cloud-Komponente",
     "GROUPS_CLOUD": "Gruppen-Cloud-Komponente",
     "CONFIRM-DIALOG": "Bestätigungsdialog",

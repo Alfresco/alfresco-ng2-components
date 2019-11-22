@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Inga meddelanden",
     "TITLE": "Aviseringar",
-    "MARK_AS_READ": "Markera allt som läst"
+    "MARK_AS_READ": "Markera allt som läst",
+    "SYSTEM": "System"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Kan inte vara mindre än {{ minValue }}",
         "AT_LEAST_LONG": "Ange minst {{ minLength }} tecken",
         "NO_LONGER_THAN": "Ange inte fler än {{ maxLength }} tecken"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "En fil med samma namn finns redan uppladdad."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Namnlös uppgift"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Företagslogotyp"
+      "LOGO_ARIA": "Företagslogotyp",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Växla meny"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "Byte",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "Omdirigera URI-utloggning",
       "SILENT": "Tyst inloggning",
       "SCOPE": "Definitionsområde",
-      "CLIENT": "Klient-ID"
+      "CLIENT": "Klient-ID",
+      "PUBLIC_URLS": "Offentliga url:er för tyst inloggning"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Använd ett nummerformat",
         "INT_VALIDATION_ERROR": "Använd ett heltalsformat"
-      }
+      },
+      "MORE": "Mer"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Stigande",
       "SORT_DESCENDING": "Sjunkande",
       "SORT_NONE": "Ingen",
-      "ICON_TEXT": "Filtyp {{ type }}",
+      "ICON_TEXT": "Artikeltyp {{ type }}",
       "ICON_DISABLED": "Avaktiverad",
       "ROW_OPTION_BUTTON": "Åtgärder"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Passa in sida",
       "ROTATE_LEFT": "Rotera till vänster",
       "ROTATE_RIGHT": "Rotera till höger",
-      "RESET": "Återställ"
+      "RESET": "Återställ",
+      "THUMBNAILS": "Dokumentminiatyrbilder"
     },
     "PAGE_LABEL": {
       "SHOWING": "Visar",

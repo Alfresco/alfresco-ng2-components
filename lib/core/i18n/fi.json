@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Ei viestejä",
     "TITLE": "Ilmoitukset",
-    "MARK_AS_READ": "Merkitse kaikki luetuiksi"
+    "MARK_AS_READ": "Merkitse kaikki luetuiksi",
+    "SYSTEM": "Järjestelmä"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Ei voi olla pienempi kuin {{ minValue }}",
         "AT_LEAST_LONG": "Anna vähintään {{ minLength }} merkkiä",
         "NO_LONGER_THAN": "Anna enintään {{ maxLength }} merkkiä"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "Samanniminen tiedosto on jo ladattu."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Nimetön tehtävä"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Yrityksen logo"
+      "LOGO_ARIA": "Yrityksen logo",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Valikko"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "tavua",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "Uudelleenohjauksen URI-osoite – uloskirjautuminen",
       "SILENT": "Hiljainen kirjautuminen",
       "SCOPE": "Laajuus",
-      "CLIENT": "Asiakastunnus"
+      "CLIENT": "Asiakastunnus",
+      "PUBLIC_URLS": "Yleisten url-osoitteiden hiljainen sisäänkirjaus"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Käytä numeromuotoa",
         "INT_VALIDATION_ERROR": "Käytä kokonaislukumuotoa"
-      }
+      },
+      "MORE": "Lisää"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Nouseva",
       "SORT_DESCENDING": "Laskeva",
       "SORT_NONE": "Ei mitään",
-      "ICON_TEXT": "Tiedostotyyppi {{ type }}",
+      "ICON_TEXT": "Kohteen tyyppi {{ type }}",
       "ICON_DISABLED": "Poistettu käytöstä",
       "ROW_OPTION_BUTTON": "Toiminnot"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Sovita sivu",
       "ROTATE_LEFT": "Käännä vasemmalle",
       "ROTATE_RIGHT": "Käännä oikealle",
-      "RESET": "Nollaa"
+      "RESET": "Nollaa",
+      "THUMBNAILS": "Asiakirjojen esikatselukuvakkeet"
     },
     "PAGE_LABEL": {
       "SHOWING": "Näytetään",

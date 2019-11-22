@@ -208,7 +208,11 @@
       "DESCRIPTION": "الوصف",
       "DESCRIPTION_DEFAULT": "لا يوجد وصف",
       "FORM_NAME": "اسم النموذج",
-      "FORM_NAME_DEFAULT": "لا يوجد نموذج"
+      "FORM_NAME_DEFAULT": "لا يوجد نموذج",
+      "CANDIDATE_USERS": "المستخدمون المرشحون",
+      "CANDIDATE_USERS_DEFAULT": "لا يوجد مستخدمون مرشحون",
+      "CANDIDATE_GROUPS": "المجموعات المرشحة",
+      "CANDIDATE_GROUPS_DEFAULT": "لا توجد مجموعات مرشحة"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "أدخل قيمة مختلفة"

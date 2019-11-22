@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "无消息",
     "TITLE": "通知",
-    "MARK_AS_READ": "全部标记为已读"
+    "MARK_AS_READ": "全部标记为已读",
+    "SYSTEM": "系统"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "不能小于 {{ minValue }}",
         "AT_LEAST_LONG": "至少输入 {{ minLength }} 个字符",
         "NO_LONGER_THAN": "输入不超过 {{ maxLength }} 个字符"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "已上传使用相同名称的文件。"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "无名称的任务"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "公司徽标"
+      "LOGO_ARIA": "公司徽标",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "切换菜单"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "字节",
@@ -144,7 +149,7 @@
       "SSO": "SSO",
       "IMPLICIT-FLOW": "隐式流",
       "PROVIDER": "提供程序",
-      "REQUIRED": "此字段为必填项",
+      "REQUIRED": "此字段为必填字段",
       "CS_URL_ERROR": "Content Services 地址与 URL 格式不匹配",
       "PS_URL_ERROR": "Process Services 地址与 URL 格式不匹配",
       "TITLE": "设置",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "重定向 URI 注销",
       "SILENT": "静默登录",
       "SCOPE": "范围",
-      "CLIENT": "客户端 ID"
+      "CLIENT": "客户端 ID",
+      "PUBLIC_URLS": "用于静默登录的公共 URL"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "使用数字格式",
         "INT_VALIDATION_ERROR": "使用整数格式"
-      }
+      },
+      "MORE": "更多"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "升序",
       "SORT_DESCENDING": "降序",
       "SORT_NONE": "无",
-      "ICON_TEXT": "文件类型 {{ type }}",
+      "ICON_TEXT": "项目类型 {{ type }}",
       "ICON_DISABLED": "禁用",
       "ROW_OPTION_BUTTON": "操作"
     },
@@ -274,7 +281,7 @@
       "DOCUMENT": "文档",
       "FOLDER": "文件夹",
       "PDF": "PDF",
-      "IMAGE": "图像(&I)",
+      "IMAGE": "图像",
       "EXCEL": "Excel 电子表格",
       "WORD": "Word 文档",
       "POWERPOINT": "PowerPoint 演示文稿",
@@ -323,7 +330,8 @@
       "FIT_PAGE": "符合页面",
       "ROTATE_LEFT": "向左旋转",
       "ROTATE_RIGHT": "向右旋转",
-      "RESET": "重置"
+      "RESET": "重置",
+      "THUMBNAILS": "文档缩略图"
     },
     "PAGE_LABEL": {
       "SHOWING": "正在显示",
@@ -390,7 +398,7 @@
     },
     "502": {
       "TITLE": "出现错误。",
-      "DESCRIPTION": "错误网关，请重试或联系 IT 支持 [502]。",
+      "DESCRIPTION": "错误分支，请重试或联系 IT 支持 [502]。",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
@@ -449,7 +457,7 @@
       },
       "STATUS": {
         "READ_ONLY": "只读",
-        "AUDIT_ENABLED": "是否已启用审核",
+        "AUDIT_ENABLED": "是否已启用审计",
         "QUICK_SHARE_ENABLED": "是否已启用 Quick Share",
         "THUMBNAIL_ENABLED": "缩略图生成"
       },

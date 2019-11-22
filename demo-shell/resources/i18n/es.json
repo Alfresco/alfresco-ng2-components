@@ -94,6 +94,12 @@
     "TREE_VIEW": "Vista de árbol",
     "ICONS": "Iconos",
     "PEOPLE_GROUPS_CLOUD": "Personas/Grupos en la nube",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "Encabezados de tareas en componente nube",
+      "APP_NAME_INPUT": "Nombre de aplicación",
+      "TASK_ID_INPUT": "ID de tarea",
+      "FIND_TASK_BUTTON": "Buscar tarea"
+    },
     "PEOPLE_CLOUD": "Componente en la nube de personas",
     "GROUPS_CLOUD": "Componente en la nube de grupos",
     "CONFIRM-DIALOG": "Cuadro de diálogo de confirmación",

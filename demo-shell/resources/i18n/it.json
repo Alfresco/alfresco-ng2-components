@@ -4,14 +4,14 @@
       "TITLE": "Dettagli",
       "COMMENTS": "Commenti",
       "PROPERTIES": "Proprietà",
-      "VERSIONS": "Versione"
+      "VERSIONS": "Versioni"
     },
     "HOME": {
       "TITLE": "Componenti angolari per Alfresco",
       "DOCUMENTATION": "Documentazione"
     },
     "LOGOUT": {
-      "TITLE": "Pagina di uscita",
+      "TITLE": "Pagina di logout",
       "SUB_TITLE": "Utente disconnesso",
       "LOGIN": "Login",
       "HOME": "Home"
@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Consenti eliminazione",
       "SHOW_COMMENTS": "Mostra commenti sulle versioni",
-      "ALLOW_DOWNLOAD": "Abilita download versioni",
+      "ALLOW_DOWNLOAD": "Abilita scaricamento versioni",
       "READ_ONLY": "Sola lettura",
       "COMMENTS": "Mostra commenti"
     },
@@ -38,8 +38,8 @@
   },
   "title": "Benvenuto",
   "VERSION": {
-    "NO_PERMISSION": "Non hai il permesso di gestire versioni di questo contenuto",
-    "NO_PERMISSION_EVENT": "Non hai il permesso ${event.permission} di ${event.action} ${event.type}",
+    "NO_PERMISSION": "Non si dispone dei permessi per gestire versioni di questo contenuto",
+    "NO_PERMISSION_EVENT": "Non si dispone dei permessi ${event.permission} di ${event.action} ${event.type}",
     "CHOOSE_FILE": "Seleziona un file per visualizzarne le versioni",
     "DIALOG": {
       "CLOSE": "Chiudi",
@@ -61,7 +61,7 @@
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Breadcrumb",
     "NOTIFICATIONS": "Notifiche",
-    "TASK_LIST": "Elenco attività",
+    "TASK_LIST": "Elenco compiti",
     "PROCESS_LIST": "Elenco processi",
     "PROCESS_CLOUD": "Activiti Cloud",
     "CARD_VIEW": "CardView",
@@ -94,6 +94,12 @@
     "TREE_VIEW": "Vista struttura",
     "ICONS": "Icone",
     "PEOPLE_GROUPS_CLOUD": "Cloud persone/gruppi",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "Cloud intestazione compito",
+      "APP_NAME_INPUT": "Nome applicazione",
+      "TASK_ID_INPUT": "ID compito",
+      "FIND_TASK_BUTTON": "Trova compito"
+    },
     "PEOPLE_CLOUD": "Componente Cloud persone",
     "GROUPS_CLOUD": "Componente Cloud gruppi",
     "CONFIRM-DIALOG": "Finestra di conferma",
@@ -112,7 +118,7 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Selezione multipla (con caselle di spunta)",
-    "THUMBNAILS": "Abilita anteprime",
+    "THUMBNAILS": "Abilita miniature",
     "ALLOW_DROP_FILES": "Abilita trascinamento di file in una cartella",
     "MULTIPLE_FILE_UPLOAD": "Caricamento di file multipli",
     "FOLDER_UPLOAD": "Caricamento cartelle",
@@ -145,7 +151,7 @@
       "SHARE_EDIT": "Modifica impostazioni",
       "NEW_FOLDER": "Nuova cartella",
       "EDIT_FOLDER": "Modifica cartella",
-      "DOWNLOAD": "Download",
+      "DOWNLOAD": "Scarica",
       "DELETE": "Elimina",
       "FAVORITES": "Aggiungi ai preferiti",
       "SHARE": "Condividi",
@@ -159,7 +165,7 @@
       "VERSIONS": "Gestione versioni",
       "LOCK": "Blocca",
       "METADATA": "Informazioni",
-      "DOWNLOAD": "Download",
+      "DOWNLOAD": "Scarica",
       "PERMISSION": "Permesso",
       "FOLDER": {
         "COPY": "Copia",
@@ -257,8 +263,8 @@
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Inserisci ID app",
-      "APP_ID_TYPE_ERROR": "L'ID app deve essere un numero",
+      "APP_ID_REQUIRED_ERROR": "Inserisci ID applicazione",
+      "APP_ID_TYPE_ERROR": "L'ID applicazione deve essere un numero",
       "NUMBER_TYPE_ERROR": "Il valore deve essere un numero",
       "NUMBER_GREATER_THAN": "Il valore deve essere maggiore o uguale a {{ value }}"
     },
@@ -268,8 +274,8 @@
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Inserisci ID app",
-      "APP_ID_TYPE_ERROR": "L'ID app deve essere un numero",
+      "APP_ID_REQUIRED_ERROR": "Inserisci ID applicazione",
+      "APP_ID_TYPE_ERROR": "L'ID applicazione deve essere un numero",
       "NUMBER_GREATER_THAN": "Il valore deve essere maggiore o uguale a {{ value }}"
     }
   },

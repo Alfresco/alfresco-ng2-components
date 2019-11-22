@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Нет сообщений",
     "TITLE": "Оповещения",
-    "MARK_AS_READ": "Отметить все как прочитанное"
+    "MARK_AS_READ": "Отметить все как прочитанное",
+    "SYSTEM": "Система"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Не может быть меньше {{ minValue }}",
         "AT_LEAST_LONG": "Введите не менее {{ minLength }} символов",
         "NO_LONGER_THAN": "Введите не более {{ maxLength }} символов"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "Файл с таким названием уже загружен."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Задача без имени"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Логотип компании"
+      "LOGO_ARIA": "Логотип компании",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Переключение меню"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "б",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "Выход URI перенаправления",
       "SILENT": "Автоматический вход",
       "SCOPE": "Область применения",
-      "CLIENT": "Идентификатор клиента"
+      "CLIENT": "Идентификатор клиента",
+      "PUBLIC_URLS": "Общедоступные URL-адреса с автоматическим входом"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Использовать формат числа",
         "INT_VALIDATION_ERROR": "Использовать формат целого числа"
-      }
+      },
+      "MORE": "Больше"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "По возрастанию",
       "SORT_DESCENDING": "По убыванию",
       "SORT_NONE": "Нет",
-      "ICON_TEXT": "Тип файла {{ type }}",
+      "ICON_TEXT": "Тип элемента {{ type }}",
       "ICON_DISABLED": "Отменено",
       "ROW_OPTION_BUTTON": "Действия"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "По размеру страницы",
       "ROTATE_LEFT": "Повернуть влево",
       "ROTATE_RIGHT": "Повернуть вправо",
-      "RESET": "Сброс"
+      "RESET": "Сброс",
+      "THUMBNAILS": "Миниатюры документов"
     },
     "PAGE_LABEL": {
       "SHOWING": "Отображается",

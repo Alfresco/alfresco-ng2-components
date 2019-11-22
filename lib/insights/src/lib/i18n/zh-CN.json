@@ -25,7 +25,7 @@
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "包含通过步骤，如启动事件和网关"
+        "TYPE-FILTERING": "包含通过步骤，如启动事件和分支"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
         "PROCESS-DEFINITION": "流程定义",

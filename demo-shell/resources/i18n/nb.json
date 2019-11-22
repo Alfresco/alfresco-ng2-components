@@ -94,6 +94,12 @@
     "TREE_VIEW": "Trevisning",
     "ICONS": "Ikoner",
     "PEOPLE_GROUPS_CLOUD": "Person-/gruppesky",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "Oppgaveoverskrift for sky",
+      "APP_NAME_INPUT": "Navn på app",
+      "TASK_ID_INPUT": "Oppgave-ID",
+      "FIND_TASK_BUTTON": "Finn oppgave"
+    },
     "PEOPLE_CLOUD": "Personsky-komponent",
     "GROUPS_CLOUD": "Gruppesky-kompontent",
     "CONFIRM-DIALOG": "Bekreftelsesdialog",

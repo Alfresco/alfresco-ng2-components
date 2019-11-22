@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Aucun message",
     "TITLE": "Notifications",
-    "MARK_AS_READ": "Marquer tout comme lu"
+    "MARK_AS_READ": "Marquer tout comme lu",
+    "SYSTEM": "Système"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Ne peut pas être inférieur à {{ minValue }}",
         "AT_LEAST_LONG": "Saisir {{ minLength }} caractères minimum",
         "NO_LONGER_THAN": "Saisir {{ maxLength }} caractères maximum"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "Un fichier du même nom a déjà été importé."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Tâche sans nom"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Logo de l'entreprise"
+      "LOGO_ARIA": "Logo de l'entreprise",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Activer/désactiver le menu"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "Octets",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "Déconnexion URI de redirection",
       "SILENT": "Connexion en mode silencieux",
       "SCOPE": "Etendue",
-      "CLIENT": "ID client"
+      "CLIENT": "ID client",
+      "PUBLIC_URLS": "URL publiques pour connexion en mode silencieux"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utiliser un format de numéro",
         "INT_VALIDATION_ERROR": "Utiliser un format d'entier"
-      }
+      },
+      "MORE": "Plus"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Croissant",
       "SORT_DESCENDING": "Décroissant",
       "SORT_NONE": "Aucun",
-      "ICON_TEXT": "Type de fichier {{ type }}",
+      "ICON_TEXT": "Type d'élément {{ type }}",
       "ICON_DISABLED": "Désactivé",
       "ROW_OPTION_BUTTON": "Actions"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Ajuster à la page",
       "ROTATE_LEFT": "Faire pivoter à gauche",
       "ROTATE_RIGHT": "Faire pivoter à droite",
-      "RESET": "Réinitialiser"
+      "RESET": "Réinitialiser",
+      "THUMBNAILS": "Miniatures des documents"
     },
     "PAGE_LABEL": {
       "SHOWING": "Affichage en cours",

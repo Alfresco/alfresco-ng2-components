@@ -94,6 +94,12 @@
     "TREE_VIEW": "Trädvy",
     "ICONS": "Ikoner",
     "PEOPLE_GROUPS_CLOUD": "Personer/grupp moln",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "Uppgiftsrubrik för moln eller molnkomponent",
+      "APP_NAME_INPUT": "Programnamn",
+      "TASK_ID_INPUT": "Uppgifts-ID",
+      "FIND_TASK_BUTTON": "Hitta uppgift"
+    },
     "PEOPLE_CLOUD": "Personer moln-komponent",
     "GROUPS_CLOUD": "Grupper moln-komponent",
     "CONFIRM-DIALOG": "Dialogruta för bekräftelse",

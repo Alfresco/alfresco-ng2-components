@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Žádné zprávy",
     "TITLE": "Upozornění",
-    "MARK_AS_READ": "Označit všechny jako přečtené"
+    "MARK_AS_READ": "Označit všechny jako přečtené",
+    "SYSTEM": "Systém"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Nesmí být nižší než {{ minValue }}",
         "AT_LEAST_LONG": "Zadejte alespoň následující počet znaků: {{ minLength }}",
         "NO_LONGER_THAN": "Zadat můžete nejvýše následující počet znaků: {{ maxLength }}"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "Soubor s tímto názvem již byl odeslán."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Úloha bez názvu"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Logo společnosti"
+      "LOGO_ARIA": "Logo společnosti",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Přepnout nabídku"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "bajtů",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "URI pro přesměrování (odhlášení)",
       "SILENT": "Přihlášení na pozadí",
       "SCOPE": "Rozsah",
-      "CLIENT": "ID klienta"
+      "CLIENT": "ID klienta",
+      "PUBLIC_URLS": "Veřejné adresy URL pro přihlášení na pozadí"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Použít formát čísla",
         "INT_VALIDATION_ERROR": "Použít formát celého čísla"
-      }
+      },
+      "MORE": "Více"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Vzestupně",
       "SORT_DESCENDING": "Sestupně",
       "SORT_NONE": "Žádný",
-      "ICON_TEXT": "Typ souboru {{ type }}",
+      "ICON_TEXT": "Typ položky {{ type }}",
       "ICON_DISABLED": "Zakázáno",
       "ROW_OPTION_BUTTON": "Akce"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Přizpůsobit na stránku",
       "ROTATE_LEFT": "Otočit vlevo",
       "ROTATE_RIGHT": "Otočit vpravo",
-      "RESET": "Reset"
+      "RESET": "Reset",
+      "THUMBNAILS": "Miniatury dokumentů"
     },
     "PAGE_LABEL": {
       "SHOWING": "Zobrazeno",
