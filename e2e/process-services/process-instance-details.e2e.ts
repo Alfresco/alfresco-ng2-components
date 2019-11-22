@@ -38,7 +38,7 @@ describe('Process Instance Details', () => {
 
     let appModel, process, user;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    const PROCESS_DATE_FORMAT = 'mmm d, yyyy';
+    const PROCESS_DATE_FORMAT = 'MMM d, YYYY';
 
     beforeAll(async () => {
         const apps = new AppsActions();
