@@ -35,7 +35,7 @@ describe('Task Details component', () => {
     let processUserModel, appModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
-    const TASK_DATE_FORMAT = 'MMM d, YYYY';
+    const TASK_DATE_FORMAT = 'll';
     let formModel;
     let apps;
 
