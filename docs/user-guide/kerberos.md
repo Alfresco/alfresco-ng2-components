@@ -6,8 +6,7 @@ Added: v3.6.0
 # Kerberos
 The configuration for Kerberos authentication will allow users to access ADF applications by entering their credentials only once when logging into their Windows environment.
 
-To correctly setup your ADF app to work with Kerberos you need to set `withCredentials` property to true in the `auth` section of
-`app.config.json` this will enable Kerberos and bypass the normal login:
+To enable Kerberos SSO and bypass the normal login, set the `withCredentials` property to `true` in the `auth` section of the `app.config.json`:
 
 ```json
 {
@@ -17,4 +16,4 @@ To correctly setup your ADF app to work with Kerberos you need to set `withCrede
 }
 ```
 
-You don't have to use the login component and logout directive in your app when use Kerberos. 
+**Note**: You don't need to use the [login component](../../docs/core/components/login.component.md) and [logout directive](../../docs/core/directives/logout.directive.md) in your app when using Kerberos. 

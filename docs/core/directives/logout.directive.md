@@ -27,9 +27,11 @@ Logs the user out when the decorated element is clicked.
 
 ## Kerberos
 
-You don't have to use the logout directive when enable the Kerberos SSO in ADF. The configuration for Kerberos authentication will allow users to access Alfresco products by entering their credentials only once when logging into their Windows environment.
+The configuration for Kerberos authentication will allow users to access Alfresco products by entering their credentials only once when logging into their Windows environment.
 
-[Kerberos Configuration](../../../lib/docs/core/directives/logout.directive.md)
+**You don't need to use the logout directive when Kerberos SSO is enabled in ADF**. 
+
+See [Kerberos Configuration](../../../docs/user-guide/kerberos.md) for instructions on configuring Kerberos for an ADF app. 
 
 ## See also
 
