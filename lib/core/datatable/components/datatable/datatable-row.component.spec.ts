@@ -120,4 +120,15 @@ describe('DataTableRowComponent', () => {
         fixture.debugElement.nativeElement.dispatchEvent(event);
         expect(component.select.emit).toHaveBeenCalledWith(event);
     });
+
+    it('should emit keyboard Enter event', () => {
+        spyOn(component.select, 'emit');
+        const event = new KeyboardEvent('keydown', {
+            key: ' ',
+            code: 'Enter'
+        });
+
+        fixture.debugElement.nativeElement.dispatchEvent(event);
+        expect(component.select.emit).toHaveBeenCalledWith(event);
+    });
 });
