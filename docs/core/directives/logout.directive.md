@@ -24,6 +24,11 @@ Logs the user out when the decorated element is clicked.
 | enableRedirect | `boolean` | true | Enable redirecting after logout |
 | redirectUri | `string` | "/login" | URI to redirect to after logging out. |
 
+
+## Kerberos
+
+You don't have to use the logout directive when enable the Kerberos SSO in ADF. The configuration for Kerberos authentication will allow users to access Alfresco products by entering their credentials only once when logging into their Windows environment.
+
 ## See also
 
 -   [Login component](../components/login.component.md)
