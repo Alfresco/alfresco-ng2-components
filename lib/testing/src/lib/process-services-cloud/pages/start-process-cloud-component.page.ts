@@ -60,6 +60,13 @@ export class StartProcessCloudPage {
         await this.selectOption(name);
     }
 
+    async selectFirstOptionFromProcessDropdown(): Promise<void> {
+        await this.clickProcessDropdownArrow();
+        const selectFirstProcessDropdown = element.all(by.css('.mat-option-text')).first();
+        await BrowserVisibility.waitUntilElementIsPresent(selectFirstProcessDropdown);
+        await BrowserActions.click(selectFirstProcessDropdown);
+    }
+
     async clickProcessDropdownArrow(): Promise<void> {
         await BrowserActions.click(this.selectProcessDropdownArrow);
     }

@@ -86,6 +86,8 @@ describe('Start Process', () => {
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
         await appListCloudComponent.goToApp(simpleApp);
         await processCloudDemoPage.openNewProcessForm();
+        await startProcessPage.selectFirstOptionFromProcessDropdown();
+
         await startProcessPage.enterProcessName(processName255Characters);
         await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
 
@@ -98,6 +100,8 @@ describe('Start Process', () => {
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
         await appListCloudComponent.goToApp(simpleApp);
         await processCloudDemoPage.openNewProcessForm();
+        await startProcessPage.selectFirstOptionFromProcessDropdown();
+
         await startProcessPage.clearField(startProcessPage.processNameInput);
         await startProcessPage.enterProcessName(processName);
         await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
