@@ -24,7 +24,7 @@ import FormModel = require('../models/APS/FormModel');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import CONSTANTS = require('../util/constants');
-import dateFormat = require('dateformat');
+import moment = require('moment');
 import { LoginPage, BrowserActions, StringUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { browser } from 'protractor';
@@ -35,7 +35,7 @@ describe('Task Details component', () => {
     let processUserModel, appModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
-    const TASK_DATE_FORMAT = 'mmm d, yyyy';
+    const TASK_DATE_FORMAT = 'll';
     let formModel;
     let apps;
 
@@ -92,7 +92,7 @@ describe('Task Details component', () => {
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        await expect(await taskPage.taskDetails().getCreated()).toEqual(moment(taskModel.getCreated()).format(TASK_DATE_FORMAT));
         await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         await expect(await taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
@@ -127,7 +127,7 @@ describe('Task Details component', () => {
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
 
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        await expect(await taskPage.taskDetails().getCreated()).toEqual(moment(taskModel.getCreated()).format(TASK_DATE_FORMAT));
         await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         await expect(await taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
@@ -161,7 +161,7 @@ describe('Task Details component', () => {
         const taskModel = new TaskModel(allTasks.data[0]);
 
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        await expect(await taskPage.taskDetails().getCreated()).toEqual(moment(taskModel.getCreated()).format(TASK_DATE_FORMAT));
         await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         await expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
@@ -195,7 +195,7 @@ describe('Task Details component', () => {
         const taskModel = new TaskModel(allTasks.data[0]);
 
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        await expect(await taskPage.taskDetails().getCreated()).toEqual(moment(taskModel.getCreated()).format(TASK_DATE_FORMAT));
         await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         await expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
@@ -239,7 +239,7 @@ describe('Task Details component', () => {
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        await expect(await taskPage.taskDetails().getCreated()).toEqual(moment(taskModel.getCreated()).format(TASK_DATE_FORMAT));
         await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         await expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
@@ -276,7 +276,7 @@ describe('Task Details component', () => {
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        await expect(await taskPage.taskDetails().getCreated()).toEqual(moment(taskModel.getCreated()).format(TASK_DATE_FORMAT));
         await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         await expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
@@ -308,7 +308,7 @@ describe('Task Details component', () => {
 
         const taskModel = new TaskModel(getTaskResponse);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATE_FORMAT));
+        await expect(await taskPage.taskDetails().getCreated()).toEqual(moment(taskModel.getCreated()).format(TASK_DATE_FORMAT));
         await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         await expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());

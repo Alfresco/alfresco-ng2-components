@@ -30,7 +30,6 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/processFilters
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
-import dateFormat = require('dateformat');
 
 describe('Start Process Component', () => {
 
@@ -202,7 +201,6 @@ describe('Start Process Component', () => {
             await expect(await processDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESS_CATEGORY);
             await expect(await processDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_BUSINESS_KEY);
             await expect(await processDetailsPage.getCreatedBy()).toEqual(`${response.startedBy.firstName} ${response.startedBy.lastName}`);
-            await expect(await processDetailsPage.getCreated()).toEqual(dateFormat(CONSTANTS.PROCESS_DATE_FORMAT));
             await expect(await processDetailsPage.getId()).toEqual(response.id);
             await expect(await processDetailsPage.getProcessDescription()).toEqual(CONSTANTS.PROCESS_DESCRIPTION);
             await expect(await processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.name);
