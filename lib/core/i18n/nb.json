@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Ingen meldinger",
     "TITLE": "Varsler",
-    "MARK_AS_READ": "Merk alle som lest"
+    "MARK_AS_READ": "Merk alle som lest",
+    "SYSTEM": "System"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Kan ikke være mindre enn {{ minValue }}",
         "AT_LEAST_LONG": "Angi minst {{ minLength }} tegn",
         "NO_LONGER_THAN": "Angi opptil {{ maxLength }} tegn"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "En fil med samme navn er allerede opplastet."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Navnløs oppgave"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Selskapslogo"
+      "LOGO_ARIA": "Selskapslogo",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Bytt meny"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "Byte",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "Omdirigerings-URI avlogging",
       "SILENT": "Stille pålogging",
       "SCOPE": "Område",
-      "CLIENT": "Klient-ID"
+      "CLIENT": "Klient-ID",
+      "PUBLIC_URLS": "Offentlige URL-er for stille pålogging"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Bruk et nummerformat",
         "INT_VALIDATION_ERROR": "Bruk heltall"
-      }
+      },
+      "MORE": "Mer"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Stigende",
       "SORT_DESCENDING": "Synkende",
       "SORT_NONE": "Ingen",
-      "ICON_TEXT": "Filtype {{ type }}",
+      "ICON_TEXT": "Elementtype {{ type }}",
       "ICON_DISABLED": "Deaktivert",
       "ROW_OPTION_BUTTON": "Handlinger"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Tilpass side",
       "ROTATE_LEFT": "Roter mot venstre",
       "ROTATE_RIGHT": "Roter mot høyre",
-      "RESET": "Tilbakestill"
+      "RESET": "Tilbakestill",
+      "THUMBNAILS": "Miniatyrbilder for dokument"
     },
     "PAGE_LABEL": {
       "SHOWING": "Viser",

@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Brak komunikatów",
     "TITLE": "Powiadomienia",
-    "MARK_AS_READ": "Oznacz wszystkie jako przeczytane"
+    "MARK_AS_READ": "Oznacz wszystkie jako przeczytane",
+    "SYSTEM": "System"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Wartość nie może być mniejsza niż {{ minValue }}.",
         "AT_LEAST_LONG": "Wprowadź co najmniej następującą liczbę znaków: {{ minLength }}.",
         "NO_LONGER_THAN": "Możesz wprowadzić maksymalnie następującą liczbę znaków: {{ maxLength }}."
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "Plik o tej samej nazwie został już przesłany."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Zadanie bez nazwy"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Logo firmy"
+      "LOGO_ARIA": "Logo firmy",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Przełącz menu"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "B",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "Identyfikator URI przekierowania — wylogowanie",
       "SILENT": "Ciche logowanie",
       "SCOPE": "Zakres",
-      "CLIENT": "Identyfikator klienta"
+      "CLIENT": "Identyfikator klienta",
+      "PUBLIC_URLS": "Publiczne URL do cichego logowania"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Użyj formatu liczby",
         "INT_VALIDATION_ERROR": "Użyj formatu liczby całkowitej"
-      }
+      },
+      "MORE": "Więcej"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Rosnąco",
       "SORT_DESCENDING": "Malejąco",
       "SORT_NONE": "Brak",
-      "ICON_TEXT": "Typ pliku: {{ type }}",
+      "ICON_TEXT": "Typ elementu {{ type }}",
       "ICON_DISABLED": "Wyłączone",
       "ROW_OPTION_BUTTON": "Czynności"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Zmieść na stronie",
       "ROTATE_LEFT": "Obróć w lewo",
       "ROTATE_RIGHT": "Obróć w prawo",
-      "RESET": "Resetuj"
+      "RESET": "Resetuj",
+      "THUMBNAILS": "Miniatura dokumentu"
     },
     "PAGE_LABEL": {
       "SHOWING": "Wyświetlanie",

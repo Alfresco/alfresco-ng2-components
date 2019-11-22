@@ -37,6 +37,7 @@
     "NO_PERMISSION": "Nie masz uprawnień do wyświetlenia tego pliku lub folderu.",
     "LAYOUT": {
       "CREATED": "Utworzono",
+      "CREATED_BY": "Utworzone przez",
       "THUMBNAIL": "Miniatura",
       "NAME": "Nazwa",
       "LOCATION": "Lokalizacja",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Ścieżka nawigacyjna",
-      "CURRENT_PAGE": "Strona"
+      "DROPDOWN": "Rozwiń"
     }
   },
   "NAME_COLUMN_LINK": {

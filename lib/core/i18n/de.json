@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Keine Nachrichten",
     "TITLE": "Benachrichtigungen",
-    "MARK_AS_READ": "Alles als gelesen markieren"
+    "MARK_AS_READ": "Alles als gelesen markieren",
+    "SYSTEM": "System"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Darf nicht kleiner als {{ minValue }} sein",
         "AT_LEAST_LONG": "Geben Sie mindestens {{ minLength }} Zeichen ein",
         "NO_LONGER_THAN": "Geben Sie höchstens {{ maxLength }} Zeichen ein"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "Eine Datei mit diesem Namen wurde bereits hochgeladen."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Namenlose Aufgabe"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Firmenlogo"
+      "LOGO_ARIA": "Firmenlogo",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Menü wechseln"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "Bytes",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "Umleitungs-URI zum Abmelden",
       "SILENT": "Automatische Anmeldung",
       "SCOPE": "Bereich",
-      "CLIENT": "Client-ID"
+      "CLIENT": "Client-ID",
+      "PUBLIC_URLS": "Öffentliche URLs für automatische Anmeldung"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Verwenden Sie ein Zahlenformat",
         "INT_VALIDATION_ERROR": "Verwenden Sie ein Ganzzahlenformat"
-      }
+      },
+      "MORE": "Mehr"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Aufsteigend",
       "SORT_DESCENDING": "Absteigend",
       "SORT_NONE": "Keine",
-      "ICON_TEXT": "Dateityp {{ type }}",
+      "ICON_TEXT": "Elementtyp {{ type }}",
       "ICON_DISABLED": "Deaktiviert",
       "ROW_OPTION_BUTTON": "Aktionen"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Seite anpassen",
       "ROTATE_LEFT": "Nach links drehen",
       "ROTATE_RIGHT": "Nach rechts drehen",
-      "RESET": "Zurücksetzen"
+      "RESET": "Zurücksetzen",
+      "THUMBNAILS": "Dokumenten-Miniaturansichten"
     },
     "PAGE_LABEL": {
       "SHOWING": "Angezeigt",

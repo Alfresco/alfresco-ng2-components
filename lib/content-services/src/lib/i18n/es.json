@@ -37,6 +37,7 @@
     "NO_PERMISSION": "No tiene permiso para ver este fichero o carpeta.",
     "LAYOUT": {
       "CREATED": "Creado",
+      "CREATED_BY": "Creado por",
       "THUMBNAIL": "Miniatura",
       "NAME": "Nombre",
       "LOCATION": "Ubicación",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Ruta de navegación",
-      "CURRENT_PAGE": "Página"
+      "DROPDOWN": "Desplegable"
     }
   },
   "NAME_COLUMN_LINK": {

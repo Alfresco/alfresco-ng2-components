@@ -208,7 +208,11 @@
       "DESCRIPTION": "説明",
       "DESCRIPTION_DEFAULT": "説明なし",
       "FORM_NAME": "フォームの名前",
-      "FORM_NAME_DEFAULT": "フォームなし"
+      "FORM_NAME_DEFAULT": "フォームなし",
+      "CANDIDATE_USERS": "候補ユーザー",
+      "CANDIDATE_USERS_DEFAULT": "候補ユーザーなし",
+      "CANDIDATE_GROUPS": "候補グループ",
+      "CANDIDATE_GROUPS_DEFAULT": "候補グループなし"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "別の値を入力してください"

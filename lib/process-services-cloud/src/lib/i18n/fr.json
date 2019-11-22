@@ -208,7 +208,11 @@
       "DESCRIPTION": "Description",
       "DESCRIPTION_DEFAULT": "Aucune description",
       "FORM_NAME": "Nom du formulaire",
-      "FORM_NAME_DEFAULT": "Aucun formulaire"
+      "FORM_NAME_DEFAULT": "Aucun formulaire",
+      "CANDIDATE_USERS": "Utilisateurs candidats",
+      "CANDIDATE_USERS_DEFAULT": "Aucun utilisateur candidat",
+      "CANDIDATE_GROUPS": "Groupes candidats",
+      "CANDIDATE_GROUPS_DEFAULT": "Aucun groupe candidat"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Saisir une valeur différente"

@@ -37,6 +37,7 @@
     "NO_PERMISSION": "Vous n'avez pas les droits d'accès pour consulter ce fichier ou dossier.",
     "LAYOUT": {
       "CREATED": "Créé",
+      "CREATED_BY": "Créé par",
       "THUMBNAIL": "Miniature",
       "NAME": "Nom",
       "LOCATION": "Emplacement",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Fil d'Ariane",
-      "CURRENT_PAGE": "Page"
+      "DROPDOWN": "Liste déroulante"
     }
   },
   "NAME_COLUMN_LINK": {

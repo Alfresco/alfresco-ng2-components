@@ -37,6 +37,7 @@
     "NO_PERMISSION": "Du har ikke tillatelse til å se denne filen eller mappen.",
     "LAYOUT": {
       "CREATED": "Opprettet",
+      "CREATED_BY": "Opprettet av",
       "THUMBNAIL": "Miniatyrbilde",
       "NAME": "Navn",
       "LOCATION": "Sted",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Søkebane",
-      "CURRENT_PAGE": "Side"
+      "DROPDOWN": "Nedtrekksliste"
     }
   },
   "NAME_COLUMN_LINK": {

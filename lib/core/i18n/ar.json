@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "لا توجد رسائل",
     "TITLE": "إعلامات",
-    "MARK_AS_READ": "وضع علامة على الكل كغير مقروءة"
+    "MARK_AS_READ": "وضع علامة على الكل كغير مقروءة",
+    "SYSTEM": "النظام"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "لا يمكن أن يكون أقل من {{ minValue }}",
         "AT_LEAST_LONG": "أدخل {{ minLength }} حرف (حرفًا) على الأقل",
         "NO_LONGER_THAN": "أدخل {{ maxLength }} حرف (حرفًا) كحد أقصى"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "تم تحميل ملف بالاسم نفسه بالفعل."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "مهمة بدون اسم"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "شعار الشركة"
+      "LOGO_ARIA": "شعار الشركة",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "تبديل القائمة"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "بايت",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "إعادة توجيه خروج URI",
       "SILENT": "دخول صامت",
       "SCOPE": "نطاق",
-      "CLIENT": "معرف العميل"
+      "CLIENT": "معرف العميل",
+      "PUBLIC_URLS": "عناوين url العامة لتسجيل الدخول الصامت"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "استخدام تنسيق رقم",
         "INT_VALIDATION_ERROR": "استخدام تنسيق عدد صحيح"
-      }
+      },
+      "MORE": "المزيد"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "تصاعدي",
       "SORT_DESCENDING": "تنازلي",
       "SORT_NONE": "بلا",
-      "ICON_TEXT": "نوع الملف {{ type }}",
+      "ICON_TEXT": "نوع العنصر {{ type }}",
       "ICON_DISABLED": "معطّل",
       "ROW_OPTION_BUTTON": "إجراءات"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "ملاءمة الصفحة",
       "ROTATE_LEFT": "تدوير لليسار",
       "ROTATE_RIGHT": "تدوير لليمين",
-      "RESET": "إعادة تعيين"
+      "RESET": "إعادة تعيين",
+      "THUMBNAILS": "الصور المصغرة للمستندات"
     },
     "PAGE_LABEL": {
       "SHOWING": "إظهار",

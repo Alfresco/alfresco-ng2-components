@@ -208,7 +208,11 @@
       "DESCRIPTION": "Beskrivelse",
       "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
       "FORM_NAME": "Skjemaets navn",
-      "FORM_NAME_DEFAULT": "Ikke noe skjema"
+      "FORM_NAME_DEFAULT": "Ikke noe skjema",
+      "CANDIDATE_USERS": "Kandidatbrukere",
+      "CANDIDATE_USERS_DEFAULT": "Ingen kandidatbrukere",
+      "CANDIDATE_GROUPS": "Kandidatgrupper",
+      "CANDIDATE_GROUPS_DEFAULT": "Ingen kandidatgrupper"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Angi en annen verdi"

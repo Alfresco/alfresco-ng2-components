@@ -37,6 +37,7 @@
     "NO_PERMISSION": "У вас нет разрешения на просмотр этого файла или папки.",
     "LAYOUT": {
       "CREATED": "Создано",
+      "CREATED_BY": "Создано пользователем",
       "THUMBNAIL": "Эскиз",
       "NAME": "Имя",
       "LOCATION": "Местоположение",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Иерархия",
-      "CURRENT_PAGE": "Страница"
+      "DROPDOWN": "Выпадающий список"
     }
   },
   "NAME_COLUMN_LINK": {

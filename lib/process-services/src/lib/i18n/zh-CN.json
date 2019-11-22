@@ -31,7 +31,7 @@
       "PARENT_TASK_ID": "父任务 ID",
       "NAME": "名称",
       "ASSIGNEE": "被指派者",
-      "ASSIGNEE_DEFAULT": "没有被分派人",
+      "ASSIGNEE_DEFAULT": "没有被指派者",
       "PRIORITY": "优先级",
       "DUE_DATE": "截止日期",
       "DUE_DATE_DEFAULT": "没有日期",
@@ -68,7 +68,7 @@
         "CHECKLIST": "检查表",
         "INVOLVED_PEOPLE": "涉及人员",
         "ADD_PEOPLE": "添加人员和组",
-        "ADD_ASSIGNEE": "新增被分派人"
+        "ADD_ASSIGNEE": "新增被指派者"
       },
       "BUTTON": {
         "COMPLETE": "完成",
@@ -88,7 +88,7 @@
         "NONE": "无截止日期"
       },
       "ASSIGNEE": {
-        "NONE": "没有被分派人"
+        "NONE": "没有被指派者"
       },
       "PEOPLE": {
         "NONE": "未包含任何人"
@@ -174,14 +174,14 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "TITLE": "找不到进程",
-      "SUBTITLE": "创建您想要今后轻松查找的新进程",
-      "SUMMARY": "找到 {{total}} 个进程实例",
-      "ERROR": "无法加载进程实例。请重试，或将以下信息告知 IT 团队：{{errorMessage}}"
+      "TITLE": "找不到流程",
+      "SUBTITLE": "创建您想要今后轻松查找的新流程",
+      "SUMMARY": "找到 {{total}} 个流程实例",
+      "ERROR": "无法加载流程实例。请重试，或将以下信息告知 IT 团队：{{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "未选择进程实例过滤器。"
+        "NONE": "未选择流程实例过滤器。"
       }
     },
     "PROPERTIES": {
@@ -194,7 +194,7 @@
       "CATEGORY": "类别",
       "CATEGORY_DEFAULT": "没有类别",
       "CREATED_BY": "创建者",
-      "CREATED_BY_DEFAULT": "没有被分派人",
+      "CREATED_BY_DEFAULT": "没有被指派者",
       "CREATED": "已创建",
       "BUSINESS_KEY": "商业 Key",
       "BUSINESS_KEY_DEFAULT": "无",
@@ -312,7 +312,7 @@
     "BUTTON": {
       "CREATE": "创建",
       "NEW_TASK": "新任务",
-      "NEW_PROCESS": "新建流程"
+      "NEW_PROCESS": "新流程"
     }
   },
   "APP": {

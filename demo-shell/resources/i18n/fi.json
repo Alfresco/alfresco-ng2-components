@@ -63,7 +63,7 @@
     "NOTIFICATIONS": "Ilmoitukset",
     "TASK_LIST": "Tehtäväluettelo",
     "PROCESS_LIST": "Prosessiluettelo",
-    "PROCESS_CLOUD": "Prosessipilvi",
+    "PROCESS_CLOUD": "Activiti Cloud",
     "CARD_VIEW": "Korttinäkymä",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Kirjaudu sisään",
@@ -94,6 +94,12 @@
     "TREE_VIEW": "Puunäkymä",
     "ICONS": "Kuvakkeet",
     "PEOPLE_GROUPS_CLOUD": "Ihmispilvi/Ryhmäpilvi",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "Tehtävänimikepilvi",
+      "APP_NAME_INPUT": "Sovelluksen nimi",
+      "TASK_ID_INPUT": "Tehtävän tunnus",
+      "FIND_TASK_BUTTON": "Etsi tehtävä"
+    },
     "PEOPLE_CLOUD": "Ihmispilvi-komponentti",
     "GROUPS_CLOUD": "Ryhmäpilvi-komponentti",
     "CONFIRM-DIALOG": "Vahvistusvalintaikkuna",

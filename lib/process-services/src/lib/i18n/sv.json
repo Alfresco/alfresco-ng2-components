@@ -104,7 +104,7 @@
       },
       "ERROR": {
         "TITLE": "Kunde inte slutföra åtgärden",
-        "DESCRIPTION": "Försök igen eller kontrolla att du har åtkomst.",
+        "DESCRIPTION": "Försök igen eller kontrollera att du har åtkomst.",
         "CLOSE": "Stäng"
       }
     },
@@ -115,7 +115,7 @@
     },
     "START_TASK": {
       "DEFAULT_NAME": "Min standarduppgift",
-      "BUTTON": "Skapa uppgfit",
+      "BUTTON": "Skapa uppgift",
       "FORM": {
         "TITLE": "Starta uppgift",
         "LABEL": {
@@ -175,7 +175,7 @@
   "ADF_PROCESS_LIST": {
     "LIST": {
       "TITLE": "Inga processer hittades",
-      "SUBTITLE": "Skapa en ny proces som du enkelt hittar senare",
+      "SUBTITLE": "Skapa en ny process som du enkelt hittar senare",
       "SUMMARY": "{{total}} processinstanser hittades",
       "ERROR": "Kunde inte läsa in processinstanser. Försök igen eller dela följande meddelande med din IT-avdelning: {{errorMessage}}"
     },

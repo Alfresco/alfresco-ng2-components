@@ -37,6 +37,7 @@
     "NO_PERMISSION": "このファイルまたはフォルダを表示する権限がありません。",
     "LAYOUT": {
       "CREATED": "作成日",
+      "CREATED_BY": "作成者",
       "THUMBNAIL": "サムネイル",
       "NAME": "名前",
       "LOCATION": "場所",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "階層リンク",
-      "CURRENT_PAGE": "ページ"
+      "DROPDOWN": "ドロップダウン"
     }
   },
   "NAME_COLUMN_LINK": {

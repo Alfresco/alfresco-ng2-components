@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Geen berichten",
     "TITLE": "Meldingen",
-    "MARK_AS_READ": "Alles markeren als gelezen"
+    "MARK_AS_READ": "Alles markeren als gelezen",
+    "SYSTEM": "Systeem"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "Mag niet kleiner zijn dan {{ minValue }}",
         "AT_LEAST_LONG": "Voer ten minste {{ minLength }} tekens in",
         "NO_LONGER_THAN": "Voer niet meer dan {{ maxLength }} tekens in"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "Er is al een bestand met dezelfde naam geüpload."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Naamloze taak"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Bedrijfslogo"
+      "LOGO_ARIA": "Bedrijfslogo",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Menu in-/uitschakelen"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "bytes",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "Omleidings-URI afmelden",
       "SILENT": "Stille aanmelding",
       "SCOPE": "Bereik",
-      "CLIENT": "Client-id"
+      "CLIENT": "Client-id",
+      "PUBLIC_URLS": "Openbare URL's voor stille aanmelding"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Gebruik een getalnotatie",
         "INT_VALIDATION_ERROR": "Gebruik een notatie voor gehele getallen"
-      }
+      },
+      "MORE": "Meer"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Oplopend",
       "SORT_DESCENDING": "Aflopend",
       "SORT_NONE": "Geen",
-      "ICON_TEXT": "Bestandstype {{ type }}",
+      "ICON_TEXT": "Itemtype {{ type }}",
       "ICON_DISABLED": "Uitgeschakeld",
       "ROW_OPTION_BUTTON": "Acties"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Aangepast aan pagina",
       "ROTATE_LEFT": "Linksom draaien",
       "ROTATE_RIGHT": "Rechtsom draaien",
-      "RESET": "Opnieuw instellen"
+      "RESET": "Opnieuw instellen",
+      "THUMBNAILS": "Documentminiaturen"
     },
     "PAGE_LABEL": {
       "SHOWING": "Wordt weergegeven",

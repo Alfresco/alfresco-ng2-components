@@ -37,6 +37,7 @@
     "NO_PERMISSION": "ليس لديك إذن لعرض هذا الملف أو المجلد.",
     "LAYOUT": {
       "CREATED": "تم الإنشاء",
+      "CREATED_BY": "تم الإنشاء بواسطة",
       "THUMBNAIL": "صورة مصغرة",
       "NAME": "الاسم",
       "LOCATION": "مكان",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "مسار التنقل",
-      "CURRENT_PAGE": "صفحة"
+      "DROPDOWN": "القائمة المنسدلة"
     }
   },
   "NAME_COLUMN_LINK": {

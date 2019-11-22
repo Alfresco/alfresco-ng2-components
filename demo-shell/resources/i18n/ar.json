@@ -63,7 +63,7 @@
     "NOTIFICATIONS": "إعلامات",
     "TASK_LIST": "قائمة المهام",
     "PROCESS_LIST": "مهام عملية",
-    "PROCESS_CLOUD": "سحابة العملية",
+    "PROCESS_CLOUD": "Activiti Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "دخول",
@@ -94,6 +94,12 @@
     "TREE_VIEW": "طريقة عرض الشجرة",
     "ICONS": "أيقونات",
     "PEOPLE_GROUPS_CLOUD": "سحابة الأشخاص/المجموعة",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "عنوان مهمة السحابة",
+      "APP_NAME_INPUT": "اسم التطبيق",
+      "TASK_ID_INPUT": "معرف المهمة",
+      "FIND_TASK_BUTTON": "بحث عن المهمة"
+    },
     "PEOPLE_CLOUD": "مكون سحابة الأشخاص",
     "GROUPS_CLOUD": "مكون سحابة المجموعة",
     "CONFIRM-DIALOG": "مربع حوار التأكيد",

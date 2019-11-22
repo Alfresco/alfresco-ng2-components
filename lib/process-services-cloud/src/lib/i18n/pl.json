@@ -208,7 +208,11 @@
       "DESCRIPTION": "Opis",
       "DESCRIPTION_DEFAULT": "Brak opisu",
       "FORM_NAME": "Nazwa formularza",
-      "FORM_NAME_DEFAULT": "Brak formularza"
+      "FORM_NAME_DEFAULT": "Brak formularza",
+      "CANDIDATE_USERS": "Kandydujący użytkownicy",
+      "CANDIDATE_USERS_DEFAULT": "Brak kandydujący użytkowników",
+      "CANDIDATE_GROUPS": "Kandydujące grupy",
+      "CANDIDATE_GROUPS_DEFAULT": "Brak kandydujących grup"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Wprowadź inną wartość."

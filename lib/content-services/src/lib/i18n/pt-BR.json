@@ -37,6 +37,7 @@
     "NO_PERMISSION": "Você não tem permissão para visualizar este arquivo ou pasta.",
     "LAYOUT": {
       "CREATED": "Criado",
+      "CREATED_BY": "Criado por",
       "THUMBNAIL": "Miniatura",
       "NAME": "Nome",
       "LOCATION": "Localização",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Trilha de navegação",
-      "CURRENT_PAGE": "Página"
+      "DROPDOWN": "Lista suspensa"
     }
   },
   "NAME_COLUMN_LINK": {

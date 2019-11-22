@@ -64,7 +64,7 @@
           "DESCRIPTION": "说明",
           "ATTACHFORM": "附加表单",
           "ASSIGNEE": "被指派者",
-          "CANDIDATE_GROUP": "候选人组",
+          "CANDIDATE_GROUP": "候选组",
           "FORM": "表单",
           "DATE": "选择日期",
           "NONE": "无"
@@ -175,7 +175,7 @@
     }
   },
   "ADF_CLOUD_GROUPS": {
-    "SEARCH-GROUP": "分组",
+    "SEARCH-GROUP": "组",
     "ERROR": {
       "NOT_FOUND": "未找到具有名称 {{groupName}} 的分组"
     }
@@ -192,7 +192,7 @@
       "PARENT_TASK_ID": "父任务 ID",
       "NAME": "名称",
       "ASSIGNEE": "被指派者",
-      "ASSIGNEE_DEFAULT": "没有被分派人",
+      "ASSIGNEE_DEFAULT": "没有被指派者",
       "PRIORITY": "优先级",
       "DUE_DATE": "截止日期",
       "DUE_DATE_DEFAULT": "没有日期",
@@ -208,7 +208,11 @@
       "DESCRIPTION": "说明",
       "DESCRIPTION_DEFAULT": "没有描述",
       "FORM_NAME": "表单名称",
-      "FORM_NAME_DEFAULT": "无表单"
+      "FORM_NAME_DEFAULT": "无表单",
+      "CANDIDATE_USERS": "候选用户",
+      "CANDIDATE_USERS_DEFAULT": "无候选用户",
+      "CANDIDATE_GROUPS": "候选组",
+      "CANDIDATE_GROUPS_DEFAULT": "无候选组"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "使用其他值"

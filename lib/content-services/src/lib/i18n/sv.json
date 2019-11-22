@@ -37,6 +37,7 @@
     "NO_PERMISSION": "Du har inte behörighet att visa den här filen eller mappen.",
     "LAYOUT": {
       "CREATED": "Skapad",
+      "CREATED_BY": "Skapad av",
       "THUMBNAIL": "Miniatyrbild",
       "NAME": "Namn",
       "LOCATION": "Plats",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Synlig sökväg",
-      "CURRENT_PAGE": "Sida"
+      "DROPDOWN": "Rullgardinsmeny"
     }
   },
   "NAME_COLUMN_LINK": {

@@ -94,6 +94,12 @@
     "TREE_VIEW": "Stromová struktura",
     "ICONS": "Ikony",
     "PEOPLE_GROUPS_CLOUD": "Cloud osob/skupin",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "Záhlaví úkolu cloudové komponenty",
+      "APP_NAME_INPUT": "Název aplikace",
+      "TASK_ID_INPUT": "ID úkolu",
+      "FIND_TASK_BUTTON": "Najít úkol"
+    },
     "PEOPLE_CLOUD": "Součást cloudu osob",
     "GROUPS_CLOUD": "Součást cloudu skupin",
     "CONFIRM-DIALOG": "Dialogové okno s potvrzením",

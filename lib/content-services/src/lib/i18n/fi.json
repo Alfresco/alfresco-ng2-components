@@ -37,6 +37,7 @@
     "NO_PERMISSION": "Sinulla ei ole oikeutta tarkastella tätä tiedostoa tai kansiota.",
     "LAYOUT": {
       "CREATED": "Luotu",
+      "CREATED_BY": "Tekijä:",
       "THUMBNAIL": "Pikkukuva",
       "NAME": "Nimi",
       "LOCATION": "Sijainti",
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Siirtymispolku",
-      "CURRENT_PAGE": "Sivu"
+      "DROPDOWN": "Pudotusvalikko"
     }
   },
   "NAME_COLUMN_LINK": {

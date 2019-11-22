@@ -8,7 +8,8 @@
   "NOTIFICATIONS": {
     "NO_MESSAGE": "No hay mensajes",
     "TITLE": "Notificaciones",
-    "MARK_AS_READ": "Marcar todo como leído"
+    "MARK_AS_READ": "Marcar todo como leído",
+    "SYSTEM": "Sistema"
   },
   "FORM": {
     "START_FORM": {
@@ -33,7 +34,8 @@
         "NOT_LESS_THAN": "No puede ser menor que {{ minValue }}",
         "AT_LEAST_LONG": "Introducir al menos {{ minLength }} caracteres",
         "NO_LONGER_THAN": "No introducir más de {{ maxLength }} caracteres"
-      }
+      },
+      "FILE_ALREADY_UPLOADED": "Ya se ha cargado un fichero con el mismo nombre."
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Tarea sin nombre"
@@ -41,7 +43,10 @@
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Logotipo de la empresa"
+      "LOGO_ARIA": "Logotipo de la empresa",
+      "ACCESSIBILITY": {
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Alternar menú"
+      }
     },
     "FILE_SIZE": {
       "BYTES": "bytes",
@@ -157,7 +162,8 @@
       "REDIRECT_LOGOUT": "Cierre de sesión de URI de redireccionamiento",
       "SILENT": "Inicio de sesión silencioso",
       "SCOPE": "Ámbito",
-      "CLIENT": "ID de cliente"
+      "CLIENT": "ID de cliente",
+      "PUBLIC_URLS": "URL públicas para inicio de sesión silencioso"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -169,7 +175,8 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizar un formato de número",
         "INT_VALIDATION_ERROR": "Utilizar un formato de entero"
-      }
+      },
+      "MORE": "Más"
     },
     "METADATA": {
       "BASIC": {
@@ -266,7 +273,7 @@
       "SORT_ASCENDING": "Ascendente",
       "SORT_DESCENDING": "Descendente",
       "SORT_NONE": "Ninguno",
-      "ICON_TEXT": "Tipo de fichero {{ type }}",
+      "ICON_TEXT": "Tipo de elemento {{ type }}",
       "ICON_DISABLED": "Desactivado",
       "ROW_OPTION_BUTTON": "Acciones"
     },
@@ -323,7 +330,8 @@
       "FIT_PAGE": "Ajustar página",
       "ROTATE_LEFT": "Girar a la izquierda",
       "ROTATE_RIGHT": "Girar a la derecha",
-      "RESET": "Reiniciar"
+      "RESET": "Reiniciar",
+      "THUMBNAILS": "Miniaturas de documento"
     },
     "PAGE_LABEL": {
       "SHOWING": "Mostrando",

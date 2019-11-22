@@ -94,6 +94,12 @@
     "TREE_VIEW": "ツリービュー",
     "ICONS": "アイコン",
     "PEOPLE_GROUPS_CLOUD": "メンバー/グループのクラウド",
+    "TASK_HEADER_CLOUD": {
+      "COMPONENT_NAME": "クラウドのタスクヘッダー",
+      "APP_NAME_INPUT": "アプリケーション名",
+      "TASK_ID_INPUT": "タスク ID",
+      "FIND_TASK_BUTTON": "タスクの検索"
+    },
     "PEOPLE_CLOUD": "メンバーのクラウドコンポーネント",
     "GROUPS_CLOUD": "グループのクラウドコンポーネント",
     "CONFIRM-DIALOG": "確認ダイアログ",

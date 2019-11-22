@@ -208,7 +208,11 @@
       "DESCRIPTION": "Описание",
       "DESCRIPTION_DEFAULT": "Нет описания",
       "FORM_NAME": "Имя формы",
-      "FORM_NAME_DEFAULT": "Без формы"
+      "FORM_NAME_DEFAULT": "Без формы",
+      "CANDIDATE_USERS": "Пользователи-кандидаты",
+      "CANDIDATE_USERS_DEFAULT": "Пользователи-кандидаты отсутствуют",
+      "CANDIDATE_GROUPS": "Группы-кандидаты",
+      "CANDIDATE_GROUPS_DEFAULT": "Группы-кандидаты отсутствуют"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Введите другое значение"

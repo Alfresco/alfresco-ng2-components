@@ -3,9 +3,9 @@
     "ACTIONS": {
       "RESTORE": "Ripristina",
       "DELETE": "Elimina",
-      "DOWNLOAD": "Download",
+      "DOWNLOAD": "Scarica",
       "UPLOAD": {
-        "TITLE": "Utilizza nuova versione",
+        "TITLE": "Carica la nuova versione",
         "TOOLTIP": "Limite: è necessario caricare un file con lo stesso nome per crearne una nuova versione.",
         "MAJOR": "modifiche maggiori (2.0)",
         "MINOR": "modifiche minori (1.1)",
@@ -34,9 +34,10 @@
     "EMPTY": {
       "HEADER": "Questa cartella è vuota"
     },
-    "NO_PERMISSION": "Non disponi del permesso per visualizzare questo file o questa cartella.",
+    "NO_PERMISSION": "Non si dispone dei permessi per visualizzare questo file o questa cartella.",
     "LAYOUT": {
       "CREATED": "Creato",
+      "CREATED_BY": "Creato da",
       "THUMBNAIL": "Miniatura",
       "NAME": "Nome",
       "LOCATION": "Località",
@@ -52,7 +53,7 @@
     "MENU_ACTIONS": {
       "VIEW": "Visualizza",
       "REMOVE": "Rimuovi",
-      "DOWNLOAD": "Download"
+      "DOWNLOAD": "Scarica"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -165,7 +166,7 @@
       "UPLOAD_ERRORS": "{{ total }} caricamenti eseguiti correttamente",
       "PROGRESS": "Caricamento in corso...",
       "FOLDER_ALREADY_EXIST": "Cartella {0} già presente",
-      "FOLDER_NOT_SUPPORTED": "L'upload di cartelle non è supportato dal browser, prova con un altro browser",
+      "FOLDER_NOT_SUPPORTED": "Il browser non supporta il caricamento di cartelle, prova con un altro browser",
       "REMOVE_FILE_ERROR": "Impossibile rimuovere {{ fileName }}, riprova o verifica con il team IT.",
       "REMOVE_FILES_ERROR": "Impossibile rimuovere {{ total }} file. Riprova o verifica con il team IT.",
       "EXCEED_MAX_FILE_SIZE": "Il file {{ fileName }} è più grande delle dimensioni del file consentite"
@@ -200,11 +201,11 @@
     "RESULTS": {
       "SUMMARY": "Trovati {{numResults}} risultati per {{searchTerm}}",
       "NONE": "Nessun risultato trovato per {{searchTerm}}",
-      "ERROR": "La ricerca ha generato un errore, riprova.",
+      "ERROR": "Si è verificato un problema durante la ricerca. Riprovare.",
       "COLUMNS": {
         "NAME": "Nome visualizzato",
         "MODIFIED_BY": "Modificato da",
-        "MODIFIED_AT": "Modificato"
+        "MODIFIED_AT": "Modificato in"
       }
     },
     "FILTER": {
@@ -266,7 +267,7 @@
           "COPY": "Copia"
         },
         "DOCUMENT": {
-          "DOWNLOAD": "Download",
+          "DOWNLOAD": "Scarica",
           "DELETE": "Elimina",
           "MOVE": "Sposta",
           "COPY": "Copia",
@@ -276,7 +277,7 @@
     }
   },
   "PERMISSION": {
-    "LACKOF": "Non hai l'autorizzazione {{permission}} per {{action}} {{type}}"
+    "LACKOF": "Non  si dispone dei permessi {{permission}} per {{action}} {{type}}"
   },
   "METADATA": {
     "BASIC": {
@@ -313,7 +314,7 @@
       "REMOVE": "Rimuovi"
     },
     "UNSHARE_ERROR": "Errore durante l'annullamento della condivisione di questo file",
-    "UNSHARE_PERMISSION_ERROR": "Non hai il permesso per rimuovere la condivisione di questo file"
+    "UNSHARE_PERMISSION_ERROR": "Non si dispone dei permessi per rimuovere la condivisione di questo file"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -378,7 +379,7 @@
       "TITLE_TOO_SHORT": "Il titolo deve contenere almeno 2 caratteri",
       "ILLEGAL_CHARACTERS": "Utilizzare solo lettere e numeri",
       "ONLY_SPACES": "Il nome della raccolta non può contenere solo spazi",
-      "LIBRARY_UPDATE_ERROR": "Si è verificato un errore nell’aggiornamento della proprietà della raccolta"
+      "LIBRARY_UPDATE_ERROR": "Si è verificato un errore di caricamento delle proprietà della raccolta"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Proprietà della raccolta aggiornate"
@@ -387,7 +388,7 @@
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Breadcrumb",
-      "CURRENT_PAGE": "Pagina"
+      "DROPDOWN": "Elenco a discesa"
     }
   },
   "NAME_COLUMN_LINK": {

@@ -208,7 +208,11 @@
       "DESCRIPTION": "Descripción",
       "DESCRIPTION_DEFAULT": "Sin descripción",
       "FORM_NAME": "Nombre del formulario",
-      "FORM_NAME_DEFAULT": "No hay formulario"
+      "FORM_NAME_DEFAULT": "No hay formulario",
+      "CANDIDATE_USERS": "Usuarios candidatos",
+      "CANDIDATE_USERS_DEFAULT": "Sin usuarios candidatos",
+      "CANDIDATE_GROUPS": "Grupos candidatos",
+      "CANDIDATE_GROUPS_DEFAULT": "Sin grupos candidatos"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Introducir un valor diferente"

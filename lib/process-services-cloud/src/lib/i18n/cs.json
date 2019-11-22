@@ -208,7 +208,11 @@
       "DESCRIPTION": "Popis",
       "DESCRIPTION_DEFAULT": "Žádný popis",
       "FORM_NAME": "Název formuláře",
-      "FORM_NAME_DEFAULT": "Žádný formulář"
+      "FORM_NAME_DEFAULT": "Žádný formulář",
+      "CANDIDATE_USERS": "Uživatelé kandidáti",
+      "CANDIDATE_USERS_DEFAULT": "Žádní uživatelé kandidáti",
+      "CANDIDATE_GROUPS": "Skupiny kandidátů",
+      "CANDIDATE_GROUPS_DEFAULT": "Žádné skupiny kandidátů"
     },
     "FORM_VALIDATION": {
       "INVALID_FIELD": "Zadejte jinou hodnotu"
