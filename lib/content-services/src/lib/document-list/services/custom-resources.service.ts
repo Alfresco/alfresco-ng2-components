@@ -154,8 +154,8 @@ export class CustomResourcesService {
                                             const target = entry.target.file || entry.target.folder;
                                             target.properties = {
                                                 ...(target.properties || {
-                                                    'cm:title': entry.title,
-                                                    'cm:description': entry.description
+                                                        'cm:title': entry.title || target.title,
+                                                        'cm:description': entry.description || target.description
                                                     }),
                                                 ...(entry.properties || {})
                                             };
