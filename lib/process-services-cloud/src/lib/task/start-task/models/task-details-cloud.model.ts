@@ -32,7 +32,7 @@ export interface TaskDetailsCloudModel {
     lastModifiedTo?: Date;
     lastModifiedFrom?: Date;
     owner?: any;
-    parentTaskId?: number;
+    parentTaskId?: string;
     priority?: number;
     processDefinitionId?: string;
     processInstanceId?: string;

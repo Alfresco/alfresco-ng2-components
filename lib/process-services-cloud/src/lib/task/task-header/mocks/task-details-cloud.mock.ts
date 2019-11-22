@@ -17,6 +17,30 @@
 
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 
+export const taskDetailsWithParentTaskIdMock: TaskDetailsCloudModel = {
+    'appName': 'task-app',
+    'appVersion': 1,
+    'id': '68d54a8f-01f3-11e9-8e36-0a58646002ad',
+    'assignee': 'AssignedTaskUser',
+    'name': 'This is a parent task name ',
+    'description': 'This is the description ',
+    'createdDate': new Date(1545048055900),
+    'dueDate': new Date(),
+    'claimedDate': null,
+    'priority': 5,
+    'category': null,
+    'processDefinitionId': null,
+    'processInstanceId': null,
+    'status': 'ASSIGNED',
+    'owner': 'ownerUser',
+    'parentTaskId': 'mock-parent-task-id',
+    'formKey': null,
+    'lastModified': new Date(1545048055900),
+    'lastModifiedTo': null,
+    'lastModifiedFrom': null,
+    'standalone': true
+};
+
 export const assignedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     'appName': 'task-app',
     'appVersion': 1,
@@ -81,6 +105,102 @@ export const emptyOwnerTaskDetailsCloudMock: TaskDetailsCloudModel = {
     'processInstanceId': null,
     'status': 'ASSIGNED',
     'owner': null,
+    'parentTaskId': null,
+    'formKey': null,
+    'lastModified': new Date(1545048055900),
+    'lastModifiedTo': null,
+    'lastModifiedFrom': null,
+    'standalone': true
+};
+
+export const createdStateTaskDetailsCloudMock: TaskDetailsCloudModel = {
+    'appName': 'mock-app-name',
+    'appVersion': 1,
+    'id': 'mock-task-id',
+    'assignee': '',
+    'name': 'This is a new task ',
+    'description': 'This is the description ',
+    'createdDate': new Date(1545048055900),
+    'dueDate': new Date(1545091200000),
+    'claimedDate': null,
+    'priority': 5,
+    'category': null,
+    'processDefinitionId': null,
+    'processInstanceId': null,
+    'status': 'CREATED',
+    'owner': 'ownerUser',
+    'parentTaskId': null,
+    'formKey': null,
+    'lastModified': new Date(1545048055900),
+    'lastModifiedTo': null,
+    'lastModifiedFrom': null,
+    'standalone': false
+};
+
+export const completedTaskDetailsCloudMock: TaskDetailsCloudModel = {
+    'appName': 'mock-app-name',
+    'appVersion': 1,
+    'id': 'mock-task-id',
+    'assignee': 'CompletedTaskAssignee',
+    'name': 'This is a new task ',
+    'description': 'This is the description ',
+    'createdDate': new Date(1545048055900),
+    'dueDate': new Date(1545091200000),
+    'claimedDate': null,
+    'priority': 5,
+    'category': null,
+    'processDefinitionId': null,
+    'processInstanceId': null,
+    'status': 'COMPLETED',
+    'owner': 'ownerUser',
+    'parentTaskId': null,
+    'formKey': null,
+    'lastModified': new Date(1545048055900),
+    'lastModifiedTo': null,
+    'lastModifiedFrom': null,
+    'standalone': false
+};
+
+export const cancelledTaskDetailsCloudMock: TaskDetailsCloudModel = {
+    'appName': 'mock-app-name',
+    'appVersion': 1,
+    'id': 'mock-task-id',
+    'assignee': 'CancelledTaskAssignee',
+    'name': 'This is a new task ',
+    'description': 'This is the description ',
+    'createdDate': new Date(1545048055900),
+    'dueDate': new Date(1545091200000),
+    'claimedDate': null,
+    'priority': 5,
+    'category': null,
+    'processDefinitionId': null,
+    'processInstanceId': null,
+    'status': 'CANCELLED',
+    'owner': 'ownerUser',
+    'parentTaskId': null,
+    'formKey': null,
+    'lastModified': new Date(1545048055900),
+    'lastModifiedTo': null,
+    'lastModifiedFrom': null,
+    'standalone': true
+};
+
+export const suspendedTaskDetailsCloudMock: TaskDetailsCloudModel = {
+    'appName': 'mock-app-name',
+    'appVersion': 1,
+    'id': 'mock-task-id',
+    'assignee': 'SuspendedTaskAssignee',
+    'name': 'This is a new task ',
+    'description': 'This is the description ',
+    'createdDate': new Date(1545048055900),
+    'dueDate': new Date(1545091200000),
+    'claimedDate': null,
+    'priority': 5,
+    'category': null,
+    'processDefinitionId': null,
+    'processInstanceId': null,
+    'status': 'SUSPENDED',
+    'owner': 'ownerUser',
     'parentTaskId': null,
     'formKey': null,
     'lastModified': new Date(1545048055900),

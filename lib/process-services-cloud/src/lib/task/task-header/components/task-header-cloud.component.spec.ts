@@ -15,33 +15,35 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
-import { assignedTaskDetailsCloudMock } from '../mocks/task-details-cloud.mock';
-import { TaskHeaderCloudModule } from '../task-header-cloud.module';
-import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { setupTestBed, AppConfigService } from '@alfresco/adf-core';
+import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { TaskHeaderCloudModule } from '../task-header-cloud.module';
+import {
+    assignedTaskDetailsCloudMock,
+    completedTaskDetailsCloudMock,
+    createdStateTaskDetailsCloudMock,
+    suspendedTaskDetailsCloudMock,
+    taskDetailsWithParentTaskIdMock
+} from '../mocks/task-details-cloud.mock';
 import moment = require('moment');
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
     let fixture: ComponentFixture<TaskHeaderCloudComponent>;
-    let service: TaskCloudService;
     let appConfigService: AppConfigService;
-    let identityUserService: IdentityUserService;
+    let taskCloudService: TaskCloudService;
+    let getTaskByIdSpy: jasmine.Spy;
+    let updateTaskSpy: jasmine.Spy;
     let getCandidateGroupsSpy: jasmine.Spy;
     let getCandidateUsersSpy: jasmine.Spy;
+    let isTaskEditableSpy: jasmine.Spy;
 
-    const identityUserMock = {
-        username: 'testuser',
-        firstName: 'fake-identity-first-name',
-        lastName: 'fake-identity-last-name',
-        email: 'fakeIdentity@email.com'
-    };
     const mockCandidateUsers = ['mockuser1', 'mockuser2', 'mockuser3'];
     const mockCandidateGroups = ['mockgroup1', 'mockgroup2', 'mockgroup3'];
 
@@ -51,67 +53,63 @@ describe('TaskHeaderCloudComponent', () => {
             TaskHeaderCloudModule,
             RouterTestingModule
         ],
-        providers: [IdentityUserService]
+        providers: [TaskCloudService]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TaskHeaderCloudComponent);
+        component = fixture.componentInstance;
+        appConfigService = TestBed.get(AppConfigService);
+        taskCloudService = TestBed.get(TaskCloudService);
+        component.appName = 'mock-app-name';
+        component.taskId = 'mock-task-id';
+        getTaskByIdSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(assignedTaskDetailsCloudMock));
+        updateTaskSpy = spyOn(taskCloudService, 'updateTask').and.returnValue(of(assignedTaskDetailsCloudMock));
+        isTaskEditableSpy = spyOn(taskCloudService, 'isTaskEditable').and.returnValue(true);
+        getCandidateUsersSpy = spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of(mockCandidateUsers));
+        getCandidateGroupsSpy = spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of(mockCandidateGroups));
     });
 
     describe('Task Details', () => {
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(TaskHeaderCloudComponent);
-            component = fixture.componentInstance;
-            component.appName = 'myApp';
-            component.taskId = assignedTaskDetailsCloudMock.id;
-            service = TestBed.get(TaskCloudService);
-            identityUserService = TestBed.get(IdentityUserService);
-            appConfigService = TestBed.get(AppConfigService);
-            spyOn(service, 'getTaskById').and.returnValue(of(assignedTaskDetailsCloudMock));
-            getCandidateUsersSpy = spyOn(service, 'getCandidateUsers').and.returnValue(of(mockCandidateUsers));
-            getCandidateGroupsSpy = spyOn(service, 'getCandidateGroups').and.returnValue(of(mockCandidateGroups));
-            spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
+            component.ngOnChanges();
         });
 
-        it('should render empty component if no task details provided', async(() => {
-            component.appName = undefined;
-            component.taskId = undefined;
+        it('should fectch task details when appName and taskId defined', async(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.children.length).toBe(2);
+            fixture.whenStable().then(() => {
+                expect(getTaskByIdSpy).toHaveBeenCalled();
+                expect(component.taskDetails).toBe(assignedTaskDetailsCloudMock);
+            });
         }));
 
         it('should display assignee', async(() => {
-            component.ngOnChanges();
             fixture.detectChanges();
-
             fixture.whenStable().then(() => {
-                const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
-                expect(formNameEl.nativeElement.innerText).toBe('AssignedTaskUser');
+                const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
+                expect(assigneeEl.nativeElement.innerText).toBe('AssignedTaskUser');
             });
         }));
 
-        it('should display placeholder if no assignee', async(() => {
-            component.taskDetails.assignee = null;
-            component.refreshData();
+        it('should display status', async(() => {
             fixture.detectChanges();
-
             fixture.whenStable().then(() => {
-                const valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
-                expect(valueEl.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT');
+                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"] span'));
+                expect(statusEl.nativeElement.innerText).toBe('ASSIGNED');
             });
-
         }));
 
         it('should display priority', async(() => {
-            component.ngOnChanges();
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
-                expect(formNameEl.nativeElement.innerText).toBe('5');
+                const priorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
+                expect(priorityEl.nativeElement.innerText).toBe('5');
             });
         }));
 
         it('should display error if priority is not a number', async(() => {
-            component.ngOnChanges();
-            component.taskDetails.assignee = 'testuser';
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -134,7 +132,6 @@ describe('TaskHeaderCloudComponent', () => {
         }));
 
         it('should display due date', async(() => {
-            component.ngOnChanges();
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -155,13 +152,247 @@ describe('TaskHeaderCloudComponent', () => {
         }));
 
         it('should display the default parent value if is undefined', async(() => {
-            component.ngOnChanges();
             component.taskDetails.processInstanceId = null;
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
                 const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
                 expect(valueEl.nativeElement.innerText.trim()).toEqual('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT');
+            });
+        }));
+
+        it('should be able to call update service on updating task description', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const descriptionEditIcon = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-edit-icon-description"]'));
+                descriptionEditIcon.nativeElement.click();
+                fixture.detectChanges();
+
+                const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-edittextarea-description"]'));
+                inputEl.nativeElement.value = 'updated description';
+                inputEl.nativeElement.dispatchEvent(new Event('input'));
+                fixture.detectChanges();
+
+                const submitEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-update-description"]'));
+                submitEl.nativeElement.click();
+                fixture.detectChanges();
+                expect(updateTaskSpy).toHaveBeenCalled();
+            });
+        }));
+
+    });
+
+    describe('Task with parentTaskId', () => {
+
+        beforeEach(() => {
+            getTaskByIdSpy.and.returnValue(of(taskDetailsWithParentTaskIdMock));
+            component.ngOnChanges();
+        });
+
+        it('should fectch parent task details if the task has parent id', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(getTaskByIdSpy).toHaveBeenCalledTimes(2);
+            });
+        }));
+
+        it('should display parent task id', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentTaskId"] span'));
+                expect(assigneeEl.nativeElement.innerText).toBe('mock-parent-task-id');
+            });
+        }));
+
+        it('should display parent task name', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentName"] span'));
+                expect(statusEl.nativeElement.innerText).toBe('This is a parent task name');
+            });
+        }));
+    });
+
+    describe('Assigned Task', () => {
+
+        beforeEach(() => {
+            getTaskByIdSpy.and.returnValue(of(assignedTaskDetailsCloudMock));
+            component.ngOnChanges();
+        });
+
+        it('should display assignee', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
+                expect(assigneeEl.nativeElement.innerText).toBe('AssignedTaskUser');
+            });
+        }));
+
+        it('should display status', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"] span'));
+                expect(statusEl.nativeElement.innerText).toBe('ASSIGNED');
+            });
+        }));
+
+        it('should render defined edit icon for assignee property if the task in assigned state and assingee should be current user', () => {
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText).toBe('create');
+        });
+
+        it('should render edit icon if the task in assigned state and assingee should be current user', () => {
+            fixture.detectChanges();
+            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
+            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
+            const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
+            expect(priorityEditIcon).not.toBeNull('Edit icon should be shown');
+            expect(descriptionEditIcon).not.toBeNull('Edit icon should be shown');
+            expect(dueDateEditIcon).not.toBeNull('Edit icon should be shown');
+        });
+
+        it('should not render defined clickable edit icon for assignee property if the task in assigned state and assingned user is different from current logged-in user', () => {
+            isTaskEditableSpy.and.returnValue(false);
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            expect(value).toBeNull('Edit icon should NOT be shown');
+        });
+
+        it('should not render edit icon if the task in assigned state and assingned user is different from current logged-in user', () => {
+            isTaskEditableSpy.and.returnValue(false);
+            fixture.detectChanges();
+            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
+            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
+            const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
+            expect(priorityEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(descriptionEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(dueDateEditIcon).toBeNull('Edit icon should NOT be shown');
+        });
+    });
+
+    describe('Created Task', () => {
+
+        beforeEach(() => {
+            getTaskByIdSpy.and.returnValue(of(createdStateTaskDetailsCloudMock));
+            isTaskEditableSpy.and.returnValue(false);
+            component.ngOnChanges();
+        });
+
+        it('should display status', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"] span'));
+                expect(statusEl.nativeElement.innerText).toBe('CREATED');
+            });
+        }));
+
+        it('should display placeholder if no assignee', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
+                expect(assigneeEl.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT');
+            });
+        }));
+
+        it('should not render defined clickable edit icon for assignee property if the task in created state and not assigned', () => {
+            fixture.detectChanges();
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            expect(value).toBeNull('Edit icon should NOT be shown');
+        });
+
+        it('should not render edit icon if the task in created state and not assigned', () => {
+            fixture.detectChanges();
+            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
+            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
+            const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
+            expect(priorityEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(descriptionEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(dueDateEditIcon).toBeNull('Edit icon should NOT be shown');
+        });
+    });
+
+    describe('Completed Task', () => {
+
+        beforeEach(() => {
+            getTaskByIdSpy.and.returnValue(of(completedTaskDetailsCloudMock));
+            isTaskEditableSpy.and.returnValue(false);
+            component.ngOnChanges();
+        });
+
+        it('should display status', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"] span'));
+                expect(statusEl.nativeElement.innerText).toBe('COMPLETED');
+            });
+        }));
+
+        it('should not render defined clickable edit icon for assignee property if the task in completed state', () => {
+            fixture.detectChanges();
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            expect(value).toBeNull('Edit icon should NOT be shown');
+        });
+
+        it('should not render edit icon if the task in completed state', () => {
+            fixture.detectChanges();
+            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
+            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
+            const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
+            expect(priorityEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(descriptionEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(dueDateEditIcon).toBeNull('Edit icon should NOT be shown');
+        });
+    });
+
+    describe('Suspended Task', () => {
+
+        beforeEach(() => {
+            getTaskByIdSpy.and.returnValue(of(suspendedTaskDetailsCloudMock));
+            isTaskEditableSpy.and.returnValue(false);
+            component.ngOnChanges();
+        });
+
+        it('should display status', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"] span'));
+                expect(statusEl.nativeElement.innerText).toBe('SUSPENDED');
+            });
+        }));
+
+        it('should not render defined clickable edit icon for assignee property if the task in suspended state', () => {
+            fixture.detectChanges();
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            expect(value).toBeNull('Edit icon should NOT be shown');
+        });
+
+        it('should not render edit icon if the task in suspended state', () => {
+            fixture.detectChanges();
+            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
+            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
+            const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
+            expect(priorityEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(descriptionEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(dueDateEditIcon).toBeNull('Edit icon should NOT be shown');
+        });
+    });
+
+    describe('Task with candidates', () => {
+
+        it('should display candidate groups', async(() => {
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                const candidateGroup1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup1"] span');
+                const candidateGroup2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup2"] span');
+                expect(getCandidateGroupsSpy).toHaveBeenCalled();
+                expect(candidateGroup1.innerText).toBe('mockgroup1');
+                expect(candidateGroup2.innerText).toBe('mockgroup2');
             });
         }));
 
@@ -178,36 +409,10 @@ describe('TaskHeaderCloudComponent', () => {
             });
         }));
 
-        it('should display placeholder if no candidate users', async(() => {
-            getCandidateUsersSpy.and.returnValue(of([]));
-            component.refreshData();
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                const labelValue = fixture.debugElement.query(By.css('[data-automation-id="card-array-label-candidateUsers"]'));
-                const defaultElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-default"]'));
-                expect(labelValue.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS');
-                expect(defaultElement.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT');
-            });
-
-        }));
-
-        it('should display candidate groups', async(() => {
-            component.ngOnChanges();
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                const candidateGroup1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup1"] span');
-                const candidateGroup2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup2"] span');
-                expect(getCandidateGroupsSpy).toHaveBeenCalled();
-                expect(candidateGroup1.innerText).toBe('mockgroup1');
-                expect(candidateGroup2.innerText).toBe('mockgroup2');
-            });
-        }));
-
         it('should display placeholder if no candidate groups', async(() => {
             getCandidateGroupsSpy.and.returnValue(of([]));
-            component.refreshData();
+            fixture.detectChanges();
+            component.ngOnChanges();
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -219,52 +424,58 @@ describe('TaskHeaderCloudComponent', () => {
 
         }));
 
-        describe('Config Filtering', () => {
+        it('should display placeholder if no candidate users', async(() => {
+            getCandidateUsersSpy.and.returnValue(of([]));
+            fixture.detectChanges();
+            component.ngOnChanges();
+            fixture.detectChanges();
 
-            it('should show only the properties from the configuration file', async(() => {
-                spyOn(appConfigService, 'get').and.returnValue(['assignee', 'status']);
-                component.ngOnChanges();
-                fixture.detectChanges();
-                const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
-
-                fixture.whenStable().then(() => {
-                    expect(propertyList).toBeDefined();
-                    expect(propertyList).not.toBeNull();
-                    expect(propertyList.length).toBe(2);
-                    expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
-                    expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
-                });
-            }));
-
-            it('should show all the default properties if there is no configuration', async(() => {
-                spyOn(appConfigService, 'get').and.returnValue(null);
-                component.ngOnChanges();
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
-                    expect(propertyList).toBeDefined();
-                    expect(propertyList).not.toBeNull();
-                    expect(propertyList.length).toBe(component.properties.length);
-                    expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
-                    expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
-                });
-            }));
-
-        });
-
+            fixture.whenStable().then(() => {
+                const labelValue = fixture.debugElement.query(By.css('[data-automation-id="card-array-label-candidateUsers"]'));
+                const defaultElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-default"]'));
+                expect(labelValue.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS');
+                expect(defaultElement.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT');
+            });
+        }));
     });
 
-    describe('Task Errors', () => {
+    describe('Config properties', () => {
 
-        beforeEach(() => {
-            fixture = TestBed.createComponent(TaskHeaderCloudComponent);
-            component = fixture.componentInstance;
-            service = TestBed.get(TaskCloudService);
-        });
+        it('should show only the properties from the configuration file', async(() => {
+            spyOn(appConfigService, 'get').and.returnValue(['assignee', 'status']);
+            component.ngOnChanges();
+            fixture.detectChanges();
+            const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
+
+            fixture.whenStable().then(() => {
+                expect(propertyList).toBeDefined();
+                expect(propertyList).not.toBeNull();
+                expect(propertyList.length).toBe(2);
+                expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
+                expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
+            });
+        }));
+
+        it('should show all the default properties if there is no configuration', async(() => {
+            spyOn(appConfigService, 'get').and.returnValue(null);
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
+                expect(propertyList).toBeDefined();
+                expect(propertyList).not.toBeNull();
+                expect(propertyList.length).toBe(component.properties.length);
+                expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
+                expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
+            });
+        }));
+    });
+
+    describe('Task errors', () => {
 
         it('should emit an error when task can not be found', async(() => {
-            spyOn(service, 'getTaskById').and.returnValue(throwError('Task not found'));
+            getTaskByIdSpy.and.returnValue(throwError('Task not found'));
 
             component.error.subscribe((error) => {
                 expect(error).toEqual('Task not found');
