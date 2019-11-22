@@ -346,17 +346,15 @@ To enable public accessible urls, that don't need authentication, these must be 
 }
 ```
 
+
 ### Kerberos
 
-Setting the `withCredentials` property to true in the `auth` section of
-`app.config.json` will enable Kerberos and bypass the normal login:
+The configuration for Kerberos authentication will allow users to access Alfresco products by entering their credentials only once when first logging into their Windows environment.
 
-```json
-{
-  "auth": {
-    "withCredentials": "true"
-  },
-```
+**You don't need to use the login component in order to enable Kerberos SSO in ADF**.
+
+See [Kerberos Configuration](../../../docs/user-guide/kerberos.md) for instructions on configuring Kerberos for an ADF app. 
+
 
 ## See Also
 
