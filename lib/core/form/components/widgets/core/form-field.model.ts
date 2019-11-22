@@ -83,8 +83,8 @@ export class FormFieldModel extends FormWidgetModel {
         return this._value;
     }
 
-    set value(value: any) {
-        this._value = value;
+    set value(v: any) {
+        this._value = v;
         this.updateForm();
     }
 

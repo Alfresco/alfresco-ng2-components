@@ -87,6 +87,23 @@ describe('DateTimeWidgetComponent', () => {
         expect(widget.maxDate.isSame(expected)).toBeTruthy();
     });
 
+    it('should eval visibility on date changed', () => {
+        spyOn(widget, 'onFieldChanged').and.callThrough();
+
+        const field = new FormFieldModel(new FormModel(), {
+            id: 'date-field-id',
+            name: 'date-name',
+            value: '09-12-9999 10:00 AM',
+            type: 'datetime',
+            readOnly: 'false'
+        });
+
+        widget.field = field;
+
+        widget.onDateChanged({ value: moment('1982-03-13T10:00:000Z') });
+        expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
+    });
+
     describe('template check', () => {
 
         it('should show visible date widget', async(() => {

@@ -86,5 +86,6 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         } else {
             this.field.value = null;
         }
+        this.onFieldChanged(this.field);
     }
 }
