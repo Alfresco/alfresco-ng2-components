@@ -81,6 +81,24 @@ describe('Document List Component', () => {
 
         afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
+
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            if (filePdfNode) {
+                await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
+            }
+            if (fileTestNode) {
+                await uploadActions.deleteFileOrFolder(fileTestNode.entry.id);
+            }
+            if (fileDocxNode) {
+                await uploadActions.deleteFileOrFolder(fileDocxNode.entry.id);
+            }
+            if (filePDFSubNode) {
+                await uploadActions.deleteFileOrFolder(filePDFSubNode.entry.id);
+            }
+            if (folderNode) {
+                await uploadActions.deleteFileOrFolder(folderNode.entry.id);
+            }
+
         });
 
         beforeEach(async () => {
@@ -157,11 +175,6 @@ describe('Document List Component', () => {
             await contentServicesPage.checkListIsSortedByNameColumn('asc');
         });
 
-        it('[C261994] Should be able to sort Gallery Cards by size', async () => {
-            await contentServicesPage.selectGridSortingFromDropdown(cardProperties.SIZE);
-            await contentServicesPage.checkListIsSortedBySizeColumn('asc');
-        });
-
         it('[C261995] Should be able to sort Gallery Cards by author', async () => {
             await contentServicesPage.selectGridSortingFromDropdown(cardProperties.CREATED_BY);
             await contentServicesPage.checkListIsSortedByAuthorColumn('asc');
@@ -172,25 +185,6 @@ describe('Document List Component', () => {
             await contentServicesPage.checkListIsSortedByCreatedColumn('asc');
         });
 
-        afterAll(async () => {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            if (filePdfNode) {
-                await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
-            }
-            if (fileTestNode) {
-                await uploadActions.deleteFileOrFolder(fileTestNode.entry.id);
-            }
-            if (fileDocxNode) {
-                await uploadActions.deleteFileOrFolder(fileDocxNode.entry.id);
-            }
-            if (filePDFSubNode) {
-                await uploadActions.deleteFileOrFolder(filePDFSubNode.entry.id);
-            }
-            if (folderNode) {
-                await uploadActions.deleteFileOrFolder(folderNode.entry.id);
-            }
-
-        });
     });
 
 });
