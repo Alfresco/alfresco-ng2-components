@@ -43,7 +43,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     /** Layout text orientation 'ltr' | 'rtl' */
     @Input() direction: Direction = 'ltr';
 
-    @ViewChild(MatSidenav) sidenav: MatSidenav;
+    @ViewChild(MatSidenav, { static: true }) sidenav: MatSidenav;
 
     sidenavAnimationState: any;
     contentAnimationState: any;

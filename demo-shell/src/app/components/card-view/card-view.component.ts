@@ -40,7 +40,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class CardViewComponent implements OnInit, OnDestroy {
 
-    @ViewChild('console') console: ElementRef;
+    @ViewChild('console', { static: true }) console: ElementRef;
 
     isEditable = true;
     properties: any;

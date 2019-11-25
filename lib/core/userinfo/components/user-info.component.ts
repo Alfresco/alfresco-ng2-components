@@ -34,7 +34,7 @@ import { MatMenuTrigger, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@a
 })
 export class UserInfoComponent implements OnInit {
 
-    @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+    @ViewChild(MatMenuTrigger, { static: false }) trigger: MatMenuTrigger;
 
     /** Custom path for the background banner image for ACS users. */
     @Input()

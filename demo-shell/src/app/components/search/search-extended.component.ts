@@ -33,7 +33,7 @@ import { TestSearchConfigurationService } from './search-config-test.service';
 })
 export class SearchExtendedComponent {
 
-    @ViewChild('search')
+    @ViewChild('search', { static: false })
     search: SearchComponent;
 
     queryParamName = 'q';

@@ -36,10 +36,10 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     static PRESET_KEY = 'adf-cloud-process-list.presets';
 
-    @ContentChild(CustomEmptyContentTemplateDirective)
+    @ContentChild(CustomEmptyContentTemplateDirective, { static: false })
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
-    @ContentChild(CustomLoadingContentTemplateDirective)
+    @ContentChild(CustomLoadingContentTemplateDirective, { static: false })
     customLoadingContent: CustomLoadingContentTemplateDirective;
 
     /** The name of the application. */

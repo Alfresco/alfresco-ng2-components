@@ -52,13 +52,13 @@ import { share, takeUntil } from 'rxjs/operators';
 })
 export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
-    @ViewChild('activitiComments')
+    @ViewChild('activitiComments', { static: false })
     activitiComments: CommentsComponent;
 
-    @ViewChild('activitiChecklist')
+    @ViewChild('activitiChecklist', { static: false })
     activitiChecklist: any;
 
-    @ViewChild('errorDialog')
+    @ViewChild('errorDialog', { static: false })
     errorDialog: TemplateRef<any>;
 
     /** Toggles debug mode. */

@@ -178,16 +178,16 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     deleteElementSuccess: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('documentList')
+    @ViewChild('documentList', { static: true })
     documentList: DocumentListComponent;
 
-    @ViewChild('standardPagination')
+    @ViewChild('standardPagination', { static: false })
     standardPagination: PaginationComponent;
 
-    @ViewChild(InfinitePaginationComponent)
+    @ViewChild(InfinitePaginationComponent, { static: true })
     infinitePaginationComponent: InfinitePaginationComponent;
 
-    @ViewChild(HighlightDirective)
+    @ViewChild(HighlightDirective, { static: false })
     highlighter: HighlightDirective;
 
     permissionsStyle: PermissionStyleModel[] = [];

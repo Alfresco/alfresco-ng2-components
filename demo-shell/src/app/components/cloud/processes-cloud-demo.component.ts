@@ -39,10 +39,10 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     public static ACTION_SAVE_AS = 'saveAs';
     static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
 
-    @ViewChild('processCloud')
+    @ViewChild('processCloud', { static: false })
     processCloud: ProcessListCloudComponent;
 
-    @ViewChild('processFiltersCloud')
+    @ViewChild('processFiltersCloud', { static: false })
     processFiltersCloud: ProcessFiltersCloudComponent;
 
     appName: string = '';

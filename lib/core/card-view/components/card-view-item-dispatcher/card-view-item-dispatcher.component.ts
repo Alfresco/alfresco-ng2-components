@@ -48,7 +48,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     @Input()
     displayClearAction: boolean = true;
 
-    @ViewChild(CardViewContentProxyDirective)
+    @ViewChild(CardViewContentProxyDirective, { static: true })
     private content: CardViewContentProxyDirective;
 
     private loaded: boolean = false;

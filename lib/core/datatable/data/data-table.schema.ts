@@ -23,7 +23,7 @@ import { ObjectDataColumn } from './object-datacolumn.model';
 
 export abstract class DataTableSchema {
 
-    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+    @ContentChild(DataColumnListComponent, { static: false }) columnList: DataColumnListComponent;
 
     /** Custom preset column schema in JSON format. */
     @Input()

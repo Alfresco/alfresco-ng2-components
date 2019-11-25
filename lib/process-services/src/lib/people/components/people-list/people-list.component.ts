@@ -27,10 +27,10 @@ import { UserEventModel } from '../../../task-list/models/user-event.model';
 
 export class PeopleListComponent implements AfterContentInit {
 
-    @ContentChild(DataColumnListComponent)
+    @ContentChild(DataColumnListComponent, { static: false })
     columnList: DataColumnListComponent;
 
-    @ViewChild('dataTable')
+    @ViewChild('dataTable', { static: true })
     peopleDataTable: DataTableComponent;
 
     /** The array of user data used to populate the people list. */

@@ -55,7 +55,7 @@ export class ChecklistComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild('dialog')
+    @ViewChild('dialog', { static: true })
     addNewDialog: any;
 
     taskName: string;

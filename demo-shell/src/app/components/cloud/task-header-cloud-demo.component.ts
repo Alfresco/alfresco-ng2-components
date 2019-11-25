@@ -24,7 +24,7 @@ import { FormControl } from '@angular/forms';
     styleUrls: ['./task-header-cloud-demo.component.scss']
 })
 export class TaskHeaderCloudDemoComponent {
-    @ViewChild('taskHeader')
+    @ViewChild('taskHeader', { static: true })
     taskHeader: TaskHeaderCloudComponent;
 
     appName: string;

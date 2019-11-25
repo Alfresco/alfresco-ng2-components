@@ -28,7 +28,7 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['trashcan.component.scss']
 })
 export class TrashcanComponent implements OnInit, OnDestroy {
-    @ViewChild('documentList')
+    @ViewChild('documentList', { static: true })
     documentList: DocumentListComponent;
 
     currentLocale;

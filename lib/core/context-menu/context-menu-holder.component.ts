@@ -51,7 +51,7 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
     @Input()
     showIcons: boolean = false;
 
-    @ViewChild(MatMenuTrigger)
+    @ViewChild(MatMenuTrigger, { static: true })
     menuTrigger: MatMenuTrigger;
 
     @HostListener('contextmenu', ['$event'])

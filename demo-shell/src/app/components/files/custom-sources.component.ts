@@ -27,7 +27,7 @@ export class CustomSourcesComponent {
     @Input()
     selectedSource = '-recent-';
 
-    @ViewChild('customSourcesDocumentList')
+    @ViewChild('customSourcesDocumentList', { static: true })
     documentList: DocumentListComponent;
 
     sources = [

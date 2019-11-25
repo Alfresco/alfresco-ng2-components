@@ -46,7 +46,7 @@ export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppCon
 
 export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
 
-    @ViewChild('taskAttachList')
+    @ViewChild('taskAttachList', { static: false })
     taskAttachList: TaskAttachmentListComponent;
 
     @Input()

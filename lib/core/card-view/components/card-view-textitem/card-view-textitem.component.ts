@@ -38,7 +38,7 @@ export class CardViewTextItemComponent implements OnChanges {
     @Input()
     displayEmpty: boolean = true;
 
-    @ViewChild('editorInput')
+    @ViewChild('editorInput', { static: false })
     private editorInput: any;
 
     inEdit: boolean = false;

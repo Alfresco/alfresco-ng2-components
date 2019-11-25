@@ -28,7 +28,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class FormListComponent implements OnInit, OnDestroy {
 
-    @ViewChild('adfForm')
+    @ViewChild('adfForm', { static: false })
     activitiForm: FormComponent;
 
     formList: any [] = [];

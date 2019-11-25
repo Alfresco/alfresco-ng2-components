@@ -25,7 +25,7 @@ import { SearchFilterService } from '../search-filter/search-filter.service';
 })
 export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
 
-    @ViewChild('content', { read: ViewContainerRef })
+    @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
 
     @Input()

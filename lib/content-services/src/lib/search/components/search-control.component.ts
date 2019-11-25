@@ -77,16 +77,16 @@ export class SearchControlComponent implements OnDestroy {
     @Output()
     optionClicked: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('searchTextInput')
+    @ViewChild('searchTextInput', { static: false })
     searchTextInput: SearchTextInputComponent;
 
-    @ViewChild('search')
+    @ViewChild('search', { static: false })
     searchAutocomplete: SearchComponent;
 
     @ViewChildren(MatListItem)
     private listResultElement: QueryList<MatListItem>;
 
-    @ContentChild(EmptySearchResultComponent)
+    @ContentChild(EmptySearchResultComponent, { static: false })
     emptySearchTemplate: EmptySearchResultComponent;
 
     focusSubject = new Subject<FocusEvent>();

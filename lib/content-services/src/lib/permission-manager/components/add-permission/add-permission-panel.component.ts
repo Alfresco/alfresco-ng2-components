@@ -35,7 +35,7 @@ import { NodeEntry } from '@alfresco/js-api';
 })
 export class AddPermissionPanelComponent {
 
-    @ViewChild('search')
+    @ViewChild('search', { static: true })
     search: SearchComponent;
 
     /** Emitted when a permission list item is selected. */

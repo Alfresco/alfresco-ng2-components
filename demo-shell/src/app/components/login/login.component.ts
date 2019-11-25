@@ -27,7 +27,7 @@ import { LogService } from '@alfresco/adf-core';
 })
 export class LoginComponent implements OnInit {
 
-    @ViewChild('alfrescoLogin')
+    @ViewChild('alfrescoLogin', { static: true })
     alfrescoLogin: any;
 
     customValidation: any;

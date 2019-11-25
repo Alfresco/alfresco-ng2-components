@@ -42,7 +42,7 @@ export class ContentColumnComponent implements OnInit, AfterContentInit, DataCol
     @Input()
     title: string = '';
 
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, { static: false })
     template: any;
 
     /**

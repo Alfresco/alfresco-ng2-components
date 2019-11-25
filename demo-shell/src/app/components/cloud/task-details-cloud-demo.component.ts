@@ -27,7 +27,7 @@ import { PreviewService } from 'app/services/preview.service';
 })
 export class TaskDetailsCloudDemoComponent {
 
-    @ViewChild('taskHeader')
+    @ViewChild('taskHeader', { static: true })
     taskHeader: TaskHeaderCloudComponent;
 
     taskId: string;

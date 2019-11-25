@@ -28,7 +28,7 @@ import { NodesApiService, NotificationService } from '@alfresco/adf-core';
 })
 export class DemoPermissionComponent implements OnInit {
 
-    @ViewChild('permissionList')
+    @ViewChild('permissionList', { static: true })
     displayPermissionComponent: PermissionListComponent;
 
     nodeId: string;

@@ -67,13 +67,13 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     });
     type = 'datetime';
 
-    @ViewChild('matDatetimepickerToggle')
+    @ViewChild('matDatetimepickerToggle', { static: true })
     matDatetimepickerToggle;
 
-    @ViewChild('slideToggleExpirationDate')
+    @ViewChild('slideToggleExpirationDate', { static: true })
     slideToggleExpirationDate;
 
-    @ViewChild('dateTimePickerInput')
+    @ViewChild('dateTimePickerInput', { static: true })
     dateTimePickerInput;
 
     private onDestroy$ = new Subject<boolean>();

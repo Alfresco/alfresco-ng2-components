@@ -79,16 +79,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         totalItems: 0
     });
 
-    @ContentChild(DataColumnListComponent)
+    @ContentChild(DataColumnListComponent, { static: false })
     columnList: DataColumnListComponent;
 
-    @ContentChild(CustomLoadingContentTemplateDirective)
+    @ContentChild(CustomLoadingContentTemplateDirective, { static: false })
     customLoadingContent: CustomLoadingContentTemplateDirective;
 
-    @ContentChild(CustomNoPermissionTemplateDirective)
+    @ContentChild(CustomNoPermissionTemplateDirective, { static: false })
     customNoPermissionsTemplate: CustomNoPermissionTemplateDirective;
 
-    @ContentChild(CustomEmptyContentTemplateDirective)
+    @ContentChild(CustomEmptyContentTemplateDirective, { static: false })
     customNoContentTemplate: CustomEmptyContentTemplateDirective;
 
     /** Include additional information about the node in the server request. For example: association, isLink, isLocked and others. */
@@ -298,7 +298,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('dataTable')
+    @ViewChild('dataTable', { static: true })
     dataTable: DataTableComponent;
 
     actions: ContentActionModel[] = [];

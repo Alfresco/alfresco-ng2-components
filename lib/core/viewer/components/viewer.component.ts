@@ -41,16 +41,16 @@ import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extension
 })
 export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
-    @ContentChild(ViewerToolbarComponent)
+    @ContentChild(ViewerToolbarComponent, { static: false })
     toolbar: ViewerToolbarComponent;
 
-    @ContentChild(ViewerSidebarComponent)
+    @ContentChild(ViewerSidebarComponent, { static: false })
     sidebar: ViewerSidebarComponent;
 
-    @ContentChild(ViewerOpenWithComponent)
+    @ContentChild(ViewerOpenWithComponent, { static: false })
     mnuOpenWith: ViewerOpenWithComponent;
 
-    @ContentChild(ViewerMoreActionsComponent)
+    @ContentChild(ViewerMoreActionsComponent, { static: false })
     mnuMoreActions: ViewerMoreActionsComponent;
 
     /** If you want to load an external file that does not come from ACS you

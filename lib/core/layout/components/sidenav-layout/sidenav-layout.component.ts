@@ -71,15 +71,15 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     /** Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes. */
     @Output() expanded = new EventEmitter<boolean>();
 
-    @ContentChild(SidenavLayoutHeaderDirective) headerDirective: SidenavLayoutHeaderDirective;
-    @ContentChild(SidenavLayoutNavigationDirective) navigationDirective: SidenavLayoutNavigationDirective;
-    @ContentChild(SidenavLayoutContentDirective) contentDirective: SidenavLayoutContentDirective;
+    @ContentChild(SidenavLayoutHeaderDirective, { static: false }) headerDirective: SidenavLayoutHeaderDirective;
+    @ContentChild(SidenavLayoutNavigationDirective, { static: false }) navigationDirective: SidenavLayoutNavigationDirective;
+    @ContentChild(SidenavLayoutContentDirective, { static: false }) contentDirective: SidenavLayoutContentDirective;
 
     private menuOpenStateSubject: BehaviorSubject<boolean>;
     public menuOpenState$: Observable<boolean>;
 
-    @ViewChild('container') container: any;
-    @ViewChild('emptyTemplate') emptyTemplate: any;
+    @ViewChild('container', { static: true }) container: any;
+    @ViewChild('emptyTemplate', { static: true }) emptyTemplate: any;
 
     mediaQueryList: MediaQueryList;
     _isMenuMinimized;

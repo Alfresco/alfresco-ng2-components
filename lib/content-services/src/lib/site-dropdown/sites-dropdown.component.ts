@@ -71,7 +71,7 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
     @Output()
     change: EventEmitter<SiteEntry> = new EventEmitter();
 
-    @ViewChild('siteSelect')
+    @ViewChild('siteSelect', { static: true })
     siteSelect: MatSelect;
 
     private loading = true;

@@ -33,7 +33,7 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
     public static LAYOUT_GRID: string = 'GRID';
     public static RUNNING_STATUS: string = 'RUNNING';
 
-    @ContentChild(CustomEmptyContentTemplateDirective)
+    @ContentChild(CustomEmptyContentTemplateDirective, { static: false })
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
     /** (**required**) Defines the layout of the apps. There are two possible

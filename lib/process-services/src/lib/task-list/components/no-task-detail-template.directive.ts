@@ -31,7 +31,7 @@ import { TaskDetailsComponent } from './task-details.component';
 })
 export class NoTaskDetailsTemplateDirective implements AfterContentInit {
 
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, { static: false })
     template: any;
 
     constructor(

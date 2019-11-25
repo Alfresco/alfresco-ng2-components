@@ -40,7 +40,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     private margin: number = 15;
     private itemHeight: number = 114 + this.margin;
 
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, { static: false })
     template: any;
 
     @HostListener('window:resize')

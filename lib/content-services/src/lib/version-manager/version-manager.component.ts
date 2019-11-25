@@ -63,7 +63,7 @@ export class VersionManagerComponent {
     @Output()
     uploadError: EventEmitter<Node> = new EventEmitter<Node>();
 
-    @ViewChild('versionList')
+    @ViewChild('versionList', { static: true })
     versionListComponent: VersionListComponent;
 
     uploadState: string = 'close';

@@ -54,7 +54,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @ViewChildren(DataTableRowComponent)
     rowsList: QueryList<DataTableRowComponent>;
 
-    @ContentChild(DataColumnListComponent)
+    @ContentChild(DataColumnListComponent, { static: false })
     columnList: DataColumnListComponent;
 
     /** Data source for the table */

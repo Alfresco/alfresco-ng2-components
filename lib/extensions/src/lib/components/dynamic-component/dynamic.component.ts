@@ -35,7 +35,7 @@ import { ExtensionComponent } from '../../services/component-register.service';
     template: `<div #content></div>`
 })
 export class DynamicExtensionComponent implements OnChanges, OnDestroy {
-    @ViewChild('content', { read: ViewContainerRef })
+    @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
 
     /** Unique ID string for the component to show. */

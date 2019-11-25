@@ -41,10 +41,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     static PRESET_KEY = 'adf-task-list.presets';
 
-    @ContentChild(CustomEmptyContentTemplateDirective)
+    @ContentChild(CustomEmptyContentTemplateDirective, { static: false })
     customEmptyContent: CustomEmptyContentTemplateDirective;
 
-    @ContentChild(CustomLoadingContentTemplateDirective)
+    @ContentChild(CustomLoadingContentTemplateDirective, { static: false })
     customLoadingContent: CustomLoadingContentTemplateDirective;
 
     requestNode: TaskQueryRequestRepresentationModel;
