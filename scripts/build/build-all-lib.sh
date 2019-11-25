@@ -26,8 +26,8 @@ echo "====== Run process-services-cloud ====="
 echo "====== Run testing ====="
 ./build-testing.sh || exit 1
 
-echo "====== Run Cli ====="
-./build-cli.sh || exit 1
+# echo "====== Run Cli ====="
+# ./build-cli.sh || exit 1
 
 echo "====== Copy schema ====="
 

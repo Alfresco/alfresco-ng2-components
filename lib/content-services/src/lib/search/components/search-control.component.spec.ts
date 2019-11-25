@@ -45,10 +45,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 export class SimpleSearchTestCustomEmptyComponent {
     customMessage = '';
 
-    @ViewChild(SearchControlComponent)
+    @ViewChild(SearchControlComponent, { static: false })
     searchComponent: SearchControlComponent;
 
-    @ViewChild(SearchTextInputComponent)
+    @ViewChild(SearchTextInputComponent, { static: false })
     searchTextInputComponent: SearchTextInputComponent;
 }
 
