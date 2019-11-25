@@ -78,8 +78,8 @@ function removeNPMRC(args: PublishArgs, project: string) {
     logger.info(response);
 }
 
-export default function (args: PublishArgs) {
-    main(args);
+export default async function (args: PublishArgs) {
+    await main(args);
 }
 
 async function main(args) {
@@ -104,8 +104,7 @@ async function main(args) {
     }
 }
 
-async function sleep(milliseconds: number) {
-    logger.info(`Waiting for ${milliseconds} milliseconds...`);
-    await new Promise(done => setTimeout(done, milliseconds));
-    logger.info(`Done...`);
+async function sleep(ms: number) {
+    logger.info(`Waiting for ${ms} milliseconds...`);
+   return new Promise(resolve => setTimeout(resolve, ms));
 }
