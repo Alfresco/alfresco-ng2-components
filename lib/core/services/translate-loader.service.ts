@@ -17,7 +17,6 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, forkJoin, throwError, of } from 'rxjs';
 import { ComponentTranslationModel } from '../models/component.model';
@@ -59,9 +58,7 @@ export class TranslateLoaderService implements TranslateLoader {
         const translationUrl = fallbackUrl || `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
 
         return this.http.get(translationUrl).pipe(
-            map((res: Response) => {
-                component.json[lang] = res;
-            }),
+            map((res: any) => component.json[lang] = res),
             retry(3),
             catchError(() => {
                 if (!fallbackUrl && lang.includes('-')) {

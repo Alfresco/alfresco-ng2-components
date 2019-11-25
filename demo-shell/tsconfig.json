@@ -6,6 +6,7 @@
     "baseUrl": "src",
     "sourceMap": true,
     "declaration": false,
+    "module": "esnext",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -13,7 +14,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "target": "es5",
+    "target": "es2015",
     "allowSyntheticDefaultImports": true,
     "typeRoots": [
       "node_modules/@types"

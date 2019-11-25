@@ -17,7 +17,6 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Observable, from, throwError, of } from 'rxjs';
 import { ParameterValueModel } from '../../diagram/models/report/parameterValue.model';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
@@ -256,7 +255,7 @@ export class AnalyticsService {
             );
     }
 
-    private handleError(error: Response) {
+    private handleError(error: any) {
         this.logService.error(error);
         return throwError(error || 'Server error');
     }
