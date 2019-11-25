@@ -194,7 +194,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     }
 
     emitDocumentContent(content: any) {
-        this.activitiContentService.getFileRawContent(content.id).subscribe(
+        this.activitiContentService.getContentPreview(content.id).subscribe(
             (blob: Blob) => {
                 content.contentBlob = blob;
                 this.attachmentClick.emit(content);
