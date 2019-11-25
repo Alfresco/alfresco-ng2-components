@@ -63,7 +63,7 @@ if $GNU; then
     if [ $NAME_REPO == 'Alfresco/generator-ng2-alfresco-app' ] || [ $NAME_REPO == 'Alfresco/alfresco-modeler-app' ]; then
         ./scripts/update-version.sh -gnu -v $VERSION -vj $JS_VERSION
     else
-        npm install @alfresco/adf-cli@alpha
+        npm install @alfresco/adf-cli@alpha --no-save
         npx adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION
     fi
 else

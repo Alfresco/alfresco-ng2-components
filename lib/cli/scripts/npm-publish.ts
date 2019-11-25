@@ -79,11 +79,10 @@ function removeNPMRC(args: PublishArgs, project: string) {
 }
 
 export default function (args: PublishArgs) {
-
     main(args);
 }
 
-function main(args) {
+async function main(args) {
 
     program
         .version('0.1.0')
@@ -98,8 +97,15 @@ function main(args) {
         program.outputHelp();
     }
 
-    projects.forEach((project: string) => {
-        logger.info(`========Analyzing project: ${project} ========`);
-        npmPublish(args, project);
-    });
+    for (let i = 0; i < projects.length; i++) {
+        await sleep(120000);
+        logger.info(`========Analyzing project: ${projects[i]} ========`);
+        npmPublish(args, projects[i]);
+    }
+}
+
+async function sleep(milliseconds: number) {
+    logger.info(`Waiting for ${milliseconds} milliseconds...`);
+    await new Promise(done => setTimeout(done, milliseconds));
+    logger.info(`Done...`);
 }
