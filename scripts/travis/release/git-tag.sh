@@ -1,6 +1,10 @@
 #!/bin/bash
 
-VERSION=$(npm view @alfresco/adf-core@beta version)
+if [[  $TRAVIS_BRANCH == "master" ]]; then
+    TAG_VERSION=$(grep -m1 version package.json | awk '{ print $2 }' | sed 's/[", ]//g')
+else
+    TAG_VERSION=$(npm view @alfresco/adf-core@beta version)
+fi;
 
 echo "git tag -a ${VERSION} -m ${VERSION}"
 git config --local user.name "alfresco-build"

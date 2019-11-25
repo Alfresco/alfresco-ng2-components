@@ -89,7 +89,7 @@ jobs:
           script: ./scripts/travis/update/update-children.sh
 
         - stage: Release beta tag
-          script: ./scripts/travis/release/git-tag-beta.sh
+          script: ./scripts/travis/release/git-tag.sh
 
 
         - stage: e2e Test
@@ -125,23 +125,6 @@ jobs:
         - stage: Update Rancher PR
           name: Update Rancher PR
           script: ./scripts/travis/deploy/deploy.sh
-
-
-before_deploy:
-  if ![[ $TRAVIS_TAG ]]; then
-      git config --local user.name "Alfresco"
-      export TRAVIS_TAG=$(cat package.json | grep version | head -1 | awk -F= "{ print $2 }" | sed 's/[version:,\",]//g' | tr -d '[[:space:]]')
-      echo "Create tag:" $TRAVIS_TAG
-      git tag $TRAVIS_TAG
-  fi
-
-deploy:
-  provider: releases
-  api_key: $GITHUB_TOKEN
-  name: $TRAVIS_TAG
-  body: "Add the release note"
-  on:
-    branch: master
 
 cache:
   directories:
