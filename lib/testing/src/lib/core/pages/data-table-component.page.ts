@@ -67,6 +67,10 @@ export class DataTableComponentPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.getRowCheckbox(columnName, columnValue).element(by.css('input[aria-checked="true"]')));
     }
 
+    async checkListIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.list.first());
+    }
+
     async checkRowIsChecked(columnName: string, columnValue: string): Promise<void> {
         const rowCheckbox = this.getRowCheckbox(columnName, columnValue);
         await BrowserVisibility.waitUntilElementIsVisible(rowCheckbox.element(by.css('input[aria-checked="true"]')));
