@@ -16,8 +16,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Params } from '@angular/router/src/shared';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     selector: 'app-cloud-viewer',
