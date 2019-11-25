@@ -16,20 +16,18 @@
  */
 
 import { NgModule } from '@angular/core';
-import {
-    MatDialogModule,
-    MatInputModule,
-    MatProgressBarModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSlideToggleModule,
-    MatCardModule,
-    MatListModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatSnackBarModule,
-    MatExpansionModule
-} from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const MATERIAL_MODULES = [
     MatSlideToggleModule,
@@ -50,5 +48,4 @@ const MATERIAL_MODULES = [
     imports: MATERIAL_MODULES,
     exports: MATERIAL_MODULES
 })
-export class MaterialModule {
-}
+export class MaterialModule {}

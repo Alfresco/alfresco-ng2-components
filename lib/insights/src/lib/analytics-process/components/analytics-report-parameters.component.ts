@@ -30,7 +30,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import moment from 'moment-es6';
 import { ParameterValueModel } from '../../diagram/models/report/parameterValue.model';
 import { ReportParameterDetailsModel } from '../../diagram/models/report/reportParameterDetails.model';

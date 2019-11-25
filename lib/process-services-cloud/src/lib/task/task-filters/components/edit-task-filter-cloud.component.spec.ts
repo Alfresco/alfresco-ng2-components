@@ -20,7 +20,7 @@ import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { setupTestBed } from '@alfresco/adf-core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';

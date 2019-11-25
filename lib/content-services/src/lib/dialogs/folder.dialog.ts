@@ -19,7 +19,7 @@ import { Observable } from 'rxjs';
 
 import { Component, Inject, OnInit, Optional, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { Node } from '@alfresco/js-api';
 import { NodesApiService, TranslationService } from '@alfresco/adf-core';

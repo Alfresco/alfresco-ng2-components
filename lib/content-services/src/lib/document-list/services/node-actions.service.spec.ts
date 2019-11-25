@@ -22,7 +22,7 @@ import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import { of, throwError } from 'rxjs';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { DialogModule } from '../../dialogs/dialog.module';
 
 const fakeNode: Node = <Node> {

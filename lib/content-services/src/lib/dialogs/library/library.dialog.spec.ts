@@ -20,7 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LibraryDialogComponent } from './library.dialog';
 import { TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import {
     CoreModule,
     AlfrescoApiService,

@@ -16,7 +16,7 @@
  */
 
 import { Directive, Input, HostListener } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { DownloadZipDialogComponent } from '../dialogs/download-zip/download-zip.dialog';
 import { NodeEntry } from '@alfresco/js-api';

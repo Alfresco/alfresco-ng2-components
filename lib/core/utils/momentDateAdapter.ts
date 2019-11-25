@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 import { isMoment, Moment } from 'moment';
 import moment from 'moment-es6';
 

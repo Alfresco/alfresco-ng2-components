@@ -24,7 +24,7 @@ import { ClipboardService } from './clipboard.service';
 import { TranslationService } from '../services/translation.service';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { HttpClientModule } from '@angular/common/http';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslationMock } from '@alfresco/adf-core';
 import { setupTestBed } from '../testing/setupTestBed';
 

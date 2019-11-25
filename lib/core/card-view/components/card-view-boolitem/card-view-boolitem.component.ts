@@ -16,7 +16,7 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 

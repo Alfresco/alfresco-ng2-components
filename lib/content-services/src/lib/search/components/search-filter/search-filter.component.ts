@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { SearchService, TranslationService } from '@alfresco/adf-core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';

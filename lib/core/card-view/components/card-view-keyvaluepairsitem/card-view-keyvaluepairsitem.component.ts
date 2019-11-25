@@ -19,7 +19,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view.models';
 import { CardViewKeyValuePairsItemType } from '../../interfaces/card-view.interfaces';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'adf-card-view-boolitem',

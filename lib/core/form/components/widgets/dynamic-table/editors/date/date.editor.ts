@@ -22,7 +22,8 @@ import { UserPreferencesService, UserPreferenceValues } from '../../../../../../
 import { MomentDateAdapter } from '../../../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../../../utils/moment-date-formats.model';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS, MatDatepickerInputEvent } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { DynamicTableColumn } from './../../dynamic-table-column.model';

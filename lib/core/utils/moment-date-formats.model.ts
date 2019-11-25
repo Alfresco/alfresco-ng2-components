@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MatDateFormats } from '@angular/material';
+import { MatDateFormats } from '@angular/material/core';
 
 export const MOMENT_DATE_FORMATS: MatDateFormats = {
     parse: {

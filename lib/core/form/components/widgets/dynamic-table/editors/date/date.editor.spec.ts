@@ -25,7 +25,7 @@ import { setupTestBed } from '../../../../../../testing/setupTestBed';
 import { CoreModule } from '../../../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 describe('DateEditorComponent', () => {
     let component: DateEditorComponent;

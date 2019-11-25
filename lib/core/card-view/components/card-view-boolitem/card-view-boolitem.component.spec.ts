@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MatCheckbox, MatCheckboxChange } from '@angular/material';
+import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { setupTestBed } from '../../../testing/setupTestBed';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';

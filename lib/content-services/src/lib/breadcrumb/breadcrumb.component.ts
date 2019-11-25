@@ -26,7 +26,7 @@ import {
     ViewEncapsulation,
     OnDestroy
 } from '@angular/core';
-import { MatSelect } from '@angular/material';
+import { MatSelect } from '@angular/material/select';
 import { Node, PathElementEntity } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list';
 import { Subject } from 'rxjs';

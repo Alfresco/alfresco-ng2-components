@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ExternalAlfrescoApiService, AlfrescoApiService, AuthenticationService, LoginDialogPanelComponent, SitesService, SearchService } from '@alfresco/adf-core';
 import { DocumentListService, ContentNodeSelectorService } from '@alfresco/adf-content-services';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';

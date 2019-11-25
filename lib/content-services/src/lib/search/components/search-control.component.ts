@@ -21,7 +21,7 @@ import { Component, EventEmitter, Input, OnDestroy, Output,
 import { NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { SearchComponent } from './search.component';
-import { MatListItem } from '@angular/material';
+import { MatListItem } from '@angular/material/list';
 import { EmptySearchResultComponent } from './empty-search-result.component';
 
 @Component({

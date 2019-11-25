@@ -16,7 +16,7 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ConfirmDialogComponent } from './confirm.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';

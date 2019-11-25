@@ -18,7 +18,7 @@
 import moment from 'moment-es6';
 
 import { Component, Inject, OnInit, Optional } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { NodeBodyLock, Node, NodeEntry } from '@alfresco/js-api';

@@ -17,7 +17,7 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Component, DebugElement } from '@angular/core';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';

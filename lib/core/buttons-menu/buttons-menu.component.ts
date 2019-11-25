@@ -16,7 +16,7 @@
  */
 
 import { Component, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
-import { MatMenuItem } from '@angular/material';
+import { MatMenuItem } from '@angular/material/menu';
 
 @Component({
     selector: 'adf-buttons-action-menu',

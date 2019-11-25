@@ -16,27 +16,65 @@
  */
 
 import { NgModule } from '@angular/core';
+
 import {
-    MAT_LABEL_GLOBAL_OPTIONS, MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
-    MatChipsModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
-    MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
-    MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
-    MatTooltipModule, MatMenuModule, MatExpansionModule
-} from '@angular/material';
+    MAT_LABEL_GLOBAL_OPTIONS,
+    MatNativeDateModule,
+    MatOptionModule,
+    MatRippleModule
+} from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 export function modules() {
     return [
-        MatAutocompleteModule, MatButtonModule, MatCardModule, MatDialogModule,
-        MatCheckboxModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule,
-        MatListModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule,
-        MatTabsModule, MatProgressSpinnerModule, MatNativeDateModule, MatRippleModule, MatTooltipModule,
-        MatChipsModule, MatMenuModule, MatExpansionModule
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatOptionModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTableModule,
+        MatTabsModule,
+        MatProgressSpinnerModule,
+        MatNativeDateModule,
+        MatRippleModule,
+        MatTooltipModule,
+        MatChipsModule,
+        MatMenuModule,
+        MatExpansionModule
     ];
 }
 
 @NgModule({
     providers: [
-        {provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'never' }}
+        { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'never' } }
     ],
     imports: modules(),
     exports: modules()

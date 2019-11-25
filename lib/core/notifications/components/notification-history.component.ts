@@ -18,7 +18,7 @@
 import { Component, Input, ViewChild, OnDestroy } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { NotificationModel } from '../models/notification.model';
-import { MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { StorageService } from '../../services/storage.service';
