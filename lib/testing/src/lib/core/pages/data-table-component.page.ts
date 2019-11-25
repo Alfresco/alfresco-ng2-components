@@ -68,7 +68,7 @@ export class DataTableComponentPage {
     }
 
     async checkListIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.list.first());
+        await BrowserVisibility.waitUntilElementIsVisible(this.list.first());
     }
 
     async checkRowIsChecked(columnName: string, columnValue: string): Promise<void> {
