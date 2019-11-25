@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
+        "target": "es2015",
+        "module": "esnext",
         "moduleResolution": "node",
         "sourceMap": true,
         "emitDecoratorMetadata": true,
@@ -32,7 +32,7 @@
             "@alfresco/adf-insights": ["./analytics"]
         },
         "lib": [
-            "es2016",
+            "es2018",
             "dom"
         ],
         "suppressImplicitAnyIndexErrors": true
