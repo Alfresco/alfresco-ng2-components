@@ -132,10 +132,10 @@
     "ajv-cli": "^3.0.0",
     "bundlesize": "0.18.0",
     "codelyzer": "5.0.0",
-    "commander": "4.0.0",
+    "commander": "^4.0.1",
     "concurrently": "^3.5.1",
     "cspell": "^4.0.35",
-    "dotenv": "6.2.0",
+    "dotenv": "^8.2.0",
     "ejs": "^2.6.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "fs-extra": "^4.0.2",
@@ -156,7 +156,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-mocha-reporter": "2.2.5",
     "license-checker": "^25.0.1",
-    "lint-staged": "^8.1.7",
+    "lint-staged": "^9.4.3",
     "lite-server": "^2.4.0",
     "lodash.wrap": "^4.1.1",
     "markdownlint-cli": "^0.16.0",
@@ -235,12 +235,10 @@
   "module": "./index.js",
   "typings": "./index.d.ts",
   "lint-staged": {
-    "linters": {
-      "**/demo-shell/src/**/*.ts": "npm run lint-demo -- --fix",
-      "**/lib/**/*.ts": "npm run lint-lib -- --fix",
-      "**/e2e/**/*.ts": "npm run lint-e2e -- --fix",
-      "*.scss": "npm run stylelint --  --fix"
-    }
+    "**/demo-shell/src/**/*.ts": "npm run lint-demo -- --fix",
+    "**/lib/**/*.ts": "npm run lint-lib -- --fix",
+    "**/e2e/**/*.ts": "npm run lint-e2e -- --fix",
+    "*.scss": "npm run stylelint --  --fix"
   },
   "husky": {
     "hooks": {
