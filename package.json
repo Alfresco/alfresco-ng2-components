@@ -103,8 +103,6 @@
     "adf-monaco-extension": "0.0.8",
     "adf-tslint-rules": "0.0.6",
     "chart.js": "2.5.0",
-    "classlist.js": "1.1.20150312",
-    "custom-event-polyfill": "0.3.0",
     "minimatch-browser": "1.0.0",
     "moment": "2.22.2",
     "moment-es6": "^1.0.0",
@@ -116,7 +114,6 @@
     "rxjs": "^6.2.2",
     "snyk": "^1.258.2",
     "systemjs": "0.19.27",
-    "web-animations-js": "2.3.1",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {
