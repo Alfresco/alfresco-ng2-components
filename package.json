@@ -54,7 +54,6 @@
     "06s": "",
     "clean": "rimraf dist ./node_modules typings lib/dist",
     "clean-lock": "rimraf package-lock.json",
-    "lint:staged": "lint-staged",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
@@ -242,7 +241,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:staged"
+      "pre-commit": "lint-staged"
     }
   },
   "snyk": true
