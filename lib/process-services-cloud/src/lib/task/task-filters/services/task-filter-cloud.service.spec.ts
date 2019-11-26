@@ -47,10 +47,7 @@ describe('TaskFilterCloudService', () => {
             CoreModule.forRoot()
         ],
         providers: [
-            TaskFilterCloudService,
-            LocalPreferenceCloudService,
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
-            IdentityUserService
+            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
     });
 
@@ -233,10 +230,7 @@ describe('Inject [UserPreferenceCloudService] into the TaskFilterCloudService', 
             CoreModule.forRoot()
         ],
         providers: [
-            TaskFilterCloudService,
-            LocalPreferenceCloudService,
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
-            IdentityUserService
+            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
         ]
     });
 

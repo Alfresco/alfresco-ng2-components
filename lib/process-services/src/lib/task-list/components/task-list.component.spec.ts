@@ -561,8 +561,7 @@ describe('CustomTaskListComponent', () => {
 
     setupTestBed({
         imports: [CoreModule.forRoot()],
-        declarations: [TaskListComponent, CustomTaskListComponent],
-        providers: [TaskListService]
+        declarations: [TaskListComponent, CustomTaskListComponent]
     });
 
     beforeEach(() => {

@@ -43,9 +43,6 @@ describe('ProcessInstanceDetailsComponent', () => {
             FormModule,
             TaskListModule
         ],
-        providers: [
-            ProcessService
-        ],
         schemas: [NO_ERRORS_SCHEMA]
     });
 

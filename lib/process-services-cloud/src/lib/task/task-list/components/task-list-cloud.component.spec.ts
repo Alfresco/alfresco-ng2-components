@@ -253,8 +253,11 @@ describe('TaskListCloudComponent', () => {
 
         setupTestBed({
             imports: [CoreModule.forRoot()],
-            declarations: [TaskListCloudComponent, CustomTaskListComponent, CustomCopyContentTaskListComponent],
-            providers: [TaskListCloudService]
+            declarations: [
+                TaskListCloudComponent,
+                CustomTaskListComponent,
+                CustomCopyContentTaskListComponent
+            ]
         });
 
         beforeEach(() => {

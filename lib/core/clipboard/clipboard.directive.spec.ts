@@ -47,9 +47,6 @@ describe('ClipboardDirective', () => {
         ],
         declarations: [
             TestTargetClipboardComponent
-        ],
-        providers: [
-            ClipboardService
         ]
     });
 

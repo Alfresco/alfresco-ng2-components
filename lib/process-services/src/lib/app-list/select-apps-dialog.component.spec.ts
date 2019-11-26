@@ -60,7 +60,6 @@ describe('Select app dialog', () => {
         imports: [ProcessTestingModule],
         declarations: [DialogSelectAppTestComponent],
         providers: [
-            AppsProcessService,
             {
                 provide: OverlayContainer,
                 useFactory: () => {

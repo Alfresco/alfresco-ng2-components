@@ -52,8 +52,7 @@ describe('TaskHeaderCloudComponent', () => {
             ProcessServiceCloudTestingModule,
             TaskHeaderCloudModule,
             RouterTestingModule
-        ],
-        providers: [TaskCloudService]
+        ]
     });
 
     beforeEach(() => {

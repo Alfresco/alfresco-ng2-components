@@ -20,7 +20,7 @@ import { DOCUMENT } from '@angular/common';
 import { LogService } from '../services/log.service';
 import { NotificationService } from '../notifications/services/notification.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ClipboardService {
 
     constructor(

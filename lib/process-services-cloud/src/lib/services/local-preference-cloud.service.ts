@@ -20,7 +20,7 @@ import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
 import { StorageService } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LocalPreferenceCloudService implements PreferenceCloudServiceInterface {
 
   constructor(private storage: StorageService) { }

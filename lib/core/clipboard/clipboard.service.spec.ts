@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { LogService } from '../services/log.service';
 import { NotificationService } from '../notifications/services/notification.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { TestBed } from '@angular/core/testing';
@@ -40,10 +39,8 @@ describe('ClipboardService', () => {
             MatSnackBarModule
         ],
         providers: [
-            LogService,
             { provide: TranslationService, useClass: TranslationMock },
-            { provide: AppConfigService, useClass: AppConfigServiceMock },
-            NotificationService
+            { provide: AppConfigService, useClass: AppConfigServiceMock }
         ]
     });
 

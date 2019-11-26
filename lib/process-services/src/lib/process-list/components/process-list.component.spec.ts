@@ -466,8 +466,7 @@ describe('CustomProcessListComponent', () => {
 
     setupTestBed({
         imports: [CoreModule.forRoot()],
-        declarations: [ProcessInstanceListComponent, CustomProcessListComponent],
-        providers: [ProcessService]
+        declarations: [ProcessInstanceListComponent, CustomProcessListComponent]
     });
 
     beforeEach(() => {

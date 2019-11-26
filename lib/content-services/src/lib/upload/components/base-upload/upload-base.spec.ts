@@ -50,7 +50,6 @@ describe('UploadBase', () => {
             UploadTestComponent
         ],
         providers: [
-            UploadService,
             { provide: TranslationService, useClass: TranslationMock }
         ]
     });

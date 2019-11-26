@@ -70,9 +70,6 @@ describe('FolderCreateDirective', () => {
             TestComponent,
             FolderDialogComponent,
             FolderCreateDirective
-        ],
-        providers: [
-            ContentService
         ]
     });
 

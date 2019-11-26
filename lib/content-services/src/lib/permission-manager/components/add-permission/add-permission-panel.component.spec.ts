@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
-import { SearchService, setupTestBed, SearchConfigurationService } from '@alfresco/adf-core';
+import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { fakeAuthorityListResult } from '../../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -33,8 +33,7 @@ describe('AddPermissionPanelComponent', () => {
     let debugElement: DebugElement;
 
     setupTestBed({
-        imports: [ContentTestingModule],
-        providers: [SearchService, SearchConfigurationService]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {
