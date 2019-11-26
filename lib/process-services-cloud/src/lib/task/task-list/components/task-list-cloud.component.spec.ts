@@ -42,7 +42,7 @@ import { Person } from '@alfresco/js-api';
     </adf-cloud-task-list>`
 })
 class CustomTaskListComponent {
-    @ViewChild(TaskListCloudComponent)
+    @ViewChild(TaskListCloudComponent, { static: false })
     taskList: TaskListCloudComponent;
 
     getFullName(person: Person): string {
@@ -70,7 +70,7 @@ class EmptyTemplateComponent {
     </adf-cloud-task-list>`
 })
 class CustomCopyContentTaskListComponent {
-    @ViewChild(TaskListCloudComponent)
+    @ViewChild(TaskListCloudComponent, { static: false })
     taskList: TaskListCloudComponent;
 }
 

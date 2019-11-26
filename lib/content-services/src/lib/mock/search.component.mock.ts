@@ -137,7 +137,7 @@ export let errorJson = {
 
   export class SimpleSearchTestComponent {
 
-    @ViewChild('search')
+    @ViewChild('search', { static: false })
     search: SearchComponent;
 
     message: string = '';

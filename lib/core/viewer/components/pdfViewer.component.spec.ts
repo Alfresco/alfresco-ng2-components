@@ -49,7 +49,7 @@ class TestDialogComponent {
 })
 class UrlTestComponent {
 
-    @ViewChild(PdfViewerComponent)
+    @ViewChild(PdfViewerComponent, { static: false })
     pdfViewerComponent: PdfViewerComponent;
 
     urlFile: any;
@@ -69,7 +69,7 @@ class UrlTestComponent {
 })
 class UrlTestPasswordComponent {
 
-    @ViewChild(PdfViewerComponent)
+    @ViewChild(PdfViewerComponent, { static: false })
     pdfViewerComponent: PdfViewerComponent;
 
     urlFile: any;
@@ -89,7 +89,7 @@ class UrlTestPasswordComponent {
 })
 class BlobTestComponent {
 
-    @ViewChild(PdfViewerComponent)
+    @ViewChild(PdfViewerComponent, { static: false })
     pdfViewerComponent: PdfViewerComponent;
 
     blobFile: any;

@@ -35,7 +35,7 @@ import { TranslationMock } from '../mock/translation.service.mock';
 class TestComponent {
     selection = [];
 
-    @ViewChild(NodeDeleteDirective)
+    @ViewChild(NodeDeleteDirective, { static: false })
     deleteDirective: NodeDeleteDirective;
 
     onDelete() {
@@ -52,7 +52,7 @@ class TestComponent {
 class TestWithPermissionsComponent {
     selection = [];
 
-    @ViewChild(NodeDeleteDirective)
+    @ViewChild(NodeDeleteDirective, { static: false })
     deleteDirective: NodeDeleteDirective;
 
     onDelete = jasmine.createSpy('onDelete');
@@ -70,7 +70,7 @@ class TestWithPermissionsComponent {
 class TestDeletePermanentComponent {
     selection = [];
 
-    @ViewChild(NodeDeleteDirective)
+    @ViewChild(NodeDeleteDirective, { static: false })
     deleteDirective: NodeDeleteDirective;
 
     permanent = true;

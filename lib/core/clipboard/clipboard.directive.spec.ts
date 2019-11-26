@@ -79,7 +79,7 @@ describe('CopyClipboardDirective', () => {
         mockText = 'text to copy';
         placeholder = 'copy text';
 
-        @ViewChild(ClipboardDirective)
+        @ViewChild(ClipboardDirective, { static: false })
         clipboardDirective: ClipboardDirective;
     }
 

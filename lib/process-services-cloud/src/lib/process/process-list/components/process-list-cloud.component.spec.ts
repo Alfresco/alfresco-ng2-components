@@ -40,7 +40,7 @@ import { ProcessListCloudModule } from '../process-list-cloud.module';
     </adf-cloud-process-list>`
 })
 class CustomTaskListComponent {
-    @ViewChild(ProcessListCloudComponent)
+    @ViewChild(ProcessListCloudComponent, { static: false })
     processListCloud: ProcessListCloudComponent;
 }
 
