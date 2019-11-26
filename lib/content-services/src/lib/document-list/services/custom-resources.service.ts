@@ -150,15 +150,19 @@ export class CustomResourcesService {
                         const page: FavoritePaging = {
                             list: {
                                 entries: result.list.entries
-                                    .map(({ entry: { target } }: any) => ({
-                                        entry: target.file || target.folder
-                                    }))
                                     .map(({ entry }: any) => {
-                                        entry.properties = {
-                                            'cm:title': entry.title,
-                                            'cm:description': entry.description
-                                        };
-                                        return { entry };
+                                            const target = entry.target.file || entry.target.folder;
+                                            target.properties = {
+                                                ...(target.properties || {
+                                                        'cm:title': entry.title || target.title,
+                                                        'cm:description': entry.description || target.description
+                                                    }),
+                                                ...(entry.properties || {})
+                                            };
+
+                                            return {
+                                                entry: target
+                                            };
                                     }),
                                 pagination: result.list.pagination
                             }
