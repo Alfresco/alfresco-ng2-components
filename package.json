@@ -167,7 +167,7 @@
     "mdast-zone": "^3.0.1",
     "nconf": "^0.10.0",
     "ncp": "^2.0.0",
-    "ng-packagr": "4.7.1",
+    "ng-packagr": "^5.7.1",
     "node-sass": "4.13.0",
     "protractor": "^5.4.2",
     "protractor-browser-logs": "1.0.456",
