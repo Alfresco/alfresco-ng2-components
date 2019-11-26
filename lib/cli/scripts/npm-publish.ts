@@ -106,5 +106,5 @@ async function main(args) {
 
 async function sleep(ms: number) {
     logger.info(`Waiting for ${ms} milliseconds...`);
-   return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
