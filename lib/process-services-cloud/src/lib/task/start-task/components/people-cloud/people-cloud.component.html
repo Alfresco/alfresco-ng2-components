@@ -6,7 +6,7 @@
             *ngFor="let user of selectedUsers$ | async"
             (removed)="onRemove(user)">
             {{user | fullName}}
-            <mat-icon matChipRemove>cancel</mat-icon>
+            <mat-icon *ngIf="!canRemoveLastChip()" matChipRemove>cancel</mat-icon>
         </mat-chip>
         <input
             #userInput
