@@ -16,14 +16,10 @@
  */
 
 var exports = module.exports = {};
-var request = require('request');
-var RequestCoreAPI = require('./RequestUtil/RequestCoreAPI');
-var url = require('url-join');
-var path = require('path');
-var fs = require('fs');
-var TestConfig = require('../../test.config');
-
-var peopleBaseUrl = 'people';
+const request = require('request');
+const RequestCoreAPI = require('./RequestUtil/RequestCoreAPI');
+const path = require('path');
+const fs = require('fs');
 
 function read(initialFile) {
     return new Promise(function (resolve, reject) {
@@ -63,9 +59,9 @@ function write(file, uri, header) {
  * @method updateAvatarViaAPI
  */
 exports.updateAvatarViaAPI = function (requestUserModel, fileModel, personId) {
+    const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, fileModel.getLocation()));
+    const uri = `${RequestCoreAPI.getBaseURL()}/people/${personId}/avatar`;
 
-    var absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, fileModel.getLocation()));
-    var uri = url(RequestCoreAPI.getBaseURL(), peopleBaseUrl, personId, "avatar");
     // console.debug("Update avatar via API: fileName=" + fileModel.getName() + " uri=" + uri + " auth=" + requestUserModel.id + " password: " + requestUserModel.password);
 
     var allHeaders = RequestCoreAPI.requestHeaders(requestUserModel);
@@ -85,7 +81,7 @@ exports.updateAvatarViaAPI = function (requestUserModel, fileModel, personId) {
  * @method getAvatarViaAPIWithRetry
  */
 exports.getAvatarViaAPI = function (retry, requestUserModel, personId, callback) {
-    var uri = url(RequestCoreAPI.getBaseURL(), peopleBaseUrl, personId, "avatar");
+    const uri = `${RequestCoreAPI.getBaseURL()}/people/${personId}/avatar`;
 
     // console.debug("Get avatar via API: uri= " + uri + " auth=" + requestUserModel.id + " password: " + requestUserModel.password);
 
@@ -117,8 +113,7 @@ exports.getAvatarViaAPI = function (retry, requestUserModel, personId, callback)
  * @param callback
  */
 exports.deleteAvatarViaAPI = function (requestUserModel, personId, callback) {
-
-    var uri = url(RequestCoreAPI.getBaseURL(), peopleBaseUrl, personId, "avatar");
+    const uri = `${RequestCoreAPI.getBaseURL()}/people/${personId}/avatar`;
 
     request.del({url: uri, headers: RequestCoreAPI.requestHeaders(requestUserModel)}, function (error, response, body) {
         if (error) {

@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-var url = require('url-join');
 var APIUtils = require('../../../restAPI/APIUtil');
 var CONSTANTS = require('../../../util/constants');
 
 var ACMBaseURL = '/alfresco/versions/1';
 
 exports.getBaseURL = function () {
-    return url(new APIUtils().getBaseURL(CONSTANTS.APPLICATION.ADF_ACS), ACMBaseURL);
+    return `${new APIUtils().getBaseURL(CONSTANTS.APPLICATION.ADF_ACS)}/${ACMBaseURL}`;
 };
 
 exports.requestHeaders = function (auth) {

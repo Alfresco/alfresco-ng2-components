@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-var url = require('url-join');
-var TestConfig = require('../test.config');
+const TestConfig = require('../test.config');
 
 var APIUtils = function () {
     /**
@@ -50,9 +49,7 @@ var APIUtils = function () {
         urlComponents.path = TestConfig[application].apiContextRoot;
         Object.assign(urlComponents, urlComponentsParam);
 
-        return url(urlComponents.hostname
-            + (urlComponents.port !== "" ? ":" + urlComponents.port : ""),
-            urlComponents.path);
+        return `${urlComponents.hostname}/${urlComponents.port !== "" ? ":" + urlComponents.port : ""}/${urlComponents.path}`;
     };
 
 };
