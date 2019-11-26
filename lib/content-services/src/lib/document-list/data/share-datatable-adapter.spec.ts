@@ -19,41 +19,8 @@ import { DataColumn, DataRow, DataSorting, ContentService, ThumbnailService, set
 import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode } from './../../mock';
 import { ShareDataRow } from './share-data-row.model';
 import { ShareDataTableAdapter } from './share-datatable-adapter';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material/icon';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TestBed } from '@angular/core/testing';
-
-class FakeSanitizer extends DomSanitizer {
-
-    constructor() {
-        super();
-    }
-
-    sanitize(html) {
-        return html;
-    }
-
-    bypassSecurityTrustHtml(value: string): any {
-        return value;
-    }
-
-    bypassSecurityTrustStyle(): any {
-        return null;
-    }
-
-    bypassSecurityTrustScript(): any {
-        return null;
-    }
-
-    bypassSecurityTrustUrl(): any {
-        return null;
-    }
-
-    bypassSecurityTrustResourceUrl(): any {
-        return null;
-    }
-}
 
 describe('ShareDataTableAdapter', () => {
 
@@ -61,16 +28,7 @@ describe('ShareDataTableAdapter', () => {
     let contentService: ContentService;
 
     setupTestBed({
-        imports: [ContentTestingModule],
-        providers: [
-            {
-                provide: MatIconRegistry,
-                useValue: jasmine.createSpyObj(['addSvgIcon', 'addSvgIconInNamespace'])
-            },
-            {
-                provide: DomSanitizer, useClass: FakeSanitizer
-            }
-        ]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {

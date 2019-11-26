@@ -17,7 +17,7 @@
 
 import { Component, NgZone } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { TranslationService, UploadService, setupTestBed, CoreModule, FileModel, TranslationMock } from '@alfresco/adf-core';
+import { TranslationService, UploadService, setupTestBed, CoreModule, FileModel } from '@alfresco/adf-core';
 import { UploadBase } from './upload-base';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UploadFilesEvent } from '../upload-files.event';
@@ -48,9 +48,6 @@ describe('UploadBase', () => {
         ],
         declarations: [
             UploadTestComponent
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
         ]
     });
 

@@ -37,16 +37,17 @@ describe('ContentMetadataComponent', () => {
     let nodesApiService: NodesApiService;
     let node: Node;
     let folderNode: Node;
+    let logService: LogService;
     const preset = 'custom-preset';
 
     setupTestBed({
-        imports: [ContentTestingModule],
-        providers: [{ provide: LogService, useValue: { error: jasmine.createSpy('error') } }]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
+        logService = TestBed.get(LogService);
         contentMetadataService = TestBed.get(ContentMetadataService);
         updateService = TestBed.get(CardViewUpdateService);
         nodesApiService = TestBed.get(NodesApiService);
@@ -136,8 +137,8 @@ describe('ContentMetadataComponent', () => {
 
         it('should throw error on unsuccessful save', () => {
             const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' };
-            const logService: LogService = TestBed.get(LogService);
 
+            spyOn(logService, 'error').and.stub();
             spyOn(nodesApiService, 'updateNode').and.callFake(() => {
                 return throwError(new Error('My bad'));
             });
@@ -166,10 +167,13 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Properties loading', () => {
-        let expectedNode;
+        let expectedNode: Node;
 
         beforeEach(() => {
-            expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
+            expectedNode = {
+                ...node,
+                name: 'some-modified-value'
+            };
             fixture.detectChanges();
         });
 

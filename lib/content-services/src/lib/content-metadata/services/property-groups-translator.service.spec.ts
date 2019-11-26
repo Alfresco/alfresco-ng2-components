@@ -37,19 +37,14 @@ describe('PropertyGroupTranslatorService', () => {
     let propertyGroup: OrganisedPropertyGroup;
     let property: Property;
     let propertyValues: { [key: string]: any };
+    let logService: LogService;
 
     setupTestBed({
-        imports: [ContentTestingModule],
-        providers: [
-            {
-                provide: LogService, useValue: {
-                    error: () => {}
-                }
-            }
-        ]
+        imports: [ContentTestingModule]
     });
 
     beforeEach(() => {
+        logService = TestBed.get(LogService);
         service = TestBed.get(PropertyGroupTranslatorService);
 
         property = {
@@ -135,7 +130,6 @@ describe('PropertyGroupTranslatorService', () => {
         });
 
         it('should log an error if unrecognised type is found', () => {
-            const logService = TestBed.get(LogService);
             spyOn(logService, 'error').and.stub();
 
             property.name = 'FAS:PLAGUE';
