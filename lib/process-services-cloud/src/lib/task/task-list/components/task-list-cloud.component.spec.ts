@@ -42,7 +42,7 @@ import { Person } from '@alfresco/js-api';
     </adf-cloud-task-list>`
 })
 class CustomTaskListComponent {
-    @ViewChild(TaskListCloudComponent, { static: false })
+    @ViewChild(TaskListCloudComponent, { static: true })
     taskList: TaskListCloudComponent;
 
     getFullName(person: Person): string {
@@ -51,26 +51,26 @@ class CustomTaskListComponent {
  }
 @Component({
     template: `
-    <adf-tasklist>
-        <adf-empty-content-holder>
-            <p id="custom-id"></p>
-        </adf-empty-content-holder>
-    </adf-tasklist>
-       `
+        <adf-tasklist>
+            <adf-empty-content-holder>
+                <p id="custom-id"></p>
+            </adf-empty-content-holder>
+        </adf-tasklist>
+    `
 })
 class EmptyTemplateComponent {
 }
 @Component({
     template: `
-    <adf-cloud-task-list #taskListCloudCopy>
-        <data-columns>
-            <data-column [copyContent]="true" key="entry.id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
-            <data-column key="entry.name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"></data-column>
-        </data-columns>
-    </adf-cloud-task-list>`
+        <adf-cloud-task-list #taskListCloudCopy>
+            <data-columns>
+                <data-column [copyContent]="true" key="entry.id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
+                <data-column key="entry.name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"></data-column>
+            </data-columns>
+        </adf-cloud-task-list>`
 })
 class CustomCopyContentTaskListComponent {
-    @ViewChild(TaskListCloudComponent, { static: false })
+    @ViewChild(TaskListCloudComponent, { static: true })
     taskList: TaskListCloudComponent;
 }
 
@@ -82,9 +82,9 @@ describe('TaskListCloudComponent', () => {
 
     setupTestBed({
         imports: [
-            ProcessServiceCloudTestingModule, TaskListCloudModule
-        ],
-        providers: [TaskListCloudService]
+            ProcessServiceCloudTestingModule,
+            TaskListCloudModule
+        ]
     });
 
     beforeEach(() => {
