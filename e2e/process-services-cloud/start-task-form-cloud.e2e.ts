@@ -37,7 +37,8 @@ import {
     UploadActions,
     ContentNodeSelectorDialogPage,
     ProcessInstancesService,
-    ProcessDefinitionsService
+    ProcessDefinitionsService,
+    FileBrowserUtil
 } from '@alfresco/adf-testing';
 import { StartProcessCloudConfiguration } from './config/start-process-cloud.config';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
@@ -83,7 +84,7 @@ describe('Start Task Form', () => {
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
     let processDefinition, uploadLocalFileProcess, uploadContentFileProcess, uploadDefaultFileProcess,
-        cancelUploadFileProcess, completeUploadFileProcess;
+        cancelUploadFileProcess, completeUploadFileProcess, downloadContentFileProcess;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const pdfFileModel = new FileModel({
@@ -138,6 +139,11 @@ describe('Start Task Form', () => {
         });
 
         completeUploadFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            'name': StringUtil.generateRandomString(),
+            'businessKey': StringUtil.generateRandomString()
+        });
+
+        downloadContentFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
             'name': StringUtil.generateRandomString(),
             'businessKey': StringUtil.generateRandomString()
         });
@@ -504,5 +510,41 @@ describe('Start Task Form', () => {
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
             await contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
         });
+
+        it('[C315292] Should be able to download attached file from acs repository', async () => {
+            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(downloadContentFileProcess.entry.name);
+            await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', downloadContentFileProcess.entry.name);
+            await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
+            await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
+            await taskFormCloudComponent.clickClaimButton();
+
+            const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
+            await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
+            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
+            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
+            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
+            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
+
+            await contentNodeSelectorDialogPage.clickMoveCopyButton();
+            await contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+            await contentFileWidget.checkFileIsAttached(testFileModel.name);
+
+            await contentFileWidget.downloadFile(testFileModel.name);
+            await expect(await FileBrowserUtil.isFileDownloaded(testFileModel.name)).toBe(true);
+
+            const taskId = await taskHeaderCloudPage.getId();
+            await taskFormCloudComponent.clickCompleteButton();
+            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
+
+            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(taskId);
+            await contentFileWidget.checkFileIsAttached(testFileModel.name);
+            await contentFileWidget.downloadFile(testFileModel.name);
+            await expect(await FileBrowserUtil.isFileDownloaded(testFileModel.name)).toBe(true);
+        });
+
     });
 });

@@ -75,23 +75,25 @@ export class AttachFileWidgetCloud {
         return fileAttached.getAttribute('id');
     }
 
-    async removeFile(fileName: string): Promise<void> {
+    async clickActionMenu(fileName: string, actionName: string): Promise<void> {
         const fileId = await this.getFileId(fileName);
         const optionMenu = this.widget.element(by.css(`button[id='${fileId}-option-menu']`));
         await BrowserActions.click(optionMenu);
         await BrowserActions.waitUntilActionMenuIsVisible();
-        const deleteButton = element(by.css(`button#${fileId}-remove`));
-        await BrowserActions.click(deleteButton);
-        await BrowserVisibility.waitUntilElementIsNotVisible(deleteButton);
+        const actionButton = element(by.css(`button#${fileId}-${actionName}`));
+        await BrowserActions.click(actionButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(actionButton);
     }
 
-    async showFile(name): Promise<void> {
-        const fileId = await this.getFileId(name);
-        const optionMenu = this.widget.element(by.css(`button[id='${fileId}-option-menu']`));
-        await BrowserActions.click(optionMenu);
-        await BrowserActions.waitUntilActionMenuIsVisible();
-        const showButton = element(by.css(`button#${fileId}-show-file`));
-        await BrowserActions.click(showButton);
-        await BrowserVisibility.waitUntilElementIsNotVisible(showButton);
+    async removeFile(fileName: string): Promise<void> {
+        await this.clickActionMenu(fileName, 'remove');
+    }
+
+    async downloadFile(fileName: string): Promise<void> {
+        await this.clickActionMenu(fileName, 'download-file');
+    }
+
+    async viewFile(fileName: string): Promise<void> {
+        await this.clickActionMenu(fileName, 'show-file');
     }
 }
