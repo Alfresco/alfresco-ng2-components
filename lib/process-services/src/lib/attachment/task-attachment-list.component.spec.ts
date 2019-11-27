@@ -32,6 +32,7 @@ describe('TaskAttachmentList', () => {
     let mockAttachment: any;
     let deleteContentSpy: jasmine.Spy;
     let getFileRawContentSpy: jasmine.Spy;
+    let getContentPreviewSpy: jasmine.Spy;
     let disposableSuccess: any;
 
     setupTestBed({
@@ -87,6 +88,8 @@ describe('TaskAttachmentList', () => {
         deleteContentSpy = spyOn(service, 'deleteRelatedContent').and.returnValue(of({ successCode: true }));
 
         const blobObj = new Blob();
+
+        getContentPreviewSpy = spyOn(service, 'getContentPreview').and.returnValue(of(blobObj));
         getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(of(blobObj));
     });
 
@@ -144,7 +147,7 @@ describe('TaskAttachmentList', () => {
     it('emit document when a user wants to view the document', () => {
         component.emitDocumentContent(mockAttachment.data[1]);
         fixture.detectChanges();
-        expect(getFileRawContentSpy).toHaveBeenCalled();
+        expect(getContentPreviewSpy).toHaveBeenCalled();
     });
 
     it('download document when a user wants to view the document', () => {
