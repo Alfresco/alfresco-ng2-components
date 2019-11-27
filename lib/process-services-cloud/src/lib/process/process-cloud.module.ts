@@ -21,6 +21,7 @@ import { ProcessListCloudModule } from './process-list/process-list-cloud.module
 import { StartProcessCloudModule } from './start-process/start-process-cloud.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { ProcessHeaderCloudModule } from './process-header/process-header-cloud.module';
+import { ProcessDirectiveModule } from './directives/process-directive.module';
 
 @NgModule({
     imports: [
@@ -28,13 +29,15 @@ import { ProcessHeaderCloudModule } from './process-header/process-header-cloud.
         ProcessListCloudModule,
         StartProcessCloudModule,
         ProcessHeaderCloudModule,
+        ProcessDirectiveModule,
         CoreModule
     ],
     exports: [
         ProcessFiltersCloudModule,
         ProcessListCloudModule,
         StartProcessCloudModule,
-        ProcessHeaderCloudModule
+        ProcessHeaderCloudModule,
+        ProcessDirectiveModule
     ]
 })
 export class ProcessCloudModule { }
