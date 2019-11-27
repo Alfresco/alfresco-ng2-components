@@ -79,6 +79,18 @@ export class TaskFormCloudComponent {
         await BrowserActions.click(this.completeButton);
     }
 
+    async checkFormOutcomeButtonIsDisplayedByName(name: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`button[id="adf-form-${name}"]`)));
+    }
+
+    async checkFormOutcomeButtonIsNotDisplayedByName(name: string) {
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`button[id="adf-form-${name}"]`)));
+    }
+
+    async clickFormOutcomeButtonByName(name: string): Promise<void> {
+        await BrowserActions.click(element(by.css(`button[id="adf-form-${name}"]`)));
+    }
+
     async clickCancelButton(): Promise<void> {
         await BrowserActions.click(this.cancelButton);
     }
