@@ -4,9 +4,10 @@
         <mat-chip-list #userChipList *ngIf="isMultipleMode(); else singleSelection">
         <mat-chip
             *ngFor="let user of selectedUsers$ | async"
+            [attr.data-automation-id]="'adf-people-cloud-chip-' + user.username"
             (removed)="onRemove(user)">
             {{user | fullName}}
-            <mat-icon *ngIf="!canRemoveLastChip()" matChipRemove>cancel</mat-icon>
+            <mat-icon *ngIf="!canRemoveLastChip()" data-automation-id="adf-people-cloud-chip-remove-icon" matChipRemove>cancel</mat-icon>
         </mat-chip>
         <input
             #userInput

@@ -461,6 +461,44 @@ describe('PeopleCloudComponent', () => {
         });
     });
 
+    describe('Multiple Mode with removeLastChip flag', () => {
+
+        beforeEach(async(() => {
+            component.mode = 'multiple';
+            component.preSelectUsers = [{ id: mockUsers[0].id, username: mockUsers[0].username }];
+            fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        it('should show remove icon on last chip when removeLastChip is set to true', (done) => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const chipList = element.querySelector('mat-chip-list');
+                const selectedChip = element.querySelector('[data-automation-id="adf-people-cloud-chip-first-name-1 last-name-1"]');
+                const removeIcon = element.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon"]');
+                expect(chipList).toBeDefined();
+                expect(selectedChip).toBeDefined();
+                expect(removeIcon).not.toBeNull();
+                done();
+            });
+        });
+
+        it('should not show remove icon on last chip when removeLastChip is set to false', (done) => {
+            component.removeLastChip = false;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const chipList = element.querySelector('mat-chip-list');
+                const selectedChip = element.querySelector('[data-automation-id="adf-people-cloud-chip-first-name-1 last-name-1"]');
+                const removeIcon = element.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon"]');
+                expect(chipList).toBeDefined();
+                expect(selectedChip).toBeDefined();
+                expect(removeIcon).toBeNull();
+                done();
+            });
+        });
+    });
+
     describe('Multiple Mode and Pre-selected users with validate flag', () => {
 
         const change = new SimpleChange(null, mockPreselectedUsers, false);
