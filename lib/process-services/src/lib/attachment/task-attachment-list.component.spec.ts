@@ -87,7 +87,7 @@ describe('TaskAttachmentList', () => {
         deleteContentSpy = spyOn(service, 'deleteRelatedContent').and.returnValue(of({ successCode: true }));
 
         const blobObj = new Blob();
-        getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(of(blobObj));
+        getFileRawContentSpy = spyOn(service, 'getContentPreview').and.returnValue(of(blobObj));
     });
 
     afterEach(() => {
