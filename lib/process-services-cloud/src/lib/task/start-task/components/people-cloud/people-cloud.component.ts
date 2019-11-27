@@ -80,7 +80,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     title: string;
 
-    /** This flag enables not to delete last chip on multiple mode.
+    /** This flag enables not to delete last chip in multiple mode.
      * In case the flag is false, last chip from the list can not be deleted
      * Otherwise, last chip can be deletable.
      */
@@ -425,9 +425,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onRemove(user: IdentityUserModel) {
-        if (this.canRemoveLastChip()) {
-            this.selectedUsersSubject.next(this.preSelectUsers);
-        } else {
+        if (!this.canRemoveLastChip())  {
             this.removeUser.emit(user);
             const indexToRemove = this.preSelectUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
             this.preSelectUsers.splice(indexToRemove, 1);

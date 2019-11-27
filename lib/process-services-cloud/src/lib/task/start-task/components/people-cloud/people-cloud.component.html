@@ -7,7 +7,11 @@
             [attr.data-automation-id]="'adf-people-cloud-chip-' + user.username"
             (removed)="onRemove(user)">
             {{user | fullName}}
-            <mat-icon *ngIf="!canRemoveLastChip()" data-automation-id="adf-people-cloud-chip-remove-icon" matChipRemove>cancel</mat-icon>
+            <mat-icon
+                *ngIf="!canRemoveLastChip()"
+                [attr.data-automation-id]="'adf-people-cloud-chip-remove-icon' + user.username"
+                matChipRemove>cancel
+            </mat-icon>
         </mat-chip>
         <input
             #userInput

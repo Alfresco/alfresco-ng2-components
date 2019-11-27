@@ -475,7 +475,7 @@ describe('PeopleCloudComponent', () => {
             fixture.whenStable().then(() => {
                 const chipList = element.querySelector('mat-chip-list');
                 const selectedChip = element.querySelector('[data-automation-id="adf-people-cloud-chip-first-name-1 last-name-1"]');
-                const removeIcon = element.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon"]');
+                const removeIcon = element.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon-first-name-1 last-name-1"]');
                 expect(chipList).toBeDefined();
                 expect(selectedChip).toBeDefined();
                 expect(removeIcon).not.toBeNull();
@@ -490,7 +490,7 @@ describe('PeopleCloudComponent', () => {
                 fixture.detectChanges();
                 const chipList = element.querySelector('mat-chip-list');
                 const selectedChip = element.querySelector('[data-automation-id="adf-people-cloud-chip-first-name-1 last-name-1"]');
-                const removeIcon = element.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon"]');
+                const removeIcon = element.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon-first-name-1 last-name-1"]');
                 expect(chipList).toBeDefined();
                 expect(selectedChip).toBeDefined();
                 expect(removeIcon).toBeNull();
