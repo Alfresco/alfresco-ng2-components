@@ -18,7 +18,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, IdentityUserService, setupTestBed } from '@alfresco/adf-core';
-import { RouterTestingModule } from '@angular/router/testing';
 import { DeleteProcessDirective } from './delete-process.directive';
 import { ProcessCloudService } from '../services/process-cloud.service';
 import { of } from 'rxjs';
@@ -45,8 +44,7 @@ describe('DeleteProcessDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
+            CoreModule.forRoot()
         ],
         declarations: [
             TestComponent,
@@ -117,8 +115,7 @@ describe('Validation Errors', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
+            CoreModule.forRoot()
         ],
         declarations: [
             DeleteProcessMissingInputsDirectiveComponent,
