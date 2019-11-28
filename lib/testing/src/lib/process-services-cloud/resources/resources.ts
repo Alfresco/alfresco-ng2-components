@@ -80,7 +80,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
             multiinstancesubprocess: 'multiinstance-subprocess',
             calledprocess: 'calledprocess',
             booleanvisibilityprocess: 'booleanvisibilityprocess',
-            numbervisibilityprocess: 'numbervisibilityprocess'
+            numbervisibilityprocess: 'numbervisibilityprocess',
+            processformoutcome: 'processformoutcome'
         },
         forms: {
             tabVisibilityFields: {
