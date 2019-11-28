@@ -7,7 +7,6 @@
       </mat-expansion-panel-header>
       <adf-cloud-task-filters
           *ngIf="expandTaskFilter"
-          [appName]="''"
           [showIcons]="true"
           [filterParam]="currentTaskFilter$ | async"
           (filterClick)="onTaskFilterSelected($event)">
