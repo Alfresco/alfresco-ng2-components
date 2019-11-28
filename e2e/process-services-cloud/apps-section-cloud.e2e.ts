@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { ApiService, ApplicationsService, AppListCloudPage, IdentityService, LocalStorageUtil, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsService, AppListCloudPage, IdentityService, LocalStorageUtil, LoginPage, SettingsPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Applications list', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
+    const settingsPage = new SettingsPage();
     const appListCloudPage = new AppListCloudPage();
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
@@ -37,8 +38,11 @@ describe('Applications list', () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_DEVOPS]);
-
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost, false, false);
+        await loginPage.login(testUser.email, testUser.password);
         await apiService.login(testUser.email, testUser.password);
         applicationsService = new ApplicationsService(apiService);
         applications = await applicationsService.getApplicationsByStatus('RUNNING');

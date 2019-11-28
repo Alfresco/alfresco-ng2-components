@@ -17,21 +17,22 @@
 
 import {
     ApiService, AppListCloudPage, GroupIdentityService, IdentityService,
-    LoginSSOPage, NotificationHistoryPage, ProcessDefinitionsService,
+    LoginPage, NotificationHistoryPage, ProcessDefinitionsService,
     ProcessInstancesService, QueryService, TaskFormCloudComponent, TaskHeaderCloudPage,
-    TasksService, Widget
+    TasksService, Widget, SettingsPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Form Field Component - Dropdown Widget', () => {
-    const loginSSOPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const notificationHistoryPage = new NotificationHistoryPage();
+    const settingsPage = new SettingsPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const widget = new Widget();
     const dropdown = widget.dropdown();
@@ -77,7 +78,12 @@ describe('Form Field Component - Dropdown Widget', () => {
         tasksService = new TasksService(apiService);
         await tasksService.claimTask(task.entry.id, simpleApp);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost, false, false);
+        await loginPage.login(testUser.email, testUser.password);
+
     });
 
     afterAll(async () => {

@@ -20,7 +20,7 @@ import {
     AppListCloudPage,
     StringUtil,
     ApiService,
-    LoginSSOPage,
+    LoginPage,
     TasksService,
     ProcessDefinitionsService,
     ProcessInstancesService,
@@ -34,7 +34,7 @@ import { FormCloudService } from '../../lib/testing/src/lib/form-cloud/actions/f
 
 describe('Task form cloud component', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
@@ -135,7 +135,7 @@ describe('Task form cloud component', () => {
         processInstancesService = new ProcessInstancesService(apiServiceHrUser);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginPage.login(testUser.email, testUser.password);
 
     }, 5 * 60 * 1000);
 

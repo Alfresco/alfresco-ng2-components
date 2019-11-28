@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, DateUtil, GroupIdentityService, IdentityService, LocalStorageUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, StringUtil, TasksService } from '@alfresco/adf-testing';
+import { SettingsPage, ApiService, AppListCloudPage, DateUtil, GroupIdentityService, IdentityService, LocalStorageUtil, LoginPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, StringUtil, TasksService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -26,12 +26,13 @@ import { ProcessListCloudConfiguration } from './config/process-list-cloud.confi
 import moment = require('moment');
 
 describe('Process filters cloud', () => {
-    const loginSSOPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const processListPage = new ProcessListPage();
+    const settingsPage = new SettingsPage();
     const apiService = new ApiService(
         browser.params.config.oauth2.clientId,
         browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -116,7 +117,11 @@ describe('Process filters cloud', () => {
         const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
         await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost, false, false);
+        await loginPage.login(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
 

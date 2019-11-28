@@ -16,17 +16,18 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, TasksService, ApiService, AppListCloudPage, StringUtil, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
+import { LoginPage, TasksService, ApiService, AppListCloudPage, StringUtil, SettingsPage, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 
 describe('Task filters cloud', () => {
 
     describe('Task Filters', () => {
-        const loginSSOPage = new LoginSSOPage();
+        const loginPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const settingsPage = new SettingsPage();
         let tasksService: TasksService;
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
@@ -46,8 +47,11 @@ describe('Task filters cloud', () => {
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.email, testUser.password);
-
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await settingsPage.setProviderBpmSso(
+                browser.params.config.bpmHost,
+                browser.params.config.oauth2.host,
+                browser.params.config.identityHost, false, false);
+            await loginPage.login(testUser.email, testUser.password);
 
         });
 

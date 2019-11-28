@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget } from '@alfresco/adf-testing';
+import { LoginPage, SettingsPage, Widget } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -27,7 +27,8 @@ import { tabFieldValueVisibilityJson, tabVarValueVisibilityJson, tabVarFieldVisi
 
 describe('Visibility conditions on tabs - cloud', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const settingsPage = new SettingsPage();
+    const loginPage = new LoginPage();
 
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudDemoPage();
@@ -60,7 +61,11 @@ describe('Visibility conditions on tabs - cloud', () => {
             hostBpm: browser.params.testConfig.adf_aps.host
         });
 
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost, false, false);
+        await loginPage.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await navigationBarPage.navigateToFormCloudPage();
     });

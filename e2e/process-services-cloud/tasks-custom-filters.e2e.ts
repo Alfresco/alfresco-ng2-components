@@ -23,10 +23,11 @@ import {
     QueryService,
     ProcessDefinitionsService,
     ProcessInstancesService,
-    LoginSSOPage,
+    LoginPage,
     ApiService,
     IdentityService, GroupIdentityService,
-    AppListCloudPage
+    AppListCloudPage,
+    SettingsPage
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -34,10 +35,11 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 describe('Task filters cloud', () => {
 
     describe('Filters', () => {
-        const loginSSOPage = new LoginSSOPage();
+        const loginPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const settingsPage = new SettingsPage();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -97,7 +99,11 @@ describe('Task filters cloud', () => {
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);
             await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await settingsPage.setProviderBpmSso(
+                browser.params.config.bpmHost,
+                browser.params.config.oauth2.host,
+                browser.params.config.identityHost, false, false);
+            await loginPage.login(testUser.email, testUser.password);
 
         }, 5 * 60 * 1000);
 

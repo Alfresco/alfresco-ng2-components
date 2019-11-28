@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, AppListCloudPage, IdentityService, GroupIdentityService, ApiService, StringUtil, StartTasksCloudPage, TaskFormCloudComponent } from '@alfresco/adf-testing';
+import { LoginPage, AppListCloudPage, IdentityService, GroupIdentityService, ApiService, StringUtil, StartTasksCloudPage, TaskFormCloudComponent } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -34,7 +34,7 @@ describe('Task cloud visibility', async () => {
     const startProcessPage = new StartProcessPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
-    const loginSSOPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const standaloneTaskName = StringUtil.generateRandomString(5);
@@ -52,7 +52,7 @@ describe('Task cloud visibility', async () => {
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginPage.login(testUser.email, testUser.password);
     });
 
     afterAll(async () => {

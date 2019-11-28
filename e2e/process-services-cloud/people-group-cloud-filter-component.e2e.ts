@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginSSOPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
+import { SettingsPage, ApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -23,11 +23,12 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 describe('People Groups Cloud Component', () => {
 
     describe('People Groups Cloud Component', () => {
-        const loginSSOPage = new LoginSSOPage();
+        const loginPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
         const peopleCloudComponent = new PeopleCloudComponentPage();
         const groupCloudComponentPage = new GroupCloudComponentPage();
+        const settingsPage = new SettingsPage();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -60,7 +61,12 @@ describe('People Groups Cloud Component', () => {
 
             users = [apsUser.idIdentityService, noRoleUser.idIdentityService, testUser.idIdentityService];
 
-            await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
+            await settingsPage.setProviderBpmSso(
+                browser.params.config.bpmHost,
+                browser.params.config.oauth2.host,
+                browser.params.config.identityHost, false, false);
+            await loginPage.login(apsUser.email, apsUser.password);
+
         });
 
         afterAll(async () => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, StringUtil, TasksService } from '@alfresco/adf-testing';
+import { SettingsPage, ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginPage, StringUtil, TasksService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -23,10 +23,11 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 describe('Task list cloud - selection', () => {
 
     describe('Task list cloud - selection', () => {
-        const loginSSOPage = new LoginSSOPage();
+        const loginPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const settingsPage = new SettingsPage();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -59,7 +60,11 @@ describe('Task list cloud - selection', () => {
                 tasks.push(response.entry.name);
             }
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await settingsPage.setProviderBpmSso(
+                browser.params.config.bpmHost,
+                browser.params.config.oauth2.host,
+                browser.params.config.identityHost, false, false);
+            await loginPage.login(testUser.email, testUser.password);
 
         });
 

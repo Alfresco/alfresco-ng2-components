@@ -17,8 +17,8 @@
 
 import { browser } from 'protractor';
 import {
-    StringUtil, TasksService,
-    LoginSSOPage, ApiService,
+    SettingsPage, StringUtil, TasksService,
+    LoginPage, ApiService,
     AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -27,11 +27,12 @@ import { TaskListCloudConfiguration } from './config/task-list-cloud.config';
 
 describe('Edit task filters and task list properties', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
 
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const settingsPage = new SettingsPage();
 
     let tasksService: TasksService;
     let identityService: IdentityService;
@@ -74,8 +75,13 @@ describe('Edit task filters and task list properties', () => {
         await tasksService.claimTask(subTask.entry.id, simpleApp);
 
         const jsonFile = new TaskListCloudConfiguration().getConfiguration();
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost, false, false);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginPage.login(testUser.email, testUser.password);
+
         await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
             'filterProperties': [
@@ -113,7 +119,7 @@ describe('Edit task filters and task list properties', () => {
                 'delete'
             ]
         }));
-    }, 5 * 60 * 1000);
+    });
 
     afterAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);

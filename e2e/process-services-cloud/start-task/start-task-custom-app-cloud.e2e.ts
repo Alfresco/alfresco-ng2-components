@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
-    LoginSSOPage,
+    LoginPage,
     AppListCloudPage,
     StringUtil,
     TaskHeaderCloudPage,
@@ -28,18 +28,20 @@ import {
     TasksService,
     ApiService,
     IdentityService,
+    SettingsPage,
     GroupIdentityService
 } from '@alfresco/adf-testing';
 
 describe('Start Task', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
+    const settingsPage = new SettingsPage();
     const apiService = new ApiService(
         browser.params.config.oauth2.clientId,
         browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -73,7 +75,12 @@ describe('Start Task', () => {
         await identityService.addUserToGroup(apsUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost, false, false);
+        await loginPage.login(testUser.email, testUser.password);
+
     });
 
     afterAll(async () => {

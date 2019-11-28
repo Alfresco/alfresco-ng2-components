@@ -19,7 +19,7 @@ import { browser, protractor } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
-    LoginSSOPage,
+    LoginPage,
     AppListCloudPage,
     StringUtil,
     StartTasksCloudPage,
@@ -50,7 +50,7 @@ import { BreadCrumbDropdownPage } from '../pages/adf/content-services/breadcrumb
 
 describe('Start Task Form', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -168,10 +168,9 @@ describe('Start Task Form', () => {
             browser.params.config.oauth2.host,
             browser.params.config.identityHost,
             browser.params.config.oauth2.clientId,
-            false);
-        await loginSSOPage.clickOnSSOButton();
+            false, false);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginPage.login(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-start-process', JSON.stringify(startProcessCloudConfig));
     });
 

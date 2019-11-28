@@ -20,10 +20,11 @@ import {
     AppListCloudPage,
     StringUtil,
     ApiService,
-    LoginSSOPage,
+    LoginPage,
     TasksService,
     ProcessDefinitionsService,
     ProcessInstancesService,
+    SettingsPage,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
     Widget, IdentityService, GroupIdentityService, QueryService
@@ -34,12 +35,13 @@ import { FormCloudService } from '../../lib/testing/src/lib/form-cloud/actions/f
 
 describe('Task form cloud component', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
+    const settingsPage = new SettingsPage();
     const widget = new Widget();
 
     let processDefinitionService: ProcessDefinitionsService;
@@ -104,7 +106,11 @@ describe('Task form cloud component', () => {
 
         formTaskId = formTasks.list.entries[0].entry.id;
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost, false, false);
+        await loginPage.login(testUser.email, testUser.password);
 
     }, 5 * 60 * 1000);
 

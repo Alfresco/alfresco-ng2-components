@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginSSOPage, PeopleCloudComponentPage, RolesService } from '@alfresco/adf-testing';
+import { SettingsPage, ApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginPage, PeopleCloudComponentPage, RolesService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -23,7 +23,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 describe('People Groups Cloud Component', () => {
 
     describe('People Groups Cloud Component', () => {
-        const loginSSOPage = new LoginSSOPage();
+        const loginPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
         const peopleCloudComponent = new PeopleCloudComponentPage();
@@ -31,6 +31,7 @@ describe('People Groups Cloud Component', () => {
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
         let rolesService: RolesService;
+        const settingsPage = new SettingsPage();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -75,7 +76,12 @@ describe('People Groups Cloud Component', () => {
             users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`, `${testUser.idIdentityService}`];
             groups = [`${groupUser.id}`, `${groupAdmin.id}`, `${groupNoRole.id}`];
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await settingsPage.setProviderBpmSso(
+                browser.params.config.bpmHost,
+                browser.params.config.oauth2.host,
+                browser.params.config.identityHost, false, false);
+            await loginPage.login(testUser.email, testUser.password);
+
         });
 
         afterAll(async () => {

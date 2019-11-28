@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
-    LoginSSOPage,
+    LoginPage,
     AppListCloudPage,
     StringUtil,
     GroupCloudComponentPage,
@@ -28,17 +28,19 @@ import {
     TasksService,
     ApiService,
     IdentityService,
+    SettingsPage,
     GroupIdentityService, RolesService
 } from '@alfresco/adf-testing';
 
 describe('Start Task - Group Cloud Component', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
+    const settingsPage = new SettingsPage();
     const apiService = new ApiService(
         browser.params.config.oauth2.clientId,
         browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -70,6 +72,12 @@ describe('Start Task - Group Cloud Component', () => {
 
         await identityService.addUserToGroup(testUser.idIdentityService, testGroup.id);
         await identityService.addUserToGroup(apsUser.idIdentityService, hrGroup.id);
+
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost, false, false);
+
     });
 
     afterAll(async () => {
@@ -89,7 +97,7 @@ describe('Start Task - Group Cloud Component', () => {
     });
 
     beforeEach(async () => {
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginPage.login(testUser.email, testUser.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
@@ -123,7 +131,7 @@ describe('Start Task - Group Cloud Component', () => {
         await startTask.clickStartButton();
 
         await navigationBarPage.clickLogoutButton();
-        await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
+        await loginPage.login(apsUser.email, apsUser.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
@@ -155,7 +163,7 @@ describe('Start Task - Group Cloud Component', () => {
         await startTask.clickStartButton();
 
         await navigationBarPage.clickLogoutButton();
-        await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
+        await loginPage.login(apsUser.email, apsUser.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
