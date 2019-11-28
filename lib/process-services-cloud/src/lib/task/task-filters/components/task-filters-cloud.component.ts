@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
@@ -27,10 +27,10 @@ import { takeUntil } from 'rxjs/operators';
     templateUrl: './task-filters-cloud.component.html',
     styleUrls: ['task-filters-cloud.component.scss']
 })
-export class TaskFiltersCloudComponent implements OnChanges, OnDestroy {
+export class TaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
     /** Display filters available to the current user for the application with the specified name. */
     @Input()
-    appName: string;
+    appName: string = '';
 
     /**
      * Parameters to use for the task filter cloud. If there is no match then the default filter
@@ -64,6 +64,10 @@ export class TaskFiltersCloudComponent implements OnChanges, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private taskFilterCloudService: TaskFilterCloudService, private translationService: TranslationService) {
+    }
+
+    ngOnInit() {
+        this.getFilters(this.appName);
     }
 
     ngOnChanges(changes: SimpleChanges) {

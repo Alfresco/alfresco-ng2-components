@@ -1,7 +1,6 @@
 <div fxLayout="column" fxFill fxLayoutGap="2px">
     <adf-cloud-edit-task-filter
         [id]="filterId"
-        [appName]="'community'"
         [filterProperties]="taskFilterProperties.filterProperties"
         [sortProperties]="taskFilterProperties.sortProperties"
         [actions]="taskFilterProperties.actions"
@@ -11,7 +10,6 @@
     <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">
         <adf-cloud-task-list #taskCloud
             fxFlex
-            [appName]="''"
             class="app-cloud-layout-overflow"
             [processDefinitionId]="editedFilter.processDefinitionId"
             [processInstanceId]="editedFilter.processInstanceId"

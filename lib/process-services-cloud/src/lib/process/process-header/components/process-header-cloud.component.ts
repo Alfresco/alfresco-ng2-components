@@ -30,7 +30,7 @@ export class ProcessHeaderCloudComponent implements OnChanges {
 
     /** (Required) The name of the application. */
     @Input()
-    appName: string;
+    appName: string = '';
 
     /** (Required) The id of the process instance. */
     @Input()
@@ -50,7 +50,7 @@ export class ProcessHeaderCloudComponent implements OnChanges {
     }
 
     ngOnChanges() {
-        if (this.appName && this.processInstanceId) {
+        if ((this.appName || this.appName === '') && this.processInstanceId) {
             this.loadProcessInstanceDetails(this.appName, this.processInstanceId);
         }
     }

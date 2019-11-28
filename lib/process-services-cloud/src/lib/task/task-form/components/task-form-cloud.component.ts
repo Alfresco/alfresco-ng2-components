@@ -17,7 +17,7 @@
 
 import {
     Component, EventEmitter, Input, OnChanges,
-    Output, SimpleChanges
+    Output, SimpleChanges, OnInit
 } from '@angular/core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -31,11 +31,11 @@ import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/
     templateUrl: './task-form-cloud.component.html',
     styleUrls: ['./task-form-cloud.component.scss']
 })
-export class TaskFormCloudComponent implements OnChanges {
+export class TaskFormCloudComponent implements OnInit, OnChanges {
 
     /** App id to fetch corresponding form and values. */
     @Input()
-    appName: string;
+    appName: string = '';
 
     /** Task id to fetch corresponding form and values. */
     @Input()
@@ -108,9 +108,15 @@ export class TaskFormCloudComponent implements OnChanges {
         this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
     }
 
+    ngOnInit() {
+        if (this.appName === '' && this.taskId) {
+            this.loadTask();
+        }
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
-        if (appName && (appName.currentValue || appName.currentValue === '') && this.taskId) {
+        if (appName && (appName.currentValue !== appName.previousValue) && this.taskId) {
             this.loadTask();
             return;
         }

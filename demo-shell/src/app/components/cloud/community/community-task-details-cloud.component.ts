@@ -26,7 +26,6 @@ import { NotificationService } from '@alfresco/adf-core';
 export class CommunityTaskDetailsCloudDemoComponent {
 
     taskId: string;
-    appName: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -36,13 +35,10 @@ export class CommunityTaskDetailsCloudDemoComponent {
         this.route.params.subscribe((params) => {
             this.taskId = params.taskId;
         });
-        this.route.parent.params.subscribe((params) => {
-            this.appName = params.appName;
-        });
     }
 
     isTaskValid(): boolean {
-        return this.appName !== undefined && this.taskId !== undefined;
+        return this.taskId !== undefined;
     }
 
     goBack() {

@@ -41,7 +41,7 @@ export class ProcessHeaderCloudService extends BaseCloudService {
      * @returns Process instance details
      */
     getProcessInstanceById(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
-        if (appName && processInstanceId) {
+        if ((appName || appName === '') && processInstanceId) {
             const url = `${this.getBasePath(appName)}/query/v1/process-instances/${processInstanceId}`;
 
             return this.get(url).pipe(

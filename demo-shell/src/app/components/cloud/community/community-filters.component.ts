@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CloudLayoutService } from '../services/cloud-layout.service';
@@ -25,9 +25,6 @@ import { CloudLayoutService } from '../services/cloud-layout.service';
     encapsulation: ViewEncapsulation.None
 })
 export class CommunityCloudFiltersDemoComponent implements OnInit {
-
-    @Input()
-    appName: string = 'community';
 
     currentTaskFilter$: Observable<any>;
     currentProcessFilter$: Observable<any>;

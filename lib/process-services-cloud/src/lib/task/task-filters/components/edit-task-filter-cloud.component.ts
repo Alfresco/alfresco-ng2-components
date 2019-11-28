@@ -52,7 +52,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
 
     /** (required) Name of the app. */
     @Input()
-    appName: string;
+    appName: string = '';
 
     /** (required) ID of the task filter. */
     @Input()

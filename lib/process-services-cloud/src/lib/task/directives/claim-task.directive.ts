@@ -30,7 +30,7 @@ export class ClaimTaskDirective implements OnInit {
 
     /** (Required) The name of the application. */
     @Input()
-    appName: string;
+    appName: string = '';
 
     /** Emitted when the task is completed. */
     @Output()
@@ -68,7 +68,7 @@ export class ClaimTaskDirective implements OnInit {
     }
 
     isAppValid(): boolean {
-        return (this.appName && this.appName.length > 0);
+        return !!this.appName || this.appName === '';
     }
 
     @HostListener('click')

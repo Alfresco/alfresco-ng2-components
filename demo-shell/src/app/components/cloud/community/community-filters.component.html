@@ -7,7 +7,7 @@
       </mat-expansion-panel-header>
       <adf-cloud-task-filters
           *ngIf="expandTaskFilter"
-          [appName]="appName"
+          [appName]="''"
           [showIcons]="true"
           [filterParam]="currentTaskFilter$ | async"
           (filterClick)="onTaskFilterSelected($event)">
@@ -22,7 +22,6 @@
       </mat-expansion-panel-header>
       <adf-cloud-process-filters
           *ngIf="expandProcessFilter"
-          [appName]="appName"
           [showIcons]="true"
           [filterParam]="currentProcessFilter$ | async"
           (filterClick)="onProcessFilterSelected($event)">

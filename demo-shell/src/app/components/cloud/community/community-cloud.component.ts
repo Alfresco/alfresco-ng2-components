@@ -33,8 +33,6 @@ import { CloudLayoutService } from '../services/cloud-layout.service';
 })
 export class CommunityCloudComponent  {
 
-    appName: string = '';
-
     constructor(
         private router: Router,
         private route: ActivatedRoute,

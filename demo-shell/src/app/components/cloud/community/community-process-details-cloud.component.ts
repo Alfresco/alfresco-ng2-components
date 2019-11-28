@@ -25,15 +25,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CommunityProcessDetailsCloudDemoComponent {
 
     processInstanceId: string;
-    appName: string;
 
     constructor(private route: ActivatedRoute, private router: Router) {
         this.route.params.subscribe((params) => {
             this.processInstanceId = params.processInstanceId;
-        });
-
-        this.route.parent.params.subscribe((params) => {
-            this.appName = params.appName;
         });
     }
 

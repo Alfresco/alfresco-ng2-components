@@ -44,9 +44,7 @@ export class CommunityProcessesCloudDemoComponent implements OnInit, OnDestroy {
     @ViewChild('processFiltersCloud')
     processFiltersCloud: ProcessFiltersCloudComponent;
 
-    appName: string = '';
     isFilterLoaded: boolean;
-
     filterId: string = '';
     sortArray: any = [];
     selectedRow: any;
@@ -78,10 +76,6 @@ export class CommunityProcessesCloudDemoComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.isFilterLoaded = false;
-
-        this.route.parent.params.subscribe((params) => {
-            this.appName = params.appName;
-        });
 
         this.route.queryParams.subscribe((params) => {
             if (Object.keys(params).length > 0) {

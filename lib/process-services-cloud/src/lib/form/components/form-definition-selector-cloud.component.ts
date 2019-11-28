@@ -31,7 +31,7 @@ export class FormDefinitionSelectorCloudComponent implements OnInit {
 
     /** Name of the application. If specified, this shows the users who have access to the app. */
     @Input()
-    appName: string;
+    appName: string = '';
 
     /** Emitted when a form is selected. */
     @Output()

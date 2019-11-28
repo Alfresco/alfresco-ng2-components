@@ -1,10 +1,9 @@
-<h4 data-automation-id="task-details-header">Simple page to show the taskId: {{ taskId }} of the app: {{ appName }}</h4>
+<h4 data-automation-id="task-details-header">Simple page to show the taskId: {{ taskId }}</h4>
 
 <div fxLayout="column" fxFill fxLayoutGap="2px">
     <div fxLayout="row" fxFill>
         <div fxLayout="column" fxFlex="80%">
             <adf-cloud-task-form
-                [appName]="''"
                 [taskId]="taskId"
                 (cancelClick)="goBack()"
                 (taskClaimed)="onClaimTask()"
@@ -14,7 +13,6 @@
             </adf-cloud-task-form>
         </div>
         <adf-cloud-task-header fxFlex
-            [appName]="''"
             [taskId]="taskId">
         </adf-cloud-task-header>
     </div>

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
@@ -28,11 +28,11 @@ import { takeUntil } from 'rxjs/operators';
     templateUrl: './process-filters-cloud.component.html',
     styleUrls: ['process-filters-cloud.component.scss']
 })
-export class ProcessFiltersCloudComponent implements OnChanges, OnDestroy {
+export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** (required) The application name */
     @Input()
-    appName: string;
+    appName: string = '';
 
     /** (optional) The filter to be selected by default */
     @Input()
@@ -65,6 +65,12 @@ export class ProcessFiltersCloudComponent implements OnChanges, OnDestroy {
     constructor(
         private processFilterCloudService: ProcessFilterCloudService,
         private translationService: TranslationService ) { }
+
+    ngOnInit() {
+        if (this.appName === '') {
+            this.getFilters(this.appName);
+        }
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];

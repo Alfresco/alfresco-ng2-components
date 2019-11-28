@@ -46,7 +46,7 @@ export class TaskFilterCloudModel  {
             this.key = obj.key || null;
             this.icon = obj.icon || null;
             this.index = obj.index || null;
-            this.appName = obj.appName || null;
+            this.appName = obj.appName || obj.appName === '' ? obj.appName : null;
             this.status = obj.status || null;
             this.sort = obj.sort || null;
             this.assignee = obj.assignee || null;

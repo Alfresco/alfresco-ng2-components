@@ -41,7 +41,7 @@ export class ProcessFilterCloudModel {
             this.key = obj.key || null;
             this.icon = obj.icon || null;
             this.index = obj.index || null;
-            this.appName = obj.appName || null;
+            this.appName = obj.appName || obj.appName === '' ? obj.appName : null;
             this.processInstanceId = obj.processInstanceId || null;
             this.processName = obj.processName || null;
             this.initiator = obj.initiator || null;
