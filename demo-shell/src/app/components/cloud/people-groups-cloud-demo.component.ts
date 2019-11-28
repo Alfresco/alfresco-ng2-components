@@ -45,7 +45,7 @@ export class PeopleGroupCloudDemoComponent {
     groupRoles: string[];
     groupAppName: string;
     groupFilterMode: string = this.DEFAULT_FILTER_MODE;
-    removeLastChip = true;
+    removeItems = true;
 
     setPeoplePreselectValue(event: any) {
         this.preSelectUsers = this.getArrayFromString(event.target.value);
@@ -173,6 +173,6 @@ export class PeopleGroupCloudDemoComponent {
     }
 
     onRemoveLastChip(event) {
-        this.removeLastChip = !event.checked;
+        this.removeItems = !event.checked;
     }
 }

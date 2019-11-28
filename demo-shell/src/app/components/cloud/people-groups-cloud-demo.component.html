@@ -35,7 +35,7 @@
             <mat-checkbox
                 (change)="onRemoveLastChip($event)"
                 data-automation-id="app-people-remove-last-chip">
-                {{ 'PEOPLE_GROUPS_CLOUD.REMOVE_LAST_CHIP' | translate }}
+                {{ 'PEOPLE_GROUPS_CLOUD.REMOVE' | translate }}
             </mat-checkbox >
         </div>
         <div>
@@ -43,7 +43,7 @@
                 [preSelectUsers]="preSelectUsers"
                 [validate]="peoplePreselectValidation"
                 [appName]="peopleAppName"
-                [removeLastChip]="removeLastChip"
+                [remove]="removeItems"
                 [roles]="peopleRoles"
                 [appName]="peopleAppName"
                 [title]="'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"

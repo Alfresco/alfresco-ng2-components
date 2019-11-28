@@ -80,12 +80,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     title: string;
 
-    /** This flag enables not to delete last chip in multiple mode.
-     * In case the flag is false, last chip from the list can not be deleted
-     * Otherwise, last chip can be deletable.
+    /** This flag enables not to remove selected items in multiple mode.
+     * In case the flag is false, selected items can not be removable
+     * Otherwise, selected items can be removable.
      */
     @Input()
-    removeLastChip: boolean = true;
+    remove = true;
 
     /** Emitted when a user is selected. */
     @Output()
@@ -425,20 +425,14 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onRemove(user: IdentityUserModel) {
-        if (!this.canRemoveLastChip())  {
-            this.removeUser.emit(user);
-            const indexToRemove = this.preSelectUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
-            this.preSelectUsers.splice(indexToRemove, 1);
-            this.selectedUsersSubject.next(this.preSelectUsers);
-        }
+        this.removeUser.emit(user);
+        const indexToRemove = this.preSelectUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
+        this.preSelectUsers.splice(indexToRemove, 1);
+        this.selectedUsersSubject.next(this.preSelectUsers);
     }
 
     getDisplayName(user): string {
         return FullNamePipe.prototype.transform(user);
-    }
-
-    canRemoveLastChip(): boolean {
-        return this.isMultipleMode() && !this.removeLastChip && this.preSelectUsers.length === 1;
     }
 
     isMultipleMode(): boolean {

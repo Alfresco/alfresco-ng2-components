@@ -461,7 +461,7 @@ describe('PeopleCloudComponent', () => {
         });
     });
 
-    describe('Multiple Mode with removeLastChip flag', () => {
+    describe('Multiple Mode with remove flag', () => {
 
         beforeEach(async(() => {
             component.mode = 'multiple';
@@ -470,7 +470,8 @@ describe('PeopleCloudComponent', () => {
             element = fixture.nativeElement;
         }));
 
-        it('should show remove icon on last chip when removeLastChip is set to true', (done) => {
+        it('should show remove icon on selected items when remove flag is set to true', (done) => {
+            component.remove = true;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const chipList = element.querySelector('mat-chip-list');
@@ -483,8 +484,8 @@ describe('PeopleCloudComponent', () => {
             });
         });
 
-        it('should not show remove icon on last chip when removeLastChip is set to false', (done) => {
-            component.removeLastChip = false;
+        it('should not show remove icon on selected items when remove flag is set to false', (done) => {
+            component.remove = false;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
