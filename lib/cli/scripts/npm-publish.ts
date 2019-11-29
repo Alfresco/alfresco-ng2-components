@@ -41,21 +41,41 @@ const projects = [
     'extensions'
 ];
 
-function npmPublish(args: PublishArgs, project: string) {
+async function npmPublish(args: PublishArgs, project: string) {
     if (args.npmRegistry) {
         changeRegistry(args, project);
     }
-    logger.info(`Publishing lib ${project} to npm`);
-    const options = ['publish'];
-    if (args.tag) {
-        options.push('-tag');
-        options.push(`${args.tag}`);
+
+    const version = require(`${args.pathProject}/lib/dist/${project}/package.json`).version;
+
+    const exist = npmCheckExist(project, version);
+
+    if (!exist) {
+        logger.info(`Publishing lib ${project} to npm`);
+        const options = ['publish'];
+        if (args.tag) {
+            options.push('-tag');
+            options.push(`${args.tag}`);
+        }
+        const response = exec('npm', options, { cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`) });
+        logger.info(response);
+        if (args.npmRegistry) {
+            removeNPMRC(args, project);
+        }
+
+        await sleep(120000);
+    } else {
+        logger.info(`@alfresco/adf-${project}@${version} already exist`);
+
     }
-    const response = exec('npm', options, { cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`) });
-    logger.info(response);
-    if (args.npmRegistry) {
-        removeNPMRC(args, project);
-    }
+}
+
+function npmCheckExist(project: string, version: string) {
+    logger.info(`Check if lib  ${project} is already in npm`);
+
+    const exist = exec(`npm`, [`view`, `@alfresco/adf-${project}@${version} version`]  );
+
+    return exist !== '';
 }
 
 function changeRegistry(args: PublishArgs, project: string) {
@@ -98,9 +118,8 @@ async function main(args) {
     }
 
     for (let i = 0; i < projects.length; i++) {
-        await sleep(120000);
         logger.info(`========Analyzing project: ${projects[i]} ========`);
-        npmPublish(args, projects[i]);
+        await npmPublish(args, projects[i]);
     }
 }
 

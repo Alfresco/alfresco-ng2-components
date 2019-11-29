@@ -18,11 +18,11 @@ name_docker_repo(){
 }
 
 username_docker_repo(){
-    USERNAME_DOCKER=$1
+    DOCKER_REPOSITORY_USER=$1
 }
 
 password_docker_repo(){
-    PASSWORD_DOCKER=$1
+    DOCKER_REPOSITORY_PASSWORD=$1
 }
 
 while [[ $1 == -* ]]; do
@@ -43,7 +43,7 @@ echo "====== PUBLISH DOCKER IMAGE TAG pr $NAME_PR ====="
 docker build -t $DOCKER_REPO/adf/demo-shell:$NAME_PR --build-arg BUILD_NUMBER=$NAME_PR .
 
 echo "====== LOGIN  ====="
-docker login http://$DOCKER_REPO -p $PASSWORD_DOCKER -u $USERNAME_DOCKER
+docker login http://$DOCKER_REPO -p $DOCKER_REPOSITORY_PASSWORD -u $DOCKER_REPOSITORY_USER
 docker push "$DOCKER_REPO/adf/demo-shell:$NAME_PR"
 
 
