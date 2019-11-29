@@ -25,12 +25,15 @@ export const ACTIVITI_CLOUD_APPS: any = {
             candidateGroupProcess: 'candidategroupprocess',
             anotherCandidateGroupProcess: 'anothercandidategroup',
             uploadFileProcess: 'uploadfileprocess',
-            processwithstarteventform: 'processwithstarteventform'
+            processwithstarteventform: 'processwithstarteventform',
+            processwithjsonfilemapping: 'processwithjsonfilemapping'
         },
         forms: {
             starteventform: 'starteventform',
             formtotestvalidations: 'formtotestvalidations',
-            uploadfileform: 'uploadfileform'
+            uploadfileform: 'uploadfileform',
+            inputform: 'inputform',
+            outputform: 'outputform'
         },
         security: [
             { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
