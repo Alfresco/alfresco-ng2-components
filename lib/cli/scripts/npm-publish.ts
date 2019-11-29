@@ -63,7 +63,7 @@ async function npmPublish(args: PublishArgs, project: string) {
             removeNPMRC(args, project);
         }
 
-        await sleep(120000);
+        await sleep(30000);
     } else {
         logger.info(`@alfresco/adf-${project}@${version} already exist`);
 
