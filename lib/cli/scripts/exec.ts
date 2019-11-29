@@ -30,9 +30,9 @@ export function exec(command: string, args?: string[], opts?: { cwd?: string }) 
 
     if (status !== 0) {
 
-        if(args) {
+        if (args) {
             logger.error(`Command failed: ${command} ${args.map((x) => JSON.stringify(x)).join(', ')}`);
-        }else{
+        } else {
             logger.error(`Command failed ${command}`);
         }
 

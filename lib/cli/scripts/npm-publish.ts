@@ -46,9 +46,9 @@ async function npmPublish(args: PublishArgs, project: string) {
         changeRegistry(args, project);
     }
 
-    let version = require(`${args.pathProject}/lib/dist/${project}/package.json`).version;
+    const version = require(`${args.pathProject}/lib/dist/${project}/package.json`).version;
 
-    let exist = npmCheckExist(project, version);
+    const exist = npmCheckExist(project, version);
 
     if (!exist) {
         logger.info(`Publishing lib ${project} to npm`);
