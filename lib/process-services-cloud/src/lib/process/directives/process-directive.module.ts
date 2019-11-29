@@ -15,11 +15,15 @@
  * limitations under the License.
  */
 
-export * from './process-list/public-api';
-export * from './process-filters/public-api';
-export * from './start-process/public-api';
-export * from './process-header/public-api';
-export * from './directives/public-api';
-export * from './services/process-cloud.service';
+import { NgModule } from '@angular/core';
+import { DeleteProcessDirective } from './delete-process.directive';
 
-export * from './process-cloud.module';
+@NgModule({
+    declarations: [
+        DeleteProcessDirective
+    ],
+    exports: [
+        DeleteProcessDirective
+    ]
+})
+export class ProcessDirectiveModule { }
