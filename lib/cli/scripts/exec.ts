@@ -29,7 +29,13 @@ export function exec(command: string, args?: string[], opts?: { cwd?: string }) 
     const { status, error, stderr, stdout } = spawnSync(command, args, { ...opts });
 
     if (status !== 0) {
-        logger.error(`Command failed: ${command} ${args.map((x) => JSON.stringify(x)).join(', ')}`);
+
+        if(args) {
+            logger.error(`Command failed: ${command} ${args.map((x) => JSON.stringify(x)).join(', ')}`);
+        }else{
+            logger.error(`Command failed ${command}`);
+        }
+
         if (error) {
             logger.error('Error: ' + (error ? error.message : 'undefined'));
         } else {

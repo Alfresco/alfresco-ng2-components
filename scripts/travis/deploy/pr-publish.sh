@@ -17,12 +17,12 @@ name_docker_repo(){
     DOCKER_REPO=$1
 }
 
-username_docker_repo(){
-    USERNAME_DOCKER=$1
+DOCKER_REPOSITORY_USER_repo(){
+    DOCKER_REPOSITORY_USER=$1
 }
 
-password_docker_repo(){
-    PASSWORD_DOCKER=$1
+DOCKER_REPOSITORY_PASSWORD_repo(){
+    DOCKER_REPOSITORY_PASSWORD=$1
 }
 
 while [[ $1 == -* ]]; do
@@ -30,8 +30,8 @@ while [[ $1 == -* ]]; do
       -h|--help|-\?) show_help; exit 0;;
       -n|--name)  name_pr $2; shift 2;;
       -r|--repo)  name_docker_repo $2; shift 2;;
-      -u|--username)  username_docker_repo $2; shift 2;;
-      -p|--password)  password_docker_repo $2; shift 2;;
+      -u|--username)  DOCKER_REPOSITORY_USER_repo $2; shift 2;;
+      -p|--password)  DOCKER_REPOSITORY_PASSWORD_repo $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
@@ -43,7 +43,7 @@ echo "====== PUBLISH DOCKER IMAGE TAG pr $NAME_PR ====="
 docker build -t $DOCKER_REPO/adf/demo-shell:$NAME_PR --build-arg BUILD_NUMBER=$NAME_PR .
 
 echo "====== LOGIN  ====="
-docker login http://$DOCKER_REPO -p $PASSWORD_DOCKER -u $USERNAME_DOCKER
+docker login http://$DOCKER_REPO -p $DOCKER_REPOSITORY_PASSWORD -u $DOCKER_REPOSITORY_USER
 docker push "$DOCKER_REPO/adf/demo-shell:$NAME_PR"
 
 

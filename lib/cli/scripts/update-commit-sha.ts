@@ -27,7 +27,7 @@ export interface CommitArgs {
     skipGnu: boolean;
 }
 
-function commitPerform(args: CommitArgs): string {
+function getSha(args: CommitArgs): string {
     logger.info('Check commit sha...');
 
     const gitPointer = args.pointer ? args.pointer : 'HEAD';
@@ -57,7 +57,7 @@ function main(args) {
         .version('0.1.0')
         .description('This command allows you to update the commit sha as part of the package.json.\n' +
             'Your package.json must to have an existing property called "commit.\n\n' +
-    'adf-cli update-commit-sha --pointer "HEAD~1" --pathProject "$(pwd)"\n\n' +
+            'adf-cli update-commit-sha --pointer "HEAD~1" --pathProject "$(pwd)"\n\n' +
             'adf-cli update-commit-sha --pathProject "$(pwd)" --skipGnu')
         .option('--pointer [type]', 'pointer')
         .option('--pathPackage [type]', 'pathPackage')
@@ -68,7 +68,7 @@ function main(args) {
         program.outputHelp();
     }
 
-    const sha = commitPerform(args);
+    const sha = getSha(args);
 
     replacePerform(args, sha);
 }
