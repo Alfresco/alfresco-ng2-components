@@ -17,11 +17,11 @@ name_docker_repo(){
     DOCKER_REPO=$1
 }
 
-DOCKER_REPOSITORY_USER_repo(){
+username_docker_repo(){
     DOCKER_REPOSITORY_USER=$1
 }
 
-DOCKER_REPOSITORY_PASSWORD_repo(){
+password_docker_repo(){
     DOCKER_REPOSITORY_PASSWORD=$1
 }
 
@@ -30,8 +30,8 @@ while [[ $1 == -* ]]; do
       -h|--help|-\?) show_help; exit 0;;
       -n|--name)  name_pr $2; shift 2;;
       -r|--repo)  name_docker_repo $2; shift 2;;
-      -u|--username)  DOCKER_REPOSITORY_USER_repo $2; shift 2;;
-      -p|--password)  DOCKER_REPOSITORY_PASSWORD_repo $2; shift 2;;
+      -u|--username)  username_docker_repo $2; shift 2;;
+      -p|--password)  password_docker_repo $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
