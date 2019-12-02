@@ -38,8 +38,8 @@ export class FormFields {
         await BrowserActions.clearSendKeys(fieldElement, value);
     }
 
-    async clickField(locator, field): Promise<void> {
-        const fieldElement = element(locator(field));
+    async clickField(locator, field, fieldtext?): Promise<void> {
+        const fieldElement = fieldtext ? element(locator(field, fieldtext)) : element(locator(field));
         await BrowserActions.click(fieldElement);
     }
 
