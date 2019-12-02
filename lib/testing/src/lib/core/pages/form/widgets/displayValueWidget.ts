@@ -16,7 +16,8 @@
  */
 
 import { FormFields } from '../formFields';
-import { by, Locator } from 'protractor';
+import { by, element, Locator } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DisplayValueWidget {
 
@@ -32,4 +33,12 @@ export class DisplayValueWidget {
         return this.formFields.getFieldValue(fieldId, this.inputLocator);
     }
 
+    async isDisplayValueWidgetVisible(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsVisible(fieldId);
+    }
+
+    async checkDisplayValueWidgetIsHidden(fieldId): Promise<void> {
+        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
+        await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement);
+    }
 }

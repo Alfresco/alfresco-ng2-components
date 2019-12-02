@@ -23,6 +23,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
 import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
 import { multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
+import { displayValueTextJson } from '../../resources/forms/displayValue-visibilityConditions';
 
 describe('Visibility conditions - cloud', () => {
 
@@ -39,7 +40,9 @@ describe('Visibility conditions - cloud', () => {
         textTwoId: 'textTwo',
         textThreeId: 'textThree',
         checkboxBasicVariable: 'CheckboxBasicVariableField',
-        checkboxBasicField: 'CheckboxBasicFieldValue'
+        checkboxBasicField: 'CheckboxBasicFieldValue',
+        textOneDisplay: 'TextOne',
+        textTwoDisplay: 'TextTwo'
     };
 
     const value = {
@@ -55,6 +58,11 @@ describe('Visibility conditions - cloud', () => {
         checkboxVariableValue: 'CheckboxVariableValue',
         checkboxVariableVariable: 'CheckboxVariableVariable',
         checkbox1: 'Checkbox1'
+    };
+    const displayValueString = {
+        displayValueNoConditionField: 'DisplayValueNoCondition',
+        displayValueSingleConditionField: 'DisplayValueSingleCondition',
+        displayValueMultipleConditionsField: 'DisplayValueMultipleCondition'
     };
 
     beforeAll(async () => {
@@ -241,5 +249,80 @@ describe('Visibility conditions - cloud', () => {
         await widget.textWidget().setValue(widgets.textTwoId, 'something');
         await widget.textWidget().setValue(widgets.textThreeId, 'something');
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
+    });
+
+    it('[C309867] Display value widget displays the value of a form variable', async () => {
+        await formCloudDemoPage.setConfigToEditor(displayValueTextJson);
+
+        await widget.displayValueWidget().isDisplayValueWidgetVisible(displayValueString.displayValueNoConditionField);
+
+        const textDisplayWidgetNoCondition = await widget.displayValueWidget().getFieldValue(displayValueString.displayValueNoConditionField);
+        await expect(textDisplayWidgetNoCondition).toEqual('No cats');
+
+    });
+
+    it('[C309869] Should be able to see Display text widget when visibility condition refers to a form variable and a field', async () => {
+        await formCloudDemoPage.setConfigToEditor(displayValueTextJson);
+
+        await widget.textWidget().isWidgetVisible(widgets.textOneDisplay);
+        let textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
+        await expect(textOneField).toEqual('');
+        await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueSingleConditionField);
+
+        await widget.textWidget().setValue(widgets.textOneDisplay, 'cat');
+        textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
+        await expect(textOneField).toEqual('cat');
+        await widget.displayValueWidget().isDisplayValueWidgetVisible(displayValueString.displayValueSingleConditionField);
+        const textDisplayWidgetSingleCondition = await widget.displayValueWidget().getFieldValue(displayValueString.displayValueSingleConditionField);
+        await expect(textDisplayWidgetSingleCondition).toEqual('cat');
+
+        await widget.textWidget().setValue(widgets.textOneDisplay, 'dog');
+        textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
+        await expect(textOneField).toEqual('dog');
+        await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueSingleConditionField);
+
+    });
+    it('[C309871] Should be able to see Display text widget when has multiple visibility conditions and next condition operators', async () => {
+        await formCloudDemoPage.setConfigToEditor(displayValueTextJson);
+
+        await widget.textWidget().isWidgetVisible(widgets.textOneDisplay);
+        let textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
+        await expect(textOneField).toEqual('');
+
+        await widget.textWidget().isWidgetVisible(widgets.textTwoDisplay);
+        let textTwoField = await widget.textWidget().getFieldValue(widgets.textTwoDisplay);
+        await expect(textTwoField).toEqual('');
+
+        await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueSingleConditionField);
+        await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueMultipleConditionsField);
+
+        await widget.textWidget().setValue(widgets.textOneDisplay, 'cat');
+        textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
+        await expect(textOneField).toEqual('cat');
+        await widget.displayValueWidget().isDisplayValueWidgetVisible(displayValueString.displayValueMultipleConditionsField);
+        const textDisplayWidgetMultipleCondition = await widget.displayValueWidget().getFieldValue(displayValueString.displayValueMultipleConditionsField);
+        await expect(textDisplayWidgetMultipleCondition).toEqual('more cats');
+
+        await widget.textWidget().setValue(widgets.textOneDisplay, 'dog');
+        textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
+        await expect(textOneField).toEqual('dog');
+        await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueMultipleConditionsField);
+
+        await widget.textWidget().setValue(widgets.textTwoDisplay, 'cat');
+        textTwoField = await widget.textWidget().getFieldValue(widgets.textTwoDisplay);
+        await expect(textTwoField).toEqual('cat');
+        await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueMultipleConditionsField);
+
+        await widget.textWidget().setValue(widgets.textOneDisplay, 'cat');
+        textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
+        await expect(textOneField).toEqual('cat');
+        await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueMultipleConditionsField);
+
+        await widget.textWidget().setValue(widgets.textTwoDisplay, 'dog');
+        textTwoField = await widget.textWidget().getFieldValue(widgets.textTwoDisplay);
+        await expect(textTwoField).toEqual('dog');
+        await widget.displayValueWidget().isDisplayValueWidgetVisible(displayValueString.displayValueMultipleConditionsField);
+        await expect(textDisplayWidgetMultipleCondition).toEqual('more cats');
+
     });
 });
