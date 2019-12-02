@@ -251,7 +251,7 @@ describe('Visibility conditions - cloud', () => {
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
     });
 
-    it('[C309867] Display value widget displays the value of a form variable', async () => {
+    it('[C309867] Should be able to see the value of a form variable in the Display Value Widget when no visibility conditions are added', async () => {
         await formCloudDemoPage.setConfigToEditor(displayValueTextJson);
 
         await widget.displayValueWidget().isDisplayValueWidgetVisible(displayValueString.displayValueNoConditionField);
