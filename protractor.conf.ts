@@ -5,13 +5,14 @@ const tsConfig = require('./e2e/tsconfig.e2e.json');
 const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 const TestConfig = require('./e2e/test.config');
 const RESOURCES = require('./e2e/util/resources');
+const SmartRunner = require('protractor-smartrunner');
+const resolve = require('path').resolve;
 
 require('ts-node').register({
     project: './lib/testing/tsconfig.lib.json'
 });
 const ACTIVITI_CLOUD_APPS = require('./lib/testing').ACTIVITI_CLOUD_APPS;
 
-const failFast = require('./e2e/protractor/fail-fast');
 const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
 const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
@@ -124,8 +125,10 @@ exports.config = {
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 120000,
-        print: function () {
-        }
+        print: () => {},
+        ...SmartRunner.withOptionalExclusions(
+            resolve(__dirname, 'protractor.excludes.json')
+        )
     },
 
     /**
