@@ -29,7 +29,6 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | preSelectUsers | [`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]` |  | Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username |
 | roles | `string[]` |  | Role names of the users to be listed. |
 | searchUserCtrl | `FormControl` | new FormControl() | FormControl to search the user |
-| remove | `Boolean` | true | This flag enables not to remove selected items in multiple mode. In case the flag is false, selected items can not be removable Otherwise, selected items can be removable. |
 | title | `string` |  | Placeholder translation key |
 | validate | `Boolean` | false | This flag enables the validation on the preSelectUsers passed as input. In case the flag is true the components call the [identity service](../../../lib/testing/src/lib/core/actions/identity/identity.service.ts) to verify the validity of the information passed as input. Otherwise, no check will be done. |
 
@@ -40,3 +39,25 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | removeUser | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`>` | Emitted when a selected user is removed in multi selection mode. |
 | selectUser | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`>` | Emitted when a user is selected. |
 | warning | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an warning occurs. |
+
+## Details
+
+### Read-only
+
+You can use `readonly` property to make preselected users read-only in `multiple` mode.
+
+```ts
+const preSelectUsers = [
+        { "id": "1", "username": "username1", "firstName": "user 1", "readonly": true },
+        { "id": "2", "username": "username2", "firstName": "user 2", "readonly": false },
+        { "id": "3", "username": "username3", "firstName": "user 3", "readonly": true }
+    ];
+```
+```html
+<adf-cloud-people
+    [mode]="'multiple'",
+    [preSelectUsers]="preSelectUsers">
+</adf-cloud-people>
+```
+
+from above `preSelectUsers`, `username2` is removable from the `preSelectUsers` whereas `username1`, `username3` are readonly you can not remove them.

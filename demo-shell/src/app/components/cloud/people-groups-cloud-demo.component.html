@@ -32,18 +32,12 @@
             </mat-form-field>
             <mat-checkbox class="app-preselect-value" (change)="onChangePeopleValidation($event)">{{
                 'PEOPLE_GROUPS_CLOUD.PRESELECT_VALIDATION' | translate }}</mat-checkbox>
-            <mat-checkbox
-                (change)="onRemoveLastChip($event)"
-                data-automation-id="app-people-remove-last-chip">
-                {{ 'PEOPLE_GROUPS_CLOUD.REMOVE' | translate }}
-            </mat-checkbox >
         </div>
         <div>
             <adf-cloud-people
                 [preSelectUsers]="preSelectUsers"
                 [validate]="peoplePreselectValidation"
                 [appName]="peopleAppName"
-                [remove]="removeItems"
                 [roles]="peopleRoles"
                 [appName]="peopleAppName"
                 [title]="'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"

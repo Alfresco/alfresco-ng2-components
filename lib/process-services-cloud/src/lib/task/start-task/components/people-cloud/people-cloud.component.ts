@@ -80,13 +80,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     title: string;
 
-    /** This flag enables not to remove selected items in multiple mode.
-     * In case the flag is false, selected items can not be removable
-     * Otherwise, selected items can be removable.
-     */
-    @Input()
-    remove = true;
-
     /** Emitted when a user is selected. */
     @Output()
     selectUser = new EventEmitter<IdentityUserModel>();

@@ -24,4 +24,5 @@ export interface IdentityUserModel {
     createdTimestamp?: any;
     emailVerified?: boolean;
     enabled?: boolean;
+    readonly?: boolean;
 }
