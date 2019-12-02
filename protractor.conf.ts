@@ -161,7 +161,6 @@ exports.config = {
         retry.onPrepare();
 
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
-        jasmine.getEnv().addReporter(failFast.init());
 
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
