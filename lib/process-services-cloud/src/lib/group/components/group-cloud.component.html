@@ -4,10 +4,14 @@
     <mat-chip-list #groupChipList *ngIf="isMultipleMode()" [disabled]="isDisabled" data-automation-id="adf-cloud-group-chip-list" class="apa-group-chip-list">
       <mat-chip
         *ngFor="let group of selectedGroups$ | async"
+        [removable]="!(group.readonly)"
         (removed)="onRemove(group)"
         [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name">
         {{group.name}}
-        <mat-icon matChipRemove>cancel</mat-icon>
+        <mat-icon
+            matChipRemove [attr.data-automation-id]="'adf-cloud-group-chip-remove-icon-' + group.name">
+            cancel
+        </mat-icon>
       </mat-chip>
       <input matInput
         [formControl]="searchGroupsControl"

@@ -18,30 +18,30 @@
 import { IdentityGroupModel, IdentityGroupCountModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 
-export let mockIdentityGroup1 = new IdentityGroupModel({
+export let mockIdentityGroup1 = <IdentityGroupModel> {
     id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
-});
+};
 
-export let mockIdentityGroup2 = new IdentityGroupModel({
+export let mockIdentityGroup2 = <IdentityGroupModel> {
     id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: []
-});
+};
 
-export let mockIdentityGroup3 = new IdentityGroupModel({
+export let mockIdentityGroup3 = <IdentityGroupModel> {
   id: 'mock-group-id-3', name: 'Mock Group 3', path: '', subGroups: []
-});
+};
 
-export let mockIdentityGroup4 = new IdentityGroupModel({
+export let mockIdentityGroup4 = <IdentityGroupModel> {
     id: 'mock-group-id-4', name: 'Mock Group 4', path: '', subGroups: []
-});
+};
 
-export let mockIdentityGroup5 = new IdentityGroupModel({
+export let mockIdentityGroup5 = <IdentityGroupModel> {
     id: 'mock-group-id-5', name: 'Mock Group 5', path: '', subGroups: []
-});
+};
 
 export let mockIdentityGroupsCount = <IdentityGroupCountModel> { count: 10 };
 
 export let mockIdentityGroups = [
-    mockIdentityGroup1, mockIdentityGroup2, mockIdentityGroup3, mockIdentityGroup5, mockIdentityGroup5
+    mockIdentityGroup1, mockIdentityGroup2, mockIdentityGroup3, mockIdentityGroup4, mockIdentityGroup5
 ];
 
 export let mockApplicationDetails = {id: 'mock-app-id', name: 'mock-app-name'};

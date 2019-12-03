@@ -17,27 +17,15 @@
 
 import { Pagination } from '@alfresco/js-api';
 
-export class IdentityGroupModel {
-
-    id: string;
-    name: string;
-    path: string;
-    realmRoles: string[];
-    clientRoles: any;
-    access: any;
-    attributes: any;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.name = obj.name || null;
-            this.path = obj.path || null;
-            this.realmRoles = obj.realmRoles || null;
-            this.clientRoles = obj.clientRoles || null;
-            this.access = obj.access || null;
-            this.attributes = obj.attributes || null;
-        }
-    }
+export interface IdentityGroupModel {
+    id?: string;
+    name?: string;
+    path?: string;
+    realmRoles?: string[];
+    clientRoles?: any;
+    access?: any;
+    attributes?: any;
+    readonly?: boolean;
 }
 
 export interface IdentityGroupSearchParam {
@@ -50,17 +38,9 @@ export interface IdentityGroupQueryResponse {
     pagination: Pagination;
 }
 
-export class IdentityGroupQueryCloudRequestModel {
-
+export interface IdentityGroupQueryCloudRequestModel {
     first: number;
     max: number;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.first = obj.first;
-            this.max = obj.max;
-        }
-    }
 }
 
 export interface IdentityGroupCountModel {
