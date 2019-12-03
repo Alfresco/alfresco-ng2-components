@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange, NO_ERRORS_SCHEMA, QueryList } from '@angular/core';
+import { SimpleChange, NO_ERRORS_SCHEMA, QueryList, Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material';
 import { DataColumn } from '../../data/data-column.model';
@@ -28,6 +28,13 @@ import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../../data-column/data-column.component';
+
+@Component({selector: 'adf-custom-column-template-component', template: `
+    <ng-template #tmplRef></ng-template>
+`})
+class CustomColumnTemplateComponent {
+    @ViewChild('tmplRef') templateRef: TemplateRef<any>;
+}
 
 class FakeDataRow implements DataRow {
     isDropTarget = false;
@@ -1127,15 +1134,18 @@ describe('Accesibility', () => {
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let element: any;
+    let columnCustomTemplate: TemplateRef<any>;
 
     setupTestBed({
         imports: [
             CoreTestingModule
         ],
+        declarations: [CustomColumnTemplateComponent],
         schemas: [NO_ERRORS_SCHEMA]
     });
 
     beforeEach(() => {
+        columnCustomTemplate = TestBed.createComponent(CustomColumnTemplateComponent).componentInstance.templateRef;
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
@@ -1329,5 +1339,43 @@ describe('Accesibility', () => {
         fixture.debugElement.nativeElement.dispatchEvent(event);
 
         expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-1');
+    });
+
+    it('should remove cell focus when [focus] is set to false', () => {
+        dataTable.showHeader = false;
+        const dataRows = [ { name: 'name1' } ];
+
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: false })]
+        );
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        const cell = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
+        expect(cell.getAttribute('tabindex')).toBe(null);
+    });
+
+    it('should allow element focus when [focus] is set to true', () => {
+        dataTable.showHeader = false;
+        const dataRows = [ { name: 'name1' } ];
+
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: true })]
+        );
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        const cell = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
+        expect(cell.getAttribute('tabindex')).toBe('0');
     });
 });

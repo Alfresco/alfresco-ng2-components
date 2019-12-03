@@ -197,7 +197,7 @@
                         </ng-container>
                     </div>
                     <div *ngIf="col.template" class="adf-datatable-cell-container">
-                        <div class="adf-cell-value">
+                        <div class="adf-cell-value" [attr.tabindex]="col.focus ? 0 : null">
                             <ng-container
                                 [ngTemplateOutlet]="col.template"
                                 [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col, resolverFn) }">

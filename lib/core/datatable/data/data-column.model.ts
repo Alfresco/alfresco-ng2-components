@@ -41,4 +41,5 @@ export interface DataColumn {
     formatTooltip?: Function;
     copyContent?: boolean;
     editable?: boolean;
+    focus?: boolean;
 }

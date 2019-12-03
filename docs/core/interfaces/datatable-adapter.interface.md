@@ -70,6 +70,7 @@ interface DataColumn {
     cssClass?: string;
     template?: TemplateRef<any>;
     formatTooltip?: Function;
+    focus?: boolean;
 }
 ```
 

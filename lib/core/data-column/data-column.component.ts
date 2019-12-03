@@ -74,6 +74,10 @@ export class DataColumnComponent implements OnInit {
     @Input()
     editable: boolean = false;
 
+    /**  Enable or disable cell focus */
+    @Input()
+    focus: boolean = true;
+
     ngOnInit() {
         if (!this.srTitle && this.key === '$thumbnail') {
             this.srTitle = 'Thumbnail';
