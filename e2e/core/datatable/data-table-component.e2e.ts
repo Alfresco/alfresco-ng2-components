@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage, LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
+import { LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { DropActions } from '../../actions/drop.actions';
@@ -32,7 +32,6 @@ describe('Datatable component', () => {
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
-    const dataTableComponent = new DataTableComponentPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const dragAndDrop = new DropActions();
     const pngFile = new FileModel({
@@ -56,44 +55,6 @@ describe('Datatable component', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-    });
-
-    describe('Datatable component', () => {
-
-        beforeAll(async () => {
-            await navigationBarPage.navigateToDatatable();
-            await dataTablePage.dataTable.waitForTableBody();
-        });
-
-        beforeEach(async () => {
-            await dataTablePage.clickReset();
-        });
-
-        it('[C91314] Should be possible add new row to the table', async () => {
-            const result = await dataTableComponent.numberOfRows();
-            await dataTablePage.addRow();
-            await expect(await dataTableComponent.numberOfRows()).toEqual(result + 1);
-            await dataTablePage.addRow();
-            await expect(await dataTableComponent.numberOfRows()).toEqual(result + 2);
-        });
-
-        it('[C260039] Should be possible replace rows', async () => {
-            await dataTablePage.replaceRows(1);
-        });
-
-        it('[C260041] Should be possible replace columns', async () => {
-            await dataTablePage.replaceColumns();
-        });
-
-        it('[C277314] Should filter the table rows when the input filter is passed', async () => {
-            await dataTablePage.replaceRows(1);
-            await dataTablePage.replaceColumns();
-            await expect(await dataTableComponent.numberOfRows()).toEqual(4);
-            await dataTablePage.insertFilter('Name');
-            await expect(await dataTableComponent.numberOfRows()).toEqual(3);
-            await dataTablePage.insertFilter('I');
-            await expect(await dataTableComponent.numberOfRows()).toEqual(1);
-        });
     });
 
     describe('Datatable component - copyContent', () => {
