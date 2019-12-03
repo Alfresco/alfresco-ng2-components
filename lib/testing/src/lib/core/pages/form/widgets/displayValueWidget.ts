@@ -16,7 +16,8 @@
  */
 
 import { FormFields } from '../formFields';
-import { by, Locator } from 'protractor';
+import { by, element, Locator } from 'protractor';
+import { BrowserVisibility } from '../../../utils/public-api';
 
 export class DisplayValueWidget {
 
@@ -32,4 +33,22 @@ export class DisplayValueWidget {
         return this.formFields.getFieldValue(fieldId, this.inputLocator);
     }
 
+    async isDisplayValueWidgetVisible(fieldId: string): Promise<boolean> {
+        try {
+            await this.formFields.checkWidgetIsVisible(fieldId);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async checkDisplayValueWidgetIsHidden(fieldId: string): Promise<boolean> {
+        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
+        try {
+            await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement);
+            return true;
+        } catch {
+            return false;
+        }
+    }
 }
