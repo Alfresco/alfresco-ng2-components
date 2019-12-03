@@ -209,7 +209,9 @@ async function deployApp(args: ConfigArgs, apiService: any, appInfo: any, projec
     const bodyParam = {
         'name': appInfo.name,
         'releaseId': projectReleaseId,
-        'security': appInfo.security
+        'security': appInfo.security,
+        'infrastructure': appInfo.infrastructure,
+        'variables': appInfo.variables
     };
 
     logger.debug(`Deploy with body: ${JSON.stringify(bodyParam)}`);
