@@ -125,7 +125,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
             { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] },
             { 'role': 'APS_ADMIN', 'groups': [], 'users': ['superadminuser'] },
             { 'role': 'APS_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] }
-        ]
+        ],
+        infrastructure: {connectors: {restconnector: {}}, bridges: {}}
     },
     SUB_PROCESS_APP: {
         name: 'subprocessapp',
