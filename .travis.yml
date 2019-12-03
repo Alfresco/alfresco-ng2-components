@@ -125,7 +125,19 @@ jobs:
         - stage: Update Rancher PR
           name: Update Rancher PR
           script: ./scripts/travis/deploy/deploy.sh
-
+          
+notifications:
+  slack:
+    on_pull_requests: false    
+    rooms:
+      secure: "qcTP/+rhVweMSZZAQMPz4sW7boS8XC0RX1SPYgg7hIfxBr9747WpRLkJ1sirkVaXI/6XfYAyl42CTfPmTuJxIC+co/NSnEDknwVsnKZd0O/ykTpo+mxIN4BTZX8dm+gELR5IEYQPs+Yki3ZnD9b+0mCK1yD8JallKCQeE2U9BhzZhP/Fn0ce35EulybNp3QQDaox0XC+7gadMdxlvK8mzP1scw76wRLtx25QLxxV+OwEw0bzyh8y3onfjHfnoDcUQWRTNdnjapzmgf1LNdC202A5kwp5sJggfSDr+ActRqaMvv4BbMsFpdan34B6zPQJfyZL1r8IB8O8BEKcAaOUVcTjnZAOom8kHS8F07/mo5xnNYmV8oNX2/egr1CiG4U0EAGF2XGqM+vetYnF88LTEzy84kVxmSwKGVfzlGOyTplMXJ1iCENndtfWm1AXhAFj5RSsSAZg6IStTM+mcpnC75moEwQtj8bTenwehHz1HQAjQX7xeTQo27SxDc7oqp1ReyXCllMjKxckjVGmp2j6yxn1Jl55kivBj57vluLtEtziOGluVELP5E2fV0VAuErNhnjLm4LJARVN76PQaTOXYwATVVJJDhb/77TesvxQsr3VfiROEKm7QB7IDFjghjLLisSX67JQ5+7K/qMlqf9+9hNw4n0v1eMylVjt+gyxspc="  
+    on_failure: always
+    on_success: change
+    template:
+      - "Repo `%{repository_slug}` *%{result}* build (<%{build_url}|#%{build_number}>) for commit (<%{compare_url}|%{commit}>) on branch `%{branch}`."
+      - "Author: %{author} Execution time: *%{duration}*"
+      - "Message: %{message}"    
+      
 cache:
   directories:
   - node_modules
