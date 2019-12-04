@@ -233,6 +233,7 @@ export class ViewerPage {
     }
 
     async checkFileNameIsDisplayed(file): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.fileName);
         await expect(await BrowserActions.getText(this.fileName)).toEqual(file);
     }
 
