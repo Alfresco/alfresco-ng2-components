@@ -57,17 +57,17 @@ export const mockEffectiveRoles = [
 
 export const mockJoinGroupRequest: IdentityJoinGroupRequestModel = {userId: 'mock-hser-id', groupId: 'mock-group-id', realm: 'mock-realm-name'};
 
-export const mockGroup1 = new IdentityGroupModel({
+export const mockGroup1 = <IdentityGroupModel> {
     id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
-});
+};
 
-export const mockGroup2 = new IdentityGroupModel({
+export const mockGroup2 = <IdentityGroupModel> {
     id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: []
-});
+};
 
 export const mockGroups = [
-    new IdentityGroupModel({ id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [] }),
-    new IdentityGroupModel({ id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] })
+    <IdentityGroupModel> { id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [] },
+    <IdentityGroupModel> { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] }
 ];
 
 export const queryUsersMockApi = {

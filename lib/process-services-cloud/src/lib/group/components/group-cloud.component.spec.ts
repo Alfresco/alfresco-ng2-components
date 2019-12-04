@@ -24,10 +24,10 @@ import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
 import {
     setupTestBed,
-    AlfrescoApiServiceMock,
     IdentityGroupService,
-    IdentityGroupModel,
-    mockIdentityGroups
+    mockIdentityGroups,
+    AlfrescoApiService,
+    CoreModule
 } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 
@@ -35,285 +35,471 @@ describe('GroupCloudComponent', () => {
     let component: GroupCloudComponent;
     let fixture: ComponentFixture<GroupCloudComponent>;
     let element: HTMLElement;
-    let service: IdentityGroupService;
+    let identityGroupService: IdentityGroupService;
+    let alfrescoApiService: AlfrescoApiService;
     let findGroupsByNameSpy: jasmine.Spy;
-    let getClientIdByApplicationNameSpy: jasmine.Spy;
-    let checkGroupHasAccessSpy: jasmine.Spy;
-    let checkGroupHasGivenRoleSpy: jasmine.Spy;
+
+    const mock = {
+        oauth2Auth: {
+            callCustomApi: () => Promise.resolve(mockIdentityGroups)
+        }
+    };
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, GroupCloudModule],
-        providers: [AlfrescoApiServiceMock, IdentityGroupService]
+        imports: [
+            CoreModule.forRoot(),
+            ProcessServiceCloudTestingModule,
+            GroupCloudModule],
+        providers: [
+            IdentityGroupService
+        ]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(GroupCloudComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-        service = TestBed.get(IdentityGroupService);
-        findGroupsByNameSpy = spyOn(service, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
-        getClientIdByApplicationNameSpy = spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
-        checkGroupHasAccessSpy = spyOn(service, 'checkGroupHasClientApp').and.returnValue(of(true));
-        checkGroupHasGivenRoleSpy = spyOn(service, 'checkGroupHasRole').and.returnValue(of(true));
-        component.appName = 'mock-app-name';
+        identityGroupService = TestBed.get(IdentityGroupService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
     });
 
     it('should create GroupCloudComponent', () => {
         expect(component instanceof GroupCloudComponent).toBeTruthy();
     });
 
-    it('should be able to fetch client id', async(() => {
-        component.ngOnChanges( {
-            appName: new SimpleChange(null, component.appName, true)
-        });
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
-            expect(component.clientId).toBe('mock-client-id');
-        });
-    }));
+    describe('Search group', () => {
 
-    it('should show the groups if the typed result match', async(() => {
-        fixture.detectChanges();
-        component.searchGroups$.next(<IdentityGroupModel[]> mockIdentityGroups);
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
-        inputHTMLElement.dispatchEvent(new Event('keydown'));
-        inputHTMLElement.value = 'M';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        beforeEach(async(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('mat-option'))).toBeDefined();
-        });
-    }));
+            element = fixture.nativeElement;
+            findGroupsByNameSpy = spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
+        }));
 
-    it('should hide result list if input is empty', async(() => {
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = '';
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(fixture.debugElement.query(By.css('mat-option'))).toBeNull();
-            expect(fixture.debugElement.query(By.css('#adf-group-0'))).toBeNull();
-        });
-    }));
-
-    it('should emit selectedGroup if option is valid', async(() => {
-        fixture.detectChanges();
-        const selectEmitSpy = spyOn(component.selectGroup, 'emit');
-        component.onSelect(new IdentityGroupModel({ name: 'group name'}));
-        fixture.whenStable().then(() => {
-            expect(selectEmitSpy).toHaveBeenCalled();
-        });
-    }));
-
-    it('should show an error message if the group is invalid', async(() => {
-        fixture.detectChanges();
-        checkGroupHasAccessSpy.and.returnValue(of(false));
-        findGroupsByNameSpy.and.returnValue(of([]));
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'ZZZ';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        it('should list the group if the typed result match', (done) => {
+            findGroupsByNameSpy.and.returnValue(of(mockIdentityGroups));
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'Mock';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
-            const errorMessage = element.querySelector('.adf-cloud-group-error-message');
-            expect(errorMessage).not.toBeNull();
-            expect(errorMessage.textContent).toContain('ADF_CLOUD_GROUPS.ERROR.NOT_FOUN');
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(5);
+                expect(findGroupsByNameSpy).toHaveBeenCalled();
+                done();
+            });
         });
-    }));
 
-    it('should show chip list when mode=multiple', async(() => {
-        component.mode = 'multiple';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const chip = element.querySelector('mat-chip-list');
-            expect(chip).toBeDefined();
-        });
-    }));
-
-    it('should not show chip list when mode=single', async(() => {
-        component.mode = 'single';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const chip = element.querySelector('mat-chip-list');
-            expect(chip).toBeNull();
-        });
-    }));
-
-    it('should pre-select all preSelectGroups when mode=multiple', async(() => {
-        component.mode = 'multiple';
-        component.preSelectGroups = <any> [{id: mockIdentityGroups[1].id}, {id: mockIdentityGroups[2].id}];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        it('should hide result list if input is empty', (done) => {
             fixture.detectChanges();
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
-            expect(chips.length).toBe(2);
-        });
-    }));
-
-    it('should not pre-select any group when preSelectGroups is empty and mode=multiple', async(() => {
-        component.mode = 'multiple';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = '';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
-            const chip = fixture.debugElement.query(By.css('mat-chip'));
-            expect(chip).toBeNull();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('mat-option')).toBeNull();
+                done();
+            });
         });
-    }));
 
-    it('should pre-select preSelectGroups[0] when mode=single', async(() => {
-        component.mode = 'single';
-        component.preSelectGroups = <any> [{id: mockIdentityGroups[1].id}, {id: mockIdentityGroups[2].id}];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const selectedGroup = component.searchGroupsControl.value;
-            expect(selectedGroup.id).toBe(mockIdentityGroups[1].id);
-        });
-    }));
-
-    it('should not pre-select any group when preSelectGroups is empty and mode=single', async(() => {
-        component.mode = 'single';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const selectedGroup = component.searchGroupsControl.value;
-            expect(selectedGroup).toBeNull();
-        });
-    }));
-
-    it('should emit removeGroup when a selected group is removed if mode=multiple', async(() => {
-        const removeGroupSpy = spyOn(component.removeGroup, 'emit');
-
-        component.mode = 'multiple';
-        component.preSelectGroups = <any> [{id: mockIdentityGroups[1].id}, {id: mockIdentityGroups[2].id}];
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
+        it('should emit selectedGroup if option is valid', (done) => {
             fixture.detectChanges();
-            const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
-            removeIcon.nativeElement.click();
-
-            expect(removeGroupSpy).toHaveBeenCalledWith({ id: mockIdentityGroups[1].id });
-        });
-
-    }));
-
-    it('should list groups who have access to the app when appName is specified', async(() => {
-        component.appName = 'sample-app';
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'M';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+            const selectEmitSpy = spyOn(component.selectGroup, 'emit');
+            component.onSelect({ name: 'groupname' });
             fixture.detectChanges();
-            const groupsList = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(groupsList.length).toBe(mockIdentityGroups.length);
+            fixture.whenStable().then(() => {
+                expect(selectEmitSpy).toHaveBeenCalled();
+                done();
+            });
         });
-    }));
 
-    it('should not list groups who do not have access to the app when appName is specified', async(() => {
-        checkGroupHasAccessSpy.and.returnValue(of(false));
-        component.appName = 'sample-app';
-
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'Mock';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        it('should show an error message if the search result empty', (done) => {
+            findGroupsByNameSpy.and.returnValue(of([]));
             fixture.detectChanges();
-            const groupsList = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(groupsList.length).toBe(0);
-        });
-    }));
-
-    it('should filter groups when roles are specified', async(() => {
-        checkGroupHasGivenRoleSpy.and.returnValue(of(true));
-        component.roles = ['mock-role-1', 'mock-role-2'];
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'M';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'ZZZ';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
-            const groupsList = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(groupsList.length).toBe(mockIdentityGroups.length);
-            expect(checkGroupHasGivenRoleSpy).toHaveBeenCalled();
+            fixture.whenStable().then(() => {
+                inputHTMLElement.blur();
+                fixture.detectChanges();
+                const errorMessage = element.querySelector('.adf-cloud-group-error-message');
+                expect(errorMessage).not.toBeNull();
+                expect(errorMessage.textContent).toContain(' ADF_CLOUD_GROUPS.ERROR.NOT_FOUND ');
+                done();
+            });
         });
-    }));
 
-    it('should return groups when roles are not specified', async(() => {
-        checkGroupHasGivenRoleSpy.and.returnValue(of(false));
-        component.roles = [];
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'M';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        it('should populate placeholder when title is present', (done) => {
+            component.title = 'TITLE_KEY';
             fixture.detectChanges();
-            const groupsList = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(groupsList.length).toBe(mockIdentityGroups.length);
-            expect(checkGroupHasGivenRoleSpy).not.toHaveBeenCalled();
+            const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
+            fixture.whenStable().then( () => {
+                fixture.detectChanges();
+                expect(matLabel.textContent).toEqual('TITLE_KEY');
+                done();
+            });
         });
-    }));
+    });
 
-    it('should validate access to the app when appName is specified', async(() => {
-        findGroupsByNameSpy.and.returnValue(of(mockIdentityGroups));
-        checkGroupHasAccessSpy.and.returnValue(of(true));
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'Mock';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(checkGroupHasAccessSpy).toHaveBeenCalledTimes(mockIdentityGroups.length);
-        });
-    }));
+    describe('when application name defined', () => {
 
-    it('should not validate access to the app when appName is not specified', async(() => {
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'M';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(checkGroupHasAccessSpy).not.toHaveBeenCalled();
-        });
-    }));
+        let checkGroupHasAnyClientAppRoleSpy: jasmine.Spy;
+        let checkGroupHasClientAppSpy: jasmine.Spy;
 
-    it('should load the clients if appName change', async( () => {
-        component.appName = 'ADF';
-        fixture.detectChanges();
-        fixture.whenStable().then( () => {
+        beforeEach(async(() => {
+            findGroupsByNameSpy = spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
+            checkGroupHasAnyClientAppRoleSpy = spyOn(identityGroupService, 'checkGroupHasAnyClientAppRole').and.returnValue(of(true));
+            checkGroupHasClientAppSpy = spyOn(identityGroupService, 'checkGroupHasClientApp').and.returnValue(of(true));
+            component.preSelectGroups = [];
+            component.appName = 'mock-app-name';
             fixture.detectChanges();
-            expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
-        });
-    }));
+            element = fixture.nativeElement;
+        }));
 
-    it('should filter users if appName change', async(() => {
-        component.appName = 'ADF';
-        fixture.detectChanges();
-        fixture.whenStable().then( () => {
+        it('should fetch the client ID if appName specified', async(() => {
+            const getClientIdByApplicationNameSpy = spyOn(identityGroupService, 'getClientIdByApplicationName').and.callThrough();
+            component.appName = 'mock-app-name';
+            const change = new SimpleChange(null, 'mock-app-name', false);
+            component.ngOnChanges({ 'appName': change });
             fixture.detectChanges();
-            expect(checkGroupHasAccessSpy).toHaveBeenCalled();
+            fixture.whenStable().then( () => {
+                fixture.detectChanges();
+                expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
+            });
+        }));
+
+        it('should list groups who have access to the app when appName is specified', (done) => {
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(5);
+                done();
+            });
         });
-    }));
+
+        it('should not list groups who do not have access to the app when appName is specified', (done) => {
+            checkGroupHasClientAppSpy.and.returnValue(of(false));
+            fixture.detectChanges();
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelectorAll('mat-option').length).toEqual(0);
+                done();
+            });
+        });
+
+        it('should list groups if given roles mapped with client roles', (done) => {
+            component.roles = ['MOCK_ROLE_1', 'MOCK_ROLE_1'];
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(5);
+                expect(checkGroupHasAnyClientAppRoleSpy).toHaveBeenCalled();
+                done();
+            });
+        });
+
+        it('should not list groups if roles are not mapping with client roles', (done) => {
+            checkGroupHasAnyClientAppRoleSpy.and.returnValue(of(false));
+            component.roles = ['MOCK_ROLE_1', 'MOCK_ROLE_1'];
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(0);
+                expect(checkGroupHasAnyClientAppRoleSpy).toHaveBeenCalled();
+                done();
+            });
+        });
+
+        it('should not call client role mapping sevice if roles not specified', (done) => {
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(checkGroupHasAnyClientAppRoleSpy).not.toHaveBeenCalled();
+                done();
+            });
+        });
+
+        it('should validate access to the app when appName is specified', (done) => {
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(checkGroupHasClientAppSpy).toHaveBeenCalledTimes(5);
+                done();
+            });
+        });
+
+        it('should not validate access to the app when appName is not specified', (done) => {
+            component.appName = '';
+            fixture.detectChanges();
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(checkGroupHasClientAppSpy).not.toHaveBeenCalled();
+                done();
+            });
+        });
+
+        it('should show an error message if the group does not have access', (done) => {
+            checkGroupHasClientAppSpy.and.returnValue(of(false));
+            findGroupsByNameSpy.and.returnValue(of([]));
+            fixture.detectChanges();
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'ZZZ';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                inputHTMLElement.blur();
+                fixture.detectChanges();
+                const errorMessage = element.querySelector('.adf-cloud-group-error-message');
+                expect(errorMessage).not.toBeNull();
+                expect(errorMessage.textContent).toContain(' ADF_CLOUD_GROUPS.ERROR.NOT_FOUND ');
+                done();
+            });
+        });
+    });
+
+    describe('Single Mode and Pre-selected groups', () => {
+
+        beforeEach(async(() => {
+            component.mode = 'single';
+            component.preSelectGroups = <any> mockIdentityGroups;
+            fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        it('should not show chip list when mode=single', (done) => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const chip = element.querySelector('mat-chip-list');
+                expect(chip).toBeNull();
+                done();
+            });
+        });
+
+        it('should not pre-select any group when preSelectGroups is empty and mode=single', (done) => {
+            component.preSelectGroups = [];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const selectedUser = component.searchGroupsControl.value;
+                expect(selectedUser).toBeNull();
+                done();
+            });
+        });
+    });
+
+    describe('Multiple Mode and Pre-selected groups', () => {
+
+        const change = new SimpleChange(null, mockIdentityGroups, false);
+
+        beforeEach(async(() => {
+            component.mode = 'multiple';
+            component.preSelectGroups = <any> mockIdentityGroups;
+            component.ngOnChanges({ 'preSelectGroups': change });
+            fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        it('should show chip list when mode=multiple', (done) => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const chip = element.querySelector('mat-chip-list');
+                expect(chip).toBeDefined();
+                done();
+            });
+        });
+
+        it('should pre-select all preSelectGroups when mode=multiple', (done) => {
+            component.mode = 'multiple';
+            fixture.detectChanges();
+            component.ngOnChanges({ 'preSelectUsers': change });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+                expect(chips.length).toBe(5);
+                done();
+            });
+        });
+
+        it('should emit removeGroup when a selected group is removed', (done) => {
+            const removeSpy = spyOn(component.removeGroup, 'emit');
+            component.mode = 'multiple';
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
+                removeIcon.nativeElement.click();
+                fixture.detectChanges();
+                expect(removeSpy).toHaveBeenCalled();
+                done();
+            });
+        });
+    });
+
+    describe('When roles defined', () => {
+
+        let checkGroupHasRoleSpy: jasmine.Spy;
+
+        beforeEach(async(() => {
+            component.roles = ['mock-role-1', 'mock-role-2'];
+            spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
+            checkGroupHasRoleSpy = spyOn(identityGroupService, 'checkGroupHasRole').and.returnValue(of(true));
+            fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        it('should filter if groups has any specified role', (done) => {
+            fixture.detectChanges();
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(5);
+                expect(checkGroupHasRoleSpy).toHaveBeenCalledTimes(5);
+                done();
+            });
+        });
+
+        it('should not filter groups if user does not have any specified role', (done) => {
+            fixture.detectChanges();
+            checkGroupHasRoleSpy.and.returnValue(of(false));
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelectorAll('mat-option').length).toEqual(0);
+                expect(checkGroupHasRoleSpy).toHaveBeenCalled();
+                done();
+            });
+        });
+
+        it('should not call checkGroupHasRole service when roles are not specified', (done) => {
+            component.roles = [];
+            fixture.detectChanges();
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(checkGroupHasRoleSpy).not.toHaveBeenCalled();
+                done();
+            });
+        });
+    });
+
+    describe('Multiple Mode with read-only', () => {
+
+        it('Should not be able to remove pre-selected groups if readonly property set to true', (done) => {
+            fixture.detectChanges();
+            const preselectedGroups = [
+                { id: mockIdentityGroups[0].id, name: mockIdentityGroups[0].name, readonly: true },
+                { id: mockIdentityGroups[1].id, name: mockIdentityGroups[1].name, readonly: true }
+            ];
+            component.preSelectGroups = preselectedGroups;
+            const change = new SimpleChange(null, preselectedGroups, false);
+            component.mode = 'multiple';
+            const removeGroupSpy = spyOn(component.removeGroup, 'emit');
+            component.ngOnChanges({ 'preSelectGroups': change });
+            fixture.detectChanges();
+            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
+            const removeIcon = <HTMLElement> fixture.nativeElement.querySelector('[data-automation-id="adf-cloud-group-chip-remove-icon-Mock Group 1"]');
+            expect(chipList.length).toBe(2);
+            expect(component.preSelectGroups[0].readonly).toBeTruthy();
+            expect(component.preSelectGroups[1].readonly).toBeTruthy();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                removeIcon.click();
+                fixture.detectChanges();
+                expect(removeGroupSpy).not.toHaveBeenCalled();
+                expect(component.preSelectGroups.length).toBe(2);
+                expect(component.preSelectGroups[0].readonly).toBe(true, 'Not removable');
+                expect(component.preSelectGroups[1].readonly).toBe(true, 'Not removable');
+                expect(fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip').length).toBe(2);
+                done();
+            });
+        });
+
+        it('Should be able to remove preselected groups if readonly property set to false', (done) => {
+            fixture.detectChanges();
+            const preselectedGroups = [
+                { id: mockIdentityGroups[0].id, name: mockIdentityGroups[0].name, readonly: false },
+                { id: mockIdentityGroups[1].id, name: mockIdentityGroups[1].name, readonly: false }
+            ];
+            component.preSelectGroups = preselectedGroups;
+            const change = new SimpleChange(null, preselectedGroups, false);
+            component.mode = 'multiple';
+            const removeGroupSpy = spyOn(component.removeGroup, 'emit');
+            component.ngOnChanges({ 'preSelectGroups': change });
+            fixture.detectChanges();
+            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
+            const removeIcon = <HTMLElement> fixture.nativeElement.querySelector('[data-automation-id="adf-cloud-group-chip-remove-icon-Mock Group 1"]');
+            expect(chipList.length).toBe(2);
+            expect(component.preSelectGroups[0].readonly).toBe(false, 'Removable');
+            expect(component.preSelectGroups[1].readonly).toBe(false, 'Removable');
+            removeIcon.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                removeIcon.click();
+                fixture.detectChanges();
+                expect(removeGroupSpy).toHaveBeenCalled();
+                expect(fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip').length).toBe(1);
+                done();
+            });
+        });
+    });
 });

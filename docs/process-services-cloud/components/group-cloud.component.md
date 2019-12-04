@@ -92,3 +92,35 @@ export class MyComponent {
     [preSelectGroups]="groups">
 </adf-cloud-group>
 ```
+
+### Read-only
+
+You can use `readonly` property to make preselected groups read-only in `multiple` mode.
+
+Usage example:
+
+```ts
+import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
+
+@Component({...})
+export class MyComponent {
+    groups: any;
+
+    constructor() {
+        this.groups =
+            [
+                {id: 1, name: 'Group 1', readonly: true},
+                {id: 2, name: 'Group 2', readonly: false}
+            ];
+    }
+}
+```
+
+```html
+<adf-cloud-group
+    [mode]="'multiple'"
+    [preSelectGroups]="groups">
+</adf-cloud-group>
+```
+
+from above `preSelectGroups`, `Group 2` is removable from the `preSelectGroups` whereas `Group 1` is readonly you can not remove them.
