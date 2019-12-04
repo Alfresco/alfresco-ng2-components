@@ -23,6 +23,7 @@ import { AuthenticationService } from './authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material';
 
 @Injectable({
     providedIn: 'root'
@@ -31,8 +32,9 @@ export class AuthGuardEcm extends AuthGuardBase {
 
     constructor(authenticationService: AuthenticationService,
                 router: Router,
-                appConfigService: AppConfigService) {
-        super(authenticationService, router, appConfigService);
+                appConfigService: AppConfigService,
+                dialog: MatDialog) {
+        super(authenticationService, router, appConfigService, dialog);
     }
 
     checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
