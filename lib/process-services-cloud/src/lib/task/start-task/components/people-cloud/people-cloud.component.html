@@ -6,10 +6,12 @@
             *ngFor="let user of selectedUsers$ | async"
             [removable]="!(user.readonly)"
             [attr.data-automation-id]="'adf-people-cloud-chip-' + user.username"
+            matTooltip="{{ (user.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}"
             (removed)="onRemove(user)">
             {{user | fullName}}
             <mat-icon
                 matChipRemove
+                *ngIf=!(user.readonly)
                 [attr.data-automation-id]="'adf-people-cloud-chip-remove-icon-' + user.username">
                 cancel
             </mat-icon>

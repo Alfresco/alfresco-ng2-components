@@ -176,6 +176,7 @@
   },
   "ADF_CLOUD_GROUPS": {
     "SEARCH-GROUP": "Groups",
+    "MANDATORY": "Mandatory",
     "ERROR": {
       "NOT_FOUND": "No group found with the name {{groupName}}"
     }
