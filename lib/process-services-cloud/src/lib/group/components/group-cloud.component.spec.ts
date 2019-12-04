@@ -442,7 +442,7 @@ describe('GroupCloudComponent', () => {
 
     describe('Multiple Mode with read-only', () => {
 
-        it('Should not be able to remove pre-selected groups if readonly property set to true', (done) => {
+        it('Should not show remove icon for pre-selected groups if readonly property set to true', (done) => {
             fixture.detectChanges();
             const preselectedGroups = [
                 { id: mockIdentityGroups[0].id, name: mockIdentityGroups[0].name, readonly: true },
@@ -451,7 +451,6 @@ describe('GroupCloudComponent', () => {
             component.preSelectGroups = preselectedGroups;
             const change = new SimpleChange(null, preselectedGroups, false);
             component.mode = 'multiple';
-            const removeGroupSpy = spyOn(component.removeGroup, 'emit');
             component.ngOnChanges({ 'preSelectGroups': change });
             fixture.detectChanges();
             const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
@@ -462,9 +461,7 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                removeIcon.click();
-                fixture.detectChanges();
-                expect(removeGroupSpy).not.toHaveBeenCalled();
+                expect(removeIcon).toBeNull();
                 expect(component.preSelectGroups.length).toBe(2);
                 expect(component.preSelectGroups[0].readonly).toBe(true, 'Not removable');
                 expect(component.preSelectGroups[1].readonly).toBe(true, 'Not removable');
