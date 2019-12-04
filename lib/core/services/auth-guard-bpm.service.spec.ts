@@ -22,6 +22,7 @@ import { AuthenticationService } from './authentication.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { MatDialog } from '@angular/material';
 
 describe('AuthGuardService BPM', () => {
 
@@ -156,4 +157,21 @@ describe('AuthGuardService BPM', () => {
         expect(router.navigateByUrl).toHaveBeenCalledWith('/fakeLoginRoute?redirectUrl=some-url');
     }));
 
+    it('should to close the material dialog if is redirect to the login', () => {
+        const materialDialog = TestBed.get(MatDialog);
+
+        spyOn(materialDialog, 'closeAll');
+
+        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(router, 'navigateByUrl').and.stub();
+        const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
+
+        authGuard.canActivate(null, route);
+
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'ECM', url: 'some-url'
+        });
+
+        expect(materialDialog.closeAll).toHaveBeenCalled();
+    });
 });

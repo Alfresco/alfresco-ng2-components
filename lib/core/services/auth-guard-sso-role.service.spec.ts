@@ -21,6 +21,7 @@ import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from './jwt-helper.service';
+import { MatDialog } from '@angular/material';
 
 describe('Auth Guard SSO role service', () => {
 
@@ -164,4 +165,20 @@ describe('Auth Guard SSO role service', () => {
 
         expect(authGuard.canActivate(route)).toBeFalsy();
     });
+
+    it('Should canActivate be false hasRealm is true and hasClientRole is false', () => {
+        const materialDialog = TestBed.get(MatDialog);
+
+        spyOn(materialDialog, 'closeAll');
+
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        spyOn(jwtHelperService, 'hasRealmRoles').and.returnValue(true);
+        spyOn(jwtHelperService, 'hasRealmRolesForClientRole').and.returnValue(false);
+
+        route.params = { appName: 'fakeapp' };
+        route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
+
+        expect(materialDialog.closeAll).toHaveBeenCalled();
+    });
+
 });
