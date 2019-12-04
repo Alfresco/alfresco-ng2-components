@@ -169,7 +169,7 @@ describe('AuthGuardService BPM', () => {
         authGuard.canActivate(null, route);
 
         expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', url: 'some-url'
+            provider: 'BPM', url: 'some-url'
         });
 
         expect(materialDialog.closeAll).toHaveBeenCalled();
