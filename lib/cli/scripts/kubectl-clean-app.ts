@@ -244,7 +244,6 @@ async function main(args) {
     const configDevops = getAlfrescoJsApiInstance(args);
     const alfrescoJsApiDevops = await login(args.devopsUsername, args.devopsPassword, configDevops);
 
-
     if (args.label !== undefined || args.apps !== undefined) {
         setCluster(args);
         setCredentials(args);
