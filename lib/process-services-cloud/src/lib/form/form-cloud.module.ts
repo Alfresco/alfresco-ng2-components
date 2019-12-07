@@ -26,9 +26,13 @@ import { FormDefinitionSelectorCloudComponent } from './components/form-definiti
 import { FormDefinitionSelectorCloudService } from './services/form-definition-selector-cloud.service';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
 import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
+
 import { DateCloudWidgetComponent } from './components/widgets/date/date-cloud.widget';
 import { DropdownCloudWidgetComponent } from './components/widgets/dropdown/dropdown-cloud.widget';
+import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
+import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
+
 import { UploadCloudWidgetComponent } from './components/widgets/attach-file/upload-cloud.widget';
 import { PeopleCloudModule } from '../people/people-cloud.module';
 import { GroupCloudModule } from '../group/group-cloud.module';
@@ -55,7 +59,9 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         FormCustomOutcomesComponent,
         DropdownCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
-        DateCloudWidgetComponent
+        DateCloudWidgetComponent,
+        PeopleCloudWidgetComponent,
+        GroupCloudWidgetComponent
     ],
     providers: [
         FormDefinitionSelectorCloudService,
@@ -65,7 +71,9 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         UploadCloudWidgetComponent,
         DropdownCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
-        DateCloudWidgetComponent
+        DateCloudWidgetComponent,
+        PeopleCloudWidgetComponent,
+        GroupCloudWidgetComponent
     ],
     exports: [
         FormCloudComponent,
