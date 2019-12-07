@@ -23,7 +23,7 @@ import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { deployedApps } from '../mock/apps-list.mock';
 import { of } from 'rxjs';
 
-import { SelectAppsDialogComponent } from './select-apps-dialog-component';
+import { SelectAppsDialogComponent } from './select-apps-dialog.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 
 @Component({
@@ -102,12 +102,12 @@ describe('Select app dialog', () => {
 
             expect(
                 overlayContainerElement.querySelector(
-                    '.adf-selet-app-dialog-title'
+                    '.adf-select-app-dialog-title'
                 )
             ).toBeDefined();
             expect(
                 overlayContainerElement.querySelector(
-                    '.adf-selet-app-dialog-dropdown'
+                    '.adf-select-app-dialog-dropdown'
                 )
             ).toBeDefined();
         });

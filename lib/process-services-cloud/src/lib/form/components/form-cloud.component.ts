@@ -37,9 +37,10 @@ import {
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
-import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
-import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget/attach-file-cloud-widget.component';
-import { DateCloudWidgetComponent } from './date-cloud/date-cloud.widget';
+import { DropdownCloudWidgetComponent } from './widgets/dropdown/dropdown-cloud.widget';
+import { AttachFileCloudWidgetComponent } from './widgets/attach-file/attach-file-cloud-widget.component';
+import { DateCloudWidgetComponent } from './widgets/date/date-cloud.widget';
+import { PeopleCloudWidget } from './widgets/people/people-cloud.widget';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 
 @Component({
@@ -121,6 +122,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('people', () => PeopleCloudWidget, true);
+        this.formRenderingService.setComponentTypeResolver('functional-group', () => PeopleCloudWidget, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {

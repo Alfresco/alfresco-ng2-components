@@ -90,6 +90,8 @@ import {
     TASK_FILTERS_SERVICE_TOKEN
 } from '@alfresco/adf-process-services-cloud';
 
+import { SelectAppsDialogCloudComponent } from './components/files/select-apps-dialog-cloud.component';
+
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import localeDe from '@angular/common/locales/de';
@@ -192,7 +194,8 @@ registerLocaleData(localeSv);
         PeopleGroupCloudDemoComponent,
         ConfirmDialogExampleComponent,
         FormCloudDemoComponent,
-        ConfirmDialogExampleComponent
+        ConfirmDialogExampleComponent,
+        SelectAppsDialogCloudComponent
     ],
     providers: [
         {
@@ -223,7 +226,8 @@ registerLocaleData(localeSv);
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
-        MetadataDialogAdapterComponent
+        MetadataDialogAdapterComponent,
+        SelectAppsDialogCloudComponent
     ],
     bootstrap: [AppComponent]
 })

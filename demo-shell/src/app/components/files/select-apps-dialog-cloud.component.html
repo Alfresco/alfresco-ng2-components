@@ -1,0 +1,26 @@
+<header mat-dialog-title id="adf-select-app-dialog-title">Process Selector</header>
+<section mat-dialog-content>
+
+    <mat-select id="adf-select-app-dialog-dropdown" placeholder="Select an App"
+                [(value)]="selectedProcess">
+        <mat-option *ngFor="let currentProcessApp of (apps$ | async)"
+                    [value]="currentProcessApp">
+            {{ currentProcessApp.name }}
+        </mat-option>
+    </mat-select>
+
+</section>
+<footer mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="onStart()">{{'APP.DIALOG.START' | translate}}</button>
+</footer>
+
+
+<adf-cloud-start-process *ngIf="selectedProcess"
+                         [appName]="selectedProcess.name"
+                         [name]="processName"
+                         [values]="formValues"
+                         [variables]="variables"
+                         (error)="openSnackMessage($event)"
+                         (success)="onStartProcessSuccess()"
+                         (cancel)="onCancelStartProcess()">
+</adf-cloud-start-process>

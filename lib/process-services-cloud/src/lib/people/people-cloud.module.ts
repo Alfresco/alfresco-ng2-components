@@ -16,33 +16,19 @@
  */
 
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { MaterialModule } from '../material.module';
+import { PeopleCloudComponent } from './components/people-cloud.component';
 import { CommonModule } from '@angular/common';
-import { AppDetailsCloudComponent } from './components/app-details-cloud.component';
-import { AppListCloudComponent } from './components/app-list-cloud.component';
-import { AppsProcessCloudService } from './services/apps-process-cloud.service';
-import { TemplateModule, CoreModule } from '@alfresco/adf-core';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        TemplateModule,
-        MaterialModule,
-        FlexLayoutModule,
-        CoreModule
+        MaterialModule
     ],
-    declarations: [
-        AppListCloudComponent,
-        AppDetailsCloudComponent
-    ],
-    providers: [
-        AppsProcessCloudService
-    ],
+    declarations: [PeopleCloudComponent],
     exports: [
-        AppListCloudComponent,
-        AppDetailsCloudComponent
+        PeopleCloudComponent
     ]
 })
-export class AppListCloudModule {
+export class PeopleCloudModule {
 }

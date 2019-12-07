@@ -22,7 +22,7 @@ import { Node } from '@alfresco/js-api';
 import { Observable, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ContentLinkModel, NotificationService } from '@alfresco/adf-core';
-import { ProcessCloudContentService } from '../services/process-cloud-content.service';
+import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 
 @Component({
     selector: 'upload-cloud-widget',

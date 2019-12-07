@@ -19,9 +19,7 @@ export * from './models/task-variable-cloud.model';
 export * from './models/form-definition-selector-cloud.model';
 
 export * from './components/form-cloud.component';
-export * from './components/upload-cloud.widget';
 export * from './components/form-definition-selector-cloud.component';
-export * from './components/attach-file-cloud-widget/attach-file-cloud-widget.component';
 
 export * from './services/form-cloud.service';
 export * from './services/form-definition-selector-cloud.service';

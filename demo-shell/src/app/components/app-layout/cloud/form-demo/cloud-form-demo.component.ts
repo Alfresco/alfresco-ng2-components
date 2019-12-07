@@ -16,8 +16,8 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormFieldModel, NotificationService, FormRenderingService, CoreAutomationService, FormModel } from '@alfresco/adf-core';
-import { FormCloudService, UploadCloudWidgetComponent } from '@alfresco/adf-process-services-cloud';
+import { FormFieldModel, NotificationService, CoreAutomationService, FormModel } from '@alfresco/adf-core';
+import { FormCloudService } from '@alfresco/adf-process-services-cloud';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -43,10 +43,9 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
 
     constructor(
         private notificationService: NotificationService,
-        private formRenderingService: FormRenderingService,
         private formService: FormCloudService,
         private automationService: CoreAutomationService) {
-        this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
+       // ?????????? this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true); WHY IS HEREEEE?????????
     }
 
     logErrors(errorFields: FormFieldModel[]) {

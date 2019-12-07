@@ -29,6 +29,7 @@ import {
     PROCESS_FILTERS_SERVICE_TOKEN,
     TASK_FILTERS_SERVICE_TOKEN
 } from './services/public-api';
+import { PeopleCloudModule } from './people/people-cloud.module';
 
 @NgModule({
     imports: [
@@ -37,6 +38,7 @@ import {
         ProcessCloudModule,
         TaskCloudModule,
         GroupCloudModule,
+        PeopleCloudModule,
         FormCloudModule,
         TaskFormModule
     ],
@@ -60,7 +62,8 @@ import {
         TaskCloudModule,
         GroupCloudModule,
         FormCloudModule,
-        TaskFormModule
+        TaskFormModule,
+        PeopleCloudModule
     ]
 })
 export class ProcessServicesCloudModule { }

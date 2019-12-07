@@ -28,8 +28,8 @@ import {
     IdentityUserModel,
     UserPreferenceValues
 } from '@alfresco/adf-core';
-import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
-import { GroupCloudComponent } from '../../../../lib/group/components/group-cloud.component';
+import { PeopleCloudComponent } from '../../../people/components/people-cloud.component';
+import { GroupCloudComponent } from '../../../group/components/group-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { takeUntil } from 'rxjs/operators';

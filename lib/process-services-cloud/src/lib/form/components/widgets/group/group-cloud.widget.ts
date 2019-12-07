@@ -15,6 +15,21 @@
  * limitations under the License.
  */
 
-export * from './models/task-details-cloud.model';
-export * from './components/start-task-cloud.component';
-export * from './start-task-cloud.module';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { baseHost, WidgetComponent, IdentityGroupCountModel } from '@alfresco/adf-core';
+
+/* tslint:disable:component-selector  */
+
+@Component({
+    selector: 'group-cloud-widget',
+    templateUrl: './group-cloud.widget.html',
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
+})
+export class PeopleCloudWidgetComponent extends WidgetComponent {
+
+    appName: string;
+    roles: string[];
+    mode: string;
+    preSelectGroup: IdentityGroupCountModel[];
+}
