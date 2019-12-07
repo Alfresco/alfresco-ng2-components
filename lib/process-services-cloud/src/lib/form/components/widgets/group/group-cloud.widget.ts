@@ -26,7 +26,7 @@ import { baseHost, WidgetComponent, IdentityGroupCountModel } from '@alfresco/ad
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class PeopleCloudWidgetComponent extends WidgetComponent {
+export class GroupCloudWidgetComponent extends WidgetComponent {
 
     appName: string;
     roles: string[];

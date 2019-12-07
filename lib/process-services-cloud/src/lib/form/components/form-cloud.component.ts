@@ -40,7 +40,8 @@ import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { DropdownCloudWidgetComponent } from './widgets/dropdown/dropdown-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './widgets/attach-file/attach-file-cloud-widget.component';
 import { DateCloudWidgetComponent } from './widgets/date/date-cloud.widget';
-import { PeopleCloudWidget } from './widgets/people/people-cloud.widget';
+import { PeopleCloudWidgetComponent } from './widgets/people/people-cloud.widget';
+import { GroupCloudWidgetComponent } from './widgets/group/group-cloud.widget';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 
 @Component({
@@ -122,8 +123,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
-        this.formRenderingService.setComponentTypeResolver('people', () => PeopleCloudWidget, true);
-        this.formRenderingService.setComponentTypeResolver('functional-group', () => PeopleCloudWidget, true);
+        this.formRenderingService.setComponentTypeResolver('people', () => PeopleCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('functional-group', () => GroupCloudWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
