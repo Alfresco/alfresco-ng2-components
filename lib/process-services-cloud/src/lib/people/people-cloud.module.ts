@@ -19,9 +19,11 @@ import { NgModule } from '@angular/core';
 import { PeopleCloudComponent } from './components/people-cloud.component';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
+import { PipeModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
+        PipeModule,
         CommonModule,
         MaterialModule
     ],
