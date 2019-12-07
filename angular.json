@@ -285,17 +285,17 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/process-services/assets",
+                "input": "lib/process-services/src/lib/assets",
                 "output": "/assets"
               },
               {
                 "glob": "**/*",
-                "input": "lib/process-services-cloud/assets",
+                "input": "lib/process-services-cloud/src/lib/assets",
                 "output": "/assets"
               },
               {
                 "glob": "**/*",
-                "input": "lib/content-services/assets",
+                "input": "lib/content-services/src/lib/assets",
                 "output": "/assets"
               },
               {
@@ -305,7 +305,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/content-services/i18n",
+                "input": "lib/content-services/src/lib/i18n",
                 "output": "/assets/adf-content-services/i18n"
               },
               {
@@ -454,17 +454,17 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/process-services/assets",
+                "input": "lib/process-services/src/lib/assets",
                 "output": "/assets"
               },
               {
                 "glob": "**/*",
-                "input": "lib/process-services-cloud/assets",
+                "input": "lib/process-services-cloud/src/lib/assets",
                 "output": "/assets"
               },
               {
                 "glob": "**/*",
-                "input": "lib/content-services/assets",
+                "input": "lib/content-services/src/lib/assets",
                 "output": "/assets"
               },
               {
@@ -474,7 +474,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/content-services/i18n",
+                "input": "lib/content-services/src/lib/i18n",
                 "output": "/assets/adf-content-services/i18n"
               },
               {
