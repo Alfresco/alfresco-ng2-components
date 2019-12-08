@@ -35,10 +35,10 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
 
     ngOnInit() {
         if (this.field) {
-            this.appName = this.field.appName;
-            this.roles = this.field.roles;
-            this.mode = this.field.mode;
-            this.preSelectUsers = this.field.preSelectUsers;
+            this.appName = this.field.people.appName;
+            this.roles = this.field.people.roles;
+            this.mode = this.field.people.mode;
+            this.preSelectUsers = this.field.value;
         }
     }
 }

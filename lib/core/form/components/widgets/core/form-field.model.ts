@@ -79,6 +79,18 @@ export class FormFieldModel extends FormWidgetModel {
     emptyOption: FormFieldOption;
     validationSummary: ErrorMessageModel;
 
+    people: {
+        appName: string;
+        roles: string[];
+        mode: string;
+    };
+
+    group: {
+        appName: string;
+        roles: string[];
+        mode: string;
+    };
+
     get value(): any {
         return this._value;
     }
@@ -167,6 +179,8 @@ export class FormFieldModel extends FormWidgetModel {
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
             this._value = this.parseValue(json);
             this.validationSummary = new ErrorMessageModel();
+            this.people = json.people;
+            this.group = json.group;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
@@ -344,9 +358,9 @@ export class FormFieldModel extends FormWidgetModel {
                  This is needed due to Activiti issue related to reading radio button values as value string
                  but saving back as object: { id: <id>, name: <name> }
                  */
-                const rbEntry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
-                if (rbEntry.length > 0) {
-                    this.form.values[this.id] = rbEntry[0];
+                const radioButton: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
+                if (radioButton.length > 0) {
+                    this.form.values[this.id] = radioButton[0];
                 }
                 break;
             case FormFieldTypes.UPLOAD:
@@ -358,9 +372,9 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.TYPEAHEAD:
-                const taEntry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value || opt.name === this.value);
-                if (taEntry.length > 0) {
-                    this.form.values[this.id] = taEntry[0];
+                const typeAheadEntry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value || opt.name === this.value);
+                if (typeAheadEntry.length > 0) {
+                    this.form.values[this.id] = typeAheadEntry[0];
                 } else if (this.options.length > 0) {
                     this.form.values[this.id] = null;
                 }
