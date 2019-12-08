@@ -45,7 +45,6 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
         private notificationService: NotificationService,
         private formService: FormCloudService,
         private automationService: CoreAutomationService) {
-       // ?????????? this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true); WHY IS HEREEEE?????????
     }
 
     logErrors(errorFields: FormFieldModel[]) {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { baseHost, WidgetComponent, IdentityGroupCountModel } from '@alfresco/adf-core';
 
 /* tslint:disable:component-selector  */
@@ -26,10 +26,19 @@ import { baseHost, WidgetComponent, IdentityGroupCountModel } from '@alfresco/ad
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class GroupCloudWidgetComponent extends WidgetComponent {
+export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit {
 
     appName: string;
     roles: string[];
     mode: string;
     preSelectGroup: IdentityGroupCountModel[];
+
+    ngOnInit() {
+        if (this.field) {
+            this.appName = this.field.appName;
+            this.roles = this.field.roles;
+            this.mode = this.field.mode;
+            this.preSelectGroup = this.field.preSelectGroup;
+        }
+    }
 }
