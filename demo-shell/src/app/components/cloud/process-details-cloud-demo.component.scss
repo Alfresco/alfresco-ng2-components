@@ -11,4 +11,9 @@
         margin-left: 10px;
         width: 25%;
     }
+
+     &-process-cloud-buttons-container {
+         display: flex;
+         flex-direction: column;
+     }
  }

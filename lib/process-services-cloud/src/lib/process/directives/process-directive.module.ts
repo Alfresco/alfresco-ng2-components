@@ -16,14 +16,14 @@
  */
 
 import { NgModule } from '@angular/core';
-import { DeleteProcessDirective } from './delete-process.directive';
+import { CancelProcessDirective } from './cancel-process.directive';
 
 @NgModule({
     declarations: [
-        DeleteProcessDirective
+        CancelProcessDirective
     ],
     exports: [
-        DeleteProcessDirective
+        CancelProcessDirective
     ]
 })
 export class ProcessDirectiveModule { }

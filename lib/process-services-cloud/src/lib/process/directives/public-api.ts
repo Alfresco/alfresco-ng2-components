@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
-export * from './delete-process.directive';
+export * from './cancel-process.directive';
 
 export * from './process-directive.module';
