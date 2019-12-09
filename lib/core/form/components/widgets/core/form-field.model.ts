@@ -79,7 +79,7 @@ export class FormFieldModel extends FormWidgetModel {
     emptyOption: FormFieldOption;
     validationSummary: ErrorMessageModel;
 
-    //People and Group Options
+    // People and Group Options
     appName: string;
     roles: string[];
     mode: string;
@@ -173,7 +173,7 @@ export class FormFieldModel extends FormWidgetModel {
             this._value = this.parseValue(json);
             this.validationSummary = new ErrorMessageModel();
 
-            //People and Group Options
+            // People and Group Options
             this.appName = json.appName;
             this.roles = json.roles;
             this.mode = json.mode;

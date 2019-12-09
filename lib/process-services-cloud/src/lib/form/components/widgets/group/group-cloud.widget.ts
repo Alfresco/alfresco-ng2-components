@@ -35,9 +35,9 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
 
     ngOnInit() {
         if (this.field) {
-            this.appName = this.field.group.appName;
-            this.roles = this.field.group.roles;
-            this.mode = this.field.group.mode;
+            this.appName = this.field.appName;
+            this.roles = this.field.roles;
+            this.mode = this.field.mode;
             this.preSelectGroup = this.field.value;
         }
     }
