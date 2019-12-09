@@ -41,7 +41,7 @@ import {
     ContentMetadataService
 } from '@alfresco/adf-content-services';
 
-import { SelectAppsDialogCloudComponent } from './select-apps-dialog-cloud.component';
+import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
@@ -501,7 +501,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     startProcessAction($event: any) {
         this.formValues['file'] = $event.value.entry;
 
-        const dialogRef = this.dialog.open(SelectAppsDialogCloudComponent, {
+        const dialogRef = this.dialog.open(SelectAppsDialogComponent, {
             width: '630px',
             panelClass: 'adf-version-manager-dialog'
         });
