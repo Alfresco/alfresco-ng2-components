@@ -39,3 +39,25 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | removeUser | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`>` | Emitted when a selected user is removed in multi selection mode. |
 | selectUser | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`>` | Emitted when a user is selected. |
 | warning | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an warning occurs. |
+
+## Details
+
+### Read-only
+
+You can use `readonly` property to make preselected users read-only in `multiple` mode.
+
+```ts
+const preSelectUsers = [
+        { "id": "1", "username": "username1", "firstName": "user 1", "readonly": true },
+        { "id": "2", "username": "username2", "firstName": "user 2", "readonly": false },
+        { "id": "3", "username": "username3", "firstName": "user 3", "readonly": true }
+    ];
+```
+```html
+<adf-cloud-people
+    [mode]="'multiple'",
+    [preSelectUsers]="preSelectUsers">
+</adf-cloud-people>
+```
+
+from above `preSelectUsers`, `username2` is removable from the `preSelectUsers` whereas `username1`, `username3` are readonly you can not remove them.

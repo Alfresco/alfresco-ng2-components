@@ -461,6 +461,59 @@ describe('PeopleCloudComponent', () => {
         });
     });
 
+    describe('Multiple Mode with read-only mode', () => {
+
+        it('Should not show remove icon for pre-selected users if readonly property set to true', (done) => {
+            component.mode = 'multiple';
+            const removeUserSpy = spyOn(component.removeUser, 'emit');
+            component.preSelectUsers = [
+                { id: mockUsers[0].id, username: mockUsers[0].username, readonly: true },
+                { id: mockUsers[1].id, username: mockUsers[1].username, readonly: true }
+            ];
+            fixture.detectChanges();
+            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
+            const removeIcon = <HTMLElement> fixture.nativeElement.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon-first-name-1 last-name-1"]');
+            expect(chipList.length).toBe(2);
+            expect(component.preSelectUsers[0].readonly).toBeTruthy();
+            expect(component.preSelectUsers[1].readonly).toBeTruthy();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(removeIcon).toBeNull();
+                fixture.detectChanges();
+                expect(removeUserSpy).not.toHaveBeenCalled();
+                expect(component.preSelectUsers.length).toBe(2);
+                expect(component.preSelectUsers[0].readonly).toBe(true, 'Not removable');
+                expect(component.preSelectUsers[1].readonly).toBe(true, 'not removable');
+                done();
+            });
+        });
+
+        it('Should be able to remove preselected users if readonly property set to false', (done) => {
+            component.mode = 'multiple';
+            const removeUserSpy = spyOn(component.removeUser, 'emit');
+            component.preSelectUsers = [
+                { id: mockUsers[0].id, username: mockUsers[0].username, readonly: false },
+                { id: mockUsers[1].id, username: mockUsers[1].username, readonly: false }
+            ];
+            fixture.detectChanges();
+            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
+            const removeIcon = <HTMLElement> fixture.nativeElement.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon-first-name-1 last-name-1"]');
+            expect(chipList.length).toBe(2);
+            expect(component.preSelectUsers[0].readonly).toBe(false, 'Removable');
+            expect(component.preSelectUsers[1].readonly).toBe(false, 'Removable');
+            removeIcon.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(removeUserSpy).toHaveBeenCalled();
+                expect(component.preSelectUsers.length).toBe(1);
+                expect(component.preSelectUsers[0].readonly).toBeFalsy();
+                done();
+            });
+        });
+    });
+
     describe('Multiple Mode and Pre-selected users with validate flag', () => {
 
         const change = new SimpleChange(null, mockPreselectedUsers, false);

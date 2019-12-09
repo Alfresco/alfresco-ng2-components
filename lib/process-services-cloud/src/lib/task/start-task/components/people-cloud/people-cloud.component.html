@@ -4,9 +4,17 @@
         <mat-chip-list #userChipList *ngIf="isMultipleMode(); else singleSelection">
         <mat-chip
             *ngFor="let user of selectedUsers$ | async"
+            [removable]="!(user.readonly)"
+            [attr.data-automation-id]="'adf-people-cloud-chip-' + user.username"
+            matTooltip="{{ (user.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}"
             (removed)="onRemove(user)">
             {{user | fullName}}
-            <mat-icon matChipRemove>cancel</mat-icon>
+            <mat-icon
+                matChipRemove
+                *ngIf=!(user.readonly)
+                [attr.data-automation-id]="'adf-people-cloud-chip-remove-icon-' + user.username">
+                cancel
+            </mat-icon>
         </mat-chip>
         <input
             #userInput
