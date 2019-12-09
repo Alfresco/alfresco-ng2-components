@@ -110,6 +110,14 @@ export class StartProcessCloudPage {
         await BrowserActions.clearWithBackSpace(locator);
     }
 
+    async startProcessWithProcessDefinition(processName: string, processDefinition: string) {
+        await this.clearField(this.processNameInput);
+        await this.enterProcessName(processName);
+        await this.selectFromProcessDropdown(processDefinition);
+        await this.checkStartProcessButtonIsEnabled();
+        await this.clickStartProcessButton();
+    }
+
     formFields(): FormFields {
         return new FormFields();
     }
