@@ -79,17 +79,10 @@ export class FormFieldModel extends FormWidgetModel {
     emptyOption: FormFieldOption;
     validationSummary: ErrorMessageModel;
 
-    people: {
-        appName: string;
-        roles: string[];
-        mode: string;
-    };
-
-    group: {
-        appName: string;
-        roles: string[];
-        mode: string;
-    };
+    //People and Group Options
+    appName: string;
+    roles: string[];
+    mode: string;
 
     get value(): any {
         return this._value;
@@ -179,8 +172,11 @@ export class FormFieldModel extends FormWidgetModel {
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
             this._value = this.parseValue(json);
             this.validationSummary = new ErrorMessageModel();
-            this.people = json.people;
-            this.group = json.group;
+
+            //People and Group Options
+            this.appName = json.appName;
+            this.roles = json.roles;
+            this.mode = json.mode;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
