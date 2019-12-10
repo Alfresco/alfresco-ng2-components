@@ -92,29 +92,27 @@ describe('CardView Component', () => {
     describe('Text', () => {
 
         it('[C279937] Should the label be present', async () => {
-            const label = element(by.css('div[data-automation-id="card-textitem-label-name"]'));
-
-            await BrowserVisibility.waitUntilElementIsPresent(label);
+            await cardViewPageComponent.checkNameTextLabelIsPresent();
         });
 
         it('[C279943] Should be present a default value', async () => {
-            await expect(await cardViewPageComponent.getTextFieldText()).toBe('Spock');
+            await expect(await cardViewPageComponent.getNameTextFieldText()).toBe('Spock');
         });
 
         it('[C279934] Should be possible edit text item', async () => {
-            await cardViewPageComponent.clickOnTextField();
-            await cardViewPageComponent.enterTextField('example');
-            await cardViewPageComponent.clickOnTextSaveIcon();
+            await cardViewPageComponent.clickOnNameTextField();
+            await cardViewPageComponent.enterNameTextField('example');
+            await cardViewPageComponent.clickOnNameTextSaveIcon();
 
             await expect(await cardViewPageComponent.getOutputText(0)).toBe('[CardView Text Item] - example');
         });
 
         it('[C279944] Should be possible undo text item modify when click on the clear button', async () => {
-            await cardViewPageComponent.clickOnTextField();
-            await cardViewPageComponent.enterTextField('example');
-            await cardViewPageComponent.clickOnTextClearIcon();
+            await cardViewPageComponent.clickOnNameTextField();
+            await cardViewPageComponent.enterNameTextField('example');
+            await cardViewPageComponent.clickOnNameTextClearIcon();
 
-            await expect(await cardViewPageComponent.getTextFieldText()).toBe('Spock');
+            await expect(await cardViewPageComponent.getNameTextFieldText()).toBe('Spock');
         });
     });
 
