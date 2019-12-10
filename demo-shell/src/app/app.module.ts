@@ -90,7 +90,6 @@ import {
     TASK_FILTERS_SERVICE_TOKEN
 } from '@alfresco/adf-process-services-cloud';
 
-
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import localeDe from '@angular/common/locales/de';
