@@ -29,7 +29,7 @@ export class CardTextItemPage {
     toggle: Locator = by.css('div[data-automation-id*="card-textitem-edit-toggle"]');
 
     constructor(label: string = 'assignee') {
-        this.rootElement = element(by.xpath(`//adf-card-view-textitem/div[data-automation-id*="label-${label}"]/ancestor`));
+        this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-textitem`));
     }
 
     async getFieldValue(): Promise<string> {
