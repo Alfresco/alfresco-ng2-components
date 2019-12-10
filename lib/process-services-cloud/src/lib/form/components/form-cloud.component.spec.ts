@@ -37,16 +37,23 @@ describe('FormCloudComponent', () => {
     let visibilityService: WidgetVisibilityService;
     let logService: LogService;
     let formRenderingService: FormRenderingService;
+    let appConfigService: AppConfigService;
+
+    setupTestBed({
+        imports: [ProcessServiceCloudTestingModule]
+    });
 
     beforeEach(() => {
         logService = new LogService(null);
         formRenderingService = TestBed.get(FormRenderingService);
         visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
+        appConfigService = TestBed.get(AppConfigService);
+        spyOn(appConfigService, 'get').and.returnValue([]);
         spyOn(formRenderingService, 'setComponentTypeResolver').and.returnValue(true);
         formCloudService = new FormCloudService(null, new AppConfigService(null));
         formService = new FormService(null, null, logService);
-        formComponent = new FormCloudComponent(formCloudService, formService, null, formRenderingService, visibilityService);
+        formComponent = new FormCloudComponent(formCloudService, formService, null, formRenderingService, visibilityService, appConfigService);
 
     });
 
