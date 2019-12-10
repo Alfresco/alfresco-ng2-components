@@ -6,6 +6,8 @@
                          [title]="title"
                          [roles]="roles"
                          [appName]="appName"
+                         (selectGroup)="onSelectGroup($event)"
+                         (removeGroup)="onRemoveGroup($event)"
                          [preSelectGroups]="preSelectGroup">
         </adf-cloud-group>
 </div>

@@ -6,6 +6,8 @@
             [validate]="true"
             [appName]="appName"
             [title]="title"
+            (selectUser)="onSelectUser($event)"
+            (removeUser)="onRemoveUser($event)"
             [roles]="roles"
             [mode]="mode">
         </adf-cloud-people>
