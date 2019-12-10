@@ -21,7 +21,7 @@ import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
 import { FormService, WidgetVisibilityService, FormFieldOption, setupTestBed, FormFieldModel, FormModel, CoreModule } from '@alfresco/adf-core';
-import { FormCloudService } from '../../services/form-cloud.service';
+import { FormCloudService } from '../../../services/form-cloud.service';
 
 describe('DropdownCloudWidgetComponent', () => {
 

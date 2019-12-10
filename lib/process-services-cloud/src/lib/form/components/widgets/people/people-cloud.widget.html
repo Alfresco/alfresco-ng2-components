@@ -1,0 +1,15 @@
+<div class="adf-dropdown-widget {{field.className}}"
+     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
+    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+        <adf-cloud-people
+            [preSelectUsers]="preSelectUsers"
+            [validate]="true"
+            [appName]="appName"
+            [roles]="roles"
+            [mode]="mode">
+        </adf-cloud-people>
+    <error-widget [error]="field.validationSummary"></error-widget>
+    <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()"
+                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+</div>
+

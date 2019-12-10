@@ -145,6 +145,7 @@ async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApp
     const projectList = await getAppProjects(args, apiService);
     let TIME = 5000;
     let noError = true;
+
     for (let i = 0; i < absentApps.length; i++) {
         noError = true;
         const currentAbsentApp = absentApps[i];
@@ -152,8 +153,11 @@ async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApp
             return currentAbsentApp.name === currentApp.entry.name;
         });
         let projectRelease: any;
+
         if (app === undefined) {
+
             logger.warn('Missing project: Create the project for ' + currentAbsentApp.name);
+
             try {
                 const uploadedApp = await importProjectApp(args, apiService, currentAbsentApp);
                 logger.warn('Project imported ' + currentAbsentApp.name);
@@ -161,16 +165,21 @@ async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApp
                     projectRelease = await releaseProject(args, apiService, uploadedApp);
                 }
             } catch (error) {
+                logger.info(`error status ${error.status}`);
+
                 if (error.status !== 409) {
                     logger.info(`Not possible to upload the project ${app.name} status  : ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
                     process.exit(1);
                 } else {
                     logger.error(`Not possible to upload the project because inconsistency CS - Modelling try to delete manually the node`);
-                    noError = false;
+                    process.exit(1);
                 }
             }
+
         } else {
+
             TIME += 5000;
+
             logger.info('Project ' + app.entry.name + ' found');
 
             const projectReleaseList = await getReleaseAppProjectId(args, apiService, app.entry.id);
@@ -192,6 +201,7 @@ async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApp
                 });
             }
         }
+
         if (noError) {
             await checkDescriptorExist(args, apiService, currentAbsentApp.name);
             await sleep(TIME);

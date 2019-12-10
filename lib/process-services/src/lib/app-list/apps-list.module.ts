@@ -22,7 +22,7 @@ import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 
 import { AppsListComponent } from './apps-list.component';
-import { SelectAppsDialogComponent } from './select-apps-dialog-component';
+import { SelectAppsDialogComponent } from './select-apps-dialog.component';
 
 @NgModule({
     imports: [

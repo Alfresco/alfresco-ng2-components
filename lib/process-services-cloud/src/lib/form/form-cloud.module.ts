@@ -20,16 +20,22 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TemplateModule, FormBaseModule, PipeModule, CoreModule, FormRenderingService } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UploadCloudWidgetComponent } from './components/upload-cloud.widget';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { FormDefinitionSelectorCloudService } from './services/form-definition-selector-cloud.service';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
-import { DropdownCloudWidgetComponent } from './components/dropdown-cloud/dropdown-cloud.widget';
-import { AttachFileCloudWidgetComponent } from './components/attach-file-cloud-widget/attach-file-cloud-widget.component';
 import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
-import { DateCloudWidgetComponent } from './components/date-cloud/date-cloud.widget';
+
+import { DateCloudWidgetComponent } from './components/widgets/date/date-cloud.widget';
+import { DropdownCloudWidgetComponent } from './components/widgets/dropdown/dropdown-cloud.widget';
+import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
+import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
+import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
+
+import { UploadCloudWidgetComponent } from './components/widgets/attach-file/upload-cloud.widget';
+import { PeopleCloudModule } from '../people/people-cloud.module';
+import { GroupCloudModule } from '../group/group-cloud.module';
 
 @NgModule({
     imports: [
@@ -42,7 +48,9 @@ import { DateCloudWidgetComponent } from './components/date-cloud/date-cloud.wid
         ReactiveFormsModule,
         FormBaseModule,
         CoreModule,
-        ContentNodeSelectorModule
+        ContentNodeSelectorModule,
+        PeopleCloudModule,
+        GroupCloudModule
     ],
     declarations: [
         FormCloudComponent,
@@ -51,7 +59,9 @@ import { DateCloudWidgetComponent } from './components/date-cloud/date-cloud.wid
         FormCustomOutcomesComponent,
         DropdownCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
-        DateCloudWidgetComponent
+        DateCloudWidgetComponent,
+        PeopleCloudWidgetComponent,
+        GroupCloudWidgetComponent
     ],
     providers: [
         FormDefinitionSelectorCloudService,
@@ -61,7 +71,9 @@ import { DateCloudWidgetComponent } from './components/date-cloud/date-cloud.wid
         UploadCloudWidgetComponent,
         DropdownCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
-        DateCloudWidgetComponent
+        DateCloudWidgetComponent,
+        PeopleCloudWidgetComponent,
+        GroupCloudWidgetComponent
     ],
     exports: [
         FormCloudComponent,

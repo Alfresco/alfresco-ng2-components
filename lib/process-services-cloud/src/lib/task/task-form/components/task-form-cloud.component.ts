@@ -22,9 +22,9 @@ import {
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { FormRenderingService, FormModel, ContentLinkModel } from '@alfresco/adf-core';
-import { AttachFileCloudWidgetComponent } from '../../../form/components/attach-file-cloud-widget/attach-file-cloud-widget.component';
-import { DropdownCloudWidgetComponent } from '../../../form/components/dropdown-cloud/dropdown-cloud.widget';
-import { DateCloudWidgetComponent } from '../../../form/components/date-cloud/date-cloud.widget';
+import { AttachFileCloudWidgetComponent } from '../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
+import { DropdownCloudWidgetComponent } from '../../../form/components/widgets/dropdown/dropdown-cloud.widget';
+import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/date-cloud.widget';
 
 @Component({
     selector: 'adf-cloud-task-form',

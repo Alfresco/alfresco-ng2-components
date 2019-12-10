@@ -27,9 +27,9 @@ import {
   baseHost
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
-import { ContentCloudNodeSelectorService } from '../../services/content-cloud-node-selector.service';
-import { ProcessCloudContentService } from '../../services/process-cloud-content.service';
-import { UploadCloudWidgetComponent } from '../upload-cloud.widget';
+import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
+import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
+import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',

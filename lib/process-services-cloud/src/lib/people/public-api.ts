@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
-export * from './models/task-details-cloud.model';
-export * from './components/start-task-cloud.component';
-export * from './start-task-cloud.module';
+export * from './components/people-cloud.component';
+
+export * from './people-cloud.module';
