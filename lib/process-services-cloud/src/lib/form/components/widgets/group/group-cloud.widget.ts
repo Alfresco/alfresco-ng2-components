@@ -28,17 +28,17 @@ import { baseHost, WidgetComponent, IdentityGroupCountModel } from '@alfresco/ad
 })
 export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit {
 
-    appName: string;
     roles: string[];
     mode: string;
+    title: string;
     preSelectGroup: IdentityGroupCountModel[];
 
     ngOnInit() {
         if (this.field) {
-            this.appName = this.field.appName;
             this.roles = this.field.roles;
-            this.mode = this.field.mode;
-            this.preSelectGroup = this.field.value;
+            this.mode = this.field.optionType;
+            this.title = this.field.placeholder;
+            this.preSelectGroup = this.field.value ? this.field.value : [];
         }
     }
 }

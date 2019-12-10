@@ -31,14 +31,15 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     appName: string;
     roles: string[];
     mode: string;
+    title: string;
     preSelectUsers: IdentityUserModel[];
 
     ngOnInit() {
         if (this.field) {
-            this.appName = this.field.appName;
             this.roles = this.field.roles;
-            this.mode = this.field.mode;
-            this.preSelectUsers = this.field.value;
+            this.mode = this.field.optionType;
+            this.title = this.field.placeholder;
+            this.preSelectUsers = this.field.value ? this.field.value : [];
         }
     }
 }

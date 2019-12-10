@@ -55,6 +55,7 @@ export class FormFieldModel extends FormWidgetModel {
     regexPattern: string;
     options: FormFieldOption[] = [];
     restUrl: string;
+    roles: string[];
     restResponsePath: string;
     restIdProperty: string;
     restLabelProperty: string;
@@ -78,11 +79,6 @@ export class FormFieldModel extends FormWidgetModel {
     // util members
     emptyOption: FormFieldOption;
     validationSummary: ErrorMessageModel;
-
-    // People and Group Options
-    appName: string;
-    roles: string[];
-    mode: string;
 
     get value(): any {
         return this._value;
@@ -145,6 +141,8 @@ export class FormFieldModel extends FormWidgetModel {
             this.id = json.id;
             this.name = json.name;
             this.type = json.type;
+            this.roles = json.roles;
+            this.mode = json.optionType;
             this._required = <boolean> json.required;
             this._readOnly = <boolean> json.readOnly || json.type === 'readonly';
             this.overrideId = <boolean> json.overrideId;
@@ -172,11 +170,6 @@ export class FormFieldModel extends FormWidgetModel {
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
             this._value = this.parseValue(json);
             this.validationSummary = new ErrorMessageModel();
-
-            // People and Group Options
-            this.appName = json.appName;
-            this.roles = json.roles;
-            this.mode = json.mode;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
@@ -402,6 +395,12 @@ export class FormFieldModel extends FormWidgetModel {
                 break;
             case FormFieldTypes.BOOLEAN:
                 this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : false;
+                break;
+            case FormFieldTypes.PEOPLE:
+                this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : [];
+                break;
+            case FormFieldTypes.FUNCTIONAL_GROUP:
+                this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : [];
                 break;
             default:
                 if (!FormFieldTypes.isReadOnlyType(this.type) && !this.isInvalidFieldType(this.type)) {
