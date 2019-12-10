@@ -81,7 +81,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
             calledprocess: 'calledprocess',
             booleanvisibilityprocess: 'booleanvisibilityprocess',
             numbervisibilityprocess: 'numbervisibilityprocess',
-            processformoutcome: 'processformoutcome'
+            processformoutcome: 'outcomebuttons'
         },
         forms: {
             tabVisibilityFields: {
