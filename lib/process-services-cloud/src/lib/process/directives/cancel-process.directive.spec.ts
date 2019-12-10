@@ -21,6 +21,8 @@ import { CoreModule, IdentityUserService, setupTestBed } from '@alfresco/adf-cor
 import { CancelProcessDirective } from './cancel-process.directive';
 import { ProcessCloudService } from '../services/process-cloud.service';
 import { of } from 'rxjs';
+import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
+import { fakeProcessInstance } from '../start-process/mock/start-process.component.mock';
 
 describe('CancelProcessDirective', () => {
 
@@ -52,11 +54,12 @@ describe('CancelProcessDirective', () => {
         processCloudService = TestBed.get(ProcessCloudService);
         fixture = TestBed.createComponent(TestComponent);
         identityUserService = TestBed.get(IdentityUserService);
-        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({username: 'user-mock'});
+        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({username: 'usermock'});
         fixture.detectChanges();
     });
 
     it('should call cancel process service when click', () => {
+        fixture.componentInstance.cancelProcessDirective.processInstanceDetails = new ProcessInstanceCloud(fakeProcessInstance);
         spyOn(processCloudService, 'cancelProcess').and.returnValue(of({}));
         const button = fixture.nativeElement.querySelector('button');
         button.click();
