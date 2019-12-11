@@ -1,15 +1,14 @@
-
 <div [attr.data-automation-id]="'card-array-label-' + property.key" class="adf-property-label">{{ property.label | translate }}</div>
-<div class="adf-property-value" (click)="clicked()">
+<div class="adf-property-value adf-card-view-array-item-container" (click)="clicked()">
     <ng-container *ngIf="(property.displayValue | async) as items; else elseEmptyValueBlock">
         <mat-chip-list *ngIf="items.length > 0; else elseEmptyValueBlock" data-automation-id="card-arrayitem-chip-list-container">
             <ng-container *ngIf="displayCount() > 0; else withOutDisplayCount" >
                 <mat-chip
                     *ngFor="let item of items.slice(0, displayCount())"
                     (click)="clicked()"
-                    [attr.data-automation-id]="'card-arrayitem-chip-' + item">
-                    <mat-icon *ngIf="hasIcon()" class="adf-array-item-icon">{{property.icon}}</mat-icon>
-                    <span>{{item}}</span>
+                    [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
+                    <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
+                    <span>{{item.value}}</span>
                 </mat-chip>
                 <mat-chip
                     *ngIf="items.length > displayCount()"
@@ -22,9 +21,9 @@
                 <mat-chip
                     *ngFor="let item of items"
                     (click)="clicked()"
-                    [attr.data-automation-id]="'card-arrayitem-chip-' + item">
-                    <mat-icon *ngIf="hasIcon()" class="adf-array-item-icon">{{property.icon}}</mat-icon>
-                    <span>{{item}}</span>
+                    [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
+                    <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
+                    <span>{{item.value}}</span>
                 </mat-chip>
             </ng-template>
         </mat-chip-list>
@@ -34,9 +33,9 @@
                     <mat-chip-list>
                         <mat-chip (click)="clicked()"
                             *ngFor="let item of items.slice(displayCount(), items.length)"
-                            [attr.data-automation-id]="'card-arrayitem-chip-' + item">
-                        <mat-icon *ngIf="hasIcon()" class="adf-array-item-icon">{{property.icon}}</mat-icon>
-                        <span>{{item}}</span>
+                            [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
+                        <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
+                        <span>{{item.value}}</span>
                         </mat-chip>
                     </mat-chip-list>
                 </mat-card-content>
@@ -44,6 +43,13 @@
         </mat-menu>
     </ng-container>
     <ng-template #elseEmptyValueBlock>
-        <span  data-automation-id="card-arrayitem-default">{{ property.default | translate }}</span>
+        <span class="adf-card-array-item-default" data-automation-id="card-arrayitem-default">{{ property?.default | translate }}</span>
     </ng-template>
+    <button mat-icon-button *ngIf="showClickableIcon()"
+        class="adf-array-item-action"
+        [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+        [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+        [attr.data-automation-id]="'card-array-item-clickable-icon-' + property.key">
+        <mat-icon class="adf-array-item-icon">{{property.icon}}</mat-icon>
+    </button>
 </div>

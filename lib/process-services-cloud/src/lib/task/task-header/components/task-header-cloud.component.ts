@@ -28,7 +28,8 @@ import {
     AppConfigService,
     UpdateNotification,
     CardViewUpdateService,
-    CardViewDatetimeItemModel
+    CardViewDatetimeItemModel,
+    CardViewArrayItem
 } from '@alfresco/adf-core';
 import { TaskDetailsCloudModel, TaskStatus } from '../../start-task/models/task-details-cloud.model';
 import { Router } from '@angular/router';
@@ -63,8 +64,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     taskDetails: TaskDetailsCloudModel = {};
-    candidateUsers: string[] = [];
-    candidateGroups: string[] = [];
+    candidateUsers: CardViewArrayItem[] = [];
+    candidateGroups: CardViewArrayItem[] = [];
     properties: CardViewItem[];
     inEdit: boolean = false;
     parentTaskName: string;
@@ -120,8 +121,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
             )
         ).subscribe(([taskDetails, candidateUsers, candidateGroups]) => {
                 this.taskDetails = taskDetails;
-                this.candidateGroups = candidateGroups;
-                this.candidateUsers = candidateUsers;
+                this.candidateGroups = candidateGroups.map((user) => <CardViewArrayItem> { icon: 'group', value: user });
+                this.candidateUsers = candidateUsers.map((group) => <CardViewArrayItem> { icon: 'person', value: group });
                 if (this.taskDetails.parentTaskId) {
                     this.loadParentName(`${this.taskDetails.parentTaskId}`);
                 } else {
@@ -235,7 +236,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS',
                     value: of(this.candidateUsers),
                     key: 'candidateUsers',
-                    icon: 'person',
+                    icon: 'edit',
+                    clickable: false,
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT'),
                     noOfItemsToDisplay: 2
                 }
@@ -245,7 +247,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS',
                     value: of(this.candidateGroups),
                     key: 'candidateGroups',
-                    icon: 'group',
+                    icon: 'edit',
+                    clickable: false,
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT'),
                     noOfItemsToDisplay: 2
                 }

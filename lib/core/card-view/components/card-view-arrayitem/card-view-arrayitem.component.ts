@@ -33,7 +33,13 @@ export class CardViewArrayItemComponent {
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
 
     clicked(): void {
-        this.cardViewUpdateService.clicked(this.property);
+        if (this.isClickable()) {
+            this.cardViewUpdateService.clicked(this.property);
+        }
+    }
+
+    showClickableIcon(): boolean {
+        return this.hasIcon() && this.isClickable();
     }
 
     hasIcon(): boolean {
@@ -42,5 +48,9 @@ export class CardViewArrayItemComponent {
 
     displayCount(): number {
         return this.property.noOfItemsToDisplay ? this.property.noOfItemsToDisplay : 0;
+    }
+
+    isClickable(): boolean {
+        return !!this.property.clickable;
     }
 }
