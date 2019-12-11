@@ -11,7 +11,7 @@
             {{user | fullName}}
             <mat-icon
                 matChipRemove
-                *ngIf=!(user.readonly)
+                *ngIf="!(user.readonly || readOnly)"
                 [attr.data-automation-id]="'adf-people-cloud-chip-remove-icon-' + user.username">
                 cancel
             </mat-icon>

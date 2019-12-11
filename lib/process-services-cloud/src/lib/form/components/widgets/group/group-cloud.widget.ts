@@ -17,6 +17,9 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { baseHost, WidgetComponent, IdentityGroupModel } from '@alfresco/adf-core';
+import { FormControl } from '@angular/forms';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 /* tslint:disable:component-selector  */
 
@@ -28,10 +31,13 @@ import { baseHost, WidgetComponent, IdentityGroupModel } from '@alfresco/adf-cor
 })
 export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit {
 
+    private onDestroy$ = new Subject<boolean>();
+
     roles: string[];
     mode: string;
     title: string;
     preSelectGroup: IdentityGroupModel[];
+    search: FormControl;
 
     ngOnInit() {
         if (this.field) {
@@ -40,17 +46,57 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             this.title = this.field.placeholder;
             this.preSelectGroup = this.field.value ? this.field.value : [];
         }
+        this.search =  new FormControl({value: '', disabled: this.field.readOnly}, []),
+
+        this.search.statusChanges
+            .pipe(
+                filter((value: string) => {
+                    return value === 'INVALID';
+                }),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(() => {
+                this.field.markAsInvalid();
+                this.field.form.markAsInvalid();
+            });
+
+        this.search.statusChanges
+            .pipe(
+                filter((value: string) => {
+                    return value === 'VALID';
+                }),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(() => {
+                this.field.validate();
+                this.field.form.validateForm();
+            });
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onSelectGroup(group: IdentityGroupModel) {
-        this.field.value = [...this.field.value, group];
+        this.field.value = [...this.preSelectGroup, group];
         this.onFieldChanged(this.field);
     }
 
     onRemoveGroup(group: IdentityGroupModel) {
-        const indexToRemove = this.field.value.findIndex((selected) => { return selected.id === group.id; });
-        this.field.value.splice(indexToRemove, 1);
-        this.field.value = [...this.field.value];
+        if (this.isMultipleMode()) {
+            const indexToRemove = this.preSelectGroup.findIndex((selectedUser) => { return selectedUser.id === group.id; });
+            if (indexToRemove > -1) {
+                this.preSelectGroup.splice(indexToRemove, 1);
+            }
+        } else {
+            this.preSelectGroup = [];
+        }
+        this.field.value = [...this.preSelectGroup];
         this.onFieldChanged(this.field);
+    }
+
+    isMultipleMode(): boolean {
+        return this.mode === 'multiple';
     }
 }

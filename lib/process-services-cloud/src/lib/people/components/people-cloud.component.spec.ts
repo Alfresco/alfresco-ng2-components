@@ -16,7 +16,7 @@
  */
 
 import { PeopleCloudComponent } from './people-cloud.component';
-import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { IdentityUserService, AlfrescoApiService, CoreModule, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
@@ -392,8 +392,6 @@ describe('PeopleCloudComponent', () => {
 
     describe('Single Mode and Pre-selected users with validate flag', () => {
 
-        const change = new SimpleChange(null, mockPreselectedUsers, false);
-
         beforeEach(async(() => {
             component.mode = 'single';
             component.validate = true;
@@ -410,17 +408,6 @@ describe('PeopleCloudComponent', () => {
                 done();
             });
         });
-
-        it('should pre-select preSelectUsers[0] when mode=single', fakeAsync(() => {
-            component.mode = 'single';
-            fixture.detectChanges();
-            spyOn(component, 'filterPreselectUsers').and.returnValue(Promise.resolve(mockPreselectedUsers));
-            component.ngOnChanges({ 'preSelectUsers': change });
-            fixture.detectChanges();
-            tick();
-            const selectedUser = component.searchUserCtrl.value;
-            expect(selectedUser.id).toBe(mockUsers[1].id);
-        }));
     });
 
     describe('Multiple Mode and Pre-selected users with no validate flag', () => {

@@ -71,6 +71,11 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     preSelectGroups: IdentityGroupModel[] = [];
 
+    /** Show the info in readonly mode
+     */
+    @Input()
+    readOnly: boolean = false;
+
     /** FormControl to search the group */
     @Input()
     searchGroupsControl: FormControl = new FormControl();

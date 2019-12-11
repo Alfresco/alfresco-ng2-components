@@ -63,6 +63,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     validate: Boolean = false;
 
+    /** Show the info in readonly mode
+     */
+    @Input()
+    readOnly: boolean = false;
+
     /** Array of users to be pre-selected. All users in the
      * array are pre-selected in multi selection mode, but only the first user
      * is pre-selected in single selection mode.
@@ -73,7 +78,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** FormControl to search the user */
     @Input()
-    searchUserCtrl = new FormControl();
+    searchUserCtrl: FormControl = new FormControl();
 
     /** Placeholder translation key
      */
@@ -256,6 +261,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     private initSearch() {
         this.searchUserCtrl.valueChanges.pipe(
+            debounceTime(500),
+            distinctUntilChanged(),
             filter((value) => {
                 return typeof value === 'string';
             }),
@@ -268,8 +275,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                     }
                 }
             }),
-            debounceTime(500),
-            distinctUntilChanged(),
             tap(() => {
                 this.resetSearchUsers();
             }),
@@ -418,10 +423,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onRemove(user: IdentityUserModel) {
-        this.removeUser.emit(user);
         const indexToRemove = this.preSelectUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
         this.preSelectUsers.splice(indexToRemove, 1);
         this.selectedUsersSubject.next(this.preSelectUsers);
+        this.removeUser.emit(user);
     }
 
     getDisplayName(user): string {
