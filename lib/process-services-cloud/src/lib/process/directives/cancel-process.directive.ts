@@ -34,6 +34,10 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    /** Emitted when the can cancel process status is checked */
+    canCancelProcess: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     processInstanceDetails: ProcessInstanceCloud;
 
     invalidParams: string[] = [];
@@ -49,6 +53,8 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDetails: ProcessInstanceCloud) => {
                 this.processInstanceDetails = processDetails;
+                const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
+                this.canCancelProcess.emit(this.processCloudService.canCancelProcess(this.processInstanceDetails, currentUser));
             });
     }
 
@@ -63,7 +69,7 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
 
     private async cancelProcess() {
         const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
-        if (currentUser === this.processInstanceDetails.initiator) {
+        if (this.processCloudService.canCancelProcess(this.processInstanceDetails, currentUser)) {
             await this.processCloudService.cancelProcess(this.processInstanceDetails.appName, this.processInstanceDetails.id)
                 .subscribe((response) => {
                     this.success.emit(response);

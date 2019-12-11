@@ -78,4 +78,14 @@ export class ProcessCloudService extends BaseCloudService {
             return throwError('App name and process id not configured');
         }
     }
+
+    /**
+     * Validate if a process can be cancelled.
+     * @param processInstanceDetails instance details object
+     * @param currentUser username of the current user
+     * @returns Boolean value if the process can be cancelled
+     */
+    canCancelProcess(processInstanceDetails: ProcessInstanceCloud, currentUser: string): boolean {
+        return  processInstanceDetails.initiator === currentUser && processInstanceDetails.status === 'RUNNING';
+    }
 }
