@@ -27,8 +27,6 @@ export class ProcessDetailsCloudDemoComponent {
     processInstanceId: string;
     appName: string;
 
-    errorMessage: string;
-
     constructor(private route: ActivatedRoute, private router: Router) {
         this.route.params.subscribe((params) => {
             this.processInstanceId = params.processInstanceId;
@@ -47,14 +45,5 @@ export class ProcessDetailsCloudDemoComponent {
         if (taskId) {
             this.router.navigate([`/cloud/${this.appName}/task-details/${taskId}`]);
         }
-    }
-
-    onCancelSuccess() {
-        this.errorMessage = '';
-        this.onGoBack();
-    }
-
-    onCancelError($event) {
-        this.errorMessage = $event;
     }
 }
