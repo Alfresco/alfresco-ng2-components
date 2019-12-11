@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { baseHost, WidgetComponent, IdentityGroupCountModel } from '@alfresco/adf-core';
+import { baseHost, WidgetComponent, IdentityGroupModel } from '@alfresco/adf-core';
 
 /* tslint:disable:component-selector  */
 
@@ -28,17 +28,29 @@ import { baseHost, WidgetComponent, IdentityGroupCountModel } from '@alfresco/ad
 })
 export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit {
 
-    appName: string;
     roles: string[];
     mode: string;
-    preSelectGroup: IdentityGroupCountModel[];
+    title: string;
+    preSelectGroup: IdentityGroupModel[];
 
     ngOnInit() {
         if (this.field) {
-            this.appName = this.field.appName;
             this.roles = this.field.roles;
-            this.mode = this.field.mode;
-            this.preSelectGroup = this.field.value;
+            this.mode = this.field.optionType;
+            this.title = this.field.placeholder;
+            this.preSelectGroup = this.field.value ? this.field.value : [];
         }
+    }
+
+    onSelectGroup(group: IdentityGroupModel) {
+        this.field.value = [...this.field.value, group];
+        this.onFieldChanged(this.field);
+    }
+
+    onRemoveGroup(group: IdentityGroupModel) {
+        const indexToRemove = this.field.value.findIndex((selected) => { return selected.id === group.id; });
+        this.field.value.splice(indexToRemove, 1);
+        this.field.value = [...this.field.value];
+        this.onFieldChanged(this.field);
     }
 }

@@ -69,7 +69,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
      * Mandatory properties are: id, email, username
      */
     @Input()
-    preSelectUsers: IdentityUserModel[];
+    preSelectUsers: IdentityUserModel[] = [];
 
     /** FormControl to search the user */
     @Input()

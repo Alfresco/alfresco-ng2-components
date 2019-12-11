@@ -3,12 +3,11 @@
     <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span
         *ngIf="isRequired()">*</span></label>
         <adf-cloud-group [mode]="mode"
+                         [title]="title"
                          [roles]="roles"
-                         [appName]="appName"
+                         (selectGroup)="onSelectGroup($event)"
+                         (removeGroup)="onRemoveGroup($event)"
                          [preSelectGroups]="preSelectGroup">
         </adf-cloud-group>
-    <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()"
-                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>
 

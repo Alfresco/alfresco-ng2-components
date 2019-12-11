@@ -78,7 +78,7 @@ export class IdentityUserService {
      * @param search Search query string
      * @returns List of users
      */
-    findUsersByName(search: string): Observable<any> {
+    findUsersByName(search: string): Observable<IdentityUserModel[]> {
         if (search === '') {
             return of([]);
         }
@@ -86,11 +86,18 @@ export class IdentityUserService {
         const httpMethod = 'GET', pathParams = {}, queryParams = { search: search }, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
-        ));
+        ).pipe(
+            map((response: []) => {
+                return response.map( (user: IdentityUserModel) =>  {
+                    return {id: user.id, firstName: user.firstName,  lastName: user.lastName, email: user.email, username: user.username};
+                });
+            }),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -98,7 +105,7 @@ export class IdentityUserService {
      * @param username Search query string
      * @returns List of users
      */
-    findUserByUsername(username: string): Observable<any> {
+    findUserByUsername(username: string): Observable<IdentityUserModel[]> {
         if (username === '') {
             return of([]);
         }
@@ -106,11 +113,18 @@ export class IdentityUserService {
         const httpMethod = 'GET', pathParams = {}, queryParams = { username: username }, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
-        ));
+        ).pipe(
+            map((response: []) => {
+                return response.map( (user: IdentityUserModel) =>  {
+                    return {id: user.id, firstName: user.firstName,  lastName: user.lastName, email: user.email, username: user.username};
+                });
+            }),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -118,7 +132,7 @@ export class IdentityUserService {
      * @param email Search query string
      * @returns List of users
      */
-    findUserByEmail(email: string): Observable<any> {
+    findUserByEmail(email: string): Observable<IdentityUserModel[]> {
         if (email === '') {
             return of([]);
         }
@@ -126,11 +140,18 @@ export class IdentityUserService {
         const httpMethod = 'GET', pathParams = {}, queryParams = { email: email }, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
-        ));
+        ).pipe(
+            map((response: []) => {
+                return response.map( (user: IdentityUserModel) =>  {
+                    return {id: user.id, firstName: user.firstName,  lastName: user.lastName, email: user.email, username: user.username};
+                });
+            }),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**

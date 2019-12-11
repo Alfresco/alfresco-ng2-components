@@ -202,6 +202,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             .subscribe(
                 (data) => {
                     this.formCloudRepresentationJSON = data[0];
+
                     this.formCloudRepresentationJSON.processVariables = data[1];
                     this.data = data[1];
 

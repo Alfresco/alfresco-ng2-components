@@ -173,7 +173,7 @@ export class IdentityGroupService {
      * @param searchParams Object containing the name filter string
      * @returns List of group information
      */
-    findGroupsByName(searchParams: IdentityGroupSearchParam): Observable<any> {
+    findGroupsByName(searchParams: IdentityGroupSearchParam): Observable<IdentityGroupModel[]> {
         if (searchParams.name === '') {
             return of([]);
         }
@@ -181,12 +181,17 @@ export class IdentityGroupService {
         const httpMethod = 'GET', pathParams = {}, queryParams = {search: searchParams.name}, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
-        )).pipe(
-            catchError((error) => this.handleError(error))
+        ).pipe(
+            map((response: []) => {
+                return response.map( (group: IdentityGroupModel) =>  {
+                    return {id: group.id, name: group.name};
+                });
+            }),
+            catchError((err) => this.handleError(err))
         );
     }
 
