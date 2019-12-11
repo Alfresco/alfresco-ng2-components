@@ -392,8 +392,6 @@ describe('PeopleCloudComponent', () => {
 
     describe('Single Mode and Pre-selected users with validate flag', () => {
 
-        const change = new SimpleChange(null, mockPreselectedUsers, false);
-
         beforeEach(async(() => {
             component.mode = 'single';
             component.validate = true;
@@ -410,7 +408,6 @@ describe('PeopleCloudComponent', () => {
                 done();
             });
         });
-
     });
 
     describe('Multiple Mode and Pre-selected users with no validate flag', () => {
