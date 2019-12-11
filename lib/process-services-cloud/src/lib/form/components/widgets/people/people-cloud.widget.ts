@@ -17,6 +17,9 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { baseHost, WidgetComponent, IdentityUserModel } from '@alfresco/adf-core';
+import { FormControl } from '@angular/forms';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 /* tslint:disable:component-selector  */
 
@@ -28,11 +31,14 @@ import { baseHost, WidgetComponent, IdentityUserModel } from '@alfresco/adf-core
 })
 export class PeopleCloudWidgetComponent extends WidgetComponent implements OnInit {
 
+    private onDestroy$ = new Subject<boolean>();
+
     appName: string;
     roles: string[];
     mode: string;
     title: string;
     preSelectUsers: IdentityUserModel[];
+    search: FormControl;
 
     ngOnInit() {
         if (this.field) {
@@ -41,17 +47,57 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
             this.title = this.field.placeholder;
             this.preSelectUsers = this.field.value ? this.field.value : [];
         }
+        this.search =  new FormControl({value: '', disabled: this.field.readOnly}, []),
+
+        this.search.statusChanges
+            .pipe(
+                filter((value: string) => {
+                    return value === 'INVALID';
+                }),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(() => {
+                this.field.markAsInvalid();
+                this.field.form.markAsInvalid();
+            });
+
+        this.search.statusChanges
+            .pipe(
+                filter((value: string) => {
+                    return value === 'VALID';
+                }),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(() => {
+                this.field.validate();
+                this.field.form.validateForm();
+            });
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onSelectUser(user: IdentityUserModel) {
-        this.field.value = [...this.field.value, user];
+        this.field.value = [...this.preSelectUsers, user];
         this.onFieldChanged(this.field);
     }
 
     onRemoveUser(user: IdentityUserModel) {
-        const indexToRemove = this.field.value.findIndex((selectedUser) => { return selectedUser.id === user.id; });
-        this.field.value.splice(indexToRemove, 1);
-        this.field.value = [...this.field.value];
+        if (this.isMultipleMode()) {
+            const indexToRemove = this.preSelectUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
+            if (indexToRemove > -1) {
+                this.preSelectUsers.splice(indexToRemove, 1);
+            }
+        } else {
+            this.preSelectUsers = [];
+        }
+        this.field.value = [...this.preSelectUsers];
         this.onFieldChanged(this.field);
+    }
+
+    isMultipleMode(): boolean {
+        return this.mode === 'multiple';
     }
 }
