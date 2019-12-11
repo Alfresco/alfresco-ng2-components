@@ -34,8 +34,6 @@ import {
     groupsMockApi,
     roleMappingApi,
     clientRoles,
-    returnCallQueryParameters,
-    returnCallUrl,
     applicationDetailsMockApi,
     mockApiError,
     mockIdentityGroup1,
@@ -233,22 +231,14 @@ describe('IdentityGroupService', () => {
         );
     });
 
-    it('should append to the call all the parameters', (done) => {
-        spyOn(apiService, 'getInstance').and.returnValue(returnCallQueryParameters);
-        service.findGroupsByName(<IdentityGroupSearchParam> {name: 'mock'}).subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(res).not.toBeNull();
-            expect(res.search).toBe('mock');
-            done();
-        });
-    });
-
-    it('should request groups api url', (done) => {
-        spyOn(apiService, 'getInstance').and.returnValue(returnCallUrl);
-        service.findGroupsByName(<IdentityGroupSearchParam> {name: 'mock'}).subscribe((requestUrl) => {
-            expect(requestUrl).toBeDefined();
-            expect(requestUrl).not.toBeNull();
-            expect(requestUrl).toContain('/groups');
+    it('should return only the properties of IdentityGroupSearchParam', (done) => {
+        spyOn(apiService, 'getInstance').and.returnValue(groupsMockApi);
+        service.findGroupsByName(<IdentityGroupSearchParam> {name: 'mock'}).subscribe((groups) => {
+            expect(groups).toBeDefined();
+            expect(groups).toBeDefined();
+            expect(groups[0].id).toEqual('mock-group-id-1');
+            expect(groups[0].name).toEqual('Mock Group 1');
+            expect(groups[0]['subGroups']).not.toBeDefined();
             done();
         });
     });
