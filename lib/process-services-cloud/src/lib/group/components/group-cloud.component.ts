@@ -92,6 +92,10 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     removeGroup = new EventEmitter<IdentityGroupModel>();
 
+    /** Emitted when a group selection change. */
+    @Output()
+    changedGroups = new EventEmitter<IdentityGroupModel[]>();
+
     @ViewChild('groupInput')
     private groupInput: ElementRef<HTMLInputElement>;
 
@@ -203,21 +207,20 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    isGroupAlreadySelected(group: IdentityGroupModel): boolean {
-        const result = this.selectedGroups.find((selectedGroup: IdentityGroupModel) => {
-            return selectedGroup.id === group.id;
-        });
+    private isGroupAlreadySelected(group: IdentityGroupModel): boolean {
+        if (this.selectedGroups && this.selectedGroups.length > 0 && this.isMultipleMode()) {
+            const result = this.selectedGroups.find((selectedGroup: IdentityGroupModel) => {
+                return selectedGroup.id === group.id;
+            });
 
-        return !!result;
+            return !!result;
+        }
+        return false;
     }
 
     private loadPreSelectGroups() {
         if (this.isMultipleMode()) {
-            this.selectedGroups = [];
-            this.preSelectGroups.forEach((group: IdentityGroupModel) => {
-                this.selectedGroups.push(group);
-            });
-            const groups = this.removeDuplicatedGroups(this.selectedGroups);
+            const groups = this.removeDuplicatedGroups([...this.preSelectGroups]);
             this.selectedGroups = [...groups];
             this.selectedGroups$.next(this.selectedGroups);
         } else {
@@ -240,31 +243,33 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             map((filteredGroup: { hasRole: boolean, group: IdentityGroupModel }) => filteredGroup.group));
     }
 
-    onSelect(selectedGroup: IdentityGroupModel) {
+    onSelect(group: IdentityGroupModel) {
+        this.selectGroup.emit(group);
         if (this.isMultipleMode()) {
-            if (!this.isGroupAlreadySelected(selectedGroup)) {
-                this.selectedGroups.push(selectedGroup);
+            if (!this.isGroupAlreadySelected(group)) {
+                this.selectedGroups.push(group);
                 this.selectedGroups$.next(this.selectedGroups);
-                this.selectGroup.emit(selectedGroup);
                 this.searchGroups$.next([]);
             }
             this.groupInput.nativeElement.value = '';
             this.searchGroupsControl.setValue('');
         } else {
-            this.selectGroup.emit(selectedGroup);
+            this.selectedGroups = [group];
         }
+        this.changedGroups.emit(this.selectedGroups);
 
         this.clearError();
         this.resetSearchGroups();
     }
 
-    onRemove(selectedGroup: IdentityGroupModel) {
-        this.removeGroup.emit(selectedGroup);
+    onRemove(removedGroup: IdentityGroupModel) {
+        this.removeGroup.emit(removedGroup);
         const indexToRemove = this.selectedGroups.findIndex((group: IdentityGroupModel) => {
-            return group.id === selectedGroup.id;
+            return group.id === removedGroup.id;
         });
         this.selectedGroups.splice(indexToRemove, 1);
         this.selectedGroups$.next(this.selectedGroups);
+        this.changedGroups.emit(this.selectedGroups);
     }
 
     private resetSearchGroups() {

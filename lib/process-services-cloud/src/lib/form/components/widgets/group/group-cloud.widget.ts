@@ -78,21 +78,8 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
         this.onDestroy$.complete();
     }
 
-    onSelectGroup(group: IdentityGroupModel) {
-        this.field.value = [...this.preSelectGroup, group];
-        this.onFieldChanged(this.field);
-    }
-
-    onRemoveGroup(group: IdentityGroupModel) {
-        if (this.isMultipleMode()) {
-            const indexToRemove = this.preSelectGroup.findIndex((selectedUser) => { return selectedUser.id === group.id; });
-            if (indexToRemove > -1) {
-                this.preSelectGroup.splice(indexToRemove, 1);
-            }
-        } else {
-            this.preSelectGroup = [];
-        }
-        this.field.value = [...this.preSelectGroup];
+    onChangedGroup(groups) {
+        this.field.value = [...groups];
         this.onFieldChanged(this.field);
     }
 

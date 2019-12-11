@@ -7,8 +7,7 @@
                          [readOnly]="field.readOnly"
                          [roles]="roles"
                          [searchGroupsControl]="search"
-                         (selectGroup)="onSelectGroup($event)"
-                         (removeGroup)="onRemoveGroup($event)"
+                         (changedGroups)="onChangedGroup($event)"
                          [preSelectGroups]="preSelectGroup">
         </adf-cloud-group>
         <error-widget [error]="field.validationSummary"></error-widget>
