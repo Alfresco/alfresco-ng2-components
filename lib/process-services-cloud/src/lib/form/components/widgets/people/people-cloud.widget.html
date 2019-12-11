@@ -8,8 +8,7 @@
             [title]="title"
             [readOnly]="field.readOnly"
             [searchUserCtrl]="search"
-            (selectUser)="onSelectUser($event)"
-            (removeUser)="onRemoveUser($event)"
+            (changedUsers)="onChangedUser($event)"
             [roles]="roles"
             [mode]="mode">
         </adf-cloud-people>

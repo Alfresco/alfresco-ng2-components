@@ -79,21 +79,8 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
         this.onDestroy$.complete();
     }
 
-    onSelectUser(user: IdentityUserModel) {
-        this.field.value = [...this.preSelectUsers, user];
-        this.onFieldChanged(this.field);
-    }
-
-    onRemoveUser(user: IdentityUserModel) {
-        if (this.isMultipleMode()) {
-            const indexToRemove = this.preSelectUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
-            if (indexToRemove > -1) {
-                this.preSelectUsers.splice(indexToRemove, 1);
-            }
-        } else {
-            this.preSelectUsers = [];
-        }
-        this.field.value = [...this.preSelectUsers];
+    onChangedUser(users) {
+        this.field.value = [...users];
         this.onFieldChanged(this.field);
     }
 

@@ -93,6 +93,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     removeUser = new EventEmitter<IdentityUserModel>();
 
+    /** Emitted when a user selection change. */
+    @Output()
+    changedUsers = new EventEmitter<IdentityUserModel[]>();
+
     /** Emitted when an warning occurs. */
     @Output()
     warning = new EventEmitter<any>();
@@ -105,6 +109,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     private searchUsersSubject: BehaviorSubject<IdentityUserModel[]>;
     private onDestroy$ = new Subject<boolean>();
 
+    selectedUsers: IdentityUserModel[] = [];
     selectedUsers$: Observable<IdentityUserModel[]>;
     searchUsers$: Observable<IdentityUserModel[]>;
     _subscriptAnimationState: string = 'enter';
@@ -118,6 +123,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
+        this.selectedUsers = [...this.preSelectUsers];
         this.initSubjects();
         this.initSearch();
 
@@ -326,8 +332,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private isUserAlreadySelected(user: IdentityUserModel): boolean {
-        if (this.preSelectUsers && this.preSelectUsers.length > 0 && this.isMultipleMode()) {
-            const result = this.preSelectUsers.find((selectedUser) => {
+        if (this.selectedUsers && this.selectedUsers.length > 0 && this.isMultipleMode()) {
+            const result = this.selectedUsers.find((selectedUser) => {
                 return selectedUser.id === user.id || selectedUser.email === user.email || selectedUser.username === user.username;
             });
 
@@ -379,8 +385,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         const users = await this.validatePreselectUsers();
         if (users && users.length > 0) {
             this.checkPreselectValidationErrors();
-            this.preSelectUsers = [...users];
-            this.selectedUsersSubject.next(users);
+            this.selectedUsers = [...users];
+            this.selectedUsersSubject.next(this.selectedUsers);
         } else {
             this.checkPreselectValidationErrors();
         }
@@ -404,29 +410,30 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onSelect(user: IdentityUserModel) {
+        this.selectUser.emit(user);
         if (this.isMultipleMode()) {
-
             if (!this.isUserAlreadySelected(user)) {
-                this.preSelectUsers.push(user);
-                this.selectedUsersSubject.next(this.preSelectUsers);
-                this.selectUser.emit(user);
+                this.selectedUsers.push(user);
+                this.selectedUsersSubject.next(this.selectedUsers);
             }
 
             this.userInput.nativeElement.value = '';
             this.searchUserCtrl.setValue('');
         } else {
-            this.selectUser.emit(user);
+            this.selectedUsers = [user];
         }
 
+        this.changedUsers.emit(this.selectedUsers);
         this.clearError();
         this.resetSearchUsers();
     }
 
     onRemove(user: IdentityUserModel) {
-        const indexToRemove = this.preSelectUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
-        this.preSelectUsers.splice(indexToRemove, 1);
-        this.selectedUsersSubject.next(this.preSelectUsers);
         this.removeUser.emit(user);
+        const indexToRemove = this.selectedUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
+        this.selectedUsers.splice(indexToRemove, 1);
+        this.selectedUsersSubject.next(this.selectedUsers);
+        this.changedUsers.emit(this.selectedUsers);
     }
 
     getDisplayName(user): string {
