@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// trigger branch fix/failing_thumbnail_test
 
 import { NgModule } from '@angular/core';
 import {
