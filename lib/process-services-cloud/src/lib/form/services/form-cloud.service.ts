@@ -175,9 +175,9 @@ export class FormCloudService extends BaseCloudService {
         const url = `${this.getBasePath(appName)}/form/v1/forms/${formKey}`;
 
         // blocked by the issue  AAE-1218
-        // if (version) {
+        if (version) {
         //     url += `/versions/${version}`;
-        // }
+        }
 
         return this.get(url);
     }
