@@ -23,7 +23,7 @@ import {
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
-import { FormModel } from '@alfresco/adf-core';
+import { FormModel, ContentLinkModel } from '@alfresco/adf-core';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -83,6 +83,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     /** Emitted when an error occurs. */
     @Output()
     error = new EventEmitter<ProcessInstanceCloud>();
+
+    /** Emitted when form content is clicked. */
+    @Output()
+    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter();
 
     processDefinitionList: ProcessDefinitionCloud[] = [];
     processDefinitionCurrent: ProcessDefinitionCloud;
@@ -299,6 +303,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     get processDefinition(): AbstractControl {
         return this.processForm.get('processDefinition');
+    }
+
+    onFormContentClicked(content: ContentLinkModel) {
+        this.formContentClicked.emit(content);
     }
 
     ngOnDestroy() {

@@ -210,6 +210,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     this.visibilityService.refreshVisibility(<any> parsedForm);
                     parsedForm.validateForm();
                     this.form = parsedForm;
+                    this.form.nodeId = '-my-';
                     this.form.contentHost = this.appConfigService.get('ecmHost');
                     this.onFormLoaded(this.form);
                     resolve(this.form);
@@ -238,6 +239,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     this.visibilityService.refreshVisibility(<any> parsedForm);
                     parsedForm.validateForm();
                     this.form = parsedForm;
+                    this.form.nodeId = '-my-';
                     this.form.contentHost = this.appConfigService.get('ecmHost');
                     this.onFormLoaded(this.form);
                 },

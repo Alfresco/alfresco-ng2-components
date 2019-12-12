@@ -58,6 +58,7 @@
                 [showRefreshButton]="false"
                 [showValidationIcon]="false"
                 [showTitle]="false"
+                (formContentClicked)="onFormContentClicked($event)"
                 (formLoaded)="onFormLoaded($event)">
                 <adf-cloud-form-custom-outcomes>
                     <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
