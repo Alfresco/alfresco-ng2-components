@@ -22,9 +22,9 @@ import {
   FormService,
   LogService,
   ThumbnailService,
-  ContentLinkModel,
   NotificationService,
-  baseHost
+  baseHost,
+  ContentLinkModel
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -124,14 +124,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         );
     }
 
-    onAttachFileClicked(file: ContentLinkModel) {
-        this.processCloudContentService
-            .getRawContentNode(file.nodeId, this.field.form.contentHost)
-            .subscribe(
-                blob => {
-                    file.contentBlob = blob;
-                    this.fileClicked(file);
-                }
-            );
+    onAttachFileClicked(nodeSelector: any) {
+        nodeSelector.nodeId = nodeSelector.id;
+        this.fileClicked(new ContentLinkModel(nodeSelector));
     }
 }
