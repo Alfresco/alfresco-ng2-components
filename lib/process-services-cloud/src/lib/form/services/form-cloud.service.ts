@@ -44,10 +44,10 @@ export class FormCloudService extends BaseCloudService {
      * @param version Version of the form
      * @returns Form definition
      */
-    getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
+    getTaskForm(appName: string, taskId: string): Observable<any> {
         return this.getTask(appName, taskId).pipe(
             switchMap(task => {
-                return this.getForm(appName, task.formKey, version).pipe(
+                return this.getForm(appName, task.formKey).pipe(
                     map(form => {
                         const flattenForm = {
                             ...form.formRepresentation,
