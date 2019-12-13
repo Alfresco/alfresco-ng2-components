@@ -26,7 +26,7 @@ import {
     ProcessInstancesService,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
-    Widget, IdentityService, GroupIdentityService, QueryService
+    Widget, QueryService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -44,27 +44,15 @@ describe('Task form cloud component', () => {
 
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
-    let identityService: IdentityService;
 
-    let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, testUser, formTaskId, assigneeTaskId, assigneeReleaseTask;
+    let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, formTaskId, assigneeTaskId, assigneeReleaseTask;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
-    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
     const apiServiceHrUser = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-
-        identityService = new IdentityService(apiService);
-        const groupIdentityService = new GroupIdentityService(apiService);
-
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
-
-        const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-
-        await apiServiceHrUser.login(testUser.email, testUser.password);
+        await apiServiceHrUser.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         const tasksService = new TasksService(apiServiceHrUser);
         const queryService = new QueryService(apiServiceHrUser);
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
@@ -104,12 +92,13 @@ describe('Task form cloud component', () => {
 
         formTaskId = formTasks.list.entries[0].entry.id;
 
-        const assigneeProcessDefinition = await processDefinitionService.getProcessDefinitionByName('assigneeprocess', candidateBaseApp);
-        const assigneeProcess = await processInstancesService.createProcessInstance(assigneeProcessDefinition.entry.key, candidateBaseApp);
-        assigneeReleaseTask = await queryService.getProcessInstanceTasks(assigneeProcess.entry.id, candidateBaseApp);
+        /* cspell: disable-next-line */
+        const assigneeProcessDefinition = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.calledprocess, simpleApp);
+        const assigneeProcess = await processInstancesService.createProcessInstance(assigneeProcessDefinition.entry.key, simpleApp);
+        assigneeReleaseTask = await queryService.getProcessInstanceTasks(assigneeProcess.entry.id, simpleApp);
         assigneeTaskId = assigneeReleaseTask.list.entries[0].entry.id;
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
 
     }, 5 * 60 * 1000);
 
@@ -119,11 +108,6 @@ describe('Task form cloud component', () => {
     });
 
     afterAll(async () => {
-        try {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            await identityService.deleteIdentityUser(testUser.idIdentityService);
-        } catch (error) {
-        }
         await browser.executeScript('window.sessionStorage.clear();');
         await browser.executeScript('window.localStorage.clear();');
     });
@@ -164,6 +148,17 @@ describe('Task form cloud component', () => {
         await taskFormCloudComponent.checkCancelButtonIsDisplayed();
     });
 
+    it('[C306872] Should not be able to Release a process task which has only assignee', async () => {
+        await appListCloudComponent.goToApp(simpleApp);
+        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(assigneeTaskId);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(assigneeTaskId);
+
+        await expect(await taskHeaderCloudPage.getAssignee()).toEqual(assigneeReleaseTask.list.entries[0].entry.assignee);
+        await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
+        await taskFormCloudComponent.checkReleaseButtonIsNotDisplayed();
+    });
+
     describe('Candidate Base App', () => {
 
         beforeEach(async () => {
@@ -175,16 +170,6 @@ describe('Task form cloud component', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
             await expect(await taskFormCloudComponent.getReleaseButtonText()).toBe('RELEASE');
-        });
-
-        it('[C306872] Should not be able to Release a process task which has only assignee', async () => {
-            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(assigneeTaskId);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(assigneeTaskId);
-
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(assigneeReleaseTask.list.entries[0].entry.assignee);
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-            await taskFormCloudComponent.checkReleaseButtonIsNotDisplayed();
         });
 
         it('[C310142] Empty content is displayed when having a task without form', async () => {
