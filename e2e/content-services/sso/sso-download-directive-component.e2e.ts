@@ -161,6 +161,8 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await contentServicesPage.enableThumbnails();
             await contentServicesPage.checkAcsContainer();
             await contentListPage.waitForTableBody();
+            // Wait async rendition
+            await browser.sleep(5000);
             const filePdfIconUrl = await contentServicesPage.getRowIconImageUrl(firstPdfFileModel.name);
             await expect(filePdfIconUrl).toContain(`/versions/1/nodes/${pdfUploadedFile.entry.id}/renditions`);
             const filePngIconUrl = await contentServicesPage.getRowIconImageUrl(pngFileModel.name);
