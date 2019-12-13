@@ -17,6 +17,7 @@
 
 import { by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../utils/browser-actions';
+import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class NotificationHistoryPage {
 
@@ -44,11 +45,14 @@ export class NotificationHistoryPage {
         await this.clickNotificationButton();
         await this.checkNotificationIsPresent(text);
         await this.clickMarkAsRead();
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.notificationList);
     }
 
     async checkNotifyNotContains(text: string): Promise<void> {
         await this.clickNotificationButton();
         await this.checkNotificationIsNotPresent(text);
+        await this.clickNotificationButton();
         await BrowserActions.closeMenuAndDialogs();
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.notificationList);
     }
 }
