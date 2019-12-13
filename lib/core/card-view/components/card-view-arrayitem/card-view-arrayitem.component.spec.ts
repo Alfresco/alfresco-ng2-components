@@ -20,20 +20,26 @@ import { of } from 'rxjs';
 import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
-import { CardViewArrayItemModel } from '../../models/card-view-arrayitem.model';
+import { CardViewArrayItemModel, CardViewArrayItem } from '../../models/card-view-arrayitem.model';
 import { By } from '@angular/platform-browser';
 
 describe('CardViewArrayItemComponent', () => {
     let component: CardViewArrayItemComponent;
     let fixture: ComponentFixture<CardViewArrayItemComponent>;
 
-    const mockData = ['Zlatan', 'Lionel Messi', 'Mohamed', 'Ronaldo'];
+    const mockData = <CardViewArrayItem[]> [
+        { icon: 'person', value: 'Zlatan' },
+        { icon: 'group', value: 'Lionel Messi' },
+        { icon: 'person', value: 'Mohamed' },
+        { icon: 'person', value: 'Ronaldo' }];
+
     const mockDefaultProps = {
         label: 'Array of items',
         value: of(mockData),
         key: 'array',
-        icon: 'person'
+        icon: 'edit'
     };
+
     setupTestBed({
         imports: [CoreTestingModule]
     });
@@ -75,6 +81,47 @@ describe('CardViewArrayItemComponent', () => {
             expect(chiplistContainer).not.toBeNull();
             expect(chip1.innerText).toEqual('Zlatan');
             expect(chip2.innerText).toEqual('Lionel Messi');
+        });
+
+        it('should render chip with defined icon', () => {
+            component.property = new CardViewArrayItemModel({
+                ...mockDefaultProps,
+                editable: true
+            });
+            fixture.detectChanges();
+
+            const chiplistContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
+            const chip1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"] span');
+            const chip1Icon = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"] mat-icon');
+            const chip2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Lionel Messi"] span');
+            const chip2Icon = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Lionel Messi"] mat-icon');
+
+            expect(chiplistContainer).not.toBeNull();
+            expect(chip1.innerText).toEqual('Zlatan');
+            expect(chip1Icon.innerText).toEqual('person');
+            expect(chip2.innerText).toEqual('Lionel Messi');
+            expect(chip2Icon.innerText).toEqual('group');
+        });
+
+        it('should render defined icon if clickable set to true', () => {
+            component.property = new CardViewArrayItemModel({
+                ...mockDefaultProps,
+                clickable: true
+            });
+            fixture.detectChanges();
+            const editicon = fixture.nativeElement.querySelector('[data-automation-id="card-array-item-clickable-icon-array"]');
+            expect(editicon).toBeDefined();
+            expect(editicon.innerText).toBe('edit');
+        });
+
+        it('should not render defined icon if clickable set to false', () => {
+            component.property = new CardViewArrayItemModel({
+                ...mockDefaultProps,
+                clickable: false
+            });
+            fixture.detectChanges();
+            const editicon = fixture.nativeElement.querySelector('[data-automation-id="card-array-item-clickable-icon-array"]');
+            expect(editicon).toBeNull();
         });
 
         it('should render all values if noOfItemsToDisplay is not defined', () => {
