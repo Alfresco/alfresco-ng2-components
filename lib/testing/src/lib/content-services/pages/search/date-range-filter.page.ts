@@ -101,7 +101,6 @@ export class DateRangeFilterPage {
     }
 
     async clickToField(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toField));
         await BrowserActions.click(this.filter.element(this.toField));
     }
 

@@ -113,7 +113,6 @@ export class ViewerPage {
     }
 
     async clearPageNumber(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
         await BrowserActions.clearSendKeys(this.pageSelectorInput, protractor.Key.ENTER);
     }
 
@@ -140,7 +139,6 @@ export class ViewerPage {
     }
 
     async enterPassword(password): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.passwordInput);
         await BrowserActions.clearSendKeys(this.passwordInput, password);
     }
 
@@ -590,7 +588,7 @@ export class ViewerPage {
 
     async enterCustomName(text: string): Promise<void> {
         const textField: ElementFinder = element(by.css('input[data-automation-id="adf-text-custom-name"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(textField);
+        // await BrowserVisibility.waitUntilElementIsVisible(textField);
         await BrowserActions.clearSendKeys(textField, text);
     }
 

@@ -30,7 +30,6 @@ export class GroupCloudComponentPage {
     }
 
     async searchGroupsToExisting(name) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
         await BrowserActions.clearSendKeys(this.groupCloudSearch, name);
     }
 
