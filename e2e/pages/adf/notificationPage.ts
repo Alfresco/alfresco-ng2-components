@@ -58,12 +58,10 @@ export class NotificationPage {
     }
 
     async enterMessageField(text): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.messageField);
         await BrowserActions.clearSendKeys(this.messageField, text);
     }
 
     async enterDurationField(time): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.durationField);
         await BrowserActions.clearSendKeys(this.durationField, time);
     }
 
@@ -106,7 +104,6 @@ export class NotificationPage {
     }
 
     async clearMessage(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.messageField);
         await BrowserActions.clearSendKeys(this.messageField, '');
     }
 }

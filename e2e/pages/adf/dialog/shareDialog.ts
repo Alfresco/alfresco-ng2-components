@@ -97,7 +97,6 @@ export class ShareDialog {
         await BrowserVisibility.waitUntilElementIsVisible(this.dayPicker);
 
         const tomorrow = moment().add(1, 'days').format('LL');
-        await BrowserVisibility.waitUntilElementIsClickable(this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)));
         await BrowserActions.click(this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)));
 
     }
@@ -105,13 +104,11 @@ export class ShareDialog {
     async setDefaultHour(): Promise<void> {
         const selector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
         await BrowserVisibility.waitUntilElementIsVisible(this.clockPicker);
-        await BrowserVisibility.waitUntilElementIsVisible(this.hoursPicker);
         await BrowserActions.click(this.hoursPicker.all(by.css(selector)).first());
     }
 
     async setDefaultMinutes() {
         const selector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
-        await BrowserVisibility.waitUntilElementIsVisible(this.minutePicker);
         await BrowserActions.click(this.minutePicker.all(by.css(selector)).first());
     }
 

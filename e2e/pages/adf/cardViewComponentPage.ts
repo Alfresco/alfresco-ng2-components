@@ -67,7 +67,6 @@ export class CardViewComponentPage {
     }
 
     async enterTextField(text: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.textField);
         await BrowserActions.clearSendKeys(this.textField, text);
     }
 
@@ -88,7 +87,6 @@ export class CardViewComponentPage {
     }
 
     async enterIntField(text): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.intField);
         await BrowserActions.clearSendKeys(this.intField, text);
     }
 

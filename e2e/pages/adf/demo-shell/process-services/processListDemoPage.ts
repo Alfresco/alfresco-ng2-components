@@ -55,7 +55,6 @@ export class ProcessListDemoPage {
 
     async clickResetButton(): Promise<void> {
         await BrowserActions.click(this.resetButton);
-
     }
 
     async checkErrorMessageIsDisplayed(error): Promise<void> {
@@ -92,12 +91,10 @@ export class ProcessListDemoPage {
     }
 
     async addProcessDefinitionId(procDefinitionId): Promise<void> {
-        await BrowserActions.click(this.processDefinitionInput);
         await BrowserActions.clearSendKeys(this.processDefinitionInput, procDefinitionId);
     }
 
     async addProcessInstanceId(procInstanceId): Promise<void> {
-        await BrowserActions.click(this.processInstanceInput);
         await BrowserActions.clearSendKeys(this.processInstanceInput, procInstanceId);
     }
 }

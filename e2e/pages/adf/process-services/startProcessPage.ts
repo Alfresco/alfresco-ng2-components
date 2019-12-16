@@ -54,7 +54,6 @@ export class StartProcessPage {
     }
 
     async enterProcessName(name): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
         await BrowserActions.clearSendKeys(this.processNameInput, name);
     }
 
@@ -84,8 +83,6 @@ export class StartProcessPage {
     }
 
     async typeProcessDefinition(name): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processDefinition);
-        await BrowserVisibility.waitUntilElementIsClickable(this.processDefinition);
         await BrowserActions.clearSendKeys(this.processDefinition, name);
     }
 
@@ -99,7 +96,6 @@ export class StartProcessPage {
     }
 
     async clickFormStartProcessButton(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsClickable(this.formStartProcessButton);
         await BrowserActions.click(this.formStartProcessButton);
     }
 

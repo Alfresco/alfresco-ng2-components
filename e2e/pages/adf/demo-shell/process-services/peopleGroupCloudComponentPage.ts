@@ -77,17 +77,17 @@ export class PeopleGroupCloudComponentPage {
     }
 
     async enterPeopleRoles(roles): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.peopleRoleInput);
+        // await BrowserVisibility.waitUntilElementIsVisible(this.peopleRoleInput);
         await BrowserActions.clearSendKeys(this.peopleRoleInput, roles);
     }
 
     async enterPeoplePreselect(preselect): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.peoplePreselect);
+        // await BrowserVisibility.waitUntilElementIsVisible(this.peoplePreselect);
         await BrowserActions.clearSendKeys(this.peoplePreselect, preselect);
     }
 
     async clearField(locator): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(locator);
+        // await BrowserVisibility.waitUntilElementIsVisible(locator);
         await BrowserActions.clearSendKeys(locator, '');
     }
 
@@ -100,7 +100,7 @@ export class PeopleGroupCloudComponentPage {
     }
 
     async enterGroupRoles(roles): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.groupRoleInput);
+        // await BrowserVisibility.waitUntilElementIsVisible(this.groupRoleInput);
         await BrowserActions.clearSendKeys(this.groupRoleInput, roles);
     }
 
@@ -122,12 +122,12 @@ export class PeopleGroupCloudComponentPage {
     }
 
     async enterPeopleAppName(appName): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.peopleAppInput);
+        // await BrowserVisibility.waitUntilElementIsVisible(this.peopleAppInput);
         await BrowserActions.clearSendKeys(this.peopleAppInput, appName);
     }
 
     async enterGroupAppName(appName): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.groupAppInput);
+        // await BrowserVisibility.waitUntilElementIsVisible(this.groupAppInput);
         await BrowserActions.clearSendKeys(this.groupAppInput, appName);
     }
 

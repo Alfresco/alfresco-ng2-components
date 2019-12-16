@@ -51,7 +51,6 @@ export class TagPage {
     }
 
     async addNewTagInput(tag) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
         await BrowserActions.clearSendKeys(this.newTagInput, tag);
     }
 

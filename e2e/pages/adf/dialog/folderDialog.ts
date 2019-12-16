@@ -52,12 +52,10 @@ export class FolderDialog {
     }
 
     async addFolderName(folderName): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.folderNameField);
         await BrowserActions.clearSendKeys(this.folderNameField, folderName);
     }
 
     async addFolderDescription(folderDescription): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.folderDescriptionField);
         await BrowserActions.clearSendKeys(this.folderDescriptionField, folderDescription);
     }
 

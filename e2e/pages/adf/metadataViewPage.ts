@@ -157,13 +157,11 @@ export class MetadataViewPage {
 
     async enterPropertyText(propertyName: string, text: string | number): Promise<void> {
         const textField: ElementFinder = element(by.css('input[data-automation-id="card-textitem-editinput-' + propertyName + '"]'));
-        await BrowserVisibility.waitUntilElementIsClickable(textField);
         await BrowserActions.clearSendKeys(textField, text.toString());
     }
 
     async enterPresetText(text: string): Promise<void> {
         const presetField: ElementFinder = element(by.css('input[data-automation-id="adf-text-custom-preset"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(presetField);
         await BrowserActions.clearSendKeys(presetField, text);
         const applyButton: ElementFinder = element(by.css('button[id="adf-metadata-aplly"]'));
         await BrowserActions.click(applyButton);
@@ -171,7 +169,6 @@ export class MetadataViewPage {
 
     async enterDescriptionText(text: string): Promise<void> {
         const textField: ElementFinder = element(by.css('textarea[data-automation-id="card-textitem-edittextarea-properties.cm:description"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(textField);
         await BrowserActions.clearSendKeys(textField, text);
     }
 
@@ -244,7 +241,6 @@ export class MetadataViewPage {
     }
 
     async typeAspectName(aspectName): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.displayAspect);
         await BrowserActions.clearSendKeys(this.displayAspect, aspectName);
     }
 

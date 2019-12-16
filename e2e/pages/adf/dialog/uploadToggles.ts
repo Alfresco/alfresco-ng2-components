@@ -104,7 +104,6 @@ export class UploadToggles {
     }
 
     async clearText(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.maxSizeField);
         await BrowserActions.clearSendKeys(this.maxSizeField, '');
     }
 
