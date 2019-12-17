@@ -22,8 +22,8 @@ export class CardTextItemPage {
 
     rootElement: ElementFinder;
     textField: Locator = by.css('input[data-automation-id*="card-textitem-editinput"]');
-    saveIcon: Locator = by.css('button[data-automation-id*="card-textitem-update"]');
-    clearIcon: Locator = by.css('button[data-automation-id*="card-textitem-reset"]');
+    saveButton: Locator = by.css('button[data-automation-id*="card-textitem-update"]');
+    clearButton: Locator = by.css('button[data-automation-id*="card-textitem-reset"]');
     field: Locator = by.css('span[data-automation-id*="card-textitem-value"] span');
     labelLocator: Locator = by.css('div[data-automation-id*="card-textitem-label"]');
     toggle: Locator = by.css('div[data-automation-id*="card-textitem-edit-toggle"]');
@@ -53,11 +53,11 @@ export class CardTextItemPage {
         await BrowserActions.clearSendKeys(this.rootElement.element(this.textField), text);
     }
 
-    async clickOnTextSaveIcon(): Promise<void> {
-        await BrowserActions.click(this.rootElement.element(this.saveIcon));
+    async clickOnSaveButton(): Promise<void> {
+        await BrowserActions.click(this.rootElement.element(this.saveButton));
     }
 
-    async clickOnTextClearIcon(): Promise<void> {
-        await BrowserActions.click(this.rootElement.element(this.clearIcon));
+    async clickOnClearButton(): Promise<void> {
+        await BrowserActions.click(this.rootElement.element(this.clearButton));
     }
 }

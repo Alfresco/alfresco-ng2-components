@@ -18,32 +18,37 @@
 import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { CardTextItemPage } from '../../core/pages/card-view/card-view-text-item.page';
 
 export class TaskHeaderCloudPage {
 
-    assigneeField: ElementFinder = element(by.css('span[data-automation-id*="assignee"] span'));
-    statusField: ElementFinder = element(by.css('span[data-automation-id*="status"] span'));
-    priorityField: ElementFinder = element(by.css('span[data-automation-id*="priority"] span'));
+    assigneeCardTextItem: CardTextItemPage = new CardTextItemPage('assignee');
+    statusCardTextItem: CardTextItemPage = new CardTextItemPage('status');
+    priorityCardTextItem: CardTextItemPage = new CardTextItemPage('priority');
     dueDateField: ElementFinder = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
     categoryField: ElementFinder = element(by.css('span[data-automation-id*="category"] span'));
     createdField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
     parentNameField: ElementFinder = element(by.css('span[data-automation-id*="parentName"] span'));
     parentTaskIdField: ElementFinder = element(by.css('span[data-automation-id*="parentTaskId"] span'));
     endDateField: ElementFinder = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
-    idField: ElementFinder = element.all(by.css('span[data-automation-id*="id"] span')).first();
-    descriptionField: ElementFinder = element(by.css('span[data-automation-id*="description"] span'));
+    idCardTextItem: CardTextItemPage = new CardTextItemPage('id');
+    descriptionCardTextItem: CardTextItemPage = new CardTextItemPage('description');
     taskPropertyList: ElementFinder = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
 
     async getAssignee(): Promise<string> {
-        return BrowserActions.getText(this.assigneeField);
+        return this.assigneeCardTextItem.getFieldValue();
+    }
+
+    async clickOnAssignee(): Promise<void> {
+        await this.assigneeCardTextItem.clickOnToggleTextField();
     }
 
     async getStatus(): Promise<string> {
-        return BrowserActions.getText(this.statusField);
+        return this.statusCardTextItem.getFieldValue();
     }
 
     async getPriority(): Promise<string> {
-        return BrowserActions.getText(this.priorityField);
+        return this.priorityCardTextItem.getFieldValue();
     }
 
     async getCategory(): Promise<string> {
@@ -67,11 +72,11 @@ export class TaskHeaderCloudPage {
     }
 
     async getId(): Promise<string> {
-        return BrowserActions.getText(this.idField);
+        return this.idCardTextItem.getFieldValue();
     }
 
     async getDescription(): Promise<string> {
-        return BrowserActions.getText(this.descriptionField);
+        return this.descriptionCardTextItem.getFieldValue();
     }
 
     async getDueDate(): Promise<string> {
