@@ -43,15 +43,15 @@ export class AuthGuard extends AuthGuardBase {
     }
 
     ticketChange(event: StorageEvent) {
-        if (event.key === 'ticket-ECM' && event.newValue !== event.oldValue) {
+        if (event.key.includes('ticket-ECM') && event.newValue !== event.oldValue) {
             this.ticketChangeRedirect(event, 'ECM');
         }
 
-        if (event.key === 'ticket-BPM' && event.newValue !== event.oldValue) {
+        if (event.key.includes('ticket-BPM') && event.newValue !== event.oldValue) {
             this.ticketChangeRedirect(event, 'BPM');
         }
 
-        if (event.key === JwtHelperService.USER_ACCESS_TOKEN &&
+        if (event.key.includes(JwtHelperService.USER_ACCESS_TOKEN) &&
             this.jwtHelperService.getValueFromToken(event.newValue, JwtHelperService.USER_PREFERRED_USERNAME) !==
             this.jwtHelperService.getValueFromToken(event.oldValue, JwtHelperService.USER_PREFERRED_USERNAME)) {
             this.ticketChangeRedirect(event, 'ALL');
