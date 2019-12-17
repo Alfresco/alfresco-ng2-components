@@ -69,8 +69,6 @@ export class StartTasksCloudPage {
     }
 
     async blur(locator: ElementFinder): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(locator);
-        await BrowserVisibility.waitUntilElementIsClickable(locator);
         await BrowserActions.click(locator);
         await locator.sendKeys(Key.TAB);
     }

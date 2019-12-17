@@ -30,7 +30,6 @@ export class PeopleCloudComponentPage {
     }
 
     async searchAssigneeAndSelect(name: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
         await this.selectAssigneeFromList(name);
     }
@@ -43,7 +42,6 @@ export class PeopleCloudComponentPage {
     }
 
     async searchAssigneeToExisting(name: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
     }
 

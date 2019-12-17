@@ -46,7 +46,6 @@ export class TaskListDemoPage {
     }
 
     async typeAppId(input): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.appId);
         await BrowserActions.clearSendKeys(this.appId, input);
     }
 
@@ -60,7 +59,6 @@ export class TaskListDemoPage {
     }
 
     async typeTaskId(input): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.taskId);
         await BrowserActions.clearSendKeys(this.taskId, input);
     }
 
@@ -70,7 +68,6 @@ export class TaskListDemoPage {
     }
 
     async typeTaskName(input): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.taskName);
         await BrowserActions.clearSendKeys(this.taskName, input);
     }
 
@@ -80,12 +77,10 @@ export class TaskListDemoPage {
     }
 
     async typeItemsPerPage(input): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPage);
         await BrowserActions.clearSendKeys(this.itemsPerPage, input);
     }
 
     async typeProcessDefinitionId(input): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processDefinitionId);
         await BrowserActions.clearSendKeys(this.processDefinitionId, input);
     }
 
@@ -95,7 +90,6 @@ export class TaskListDemoPage {
     }
 
     async typeProcessInstanceId(input): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceId);
         await BrowserActions.clearSendKeys(this.processInstanceId, input);
     }
 
@@ -111,7 +105,6 @@ export class TaskListDemoPage {
     }
 
     async typePage(input): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.page);
         await BrowserActions.clearSendKeys(this.page, input);
     }
 
@@ -127,12 +120,10 @@ export class TaskListDemoPage {
     }
 
     async typeDueAfter(input): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.dueAfter);
         await BrowserActions.clearSendKeys(this.dueAfter, input);
     }
 
     async typeDueBefore(input): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.dueBefore);
         await BrowserActions.clearSendKeys(this.dueBefore, input);
     }
 

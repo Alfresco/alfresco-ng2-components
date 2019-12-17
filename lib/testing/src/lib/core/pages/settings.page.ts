@@ -175,7 +175,6 @@ export class SettingsPage {
     }
 
     async setProcessServicesURL(processServiceURL) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
     }
 
@@ -192,17 +191,14 @@ export class SettingsPage {
     }
 
     async clearProcessServicesURL() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await BrowserActions.clearWithBackSpace(this.bpmText);
     }
 
     async setAuthHost(authHostURL) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.authHostText);
         await BrowserActions.clearSendKeys(this.authHostText, authHostURL);
     }
 
     async setIdentityHost(identityHost) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.identityHostText);
         await BrowserActions.clearSendKeys(this.identityHostText, identityHost);
     }
 

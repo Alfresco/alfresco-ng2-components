@@ -39,7 +39,6 @@ export class AnalyticsPage {
     }
 
     async clearReportTitle(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleInput);
         await BrowserActions.clearSendKeys(this.toolbarTitleInput, '');
         await BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleInput);
     }

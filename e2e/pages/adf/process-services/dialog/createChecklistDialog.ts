@@ -26,7 +26,6 @@ export class ChecklistDialog {
     dialogTitle: ElementFinder = element(by.id('add-checklist-title'));
 
     async addName(name): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsClickable(this.nameField);
         await BrowserActions.clearSendKeys(this.nameField, name);
     }
 

@@ -62,7 +62,6 @@ export class AttachFormPage {
     }
 
     async selectAttachFormOption(option): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsClickable(element(by.cssContainingText("mat-option[role='option']", option)));
         await BrowserActions.click(element(by.cssContainingText("mat-option[role='option']", option)));
     }
 
