@@ -1,9 +1,25 @@
 @mixin adf-card-view-array-item-theme($theme) {
+    $foreground: map-get($theme, foreground);
 
     .adf {
         &-array-item-icon {
             font-size: 16px;
             padding-top: 8px;
+        }
+
+        &-array-item-action {
+            color: mat-color($foreground, text, 0.25);
+        }
+
+        &-array-item-action:hover, &-array-item-action:focus {
+            color: mat-color($foreground, text);
+        }
+
+        &-card-array-item-default {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: block;
         }
 
         &-array-item-more-chip-container {
@@ -28,6 +44,14 @@
             .mat-chip {
                 cursor: pointer;
             }
+        }
+
+        &-card-view-array-item-container {
+            flex-direction: row;
+            box-sizing: border-box;
+            display: flex;
+            place-content: center space-between;
+            align-items: center;
         }
     }
 }

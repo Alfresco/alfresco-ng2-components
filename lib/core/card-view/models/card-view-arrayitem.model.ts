@@ -21,10 +21,15 @@ import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { Observable } from 'rxjs';
 import { CardViewArrayItemProperties } from '../interfaces/card-view-arrayitem-properties.interface';
 
+export interface CardViewArrayItem {
+    icon: string;
+    value: string;
+}
+
 export class CardViewArrayItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
 
     type: string = 'array';
-    value: Observable<string[]>;
+    value: Observable<CardViewArrayItem[]>;
     noOfItemsToDisplay: number;
 
     constructor(cardViewArrayItemProperties: CardViewArrayItemProperties) {
@@ -32,7 +37,7 @@ export class CardViewArrayItemModel extends CardViewBaseItemModel implements Car
         this.noOfItemsToDisplay = cardViewArrayItemProperties.noOfItemsToDisplay;
     }
 
-    get displayValue(): Observable<string[]> {
+    get displayValue(): Observable<CardViewArrayItem[]> {
         return this.value;
     }
 }

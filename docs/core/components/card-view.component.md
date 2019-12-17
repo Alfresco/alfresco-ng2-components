@@ -90,7 +90,10 @@ Defining properties from Typescript:
     new CardViewArrayItemModel({
         label: 'Array of items',
         value: '',
-        items$: of(['One', 'Two', 'Three', 'Four']),
+        items$: of([
+            { icon: 'person', value: 'One' }, { icon: 'person', value: 'Two' },
+            { icon: 'person', value: 'Three' }, { icon: 'person', value: 'Four' }
+            ]),
         key: 'array',
         default: 'Empty',
         noOfItemsToDisplay: 2
@@ -358,7 +361,7 @@ const arrayItemProperty = new CardViewArrayItemModel(items);
 | label\* | string |  | Item label |
 | key\* | string |  | Identifying key (important when editing the item) |
 | editable | boolean | false | Toggles whether the item is editable |
-| value | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;`string`\[]> |  | The original data value for the item |
+| value | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;[`CardViewArrayItem`](../../../lib/core/card-view/models/card-view-arrayitem.model.ts)\[]> |  | The original data value for the item |
 
 ## See also
 
