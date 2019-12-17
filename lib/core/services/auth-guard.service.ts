@@ -22,7 +22,6 @@ import { Observable } from 'rxjs';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { JwtHelperService } from './jwt-helper.service';
-import { MatDialog } from '@angular/material';
 
 @Injectable({
     providedIn: 'root'
@@ -34,9 +33,8 @@ export class AuthGuard extends AuthGuardBase {
     constructor(private jwtHelperService: JwtHelperService,
                 authenticationService: AuthenticationService,
                 router: Router,
-                appConfigService: AppConfigService,
-                dialog: MatDialog) {
-        super(authenticationService, router, appConfigService, dialog);
+                appConfigService: AppConfigService) {
+        super(authenticationService, router, appConfigService);
         this.ticketChangeBind = this.ticketChange.bind(this);
 
         window.addEventListener('storage', this.ticketChangeBind);

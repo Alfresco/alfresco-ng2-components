@@ -29,7 +29,6 @@ import {
     AppConfigValues
 } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
-import { MatDialog } from '@angular/material';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     abstract checkLogin(
@@ -47,21 +46,14 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     constructor(
         protected authenticationService: AuthenticationService,
         protected router: Router,
-        protected appConfigService: AppConfigService,
-        protected dialog: MatDialog
+        protected appConfigService: AppConfigService
     ) {}
 
     canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<boolean> | Promise<boolean> | boolean {
-        const checkLogin = this.checkLogin(route, state.url);
-
-        if (!checkLogin) {
-            this.dialog.closeAll();
-        }
-
-        return checkLogin;
+        return this.checkLogin(route, state.url);
     }
 
     canActivateChild(
