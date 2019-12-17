@@ -26,7 +26,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
             anotherCandidateGroupProcess: 'anothercandidategroup',
             uploadFileProcess: 'uploadfileprocess',
             processwithstarteventform: 'processwithstarteventform',
-            processwithjsonfilemapping: 'processwithjsonfilemapping'
+            processwithjsonfilemapping: 'processwithjsonfilemapping',
+            assigneeProcess: 'assigneeprocess'
         },
         forms: {
             starteventform: 'starteventform',
