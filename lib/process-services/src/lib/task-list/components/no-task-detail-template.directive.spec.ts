@@ -27,8 +27,8 @@ describe('NoTaskDetailsTemplateDirective', () => {
     let authService: AuthenticationService;
 
     beforeEach(() => {
-        authService = new AuthenticationService(null, null, null, null);
-        spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email'}));
+        authService = new AuthenticationService(null, null, null, null, null);
+        spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email' }));
         detailsComponent = new TaskDetailsComponent(null, authService, null, null, null, null);
         component = new NoTaskDetailsTemplateDirective(detailsComponent);
     });
