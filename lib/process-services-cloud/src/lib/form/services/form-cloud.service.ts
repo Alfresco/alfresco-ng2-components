@@ -174,7 +174,6 @@ export class FormCloudService extends BaseCloudService {
     getForm(appName: string, formKey: string, version?: number): Observable<any> {
         let url = `${this.getBasePath(appName)}/form/v1/forms/${formKey}`;
 
-        // blocked by the issue  AAE-1218
         if (version) {
             url += `/versions/${version}`;
         }
