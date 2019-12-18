@@ -1,6 +1,7 @@
 ---
 Title: Working with the Nodes API service
 Level: Intermediate
+Last reviewed: 2019-12-17
 ---
 
 # Working with the Nodes API Service
@@ -32,18 +33,11 @@ _how-to_ description in
 [preparation of the development environment](./preparing-environment.md).
 
 When you have the Alfresco Example Content Application up and running, edit the `FileComponent`
-defined in `src/app/components/files/files.component.ts`. Change the  `onNodeDoubleClick` method
+defined in `src/app/components/files/files.component.ts`. Change the  `navigateTo` method
 to match the source code below.
 
 ```ts
-if (PageComponent.isLockedNode(node)) {
-        ...
-} else if (node.isFile) {
-
-    // Comment the line below.
-    // this.router.navigate(['./preview', node.id], { relativeTo: this.route });
-
-    // Add this line.
+if (node.isFile) {
     this.myOnNodeDoubleClick(node.id);
 }
 ```
@@ -134,18 +128,12 @@ other visual component) then the principle is the same.
 ## Retrieving the node's children
 
 Another common use of the [`NodesApiService`](../core/services/nodes-api.service.md) is to retrieve a list of the children of a folder node.
-Edit `src/app/components/files/files.component.ts` again, changing the `onNodeDoubleClick` method
+Edit `src/app/components/files/files.component.ts` again, changing the `navigateTo` method
 to match the source code below:
 
 ```ts
     if (node.isFolder) {
-
-	    // Comment the line below.
-        // this.navigate(node.id);
-
-	    // Add this line.
 	    this.myOnFolderNodeDoubleClick(node.id);
-
     }
 ```
 
