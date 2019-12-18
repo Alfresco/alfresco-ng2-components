@@ -53,7 +53,7 @@ export class ProcessCloudService extends BaseCloudService {
                 })
             );
         } else {
-            this.logService.error('AppName and ProcessInstanceId are mandatory for querying a task');
+            this.logService.error('AppName and ProcessInstanceId are mandatory for querying a process');
             return throwError('AppName/ProcessInstanceId not configured');
         }
     }
