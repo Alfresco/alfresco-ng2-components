@@ -19,7 +19,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material.module';
 import { DataTableModule, TemplateModule, CoreModule } from '@alfresco/adf-core';
-import { ProcessHeaderCloudService } from '../process-header/services/process-header-cloud.service';
 import { ProcessHeaderCloudComponent } from './components/process-header-cloud.component';
 
 @NgModule({
@@ -32,7 +31,6 @@ import { ProcessHeaderCloudComponent } from './components/process-header-cloud.c
 
     ],
     declarations: [ProcessHeaderCloudComponent],
-    exports: [ProcessHeaderCloudComponent],
-    providers: [ProcessHeaderCloudService]
+    exports: [ProcessHeaderCloudComponent]
 })
 export class ProcessHeaderCloudModule { }

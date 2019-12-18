@@ -22,7 +22,7 @@ import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessHeaderCloudComponent } from './process-header-cloud.component';
 import { ProcessHeaderCloudModule } from '../process-header-cloud.module';
-import { ProcessHeaderCloudService } from '../services/process-header-cloud.service';
+import { ProcessCloudService } from '../../services/process-cloud.service';
 
 const processInstanceDetailsCloudMock = {
     appName: 'app-form-mau',
@@ -39,7 +39,7 @@ const processInstanceDetailsCloudMock = {
 describe('ProcessHeaderCloudComponent', () => {
     let component: ProcessHeaderCloudComponent;
     let fixture: ComponentFixture<ProcessHeaderCloudComponent>;
-    let service: ProcessHeaderCloudService;
+    let service: ProcessCloudService;
     let appConfigService: AppConfigService;
 
     setupTestBed({
@@ -52,7 +52,7 @@ describe('ProcessHeaderCloudComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ProcessHeaderCloudComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(ProcessHeaderCloudService);
+        service = TestBed.get(ProcessCloudService);
         appConfigService = TestBed.get(AppConfigService);
         spyOn(service, 'getProcessInstanceById').and.returnValue(of(processInstanceDetailsCloudMock));
         component.appName = 'myApp';

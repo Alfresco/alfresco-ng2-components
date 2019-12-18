@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { CardViewItem, CardViewTextItemModel, TranslationService, AppConfigService, CardViewDateItemModel, CardViewBaseItemModel } from '@alfresco/adf-core';
 import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
-import { ProcessHeaderCloudService } from '../services/process-header-cloud.service';
+import { ProcessCloudService } from '../../services/process-cloud.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'adf-cloud-process-header',
@@ -26,7 +28,7 @@ import { ProcessHeaderCloudService } from '../services/process-header-cloud.serv
     styleUrls: ['./process-header-cloud.component.scss']
 })
 
-export class ProcessHeaderCloudComponent implements OnChanges {
+export class ProcessHeaderCloudComponent implements OnChanges, OnInit {
 
     /** (Required) The name of the application. */
     @Input()
@@ -41,12 +43,23 @@ export class ProcessHeaderCloudComponent implements OnChanges {
     dateFormat: string;
     dateLocale: string;
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(
-        private processHeaderCloudService: ProcessHeaderCloudService,
+        private processCloudService: ProcessCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService) {
             this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
             this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
+    }
+
+    ngOnInit() {
+        this.processCloudService.dataChangesDetected
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((processDetails: ProcessInstanceCloud) => {
+                this.processInstanceDetails = processDetails;
+                this.refreshData();
+            });
     }
 
     ngOnChanges() {
@@ -56,7 +69,7 @@ export class ProcessHeaderCloudComponent implements OnChanges {
     }
 
     private loadProcessInstanceDetails(appName: string, processInstanceId: string) {
-        this.processHeaderCloudService.getProcessInstanceById(appName, processInstanceId).subscribe(
+        this.processCloudService.getProcessInstanceById(appName, processInstanceId).subscribe(
             (processInstanceDetails) => {
                 this.processInstanceDetails = processInstanceDetails;
                 this.refreshData();
@@ -136,6 +149,11 @@ export class ProcessHeaderCloudComponent implements OnChanges {
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
 }
