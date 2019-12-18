@@ -59,5 +59,3 @@ export class AuthGuardSsoRoleService implements CanActivate {
         return hasRole;
     }
 }
-
-
