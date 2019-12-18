@@ -61,10 +61,10 @@ describe('DeleteProcessDirective', () => {
     });
 
     it('should call delete process service when click', () => {
-        spyOn(processCloudService, 'deleteProcess').and.returnValue(of({}));
+        spyOn(processCloudService, 'cancelProcess').and.returnValue(of({}));
         const button = fixture.nativeElement.querySelector('button');
         button.click();
-        expect(processCloudService.deleteProcess).toHaveBeenCalled();
+        expect(processCloudService.cancelProcess).toHaveBeenCalled();
     });
 
 });
