@@ -1,13 +1,13 @@
 ---
-Title: Process Header Cloud Service
+Title: Process Cloud Service
 Added: v3.0.0
 Status: Experimental
 Last reviewed: 2019-03-15
 ---
 
-# [Process Header Cloud Service](../../../lib/process-services-cloud/src/lib/process/process-header/services/process-header-cloud.service.ts "Defined in process-header-cloud.service.ts")
+# [Process Cloud Service](../../../lib/process-services-cloud/src/lib/process/services/process-cloud.service.ts "Defined in process-cloud.service.ts")
 
-Manages cloud process instances. 
+Manages cloud process instances.
 
 ## Class members
 
@@ -15,11 +15,17 @@ Manages cloud process instances.
 
 -   **getBasePath**(appName: `string`): `string`<br/>
 
-    -   _appName:_ `string`  - 
-    -   **Returns** `string` - 
+    -   _appName:_ `string`  -
+    -   **Returns** `string` -
 
 -   **getProcessInstanceById**(appName: `string`, processInstanceId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>`<br/>
     Gets details of a process instance.
+    -   _appName:_ `string`  - Name of the app
+    -   _processInstanceId:_ `string`  - ID of the process instance whose details you want
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` - Process instance details
+
+-   **cancelProcess**(appName: `string`, processInstanceId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>`<br/>
+    Cancels a process instance.
     -   _appName:_ `string`  - Name of the app
     -   _processInstanceId:_ `string`  - ID of the process instance whose details you want
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` - Process instance details

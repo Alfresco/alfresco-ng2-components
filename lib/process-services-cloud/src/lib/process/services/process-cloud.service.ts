@@ -64,12 +64,13 @@ export class ProcessCloudService extends BaseCloudService {
      * @param processInstanceId Id of the process to cancel
      * @returns Operation Information
      */
-    cancelProcess(appName: string, processInstanceId: string): Observable<void> {
+    cancelProcess(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
         if (appName && processInstanceId) {
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;
             return this.delete(queryUrl).pipe(
                 map((res: any) => {
                    this.dataChangesDetected.next(res.entry);
+                   return new ProcessInstanceCloud(res.entry);
                 })
             );
         } else {
