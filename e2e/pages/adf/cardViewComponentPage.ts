@@ -100,7 +100,7 @@ export class CardViewComponentPage {
     }
 
     async clickOnFloatField(): Promise<void> {
-        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-edit-toggle-float"]'));
+        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-toggle-float"]'));
         await BrowserActions.click(toggleText);
         await BrowserVisibility.waitUntilElementIsVisible(this.floatField);
     }
