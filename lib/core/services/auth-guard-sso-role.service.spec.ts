@@ -178,6 +178,8 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'fakeapp' };
         route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
 
+
+        expect(authGuard.canActivate(route)).toBeFalsy();
         expect(materialDialog.closeAll).toHaveBeenCalled();
     });
 

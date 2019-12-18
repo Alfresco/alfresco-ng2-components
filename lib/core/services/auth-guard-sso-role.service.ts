@@ -18,11 +18,15 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from './jwt-helper.service';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardSsoRoleService implements CanActivate {
+
+    constructor(private jwtHelperService: JwtHelperService, private router: Router, private dialog: MatDialog) {
+    }
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
         let hasRole;
@@ -48,9 +52,12 @@ export class AuthGuardSsoRoleService implements CanActivate {
             this.router.navigate(['/' + route.data['redirectUrl']]);
         }
 
+        if (!hasRole) {
+            this.dialog.closeAll();
+        }
+
         return hasRole;
     }
-
-    constructor(private jwtHelperService: JwtHelperService, private router: Router) {
-    }
 }
+
+
