@@ -58,20 +58,15 @@ export class CardViewComponentPage {
     }
 
     async clickOnNameTextSaveIcon(): Promise<void> {
-        await this.nameCardTextItem.clickOnTextSaveIcon();
+        await this.nameCardTextItem.clickOnSaveButton();
     }
 
     async clickOnNameTextClearIcon(): Promise<void> {
-        await this.nameCardTextItem.clickOnTextClearIcon();
+        await this.nameCardTextItem.clickOnClearButton();
     }
 
-<<<<<<< HEAD
-    async enterTextField(text: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.textField, text);
-=======
     async clickOnResetButton(): Promise<void> {
         await BrowserActions.click(this.resetButton);
->>>>>>> Create card view text item PO
     }
 
     async clickOnIntField(): Promise<void> {
