@@ -127,7 +127,7 @@ exports.config = {
         defaultTimeoutInterval: 120000,
         print: () => {},
         ...SmartRunner.withOptionalExclusions(
-            resolve(__dirname, 'protractor.excludes.json')
+            resolve(__dirname, './e2e/protractor.excludes.json')
         )
     },
 
