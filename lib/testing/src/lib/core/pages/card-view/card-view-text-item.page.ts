@@ -26,7 +26,7 @@ export class CardTextItemPage {
     clearButton: Locator = by.css('button[data-automation-id*="card-textitem-reset"]');
     field: Locator = by.css('span[data-automation-id*="card-textitem-value"] span');
     labelLocator: Locator = by.css('div[data-automation-id*="card-textitem-label"]');
-    toggle: Locator = by.css('div[data-automation-id*="card-textitem-edit-toggle"]');
+    toggle: Locator = by.css('div[data-automation-id*="card-textitem-toggle"]');
 
     constructor(label: string = 'assignee') {
         this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-textitem`));

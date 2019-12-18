@@ -70,7 +70,7 @@ export class CardViewComponentPage {
     }
 
     async clickOnIntField(): Promise<void> {
-        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-edit-toggle-int"]'));
+        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-toggle-int"]'));
         await BrowserActions.click(toggleText);
         await BrowserVisibility.waitUntilElementIsVisible(this.intField);
     }
