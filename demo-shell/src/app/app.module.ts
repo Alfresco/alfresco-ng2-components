@@ -84,10 +84,7 @@ import { environment } from '../environments/environment';
 import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import {
-    ProcessServicesCloudModule,
-    UserPreferenceCloudService,
-    PROCESS_FILTERS_SERVICE_TOKEN,
-    TASK_FILTERS_SERVICE_TOKEN
+    ProcessServicesCloudModule
 } from '@alfresco/adf-process-services-cloud';
 
 import { registerLocaleData } from '@angular/common';
@@ -199,8 +196,6 @@ registerLocaleData(localeSv);
             provide: HTTP_INTERCEPTORS, useClass:
             AuthBearerInterceptor, multi: true
         },
-        { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
-        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         {
             provide: TRANSLATION_PROVIDER,

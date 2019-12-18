@@ -45,7 +45,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 
     /** (Required) The name of the application. */
     @Input()
-    appName: string;
+    appName: string = '';
 
     /** (Required) The id of the task. */
     @Input()
@@ -103,7 +103,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 
     ngOnChanges() {
         this.taskDetails = {};
-        if (this.appName && this.taskId) {
+        if ((this.appName || this.appName === '') && this.taskId) {
             this.loadTaskDetailsById(this.appName, this.taskId);
         } else {
             this.error.emit('App Name and Task Id are mandatory');
@@ -301,7 +301,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     isTaskValid(): boolean {
-        return (this.appName) && !!this.taskId;
+        return (this.appName || this.appName === '') && !!this.taskId;
     }
 
     isTaskAssigned(): boolean {

@@ -51,7 +51,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     /** The name of the application. */
     @Input()
-    appName: string;
+    appName: string = '';
 
     /** Id of the process instance filter. */
     @Input()

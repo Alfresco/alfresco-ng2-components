@@ -51,9 +51,9 @@ import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details
 })
 export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnDestroy {
 
-    /** App id to fetch corresponding form and values. */
+    /** App name to fetch corresponding form and values. */
     @Input()
-    appName: string;
+    appName: string = '';
 
     /** The application version to use when fetching data */
     @Input()

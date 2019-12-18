@@ -47,7 +47,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Details of the task that was completed
      */
     completeTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
+        if ((appName || appName === '') && taskId) {
             const url = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/complete`;
             const payload = { 'payloadType': 'CompleteTaskPayload' };
 
@@ -103,7 +103,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Details of the claimed task
      */
     claimTask(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
+        if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
 
             return this.post(queryUrl).pipe(
@@ -125,7 +125,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Details of the task that was unclaimed
      */
     unclaimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
+        if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/release`;
 
             return this.post(queryUrl).pipe(
@@ -147,7 +147,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Task details
      */
     getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
+        if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
 
             return this.get(queryUrl).pipe(
@@ -182,7 +182,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Updated task details
      */
     updateTask(appName: string, taskId: string, payload: any): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
+        if ((appName || appName === '') && taskId) {
             payload.payloadType = 'UpdateTaskPayload';
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
 
@@ -202,7 +202,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Candidate users
      */
     getCandidateUsers(appName: string, taskId: string): Observable<string[]> {
-        if (appName && taskId) {
+        if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-users`;
             return this.get<string[]>(queryUrl);
         } else {
@@ -218,7 +218,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Candidate groups
      */
     getCandidateGroups(appName: string, taskId: string): Observable<string[]> {
-        if (appName && taskId) {
+        if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-groups`;
             return this.get<string[]>(queryUrl);
         } else {

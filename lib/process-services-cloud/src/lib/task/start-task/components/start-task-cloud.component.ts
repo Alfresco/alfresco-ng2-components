@@ -52,7 +52,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     /** (required) Name of the app. */
     @Input()
-    appName: string;
+    appName: string = '';
 
     /** Maximum length of the task name. */
     @Input()

@@ -79,7 +79,8 @@
                                  (selectGroup)="onCandidateGroupSelect($event)"
                                  (removeGroup)="onCandidateGroupRemove($event)">
                 </adf-cloud-group>
-                <adf-cloud-form-definition-selector fxFlex
+                <adf-cloud-form-definition-selector *ngIf="appName"
+                                                    fxFlex
                                                     [appName]="appName"
                                                     (selectForm)="onFormSelect($event)">
                 </adf-cloud-form-definition-selector>

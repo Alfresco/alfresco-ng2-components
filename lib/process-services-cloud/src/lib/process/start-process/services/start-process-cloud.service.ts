@@ -42,7 +42,7 @@ export class StartProcessCloudService extends BaseCloudService {
      * @returns Array of process definitions
      */
     getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
-        if (appName) {
+        if (appName || appName === '') {
             const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
             return this.get(url).pipe(

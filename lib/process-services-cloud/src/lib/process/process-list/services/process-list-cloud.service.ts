@@ -37,7 +37,7 @@ export class ProcessListCloudService extends BaseCloudService {
      * @returns Process information
      */
     getProcessByRequest(requestNode: ProcessQueryCloudRequestModel): Observable<any> {
-        if (requestNode.appName) {
+        if (requestNode.appName || requestNode.appName === '') {
             const queryUrl = `${this.getBasePath(requestNode.appName)}/query/v1/process-instances`;
             const queryParams = this.buildQueryParams(requestNode);
             const sortingParams = this.buildSortingParam(requestNode.sorting);
