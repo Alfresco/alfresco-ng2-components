@@ -62,6 +62,11 @@ export class UserInfoPage {
         await tabsPage.checkTabIsSelectedByTitle('Process Services');
     }
 
+    async checkContentServicesTabIsSelected(): Promise<void> {
+        const tabsPage = new TabsPage;
+        await tabsPage.checkTabIsSelectedByTitle('Content Services');
+    }
+
     async clickOnProcessServicesTab(): Promise<void> {
         const tabsPage = new TabsPage;
         await tabsPage.clickTabByTitle('Process Services');
