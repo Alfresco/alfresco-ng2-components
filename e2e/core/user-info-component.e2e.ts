@@ -73,16 +73,9 @@ describe('User Info component', () => {
         await loginPage.loginToAllUsingUserModel(contentUserModel);
 
         await userInfoPage.clickUserProfile();
-
-        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        await expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        await expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
-        await expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
-
-        await userInfoPage.checkInitialImage();
-        await userInfoPage.APSProfileImageNotDisplayed();
-        await userInfoPage.ACSProfileImageNotDisplayed();
+        await userInfoPage.dialogIsDisplayed();
         await userInfoPage.clickOnContentServicesTab();
+        await userInfoPage.checkContentServicesTabIsSelected();
 
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         await expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
@@ -92,16 +85,16 @@ describe('User Info component', () => {
         await userInfoPage.checkInitialImage();
         await userInfoPage.APSProfileImageNotDisplayed();
         await userInfoPage.ACSProfileImageNotDisplayed();
+
         await userInfoPage.clickOnProcessServicesTab();
         await userInfoPage.checkProcessServicesTabIsSelected();
 
-        await expect(await userInfoPage.getProcessHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        await expect(await userInfoPage.getProcessTitle()).toEqual(contentUserModel.firstName + ' ' + processUserModel.lastName);
-        await expect(await userInfoPage.getProcessEmail()).toEqual(contentUserModel.email);
+        await browser.sleep(1000);
 
-        await userInfoPage.checkInitialImage();
-        await userInfoPage.APSProfileImageNotDisplayed();
-        await userInfoPage.ACSProfileImageNotDisplayed();
+        await expect(await userInfoPage.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
+        await expect(await userInfoPage.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
+        await expect(await userInfoPage.getProcessEmail()).toEqual(processUserModel.email);
+
         await userInfoPage.closeUserProfile();
     });
 
