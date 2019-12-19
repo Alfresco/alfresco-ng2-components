@@ -375,7 +375,7 @@ describe('CardViewTextItemComponent', () => {
                 }
             );
 
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${component.property.key}"]`));
             editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             fixture.detectChanges();
 
@@ -403,7 +403,7 @@ describe('CardViewTextItemComponent', () => {
                 }
             );
 
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${component.property.key}"]`));
             editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             fixture.detectChanges();
 
@@ -426,7 +426,7 @@ describe('CardViewTextItemComponent', () => {
             component.property.isValid = () => true;
             fixture.detectChanges();
 
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${component.property.key}"]`));
             editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             fixture.detectChanges();
 

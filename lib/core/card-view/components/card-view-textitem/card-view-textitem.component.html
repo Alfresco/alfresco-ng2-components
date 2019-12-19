@@ -5,7 +5,7 @@
             <span *ngIf="showProperty()" class="adf-textitem-ellipsis">{{ property.displayValue }}</span>
         </span>
         <ng-template #elseBlock>
-            <div role="button" class="adf-textitem-clickable" (click)="clicked()" fxLayout="row" fxLayoutAlign="space-between center">
+            <div role="button" class="adf-textitem-clickable" [attr.data-automation-id]="'card-textitem-toggle-' + property.key" (click)="clicked()" fxLayout="row" fxLayoutAlign="space-between center">
                 <span class="adf-textitem-clickable-value" [attr.data-automation-id]="'card-textitem-value-' + property.key">
                     <span *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
                 </span>
@@ -27,7 +27,7 @@
             (click)="setEditMode(true)"
             (keydown.enter)="setEditMode(true)"
             class="adf-textitem-readonly"
-            [attr.data-automation-id]="'card-textitem-edit-toggle-' + property.key"
+            [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
             fxLayout="row" fxLayoutAlign="space-between center">
             <span [attr.data-automation-id]="'card-textitem-value-' + property.key">
                 <span *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>

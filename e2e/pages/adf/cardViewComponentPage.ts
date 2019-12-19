@@ -16,13 +16,13 @@
  */
 
 import { by, element, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, CardTextItemPage } from '@alfresco/adf-testing';
 
 export class CardViewComponentPage {
 
     addButton: ElementFinder = element(by.className('adf-card-view__key-value-pairs__add-btn'));
     selectValue = 'mat-option';
-    textField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-name']`));
+    nameCardTextItem: CardTextItemPage = new CardTextItemPage('name');
     intField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-int']`));
     floatField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
     valueInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Value']`));
@@ -41,37 +41,36 @@ export class CardViewComponentPage {
         await BrowserActions.click(this.addButton);
     }
 
+    async checkNameTextLabelIsPresent(): Promise<void> {
+        await this.nameCardTextItem.checkLabelIsPresent();
+    }
+
+    async getNameTextFieldText(): Promise<string> {
+        return this.nameCardTextItem.getFieldValue();
+    }
+
+    async clickOnNameTextField(): Promise<void> {
+        await this.nameCardTextItem.clickOnToggleTextField();
+    }
+
+    async enterNameTextField(text: string): Promise<void> {
+        await this.nameCardTextItem.enterTextField(text);
+    }
+
+    async clickOnNameTextSaveIcon(): Promise<void> {
+        await this.nameCardTextItem.clickOnSaveButton();
+    }
+
+    async clickOnNameTextClearIcon(): Promise<void> {
+        await this.nameCardTextItem.clickOnClearButton();
+    }
+
     async clickOnResetButton(): Promise<void> {
         await BrowserActions.click(this.resetButton);
     }
 
-    async clickOnTextField(): Promise<void> {
-        const toggleText: ElementFinder = element(by.css(`div[data-automation-id='card-textitem-edit-toggle-name']`));
-        await BrowserActions.click(toggleText);
-        await BrowserVisibility.waitUntilElementIsVisible(this.textField);
-    }
-
-    async clickOnTextClearIcon(): Promise<void> {
-        const clearIcon: ElementFinder = element(by.css(`button[data-automation-id="card-textitem-reset-name"]`));
-        await BrowserActions.click(clearIcon);
-    }
-
-    async clickOnTextSaveIcon(): Promise<void> {
-        const saveIcon: ElementFinder = element(by.css(`button[data-automation-id="card-textitem-update-name"]`));
-        await BrowserActions.click(saveIcon);
-    }
-
-    getTextFieldText(): Promise<string> {
-        const textField: ElementFinder = element(by.css(`span[data-automation-id="card-textitem-value-name"]`));
-        return BrowserActions.getText(textField);
-    }
-
-    async enterTextField(text: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.textField, text);
-    }
-
     async clickOnIntField(): Promise<void> {
-        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-edit-toggle-int"]'));
+        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-toggle-int"]'));
         await BrowserActions.click(toggleText);
         await BrowserVisibility.waitUntilElementIsVisible(this.intField);
     }
@@ -101,7 +100,7 @@ export class CardViewComponentPage {
     }
 
     async clickOnFloatField(): Promise<void> {
-        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-edit-toggle-float"]'));
+        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-toggle-float"]'));
         await BrowserActions.click(toggleText);
         await BrowserVisibility.waitUntilElementIsVisible(this.floatField);
     }
