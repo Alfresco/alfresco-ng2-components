@@ -32,6 +32,7 @@ import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
 import { AppConfigService } from './../../app-config/app-config.service';
+import { PDFDocumentProxy, PDFSource } from 'pdfjs-dist';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
@@ -82,14 +83,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Output()
     close = new EventEmitter<any>();
 
-    loadingTask: any;
-    currentPdfDocument: any;
+    pdfDocument: PDFDocumentProxy;
     page: number;
     displayPage: number;
     totalPages: number;
     loadingPercent: number;
     pdfViewer: any;
-    documentContainer: any;
     currentScaleMode: string = 'auto';
     currentScale: number = 1;
 
@@ -139,28 +138,28 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    async ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
 
         if (blobFile && blobFile.currentValue) {
             const reader = new FileReader();
-            reader.onload = () => {
-                const options = {
+            reader.onload = async () => {
+                const pdfSource: PDFSource = {
                     data: reader.result,
                     withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
                 };
-                this.executePdf(options);
+                await this.executePdf(pdfSource);
             };
             reader.readAsArrayBuffer(blobFile.currentValue);
         }
 
         const urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
-            const options = {
+            const pdfSource: PDFSource = {
                 url: urlFile.currentValue,
                 withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
             };
-            this.executePdf(options);
+            await  this.executePdf(pdfSource);
         }
 
         if (!this.urlFile && !this.blobFile) {
@@ -168,57 +167,52 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    executePdf(pdfOptions: PdfDocumentOptions) {
+    async executePdf(pdfOptions: PdfDocumentOptions) {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
-        this.loadingTask = pdfjsLib.getDocument(pdfOptions);
-
-        this.loadingTask.onPassword = (callback, reason) => {
+        const onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);
         };
 
-        this.loadingTask.onProgress = (progressData) => {
+        const onProgress = (progressData) => {
             const level = progressData.loaded / progressData.total;
             this.loadingPercent = Math.round(level * 100);
         };
 
-        this.loadingTask.then((pdfDocument) => {
-            this.currentPdfDocument = pdfDocument;
-            this.totalPages = pdfDocument.numPages;
-            this.page = 1;
-            this.displayPage = 1;
-            this.initPDFViewer(this.currentPdfDocument);
+        this.pdfDocument = await pdfjsLib.getDocument(pdfOptions,
+            undefined,
+            onPassword,
+            onProgress).promise;
 
-            this.currentPdfDocument.getPage(1).then(() => {
-                this.scalePage('auto');
-            }, () => {
-                this.error.emit();
-            });
+        this.totalPages = this.pdfDocument.numPages;
+        this.page = 1;
+        this.displayPage = 1;
+        this.initPDFViewer(this.pdfDocument);
 
+        this.pdfDocument.getPage(1).then(() => {
+            this.scalePage('auto');
         }, () => {
             this.error.emit();
         });
     }
 
-    initPDFViewer(pdfDocument: any) {
-        const viewer: any = document.getElementById(`${this.randomPdfId}-viewer-viewerPdf`);
-        const container = document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
+    initPDFViewer(pdfDocument: PDFDocumentProxy) {
+        const viewer: any = this.getViewer();
+        const container = this.getDocumentContainer();
 
         if (viewer && container) {
-            this.documentContainer = container;
-
-            // cspell: disable-next
-            this.documentContainer.addEventListener('pagechange', this.onPageChange, true);
-            // cspell: disable-next
-            this.documentContainer.addEventListener('pagesloaded', this.onPagesLoaded, true);
-            // cspell: disable-next
-            this.documentContainer.addEventListener('textlayerrendered', this.onPageRendered, true);
-
             this.pdfViewer = new pdfjsViewer.PDFViewer({
-                container: this.documentContainer,
+                container: container,
                 viewer: viewer,
                 renderingQueue: this.renderingQueueServices
             });
+
+            // cspell: disable-next
+            this.pdfViewer.eventBus.on('pagechanging', this.onPageChange);
+            // cspell: disable-next
+            this.pdfViewer.eventBus.on('pagesloaded', this.onPagesLoaded);
+            // cspell: disable-next
+            this.pdfViewer.eventBus.on('textlayerrendered', this.onPageRendered);
 
             this.renderingQueueServices.setViewer(this.pdfViewer);
             this.pdfViewer.setDocument(pdfDocument);
@@ -227,22 +221,22 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.documentContainer) {
+        if (this.pdfViewer) {
             // cspell: disable-next
-            this.documentContainer.removeEventListener('pagechange', this.onPageChange, true);
+            this.pdfViewer.eventBus.off('pagechanging');
             // cspell: disable-next
-            this.documentContainer.removeEventListener('pagesloaded', this.onPagesLoaded, true);
+            this.pdfViewer.eventBus.off('pagesloaded');
             // cspell: disable-next
-            this.documentContainer.removeEventListener('textlayerrendered', this.onPageRendered, true);
+            this.pdfViewer.eventBus.off('textlayerrendered');
         }
 
-        if (this.loadingTask) {
+        if (this.pdfDocument) {
             try {
-                this.loadingTask.destroy();
+                this.pdfDocument.destroy();
             } catch {
             }
 
-            this.loadingTask = null;
+            this.pdfDocument = null;
         }
     }
 
@@ -259,7 +253,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.currentScaleMode = scaleMode;
 
         const viewerContainer = document.getElementById(`${this.randomPdfId}-viewer-main-container`);
-        const documentContainer = document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
+        const documentContainer = this.getDocumentContainer();
 
         if (this.pdfViewer && documentContainer) {
 
@@ -317,6 +311,14 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 this.setScaleUpdatePages(scale);
             }
         }
+    }
+
+    private getDocumentContainer() {
+        return document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
+    }
+
+    private getViewer() {
+        return document.getElementById(`${this.randomPdfId}-viewer-viewerPdf`);
     }
 
     /**
@@ -467,11 +469,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 data: { reason }
             })
             .afterClosed().subscribe((password) => {
-                if (password) {
-                    callback(password);
-                } else {
-                    this.close.emit();
-                }
+            if (password) {
+                callback(password);
+            } else {
+                this.close.emit();
+            }
         });
     }
 
