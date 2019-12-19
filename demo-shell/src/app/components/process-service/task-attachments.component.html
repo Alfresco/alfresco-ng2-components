@@ -2,7 +2,8 @@
     <div>
 
         <adf-upload-drag-area
-            [rootFolderId]="taskId">
+            [rootFolderId]="taskId"
+            [disabled]="isCompletedTask()">
 
             <adf-task-attachment-list #taskAttachList
                 [disabled]="isCompletedTask()"
@@ -11,7 +12,7 @@
                 <adf-empty-list>
                     <div adf-empty-list-header class="app-empty-list-header">{{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}}
                     </div>
-                    <div adf-empty-list-body>
+                    <div adf-empty-list-body  *ngIf="!isCompletedTask()">
                         <div fxHide.lt-md="true" class="app-empty-list-drag_drop">
                             {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE' | translate}}
                         </div>

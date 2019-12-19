@@ -14,7 +14,7 @@
                       <div adf-empty-list-header class="app-empty-list-header">
                           {{'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER' | translate}}
                        </div>
-                            <div adf-empty-list-body>
+                            <div adf-empty-list-body *ngIf="!isCompletedProcess()">
                             <div fxHide.lt-md="true" class="app-empty-list-drag_drop">
                               {{'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE' | translate}}
                             </div>
