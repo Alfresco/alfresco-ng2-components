@@ -39,9 +39,9 @@ export class UserInfoPage {
     userInfoSsoTitle: ElementFinder = element(by.css('.adf-userinfo__detail-title'));
     ssoEmail: ElementFinder = element(by.id('identity-email'));
     userProfileButton: ElementFinder = element(by.css('button[data-automation-id="adf-user-profile"]'));
-    tabsPage:TabsPage;
+    tabsPage: TabsPage;
 
-    constructor(){
+    constructor() {
         this.tabsPage = new TabsPage();
     }
 
