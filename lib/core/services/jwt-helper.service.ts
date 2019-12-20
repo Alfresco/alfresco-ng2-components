@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +32,7 @@ export class JwtHelperService {
     static RESOURCE_ACCESS = 'resource_access';
     static USER_PREFERRED_USERNAME = 'preferred_username';
 
-    constructor() {
+    constructor(private storageService: StorageService) {
     }
 
     /**
@@ -89,12 +90,12 @@ export class JwtHelperService {
      * @returns access token
      */
     getAccessToken(): string {
-        return localStorage.getItem(JwtHelperService.USER_ACCESS_TOKEN);
+        return this.storageService.getItem(JwtHelperService.USER_ACCESS_TOKEN);
     }
 
     /**
      * Gets a named value from the user access token.
-     * @param key accessToken
+     * @param accessToken your SSO access token where the value is encode
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */

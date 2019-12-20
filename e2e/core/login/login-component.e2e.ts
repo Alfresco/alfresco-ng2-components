@@ -208,7 +208,7 @@ describe('Login component', () => {
         await loginPage.clickSettingsIcon();
         await settingsPage.setProviderEcmBpm();
         await loginPage.login(adminUserModel.id, adminUserModel.password);
-        await browser.executeScript('window.localStorage.removeItem("ticket-ECM");');
+        await browser.executeScript('window.localStorage.removeItem("ADF_ticket-ECM");');
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
         await loginPage.waitForElements();
     });
@@ -228,7 +228,7 @@ describe('Login component', () => {
         await loginPage.clickSettingsIcon();
         await settingsPage.setProviderEcmBpm();
         await loginPage.login(adminUserModel.id, adminUserModel.password);
-        await browser.executeScript('window.localStorage.removeItem("ticket-BPM");');
+        await browser.executeScript('window.localStorage.removeItem("ADF_ticket-BPM");');
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
         await loginPage.waitForElements();
     });
