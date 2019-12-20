@@ -591,7 +591,7 @@ describe('Test PdfViewer component', () => {
                     const args = {
                         pageNumber: 6,
                         source: {
-                            container: componentUrlTestComponent.pdfViewerComponent.documentContainer
+                            container: document.getElementById(`${componentUrlTestComponent.pdfViewerComponent.randomPdfId}-viewer-pdf-viewer`)
                         }
                     };
 
@@ -615,7 +615,7 @@ describe('Test PdfViewer component', () => {
                     const args = {
                         pagesCount: 10,
                         source: {
-                            container: componentUrlTestComponent.pdfViewerComponent.documentContainer
+                            container: document.getElementById(`${componentUrlTestComponent.pdfViewerComponent.randomPdfId}-viewer-pdf-viewer`)
                         }
                     };
 

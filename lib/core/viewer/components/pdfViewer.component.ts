@@ -37,12 +37,6 @@ import { PDFDocumentProxy, PDFSource } from 'pdfjs-dist';
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
 
-export interface PdfDocumentOptions {
-    url?: string;
-    data?: any;
-    withCredentials?: boolean;
-}
-
 @Component({
     selector: 'adf-pdf-viewer',
     templateUrl: './pdfViewer.component.html',
@@ -138,7 +132,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    async ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
 
         if (blobFile && blobFile.currentValue) {
@@ -148,7 +142,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                     data: reader.result,
                     withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
                 };
-                await this.executePdf(pdfSource);
+                this.executePdf(pdfSource);
             };
             reader.readAsArrayBuffer(blobFile.currentValue);
         }
@@ -159,7 +153,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 url: urlFile.currentValue,
                 withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
             };
-            await  this.executePdf(pdfSource);
+            this.executePdf(pdfSource);
         }
 
         if (!this.urlFile && !this.blobFile) {
@@ -167,30 +161,32 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    async executePdf(pdfOptions: PdfDocumentOptions) {
+    executePdf(pdfOptions: PDFSource) {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
-        const onPassword = (callback, reason) => {
+        const loadingTask = pdfjsLib.getDocument(pdfOptions);
+
+        loadingTask.onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);
         };
 
-        const onProgress = (progressData) => {
+        loadingTask.onProgress = (progressData) => {
             const level = progressData.loaded / progressData.total;
             this.loadingPercent = Math.round(level * 100);
         };
 
-        this.pdfDocument = await pdfjsLib.getDocument(pdfOptions,
-            undefined,
-            onPassword,
-            onProgress).promise;
+        loadingTask.promise.then((pdfDocument: PDFDocumentProxy) => {
+            this.totalPages = pdfDocument.numPages;
+            this.page = 1;
+            this.displayPage = 1;
+            this.initPDFViewer(pdfDocument);
 
-        this.totalPages = this.pdfDocument.numPages;
-        this.page = 1;
-        this.displayPage = 1;
-        this.initPDFViewer(this.pdfDocument);
+            pdfDocument.getPage(1).then(() => {
+                this.scalePage('auto');
+            }, () => {
+                this.error.emit();
+            });
 
-        this.pdfDocument.getPage(1).then(() => {
-            this.scalePage('auto');
         }, () => {
             this.error.emit();
         });
