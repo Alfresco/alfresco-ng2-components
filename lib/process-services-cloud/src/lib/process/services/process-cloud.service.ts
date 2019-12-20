@@ -17,13 +17,17 @@
 
 import { AlfrescoApiService, LogService, AppConfigService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProcessCloudService extends BaseCloudService {
+
+    dataChangesDetected = new Subject<ProcessInstanceCloud>();
 
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService,
@@ -33,15 +37,42 @@ export class ProcessCloudService extends BaseCloudService {
     }
 
     /**
-     * Deletes a process.
+     * Gets details of a process instance.
      * @param appName Name of the app
-     * @param processId Id of the process to delete
+     * @param processInstanceId ID of the process instance whose details you want
+     * @returns Process instance details
+     */
+    getProcessInstanceById(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
+        if (appName && processInstanceId) {
+            const url = `${this.getBasePath(appName)}/query/v1/process-instances/${processInstanceId}`;
+
+            return this.get(url).pipe(
+                map((res: any) => {
+                    this.dataChangesDetected.next(res.entry);
+                    return new ProcessInstanceCloud(res.entry);
+                })
+            );
+        } else {
+            this.logService.error('AppName and ProcessInstanceId are mandatory for querying a process');
+            return throwError('AppName/ProcessInstanceId not configured');
+        }
+    }
+
+    /**
+     * Cancels a process.
+     * @param appName Name of the app
+     * @param processInstanceId Id of the process to cancel
      * @returns Operation Information
      */
-    deleteProcess(appName: string, processId: string) {
-        if (appName && processId) {
-            const queryUrl = `${this.getBasePath(appName)}/rb/v1/process-instances/${processId}`;
-            return this.delete(queryUrl);
+    cancelProcess(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
+        if (appName && processInstanceId) {
+            const queryUrl = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;
+            return this.delete(queryUrl).pipe(
+                map((res: any) => {
+                   this.dataChangesDetected.next(res.entry);
+                   return new ProcessInstanceCloud(res.entry);
+                })
+            );
         } else {
             this.logService.error('App name and Process id are mandatory for deleting a process');
             return throwError('App name and process id not configured');

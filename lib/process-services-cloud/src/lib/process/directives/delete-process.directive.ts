@@ -19,6 +19,7 @@ import { IdentityUserService } from '@alfresco/adf-core';
 import { ProcessCloudService } from '../services/process-cloud.service';
 
 @Directive({
+    // tslint:disable-next-line: directive-selector
     selector: '[adf-cloud-delete-process]'
 })
 export class DeleteProcessDirective implements OnInit {
@@ -93,7 +94,7 @@ export class DeleteProcessDirective implements OnInit {
     private async deleteProcess() {
         const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
         if (currentUser === this.processInitiator) {
-            await this.processCloudService.deleteProcess(this.appName, this.processId)
+            await this.processCloudService.cancelProcess(this.appName, this.processId)
                 .subscribe((response) => {
                     this.success.emit(response);
                 }, ((error) => {
