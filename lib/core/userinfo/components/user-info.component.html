@@ -44,7 +44,7 @@
         </div>
     </button>
     <mat-menu #menu="matMenu" id="user-profile-lists" [xPosition]="menuPositionX" [yPosition]="menuPositionY" [overlapTrigger]="false" class="adf-userinfo-menu">
-        <mat-tab-group id="tab-group-env" (click)="stopClosing($event)"
+        <mat-tab-group id="tab-group-env" (click)="stopClosing($event)" selectedIndex="0"
             class="adf-userinfo-tab" [class.adf-hide-tab]="!(bpmUser$ | async) || !(ecmUser$ | async)">
             <mat-tab id="ecm-panel" label="{{ 'USER_PROFILE.TAB.CS' | translate }}" *ngIf="ecmUser$ | async as ecmUser">
                 <mat-card class="adf-userinfo-card">
