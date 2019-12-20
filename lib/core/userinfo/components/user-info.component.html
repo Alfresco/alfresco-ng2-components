@@ -46,8 +46,8 @@
     <mat-menu #menu="matMenu" id="user-profile-lists" [xPosition]="menuPositionX" [yPosition]="menuPositionY" [overlapTrigger]="false" class="adf-userinfo-menu">
         <mat-tab-group id="tab-group-env" (click)="stopClosing($event)" selectedIndex="0"
             class="adf-userinfo-tab" [class.adf-hide-tab]="!(bpmUser$ | async) || !(ecmUser$ | async)">
-            <mat-tab id="ecm-panel" label="{{ 'USER_PROFILE.TAB.CS' | translate }}" *ngIf="ecmUser$ | async as ecmUser">
-                <mat-card class="adf-userinfo-card">
+            <mat-tab id="ecm-panel" label="{{ 'USER_PROFILE.TAB.CS' | translate }}" *ngIf="isEcmLoggedIn()">
+                <mat-card class="adf-userinfo-card" *ngIf="ecmUser$ | async as ecmUser">
                     <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + ecmBackgroundImage + ')'">
                         <div *ngIf="ecmUser.avatarId; else initialTemplate" class="adf-userinfo-profile-container adf-hide-small">
                             <img class="adf-userinfo-profile-picture" id="ecm-user-detail-image"
@@ -75,8 +75,8 @@
                     </mat-card-content>
                 </mat-card>
             </mat-tab>
-            <mat-tab id="bpm-panel" label="{{ 'USER_PROFILE.TAB.PS' | translate }}" *ngIf="bpmUser$ | async as bpmUser">
-            <mat-card class="adf-userinfo-card">
+            <mat-tab id="bpm-panel" label="{{ 'USER_PROFILE.TAB.PS' | translate }}" *ngIf="isBpmLoggedIn()">
+            <mat-card class="adf-userinfo-card" *ngIf="bpmUser$ | async as bpmUser">
                 <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + bpmBackgroundImage + ')'">
                     <img *ngIf="bpmUser.pictureId; else initialTemplate" class="adf-userinfo-profile-picture adf-hide-small" id="bpm-user-detail-image"
                             alt="bpm-profile-image" [src]="getBpmUserImage()"/>

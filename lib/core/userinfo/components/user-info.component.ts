@@ -90,12 +90,20 @@ export class UserInfoComponent implements OnInit {
         }
     }
 
+    isEcmLoggedIn() {
+        return this.authService.isEcmLoggedIn();
+    }
+
+    isBpmLoggedIn() {
+        return this.authService.isBpmLoggedIn();
+    }
+
     onKeyPress(event: KeyboardEvent) {
         this.closeUserModal(event);
     }
 
     private closeUserModal($event: KeyboardEvent) {
-        if ($event.keyCode === 27 ) {
+        if ($event.keyCode === 27) {
             this.trigger.closeMenu();
         }
     }
@@ -120,7 +128,7 @@ export class UserInfoComponent implements OnInit {
         event.stopPropagation();
     }
 
-    getEcmAvatar(avatarId: any ): string {
+    getEcmAvatar(avatarId: any): string {
         return this.ecmUserService.getUserProfileImage(avatarId);
     }
 
