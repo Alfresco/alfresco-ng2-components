@@ -453,9 +453,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      *
      * @param event
      */
-    onPageChange(event) {
-        this.page = event.pageNumber;
-        this.displayPage = event.pageNumber;
+    onPageChange(event: any) {
+        if (event.source && event.source.container.id === `${this.randomPdfId}-viewer-pdf-viewer`) {
+            this.page = event.pageNumber;
+            this.displayPage = event.pageNumber;
+        }
     }
 
     onPdfPassword(callback, reason) {
