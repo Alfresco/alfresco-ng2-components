@@ -480,17 +480,15 @@ describe('Test PdfViewer component', () => {
             });
         }, 25000);
 
-        it('should event RIGHT_ARROW keyboard change pages', (done) => {
+        it('should event RIGHT_ARROW keyboard change pages', fakeAsync(() => {
+            fixtureUrlTestComponent.whenStable();
+            fixtureUrlTestComponent.detectChanges();
             EventMock.keyDown(RIGHT_ARROW);
 
-            fixtureUrlTestComponent.detectChanges();
+            tick(250);
 
-            fixtureUrlTestComponent.whenStable().then(() => {
-                fixtureUrlTestComponent.detectChanges();
-                expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
-                done();
-            });
-        }, 25000);
+            expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
+        }));
 
         it('should event LEFT_ARROW keyboard change pages', (done) => {
             component.inputPage('2');
@@ -591,12 +589,12 @@ describe('Test PdfViewer component', () => {
                     const args = {
                         pageNumber: 6,
                         source: {
-                            container: componentUrlTestComponent.pdfViewerComponent.documentContainer
+                            container: document.getElementById(`${componentUrlTestComponent.pdfViewerComponent.randomPdfId}-viewer-pdf-viewer`)
                         }
                     };
 
                     /* cspell:disable-next-line */
-                    componentUrlTestComponent.pdfViewerComponent.pdfViewer.eventBus.dispatch('pagechange', args);
+                    componentUrlTestComponent.pdfViewerComponent.pdfViewer.eventBus.dispatch('pagechanging', args);
                     fixtureUrlTestComponent.detectChanges();
 
                     fixtureUrlTestComponent.whenStable().then(() => {
@@ -615,7 +613,7 @@ describe('Test PdfViewer component', () => {
                     const args = {
                         pagesCount: 10,
                         source: {
-                            container: componentUrlTestComponent.pdfViewerComponent.documentContainer
+                            container: document.getElementById(`${componentUrlTestComponent.pdfViewerComponent.randomPdfId}-viewer-pdf-viewer`)
                         }
                     };
 
