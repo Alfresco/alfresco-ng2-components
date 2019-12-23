@@ -19,7 +19,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, IdentityUserService, setupTestBed } from '@alfresco/adf-core';
 import { CancelProcessDirective } from './cancel-process.directive';
-import { processDetailsMockRunning, processDetailsMockCompleted } from '../mock/process-details.mock'
+import { processDetailsMockRunning, processDetailsMockCompleted } from '../mock/process-details.mock';
 
 describe('CancelProcessDirective', () => {
 

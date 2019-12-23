@@ -1,5 +1,5 @@
 ---
-Title: Delete Process Directive
+Title: Cancel Process Directive
 Added: v3.7.0
 Status: Experimental
 Last reviewed: 2019-12-09
