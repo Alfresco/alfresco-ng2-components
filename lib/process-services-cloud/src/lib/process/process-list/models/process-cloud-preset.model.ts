@@ -18,17 +18,18 @@
 export let processCloudPresetsDefaultModel = {
     'default': [
         {
-            'key': 'name',
+            'key': 'entry.name',
             'type': 'text',
             'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME',
             'sortable': true
         },
         {
-            'key': 'created',
-            'type': 'text',
-            'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.CREATED',
+            'key': 'entry.startDate',
+            'type': 'date',
+            'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE',
             'cssClass': 'hidden',
-            'sortable': true
+            'sortable': true,
+            'format': 'timeAgo'
         }
     ]
 };
