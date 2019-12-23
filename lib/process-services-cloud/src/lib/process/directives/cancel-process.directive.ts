@@ -78,6 +78,7 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
     async cancelProcess() {
         if (this.canCancelProcess) {
             await this.processCloudService.cancelProcess(this.processInstanceDetails.appName, this.processInstanceDetails.id)
+                .pipe(takeUntil(this.onDestroy$))
                 .subscribe((response) => {
                     this.success.emit(response);
                 }, ((error) => {
