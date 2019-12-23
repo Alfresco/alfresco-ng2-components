@@ -36,8 +36,6 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
 
     processInstanceDetails: ProcessInstanceCloud;
 
-    invalidParams: string[] = [];
-
     canCancelProcess = false;
 
     private onDestroy$ = new Subject<boolean>();
