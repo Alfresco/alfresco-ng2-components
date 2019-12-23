@@ -19,10 +19,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, IdentityUserService, setupTestBed } from '@alfresco/adf-core';
 import { CancelProcessDirective } from './cancel-process.directive';
-import { ProcessCloudService } from '../services/process-cloud.service';
-import { of } from 'rxjs';
-import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
-import { fakeProcessInstance } from '../start-process/mock/start-process.component.mock';
+import { processDetailsMockRunning, processDetailsMockCompleted } from '../mock/process-details.mock'
 
 describe('CancelProcessDirective', () => {
 
@@ -37,8 +34,8 @@ describe('CancelProcessDirective', () => {
     }
 
     let fixture: ComponentFixture<TestComponent>;
-    let processCloudService: ProcessCloudService;
     let identityUserService: IdentityUserService;
+    let component: TestComponent;
 
     setupTestBed({
         imports: [
@@ -51,19 +48,37 @@ describe('CancelProcessDirective', () => {
     });
 
     beforeEach(() => {
-        processCloudService = TestBed.get(ProcessCloudService);
         fixture = TestBed.createComponent(TestComponent);
+        component = fixture.componentInstance;
         identityUserService = TestBed.get(IdentityUserService);
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({username: 'usermock'});
         fixture.detectChanges();
     });
 
-    it('should call cancel process service when click', () => {
-        fixture.componentInstance.cancelProcessDirective.processInstanceDetails = new ProcessInstanceCloud(fakeProcessInstance);
-        spyOn(processCloudService, 'cancelProcess').and.returnValue(of({}));
+    it('should directive call cancelProcess when button is clicked', () => {
+        const cancelProcessSpy = spyOn(component.cancelProcessDirective, 'cancelProcess').and.callThrough();
         const button = fixture.nativeElement.querySelector('button');
         button.click();
-        expect(processCloudService.cancelProcess).toHaveBeenCalled();
+        expect(cancelProcessSpy).toHaveBeenCalled();
+    });
+
+    it('should checkCanCancelProcess return false when process status is COMPLETED', () => {
+        component.cancelProcessDirective.processInstanceDetails = processDetailsMockCompleted;
+        fixture.detectChanges();
+        expect(component.cancelProcessDirective.checkCanCancelProcess()).toBeFalsy();
+    });
+
+    it('should checkCanCancelProcess return true when process status is RUNNING and logged in user is the processInitiator', () => {
+        component.cancelProcessDirective.processInstanceDetails = processDetailsMockRunning;
+        fixture.detectChanges();
+        expect(component.cancelProcessDirective.checkCanCancelProcess()).toBeTruthy();
+    });
+
+    it('should checkCanCancelProcess return false when logged in user is not the processInitiator', () => {
+        component.cancelProcessDirective.processInstanceDetails = processDetailsMockRunning;
+        component.cancelProcessDirective.processInstanceDetails.initiator = 'mock-user';
+        fixture.detectChanges();
+        expect(component.cancelProcessDirective.checkCanCancelProcess()).toBeFalsy();
     });
 
 });

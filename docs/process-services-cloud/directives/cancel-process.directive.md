@@ -12,7 +12,7 @@ Cancels a process
 ## Basic Usage
 
 ```html
-<button adf-cloud-delete-process (success)="onProcessCancelled()" (error)="onCancelProcessError()" (canCancelProcess)="showCancelAction()">Delete</button>
+<button adf-cloud-cancel-process (success)="onProcessCancelled()" (error)="onCancelProcessError()">Cancel</button>
 ```
 
 ### Events
@@ -21,4 +21,3 @@ Cancels a process
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the process can not be cancelled. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the process is cancelled. |
-| canCancelProcess | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the process cancel ability is checked. |

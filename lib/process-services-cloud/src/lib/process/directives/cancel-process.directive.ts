@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Directive, HostListener, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Directive, HostListener, Output, EventEmitter, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { IdentityUserService } from '@alfresco/adf-core';
 import { ProcessCloudService } from '../services/process-cloud.service';
 import { takeUntil } from 'rxjs/operators';
@@ -34,27 +34,26 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    @Output()
-    /** Emitted when the can cancel process status is checked */
-    canCancelProcess: EventEmitter<boolean> = new EventEmitter<boolean>();
-
     processInstanceDetails: ProcessInstanceCloud;
 
     invalidParams: string[] = [];
 
+    canCancelProcess = false;
+
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
+        private elementRef: ElementRef,
         private processCloudService: ProcessCloudService,
         private identityUserService: IdentityUserService) {}
 
     ngOnInit() {
-        this.processCloudService.dataChangesDetected$
+        this.processCloudService.dataChangesDetected
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDetails: ProcessInstanceCloud) => {
                 this.processInstanceDetails = processDetails;
-                const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
-                this.canCancelProcess.emit(this.processCloudService.canCancelProcess(this.processInstanceDetails, currentUser));
+                this.canCancelProcess = this.checkCanCancelProcess();
+                this.setElementVisibility();
             });
     }
 
@@ -67,9 +66,17 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
         }
     }
 
-    private async cancelProcess() {
-        const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
-        if (this.processCloudService.canCancelProcess(this.processInstanceDetails, currentUser)) {
+    private setElementVisibility() {
+        this.elementRef.nativeElement.disabled = !this.canCancelProcess;
+    }
+
+    checkCanCancelProcess(): boolean {
+        const currentUser = this.identityUserService.getCurrentUserInfo().username;
+        return  this.processInstanceDetails.initiator === currentUser && this.processInstanceDetails.status === 'RUNNING';
+    }
+
+    async cancelProcess() {
+        if (this.canCancelProcess) {
             await this.processCloudService.cancelProcess(this.processInstanceDetails.appName, this.processInstanceDetails.id)
                 .subscribe((response) => {
                     this.success.emit(response);
