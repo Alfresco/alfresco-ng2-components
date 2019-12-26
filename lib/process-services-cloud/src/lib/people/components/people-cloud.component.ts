@@ -16,7 +16,7 @@
  */
 
 import { FormControl } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef, SimpleChanges, OnChanges, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, map, takeUntil } from 'rxjs/operators';
 import { FullNamePipe, IdentityUserModel, IdentityUserService, LogService } from '@alfresco/adf-core';
@@ -36,6 +36,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
         ])
     ],
     providers: [FullNamePipe],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
 
@@ -123,7 +124,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        this.selectedUsers = [...this.preSelectUsers];
+        if (this.hasPreSelectUsers()) {
+            this.selectedUsers = [...this.preSelectUsers];
+        }
         this.initSubjects();
         this.initSearch();
 
@@ -362,7 +365,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             }
 
             this.currentTimeout = setTimeout(() => {
-                this.searchUserCtrl.setValue( this.selectedUsers[0]);
+                this.searchUserCtrl.setValue(this.selectedUsers[0]);
                 this.onSelect(this.selectedUsers[0]);
             }, 0);
         }
