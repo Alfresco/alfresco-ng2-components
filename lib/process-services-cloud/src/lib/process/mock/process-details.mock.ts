@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
-export * from './cancel-process.directive';
+import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
 
-export * from './process-directive.module';
+export let processDetailsMockRunning = new ProcessInstanceCloud({ initiator: 'usermock', status: 'RUNNING' });
+
+export let processDetailsMockCompleted = new ProcessInstanceCloud({ initiator: 'usermock', status: 'COMPLETED' });
