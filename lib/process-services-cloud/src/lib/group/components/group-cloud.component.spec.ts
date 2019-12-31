@@ -68,6 +68,16 @@ describe('GroupCloudComponent', () => {
         expect(component instanceof GroupCloudComponent).toBeTruthy();
     });
 
+    it('should populate placeholder when title is present', async(() => {
+        component.title = 'TITLE_KEY';
+        fixture.detectChanges();
+        const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('#adf-group-cloud-title-id');
+        fixture.whenStable().then( () => {
+            fixture.detectChanges();
+            expect(matLabel.textContent).toEqual('TITLE_KEY');
+        });
+    }));
+
     describe('Search group', () => {
 
         beforeEach(async(() => {
@@ -132,17 +142,6 @@ describe('GroupCloudComponent', () => {
                 const errorMessage = element.querySelector('.adf-cloud-group-error-message');
                 expect(errorMessage).not.toBeNull();
                 expect(errorMessage.textContent).toContain(' ADF_CLOUD_GROUPS.ERROR.NOT_FOUND ');
-                done();
-            });
-        });
-
-        it('should populate placeholder when title is present', (done) => {
-            component.title = 'TITLE_KEY';
-            fixture.detectChanges();
-            const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
-            fixture.whenStable().then( () => {
-                fixture.detectChanges();
-                expect(matLabel.textContent).toEqual('TITLE_KEY');
                 done();
             });
         });
