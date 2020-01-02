@@ -69,6 +69,26 @@ describe('PeopleCloudComponent', () => {
         expect(component instanceof PeopleCloudComponent).toBe(true, 'should create PeopleCloudComponent');
     });
 
+    it('should populate placeholder when title is present', async(() => {
+        component.title = 'TITLE_KEY';
+        fixture.detectChanges();
+        const matLabel: HTMLInputElement = <HTMLInputElement> fixture.nativeElement.querySelector('#adf-people-cloud-title-id');
+        fixture.whenStable().then( () => {
+            fixture.detectChanges();
+            expect(matLabel.textContent).toEqual('TITLE_KEY');
+        });
+    }));
+
+    it('should not populate placeholder when title is not present', async(() => {
+        fixture.detectChanges();
+        const matLabel: HTMLInputElement = <HTMLInputElement> fixture.nativeElement.querySelector('#adf-people-cloud-title-id');
+        fixture.detectChanges();
+        fixture.whenStable().then( () => {
+            fixture.detectChanges();
+            expect(matLabel.textContent).toEqual('');
+        });
+    }));
+
     describe('Search user', () => {
 
         beforeEach(async(() => {
@@ -133,27 +153,6 @@ describe('PeopleCloudComponent', () => {
                 const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
                 expect(errorMessage).not.toBeNull();
                 expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
-                done();
-            });
-        });
-
-        it('should populate placeholder when title is present', (done) => {
-            component.title = 'TITLE_KEY';
-            fixture.detectChanges();
-            const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
-            fixture.whenStable().then( () => {
-                fixture.detectChanges();
-                expect(matLabel.textContent).toEqual('TITLE_KEY');
-                done();
-            });
-        });
-
-        it('should not populate placeholder when title is present', (done) => {
-            const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
-            fixture.detectChanges();
-            fixture.whenStable().then( () => {
-                fixture.detectChanges();
-                expect(matLabel.textContent).toEqual('');
                 done();
             });
         });
@@ -652,21 +651,6 @@ describe('PeopleCloudComponent', () => {
                     done();
                 });
             });
-        });
-
-        it('should populate placeholder when title is present', () => {
-            fixture.detectChanges();
-            component.title = 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE';
-            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
-            fixture.detectChanges();
-            expect(inputHTMLElement.textContent).toEqual('ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE');
-        });
-
-        it('should not populate placeholder when title is present', () => {
-            fixture.detectChanges();
-            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
-            fixture.detectChanges();
-            expect(inputHTMLElement.textContent).toEqual('');
         });
 
         it('should remove duplicated preselcted users when a user is duplicated', () => {

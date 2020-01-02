@@ -26,7 +26,8 @@ import {
     Input,
     SimpleChanges,
     OnChanges,
-    OnDestroy
+    OnDestroy,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -48,6 +49,7 @@ import { IdentityGroupModel, IdentityGroupSearchParam, IdentityGroupService } fr
             ])
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
 export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
