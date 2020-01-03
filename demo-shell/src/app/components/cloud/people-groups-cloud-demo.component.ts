@@ -18,7 +18,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { PeopleCloudComponent, GroupCloudComponent } from '@alfresco/adf-process-services-cloud';
 import { MatRadioChange, MatCheckboxChange } from '@angular/material';
-import { IdentityGroupModel } from '@alfresco/adf-core';
+import { IdentityGroupModel, IdentityUserModel } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-people-groups-cloud',
@@ -33,14 +33,17 @@ export class PeopleGroupCloudDemoComponent {
     DEFAULT_PEOPLE_PLACEHOLDER: string = `[{"id": "1", email": "user@user.com", "firstName":"user", "lastName": "lastName", "username": "user"}]`;
 
     peopleMode: string = PeopleCloudComponent.MODE_SINGLE;
-    preSelectUsers: string[] = [];
+    preSelectUsers: IdentityUserModel[] = [];
+    invalidUsers: IdentityGroupModel[] = [];
     peopleRoles: string[] = [];
     peopleAppName: string;
     peopleFilterMode: string = this.DEFAULT_FILTER_MODE;
     peoplePreselectValidation: Boolean = false;
+    groupPreselectValidation = false;
 
     groupMode: string = GroupCloudComponent.MODE_SINGLE;
     preSelectGroup: IdentityGroupModel[] = [];
+    invalidGroups: IdentityGroupModel[] = [];
     selectedGroupList: IdentityGroupModel[] = [];
     groupRoles: string[];
     groupAppName: string;
@@ -114,9 +117,32 @@ export class PeopleGroupCloudDemoComponent {
         }
     }
 
+    onChangedUsers(users) {
+
+    }
+
     onChangePeopleValidation(event: MatCheckboxChange) {
         this.peoplePreselectValidation = event.checked;
         this.preSelectUsers = [...this.preSelectUsers];
+        if (!this.peoplePreselectValidation) {
+            this.invalidUsers = [];
+        }
+    }
+
+    onChangeGroupValidation(event: MatCheckboxChange) {
+        this.groupPreselectValidation = event.checked;
+        this.preSelectGroup = [...this.preSelectGroup];
+        if (!this.groupPreselectValidation) {
+            this.invalidGroups = [];
+        }
+    }
+
+    onGroupsWarning(warning: any) {
+        this.invalidGroups = warning.groups;
+    }
+
+    onUsersWarning(warning: any) {
+        this.invalidUsers = warning.users;
     }
 
     isStringArray(str: string) {
@@ -147,6 +173,12 @@ export class PeopleGroupCloudDemoComponent {
 
     onRemoveGroup(group: IdentityGroupModel) {
         this.preSelectGroup = this.preSelectGroup.filter((value: any) => value.id !== group.id);
+    }
+
+    onSelectUser(user: IdentityUserModel) {
+        if (this.peopleMode === PeopleCloudComponent.MODE_MULTIPLE) {
+            this.preSelectUsers.push(user);
+        }
     }
 
     onSelectGroup(group: IdentityGroupModel) {
