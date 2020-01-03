@@ -40,16 +40,29 @@
                 [appName]="peopleAppName"
                 [roles]="peopleRoles"
                 [title]="'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"
-                [mode]="peopleMode"></adf-cloud-people>
+                [mode]="peopleMode"
+                (selectUser)="onSelectUser($event)"
+                (warning)="onUsersWarning($event)"></adf-cloud-people>
         </div>
 
         <div class="app-people-list" *ngIf="canShowPeopleList()">
+            <h4>{{ 'PEOPLE_GROUPS_CLOUD.ALL_SELECTED_USERS' | translate }}</h4>
             <mat-list role="list">
                 <mat-list-item *ngFor="let item of preSelectUsers" role="listitem">
                     <mat-icon mat-list-icon>person</mat-icon>
-                    {{ item?.firstName }} {{ item?.lastName }}
+                    {{item | fullName}}
                 </mat-list-item>
             </mat-list>
+
+            <div *ngIf="invalidUsers.length > 0">
+                <h4>{{ 'PEOPLE_GROUPS_CLOUD.INVALID_USERS' | translate }} <mat-icon>warning</mat-icon> </h4>
+                <mat-list role="list">
+                    <mat-list-item *ngFor="let invalidUser of invalidUsers" role="listitem">
+                        <mat-icon mat-list-icon>person</mat-icon>
+                        {{invalidUser | fullName}}
+                    </mat-list-item>
+                </mat-list>
+            </div>
         </div>
     </mat-card-content>
 </mat-card>
@@ -86,19 +99,39 @@
                 <mat-label>Preselect: {{ DEFAULT_GROUP_PLACEHOLDER }}</mat-label>
                 <input matInput (input)="setGroupsPreselectValue($event)" data-automation-id="app-group-preselect-input" />
             </mat-form-field>
+            <mat-checkbox class="app-group-preselect-validation" (change)="onChangeGroupValidation($event)">{{
+                'PEOPLE_GROUPS_CLOUD.PRESELECT_VALIDATION' | translate }}</mat-checkbox>
         </div>
         <div>
-            <adf-cloud-group [mode]="groupMode" [roles]="groupRoles" [appName]="groupAppName" [preSelectGroups]="preSelectGroup"
-                (selectGroup)="onSelectGroup($event)" (removeGroup)="onRemoveGroup($event)"></adf-cloud-group>
+            <adf-cloud-group
+                [mode]="groupMode"
+                [validate]="groupPreselectValidation"
+                [roles]="groupRoles"
+                [appName]="groupAppName"
+                [preSelectGroups]="preSelectGroup"
+                (selectGroup)="onSelectGroup($event)"
+                (removeGroup)="onRemoveGroup($event)"
+                (warning)="onGroupsWarning($event)"></adf-cloud-group>
         </div>
 
         <div class="app-group-list" *ngIf="canShowGroupList()">
+            <h4>{{ 'PEOPLE_GROUPS_CLOUD.ALL_SELECTED_GROUPS' | translate }}</h4>
             <mat-list role="list">
                 <mat-list-item *ngFor="let item of preSelectGroup" role="listitem">
                     <mat-icon mat-list-icon>group</mat-icon>
                     {{ item.name }}
                 </mat-list-item>
             </mat-list>
+
+            <div *ngIf="invalidGroups.length > 0">
+                <h4>{{ 'PEOPLE_GROUPS_CLOUD.INVALID_GROUPS' | translate }} <mat-icon>warning</mat-icon> </h4>
+                <mat-list role="list">
+                    <mat-list-item *ngFor="let invalidGroup of invalidGroups" role="listitem">
+                        <mat-icon mat-list-icon>group</mat-icon>
+                        {{invalidGroup?.name}}
+                    </mat-list-item>
+                </mat-list>
+            </div>
         </div>
     </mat-card-content>
 </mat-card>

@@ -324,8 +324,8 @@ describe('GroupCloudComponent', () => {
             component.preSelectGroups = [];
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const selectedUser = component.searchGroupsControl.value;
-                expect(selectedUser).toBeNull();
+                const selectedGroup = component.searchGroupsControl.value;
+                expect(selectedGroup).toBeNull();
                 done();
             });
         });
@@ -355,7 +355,7 @@ describe('GroupCloudComponent', () => {
         it('should pre-select all preSelectGroups when mode=multiple', (done) => {
             component.mode = 'multiple';
             fixture.detectChanges();
-            component.ngOnChanges({ 'preSelectUsers': change });
+            component.ngOnChanges({ 'preSelectGroups': change });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -407,7 +407,7 @@ describe('GroupCloudComponent', () => {
             });
         });
 
-        it('should not filter groups if user does not have any specified role', (done) => {
+        it('should not filter groups if group does not have any specified role', (done) => {
             fixture.detectChanges();
             checkGroupHasRoleSpy.and.returnValue(of(false));
             const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
@@ -495,6 +495,66 @@ describe('GroupCloudComponent', () => {
                 expect(removeGroupSpy).toHaveBeenCalled();
                 expect(fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip').length).toBe(1);
                 done();
+            });
+        });
+    });
+
+    describe('Multiple Mode and Pre-selected groups with validate flag', () => {
+
+        beforeEach(async(() => {
+            component.mode = 'multiple';
+            component.validate = true;
+            component.preSelectGroups = <any> mockIdentityGroups;
+            element = fixture.nativeElement;
+            alfrescoApiService = TestBed.get(AlfrescoApiService);
+            fixture.detectChanges();
+        }));
+
+        it('should emit warning if are invalid groups', (done) => {
+            findGroupsByNameSpy.and.returnValue(Promise.resolve([]));
+            const warnMessage = { message: 'INVALID_PRESELECTED_GROUPS', groups: [{ name: 'invalidGroupOne' }, { name: 'invalidGroupTwo' }] };
+            component.validate = true;
+            component.preSelectGroups = <any> [{ name: 'invalidGroupOne' }, { name: 'invalidGroupTwo' }];
+            fixture.detectChanges();
+            component.loadSinglePreselectGroup();
+            component.warning.subscribe((response) => {
+                expect(response).toEqual(warnMessage);
+                expect(response.message).toEqual(warnMessage.message);
+                expect(response.groups).toEqual(warnMessage.groups);
+                expect(response.groups[0].name).toEqual('invalidGroupOne');
+                done();
+            });
+        });
+
+        it('should filter group by name if validate true', (done) => {
+            findGroupsByNameSpy.and.returnValue(of(mockIdentityGroups));
+            component.mode = 'multiple';
+            component.validate = true;
+            component.preSelectGroups = <any> [{ name: mockIdentityGroups[1].name }, { name: mockIdentityGroups[2].name }];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.filterPreselectGroups().then((result) => {
+                    expect(findGroupsByNameSpy).toHaveBeenCalled();
+                    expect(component.groupExists(result[0])).toEqual(true);
+                    expect(component.groupExists(result[1])).toEqual(true);
+                    done();
+                });
+            });
+        });
+
+        it('should not preselect any group if name is invalid and validation enable', (done) => {
+            findGroupsByNameSpy.and.returnValue(of([]));
+            component.mode = 'single';
+            component.validate = true;
+            component.preSelectGroups = <any> [{ name: 'invalid group' }];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.validatePreselectGroups().then((result) => {
+                    fixture.detectChanges();
+                    expect(findGroupsByNameSpy).toHaveBeenCalled();
+                    expect(result.length).toEqual(0);
+                    done();
+                });
             });
         });
     });
