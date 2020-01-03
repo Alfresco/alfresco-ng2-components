@@ -46,20 +46,20 @@
         </div>
 
         <div class="app-people-list" *ngIf="canShowPeopleList()">
-            <h4>All Selected Users: </h4>
+            <h4>{{ 'PEOPLE_GROUPS_CLOUD.ALL_SELECTED_USERS' | translate }}</h4>
             <mat-list role="list">
                 <mat-list-item *ngFor="let item of preSelectUsers" role="listitem">
                     <mat-icon mat-list-icon>person</mat-icon>
-                   {{ item?.firstName || item?.lastName || item.username }}
+                    {{item | fullName}}
                 </mat-list-item>
             </mat-list>
 
             <div *ngIf="invalidUsers.length > 0">
-                <h4>Invalid Users <mat-icon>warning</mat-icon> </h4>
+                <h4>{{ 'PEOPLE_GROUPS_CLOUD.INVALID_USERS' | translate }} <mat-icon>warning</mat-icon> </h4>
                 <mat-list role="list">
                     <mat-list-item *ngFor="let invalidUser of invalidUsers" role="listitem">
                         <mat-icon mat-list-icon>person</mat-icon>
-                        {{ invalidUser?.firstName || invalidUser?.lastName || invalidUser.username }}
+                        {{invalidUser | fullName}}
                     </mat-list-item>
                 </mat-list>
             </div>
@@ -110,13 +110,12 @@
                 [appName]="groupAppName"
                 [preSelectGroups]="preSelectGroup"
                 (selectGroup)="onSelectGroup($event)"
-                (changedUsers)="onChangedUsers($event)"
                 (removeGroup)="onRemoveGroup($event)"
                 (warning)="onGroupsWarning($event)"></adf-cloud-group>
         </div>
 
         <div class="app-group-list" *ngIf="canShowGroupList()">
-            <h4>All Selected Groups: </h4>
+            <h4>{{ 'PEOPLE_GROUPS_CLOUD.ALL_SELECTED_GROUPS' | translate }}</h4>
             <mat-list role="list">
                 <mat-list-item *ngFor="let item of preSelectGroup" role="listitem">
                     <mat-icon mat-list-icon>group</mat-icon>
@@ -125,8 +124,7 @@
             </mat-list>
 
             <div *ngIf="invalidGroups.length > 0">
-                <h4>Invalid Groups: </h4>
-                <mat-icon>warning</mat-icon>
+                <h4>{{ 'PEOPLE_GROUPS_CLOUD.INVALID_GROUPS' | translate }} <mat-icon>warning</mat-icon> </h4>
                 <mat-list role="list">
                     <mat-list-item *ngFor="let invalidGroup of invalidGroups" role="listitem">
                         <mat-icon mat-list-icon>group</mat-icon>

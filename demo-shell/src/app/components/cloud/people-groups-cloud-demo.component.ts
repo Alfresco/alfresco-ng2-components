@@ -117,10 +117,6 @@ export class PeopleGroupCloudDemoComponent {
         }
     }
 
-    onChangedUsers(users) {
-
-    }
-
     onChangePeopleValidation(event: MatCheckboxChange) {
         this.peoplePreselectValidation = event.checked;
         this.preSelectUsers = [...this.preSelectUsers];
