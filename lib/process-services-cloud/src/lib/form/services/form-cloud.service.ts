@@ -112,8 +112,8 @@ export class FormCloudService extends BaseCloudService {
      * @param outcome Form outcome
      * @returns Updated task details
      */
-    completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string): Observable<TaskDetailsCloudModel> {
-        const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit`;
+    completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string, version: number): Observable<TaskDetailsCloudModel> {
+        const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit/versions/${version}`;
         const completeFormRepresentation = <CompleteFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
