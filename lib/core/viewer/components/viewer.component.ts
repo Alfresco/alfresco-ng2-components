@@ -233,7 +233,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         text: ['text/plain', 'text/csv', 'text/xml', 'text/html', 'application/x-javascript'],
         pdf: ['application/pdf'],
         image: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg+xml'],
-        media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/ogg', 'audio/wav']
+        media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/mp3', 'audio/ogg', 'audio/wav']
     };
 
     constructor(private apiService: AlfrescoApiService,
