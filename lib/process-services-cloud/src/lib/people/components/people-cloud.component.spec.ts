@@ -449,6 +449,25 @@ describe('PeopleCloudComponent', () => {
 
     describe('Multiple Mode with read-only mode', () => {
 
+        it('should not be able to remove pre-selected people if readonly property set to true', (done) => {
+            fixture.detectChanges();
+            component.preSelectUsers = [
+                { id: mockUsers[0].id, username: mockUsers[0].username },
+                { id: mockUsers[1].id, username: mockUsers[1].username }
+            ];
+            component.mode = 'multiple';
+            component.readOnly = true;
+
+            spyOn(component.removeUser, 'emit');
+            component.onRemove(component.preSelectUsers[1]);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(component.removeUser.emit).not.toHaveBeenCalled();
+                done();
+            });
+        });
+
         it('Should not show remove icon for pre-selected users if readonly property set to true', (done) => {
             component.mode = 'multiple';
             const removeUserSpy = spyOn(component.removeUser, 'emit');

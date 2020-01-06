@@ -34,12 +34,14 @@ export class PeopleGroupCloudDemoComponent {
 
     peopleMode: string = PeopleCloudComponent.MODE_SINGLE;
     preSelectUsers: IdentityUserModel[] = [];
-    invalidUsers: IdentityGroupModel[] = [];
+    invalidUsers: IdentityUserModel[] = [];
     peopleRoles: string[] = [];
     peopleAppName: string;
     peopleFilterMode: string = this.DEFAULT_FILTER_MODE;
     peoplePreselectValidation: Boolean = false;
     groupPreselectValidation = false;
+    peopleReadonly = false;
+    groupReadonly = false;
 
     groupMode: string = GroupCloudComponent.MODE_SINGLE;
     preSelectGroup: IdentityGroupModel[] = [];
@@ -76,6 +78,14 @@ export class PeopleGroupCloudDemoComponent {
     onChangePeopleMode(event: MatRadioChange) {
        this.peopleMode = event.value;
        this.preSelectUsers = [...this.preSelectUsers];
+    }
+
+    onChangePeopleReadonly(event: MatCheckboxChange) {
+        this.peopleReadonly = event.checked;
+    }
+
+    onChangeGroupReadonly(event: MatCheckboxChange) {
+        this.groupReadonly = event.checked;
     }
 
     onChangeGroupsMode(event: MatRadioChange) {

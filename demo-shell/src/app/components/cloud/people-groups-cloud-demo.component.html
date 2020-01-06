@@ -32,10 +32,13 @@
             </mat-form-field>
             <mat-checkbox class="app-preselect-value" (change)="onChangePeopleValidation($event)">{{
                 'PEOPLE_GROUPS_CLOUD.PRESELECT_VALIDATION' | translate }}</mat-checkbox>
+            <mat-checkbox data-automation-id="app-people-readonly" value="{{ peopleReadonly }}" (change)="onChangePeopleReadonly($event)">{{
+                'PEOPLE_GROUPS_CLOUD.READONLY_MODE' | translate }}</mat-checkbox>
         </div>
         <div>
             <adf-cloud-people
                 [preSelectUsers]="preSelectUsers"
+                [readOnly]="peopleReadonly"
                 [validate]="peoplePreselectValidation"
                 [appName]="peopleAppName"
                 [roles]="peopleRoles"
@@ -99,12 +102,15 @@
                 <mat-label>Preselect: {{ DEFAULT_GROUP_PLACEHOLDER }}</mat-label>
                 <input matInput (input)="setGroupsPreselectValue($event)" data-automation-id="app-group-preselect-input" />
             </mat-form-field>
-            <mat-checkbox class="app-group-preselect-validation" (change)="onChangeGroupValidation($event)">{{
+            <mat-checkbox class="app-preselect-value" (change)="onChangeGroupValidation($event)">{{
                 'PEOPLE_GROUPS_CLOUD.PRESELECT_VALIDATION' | translate }}</mat-checkbox>
+            <mat-checkbox data-automation-id="app-group-readonly" value="{{ groupReadonly }}" (change)="onChangeGroupReadonly($event)">{{
+                'PEOPLE_GROUPS_CLOUD.READONLY_MODE' | translate }}</mat-checkbox>
         </div>
         <div>
             <adf-cloud-group
                 [mode]="groupMode"
+                [readOnly]="groupReadonly"
                 [validate]="groupPreselectValidation"
                 [roles]="groupRoles"
                 [appName]="groupAppName"

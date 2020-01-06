@@ -440,11 +440,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onRemove(user: IdentityUserModel) {
-        this.removeUser.emit(user);
-        const indexToRemove = this.selectedUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
-        this.selectedUsers.splice(indexToRemove, 1);
-        this.selectedUsersSubject.next(this.selectedUsers);
-        this.changedUsers.emit(this.selectedUsers);
+        if (!this.readOnly) {
+            this.removeUser.emit(user);
+            const indexToRemove = this.selectedUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
+            this.selectedUsers.splice(indexToRemove, 1);
+            this.selectedUsersSubject.next(this.selectedUsers);
+            this.changedUsers.emit(this.selectedUsers);
+        }
     }
 
     getDisplayName(user): string {

@@ -441,14 +441,32 @@ describe('GroupCloudComponent', () => {
 
     describe('Multiple Mode with read-only', () => {
 
-        it('Should not show remove icon for pre-selected groups if readonly property set to true', (done) => {
+        it('should not be able to remove pre-selected groups if readonly property set to true', (done) => {
             fixture.detectChanges();
-            const preselectedGroups = [
+            component.preSelectGroups = [
                 { id: mockIdentityGroups[0].id, name: mockIdentityGroups[0].name, readonly: true },
                 { id: mockIdentityGroups[1].id, name: mockIdentityGroups[1].name, readonly: true }
             ];
-            component.preSelectGroups = preselectedGroups;
-            const change = new SimpleChange(null, preselectedGroups, false);
+            component.mode = 'multiple';
+            component.readOnly = true;
+
+            spyOn(component.removeGroup, 'emit');
+            component.onRemove(component.preSelectGroups[1]);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(component.removeGroup.emit).not.toHaveBeenCalled();
+                done();
+            });
+        });
+
+        it('Should not show remove icon for pre-selected groups if readonly property set to true', (done) => {
+            fixture.detectChanges();
+            component.preSelectGroups = [
+                { id: mockIdentityGroups[0].id, name: mockIdentityGroups[0].name, readonly: true },
+                { id: mockIdentityGroups[1].id, name: mockIdentityGroups[1].name, readonly: true }
+            ];
+            const change = new SimpleChange(null, component.preSelectGroups, false);
             component.mode = 'multiple';
             component.ngOnChanges({ 'preSelectGroups': change });
             fixture.detectChanges();
@@ -471,12 +489,11 @@ describe('GroupCloudComponent', () => {
 
         it('Should be able to remove preselected groups if readonly property set to false', (done) => {
             fixture.detectChanges();
-            const preselectedGroups = [
+            component.preSelectGroups = [
                 { id: mockIdentityGroups[0].id, name: mockIdentityGroups[0].name, readonly: false },
                 { id: mockIdentityGroups[1].id, name: mockIdentityGroups[1].name, readonly: false }
             ];
-            component.preSelectGroups = preselectedGroups;
-            const change = new SimpleChange(null, preselectedGroups, false);
+            const change = new SimpleChange(null, component.preSelectGroups, false);
             component.mode = 'multiple';
             const removeGroupSpy = spyOn(component.removeGroup, 'emit');
             component.ngOnChanges({ 'preSelectGroups': change });
