@@ -96,7 +96,7 @@
       }
     },
     "FOLDER_DIALOG": {
-      "CREATE_FOLDER_TITLE": "Créer un nouveau filtre",
+      "CREATE_FOLDER_TITLE": "Créer un nouveau dossier",
       "EDIT_FOLDER_TITLE": "Modifier le dossier",
       "FOLDER_NAME": {
         "LABEL": "Nom",
