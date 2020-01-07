@@ -123,6 +123,7 @@ export class ThumbnailService {
         'audio/ogg': './assets/images/ft_ic_audio.svg',
         'audio/wav': './assets/images/ft_ic_audio.svg',
         'audio/basic': './assets/images/ft_ic_audio.svg',
+        'audio/mp3': './assets/images/ft_ic_audio.svg',
         'audio/mp4': './assets/images/ft_ic_audio.svg',
         'audio/vnd.adobe.soundbooth': './assets/images/ft_ic_audio.svg',
         'audio/vorbis': './assets/images/ft_ic_audio.svg',
