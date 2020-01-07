@@ -17,13 +17,16 @@
 
 import { ApiService } from '../api.service';
 import { Logger } from '../../utils/logger';
+import { QueryService } from './query.service';
 
 export class TasksService {
 
     api: ApiService;
+    queryService: QueryService;
 
     constructor(api: ApiService) {
         this.api = api;
+        this.queryService = new QueryService(api);
     }
 
     async createStandaloneTask(taskName: string, appName: string, options?: Object): Promise<any> {
@@ -73,7 +76,15 @@ export class TasksService {
         } catch (error) {
             Logger.error('Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
+    }
 
+    async completeTaskOfAProcess(processId: string, appName: string): Promise<any> {
+        try {
+            const task = await this.queryService.getProcessInstanceTasks(processId, appName);
+            return await this.completeTask(task.list.entries[0].entry.id, appName);
+        } catch (error) {
+            Logger.error('Claim or Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+        }
     }
 
     async claimTask(taskId: string, appName: string): Promise<any> {
