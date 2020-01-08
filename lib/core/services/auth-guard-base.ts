@@ -78,6 +78,8 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
             const pathToLogin = this.getLoginRoute();
             const urlToRedirect = `/${pathToLogin}?redirectUrl=${url}`;
 
+            this.dialog.closeAll();
+
             this.router.navigateByUrl(urlToRedirect);
         }
     }
