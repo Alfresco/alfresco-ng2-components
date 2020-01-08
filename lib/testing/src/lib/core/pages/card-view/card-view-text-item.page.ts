@@ -45,7 +45,6 @@ export class CardTextItemPage {
     async clickOnToggleTextField(): Promise<void> {
         const toggleText: ElementFinder = this.rootElement.element(this.toggle);
         await BrowserActions.click(toggleText);
-        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.textField));
     }
 
     async enterTextField(text: string): Promise<void> {

@@ -168,6 +168,10 @@ export class DataTableComponentPage {
         return this.rootElement.all(this.rows).count();
     }
 
+    async waitForFirstRow(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(this.rows).first());
+    }
+
     async getAllRowsColumnValues(column: string) {
         const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title='" + column + "'] span");
         await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first());

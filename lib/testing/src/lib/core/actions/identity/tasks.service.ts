@@ -73,7 +73,6 @@ export class TasksService {
         } catch (error) {
             Logger.error('Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
-
     }
 
     async claimTask(taskId: string, appName: string): Promise<any> {
