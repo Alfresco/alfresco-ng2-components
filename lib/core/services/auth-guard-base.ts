@@ -30,11 +30,12 @@ import {
 } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material';
-import * as _minimatch from 'minimatch';
-
-const minimatch = _minimatch;
+import { Oauth2Auth, AlfrescoApi } from '@alfresco/js-api';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
+
+    oauth2Auth: Oauth2Auth;
+
     abstract checkLogin(
         activeRoute: ActivatedRouteSnapshot,
         redirectUrl: string
@@ -52,7 +53,13 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         protected router: Router,
         protected appConfigService: AppConfigService,
         protected dialog: MatDialog
-    ) {}
+    ) {
+        if(this.authenticationService.isOauth())
+        {
+            const apiService = new AlfrescoApi(this.appConfigService.config);
+            this.oauth2Auth = new Oauth2Auth(this.appConfigService.config, apiService);
+        }
+    }
 
     canActivate(
         route: ActivatedRouteSnapshot,
@@ -75,7 +82,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected redirectToUrl(provider: string, url: string) {
-        if (!this.isSilentLogin() || !this.isPublicUrl()) {
+        if (!this.isSilentLogin() || this.isSilentLogin() && this.oauth2Auth && !this.oauth2Auth.isPublicUrl()) {
             this.authenticationService.setRedirect({ provider, url });
 
             const pathToLogin = this.getLoginRoute();
@@ -112,19 +119,5 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         );
 
         return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
-    }
-
-    protected isPublicUrl(): boolean {
-        const oauth = this.appConfigService.get<OauthConfigModel>(
-            AppConfigValues.OAUTHCONFIG,
-            null
-        );
-
-        if (Array.isArray(oauth.publicUrls)) {
-            return oauth.publicUrls.length &&
-                oauth.publicUrls.some((urlPattern: string) => minimatch(window.location.href, urlPattern));
-        }
-
-        return false;
     }
 }
