@@ -54,8 +54,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         protected appConfigService: AppConfigService,
         protected dialog: MatDialog
     ) {
-        if(this.authenticationService.isOauth())
-        {
+        if (this.authenticationService.isOauth()) {
             const apiService = new AlfrescoApi(this.appConfigService.config);
             this.oauth2Auth = new Oauth2Auth(this.appConfigService.config, apiService);
         }
