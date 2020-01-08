@@ -30,6 +30,9 @@ import {
 } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material';
+import * as _minimatch from 'minimatch';
+
+const minimatch = _minimatch;
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     abstract checkLogin(
@@ -72,7 +75,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected redirectToUrl(provider: string, url: string) {
-        if (!this.isSilentLogin()) {
+        if (!this.isSilentLogin() || !this.isPublicUrl()) {
             this.authenticationService.setRedirect({ provider, url });
 
             const pathToLogin = this.getLoginRoute();
@@ -109,5 +112,19 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         );
 
         return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
+    }
+
+    protected isPublicUrl(): boolean {
+        const oauth = this.appConfigService.get<OauthConfigModel>(
+            AppConfigValues.OAUTHCONFIG,
+            null
+        );
+
+        if (Array.isArray(oauth.publicUrls)) {
+            return oauth.publicUrls.length &&
+                oauth.publicUrls.some((urlPattern: string) => minimatch(window.location.href, urlPattern));
+        }
+
+        return false;
     }
 }
