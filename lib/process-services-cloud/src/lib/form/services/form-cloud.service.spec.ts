@@ -174,11 +174,11 @@ describe('Form Cloud service', () => {
             oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
             const formId = 'form-id';
 
-            service.completeTaskForm(appName, taskId, processInstanceId, formId, {}, '').subscribe((result: any) => {
+            service.completeTaskForm(appName, taskId, processInstanceId, formId, {}, '', 1).subscribe((result: any) => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(result.name).toBe('name');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/form/v1/forms/${formId}/submit`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/form/v1/forms/${formId}/submit/versions/1`)).toBeTruthy();
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('POST');
                 done();
             });
