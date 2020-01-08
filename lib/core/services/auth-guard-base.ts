@@ -30,11 +30,8 @@ import {
 } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material';
-import { Oauth2Auth, AlfrescoApi } from '@alfresco/js-api';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
-
-    oauth2Auth: Oauth2Auth;
 
     abstract checkLogin(
         activeRoute: ActivatedRouteSnapshot,
@@ -53,12 +50,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         protected router: Router,
         protected appConfigService: AppConfigService,
         protected dialog: MatDialog
-    ) {
-        if (this.authenticationService.isOauth()) {
-            const apiService = new AlfrescoApi(this.appConfigService.config);
-            this.oauth2Auth = new Oauth2Auth(this.appConfigService.config, apiService);
-        }
-    }
+    ) {}
 
     canActivate(
         route: ActivatedRouteSnapshot,
@@ -70,11 +62,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
             this.dialog.closeAll();
         }
 
-        if (this.isSilentLogin() && this.oauth2Auth && !this.oauth2Auth.isPublicUrl()) {
-            return true;
-        }
-
-        return checkLogin;
+        return true;
     }
 
     canActivateChild(
