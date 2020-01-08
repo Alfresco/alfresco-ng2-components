@@ -278,6 +278,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     async validatePreselectGroups(): Promise<IdentityGroupModel[]> {
+        this.invalidGroups = [];
         let filteredPreselectGroups: IdentityGroupModel[];
         let validGroups: IdentityGroupModel[] = [];
 
@@ -383,15 +384,13 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onRemove(removedGroup: IdentityGroupModel) {
-        if (!this.readOnly) {
-            this.removeGroup.emit(removedGroup);
-            const indexToRemove = this.selectedGroups.findIndex((group: IdentityGroupModel) => {
-                return group.id === removedGroup.id;
-            });
-            this.selectedGroups.splice(indexToRemove, 1);
-            this.selectedGroups$.next(this.selectedGroups);
-            this.changedGroups.emit(this.selectedGroups);
-        }
+        this.removeGroup.emit(removedGroup);
+        const indexToRemove = this.selectedGroups.findIndex((group: IdentityGroupModel) => {
+            return group.id === removedGroup.id;
+        });
+        this.selectedGroups.splice(indexToRemove, 1);
+        this.selectedGroups$.next(this.selectedGroups);
+        this.changedGroups.emit(this.selectedGroups);
     }
 
     private resetSearchGroups() {

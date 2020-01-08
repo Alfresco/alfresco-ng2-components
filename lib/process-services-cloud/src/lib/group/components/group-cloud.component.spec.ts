@@ -439,24 +439,39 @@ describe('GroupCloudComponent', () => {
         });
     });
 
+    describe('Single Mode and Pre-selected groups with readonly mode', () => {
+        beforeEach(async( () => {
+            component.preSelectGroups = [
+                { id: mockIdentityGroups[0].id, name: mockIdentityGroups[0].name, readonly: true }
+            ];
+            component.mode = 'single';
+            component.readOnly = true;
+            fixture.detectChanges();
+        }));
+
+        it('should group input be disabled', () => {
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const groupInput = fixture.nativeElement.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
+                expect(groupInput.readOnly).toBeTruthy();
+            });
+        });
+    });
+
     describe('Multiple Mode with read-only', () => {
 
-        it('should not be able to remove pre-selected groups if readonly property set to true', (done) => {
-            fixture.detectChanges();
+        it('should group chip-list be disabled', () => {
             component.preSelectGroups = [
-                { id: mockIdentityGroups[0].id, name: mockIdentityGroups[0].name, readonly: true },
-                { id: mockIdentityGroups[1].id, name: mockIdentityGroups[1].name, readonly: true }
+                { id: mockIdentityGroups[0].id, name: mockIdentityGroups[0].name },
+                { id: mockIdentityGroups[1].id, name: mockIdentityGroups[1].name }
             ];
             component.mode = 'multiple';
             component.readOnly = true;
-
-            spyOn(component.removeGroup, 'emit');
-            component.onRemove(component.preSelectGroups[1]);
-
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(component.removeGroup.emit).not.toHaveBeenCalled();
-                done();
+                const matChipList = fixture.nativeElement.querySelector('mat-chip-list');
+                expect(matChipList.attributes['ng-reflect-disabled'].value).toBeTruthy();
             });
         });
 

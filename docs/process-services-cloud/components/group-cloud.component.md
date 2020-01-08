@@ -26,9 +26,10 @@ Searches Groups.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` |  | Name of the application. If specified this shows the users who have access to the app. |
+| appName | `string` |  | Name of the application. If specified this shows the groups who have access to the app. |
+| readOnly | `boolean` | false | readOnly mode (true/false). |
 | mode | `string` |  | User selection mode (single/multiple). |
-| preSelectGroups | [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]` | \[] | Array of users to be pre-selected. This pre-selects all users in multi selection mode and only the first user of the array in single selection mode. |
+| preSelectGroups | [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]` | \[] | Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode. |
 | roles | `string[]` | \[] | Role names of the groups to be listed. |
 | searchGroupsControl | `FormControl` | new FormControl() | FormControl to search the group |
 | title | `string` |  | Title of the field |
@@ -94,6 +95,20 @@ export class MyComponent {
 ```
 
 ### Read-only
+
+You can use `readonly` property to set the component in `readonly` mode. Readonly mode will disable any interaction with the component.
+
+```html
+<adf-cloud-group
+    [appName]="'simple-app'"
+    [mode]="'multiple'"
+    [preSelectGroups]="groups"
+    [readOnly]="true">
+</adf-cloud-group>
+```
+
+If you want to manage each group seperately you can set their readonly property at your preference.
+You need to have component's readonly property set to false. Component's readonly mode overwrites groups level.
 
 You can use `readonly` property to make preselected groups read-only in `multiple` mode.
 

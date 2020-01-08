@@ -25,6 +25,7 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | Name of the application. If specified, this shows the users who have access to the app. |
+| readOnly | `boolean` | false | readOnly mode (true/false). |
 | mode | `string` |  | User selection mode (single/multiple). |
 | preSelectUsers | [`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]` |  | Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username |
 | roles | `string[]` |  | Role names of the users to be listed. |
@@ -44,7 +45,19 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 
 ### Read-only
 
-You can use `readonly` property to make preselected users read-only in `multiple` mode.
+You can use `readonly` property to set the component in `readonly` mode. Readonly mode will disable any interaction with the component.
+
+```html
+<adf-cloud-people
+    [appName]="'simple-app'"
+    [mode]="'multiple'"
+    [preSelectUsers]="preSelectUsers"
+    [readOnly]="true">
+</adf-cloud-people>
+```
+
+If you want to manage each user seperately you can set their readonly property at your preference.
+You need to have component's readonly property set to false. Component's readonly mode overwrites users level.
 
 ```ts
 const preSelectUsers = [
@@ -55,7 +68,7 @@ const preSelectUsers = [
 ```
 ```html
 <adf-cloud-people
-    [mode]="'multiple'",
+    [mode]="'multiple'"
     [preSelectUsers]="preSelectUsers">
 </adf-cloud-people>
 ```

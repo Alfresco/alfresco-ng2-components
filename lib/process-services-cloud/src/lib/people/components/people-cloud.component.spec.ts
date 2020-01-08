@@ -360,6 +360,25 @@ describe('PeopleCloudComponent', () => {
         });
     });
 
+    describe('Single Mode and Pre-selected users with readonly mode', () => {
+
+        beforeEach(async( () => {
+            component.preSelectUsers = [
+                { id: mockUsers[0].id, username: mockUsers[0].username }
+            ];
+            component.readOnly = true;
+            fixture.detectChanges();
+        }));
+
+        it('should people input be disabled', () => {
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const peopleInput = fixture.nativeElement.querySelector('[data-automation-id="adf-people-cloud-search-input"]');
+                expect(peopleInput.readOnly).toBeTruthy();
+            });
+        });
+    });
+
     describe('Single Mode and Pre-selected users with no validate flag', () => {
 
         beforeEach(async(() => {
@@ -449,22 +468,18 @@ describe('PeopleCloudComponent', () => {
 
     describe('Multiple Mode with read-only mode', () => {
 
-        it('should not be able to remove pre-selected people if readonly property set to true', (done) => {
-            fixture.detectChanges();
+        it('should people chip-list be disabled', () => {
             component.preSelectUsers = [
                 { id: mockUsers[0].id, username: mockUsers[0].username },
                 { id: mockUsers[1].id, username: mockUsers[1].username }
             ];
             component.mode = 'multiple';
             component.readOnly = true;
-
-            spyOn(component.removeUser, 'emit');
-            component.onRemove(component.preSelectUsers[1]);
-
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(component.removeUser.emit).not.toHaveBeenCalled();
-                done();
+                const matChipList = fixture.nativeElement.querySelector('mat-chip-list');
+                expect(matChipList.attributes['ng-reflect-disabled'].value).toBeTruthy();
             });
         });
 

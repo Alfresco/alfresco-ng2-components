@@ -1,7 +1,7 @@
 <form>
     <mat-form-field class="adf-people-cloud">
         <mat-label id="adf-people-cloud-title-id">{{ title | translate }}</mat-label>
-        <mat-chip-list #userChipList *ngIf="isMultipleMode(); else singleSelection">
+        <mat-chip-list #userChipList [disabled]="readOnly" data-automation-id="adf-cloud-people-chip-list" *ngIf="isMultipleMode(); else singleSelection">
         <mat-chip
             *ngFor="let user of selectedUsers$ | async"
             [removable]="!(user.readonly)"
@@ -30,6 +30,7 @@
 
         <ng-template #singleSelection>
         <input matInput
+            [readonly]="readOnly"
             (focus)="setFocus(true)"
             (blur)="setFocus(false)"
             class="adf-cloud-input"

@@ -1,7 +1,7 @@
 <div class="adf-cloud-group">
 <mat-form-field>
     <mat-label id="adf-group-cloud-title-id">{{ (title || 'ADF_CLOUD_GROUPS.SEARCH-GROUP') | translate }}</mat-label>
-    <mat-chip-list #groupChipList *ngIf="isMultipleMode()" [disabled]="isDisabled" data-automation-id="adf-cloud-group-chip-list" class="apa-group-chip-list">
+    <mat-chip-list #groupChipList *ngIf="isMultipleMode()" [disabled]="readOnly" data-automation-id="adf-cloud-group-chip-list" class="apa-group-chip-list">
       <mat-chip
         *ngFor="let group of selectedGroups$ | async"
         [removable]="!(group.readonly)"
@@ -31,6 +31,7 @@
       matInput
       class="adf-group-input"
       data-automation-id="adf-cloud-group-search-input"
+      [readonly]="readOnly"
       (focus)="setFocus(true)"
       (blur)="setFocus(false)"
       [formControl]="searchGroupsControl"
