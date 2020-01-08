@@ -70,6 +70,10 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
             this.dialog.closeAll();
         }
 
+        if (this.isSilentLogin() && this.oauth2Auth && !this.oauth2Auth.isPublicUrl()) {
+            return true;
+        }
+
         return checkLogin;
     }
 
@@ -81,7 +85,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected redirectToUrl(provider: string, url: string) {
-        if (!this.isSilentLogin() || this.isSilentLogin() && this.oauth2Auth && !this.oauth2Auth.isPublicUrl()) {
+        if (!this.isSilentLogin()) {
             this.authenticationService.setRedirect({ provider, url });
 
             const pathToLogin = this.getLoginRoute();

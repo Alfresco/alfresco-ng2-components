@@ -108,8 +108,7 @@ describe('AuthGuardService ECM', () => {
         spyOn(authGuardEcm.oauth2Auth, 'isPublicUrl').and.returnValue(false);
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
-        expect(authGuardEcm.canActivate(null, route)).toBeFalsy();
-        expect(router.navigateByUrl).toHaveBeenCalled();
+        expect(authGuardEcm.canActivate(null, route)).toBeTruthy();
     }));
 
     it('should redirect url if NOT logged in and isOAuth but no silentLogin configured', async(() => {
