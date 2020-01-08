@@ -57,7 +57,7 @@ describe('Auth Guard SSO role service', () => {
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { 'roles': ['role1', 'role2'] };
 
-        expect(authGuard.canActivate(router)).toBeFalsy();
+        expect(authGuard.canActivate(router)).toBeTruthy();
     }));
 
     it('Should not redirect if canActivate is', async(() => {
@@ -78,7 +78,7 @@ describe('Auth Guard SSO role service', () => {
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
 
-        expect(authGuard.canActivate(router)).toBeFalsy();
+        expect(authGuard.canActivate(router)).toBeTruthy();
     }));
 
     it('Should canActivate return false if the realm_access is not present', async(() => {
@@ -87,10 +87,10 @@ describe('Auth Guard SSO role service', () => {
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
 
-        expect(authGuard.canActivate(router)).toBeFalsy();
+        expect(authGuard.canActivate(router)).toBeTruthy();
     }));
 
-    it('Should redirect to the redirectURL if canActivate is false and redirectUrl is in data', async(() => {
+    it('Should redirect to the redirectURL if canActivate is true and redirectUrl is in data', async(() => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({});
         spyOn(routerService, 'navigate').and.stub();
@@ -98,11 +98,11 @@ describe('Auth Guard SSO role service', () => {
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { 'roles': ['role1', 'role2'], 'redirectUrl': 'no-role-url' };
 
-        expect(authGuard.canActivate(router)).toBeFalsy();
+        expect(authGuard.canActivate(router)).toBeTruthy();
         expect(routerService.navigate).toHaveBeenCalledWith(['/no-role-url']);
     }));
 
-    it('Should not redirect if canActivate is false and redirectUrl is not in  data', async(() => {
+    it('Should not redirect if canActivate is true and redirectUrl is not in  data', async(() => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({});
         spyOn(routerService, 'navigate').and.stub();
@@ -110,11 +110,11 @@ describe('Auth Guard SSO role service', () => {
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { 'roles': ['role1', 'role2'] };
 
-        expect(authGuard.canActivate(router)).toBeFalsy();
+        expect(authGuard.canActivate(router)).toBeTruthy();
         expect(routerService.navigate).not.toHaveBeenCalled();
     }));
 
-    it('Should canActivate be false hasRealm is true and hasClientRole is false', () => {
+    it('Should canActivate be false hasRealm is true and hasClientRole is true', () => {
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         spyOn(jwtHelperService, 'hasRealmRoles').and.returnValue(true);
         spyOn(jwtHelperService, 'hasRealmRolesForClientRole').and.returnValue(false);
@@ -122,10 +122,10 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'fakeapp' };
         route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
 
-        expect(authGuard.canActivate(route)).toBeFalsy();
+        expect(authGuard.canActivate(route)).toBeTruthy();
     });
 
-    it('Should canActivate be false if hasRealm is false and hasClientRole is true', () => {
+    it('Should canActivate be false if hasRealm is true and hasClientRole is true', () => {
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         spyOn(jwtHelperService, 'hasRealmRoles').and.returnValue(false);
         spyOn(jwtHelperService, 'hasRealmRolesForClientRole').and.returnValue(true);
@@ -133,7 +133,7 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'fakeapp' };
         route.data = { 'clientRoles': ['fakeapp'], 'roles': ['role1', 'role2'] };
 
-        expect(authGuard.canActivate(route)).toBeFalsy();
+        expect(authGuard.canActivate(route)).toBeTruthy();
     });
 
     it('Should canActivate be true if both Real Role and Client Role are present int the JWT token', () => {
@@ -163,10 +163,10 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'fakeapp' };
         route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
 
-        expect(authGuard.canActivate(route)).toBeFalsy();
+        expect(authGuard.canActivate(route)).toBeTruthy();
     });
 
-    it('Should canActivate be false hasRealm is true and hasClientRole is false', () => {
+    it('Should canActivate be false hasRealm is true and hasClientRole is true', () => {
         const materialDialog = TestBed.get(MatDialog);
 
         spyOn(materialDialog, 'closeAll');
@@ -178,7 +178,7 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'fakeapp' };
         route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
 
-        expect(authGuard.canActivate(route)).toBeFalsy();
+        expect(authGuard.canActivate(route)).toBeTruthy();
         expect(materialDialog.closeAll).toHaveBeenCalled();
     });
 
