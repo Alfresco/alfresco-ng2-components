@@ -1,5 +1,5 @@
 <div class="row-editor mdl-shadow--2dp"
-    [class.row-editor__invalid]="!validationSummary.isValid">
+     [class.row-editor__invalid]="!validationSummary.isValid">
     <div class="mdl-grid" *ngFor="let column of table.columns">
         <div class="mdl-cell mdl-cell--6-col" [ngSwitch]="column.type">
             <div *ngSwitchCase="'Dropdown'">
@@ -8,29 +8,36 @@
                     [row]="row"
                     [column]="column">
                 </adf-dropdown-editor>
-                </div>
-                <div *ngSwitchCase="'Date'">
-                    <adf-date-editor
+            </div>
+            <div *ngSwitchCase="'Date'">
+                <adf-date-editor
                     [table]="table"
                     [row]="row"
                     [column]="column">
                 </adf-date-editor>
-                </div>
-                <div *ngSwitchCase="'Datetime'">
-                    <adf-datetime-editor
-                        [table]="table"
-                        [row]="row"
-                        [column]="column">
-                    </adf-datetime-editor>
-                </div>
-                <div *ngSwitchCase="'Boolean'">
+            </div>
+            <div *ngSwitchCase="'Datetime'">
+                <adf-datetime-editor
+                    [table]="table"
+                    [row]="row"
+                    [column]="column">
+                </adf-datetime-editor>
+            </div>
+            <div *ngSwitchCase="'Boolean'">
                 <adf-boolean-editor
                     [table]="table"
                     [row]="row"
                     [column]="column">
                 </adf-boolean-editor>
-                </div>
-                <div *ngSwitchDefault>
+            </div>
+            <div *ngSwitchCase="'Amount'">
+                <adf-amount-editor
+                    [table]="table"
+                    [row]="row"
+                    [column]="column">
+                </adf-amount-editor>
+            </div>
+            <div *ngSwitchDefault>
                 <adf-text-editor
                     [table]="table"
                     [row]="row"
