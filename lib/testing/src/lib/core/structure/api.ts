@@ -15,9 +15,28 @@
  * limitations under the License.
  */
 
-export * from './actions/public-api';
-export * from './pages/public-api';
-export * from './models/public-api';
-export * from './dialog/public-api';
-export * from './utils/public-api';
-export * from './structure/public-api';
+import { AlfrescoApi } from '@alfresco/js-api';
+import { browser } from 'protractor';
+
+export abstract class Api {
+  public api: AlfrescoApi;
+  testConfig = browser.params;
+
+  constructor(root: string) {
+    this.api  = this.configureApi(root);
+  }
+
+  private configureApi(root: string): AlfrescoApi {
+    const config = browser.params.adminapp.apiConfig;
+    return new AlfrescoApi({
+      provider: 'BPM',
+      authType: config.authType,
+      oauth2: config.oauth2,
+      hostBpm: config.bpmHost  + '/' + root
+    });
+  }
+
+  abstract setUp(): Promise<Api>;
+
+  abstract tearDown();
+}
