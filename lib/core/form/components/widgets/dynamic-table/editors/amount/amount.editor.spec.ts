@@ -31,7 +31,7 @@ describe('AmountEditorComponent', () => {
         const row = <DynamicTableRow> { value: {} };
         const column = <DynamicTableColumn> { id: 'key' };
 
-        const value = '<value>';
+        const value = 100;
         const event = { target: { value } };
 
         editor.onValueChanged(row, column, event);
