@@ -28,8 +28,10 @@ import * as fs from 'fs';
 import { logger } from './logger';
 
 export interface ConfigArgs {
-    username: string;
-    password: string;
+    modelerUsername: string;
+    modelerPassword: string;
+    devopsUsername: string;
+    devopsPassword: string;
     clientId: string;
     host: string;
     oauth: string;
@@ -88,9 +90,9 @@ function getAlfrescoJsApiInstance(args: ConfigArgs) {
 async function login(args: ConfigArgs, alfrescoJsApi: any) {
     logger.info(`Perform login...`);
     try {
-    await alfrescoJsApi.login(args.username, args.password);
+    await alfrescoJsApi.login(args.modelerUsername, args.modelerPassword);
     } catch (error) {
-        logger.error(`Not able to login. Credentials ${args.username}:${args.password} are not valid`);
+        logger.error(`Not able to login. Credentials ${args.modelerUsername}:${args.modelerPassword} are not valid`);
         process.exit(1);
     }
     return alfrescoJsApi;
@@ -241,6 +243,44 @@ async function sleep(time: number) {
     return;
 }
 
+async function initConfiguration(args: ConfigArgs) {
+    browser = {
+        params: {
+            config: {
+                log: true
+            },
+            adminapp: {
+                apiConfig: {
+                    authType: 'OAUTH',
+                    identityHost: args.identityHost,
+                    oauth2: {
+                        host: args.oauth,
+                        authPath: '/protocol/openid-connect/token/',
+                        clientId: args.clientId,
+                        scope: 'openid',
+                        implicitFlow: false,
+                        redirectUri: ''
+                    },
+                    bpmHost: args.host,
+                    providers: 'BPM'
+                },
+                modeler: args.modelerUsername,
+                modeler_password: args.modelerPassword,
+                devops: args.devopsUsername,
+                devops_password: args.devopsPassword,
+            }
+        }
+    };
+
+    global['protractor'] = {browser: browser};
+
+    deploymentAPI = new DeploymentAPI();
+    modelingAPI = new ModelingAPI();
+
+    await deploymentAPI.setUp();
+    await modelingAPI.setUp();
+}
+
 export default async function (args: ConfigArgs) {
     await main(args);
 }
@@ -262,43 +302,7 @@ async function main(args: ConfigArgs) {
         program.outputHelp();
     }
 
-    browser = {
-        params: {
-            config: {
-                log: true
-            },
-            adminapp: {
-                apiConfig: {
-                    authType: 'OAUTH',
-                    identityHost: args.identityHost,
-                    oauth2: {
-                        host: args.oauth,
-                        authPath: '/protocol/openid-connect/token/',
-                        clientId: args.clientId,
-                        scope: 'openid',
-                        implicitFlow: false,
-                        redirectUri: ''
-                    },
-                    bpmHost: args.host,
-                    providers: 'BPM'
-                },
-                superadmin: 'superadmin',
-                superadmin_password: '',
-                modeler: 'modeler',
-                modeler_password: 'password',
-                devops: 'devopsuser',
-                devops_password: 'password'
-            }
-        }
-    };
-
-    global['protractor'] = {browser: browser};
-
-    deploymentAPI = new DeploymentAPI();
-    modelingAPI = new ModelingAPI();
-
-    await deploymentAPI.setUp();
-    await modelingAPI.setUp();
+    await initConfiguration(args);
 
     const alfrescoJsApi = getAlfrescoJsApiInstance(args);
     await login(args, alfrescoJsApi);
