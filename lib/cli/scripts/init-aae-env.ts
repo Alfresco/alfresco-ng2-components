@@ -267,7 +267,7 @@ async function initConfiguration(args: ConfigArgs) {
                 modeler: args.modelerUsername,
                 modeler_password: args.modelerPassword,
                 devops: args.devopsUsername,
-                devops_password: args.devopsPassword,
+                devops_password: args.devopsPassword
             }
         }
     };
@@ -290,12 +290,14 @@ async function main(args: ConfigArgs) {
     program
         .version('0.1.0')
         .description('The following command is in charge of Initializing the activiti cloud env with the default apps' +
-            'adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --username "username" --password "password"')
+            'adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword"')
         .option('-h, --host [type]', 'Host gateway')
         .option('-o, --oauth [type]', 'Host sso server')
         .option('--clientId[type]', 'sso client')
-        .option('--username [type]', 'username')
-        .option('--password [type]', 'password')
+        .option('--modelerUsername [type]', 'username of a user with role ACTIVIT_MODELER')
+        .option('--modelerPassword [type]', 'modeler password')
+        .option('--devopsUsername [type]', 'username of a user with role ACTIVIT_DEVOPS')
+        .option('--devopsPassword [type]', 'devops password')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
