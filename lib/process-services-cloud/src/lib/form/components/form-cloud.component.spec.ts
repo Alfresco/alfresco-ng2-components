@@ -608,6 +608,7 @@ describe('FormCloudComponent', () => {
         formComponent.formCompleted.subscribe(() => completed = true);
 
         const taskId = '123-223';
+        const appVersion = 1;
         const appName = 'test-app';
         const processInstanceId = '333-444';
 
@@ -620,13 +621,14 @@ describe('FormCloudComponent', () => {
             ]
         });
 
+        formComponent.appVersion = appVersion;
         formComponent.form = formModel;
         formComponent.taskId = taskId;
         formComponent.appName = appName;
         formComponent.processInstanceId = processInstanceId;
         formComponent.completeTaskForm(outcome);
 
-        expect(formCloudService.completeTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, processInstanceId, formModel.id, formModel.values, outcome);
+        expect(formCloudService.completeTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, processInstanceId, formModel.id, formModel.values, outcome, appVersion);
         expect(completed).toBeTruthy();
     });
 

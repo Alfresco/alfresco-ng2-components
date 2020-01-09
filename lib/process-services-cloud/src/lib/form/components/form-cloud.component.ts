@@ -291,7 +291,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     completeTaskForm(outcome?: string) {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
-                .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome)
+                .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe(
                     () => {
