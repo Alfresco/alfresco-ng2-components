@@ -1,6 +1,6 @@
 <div class="adf-attach-widget {{field.className}}"
-    [class.adf-invalid]="!field.isValid"
-    [class.adf-readonly]="field.readOnly">
+     [class.adf-invalid]="!field.isValid"
+     [class.adf-readonly]="field.readOnly">
     <label class="adf-label" [attr.for]="field.id">{{field.name}}
         <span *ngIf="isRequired()">*</span>
     </label>
@@ -10,26 +10,27 @@
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
                 <mat-icon>file_upload</mat-icon>
                 <input #uploadFiles
-                        [multiple]="multipleOption"
-                        type="file"
-                        [id]="field.id"
-                        (change)="onAttachFileChanged($event)"/>
+                       [multiple]="multipleOption"
+                       type="file"
+                       [id]="field.id"
+                       (change)="onAttachFileChanged($event)"/>
             </a>
         </div>
         <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
             <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id">
-                    {{ 'FORM.FIELD.UPLOAD' | translate }}
-                    <mat-icon>attach_file</mat-icon>
+                {{ 'FORM.FIELD.UPLOAD' | translate }}
+                <mat-icon>attach_file</mat-icon>
             </button>
             <mat-menu #menu="matMenu" class="adf-attach-widget__menu-content">
                 <div *ngIf="isContentSourceSelected()">
                     <button mat-menu-item
                             id="attach-{{field.params?.fileSource?.name}}"
-                           (click)="uploadFileFromCS()">
-                           {{field.params?.fileSource?.name}}
-                            <mat-icon>
-                                <img alt="alfresco" class="adf-attach-widget__image-logo" src="../assets/images/alfresco-flower.svg">
-                            </mat-icon>
+                            (click)="uploadFileFromCS()">
+                        {{field.params?.fileSource?.name}}
+                        <mat-icon>
+                            <img alt="alfresco" class="adf-attach-widget__image-logo"
+                                 src="../assets/images/alfresco-flower.svg">
+                        </mat-icon>
                     </button>
                 </div>
             </mat-menu>
@@ -53,12 +54,12 @@
             </button>
             <mat-menu #fileActionMenu="matMenu" xPosition="before">
                 <button id="{{'file-'+file?.id+'-show-file'}}"
-                    mat-menu-item (click)="onAttachFileClicked(file)">
+                        mat-menu-item (click)="onAttachFileClicked(file)">
                     <mat-icon>image</mat-icon>
                     <span>{{ 'FORM.FIELD.SHOW_FILE' | translate }}</span>
                 </button>
                 <button id="{{'file-'+file?.id+'-download-file'}}"
-                    mat-menu-item (click)="downloadContent(file)">
+                        mat-menu-item (click)="downloadContent(file)">
                     <mat-icon>file_download</mat-icon>
                     <span>{{ 'FORM.FIELD.DOWNLOAD_FILE' | translate }}</span>
                 </button>
@@ -71,6 +72,10 @@
             </mat-menu>
         </mat-list-item>
     </mat-list>
+    <div *ngIf="!hasFile && field.readOnly" id="{{'adf-attach-empty-list-'+field.id}}">
+        {{ 'FORM.FIELD.NO_FILE_ATTACHED' | translate }}
+    </div>
+
 </div>
 
 <error-widget [error]="field.validationSummary"></error-widget>
