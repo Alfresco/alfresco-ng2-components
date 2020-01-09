@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { ACTIVITI_CLOUD_APPS } from '@alfresco/adf-testing';
+import { ACTIVITI_CLOUD_APPS, DeploymentAPI, ModelingAPI } from '@alfresco/adf-testing';
 import * as program from 'commander';
 
 /* tslint:disable */
@@ -36,30 +36,15 @@ export interface ConfigArgs {
     identityHost: boolean;
 }
 
+let browser: any;
+let deploymentAPI: DeploymentAPI;
+let modelingAPI: ModelingAPI;
+
 export const AAE_MICROSERVICES = [
     'deployment-service',
     'modeling-service',
     'dmn-service'
 ];
-
-async function getDeployedApplicationsByStatus(args: ConfigArgs, apiService: any, status: string) {
-    const url = `${args.host}/deployment-service/v1/applications`;
-
-    const pathParams = {}, queryParams = {status: status},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-
-    let data;
-    try {
-        data = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-        return data.list.entries;
-    } catch (error) {
-        logger.error(`Not possible get the applications from deployment-service ${JSON.stringify(error)} `);
-        process.exit(1);
-    }
-
-}
 
 async function healthCheck(args: ConfigArgs, apiService: any, nameService: string, result: any) {
     const url = `${args.host}/${nameService}/actuator/health`;
@@ -111,64 +96,42 @@ async function login(args: ConfigArgs, alfrescoJsApi: any) {
     return alfrescoJsApi;
 }
 
-async function deployMissingApps(args: ConfigArgs, alfrescoJsApi: any) {
-    const deployedApps = await getDeployedApplicationsByStatus(args, alfrescoJsApi, '');
-    const absentApps = findMissingApps(deployedApps);
+async function deployMissingApps() {
+    const deployedApps = await deploymentAPI.getApplicationByStatus('');
+    const absentApps = findMissingApps(deployedApps.list.entries);
 
     if (absentApps.length > 0) {
         logger.warn(`Missing apps: ${JSON.stringify(absentApps)}`);
-        await checkIfAppIsReleased(args, alfrescoJsApi, absentApps);
+        await checkIfAppIsReleased(absentApps);
     } else {
         logger.warn(`All the apps are correctly deployed`);
     }
 }
 
-async function getAppProjects(args: ConfigArgs, apiService: any) {
-    const url = `${args.host}/modeling-service/v1/projects?maxItems=200&skipCount=0`;
-
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-
-    let data;
-    try {
-        data = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-        return data.list.entries;
-    } catch (error) {
-        logger.error(`Not possible get the application from modeling-service ` + error);
-        process.exit(1);
-    }
-}
-
-async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApps: any []) {
-    const projectList = await getAppProjects(args, apiService);
+async function checkIfAppIsReleased(absentApps: any []) {
+    const projectList = await modelingAPI.getProjects();
     let TIME = 5000;
     let noError = true;
 
     for (let i = 0; i < absentApps.length; i++) {
         noError = true;
         const currentAbsentApp = absentApps[i];
-        const app = projectList.find((currentApp: any) => {
+        const project = projectList.list.entries.find((currentApp: any) => {
             return currentAbsentApp.name === currentApp.entry.name;
         });
         let projectRelease: any;
 
-        if (app === undefined) {
+        if (project === undefined) {
 
             logger.warn('Missing project: Create the project for ' + currentAbsentApp.name);
 
             try {
-                const uploadedApp = await importProjectApp(args, apiService, currentAbsentApp);
-                logger.warn('Project imported ' + currentAbsentApp.name);
-                if (uploadedApp) {
-                    projectRelease = await releaseProject(args, apiService, uploadedApp);
-                }
+                projectRelease = await importProjectAndRelease(currentAbsentApp);
             } catch (error) {
                 logger.info(`error status ${error.status}`);
 
                 if (error.status !== 409) {
-                    logger.info(`Not possible to upload the project ${app.name} status  : ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
+                    logger.info(`Not possible to upload the project ${project.entry.name} status  : ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
                     process.exit(1);
                 } else {
                     logger.error(`Not possible to upload the project because inconsistency CS - Modelling try to delete manually the node`);
@@ -180,13 +143,13 @@ async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApp
 
             TIME += 5000;
 
-            logger.info('Project ' + app.entry.name + ' found');
+            logger.info('Project ' + project.entry.name + ' found');
 
-            const projectReleaseList = await getReleaseAppProjectId(args, apiService, app.entry.id);
+            const projectReleaseList = await modelingAPI.getProjectRelease(project.entry.id);
 
             if (projectReleaseList.list.entries.length === 0) {
                 logger.warn('Project needs release');
-                projectRelease = await releaseProject(args, apiService, app);
+                projectRelease = await modelingAPI.releaseProject(project.entry);
                 logger.warn(`Project released: ${projectRelease.id}`);
             } else {
                 logger.info('Project already has release');
@@ -203,139 +166,37 @@ async function checkIfAppIsReleased(args: ConfigArgs, apiService: any, absentApp
         }
 
         if (noError) {
-            await checkDescriptorExist(args, apiService, currentAbsentApp.name);
+            await checkDescriptorExist(currentAbsentApp.name);
             await sleep(TIME);
-            await deployApp(args, apiService, currentAbsentApp, projectRelease.entry.id);
+            const deployPayload = {
+                'name': currentAbsentApp.name,
+                'releaseId': projectRelease.entry.id,
+                'security': currentAbsentApp.security,
+                'infrastructure': currentAbsentApp.infrastructure,
+                'variables': currentAbsentApp.variables
+            };
+            await deploymentAPI.deploy(deployPayload);
         }
     }
 }
 
-async function deployApp(args: ConfigArgs, apiService: any, appInfo: any, projectReleaseId: string) {
-    logger.warn(`Deploy app ${appInfo.name} with projectReleaseId ${projectReleaseId}`);
-
-    const url = `${args.host}/deployment-service/v1/applications`;
-
-    const pathParams = {};
-    const bodyParam = {
-        'name': appInfo.name,
-        'releaseId': projectReleaseId,
-        'security': appInfo.security,
-        'infrastructure': appInfo.infrastructure,
-        'variables': appInfo.variables
-    };
-
-    logger.debug(`Deploy with body: ${JSON.stringify(bodyParam)}`);
-
-    const headerParams = {}, formParams = {}, queryParams = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-
-    try {
-        return await apiService.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-    } catch (error) {
-        logger.error(`Not possible to deploy the project ${appInfo.name} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
-        // await deleteSiteByName(name);
-        process.exit(1);
-    }
-}
-
-async function checkDescriptorExist(args: ConfigArgs, apiService: any, name: string) {
+async function checkDescriptorExist(name: string) {
     logger.info(`Check descriptor ${name} exist in the list `);
-    const descriptorList: [] = await getDescriptorList(args, apiService);
-    descriptorList.forEach( async(descriptor: any) => {
+    const descriptorList = await deploymentAPI.getDescriptors();
+    descriptorList.list.entries.forEach( async(descriptor: any) => {
         if (descriptor.entry.name === name) {
             if (descriptor.entry.deployed === false) {
-                await deleteDescriptor(args, apiService, descriptor.entry.name);
+                await deploymentAPI.deleteDescriptor(descriptor.entry.name);
             }
         }
     });
     return false;
 }
 
-async function getDescriptorList(args: ConfigArgs, apiService: any) {
-    const url = `${args.host}/deployment-service/v1/descriptors?page=0&size=50&sort=lastModifiedAt,desc`;
-
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-
-    let data;
-    try {
-        data = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-        return data.list.entries;
-    } catch (error) {
-        logger.error(`Not possible get the descriptors from deployment-service ${JSON.stringify(error)} `);
-    }
-
-}
-
-async function deleteDescriptor(args: ConfigArgs, apiService: any, name: string) {
-    logger.warn(`Delete the descriptor ${name}`);
-
-    const url = `${args.host}/deployment-service/v1/descriptors/${name}`;
-
-    const pathParams = {};
-    const bodyParam = {};
-
-    const headerParams = {}, formParams = {}, queryParams = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-
-    try {
-        return await apiService.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam, contentTypes, accepts);
-    } catch (error) {
-        logger.error(`Not possible to delete the descriptor ${name} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
-    }
-}
-
-async function releaseProject(args: ConfigArgs, apiService: any, app: any) {
-    const url = `${args.host}/modeling-service/v1/projects/${app.entry.id}/releases`;
-
-    logger.info(`Release ID  ${app.entry.id}`);
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-
-    try {
-        return await apiService.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-    } catch (error) {
-        logger.info(`Not possible to release the project ${app.entry.name} status  : $ \n ${JSON.stringify(error.status)}  \n ${JSON.stringify(error.response.text)}`);
-        process.exit(1);
-    }
-}
-
-async function getReleaseAppProjectId(args: ConfigArgs, apiService: any, projectId: string) {
-    const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
-
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-
-    try {
-        return await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-    } catch (error) {
-        logger.error(`Not possible to get the release of the project ${projectId} ` + JSON.stringify(error));
-        process.exit(1);
-    }
-
-}
-
-async function importProjectApp(args: ConfigArgs, apiService: any, app: any) {
+async function importProjectAndRelease(app: any) {
     await getFileFromRemote(app.file_location, app.name);
-
-    const file = fs.createReadStream(`${app.name}.zip`).on('error', () => {logger.error(`${app.name}.zip does not exist`); });
-
-    const url = `${args.host}/modeling-service/v1/projects/import`;
-
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {'file': file}, bodyParam = {},
-        contentTypes = ['multipart/form-data'], accepts = ['application/json'];
-
-    logger.warn(`import app ${app.file_location}`);
-    const result = await apiService.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
-        contentTypes, accepts);
+    logger.warn('Project imported ' + app.name);
+    const result = await modelingAPI.importAndReleaseProject(`${app.name}.zip`);
     deleteLocalFile(`${app.name}`);
     return result;
 }
@@ -384,7 +245,7 @@ export default async function (args: ConfigArgs) {
     await main(args);
 }
 
-async function main(args) {
+async function main(args: ConfigArgs) {
 
     program
         .version('0.1.0')
@@ -401,6 +262,44 @@ async function main(args) {
         program.outputHelp();
     }
 
+    browser = {
+        params: {
+            config: {
+                log: true
+            },
+            adminapp: {
+                apiConfig: {
+                    authType: 'OAUTH',
+                    identityHost: args.identityHost,
+                    oauth2: {
+                        host: args.oauth,
+                        authPath: '/protocol/openid-connect/token/',
+                        clientId: args.clientId,
+                        scope: 'openid',
+                        implicitFlow: false,
+                        redirectUri: ''
+                    },
+                    bpmHost: args.host,
+                    providers: 'BPM'
+                },
+                superadmin: 'superadmin',
+                superadmin_password: '',
+                modeler: 'modeler',
+                modeler_password: 'password',
+                devops: 'devopsuser',
+                devops_password: 'password'
+            }
+        }
+    };
+
+    global['protractor'] = {browser: browser};
+
+    deploymentAPI = new DeploymentAPI();
+    modelingAPI = new ModelingAPI();
+
+    await deploymentAPI.setUp();
+    await modelingAPI.setUp();
+
     const alfrescoJsApi = getAlfrescoJsApiInstance(args);
     await login(args, alfrescoJsApi);
 
@@ -412,7 +311,7 @@ async function main(args) {
 
     if (result.isValid) {
         logger.error('The envirorment is up and running');
-        await deployMissingApps(args, alfrescoJsApi);
+        await deployMissingApps();
     } else {
         logger.error('The envirorment is not up');
         process.exit(1);
