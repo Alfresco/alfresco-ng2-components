@@ -62,6 +62,8 @@ export class UserInfoComponent implements OnInit {
     @Input()
     namePosition: string = 'right';
 
+    mode: string;
+
     ecmUser$: Observable<EcmUserModel>;
     bpmUser$: Observable<BpmUserModel>;
     identityUser$: Observable<IdentityUserModel>;
@@ -80,22 +82,18 @@ export class UserInfoComponent implements OnInit {
     getUserInfo() {
         if (this.authService.isOauth()) {
             this.loadIdentityUserInfo();
+            this.mode = 'SSO';
         } else if (this.authService.isEcmLoggedIn() && this.authService.isBpmLoggedIn()) {
             this.loadEcmUserInfo();
             this.loadBpmUserInfo();
+            this.mode = 'ALL';
         } else if (this.authService.isEcmLoggedIn()) {
             this.loadEcmUserInfo();
+            this.mode = 'CONTENT';
         } else if (this.authService.isBpmLoggedIn()) {
             this.loadBpmUserInfo();
+            this.mode = 'PROCESS';
         }
-    }
-
-    isEcmLoggedIn() {
-        return this.authService.isEcmLoggedIn();
-    }
-
-    isBpmLoggedIn() {
-        return this.authService.isBpmLoggedIn();
     }
 
     onKeyPress(event: KeyboardEvent) {
