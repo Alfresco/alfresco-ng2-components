@@ -151,6 +151,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     ) {
         this.initFormError();
         this.initFormFieldsMessages();
+        if (this.authService.isOauth()) {
+            const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+            if (oauth && oauth.implicitFlow) {
+                this.implicitFlow = true;
+            }
+            if (oauth && oauth.silentLogin) {
+                this.implicitLogin();
+            }
+        }
     }
 
     ngOnInit() {
@@ -158,6 +167,9 @@ export class LoginComponent implements OnInit, OnDestroy {
             const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
             if (oauth && oauth.implicitFlow) {
                 this.implicitFlow = true;
+            }
+            if (oauth && oauth.silentLogin) {
+                this.implicitLogin();
             }
         }
 
