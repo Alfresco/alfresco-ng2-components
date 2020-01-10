@@ -838,6 +838,20 @@
           }
         }
       }
+    },
+    "cli": {
+      "root": "lib/cli",
+      "sourceRoot": "lib/cli",
+      "projectType": "library",
+      "prefix": "adf",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "lib/cli/tsconfig.json"
+          }
+        }
+      }
     }
   },
   "defaultProject": "dist"
