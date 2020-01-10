@@ -54,12 +54,12 @@ describe('AuthGuardService', () => {
         expect(router.navigateByUrl).not.toHaveBeenCalled();
     }));
 
-    it('if the alfresco js api is NOT logged in should canActivate be false', async(() => {
+    it('if the alfresco js api is NOT logged in should canActivate be true', async(() => {
         state.url = 'some-url';
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
 
-        expect(authGuard.canActivate(null, state)).toBeFalsy();
+        expect(authGuard.canActivate(null, state)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
@@ -78,7 +78,7 @@ describe('AuthGuardService', () => {
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = false;
 
-        expect(authGuard.canActivate(null, state)).toBeFalsy();
+        expect(authGuard.canActivate(null, state)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
@@ -88,7 +88,7 @@ describe('AuthGuardService', () => {
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = undefined;
 
-        expect(authGuard.canActivate(null, state)).toBeFalsy();
+        expect(authGuard.canActivate(null, state)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
@@ -98,7 +98,7 @@ describe('AuthGuardService', () => {
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = true;
 
-        expect(authGuard.canActivate(null, state)).toBeFalsy();
+        expect(authGuard.canActivate(null, state)).toBeTruthy();
         expect(router.navigateByUrl).not.toHaveBeenCalled();
     }));
 

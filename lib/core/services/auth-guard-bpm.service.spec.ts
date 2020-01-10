@@ -63,12 +63,12 @@ describe('AuthGuardService BPM', () => {
         expect(authGuard.canActivate(null, route)).toBeTruthy();
     }));
 
-    it('if the alfresco js api is NOT logged in should canActivate be false', async(() => {
+    it('if the alfresco js api is NOT logged in should canActivate be true', async(() => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         spyOn(router, 'navigateByUrl').and.stub();
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
-        expect(authGuard.canActivate(null, route)).toBeFalsy();
+        expect(authGuard.canActivate(null, route)).toBeTruthy();
     }));
 
     it('if the alfresco js api is NOT logged in should trigger a redirect event', async(() => {
@@ -78,7 +78,7 @@ describe('AuthGuardService BPM', () => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
-        expect(authGuard.canActivate(null, route)).toBeFalsy();
+        expect(authGuard.canActivate(null, route)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalledWith('/login?redirectUrl=some-url');
     }));
 
@@ -89,7 +89,7 @@ describe('AuthGuardService BPM', () => {
         appConfigService.config.oauth2.silentLogin = false;
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
-        expect(authGuard.canActivate(null, route)).toBeFalsy();
+        expect(authGuard.canActivate(null, route)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
@@ -100,7 +100,7 @@ describe('AuthGuardService BPM', () => {
         appConfigService.config.oauth2.silentLogin = undefined;
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
-        expect(authGuard.canActivate(null, route)).toBeFalsy();
+        expect(authGuard.canActivate(null, route)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
