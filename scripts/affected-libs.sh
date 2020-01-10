@@ -84,7 +84,7 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "core" ] ; then
-        AFFECTED_LIBS="core$ content-services$ process-services$ process-services-cloud$ insights$ extensions$ testing$"
+        AFFECTED_LIBS="core$ content-services$ process-services$ process-services-cloud$ insights$ extensions$ testing$ cli$"
         echo "${AFFECTED_LIBS}"
         exit 0
     fi
@@ -122,12 +122,19 @@ do
     fi
 done
 
-
 #process-services-cloud
 for i in "${libs[@]}"
 do
     if [ "$i" == "process-services-cloud" ] ; then
         AFFECTED_LIBS=$AFFECTED_LIBS" process-services-cloud$"
+    fi
+done
+
+#cli
+for i in "${libs[@]}"
+do
+    if [ "$i" == "cli" ] ; then
+        AFFECTED_LIBS=$AFFECTED_LIBS" cli$"
     fi
 done
 
