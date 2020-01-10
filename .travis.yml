@@ -56,11 +56,11 @@ before_install:
 jobs:
     include:
         # Run Only for any PR
-        - stage: Lint & Build Dist
-          name:  Lint & Build Dist
-          script:
-            - ./scripts/travis/build/build.sh || exit 1;
-            - ./scripts/lint.sh || exit 1;
+        # - stage: Lint & Build Dist
+        #   name:  Lint & Build Dist
+        #   script:
+        #     - ./scripts/travis/build/build.sh || exit 1;
+        #     - ./scripts/lint.sh || exit 1;
 
         # Run Only on Development and master
         - stage: Lint & Build Dist & Release
@@ -80,9 +80,9 @@ jobs:
         - stage: Unit test
           name: Unit test core extension demo
           script: ./scripts/travis/unit-test/core-extension-demo.sh
-        - stage: Unit test
-          name: Unit test process process-cloud insights
-          script: ./scripts/travis/unit-test/process.sh
+        # - stage: Unit test
+        #   name: Unit test process process-cloud insights
+        #   script: ./scripts/travis/unit-test/process.sh
 
 
         - stage: Update Children Projects
@@ -92,10 +92,10 @@ jobs:
           script: ./scripts/travis/release/git-tag.sh
 
 
-        - stage: e2e Test
+        - stage: Unit test
           name: core
           script: ./scripts/travis/e2e/core-e2e.sh
-        - stage: e2e Test
+        - stage: Unit test
           name:  content
           script: ./scripts/travis/e2e/content-services-e2e.sh
         - stage: e2e Test

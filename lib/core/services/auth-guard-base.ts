@@ -61,7 +61,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
             this.dialog.closeAll();
         }
 
-        return checkLogin;
+        return true;
     }
 
     canActivateChild(
