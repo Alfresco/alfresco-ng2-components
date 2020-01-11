@@ -181,7 +181,7 @@ function createTmpTable(podName: string, appName: string) {
 
 function dropTmpTable(podName: string) {
     logger.info('Perform drop tmp table...');
-    const query = `drop table query_table`;
+    const query = `drop table IF EXISTS query_table`;
     const response = exec('kubectl', [`exec`, `${podName}`, `--`,  `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`, `${query}` ], {});
     logger.info(response);
 }
@@ -200,10 +200,27 @@ function deleteRelease(podName: string) {
     logger.info(response);
 }
 
+function deleteInvolvedGroupsRelease(podName: string) {
+    logger.info('Perform delete release involved groups...');
+    const query = `delete from release_involved_groups where release_entity_id in (select id from release where release.project_id in (select query_table.project_id from query_table))`;
+    const response = exec('kubectl', [`exec`, `${podName}`, `--`,  `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`,  `${query}` ], {});
+    logger.info(response);
+}
+
+function deleteInvolvedUsersRelease(podName: string) {
+    logger.info('Perform delete release involved users...');
+    const query = `delete from release_involved_users where release_entity_id in (select id from release where release.project_id in (select query_table.project_id from query_table))`;
+    const response = exec('kubectl', [`exec`, `${podName}`, `--`,  `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`,  `${query}` ], {});
+    logger.info(response);
+}
+
 function deleteAllReleases(podName: string, appName: string) {
     logger.info(podName, appName);
+    dropTmpTable(podName);
     createTmpTable(podName, appName);
     deleteLatestRelease(podName);
+    deleteInvolvedGroupsRelease(podName);
+    deleteInvolvedUsersRelease(podName);
     deleteRelease(podName);
     dropTmpTable(podName);
 }

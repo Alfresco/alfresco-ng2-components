@@ -108,3 +108,11 @@ do
         ./scripts/build/build-testing.sh || exit 1;
     fi
 done
+
+#cli
+for i in "${libs[@]}"
+do
+    if [ "$i" == "cli$" ] ; then
+        ./scripts/build/build-cli.sh || exit 1;
+    fi
+done
