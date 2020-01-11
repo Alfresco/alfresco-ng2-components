@@ -142,7 +142,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /** Toggle search input rendering */
     @Input()
     set showSearch(value: boolean) {
-        if (value !== undefined || value !== null) {
+        if (value !== undefined && value !== null) {
             this._showSearch = value;
         }
     }
@@ -154,7 +154,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /** Toggle sites list dropdown rendering */
     @Input()
     set showDropdownSiteList(value: boolean) {
-        if (value !== undefined || value !== null) {
+        if (value !== undefined && value !== null) {
             this._showDropdownSiteList = value;
         }
     }
