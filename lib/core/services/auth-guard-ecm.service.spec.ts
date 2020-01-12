@@ -97,11 +97,22 @@ describe('AuthGuardService ECM', () => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
-        appConfigService.config.oauth2.silentLogin = true;
+
+        appConfigService.config.oauth2 = {
+            silentLogin: true,
+            host: 'http://localhost:6543',
+            redirectUri: '/',
+            clientId: 'activiti',
+            scope: 'openid'
+        };
+        const dialog = TestBed.get(MatDialog);
+        const authGuardEcm = new AuthGuardEcm(authService, router, appConfigService, dialog);
         appConfigService.config.oauth2.implicitFlow = true;
+        spyOn(authGuardEcm.oauth2Auth, 'isPublicUrl').and.returnValue(false);
+
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
-        expect(authGuard.canActivate(null, route)).toBeTruthy();
+        expect(authGuardEcm.canActivate(null, route)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalledTimes(0);
     }));
 
