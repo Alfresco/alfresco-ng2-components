@@ -26,6 +26,7 @@
       "REMOVE_FILE": "Remove",
       "UPLOAD": "UPLOAD",
       "REQUIRED": "*Required",
+      "NO_FILE_ATTACHED" : "No file attached",
       "VALIDATOR": {
         "INVALID_NUMBER": "Use a different number format",
         "INVALID_DATE": "Use a different date format",

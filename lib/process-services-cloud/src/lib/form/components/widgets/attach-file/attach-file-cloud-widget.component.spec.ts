@@ -234,6 +234,56 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
     }));
 
+    describe('when is readonly', () => {
+
+        it('should show empty list message when there are no file', async(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                readOnly: true,
+                value: []
+            });
+            widget.field.id = 'empty-test';
+            widget.field.params = <FormFieldMetadata> onlyLocalParams;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#adf-attach-empty-list-empty-test')).not.toBeNull();
+            });
+        }));
+
+        it('should not show empty list message when there are files', async(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                readOnly: true,
+                value: [fakePngAnswer]
+            });
+            widget.field.id = 'fill-test';
+            widget.field.params = <FormFieldMetadata> onlyLocalParams;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#adf-attach-empty-list-fill-test')).toBeNull();
+            });
+        }));
+
+        it('should not show remove button when there are files attached', async(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                readOnly: true,
+                value: [fakePngAnswer]
+            });
+            widget.field.id = 'fill-test';
+            widget.field.params = <FormFieldMetadata> onlyLocalParams;
+
+            fixture.detectChanges();
+            const menuButton: HTMLButtonElement = <HTMLButtonElement> (
+                fixture.debugElement.query(By.css('#file-1155-option-menu'))
+                    .nativeElement
+            );
+            menuButton.click();
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#file-1155-remove'))).toBeNull();
+        }));
+    });
+
     describe('when a file is uploaded', () => {
         beforeEach(async(() => {
             widget.field = new FormFieldModel(new FormModel(), {
