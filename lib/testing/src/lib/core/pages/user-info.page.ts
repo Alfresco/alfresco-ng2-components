@@ -39,6 +39,11 @@ export class UserInfoPage {
     userInfoSsoTitle: ElementFinder = element(by.css('.adf-userinfo__detail-title'));
     ssoEmail: ElementFinder = element(by.id('identity-email'));
     userProfileButton: ElementFinder = element(by.css('button[data-automation-id="adf-user-profile"]'));
+    tabsPage: TabsPage;
+
+    constructor() {
+        this.tabsPage = new TabsPage();
+    }
 
     async dialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
@@ -53,23 +58,19 @@ export class UserInfoPage {
     }
 
     async clickOnContentServicesTab(): Promise<void> {
-        const tabsPage = new TabsPage();
-        await tabsPage.clickTabByTitle('Content Services');
+        await this.tabsPage.clickTabByTitle('Content Services');
     }
 
     async checkProcessServicesTabIsSelected(): Promise<void> {
-        const tabsPage = new TabsPage;
-        await tabsPage.checkTabIsSelectedByTitle('Process Services');
+        await this.tabsPage.checkTabIsSelectedByTitle('Process Services');
     }
 
     async checkContentServicesTabIsSelected(): Promise<void> {
-        const tabsPage = new TabsPage;
-        await tabsPage.checkTabIsSelectedByTitle('Content Services');
+        await this.tabsPage.checkTabIsSelectedByTitle('Content Services');
     }
 
     async clickOnProcessServicesTab(): Promise<void> {
-        const tabsPage = new TabsPage;
-        await tabsPage.clickTabByTitle('Process Services');
+        await this.tabsPage.clickTabByTitle('Process Services');
     }
 
     async userImageIsDisplayed(): Promise<void> {

@@ -74,7 +74,6 @@ describe('User Info component', () => {
 
         await userInfoPage.clickUserProfile();
         await userInfoPage.dialogIsDisplayed();
-        await userInfoPage.clickOnContentServicesTab();
         await userInfoPage.checkContentServicesTabIsSelected();
 
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
