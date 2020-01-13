@@ -661,7 +661,7 @@ describe('LoginComponent', () => {
                 });
             }));
 
-            it('should implicit login if silent login is enabled during component creation', async(() => {
+            it('should implicit login if silent login is enabled during component creation ', async(() => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
                 spyOn(authService, 'ssoImplicitLogin').and.stub();
 
