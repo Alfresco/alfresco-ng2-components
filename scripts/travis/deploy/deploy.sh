@@ -4,6 +4,14 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
- node ./scripts/travis/deploy/move-dist-folder.js --base-href $TRAVIS_BUILD_NUMBER && (./scripts/travis/deploy/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $DOCKER_REPOSITORY_USER -p $DOCKER_REPOSITORY_PASSWORD || exit 1);
+# Get Tag Image
+TAG_VERSION=$(./scripts/travis/deploy/get-docker-image-tag-name.sh)
+echo "Running the docker with tag" $TAG_VERSION
 
- (node --no-deprecation ./scripts/travis/deploy/pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1);
+# Publish Image to docker
+./node_modules/@alfresco/adf-cli/bin/adf-cli docker-publish --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --dockerTags "$TAG_VERSION,$TRAVIS_BRANCH" --pathProject "$(pwd)"
+
+echo "Update rancher with docker tag" $TAG_VERSION  --url $REPO_RANCHER --environment_name $REPO_RANCHER_ADF_NAME
+
+# Deploy PR in Rancher env
+(node --no-deprecation ./scripts/travis/deploy/rancher-pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TAG_VERSION" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1);
