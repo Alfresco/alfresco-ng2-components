@@ -73,7 +73,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         let canActivateSSO = false;
         if (this.authenticationService.isOauth()) {
             const oauth: OauthConfigModel = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
-            if (oauth && oauth.implicitFlow && oauth.silentLogin && !this.oauth2Auth.isPublicUrl()) {
+            if (oauth && oauth.implicitFlow && oauth.silentLogin && this.oauth2Auth.isPublicUrl()) {
                 canActivateSSO = true;
             }
         }

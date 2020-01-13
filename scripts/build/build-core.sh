@@ -20,6 +20,9 @@ cp -R ./lib/core/assets/* ./lib/dist/core/bundles/assets
 
 npm run webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail
 
+echo "====== Copy schema ====="
+cp ./lib/core/app-config/schema.json ./lib/dist/core/app.config.schema.json
+
 echo "====== Move to node_modules ======"
 rm -rf ./node_modules/@alfresco/adf-core/ && \
 mkdir -p ./node_modules/@alfresco/adf-core/ && \
