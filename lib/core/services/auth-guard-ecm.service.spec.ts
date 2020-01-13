@@ -108,7 +108,7 @@ describe('AuthGuardService ECM', () => {
         const dialog = TestBed.get(MatDialog);
         const authGuardEcm = new AuthGuardEcm(authService, router, appConfigService, dialog);
         appConfigService.config.oauth2.implicitFlow = true;
-        spyOn(authGuardEcm.oauth2Auth, 'isPublicUrl').and.returnValue(false);
+        spyOn(authGuardEcm.oauth2Auth, 'isPublicUrl').and.returnValue(true);
 
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
