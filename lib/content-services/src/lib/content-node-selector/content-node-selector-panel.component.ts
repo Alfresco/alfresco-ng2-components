@@ -54,8 +54,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         hasMoreItems: false
     });
 
-    private _showDropdownSiteList = true;
-    private _showSearch = true;
+    private showSiteList = true;
+    private showSearchField = true;
 
     /** Node ID of the folder currently listed. */
     @Input()
@@ -143,24 +143,24 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Input()
     set showSearch(value: boolean) {
         if (value !== undefined && value !== null) {
-            this._showSearch = value;
+            this.showSearchField = value;
         }
     }
 
     get showSearch(): boolean {
-        return this._showSearch;
+        return this.showSearchField;
     }
 
     /** Toggle sites list dropdown rendering */
     @Input()
     set showDropdownSiteList(value: boolean) {
         if (value !== undefined && value !== null) {
-            this._showDropdownSiteList = value;
+            this.showSiteList = value;
         }
     }
 
     get showDropdownSiteList(): boolean {
-        return this._showDropdownSiteList;
+        return this.showSiteList;
     }
 
     /** Emitted when the user has chosen an item. */
