@@ -30,14 +30,14 @@ import {
 } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material';
-import { AlfrescoApi, Oauth2Auth } from '@alfresco/js-api';
+// import { AlfrescoApi, Oauth2Auth } from '@alfresco/js-api';
 import * as _minimatch from 'minimatch';
 
 const minimatch = _minimatch;
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
-    oauth2Auth: Oauth2Auth;
+    // oauth2Auth: Oauth2Auth;
 
     abstract checkLogin(
         activeRoute: ActivatedRouteSnapshot,
@@ -75,7 +75,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
         let canActivateSSO = false;
         if (this.isSilentLogin()) {
-            if (this.oauth2Auth.isPublicUrl()) {
+            if (this.isPublicUrl()) {
                 canActivateSSO = true;
             }
         }
