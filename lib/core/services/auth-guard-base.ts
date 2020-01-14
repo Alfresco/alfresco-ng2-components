@@ -73,13 +73,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
             this.dialog.closeAll();
         }
 
-        let canActivateSSO = false;
-        if (this.isSilentLogin()) {
-            if (this.isPublicUrl()) {
-                canActivateSSO = true;
-            }
-        }
-        return checkLogin || canActivateSSO;
+        return checkLogin;
     }
 
     isPublicUrl(): boolean {
