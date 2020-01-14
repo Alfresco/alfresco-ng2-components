@@ -103,16 +103,17 @@ describe('AuthGuardService ECM', () => {
             host: 'http://localhost:6543',
             redirectUri: '/',
             clientId: 'activiti',
+            publicUrl: 'settings',
             scope: 'openid'
         };
-        const dialog = TestBed.get(MatDialog);
-        const authGuardEcm = new AuthGuardEcm(authService, router, appConfigService, dialog);
-        appConfigService.config.oauth2.implicitFlow = true;
-        spyOn(authGuardEcm.oauth2Auth, 'isPublicUrl').and.returnValue(true);
+        // const dialog = TestBed.get(MatDialog);
+        // const authGuardEcm = new AuthGuardEcm(authService, router, appConfigService, dialog);
+        // appConfigService.config.oauth2.implicitFlow = true;
+        spyOn(authGuard, 'isPublicUrl').and.returnValue(true);
 
-        const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
+        const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'settings'};
 
-        expect(authGuardEcm.canActivate(null, route)).toBeTruthy();
+        expect(authGuard.canActivate(null, route)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalledTimes(0);
     }));
 
