@@ -68,13 +68,4 @@ export class BrowserVisibility {
         await this.waitUntilElementIsNotPresent(dialog);
     }
 
-    /*
-     * Wait for specific number of datatable rows by total number of items
-     */
-    static async waitUntilExpectedValue(elementToCheck: ElementFinder, expectedValue: number): Promise<any> {
-        await this.waitUntilElementIsVisible(elementToCheck);
-        const condition = () => elementToCheck.getText().then(value => value && +value.split('of ')[1] < expectedValue);
-        return browser.wait(condition, DEFAULT_TIMEOUT);
-    }
-
 }
