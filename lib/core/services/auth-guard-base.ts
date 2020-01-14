@@ -31,6 +31,9 @@ import {
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material';
 import { AlfrescoApi, Oauth2Auth } from '@alfresco/js-api';
+import * as _minimatch from 'minimatch';
+
+const minimatch = _minimatch;
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
@@ -54,10 +57,10 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         protected appConfigService: AppConfigService,
         protected dialog: MatDialog
     ) {
-        if (this.authenticationService.isOauth()) {
-            const apiService = new AlfrescoApi(this.appConfigService.config);
-            this.oauth2Auth = new Oauth2Auth(this.appConfigService.config, apiService);
-        }
+        // if (this.isSilentLogin()) {
+        //     const apiService = new AlfrescoApi(this.appConfigService.config);
+        //     this.oauth2Auth = new Oauth2Auth(this.appConfigService.config, apiService);
+        // }
     }
 
     canActivate(
@@ -71,13 +74,26 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         }
 
         let canActivateSSO = false;
-        if (this.authenticationService.isOauth()) {
-            const oauth: OauthConfigModel = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
-            if (oauth && oauth.implicitFlow && oauth.silentLogin && this.oauth2Auth.isPublicUrl()) {
+        if (this.isSilentLogin()) {
+            if (this.oauth2Auth.isPublicUrl()) {
                 canActivateSSO = true;
             }
         }
         return checkLogin || canActivateSSO;
+    }
+
+    isPublicUrl(): boolean {
+        const oauth = this.appConfigService.get<OauthConfigModel>(
+            AppConfigValues.OAUTHCONFIG,
+            null
+        );
+        const publicUrls = oauth.publicUrls || [];
+
+        if (Array.isArray(publicUrls)) {
+            return publicUrls.length &&
+                publicUrls.some((urlPattern: string) => minimatch(window.location.href, urlPattern));
+        }
+        return false;
     }
 
     canActivateChild(
