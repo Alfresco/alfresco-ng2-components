@@ -153,7 +153,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.initFormFieldsMessages();
         if (this.authService.isOauth()) {
             const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
-            if (oauth && oauth.implicitFlow && oauth.silentLogin) {
+            if (oauth && oauth.implicitFlow && oauth.silentLogin && !this.authService.isEcmLoggedIn()) {
                 this.implicitFlow = true;
                 this.implicitLogin();
             }
