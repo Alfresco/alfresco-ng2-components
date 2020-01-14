@@ -18,7 +18,7 @@
     "scope": "openid",
     "secret": "",
     "implicitFlow": true,
-    "silentLogin": true,
+    "silentLogin": false,
     "redirectSilentIframeUri": "{protocol}//{hostname}{:port}/assets/silent-refresh.html",
     "redirectUri": "/",
     "redirectUriLogout": "/logout",
