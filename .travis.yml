@@ -92,18 +92,18 @@ jobs:
           script: ./scripts/travis/release/git-tag.sh
 
 
-        - stage: e2e Test
-          name: core
-          script: ./scripts/travis/e2e/core-e2e.sh
-        - stage: e2e Test
-          name:  content
-          script: ./scripts/travis/e2e/content-services-e2e.sh
-        - stage: e2e Test
-          name:  search
-          script: ./scripts/travis/e2e/search-e2e.sh
-        - stage: e2e Test
-          name: process
-          script: ./scripts/travis/e2e/process-services-e2e.sh
+        # - stage: e2e Test
+        #   name: core
+        #   script: ./scripts/travis/e2e/core-e2e.sh
+        # - stage: e2e Test
+        #   name:  content
+        #   script: ./scripts/travis/e2e/content-services-e2e.sh
+        # - stage: e2e Test
+        #   name:  search
+        #   script: ./scripts/travis/e2e/search-e2e.sh
+        # - stage: e2e Test
+        #   name: process
+        #   script: ./scripts/travis/e2e/process-services-e2e.sh
         - stage: e2e Test
           name: process Cloud
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
