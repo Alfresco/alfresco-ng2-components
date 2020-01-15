@@ -16,7 +16,6 @@
  */
 
 export * from './models/task-variable-cloud.model';
-export * from './models/form-definition-selector-cloud.model';
 
 export * from './components/form-cloud.component';
 export * from './components/form-definition-selector-cloud.component';
