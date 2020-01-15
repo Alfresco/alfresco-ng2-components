@@ -55,7 +55,7 @@ before_install:
 
 jobs:
     include:
-        Run Only for any PR
+        # Run Only for any PR
         - stage: Lint & Build Dist
           name:  Lint & Build Dist
           script:
