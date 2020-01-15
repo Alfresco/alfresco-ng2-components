@@ -1,5 +1,5 @@
 <div class="adf-content-node-selector-content" (node-select)="onNodeSelect($event)">
-    <mat-form-field floatPlaceholder="never" class="adf-content-node-selector-content-input">
+    <mat-form-field floatPlaceholder="never" class="adf-content-node-selector-content-input" *ngIf="showSearch">
         <input matInput
             id="searchInput"
             [formControl]="searchInput"
@@ -23,6 +23,7 @@
     </mat-form-field>
 
     <adf-sites-dropdown
+        *ngIf="showDropdownSiteList"
         class="full-width"
         (change)="siteChanged($event)"
         [placeholder]="'NODE_SELECTOR.SELECT_LOCATION'"

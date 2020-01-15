@@ -54,6 +54,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         hasMoreItems: false
     });
 
+    private showSiteList = true;
+    private showSearchField = true;
+
     /** Node ID of the folder currently listed. */
     @Input()
     currentFolderId: string = null;
@@ -135,6 +138,30 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      */
     @Input()
     breadcrumbTransform: (node) => any;
+
+    /** Toggle search input rendering */
+    @Input()
+    set showSearch(value: boolean) {
+        if (value !== undefined && value !== null) {
+            this.showSearchField = value;
+        }
+    }
+
+    get showSearch(): boolean {
+        return this.showSearchField;
+    }
+
+    /** Toggle sites list dropdown rendering */
+    @Input()
+    set showDropdownSiteList(value: boolean) {
+        if (value !== undefined && value !== null) {
+            this.showSiteList = value;
+        }
+    }
+
+    get showDropdownSiteList(): boolean {
+        return this.showSiteList;
+    }
 
     /** Emitted when the user has chosen an item. */
     @Output()

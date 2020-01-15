@@ -172,6 +172,32 @@ describe('ContentNodeSelectorComponent', () => {
                 const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
                 expect(component.rowFilter(<any> { node: { entry: testSiteContent } }, null, null)).toBe(true);
             });
+
+            it('should render search input by default', () => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.nativeElement.querySelector('.adf-content-node-selector-content-input'))
+                .not.toBe(null);
+            });
+
+            it('should not render search input if `showSearch` is false', () => {
+                component.showSearch = false;
+                fixture.detectChanges();
+                expect(fixture.debugElement.nativeElement.querySelector('.adf-content-node-selector-content-input'))
+                .toBe(null);
+            });
+
+            it('should render sites list dropdown by default', () => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.nativeElement.querySelector('adf-sites-dropdown'))
+                .not.toBe(null);
+            });
+
+            it('should not render sites list dropdown if `showDropdownSiteList` is false', () => {
+                component.showDropdownSiteList = false;
+                fixture.detectChanges();
+                expect(fixture.debugElement.nativeElement.querySelector('adf-sites-dropdown'))
+                .toBe(null);
+            });
         });
 
         describe('Breadcrumbs', () => {
