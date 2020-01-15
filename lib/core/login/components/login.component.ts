@@ -154,7 +154,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (this.authService.isOauth()) {
             const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
             if (oauth && oauth.implicitFlow && oauth.silentLogin && !this.authService.isEcmLoggedIn() && !this.authService.isBpmLoggedIn()) {
-                this.implicitFlow = true;
+                // this.implicitFlow = true;
                 // this.implicitLogin();
             }
         }
