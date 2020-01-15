@@ -38,8 +38,7 @@ export class AuthGuardEcm extends AuthGuardBase {
     }
 
     checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
-        /// | !this.authenticationService.isEcmLoggedIn() && this.isSilentLogin() && !this.isPublicUrl()**/
-        if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
+        if (this.authenticationService.isEcmLoggedIn() || this.withCredentials || !this.authenticationService.isEcmLoggedIn() && this.isSilentLogin() && !this.isPublicUrl()) {
             return true;
         }
         this.redirectToUrl('ECM', redirectUrl);
