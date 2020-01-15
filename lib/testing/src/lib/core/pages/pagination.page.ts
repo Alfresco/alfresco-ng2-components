@@ -120,4 +120,17 @@ export class PaginationPage {
         const totalNumberOfFiles = await BrowserActions.getText(this.totalFiles);
         return totalNumberOfFiles.split('of ')[1];
     }
+
+    async getNumberOfAllRows(): Promise<number> {
+        return +this.getTotalNumberOfFiles();
+    }
+
+    /*
+     * Wait until the total number of items is less then specified value
+     */
+    async waitUntilNoOfItemsIsLessThenValue(expectedValue: number): Promise<any> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
+        const condition = () => this.totalFiles.getText().then(value => value && +value.split('of ')[1] < expectedValue);
+        return browser.wait(condition, 10000);
+    }
 }

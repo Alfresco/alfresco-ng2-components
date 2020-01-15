@@ -68,10 +68,7 @@ jobs:
           script:
             - ./scripts/travis/build/build.sh || exit 1;
             - ./scripts/lint.sh || exit 1;
-            - ./scripts/travis/release/release.sh
-            - TAG_VERSION=$(./scripts/travis/deploy/tag-travis-branch.sh)
-            - echo "Running the docker with tag" $TAG_VERSION
-            - ./node_modules/@alfresco/adf-cli/bin/adf-cli docker-publish --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --dockerTags "$TAG_VERSION,$TAGS" --pathProject "$(pwd)"
+            - ./scripts/travis/release/release-npm.sh
 
 
         # - stage: Unit test
@@ -109,22 +106,20 @@ jobs:
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
 
 
+        - stage: Update Rancher PR
+          name: Update Rancher PR
+          script: ./scripts/travis/deploy/deploy-pr.sh
+
+        - stage: Update Rancher
+          name: Update Rancher
+          script: ./scripts/travis/deploy/deploy.sh
+
+
         - stage: Check bundle
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           - ./scripts/npm-check-bundles.sh -v ${ADF_VERSION}
 
-
-        - stage: Update Rancher
-          script:
-          - TAG_VERSION=$(./scripts/travis/deploy/tag-travis-branch.sh)
-          - echo "Update rancher with docker tag" $TAG_VERSION  --url $REPO_RANCHER --environment_name $REPO_RANCHER_ADF_NAME
-          - ./scripts/rancher-update.sh --access_key $RANCHER_TOKEN --secret_key $RANCHER_SECRET --url $REPO_RANCHER --environment_name $REPO_RANCHER_ADF_NAME --image docker:$DOCKER_REPOSITORY:$TAG_VERSION
-
-
-        - stage: Update Rancher PR
-          name: Update Rancher PR
-          script: ./scripts/travis/deploy/deploy.sh
 
 notifications:
   slack:

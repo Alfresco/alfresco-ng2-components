@@ -31,4 +31,6 @@ export interface ContentNodeSelectorComponentData {
     breadcrumbTransform?: (node) => any;
     excludeSiteContent?: string[];
     select: Subject<Node[]>;
+    showSearch?: boolean;
+    showDropdownSiteList?: boolean;
 }

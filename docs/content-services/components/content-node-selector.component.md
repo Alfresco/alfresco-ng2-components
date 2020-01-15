@@ -62,6 +62,8 @@ The properties are described in the table below:
 | isSelectionValid | [`ValidationFunction`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector-panel.component.ts) | `defaultValidation` | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | breadcrumbTransform | `(node: any) => any` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
 | select | [`Subject<Node>`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | Event emitted with the current node selection when the dialog closes |
+| showSearch | `boolean` | `true` | Render search input |
+| showDropdownSiteList | `boolean` | `true` | Render sites list dropdown menu |
 
 If you don't want to manage the dialog yourself then it is easier to use the
 [Content Node Selector Panel component](content-node-selector-panel.component.md), or the
