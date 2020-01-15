@@ -1,0 +1,12 @@
+<div class="adf-amount-editor">
+    <mat-form-field>
+    <label [attr.for]="column.id">{{displayName}}</label>
+    <input matInput
+        type="number"
+        [value]="table.getCellValue(row, column)"
+        (keyup)="onValueChanged(row, column, $event)"
+        [required]="column.required"
+        [disabled]="!column.editable"
+        [id]="column.id">
+    </mat-form-field>
+</div>
