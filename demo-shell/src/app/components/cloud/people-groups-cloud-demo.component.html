@@ -44,7 +44,6 @@
                 [roles]="peopleRoles"
                 [title]="'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"
                 [mode]="peopleMode"
-                (selectUser)="onSelectUser($event)"
                 (warning)="onUsersWarning($event)"></adf-cloud-people>
         </div>
 
@@ -115,8 +114,6 @@
                 [roles]="groupRoles"
                 [appName]="groupAppName"
                 [preSelectGroups]="preSelectGroup"
-                (selectGroup)="onSelectGroup($event)"
-                (removeGroup)="onRemoveGroup($event)"
                 (warning)="onGroupsWarning($event)"></adf-cloud-group>
         </div>
 

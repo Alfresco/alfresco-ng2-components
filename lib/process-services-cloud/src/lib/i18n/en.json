@@ -181,6 +181,20 @@
       "NOT_FOUND": "No group found with the name {{groupName}}"
     }
   },
+
+  "ADF_CLOUD_USERS": {
+    "ERROR": {
+      "NOT_FOUND": "No user found with the name {{userName}}"
+    }
+  },
+  "ADF_CLOUD_PEOPLE_GROUPS": {
+    "ERROR": {
+      "INVALID_PATTERN": "Not mathcing pattern {{pattern}}",
+      "INVALID_MIN_LENGTH": "Minimum length {{requiredLength}}",
+      "INVALID_MAX_LENGTH": "Maximum length {{requiredLength}}",
+      "REQUIRED": "Field is required"
+    }
+  },
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "Claim",

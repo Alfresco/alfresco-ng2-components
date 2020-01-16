@@ -1,48 +1,35 @@
 <form>
     <mat-form-field class="adf-people-cloud">
         <mat-label id="adf-people-cloud-title-id">{{ title | translate }}</mat-label>
-        <mat-chip-list #userChipList [disabled]="readOnly" data-automation-id="adf-cloud-people-chip-list" *ngIf="isMultipleMode(); else singleSelection">
-        <mat-chip
-            *ngFor="let user of selectedUsers$ | async"
-            [removable]="!(user.readonly)"
-            [attr.data-automation-id]="'adf-people-cloud-chip-' + user.username"
-            matTooltip="{{ (user.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}"
-            (removed)="onRemove(user)">
-            {{user | fullName}}
-            <mat-icon
-                matChipRemove
-                *ngIf="!(user.readonly || readOnly)"
-                [attr.data-automation-id]="'adf-people-cloud-chip-remove-icon-' + user.username">
-                cancel
-            </mat-icon>
-        </mat-chip>
-        <input
-            #userInput
-            matInput
-            [formControl]="searchUserCtrl"
-            [matAutocomplete]="auto"
-            [matChipInputFor]="userChipList"
-            class="adf-cloud-input"
-            (focus)="setFocus(true)"
-            (blur)="setFocus(false)"
-            data-automation-id="adf-people-cloud-search-input">
+        <mat-chip-list #userMultipleChipList [disabled]="isReadonly()" data-automation-id="adf-cloud-people-chip-list">
+            <mat-chip
+                *ngFor="let user of selectedUsers"
+                [removable]="!(user.readonly)"
+                [attr.data-automation-id]="'adf-people-cloud-chip-' + user.username"
+                (removed)="onRemove(user)"
+                matTooltip="{{ (user.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}">
+                {{user | fullName}}
+                <mat-icon
+                    matChipRemove
+                    *ngIf="!(user.readonly || readOnly)"
+                    [attr.data-automation-id]="'adf-people-cloud-chip-remove-icon-' + user.username">
+                    cancel
+                </mat-icon>
+            </mat-chip>
+            <input matInput
+                   [formControl]="searchUserCtrl"
+                   [matAutocomplete]="auto"
+                   [matChipInputFor]="userMultipleChipList"
+                   (focus)="setFocus(true)"
+                   (blur)="setFocus(false)"
+                   class="adf-cloud-input"
+                   data-automation-id="adf-people-cloud-search-input" #userInput>
         </mat-chip-list>
 
-        <ng-template #singleSelection>
-        <input matInput
-            [readonly]="readOnly"
-            (focus)="setFocus(true)"
-            (blur)="setFocus(false)"
-            class="adf-cloud-input"
-            data-automation-id="adf-people-cloud-search-input"
-            type="text"
-            [formControl]="searchUserCtrl"
-            [matAutocomplete]="auto">
-        </ng-template>
         <mat-autocomplete autoActiveFirstOption class="adf-people-cloud-list"
-                        #auto="matAutocomplete"
-                        (optionSelected)="onSelect($event.option.value)"
-                        [displayWith]="getDisplayName">
+                          #auto="matAutocomplete"
+                          (optionSelected)="onSelect($event.option.value)"
+                          [displayWith]="getDisplayName">
             <mat-option *ngFor="let user of searchUsers$ | async; let i = index" [value]="user">
                 <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{i}}">
                     <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>
@@ -51,10 +38,23 @@
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
-    <div class="adf-start-task-cloud-error">
-        <div *ngIf="hasErrorMessage()" fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
-            <div class="adf-start-task-cloud-error-message">{{ 'ADF_CLOUD_START_TASK.ERROR.MESSAGE' | translate }}</div>
-            <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
-        </div>
-    </div>
+    <mat-error *ngIf="hasPreselectError()">
+        <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
+        {{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : validateUsersMessage } }}</mat-error>
+    <mat-error *ngIf="searchUserCtrl.hasError('pattern')">
+        <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
+        {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_PATTERN' | translate: { pattern: getValidationPattern() } }}</mat-error>
+    <mat-error *ngIf="searchUserCtrl.hasError('maxlength')">
+        <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
+        {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MAX_LENGTH' | translate: { requiredLength: getValidationMaxLength() } }}
+    </mat-error>
+    <mat-error *ngIf="searchUserCtrl.hasError('minlength')">
+        <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
+        {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MIN_LENGTH' | translate: { requiredLength: getValidationMinLength() } }}</mat-error>
+    <mat-error *ngIf="searchUserCtrl.hasError('required')">
+        <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
+        {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.REQUIRED' | translate }} </mat-error>
+    <mat-error *ngIf="searchUserCtrl.hasError('searchTypingError') && !this.isFocused">
+        <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
+        {{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : searchedValue } }}</mat-error>
 </form>
