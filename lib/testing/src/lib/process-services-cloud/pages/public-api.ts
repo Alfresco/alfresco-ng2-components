@@ -29,4 +29,4 @@ export * from './task-list-cloud-component.page';
 export * from './start-process-cloud-component.page';
 export * from './task-form-cloud-component.page';
 export * from './dialog/public-api';
-export * from './form/widget/public-api';
+export * from './form/public-api';

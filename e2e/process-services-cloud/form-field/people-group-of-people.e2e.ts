@@ -22,7 +22,7 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
-import { peopleJson, peopleMultipleModeJson, peopleRequiredJson, groupSingleJson, groupMultipleJson, groupRequiredJson } from '../../resources/forms/people-groupOfPeople-formWidget-Json';
+import { peopleJson, peopleMultipleModeJson, peopleRequiredJson, groupSingleJson, groupMultipleJson, groupRequiredJson } from '../../resources/forms/people-group-formwidget-json';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 

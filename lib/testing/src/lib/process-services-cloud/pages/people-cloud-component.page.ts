@@ -18,7 +18,7 @@
 import { browser, by, element, ElementFinder, Locator, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { FormFields } from '../../../..';
+import { FormFields } from '../../core/pages/form/formFields';
 
 export class PeopleCloudComponentPage {
 
