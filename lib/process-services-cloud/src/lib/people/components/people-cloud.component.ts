@@ -156,7 +156,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.hasPreSelectUsers()) {
             this.loadPreSelectUsers();
-        } else if (this.preselectedUsersCleared(changes)) {
+        } else if (this.isPreselectedUsersCleared(changes)) {
             this.selectedUsers = [];
             this.invalidUsers = [];
         }
@@ -353,6 +353,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 this.selectedUsers.push(user);
             }
         } else {
+            this.invalidUsers = [];
             this.selectedUsers = [user];
         }
 
@@ -432,7 +433,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         return this.preSelectUsers && this.preSelectUsers.length > 0;
     }
 
-    private preselectedUsersCleared(changes): boolean {
+    private isPreselectedUsersCleared(changes): boolean {
         return changes && changes.preSelectUsers && changes.preSelectUsers.currentValue.length === 0;
     }
 

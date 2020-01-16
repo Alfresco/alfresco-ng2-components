@@ -152,7 +152,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.hasPreSelectGroups()) {
             this.loadPreSelectGroups();
-        } else if (this.preselectedGroupsCleared(changes)) {
+        } else if (this.isPreselectedGroupsCleared(changes)) {
             this.selectedGroups = [];
             this.invalidGroups = [];
         }
@@ -324,6 +324,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
                 this.selectedGroups.push(group);
             }
         } else {
+            this.invalidGroups = [];
             this.selectedGroups = [group];
         }
 
@@ -399,7 +400,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             }));
     }
 
-    private preselectedGroupsCleared(changes): boolean {
+    private isPreselectedGroupsCleared(changes): boolean {
         return changes && changes.preSelectGroups && changes.preSelectGroups.currentValue.length === 0;
     }
 
