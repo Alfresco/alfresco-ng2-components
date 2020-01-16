@@ -550,7 +550,7 @@ xdescribe('GroupCloudComponent', () => {
             component.validate = true;
             component.preSelectGroups = <any> [{ name: 'invalidGroupOne' }, { name: 'invalidGroupTwo' }];
             fixture.detectChanges();
-            component.loadSinglePreselectGroup();
+            // component.loadSinglePreselectGroup();
             component.warning.subscribe((response) => {
                 expect(response).toEqual(warnMessage);
                 expect(response.message).toEqual(warnMessage.message);
@@ -567,12 +567,12 @@ xdescribe('GroupCloudComponent', () => {
             component.preSelectGroups = <any> [{ name: mockIdentityGroups[1].name }, { name: mockIdentityGroups[2].name }];
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                component.filterPreselectGroups().then((result) => {
-                    expect(findGroupsByNameSpy).toHaveBeenCalled();
-                    expect(component.groupExists(result[0])).toEqual(true);
-                    expect(component.groupExists(result[1])).toEqual(true);
+                // component.filterPreselectGroups().then((result) => {
+                //     expect(findGroupsByNameSpy).toHaveBeenCalled();
+                //     expect(component.groupExists(result[0])).toEqual(true);
+                //     expect(component.groupExists(result[1])).toEqual(true);
                     done();
-                });
+                // });
             });
         });
 
