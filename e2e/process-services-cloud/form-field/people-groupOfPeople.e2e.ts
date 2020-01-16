@@ -77,6 +77,7 @@ describe('People and Group of people Widgets', () => {
         await peopleCloudWidget.isPeopleWidgetVisible(peopleValueString.peopleCloudWidgetSingleModeField);
         let peopleSingleMode = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetSingleModeId);
         await expect(peopleSingleMode).toEqual('');
+
         await peopleCloudWidget.searchAssigneeAndSelect('HR User');
         peopleSingleMode = await peopleCloudWidget.getAssigneeFieldContent();
         await expect(peopleSingleMode).toEqual('HR User');
@@ -88,6 +89,7 @@ describe('People and Group of people Widgets', () => {
         await peopleCloudWidget.isPeopleWidgetVisible(peopleValueString.peopleCloudWidgetMultipleModeField);
         const peopleMultipleMode = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetMultipleModeId);
         await expect(peopleMultipleMode).toEqual('');
+
         await peopleCloudWidget.searchAssigneeAndSelect('HR User');
         await peopleCloudWidget.searchAssigneeAndSelect('Sales User');
         await peopleCloudWidget.checkSelectedPeople('HR User');
@@ -108,7 +110,6 @@ describe('People and Group of people Widgets', () => {
         await expect(requiredPeople).toEqual('HR User');
         await expect(await formPage.isSaveButtonDisabled()).toBe(false);
         await expect(await formPage.isValidationIconBlue()).toBe(true);
-        await browser.sleep(100);
     });
 
     it('[C325003] Should be able to add a user in Group of people field when Single mode is chosen', async () => {
@@ -116,6 +117,7 @@ describe('People and Group of people Widgets', () => {
         await groupCloudWidget.isGroupWidgetVisible(groupValueString.groupCloudWidgetSingleModeField);
         let groupSingleMode = await groupCloudWidget.getGroupsFieldContent();
         await expect(groupSingleMode).toEqual('');
+
         await groupCloudWidget.searchGroups('hr');
         await groupCloudWidget.selectGroupFromList('hr');
         groupSingleMode = await groupCloudWidget.getGroupsFieldContent();
@@ -127,6 +129,7 @@ describe('People and Group of people Widgets', () => {
         await groupCloudWidget.isGroupWidgetVisible(groupValueString.groupCloudWidgetMultipleModeField);
         const groupSingleMode = await groupCloudWidget.getGroupsFieldContent();
         await expect(groupSingleMode).toEqual('');
+
         await groupCloudWidget.searchGroups('hr');
         await groupCloudWidget.selectGroupFromList('hr');
         await groupCloudWidget.searchGroups('sales');

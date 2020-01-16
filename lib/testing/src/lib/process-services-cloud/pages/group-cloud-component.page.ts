@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {browser, by, element, ElementFinder, Locator} from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../../..';
@@ -24,7 +24,6 @@ export class GroupCloudComponentPage {
 
     groupCloudSearch: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
     formFields: FormFields = new FormFields();
-    inputLocator: Locator = by.css('input');
 
     async searchGroups(name: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
@@ -71,11 +70,6 @@ export class GroupCloudComponentPage {
         await BrowserActions.click(locator);
     }
 
-    async clickGroupInput(fieldId): Promise<void> {
-        const peopleInput = element.all(by.css(`div[id="field-${fieldId}-container"] `)).first();
-        await BrowserActions.click(peopleInput);
-    }
-
     async isGroupWidgetVisible(fieldId: string): Promise<boolean> {
         try {
             await this.formFields.checkWidgetIsVisible(fieldId);
@@ -83,10 +77,6 @@ export class GroupCloudComponentPage {
         } catch {
             return false;
         }
-    }
-
-    getFieldValue(fieldId): Promise<string> {
-        return this.formFields.getFieldValue(fieldId, this.inputLocator);
     }
 
 }
