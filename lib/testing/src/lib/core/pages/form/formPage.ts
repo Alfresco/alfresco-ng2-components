@@ -46,4 +46,34 @@ export class FormPage {
         await BrowserActions.click(this.saveButton);
     }
 
+    async isSaveButtonDisabled(): Promise<boolean> {
+        const saveButtonDisabled = element(by.css('.adf-form-mat-card-actions [disabled]'));
+        try {
+            await saveButtonDisabled.isDisplayed();
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async isValidationIconBlue(): Promise<boolean> {
+        const validationIcon = element(by.css('#adf-valid-form-icon'));
+        try {
+            await validationIcon.isDisplayed();
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async isValidationIconRed(): Promise<boolean> {
+        const validationIcon = element(by.css('#adf-invalid-form-icon'));
+        try {
+            await validationIcon.isDisplayed();
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget } from '@alfresco/adf-testing';
+import { LoginSSOPage, ProcessCloudWidget } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -31,7 +31,7 @@ describe('Visibility conditions - cloud', () => {
 
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudDemoPage();
-    const widget = new Widget();
+    const widget = new ProcessCloudWidget();
 
     let visibleCheckbox;
 

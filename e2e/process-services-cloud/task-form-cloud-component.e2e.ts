@@ -26,7 +26,7 @@ import {
     ProcessInstancesService,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
-    Widget, QueryService
+    QueryService, ProcessCloudWidget
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -40,7 +40,7 @@ describe('Task form cloud component', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
-    const widget = new Widget();
+    const widget = new ProcessCloudWidget();
 
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
