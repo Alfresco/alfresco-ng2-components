@@ -18,7 +18,7 @@
 import {
     FormPage,
     LoginSSOPage,
-    ProcessCloudWidget
+    ProcessCloudWidgetPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
@@ -30,7 +30,7 @@ describe('People and Group of people Widgets', () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudDemoPage();
-    const widget = new ProcessCloudWidget();
+    const widget = new ProcessCloudWidgetPage();
     const peopleCloudWidget = widget.peopleCloudWidget();
     const groupCloudWidget = widget.groupCloudWidget();
     const formPage = new FormPage();

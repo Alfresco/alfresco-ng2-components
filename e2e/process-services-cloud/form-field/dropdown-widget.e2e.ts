@@ -17,7 +17,7 @@
 
 import {
     ApiService, AppListCloudPage, GroupIdentityService, IdentityService,
-    LoginSSOPage, NotificationHistoryPage, ProcessCloudWidget, ProcessDefinitionsService,
+    LoginSSOPage, NotificationHistoryPage, ProcessCloudWidgetPage, ProcessDefinitionsService,
     ProcessInstancesService, QueryService, TaskFormCloudComponent, TaskHeaderCloudPage,
     TasksService
 } from '@alfresco/adf-testing';
@@ -33,7 +33,7 @@ describe('Form Field Component - Dropdown Widget', () => {
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const notificationHistoryPage = new NotificationHistoryPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
-    const widget = new ProcessCloudWidget();
+    const widget = new ProcessCloudWidgetPage();
     const dropdown = widget.dropdown();
     const apiService = new ApiService(
         browser.params.config.oauth2.clientId,

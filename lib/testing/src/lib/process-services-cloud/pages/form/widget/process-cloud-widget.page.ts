@@ -19,7 +19,7 @@ import { Widget } from '../../../../core/pages/form/widgets/widget';
 import { PeopleCloudComponentPage } from '../../people-cloud-component.page';
 import { GroupCloudComponentPage } from '../../group-cloud-component.page';
 
-export class ProcessCloudWidget extends Widget {
+export class ProcessCloudWidgetPage extends Widget {
 
     peopleCloudWidget(): PeopleCloudComponentPage {
         return new PeopleCloudComponentPage();

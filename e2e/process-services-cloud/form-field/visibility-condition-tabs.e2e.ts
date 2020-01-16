@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ProcessCloudWidget } from '@alfresco/adf-testing';
+import { LoginSSOPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -31,7 +31,7 @@ describe('Visibility conditions on tabs - cloud', () => {
 
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudDemoPage();
-    const widget = new ProcessCloudWidget();
+    const widget = new ProcessCloudWidgetPage();
 
     const widgets = {
         textOneId: 'TextOne',

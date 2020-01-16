@@ -15,4 +15,4 @@
  * limitations under the License.
  */
 
-export * from './process-cloud-widget';
+export * from './process-cloud-widget.page';

@@ -37,7 +37,7 @@ import {
     ContentNodeSelectorDialogPage,
     ProcessInstancesService,
     ProcessDefinitionsService,
-    FileBrowserUtil, ProcessCloudWidget
+    FileBrowserUtil, ProcessCloudWidgetPage
 } from '@alfresco/adf-testing';
 import { StartProcessCloudConfiguration } from './config/start-process-cloud.config';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
@@ -59,7 +59,7 @@ describe('Start Task Form', () => {
     const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
     const settingsPage = new SettingsPage();
-    const widget = new ProcessCloudWidget();
+    const widget = new ProcessCloudWidgetPage();
     const startProcessPage = new StartProcessCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
