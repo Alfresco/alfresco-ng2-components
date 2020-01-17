@@ -151,13 +151,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     ) {
         this.initFormError();
         this.initFormFieldsMessages();
-        this.initAuth();
-    }
-
-    initAuth() {
         if (this.authService.isOauth()) {
             const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
-            if (oauth && oauth.implicitFlow) {
+            if (oauth && oauth.silentLogin && !this.authService.isEcmLoggedIn() && !this.authService.isBpmLoggedIn()) {
+                // this.implicitLogin();
                 this.implicitFlow = true;
             }
         }
@@ -175,7 +172,23 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.initAuth();
+        if (this.authService.isOauth()) {
+            const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+            if (oauth && oauth.implicitFlow) {
+                this.implicitFlow = true;
+            }
+        }
+
+        if (this.authService.isEcmLoggedIn() || this.authService.isBpmLoggedIn()) {
+            this.location.forward();
+        } else {
+            this.route.queryParams.subscribe((params: Params) => {
+                const url = params['redirectUrl'];
+                const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
+
+                this.authService.setRedirect({ provider, url });
+            });
+        }
 
         if (this.hasCustomFieldsValidation()) {
             this.form = this._fb.group(this.fieldsValidation);
