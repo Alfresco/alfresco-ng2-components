@@ -151,33 +151,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     ) {
         this.initFormError();
         this.initFormFieldsMessages();
-        if (this.authService.isOauth()) {
-            const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
-            if (oauth && oauth.implicitFlow) {
-                this.implicitFlow = true;
-            }
-        }
-
-        if (this.authService.isEcmLoggedIn() || this.authService.isBpmLoggedIn()) {
-            this.location.forward();
-        } else {
-            this.route.queryParams.subscribe((params: Params) => {
-                const url = params['redirectUrl'];
-                const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
-
-                this.authService.setRedirect({ provider, url });
-            });
-        }
-
-        if (this.hasCustomFieldsValidation()) {
-            this.form = this._fb.group(this.fieldsValidation);
-        } else {
-            this.initFormFieldsDefault();
-            this.initFormFieldsMessagesDefault();
-        }
-        this.form.valueChanges
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(data => this.onValueChanged(data));
     }
 
     ngOnInit() {
