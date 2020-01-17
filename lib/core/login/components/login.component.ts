@@ -153,8 +153,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.initFormFieldsMessages();
         if (this.authService.isOauth()) {
             const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
-            if (oauth && oauth.silentLogin && !this.authService.isEcmLoggedIn() && !this.authService.isBpmLoggedIn()) {
-                // this.implicitLogin();
+            if (oauth && oauth.implicitFlow) {
                 this.implicitFlow = true;
             }
         }
@@ -169,6 +168,16 @@ export class LoginComponent implements OnInit, OnDestroy {
                 this.authService.setRedirect({ provider, url });
             });
         }
+
+        if (this.hasCustomFieldsValidation()) {
+            this.form = this._fb.group(this.fieldsValidation);
+        } else {
+            this.initFormFieldsDefault();
+            this.initFormFieldsMessagesDefault();
+        }
+        this.form.valueChanges
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(data => this.onValueChanged(data));
     }
 
     ngOnInit() {
