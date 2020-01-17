@@ -620,7 +620,7 @@ describe('LoginComponent', () => {
         describe('implicitFlow ', () => {
 
             beforeEach(() => {
-                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true, silentLogin: false };
+                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true };
                 appConfigService.load();
                 alfrescoApiService.reset();
             });
@@ -659,29 +659,6 @@ describe('LoginComponent', () => {
                 fixture.whenStable().then(() => {
                     expect(element.querySelector('#login-button-sso')).toBeDefined();
                 });
-            }));
-
-            it('should implicit login if not logged in and silent login is enabled during component creation', async(() => {
-                spyOn(authService, 'isOauth').and.returnValue(true);
-                spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
-                spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
-                spyOn(authService, 'ssoImplicitLogin').and.stub();
-
-                appConfigService.config.providers = 'ECM';
-                appConfigService.config.authType = 'OAUTH';
-
-                let login = new LoginComponent(null, authService, null, null, router, appConfigService, userPreferences, null, null, null);
-
-                expect(authService.ssoImplicitLogin).toHaveBeenCalledTimes(0);
-
-                appConfigService.config.oauth2 = <OauthConfigModel> {
-                    implicitFlow: true,
-                    silentLogin: true
-                };
-
-                login = new LoginComponent(null, authService, null, null, router, appConfigService, userPreferences, null, null, null);
-                expect(authService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
-                login.ngOnDestroy();
             }));
         });
     });
