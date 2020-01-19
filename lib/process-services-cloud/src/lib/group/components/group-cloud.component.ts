@@ -420,7 +420,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         return changes && changes.validate && changes.validate.currentValue !== changes.validate.previousValue;
     }
 
-    private hasPreselectedGroupsChanged(changes):boolean {
+    private hasPreselectedGroupsChanged(changes): boolean {
         return changes && changes.preSelectGroups && changes.preSelectGroups.currentValue !== changes.preSelectGroups.previousValue;
     }
 

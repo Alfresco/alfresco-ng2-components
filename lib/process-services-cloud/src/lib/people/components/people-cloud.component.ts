@@ -286,7 +286,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     async validatePreselectUsers(): Promise<any> {
         this.invalidUsers = [];
-        let validUsers: IdentityUserModel[] = [];
+        const validUsers: IdentityUserModel[] = [];
 
         let preselectedUsersToValidate: IdentityUserModel[] = [];
 
@@ -465,7 +465,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         return changes && changes.validate && changes.validate.currentValue !== changes.validate.previousValue;
     }
 
-    private hasPreselectedUsersChanged(changes):boolean {
+    private hasPreselectedUsersChanged(changes): boolean {
         return changes && changes.preSelectUsers && changes.preSelectUsers.currentValue !== changes.preSelectUsers.previousValue;
     }
 
