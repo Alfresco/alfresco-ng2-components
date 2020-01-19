@@ -134,6 +134,8 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     validateGroupsMessage: string;
     searchedValue = '';
 
+    isLoading = false;
+
     constructor(
         private identityGroupService: IdentityGroupService,
         private logService: LogService) {}
@@ -150,15 +152,17 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges) {
 
-        if (this.hasPreSelectGroups()) {
-            this.loadPreSelectGroups();
-        } else if (this.isPreselectedGroupsCleared(changes)) {
-            this.selectedGroups = [];
-            this.invalidGroups = [];
-        }
+        if (this.hasPreselectedGroupsChanged(changes) || this.hasModeChanged(changes) || this.isValidationChanged(changes)) {
+            if (this.hasPreSelectGroups()) {
+                this.loadPreSelectGroups();
+            } else if (this.hasPreselectedGroupsCleared(changes)) {
+                this.selectedGroups = [];
+                this.invalidGroups = [];
+            }
 
-        if (!this.isValidationEnabled()) {
-            this.invalidGroups = [];
+            if (!this.isValidationEnabled()) {
+                this.invalidGroups = [];
+            }
         }
 
         if (changes.appName && this.isAppNameChanged(changes.appName)) {
@@ -255,7 +259,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         if (this.isSingleMode()) {
             preselectedGroupsToValidate = [this.preSelectGroups[0]];
         } else {
-            preselectedGroupsToValidate = this.preSelectGroups;
+            preselectedGroupsToValidate = this.removeDuplicatedGroups(this.preSelectGroups);
         }
 
         await Promise.all(preselectedGroupsToValidate.map(async (group: IdentityGroupModel) => {
@@ -270,9 +274,12 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             }
         }));
         this.checkPreselectValidationErrors();
+        this.isLoading = false;
     }
 
     public checkPreselectValidationErrors() {
+
+        this.invalidGroups = this.removeDuplicatedGroups(this.invalidGroups);
 
         if (this.invalidGroups.length > 0) {
             this.generateInvalidGroupsMessage();
@@ -299,14 +306,15 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     private async loadPreSelectGroups() {
         this.selectedGroups = [];
 
-        if (this.isValidationEnabled()) {
-            await this.validatePreselectGroups();
-        }
-
         if (this.isSingleMode()) {
             this.selectedGroups = [this.preSelectGroups[0]];
         } else {
             this.selectedGroups = this.removeDuplicatedGroups(this.preSelectGroups);
+        }
+
+        if (this.isValidationEnabled()) {
+            this.isLoading = true;
+            await this.validatePreselectGroups();
         }
     }
 
@@ -350,7 +358,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    removeGroupFromValidation(groupName: string) {
+    private removeGroupFromValidation(groupName: string) {
         const indexToRemove = this.invalidGroups.findIndex((invalidGroup) => {
            return invalidGroup.name === groupName;
         });
@@ -365,7 +373,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.searchGroupsSubject.next(this.searchGroups);
     }
 
-    hasGroupIdOrName(group: IdentityGroupModel): boolean {
+    private hasGroupIdOrName(group: IdentityGroupModel): boolean {
         return group && (group.id.length > 0 || group.name.length > 0);
     }
 
@@ -400,12 +408,24 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             }));
     }
 
-    private isPreselectedGroupsCleared(changes): boolean {
-        return changes && changes.preSelectGroups && changes.preSelectGroups.currentValue.length === 0;
-    }
-
     private hasPreSelectGroups(): boolean {
         return this.preSelectGroups && this.preSelectGroups.length > 0;
+    }
+
+    private hasModeChanged(changes): boolean {
+        return changes && changes.mode && changes.mode.currentValue !== changes.mode.previousValue;
+    }
+
+    private isValidationChanged(changes): boolean {
+        return changes && changes.validate && changes.validate.currentValue !== changes.validate.previousValue;
+    }
+
+    private hasPreselectedGroupsChanged(changes):boolean {
+        return changes && changes.preSelectGroups && changes.preSelectGroups.currentValue !== changes.preSelectGroups.previousValue;
+    }
+
+    private hasPreselectedGroupsCleared(changes): boolean {
+        return changes && changes.preSelectGroups && changes.preSelectGroups.currentValue.length === 0;
     }
 
     private createSearchParam(value: string): IdentityGroupSearchParam {
@@ -427,6 +447,10 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     hasError(): boolean {
         return !!this.searchGroupsControl.errors;
+    }
+
+    isValidationLoading(): boolean {
+        return this.isValidationEnabled() && this.isLoading;
     }
 
     setFocus(isFocused: boolean) {

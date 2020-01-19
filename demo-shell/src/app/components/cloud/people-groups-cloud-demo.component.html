@@ -48,7 +48,7 @@
         </div>
 
         <div class="app-people-list" *ngIf="canShowPeopleList()">
-            <h4>{{ 'PEOPLE_GROUPS_CLOUD.ALL_SELECTED_USERS' | translate }}</h4>
+            <h4>{{ 'PEOPLE_GROUPS_CLOUD.ALL_PRESELECTED_USERS' | translate }}</h4>
             <mat-list role="list">
                 <mat-list-item *ngFor="let item of preSelectUsers" role="listitem">
                     <mat-icon mat-list-icon>person</mat-icon>
@@ -118,7 +118,7 @@
         </div>
 
         <div class="app-group-list" *ngIf="canShowGroupList()">
-            <h4>{{ 'PEOPLE_GROUPS_CLOUD.ALL_SELECTED_GROUPS' | translate }}</h4>
+            <h4>{{ 'PEOPLE_GROUPS_CLOUD.ALL_PRESELECTED_GROUPS' | translate }}</h4>
             <mat-list role="list">
                 <mat-list-item *ngFor="let item of preSelectGroup" role="listitem">
                     <mat-icon mat-list-icon>group</mat-icon>

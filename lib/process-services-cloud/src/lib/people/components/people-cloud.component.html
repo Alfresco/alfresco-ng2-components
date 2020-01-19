@@ -1,7 +1,7 @@
 <form>
     <mat-form-field class="adf-people-cloud">
         <mat-label id="adf-people-cloud-title-id">{{ title | translate }}</mat-label>
-        <mat-chip-list #userMultipleChipList [disabled]="isReadonly()" data-automation-id="adf-cloud-people-chip-list">
+        <mat-chip-list #userMultipleChipList [disabled]="isReadonly() " data-automation-id="adf-cloud-people-chip-list">
             <mat-chip
                 *ngFor="let user of selectedUsers"
                 [removable]="!(user.readonly)"
@@ -38,7 +38,12 @@
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
-    <mat-error *ngIf="hasPreselectError()">
+    <mat-progress-bar
+        *ngIf="isLoading"
+        mode="indeterminate">
+    </mat-progress-bar>
+
+    <mat-error *ngIf="hasPreselectError() && !isValidationLoading()">
         <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
         {{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : validateUsersMessage } }}</mat-error>
     <mat-error *ngIf="searchUserCtrl.hasError('pattern')">

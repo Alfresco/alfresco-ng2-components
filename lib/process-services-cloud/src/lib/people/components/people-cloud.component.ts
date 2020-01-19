@@ -138,6 +138,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     validateUsersMessage: string;
     searchedValue = '';
 
+    isLoading = false;
+
     constructor(
         private identityUserService: IdentityUserService,
         private logService: LogService) {}
@@ -154,15 +156,17 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges) {
 
-        if (this.hasPreSelectUsers()) {
-            this.loadPreSelectUsers();
-        } else if (this.isPreselectedUsersCleared(changes)) {
-            this.selectedUsers = [];
-            this.invalidUsers = [];
-        }
+        if (this.hasPreselectedUsersChanged(changes) || this.hasModeChanged(changes) || this.isValidationChanged(changes)) {
+            if (this.hasPreSelectUsers()) {
+                this.loadPreSelectUsers();
+            } else if (this.hasPreselectedUsersCleared(changes)) {
+                this.selectedUsers = [];
+                this.invalidUsers = [];
+            }
 
-        if (!this.isValidationEnabled()) {
-            this.invalidUsers = [];
+            if (!this.isValidationEnabled()) {
+                this.invalidUsers = [];
+            }
         }
 
         if (changes.appName && this.isAppNameChanged(changes.appName)) {
@@ -268,26 +272,28 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     private async loadPreSelectUsers() {
         this.selectedUsers = [];
 
-        if (this.isValidationEnabled()) {
-            await this.validatePreselectUsers();
-        }
-
         if (this.isSingleMode()) {
             this.selectedUsers = [this.preSelectUsers[0]];
         } else {
             this.selectedUsers = this.removeDuplicatedUsers(this.preSelectUsers);
         }
+
+        if (this.isValidationEnabled()) {
+            this.isLoading = true;
+            await this.validatePreselectUsers();
+        }
     }
 
     async validatePreselectUsers(): Promise<any> {
         this.invalidUsers = [];
+        let validUsers: IdentityUserModel[] = [];
 
         let preselectedUsersToValidate: IdentityUserModel[] = [];
 
         if (this.isSingleMode()) {
             preselectedUsersToValidate = [this.preSelectUsers[0]];
         } else {
-            preselectedUsersToValidate = this.preSelectUsers;
+            preselectedUsersToValidate = this.removeDuplicatedUsers(this.preSelectUsers);
         }
 
         await Promise.all(preselectedUsersToValidate.map(async (user: IdentityUserModel) => {
@@ -295,6 +301,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 const validationResult = await this.searchUser(user);
                 if (!this.hasUserDetails(validationResult)) {
                     this.invalidUsers.push(user);
+                } else {
+                    validUsers.push(validationResult);
                 }
             } catch (error) {
                 this.invalidUsers.push(user);
@@ -302,6 +310,20 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             }
         }));
         this.checkPreselectValidationErrors();
+        this.alignUsersAfterValidation(validUsers);
+        this.isLoading = false;
+    }
+
+    private alignUsersAfterValidation(validatedUsers: IdentityUserModel[]) {
+        this.selectedUsers.forEach((selectedUser, index) => {
+            if (validatedUsers[index]) {
+                if ((selectedUser.id === validatedUsers[index].id) || (selectedUser.username === validatedUsers[index].username)
+                    || (selectedUser.email === validatedUsers[index].email)) {
+                    validatedUsers[index].readonly = selectedUser.readonly;
+                    this.selectedUsers[index] = validatedUsers[index];
+                }
+            }
+        });
     }
 
     async searchUser(user: IdentityUserModel) {
@@ -335,6 +357,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public checkPreselectValidationErrors() {
+
+        this.invalidUsers = this.removeDuplicatedUsers(this.invalidUsers);
 
         if (this.invalidUsers.length > 0) {
             this.generateInvalidUsersMessage();
@@ -379,7 +403,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    removeUserFromValidation(username: string) {
+    private removeUserFromValidation(username: string) {
         const indexToRemove = this.invalidUsers.findIndex((invalidUser) => {
             return invalidUser.username === username;
         });
@@ -389,7 +413,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    hasUserDetails(user: IdentityUserModel): boolean {
+    private hasUserDetails(user: IdentityUserModel): boolean {
         return user && (user.id.length > 0 || user.username.length > 0 || user.email.length > 0);
     }
 
@@ -433,7 +457,19 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         return this.preSelectUsers && this.preSelectUsers.length > 0;
     }
 
-    private isPreselectedUsersCleared(changes): boolean {
+    private hasModeChanged(changes): boolean {
+        return changes && changes.mode && changes.mode.currentValue !== changes.mode.previousValue;
+    }
+
+    private isValidationChanged(changes): boolean {
+        return changes && changes.validate && changes.validate.currentValue !== changes.validate.previousValue;
+    }
+
+    private hasPreselectedUsersChanged(changes):boolean {
+        return changes && changes.preSelectUsers && changes.preSelectUsers.currentValue !== changes.preSelectUsers.previousValue;
+    }
+
+    private hasPreselectedUsersCleared(changes): boolean {
         return changes && changes.preSelectUsers && changes.preSelectUsers.currentValue.length === 0;
     }
 
@@ -444,6 +480,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     isReadonly(): boolean {
         return this.readOnly || this.isSingleSelectionReadonly();
+    }
+
+    isValidationLoading(): boolean {
+        return this.isValidationEnabled() && this.isLoading;
     }
 
     setFocus(isFocused: boolean) {
