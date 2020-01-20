@@ -349,7 +349,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private removeDuplicatedUsers(users: IdentityUserModel[]): IdentityUserModel[] {
+    removeDuplicatedUsers(users: IdentityUserModel[]): IdentityUserModel[] {
         return users.filter((user, index, self) =>
             index === self.findIndex((auxUser) => {
                 return user.id === auxUser.id && user.username === auxUser.username;
@@ -413,8 +413,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private hasUserDetails(user: IdentityUserModel): boolean {
-        return user && (user.id.length > 0 || user.username.length > 0 || user.email.length > 0);
+    hasUserDetails(user: IdentityUserModel): boolean {
+        return user && (user.id !== undefined || user.username !== undefined || user.email !== undefined);
     }
 
     generateInvalidUsersMessage() {
@@ -476,6 +476,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     private resetSearchUsers() {
         this._searchUsers = [];
         this.searchUsersSubject.next(this._searchUsers);
+    }
+
+    getSelectedUsers(): IdentityUserModel[] {
+        return this.selectedUsers;
     }
 
     isReadonly(): boolean {

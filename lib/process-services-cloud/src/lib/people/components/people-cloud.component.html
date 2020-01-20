@@ -1,7 +1,7 @@
 <form>
     <mat-form-field class="adf-people-cloud">
         <mat-label id="adf-people-cloud-title-id">{{ title | translate }}</mat-label>
-        <mat-chip-list #userMultipleChipList [disabled]="isReadonly() " data-automation-id="adf-cloud-people-chip-list">
+        <mat-chip-list #userMultipleChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-people-chip-list">
             <mat-chip
                 *ngFor="let user of selectedUsers"
                 [removable]="!(user.readonly)"
@@ -59,7 +59,7 @@
     <mat-error *ngIf="searchUserCtrl.hasError('required')">
         <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
         {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.REQUIRED' | translate }} </mat-error>
-    <mat-error *ngIf="searchUserCtrl.hasError('searchTypingError') && !this.isFocused">
+    <mat-error *ngIf="searchUserCtrl.hasError('searchTypingError') && !this.isFocused" data-automation-id="invalid-users-typing-error">
         <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
         {{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : searchedValue } }}</mat-error>
 </form>

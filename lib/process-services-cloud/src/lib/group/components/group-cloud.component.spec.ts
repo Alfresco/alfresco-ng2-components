@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
-
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -33,7 +31,7 @@ import {
 } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 
-xdescribe('GroupCloudComponent', () => {
+describe('GroupCloudComponent', () => {
     let component: GroupCloudComponent;
     let fixture: ComponentFixture<GroupCloudComponent>;
     let element: HTMLElement;
@@ -74,7 +72,7 @@ xdescribe('GroupCloudComponent', () => {
         component.title = 'TITLE_KEY';
         fixture.detectChanges();
         const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('#adf-group-cloud-title-id');
-        fixture.whenStable().then( () => {
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(matLabel.textContent).toEqual('TITLE_KEY');
         });
@@ -88,14 +86,14 @@ xdescribe('GroupCloudComponent', () => {
             findGroupsByNameSpy = spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
         }));
 
-        it('should list the group if the typed result match', (done) => {
-            findGroupsByNameSpy.and.returnValue(of(mockIdentityGroups));
+        it('should list the groups as dropdown options if the search term has results', (done) => {
             const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             inputHTMLElement.focus();
             inputHTMLElement.value = 'Mock';
             inputHTMLElement.dispatchEvent(new Event('keyup'));
             inputHTMLElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
+
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(5);
@@ -118,13 +116,19 @@ xdescribe('GroupCloudComponent', () => {
             });
         });
 
-        it('should emit selectedGroup if option is valid', (done) => {
+        it('should selectedGroup  and groupsChanged emit, update selected groups when a group is selected', (done) => {
+            const group = { name: 'groupname' };
             fixture.detectChanges();
+            spyOn(component, 'hasGroupIdOrName').and.returnValue(true);
             const selectEmitSpy = spyOn(component.selectGroup, 'emit');
-            component.onSelect({ name: 'groupname' });
+            const changedGroupsSpy = spyOn(component.changedGroups, 'emit');
+            component.onSelect(group);
             fixture.detectChanges();
+
             fixture.whenStable().then(() => {
-                expect(selectEmitSpy).toHaveBeenCalled();
+                expect(selectEmitSpy).toHaveBeenCalledWith(group);
+                expect(changedGroupsSpy).toHaveBeenCalledWith([group]);
+                expect(component.getSelectedGroups()[0]).toEqual(group);
                 done();
             });
         });
@@ -141,9 +145,9 @@ xdescribe('GroupCloudComponent', () => {
             fixture.whenStable().then(() => {
                 inputHTMLElement.blur();
                 fixture.detectChanges();
-                const errorMessage = element.querySelector('.adf-cloud-group-error-message');
+                const errorMessage = element.querySelector('[data-automation-id="invalid-groups-typing-error"]');
                 expect(errorMessage).not.toBeNull();
-                expect(errorMessage.textContent).toContain(' ADF_CLOUD_GROUPS.ERROR.NOT_FOUND ');
+                expect(errorMessage.textContent).toContain('ADF_CLOUD_GROUPS.ERROR.NOT_FOUND');
                 done();
             });
         });
@@ -164,13 +168,13 @@ xdescribe('GroupCloudComponent', () => {
             element = fixture.nativeElement;
         }));
 
-        it('should fetch the client ID if appName specified', async(() => {
+        it('should fetch the client ID if appName specified', async (() => {
             const getClientIdByApplicationNameSpy = spyOn(identityGroupService, 'getClientIdByApplicationName').and.callThrough();
             component.appName = 'mock-app-name';
             const change = new SimpleChange(null, 'mock-app-name', false);
             component.ngOnChanges({ 'appName': change });
             fixture.detectChanges();
-            fixture.whenStable().then( () => {
+            fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
             });
@@ -296,89 +300,31 @@ xdescribe('GroupCloudComponent', () => {
             fixture.whenStable().then(() => {
                 inputHTMLElement.blur();
                 fixture.detectChanges();
-                const errorMessage = element.querySelector('.adf-cloud-group-error-message');
+                const errorMessage = element.querySelector('[data-automation-id="invalid-groups-typing-error"]');
                 expect(errorMessage).not.toBeNull();
-                expect(errorMessage.textContent).toContain(' ADF_CLOUD_GROUPS.ERROR.NOT_FOUND ');
+                expect(errorMessage.textContent).toContain('ADF_CLOUD_GROUPS.ERROR.NOT_FOUND');
                 done();
             });
         });
     });
 
-    describe('Single Mode and Pre-selected groups', () => {
+    describe('No preselected groups', () => {
+        beforeEach(async () => {
+            fixture.detectChanges();
+        });
 
-        beforeEach(async(() => {
+        it('should not pre-select any group when preSelectGroups is empty - single mode', () => {
             component.mode = 'single';
-            component.preSelectGroups = <any> mockIdentityGroups;
             fixture.detectChanges();
-            element = fixture.nativeElement;
-        }));
-
-        it('should not show chip list when mode=single', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const chip = element.querySelector('mat-chip-list');
-                expect(chip).toBeNull();
-                done();
-            });
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            expect(chips.length).toEqual(0);
         });
 
-        it('should not pre-select any group when preSelectGroups is empty and mode=single', (done) => {
-            component.preSelectGroups = [];
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const selectedGroup = component.searchGroupsControl.value;
-                expect(selectedGroup).toBeNull();
-                done();
-            });
-        });
-    });
-
-    describe('Multiple Mode and Pre-selected groups', () => {
-
-        const change = new SimpleChange(null, mockIdentityGroups, false);
-
-        beforeEach(async(() => {
-            component.mode = 'multiple';
-            component.preSelectGroups = <any> mockIdentityGroups;
-            component.ngOnChanges({ 'preSelectGroups': change });
-            fixture.detectChanges();
-            element = fixture.nativeElement;
-        }));
-
-        it('should show chip list when mode=multiple', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const chip = element.querySelector('mat-chip-list');
-                expect(chip).toBeDefined();
-                done();
-            });
-        });
-
-        it('should pre-select all preSelectGroups when mode=multiple', (done) => {
+        it('should not pre-select any group when preSelectGroups is empty - multiple mode', () => {
             component.mode = 'multiple';
             fixture.detectChanges();
-            component.ngOnChanges({ 'preSelectGroups': change });
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
-                expect(chips.length).toBe(5);
-                done();
-            });
-        });
-
-        it('should emit removeGroup when a selected group is removed', (done) => {
-            const removeSpy = spyOn(component.removeGroup, 'emit');
-            component.mode = 'multiple';
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
-                removeIcon.nativeElement.click();
-                fixture.detectChanges();
-                expect(removeSpy).toHaveBeenCalled();
-                done();
-            });
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            expect(chips.length).toEqual(0);
         });
     });
 
@@ -441,41 +387,72 @@ xdescribe('GroupCloudComponent', () => {
         });
     });
 
-    describe('Single Mode and Pre-selected groups with readonly mode', () => {
-        beforeEach(async( () => {
-            component.preSelectGroups = [
-                { id: mockIdentityGroups[0].id, name: mockIdentityGroups[0].name, readonly: true }
-            ];
+    describe('Single Mode with pre-selected groups', () => {
+
+        const changes = new SimpleChange(null, mockIdentityGroups, false);
+
+        beforeEach(async(() => {
             component.mode = 'single';
-            component.readOnly = true;
+            component.preSelectGroups = <any> mockIdentityGroups;
+            component.ngOnChanges({ 'preSelectGroups': changes });
             fixture.detectChanges();
+            element = fixture.nativeElement;
         }));
 
-        it('should group input be disabled', () => {
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const groupInput = fixture.nativeElement.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
-                expect(groupInput.readOnly).toBeTruthy();
-            });
+        it('should show only one mat chip with the first preSelectedGroup', () => {
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            expect(chips.length).toEqual(1);
+            expect(chips[0].attributes['data-automation-id']).toEqual(`adf-cloud-group-chip-${mockIdentityGroups[0].name}`);
         });
     });
 
-    describe('Multiple Mode with read-only', () => {
+    describe('Multiple Mode with pre-selected groups', () => {
 
-        it('should group chip-list be disabled', () => {
-            component.preSelectGroups = [
-                { id: mockIdentityGroups[0].id, name: mockIdentityGroups[0].name },
-                { id: mockIdentityGroups[1].id, name: mockIdentityGroups[1].name }
-            ];
+        const change = new SimpleChange(null, mockIdentityGroups, false);
+
+        beforeEach(async(() => {
             component.mode = 'multiple';
-            component.readOnly = true;
+            component.preSelectGroups = <any> mockIdentityGroups;
+            component.ngOnChanges({ 'preSelectGroups': change });
             fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        it('should pre-select all preSelectGroups', () => {
+            component.mode = 'multiple';
+            fixture.detectChanges();
+            component.ngOnChanges({ 'preSelectGroups': change });
+            fixture.detectChanges();
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            expect(chips.length).toBe(5);
+        });
+
+        it('should removeGroup and changedGroups emit when a selected group is removed', (done) => {
+            const removeGroupEmitterSpy = spyOn(component.removeGroup, 'emit');
+            const changedGroupsEmitterSpy = spyOn(component.changedGroups, 'emit');
+            const groupToRemove = mockIdentityGroups[0];
+            component.mode = 'multiple';
+            fixture.detectChanges();
+
+            const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
+            removeIcon.nativeElement.click();
+            fixture.detectChanges();
+
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const matChipList = fixture.nativeElement.querySelector('mat-chip-list');
-                expect(matChipList.attributes['ng-reflect-disabled'].value).toBeTruthy();
+                expect(removeGroupEmitterSpy).toHaveBeenCalledWith(groupToRemove);
+                expect(changedGroupsEmitterSpy).toHaveBeenCalledWith([mockIdentityGroups[1], mockIdentityGroups[2], mockIdentityGroups[3], mockIdentityGroups[4]]);
+                expect(component.getSelectedGroups().indexOf({
+                    id: groupToRemove.id,
+                    name: groupToRemove.name,
+                    path: groupToRemove.path
+                })).toEqual(-1);
+                done();
             });
         });
+
+    });
+
+    describe('Multiple Mode with read-only', () => {
 
         it('Should not show remove icon for pre-selected groups if readonly property set to true', (done) => {
             fixture.detectChanges();
@@ -487,19 +464,14 @@ xdescribe('GroupCloudComponent', () => {
             component.mode = 'multiple';
             component.ngOnChanges({ 'preSelectGroups': change });
             fixture.detectChanges();
-            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
-            const removeIcon = <HTMLElement> fixture.nativeElement.querySelector('[data-automation-id="adf-cloud-group-chip-remove-icon-Mock Group 1"]');
-            expect(chipList.length).toBe(2);
-            expect(component.preSelectGroups[0].readonly).toBeTruthy();
-            expect(component.preSelectGroups[1].readonly).toBeTruthy();
-            fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
+                const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
+                const removeIcon = <HTMLElement> fixture.nativeElement.querySelector('[data-automation-id="adf-cloud-group-chip-remove-icon-Mock Group 1"]');
+                expect(chipList.length).toBe(2);
+                expect(component.preSelectGroups[0].readonly).toBeTruthy();
+                expect(component.preSelectGroups[1].readonly).toBeTruthy();
                 expect(removeIcon).toBeNull();
-                expect(component.preSelectGroups.length).toBe(2);
-                expect(component.preSelectGroups[0].readonly).toBe(true, 'Not removable');
-                expect(component.preSelectGroups[1].readonly).toBe(true, 'Not removable');
-                expect(fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip').length).toBe(2);
                 done();
             });
         });
@@ -512,18 +484,17 @@ xdescribe('GroupCloudComponent', () => {
             ];
             const change = new SimpleChange(null, component.preSelectGroups, false);
             component.mode = 'multiple';
-            const removeGroupSpy = spyOn(component.removeGroup, 'emit');
             component.ngOnChanges({ 'preSelectGroups': change });
+            const removeGroupSpy = spyOn(component.removeGroup, 'emit');
             fixture.detectChanges();
-            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
-            const removeIcon = <HTMLElement> fixture.nativeElement.querySelector('[data-automation-id="adf-cloud-group-chip-remove-icon-Mock Group 1"]');
-            expect(chipList.length).toBe(2);
-            expect(component.preSelectGroups[0].readonly).toBe(false, 'Removable');
-            expect(component.preSelectGroups[1].readonly).toBe(false, 'Removable');
-            removeIcon.click();
-            fixture.detectChanges();
+
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
+                const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+                const removeIcon = <HTMLElement> fixture.nativeElement.querySelector('[data-automation-id="adf-cloud-group-chip-remove-icon-Mock Group 1"]');
+                expect(chips.length).toBe(2);
+                expect(component.preSelectGroups[0].readonly).toBe(false, 'Removable');
+                expect(component.preSelectGroups[1].readonly).toBe(false, 'Removable');
                 removeIcon.click();
                 fixture.detectChanges();
                 expect(removeGroupSpy).toHaveBeenCalled();
@@ -531,65 +502,101 @@ xdescribe('GroupCloudComponent', () => {
                 done();
             });
         });
-    });
 
-    describe('Multiple Mode and Pre-selected groups with validate flag', () => {
+        describe('Component readonly mode', () => {
+            const change = new SimpleChange(null, mockIdentityGroups, false);
 
-        beforeEach(async(() => {
-            component.mode = 'multiple';
-            component.validate = true;
-            component.preSelectGroups = <any> mockIdentityGroups;
-            element = fixture.nativeElement;
-            alfrescoApiService = TestBed.get(AlfrescoApiService);
-            fixture.detectChanges();
-        }));
+            it('should chip list be disabled and show one single chip - single mode', () => {
+                component.mode = 'single';
+                component.readOnly = true;
+                component.preSelectGroups = <any> mockIdentityGroups;
+                component.ngOnChanges({ 'preSelectGroups': change });
 
-        it('should emit warning if are invalid groups', (done) => {
-            findGroupsByNameSpy.and.returnValue(Promise.resolve([]));
-            const warnMessage = { message: 'INVALID_PRESELECTED_GROUPS', groups: [{ name: 'invalidGroupOne' }, { name: 'invalidGroupTwo' }] };
-            component.validate = true;
-            component.preSelectGroups = <any> [{ name: 'invalidGroupOne' }, { name: 'invalidGroupTwo' }];
-            fixture.detectChanges();
-            // component.loadSinglePreselectGroup();
-            component.warning.subscribe((response) => {
-                expect(response).toEqual(warnMessage);
-                expect(response.message).toEqual(warnMessage.message);
-                expect(response.groups).toEqual(warnMessage.groups);
-                expect(response.groups[0].name).toEqual('invalidGroupOne');
-                done();
+                fixture.detectChanges();
+                const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+                const chipList = fixture.nativeElement.querySelector('mat-chip-list');
+                expect(chips).toBeDefined();
+                expect(chipList).toBeDefined();
+                expect(chips.length).toBe(1);
+                expect(chipList.attributes['ng-reflect-disabled'].value).toEqual('true');
+            });
+
+            it('should chip list be disabled and show all the chips - multiple mode', () => {
+                component.mode = 'multiple';
+                component.readOnly = true;
+                component.preSelectGroups = <any> mockIdentityGroups;
+                component.ngOnChanges({ 'preSelectGroups': change });
+                fixture.detectChanges();
+                const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+                const chipList = fixture.nativeElement.querySelector('mat-chip-list');
+                expect(chips).toBeDefined();
+                expect(chipList).toBeDefined();
+                expect(chips.length).toBe(5);
+                expect(chipList.attributes['ng-reflect-disabled'].value).toEqual('true');
             });
         });
 
-        it('should filter group by name if validate true', (done) => {
-            findGroupsByNameSpy.and.returnValue(of(mockIdentityGroups));
-            component.mode = 'multiple';
-            component.validate = true;
-            component.preSelectGroups = <any> [{ name: mockIdentityGroups[1].name }, { name: mockIdentityGroups[2].name }];
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                // component.filterPreselectGroups().then((result) => {
-                //     expect(findGroupsByNameSpy).toHaveBeenCalled();
-                //     expect(component.groupExists(result[0])).toEqual(true);
-                //     expect(component.groupExists(result[1])).toEqual(true);
-                    done();
-                // });
-            });
-        });
+        describe('Preselected groups and validation enabled', () => {
 
-        it('should not preselect any group if name is invalid and validation enable', (done) => {
-            findGroupsByNameSpy.and.returnValue(of([]));
-            component.mode = 'single';
-            component.validate = true;
-            component.preSelectGroups = <any> [{ name: 'invalid group' }];
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.validatePreselectGroups().then((result) => {
-                    fixture.detectChanges();
-                    expect(findGroupsByNameSpy).toHaveBeenCalled();
-                    expect(result.length).toEqual(0);
+            it('should check validation only for the first group and emit warning when group is invalid - single mode', (done) => {
+                spyOn(identityGroupService, 'findGroupsByName').and.returnValue(Promise.resolve([]));
+                spyOn(component, 'hasGroupIdOrName').and.returnValue(false);
+
+                const expectedWarning = {
+                    message: 'INVALID_PRESELECTED_GROUPS',
+                    groups: [{
+                        id: mockIdentityGroups[0].id,
+                        name: mockIdentityGroups[0].name,
+                        path: mockIdentityGroups[0].path,
+                        subGroups: []
+                    }]
+                };
+                component.warning.subscribe(warning => {
+                    expect(warning).toEqual(expectedWarning);
                     done();
                 });
+
+                component.mode = 'single';
+                component.validate = true;
+                component.preSelectGroups = <any> [mockIdentityGroups[0], mockIdentityGroups[1]];
+                component.ngOnChanges({ 'preSelectGroups': new SimpleChange(null, [mockIdentityGroups[0], mockIdentityGroups[1]], false) });
             });
+
+            it('should check validation for all the groups and emit warning - multiple mode', (done) => {
+                spyOn(identityGroupService, 'findGroupsByName').and.returnValue(Promise.resolve(undefined));
+
+                const expectedWarning = {
+                    message: 'INVALID_PRESELECTED_GROUPS',
+                    groups: [
+                        {
+                            id: mockIdentityGroups[0].id,
+                            name: mockIdentityGroups[0].name,
+                            path: mockIdentityGroups[0].path,
+                            subGroups: []
+                        },
+                        {
+                            id: mockIdentityGroups[1].id,
+                            name: mockIdentityGroups[1].name,
+                            path: mockIdentityGroups[1].path,
+                            subGroups: []
+                        }]
+                };
+
+                component.warning.subscribe(warning => {
+                    expect(warning).toEqual(expectedWarning);
+                    done();
+                });
+
+                component.mode = 'multiple';
+                component.validate = true;
+                component.preSelectGroups = <any> [mockIdentityGroups[0], mockIdentityGroups[1]];
+                component.ngOnChanges({ 'preSelectGroups': new SimpleChange(null, [mockIdentityGroups[0], mockIdentityGroups[1]], false) });
+            });
+        });
+
+        it('should removeDuplicatedGroups return only unique groups', () => {
+            const duplicatedGroups = [{ name: mockIdentityGroups[0].name }, { name: mockIdentityGroups[0].name }];
+            expect(component.removeDuplicatedGroups(duplicatedGroups)).toEqual([{ name: mockIdentityGroups[0].name }]);
         });
     });
 });

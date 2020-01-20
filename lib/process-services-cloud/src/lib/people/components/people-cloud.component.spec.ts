@@ -15,10 +15,14 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
 import { PeopleCloudComponent } from './people-cloud.component';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { IdentityUserService, AlfrescoApiService, CoreModule, setupTestBed } from '@alfresco/adf-core';
+import {
+    IdentityUserService,
+    AlfrescoApiService,
+    CoreModule,
+    setupTestBed
+} from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
 import { mockUsers } from '../mock/user-cloud.mock';
@@ -26,14 +30,13 @@ import { PeopleCloudModule } from '../people-cloud.module';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-xdescribe('PeopleCloudComponent', () => {
+describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;
     let fixture: ComponentFixture<PeopleCloudComponent>;
     let element: HTMLElement;
     let identityService: IdentityUserService;
     let alfrescoApiService: AlfrescoApiService;
     let findUsersByNameSpy: jasmine.Spy;
-    let findUserByUsernameSpy: jasmine.Spy;
 
     const mock = {
         oauth2Auth: {
@@ -63,7 +66,6 @@ xdescribe('PeopleCloudComponent', () => {
         identityService = TestBed.get(IdentityUserService);
         alfrescoApiService = TestBed.get(AlfrescoApiService);
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
-        findUserByUsernameSpy = spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve([]));
     });
 
     it('should create PeopleCloudComponent', () => {
@@ -74,7 +76,7 @@ xdescribe('PeopleCloudComponent', () => {
         component.title = 'TITLE_KEY';
         fixture.detectChanges();
         const matLabel: HTMLInputElement = <HTMLInputElement> fixture.nativeElement.querySelector('#adf-people-cloud-title-id');
-        fixture.whenStable().then( () => {
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(matLabel.textContent).toEqual('TITLE_KEY');
         });
@@ -84,7 +86,7 @@ xdescribe('PeopleCloudComponent', () => {
         fixture.detectChanges();
         const matLabel: HTMLInputElement = <HTMLInputElement> fixture.nativeElement.querySelector('#adf-people-cloud-title-id');
         fixture.detectChanges();
-        fixture.whenStable().then( () => {
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(matLabel.textContent).toEqual('');
         });
@@ -98,14 +100,14 @@ xdescribe('PeopleCloudComponent', () => {
             findUsersByNameSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
         }));
 
-        it('should list the users if the typed result match', (done) => {
-            findUsersByNameSpy.and.returnValue(of(mockUsers));
+        it('should list the users as dropdown options if the search term has results', (done) => {
             const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             inputHTMLElement.focus();
             inputHTMLElement.value = 'first';
             inputHTMLElement.dispatchEvent(new Event('keyup'));
             inputHTMLElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
+
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(3);
@@ -128,13 +130,19 @@ xdescribe('PeopleCloudComponent', () => {
             });
         });
 
-        it('should emit selectedUser if option is valid', (done) => {
+        it('should selectedUser and changedUsers emit, update selected users when a user is selected', (done) => {
+            const user = { username: 'username' };
             fixture.detectChanges();
+            spyOn(component, 'hasUserDetails').and.returnValue(true);
             const selectEmitSpy = spyOn(component.selectUser, 'emit');
-            component.onSelect({ username: 'username' });
+            const changedUsersSpy = spyOn(component.changedUsers, 'emit');
+            component.onSelect(user);
             fixture.detectChanges();
+
             fixture.whenStable().then(() => {
-                expect(selectEmitSpy).toHaveBeenCalled();
+                expect(selectEmitSpy).toHaveBeenCalledWith(user);
+                expect(changedUsersSpy).toHaveBeenCalledWith([user]);
+                expect(component.getSelectedUsers()).toEqual([user]);
                 done();
             });
         });
@@ -151,9 +159,9 @@ xdescribe('PeopleCloudComponent', () => {
             fixture.whenStable().then(() => {
                 inputHTMLElement.blur();
                 fixture.detectChanges();
-                const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
+                const errorMessage = element.querySelector('[data-automation-id="invalid-users-typing-error"]');
                 expect(errorMessage).not.toBeNull();
-                expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
+                expect(errorMessage.textContent).toContain('ADF_CLOUD_USERS.ERROR.NOT_FOUND');
                 done();
             });
         });
@@ -172,6 +180,18 @@ xdescribe('PeopleCloudComponent', () => {
             component.appName = 'mock-app-name';
             fixture.detectChanges();
             element = fixture.nativeElement;
+        }));
+
+        it('should fetch the client ID if appName specified', async (() => {
+            const getClientIdByApplicationNameSpy = spyOn(identityService, 'getClientIdByApplicationName').and.callThrough();
+            component.appName = 'mock-app-name';
+            const change = new SimpleChange(null, 'mock-app-name', false);
+            component.ngOnChanges({ 'appName': change });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
+            });
         }));
 
         it('should list users who have access to the app when appName is specified', (done) => {
@@ -294,11 +314,31 @@ xdescribe('PeopleCloudComponent', () => {
             fixture.whenStable().then(() => {
                 inputHTMLElement.blur();
                 fixture.detectChanges();
-                const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
+                const errorMessage = element.querySelector('[data-automation-id="invalid-users-typing-error"]');
                 expect(errorMessage).not.toBeNull();
-                expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
+                expect(errorMessage.textContent).toContain('ADF_CLOUD_USERS.ERROR.NOT_FOUND');
                 done();
             });
+        });
+    });
+
+    describe('No preselected users', () => {
+        beforeEach(async () => {
+            fixture.detectChanges();
+        });
+
+        it('should not pre-select any user when preSelectUsers is empty - single mode', () => {
+            component.mode = 'single';
+            fixture.detectChanges();
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            expect(chips.length).toEqual(0);
+        });
+
+        it('should not pre-select any users when preSelectUsers is empty - multiple mode', () => {
+            component.mode = 'multiple';
+            fixture.detectChanges();
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            expect(chips.length).toEqual(0);
         });
     });
 
@@ -361,343 +401,170 @@ xdescribe('PeopleCloudComponent', () => {
         });
     });
 
-    describe('Single Mode and Pre-selected users with readonly mode', () => {
+    describe('Single Mode with Pre-selected users', () => {
 
-        beforeEach(async( () => {
-            component.preSelectUsers = [
-                { id: mockUsers[0].id, username: mockUsers[0].username }
-            ];
-            component.readOnly = true;
-            fixture.detectChanges();
-        }));
-
-        it('should people input be disabled', () => {
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const peopleInput = fixture.nativeElement.querySelector('[data-automation-id="adf-people-cloud-search-input"]');
-                expect(peopleInput.readOnly).toBeTruthy();
-            });
-        });
-    });
-
-    describe('Single Mode and Pre-selected users with no validate flag', () => {
+        const changes = new SimpleChange(null, mockPreselectedUsers, false);
 
         beforeEach(async(() => {
             component.mode = 'single';
             component.preSelectUsers = <any> mockPreselectedUsers;
+            component.ngOnChanges({ 'preSelectUsers': changes });
             fixture.detectChanges();
             element = fixture.nativeElement;
         }));
 
-        it('should not show chip list when mode=single', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const chip = element.querySelector('mat-chip-list');
-                expect(chip).toBeNull();
-                done();
-            });
-        });
-
-        it('should not pre-select any user when preSelectUsers is empty and mode=single', (done) => {
-            component.preSelectUsers = [];
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const selectedUser = component.searchUserCtrl.value;
-                expect(selectedUser).toBeNull();
-                done();
-            });
-        });
-    });
-
-    describe('Single Mode and Pre-selected users with validate flag', () => {
-
-        beforeEach(async(() => {
-            component.mode = 'single';
-            component.validate = true;
-            component.preSelectUsers = <any> mockPreselectedUsers;
-            fixture.detectChanges();
-            element = fixture.nativeElement;
-        }));
-
-        it('should not show chip list when mode=single', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const chip = element.querySelector('mat-chip-list');
-                expect(chip).toBeNull();
-                done();
-            });
-        });
-    });
-
-    describe('Multiple Mode and Pre-selected users with no validate flag', () => {
-
-        const change = new SimpleChange(null, mockPreselectedUsers, false);
-
-        beforeEach(async(() => {
-            component.mode = 'multiple';
-            component.preSelectUsers = <any> mockPreselectedUsers;
-            fixture.detectChanges();
-            element = fixture.nativeElement;
-            alfrescoApiService = TestBed.get(AlfrescoApiService);
-        }));
-
-        it('should show chip list when mode=multiple', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const chip = element.querySelector('mat-chip-list');
-                expect(chip).toBeDefined();
-                done();
-            });
-        });
-
-        it('should pre-select all preSelectUsers when mode=multiple validation disabled', (done) => {
-            component.mode = 'multiple';
-            spyOn(component, 'validatePreselectUsers').and.returnValue(Promise.resolve(mockPreselectedUsers));
-            component.ngOnChanges({ 'preSelectUsers': change });
-            fixture.detectChanges();
+        it('should show only one mat chip with the first preSelectedUser', (done) => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(component.selectedUsers).toBeDefined();
-                expect(component.selectedUsers.length).toEqual(2);
-                expect(component.selectedUsers[0].id).toEqual('fake-id-2');
+                const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+                expect(chips.length).toEqual(1);
+                expect(chips[0].attributes['data-automation-id']).toEqual(`adf-people-cloud-chip-${mockPreselectedUsers[0].username}`);
                 done();
             });
         });
     });
 
-    describe('Multiple Mode with read-only mode', () => {
-
-        it('should people chip-list be disabled', () => {
-            component.preSelectUsers = [
-                { id: mockUsers[0].id, username: mockUsers[0].username },
-                { id: mockUsers[1].id, username: mockUsers[1].username }
-            ];
-            component.mode = 'multiple';
-            component.readOnly = true;
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const matChipList = fixture.nativeElement.querySelector('mat-chip-list');
-                expect(matChipList.attributes['ng-reflect-disabled'].value).toBeTruthy();
-            });
-        });
+    describe('Multiple Mode with Pre-selected Users', () => {
 
         it('Should not show remove icon for pre-selected users if readonly property set to true', (done) => {
-            component.mode = 'multiple';
-            const removeUserSpy = spyOn(component.removeUser, 'emit');
+            fixture.detectChanges();
             component.preSelectUsers = [
                 { id: mockUsers[0].id, username: mockUsers[0].username, readonly: true },
                 { id: mockUsers[1].id, username: mockUsers[1].username, readonly: true }
             ];
-            fixture.detectChanges();
-            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
-            const removeIcon = <HTMLElement> fixture.nativeElement.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon-first-name-1 last-name-1"]');
-            expect(chipList.length).toBe(2);
-            expect(component.preSelectUsers[0].readonly).toBeTruthy();
-            expect(component.preSelectUsers[1].readonly).toBeTruthy();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(removeIcon).toBeNull();
-                fixture.detectChanges();
-                expect(removeUserSpy).not.toHaveBeenCalled();
-                expect(component.preSelectUsers.length).toBe(2);
-                expect(component.preSelectUsers[0].readonly).toBe(true, 'Not removable');
-                expect(component.preSelectUsers[1].readonly).toBe(true, 'not removable');
-                done();
-            });
-        });
-    });
-
-    describe('Multiple Mode and Pre-selected users with validate flag', () => {
-
-        const change = new SimpleChange(null, mockPreselectedUsers, false);
-
-        beforeEach(async(() => {
+            const change = new SimpleChange(null, component.preSelectUsers, false);
             component.mode = 'multiple';
-            component.validate = true;
-            component.preSelectUsers = <any> mockPreselectedUsers;
-            element = fixture.nativeElement;
-            alfrescoApiService = TestBed.get(AlfrescoApiService);
-            fixture.detectChanges();
-        }));
-
-        it('should show chip list when mode=multiple', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const chip = element.querySelector('mat-chip-list');
-                expect(chip).toBeDefined();
-                done();
-            });
-        });
-
-        it('should pre-select all preSelectUsers when mode=multiple', (done) => {
-            spyOn(component, 'searchUser').and.returnValue(Promise.resolve(mockPreselectedUsers));
-            component.mode = 'multiple';
-            fixture.detectChanges();
             component.ngOnChanges({ 'preSelectUsers': change });
             fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
+                const removeIcon = <HTMLElement> fixture.nativeElement.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon-first-name-1 last-name-1"]');
+                expect(chipList.length).toBe(2);
+                expect(component.preSelectUsers[0].readonly).toBeTruthy();
+                expect(component.preSelectUsers[1].readonly).toBeTruthy();
+                expect(removeIcon).toBeNull();
+                done();
+            });
+        });
+
+        it('Should be able to remove preselected users if readonly property set to false', (done) => {
+            fixture.detectChanges();
+            component.preSelectUsers = [
+                { id: mockUsers[0].id, username: mockUsers[0].username, readonly: false },
+                { id: mockUsers[1].id, username: mockUsers[1].username, readonly: false }
+            ];
+            const change = new SimpleChange(null, component.preSelectUsers, false);
+            component.mode = 'multiple';
+            component.ngOnChanges({ 'preSelectUsers': change });
+            const removeUserSpy = spyOn(component.removeUser, 'emit');
+            fixture.detectChanges();
+
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+                const removeIcon = <HTMLElement> fixture.nativeElement.querySelector(`[data-automation-id="adf-people-cloud-chip-remove-icon-${mockPreselectedUsers[0].username}"]`);
                 expect(chips.length).toBe(2);
+                expect(component.preSelectUsers[0].readonly).toBe(false, 'Removable');
+                expect(component.preSelectUsers[1].readonly).toBe(false, 'Removable');
+                removeIcon.click();
+                fixture.detectChanges();
+                expect(removeUserSpy).toHaveBeenCalled();
+                expect(fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip').length).toBe(1);
                 done();
             });
         });
 
-        it('should emit removeUser when a selected user is removed if mode=multiple', (done) => {
-            spyOn(component.removeUser, 'emit');
-            component.mode = 'multiple';
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
+        describe('Component readonly mode', () => {
+            const change = new SimpleChange(null, mockPreselectedUsers, false);
+
+            it('should chip list be disabled and show one single chip - single mode', () => {
+                component.mode = 'single';
+                component.readOnly = true;
+                component.preSelectUsers = <any> mockPreselectedUsers;
+                component.ngOnChanges({ 'preSelectUsers': change });
+
                 fixture.detectChanges();
-                const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
-                removeIcon.nativeElement.click();
+                const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+                const chipList = fixture.nativeElement.querySelector('mat-chip-list');
+                expect(chips).toBeDefined();
+                expect(chipList).toBeDefined();
+                expect(chips.length).toBe(1);
+                expect(chipList.attributes['ng-reflect-disabled'].value).toEqual('true');
+            });
+
+            it('should chip list be disabled and show mat chips for all the preselected users - multiple mode', () => {
+                component.mode = 'multiple';
+                component.readOnly = true;
+                component.preSelectUsers = <any> mockPreselectedUsers;
+                component.ngOnChanges({ 'preSelectUsers': change });
                 fixture.detectChanges();
-                expect(component.removeUser.emit).toHaveBeenCalled();
-                done();
-            });
-        });
-
-        it('should emit warning if are invalid users', (done) => {
-            findUserByUsernameSpy.and.returnValue(Promise.resolve([]));
-            const warnMessage = { message: 'INVALID_PRESELECTED_USERS', users: [{ username: 'invalidUsername' }] };
-            component.validate = true;
-            component.preSelectUsers = <any> [{ username: 'invalidUsername' }];
-            fixture.detectChanges();
-            // component.loadPreSelectUsers();
-            component.warning.subscribe((response) => {
-                expect(response).toEqual(warnMessage);
-                expect(response.message).toEqual(warnMessage.message);
-                expect(response.users).toEqual(warnMessage.users);
-                expect(response.users[0].username).toEqual('invalidUsername');
-                done();
-            });
-        });
-
-        it('should filter user by id if validate true', async(() => {
-            const findByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(of(mockUsers[0]));
-            component.mode = 'multiple';
-            component.validate = true;
-            fixture.detectChanges();
-            component.preSelectUsers = <any> [{ id: mockUsers[0].id }, { id: mockUsers[1].id }];
-            component.ngOnChanges({ 'preSelectUsers': change });
-            fixture.detectChanges();
-            component.validatePreselectUsers().then((result: any) => {
-                fixture.detectChanges();
-                expect(findByIdSpy).toHaveBeenCalled();
-                expect(component.hasUserDetails(result[0])).toEqual(true);
-                expect(result[1].id).toBe(mockUsers[0].id);
-            });
-        }));
-
-        it('should filter user by username if validate true', (done) => {
-            findUserByUsernameSpy.and.returnValue(of(mockUsers));
-            component.mode = 'multiple';
-            component.validate = true;
-            component.preSelectUsers = <any> [{ username: mockUsers[1].username }, { username: mockUsers[2].username }];
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.validatePreselectUsers().then((result) => {
-                    expect(findUserByUsernameSpy).toHaveBeenCalled();
-                    expect(component.hasUserDetails(result[0])).toEqual(true);
-                    expect(component.hasUserDetails(result[1])).toEqual(true);
-                    done();
-                });
-            });
-        });
-
-        it('should filter user by email if validate true', (done) => {
-            // const findUserByEmailSpy = spyOn(identityService, 'findUserByEmail').and.returnValue(of(mockUsers));
-            fixture.detectChanges();
-            component.mode = 'multiple';
-            component.validate = true;
-            component.preSelectUsers = <any> [{ email: mockUsers[1].email }, { email: mockUsers[2].email }];
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                // component.filterPreselectUsers().then((result) => {
-                //     expect(findUserByEmailSpy).toHaveBeenCalled();
-                //     expect(component.userExists(result[0])).toEqual(true);
-                //     expect(component.userExists(result[1])).toEqual(true);
-                    done();
-                // });
-            });
-        });
-
-        it('should search user by id on single selection mode', (done) => {
-            const findUserByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(of(mockUsers[0]));
-            component.mode = 'single';
-            component.validate = true;
-            fixture.detectChanges();
-            component.preSelectUsers = <any> [{ id: mockUsers[0].id }];
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.validatePreselectUsers().then((result) => {
-                    expect(findUserByIdSpy).toHaveBeenCalled();
-                    expect(result.length).toEqual(1);
-                    done();
-                });
-            });
-        });
-
-        it('should not preselect any user if email is invalid and validation enable', (done) => {
-            const findUserByEmailSpy = spyOn(identityService, 'findUserByEmail').and.returnValue(of([]));
-            component.mode = 'single';
-            component.validate = true;
-            component.preSelectUsers = <any> [{ email: 'invalid email' }];
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.validatePreselectUsers().then((result) => {
-                    expect(findUserByEmailSpy).toHaveBeenCalled();
-                    expect(result.length).toEqual(0);
-                    done();
-                });
-            });
-        });
-
-        it('should not preselect any user if id is invalid and validation enable', (done) => {
-            const findUserByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(of([]));
-            component.mode = 'single';
-            component.validate = true;
-            component.preSelectUsers = <any> [{ id: 'invalid id' }];
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.validatePreselectUsers().then((result) => {
-                    expect(findUserByIdSpy).toHaveBeenCalled();
-                    expect(result.length).toEqual(0);
-                    done();
-                });
-            });
-        });
-
-        it('should not preselect any user if username is invalid and validation enable', (done) => {
-            findUserByUsernameSpy.and.returnValue(of([]));
-            component.mode = 'single';
-            component.validate = true;
-            component.preSelectUsers = <any> [{ username: 'invalid user' }];
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.validatePreselectUsers().then((result) => {
-                    fixture.detectChanges();
-                    expect(findUserByUsernameSpy).toHaveBeenCalled();
-                    expect(result.length).toEqual(0);
-                    done();
-                });
-            });
-        });
-
-        it('should remove duplicated preselcted users when a user is duplicated', () => {
-            spyOn(identityService, 'findUserById').and.returnValue(of(mockUsers[0]));
-            component.mode = 'multiple';
-            component.validate = true;
-            component.preSelectUsers = <any> [{ id: mockUsers[0].id }, { id: mockUsers[0].id }];
-            component.ngOnChanges({ 'preSelectUsers': change });
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.validatePreselectUsers().then((result) => {
-                    expect(result.length).toEqual(1);
-                });
+                const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+                const chipList = fixture.nativeElement.querySelector('mat-chip-list');
+                expect(chips).toBeDefined();
+                expect(chipList).toBeDefined();
+                expect(chips.length).toBe(2);
+                expect(chipList.attributes['ng-reflect-disabled'].value).toEqual('true');
             });
         });
     });
+
+    describe('Preselected users and validation enabled', () => {
+
+        it('should check validation only for the first user and emit warning when user is invalid - single mode', (done) => {
+            spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve([]));
+            spyOn(component, 'hasUserDetails').and.returnValue(false);
+
+            const expectedWarning = {
+                message: 'INVALID_PRESELECTED_USERS',
+                users: [{
+                    id: mockPreselectedUsers[0].id,
+                    username: mockPreselectedUsers[0].username
+                }]
+            };
+            component.warning.subscribe(warning => {
+                expect(warning).toEqual(expectedWarning);
+                done();
+            });
+
+            component.mode = 'single';
+            component.validate = true;
+            component.preSelectUsers = <any> [mockPreselectedUsers[0], mockPreselectedUsers[1]];
+            component.ngOnChanges({ 'preSelectUsers': new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false) });
+        });
+
+        it('should check validation for all the users and emit warning - multiple mode', (done) => {
+            spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve(undefined));
+
+            const expectedWarning = {
+                message: 'INVALID_PRESELECTED_USERS',
+                users: [
+                    {
+                        id: mockPreselectedUsers[0].id,
+                        username: mockPreselectedUsers[0].username
+                    },
+                    {
+                        id: mockPreselectedUsers[1].id,
+                        username: mockPreselectedUsers[1].username
+                    }]
+            };
+
+            component.warning.subscribe(warning => {
+                expect(warning).toEqual(expectedWarning);
+                done();
+            });
+
+            component.mode = 'multiple';
+            component.validate = true;
+            component.preSelectUsers = <any> [mockPreselectedUsers[0], mockPreselectedUsers[1]];
+            component.ngOnChanges({ 'preSelectUsers': new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false) });
+        });
+    });
+
+    it('should removeDuplicateUsers return only unique users', () => {
+        const duplicatedUsers = [{ id: mockUsers[0].id }, { id: mockUsers[0].id }];
+        expect(component.removeDuplicatedUsers(duplicatedUsers)).toEqual([{ id: mockUsers[0].id }]);
+    });
+
 });

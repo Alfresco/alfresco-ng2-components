@@ -373,8 +373,8 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.searchGroupsSubject.next(this.searchGroups);
     }
 
-    private hasGroupIdOrName(group: IdentityGroupModel): boolean {
-        return group && (group.id.length > 0 || group.name.length > 0);
+    hasGroupIdOrName(group: IdentityGroupModel): boolean {
+        return group && (group.id !== undefined || group.name !== undefined);
     }
 
     isSingleMode(): boolean {
@@ -401,7 +401,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         return group ? group.name : '';
     }
 
-    private removeDuplicatedGroups(groups: IdentityGroupModel[]): IdentityGroupModel[] {
+    removeDuplicatedGroups(groups: IdentityGroupModel[]): IdentityGroupModel[] {
         return groups.filter((group, index, self) =>
             index === self.findIndex((auxGroup) => {
                 return group.id === auxGroup.id && group.name === auxGroup.name;

@@ -65,7 +65,7 @@
     <mat-error *ngIf="searchGroupsControl.hasError('required')">
         <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
         {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.REQUIRED' | translate }} </mat-error>
-    <mat-error *ngIf="searchGroupsControl.hasError('searchTypingError') && !this.isFocused">
+    <mat-error *ngIf="searchGroupsControl.hasError('searchTypingError') && !this.isFocused" data-automation-id="invalid-groups-typing-error">
         <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
         {{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate : { groupName : searchedValue } }}</mat-error>
 </form>
