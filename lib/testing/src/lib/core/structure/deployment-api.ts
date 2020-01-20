@@ -17,12 +17,15 @@
 
 import { Api } from './api';
 import { Application } from './application';
+import { Descriptor } from './descriptor';
 import { Logger } from '../utils/logger';
 import { browser } from 'protractor';
 import { ResultSetPaging } from '@alfresco/js-api';
+import { ProjectDetailsModel } from './project-details-model';
 
 export class DeploymentAPI extends Api {
     public application: Application;
+    public descriptor: Descriptor;
 
     constructor(ROOT: string = 'deployment-service') {
         super(ROOT);
@@ -31,6 +34,7 @@ export class DeploymentAPI extends Api {
     async setUp(): Promise<DeploymentAPI> {
         await this.login();
         this.application = new Application(this);
+        this.descriptor = new Descriptor(this);
         return this;
     }
 
@@ -66,4 +70,13 @@ export class DeploymentAPI extends Api {
         const applications =  this.application.getApplicationsByStatus(status);
         return applications;
     }
+
+    async createDescriptor(project: ProjectDetailsModel, descriptorName: string): Promise<any> {
+
+        return this.descriptor.create({
+            releaseId: project.releaseProjectResponse.entry.id,
+            security: project.security,
+            name: descriptorName
+          });
+      }
 }

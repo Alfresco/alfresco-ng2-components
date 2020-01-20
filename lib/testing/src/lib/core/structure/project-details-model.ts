@@ -15,8 +15,23 @@
  * limitations under the License.
  */
 
-export * from './api';
-export * from './utilapi';
-export * from './deployment-api';
-export * from './modeling-api';
-export * from './project-details-model';
+/**
+ * This object represents details about create, release project and security.
+ */
+import { ROLES } from '../utils/constants';
+import { browser } from 'protractor';
+
+export class ProjectDetailsModel {
+
+    projectResponse: any;
+    releaseProjectResponse: any;
+    security: any;
+
+    constructor(security?: []) {
+      this.security = security || [{
+        role: ROLES.ACTIVITI_ADMIN,
+        users: [browser.params.adminapp.superadmin],
+        groups: []
+      }];
+    }
+}

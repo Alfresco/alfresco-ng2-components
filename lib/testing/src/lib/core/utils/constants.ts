@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-export * from './api';
-export * from './utilapi';
-export * from './deployment-api';
-export * from './modeling-api';
-export * from './project-details-model';
+export const ROLES = {
+    ACTIVITI_ADMIN: 'ACTIVITI_ADMIN',
+    ACTIVITI_USER: 'ACTIVITI_USER'
+  };
