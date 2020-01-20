@@ -43,7 +43,7 @@
         mode="indeterminate">
     </mat-progress-bar>
 
-    <mat-error *ngIf="hasPreselectError() && !isValidationLoading()">
+    <mat-error *ngIf="searchUserCtrl.hasError('preselectError') && !isValidationLoading()">
         <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
         {{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : validateUsersMessage } }}</mat-error>
     <mat-error *ngIf="searchUserCtrl.hasError('pattern')">

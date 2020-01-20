@@ -166,6 +166,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
             if (!this.isValidationEnabled()) {
                 this.invalidUsers = [];
+                this.updatePreselectFormControlError();
             }
         }
 
@@ -191,9 +192,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             }),
             tap((value) => {
                 this.searchedValue = value;
-                if (value) {
-                    this.setTypingError();
-                }
+                this.updateTypingFormControlError();
             }),
             tap(() => {
                 this.resetSearchUsers();
@@ -363,6 +362,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         if (this.invalidUsers.length > 0) {
             this.generateInvalidUsersMessage();
         }
+        this.updatePreselectFormControlError();
 
         this.warning.emit({
             message: 'INVALID_PRESELECTED_USERS',
@@ -429,11 +429,25 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    setTypingError() {
-        this.searchUserCtrl.setErrors({ searchTypingError: true , ...this.searchUserCtrl.errors });
+    private updateTypingFormControlError() {
+        if (this.searchedValue) {
+            this.searchUserCtrl.setErrors({
+                searchTypingError: true, ...this.searchUserCtrl.errors,
+                preselectError: this.hasInvalidUsers()
+            });
+        } else {
+            this.searchUserCtrl.setErrors( { preselectError: this.hasInvalidUsers(), ... this.searchUserCtrl.errors });
+        }
     }
 
-    hasPreselectError(): boolean {
+    private updatePreselectFormControlError() {
+        this.searchUserCtrl.setErrors({
+            ...this.searchUserCtrl.errors,
+            preselectError: this.hasInvalidUsers()
+        });
+    }
+
+    hasInvalidUsers(): boolean {
         return this.invalidUsers && this.invalidUsers.length > 0;
     }
 

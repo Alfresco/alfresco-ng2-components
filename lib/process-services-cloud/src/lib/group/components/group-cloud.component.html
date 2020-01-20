@@ -49,7 +49,7 @@
         mode="indeterminate">
     </mat-progress-bar>
 
-    <mat-error *ngIf="hasPreselectError() &&  !isValidationLoading()">
+    <mat-error *ngIf="searchGroupsControl.hasError('preselectError') &&  !isValidationLoading()">
         <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
         {{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate : { groupName : validateGroupsMessage } }}</mat-error>
     <mat-error *ngIf="searchGroupsControl.hasError('pattern')">

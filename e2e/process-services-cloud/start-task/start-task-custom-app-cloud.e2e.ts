@@ -106,7 +106,7 @@ describe('Start Task', () => {
     it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
-        await peopleCloudComponent.clearAssignee();
+        await peopleCloudComponent.clearAssigneeFromChip(testUser.username);
         await startTask.addName(unassignedTaskName);
         await startTask.clickStartButton();
         await tasksCloudDemoPage.editTaskFilterCloudComponent();
@@ -125,7 +125,7 @@ describe('Start Task', () => {
     it('[C291956] Should be able to create a new standalone task without assignee', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
-        await peopleCloudComponent.clearAssignee();
+        await peopleCloudComponent.clearAssigneeFromChip(testUser.username);
         await startTask.addName(unassignedTaskName);
         await startTask.checkStartButtonIsEnabled();
         await startTask.clickStartButton();

@@ -29,6 +29,11 @@ export class PeopleCloudComponentPage {
         await this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
     }
 
+    async clearAssigneeFromChip(username: string): Promise<void> {
+        const assigneeChipRemoveIcon = element(by.css(`[data-automation-id="adf-people-cloud-chip-remove-icon-${username}"]`));
+        await assigneeChipRemoveIcon.click();
+    }
+
     async searchAssigneeAndSelect(name: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
         await this.selectAssigneeFromList(name);
