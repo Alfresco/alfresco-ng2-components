@@ -132,13 +132,7 @@
                                     </ng-template>
                                 </ng-template>
                             </div>
-                            <div *ngSwitchCase="'icon'" class="adf-cell-value" tabindex="0">
-                                <span class="adf-sr-only">
-                                    {{ 'ADF-DATATABLE.ACCESSIBILITY.ICON_ALT_TEXT' | translate:{
-                                            type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
-                                        }
-                                    }}
-                                </span>
+                            <div *ngSwitchCase="'icon'" class="adf-cell-value">
                                 <mat-icon>{{ data.getValue(row, col) }}</mat-icon>
                             </div>
                             <div *ngSwitchCase="'date'" class="adf-cell-value" [attr.tabindex]="data.getValue(row, col)? 0 : -1"
