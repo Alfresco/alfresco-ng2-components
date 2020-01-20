@@ -274,6 +274,7 @@
       "SORT_ASCENDING": "Ascending",
       "SORT_DESCENDING": "Descending",
       "SORT_NONE": "None",
+      "SORT_DEFAULT": "Sortable",
       "ICON_TEXT": "Item type {{ type }}",
       "ICON_DISABLED": "Disabled",
       "ROW_OPTION_BUTTON": "Actions"
