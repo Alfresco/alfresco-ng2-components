@@ -104,6 +104,7 @@
     "@types/request": "^2.48.3",
     "adf-monaco-extension": "0.0.8",
     "adf-tslint-rules": "0.0.6",
+    "angular2-uuid": "^1.1.1",
     "chart.js": "2.5.0",
     "classlist.js": "1.1.20150312",
     "core-js": "^2.5.4",
