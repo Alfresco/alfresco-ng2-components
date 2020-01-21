@@ -166,7 +166,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
             if (!this.isValidationEnabled()) {
                 this.invalidUsers = [];
-                this.updatePreselectFormControlError();
             }
         }
 
@@ -192,7 +191,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             }),
             tap((value) => {
                 this.searchedValue = value;
-                this.updateTypingFormControlError();
+                if (value) {
+                    this.setTypingError();
+                }
             }),
             tap(() => {
                 this.resetSearchUsers();
@@ -315,13 +316,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     private alignUsersAfterValidation(validatedUsers: IdentityUserModel[]) {
         this.selectedUsers.forEach((selectedUser, index) => {
-            if (validatedUsers[index]) {
-                if ((selectedUser.id === validatedUsers[index].id) || (selectedUser.username === validatedUsers[index].username)
-                    || (selectedUser.email === validatedUsers[index].email)) {
-                    validatedUsers[index].readonly = selectedUser.readonly;
-                    this.selectedUsers[index] = validatedUsers[index];
+            validatedUsers.forEach(validatedUser => {
+                if ((selectedUser.id === validatedUser.id) || (selectedUser.username === validatedUser.username)
+                    || (selectedUser.email === validatedUser.email)) {
+                    validatedUser.readonly = selectedUser.readonly;
+                    this.selectedUsers[index] = validatedUser;
                 }
-            }
+            });
         });
     }
 
@@ -351,7 +352,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     removeDuplicatedUsers(users: IdentityUserModel[]): IdentityUserModel[] {
         return users.filter((user, index, self) =>
             index === self.findIndex((auxUser) => {
-                return user.id === auxUser.id && user.username === auxUser.username;
+                return user.id === auxUser.id && user.username === auxUser.username && user.email === auxUser.email;
             }));
     }
 
@@ -362,7 +363,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         if (this.invalidUsers.length > 0) {
             this.generateInvalidUsersMessage();
         }
-        this.updatePreselectFormControlError();
 
         this.warning.emit({
             message: 'INVALID_PRESELECTED_USERS',
@@ -429,25 +429,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    private updateTypingFormControlError() {
-        if (this.searchedValue) {
-            this.searchUserCtrl.setErrors({
-                searchTypingError: true, ...this.searchUserCtrl.errors,
-                preselectError: this.hasInvalidUsers()
-            });
-        } else {
-            this.searchUserCtrl.setErrors( { preselectError: this.hasInvalidUsers(), ... this.searchUserCtrl.errors });
-        }
+    setTypingError() {
+        this.searchUserCtrl.setErrors({ searchTypingError: true, ...this.searchUserCtrl.errors });
     }
 
-    private updatePreselectFormControlError() {
-        this.searchUserCtrl.setErrors({
-            ...this.searchUserCtrl.errors,
-            preselectError: this.hasInvalidUsers()
-        });
-    }
-
-    hasInvalidUsers(): boolean {
+    hasPreselectError(): boolean {
         return this.invalidUsers && this.invalidUsers.length > 0;
     }
 

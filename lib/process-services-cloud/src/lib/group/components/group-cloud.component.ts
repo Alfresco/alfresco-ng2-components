@@ -162,7 +162,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
             if (!this.isValidationEnabled()) {
                 this.invalidGroups = [];
-                this.updatePreselectFormControlError();
             }
         }
 
@@ -192,7 +191,9 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             }),
             tap((value) => {
                 this.searchedValue = value;
-                this.updateTypingFormControlError();
+                if (value) {
+                    this.setTypingError();
+                }
             }),
             tap(() => {
                 this.resetSearchGroups();
@@ -283,7 +284,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         if (this.invalidGroups.length > 0) {
             this.generateInvalidGroupsMessage();
         }
-        this.updatePreselectFormControlError();
 
         this.warning.emit({
             message: 'INVALID_PRESELECTED_GROUPS',
@@ -385,7 +385,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         return this.isSingleMode() && this.selectedGroups.length === 1 && this.selectedGroups[0].readonly === true;
     }
 
-    hasInvalidGroups(): boolean {
+    hasPreselectError(): boolean {
         return this.invalidGroups && this.invalidGroups.length > 0;
     }
 
@@ -441,22 +441,8 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         return this.roles && this.roles.length > 0;
     }
 
-    private updateTypingFormControlError() {
-        if (this.searchedValue) {
-            this.searchGroupsControl.setErrors({
-                searchTypingError: true, ...this.searchGroupsControl.errors,
-                preselectError: this.hasInvalidGroups()
-            });
-        } else {
-            this.searchGroupsControl.setErrors( { preselectError: this.hasInvalidGroups(), ... this.searchGroupsControl.errors });
-        }
-    }
-
-    private updatePreselectFormControlError() {
-        this.searchGroupsControl.setErrors({
-            ...this.searchGroupsControl.errors,
-            preselectError: this.hasInvalidGroups()
-        });
+    private setTypingError() {
+        this.searchGroupsControl.setErrors({ searchTypingError: true, ...this.searchGroupsControl.errors });
     }
 
     hasError(): boolean {
