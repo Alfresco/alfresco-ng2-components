@@ -54,6 +54,10 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     @Input()
     appName: string = '';
 
+    /** user role. */
+    @Input()
+    role: string = '';
+
     /** (required) ID of the task filter. */
     @Input()
     id: string;
@@ -319,7 +323,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
 
     getRunningApplications() {
         this.appsProcessCloudService
-            .getDeployedApplicationsByStatus(EditTaskFilterCloudComponent.APP_RUNNING_STATUS)
+            .getDeployedApplicationsByStatus(EditTaskFilterCloudComponent.APP_RUNNING_STATUS, this.role)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((applications: ApplicationInstanceModel[]) => {
                 if (applications && applications.length > 0) {
