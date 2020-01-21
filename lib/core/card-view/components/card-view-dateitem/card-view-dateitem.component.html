@@ -1,5 +1,6 @@
 <div [attr.data-automation-id]="'card-dateitem-label-' + property.key" class="adf-property-label" *ngIf="showProperty() || isEditable()">{{ property.label | translate }}</div>
 <div class="adf-property-value">
+<div class="adf-sr-only" id="{{uniqueId}}">{{'CORE.METADATA.ACCESSIBILITY.DATEPICKER' | translate}}</div>
     <span *ngIf="!isEditable()" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span [attr.data-automation-id]="'card-dateitem-' + property.key">
             <span *ngIf="showProperty()">{{ property.displayValue }}</span>
@@ -32,7 +33,8 @@
         <input class="adf-invisible-date-input"
             [matDatetimepicker]="datetimePicker"
             [value]="valueDate"
-            (dateChange)="onDateChanged($event)">
+            (dateChange)="onDateChanged($event)"
+            [attr.aria-describedby]="uniqueId">
 
         <mat-datetimepicker #datetimePicker
             [type]="property.type"
