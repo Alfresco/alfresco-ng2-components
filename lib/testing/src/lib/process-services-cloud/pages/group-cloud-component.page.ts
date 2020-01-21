@@ -18,10 +18,12 @@
 import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { FormFields } from '../../core/pages/form/formFields';
 
 export class GroupCloudComponentPage {
 
     groupCloudSearch: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
+    formFields: FormFields = new FormFields();
 
     async searchGroups(name: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
@@ -36,7 +38,6 @@ export class GroupCloudComponentPage {
     async getGroupsFieldContent(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
         return this.groupCloudSearch.getAttribute('value');
-
     }
 
     async selectGroupFromList(name: string): Promise<void> {
@@ -67,6 +68,15 @@ export class GroupCloudComponentPage {
     async removeSelectedGroup(group: string): Promise<void> {
         const locator = element(by.css(`mat-chip[data-automation-id*="adf-cloud-group-chip-${group}"] mat-icon`));
         await BrowserActions.click(locator);
+    }
+
+    async isGroupWidgetVisible(fieldId: string): Promise<boolean> {
+        try {
+            await this.formFields.checkWidgetIsVisible(fieldId);
+            return true;
+        } catch {
+            return false;
+        }
     }
 
 }
