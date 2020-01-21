@@ -90,7 +90,7 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
             await browser.sleep(100);
-            await expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${testUser.firstName} ${testUser.lastName}`);
+            await expect(await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`));
         });
 
         it('[C305041] Should filter the People Multiple Selection with the Application name filter', async () => {
@@ -118,7 +118,7 @@ describe('People Groups Cloud Component', () => {
             await groupCloudComponentPage.searchGroups(hrGroup.name);
             await groupCloudComponentPage.checkGroupIsDisplayed(hrGroup.name);
             await groupCloudComponentPage.selectGroupFromList(hrGroup.name);
-            await expect(await groupCloudComponentPage.getGroupsFieldContent()).toBe(hrGroup.name);
+            await expect(await groupCloudComponentPage.checkSelectedGroup(hrGroup.name));
         });
 
         it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', async () => {

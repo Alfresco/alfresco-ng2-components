@@ -106,7 +106,7 @@ describe('Start Task', () => {
     it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
-        await peopleCloudComponent.clearAssignee();
+        await peopleCloudComponent.clearAssigneeFromChip(testUser.username);
         await startTask.addName(unassignedTaskName);
         await startTask.clickStartButton();
         await tasksCloudDemoPage.editTaskFilterCloudComponent();
@@ -125,7 +125,7 @@ describe('Start Task', () => {
     it('[C291956] Should be able to create a new standalone task without assignee', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
-        await peopleCloudComponent.clearAssignee();
+        await peopleCloudComponent.clearAssigneeFromChip(testUser.username);
         await startTask.addName(unassignedTaskName);
         await startTask.checkStartButtonIsEnabled();
         await startTask.clickStartButton();
@@ -203,7 +203,7 @@ describe('Start Task', () => {
     it('[C291953] Assignee field should display the logged user as default', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
-        await expect(await peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
+        await expect(await peopleCloudComponent.checkSelectedPeople(testUser.firstName));
         await startTask.clickCancelButton();
     });
 
@@ -212,7 +212,7 @@ describe('Start Task', () => {
         await startTask.checkFormIsDisplayed();
         await startTask.addName(reassignTaskName);
 
-        await expect(await peopleCloudComponent.getAssignee()).toBe(`${testUser.firstName} ${testUser.lastName}`);
+        await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`);
         await peopleCloudComponent.searchAssignee(apsUser.username);
         await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
         await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);

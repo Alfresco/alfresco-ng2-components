@@ -193,21 +193,22 @@ describe('People Groups Cloud Component', () => {
 
             await peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
             await peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
+
+            await peopleGroupCloudComponentPage.enterPeoplePreselect('[{"id":"12345","username":"someUsername","email":"someEmail"}]');
+            await expect(await peopleCloudComponent.checkSelectedPeople('someUsername'));
+
             await peopleGroupCloudComponentPage.clickPreselectValidation();
             await expect(await peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
 
-            await peopleGroupCloudComponentPage.enterPeoplePreselect('[{"id":"12345","username":"someUsername","email":"someEmail"}]');
-            await expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe('');
-
             await expect(await peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${noRoleUser.idIdentityService}"}]`);
-            await expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
+            await expect(await peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName} ${noRoleUser.lastName}`));
 
             await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"email":"${apsUser.email}"}]`);
-            await expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${apsUser.firstName} ${apsUser.lastName}`);
+            await expect(await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName} ${apsUser.lastName}`));
 
             await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"username":"${testUser.username}"}]`);
-            await expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe(`${testUser.firstName} ${testUser.lastName}`);
+            await expect(await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`));
         });
 
         it('[C309676] Should fetch the preselect users based on the Validate flag set to True in Multiple mode selection', async () => {
@@ -252,18 +253,6 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.checkSelectedPeople('TestFirstName2 TestLastName2');
             await peopleCloudComponent.checkSelectedPeople('TestFirstName3 TestLastName3');
 
-        });
-
-        it('[C309678] Should not fetch the preselect users when mandatory parameters Id, Email and username are missing', async () => {
-            await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
-            await peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
-            await peopleGroupCloudComponentPage.clickPreselectValidation();
-            await expect(await peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
-
-            await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"firstName":"${apsUser.firstName}","lastName":"${apsUser.lastName},"` +
-                `{"firstName":"${testUser.firstName}","lastName":"${testUser.lastName}",{"firstName":"${noRoleUser.firstName}","lastName":"${noRoleUser.lastName}"]`);
-            await browser.sleep(200);
-            await expect(await peopleCloudComponent.getAssigneeFieldContent()).toBe('');
         });
 
     });
