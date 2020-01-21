@@ -317,7 +317,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
-    getRunningApplications(): void {
+    getRunningApplications() {
         this.appsProcessCloudService
             .getDeployedApplicationsByStatus(EditTaskFilterCloudComponent.APP_RUNNING_STATUS)
             .pipe(takeUntil(this.onDestroy$))
