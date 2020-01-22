@@ -51,7 +51,7 @@ export class AuthGuard extends AuthGuardBase {
             this.ticketChangeRedirect(event, 'BPM');
         }
 
-        if (event.key.includes(JwtHelperService.USER_ACCESS_TOKEN) &&
+        if (event.key.endsWith(JwtHelperService.USER_ACCESS_TOKEN) &&
             this.jwtHelperService.getValueFromToken(event.newValue, JwtHelperService.USER_PREFERRED_USERNAME) !==
             this.jwtHelperService.getValueFromToken(event.oldValue, JwtHelperService.USER_PREFERRED_USERNAME)) {
             this.ticketChangeRedirect(event, 'ALL');

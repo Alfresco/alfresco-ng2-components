@@ -34,17 +34,18 @@ export class PeopleGroupCloudDemoComponent {
 
     peopleMode: string = PeopleCloudComponent.MODE_SINGLE;
     preSelectUsers: IdentityUserModel[] = [];
-    invalidUsers: IdentityGroupModel[] = [];
+    invalidUsers: IdentityUserModel[] = [];
     peopleRoles: string[] = [];
     peopleAppName: string;
     peopleFilterMode: string = this.DEFAULT_FILTER_MODE;
     peoplePreselectValidation: Boolean = false;
     groupPreselectValidation = false;
+    peopleReadonly = false;
+    groupReadonly = false;
 
     groupMode: string = GroupCloudComponent.MODE_SINGLE;
     preSelectGroup: IdentityGroupModel[] = [];
     invalidGroups: IdentityGroupModel[] = [];
-    selectedGroupList: IdentityGroupModel[] = [];
     groupRoles: string[];
     groupAppName: string;
     groupFilterMode: string = this.DEFAULT_FILTER_MODE;
@@ -75,12 +76,18 @@ export class PeopleGroupCloudDemoComponent {
 
     onChangePeopleMode(event: MatRadioChange) {
        this.peopleMode = event.value;
-       this.preSelectUsers = [...this.preSelectUsers];
+    }
+
+    onChangePeopleReadonly(event: MatCheckboxChange) {
+        this.peopleReadonly = event.checked;
+    }
+
+    onChangeGroupReadonly(event: MatCheckboxChange) {
+        this.groupReadonly = event.checked;
     }
 
     onChangeGroupsMode(event: MatRadioChange) {
         this.groupMode = event.value;
-        this.preSelectGroup = [...this.preSelectGroup];
     }
 
     onChangePeopleFilterMode(event: MatRadioChange) {
@@ -119,18 +126,10 @@ export class PeopleGroupCloudDemoComponent {
 
     onChangePeopleValidation(event: MatCheckboxChange) {
         this.peoplePreselectValidation = event.checked;
-        this.preSelectUsers = [...this.preSelectUsers];
-        if (!this.peoplePreselectValidation) {
-            this.invalidUsers = [];
-        }
     }
 
     onChangeGroupValidation(event: MatCheckboxChange) {
         this.groupPreselectValidation = event.checked;
-        this.preSelectGroup = [...this.preSelectGroup];
-        if (!this.groupPreselectValidation) {
-            this.invalidGroups = [];
-        }
     }
 
     onGroupsWarning(warning: any) {
@@ -165,22 +164,6 @@ export class PeopleGroupCloudDemoComponent {
 
     canShowGroupList() {
         return this.groupMode === GroupCloudComponent.MODE_MULTIPLE;
-    }
-
-    onRemoveGroup(group: IdentityGroupModel) {
-        this.preSelectGroup = this.preSelectGroup.filter((value: any) => value.id !== group.id);
-    }
-
-    onSelectUser(user: IdentityUserModel) {
-        if (this.peopleMode === PeopleCloudComponent.MODE_MULTIPLE) {
-            this.preSelectUsers.push(user);
-        }
-    }
-
-    onSelectGroup(group: IdentityGroupModel) {
-        if (this.groupMode === GroupCloudComponent.MODE_MULTIPLE) {
-            this.preSelectGroup.push(group);
-        }
     }
 
     get peopleSingleMode() {

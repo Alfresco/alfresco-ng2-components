@@ -15,18 +15,27 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder, protractor } from 'protractor';
+import { browser, by, element, ElementFinder, Locator, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { FormFields } from '../../core/pages/form/formFields';
 
 export class PeopleCloudComponentPage {
 
     peopleCloudSearch: ElementFinder = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
     assigneeField: ElementFinder = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
+    formFields: FormFields = new FormFields();
+    labelLocator: Locator = by.css("label[class*='adf-label']");
+    inputLocator: Locator = by.css('input');
 
     async clearAssignee(): Promise<void> {
         await BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
         await this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
+    }
+
+    async clearAssigneeFromChip(username: string): Promise<void> {
+        const assigneeChipRemoveIcon = element(by.css(`[data-automation-id="adf-people-cloud-chip-remove-icon-${username}"]`));
+        await assigneeChipRemoveIcon.click();
     }
 
     async searchAssigneeAndSelect(name: string): Promise<void> {
@@ -75,7 +84,38 @@ export class PeopleCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
         await browser.sleep(1000);
         return this.assigneeField.getAttribute('value');
+    }
 
+    getFieldLabel(fieldId): Promise<string> {
+        return this.formFields.getFieldLabel(fieldId, this.labelLocator);
+    }
+
+    getFieldValue(fieldId): Promise<string> {
+        return this.formFields.getFieldValue(fieldId, this.inputLocator);
+    }
+
+    async isPeopleWidgetVisible(fieldId: string): Promise<boolean> {
+        try {
+            await this.formFields.checkWidgetIsVisible(fieldId);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async checkPeopleWidgetIsHidden(fieldId: string): Promise<boolean> {
+        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
+        try {
+            await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async clickPeopleInput(fieldId): Promise<void> {
+        const peopleInput = element.all(by.css(`div[id="field-${fieldId}-container"] `)).first();
+        await BrowserActions.click(peopleInput);
     }
 
 }

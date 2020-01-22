@@ -40,8 +40,8 @@ export class AppsProcessCloudService {
      * @param status Required status value
      * @returns The list of deployed apps
      */
-    getDeployedApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {
-        return this.hasDeployedApps() ? of(this.deployedApps) : this.getApplicationsByStatus(status);
+    getDeployedApplicationsByStatus(status: string, role?: string): Observable<ApplicationInstanceModel[]> {
+        return this.hasDeployedApps() ? of(this.deployedApps) : this.getApplicationsByStatus(status, role);
     }
 
     hasDeployedApps(): boolean {
@@ -57,13 +57,13 @@ export class AppsProcessCloudService {
         this.deployedApps = apps;
     }
 
-    private getApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {
+    private getApplicationsByStatus(status: string, role?: string): Observable<ApplicationInstanceModel[]> {
         if (status === '') {
             return of([]);
         }
         const api: Oauth2Auth = this.apiService.getInstance().oauth2Auth;
         const path = this.getApplicationUrl();
-        const pathParams = {}, queryParams = { status: status, sort: 'name' },
+        const pathParams = {}, queryParams = { status: status, roles : role, sort: 'name' },
             headerParams = {}, formParams = {}, bodyParam = {},
             contentTypes = ['application/json'], accepts = ['application/json'];
 
