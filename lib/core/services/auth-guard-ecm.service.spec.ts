@@ -93,11 +93,10 @@ describe('AuthGuardService ECM', () => {
         expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
-    it('should not redirect url if the alfresco js api is NOT logged in and isOAuth with implicitFlow + silentLogin', async(() => {
+    it('should not redirect url if the alfresco js api is NOT logged in and isOAuth with silentLogin', async(() => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
-        spyOn(authService, 'isPublicUrl').and.returnValue(true);
 
         appConfigService.config.oauth2 = {
             silentLogin: true,
@@ -110,7 +109,6 @@ describe('AuthGuardService ECM', () => {
 
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'abc'};
 
-        expect(authGuard.canActivate(null, route)).toBeFalsy();
         spyOn(authService, 'isPublicUrl').and.returnValue(false);
         expect(authGuard.canActivate(null, route)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalledTimes(0);
