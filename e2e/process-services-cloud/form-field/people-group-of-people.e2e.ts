@@ -75,12 +75,11 @@ describe('People and Group of people Widgets', () => {
         await formCloudDemoPage.setConfigToEditor(peopleJson);
         await peopleCloudWidget.clickPeopleInput(widgets.peopleCloudWidgetSingleModeId);
         await peopleCloudWidget.isPeopleWidgetVisible(peopleValueString.peopleCloudWidgetSingleModeField);
-        let peopleSingleMode = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetSingleModeId);
+        const peopleSingleMode = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetSingleModeId);
         await expect(peopleSingleMode).toEqual('');
 
         await peopleCloudWidget.searchAssigneeAndSelect('HR User');
-        peopleSingleMode = await peopleCloudWidget.getAssigneeFieldContent();
-        await expect(peopleSingleMode).toEqual('HR User');
+        await peopleCloudWidget.checkSelectedPeople('HR User');
     });
 
     it('[C325122] Should be able to add multiple users in People field when Multiple mode is chosen', async () => {
@@ -102,12 +101,11 @@ describe('People and Group of people Widgets', () => {
         await expect(await formPage.isSaveButtonDisabled()).toBe(true);
         await expect(await formPage.isValidationIconRed()).toBe(true);
 
-        let requiredPeople = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetRequiredId);
+        const requiredPeople = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetRequiredId);
         await expect(requiredPeople).toEqual('');
         await peopleCloudWidget.searchAssigneeAndSelect('HR User');
-        requiredPeople = await peopleCloudWidget.getAssigneeFieldContent();
 
-        await expect(requiredPeople).toEqual('HR User');
+        await peopleCloudWidget.checkSelectedPeople('HR User');
         await expect(await formPage.isSaveButtonDisabled()).toBe(false);
         await expect(await formPage.isValidationIconBlue()).toBe(true);
     });
@@ -115,13 +113,12 @@ describe('People and Group of people Widgets', () => {
     it('[C325003] Should be able to add a user in Group of people field when Single mode is chosen', async () => {
         await formCloudDemoPage.setConfigToEditor(groupSingleJson);
         await groupCloudWidget.isGroupWidgetVisible(groupValueString.groupCloudWidgetSingleModeField);
-        let groupSingleMode = await groupCloudWidget.getGroupsFieldContent();
+        const groupSingleMode = await groupCloudWidget.getGroupsFieldContent();
         await expect(groupSingleMode).toEqual('');
 
         await groupCloudWidget.searchGroups('hr');
         await groupCloudWidget.selectGroupFromList('hr');
-        groupSingleMode = await groupCloudWidget.getGroupsFieldContent();
-        await expect(groupSingleMode).toEqual('hr');
+        await groupCloudWidget.checkSelectedGroup('hr');
     });
 
     it('[C325123] Should be able to add multiple users in Group of people field when Multiple mode is chosen', async () => {
@@ -144,13 +141,12 @@ describe('People and Group of people Widgets', () => {
         await expect(await formPage.isSaveButtonDisabled()).toBe(true);
         await expect(await formPage.isValidationIconRed()).toBe(true);
 
-        let groupRequired = await groupCloudWidget.getGroupsFieldContent();
+        const groupRequired = await groupCloudWidget.getGroupsFieldContent();
         await expect(groupRequired).toEqual('');
         await groupCloudWidget.searchGroups('hr');
         await groupCloudWidget.selectGroupFromList('hr');
-        groupRequired = await groupCloudWidget.getGroupsFieldContent();
 
-        await expect(groupRequired).toEqual('hr');
+        await groupCloudWidget.checkSelectedGroup('hr');
         await expect(await formPage.isSaveButtonDisabled()).toBe(false);
         await expect(await formPage.isValidationIconBlue()).toBe(true);
     });
