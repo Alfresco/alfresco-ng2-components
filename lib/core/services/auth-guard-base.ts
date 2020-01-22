@@ -32,7 +32,6 @@ import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
-
     abstract checkLogin(
         activeRoute: ActivatedRouteSnapshot,
         redirectUrl: string

@@ -71,15 +71,15 @@ jobs:
             - ./scripts/travis/release/release-npm.sh
 
 
-        # - stage: Unit test
-        #   name: Unit test content
-        #   script:  ./scripts/travis/unit-test/content.sh
-        # - stage: Unit test
-        #   name: Unit test core extension demo
-        #   script: ./scripts/travis/unit-test/core-extension-demo.sh
-        # - stage: Unit test
-        #   name: Unit test process process-cloud insights
-        #   script: ./scripts/travis/unit-test/process.sh
+        - stage: Unit test
+          name: Unit test content
+          script:  ./scripts/travis/unit-test/content.sh
+        - stage: Unit test
+          name: Unit test core extension demo
+          script: ./scripts/travis/unit-test/core-extension-demo.sh
+        - stage: Unit test
+          name: Unit test process process-cloud insights
+          script: ./scripts/travis/unit-test/process.sh
 
 
         - stage: Update Children Projects
@@ -89,18 +89,18 @@ jobs:
           script: ./scripts/travis/release/git-tag.sh
 
 
-        # - stage: e2e Test
-        #   name: core
-        #   script: ./scripts/travis/e2e/core-e2e.sh
-        # - stage: e2e Test
-        #   name:  content
-        #   script: ./scripts/travis/e2e/content-services-e2e.sh
-        # - stage: e2e Test
-        #   name:  search
-        #   script: ./scripts/travis/e2e/search-e2e.sh
-        # - stage: e2e Test
-        #   name: process
-        #   script: ./scripts/travis/e2e/process-services-e2e.sh
+        - stage: e2e Test
+          name: core
+          script: ./scripts/travis/e2e/core-e2e.sh
+        - stage: e2e Test
+          name:  content
+          script: ./scripts/travis/e2e/content-services-e2e.sh
+        - stage: e2e Test
+          name:  search
+          script: ./scripts/travis/e2e/search-e2e.sh
+        - stage: e2e Test
+          name: process
+          script: ./scripts/travis/e2e/process-services-e2e.sh
         - stage: e2e Test
           name: process Cloud
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
