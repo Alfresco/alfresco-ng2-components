@@ -98,6 +98,7 @@ describe('AuthGuardService ECM', () => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         spyOn(authService, 'isPublicUrl').and.returnValue(false);
+        spyOn(authService, 'ssoImplicitLogin').and.stub();
 
         appConfigService.config.oauth2 = {
             silentLogin: true,
@@ -112,6 +113,7 @@ describe('AuthGuardService ECM', () => {
 
         expect(authGuard.canActivate(null, route)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalledTimes(0);
+        expect(authService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
     }));
 
     it('should not redirect url if NOT logged in and isOAuth but no silentLogin configured', async(() => {
