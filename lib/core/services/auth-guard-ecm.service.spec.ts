@@ -110,6 +110,8 @@ describe('AuthGuardService ECM', () => {
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'abc'};
 
         spyOn(authService, 'isPublicUrl').and.returnValue(false);
+        spyOn(authGuard, 'checkLogin').and.returnValue(false);
+
         expect(authGuard.canActivate(null, route)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalledTimes(0);
     }));
