@@ -210,16 +210,16 @@
     },
     "FILTER": {
       "ACTIONS": {
-        "CLEAR": "Löschen",
+        "CLEAR": "Zurücksetzen",
         "APPLY": "Anwenden",
-        "CLEAR-ALL": "Alle löschen",
+        "CLEAR-ALL": "Auswahl zurücksetzen",
         "SHOW-MORE": "Mehr anzeigen",
         "SHOW-LESS": "Weniger anzeigen",
         "FILTER-CATEGORY": "Kategorie filtern"
       },
       "BUTTONS": {
         "CLEAR-ALL": {
-          "LABEL": "Alle löschen",
+          "LABEL": "Auswahl zurücksetzen",
           "TOOLTIP": "Dadurch werden alle Auswahlen entfernt"
         },
         "RESET-ALL": {
