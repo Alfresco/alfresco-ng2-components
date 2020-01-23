@@ -17,9 +17,15 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, InjectionToken, Inject, Optional } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
+
+export interface AmountWidgetSettings {
+    showReadonlyPlaceholder: boolean;
+}
+
+export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf-amount-settings');
 
 @Component({
     selector: 'amount-widget',
@@ -31,20 +37,32 @@ import { baseHost , WidgetComponent } from './../widget.component';
 export class AmountWidgetComponent extends WidgetComponent implements OnInit {
 
     static DEFAULT_CURRENCY: string = '$';
+    private showPlaceholder = true;
 
     currency: string = AmountWidgetComponent.DEFAULT_CURRENCY;
 
     get placeholder(): string {
-        return !this.field.readOnly ? this.field.placeholder : '';
+        return this.showPlaceholder ? this.field.placeholder : '';
     }
 
-    constructor(public formService: FormService) {
+    constructor(
+        public formService: FormService,
+        @Inject(ADF_AMOUNT_SETTINGS)
+        @Optional()
+        private settings: AmountWidgetSettings
+    ) {
         super(formService);
     }
 
     ngOnInit() {
-        if (this.field && this.field.currency) {
-            this.currency = this.field.currency;
+        if (this.field) {
+            if (this.field.currency) {
+                this.currency = this.field.currency;
+            }
+
+            if (this.field.readOnly) {
+                this.showPlaceholder = this.settings && this.settings.showReadonlyPlaceholder;
+            }
         }
     }
 

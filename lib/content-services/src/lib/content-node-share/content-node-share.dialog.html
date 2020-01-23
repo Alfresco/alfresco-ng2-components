@@ -7,7 +7,7 @@
         <p class="adf-share-link__info">{{ 'SHARE.DESCRIPTION' | translate }}</p>
 
         <div class="adf-share-link--row">
-            <h1 class="adf-share-link__label">{{ 'SHARE.TITLE' | translate }}</h1>
+            <label for="mat-input-1" class="adf-share-link__label">{{ 'SHARE.TITLE' | translate }}</label>
 
             <mat-slide-toggle color="primary" data-automation-id="adf-share-toggle" [checked]="isFileShared"
                 [disabled]="!canUpdate || isDisabled" (change)="onSlideShareChange($event)">
@@ -27,7 +27,7 @@
             </mat-form-field>
 
             <div class="adf-share-link--row">
-            <h1 class="adf-share-link__label">{{ 'SHARE.EXPIRES' | translate }}</h1>
+            <label for="mat-input-2" class="adf-share-link__label">{{ 'SHARE.EXPIRES' | translate }}</label>
             <mat-slide-toggle [disabled]="!canUpdate" #slideToggleExpirationDate color="primary"
                 data-automation-id="adf-expire-toggle" [checked]="form.controls['time'].value"
                 (change)="onToggleExpirationDate($event)">
@@ -36,7 +36,7 @@
 
             <mat-form-field class="adf-full-width">
                 <mat-datetimepicker-toggle #matDatetimepickerToggle="matDatetimepickerToggle" [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
-                <mat-datetimepicker #datetimePicker (closed)="onDatetimepickerClosed()" [type]="type" openOnFocus="true" timeInterval="1"></mat-datetimepicker>
+                <mat-datetimepicker #datetimePicker (closed)="onDatetimepickerClosed()" [type]="type" timeInterval="1"></mat-datetimepicker>
                 <input class="adf-share-link__input"
                     #dateTimePickerInput
                     matInput

@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel } from './../core/form-field.model';
-import { AmountWidgetComponent } from './amount.widget';
+import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
 import { setupTestBed } from '../../../../testing/setupTestBed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -76,4 +76,39 @@ describe('AmountWidgetComponent', () => {
         expect(widget.placeholder).toBe('1234');
     });
 
+});
+
+describe('AmountWidgetComponent settings', () => {
+    let widget: AmountWidgetComponent;
+    let fixture: ComponentFixture<AmountWidgetComponent>;
+
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot()
+        ],
+        providers: [
+            {
+                provide: ADF_AMOUNT_SETTINGS,
+                useValue: {
+                    showReadonlyPlaceholder: true
+                }
+            }
+        ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AmountWidgetComponent);
+
+        widget = fixture.componentInstance;
+    });
+
+    it('should display placeholder via injected settings', () => {
+        const field: any = {
+            readOnly: true,
+            placeholder: 'some placeholder'
+        };
+        widget.field = field;
+        expect(widget.placeholder).toBe('some placeholder');
+    });
 });

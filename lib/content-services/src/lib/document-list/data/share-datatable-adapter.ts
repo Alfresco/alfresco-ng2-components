@@ -23,10 +23,9 @@ import {
     ThumbnailService,
     ContentService
 } from '@alfresco/adf-core';
-import { NodePaging } from '@alfresco/js-api';
+import { NodePaging, NodeEntry } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { ShareDataRow } from './share-data-row.model';
-import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
 import { RowFilter } from './row-filter.model';
 
 export class ShareDataTableAdapter implements DataTableAdapter {
