@@ -1,7 +1,6 @@
-<div class="adf-sr-only" id="{{'card-' + property.type + '-value-' + property.key}}>{{'CORE.METADATA.ACCESSIBILITY.DATEPICKER' | translate}}</div>
+<div class="adf-sr-only" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">{{'CORE.METADATA.ACCESSIBILITY.DATEPICKER' | translate}}</div>
 <div [attr.data-automation-id]="'card-dateitem-label-' + property.key" class="adf-property-label" *ngIf="showProperty() || isEditable()">{{ property.label | translate }}</div>
 <div class="adf-property-value">
-<div class="adf-sr-only" [attr.data-automation-id]="'card-dateitem-label-' + property.key">{{'CORE.METADATA.ACCESSIBILITY.DATEPICKER' | translate}}</div>
     <span *ngIf="!isEditable()" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span [attr.data-automation-id]="'card-dateitem-' + property.key">
             <span *ngIf="showProperty()">{{ property.displayValue }}</span>
