@@ -97,6 +97,7 @@ describe('AuthGuardService ECM', () => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
+        spyOn(authService, 'isPublicUrl').and.returnValue(false);
 
         appConfigService.config.oauth2 = {
             silentLogin: true,
@@ -108,9 +109,6 @@ describe('AuthGuardService ECM', () => {
         };
 
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'abc'};
-
-        spyOn(authService, 'isPublicUrl').and.returnValue(false);
-        spyOn(authGuard, 'checkLogin').and.returnValue(false);
 
         expect(authGuard.canActivate(null, route)).toBeTruthy();
         expect(router.navigateByUrl).toHaveBeenCalledTimes(0);
