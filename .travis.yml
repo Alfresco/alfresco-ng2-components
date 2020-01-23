@@ -33,8 +33,6 @@ stages:
     if: (type = push AND tag IS blank)  OR type = api
   - name: e2e Test
     if: (type != cron AND tag IS blank) OR type = api
-  - name: Update Rancher PR
-    if: type = pull_request
   - name: Update Children Projects
     if: branch = master AND type = push OR (tag =~ .*beta.*)
   - name: Release beta tag
@@ -106,10 +104,6 @@ jobs:
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
 
 
-        - stage: Update Rancher PR
-          name: Update Rancher PR
-          script: ./scripts/travis/deploy/deploy-pr.sh
-
         - stage: Update Rancher
           name: Update Rancher
           script: ./scripts/travis/deploy/deploy.sh
@@ -119,8 +113,7 @@ jobs:
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           - ./scripts/npm-check-bundles.sh -v ${ADF_VERSION}
-
-
+          
 notifications:
   slack:
     on_pull_requests: false
