@@ -60,7 +60,6 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
 
     valueDate: Moment;
     dateFormat: string;
-    uniqueId: string;
 
     private onDestroy$ = new Subject<boolean>();
 
