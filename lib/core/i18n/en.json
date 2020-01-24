@@ -200,6 +200,9 @@
         "CLEAR": "Clear",
         "TOGGLE": "Toggle value"
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Toggle results between ascending and descending order"
     }
   },
   "COMMENTS": {
