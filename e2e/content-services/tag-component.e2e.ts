@@ -50,9 +50,6 @@ describe('Tag component', () => {
         { tag: 'test-tag-06' }, { tag: 'test-tag-07' }, { tag: 'test-tag-08' }, { tag: 'test-tag-09' }, { tag: 'test-tag-10' },
         { tag: 'test-tag-11' }];
 
-    const uppercaseTag = StringUtil.generateRandomString().toUpperCase();
-    const digitsTag = StringUtil.generateRandomStringDigits();
-    const nonLatinTag = StringUtil.generateRandomStringNonLatin();
     let pdfUploadedFile, nodeId;
 
     beforeAll(async () => {
@@ -112,19 +109,6 @@ describe('Tag component', () => {
         await tagPage.checkTagIsDisplayedInTagList(sameTag);
         await tagPage.addTag(sameTag);
         await expect(await tagPage.getErrorMessage()).toEqual('Tag already exists');
-    });
-
-    it('[C91326] Should be possible to create a tag with different characters', async () => {
-        await tagPage.insertNodeId(pdfFileModel.id);
-
-        await tagPage.addTag(uppercaseTag + digitsTag + nonLatinTag);
-
-        await browser.sleep(5000); // wait CS return tags
-
-        await tagPage.checkTagIsDisplayedInTagList(uppercaseTag.toLowerCase() + digitsTag + nonLatinTag);
-        await tagPage.checkTagIsDisplayedInTagListByNodeId(uppercaseTag.toLowerCase() + digitsTag + nonLatinTag);
-
-        await tagPage.checkTagIsNotDisplayedInTagList(uppercaseTag + digitsTag + nonLatinTag);
     });
 
     it('[C260375] Should be possible to delete a tag', async () => {
