@@ -16,6 +16,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
     selector: 'adf-toolbar',
@@ -33,6 +34,6 @@ export class ToolbarComponent {
 
     /** Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`. */
     @Input()
-    color: string;
+    color: ThemePalette;
 
 }
