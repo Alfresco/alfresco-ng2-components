@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 @mixin  adf-sidebar-action-menu-theme($theme) {
 
     $primary: map-get($theme, primary);

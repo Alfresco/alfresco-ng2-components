@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 @mixin adf-task-list-comment-theme($theme) {
     $foreground: map-get($theme, foreground);
     $header-border: 1px solid mat-color($foreground, divider);

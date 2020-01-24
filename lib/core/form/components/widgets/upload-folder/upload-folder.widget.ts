@@ -147,7 +147,7 @@ export class UploadFolderWidgetComponent extends WidgetComponent implements OnIn
                 file.contentBlob = blob;
                 this.formService.formContentClicked.next(file);
             },
-            (error) => {
+            () => {
                 this.logService.error('Unable to send event for file ' + file.name);
             }
         );

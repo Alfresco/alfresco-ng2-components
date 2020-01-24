@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 @mixin adf-datatable-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
