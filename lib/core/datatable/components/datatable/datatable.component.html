@@ -197,7 +197,6 @@
                         </ng-container>
                     </div>
                     <div *ngIf="col.template" class="adf-datatable-cell-container">
-                        <!--ACA-2566 added check for data in the cell, and if there is add tabindex of 0 to it. if not, nothing blank will get focus -->
                         <div class="adf-cell-value" [attr.tabindex]="data.getValue(row, col)? 0 :null">
                             <ng-container
                                 [ngTemplateOutlet]="col.template"
