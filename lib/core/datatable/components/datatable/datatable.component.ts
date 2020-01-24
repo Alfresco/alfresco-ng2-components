@@ -763,6 +763,15 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING' :
             'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING';
     }
+
+    getSortLiveAnnouncement(column: DataColumn): string {
+        if (!this.isColumnSortActive(column)) {
+            return 'ADF-DATATABLE.ACCESSIBILITY.SORT_DEFAULT' ;
+        }
+        return this.isColumnSorted(column, 'asc') ?
+            'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING_BY' :
+            'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING_BY';
+    }
 }
 
 export interface DataTableDropEvent {
