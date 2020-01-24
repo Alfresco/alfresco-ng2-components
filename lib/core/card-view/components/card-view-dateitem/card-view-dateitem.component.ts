@@ -29,7 +29,6 @@ import { MOMENT_DATE_FORMATS } from '../../../utils/moment-date-formats.model';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { UUID } from 'angular2-uuid';
 
 @Component({
     providers: [
@@ -86,8 +85,6 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
         if (this.property.value) {
             this.valueDate = moment(this.property.value, this.dateFormat);
         }
-
-        this.generateUuid();
     }
 
     ngOnDestroy() {
@@ -127,10 +124,6 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
         this.cardViewUpdateService.update(this.property, null);
         this.property.value = null;
         this.property.default = null;
-    }
-
-    private generateUuid() {
-        this.uniqueId = UUID.UUID();
     }
 
 }
