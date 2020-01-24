@@ -38,7 +38,7 @@ export class DynamicTableModel extends FormWidgetModel {
     rows: DynamicTableRow[] = [];
 
     private _selectedRow: DynamicTableRow;
-    private _validators: CellValidator[] = [];
+    private readonly _validators: CellValidator[] = [];
 
     get selectedRow(): DynamicTableRow {
         return this._selectedRow;

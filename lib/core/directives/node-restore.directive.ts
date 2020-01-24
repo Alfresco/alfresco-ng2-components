@@ -34,7 +34,7 @@ export class RestoreMessageModel {
     selector: '[adf-restore]'
 })
 export class NodeRestoreDirective {
-    private restoreProcessStatus;
+    private readonly restoreProcessStatus;
 
     /** Array of deleted nodes to restore. */
     @Input('adf-restore')

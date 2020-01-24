@@ -21,7 +21,7 @@ import { FormOutcomeModel } from './form-outcome.model';
 
 export class FormOutcomeEvent {
 
-    private _outcome: FormOutcomeModel;
+    private readonly _outcome: FormOutcomeModel;
     private _defaultPrevented: boolean = false;
 
     get outcome(): FormOutcomeModel {

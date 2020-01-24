@@ -21,7 +21,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class DownloadService {
-    private saveData: Function;
+    private readonly saveData: Function;
 
     constructor() {
         this.saveData = (function() {

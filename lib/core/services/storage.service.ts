@@ -23,7 +23,7 @@ import { Injectable } from '@angular/core';
 export class StorageService {
 
     private memoryStore: { [key: string]: any } = {};
-    private useLocalStorage: boolean = false;
+    private readonly useLocalStorage: boolean = false;
     private _prefix: string = '';
 
     get prefix() {
