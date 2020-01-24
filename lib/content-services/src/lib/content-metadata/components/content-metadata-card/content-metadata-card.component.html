@@ -16,7 +16,6 @@
             <button *ngIf="!readOnly && hasAllowableOperations()"
                 mat-icon-button
                 (click)="toggleEdit()"
-                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                 [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                 data-automation-id="meta-data-card-toggle-edit">
                 <mat-icon>mode_edit</mat-icon>
