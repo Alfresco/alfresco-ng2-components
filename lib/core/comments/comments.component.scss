@@ -18,9 +18,8 @@
     }
 
     .adf-comments-input-container {
-        padding: 0 15px;
         width: calc(100% - 30px);
-        padding-top: 8px;
+        padding: 8px 15px 0;
         border-bottom: $header-border;
 
         textarea {
