@@ -1,4 +1,4 @@
-<div class="{{field.className}}" id="data-widget" [class.adf-invalid]="!field.isValid">
+<div class="{{field.className}}" id="data-widget" [class.adf-invalid]="!field.isValid" cdkTrapFocus>
     <mat-form-field class="adf-date-widget">
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span *ngIf="isRequired()">*</span></label>
         <input matInput
@@ -18,4 +18,3 @@
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
     <mat-datepicker #datePicker [touchUi]="true" [startAt]="displayDate" ></mat-datepicker>
 </div>
-
