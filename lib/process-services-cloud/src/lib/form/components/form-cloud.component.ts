@@ -34,7 +34,8 @@ import {
     FormFieldValidator,
     FormValues,
     FormModel,
-    AppConfigService
+    AppConfigService,
+    ContentLinkModel
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
@@ -101,7 +102,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     /** Emitted when form content is clicked. */
     @Output()
-    formContentClicked = new EventEmitter<string>();
+    formContentClicked = new EventEmitter<ContentLinkModel>();
 
     protected subscriptions: Subscription[] = [];
     nodeId: string;
@@ -119,7 +120,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
         this.formService.formContentClicked
         .pipe(takeUntil(this.onDestroy$))
-        .subscribe((content: any) => {
+        .subscribe((content) => {
             this.formContentClicked.emit(content);
         });
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);

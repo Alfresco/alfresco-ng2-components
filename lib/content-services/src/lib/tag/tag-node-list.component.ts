@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation, OnDestroy, OnInit } from '@angular/core';
 import { TagService } from './services/tag.service';
-import { TagPaging } from '@alfresco/js-api';
+import { TagEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -41,7 +41,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     @Input()
     showDelete = true;
 
-    tagsEntries: any;
+    tagsEntries: TagEntry[];
 
     /** Emitted when a tag is selected. */
     @Output()
@@ -73,7 +73,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
 
     refreshTag() {
         if (this.nodeId) {
-            this.tagService.getTagsByNodeId(this.nodeId).subscribe((tagPaging: TagPaging) => {
+            this.tagService.getTagsByNodeId(this.nodeId).subscribe((tagPaging) => {
                 this.tagsEntries = tagPaging.list.entries;
                 this.results.emit(this.tagsEntries);
             });

@@ -30,7 +30,7 @@ export abstract class FormWidgetModel {
     readonly form: any;
     readonly json: any;
 
-    constructor(form: FormModel, json: any) {
+    protected constructor(form: FormModel, json: any) {
         this.form = form;
         this.json = json;
 

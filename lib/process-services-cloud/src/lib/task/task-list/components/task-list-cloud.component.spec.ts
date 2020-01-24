@@ -25,6 +25,7 @@ import { fakeGlobalTask, fakeCustomSchema } from '../mock/fakeTaskResponseMock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskListCloudModule } from '../task-list-cloud.module';
+import { Person } from '@alfresco/js-api';
 
 @Component({
     template: `
@@ -34,7 +35,7 @@ import { TaskListCloudModule } from '../task-list-cloud.module';
             <data-column key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
             <data-column key="startedBy" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
                 <ng-template let-entry="$implicit">
-                    <div>{{getFullName(entry.row.obj.startedBy)}}</div>
+                    <div>{{getFullName(entry.row?.obj?.startedBy)}}</div>
                 </ng-template>
             </data-column>
         </data-columns>
@@ -43,7 +44,11 @@ import { TaskListCloudModule } from '../task-list-cloud.module';
 class CustomTaskListComponent {
     @ViewChild(TaskListCloudComponent)
     taskList: TaskListCloudComponent;
-}
+
+    getFullName(person: Person): string {
+        return `${person.firstName} ${person.lastName}`;
+    }
+ }
 @Component({
     template: `
     <adf-tasklist>
