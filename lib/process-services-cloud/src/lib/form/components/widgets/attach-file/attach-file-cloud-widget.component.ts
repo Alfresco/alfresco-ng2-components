@@ -88,7 +88,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         this.onFileChanged(event);
     }
 
-    onRemoveAttachFile(file: File | RelatedContentRepresentation) {
+    onRemoveAttachFile(file: File | RelatedContentRepresentation | Node) {
         this.removeFile(file);
     }
 

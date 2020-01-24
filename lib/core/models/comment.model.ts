@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
+import { Person } from '@alfresco/js-api';
+
 export class CommentModel {
     id: number;
     message: string;
     created: Date;
-    createdBy: any;
+    createdBy: Person;
     isSelected: boolean;
 
     constructor(obj?: any) {
