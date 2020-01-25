@@ -69,6 +69,10 @@ export class AuthenticationService {
         return this.alfrescoApi.getInstance().isOauthConfiguration();
     }
 
+    isPublicUrl(): boolean {
+        return this.alfrescoApi.getInstance().isPublicUrl();
+    }
+
     /**
      * Does the provider support ECM?
      * @returns True if supported, false otherwise

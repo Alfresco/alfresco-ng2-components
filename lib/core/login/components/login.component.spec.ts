@@ -650,7 +650,7 @@ describe('LoginComponent', () => {
                 });
             }));
 
-            it('should  show the login SSO button', async(() => {
+            it('should show the login SSO button', async(() => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
 
                 component.ngOnInit();

@@ -42,6 +42,10 @@ export class AuthGuardEcm extends AuthGuardBase {
             return true;
         }
         this.redirectToUrl('ECM', redirectUrl);
+        if (!this.authenticationService.isEcmLoggedIn() && this.isSilentLogin() && !this.authenticationService.isPublicUrl()) {
+            this.authenticationService.ssoImplicitLogin();
+            return true;
+        }
         return false;
     }
 }
