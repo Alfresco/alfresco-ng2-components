@@ -61,26 +61,19 @@ describe('Share file', () => {
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
         nodeId = pngUploadedFile.entry.id;
-
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        await navigationBarPage.clickContentServicesButton();
-
     });
 
     afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(nodeId);
-
     });
 
     describe('Shared link dialog', () => {
 
         beforeAll(async () => {
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await navigationBarPage.clickContentServicesButton();
             await contentListPage.selectRow(pngFileModel.name);
-        });
-
-        afterEach(async () => {
             await BrowserActions.closeMenuAndDialogs();
         });
 
@@ -88,12 +81,14 @@ describe('Share file', () => {
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.shareToggleButtonIsChecked();
+            await BrowserActions.closeMenuAndDialogs();
         });
 
         it('[C286544] Should display notification when clicking URL copy button', async () => {
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickShareLinkButton();
+            await BrowserActions.closeMenuAndDialogs();
             await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
         });
 
@@ -101,6 +96,7 @@ describe('Share file', () => {
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.checkShareLinkIsDisplayed();
+            await BrowserActions.closeMenuAndDialogs();
         });
 
         it('[C286578] Should disable today option in expiration day calendar', async () => {
@@ -108,6 +104,7 @@ describe('Share file', () => {
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickDateTimePickerButton();
             await shareDialog.calendarTodayDayIsDisabled();
+            await BrowserActions.closeMenuAndDialogs();
         });
 
         it('[C286548] Should be possible to set expiry date for link', async () => {
@@ -132,6 +129,7 @@ describe('Share file', () => {
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickDateTimePickerButton();
             await shareDialog.calendarTodayDayIsDisabled();
+            await BrowserActions.closeMenuAndDialogs();
         });
 
         it('[C310329] Should be possible to set expiry date only for link', async () => {
@@ -152,17 +150,11 @@ describe('Share file', () => {
     });
 
     describe('Shared link preview', () => {
-        afterEach(async() => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            await navigationBarPage.clickContentServicesButton();
 
-        });
-
-        beforeAll(async () => {
+        beforeEach(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
-
         });
 
         it('[C286565] Should open file when logged user access shared link', async () => {
@@ -171,6 +163,7 @@ describe('Share file', () => {
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickShareLinkButton();
             const sharedLink = await shareDialog.getShareLink();
+            await BrowserActions.closeMenuAndDialogs();
             await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             await BrowserActions.getUrl(sharedLink);
             await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
@@ -188,6 +181,7 @@ describe('Share file', () => {
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickShareLinkButton();
             const secondSharedLink = await shareDialog.getShareLink();
+            await BrowserActions.closeMenuAndDialogs();
             await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             await expect(sharedLink).toEqual(secondSharedLink);
             await BrowserActions.getUrl(sharedLink);
