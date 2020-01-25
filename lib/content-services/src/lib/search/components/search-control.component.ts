@@ -183,7 +183,7 @@ export class SearchControlComponent implements OnDestroy {
     }
 
     private isListElement($event: any): boolean {
-        return $event.relatedTarget && $event.relatedTarget.children[0].className === 'mat-list-item-content';
+        return $event.relatedTarget && $event.relatedTarget.children[0] && $event.relatedTarget.children[0].className === 'mat-list-item-content';
     }
 
     private getNextElementSibling(node: Element): Element {
