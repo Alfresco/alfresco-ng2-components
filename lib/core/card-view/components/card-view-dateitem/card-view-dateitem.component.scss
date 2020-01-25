@@ -56,4 +56,14 @@
             }
         }
     }
+
+    .adf-sr-only {
+        display: block;
+        height: 1px;
+        width: 1px;
+        clip: rect(1 1 1 1);
+        clip: rect(1px 1px 1px 1px);
+        overflow: hidden;
+    }
+
 }
