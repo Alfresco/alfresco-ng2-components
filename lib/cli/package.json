@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "commander": "^4.0.0",
+    "@alfresco/adf-testing": "3.6.0",
     "license-checker": "^25.0.1",
     "npm-registry-fetch": "^3.9.0",
     "@angular-devkit/core": "^7.2.15",
