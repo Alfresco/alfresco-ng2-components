@@ -374,18 +374,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     private setTableSchema() {
-        let schema = [];
-        if (!this.columns || this.columns.length === 0) {
-            schema = this.getSchemaFromHtml();
-        } else {
-            schema = this.columns.concat(this.getSchemaFromHtml());
-        }
-
-        this.columns = schema;
-
-        if (this.data && this.columns && this.columns.length > 0) {
-            this.data.setColumns(this.columns);
-        }
+        this.data.setColumns([
+            ...(this.columns || []),
+            ...this.getSchemaFromHtml()
+        ]);
     }
 
     private setTableSorting(sorting: any[]) {
