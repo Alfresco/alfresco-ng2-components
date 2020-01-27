@@ -69,6 +69,10 @@ Provides authentication to ACS and APS.
 -   **isOauth**(): `boolean`<br/>
     Does the provider support OAuth?
     -   **Returns** `boolean` - True if supported, false otherwise
+-   **isPublicUrl**(): `boolean`<br/>
+
+    -   **Returns** `boolean` - 
+
 -   **isRememberMeSet**(): `boolean`<br/>
     Checks whether the "remember me" cookie was set or not.
     -   **Returns** `boolean` - True if set, false otherwise

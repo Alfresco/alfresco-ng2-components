@@ -21,7 +21,7 @@ Unclaims a task
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` |  | (Required) The name of the application. |
+| appName | `string` | "" | (Required) The name of the application. |
 | taskId | `string` |  | (Required) The id of the task. |
 
 ### Events

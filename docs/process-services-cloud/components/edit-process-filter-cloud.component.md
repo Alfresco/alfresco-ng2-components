@@ -44,9 +44,10 @@ Shows/edits process filter details.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | actions | `string[]` |  | List of sort actions. |
-| appName | `string` |  | The name of the application. |
+| appName | `string` | "" | The name of the application. |
 | filterProperties | `string[]` |  | List of process filter properties to display |
 | id | `string` |  | Id of the process instance filter. |
+| role | `string` | "" | roles to filter the apps |
 | showFilterActions | `boolean` | true | Toggles editing of process filter actions. |
 | showTitle | `boolean` | true | Toggles editing of the process filter title. |
 | sortProperties | `string[]` |  | List of sort properties to display. |

@@ -13,9 +13,10 @@ Gets details of deployed apps for the current user.
 
 ### Methods
 
--   **getDeployedApplicationsByStatus**(status: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`[]>`<br/>
+-   **getDeployedApplicationsByStatus**(status: `string`, role?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`[]>`<br/>
     Gets a list of deployed apps for this user by status.
     -   _status:_ `string`  - Required status value
+    -   _role:_ `string`  - (Optional) to filter the apps
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`[]>` - The list of deployed apps
 -   **hasDeployedApps**(): `boolean`<br/>
 

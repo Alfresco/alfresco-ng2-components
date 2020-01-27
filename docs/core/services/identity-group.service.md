@@ -37,10 +37,10 @@ Performs CRUD operations on identity groups.
     Deletes Group.
     -   _groupId:_ `string`  - Id of the group.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the group deleted.
--   **findGroupsByName**(searchParams: [`IdentityGroupSearchParam`](../../../lib/core/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **findGroupsByName**(searchParams: [`IdentityGroupSearchParam`](../../../lib/core/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]>`<br/>
     Finds groups filtered by name.
     -   _searchParams:_ [`IdentityGroupSearchParam`](../../../lib/core/models/identity-group.model.ts)  - Object containing the name filter string
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - List of group information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]>` - List of group information
 -   **getClientIdByApplicationName**(applicationName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string>`<br/>
     Gets the client Id using the app name.
     -   _applicationName:_ `string`  - Name of the app

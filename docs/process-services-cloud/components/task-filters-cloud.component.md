@@ -21,7 +21,7 @@ Shows all available filters.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` |  | Display filters available to the current user for the application with the specified name. |
+| appName | `string` | "" | Display filters available to the current user for the application with the specified name. |
 | filterParam | [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) |  | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
 | showIcons | `boolean` | false | Toggles display of the filter's icons. |
 

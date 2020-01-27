@@ -54,6 +54,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     @Input()
     appName: string = '';
 
+    /** roles to filter the apps */
     @Input()
     role: string = '';
 
@@ -295,10 +296,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this.getPropertyController(property).errors && this.getPropertyController(property).errors.invalid;
     }
 
-    /**
-     * Return true if both filters are same
-     * @param editedQuery, @param currentQuery
-     */
     compareFilters(editedQuery: ProcessFilterCloudModel, currentQuery: ProcessFilterCloudModel): boolean {
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }

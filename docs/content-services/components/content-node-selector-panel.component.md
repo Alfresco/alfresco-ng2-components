@@ -40,6 +40,8 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | where | `string` |  | Custom _where_ filter function. See the [Document List component](../../content-services/components/document-list.component.md) for more information. |
 | excludeSiteContent | `string[]` |  | Custom list of site content componentIds. Used to filter out the corresponding items from the displayed nodes |
 | rowFilter | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts) |  | Custom row filter function. See the [Row Filter Model](row-filter.model.md) page for more information. |
+| showDropdownSiteList | `boolean` |  | Toggle sites list dropdown rendering |
+| showSearch | `boolean` |  | Toggle search input rendering |
 
 ### Events
 

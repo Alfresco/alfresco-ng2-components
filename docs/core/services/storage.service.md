@@ -62,9 +62,10 @@ In order to achieve this, you will only need to set your app identifier under th
 This identifier must be unique to the app to guarantee that it has its own storage. 
 
 ### SSO storagePrefix related scenario
+
 The storagePrefix can allow you to login with multiple user in the same browser only if:
-    - Or You don't use the implicit flow
-    - Or You use implicit flow you use different AIMS instances for any app
+    \- Or You don't use the implicit flow
+    \- Or You use implicit flow you use different AIMS instances for any app
 
 ## See also
 
