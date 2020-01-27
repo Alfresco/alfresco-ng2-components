@@ -120,7 +120,7 @@ describe('Metadata component', () => {
             await metadataViewPage.editIconIsDisplayed();
             await metadataViewPage.informationButtonIsDisplayed();
             await expect(await metadataViewPage.getInformationButtonText()).toEqual(METADATA.MORE_INFO_BUTTON);
-            await expect(await metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_UP);
+            await expect(await metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_DOWN);
         });
 
         it('[C272769] Should be possible to display more details when clicking on More Information button', async () => {
@@ -129,8 +129,8 @@ describe('Metadata component', () => {
             await metadataViewPage.clickOnPropertiesTab();
             await metadataViewPage.informationButtonIsDisplayed();
             await metadataViewPage.clickOnInformationButton();
-            await expect(await metadataViewPage.getInformationButtonText()).toEqual(METADATA.MORE_INFO_BUTTON);
-            await expect(await metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_DOWN);
+            await expect(await metadataViewPage.getInformationButtonText()).toEqual(METADATA.LESS_INFO_BUTTON);
+            await expect(await metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_UP);
         });
 
         it('[C270952] Should be possible to open/close properties using info icon', async () => {
