@@ -309,11 +309,11 @@
     "APP_FILTER_MODE": "Filter by application name",
     "ROLE_FILTER_MODE": "Filter by role",
     "PRESELECT_VALIDATION": "Preselect validation",
-    "ALL_PRESELECTED_USERS": "All Pre-selected Users",
-    "ALL_PRESELECTED_GROUPS": "All Pre-selected Groups",
+    "ALL_PRESELECTED_USERS": "All Preselected Users",
+    "ALL_PRESELECTED_GROUPS": "All Preselected Groups",
     "INVALID_USERS": "Invalid Users",
     "INVALID_GROUPS": "Invalid Groups",
-    "READONLY_MODE": "Readonly Mode"
+    "READONLY_MODE": "Read-only Mode"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multiselection",

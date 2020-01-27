@@ -201,7 +201,7 @@
         "TOGGLE": "Toggle value"
       },
       "ACCESSIBILITY": {
-        "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down moves to the same day of the week in the previous or next week respectively. Left and right move to the previous and next day respectively. Press Enter or Return to select a date."
+        "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date."
       }
     },
     "SEARCH": {
