@@ -151,7 +151,7 @@ async function checkIfAppIsReleased(absentApps: any []) {
 
             if (projectReleaseList.list.entries.length === 0) {
                 logger.warn('Project needs release');
-                projectRelease = await modelingAPI.releaseProject(project.entry);
+                projectRelease = await modelingAPI.releaseProject(project);
                 logger.warn(`Project released: ${projectRelease.id}`);
             } else {
                 logger.info('Project already has release');
