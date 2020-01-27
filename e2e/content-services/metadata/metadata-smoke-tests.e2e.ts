@@ -119,7 +119,7 @@ describe('Metadata component', () => {
 
             await metadataViewPage.editIconIsDisplayed();
             await metadataViewPage.informationButtonIsDisplayed();
-            await expect(await metadataViewPage.getInformationButtonText()).toEqual(METADATA.LESS_INFO_BUTTON);
+            await expect(await metadataViewPage.getInformationButtonText()).toEqual(METADATA.MORE_INFO_BUTTON);
             await expect(await metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_UP);
         });
 
