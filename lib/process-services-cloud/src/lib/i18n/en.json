@@ -184,15 +184,15 @@
 
   "ADF_CLOUD_USERS": {
     "ERROR": {
-      "NOT_FOUND": "No user found with the name {{userName}}"
+      "NOT_FOUND": "No user found with the username {{userName}}"
     }
   },
   "ADF_CLOUD_PEOPLE_GROUPS": {
     "ERROR": {
-      "INVALID_PATTERN": "Not mathcing pattern {{pattern}}",
-      "INVALID_MIN_LENGTH": "Minimum length {{requiredLength}}",
-      "INVALID_MAX_LENGTH": "Maximum length {{requiredLength}}",
-      "REQUIRED": "Field is required"
+      "INVALID_PATTERN": "Must match the pattern {{pattern}}",
+      "INVALID_MIN_LENGTH": "Must be at least {{requiredLength}} characters",
+      "INVALID_MAX_LENGTH": "Length exceeded, {{requiredLength}} characters max",
+      "REQUIRED": "Field required"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {
