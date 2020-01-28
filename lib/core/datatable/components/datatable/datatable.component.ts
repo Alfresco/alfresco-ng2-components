@@ -356,7 +356,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     private initTable() {
-        this.data = new ObjectDataTableAdapter(this.rows, this.columns);
+        const runtimeColumns = this.getRuntimeColumns();
+        this.data = new ObjectDataTableAdapter(this.rows, runtimeColumns);
+
         this.setTableSorting(this.sorting);
         this.resetSelection();
         this.rowMenuCache = {};
@@ -373,18 +375,18 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
+    private getRuntimeColumns(): any[] {
+        return [
+            ...(this.columns || []),
+            ...this.getSchemaFromHtml()
+        ];
+    }
+
     private setTableSchema() {
-        let schema = [];
-        if (!this.columns || this.columns.length === 0) {
-            schema = this.getSchemaFromHtml();
-        } else {
-            schema = this.columns.concat(this.getSchemaFromHtml());
-        }
+        const columns = this.getRuntimeColumns();
 
-        this.columns = schema;
-
-        if (this.data && this.columns && this.columns.length > 0) {
-            this.data.setColumns(this.columns);
+        if (this.data && columns.length > 0) {
+            this.data.setColumns(columns);
         }
     }
 
