@@ -10,15 +10,15 @@ This page lists all third party libraries that ADF 3.6.0 depends on.
 
 | Name | Version | License |
 | --- | --- | --- |
-| [@alfresco/adf-cli](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/adf-content-services](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/adf-core](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/adf-extensions](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/adf-insights](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/adf-process-services-cloud](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/adf-process-services](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/adf-testing](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/js-api](https://github.com/Alfresco/alfresco-js-api) | 3.7.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-cli](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-content-services](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-core](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-extensions](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-insights](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-process-services-cloud](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-process-services](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0| [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-testing](https://github.com/Alfresco/alfresco-ng2-components) | 3.7.0| [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/js-api](https://github.com/Alfresco/alfresco-js-api) | 3.7.0| [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [@angular-devkit/core](https://github.com/angular/angular-cli) | 7.3.9 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [@angular/animations](https://github.com/angular/angular) | 7.2.15 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [@angular/cdk](https://github.com/angular/material2) | 7.3.7 | [MIT](http://www.opensource.org/licenses/MIT) |
