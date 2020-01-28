@@ -298,11 +298,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
         await Promise.all(preselectedUsersToValidate.map(async (user: IdentityUserModel) => {
             try {
-                const validationResult = await this.searchUser(user);
-                if (!this.hasUserDetails(validationResult)) {
-                    this.invalidUsers.push(user);
-                } else {
+                const validationResult: IdentityUserModel = await this.searchUser(user);
+                if (this.isPreselectedUserValid(user, validationResult)) {
+                    validationResult.readonly = user.readonly;
                     validUsers.push(validationResult);
+                } else {
+                    this.invalidUsers.push(user);
                 }
             } catch (error) {
                 this.invalidUsers.push(user);
@@ -310,20 +311,16 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             }
         }));
         this.checkPreselectValidationErrors();
-        this.alignUsersAfterValidation(validUsers);
+        this.selectedUsers = validUsers.concat(this.invalidUsers);
         this.isLoading = false;
     }
 
-    private alignUsersAfterValidation(validatedUsers: IdentityUserModel[]) {
-        this.selectedUsers.forEach((selectedUser, index) => {
-            validatedUsers.forEach(validatedUser => {
-                if ((selectedUser.id === validatedUser.id) || (selectedUser.username === validatedUser.username)
-                    || (selectedUser.email === validatedUser.email)) {
-                    validatedUser.readonly = selectedUser.readonly;
-                    this.selectedUsers[index] = validatedUser;
-                }
-            });
-        });
+    isPreselectedUserValid(preselectedUser: IdentityUserModel, validatedUser: IdentityUserModel) {
+        if (validatedUser && (validatedUser.id !== undefined || validatedUser.username !== undefined || validatedUser.email !== undefined)) {
+            return preselectedUser.id === validatedUser.id || preselectedUser.username === validatedUser.username || preselectedUser.email === validatedUser.email;
+        } else {
+            return false;
+        }
     }
 
     async searchUser(user: IdentityUserModel) {
@@ -390,31 +387,33 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     onRemove(userToRemove: IdentityUserModel) {
         this.removeUser.emit(userToRemove);
-        const indexToRemove = this.selectedUsers.findIndex((selectedUser: IdentityUserModel) => {
-            return selectedUser.id === userToRemove.id;
-        });
-        this.selectedUsers.splice(indexToRemove, 1);
+        this.removeUserFromSelected(userToRemove);
         this.changedUsers.emit(this.selectedUsers);
         this.searchUserCtrl.markAsDirty();
 
         if (this.isValidationEnabled()) {
-            this.removeUserFromValidation(userToRemove.username);
+            this.removeUserFromValidation(userToRemove);
             this.checkPreselectValidationErrors();
         }
     }
 
-    private removeUserFromValidation(username: string) {
+    private removeUserFromSelected(userToRemove: IdentityUserModel) {
+        const indexToRemove = this.selectedUsers.findIndex((selectedUser: IdentityUserModel) => {
+            return selectedUser.id === userToRemove.id && selectedUser.username === userToRemove.username && selectedUser.email === userToRemove.email;
+        });
+        if (indexToRemove !== -1) {
+            this.selectedUsers.splice(indexToRemove, 1);
+        }
+    }
+
+    private removeUserFromValidation(userToRemove: IdentityUserModel) {
         const indexToRemove = this.invalidUsers.findIndex((invalidUser) => {
-            return invalidUser.username === username;
+            return invalidUser.username === userToRemove.username && invalidUser.id === userToRemove.id && invalidUser.email === userToRemove.email;
         });
 
         if (indexToRemove !== -1) {
             this.invalidUsers.splice(indexToRemove, 1);
         }
-    }
-
-    hasUserDetails(user: IdentityUserModel): boolean {
-        return user && (user.id !== undefined || user.username !== undefined || user.email !== undefined);
     }
 
     generateInvalidUsersMessage() {
