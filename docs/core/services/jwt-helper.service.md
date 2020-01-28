@@ -32,8 +32,8 @@ Decodes a JSON Web Token (JWT) to a JavaScript object.
     -   _key:_ `string`  - Key name of the field to retrieve
 -   **getValueFromToken**(accessToken: `string`, key: `string`)<br/>
     Gets a named value from the user access token.
-    -   _accessToken:_ `string`  - 
-    -   _key:_ `string`  - 
+    -   _accessToken:_ `string`  - your SSO access token where the value is encode
+    -   _key:_ `string`  - Key name of the field to retrieve
 -   **hasClientRole**(clientName: `string`, role: `string`): `boolean`<br/>
     Checks for client role.
     -   _clientName:_ `string`  - Targeted client name

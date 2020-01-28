@@ -142,7 +142,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Edit JSON Dialog](core/dialogs/edit-json.dialog.md) | Allows a user to preview or edit a JSON content in a dialog. | [Source](../../../../) |
+| [Edit JSON Dialog](core/dialogs/edit-json.dialog.md) | Allows a user to preview or edit a JSON content in a dialog. | [Source](../lib/testing/src/lib/core/dialog/edit-json-dialog.ts) |
 
 ### Interfaces
 
@@ -256,97 +256,97 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Add Permission Dialog Component](content-services/components/add-permission-dialog.component.md) | Displays a dialog to search for people or groups to add to the current node permissions. | [Source](../lib/content-services/permission-manager/components/add-permission/add-permission-dialog.component.ts) |
-| [Add Permission Panel Component](content-services/components/add-permission-panel.component.md) | Searches for people or groups to add to the current node permissions. | [Source](../lib/content-services/permission-manager/components/add-permission/add-permission-panel.component.ts) |
-| [Add Permission Component](content-services/components/add-permission.component.md) | Searches for people or groups to add to the current node permissions. | [Source](../lib/content-services/permission-manager/components/add-permission/add-permission.component.ts) |
-| [Breadcrumb Component](content-services/components/breadcrumb.component.md) | Indicates the current position within a navigation hierarchy. | [Source](../lib/content-services/breadcrumb/breadcrumb.component.ts) |
-| [Content Action component](content-services/components/content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../lib/content-services/document-list/components/content-action/content-action.component.ts) |
-| [Content Metadata Card component](content-services/components/content-metadata-card.component.md) | Displays and edits metadata related to a node. | [Source](../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
-| [Content Node Selector Panel component](content-services/components/content-node-selector-panel.component.md) | Opens a Content Node Selector  in its own dialog window. | [Source](../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
-| [Content Node Selector component](content-services/components/content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../lib/content-services/content-node-selector/content-node-selector.component.ts) |
-| [Document List component](content-services/components/document-list.component.md) | Displays the documents from a repository. | [Source](../lib/content-services/document-list/components/document-list.component.ts) |
-| [Dropdown Breadcrumb Component](content-services/components/dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts) |
-| [File Uploading Dialog Component](content-services/components/file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../lib/content-services/upload/components/file-uploading-dialog.component.ts) |
-| [Like component](content-services/components/like.component.md) | Allows a user to add "likes" to an item. | [Source](../lib/content-services/social/like.component.ts) |
-| [Permission List Component](content-services/components/permission-list.component.md) | Shows node permissions as a table. | [Source](../lib/content-services/permission-manager/components/permission-list/permission-list.component.ts) |
-| [Rating component](content-services/components/rating.component.md) | Allows a user to add and remove rating to an item. | [Source](../lib/content-services/social/rating.component.ts) |
-| [Search check list component](content-services/components/search-check-list.component.md) | Implements a checklist widget for the Search Filter component. | [Source](../lib/content-services/search/components/search-check-list/search-check-list.component.ts) |
-| [Search Chip List Component](content-services/components/search-chip-list.component.md) | Displays search criteria as a set of "chips". | [Source](../lib/content-services/search/components/search-chip-list/search-chip-list.component.ts) |
-| [Search control component](content-services/components/search-control.component.md) | Displays a input text that shows find-as-you-type suggestions. | [Source](../lib/content-services/search/components/search-control.component.ts) |
-| [Search date range component](content-services/components/search-date-range.component.md) | Implements a date range widget for the Search Filter component. | [Source](../lib/content-services/search/components/search-date-range/search-date-range.component.ts) |
-| [Search Filter component](content-services/components/search-filter.component.md) | Represents a main container component for custom search and faceted search settings. | [Source](../lib/content-services/search/components/search-filter/search-filter.component.ts) |
-| [Search number range component](content-services/components/search-number-range.component.md) | Implements a number range widget for the Search Filter component. | [Source](../lib/content-services/search/components/search-number-range/search-number-range.component.ts) |
-| [Search radio component](content-services/components/search-radio.component.md) | Implements a radio button list widget for the Search Filter component. | [Source](../lib/content-services/search/components/search-radio/search-radio.component.ts) |
-| [Search slider component](content-services/components/search-slider.component.md) | Implements a numeric slider widget for the Search Filter component. | [Source](../lib/content-services/search/components/search-slider/search-slider.component.ts) |
-| [Search Sorting Picker Component](content-services/components/search-sorting-picker.component.md) | Provides an ability to select one of the predefined sorting definitions for search results: | [Source](../lib/content-services/search/components/search-sorting-picker/search-sorting-picker.component.ts) |
-| [Search text component](content-services/components/search-text.component.md) | Implements a text input widget for the Search Filter component. | [Source](../lib/content-services/search/components/search-text/search-text.component.ts) |
-| [Search component](content-services/components/search.component.md) | Searches items for supplied search terms. | [Source](../lib/content-services/search/components/search.component.ts) |
-| [Sites Dropdown component](content-services/components/sites-dropdown.component.md) | Displays a dropdown menu to show and interact with the sites of the current user. | [Source](../lib/content-services/site-dropdown/sites-dropdown.component.ts) |
-| [Tag Node Actions List component](content-services/components/tag-actions.component.md) | Shows available actions for tags. | [Source](../lib/content-services/tag/tag-actions.component.ts) |
-| [Tag List component](content-services/components/tag-list.component.md) | Shows tags for an item. | [Source](../lib/content-services/tag/tag-list.component.ts) |
-| [Tag Node List component](content-services/components/tag-node-list.component.md) | Shows tags for a node. | [Source](../lib/content-services/tag/tag-node-list.component.ts) |
-| [Tree View component](content-services/components/tree-view.component.md) | Shows the folder and subfolders of a node as a tree view. | [Source](../lib/content-services/tree-view/components/tree-view.component.ts) |
-| [Upload Button Component](content-services/components/upload-button.component.md) | Activates a file upload. | [Source](../lib/content-services/upload/components/upload-button.component.ts) |
-| [Upload Drag Area Component](content-services/components/upload-drag-area.component.md) | Adds a drag and drop area to upload files to ACS. | [Source](../lib/content-services/upload/components/upload-drag-area.component.ts) |
-| [Upload Version Button Component (Workaround)](content-services/components/upload-version-button.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Activates a file version upload. | [Source](../lib/content-services/upload/components/upload-version-button.component.ts) |
-| [Version List component](content-services/components/version-list.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node in a Version Manager component. | [Source](../lib/content-services/version-manager/version-list.component.ts) |
-| [Version Manager Component](content-services/components/version-manager.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/version-manager/version-manager.component.ts) |
-| [Webscript component](content-services/components/webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/webscript/webscript.component.ts) |
+| [Add Permission Dialog Component](content-services/components/add-permission-dialog.component.md) | Displays a dialog to search for people or groups to add to the current node permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/add-permission/add-permission-dialog.component.ts) |
+| [Add Permission Panel Component](content-services/components/add-permission-panel.component.md) | Searches for people or groups to add to the current node permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/add-permission/add-permission-panel.component.ts) |
+| [Add Permission Component](content-services/components/add-permission.component.md) | Searches for people or groups to add to the current node permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/add-permission/add-permission.component.ts) |
+| [Breadcrumb Component](content-services/components/breadcrumb.component.md) | Indicates the current position within a navigation hierarchy. | [Source](../lib/content-services/src/lib/breadcrumb/breadcrumb.component.ts) |
+| [Content Action component](content-services/components/content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../lib/content-services/src/lib/document-list/components/content-action/content-action.component.ts) |
+| [Content Metadata Card component](content-services/components/content-metadata-card.component.md) | Displays and edits metadata related to a node. | [Source](../lib/content-services/src/lib/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
+| [Content Node Selector Panel component](content-services/components/content-node-selector-panel.component.md) | Opens a Content Node Selector  in its own dialog window. | [Source](../lib/content-services/src/lib/content-node-selector/content-node-selector-panel.component.ts) |
+| [Content Node Selector component](content-services/components/content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../lib/content-services/src/lib/content-node-selector/content-node-selector.component.ts) |
+| [Document List component](content-services/components/document-list.component.md) | Displays the documents from a repository. | [Source](../lib/content-services/src/lib/document-list/components/document-list.component.ts) |
+| [Dropdown Breadcrumb Component](content-services/components/dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../lib/content-services/src/lib/breadcrumb/dropdown-breadcrumb.component.ts) |
+| [File Uploading Dialog Component](content-services/components/file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../lib/content-services/src/lib/upload/components/file-uploading-dialog.component.ts) |
+| [Like component](content-services/components/like.component.md) | Allows a user to add "likes" to an item. | [Source](../lib/content-services/src/lib/social/like.component.ts) |
+| [Permission List Component](content-services/components/permission-list.component.md) | Shows node permissions as a table. | [Source](../lib/content-services/src/lib/permission-manager/components/permission-list/permission-list.component.ts) |
+| [Rating component](content-services/components/rating.component.md) | Allows a user to add and remove rating to an item. | [Source](../lib/content-services/src/lib/social/rating.component.ts) |
+| [Search check list component](content-services/components/search-check-list.component.md) | Implements a checklist widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-check-list/search-check-list.component.ts) |
+| [Search Chip List Component](content-services/components/search-chip-list.component.md) | Displays search criteria as a set of "chips". | [Source](../lib/content-services/src/lib/search/components/search-chip-list/search-chip-list.component.ts) |
+| [Search control component](content-services/components/search-control.component.md) | Displays a input text that shows find-as-you-type suggestions. | [Source](../lib/content-services/src/lib/search/components/search-control.component.ts) |
+| [Search date range component](content-services/components/search-date-range.component.md) | Implements a date range widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-date-range/search-date-range.component.ts) |
+| [Search Filter component](content-services/components/search-filter.component.md) | Represents a main container component for custom search and faceted search settings. | [Source](../lib/content-services/src/lib/search/components/search-filter/search-filter.component.ts) |
+| [Search number range component](content-services/components/search-number-range.component.md) | Implements a number range widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-number-range/search-number-range.component.ts) |
+| [Search radio component](content-services/components/search-radio.component.md) | Implements a radio button list widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-radio/search-radio.component.ts) |
+| [Search slider component](content-services/components/search-slider.component.md) | Implements a numeric slider widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-slider/search-slider.component.ts) |
+| [Search Sorting Picker Component](content-services/components/search-sorting-picker.component.md) | Provides an ability to select one of the predefined sorting definitions for search results: | [Source](../lib/content-services/src/lib/search/components/search-sorting-picker/search-sorting-picker.component.ts) |
+| [Search text component](content-services/components/search-text.component.md) | Implements a text input widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-text/search-text.component.ts) |
+| [Search component](content-services/components/search.component.md) | Searches items for supplied search terms. | [Source](../lib/content-services/src/lib/search/components/search.component.ts) |
+| [Sites Dropdown component](content-services/components/sites-dropdown.component.md) | Displays a dropdown menu to show and interact with the sites of the current user. | [Source](../lib/content-services/src/lib/site-dropdown/sites-dropdown.component.ts) |
+| [Tag Node Actions List component](content-services/components/tag-actions.component.md) | Shows available actions for tags. | [Source](../lib/content-services/src/lib/tag/tag-actions.component.ts) |
+| [Tag List component](content-services/components/tag-list.component.md) | Shows tags for an item. | [Source](../lib/content-services/src/lib/tag/tag-list.component.ts) |
+| [Tag Node List component](content-services/components/tag-node-list.component.md) | Shows tags for a node. | [Source](../lib/content-services/src/lib/tag/tag-node-list.component.ts) |
+| [Tree View component](content-services/components/tree-view.component.md) | Shows the folder and subfolders of a node as a tree view. | [Source](../lib/content-services/src/lib/tree-view/components/tree-view.component.ts) |
+| [Upload Button Component](content-services/components/upload-button.component.md) | Activates a file upload. | [Source](../lib/content-services/src/lib/upload/components/upload-button.component.ts) |
+| [Upload Drag Area Component](content-services/components/upload-drag-area.component.md) | Adds a drag and drop area to upload files to ACS. | [Source](../lib/content-services/src/lib/upload/components/upload-drag-area.component.ts) |
+| [Upload Version Button Component (Workaround)](content-services/components/upload-version-button.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Activates a file version upload. | [Source](../lib/content-services/src/lib/upload/components/upload-version-button.component.ts) |
+| [Version List component](content-services/components/version-list.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node in a Version Manager component. | [Source](../lib/content-services/src/lib/version-manager/version-list.component.ts) |
+| [Version Manager Component](content-services/components/version-manager.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/src/lib/version-manager/version-manager.component.ts) |
+| [Webscript component](content-services/components/webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/src/lib/webscript/webscript.component.ts) |
 
 ### Directives
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Node Public File Share Directive](content-services/directives/content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../lib/content-services/content-node-share/content-node-share.directive.ts) |
-| [File Draggable directive](content-services/directives/file-draggable.directive.md) | Provides drag-and-drop features for an element such as a div. | [Source](../lib/content-services/upload/directives/file-draggable.directive.ts) |
-| [Folder Create directive](content-services/directives/folder-create.directive.md) | Creates folders. | [Source](../lib/content-services/folder-directive/folder-create.directive.ts) |
-| [Folder Edit directive](content-services/directives/folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/folder-directive/folder-edit.directive.ts) |
-| [Inherit Permission directive](content-services/directives/inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../lib/content-services/permission-manager/components/inherited-button.directive.ts) |
-| [Node Lock directive](content-services/directives/node-lock.directive.md) | Locks or unlocks a node. | [Source](../lib/content-services/directives/node-lock.directive.ts) |
-| [Toggle Icon directive](content-services/directives/toggle-icon.directive.md) | Toggle icon on mouse or keyboard event for a selectable element. | [Source](../lib/content-services/upload/directives/toggle-icon.directive.ts) |
+| [Node Public File Share Directive](content-services/directives/content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../lib/content-services/src/lib/content-node-share/content-node-share.directive.ts) |
+| [File Draggable directive](content-services/directives/file-draggable.directive.md) | Provides drag-and-drop features for an element such as a div. | [Source](../lib/content-services/src/lib/upload/directives/file-draggable.directive.ts) |
+| [Folder Create directive](content-services/directives/folder-create.directive.md) | Creates folders. | [Source](../lib/content-services/src/lib/folder-directive/folder-create.directive.ts) |
+| [Folder Edit directive](content-services/directives/folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/src/lib/folder-directive/folder-edit.directive.ts) |
+| [Inherit Permission directive](content-services/directives/inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/inherited-button.directive.ts) |
+| [Node Lock directive](content-services/directives/node-lock.directive.md) | Locks or unlocks a node. | [Source](../lib/content-services/src/lib/directives/node-lock.directive.ts) |
+| [Toggle Icon directive](content-services/directives/toggle-icon.directive.md) | Toggle icon on mouse or keyboard event for a selectable element. | [Source](../lib/content-services/src/lib/upload/directives/toggle-icon.directive.ts) |
 
 ### Dialogs
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Confirm dialog component](content-services/dialogs/confirm.dialog.md) | Requests a yes/no choice from the user. | [Source](../lib/content-services/dialogs/confirm.dialog.ts) |
-| [Library dialog component](content-services/dialogs/library.dialog.md) | Creates a new Content Services document library/site. | [Source](../lib/content-services/dialogs/library/library.dialog.ts) |
+| [Confirm dialog component](content-services/dialogs/confirm.dialog.md) | Requests a yes/no choice from the user. | [Source](../lib/content-services/src/lib/dialogs/confirm.dialog.ts) |
+| [Library dialog component](content-services/dialogs/library.dialog.md) | Creates a new Content Services document library/site. | [Source](../lib/content-services/src/lib/dialogs/library/library.dialog.ts) |
 
 ### Interfaces
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Search widget interface](content-services/interfaces/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
+| [Search widget interface](content-services/interfaces/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/src/lib/search/search-widget.interface.ts) |
 
 ### Models
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Image Resolver Model](content-services/models/image-resolver.model.md) | Defines the Image Resolver function used by the Document List Component. | [Source](../lib/content-services/document-list/data/image-resolver.model.ts) |
-| [Permission Style model](content-services/models/permissions-style.model.md) | Sets custom CSS styles for rows of a Document List according to the item's permissions. | [Source](../lib/content-services/document-list/models/permissions-style.model.ts) |
+| [Permission Style model](content-services/models/permissions-style.model.md) | Sets custom CSS styles for rows of a Document List according to the item's permissions. | [Source](../lib/content-services/src/lib/document-list/models/permissions-style.model.ts) |
 | [Row Filter Model](content-services/models/row-filter.model.md) | Defines the Row Filter function used by the Document List Component. | [Source](../lib/content-services/document-list/data/row-filter.model.ts) |
 
 ### Pipes
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [File upload error pipe](content-services/pipes/file-upload-error.pipe.md) | Converts an upload error code to an error message. | [Source](../lib/content-services/upload/pipes/file-upload-error.pipe.ts) |
+| [File upload error pipe](content-services/pipes/file-upload-error.pipe.md) | Converts an upload error code to an error message. | [Source](../lib/content-services/src/lib/upload/pipes/file-upload-error.pipe.ts) |
 
 ### Services
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Content Node Dialog service](content-services/services/content-node-dialog.service.md) | Displays and manages dialogs for selecting content to open, copy or upload. | [Source](../lib/content-services/content-node-selector/content-node-dialog.service.ts) |
-| [Custom Resources service](content-services/services/custom-resources.service.md) | Manages Document List information that is specific to a user. | [Source](../lib/content-services/document-list/services/custom-resources.service.ts) |
-| [Document Actions service](content-services/services/document-actions.service.md) | Implements the document menu actions for the Document List component. | [Source](../lib/content-services/document-list/services/document-actions.service.ts) |
-| [Document List service](content-services/services/document-list.service.md) | Implements node operations used by the Document List component. | [Source](../lib/content-services/document-list/services/document-list.service.ts) |
-| [Folder Actions service](content-services/services/folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../lib/content-services/document-list/services/folder-actions.service.ts) |
-| [Node permission dialog service](content-services/services/node-permission-dialog.service.md) | Displays dialogs to let the user set node permissions. | [Source](../lib/content-services/permission-manager/services/node-permission-dialog.service.ts) |
-| [Node Permission service](content-services/services/node-permission.service.md) | Manages role permissions for content nodes. | [Source](../lib/content-services/permission-manager/services/node-permission.service.ts) |
-| [Rating service](content-services/services/rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/social/services/rating.service.ts) |
-| [Search filter service](content-services/services/search-filter.service.md) | Registers widgets for use with the Search Filter component. | [Source](../lib/content-services/search/components/search-filter/search-filter.service.ts) |
-| [Search Query Builder service](content-services/services/search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final search query. | [Source](../lib/content-services/search/search-query-builder.service.ts) |
-| [Tag service](content-services/services/tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/tag/services/tag.service.ts) |
+| [Content Node Dialog service](content-services/services/content-node-dialog.service.md) | Displays and manages dialogs for selecting content to open, copy or upload. | [Source](../lib/content-services/src/lib/content-node-selector/content-node-dialog.service.ts) |
+| [Custom Resources service](content-services/services/custom-resources.service.md) | Manages Document List information that is specific to a user. | [Source](../lib/content-services/src/lib/document-list/services/custom-resources.service.ts) |
+| [Document Actions service](content-services/services/document-actions.service.md) | Implements the document menu actions for the Document List component. | [Source](../lib/content-services/src/lib/document-list/services/document-actions.service.ts) |
+| [Document List service](content-services/services/document-list.service.md) | Implements node operations used by the Document List component. | [Source](../lib/content-services/src/lib/document-list/services/document-list.service.ts) |
+| [Folder Actions service](content-services/services/folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../lib/content-services/src/lib/document-list/services/folder-actions.service.ts) |
+| [Node permission dialog service](content-services/services/node-permission-dialog.service.md) | Displays dialogs to let the user set node permissions. | [Source](../lib/content-services/src/lib/permission-manager/services/node-permission-dialog.service.ts) |
+| [Node Permission service](content-services/services/node-permission.service.md) | Manages role permissions for content nodes. | [Source](../lib/content-services/src/lib/permission-manager/services/node-permission.service.ts) |
+| [Rating service](content-services/services/rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/src/lib/social/services/rating.service.ts) |
+| [Search filter service](content-services/services/search-filter.service.md) | Registers widgets for use with the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-filter/search-filter.service.ts) |
+| [Search Query Builder service](content-services/services/search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final search query. | [Source](../lib/content-services/src/lib/search/search-query-builder.service.ts) |
+| [Tag service](content-services/services/tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/src/lib/tag/services/tag.service.ts) |
 
 <!--content-services end-->
 
@@ -381,7 +381,7 @@ for more information about installing and using the source code.
 | [Process Instance Details Header component](process-services/components/process-instance-header.component.md) | Sub-component of the process details component, which renders some general information about the selected process. | [Source](../lib/process-services/src/lib/process-list/components/process-instance-header.component.ts) |
 | [Process Instance Tasks component](process-services/components/process-instance-tasks.component.md) | Lists both the active and completed tasks associated with a particular process instance | [Source](../lib/process-services/src/lib/process-list/components/process-instance-tasks.component.ts) |
 | [Process Instance List](process-services/components/process-list.component.md) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services/src/lib/process-list/components/process-list.component.ts) |
-| [Select App Component](process-services/components/select-apps-dialog.component.md) | Shows all available apps and returns the selected app. | [Source](../lib/process-services/src/lib/app-list/select-apps-dialog-component.ts) |
+| [Select App Component](process-services/components/select-apps-dialog.component.md) | Shows all available apps and returns the selected app. | [Source](../lib/process-services/src/lib/app-list/select-apps-dialog.component.ts) |
 | [Start Process component](process-services/components/start-process.component.md) | Starts a process. | [Source](../lib/process-services/src/lib/process-list/components/start-process.component.ts) |
 | [Start Task Component](process-services/components/start-task.component.md) | Creates/Starts a new task for the specified app. | [Source](../lib/process-services/src/lib/task-list/components/start-task.component.ts) |
 | [Task Attachment List Component](process-services/components/task-attachment-list.component.md) | Displays documents attached to a specified task. | [Source](../lib/process-services/src/lib/attachment/task-attachment-list.component.ts) |
@@ -431,14 +431,14 @@ for more information about installing and using the source code.
 | [Form cloud component](process-services-cloud/components/form-cloud.component.md) | Shows a form from Process Services. | [Source](../lib/process-services-cloud/src/lib/form/components/form-cloud.component.ts) |
 | [Form Definition Selector Cloud](process-services-cloud/components/form-definition-selector-cloud.component.md) | Allows one form to be selected from a dropdown list. For forms to be displayed in this component they will need to be compatible with standAlone tasks. | [Source](../lib/process-services-cloud/src/lib/form/components/form-definition-selector-cloud.component.ts) |
 | [Group Cloud component](process-services-cloud/components/group-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
-| [People Cloud Component](process-services-cloud/components/people-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Allows one or more users to be selected (with auto-suggestion) based on the input parameters. | [Source](../lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts) |
+| [People Cloud Component](process-services-cloud/components/people-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Allows one or more users to be selected (with auto-suggestion) based on the input parameters. | [Source](../lib/process-services-cloud/src/lib/people/components/people-cloud.component.ts) |
 | [Process Filters Cloud Component](process-services-cloud/components/process-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |
 | [Process Header Cloud Component](process-services-cloud/components/process-header-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all the information related to a process instance. | [Source](../lib/process-services-cloud/src/lib/process/process-header/components/process-header-cloud.component.ts) |
 | [Process Instance List Cloud component](process-services-cloud/components/process-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts) |
 | [Start Process Cloud Component](process-services-cloud/components/start-process-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Starts a process. | [Source](../lib/process-services-cloud/src/lib/process/start-process/components/start-process-cloud.component.ts) |
 | [Start Task Cloud Component](process-services-cloud/components/start-task-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Creates/starts a new task for the specified app. | [Source](../lib/process-services-cloud/src/lib/task/start-task/components/start-task-cloud.component.ts) |
 | [Task Filters Cloud component](process-services-cloud/components/task-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all available filters. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.ts) |
-| [Form cloud component](process-services-cloud/components/task-form-cloud.component.md) | Shows a form for a task. | [Source](../lib/process-services-cloud/src/lib/task/task-form/components/task-form-cloud.component.ts) |
+| [Form cloud component](process-services-cloud/components/task-form-cloud.component.md) | Shows a form for a task. | [Source](../lib/testing/src/lib/process-services-cloud/pages/task-form-cloud-component.page.ts) |
 | [Task Header Cloud Component](process-services-cloud/components/task-header-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all the information related to a task. | [Source](../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts) |
 | [Task List Cloud component](process-services-cloud/components/task-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts) |
 
@@ -446,6 +446,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Cancel Process Directive](process-services-cloud/directives/cancel-process.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Cancels a process | [Source](../lib/process-services-cloud/src/lib/process/directives/cancel-process.directive.ts) |
 | [Claim Task Directive](process-services-cloud/directives/claim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Claims a task | [Source](../lib/process-services-cloud/src/lib/task/directives/claim-task.directive.ts) |
 | [Complete Task Directive](process-services-cloud/directives/complete-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Completes a task. | [Source](../lib/process-services-cloud/src/lib/task/directives/complete-task.directive.ts) |
 | [Unclaim Task Directive](process-services-cloud/directives/unclaim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Unclaims a task | [Source](../lib/process-services-cloud/src/lib/task/directives/unclaim-task.directive.ts) |
@@ -461,11 +462,11 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Apps Process Cloud Service](process-services-cloud/services/apps-process-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Gets details of deployed apps for the current user. | [Source](../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts) |
-| [Form cloud service](process-services-cloud/services/form-cloud.service.md) | Implements Process Services form methods | [Source](../lib/process-services-cloud/src/lib/form/services/form-cloud.service.ts) |
+| [Form cloud service](process-services-cloud/services/form-cloud.service.md) | Implements Process Services form methods | [Source](../lib/testing/src/lib/form-cloud/actions/form-cloud.service.ts) |
 | [Group Cloud Service](process-services-cloud/services/group-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches and gets information for groups. | [Source](../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
 | [Local Preference Cloud Service](process-services-cloud/services/local-preference-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages Local Storage preferences. | [Source](../lib/process-services-cloud/src/lib/services/local-preference-cloud.service.ts) |
+| [Process Cloud Service](process-services-cloud/services/process-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages cloud process instances. | [Source](../lib/process-services-cloud/src/lib/process/services/process-cloud.service.ts) |
 | [Process Filter Cloud Service](process-services-cloud/services/process-filter-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manage Process Filters, which are pre-configured Process Instance queries. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/services/process-filter-cloud.service.ts) |
-| [Process Header Cloud Service](process-services-cloud/services/process-header-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages cloud process instances. | [Source](../lib/process-services-cloud/src/lib/process/process-header/services/process-header-cloud.service.ts) |
 | [Process List Cloud Service](process-services-cloud/services/process-list-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches processes. | [Source](../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
 | [Start Process Cloud Service](process-services-cloud/services/start-process-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Gets process definitions and starts processes. | [Source](../lib/process-services-cloud/src/lib/process/start-process/services/start-process-cloud.service.ts) |
 | [Start Task Cloud Service](process-services-cloud/services/start-task-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Starts standalone tasks. | [Source](../lib/process-services-cloud/src/lib/task/services/start-task-cloud.service.ts) |

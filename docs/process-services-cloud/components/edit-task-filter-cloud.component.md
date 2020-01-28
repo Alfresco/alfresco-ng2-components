@@ -44,9 +44,10 @@ Edits task filter details.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | actions | `string[]` |  | List of task filter actions. |
-| appName | `string` |  | (required) Name of the app. |
+| appName | `string` | "" | (required) Name of the app. |
 | filterProperties | `string[]` |  | List of task filter properties to display. |
 | id | `string` |  | (required) ID of the task filter. |
+| role | `string` | "" | user role. |
 | showFilterActions | `boolean` | true | Toggles the filter actions. |
 | showTitle | `boolean` | true | Toggles the title. |
 | sortProperties | `string[]` |  | List of sort properties to display. |

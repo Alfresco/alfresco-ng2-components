@@ -76,7 +76,7 @@ The template defined inside `empty-form` will be shown when no form definition i
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` |  | App id to fetch corresponding form and values. |
+| appName | `string` | "" | App name to fetch corresponding form and values. |
 | appVersion | `number` |  | The application version to use when fetching data |
 | data | [`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]` |  | Custom form values map to be used with the rendered form. |
 | disableCompleteButton | `boolean` | false | If true then the `Complete` outcome button is shown but it will be disabled. |

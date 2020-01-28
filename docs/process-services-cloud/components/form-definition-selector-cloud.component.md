@@ -23,7 +23,7 @@ Allows one form to be selected from a dropdown list. For forms to be displayed i
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` |  | Name of the application. If specified, this shows the users who have access to the app. |
+| appName | `string` | "" | Name of the application. If specified, this shows the users who have access to the app. |
 
 ### Events
 

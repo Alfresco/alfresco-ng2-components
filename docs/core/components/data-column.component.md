@@ -46,6 +46,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of cell contents. |
 | cssClass | `string` |  | Additional CSS class to be applied to column (header and cells). |
 | editable | `boolean` | false | Toggles the editing support of the column data. |
+| focus | `boolean` | true | Enable or disable cell focus |
 | format | `string` |  | Value format (if supported by the parent component), for example format of the date. |
 | formatTooltip | `Function` |  | Custom tooltip formatter function. |
 | key | `string` |  | Data source key. Can be either a column/property key like `title`  or a property path like `createdBy.name`. |
@@ -53,7 +54,6 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | srTitle | `string` |  | Title to be used for screen readers. |
 | title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
 | type | `string` | "text" | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize', 'location', and 'json'. |
-| focus | `boolean` | "true" | Toggles keyboard focus for a column. This should be use for custom template columns that contain actions elements   |
 
 ## Details
 

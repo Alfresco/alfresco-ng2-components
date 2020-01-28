@@ -125,7 +125,7 @@ Picard's birthday (47457.1):
     export class MyModule {}
     ```
 
-4.  Bind your custom component to the custom model type so that Angular's dynamic component
+4.  Bind your custom component to the [custom model](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/customModel.api.ts) type so that Angular's dynamic component
     loader can find it.
 
     ```ts

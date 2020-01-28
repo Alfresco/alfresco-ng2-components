@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-09-17
 ---
 
-# [Edit JSON Dialog](../../../ "Defined in ")
+# [Edit JSON Dialog](../../../lib/testing/src/lib/core/dialog/edit-json-dialog.ts "Defined in edit-json-dialog.ts")
 
 Allows a user to preview or edit a JSON content in a dialog.
 

@@ -58,22 +58,22 @@ Gets OAuth2 personal details and roles for users and performs CRUD operations on
     Deletes User.
     -   _userId:_ `string`  - Id of the  user.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the user deleted.
--   **findUserByEmail**(email: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **findUserByEmail**(email: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>`<br/>
     Find users based on email input.
     -   _email:_ `string`  - Search query string
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - List of users
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>` - List of users
 -   **findUserById**(id: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Find users based on id input.
     -   _id:_ `string`  - Search query string
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - users object
--   **findUserByUsername**(username: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **findUserByUsername**(username: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>`<br/>
     Find users based on username input.
     -   _username:_ `string`  - Search query string
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - List of users
--   **findUsersByName**(search: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>` - List of users
+-   **findUsersByName**(search: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>`<br/>
     Find users based on search input.
     -   _search:_ `string`  - Search query string
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - List of users
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>` - List of users
 -   **getAssignedRoles**(userId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>`<br/>
     Gets assigned roles.
     -   _userId:_ `string`  - Id of the user.

@@ -25,7 +25,7 @@ Creates/starts a new task for the specified app.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` |  | (required) Name of the app. |
+| appName | `string` | "" | (required) Name of the app. |
 | maxNameLength | `number` |  | Maximum length of the task name. |
 | name | `string` | "" | Name of the task. |
 

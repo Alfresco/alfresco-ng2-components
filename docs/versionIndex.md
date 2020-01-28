@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v3.7.0](#v370)
 -   [v3.6.0](#v360)
 -   [v3.5.0](#v350)
 -   [v3.4.0](#v340)
@@ -27,6 +28,16 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v3.6.0
+
+**Release:** 2020-02-03<br/>
+
+<!--v370 start-->
+
+No new components has been added in this release
+
+<!--v370 end-->
 
 ## v3.6.0
 
@@ -134,10 +145,10 @@ backend services have been tested with each released version of ADF.
 -   [Jwt helper service](core/services/jwt-helper.service.md)
 -   [Library dialog](content-services/dialogs/library.dialog.md)
 -   [People cloud component](process-services-cloud/components/people-cloud.component.md)
+-   [Process cloud service](process-services-cloud/services/process-cloud.service.md)
 -   [Process filter cloud service](process-services-cloud/services/process-filter-cloud.service.md)
 -   [Process filters cloud component](process-services-cloud/components/process-filters-cloud.component.md)
 -   [Process header cloud component](process-services-cloud/components/process-header-cloud.component.md)
--   [Process header cloud service](process-services-cloud/services/process-header-cloud.service.md)
 -   [Process list cloud component](process-services-cloud/components/process-list-cloud.component.md)
 -   [Process list cloud service](process-services-cloud/services/process-list-cloud.service.md)
 -   [Start process cloud component](process-services-cloud/components/start-process-cloud.component.md)

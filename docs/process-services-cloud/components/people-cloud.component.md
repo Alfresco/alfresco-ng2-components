@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-03-20
 ---
 
-# [People Cloud Component](../../../lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts "Defined in people-cloud.component.ts")
+# [People Cloud Component](../../../lib/process-services-cloud/src/lib/people/components/people-cloud.component.ts "Defined in people-cloud.component.ts")
 
 Allows one or more users to be selected (with auto-suggestion) based on the input parameters.
 
@@ -25,11 +25,11 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | Name of the application. If specified, this shows the users who have access to the app. |
-| readOnly | `boolean` | false | readOnly mode (true/false). |
 | mode | `string` |  | User selection mode (single/multiple). |
-| preSelectUsers | [`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]` |  | Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username |
+| preSelectUsers | [`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]` | \[] | Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username |
+| readOnly | `boolean` | false | Show the info in readonly mode |
 | roles | `string[]` |  | Role names of the users to be listed. |
-| searchUserCtrl | `FormControl` | new FormControl() | FormControl to search the user |
+| searchUserCtrl | `FormControl` |  | FormControl to search the user |
 | title | `string` |  | Placeholder translation key |
 | validate | `Boolean` | false | This flag enables the validation on the preSelectUsers passed as input. In case the flag is true the components call the [identity service](../../../lib/testing/src/lib/core/actions/identity/identity.service.ts) to verify the validity of the information passed as input. Otherwise, no check will be done. |
 
@@ -37,6 +37,7 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| changedUsers | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>` | Emitted when a user selection change. |
 | removeUser | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`>` | Emitted when a selected user is removed in multi selection mode. |
 | selectUser | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`>` | Emitted when a user is selected. |
 | warning | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an warning occurs. |
@@ -66,6 +67,7 @@ const preSelectUsers = [
         { "id": "3", "username": "username3", "firstName": "user 3", "readonly": true }
     ];
 ```
+
 ```html
 <adf-cloud-people
     [mode]="'multiple'"
