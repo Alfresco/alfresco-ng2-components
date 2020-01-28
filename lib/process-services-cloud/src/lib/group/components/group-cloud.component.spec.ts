@@ -119,7 +119,6 @@ describe('GroupCloudComponent', () => {
         it('should selectedGroup  and groupsChanged emit, update selected groups when a group is selected', (done) => {
             const group = { name: 'groupname' };
             fixture.detectChanges();
-            spyOn(component, 'hasGroupIdOrName').and.returnValue(true);
             const selectEmitSpy = spyOn(component.selectGroup, 'emit');
             const changedGroupsSpy = spyOn(component.changedGroups, 'emit');
             component.onSelect(group);
@@ -540,7 +539,6 @@ describe('GroupCloudComponent', () => {
 
             it('should check validation only for the first group and emit warning when group is invalid - single mode', (done) => {
                 spyOn(identityGroupService, 'findGroupsByName').and.returnValue(Promise.resolve([]));
-                spyOn(component, 'hasGroupIdOrName').and.returnValue(false);
 
                 const expectedWarning = {
                     message: 'INVALID_PRESELECTED_GROUPS',

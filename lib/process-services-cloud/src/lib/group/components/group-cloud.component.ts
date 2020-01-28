@@ -265,7 +265,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         await Promise.all(preselectedGroupsToValidate.map(async (group: IdentityGroupModel) => {
             try {
                 const validationResult = await this.searchGroup(group.name);
-                if (!this.hasGroupIdOrName(validationResult)) {
+                if (this.isPreselectedGroupInvalid(group, validationResult)) {
                     this.invalidGroups.push(group);
                 }
             } catch (error) {
@@ -379,8 +379,12 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.searchGroupsSubject.next(this.searchGroups);
     }
 
-    hasGroupIdOrName(group: IdentityGroupModel): boolean {
-        return group && (group.id !== undefined || group.name !== undefined);
+    isPreselectedGroupInvalid(preselectedGroup: IdentityGroupModel, validatedGroup: IdentityGroupModel): boolean {
+        if (validatedGroup && validatedGroup.name !== undefined) {
+            return preselectedGroup.name !== validatedGroup.name;
+        } else {
+            return true;
+        }
     }
 
     isSingleMode(): boolean {
