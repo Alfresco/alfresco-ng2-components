@@ -77,7 +77,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Output()
     close = new EventEmitter<any>();
 
-    pdfDocument: PDFDocumentProxy;
     page: number;
     displayPage: number;
     totalPages: number;
@@ -91,6 +90,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     MIN_SCALE: number = 0.25;
     MAX_SCALE: number = 10.0;
 
+    loadingTask: any;
     isPanelDisabled = true;
     showThumbnails: boolean = false;
     pdfThumbnailsContext: { viewer: any } = { viewer: null };
@@ -164,18 +164,18 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     executePdf(pdfOptions: PDFSource) {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
-        const loadingTask = pdfjsLib.getDocument(pdfOptions);
+        this.loadingTask = pdfjsLib.getDocument(pdfOptions);
 
-        loadingTask.onPassword = (callback, reason) => {
+        this.loadingTask.onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);
         };
 
-        loadingTask.onProgress = (progressData) => {
+        this.loadingTask.onProgress = (progressData) => {
             const level = progressData.loaded / progressData.total;
             this.loadingPercent = Math.round(level * 100);
         };
 
-        loadingTask.promise.then((pdfDocument: PDFDocumentProxy) => {
+        this.loadingTask.promise.then((pdfDocument: PDFDocumentProxy) => {
             this.totalPages = pdfDocument.numPages;
             this.page = 1;
             this.displayPage = 1;
@@ -226,13 +226,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.pdfViewer.eventBus.off('textlayerrendered');
         }
 
-        if (this.pdfDocument) {
+        if (this.loadingTask) {
             try {
-                this.pdfDocument.destroy();
+                this.loadingTask.destroy();
             } catch {
             }
 
-            this.pdfDocument = null;
+            this.loadingTask = null;
         }
     }
 
