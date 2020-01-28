@@ -35,13 +35,17 @@ import { SearchNumberRangeComponent } from './components/search-number-range/sea
 import { SearchCheckListComponent } from './components/search-check-list/search-check-list.component';
 import { SearchDateRangeComponent } from './components/search-date-range/search-date-range.component';
 import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
+import { SearchChipListDirective } from './components/search-chip-list/directives/search-chip-list.directive';
+import { SearchChipDirective } from './components/search-chip-list/directives/search-chip.directive';
 
 export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
     SearchComponent,
     SearchControlComponent,
     EmptySearchResultComponent,
     SearchFilterComponent,
-    SearchChipListComponent
+    SearchChipListComponent,
+    SearchChipListDirective,
+    SearchChipDirective
 ];
 
 @NgModule({

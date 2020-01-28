@@ -18,15 +18,18 @@
 import { Directive, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[adf-a11y-search-chip-list]'
+  selector: '[adf-a11y-search-chip]'
 })
-export class SearchChipListDirective {
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+export class SearchChipDirective {
+    constructor(private el: ElementRef, private renderer: Renderer2) {
+    }
 
     ngAfterViewInit() {
         setTimeout(() => {
-            this.renderer.removeAttribute(this.el.nativeElement, 'role');
-            this.renderer.removeAttribute(this.el.nativeElement, 'tabindex');
+            this.renderer.removeAttribute(this.el.nativeElement.parentNode.parentNode.parentNode.parentNode, 'role');
+            this.renderer.removeAttribute(this.el.nativeElement.parentNode.parentNode.parentNode.parentNode, 'tabindex');
+            this.renderer.setAttribute(this.el.nativeElement, 'role', 'button');
+            this.renderer.setAttribute(this.el.nativeElement, 'tabindex', '0');
         }, 1000);
     }
 }

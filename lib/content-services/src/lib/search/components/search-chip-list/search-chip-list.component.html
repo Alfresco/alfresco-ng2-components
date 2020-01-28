@@ -1,20 +1,29 @@
-<mat-chip-list adf-search-chip-list>
-    <ng-container *ngIf="searchFilter && searchFilter.selectedBuckets.length">
-        <mat-chip *ngIf="clearAll && searchFilter.selectedBuckets.length > 1"
-                  color="primary"
-                  selected
-                  matTooltip="{{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.TOOLTIP' | translate }}"
-                  matTooltipPosition="right"
-                  (click)="searchFilter.resetAllSelectedBuckets()">
-            {{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.LABEL' | translate }}
-        </mat-chip>
+<mat-chip-list adf-a11y-search-chip-list>
+    <!-- <ng-container *ngIf="searchFilter && searchFilter.selectedBuckets.length"> -->
+    <div class="mat-chip-list-wrapper" role="list" *ngIf="searchFilter && searchFilter.selectedBuckets.length">
+        <div role="listitem">
+            <mat-chip *ngIf="clearAll && searchFilter.selectedBuckets.length > 1"
+                    adf-a11y-search-chip
+                    color="primary"
+                    selected
+                    matTooltip="{{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.TOOLTIP' | translate }}"
+                    matTooltipPosition="right"
+                    (click)="searchFilter.resetAllSelectedBuckets()">
+                {{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.LABEL' | translate }}
+            </mat-chip>
+        </div>
 
-        <mat-chip
-            *ngFor="let selection of searchFilter.selectedBuckets"
-            [removable]="true"
-            (removed)="searchFilter.unselectFacetBucket(selection.field, selection.bucket)">
-            {{ (selection.bucket.display || selection.bucket.label) | translate }}
-            <mat-icon matChipRemove>cancel</mat-icon>
-        </mat-chip>
-    </ng-container>
+        <span role="presentation" *ngFor="let selection of searchFilter.selectedBuckets">
+            <div role="listitem">
+                <mat-chip
+                    adf-a11y-search-chip
+                    [removable]="true"
+                    (removed)="searchFilter.unselectFacetBucket(selection.field, selection.bucket)">
+                    {{ (selection.bucket.display || selection.bucket.label) | translate }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </div>
+        </span>
+    </div>
+    <!-- </ng-container> -->
 </mat-chip-list>
