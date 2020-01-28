@@ -392,7 +392,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.searchUserCtrl.markAsDirty();
 
         if (this.isValidationEnabled()) {
-            this.removeUserFromValidation(userToRemove.username);
+            this.removeUserFromValidation(userToRemove);
             this.checkPreselectValidationErrors();
         }
     }
@@ -406,9 +406,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private removeUserFromValidation(username: string) {
+    private removeUserFromValidation(userToRemove: IdentityUserModel) {
         const indexToRemove = this.invalidUsers.findIndex((invalidUser) => {
-            return invalidUser.username === username;
+            return invalidUser.username === userToRemove.username && invalidUser.id === userToRemove.id && invalidUser.email === userToRemove.email;
         });
 
         if (indexToRemove !== -1) {

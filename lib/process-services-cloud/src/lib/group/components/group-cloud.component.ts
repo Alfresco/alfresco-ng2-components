@@ -350,7 +350,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.searchGroupsControl.markAsDirty();
 
         if (this.isValidationEnabled()) {
-            this.removeGroupFromValidation(groupToRemove.name);
+            this.removeGroupFromValidation(groupToRemove);
             this.checkPreselectValidationErrors();
         }
     }
@@ -364,9 +364,9 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private removeGroupFromValidation(groupName: string) {
+    private removeGroupFromValidation(groupToRemove: IdentityGroupModel) {
         const indexToRemove = this.invalidGroups.findIndex((invalidGroup) => {
-           return invalidGroup.name === groupName;
+           return invalidGroup.name === groupToRemove.name && invalidGroup.id === groupToRemove.id;
         });
 
         if (indexToRemove !== -1) {
