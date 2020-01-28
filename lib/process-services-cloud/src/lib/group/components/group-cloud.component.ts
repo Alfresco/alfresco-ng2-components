@@ -345,16 +345,22 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     onRemove(groupToRemove: IdentityGroupModel) {
         this.removeGroup.emit(groupToRemove);
-        const indexToRemove = this.selectedGroups.findIndex((group: IdentityGroupModel) => {
-            return group.id === groupToRemove.id;
-        });
-        this.selectedGroups.splice(indexToRemove, 1);
+        this.removeGroupFromSelected(groupToRemove);
         this.changedGroups.emit(this.selectedGroups);
         this.searchGroupsControl.markAsDirty();
 
         if (this.isValidationEnabled()) {
             this.removeGroupFromValidation(groupToRemove.name);
             this.checkPreselectValidationErrors();
+        }
+    }
+
+    private removeGroupFromSelected(groupToRemove: IdentityGroupModel) {
+        const indexToRemove = this.selectedGroups.findIndex((selectedGroup: IdentityGroupModel) => {
+            return selectedGroup.id === groupToRemove.id && selectedGroup.name === groupToRemove.name;
+        });
+        if (indexToRemove !== -1) {
+            this.selectedGroups.splice(indexToRemove, 1);
         }
     }
 
