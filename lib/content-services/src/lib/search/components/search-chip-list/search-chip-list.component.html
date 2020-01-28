@@ -1,5 +1,4 @@
 <mat-chip-list adf-a11y-search-chip-list>
-    <!-- <ng-container *ngIf="searchFilter && searchFilter.selectedBuckets.length"> -->
     <div class="mat-chip-list-wrapper" role="list" *ngIf="searchFilter && searchFilter.selectedBuckets.length">
         <div role="listitem">
             <mat-chip *ngIf="clearAll && searchFilter.selectedBuckets.length > 1"
@@ -25,5 +24,4 @@
             </div>
         </span>
     </div>
-    <!-- </ng-container> -->
 </mat-chip-list>
