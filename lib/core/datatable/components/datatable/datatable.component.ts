@@ -356,7 +356,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     private initTable() {
-        this.data = new ObjectDataTableAdapter(this.rows, this.columns);
+        const runtimeColumns = this.getRuntimeColumns();
+        this.data = new ObjectDataTableAdapter(this.rows, runtimeColumns);
+
         this.setTableSorting(this.sorting);
         this.resetSelection();
         this.rowMenuCache = {};
@@ -373,11 +375,19 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
-    private setTableSchema() {
-        this.data.setColumns([
+    private getRuntimeColumns(): any[] {
+        return [
             ...(this.columns || []),
             ...this.getSchemaFromHtml()
-        ]);
+        ];
+    }
+
+    private setTableSchema() {
+        const columns = this.getRuntimeColumns();
+
+        if (this.data && columns.length > 0) {
+            this.data.setColumns(columns);
+        }
     }
 
     private setTableSorting(sorting: any[]) {
