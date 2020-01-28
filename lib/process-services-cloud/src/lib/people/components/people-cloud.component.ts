@@ -259,7 +259,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private isUserAlreadySelected(user: IdentityUserModel): boolean {
-        if (this.selectedUsers && this.selectedUsers.length > 0 && this.isMultipleMode()) {
+        if (this.selectedUsers && this.selectedUsers.length > 0) {
             const result = this.selectedUsers.find((selectedUser) => {
                 return selectedUser.id === user.id || selectedUser.email === user.email || selectedUser.username === user.username;
             });
