@@ -203,6 +203,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
                 return this.identityGroupService.findGroupsByName(queryParams);
             }),
             mergeMap((groups) => {
+                this.resetSearchGroups();
                 return groups;
             }),
             filter((group: any) => {

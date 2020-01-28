@@ -200,6 +200,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             }),
             switchMap((search) => this.identityUserService.findUsersByName(search)),
             mergeMap((users) => {
+                this.resetSearchUsers();
                 return users;
             }),
             filter((user: any) => {
