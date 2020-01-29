@@ -96,7 +96,7 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('[data-automation-id="lsite-loading"]')).toBeDefined();
+                    expect(element.querySelector('[data-automation-id="site-loading"]')).toBeDefined();
                 });
             }));
 
