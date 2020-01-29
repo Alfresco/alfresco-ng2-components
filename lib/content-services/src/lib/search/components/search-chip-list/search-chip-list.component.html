@@ -1,8 +1,7 @@
-<mat-chip-list adf-a11y-search-chip-list>
-    <div class="mat-chip-list-wrapper" role="list" *ngIf="searchFilter && searchFilter.selectedBuckets.length">
+<mat-chip-list>
+    <div class="adf-mat-chip-list-wrapper" role="list" *ngIf="searchFilter && searchFilter.selectedBuckets.length">
         <div role="listitem">
             <mat-chip *ngIf="clearAll && searchFilter.selectedBuckets.length > 1"
-                    adf-a11y-search-chip
                     color="primary"
                     selected
                     matTooltip="{{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.TOOLTIP' | translate }}"
@@ -15,7 +14,6 @@
         <span role="presentation" *ngFor="let selection of searchFilter.selectedBuckets">
             <div role="listitem">
                 <mat-chip
-                    adf-a11y-search-chip
                     [removable]="true"
                     (removed)="searchFilter.unselectFacetBucket(selection.field, selection.bucket)">
                     {{ (selection.bucket.display || selection.bucket.label) | translate }}

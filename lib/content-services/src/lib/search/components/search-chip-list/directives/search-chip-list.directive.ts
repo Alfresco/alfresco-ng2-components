@@ -18,13 +18,15 @@
 import { Directive, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[adf-a11y-search-chip-list]'
+  // tslint:disable-next-line: directive-selector
+  selector: 'mat-chip-list'
 })
 export class SearchChipListDirective {
     constructor(private el: ElementRef, private renderer: Renderer2) {}
 
     ngAfterViewInit() {
         setTimeout(() => {
+            this.renderer.setAttribute(this.el.nativeElement.querySelector('.mat-chip-list-wrapper'), 'role', 'presentation');
             this.renderer.removeAttribute(this.el.nativeElement, 'role');
             this.renderer.removeAttribute(this.el.nativeElement, 'tabindex');
         }, 1000);

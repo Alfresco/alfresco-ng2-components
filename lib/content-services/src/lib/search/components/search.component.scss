@@ -16,4 +16,12 @@
             visibility: visible;
         }
     }
+
+    .adf-mat-chip-list-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: -4px;
+    }
 }
