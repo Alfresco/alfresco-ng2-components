@@ -97,8 +97,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         { label: 'RUNNING', value: 'RUNNING' },
         { label: 'SUSPENDED', value: 'SUSPENDED' },
         { label: 'CANCELLED', value: 'CANCELLED' },
-        { label: 'COMPLETED', value: 'COMPLETED' },
-        { label: 'DELETED', value: 'DELETED' }
+        { label: 'COMPLETED', value: 'COMPLETED' }
     ];
 
     directions = [{ label: 'ASC', value: 'ASC' }, { label: 'DESC', value: 'DESC' }];

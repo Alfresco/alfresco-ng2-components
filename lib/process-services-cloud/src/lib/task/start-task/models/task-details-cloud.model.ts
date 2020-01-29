@@ -52,7 +52,6 @@ export interface StartTaskCloudResponseModel {
 
 export type TaskStatus = |
     'COMPLETED' |
-    'DELETED' |
     'CREATED' |
     'ASSIGNED' |
     'SUSPENDED' |
