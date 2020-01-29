@@ -6,11 +6,14 @@
         </span>
     </span>
     <div *ngIf="isEditable()" class="adf-dateitem-editable">
-        <div class="adf-dateitem-editable-controls">
+        <div class="adf-dateitem-editable-controls"  >
             <span
+                adf-a11y-calendar
+                (click)="showDatePicker()" 
+                (keyup.enter)="showDatePicker()" 
                 class="adf-datepicker-toggle"
                 [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
-                (click)="showDatePicker()">
+               >
                 <span [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key" *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
             </span>
 
@@ -22,7 +25,8 @@
                 clear
             </mat-icon>
 
-            <mat-datetimepicker-toggle
+            <mat-datetimepicker-toggle 
+                [attr.tabindex]="-1"
                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                 [attr.data-automation-id]="'datepickertoggle-' + property.key"
                 [for]="datetimePicker">
