@@ -259,7 +259,7 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const statusOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(statusOptions.length).toEqual(6);
+                expect(statusOptions.length).toEqual(5);
             });
         }));
 
