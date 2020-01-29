@@ -470,7 +470,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private hasPreselectedUsersCleared(changes): boolean {
-        return changes && changes.preSelectUsers && changes.preSelectUsers.currentValue.length === 0;
+        return changes && changes.preSelectUsers && changes.preSelectUsers.currentValue && changes.preSelectUsers.currentValue.length === 0;
     }
 
     private resetSearchUsers() {
