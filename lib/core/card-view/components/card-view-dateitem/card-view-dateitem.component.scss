@@ -1,4 +1,13 @@
 @mixin adf-card-view-dateitem-theme($theme) {
+    .mat-datetimepicker-calendar-body-cell:focus{
+        background-color: rgba(0,0,0,.12)!important;
+    }
+    .mat-datetimepicker-calendar-previous-button:focus{
+        outline: -webkit-focus-ring-color auto 5px;
+    } 
+    .mat-datetimepicker-calendar-next-button:focus{
+        outline: -webkit-focus-ring-color auto 5px;
+    }
 
     .adf {
         &-invisible-date-input {
@@ -56,14 +65,4 @@
             }
         }
     }
-
-    .adf-sr-only {
-        display: block;
-        height: 1px;
-        width: 1px;
-        clip: rect(1 1 1 1);
-        clip: rect(1px 1px 1px 1px);
-        overflow: hidden;
-    }
-
 }

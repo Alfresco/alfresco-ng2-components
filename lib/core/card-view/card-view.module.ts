@@ -36,6 +36,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CardViewContentProxyDirective } from './directives/card-view-content-proxy.directive';
+import { CalendarDirective } from './directives/calendar.directive';
 import { CardViewComponent } from './components/card-view/card-view.component';
 import { CardViewBoolItemComponent } from './components/card-view-boolitem/card-view-boolitem.component';
 import { CardViewDateItemComponent } from './components/card-view-dateitem/card-view-dateitem.component';
@@ -76,6 +77,7 @@ import { CardViewArrayItemComponent } from './components/card-view-arrayitem/car
         CardViewSelectItemComponent,
         CardViewItemDispatcherComponent,
         CardViewContentProxyDirective,
+        CalendarDirective,
         CardViewArrayItemComponent
     ],
     entryComponents: [
