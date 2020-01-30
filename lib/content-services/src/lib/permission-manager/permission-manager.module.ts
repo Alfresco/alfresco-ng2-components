@@ -24,6 +24,7 @@ import { AddPermissionComponent } from './components/add-permission/add-permissi
 import { AddPermissionDialogComponent } from './components/add-permission/add-permission-dialog.component';
 import { CoreModule } from '@alfresco/adf-core';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
+import { MatChipDirective } from './components/mat-chip.directive';
 import { NoPermissionTemplateComponent } from './components/permission-list/no-permission.component';
 import { AddPermissionPanelComponent } from './components/add-permission/add-permission-panel.component';
 import { SearchModule } from '../search/search.module';
@@ -42,6 +43,7 @@ import { SearchModule } from '../search/search.module';
         NoPermissionTemplateComponent,
         AddPermissionPanelComponent,
         InheritPermissionDirective,
+        MatChipDirective,
         AddPermissionComponent,
         AddPermissionDialogComponent
     ],
