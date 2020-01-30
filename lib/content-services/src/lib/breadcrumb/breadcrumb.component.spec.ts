@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PathElementEntity } from '@alfresco/js-api';
+import { PathElementEntity, Node } from '@alfresco/js-api';
 import { setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
 import { DocumentListComponent, DocumentListService } from '../document-list';
@@ -29,7 +29,10 @@ describe('Breadcrumb', () => {
 
     let component: BreadcrumbComponent;
     let fixture: ComponentFixture<BreadcrumbComponent>;
-    let documentListService: DocumentListService = jasmine.createSpyObj({'loadFolderByNodeId' : of(''), 'isCustomSourceService': false});
+    let documentListService: DocumentListService = jasmine.createSpyObj({
+        loadFolderByNodeId : of(''),
+        isCustomSourceService: false
+    });
     let documentListComponent: DocumentListComponent;
 
     setupTestBed({
@@ -74,17 +77,84 @@ describe('Breadcrumb', () => {
         component.onRoutePathClick(node, null);
     });
 
-    it('should update document list on click', () => {
+    describe('target', () => {
 
-        const node = <PathElementEntity> { id: '-id-', name: 'name' };
-        component.target = documentListComponent;
+        let folderNode: Node;
 
-        component.onRoutePathClick(node, null);
+        beforeEach(() => {
+            folderNode = {
+                id: 'folder2',
+                name: 'folder 2',
+                nodeType: 'cm:folder',
+                isFolder: true,
+                isFile: false,
+                modifiedAt: null,
+                modifiedByUser: null,
+                createdAt: null,
+                createdByUser: null,
+                path: {
+                    elements: [
+                        {
+                            id: '-root-',
+                            name: 'root'
+                        },
+                        {
+                            id: 'folder1',
+                            name: 'folder 1'
+                        }
+                    ]
+                }
+            };
+        });
 
-        expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith(node.id,
-            documentListComponent.DEFAULT_PAGINATION,
-            documentListComponent.includeFields,
-            documentListComponent.where);
+        it('should update document list on click', () => {
+
+            const node = <PathElementEntity> { id: '-id-', name: 'name' };
+            component.target = documentListComponent;
+
+            component.onRoutePathClick(node, null);
+
+            expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith(node.id,
+                documentListComponent.DEFAULT_PAGINATION,
+                documentListComponent.includeFields,
+                documentListComponent.where);
+        });
+
+        it('should build the path based on the document list node', () => {
+            component.target = documentListComponent;
+            component.ngOnInit();
+
+            documentListComponent.$folderNode.next(folderNode);
+
+            expect(component.route.length).toBe(3);
+            expect(component.route[0].id).toBe('-root-');
+            expect(component.route[1].id).toBe('folder1');
+            expect(component.route[2].id).toBe('folder2');
+        });
+
+        it('should navigate to root folder', () => {
+            spyOn(documentListComponent, 'navigateTo').and.stub();
+
+            component.target = documentListComponent;
+            component.ngOnInit();
+
+            documentListComponent.$folderNode.next(folderNode);
+            component.onRoutePathClick(component.route[0]);
+
+            expect(documentListComponent.navigateTo).toHaveBeenCalledWith('-root-');
+        });
+
+        it('should navigate to parent folder', () => {
+            spyOn(documentListComponent, 'navigateTo').and.stub();
+
+            component.target = documentListComponent;
+            component.ngOnInit();
+
+            documentListComponent.$folderNode.next(folderNode);
+            component.onRoutePathClick(component.route[component.route.length - 2]);
+
+            expect(documentListComponent.navigateTo).toHaveBeenCalledWith('folder1');
+        });
     });
 
     it('should not parse the route when node not provided', () => {
