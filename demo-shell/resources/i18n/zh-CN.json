@@ -308,7 +308,12 @@
     "APP_NAME": "应用程序名称",
     "APP_FILTER_MODE": "按应用程序名称筛选",
     "ROLE_FILTER_MODE": "按角色筛选",
-    "PRESELECT_VALIDATION": "预先选择验证"
+    "PRESELECT_VALIDATION": "预先选择验证",
+    "ALL_PRESELECTED_USERS": "所有预选用户",
+    "ALL_PRESELECTED_GROUPS": "所有预选组",
+    "INVALID_USERS": "无效用户",
+    "INVALID_GROUPS": "无效组",
+    "READONLY_MODE": "Read-only（只读）模式"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "多重选择",

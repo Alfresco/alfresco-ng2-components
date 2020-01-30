@@ -26,6 +26,7 @@
       "REMOVE_FILE": "Fjern",
       "UPLOAD": "Upload",
       "REQUIRED": "*Påkrævet",
+      "NO_FILE_ATTACHED": "Der er ikke vedhæftet en fil",
       "VALIDATOR": {
         "INVALID_NUMBER": "Brug et andet talformat",
         "INVALID_DATE": "Brug et andet datoformat",
@@ -198,7 +199,13 @@
         "CANCEL": "Annuller",
         "CLEAR": "Ryd",
         "TOGGLE": "Slå værdi til/fra"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "Brug piletasterne til at navigere mellem datoer. Pil op og pil ned bruges til at gå til den næste eller forrige uge, på den samme dag. Brug venstre og højre pil til at gå til næste eller forrige dag. Tryk på Enter eller Return for at vælge en dato."
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Slå resultater til/fra mellem stigende og faldende rækkefølge"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "Stigende",
       "SORT_DESCENDING": "Faldende",
       "SORT_NONE": "Ingen",
+      "SORT_DEFAULT": "Kan sorteres",
+      "SORT_ASCENDING_BY": "Stigende efter {{ string }}",
+      "SORT_DESCENDING_BY": "Faldende efter {{ string }}",
       "ICON_TEXT": "Elementtype {{ type }}",
       "ICON_DISABLED": "Deaktiveret",
       "ROW_OPTION_BUTTON": "Handlinger"

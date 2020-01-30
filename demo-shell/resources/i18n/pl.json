@@ -308,7 +308,12 @@
     "APP_NAME": "Nazwa aplikacji",
     "APP_FILTER_MODE": "Filtruj według nazwy aplikacji",
     "ROLE_FILTER_MODE": "Filtruj według roli",
-    "PRESELECT_VALIDATION": "Sprawdzanie poprawności wstępnego wyboru"
+    "PRESELECT_VALIDATION": "Sprawdzanie poprawności wstępnego wyboru",
+    "ALL_PRESELECTED_USERS": "Wszyscy wstępnie wybrani użytkownicy",
+    "ALL_PRESELECTED_GROUPS": "Wszystkie wstępnie wybrane grupy",
+    "INVALID_USERS": "Nieprawidłowi użytkownicy",
+    "INVALID_GROUPS": "Nieprawidłowe grupy",
+    "READONLY_MODE": "Tryb tylko do odczytu"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Wybór wielokrotny",

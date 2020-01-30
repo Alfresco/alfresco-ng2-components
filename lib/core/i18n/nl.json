@@ -26,6 +26,7 @@
       "REMOVE_FILE": "Verwijderen",
       "UPLOAD": "Uploaden",
       "REQUIRED": "*Vereist",
+      "NO_FILE_ATTACHED": "Geen bestand bijgevoegd",
       "VALIDATOR": {
         "INVALID_NUMBER": "Gebruik een andere getalnotatie",
         "INVALID_DATE": "Gebruik een andere datumnotatie",
@@ -198,7 +199,13 @@
         "CANCEL": "Annuleren",
         "CLEAR": "Wissen",
         "TOGGLE": "Waarde in-/uitschakelen"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "Gebruik de pijltoetsen om te navigeren tussen datums. Met pijl-omhoog en pijl-omlaag gaat u naar dezelfde dag in de  volgende of vorige week. Met pijl-links en pijl-rechts gaat u naar de volgende of vorige dag. Druk op Enter of Return om een datum te selecteren."
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Schakelen tussen resultaten in oplopende en aflopende volgorde"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "Oplopend",
       "SORT_DESCENDING": "Aflopend",
       "SORT_NONE": "Geen",
+      "SORT_DEFAULT": "Sorteerbaar",
+      "SORT_ASCENDING_BY": "Oplopend op {{ string }}",
+      "SORT_DESCENDING_BY": "Aflopend op {{ string }}",
       "ICON_TEXT": "Itemtype {{ type }}",
       "ICON_DISABLED": "Uitgeschakeld",
       "ROW_OPTION_BUTTON": "Acties"

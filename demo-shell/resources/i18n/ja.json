@@ -308,7 +308,12 @@
     "APP_NAME": "アプリケーション名",
     "APP_FILTER_MODE": "アプリケーション名でフィルタ",
     "ROLE_FILTER_MODE": "役割でフィルタ",
-    "PRESELECT_VALIDATION": "事前選択の検証"
+    "PRESELECT_VALIDATION": "事前選択の検証",
+    "ALL_PRESELECTED_USERS": "選択されている全ユーザー",
+    "ALL_PRESELECTED_GROUPS": "選択されている全グループ",
+    "INVALID_USERS": "無効なユーザー",
+    "INVALID_GROUPS": "無効なグループ",
+    "READONLY_MODE": "読み取り専用モード"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "複数選択",

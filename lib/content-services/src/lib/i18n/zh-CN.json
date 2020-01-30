@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "上传文件",
-      "UPLOAD_FOLDER": "上传文件夹"
+      "UPLOAD_FOLDER": "上传文件夹",
+      "PERMISSION_CHECK_ERROR": "检查权限出错"
     },
     "VERSION": {
       "MESSAGES": {

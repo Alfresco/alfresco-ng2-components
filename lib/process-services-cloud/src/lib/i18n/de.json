@@ -176,8 +176,22 @@
   },
   "ADF_CLOUD_GROUPS": {
     "SEARCH-GROUP": "Gruppen",
+    "MANDATORY": "Pflichtfeld",
     "ERROR": {
       "NOT_FOUND": "Keine Gruppe mit dem Namen {{groupName}} gefunden"
+    }
+  },
+  "ADF_CLOUD_USERS": {
+    "ERROR": {
+      "NOT_FOUND": "Kein Benutzer mit dem Benutzernamen {{userName}} gefunden"
+    }
+  },
+  "ADF_CLOUD_PEOPLE_GROUPS": {
+    "ERROR": {
+      "INVALID_PATTERN": "Muss dem Muster '{{pattern}}' entsprechen",
+      "INVALID_MIN_LENGTH": "Muss mindestens {{requiredLength}} Zeichen lang sein",
+      "INVALID_MAX_LENGTH": "Zu lang, max. {{requiredLength}} Zeichen",
+      "REQUIRED": "Feld erforderlich"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {

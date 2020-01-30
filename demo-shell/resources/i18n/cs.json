@@ -308,7 +308,12 @@
     "APP_NAME": "Název aplikace",
     "APP_FILTER_MODE": "Filtrovat podle názvu aplikace",
     "ROLE_FILTER_MODE": "Filtrovat podle role",
-    "PRESELECT_VALIDATION": "Ověření předvolené hodnoty"
+    "PRESELECT_VALIDATION": "Ověření předvolené hodnoty",
+    "ALL_PRESELECTED_USERS": "Všichni předvolení uživatelé",
+    "ALL_PRESELECTED_GROUPS": "Všechny předvolené skupiny",
+    "INVALID_USERS": "Neplatní uživatelé",
+    "INVALID_GROUPS": "Neplatné skupiny",
+    "READONLY_MODE": "Režim jen pro čtení"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Hromadný výběr",

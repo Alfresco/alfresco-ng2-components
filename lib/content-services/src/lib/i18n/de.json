@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Datei hochladen",
-      "UPLOAD_FOLDER": "Ordner hochladen"
+      "UPLOAD_FOLDER": "Ordner hochladen",
+      "PERMISSION_CHECK_ERROR": "Fehler beim Überprüfen der Berechtigung."
     },
     "VERSION": {
       "MESSAGES": {
@@ -212,14 +213,14 @@
       "ACTIONS": {
         "CLEAR": "Zurücksetzen",
         "APPLY": "Anwenden",
-        "CLEAR-ALL": "Auswahl zurücksetzen",
+        "CLEAR-ALL": "Alle zurücksetzen",
         "SHOW-MORE": "Mehr anzeigen",
         "SHOW-LESS": "Weniger anzeigen",
         "FILTER-CATEGORY": "Kategorie filtern"
       },
       "BUTTONS": {
         "CLEAR-ALL": {
-          "LABEL": "Auswahl zurücksetzen",
+          "LABEL": "Alle zurücksetzen",
           "TOOLTIP": "Dadurch werden alle Auswahlen entfernt"
         },
         "RESET-ALL": {

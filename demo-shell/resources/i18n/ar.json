@@ -308,7 +308,12 @@
     "APP_NAME": "اسم التطبيق",
     "APP_FILTER_MODE": "التصفية حسب اسم التطبيق",
     "ROLE_FILTER_MODE": "التصفية حسب الدور",
-    "PRESELECT_VALIDATION": "التحديد المسبق للتحقق من الصحة"
+    "PRESELECT_VALIDATION": "التحديد المسبق للتحقق من الصحة",
+    "ALL_PRESELECTED_USERS": "كل المستخدمين المحددين مسبقًا",
+    "ALL_PRESELECTED_GROUPS": "كل المجموعات المحددة مسبقًا",
+    "INVALID_USERS": "المستخدمون غير الصالحين",
+    "INVALID_GROUPS": "مجموعات غير صالحة",
+    "READONLY_MODE": "وضع القراءة فقط"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "تحديد متعدد",

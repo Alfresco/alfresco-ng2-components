@@ -176,8 +176,22 @@
   },
   "ADF_CLOUD_GROUPS": {
     "SEARCH-GROUP": "Группы",
+    "MANDATORY": "Обязательно",
     "ERROR": {
       "NOT_FOUND": "Не найдена группа с именем {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_USERS": {
+    "ERROR": {
+      "NOT_FOUND": "Не найден пользователь с именем пользователя {{userName}}"
+    }
+  },
+  "ADF_CLOUD_PEOPLE_GROUPS": {
+    "ERROR": {
+      "INVALID_PATTERN": "Должно соответствовать шаблону {{pattern}}",
+      "INVALID_MIN_LENGTH": "Должно быть минимум {{requiredLength}} символа(-ов)",
+      "INVALID_MAX_LENGTH": "Длина превышена, максимальное количество символов: {{requiredLength}}",
+      "REQUIRED": "Обязательное поле"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {

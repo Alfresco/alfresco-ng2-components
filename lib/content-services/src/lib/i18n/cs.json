@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Odeslat soubor",
-      "UPLOAD_FOLDER": "Odeslat složku"
+      "UPLOAD_FOLDER": "Odeslat složku",
+      "PERMISSION_CHECK_ERROR": "Chyba při kontrole oprávnění."
     },
     "VERSION": {
       "MESSAGES": {

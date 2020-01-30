@@ -26,6 +26,7 @@
       "REMOVE_FILE": "Ta bort",
       "UPLOAD": "Ladda upp",
       "REQUIRED": "*Obligatorisk",
+      "NO_FILE_ATTACHED": "Ingen fil bifogad",
       "VALIDATOR": {
         "INVALID_NUMBER": "Använd ett annat nummerformat",
         "INVALID_DATE": "Använd ett annat datumformat",
@@ -198,7 +199,13 @@
         "CANCEL": "Avbryt",
         "CLEAR": "Rensa",
         "TOGGLE": "Växla värde"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "Använd piltangenterna för att navigera mellan datumen. Upp och ner flyttar till nästa eller föregående vecka men på samma dag. Vänster och höger flyttar till nästa eller föregående dag. Tryck på Retur för att välja ett datum."
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Växla mellan att visa resultaten i stigande eller sjunkande ordning"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "Stigande",
       "SORT_DESCENDING": "Sjunkande",
       "SORT_NONE": "Ingen",
+      "SORT_DEFAULT": "Sorterbar",
+      "SORT_ASCENDING_BY": "Stigande efter {{ string }}",
+      "SORT_DESCENDING_BY": "Sjunkande efter {{ string }}",
       "ICON_TEXT": "Artikeltyp {{ type }}",
       "ICON_DISABLED": "Avaktiverad",
       "ROW_OPTION_BUTTON": "Åtgärder"

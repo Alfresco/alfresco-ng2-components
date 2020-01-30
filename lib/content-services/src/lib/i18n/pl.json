@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Prześlij plik",
-      "UPLOAD_FOLDER": "Prześlij folder"
+      "UPLOAD_FOLDER": "Prześlij folder",
+      "PERMISSION_CHECK_ERROR": "Błąd sprawdzania uprawnień."
     },
     "VERSION": {
       "MESSAGES": {

@@ -308,7 +308,12 @@
     "APP_NAME": "Имя приложения",
     "APP_FILTER_MODE": "Фильтровать по имени приложения",
     "ROLE_FILTER_MODE": "Фильтровать по роли",
-    "PRESELECT_VALIDATION": "Проверка предварительного выбора"
+    "PRESELECT_VALIDATION": "Проверка предварительного выбора",
+    "ALL_PRESELECTED_USERS": "Все заранее заданные пользователи",
+    "ALL_PRESELECTED_GROUPS": "Все заранее заданные группы",
+    "INVALID_USERS": "Недействительные пользователи",
+    "INVALID_GROUPS": "Недействительные группы",
+    "READONLY_MODE": "Режим только для чтения"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Выбор нескольких",

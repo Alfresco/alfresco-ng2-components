@@ -26,6 +26,7 @@
       "REMOVE_FILE": "Poista",
       "UPLOAD": "Lataa",
       "REQUIRED": "*Pakollinen",
+      "NO_FILE_ATTACHED": "Ei liitettyä tiedostoa",
       "VALIDATOR": {
         "INVALID_NUMBER": "Käytä toista numeromuotoa",
         "INVALID_DATE": "Käytä toista päivämäärämuotoa",
@@ -198,7 +199,13 @@
         "CANCEL": "Peruuta",
         "CLEAR": "Tyhjennä",
         "TOGGLE": "Vaihda arvoa"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "Navigoi päivämäärien välillä nuolinäppäinten avulla. Nuolet ylös ja alas siirtävät seuraavaan tai edelliseen viikkoon, mutta samaan viikonpäivään. Nuolet vasemmalle ja oikealle siirtävät seuraavan tai edelliseen päivään. Valitse päivämäärä Enter-näppäimellä."
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Tarkastele tulosnäkymää nousevassa tai laskevassa järjestyksessä"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "Nouseva",
       "SORT_DESCENDING": "Laskeva",
       "SORT_NONE": "Ei mitään",
+      "SORT_DEFAULT": "Lajiteltavissa",
+      "SORT_ASCENDING_BY": "Nouseva: {{ string }} ensin",
+      "SORT_DESCENDING_BY": "Laskeva {{ string }} ensin",
       "ICON_TEXT": "Kohteen tyyppi {{ type }}",
       "ICON_DISABLED": "Poistettu käytöstä",
       "ROW_OPTION_BUTTON": "Toiminnot"

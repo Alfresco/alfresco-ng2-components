@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "ファイルのアップロード",
-      "UPLOAD_FOLDER": "フォルダのアップロード"
+      "UPLOAD_FOLDER": "フォルダのアップロード",
+      "PERMISSION_CHECK_ERROR": "権限のチェック中にエラーが発生しました。"
     },
     "VERSION": {
       "MESSAGES": {

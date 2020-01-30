@@ -26,6 +26,7 @@
       "REMOVE_FILE": "删除",
       "UPLOAD": "上传",
       "REQUIRED": "*必需",
+      "NO_FILE_ATTACHED": "无附加文件",
       "VALIDATOR": {
         "INVALID_NUMBER": "使用其他数字格式",
         "INVALID_DATE": "使用其他日期格式",
@@ -198,7 +199,13 @@
         "CANCEL": "取消",
         "CLEAR": "清除",
         "TOGGLE": "切换值"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "使用箭头键在日期之间进行浏览。上下移动至同一天的下一周或上一周。左右移动到第二天或前一天。按 Enter（回车） 或 Return（返回） 键选择一个日期。"
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "在升序和降序之间切换结果"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "升序",
       "SORT_DESCENDING": "降序",
       "SORT_NONE": "无",
+      "SORT_DEFAULT": "可排序的",
+      "SORT_ASCENDING_BY": "按 {{ string }} 升序排列",
+      "SORT_DESCENDING_BY": "按 {{ string }} 降序排列",
       "ICON_TEXT": "项目类型 {{ type }}",
       "ICON_DISABLED": "禁用",
       "ROW_OPTION_BUTTON": "操作"

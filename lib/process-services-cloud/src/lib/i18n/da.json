@@ -176,8 +176,22 @@
   },
   "ADF_CLOUD_GROUPS": {
     "SEARCH-GROUP": "Grupper",
+    "MANDATORY": "Obligatorisk",
     "ERROR": {
       "NOT_FOUND": "Der blev ikke fundet en gruppe med navnet {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_USERS": {
+    "ERROR": {
+      "NOT_FOUND": "Der er ikke fundet en bruger med brugernavnet {{userName}}"
+    }
+  },
+  "ADF_CLOUD_PEOPLE_GROUPS": {
+    "ERROR": {
+      "INVALID_PATTERN": "Du skal matche mønstret {{pattern}}",
+      "INVALID_MIN_LENGTH": "Der skal mindst være {{requiredLength}} tegn",
+      "INVALID_MAX_LENGTH": "Længde blev overskredet. Maks. antal tegn er {{requiredLength}}",
+      "REQUIRED": "Obligatorisk felt"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {

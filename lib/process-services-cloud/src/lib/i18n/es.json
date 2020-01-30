@@ -17,7 +17,7 @@
       "DESCRIPTION": "Descripción",
       "LAST_MODIFIED": "Modificada por última vez",
       "PROCESS_NAME": "Nombre del proceso",
-      "PARENT_TASK_ID": "ID de tarea principal",
+      "PARENT_TASK_ID": "ID de tarea primaria",
       "PROCESS_DEF_ID": "ID de definición del proceso",
       "PROCESS_DEF_KEY": "Clave de definición de proceso"
     },
@@ -176,8 +176,22 @@
   },
   "ADF_CLOUD_GROUPS": {
     "SEARCH-GROUP": "Grupos",
+    "MANDATORY": "Obligatorio",
     "ERROR": {
       "NOT_FOUND": "No se ha encontrado ningún grupo con el nombre {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_USERS": {
+    "ERROR": {
+      "NOT_FOUND": "No se ha encontrado ningún usuario con el nombre de usuario {{userName}}"
+    }
+  },
+  "ADF_CLOUD_PEOPLE_GROUPS": {
+    "ERROR": {
+      "INVALID_PATTERN": "Debe coincidir con el patrón {{pattern}}",
+      "INVALID_MIN_LENGTH": "Debe tener al menos {{requiredLength}} caracteres",
+      "INVALID_MAX_LENGTH": "Longitud excedida, {{requiredLength}} caracteres máx.",
+      "REQUIRED": "Campo obligatorio"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {

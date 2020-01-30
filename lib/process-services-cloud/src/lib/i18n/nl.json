@@ -176,8 +176,22 @@
   },
   "ADF_CLOUD_GROUPS": {
     "SEARCH-GROUP": "Groepen",
+    "MANDATORY": "Verplicht",
     "ERROR": {
       "NOT_FOUND": "Geen groep gevonden met de naam {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_USERS": {
+    "ERROR": {
+      "NOT_FOUND": "Geen gebruiker gevonden met de gebruikersnaam {{userName}}"
+    }
+  },
+  "ADF_CLOUD_PEOPLE_GROUPS": {
+    "ERROR": {
+      "INVALID_PATTERN": "Moet overeenkomen met het patroon {{pattern}}",
+      "INVALID_MIN_LENGTH": "Moet minimaal {{requiredLength}} tekens bevatten",
+      "INVALID_MAX_LENGTH": "Lengte overschreden, maximaal {{requiredLength}} tekens",
+      "REQUIRED": "Veld vereist"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {

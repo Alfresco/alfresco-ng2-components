@@ -176,8 +176,22 @@
   },
   "ADF_CLOUD_GROUPS": {
     "SEARCH-GROUP": "مجموعات",
+    "MANDATORY": "إلزامي",
     "ERROR": {
       "NOT_FOUND": "لم يتم العثور على مجموعة بالاسم {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_USERS": {
+    "ERROR": {
+      "NOT_FOUND": "لم يتم العثور على مسخدم بالاسم {{userName}}"
+    }
+  },
+  "ADF_CLOUD_PEOPLE_GROUPS": {
+    "ERROR": {
+      "INVALID_PATTERN": "يجب أن يطابق النمط {{pattern}}",
+      "INVALID_MIN_LENGTH": "يجب أن يكون {{requiredLength}} حرفًا على الأقل",
+      "INVALID_MAX_LENGTH": "تم تجاوز الطول، بحد أقصى {{requiredLength}} حرفًا",
+      "REQUIRED": "حقل مطلوب"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {

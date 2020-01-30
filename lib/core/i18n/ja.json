@@ -26,6 +26,7 @@
       "REMOVE_FILE": "削除",
       "UPLOAD": "アップロード",
       "REQUIRED": "*必須",
+      "NO_FILE_ATTACHED": "ファイルが添付されていません",
       "VALIDATOR": {
         "INVALID_NUMBER": "別の番号形式を使用してください",
         "INVALID_DATE": "別の日付形式を使用してください",
@@ -198,7 +199,13 @@
         "CANCEL": "キャンセル",
         "CLEAR": "消去",
         "TOGGLE": "値の切り替え"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "矢印キーを使って日付を変更します。上下の矢印キーを使うと、同じ日付の次の週または前の週に移動できます。左右の矢印キーを使うと、次の日または前の日に移動できます。日付を選択するには、Enter キーまたはリターンキーを押します。"
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "検索結果の昇順と降順を切り替えます"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "昇順",
       "SORT_DESCENDING": "降順",
       "SORT_NONE": "なし",
+      "SORT_DEFAULT": "並べ替え可能",
+      "SORT_ASCENDING_BY": "{{ string }} (昇順)",
+      "SORT_DESCENDING_BY": "{{ string }} (降順)",
       "ICON_TEXT": "アイテムタイプ {{ type }}",
       "ICON_DISABLED": "無効",
       "ROW_OPTION_BUTTON": "処理"

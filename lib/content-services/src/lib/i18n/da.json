@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Upload fil",
-      "UPLOAD_FOLDER": "Upload mappe"
+      "UPLOAD_FOLDER": "Upload mappe",
+      "PERMISSION_CHECK_ERROR": "Der opstod en fejl under kontrol af tilladelse."
     },
     "VERSION": {
       "MESSAGES": {
