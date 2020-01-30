@@ -262,7 +262,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     private isUserAlreadySelected(user: IdentityUserModel): boolean {
         if (this.selectedUsers && this.selectedUsers.length > 0) {
             const result = this.selectedUsers.find((selectedUser) => {
-                return selectedUser.id === user.id || selectedUser.email === user.email || selectedUser.username === user.username;
+                return this.isPreselectUserAlignedWithValidatedUser(selectedUser, user);
             });
 
             return !!result;
@@ -300,7 +300,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         await Promise.all(preselectedUsersToValidate.map(async (user: IdentityUserModel) => {
             try {
                 const validationResult: IdentityUserModel = await this.searchUser(user);
-                if (this.isPreselectedUserValid(user, validationResult)) {
+                if (this.isPreselectUserAlignedWithValidatedUser(user, validationResult)) {
                     validationResult.readonly = user.readonly;
                     validUsers.push(validationResult);
                 } else {
@@ -316,15 +316,22 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.isLoading = false;
     }
 
-    isPreselectedUserValid(preselectedUser: IdentityUserModel, validatedUser: IdentityUserModel) {
-        if (validatedUser && (validatedUser.id !== undefined || validatedUser.username !== undefined || validatedUser.email !== undefined)) {
-            return preselectedUser.id === validatedUser.id || preselectedUser.username === validatedUser.username || preselectedUser.email === validatedUser.email;
-        } else {
-            return false;
+    isPreselectUserAlignedWithValidatedUser(preselectedUser: IdentityUserModel, validatedUser: IdentityUserModel) {
+        const key = this.getUserSearchKey(preselectedUser);
+
+        switch (key) {
+            case 'id':
+                return preselectedUser.id === validatedUser.id;
+            case 'username':
+                return preselectedUser.username === validatedUser.username;
+            case 'email':
+                return preselectedUser.email === validatedUser.email;
+            default:
+                return false;
         }
     }
 
-    async searchUser(user: IdentityUserModel) {
+    private getUserSearchKey(user: IdentityUserModel): string {
         let key: string = '';
 
         if (user.id) {
@@ -334,6 +341,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         } else if (user.username) {
             key = 'username';
         }
+        return key;
+    }
+
+    async searchUser(user: IdentityUserModel) {
+        const key = this.getUserSearchKey(user);
 
         switch (key) {
             case 'id':
