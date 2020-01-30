@@ -37,6 +37,8 @@ stages:
     if: branch = master AND type = push OR (tag =~ .*beta.*)
   - name: Release beta tag
     if: type = cron OR branch = master
+  - name: Trigger ADF child build
+    if: (branch = development AND type = push) OR type = api
 
 addons:
     chrome: stable
@@ -113,7 +115,11 @@ jobs:
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           - ./scripts/npm-check-bundles.sh -v ${ADF_VERSION}
-          
+
+        - stage: Trigger ADF child build
+          name: Trigger ADF child build
+          script: ./scripts/travis/update/trigger-travis-children-build.sh --branch $TRAVIS_BRANCH Alfresco $TRAVIS_ACCESS_TOKEN
+
 notifications:
   slack:
     on_pull_requests: false
