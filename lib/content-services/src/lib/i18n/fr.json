@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Importer le fichier",
-      "UPLOAD_FOLDER": "Importer le dossier"
+      "UPLOAD_FOLDER": "Importer le dossier",
+      "PERMISSION_CHECK_ERROR": "Erreur lors de la vérification des droits d'accès."
     },
     "VERSION": {
       "MESSAGES": {

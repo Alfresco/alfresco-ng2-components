@@ -7,7 +7,7 @@
     "START-DATE": "Fecha de inicio",
     "END-DATE": "Fecha de fin",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "Se necesita fecha de inicio",
+      "START-DATE-REQUIRED": "Se requiere fecha de inicio",
       "START-LESS-THAN-END-DATE": "La fecha de inicio debe ser anterior a la fecha de finalización"
     }
   },
@@ -224,7 +224,7 @@
         "CANCEL": "Cancelar proceso",
         "CLOSE": "Cerrar",
         "SHOW_DIAGRAM": "Mostrar diagrama",
-        "DRAG-ATTACHMENT": "Arrastrar los ficheros a cargar",
+        "DRAG-ATTACHMENT": "Arrastrar ficheros a cargar",
         "UPLOAD-ATTACHMENT": "Cargar adjunto"
       },
       "MESSAGES": {

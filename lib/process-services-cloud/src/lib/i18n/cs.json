@@ -176,8 +176,22 @@
   },
   "ADF_CLOUD_GROUPS": {
     "SEARCH-GROUP": "Skupiny",
+    "MANDATORY": "Povinné",
     "ERROR": {
       "NOT_FOUND": "Nenalezena žádná skupina s názvem {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_USERS": {
+    "ERROR": {
+      "NOT_FOUND": "Nebyl nalezen žádný uživatel s uživatelským jménem {{userName}}"
+    }
+  },
+  "ADF_CLOUD_PEOPLE_GROUPS": {
+    "ERROR": {
+      "INVALID_PATTERN": "Musí odpovídat vzoru {{pattern}}",
+      "INVALID_MIN_LENGTH": "Musí mít délku alespoň {{requiredLength}} znaků",
+      "INVALID_MAX_LENGTH": "Délka je překročená, maximální počet znaků: {{requiredLength}}",
+      "REQUIRED": "Povinné pole"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {

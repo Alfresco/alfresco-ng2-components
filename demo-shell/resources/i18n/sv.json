@@ -308,7 +308,12 @@
     "APP_NAME": "Programnamn",
     "APP_FILTER_MODE": "Filterera på programnamn",
     "ROLE_FILTER_MODE": "Filtrera på roll",
-    "PRESELECT_VALIDATION": "Förval validering"
+    "PRESELECT_VALIDATION": "Förval validering",
+    "ALL_PRESELECTED_USERS": "Alla förvalda användare",
+    "ALL_PRESELECTED_GROUPS": "Alla förvalda grupper",
+    "INVALID_USERS": "Ogiltiga användare",
+    "INVALID_GROUPS": "Ogiltiga grupper",
+    "READONLY_MODE": "Skrivskyddat läge"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Flerval",

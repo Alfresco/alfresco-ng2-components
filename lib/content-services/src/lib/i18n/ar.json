@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "تحميل ملف",
-      "UPLOAD_FOLDER": "تحميل مجلد"
+      "UPLOAD_FOLDER": "تحميل مجلد",
+      "PERMISSION_CHECK_ERROR": "خطأ عند التحقق من الإذن."
     },
     "VERSION": {
       "MESSAGES": {

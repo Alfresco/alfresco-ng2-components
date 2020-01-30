@@ -26,6 +26,7 @@
       "REMOVE_FILE": "Remover",
       "UPLOAD": "Carregar",
       "REQUIRED": "*Obrigatório",
+      "NO_FILE_ATTACHED": "Nenhum arquivo anexado",
       "VALIDATOR": {
         "INVALID_NUMBER": "Use um formato de número diferente",
         "INVALID_DATE": "Use um formato de data diferente",
@@ -198,7 +199,13 @@
         "CANCEL": "Cancelar",
         "CLEAR": "Limpar",
         "TOGGLE": "Alternar valor"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "Navegue entre as datas usando as teclas de seta. Para mover entre as semanas mantendo o dia, use as setas para cima e para baixo. As setas esquerda e direita alternam entre os dias. Pressione Enter ou Return para selecionar uma data."
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Alterne os resultados entre as ordens crescente e decrescente"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "Crescente",
       "SORT_DESCENDING": "Decrescente",
       "SORT_NONE": "Nenhum",
+      "SORT_DEFAULT": "Classificável",
+      "SORT_ASCENDING_BY": "Ordem crescente por {{ string }}",
+      "SORT_DESCENDING_BY": "Ordem decrescente por {{ string }}",
       "ICON_TEXT": "Tipo de item {{ type }}",
       "ICON_DISABLED": "Desativar",
       "ROW_OPTION_BUTTON": "Ações"

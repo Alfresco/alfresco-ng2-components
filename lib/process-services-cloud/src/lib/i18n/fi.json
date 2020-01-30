@@ -176,8 +176,22 @@
   },
   "ADF_CLOUD_GROUPS": {
     "SEARCH-GROUP": "Ryhmät",
+    "MANDATORY": "Pakollinen",
     "ERROR": {
       "NOT_FOUND": "Nimellä {{groupName}} ei löydy ryhmää"
+    }
+  },
+  "ADF_CLOUD_USERS": {
+    "ERROR": {
+      "NOT_FOUND": "Käyttäjänimellä {{userName}} ei löytynyt käyttäjää"
+    }
+  },
+  "ADF_CLOUD_PEOPLE_GROUPS": {
+    "ERROR": {
+      "INVALID_PATTERN": "Tulee vastata kaavaa {{pattern}}",
+      "INVALID_MIN_LENGTH": "Vähimmäispituus {{requiredLength}} merkkiä",
+      "INVALID_MAX_LENGTH": "Liian pitkä, enimmäispituus {{requiredLength}} merkkiä",
+      "REQUIRED": "Pakollinen kenttä"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {

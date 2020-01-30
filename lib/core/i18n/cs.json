@@ -26,6 +26,7 @@
       "REMOVE_FILE": "Odstranit",
       "UPLOAD": "Odeslat",
       "REQUIRED": "*Požadováno",
+      "NO_FILE_ATTACHED": "Není připojen žádný soubor",
       "VALIDATOR": {
         "INVALID_NUMBER": "Použijte jiný formát čísla",
         "INVALID_DATE": "Použijte jiný formát data",
@@ -198,7 +199,13 @@
         "CANCEL": "Zrušit",
         "CLEAR": "Vymazat",
         "TOGGLE": "Přepnout hodnotu"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "Pro přechod mezi daty používejte klávesy se šipkami. Pomocí šipek nahoru a dolů přejdete do příštího nebo minulého týdne, ale na stejný den. Pomocí šipek vlevo a vpravo přejdete na další nebo předchozí den. Datum vyberte stisknutím klávesy Enter nebo Return."
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Přepnout řazení výsledků mezi vzestupným a sestupným"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "Vzestupně",
       "SORT_DESCENDING": "Sestupně",
       "SORT_NONE": "Žádný",
+      "SORT_DEFAULT": "Seřaditelné",
+      "SORT_ASCENDING_BY": "Vzestupně podle {{ string }}",
+      "SORT_DESCENDING_BY": "Sestupně podle {{ string }}",
       "ICON_TEXT": "Typ položky {{ type }}",
       "ICON_DISABLED": "Zakázáno",
       "ROW_OPTION_BUTTON": "Akce"

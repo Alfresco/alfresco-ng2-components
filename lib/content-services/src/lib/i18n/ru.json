@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Выгрузить файл",
-      "UPLOAD_FOLDER": "Выгрузить папку"
+      "UPLOAD_FOLDER": "Выгрузить папку",
+      "PERMISSION_CHECK_ERROR": "Разрешение проверки ошибок."
     },
     "VERSION": {
       "MESSAGES": {

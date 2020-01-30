@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Last opp fil",
-      "UPLOAD_FOLDER": "Last opp mappe"
+      "UPLOAD_FOLDER": "Last opp mappe",
+      "PERMISSION_CHECK_ERROR": "Feil ved kontroll av tillatelse."
     },
     "VERSION": {
       "MESSAGES": {

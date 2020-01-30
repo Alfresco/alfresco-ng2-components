@@ -26,6 +26,7 @@
       "REMOVE_FILE": "Eliminar",
       "UPLOAD": "Cargar",
       "REQUIRED": "*Obligatorio",
+      "NO_FILE_ATTACHED": "Sin fichero adjunto",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utilizar un formato de número diferente",
         "INVALID_DATE": "Utilizar un formato de fecha diferente",
@@ -101,7 +102,7 @@
       "FOLDER_NAME": {
         "LABEL": "Nombre",
         "ERRORS": {
-          "REQUIRED": "Se necesita un nombre de carpeta",
+          "REQUIRED": "Se requiere un nombre de carpeta",
           "SPECIAL_CHARACTERS": "El nombre de la carpeta no puede tener los caracteres * \" < > \\ / ? : |",
           "ENDING_DOT": "El nombre de la carpeta no puede terminar en punto .",
           "ONLY_SPACES": "El nombre de la carpeta no puede tener solo espacios"
@@ -139,7 +140,7 @@
       "SINGULAR": "{{ name }} eliminado",
       "PLURAL": "{{ number }} elementos eliminados",
       "PARTIAL_SINGULAR": "Se ha eliminado el elemento {{ success }}, {{ failed }} no se ha podido eliminar",
-      "PARTIAL_PLURAL": "Se han eliminado {{ success }} elementos, {{ failed }} no se han podido eliminar",
+      "PARTIAL_PLURAL": "Se han eliminado los elementos {{ success }}, {{ failed }} no se han podido eliminar",
       "ERROR_SINGULAR": "{{ name }} no se ha podido eliminar",
       "ERROR_PLURAL": "{{ number }} elementos no se han podido eliminar"
     },
@@ -149,7 +150,7 @@
       "SSO": "SSO",
       "IMPLICIT-FLOW": "Flujo implícito",
       "PROVIDER": "Proveedor",
-      "REQUIRED": "Campo necesario",
+      "REQUIRED": "Este campo es obligatorio",
       "CS_URL_ERROR": "La dirección de Content Services no coincide con el formato de la URL",
       "PS_URL_ERROR": "La dirección de Process Services no coincide con el formato de la URL",
       "TITLE": "Configuración",
@@ -198,7 +199,13 @@
         "CANCEL": "Cancelar",
         "CLEAR": "Borrar",
         "TOGGLE": "Alternar valor"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "Utilice las teclas de dirección para cambiar de fecha. Las teclas de arriba y abajo pasan al mismo día de la semana siguiente o anterior; y las de izquierda y derecha pasan al día siguiente o anterior. Pulse la tecla de entrada para seleccionar una fecha."
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Alternar entre orden ascendente y descendente de resultados"
     }
   },
   "COMMENTS": {
@@ -231,7 +238,7 @@
       "HIDE-PASSWORD": "Ocultar contraseña"
     },
     "MESSAGES": {
-      "USERNAME-REQUIRED": "Requerido",
+      "USERNAME-REQUIRED": "Obligatorio",
       "USERNAME-MIN": "Su nombre de usuario debe tener al menos {{ minLength }} caracteres.",
       "PASSWORD-REQUIRED": "Introduzca su contraseña para iniciar sesión",
       "LOGIN-ERROR-CREDENTIALS": "Ha introducido un nombre de usuario o contraseña desconocidos",
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "Ascendente",
       "SORT_DESCENDING": "Descendente",
       "SORT_NONE": "Ninguno",
+      "SORT_DEFAULT": "Se puede ordenar",
+      "SORT_ASCENDING_BY": "Ascendente por {{ string }}",
+      "SORT_DESCENDING_BY": "Descendente por {{ string }}",
       "ICON_TEXT": "Tipo de elemento {{ type }}",
       "ICON_DISABLED": "Desactivado",
       "ROW_OPTION_BUTTON": "Acciones"

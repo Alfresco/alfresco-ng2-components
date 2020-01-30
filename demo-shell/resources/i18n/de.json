@@ -308,7 +308,12 @@
     "APP_NAME": "Anwendungsname",
     "APP_FILTER_MODE": "Nach Anwendungsname filtern",
     "ROLE_FILTER_MODE": "Nach Rolle filtern",
-    "PRESELECT_VALIDATION": "Vorauswahl-Prüfung"
+    "PRESELECT_VALIDATION": "Vorauswahl-Prüfung",
+    "ALL_PRESELECTED_USERS": "Alle vorausgewählten Benutzer",
+    "ALL_PRESELECTED_GROUPS": "Alle vorausgewählten Gruppen",
+    "INVALID_USERS": "Unzulässige Benutzer",
+    "INVALID_GROUPS": "Unzulässige Gruppen",
+    "READONLY_MODE": "Schreibgeschützter Modus"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Mehrfachauswahl",

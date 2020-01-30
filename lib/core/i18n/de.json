@@ -26,6 +26,7 @@
       "REMOVE_FILE": "Entfernen",
       "UPLOAD": "Hochladen",
       "REQUIRED": "*Erforderlich",
+      "NO_FILE_ATTACHED": "Keine Datei angehängt",
       "VALIDATOR": {
         "INVALID_NUMBER": "Verwenden Sie ein anderes Zahlenformat",
         "INVALID_DATE": "Verwenden Sie ein anderes Datumsformat",
@@ -198,7 +199,13 @@
         "CANCEL": "Abbrechen",
         "CLEAR": "Löschen",
         "TOGGLE": "Umschaltwert"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "Mit den Pfeiltasten können Sie zwischen den Daten wechseln. Mit den Aufwärts- und Abwärtspfeilen gelangen Sie zum selben Tag der vorherigen bzw. nächsten Woche, mit den Links- und Rechtspfeilen gelangen Sie zum vorherigen bzw. zum nächsten Tag. Drücken Sie die Eingabetaste, um ein Datum auszuwählen."
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Umschalten zwischen auf- und absteigender Reihenfolge der Ergebnisse"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "Aufsteigend",
       "SORT_DESCENDING": "Absteigend",
       "SORT_NONE": "Keine",
+      "SORT_DEFAULT": "Sortierbar",
+      "SORT_ASCENDING_BY": "Aufsteigend ({{ string }})",
+      "SORT_DESCENDING_BY": "Absteigend ({{ string }})",
       "ICON_TEXT": "Elementtyp {{ type }}",
       "ICON_DISABLED": "Deaktiviert",
       "ROW_OPTION_BUTTON": "Aktionen"

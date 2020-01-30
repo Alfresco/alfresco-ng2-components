@@ -308,7 +308,12 @@
     "APP_NAME": "Sovelluksen nimi",
     "APP_FILTER_MODE": "Suodata sovelluksen nimen perusteella",
     "ROLE_FILTER_MODE": "Suodata roolin perusteella",
-    "PRESELECT_VALIDATION": "Vahvistus esivalittu"
+    "PRESELECT_VALIDATION": "Vahvistus esivalittu",
+    "ALL_PRESELECTED_USERS": "Kaikki esivalitut käyttäjät",
+    "ALL_PRESELECTED_GROUPS": "Kaikki esivalitut ryhmät",
+    "INVALID_USERS": "Kelpaamattomat käyttäjät",
+    "INVALID_GROUPS": "Kelpaamattomat ryhmät",
+    "READONLY_MODE": "Vain luku -tila"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Monivalinta",

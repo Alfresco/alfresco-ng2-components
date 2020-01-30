@@ -26,6 +26,7 @@
       "REMOVE_FILE": "إزالة",
       "UPLOAD": "تحميل",
       "REQUIRED": "*مطلوب",
+      "NO_FILE_ATTACHED": "لا ملف مرفق",
       "VALIDATOR": {
         "INVALID_NUMBER": "استخدم تنسيق رقم مختلفًا",
         "INVALID_DATE": "استخدم تنسيق تاريخ مختلفًا",
@@ -198,7 +199,13 @@
         "CANCEL": "إلغاء",
         "CLEAR": "مسح",
         "TOGGLE": "تبديل القيمة"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "استخدم مفاتيح الأسهم للتنقل بين التواريخ. السهمان لأعلى ولأسفل ينتقلان إلى الأسبوع التالي أو السابق لكن في اليوم نفسه. السهمان الأيسر والأيمن ينتقلان إلى اليوم التالي أو السابق. اضغط على مفتاح الإدخال لتحديد تاريخ."
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "تبديل النتائج بين الترتيب الصاعدي والتنازلي"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "تصاعدي",
       "SORT_DESCENDING": "تنازلي",
       "SORT_NONE": "بلا",
+      "SORT_DEFAULT": "قابل للفرز",
+      "SORT_ASCENDING_BY": "تصاعدي حسب {{ string }}",
+      "SORT_DESCENDING_BY": "تنازلي حسب {{ string }}",
       "ICON_TEXT": "نوع العنصر {{ type }}",
       "ICON_DISABLED": "معطّل",
       "ROW_OPTION_BUTTON": "إجراءات"

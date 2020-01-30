@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Carica file",
-      "UPLOAD_FOLDER": "Carica cartella"
+      "UPLOAD_FOLDER": "Carica cartella",
+      "PERMISSION_CHECK_ERROR": "Errore durante la verifica dei permessi."
     },
     "VERSION": {
       "MESSAGES": {

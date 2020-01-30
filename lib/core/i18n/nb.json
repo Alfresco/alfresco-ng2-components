@@ -26,6 +26,7 @@
       "REMOVE_FILE": "Fjern",
       "UPLOAD": "Laster opp",
       "REQUIRED": "*Påkrevd",
+      "NO_FILE_ATTACHED": "Ingen fil vedlagt",
       "VALIDATOR": {
         "INVALID_NUMBER": "Bruk et annet nummerformat",
         "INVALID_DATE": "Bruk et annet datoformat",
@@ -198,7 +199,13 @@
         "CANCEL": "Avbryt",
         "CLEAR": "Fjern",
         "TOGGLE": "Bytt verdi"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "Bruk piltastene for å navigere mellom datoer. Med pil opp og pil ned går du til samme dag i neste eller forrige uke. Med venstre og høyre pil går du én dag frem eller tilbake. Trykk på Enter eller Retur for å velge en dato."
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Bytt mellom å vise resultater i stigende og synkende rekkefølge"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "Stigende",
       "SORT_DESCENDING": "Synkende",
       "SORT_NONE": "Ingen",
+      "SORT_DEFAULT": "Sorterbar",
+      "SORT_ASCENDING_BY": "Stigende med {{ string }}",
+      "SORT_DESCENDING_BY": "Synkende med {{ string }}",
       "ICON_TEXT": "Elementtype {{ type }}",
       "ICON_DISABLED": "Deaktivert",
       "ROW_OPTION_BUTTON": "Handlinger"

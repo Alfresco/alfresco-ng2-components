@@ -308,7 +308,12 @@
     "APP_NAME": "Toepassingsnaam",
     "APP_FILTER_MODE": "Filteren op toepassingsnaam",
     "ROLE_FILTER_MODE": "Filteren op rol",
-    "PRESELECT_VALIDATION": "Validatie voorselecteren"
+    "PRESELECT_VALIDATION": "Validatie voorselecteren",
+    "ALL_PRESELECTED_USERS": "Alle voorgeselecteerde gebruikers",
+    "ALL_PRESELECTED_GROUPS": "Alle voorgeselecteerde groepen",
+    "INVALID_USERS": "Ongeldige gebruikers",
+    "INVALID_GROUPS": "Ongeldige groepen",
+    "READONLY_MODE": "Alleen-lezenmodus"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multiselectie",

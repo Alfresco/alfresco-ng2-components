@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Bestand uploaden",
-      "UPLOAD_FOLDER": "Map uploaden"
+      "UPLOAD_FOLDER": "Map uploaden",
+      "PERMISSION_CHECK_ERROR": "Fout bij controleren van rechten."
     },
     "VERSION": {
       "MESSAGES": {

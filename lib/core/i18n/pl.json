@@ -26,6 +26,7 @@
       "REMOVE_FILE": "Usuń",
       "UPLOAD": "Prześlij",
       "REQUIRED": "*Wymagane",
+      "NO_FILE_ATTACHED": "Nie załączono pliku",
       "VALIDATOR": {
         "INVALID_NUMBER": "Użyj innego formatu liczby.",
         "INVALID_DATE": "Użyj innego formatu daty.",
@@ -198,7 +199,13 @@
         "CANCEL": "Anuluj",
         "CLEAR": "Wyczyść",
         "TOGGLE": "Przełącz wartość"
+      },
+      "ACCESSIBILITY": {
+        "DATEPICKER": "Użyj klawiszy strzałek, aby przełączać między datami. Strzałki w górę i w dół przełączają na ten sam dzień w następnym lub poprzednim tygodniu. Natomiast strzałki w lewo i w prawo przełączają na następny lub poprzedni dzień. Naciśnij Enter lub Return, aby wybrać datę."
       }
+    },
+    "SEARCH": {
+      "TOGGLE_ASC_DESC_ORDER": "Przełącz kolejność sortowania wyników między rosnącą a malejącą"
     }
   },
   "COMMENTS": {
@@ -273,6 +280,9 @@
       "SORT_ASCENDING": "Rosnąco",
       "SORT_DESCENDING": "Malejąco",
       "SORT_NONE": "Brak",
+      "SORT_DEFAULT": "Sortowalne",
+      "SORT_ASCENDING_BY": "Rosnąco według {{ string }}",
+      "SORT_DESCENDING_BY": "Malejąco według {{ string }}",
       "ICON_TEXT": "Typ elementu {{ type }}",
       "ICON_DISABLED": "Wyłączone",
       "ROW_OPTION_BUTTON": "Czynności"

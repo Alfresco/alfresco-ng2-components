@@ -308,7 +308,12 @@
     "APP_NAME": "Nome applicazione",
     "APP_FILTER_MODE": "Filtra per nome applicazione",
     "ROLE_FILTER_MODE": "Filtra per ruolo",
-    "PRESELECT_VALIDATION": "Convalida preselezione"
+    "PRESELECT_VALIDATION": "Convalida preselezione",
+    "ALL_PRESELECTED_USERS": "Tutti gli utenti preselezionati",
+    "ALL_PRESELECTED_GROUPS": "Tutti i gruppi preselezionati",
+    "INVALID_USERS": "Utenti non validi",
+    "INVALID_GROUPS": "Gruppi non validi",
+    "READONLY_MODE": "Modalità sola lettura"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Selezione multipla",

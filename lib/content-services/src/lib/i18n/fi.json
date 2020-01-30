@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Lataa tiedosto",
-      "UPLOAD_FOLDER": "Lataa kansio"
+      "UPLOAD_FOLDER": "Lataa kansio",
+      "PERMISSION_CHECK_ERROR": "Virhe oikeuksien tarkistuksessa."
     },
     "VERSION": {
       "MESSAGES": {

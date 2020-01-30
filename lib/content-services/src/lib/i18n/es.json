@@ -16,7 +16,7 @@
     },
     "CONFIRM_DELETE": {
       "TITLE": "Eliminar versión",
-      "MESSAGE": "Las versiones de ficheros eliminados no pueden restaurarse. ¿Continuar?",
+      "MESSAGE": "Las versiones de ficheros eliminados no pueden restaurarse. ¿Desea continuar?",
       "YES_LABEL": "Sí",
       "NO_LABEL": "No"
     }
@@ -132,7 +132,7 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Versión del fichero  {{ version }}",
+      "VERSION": "Versión del fichero {{ version }}",
       "DIALOG": "Lista de carga",
       "DIALOG_MAXIMIZE": "Maximizar diálogo de carga",
       "DIALOG_MINIMIZE": "Minimizar diálogo de carga",
@@ -151,7 +151,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Añadir fichero",
-      "UPLOAD_FOLDER": "Cargar carpeta"
+      "UPLOAD_FOLDER": "Cargar carpeta",
+      "PERMISSION_CHECK_ERROR": "Error al comprobar permisos."
     },
     "VERSION": {
       "MESSAGES": {
@@ -234,7 +235,7 @@
         "TO-DATE": "A"
       },
       "VALIDATION": {
-        "REQUIRED-VALUE": "Valor necesario",
+        "REQUIRED-VALUE": "Valor requerido",
         "NO-DAYS": "No se han seleccionado días.",
         "INVALID-FORMAT": "Formato no válido",
         "INVALID-DATE": "Fecha no válida. La fecha debe tener el formato '{{ requiredFormat }}'",
@@ -314,7 +315,7 @@
       "REMOVE": "Eliminar"
     },
     "UNSHARE_ERROR": "Error al dejar de compartir este fichero",
-    "UNSHARE_PERMISSION_ERROR": "No tiene acceso para dejar de compartir este fichero"
+    "UNSHARE_PERMISSION_ERROR": "No tiene permiso para dejar de compartir este fichero"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
