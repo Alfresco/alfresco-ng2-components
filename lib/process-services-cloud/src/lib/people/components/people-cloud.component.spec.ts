@@ -133,7 +133,7 @@ describe('PeopleCloudComponent', () => {
         it('should selectedUser and changedUsers emit, update selected users when a user is selected', (done) => {
             const user = { username: 'username' };
             fixture.detectChanges();
-            spyOn(component, 'isPreselectedUserValid').and.returnValue(true);
+            spyOn(component, 'isPreselectUserAlignedWithValidatedUser').and.returnValue(true);
             const selectEmitSpy = spyOn(component.selectUser, 'emit');
             const changedUsersSpy = spyOn(component.changedUsers, 'emit');
             component.onSelect(user);
@@ -514,7 +514,7 @@ describe('PeopleCloudComponent', () => {
 
         it('should check validation only for the first user and emit warning when user is invalid - single mode', (done) => {
             spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve([]));
-            spyOn(component, 'isPreselectedUserValid').and.returnValue(false);
+            spyOn(component, 'isPreselectUserAlignedWithValidatedUser').and.returnValue(false);
 
             const expectedWarning = {
                 message: 'INVALID_PRESELECTED_USERS',
