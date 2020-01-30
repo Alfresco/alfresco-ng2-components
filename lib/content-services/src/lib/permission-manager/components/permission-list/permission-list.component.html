@@ -34,14 +34,14 @@
             </data-column>
             <data-column [class]="'adf-permission-label'" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}" key="isInherited">
                 <ng-template let-entry="$implicit">
-                    <mat-chip-list>
+                    <mat-chip-list adf-list-a11y>
                         <mat-chip [class]="'mat-chip mat-primary mat-standard-chip mat-chip-selected adf-inherited-label '"
                                   *ngIf="!!entry.data.getValue(entry.row, entry.col) else locally_set_chip"
                                 id="adf-permission-inherited-label"
                                 color="primary" selected="true">{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}</mat-chip>
                     </mat-chip-list>
                     <ng-template #locally_set_chip>
-                            <mat-chip-list [class] = "'adf-locallyset-label'">
+                            <mat-chip-list adf-list-a11y [class] = "'adf-locallyset-label'">
                                     <mat-chip id="adf-permission-locallyset-label"
                                               color="accent" selected="true">
                                               {{'PERMISSION_MANAGER.PERMISSION_DISPLAY.LOCALLY_SET' | translate}}
