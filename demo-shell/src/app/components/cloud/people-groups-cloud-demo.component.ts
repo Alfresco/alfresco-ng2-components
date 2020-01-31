@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { PeopleCloudComponent, GroupCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { ComponentSelectionMode } from '@alfresco/adf-process-services-cloud';
 import { MatRadioChange, MatCheckboxChange } from '@angular/material';
 import { IdentityGroupModel, IdentityUserModel } from '@alfresco/adf-core';
 
@@ -32,83 +32,83 @@ export class PeopleGroupCloudDemoComponent {
     DEFAULT_GROUP_PLACEHOLDER: string = `[{"id": "1", "name":"activitiUserGroup"}]`;
     DEFAULT_PEOPLE_PLACEHOLDER: string = `[{"id": "1", email": "user@user.com", "firstName":"user", "lastName": "lastName", "username": "user"}]`;
 
-    peopleMode: string = PeopleCloudComponent.MODE_SINGLE;
+    peopleMode: ComponentSelectionMode = 'single';
     preSelectUsers: IdentityUserModel[] = [];
     invalidUsers: IdentityUserModel[] = [];
     peopleRoles: string[] = [];
     peopleAppName: string;
     peopleFilterMode: string = this.DEFAULT_FILTER_MODE;
-    peoplePreselectValidation: Boolean = false;
+    peoplePreselectValidation = false;
     groupPreselectValidation = false;
     peopleReadonly = false;
     groupReadonly = false;
 
-    groupMode: string = GroupCloudComponent.MODE_SINGLE;
+    groupMode: ComponentSelectionMode = 'single';
     preSelectGroup: IdentityGroupModel[] = [];
     invalidGroups: IdentityGroupModel[] = [];
     groupRoles: string[];
     groupAppName: string;
     groupFilterMode: string = this.DEFAULT_FILTER_MODE;
 
-    setPeoplePreselectValue(event: any) {
-        this.preSelectUsers = this.getArrayFromString(event.target.value);
+    setPeoplePreselectValue(value: string): void {
+        this.preSelectUsers = this.getArrayFromString(value);
     }
 
-    setGroupsPreselectValue(event: any) {
-        this.preSelectGroup = this.getArrayFromString(event.target.value);
+    setGroupsPreselectValue(value: string): void {
+        this.preSelectGroup = this.getArrayFromString(value);
     }
 
-    setPeopleRoles(event: any) {
-        this.peopleRoles = this.getArrayFromString(event.target.value);
+    setPeopleRoles(value: string): void {
+        this.peopleRoles = this.getArrayFromString(value);
     }
 
-    setGroupRoles(event: any) {
-        this.groupRoles = this.getArrayFromString(event.target.value);
+    setGroupRoles(value: string): void {
+        this.groupRoles = this.getArrayFromString(value);
     }
 
-    setPeopleAppName(event: any) {
-        this.peopleAppName = event.target.value;
+    setPeopleAppName(value: string): void {
+        this.peopleAppName = value;
     }
 
-    setGroupAppName(event: any) {
-        this.groupAppName = event.target.value;
+    setGroupAppName(value: string): void {
+        this.groupAppName = value;
     }
 
-    onChangePeopleMode(event: MatRadioChange) {
+    onChangePeopleMode(event: MatRadioChange): void {
        this.peopleMode = event.value;
     }
 
-    onChangePeopleReadonly(event: MatCheckboxChange) {
+    onChangePeopleReadonly(event: MatCheckboxChange): void {
         this.peopleReadonly = event.checked;
     }
 
-    onChangeGroupReadonly(event: MatCheckboxChange) {
+    onChangeGroupReadonly(event: MatCheckboxChange): void {
         this.groupReadonly = event.checked;
     }
 
-    onChangeGroupsMode(event: MatRadioChange) {
+    onChangeGroupsMode(event: MatRadioChange): void {
         this.groupMode = event.value;
     }
 
-    onChangePeopleFilterMode(event: MatRadioChange) {
+    onChangePeopleFilterMode(event: MatRadioChange): void {
         this.peopleFilterMode = event.value;
         this.resetPeopleFilter();
     }
 
-    onChangeGroupsFilterMode(event: MatRadioChange) {
+    onChangeGroupsFilterMode(event: MatRadioChange): void {
         this.groupFilterMode = event.value;
         this.restGroupFilter();
     }
 
-    isPeopleAppNameSelected() {
+    isPeopleAppNameSelected(): boolean {
         return this.peopleFilterMode === 'appName';
     }
 
-    isGroupAppNameSelected() {
+    isGroupAppNameSelected(): boolean {
         return this.groupFilterMode === 'appName';
     }
 
-    resetPeopleFilter() {
+    resetPeopleFilter(): void {
         if (this.isPeopleAppNameSelected()) {
             this.peopleRoles = [];
         } else {
@@ -116,7 +116,7 @@ export class PeopleGroupCloudDemoComponent {
         }
     }
 
-    restGroupFilter() {
+    restGroupFilter(): void {
         if (this.isGroupAppNameSelected()) {
             this.groupRoles = [];
         } else {
@@ -124,23 +124,23 @@ export class PeopleGroupCloudDemoComponent {
         }
     }
 
-    onChangePeopleValidation(event: MatCheckboxChange) {
+    onChangePeopleValidation(event: MatCheckboxChange): void {
         this.peoplePreselectValidation = event.checked;
     }
 
-    onChangeGroupValidation(event: MatCheckboxChange) {
+    onChangeGroupValidation(event: MatCheckboxChange): void {
         this.groupPreselectValidation = event.checked;
     }
 
-    onGroupsWarning(warning: any) {
+    onGroupsWarning(warning: any): void {
         this.invalidGroups = warning.groups;
     }
 
-    onUsersWarning(warning: any) {
+    onUsersWarning(warning: any): void {
         this.invalidUsers = warning.users;
     }
 
-    isStringArray(str: string) {
+    isStringArray(str: string): boolean {
         try {
             const result = JSON.parse(str);
             return Array.isArray(result);
@@ -149,36 +149,11 @@ export class PeopleGroupCloudDemoComponent {
         }
     }
 
-    private getArrayFromString(value: string) {
-
+    private getArrayFromString<T = any>(value: string): T[] {
         if (this.isStringArray(value)) {
             return JSON.parse(value);
         } else {
             return [];
         }
-    }
-
-    canShowPeopleList() {
-        return this.peopleMode === GroupCloudComponent.MODE_MULTIPLE;
-    }
-
-    canShowGroupList() {
-        return this.groupMode === GroupCloudComponent.MODE_MULTIPLE;
-    }
-
-    get peopleSingleMode() {
-        return PeopleCloudComponent.MODE_SINGLE;
-    }
-
-    get peopleMultipleMode() {
-        return PeopleCloudComponent.MODE_MULTIPLE;
-    }
-
-    get groupSingleMode() {
-        return GroupCloudComponent.MODE_SINGLE;
-    }
-
-    get groupMultipleMode() {
-        return GroupCloudComponent.MODE_MULTIPLE;
     }
 }
