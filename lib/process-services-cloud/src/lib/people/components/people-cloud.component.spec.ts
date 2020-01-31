@@ -510,16 +510,39 @@ describe('PeopleCloudComponent', () => {
     });
 
     describe('Multiple Mode with Pre-selected Users', () => {
+        beforeEach(() => {
+            component.mode = 'multiple';
+        });
+
+        it('should render multiple preselected users', (done) => {
+            fixture.detectChanges();
+
+            const changes = new SimpleChange(null, mockPreselectedUsers, false);
+
+            component.preSelectUsers = <any> mockPreselectedUsers;
+            component.ngOnChanges({ 'preSelectUsers': changes });
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+                expect(chips.length).toEqual(2);
+                expect(chips[0].attributes['data-automation-id']).toEqual(`adf-people-cloud-chip-${mockPreselectedUsers[0].username}`);
+                expect(chips[1].attributes['data-automation-id']).toEqual(`adf-people-cloud-chip-${mockPreselectedUsers[1].username}`);
+
+                done();
+            });
+        });
 
         it('Should not show remove icon for pre-selected users if readonly property set to true', (done) => {
             fixture.detectChanges();
+
             component.preSelectUsers = [
                 { id: mockUsers[0].id, username: mockUsers[0].username, readonly: true },
                 { id: mockUsers[1].id, username: mockUsers[1].username, readonly: true }
             ];
 
             const change = new SimpleChange(null, component.preSelectUsers, false);
-            component.mode = 'multiple';
             component.ngOnChanges({ 'preSelectUsers': change });
 
             fixture.detectChanges();
@@ -539,14 +562,12 @@ describe('PeopleCloudComponent', () => {
         });
 
         it('Should be able to remove preselected users if readonly property set to false', (done) => {
-            fixture.detectChanges();
             component.preSelectUsers = [
                 { id: mockUsers[0].id, username: mockUsers[0].username, readonly: false },
                 { id: mockUsers[1].id, username: mockUsers[1].username, readonly: false }
             ];
 
             const change = new SimpleChange(null, component.preSelectUsers, false);
-            component.mode = 'multiple';
             component.ngOnChanges({ 'preSelectUsers': change });
 
             const removeUserSpy = spyOn(component.removeUser, 'emit');
