@@ -238,7 +238,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private isGroupAlreadySelected(group: IdentityGroupModel): boolean {
-        if (this.selectedGroups && this.selectedGroups.length > 0 && this.isMultipleMode()) {
+        if (this.selectedGroups && this.selectedGroups.length > 0) {
             const result = this.selectedGroups.find((selectedGroup: IdentityGroupModel) => {
                 return selectedGroup.name === group.name;
             });

@@ -259,10 +259,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             map((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.user));
     }
 
-    private isUserAlreadySelected(user: IdentityUserModel): boolean {
+    private isUserAlreadySelected(searchUser: IdentityUserModel): boolean {
         if (this.selectedUsers && this.selectedUsers.length > 0) {
             const result = this.selectedUsers.find((selectedUser) => {
-                return this.isPreselectUserAlignedWithValidatedUser(selectedUser, user);
+                return this.compare(selectedUser, searchUser);
             });
 
             return !!result;
@@ -297,17 +297,17 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             preselectedUsersToValidate = this.removeDuplicatedUsers(this.preSelectUsers);
         }
 
-        await Promise.all(preselectedUsersToValidate.map(async (user: IdentityUserModel) => {
+        await Promise.all(preselectedUsersToValidate.map(async (preselectedUser: IdentityUserModel) => {
             try {
-                const validationResult: IdentityUserModel = await this.searchUser(user);
-                if (this.isPreselectUserAlignedWithValidatedUser(user, validationResult)) {
-                    validationResult.readonly = user.readonly;
-                    validUsers.push(validationResult);
+                const userValidationResult: IdentityUserModel = await this.searchUser(preselectedUser);
+                if (this.compare(preselectedUser, userValidationResult)) {
+                    userValidationResult.readonly = preselectedUser.readonly;
+                    validUsers.push(userValidationResult);
                 } else {
-                    this.invalidUsers.push(user);
+                    this.invalidUsers.push(preselectedUser);
                 }
             } catch (error) {
-                this.invalidUsers.push(user);
+                this.invalidUsers.push(preselectedUser);
                 this.logService.error(error);
             }
         }));
@@ -316,22 +316,17 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.isLoading = false;
     }
 
-    isPreselectUserAlignedWithValidatedUser(preselectedUser: IdentityUserModel, validatedUser: IdentityUserModel) {
-        const key = this.getUserSearchKey(preselectedUser);
-
-        switch (key) {
-            case 'id':
-                return preselectedUser.id === validatedUser.id;
-            case 'username':
-                return preselectedUser.username === validatedUser.username;
-            case 'email':
-                return preselectedUser.email === validatedUser.email;
-            default:
-                return false;
+    compare(preselectedUser: IdentityUserModel, identityUser: IdentityUserModel): boolean {
+        const uniquePropertyIdentifiers = ['id', 'username', 'email'];
+        for (const property of Object.keys(preselectedUser)) {
+            if (preselectedUser[property] !== undefined && uniquePropertyIdentifiers.includes(property)) {
+                return preselectedUser[property] === identityUser[property];
+            }
         }
+        return false;
     }
 
-    private getUserSearchKey(user: IdentityUserModel): string {
+    async searchUser(user: IdentityUserModel) {
         let key: string = '';
 
         if (user.id) {
@@ -341,11 +336,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         } else if (user.username) {
             key = 'username';
         }
-        return key;
-    }
-
-    async searchUser(user: IdentityUserModel) {
-        const key = this.getUserSearchKey(user);
 
         switch (key) {
             case 'id':
