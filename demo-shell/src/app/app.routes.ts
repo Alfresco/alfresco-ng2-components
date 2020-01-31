@@ -167,7 +167,13 @@ export const appRoutes: Routes = [
             {
                 path: 'cloud',
                 canActivate: [AuthGuardSsoRoleService],
-                data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
+                data: {
+                    roles: [
+                        'ACTIVITI_USER',
+                        'ACTIVITI_ADMIN'
+                    ],
+                    redirectUrl: '/error/403'
+                },
                 children: [
                     {
                         path: '',
@@ -188,7 +194,14 @@ export const appRoutes: Routes = [
                     {
                         path: ':appName',
                         canActivate: [AuthGuardSsoRoleService],
-                        data: { clientRoles: ['appName'], roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
+                        data: {
+                            clientRoles: ['appName'],
+                            roles: [
+                                'ACTIVITI_USER',
+                                'ACTIVITI_ADMIN'
+                            ],
+                            redirectUrl: '/error/403'
+                        },
                         children: [
                             {
                                 path: '',
