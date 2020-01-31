@@ -306,6 +306,7 @@
     "DESCRIPTION": "Click the link below to copy it to the clipboard.",
     "TITLE": "Link to share",
     "EXPIRES": "Expires on",
+    "EXPIRATION-LABEL" : "Expiration Date",
     "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
     "CLOSE": "Close",
     "CONFIRMATION": {
