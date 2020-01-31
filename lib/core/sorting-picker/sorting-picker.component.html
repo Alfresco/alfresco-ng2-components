@@ -1,4 +1,5 @@
-<mat-form-field>
+<mat-form-field floatLabel="always">
+    <mat-label>{{'CORE.SEARCH.SORT_BY' | translate}}</mat-label>
     <mat-select [(value)]="selected" (selectionChange)="onOptionChanged($event)">
         <mat-option *ngFor="let option of options" [value]="option.key">
             {{ option.label | translate }}
