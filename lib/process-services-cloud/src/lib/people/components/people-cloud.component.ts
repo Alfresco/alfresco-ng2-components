@@ -317,10 +317,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     compare(preselectedUser: IdentityUserModel, identityUser: IdentityUserModel): boolean {
-        const uniquePropertyIdentifiers = ['id', 'username', 'email'];
-        for (const property of Object.keys(preselectedUser)) {
-            if (preselectedUser[property] !== undefined && uniquePropertyIdentifiers.includes(property)) {
-                return preselectedUser[property] === identityUser[property];
+        if (preselectedUser && identityUser) {
+            const uniquePropertyIdentifiers = ['id', 'username', 'email'];
+            for (const property of Object.keys(preselectedUser)) {
+                if (preselectedUser[property] !== undefined && uniquePropertyIdentifiers.includes(property)) {
+                    return preselectedUser[property] === identityUser[property];
+                }
             }
         }
         return false;
