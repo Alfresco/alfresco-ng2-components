@@ -27,8 +27,8 @@ import { CheckAllowableOperationDirective } from './check-allowable-operation.di
 import { NodeRestoreDirective } from './node-restore.directive';
 import { UploadDirective } from './upload.directive';
 import { NodeDownloadDirective } from './node-download.directive';
-import { SearchChipListDirective } from './search-chip-list.directive';
-import { SearchChipDirective } from './search-chip.directive';
+import { A11yChipListDirective } from './a11y-chip-list.directive';
+import { A11yChipDirective } from './a11y-chip.directive';
 
 @NgModule({
     imports: [
@@ -44,8 +44,8 @@ import { SearchChipDirective } from './search-chip.directive';
         NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective,
-        SearchChipListDirective,
-        SearchChipDirective
+        A11yChipListDirective,
+        A11yChipDirective
     ],
     exports: [
         HighlightDirective,
@@ -56,8 +56,8 @@ import { SearchChipDirective } from './search-chip.directive';
         NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective,
-        SearchChipListDirective,
-        SearchChipDirective
+        A11yChipListDirective,
+        A11yChipDirective
     ]
 })
 export class DirectiveModule {}

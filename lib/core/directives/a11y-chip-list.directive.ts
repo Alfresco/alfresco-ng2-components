@@ -19,16 +19,16 @@ import { Directive, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
   // tslint:disable-next-line: directive-selector
-  selector: '[adf-mat-chip-a11y]'
+  selector: '[adf-mat-chip-list-a11y]'
 })
-export class SearchChipDirective {
-    constructor(private el: ElementRef, private renderer: Renderer2) {
-    }
+export class A11yChipListDirective {
+    constructor(private el: ElementRef, private renderer: Renderer2) {}
 
     ngAfterViewInit() {
         setTimeout(() => {
-            this.renderer.setAttribute(this.el.nativeElement, 'role', 'button');
-            this.renderer.setAttribute(this.el.nativeElement, 'tabindex', '0');
+            this.renderer.setAttribute(this.el.nativeElement.querySelector('.mat-chip-list-wrapper'), 'role', 'presentation');
+            this.renderer.removeAttribute(this.el.nativeElement, 'role');
+            this.renderer.removeAttribute(this.el.nativeElement, 'tabindex');
         }, 1000);
     }
 }

@@ -23,7 +23,7 @@ export * from './check-allowable-operation.directive';
 export * from './node-restore.directive';
 export * from './node-download.directive';
 export * from './upload.directive';
-export * from './search-chip-list.directive';
-export * from './search-chip.directive';
+export * from './a11y-chip-list.directive';
+export * from './a11y-chip.directive';
 
 export * from './directive.module';
