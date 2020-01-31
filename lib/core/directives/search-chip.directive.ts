@@ -27,10 +27,10 @@ export class SearchChipDirective {
 
     ngAfterViewInit() {
         setTimeout(() => {
-            // const chipListWrapper = document.querySelector('.mat-chip-list-wrapper');
-            // if (chipListWrapper) {
-            //     chipListWrapper.setAttribute('role', 'presentation');
-            // }
+            const chipListWrapper = document.querySelector('.mat-chip-list-wrapper');
+            if (chipListWrapper) {
+                chipListWrapper.setAttribute('role', 'presentation');
+            }
             this.renderer.setAttribute(this.el.nativeElement, 'role', 'button');
             this.renderer.setAttribute(this.el.nativeElement, 'tabindex', '0');
         }, 1000);

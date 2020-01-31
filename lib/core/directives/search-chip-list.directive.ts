@@ -26,7 +26,6 @@ export class SearchChipListDirective {
 
     ngAfterViewInit() {
         setTimeout(() => {
-            this.renderer.setAttribute(this.el.nativeElement.querySelector('.mat-chip-list-wrapper'), 'role', 'presentation');
             this.renderer.removeAttribute(this.el.nativeElement, 'role');
             this.renderer.removeAttribute(this.el.nativeElement, 'tabindex');
         }, 1000);
