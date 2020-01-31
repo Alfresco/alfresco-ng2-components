@@ -15,7 +15,7 @@
         </div>
 
         <form [formGroup]="form">
-            <mat-form-field class="adf-full-width">
+            <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
                 <input #sharedLinkInput data-automation-id="adf-share-link" class="adf-share-link__input" matInput
                     cdkFocusInitial placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}" formControlName="sharedUrl"
                     readonly="readonly">
@@ -34,12 +34,13 @@
             </mat-slide-toggle>
             </div>
 
-            <mat-form-field class="adf-full-width">
+            <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
                 <mat-datetimepicker-toggle #matDatetimepickerToggle="matDatetimepickerToggle" [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
                 <mat-datetimepicker #datetimePicker (closed)="onDatetimepickerClosed()" [type]="type" timeInterval="1"></mat-datetimepicker>
                 <input class="adf-share-link__input"
                     #dateTimePickerInput
                     matInput
+                    placeholder="Expiration Date"
                     [min]="minDate"
                     formControlName="time"
                     [matDatetimepicker]="datetimePicker" />
