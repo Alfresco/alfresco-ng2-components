@@ -189,16 +189,20 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             filter((value) => {
                 return typeof value === 'string';
             }),
-            tap((value) => {
-                this.searchedValue = value;
-                if (value) {
+            tap((value: string) => {
+                if (value.trim()) {
+                    this.searchedValue = value;
                     this.setTypingError();
+                } else {
+                    this.searchUserCtrl.markAsPristine();
+                    this.searchUserCtrl.markAsUntouched();
                 }
             }),
             tap(() => {
                 this.resetSearchUsers();
             }),
-            switchMap((search) => this.identityUserService.findUsersByName(search)),
+            switchMap((search) =>
+                this.identityUserService.findUsersByName(search.trim())),
             mergeMap((users) => {
                 this.resetSearchUsers();
                 return users;
