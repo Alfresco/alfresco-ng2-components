@@ -700,7 +700,7 @@ describe('PeopleCloudComponent', () => {
 
         it('should skip warnings if validation disabled', () => {
             spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve([]));
-            spyOn(component, 'userEquals').and.returnValue(false);
+            spyOn(component, 'compare').and.returnValue(false);
 
             let warnings = 0;
 
