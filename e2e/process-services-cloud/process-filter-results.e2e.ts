@@ -375,6 +375,7 @@ describe('Process filters cloud', () => {
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.processstring, simpleApp);
         const processInstance = await processInstancesService.createProcessInstance(simpleProcessDefinition.entry.key, simpleApp);
         const taskAssigned = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
+        const taskName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.processstring;
 
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(simpleApp);
@@ -382,7 +383,7 @@ describe('Process filters cloud', () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', processInstance.entry.id);
         await processCloudDemoPage.processListCloudComponent().selectRowById(processInstance.entry.id);
 
-        await processDetailsCloudDemoPage.checkTaskIsDisplayed('inputtask');
+        await processDetailsCloudDemoPage.checkTaskIsDisplayed(taskName);
         await browser.navigate().back();
 
         await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
@@ -392,7 +393,7 @@ describe('Process filters cloud', () => {
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskAssigned.list.entries[0].entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskAssigned.list.entries[0].entry.name);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-        await expect(await taskFormCloudComponent.getFormTitle()).toContain('inputtask');
+        await expect(await taskFormCloudComponent.getFormTitle()).toContain(taskName);
         await taskFormCloudComponent.clickCompleteButton();
     });
 
