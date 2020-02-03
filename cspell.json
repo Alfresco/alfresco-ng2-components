@@ -138,7 +138,8 @@
     "booleanvisibility",
     "processparent",
     "uploadfileform",
-    "processwithstarteventform"
+    "processwithstarteventform",
+    "processstring"
   ],
   "dictionaries": [
     "html",
