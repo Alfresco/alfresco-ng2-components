@@ -190,9 +190,12 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
                 return typeof value === 'string';
             }),
             tap((value) => {
-                this.searchedValue = value;
-                if (value) {
+                if (value.trim()) {
+                    this.searchedValue = value;
                     this.setTypingError();
+                } else {
+                    this.searchGroupsControl.markAsPristine();
+                    this.searchGroupsControl.markAsUntouched();
                 }
             }),
             tap(() => {
@@ -238,7 +241,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private isGroupAlreadySelected(group: IdentityGroupModel): boolean {
-        if (this.selectedGroups && this.selectedGroups.length > 0 && this.isMultipleMode()) {
+        if (this.selectedGroups && this.selectedGroups.length > 0) {
             const result = this.selectedGroups.find((selectedGroup: IdentityGroupModel) => {
                 return selectedGroup.name === group.name;
             });
@@ -440,7 +443,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private createSearchParam(value: string): IdentityGroupSearchParam {
-        const queryParams: IdentityGroupSearchParam = { name: value };
+        const queryParams: IdentityGroupSearchParam = { name: value.trim() };
         return queryParams;
     }
 

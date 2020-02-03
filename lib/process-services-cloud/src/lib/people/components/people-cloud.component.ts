@@ -189,16 +189,20 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             filter((value) => {
                 return typeof value === 'string';
             }),
-            tap((value) => {
-                this.searchedValue = value;
-                if (value) {
+            tap((value: string) => {
+                if (value.trim()) {
+                    this.searchedValue = value;
                     this.setTypingError();
+                } else {
+                    this.searchUserCtrl.markAsPristine();
+                    this.searchUserCtrl.markAsUntouched();
                 }
             }),
             tap(() => {
                 this.resetSearchUsers();
             }),
-            switchMap((search) => this.identityUserService.findUsersByName(search)),
+            switchMap((search) =>
+                this.identityUserService.findUsersByName(search.trim())),
             mergeMap((users) => {
                 this.resetSearchUsers();
                 return users;
@@ -259,10 +263,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             map((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.user));
     }
 
-    private isUserAlreadySelected(user: IdentityUserModel): boolean {
+    private isUserAlreadySelected(searchUser: IdentityUserModel): boolean {
         if (this.selectedUsers && this.selectedUsers.length > 0) {
             const result = this.selectedUsers.find((selectedUser) => {
-                return selectedUser.id === user.id || selectedUser.email === user.email || selectedUser.username === user.username;
+                return this.compare(selectedUser, searchUser);
             });
 
             return !!result;
@@ -297,17 +301,17 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             preselectedUsersToValidate = this.removeDuplicatedUsers(this.preSelectUsers);
         }
 
-        await Promise.all(preselectedUsersToValidate.map(async (user: IdentityUserModel) => {
+        await Promise.all(preselectedUsersToValidate.map(async (preselectedUser: IdentityUserModel) => {
             try {
-                const validationResult: IdentityUserModel = await this.searchUser(user);
-                if (this.isPreselectedUserValid(user, validationResult)) {
-                    validationResult.readonly = user.readonly;
-                    validUsers.push(validationResult);
+                const userValidationResult: IdentityUserModel = await this.searchUser(preselectedUser);
+                if (this.compare(preselectedUser, userValidationResult)) {
+                    userValidationResult.readonly = preselectedUser.readonly;
+                    validUsers.push(userValidationResult);
                 } else {
-                    this.invalidUsers.push(user);
+                    this.invalidUsers.push(preselectedUser);
                 }
             } catch (error) {
-                this.invalidUsers.push(user);
+                this.invalidUsers.push(preselectedUser);
                 this.logService.error(error);
             }
         }));
@@ -316,12 +320,16 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.isLoading = false;
     }
 
-    isPreselectedUserValid(preselectedUser: IdentityUserModel, validatedUser: IdentityUserModel) {
-        if (validatedUser && (validatedUser.id !== undefined || validatedUser.username !== undefined || validatedUser.email !== undefined)) {
-            return preselectedUser.id === validatedUser.id || preselectedUser.username === validatedUser.username || preselectedUser.email === validatedUser.email;
-        } else {
-            return false;
+    compare(preselectedUser: IdentityUserModel, identityUser: IdentityUserModel): boolean {
+        if (preselectedUser && identityUser) {
+            const uniquePropertyIdentifiers = ['id', 'username', 'email'];
+            for (const property of Object.keys(preselectedUser)) {
+                if (preselectedUser[property] !== undefined && uniquePropertyIdentifiers.includes(property)) {
+                    return preselectedUser[property] === identityUser[property];
+                }
+            }
         }
+        return false;
     }
 
     async searchUser(user: IdentityUserModel) {

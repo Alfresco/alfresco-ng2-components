@@ -116,6 +116,66 @@ describe('PeopleCloudComponent', () => {
             });
         });
 
+        it('should not be able to search for a user that his username matches one of the preselected users username', (done) => {
+            component.preSelectUsers = [{ username: mockUsers[0].username }];
+            const changes = new SimpleChange(null, [{ username: mockUsers[0].username }], false);
+            component.ngOnChanges({ 'preSelectUsers': changes });
+            fixture.detectChanges();
+
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'first-name';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
+                done();
+            });
+        });
+
+        it('should not be able to search for a user that his id matches one of the preselected users id', (done) => {
+            component.preSelectUsers = [{ id: mockUsers[0].id }];
+            const changes = new SimpleChange(null, [{ id: mockUsers[0].id }], false);
+            component.ngOnChanges({ 'preSelectUsers': changes });
+            fixture.detectChanges();
+
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'first-name';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
+                done();
+            });
+        });
+
+        it('should not be able to search for a user that his email matches one of the preselected users email', (done) => {
+            component.preSelectUsers = [{ email: mockUsers[0].email }];
+            const changes = new SimpleChange(null, [{ email: mockUsers[0].email }], false);
+            component.ngOnChanges({ 'preSelectUsers': changes });
+            fixture.detectChanges();
+
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'first-name';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
+                done();
+            });
+        });
+
         it('should hide result list if input is empty', (done) => {
             fixture.detectChanges();
             const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
@@ -133,7 +193,6 @@ describe('PeopleCloudComponent', () => {
         it('should selectedUser and changedUsers emit, update selected users when a user is selected', (done) => {
             const user = { username: 'username' };
             fixture.detectChanges();
-            spyOn(component, 'isPreselectedUserValid').and.returnValue(true);
             const selectEmitSpy = spyOn(component.selectUser, 'emit');
             const changedUsersSpy = spyOn(component.changedUsers, 'emit');
             component.onSelect(user);
@@ -514,8 +573,6 @@ describe('PeopleCloudComponent', () => {
 
         it('should check validation only for the first user and emit warning when user is invalid - single mode', (done) => {
             spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve([]));
-            spyOn(component, 'isPreselectedUserValid').and.returnValue(false);
-
             const expectedWarning = {
                 message: 'INVALID_PRESELECTED_USERS',
                 users: [{

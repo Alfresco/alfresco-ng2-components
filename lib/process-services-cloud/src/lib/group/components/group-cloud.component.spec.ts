@@ -102,6 +102,26 @@ describe('GroupCloudComponent', () => {
             });
         });
 
+        it('should not be able to search for a group that its name matches one of the preselected groups name', (done) => {
+            component.preSelectGroups = [{ name: mockIdentityGroups[0].name }];
+            const changes = new SimpleChange(null, [{ name: mockIdentityGroups[0].name }], false);
+            component.ngOnChanges({ 'preSelectGroups': changes });
+            fixture.detectChanges();
+
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'mock-group';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(4);
+                done();
+            });
+        });
+
         it('should hide result list if input is empty', (done) => {
             fixture.detectChanges();
             const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
