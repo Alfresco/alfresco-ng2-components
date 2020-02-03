@@ -131,7 +131,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     clientId: string;
     isFocused: boolean;
 
-    currentTimeout: any;
     validateUsersMessage: string;
     searchedValue = '';
 
@@ -226,7 +225,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        clearTimeout(this.currentTimeout);
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
