@@ -29,6 +29,7 @@ export class ProcessListCloudComponentPage {
 
     processList: ElementFinder = element(by.css('adf-cloud-process-list'));
     noProcessFound: ElementFinder = element.all(by.css("div[class='adf-empty-content__title']")).first();
+    isLoading: ElementFinder = element.all(by.css('.adf-cloud-process-list-loading-margin')).first();
     actionMenu: ElementFinder = element(by.css('*[role="menu"]'));
     optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
 
@@ -92,6 +93,14 @@ export class ProcessListCloudComponentPage {
 
     async checkProcessListIsLoaded(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.processList);
+    }
+
+    async checkProcessListShowsSpinner(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.isLoading);
+    }
+
+    async checkListedSelectedProcessInstance(processInstanceId: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('div ul', processInstanceId)));
     }
 
     async getNoProcessFoundMessage(): Promise<string> {

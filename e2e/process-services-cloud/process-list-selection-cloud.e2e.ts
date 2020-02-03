@@ -164,6 +164,22 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processListCloudComponent().checkRowIsNotCheckedById(processInstances[2]);
         });
 
+        it('[C297467] Should be able to see selected processes', async () => {
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.enableMultiSelection();
+            await tasksCloudDemoPage.enableTestingMode();
+            await tasksCloudDemoPage.clickAppButton();
+            await processCloudDemoPage.isProcessFiltersListVisible();
+            await expect(await processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
+
+            await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
+            await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);
+            await processCloudDemoPage.processListCloudComponent().checkListedSelectedProcessInstance(processInstances[0]);
+
+            await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[1]);
+            await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[1]);
+            await processCloudDemoPage.processListCloudComponent().checkListedSelectedProcessInstance(processInstances[1]);
+        });
     });
 
 });

@@ -325,4 +325,32 @@ describe('Process filters cloud', () => {
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 
+    it('[C290041] Should be displayed the "No Process Found" message when the process list is empty', async () => {
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
+        await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
+        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('COMPLETED');
+
+        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+        await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().contents.count()).toBeGreaterThan(0);
+
+        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', 'i_am_fake_id');
+        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
+    });
+
+    it('[C315296] Should NOT display "No Process Found" before displaying the process list', async () => {
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
+        await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
+        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('COMPLETED');
+
+        await processCloudDemoPage.processListCloudComponent().checkProcessListShowsSpinner();
+        await expect(await processListPage.getDisplayedProcessListTitle()).not.toEqual('No Processes Found');
+        await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().contents.count()).toBeGreaterThan(0);
+
+        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', 'i_am_fake_id');
+        await processCloudDemoPage.processListCloudComponent().checkProcessListShowsSpinner();
+        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
+    });
+
 });
