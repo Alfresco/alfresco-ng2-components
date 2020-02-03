@@ -25,10 +25,9 @@ import {
     ProcessInstancesService,
     LoginSSOPage,
     ApiService,
-    IdentityService, GroupIdentityService,
-    AppListCloudPage,
-    TaskHeaderCloudPage,
-    TaskFormCloudComponent
+    IdentityService,
+    GroupIdentityService,
+    AppListCloudPage
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -40,8 +39,6 @@ describe('Task filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const taskHeaderCloudPage = new TaskHeaderCloudPage();
-        const taskFormCloudComponent = new TaskFormCloudComponent();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -189,21 +186,5 @@ describe('Task filters cloud', () => {
 
         });
 
-        it('[C290040] Should be able to open the Task Details page by clicking on the process name', async () => {
-            const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.processstring, simpleApp);
-            const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-            const taskAssigned = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
-
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('RUNNING');
-
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskAssigned.list.entries[0].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskAssigned.list.entries[0].entry.name);
-            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-            await expect(await taskFormCloudComponent.getFormTitle()).toContain('inputtask');
-            await taskFormCloudComponent.clickCompleteButton();
-        });
     });
 });
