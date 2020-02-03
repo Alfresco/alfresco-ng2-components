@@ -84,7 +84,6 @@ describe('GroupCloudComponent', () => {
 
         beforeEach(async(() => {
             fixture.detectChanges();
-            element = fixture.nativeElement;
             findGroupsByNameSpy = spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
         }));
 
@@ -140,7 +139,7 @@ describe('GroupCloudComponent', () => {
             });
         });
 
-        it('should selectedGroup  and groupsChanged emit, update selected groups when a group is selected', (done) => {
+        it('should update selected groups when a group is selected', (done) => {
             fixture.detectChanges();
 
             const selectEmitSpy = spyOn(component.selectGroup, 'emit');
@@ -153,9 +152,48 @@ describe('GroupCloudComponent', () => {
             fixture.whenStable().then(() => {
                 expect(selectEmitSpy).toHaveBeenCalledWith(group);
                 expect(changedGroupsSpy).toHaveBeenCalledWith([group]);
-                expect(component.getSelectedGroups()[0]).toEqual(group);
+                expect(component.selectedGroups).toEqual([group]);
                 done();
             });
+        });
+
+        it('should replace the group in single-selection mode', () => {
+            component.mode = 'single';
+
+            const group1 = { name: 'group1' };
+            const group2 = { name: 'group2' };
+
+            component.onSelect(group1);
+            expect(component.selectedGroups).toEqual([group1]);
+
+            component.onSelect(group2);
+            expect(component.selectedGroups).toEqual([group2]);
+        });
+
+        it('should allow multiple groups in multi-selection mode', () => {
+            component.mode = 'multiple';
+
+            const group1 = { name: 'group1' };
+            const group2 = { name: 'group2' };
+
+            component.onSelect(group1);
+            component.onSelect(group2);
+
+            expect(component.selectedGroups).toEqual([group1, group2]);
+        });
+
+        it('should allow only unique groups in multi-selection mode', () => {
+            component.mode = 'multiple';
+
+            const group1 = { name: 'group1' };
+            const group2 = { name: 'group2' };
+
+            component.onSelect(group1);
+            component.onSelect(group2);
+            component.onSelect(group1);
+            component.onSelect(group2);
+
+            expect(component.selectedGroups).toEqual([group1, group2]);
         });
 
         it('should show an error message if the search result empty', (done) => {
@@ -193,7 +231,6 @@ describe('GroupCloudComponent', () => {
             component.appName = 'mock-app-name';
 
             fixture.detectChanges();
-            element = fixture.nativeElement;
         }));
 
         it('should fetch the client ID if appName specified', async (() => {
@@ -383,7 +420,6 @@ describe('GroupCloudComponent', () => {
             spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
             checkGroupHasRoleSpy = spyOn(identityGroupService, 'checkGroupHasRole').and.returnValue(of(true));
             fixture.detectChanges();
-            element = fixture.nativeElement;
         }));
 
         it('should filter if groups has any specified role', (done) => {
@@ -447,7 +483,6 @@ describe('GroupCloudComponent', () => {
             component.preSelectGroups = <any> mockIdentityGroups;
             component.ngOnChanges({ 'preSelectGroups': changes });
             fixture.detectChanges();
-            element = fixture.nativeElement;
         }));
 
         it('should show only one mat chip with the first preSelectedGroup', () => {
@@ -465,10 +500,9 @@ describe('GroupCloudComponent', () => {
             component.preSelectGroups = <any> mockIdentityGroups;
             component.ngOnChanges({ 'preSelectGroups': change });
             fixture.detectChanges();
-            element = fixture.nativeElement;
         }));
 
-        it('should pre-select all preSelectGroups', () => {
+        it('should render all preselected groups', () => {
             component.mode = 'multiple';
             fixture.detectChanges();
             component.ngOnChanges({ 'preSelectGroups': change });
@@ -491,7 +525,7 @@ describe('GroupCloudComponent', () => {
             fixture.whenStable().then(() => {
                 expect(removeGroupEmitterSpy).toHaveBeenCalledWith(groupToRemove);
                 expect(changedGroupsEmitterSpy).toHaveBeenCalledWith([mockIdentityGroups[1], mockIdentityGroups[2], mockIdentityGroups[3], mockIdentityGroups[4]]);
-                expect(component.getSelectedGroups().indexOf({
+                expect(component.selectedGroups.indexOf({
                     id: groupToRemove.id,
                     name: groupToRemove.name,
                     path: groupToRemove.path

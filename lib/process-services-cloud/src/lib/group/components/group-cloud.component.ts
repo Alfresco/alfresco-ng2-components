@@ -157,7 +157,10 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private isAppNameChanged(change: SimpleChange): boolean {
-        return change && change.previousValue !== change.currentValue && this.appName && this.appName.length > 0;
+        return change
+            && change.previousValue !== change.currentValue
+            && this.appName
+            && this.appName.length > 0;
     }
 
     private async loadClientId(): Promise<void> {
@@ -192,15 +195,13 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
                 this.resetSearchGroups();
                 return groups;
             }),
-            filter((group: any) => {
-                return !this.isGroupAlreadySelected(group);
-            }),
-            mergeMap((group: any) => {
+            filter(group => !this.isGroupAlreadySelected(group)),
+            mergeMap(group => {
                 if (this.appName) {
                     return this.checkGroupHasAccess(group.id).pipe(
-                        mergeMap((hasRole) => {
-                            return hasRole ? of(group) : of();
-                        })
+                        mergeMap(
+                            hasRole => hasRole ? of(group) : of()
+                        )
                     );
                 } else if (this.hasRoles()) {
                     return this.filterGroupsByRoles(group);
@@ -209,7 +210,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }),
             takeUntil(this.onDestroy$)
-        ).subscribe((searchedGroup: any) => {
+        ).subscribe(searchedGroup => {
             this.searchGroups.push(searchedGroup);
             this.searchGroups$.next(this.searchGroups);
         });
@@ -234,8 +235,8 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         return false;
     }
 
-    async searchGroup(groupName: string): Promise<IdentityGroupModel> {
-        return (await this.identityGroupService.findGroupsByName({ name: groupName }).toPromise())[0];
+    async searchGroup(name: string): Promise<IdentityGroupModel> {
+        return (await this.identityGroupService.findGroupsByName({ name }).toPromise())[0];
     }
 
     private getPreselectedGroups(): IdentityGroupModel[] {
@@ -314,6 +315,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     onSelect(group: IdentityGroupModel): void {
         this.selectGroup.emit(group);
+
         if (this.isMultipleMode()) {
             if (!this.isGroupAlreadySelected(group)) {
                 this.selectedGroups.push(group);
@@ -411,23 +413,27 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private hasModeChanged(changes: SimpleChanges): boolean {
-        return changes && changes.mode && changes.mode.currentValue !== changes.mode.previousValue;
+        return changes
+            && changes.mode
+            && changes.mode.currentValue !== changes.mode.previousValue;
     }
 
     private isValidationChanged(changes: SimpleChanges): boolean {
-        return changes && changes.validate && changes.validate.currentValue !== changes.validate.previousValue;
+        return changes
+            && changes.validate
+            && changes.validate.currentValue !== changes.validate.previousValue;
     }
 
     private hasPreselectedGroupsChanged(changes: SimpleChanges): boolean {
-        return changes && changes.preSelectGroups && changes.preSelectGroups.currentValue !== changes.preSelectGroups.previousValue;
+        return changes
+            && changes.preSelectGroups
+            && changes.preSelectGroups.currentValue !== changes.preSelectGroups.previousValue;
     }
 
     private hasPreselectedGroupsCleared(changes: SimpleChanges): boolean {
-        return changes && changes.preSelectGroups && changes.preSelectGroups.currentValue.length === 0;
-    }
-
-    getSelectedGroups(): IdentityGroupModel[] {
-        return this.selectedGroups;
+        return changes
+            && changes.preSelectGroups
+            && changes.preSelectGroups.currentValue.length === 0;
     }
 
     private hasRoles(): boolean {

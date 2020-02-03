@@ -21,7 +21,8 @@ import {
     IdentityUserService,
     AlfrescoApiService,
     CoreModule,
-    setupTestBed
+    setupTestBed,
+    IdentityUserModel
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
@@ -64,8 +65,10 @@ describe('PeopleCloudComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
+
         identityService = TestBed.get(IdentityUserService);
         alfrescoApiService = TestBed.get(AlfrescoApiService);
+
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
     });
 
@@ -192,7 +195,7 @@ describe('PeopleCloudComponent', () => {
             });
         });
 
-        it('should selectedUser and changedUsers emit, update selected users when a user is selected', (done) => {
+        it('should update selected users when a user is selected', (done) => {
             const user = { username: 'username' };
             fixture.detectChanges();
             const selectEmitSpy = spyOn(component.selectUser, 'emit');
@@ -207,6 +210,45 @@ describe('PeopleCloudComponent', () => {
                 expect(component.getSelectedUsers()).toEqual([user]);
                 done();
             });
+        });
+
+        it('should replace the user in single-selection mode', () => {
+            component.mode = 'single';
+
+            const user1: IdentityUserModel = { id: '1', username: 'user1', email: 'user1@mail.com' };
+            const user2: IdentityUserModel = { id: '2', username: 'user2', email: 'user2@mail.com' };
+
+            component.onSelect(user1);
+            expect(component.getSelectedUsers()).toEqual([user1]);
+
+            component.onSelect(user2);
+            expect(component.getSelectedUsers()).toEqual([user2]);
+        });
+
+        it('should allow multiple users in multi-selection mode', () => {
+            component.mode = 'multiple';
+
+            const user1: IdentityUserModel = { id: '1', username: 'user1', email: 'user1@mail.com' };
+            const user2: IdentityUserModel = { id: '2', username: 'user2', email: 'user2@mail.com' };
+
+            component.onSelect(user1);
+            component.onSelect(user2);
+
+            expect(component.getSelectedUsers()).toEqual([user1, user2]);
+        });
+
+        it('should allow only unique users in multi-selection mode', () => {
+            component.mode = 'multiple';
+
+            const user1: IdentityUserModel = { id: '1', username: 'user1', email: 'user1@mail.com' };
+            const user2: IdentityUserModel = { id: '2', username: 'user2', email: 'user2@mail.com' };
+
+            component.onSelect(user1);
+            component.onSelect(user2);
+            component.onSelect(user1);
+            component.onSelect(user2);
+
+            expect(component.getSelectedUsers()).toEqual([user1, user2]);
         });
 
         it('should show an error message if the search result empty', (done) => {
@@ -651,7 +693,26 @@ describe('PeopleCloudComponent', () => {
             component.mode = 'single';
             component.validate = true;
             component.preSelectUsers = <any> [mockPreselectedUsers[0], mockPreselectedUsers[1]];
-            component.ngOnChanges({ 'preSelectUsers': new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false) });
+            component.ngOnChanges({
+                'preSelectUsers': new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false)
+            });
+        });
+
+        it('should skip warnings if validation disabled', () => {
+            spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve([]));
+            spyOn(component, 'userEquals').and.returnValue(false);
+
+            let warnings = 0;
+
+            component.warning.subscribe(() => warnings++);
+            component.mode = 'single';
+            component.validate = false;
+            component.preSelectUsers = <any> [mockPreselectedUsers[0], mockPreselectedUsers[1]];
+            component.ngOnChanges({
+                'preSelectUsers': new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false)
+            });
+
+            expect(warnings).toBe(0);
         });
 
         it('should check validation for all the users and emit warning - multiple mode', (done) => {
@@ -679,7 +740,9 @@ describe('PeopleCloudComponent', () => {
             component.mode = 'multiple';
             component.validate = true;
             component.preSelectUsers = <any> [mockPreselectedUsers[0], mockPreselectedUsers[1]];
-            component.ngOnChanges({ 'preSelectUsers': new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false) });
+            component.ngOnChanges({
+                'preSelectUsers': new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false)
+            });
         });
     });
 
