@@ -23,13 +23,13 @@ import { PageTitleService } from './page-title.service';
 import { TranslationService } from './translation.service';
 import { Title } from '@angular/platform-browser';
 
-describe('AppTitle service', () => {
+describe('PageTitleService', () => {
 
-    let titleService: any;
-    let translationService: any;
-    let pageTitleService: any;
-    let appConfigService: any;
-    let titleServiceSpy: any;
+    let titleService: Title;
+    let translationService: TranslationService;
+    let pageTitleService: PageTitleService;
+    let appConfigService: AppConfigService;
+    let titleServiceSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
