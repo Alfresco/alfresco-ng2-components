@@ -17,16 +17,17 @@
 
 import { browser, protractor } from 'protractor';
 import {
-    AppListCloudPage,
-    StringUtil,
     ApiService,
+    AppListCloudPage,
     LoginSSOPage,
-    TasksService,
+    ProcessCloudWidgetPage,
     ProcessDefinitionsService,
     ProcessInstancesService,
-    TaskHeaderCloudPage,
+    QueryService,
+    StringUtil,
     TaskFormCloudComponent,
-    QueryService, ProcessCloudWidgetPage
+    TaskHeaderCloudPage,
+    TasksService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';

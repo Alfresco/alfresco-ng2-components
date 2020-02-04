@@ -20,6 +20,7 @@ import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/processDetailsCloudDemoPage';
 
 describe('Process list cloud', () => {
 
@@ -29,6 +30,7 @@ describe('Process list cloud', () => {
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
 
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
@@ -174,11 +176,11 @@ describe('Process list cloud', () => {
 
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);
-            await processCloudDemoPage.processListCloudComponent().checkListedSelectedProcessInstance(processInstances[0]);
+            await processDetailsCloudDemoPage.checkListedSelectedProcessInstance(processInstances[0]);
 
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[1]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[1]);
-            await processCloudDemoPage.processListCloudComponent().checkListedSelectedProcessInstance(processInstances[1]);
+            await processDetailsCloudDemoPage.checkListedSelectedProcessInstance(processInstances[1]);
         });
     });
 

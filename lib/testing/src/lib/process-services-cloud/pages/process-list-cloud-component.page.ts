@@ -94,10 +94,6 @@ export class ProcessListCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.processList);
     }
 
-    async checkListedSelectedProcessInstance(processInstanceId: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('div ul', processInstanceId)));
-    }
-
     async getNoProcessFoundMessage(): Promise<string> {
         return BrowserActions.getText(this.noProcessFound);
     }

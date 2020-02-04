@@ -27,13 +27,10 @@ import {
     ProcessInstancesService,
     QueryService,
     StringUtil,
-    TaskFormCloudComponent,
-    TaskHeaderCloudPage,
     TasksService
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/processDetailsCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessListPage } from '../pages/adf/process-services/processListPage';
@@ -47,9 +44,6 @@ describe('Process filters cloud', () => {
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
-    const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
-    const taskHeaderCloudPage = new TaskHeaderCloudPage();
-    const taskFormCloudComponent = new TaskFormCloudComponent();
     const processListPage = new ProcessListPage();
     const apiService = new ApiService(
         browser.params.config.oauth2.clientId,
@@ -343,58 +337,4 @@ describe('Process filters cloud', () => {
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
-
-    it('[C290041] Should be displayed the "No Process Found" message when the process list is empty', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('COMPLETED');
-
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().contents.count()).toBeGreaterThan(0);
-
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', 'i_am_fake_id');
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
-    });
-
-    it('[C315296] Should NOT display "No Process Found" before displaying the process list', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('COMPLETED');
-
-        await expect(await processListPage.getDisplayedProcessListTitle()).not.toEqual('No Processes Found');
-        await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().contents.count()).toBeGreaterThan(0);
-
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', 'i_am_fake_id');
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
-    });
-
-    it('[C290040] Should be able to open the Task Details page by clicking on the process name', async () => {
-        const simpleProcessDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.processstring, simpleApp);
-        const processInstance = await processInstancesService.createProcessInstance(simpleProcessDefinition.entry.key, simpleApp);
-        const taskAssigned = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
-        const taskName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.processstring;
-
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(simpleApp);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING');
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', processInstance.entry.id);
-        await processCloudDemoPage.processListCloudComponent().selectRowById(processInstance.entry.id);
-
-        await processDetailsCloudDemoPage.checkTaskIsDisplayed(taskName);
-        await browser.navigate().back();
-
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED');
-
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskAssigned.list.entries[0].entry.name);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskAssigned.list.entries[0].entry.name);
-        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-        await expect(await taskFormCloudComponent.getFormTitle()).toContain(taskName);
-        await taskFormCloudComponent.clickCompleteButton();
-    });
-
 });
