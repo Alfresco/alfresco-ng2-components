@@ -62,7 +62,7 @@
     <mat-error *ngIf="searchGroupsControl.hasError('minlength')">
         <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
         {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MIN_LENGTH' | translate: { requiredLength: getValidationMinLength() } }}</mat-error>
-    <mat-error *ngIf="searchGroupsControl.hasError('required')">
+    <mat-error *ngIf="searchGroupsControl.hasError('required') || groupChipsCtrl.hasError('required')">
         <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
         {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.REQUIRED' | translate }} </mat-error>
     <mat-error *ngIf="searchGroupsControl.hasError('searchTypingError') && !this.isFocused" data-automation-id="invalid-groups-typing-error">
