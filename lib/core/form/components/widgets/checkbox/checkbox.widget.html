@@ -1,4 +1,5 @@
-<div [ngClass]="field.className">
+<div [ngClass]="field.className"
+     [class.adf-invalid]="!field.isValid">
     <mat-checkbox
         [id]="field.id"
         color="primary"
