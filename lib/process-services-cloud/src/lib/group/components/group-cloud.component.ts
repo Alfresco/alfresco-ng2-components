@@ -84,6 +84,10 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     readOnly: boolean = false;
 
+    /** FormControl to list of group */
+    @Input()
+    groupChipsCtrl: FormControl = new FormControl({ value: '', disabled: false });
+
     /** FormControl to search the group */
     @Input()
     searchGroupsControl: FormControl = new FormControl({ value: '', disabled: false });
@@ -173,15 +177,19 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     initSearch(): void {
         this.searchGroupsControl.valueChanges.pipe(
-            debounceTime(500),
-            distinctUntilChanged(),
             filter((value) => {
                 return typeof value === 'string';
             }),
+            tap((value: string) => {
+                if (value) {
+                    this.setTypingError();
+                }
+            }),
+            debounceTime(500),
+            distinctUntilChanged(),
             tap((value) => {
                 if (value.trim()) {
                     this.searchedValue = value;
-                    this.setTypingError();
                 } else {
                     this.searchGroupsControl.markAsPristine();
                     this.searchGroupsControl.markAsUntouched();
@@ -298,7 +306,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.selectedGroups = this.removeDuplicatedGroups(this.preSelectGroups);
         }
-
+        this.groupChipsCtrl.setValue(this.selectedGroups[0].name);
         if (this.isValidationEnabled()) {
             this.isLoading = true;
             await this.validatePreselectGroups();
@@ -327,6 +335,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
         this.groupInput.nativeElement.value = '';
         this.searchGroupsControl.setValue('');
+        this.groupChipsCtrlValue(this.selectedGroups[0].name);
 
         this.changedGroups.emit(this.selectedGroups);
         this.resetSearchGroups();
@@ -336,12 +345,25 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.removeGroup.emit(groupToRemove);
         this.removeGroupFromSelected(groupToRemove);
         this.changedGroups.emit(this.selectedGroups);
+        if (this.selectedGroups.length === 0) {
+            this.groupChipsCtrlValue('');
+
+        } else {
+            this.groupChipsCtrlValue(this.selectedGroups[0].name);
+        }
         this.searchGroupsControl.markAsDirty();
+        this.searchGroupsControl.markAsTouched();
 
         if (this.isValidationEnabled()) {
             this.removeGroupFromValidation(groupToRemove);
             this.checkPreselectValidationErrors();
         }
+    }
+
+    private groupChipsCtrlValue(value: string) {
+        this.groupChipsCtrl.setValue(value);
+        this.groupChipsCtrl.markAsDirty();
+        this.groupChipsCtrl.markAsTouched();
     }
 
     private removeGroupFromSelected({ id, name }: IdentityGroupModel): void {

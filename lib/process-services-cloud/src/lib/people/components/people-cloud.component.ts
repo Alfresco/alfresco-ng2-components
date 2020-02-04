@@ -92,6 +92,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     preSelectUsers: IdentityUserModel[] = [];
 
+    /** FormControl to list of users */
+    @Input()
+    userChipsCtrl: FormControl = new FormControl({ value: '', disabled: false });
+
     /** FormControl to search the user */
     @Input()
     searchUserCtrl = new FormControl({ value: '', disabled: false });
@@ -178,15 +182,19 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     private initSearch(): void {
         this.searchUserCtrl.valueChanges.pipe(
-            debounceTime(500),
-            distinctUntilChanged(),
             filter((value) => {
                 return typeof value === 'string';
             }),
             tap((value: string) => {
+                if (value) {
+                    this.setTypingError();
+                }
+            }),
+            debounceTime(500),
+            distinctUntilChanged(),
+            tap((value: string) => {
                 if (value.trim()) {
                     this.searchedValue = value;
-                    this.setTypingError();
                 } else {
                     this.searchUserCtrl.markAsPristine();
                     this.searchUserCtrl.markAsUntouched();
@@ -273,7 +281,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.selectedUsers = this.removeDuplicatedUsers(this.preSelectUsers);
         }
-
+        this.userChipsCtrl.setValue(this.selectedUsers[0].username);
         if (this.isValidationEnabled()) {
             this.isLoading = true;
             await this.validatePreselectUsers();
@@ -386,6 +394,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
         this.userInput.nativeElement.value = '';
         this.searchUserCtrl.setValue('');
+        this.userChipsCtrlValue(this.selectedUsers[0].username);
 
         this.changedUsers.emit(this.selectedUsers);
         this.resetSearchUsers();
@@ -395,12 +404,25 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.removeUser.emit(userToRemove);
         this.removeUserFromSelected(userToRemove);
         this.changedUsers.emit(this.selectedUsers);
+        if (this.selectedUsers.length === 0) {
+            this.userChipsCtrlValue('');
+
+        } else {
+            this.userChipsCtrlValue(this.selectedUsers[0].username);
+        }
         this.searchUserCtrl.markAsDirty();
+        this.searchUserCtrl.markAsTouched();
 
         if (this.isValidationEnabled()) {
             this.removeUserFromValidation(userToRemove);
             this.checkPreselectValidationErrors();
         }
+    }
+
+    private userChipsCtrlValue(value: string) {
+        this.userChipsCtrl.setValue(value);
+        this.userChipsCtrl.markAsDirty();
+        this.userChipsCtrl.markAsTouched();
     }
 
     private removeUserFromSelected({ id, username, email }: IdentityUserModel): void {
