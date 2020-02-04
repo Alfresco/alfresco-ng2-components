@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/formFields';
@@ -26,8 +26,6 @@ export class GroupCloudComponentPage {
     formFields: FormFields = new FormFields();
 
     async searchGroups(name: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
-        await browser.sleep(1000);
         await BrowserActions.clearSendKeys(this.groupCloudSearch, name);
     }
 
@@ -42,7 +40,7 @@ export class GroupCloudComponentPage {
 
     async selectGroupFromList(name: string): Promise<void> {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
-        await browser.sleep(1000);
+
         await BrowserActions.click(groupRow);
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
     }
@@ -73,6 +71,26 @@ export class GroupCloudComponentPage {
     async isGroupWidgetVisible(fieldId: string): Promise<boolean> {
         try {
             await this.formFields.checkWidgetIsVisible(fieldId);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async checkGroupWidgetIsReadOnly (): Promise <boolean> {
+        const readOnlyGroup = element(by.css('group-cloud-widget .adf-readonly'));
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(readOnlyGroup);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async checkGroupActiveField(name): Promise <boolean> {
+        const activeGroupField = element(by.css('group-cloud-widget .adf-readonly'));
+        try {
+            await BrowserActions.clearSendKeys(activeGroupField, name);
             return true;
         } catch {
             return false;

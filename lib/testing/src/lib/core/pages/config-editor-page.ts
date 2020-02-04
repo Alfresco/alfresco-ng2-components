@@ -16,7 +16,8 @@
  */
 
 import { element, by, browser, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../utils/browser-visibility';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class ConfigEditorPage {
 

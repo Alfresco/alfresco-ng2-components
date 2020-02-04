@@ -16,20 +16,29 @@
  */
 
 import {
+    FormCloudComponentPage,
     FormPage,
     LoginSSOPage,
     ProcessCloudWidgetPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
-import { peopleJson, peopleMultipleModeJson, peopleRequiredJson, groupSingleJson, groupMultipleJson, groupRequiredJson } from '../../resources/forms/people-group-formwidget-json';
+import {
+    peopleSingleModeFormMock,
+    peopleMultipleModeFormMock,
+    peopleRequiredFormMock,
+    groupSingleModeFormMock,
+    groupMultipleModeFormMock,
+    groupRequiredFormMock,
+    peopleReadOnlyFormMock,
+    groupReadOnlyFormMock
+} from '../../resources/forms/people-group-formwidget-mocks';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('People and Group of people Widgets', () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    const formCloudDemoPage = new FormCloudDemoPage();
+    const formCloudComponentPage = new FormCloudComponentPage();
     const widget = new ProcessCloudWidgetPage();
     const peopleCloudWidget = widget.peopleCloudWidget();
     const groupCloudWidget = widget.groupCloudWidget();
@@ -72,7 +81,8 @@ describe('People and Group of people Widgets', () => {
     });
 
     it('[C325002] Should be able to add a user in People field when Single mode is chosen', async () => {
-        await formCloudDemoPage.setConfigToEditor(peopleJson);
+        await formCloudComponentPage.setConfigToEditor(peopleSingleModeFormMock);
+
         await peopleCloudWidget.clickPeopleInput(widgets.peopleCloudWidgetSingleModeId);
         await peopleCloudWidget.isPeopleWidgetVisible(peopleValueString.peopleCloudWidgetSingleModeField);
         const peopleSingleMode = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetSingleModeId);
@@ -83,7 +93,8 @@ describe('People and Group of people Widgets', () => {
     });
 
     it('[C325122] Should be able to add multiple users in People field when Multiple mode is chosen', async () => {
-        await formCloudDemoPage.setConfigToEditor(peopleMultipleModeJson);
+        await formCloudComponentPage.setConfigToEditor(peopleMultipleModeFormMock);
+
         await peopleCloudWidget.clickPeopleInput(widgets.peopleCloudWidgetMultipleModeId);
         await peopleCloudWidget.isPeopleWidgetVisible(peopleValueString.peopleCloudWidgetMultipleModeField);
         const peopleMultipleMode = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetMultipleModeId);
@@ -95,8 +106,19 @@ describe('People and Group of people Widgets', () => {
         await peopleCloudWidget.checkSelectedPeople('Sales User');
     });
 
+    it('[C325182] Should not be able to type in the People field if the readOnly option is checked', async () => {
+        await formCloudComponentPage.setConfigToEditor(peopleReadOnlyFormMock);
+
+        const readOnlyAttribute = await peopleCloudWidget.checkPeopleWidgetIsReadOnly();
+        const activePeopleField = await peopleCloudWidget.checkPeopleActiveField('HR User');
+
+        await expect (readOnlyAttribute).toBe(true);
+        await expect (activePeopleField).toBe(false);
+    });
+
     it('[C325004] Should be able to save only for valid input in the People  field if the Required option is selected ', async () => {
-        await formCloudDemoPage.setConfigToEditor(peopleRequiredJson);
+        await formCloudComponentPage.setConfigToEditor(peopleRequiredFormMock);
+
         await peopleCloudWidget.isPeopleWidgetVisible(peopleValueString.peopleCloudWidgetRequiredField);
         await expect(await formPage.isSaveButtonDisabled()).toBe(true);
         await expect(await formPage.isValidationIconRed()).toBe(true);
@@ -111,7 +133,8 @@ describe('People and Group of people Widgets', () => {
     });
 
     it('[C325003] Should be able to add a user in Group of people field when Single mode is chosen', async () => {
-        await formCloudDemoPage.setConfigToEditor(groupSingleJson);
+        await formCloudComponentPage.setConfigToEditor(groupSingleModeFormMock);
+
         await groupCloudWidget.isGroupWidgetVisible(groupValueString.groupCloudWidgetSingleModeField);
         const groupSingleMode = await groupCloudWidget.getGroupsFieldContent();
         await expect(groupSingleMode).toEqual('');
@@ -122,7 +145,8 @@ describe('People and Group of people Widgets', () => {
     });
 
     it('[C325123] Should be able to add multiple users in Group of people field when Multiple mode is chosen', async () => {
-        await formCloudDemoPage.setConfigToEditor(groupMultipleJson);
+        await formCloudComponentPage.setConfigToEditor(groupMultipleModeFormMock);
+
         await groupCloudWidget.isGroupWidgetVisible(groupValueString.groupCloudWidgetMultipleModeField);
         const groupSingleMode = await groupCloudWidget.getGroupsFieldContent();
         await expect(groupSingleMode).toEqual('');
@@ -135,8 +159,19 @@ describe('People and Group of people Widgets', () => {
         await groupCloudWidget.checkSelectedGroup('sales');
     });
 
+    it('[C325183] Should not be able to type in the Group field if the readOnly option is checked', async () => {
+        await formCloudComponentPage.setConfigToEditor(groupReadOnlyFormMock);
+
+        const readOnlyGroupAttribute = await groupCloudWidget.checkGroupWidgetIsReadOnly();
+        const activeGroupField = await groupCloudWidget.checkGroupActiveField('hr');
+
+        await expect (readOnlyGroupAttribute).toBe(true);
+        await expect (activeGroupField).toBe(false);
+    });
+
     it('[C325005] Should be able to save only for valid input in the Group of people field if the Required option is selected', async () => {
-        await formCloudDemoPage.setConfigToEditor(groupRequiredJson);
+        await formCloudComponentPage.setConfigToEditor(groupRequiredFormMock);
+
         await groupCloudWidget.isGroupWidgetVisible(groupValueString.groupCloudWidgetRequiredField);
         await expect(await formPage.isSaveButtonDisabled()).toBe(true);
         await expect(await formPage.isValidationIconRed()).toBe(true);
@@ -150,4 +185,5 @@ describe('People and Group of people Widgets', () => {
         await expect(await formPage.isSaveButtonDisabled()).toBe(false);
         await expect(await formPage.isValidationIconBlue()).toBe(true);
     });
+
 });
