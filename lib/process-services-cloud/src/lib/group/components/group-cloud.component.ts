@@ -177,19 +177,23 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     initSearch(): void {
         this.searchGroupsControl.valueChanges.pipe(
-            tap((value) => {
-                if (value.trim()) {
-                    this.searchedValue = value;
+            filter((value) => {
+                return typeof value === 'string';
+            }),
+            tap((value: string) => {
+                if (value) {
                     this.setTypingError();
-                } else {
-                    this.searchGroupsControl.markAsPristine();
-                    this.searchGroupsControl.markAsUntouched();
                 }
             }),
             debounceTime(500),
             distinctUntilChanged(),
-            filter((value) => {
-                return typeof value === 'string';
+            tap((value) => {
+                if (value.trim()) {
+                    this.searchedValue = value;
+                } else {
+                    this.searchGroupsControl.markAsPristine();
+                    this.searchGroupsControl.markAsUntouched();
+                }
             }),
             tap(() => this.resetSearchGroups()),
             switchMap((name: string) =>
