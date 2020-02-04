@@ -24,8 +24,7 @@ import {
     setupTestBed,
     CoreModule,
     UserPreferencesService,
-    SearchTextInputComponent,
-    ThumbnailService
+    SearchTextInputComponent
 } from '@alfresco/adf-core';
 import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
@@ -43,24 +42,14 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
         </adf-search-control>
     `
 })
-
 export class SimpleSearchTestCustomEmptyComponent {
-
-    customMessage: string = '';
+    customMessage = '';
 
     @ViewChild(SearchControlComponent)
     searchComponent: SearchControlComponent;
 
     @ViewChild(SearchTextInputComponent)
     searchTextInputComponent: SearchTextInputComponent;
-
-    constructor() {
-    }
-
-    setCustomMessageForNoResult(message: string) {
-        this.customMessage = message;
-    }
-
 }
 
 describe('SearchControlComponent', () => {
@@ -74,7 +63,7 @@ describe('SearchControlComponent', () => {
     let fixtureCustom: ComponentFixture<SimpleSearchTestCustomEmptyComponent>;
     let elementCustom: HTMLElement;
     let componentCustom: SimpleSearchTestCustomEmptyComponent;
-    let searchServiceSpy: any;
+    let searchServiceSpy: jasmine.Spy;
     let userPreferencesService: UserPreferencesService;
 
     setupTestBed({
@@ -87,11 +76,6 @@ describe('SearchControlComponent', () => {
             SearchComponent,
             EmptySearchResultComponent,
             SimpleSearchTestCustomEmptyComponent
-        ],
-        providers: [
-            ThumbnailService,
-            SearchService,
-            UserPreferencesService
         ]
     });
 
@@ -190,7 +174,6 @@ describe('SearchControlComponent', () => {
     describe('autocomplete list', () => {
 
         it('should make autocomplete list control hidden initially', (done) => {
-
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#autocomplete-search-result-list')).toBeNull();
@@ -204,10 +187,11 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
 
             typeWordIntoSearchInput('TEST');
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const resultElement: Element = element.querySelector('#autocomplete-search-result-list');
+                const resultElement = element.querySelector('#autocomplete-search-result-list');
                 expect(resultElement).not.toBe(null);
                 done();
             });
@@ -222,7 +206,7 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const noResultElement: Element = element.querySelector('#search_no_result');
+                const noResultElement = element.querySelector('#search_no_result');
                 expect(noResultElement).not.toBe(null);
                 done();
             });
@@ -235,10 +219,11 @@ describe('SearchControlComponent', () => {
 
             const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             typeWordIntoSearchInput('NO RES');
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let resultElement: Element = element.querySelector('#autocomplete-search-result-list');
+                let resultElement = element.querySelector('#autocomplete-search-result-list');
                 expect(resultElement).not.toBe(null);
                 inputDebugElement.nativeElement.dispatchEvent(new Event('blur'));
 
@@ -256,6 +241,7 @@ describe('SearchControlComponent', () => {
 
             const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             typeWordIntoSearchInput('TEST');
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -277,6 +263,7 @@ describe('SearchControlComponent', () => {
 
             const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             typeWordIntoSearchInput('TEST');
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -301,6 +288,7 @@ describe('SearchControlComponent', () => {
 
             const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             typeWordIntoSearchInput('TEST');
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -319,7 +307,6 @@ describe('SearchControlComponent', () => {
         });
 
         it('should focus input element when autocomplete list is cancelled', (done) => {
-
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
             fixture.detectChanges();
 
@@ -328,6 +315,7 @@ describe('SearchControlComponent', () => {
             escapeEvent.keyCode = 27;
             inputDebugElement.nativeElement.focus();
             inputDebugElement.nativeElement.dispatchEvent(escapeEvent);
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#result_name_0')).toBeNull();
@@ -363,6 +351,7 @@ describe('SearchControlComponent', () => {
             });
             fixture.detectChanges();
             typeWordIntoSearchInput('TEST');
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -426,13 +415,13 @@ describe('SearchControlComponent', () => {
             fixtureCustom.detectChanges();
             spyOn(componentCustom.searchComponent.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(noResult));
-            componentCustom.setCustomMessageForNoResult(noResultCustomMessage);
+            componentCustom.customMessage = noResultCustomMessage;
             fixtureCustom.detectChanges();
 
-            const inputDebugElement = fixtureCustom.debugElement.query(By.css('#adf-control-input'));
-            inputDebugElement.nativeElement.value = 'SOMETHING';
-            inputDebugElement.nativeElement.focus();
-            inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+            const input: HTMLInputElement = fixtureCustom.debugElement.query(By.css('#adf-control-input')).nativeElement;
+            input.value = 'SOMETHING';
+            input.focus();
+            input.dispatchEvent(new Event('input'));
 
             fixtureCustom.detectChanges();
             fixtureCustom.whenStable().then(() => {
