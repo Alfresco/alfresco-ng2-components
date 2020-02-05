@@ -32,9 +32,11 @@
 
         &__group, &__block, &__file-version {
             min-width: 100px;
-            display: flex;
+            display: flex !important;
             justify-content: flex-end;
             line-height: 40px;
+            height: 40px;
+            align-items: center;
         }
 
         &__group--toggle {
