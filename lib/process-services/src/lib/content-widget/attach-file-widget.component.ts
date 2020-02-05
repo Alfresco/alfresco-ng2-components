@@ -30,7 +30,7 @@ import {
     AppConfigService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
-import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
+import { Node, RelatedContentRepresentation, NodeChildAssociation } from '@alfresco/js-api';
 import { from, zip, of, Subject } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
@@ -131,6 +131,10 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         return this.tempFilesList.findIndex((elem) => elem.name === file.name) >= 0;
     }
 
+    getNodeFromTempFile(file): NodeChildAssociation {
+        return this.tempFilesList.find((elem) => elem.name === file.name);
+    }
+
     openSelectDialogFromFileSource() {
         const params = this.field.params;
         if (this.isDefinedSourceFolder()) {
@@ -170,7 +174,14 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     downloadContent(file: any | RelatedContentRepresentation): void {
         if (this.isTemporaryFile(file)) {
-            this.contentService.downloadBlob((<RelatedContentRepresentation> file).contentBlob, file.name);
+            const fileBlob = (<RelatedContentRepresentation> file).contentBlob;
+            if (fileBlob) {
+                this.contentService.downloadBlob(fileBlob, file.name);
+            } else {
+                const nodeUploaded: NodeChildAssociation = this.getNodeFromTempFile(file);
+                const nodeUrl = this.contentService.getContentUrl(nodeUploaded.id);
+                this.contentService.downloadUrl(nodeUrl, file.name);
+            }
         } else {
             this.processContentService.getFileRawContent((<any> file).id).subscribe(
                 (blob: Blob) => {
