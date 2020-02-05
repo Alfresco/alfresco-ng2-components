@@ -69,11 +69,6 @@ describe('TranslationService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    it('is defined', () => {
-        expect(translationService).toBeDefined();
-        expect(translationService instanceof TranslationService).toBeTruthy();
-    });
-
     it('should be able to get translations of the KEY: TEST', () => {
         translationService.get('TEST').subscribe((res: string) => {
             expect(res).toEqual('This is a test');
