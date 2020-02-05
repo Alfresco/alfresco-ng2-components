@@ -82,6 +82,7 @@
                     <span>{{ 'FORM.FIELD.SHOW_FILE' | translate }}</span>
                 </button>
                 <button id="{{'file-'+file.id+'-download-file'}}"
+                    [disabled]="file.isExternal"
                     mat-menu-item (click)="downloadContent(file)">
                     <mat-icon>file_download</mat-icon>
                     <span>{{ 'FORM.FIELD.DOWNLOAD_FILE' | translate }}</span>
