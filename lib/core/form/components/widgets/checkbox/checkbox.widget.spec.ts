@@ -65,7 +65,7 @@ describe('CheckboxWidgetComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should be marked as invalid when reauired', async(() => {
+        it('should be marked as invalid when required', async(() => {
             fixture.whenStable().then(() => {
                 expect(element.querySelector('.adf-invalid')).not.toBeNull();
             });
