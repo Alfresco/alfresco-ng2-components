@@ -56,7 +56,7 @@
             <p>
              {{item.entry?.properties['cm:authorityName']?
                                     item.entry?.properties['cm:authorityName'] :
-                                    item.entry?.properties['cm:firstName']}}</p>
+                                    item.entry?.properties['cm:owner']?.displayName}}</p>
         </mat-list-option>
     </mat-selection-list>
 </ng-template>
