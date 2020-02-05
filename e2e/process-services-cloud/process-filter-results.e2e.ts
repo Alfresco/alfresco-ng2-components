@@ -15,7 +15,20 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, DateUtil, GroupIdentityService, IdentityService, LocalStorageUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, StringUtil, TasksService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    AppListCloudPage,
+    DateUtil,
+    GroupIdentityService,
+    IdentityService,
+    LocalStorageUtil,
+    LoginSSOPage,
+    ProcessDefinitionsService,
+    ProcessInstancesService,
+    QueryService,
+    StringUtil,
+    TasksService
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -324,5 +337,4 @@ describe('Process filters cloud', () => {
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
-
 });

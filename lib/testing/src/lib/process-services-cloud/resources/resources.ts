@@ -122,6 +122,9 @@ export const ACTIVITI_CLOUD_APPS: any = {
                 name: 'requirednumbervisibility'
             }
         },
+        tasks: {
+            processstring: 'inputtask'
+        },
         security: [
             { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
             { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] },

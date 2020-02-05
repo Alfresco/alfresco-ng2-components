@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage } from '@alfresco/adf-testing';
+import { BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
+import { by, element } from 'protractor';
 
 export class ProcessDetailsCloudDemoPage {
 
@@ -27,5 +28,9 @@ export class ProcessDetailsCloudDemoPage {
 
     async selectProcessTaskByName(taskName: string): Promise<void> {
         await this.dataTable.selectRow('Name', taskName);
+    }
+
+    async checkListedSelectedProcessInstance(processInstanceId: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('div ul', processInstanceId)));
     }
 }

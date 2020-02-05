@@ -25,7 +25,8 @@ import {
     ProcessInstancesService,
     LoginSSOPage,
     ApiService,
-    IdentityService, GroupIdentityService,
+    IdentityService,
+    GroupIdentityService,
     AppListCloudPage
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -184,5 +185,6 @@ describe('Task filters cloud', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskAssigned.list.entries[0].entry.name);
 
         });
+
     });
 });

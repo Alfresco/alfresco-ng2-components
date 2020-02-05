@@ -54,6 +54,7 @@ export class TasksCloudDemoPage {
     addActionButton: ElementFinder = element(by.cssContainingText('button span', 'Add'));
     disableCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='disabled']`));
     visibleCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='visible']`));
+    filter: ElementFinder = element(by.css(`mat-expansion-panel[data-automation-id='Task Filters']`));
 
     formControllersPage: FormControllersPage = new FormControllersPage();
 
@@ -81,6 +82,10 @@ export class TasksCloudDemoPage {
 
     async enableTestingMode(): Promise<void> {
         await this.formControllersPage.enableToggle(this.testingModeToggle);
+    }
+
+    async clickOnTaskFilter(): Promise<void> {
+        await BrowserActions.click(this.filter);
     }
 
     taskListCloudComponent(): TaskListCloudComponentPage {
