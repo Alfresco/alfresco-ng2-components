@@ -132,8 +132,8 @@ describe('Login component', () => {
     it('[C260046] Should NOT be possible to login with an invalid username/password', async () => {
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.enterUsername('test');
-        await loginPage.enterPassword('test');
+        await loginPage.enterUsername('impossible-user');
+        await loginPage.enterPassword('impossible-password');
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
         await loginPage.clickSignInButton();
         await expect(await loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
