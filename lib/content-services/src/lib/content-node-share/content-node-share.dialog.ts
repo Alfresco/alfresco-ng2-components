@@ -62,7 +62,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     isDisabled: boolean = false;
     form: FormGroup = new FormGroup({
         sharedUrl: new FormControl(''),
-        time: new FormControl({ value: '', disabled: false })
+        time: new FormControl({ value: '', disabled: true })
     });
     type = 'datetime';
 
@@ -92,7 +92,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         this.type = this.appConfigService.get<string>('sharedLinkDateTimePickerType', 'datetime');
 
         if (!this.canUpdate) {
-            this.form.controls['time'].disable();
+           this.form.controls['time'].disable();
         }
 
         this.form.controls.time.valueChanges
@@ -126,6 +126,12 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         }
     }
 
+    ngAfterViewInit() {
+        if (this.slideToggleExpirationDate.checked === true) {
+            this.form.controls['time'].enable();
+        }
+    }
+
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
@@ -155,10 +161,9 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
     onToggleExpirationDate(slideToggle: MatSlideToggleChange) {
         if (slideToggle.checked) {
-            this.matDatetimepickerToggle.datetimepicker.open();
+            this.form.controls['time'].enable();
         } else {
-            this.matDatetimepickerToggle.datetimepicker.close();
-            this.form.controls.time.setValue(null);
+            this.form.controls['time'].disable();
         }
     }
 
