@@ -118,7 +118,7 @@ jobs:
 
         - stage: Trigger ADF child build
           name: Trigger ADF child build
-          script: ./scripts/travis/update/trigger-travis-children.sh--branch $TRAVIS_BRANCH Alfresco $TRAVIS_ACCESS_TOKEN
+          script: ./scripts/travis/update/trigger-travis-children.sh --branch $TRAVIS_BRANCH Alfresco $TRAVIS_ACCESS_TOKEN
 
 notifications:
   slack:
