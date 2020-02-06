@@ -77,16 +77,6 @@ export class ContentService {
     }
 
     /**
-     * @deprecated in 3.2.0, use DownloadService instead.
-     * Invokes content download for a JSON object with a file name.
-     * @param json JSON object to download.
-     * @param fileName Name of the resulting file.
-     */
-    downloadUrl(fileUrl: any, fileName: string): void {
-        this.downloadService.downloadUrl(fileUrl, fileName);
-    }
-
-    /**
      * Creates a trusted object URL from the Blob.
      * WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
      * @param  blob Data to wrap into object URL

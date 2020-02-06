@@ -25,9 +25,10 @@ import {
     ThumbnailService,
     ProcessContentService,
     ActivitiContentService,
-    ContentService,
     AppConfigValues,
-    AppConfigService
+    AppConfigService,
+    DownloadService,
+    DownloadZipService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { Node, RelatedContentRepresentation, NodeChildAssociation } from '@alfresco/js-api';
@@ -63,10 +64,11 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 public thumbnails: ThumbnailService,
                 public processContentService: ProcessContentService,
                 private activitiContentService: ActivitiContentService,
-                private contentService: ContentService,
+                private downloadService: DownloadService,
                 private contentDialog: ContentNodeDialogService,
                 private appConfigService: AppConfigService,
-                private attachDialogService: AttachFileWidgetDialogService) {
+                private attachDialogService: AttachFileWidgetDialogService,
+                private downloadZipService: DownloadZipService) {
         super(formService, logger, thumbnails, processContentService);
     }
 
@@ -176,16 +178,16 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         if (this.isTemporaryFile(file)) {
             const fileBlob = (<RelatedContentRepresentation> file).contentBlob;
             if (fileBlob) {
-                this.contentService.downloadBlob(fileBlob, file.name);
+                this.downloadService.downloadBlob(fileBlob, file.name);
             } else {
                 const nodeUploaded: NodeChildAssociation = this.getNodeFromTempFile(file);
-                const nodeUrl = this.contentService.getContentUrl(nodeUploaded.id);
-                this.contentService.downloadUrl(nodeUrl, file.name);
+                const nodeUrl = this.downloadZipService.getContentUrl(nodeUploaded.id);
+                this.downloadService.downloadUrl(nodeUrl, file.name);
             }
         } else {
             this.processContentService.getFileRawContent((<any> file).id).subscribe(
                 (blob: Blob) => {
-                    this.contentService.downloadBlob(blob, (<any> file).name);
+                    this.downloadService.downloadBlob(blob, (<any> file).name);
                 },
                 () => {
                     this.logger.error('Impossible retrieve content for download');

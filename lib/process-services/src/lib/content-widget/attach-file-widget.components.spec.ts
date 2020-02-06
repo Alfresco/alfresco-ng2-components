@@ -26,8 +26,8 @@ import {
     ProcessContentService,
     ActivitiContentService,
     FormFieldMetadata,
-    ContentService,
-    setupTestBed
+    setupTestBed,
+    DownloadService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentModule } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
@@ -116,7 +116,7 @@ describe('AttachFileWidgetComponent', () => {
     let activitiContentService: ActivitiContentService;
     let contentNodeDialogService: ContentNodeDialogService;
     let processContentService: ProcessContentService;
-    let contentService: ContentService;
+    let downloadService: DownloadService;
     let formService: FormService;
 
     setupTestBed({
@@ -133,7 +133,7 @@ describe('AttachFileWidgetComponent', () => {
         activitiContentService = TestBed.get(ActivitiContentService);
         contentNodeDialogService = TestBed.get(ContentNodeDialogService);
         processContentService = TestBed.get(ProcessContentService);
-        contentService = TestBed.get(ContentService);
+        downloadService = TestBed.get(DownloadService);
         formService = TestBed.get(FormService);
     }));
 
@@ -342,7 +342,7 @@ describe('AttachFileWidgetComponent', () => {
         }));
 
         it('should download file when download is clicked', async(() => {
-            spyOn(contentService, 'downloadBlob').and.stub();
+            spyOn(downloadService, 'downloadBlob').and.stub();
             const menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
             expect(menuButton).not.toBeNull();
             menuButton.click();
@@ -350,7 +350,7 @@ describe('AttachFileWidgetComponent', () => {
             const downloadOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
             downloadOption.click();
             fixture.whenStable().then(() => {
-                expect(contentService.downloadBlob).toHaveBeenCalled();
+                expect(downloadService.downloadBlob).toHaveBeenCalled();
             });
         }));
 
