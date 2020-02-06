@@ -25,12 +25,13 @@ import {
     ThumbnailService,
     ProcessContentService,
     ActivitiContentService,
-    ContentService,
     AppConfigValues,
-    AppConfigService
+    AppConfigService,
+    DownloadService,
+    ContentService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
-import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
+import { Node, RelatedContentRepresentation, NodeChildAssociation } from '@alfresco/js-api';
 import { from, zip, of, Subject } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
@@ -66,6 +67,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 private contentService: ContentService,
                 private contentDialog: ContentNodeDialogService,
                 private appConfigService: AppConfigService,
+                private downloadService: DownloadService,
                 private attachDialogService: AttachFileWidgetDialogService) {
         super(formService, logger, thumbnails, processContentService);
     }
@@ -131,6 +133,10 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         return this.tempFilesList.findIndex((elem) => elem.name === file.name) >= 0;
     }
 
+    getNodeFromTempFile(file): NodeChildAssociation {
+        return this.tempFilesList.find((elem) => elem.name === file.name);
+    }
+
     openSelectDialogFromFileSource() {
         const params = this.field.params;
         if (this.isDefinedSourceFolder()) {
@@ -157,7 +163,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     onAttachFileClicked(file: any) {
-        if (file.isExternal) {
+        if (file.isExternal || !file.contentAvailable) {
             this.logger.info(`The file ${file.name} comes from an external source and cannot be showed at this moment`);
             return;
         }
@@ -170,11 +176,22 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     downloadContent(file: any | RelatedContentRepresentation): void {
         if (this.isTemporaryFile(file)) {
-            this.contentService.downloadBlob((<RelatedContentRepresentation> file).contentBlob, file.name);
+            const fileBlob = (<RelatedContentRepresentation> file).contentBlob;
+            if (fileBlob) {
+                this.downloadService.downloadBlob(fileBlob, file.name);
+            } else {
+                const nodeUploaded: NodeChildAssociation = this.getNodeFromTempFile(file);
+                const nodeUrl = this.contentService.getContentUrl(nodeUploaded.id);
+                this.downloadService.downloadUrl(nodeUrl, file.name);
+            }
+        }
+        if (file.sourceId) {
+            const nodeUrl = this.contentService.getContentUrl(file.sourceId);
+            this.downloadService.downloadUrl(nodeUrl, file.name);
         } else {
             this.processContentService.getFileRawContent((<any> file).id).subscribe(
                 (blob: Blob) => {
-                    this.contentService.downloadBlob(blob, (<any> file).name);
+                    this.downloadService.downloadBlob(blob, (<any> file).name);
                 },
                 () => {
                     this.logger.error('Impossible retrieve content for download');
@@ -225,8 +242,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 },
                 () => {
                     const previousFiles = this.field.value ? this.field.value : [];
-                    this.field.value = [ ...previousFiles, ...filesSaved ];
-                    this.field.json.value = [ ...previousFiles, ...filesSaved ];
+                    this.field.value = [...previousFiles, ...filesSaved];
+                    this.field.json.value = [...previousFiles, ...filesSaved];
                     this.hasFile = true;
                 });
     }

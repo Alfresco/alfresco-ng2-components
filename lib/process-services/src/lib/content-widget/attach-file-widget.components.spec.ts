@@ -26,8 +26,8 @@ import {
     ProcessContentService,
     ActivitiContentService,
     FormFieldMetadata,
-    ContentService,
-    setupTestBed
+    setupTestBed,
+    DownloadService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentModule } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
@@ -40,30 +40,30 @@ const fakeRepositoryListAnswer = [
         'serviceId': 'alfresco-9999-SHAREME',
         'metaDataAllowed': true,
         'name': 'SHAREME',
-        'repositoryUrl' : 'http://localhost:0000/SHAREME'
+        'repositoryUrl': 'http://localhost:0000/SHAREME'
     },
     {
         'authorized': true,
         'serviceId': 'alfresco-0000-GOKUSHARE',
         'metaDataAllowed': true,
         'name': 'GOKUSHARE',
-        'repositoryUrl' : 'http://localhost:0000/GOKUSHARE'
+        'repositoryUrl': 'http://localhost:0000/GOKUSHARE'
     }];
 
 const onlyLocalParams = {
-    fileSource : {
+    fileSource: {
         serviceId: 'local-file'
     }
 };
 
 const allSourceParams = {
-    fileSource : {
+    fileSource: {
         serviceId: 'all-file-sources'
     }
 };
 
 const definedSourceParams = {
-    fileSource : {
+    fileSource: {
         serviceId: 'goku-sources',
         name: 'pippo-baudo',
         selectedFolder: {
@@ -84,10 +84,11 @@ const fakePngUpload = {
     'id': 1166,
     'name': 'fake-png.png',
     'created': '2017-07-25T17:17:37.099Z',
-    'createdBy': {'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin'},
+    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
     'relatedContent': false,
     'contentAvailable': true,
     'link': false,
+    'isExternal': false,
     'mimeType': 'image/png',
     'simpleType': 'image',
     'previewStatus': 'queued',
@@ -98,9 +99,10 @@ const fakePngAnswer = {
     'id': 1155,
     'name': 'a_png_file.png',
     'created': '2017-07-25T17:17:37.099Z',
-    'createdBy': {'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin'},
+    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
     'relatedContent': false,
     'contentAvailable': true,
+    'isExternal': false,
     'link': false,
     'mimeType': 'image/png',
     'simpleType': 'image',
@@ -116,7 +118,7 @@ describe('AttachFileWidgetComponent', () => {
     let activitiContentService: ActivitiContentService;
     let contentNodeDialogService: ContentNodeDialogService;
     let processContentService: ProcessContentService;
-    let contentService: ContentService;
+    let downloadService: DownloadService;
     let formService: FormService;
 
     setupTestBed({
@@ -133,7 +135,7 @@ describe('AttachFileWidgetComponent', () => {
         activitiContentService = TestBed.get(ActivitiContentService);
         contentNodeDialogService = TestBed.get(ContentNodeDialogService);
         processContentService = TestBed.get(ProcessContentService);
-        contentService = TestBed.get(ContentService);
+        downloadService = TestBed.get(DownloadService);
         formService = TestBed.get(FormService);
     }));
 
@@ -310,7 +312,7 @@ describe('AttachFileWidgetComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
-                inputDebugElement.triggerEventHandler('change', {target: {files: [fakePngAnswer]}});
+                inputDebugElement.triggerEventHandler('change', { target: { files: [fakePngAnswer] } });
                 fixture.detectChanges();
                 expect(element.querySelector('#file-1155-icon')).not.toBeNull();
             });
@@ -342,7 +344,7 @@ describe('AttachFileWidgetComponent', () => {
         }));
 
         it('should download file when download is clicked', async(() => {
-            spyOn(contentService, 'downloadBlob').and.stub();
+            spyOn(downloadService, 'downloadBlob').and.stub();
             const menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
             expect(menuButton).not.toBeNull();
             menuButton.click();
@@ -350,7 +352,7 @@ describe('AttachFileWidgetComponent', () => {
             const downloadOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
             downloadOption.click();
             fixture.whenStable().then(() => {
-                expect(contentService.downloadBlob).toHaveBeenCalled();
+                expect(downloadService.downloadBlob).toHaveBeenCalled();
             });
         }));
 
@@ -366,6 +368,55 @@ describe('AttachFileWidgetComponent', () => {
             fixture.detectChanges();
             const showOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
             showOption.click();
+        }));
+
+        it('should not display the show button file when is an external file', async(() => {
+            fakePngAnswer.isExternal = true;
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
+
+            const menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            expect(menuButton).not.toBeNull();
+            menuButton.click();
+            fixture.detectChanges();
+            const showOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
+            expect(showOption.disabled).toBeTruthy();
+        }));
+
+        it('should not display the download button file when is an external file', async(() => {
+            fakePngAnswer.isExternal = true;
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
+
+            const menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            expect(menuButton).not.toBeNull();
+            menuButton.click();
+            fixture.detectChanges();
+            const downloadOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
+            expect(downloadOption.disabled).toBeTruthy();
+        }));
+
+        it('should  display the download button file when is an internal file', async(() => {
+            fakePngAnswer.isExternal = false;
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
+
+            const menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            expect(menuButton).not.toBeNull();
+            menuButton.click();
+            fixture.detectChanges();
+            const downloadOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
+            expect(downloadOption.disabled).toBeFalsy();
+
+        }));
+
+        it('should not display the show button file when there is no contentAvailable', async(() => {
+            fakePngAnswer.contentAvailable = false;
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
+
+            const menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            expect(menuButton).not.toBeNull();
+            menuButton.click();
+            fixture.detectChanges();
+            const showOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
+            expect(showOption.disabled).toBeTruthy();
         }));
 
     });
