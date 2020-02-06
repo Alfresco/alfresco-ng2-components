@@ -120,6 +120,12 @@ export const ACTIVITI_CLOUD_APPS: any = {
             },
             requirednumbervisibility: {
                 name: 'requirednumbervisibility'
+            },
+            mealform: {
+                name: 'mealform'
+            },
+            resultcollectionform: {
+                name: 'resultcollectionform'
             }
         },
         tasks: {
