@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-cli",
   "description": "Alfresco ADF cli and utils",
-  "version": "3.6.0",
+  "version": "3.7.0",
   "author": "Alfresco Software, Ltd.",
   "bin": {
     "adf-license": "./bin/doc/licenseList.js",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "commander": "^4.0.0",
-    "@alfresco/adf-testing": "3.6.0",
+    "@alfresco/adf-testing": "3.7.0",
     "license-checker": "^25.0.1",
     "npm-registry-fetch": "^3.9.0",
     "@angular-devkit/core": "^7.2.15",
