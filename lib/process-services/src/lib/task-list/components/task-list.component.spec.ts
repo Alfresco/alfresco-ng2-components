@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
@@ -85,6 +85,22 @@ describe('TaskListComponent', () => {
         const spinner = fixture.debugElement.query(By.css('.mat-progress-spinner'));
         expect(spinner).toBeDefined();
     });
+
+    it('should hide loading spinner upon loading complete', async(() => {
+        component.isLoading = true;
+        fixture.detectChanges();
+
+        let spinner = fixture.debugElement.query(By.css('.mat-progress-spinner'));
+        expect(spinner).toBeDefined();
+
+        component.isLoading = false;
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            spinner = fixture.debugElement.query(By.css('.mat-progress-spinner'));
+            expect(spinner).toBeNull();
+        });
+    }));
 
     it('should use the default schemaColumn as default', () => {
         component.ngAfterContentInit();
