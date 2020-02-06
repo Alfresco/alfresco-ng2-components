@@ -28,7 +28,7 @@ import {
     AppConfigValues,
     AppConfigService,
     DownloadService,
-    DownloadZipService
+    ContentService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { Node, RelatedContentRepresentation, NodeChildAssociation } from '@alfresco/js-api';
