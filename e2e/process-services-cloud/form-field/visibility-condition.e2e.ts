@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
+import { FormCloudComponentPage, LoginSSOPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
 import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
 import { multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
 import { displayValueTextJson } from '../../resources/forms/displayValue-visibilityConditions';
@@ -30,7 +29,7 @@ describe('Visibility conditions - cloud', () => {
     const loginSSOPage = new LoginSSOPage();
 
     const navigationBarPage = new NavigationBarPage();
-    const formCloudDemoPage = new FormCloudDemoPage();
+    const formCloudDemoPage = new FormCloudComponentPage();
     const widget = new ProcessCloudWidgetPage();
 
     let visibleCheckbox;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder, Locator, protractor } from 'protractor';
+import { by, element, ElementFinder, Locator, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/formFields';
@@ -44,9 +44,6 @@ export class PeopleCloudComponentPage {
     }
 
     async searchAssignee(name: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
-        await BrowserVisibility.waitUntilElementIsClickable(this.peopleCloudSearch);
-        await browser.sleep(1000);
         await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
     }
 
@@ -56,7 +53,6 @@ export class PeopleCloudComponentPage {
 
     async selectAssigneeFromList(name: string): Promise<void> {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        await browser.sleep(2000);
         await BrowserActions.click(assigneeRow);
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
     }
@@ -82,7 +78,6 @@ export class PeopleCloudComponentPage {
 
     async getAssigneeFieldContent(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
-        await browser.sleep(1000);
         return this.assigneeField.getAttribute('value');
     }
 
@@ -116,6 +111,26 @@ export class PeopleCloudComponentPage {
     async clickPeopleInput(fieldId): Promise<void> {
         const peopleInput = element.all(by.css(`div[id="field-${fieldId}-container"] `)).first();
         await BrowserActions.click(peopleInput);
+    }
+
+    async checkPeopleWidgetIsReadOnly (): Promise <boolean> {
+        const readOnlyAttribute = element(by.css('people-cloud-widget .adf-readonly'));
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(readOnlyAttribute);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async checkPeopleActiveField(name): Promise <boolean> {
+        const activePeopleField = element(by.css('people-cloud-widget .adf-readonly'));
+        try {
+            await BrowserActions.clearSendKeys(activePeopleField, name);
+            return true;
+        } catch {
+            return false;
+        }
     }
 
 }

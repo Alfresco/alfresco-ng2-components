@@ -17,18 +17,17 @@
 
 import {
     LoginSSOPage,
-    BrowserActions, FormPage, ProcessCloudWidgetPage
+    BrowserActions, FormPage, ProcessCloudWidgetPage, FormCloudComponentPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { customDateFormAPS2 } from '../../resources/forms/custom-date-form';
-import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
 
 describe('Form Field Component - Dropdown Widget', () => {
     const loginSSOPage = new LoginSSOPage();
     const widget = new ProcessCloudWidgetPage();
     const dateWidget = widget.dateWidget();
 
-    const formDemoPage = new FormCloudDemoPage();
+    const formDemoPage = new FormCloudComponentPage();
     const formJson = JSON.parse(customDateFormAPS2);
     const formPage = new FormPage();
 

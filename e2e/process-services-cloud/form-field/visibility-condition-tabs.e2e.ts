@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
+import { FormCloudComponentPage, LoginSSOPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
 import { tabFieldValueVisibilityJson, tabVarValueVisibilityJson, tabVarFieldVisibilityJson,
     tabFieldFieldVisibilityJson, tabFieldVarVisibilityJson, tabVarVarVisibilityJson,
     tabNextOperatorsVisibilityJson } from '../../resources/forms/tab-visibility-conditions';
@@ -30,7 +29,7 @@ describe('Visibility conditions on tabs - cloud', () => {
     const loginSSOPage = new LoginSSOPage();
 
     const navigationBarPage = new NavigationBarPage();
-    const formCloudDemoPage = new FormCloudDemoPage();
+    const formCloudDemoPage = new FormCloudComponentPage();
     const widget = new ProcessCloudWidgetPage();
 
     const widgets = {

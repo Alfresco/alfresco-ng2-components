@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { ConfigEditorPage } from '../../configEditorPage';
-import { BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
 import { by, element, ElementFinder } from 'protractor';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
+import { ConfigEditorPage } from '../../core/pages/config-editor-page';
 
-export class FormCloudDemoPage {
+export class FormCloudComponentPage {
 
     formCloudEditor: ElementFinder = element.all(by.css('.mat-tab-list .mat-tab-label')).get(1);
     formCloudRender: ElementFinder = element.all(by.css('.mat-tab-list .mat-tab-label')).get(0);

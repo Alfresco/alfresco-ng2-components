@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { ConfigEditorPage } from '../../configEditorPage';
-import { BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, ConfigEditorPage } from '@alfresco/adf-testing';
 import { by, element, ElementFinder } from 'protractor';
 
 export class FormDemoPage {
