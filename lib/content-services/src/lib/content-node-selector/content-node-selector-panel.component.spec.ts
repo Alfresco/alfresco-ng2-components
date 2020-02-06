@@ -97,12 +97,13 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Parameters', () => {
 
-            let documentListService,
-                sitesService;
+            let documentListService: DocumentListService;
+            let sitesService: SitesService;
 
             beforeEach(() => {
                 documentListService = TestBed.get(DocumentListService);
                 sitesService = TestBed.get(SitesService);
+
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
                 spyOn(sitesService, 'getSites').and.returnValue(of({
@@ -111,6 +112,7 @@ describe('ContentNodeSelectorComponent', () => {
                             <SiteEntry> { entry: { guid: 'blog', id: 'blog' } }]
                     }
                 }));
+
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
             });
@@ -202,14 +204,17 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Breadcrumbs', () => {
 
-            let documentListService, sitesService;
+            let documentListService: DocumentListService;
+            let sitesService: SitesService;
 
             beforeEach(() => {
                 documentListService = TestBed.get(DocumentListService);
                 sitesService = TestBed.get(SitesService);
+
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
                 spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
+
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
             });
@@ -309,7 +314,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(breadcrumb.componentInstance.folderNode).toEqual(undefined);
             }));
 
-            it('should keep breadcrumb\'s folderNode unchanged if breadcrumbTransform is NOT defined', (done) => {
+            it('should keep breadcrumb folderNode unchanged if breadcrumbTransform is NOT defined', (done) => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -322,7 +327,7 @@ describe('ContentNodeSelectorComponent', () => {
                 });
             });
 
-            it('should make changes to breadcrumb\'s folderNode if breadcrumbTransform is defined', (done) => {
+            it('should make changes to breadcrumb folderNode if breadcrumbTransform is defined', (done) => {
                 const transformedFolderNode = <Node> {
                     id: 'trans-node',
                     name: 'trans-node-name',
