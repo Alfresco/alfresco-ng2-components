@@ -379,7 +379,7 @@ describe('AttachFileWidgetComponent', () => {
             menuButton.click();
             fixture.detectChanges();
             const showOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
-            expect(showOption.disabled).toBeTruthy()
+            expect(showOption.disabled).toBeTruthy();
         }));
 
         it('should not display the download button file when is an external file', async(() => {
@@ -391,7 +391,7 @@ describe('AttachFileWidgetComponent', () => {
             menuButton.click();
             fixture.detectChanges();
             const downloadOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
-            expect(downloadOption.disabled).toBeTruthy()
+            expect(downloadOption.disabled).toBeTruthy();
         }));
 
         it('should  display the download button file when is an internal file', async(() => {
@@ -403,7 +403,7 @@ describe('AttachFileWidgetComponent', () => {
             menuButton.click();
             fixture.detectChanges();
             const downloadOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
-            expect(downloadOption.disabled).toBeFalsy()
+            expect(downloadOption.disabled).toBeFalsy();
 
         }));
 
@@ -416,7 +416,7 @@ describe('AttachFileWidgetComponent', () => {
             menuButton.click();
             fixture.detectChanges();
             const showOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
-            expect(showOption.disabled).toBeTruthy()
+            expect(showOption.disabled).toBeTruthy();
         }));
 
     });
