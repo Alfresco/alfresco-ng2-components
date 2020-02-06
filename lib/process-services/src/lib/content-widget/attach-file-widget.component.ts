@@ -64,11 +64,11 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 public thumbnails: ThumbnailService,
                 public processContentService: ProcessContentService,
                 private activitiContentService: ActivitiContentService,
-                private downloadService: DownloadService,
+                private contentService: ContentService,
                 private contentDialog: ContentNodeDialogService,
                 private appConfigService: AppConfigService,
-                private attachDialogService: AttachFileWidgetDialogService,
-                private downloadZipService: DownloadZipService) {
+                private downloadService: DownloadService,
+                private attachDialogService: AttachFileWidgetDialogService) {
         super(formService, logger, thumbnails, processContentService);
     }
 
@@ -163,7 +163,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     onAttachFileClicked(file: any) {
-        if (file.isExternal) {
+        if (file.isExternal || !file.contentAvailable) {
             this.logger.info(`The file ${file.name} comes from an external source and cannot be showed at this moment`);
             return;
         }
@@ -181,9 +181,13 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 this.downloadService.downloadBlob(fileBlob, file.name);
             } else {
                 const nodeUploaded: NodeChildAssociation = this.getNodeFromTempFile(file);
-                const nodeUrl = this.downloadZipService.getContentUrl(nodeUploaded.id);
+                const nodeUrl = this.contentService.getContentUrl(nodeUploaded.id);
                 this.downloadService.downloadUrl(nodeUrl, file.name);
             }
+        }
+        if (file.sourceId) {
+            const nodeUrl = this.contentService.getContentUrl(file.sourceId);
+            this.downloadService.downloadUrl(nodeUrl, file.name);
         } else {
             this.processContentService.getFileRawContent((<any> file).id).subscribe(
                 (blob: Blob) => {
@@ -238,8 +242,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 },
                 () => {
                     const previousFiles = this.field.value ? this.field.value : [];
-                    this.field.value = [ ...previousFiles, ...filesSaved ];
-                    this.field.json.value = [ ...previousFiles, ...filesSaved ];
+                    this.field.value = [...previousFiles, ...filesSaved];
+                    this.field.json.value = [...previousFiles, ...filesSaved];
                     this.hasFile = true;
                 });
     }
