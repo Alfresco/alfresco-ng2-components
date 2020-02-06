@@ -81,17 +81,19 @@
         <div class="adf-new-task-footer" fxLayout="row" fxLayoutAlign="end end">
             <button
                 mat-button
+                class="adf-uppercase"
                 (click)="onCancel()"
                 id="button-cancel">
-                {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL'|translate}}
+                {{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL' | translate }}
             </button>
             <button
                 color="primary"
                 mat-button
+                class="adf-uppercase"
                 [disabled]="!isFormValid()"
                 (click)="saveTask()"
                 id="button-start">
-                {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
+                {{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.START' | translate }}
             </button>
         </div>
     </mat-card-actions>

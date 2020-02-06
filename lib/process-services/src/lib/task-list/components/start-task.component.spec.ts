@@ -34,6 +34,7 @@ describe('StartTaskComponent', () => {
     let getFormListSpy: jasmine.Spy;
     let createNewTaskSpy: jasmine.Spy;
     let logSpy: jasmine.Spy;
+
     const fakeForms$ = [
         {
             id: 123,
@@ -58,6 +59,7 @@ describe('StartTaskComponent', () => {
 
         service = TestBed.get(TaskListService);
         logService = TestBed.get(LogService);
+
         getFormListSpy = spyOn(service, 'getFormList').and.returnValue(new Observable((observer) => {
             observer.next(fakeForms$);
             observer.complete();
@@ -69,10 +71,6 @@ describe('StartTaskComponent', () => {
     afterEach(() => {
         fixture.destroy();
         TestBed.resetTestingModule();
-    });
-
-    it('should create instance of StartTaskComponent', () => {
-        expect(component instanceof StartTaskComponent).toBe(true, 'should create StartTaskComponent');
     });
 
     it('should fetch fake form on init', () => {
@@ -307,6 +305,21 @@ describe('StartTaskComponent', () => {
         expect(element.querySelector('#button-start')).toBeDefined();
         expect(element.querySelector('#button-start')).not.toBeNull();
         expect(element.querySelector('#button-start').textContent).toContain('ADF_TASK_LIST.START_TASK.FORM.ACTION.START');
+    });
+
+    it('should render start task button with primary color', () => {
+        fixture.detectChanges();
+        expect(element.querySelector('#button-start').classList.contains('mat-primary')).toBeTruthy();
+    });
+
+    it('should render task buttons with uppercase text', () => {
+        fixture.detectChanges();
+
+        const startButton = element.querySelector<HTMLButtonElement>('#button-start');
+        expect(startButton.classList.contains('adf-uppercase')).toBeTruthy();
+
+        const cancelButton = element.querySelector<HTMLButtonElement>('#button-cancel');
+        expect(cancelButton.classList.contains('adf-uppercase')).toBeTruthy();
     });
 
     it('should not emit TaskDetails OnCancel', () => {
