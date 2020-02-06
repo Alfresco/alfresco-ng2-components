@@ -11,12 +11,11 @@
     (row-keyup)="onRowKeyUp($event)">
     <adf-loading-content-template>
         <ng-template>
-            <!--Add your custom loading template here-->
             <mat-progress-spinner
                 *ngIf="!customLoadingContent"
                 class="adf-process-list-loading-margin"
-                [color]="'primary'"
-                [mode]="'indeterminate'">
+                color="primary"
+                mode="indeterminate">
             </mat-progress-spinner>
             <ng-content select="adf-custom-loading-content-template"></ng-content>
         </ng-template>
@@ -25,7 +24,7 @@
         <ng-template>
                 <adf-empty-content *ngIf="!customEmptyContent"
                     icon="assessment"
-                    [title]="(requestNode ? 'ADF_PROCESS_LIST.LIST.TITLE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate "
+                    [title]="(requestNode ? 'ADF_PROCESS_LIST.LIST.TITLE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate"
                     [subtitle]="'ADF_PROCESS_LIST.LIST.SUBTITLE'| translate">
                 </adf-empty-content>
             <ng-content select="adf-custom-empty-content-template"></ng-content>

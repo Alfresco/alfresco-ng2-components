@@ -36,6 +36,7 @@ describe('ProcessInstanceListComponent', () => {
     let service: ProcessService;
     let getProcessInstancesSpy: jasmine.Spy;
     let appConfig: AppConfigService;
+
     const resolverfn = (row: DataRow, col: DataColumn) => {
         const value = row.getValue(col.key);
         if (col.key === 'variables') {
@@ -76,6 +77,13 @@ describe('ProcessInstanceListComponent', () => {
             }
         };
     }));
+
+    it('should display loading spinner', () => {
+        component.isLoading = true;
+
+        const spinner = fixture.debugElement.query(By.css('.mat-progress-spinner'));
+        expect(spinner).toBeDefined();
+    });
 
     it('should use the default schemaColumn as default', () => {
         component.ngAfterContentInit();

@@ -18,8 +18,8 @@
                     <mat-progress-spinner
                         *ngIf="!customLoadingContent"
                         class="adf-task-list-loading-margin"
-                        [color]="'primary'"
-                        [mode]="'indeterminate'">
+                        color="primary"
+                        mode="indeterminate">
                     </mat-progress-spinner>
                     <ng-content select="adf-custom-loading-content-template"></ng-content>
                 </ng-template>

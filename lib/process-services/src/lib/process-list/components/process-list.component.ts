@@ -29,7 +29,6 @@ import {
     PaginationModel,
     UserPreferencesService
 } from '@alfresco/adf-core';
-import { DatePipe } from '@angular/common';
 import {
     AfterContentInit,
     Component,
@@ -45,7 +44,7 @@ import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
 import { BehaviorSubject } from 'rxjs';
 import { ProcessListModel } from '../models/process-list.model';
-import { ProcessInstanceRepresentation } from '@alfresco/js-api';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-process-instance-list',
@@ -120,22 +119,21 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     /** Emitted when a row in the process list is clicked. */
     @Output()
-    rowClick: EventEmitter<string> = new EventEmitter<string>();
+    rowClick = new EventEmitter<string>();
 
     /** Emitted when the list of process instances has been loaded successfully from the server. */
     @Output()
-    success: EventEmitter<ProcessListModel> = new EventEmitter<ProcessListModel>();
+    success = new EventEmitter<ProcessListModel>();
 
     /** Emitted when an error occurs while loading the list of process instances from the server. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     requestNode: ProcessFilterParamRepresentationModel;
     currentInstanceId: string;
     isLoading: boolean = true;
     rows: any[] = [];
     sorting: any[] = ['created', 'desc'];
-
     pagination: BehaviorSubject<PaginationModel>;
 
     constructor(private processService: ProcessService,
@@ -153,6 +151,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     ngAfterContentInit() {
         this.createDatatableSchema();
+
         if (this.data && this.data.getColumns().length === 0) {
             this.data.setColumns(this.columns);
         }
@@ -213,12 +212,12 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     private load(requestNode: ProcessFilterParamRepresentationModel) {
         this.isLoading = true;
         this.processService.getProcesses(requestNode)
+            .pipe(finalize(() => this.isLoading = false))
             .subscribe(
-                (response) => {
-                    this.rows = this.optimizeProcessDetails(response.data);
+                response => {
+                    this.rows = response.data;
                     this.selectFirst();
                     this.success.emit(response);
-                    this.isLoading = false;
                     this.pagination.next({
                         count: response.data.length,
                         maxItems: this.size,
@@ -226,10 +225,10 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
                         totalItems: response.total
                     });
                 },
-                (error) => {
+                error => {
                     this.error.emit(error);
-                    this.isLoading = false;
-                });
+                }
+            );
     }
 
     /**
@@ -267,6 +266,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
      */
     onRowClick(event: DataRowEvent) {
         const item = event;
+
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
     }
@@ -278,43 +278,14 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     onRowKeyUp(event: CustomEvent) {
         if (event.detail.keyboardEvent.key === 'Enter') {
             event.preventDefault();
+
             this.currentInstanceId = event.detail.row.getValue('id');
             this.rowClick.emit(this.currentInstanceId);
         }
     }
 
-    /**
-     * Optimize name field
-     * @param instances
-     */
-    private optimizeProcessDetails(instances: ProcessInstanceRepresentation[]): ProcessInstanceRepresentation[] {
-        instances = instances.map((instance) => {
-            instance.name = this.getProcessNameOrDescription(instance, 'medium');
-            return instance;
-        });
-        return instances;
-    }
-
-    getProcessNameOrDescription(processInstance: ProcessInstanceRepresentation, dateFormat: string): string {
-        let name = '';
-        if (processInstance) {
-            name = processInstance.name ||
-                processInstance.processDefinitionName + ' - ' + this.getFormatDate(processInstance.started, dateFormat);
-        }
-        return name;
-    }
-
-    getFormatDate(value: Date, format: string) {
-        const datePipe = new DatePipe('en-US');
-        try {
-            return datePipe.transform(value, format);
-        } catch (err) {
-            return '';
-        }
-    }
-
     private createRequestNode(): ProcessFilterParamRepresentationModel {
-        const requestNode = {
+        return new ProcessFilterParamRepresentationModel({
             appDefinitionId: this.appId,
             processDefinitionId: this.processDefinitionId,
             processInstanceId: this.processInstanceId,
@@ -323,14 +294,15 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
             page: this.page,
             size: this.size,
             start: 0
-        };
-        return new ProcessFilterParamRepresentationModel(requestNode);
+        });
     }
 
     updatePagination(params: PaginationModel) {
         const needsReload = params.maxItems || params.skipCount;
+
         this.size = params.maxItems;
         this.page = this.currentPage(params.skipCount, params.maxItems);
+
         if (needsReload) {
             this.reload();
         }
