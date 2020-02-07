@@ -31,7 +31,7 @@ import CONSTANTS = require('../util/constants');
 import moment = require('moment');
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { infoDrawerConfiguration } from './task.config';
+import { infoDrawerConfiguration } from './config/task.config';
 
 describe('Info Drawer', () => {
 
