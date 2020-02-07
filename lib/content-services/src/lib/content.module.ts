@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
@@ -39,53 +39,6 @@ import { FolderDirectiveModule } from './folder-directive/folder-directive.modul
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
 import { TreeViewModule } from './tree-view/tree-view.module';
-
-@NgModule({
-    imports: [
-        CoreModule,
-        SocialModule,
-        TagModule,
-        CommonModule,
-        WebScriptModule,
-        FormsModule,
-        ReactiveFormsModule,
-        DialogModule,
-        SearchModule,
-        DocumentListModule,
-        UploadModule,
-        MaterialModule,
-        SitesDropdownModule,
-        BreadcrumbModule,
-        ContentNodeSelectorModule,
-        ContentNodeShareModule,
-        ContentMetadataModule,
-        FolderDirectiveModule,
-        ContentDirectiveModule,
-        PermissionManagerModule,
-        VersionManagerModule,
-        TreeViewModule
-    ],
-    exports: [
-        SocialModule,
-        TagModule,
-        WebScriptModule,
-        DocumentListModule,
-        UploadModule,
-        SearchModule,
-        SitesDropdownModule,
-        BreadcrumbModule,
-        ContentNodeSelectorModule,
-        ContentNodeShareModule,
-        ContentMetadataModule,
-        DialogModule,
-        FolderDirectiveModule,
-        ContentDirectiveModule,
-        PermissionManagerModule,
-        VersionManagerModule,
-        TreeViewModule
-    ]
-})
-export class ContentModuleLazy {}
 
 @NgModule({
     imports: [
@@ -142,26 +95,4 @@ export class ContentModuleLazy {}
         TreeViewModule
     ]
 })
-export class ContentModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ContentModule,
-            providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-content-services',
-                        source: 'assets/adf-content-services'
-                    }
-                }
-            ]
-        };
-    }
-
-    static forChild(): ModuleWithProviders {
-        return {
-            ngModule: ContentModuleLazy
-        };
-    }
-}
+export class ContentModule {}

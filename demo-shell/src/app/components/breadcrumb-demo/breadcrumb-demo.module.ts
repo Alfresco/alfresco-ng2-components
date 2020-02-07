@@ -34,7 +34,7 @@ const routes: Routes = [
         CommonModule,
         CoreModule.forChild(),
         RouterModule.forChild(routes),
-        ContentModule.forChild()
+        ContentModule
     ],
     declarations: [BreadcrumbDemoComponent],
     exports: [BreadcrumbDemoComponent]

@@ -48,7 +48,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         imports: [
             CoreModule.forRoot(),
             ProcessTestingModule,
-            ContentModule.forRoot(),
+            ContentModule,
             RouterTestingModule
         ],
         providers: [

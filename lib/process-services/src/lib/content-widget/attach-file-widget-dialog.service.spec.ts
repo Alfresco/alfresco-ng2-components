@@ -31,7 +31,7 @@ describe('AttachFileWidgetDialogService', () => {
     setupTestBed({
         imports: [
             CoreModule.forRoot(),
-            ProcessModule.forRoot()
+            ProcessModule
         ]
     });
 

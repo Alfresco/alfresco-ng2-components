@@ -36,7 +36,7 @@ const routes: Routes = [
         CommonModule,
         CoreModule.forChild(),
         RouterModule.forChild(routes),
-        ContentModule.forChild(),
+        ContentModule,
         ExtensionsModule.forChild()
     ],
     declarations: [

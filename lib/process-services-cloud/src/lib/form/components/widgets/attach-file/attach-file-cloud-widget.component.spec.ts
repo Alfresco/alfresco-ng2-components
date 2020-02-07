@@ -111,7 +111,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         imports: [
             ProcessServiceCloudTestingModule,
             FormCloudModule,
-            ContentModule.forRoot()
+            ContentModule
         ],
         providers: [],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]

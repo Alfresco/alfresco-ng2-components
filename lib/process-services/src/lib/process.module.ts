@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
@@ -68,54 +68,4 @@ import { FormModule } from './form/form.module';
         FormModule
     ]
 })
-export class ProcessModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ProcessModule,
-            providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-process-services',
-                        source: 'assets/adf-process-services'
-                    }
-                }
-            ]
-        };
-    }
-
-    static forChild(): ModuleWithProviders {
-        return {
-            ngModule: ProcessModuleLazy
-        };
-    }
-}
-
-@NgModule({
-    imports: [
-        CoreModule,
-        CommonModule,
-        ProcessCommentsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        ProcessListModule,
-        TaskListModule,
-        AppsListModule,
-        AttachmentModule,
-        PeopleModule
-    ],
-    exports: [
-        CommonModule,
-        ProcessCommentsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ProcessListModule,
-        TaskListModule,
-        AppsListModule,
-        AttachmentModule,
-        PeopleModule
-    ]
-})
-export class ProcessModuleLazy {}
+export class ProcessModule {}

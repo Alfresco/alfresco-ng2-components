@@ -34,7 +34,7 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         CoreModule.forChild(),
-        ContentModule.forChild()
+        ContentModule
     ],
     declarations: [SitesComponent]
 })

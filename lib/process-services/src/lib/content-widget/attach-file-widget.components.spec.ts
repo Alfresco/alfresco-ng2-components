@@ -124,7 +124,7 @@ describe('AttachFileWidgetComponent', () => {
     setupTestBed({
         imports: [
             ProcessTestingModule,
-            ContentModule.forRoot()
+            ContentModule
         ]
     });
 
