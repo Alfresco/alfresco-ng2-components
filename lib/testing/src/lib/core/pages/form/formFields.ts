@@ -54,13 +54,7 @@ export class FormFields {
     }
 
     async checkWidgetIsHidden(fieldId): Promise<void> {
-        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
-        await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement);
-    }
-
-    async checkWidgetIsNotHidden(fieldId): Promise<void> {
-        await this.checkWidgetIsVisible(fieldId);
-        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
+        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
         await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement, 6000);
     }
 

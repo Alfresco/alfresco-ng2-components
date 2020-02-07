@@ -35,7 +35,7 @@ export class CheckboxWidget {
     }
 
     async isCheckboxDisplayed(fieldId): Promise<void> {
-        await this.formFields.checkWidgetIsNotHidden(fieldId);
+        await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
     async isCheckboxHidden(fieldId): Promise<void> {
