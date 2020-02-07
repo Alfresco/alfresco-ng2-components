@@ -43,6 +43,24 @@
                 background-color: #f44336 !important;
             }
 
+            .mat-checkbox {
+                color: mat-color($warn);
+                .mat-checkbox-frame {
+                    border-color: mat-color($warn);
+                }
+            }
+
+            .mat-select {
+
+                &-value {
+                    color: mat-color($warn);
+                }
+                &-arrow {
+                    color: mat-color($warn);
+                }
+
+            }
+
             .adf-file {
                 border-color: mat-color($warn);
             }
