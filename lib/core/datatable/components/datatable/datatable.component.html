@@ -107,7 +107,7 @@
                      adf-drop-zone dropTarget="cell" [dropColumn]="col" [dropRow]="row">
                     <div *ngIf="!col.template" class="adf-datatable-cell-container">
                         <ng-container [ngSwitch]="col.type">
-                            <div *ngSwitchCase="'image'" class="adf-cell-value" tabindex="0">
+                            <div *ngSwitchCase="'image'" class="adf-cell-value">
                                 <mat-icon *ngIf="isIconValue(row, col); else no_iconvalue">{{ asIconValue(row, col) }}
                                 </mat-icon>
                                 <ng-template #no_iconvalue>
