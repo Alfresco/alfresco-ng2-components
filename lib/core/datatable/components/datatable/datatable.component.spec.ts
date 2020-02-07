@@ -33,7 +33,7 @@ import { DataColumnComponent } from '../../../data-column/data-column.component'
     <ng-template #tmplRef></ng-template>
 `})
 class CustomColumnTemplateComponent {
-    @ViewChild('tmplRef') templateRef: TemplateRef<any>;
+    @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
 }
 
 class FakeDataRow implements DataRow {
