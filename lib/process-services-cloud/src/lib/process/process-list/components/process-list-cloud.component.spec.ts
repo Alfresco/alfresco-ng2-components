@@ -54,8 +54,7 @@ class CustomTaskListComponent {
     `
 })
 
-class EmptyTemplateComponent {
-}
+class EmptyTemplateComponent {}
 
 describe('ProcessListCloudComponent', () => {
     let component: ProcessListCloudComponent;
@@ -65,9 +64,9 @@ describe('ProcessListCloudComponent', () => {
 
     setupTestBed({
         imports: [
-            ProcessListCloudTestingModule, ProcessListCloudModule
-        ],
-        providers: [ProcessListCloudService]
+            ProcessListCloudTestingModule,
+            ProcessListCloudModule
+        ]
     });
 
     beforeEach(() => {
@@ -210,8 +209,10 @@ describe('ProcessListCloudComponent', () => {
 
         setupTestBed({
             imports: [CoreModule.forRoot()],
-            declarations: [ProcessListCloudComponent, CustomTaskListComponent],
-            providers: [ProcessListCloudService]
+            declarations: [
+                ProcessListCloudComponent,
+                CustomTaskListComponent
+            ]
         });
 
         beforeEach(() => {
@@ -222,10 +223,6 @@ describe('ProcessListCloudComponent', () => {
 
         afterEach(() => {
             fixtureCustom.destroy();
-        });
-
-        it('should create instance of CustomTaskListComponent', () => {
-            expect(componentCustom instanceof CustomTaskListComponent).toBe(true, 'should create CustomTaskListComponent');
         });
 
         it('should fetch custom schemaColumn from html', () => {

@@ -79,7 +79,6 @@ describe('ProcessFiltersCloudComponent', () => {
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
         providers: [
-            ProcessFilterCloudService,
             { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
     });

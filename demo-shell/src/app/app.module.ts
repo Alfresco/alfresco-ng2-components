@@ -55,7 +55,6 @@ import { TaskAttachmentsComponent } from './components/process-service/task-atta
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
-import { PreviewService } from './services/preview.service';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ContentModule } from '@alfresco/adf-content-services';
@@ -212,9 +211,7 @@ registerLocaleData(localeSv);
                 name: 'lazy-loading',
                 source: 'resources/lazy-loading'
             }
-        },
-        PreviewService,
-        CoreAutomationService
+        }
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,

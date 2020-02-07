@@ -19,10 +19,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     setupTestBed, IdentityUserService,
     AlfrescoApiService,
-    AppConfigService,
-    LogService,
-    StorageService,
-    UserPreferencesService,
     IdentityUserModel
 } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
@@ -56,15 +52,6 @@ describe('StartTaskCloudComponent', () => {
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
-        providers: [
-            TaskCloudService,
-            AlfrescoApiService,
-            AppConfigService,
-            LogService,
-            StorageService,
-            UserPreferencesService,
-            FormDefinitionSelectorCloudService
-        ],
         schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });
 

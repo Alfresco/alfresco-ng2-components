@@ -49,8 +49,7 @@ describe('UnClaimTaskDirective', () => {
         declarations: [
             TestComponent,
             UnClaimTaskDirective
-        ],
-        providers: [ TaskCloudService ]
+        ]
     });
 
     beforeEach(() => {

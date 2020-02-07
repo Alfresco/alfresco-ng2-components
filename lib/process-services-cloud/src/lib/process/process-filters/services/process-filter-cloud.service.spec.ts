@@ -48,9 +48,6 @@ describe('ProcessFilterCloudService', () => {
             CoreModule.forRoot()
         ],
         providers: [
-            ProcessFilterCloudService,
-            IdentityUserService,
-            LocalPreferenceCloudService,
             { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
     });
@@ -233,9 +230,6 @@ describe('Inject [UserPreferenceCloudService] into the ProcessFilterCloudService
             CoreModule.forRoot()
         ],
         providers: [
-            ProcessFilterCloudService,
-            IdentityUserService,
-            UserPreferenceCloudService,
             { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
         ]
     });

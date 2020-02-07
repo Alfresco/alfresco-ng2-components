@@ -19,7 +19,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DateCloudWidgetComponent } from './date-cloud.widget';
 import { setupTestBed, FormFieldModel, FormModel, CoreModule } from '@alfresco/adf-core';
-import { FormCloudService } from '../../../services/form-cloud.service';
 import moment from 'moment-es6';
 
 describe('DateWidgetComponent', () => {
@@ -33,8 +32,7 @@ describe('DateWidgetComponent', () => {
             NoopAnimationsModule,
             CoreModule.forRoot()
         ],
-        declarations: [DateCloudWidgetComponent],
-        providers: [FormCloudService]
+        declarations: [DateCloudWidgetComponent]
     });
 
     beforeEach(async(() => {

@@ -26,7 +26,7 @@ export interface DocsSiteTheme {
   isDefault?: boolean;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ThemeStorage {
   static storageKey = 'docs-theme-storage-current';
 

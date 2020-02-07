@@ -22,7 +22,7 @@ import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-
 import { Oauth2Auth } from '@alfresco/js-api';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AppsProcessCloudService {
 
     deployedApps: ApplicationInstanceModel[];

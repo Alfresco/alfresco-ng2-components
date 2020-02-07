@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TaskFiltersCloudComponent } from './components/task-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
-import { LogService, StorageService, CoreModule, MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
+import { CoreModule, MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
 import { HttpClientModule } from '@angular/common/http';
 import { EditTaskFilterCloudComponent } from './components/edit-task-filter-cloud.component';
 import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog-cloud.component';
@@ -42,8 +42,6 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
     declarations: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent, TaskFilterDialogCloudComponent],
     exports: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent],
     providers: [
-        LogService,
-        StorageService,
         { provide: DateAdapter, useClass: MomentDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
     ],

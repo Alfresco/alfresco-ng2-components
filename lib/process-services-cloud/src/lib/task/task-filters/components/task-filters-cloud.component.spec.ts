@@ -56,7 +56,6 @@ describe('TaskFiltersCloudComponent', () => {
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
         providers: [
-            TaskFilterCloudService,
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
     });
@@ -352,7 +351,6 @@ describe('Set UserPreferenceService', () => {
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
         providers: [
-            TaskFilterCloudService,
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
         ]
     });

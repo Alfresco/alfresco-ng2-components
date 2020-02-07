@@ -82,8 +82,7 @@ describe('Task Cloud Service', () => {
     setupTestBed({
         imports: [
             CoreModule.forRoot()
-        ],
-        providers: [ IdentityUserService ]
+        ]
     });
 
     beforeEach(async(() => {

@@ -146,8 +146,7 @@ export class ThemePickerComponent {
         CommonModule
     ],
     exports: [ThemePickerComponent],
-    declarations: [ThemePickerComponent],
-    providers: [StyleManager, ThemeStorage]
+    declarations: [ThemePickerComponent]
 })
 export class ThemePickerModule {
 }

@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PreviewService {
 
     public content: Blob = null;

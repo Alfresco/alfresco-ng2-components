@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProcessFiltersCloudComponent } from './components/process-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
-import { LogService, StorageService, CoreModule, MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
+import { CoreModule, MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
 import { HttpClientModule } from '@angular/common/http';
 import { EditProcessFilterCloudComponent } from './components/edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog-cloud.component';
@@ -44,8 +44,6 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
     exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
     entryComponents: [ProcessFilterDialogCloudComponent],
     providers: [
-        LogService,
-        StorageService,
         { provide: DateAdapter, useClass: MomentDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
     ]
