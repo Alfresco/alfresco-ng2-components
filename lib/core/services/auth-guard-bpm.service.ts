@@ -21,7 +21,7 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { Observable } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
     providedIn: 'root'

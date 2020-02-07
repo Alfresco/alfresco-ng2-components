@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from './jwt-helper.service';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
     providedIn: 'root'
