@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
@@ -24,19 +24,6 @@ import { DiagramsModule } from './diagram/diagram.module';
 import { AnalyticsProcessModule } from './analytics-process/analytics-process.module';
 
 import { MaterialModule } from './material.module';
-import { DiagramsService } from './diagram/services/diagrams.service';
-import { DiagramColorService } from './diagram/services/diagram-color.service';
-import { RaphaelService } from './diagram/components/raphael/raphael.service';
-import { AnalyticsService } from './analytics-process/services/analytics.service';
-
-export function providers() {
-    return [
-        AnalyticsService,
-        DiagramsService,
-        DiagramColorService,
-        RaphaelService
-    ];
-}
 
 @NgModule({
     imports: [
@@ -49,7 +36,6 @@ export function providers() {
         AnalyticsProcessModule
     ],
     providers: [
-        ...providers(),
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -68,48 +54,4 @@ export function providers() {
         AnalyticsProcessModule
     ]
 })
-export class InsightsModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: InsightsModule,
-            providers: [
-                ...providers(),
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-insights',
-                        source: 'assets/adf-insights'
-                    }
-                }
-            ]
-        };
-    }
-
-    static forChild(): ModuleWithProviders {
-        return {
-            ngModule: InsightsModuleLazy
-        };
-    }
-}
-
-@NgModule({
-    imports: [
-        CoreModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        DiagramsModule,
-        AnalyticsProcessModule
-    ],
-    exports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        DiagramsModule,
-        AnalyticsProcessModule
-    ]
-})
-export class InsightsModuleLazy {}
+export class InsightsModule {}

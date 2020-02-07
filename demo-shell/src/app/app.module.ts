@@ -135,7 +135,7 @@ registerLocaleData(localeSv);
         FlexLayoutModule,
         CoreModule.forRoot(),
         ContentModule.forRoot(),
-        InsightsModule.forRoot(),
+        InsightsModule,
         ProcessModule.forRoot(),
         ProcessServicesCloudModule,
         ExtensionsModule.forRoot(),

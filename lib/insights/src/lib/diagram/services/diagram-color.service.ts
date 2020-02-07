@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DiagramColorService {
 
     static CURRENT_COLOR = '#017501';
@@ -32,9 +32,6 @@ export class DiagramColorService {
     static CALL_ACTIVITY_STROKE = 2;
 
     totalColors: any;
-
-    constructor() {
-    }
 
     setTotalColors(totalColors) {
         this.totalColors = totalColors;

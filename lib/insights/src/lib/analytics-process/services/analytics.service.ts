@@ -29,7 +29,7 @@ import { PieChart } from '../../diagram/models/chart/pieChart.model';
 import { TableChart } from '../../diagram/models/chart/tableChart.model';
 import { map, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AnalyticsService {
 
     constructor(private apiService: AlfrescoApiService,
