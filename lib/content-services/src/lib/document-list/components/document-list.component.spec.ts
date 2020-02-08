@@ -136,7 +136,7 @@ describe('DocumentList', () => {
         expect(columns[5]).toBe(column);
     });
 
-    it('should call action\'s handler with node', () => {
+    it('should call action handler with node', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
         action.handler = () => {
@@ -149,7 +149,7 @@ describe('DocumentList', () => {
 
     });
 
-    it('should call action\'s handler with node and permission', () => {
+    it('should call action handler with node and permission', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
         action.handler = () => {
@@ -162,7 +162,7 @@ describe('DocumentList', () => {
         expect(action.handler).toHaveBeenCalledWith(node, documentList, 'fake-permission');
     });
 
-    it('should call action\'s execute with node if it is defined', () => {
+    it('should call action execute with node if it is defined', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
         action.execute = () => {
@@ -174,7 +174,7 @@ describe('DocumentList', () => {
         expect(action.execute).toHaveBeenCalledWith(node);
     });
 
-    it('should call action\'s execute only after the handler has been executed', () => {
+    it('should call action execute only after the handler has been executed', () => {
         const deleteObservable: Subject<any> = new Subject<any>();
         const node = new FileNode();
         const action = new ContentActionModel();

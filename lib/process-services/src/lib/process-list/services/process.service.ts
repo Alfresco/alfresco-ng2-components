@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, FormValues } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { RestVariable } from '@alfresco/js-api';
+import { RestVariable, ProcessInstanceRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError, of } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
@@ -26,6 +26,7 @@ import { ProcessInstanceVariable } from '../models/process-instance-variable.mod
 import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessListModel } from '../models/process-list.model';
 import { map, catchError } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 declare let moment: any;
 
@@ -67,9 +68,39 @@ export class ProcessService {
      */
     getProcesses(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel> {
         return this.getProcessInstances(requestNode, processDefinitionKey)
-            .pipe(catchError(() => {
-                return of(new ProcessListModel({}));
-            }));
+            .pipe(
+                map(response => {
+                    return {
+                        ...response,
+                        data: (response.data || []).map(instance => {
+                            instance.name = this.getProcessNameOrDescription(instance, 'medium');
+                            return instance;
+                        })
+                    };
+                }),
+                catchError(() => of(new ProcessListModel({})))
+            );
+    }
+
+    private getProcessNameOrDescription(processInstance: ProcessInstanceRepresentation, dateFormat: string): string {
+        let name = '';
+
+        if (processInstance) {
+            name = processInstance.name ||
+                processInstance.processDefinitionName + ' - ' + this.getFormatDate(processInstance.started, dateFormat);
+        }
+
+        return name;
+    }
+
+    private getFormatDate(value: Date, format: string) {
+        const datePipe = new DatePipe('en-US');
+
+        try {
+            return datePipe.transform(value, format);
+        } catch (err) {
+            return '';
+        }
     }
 
     /**

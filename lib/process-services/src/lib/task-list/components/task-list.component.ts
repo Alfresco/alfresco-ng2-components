@@ -29,7 +29,7 @@ import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
 import moment from 'moment-es6';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, finalize } from 'rxjs/operators';
 import { TaskDetailsModel } from '../models/task-details.model';
 
 @Component({
@@ -125,19 +125,19 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /** Emitted when a task in the list is clicked */
     @Output()
-    rowClick: EventEmitter<string> = new EventEmitter<string>();
+    rowClick = new EventEmitter<string>();
 
     /** Emitted when rows are selected/unselected */
     @Output()
-    rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
+    rowsSelected = new EventEmitter<any[]>();
 
     /** Emitted when the task list is loaded */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<any>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     currentInstanceId: string;
     selectedInstances: any[];
@@ -258,22 +258,24 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     private load() {
         this.isLoading = true;
-        this.loadTasksByState().subscribe(
-            (tasks) => {
-                this.rows = this.optimizeTaskDetails(tasks.data);
-                this.selectTask(this.landingTaskId);
-                this.success.emit(tasks);
-                this.isLoading = false;
-                this.pagination.next({
-                    count: tasks.data.length,
-                    maxItems: this.size,
-                    skipCount: this.page * this.size,
-                    totalItems: tasks.total
+
+        this.loadTasksByState()
+            .pipe(finalize(() => this.isLoading = false))
+            .subscribe(
+                tasks => {
+                    this.rows = this.optimizeTaskDetails(tasks.data);
+                    this.selectTask(this.landingTaskId);
+                    this.success.emit(tasks);
+                    this.pagination.next({
+                        count: tasks.data.length,
+                        maxItems: this.size,
+                        skipCount: this.page * this.size,
+                        totalItems: tasks.total
+                    });
+                },
+                error => {
+                    this.error.emit(error);
                 });
-            }, (error) => {
-                this.error.emit(error);
-                this.isLoading = false;
-            });
     }
 
     private loadTasksByState(): Observable<TaskListModel> {
@@ -288,14 +290,17 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     selectTask(taskIdSelected: string): void {
         if (!this.isListEmpty()) {
             let dataRow = null;
+
             if (taskIdSelected) {
                 dataRow = this.rows.find((currentRow: any) => {
                     return currentRow['id'] === taskIdSelected;
                 });
             }
+
             if (!dataRow && this.selectFirstRow) {
                 dataRow = this.rows[0];
             }
+
             if (dataRow) {
                 dataRow.isSelected = true;
                 this.currentInstanceId = dataRow['id'];
@@ -345,6 +350,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     onRowKeyUp(event: CustomEvent) {
         if (event.detail.keyboardEvent.key === 'Enter') {
             event.preventDefault();
+
             this.currentInstanceId = event.detail.row.getValue('id');
             this.rowClick.emit(this.currentInstanceId);
         }
@@ -365,7 +371,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     }
 
     private createRequestNode() {
-
         const requestNode = {
             appDefinitionId: this.appId,
             dueAfter: this.dueAfter ? moment(this.dueAfter).toDate() : null,
@@ -387,8 +392,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     updatePagination(params: PaginationModel) {
         const needsReload = params.maxItems || params.skipCount;
+
         this.size = params.maxItems;
         this.page = this.currentPage(params.skipCount, params.maxItems);
+
         if (needsReload) {
             this.reload();
         }

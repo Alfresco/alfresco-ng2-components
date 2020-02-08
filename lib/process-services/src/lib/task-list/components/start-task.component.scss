@@ -34,6 +34,10 @@
 
     adf-start-task {
 
+        .mat-button.adf-uppercase {
+            text-transform: uppercase;
+        }
+
         people-widget {
             width: 100%;
             .mat-form-field-label-wrapper {
@@ -54,13 +58,6 @@
         }
 
         .adf {
-
-            &-new-task-footer {
-                .mat-button {
-                    text-transform: uppercase !important;
-                }
-            }
-
             &-start-task-input-container .mat-form-field-wrapper {
                 padding-top: 8px;
             }

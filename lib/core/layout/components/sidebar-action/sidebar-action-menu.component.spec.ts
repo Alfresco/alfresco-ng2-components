@@ -42,10 +42,6 @@ describe('SidebarActionMenuComponent', () => {
         fixture.destroy();
     });
 
-    it('should create instance of SidebarActionMenuComponent', () => {
-        expect(fixture.componentInstance instanceof SidebarActionMenuComponent).toBe(true, 'should create SidebarActionMenuComponent');
-    });
-
     it('should display title', () => {
         component.title = 'Fake-Title';
         component.expanded = true;
@@ -102,10 +98,6 @@ describe('Custom SidebarActionMenuComponent', () => {
         fixture.detectChanges();
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-    });
-
-    it('should create instance of CustomSidebarActionMenuComponent', () => {
-        expect(component instanceof CustomSidebarActionMenuComponent).toBe(true, 'should create CustomSidebarActionMenuComponent');
     });
 
     it('should defined adf-sidebar-action-menu', () => {
