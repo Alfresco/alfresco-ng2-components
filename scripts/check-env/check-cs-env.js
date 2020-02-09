@@ -44,34 +44,35 @@ async function checkEnv() {
 }
 
 async function checkDiskSpaceFullEnv() {
-    this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
-        provider: 'ECM',
-        hostEcm: program.host
-    });
-
-    await this.alfrescoJsApi.login(program.username, program.password);
-
-    let folder;
-
     try {
-        folder = await alfrescoJsApi.nodes.addNode('-my-', {
-            'name': `try-env`,
-            'relativePath': `Builds`,
-            'nodeType': 'cm:folder'
-        }, {}, {
-            'overwrite': true
+
+        this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+            provider: 'ECM',
+            hostEcm: program.host
         });
 
-    } catch (error) {
-        folder = await alfrescoJsApi.nodes.getNode('-my-', {
-            'relativePath': `Builds/try-env`,
-            'nodeType': 'cm:folder'
-        }, {}, {
-            'overwrite': true
-        });
-    }
+        await this.alfrescoJsApi.login(program.username, program.password);
 
-    try {
+        let folder;
+
+        try {
+            folder = await alfrescoJsApi.nodes.addNode('-my-', {
+                'name': `try-env`,
+                'relativePath': `Builds`,
+                'nodeType': 'cm:folder'
+            }, {}, {
+                'overwrite': true
+            });
+
+        } catch (error) {
+            folder = await alfrescoJsApi.nodes.getNode('-my-', {
+                'relativePath': `Builds/try-env`,
+                'nodeType': 'cm:folder'
+            }, {}, {
+                'overwrite': true
+            });
+        }
+
         let pathFile = path.join(__dirname, '../../', 'README.md');
         let file = fs.createReadStream(pathFile);
 
@@ -89,11 +90,20 @@ async function checkDiskSpaceFullEnv() {
 
         this.alfrescoJsApi.node.deleteNode(uploadedFile.entry.id, {permanent: true});
     } catch (error) {
-        console.log('=============================================================');
-        console.log('================ Not able to upload a file ==================');
-        console.log('================ Possible cause CS is full ==================');
-        console.log('=============================================================');
-        process.exit(1);
+        counter++;
+
+        if (MAX_RETRY === counter) {
+            console.log('=============================================================');
+            console.log('================ Not able to upload a file ==================');
+            console.log('================ Possible cause CS is full ==================');
+            console.log('=============================================================');
+            process.exit(1);
+        } else {
+            console.log(`Retry in 1 minute attempt N ${counter}`);
+            sleep(TIMEOUT);
+            checkDiskSpaceFullEnv();
+        }
+
     }
 
 }
