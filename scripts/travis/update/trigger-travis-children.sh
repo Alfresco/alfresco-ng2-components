@@ -1,15 +1,4 @@
-#!/bin/sh -f
-
-# Trigger a new Travis-CI job.
-
-# Usage:
-#   trigger-travis.sh [--pro] [--branch BRANCH] GITHUBID GITHUBPROJECT TRAVIS_ACCESS_TOKEN [MESSAGE]
-# For example:
-#   trigger-travis.sh typetools checker-framework `cat ~/private/.travis-access-token` "Trigger for testing"
-
-# For full documentation, see
-# https://github.com/plume-lib/trigger-travis/
-
+#!/usr/bin/env bash
 
 eval repos=( "alfresco-modeler-app"
     "alfresco-process-workspace-app"
