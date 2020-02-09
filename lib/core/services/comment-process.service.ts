@@ -41,7 +41,7 @@ export class CommentProcessService {
     addTaskComment(taskId: string, message: string): Observable<CommentModel> {
         return from(this.apiService.getInstance().activiti.taskApi.addTaskComment({ message: message }, taskId))
             .pipe(
-                map((response: CommentModel) => {
+                map((response) => {
                     return new CommentModel({
                         id: response.id,
                         message: response.message,
@@ -61,9 +61,9 @@ export class CommentProcessService {
     getTaskComments(taskId: string): Observable<CommentModel[]> {
         return from(this.apiService.getInstance().activiti.taskApi.getTaskComments(taskId))
             .pipe(
-                map((response: any) => {
+                map((response) => {
                     const comments: CommentModel[] = [];
-                    response.data.forEach((comment: CommentModel) => {
+                    response.data.forEach((comment) => {
                         const user = new UserProcessModel(comment.createdBy);
                         comments.push(new CommentModel({
                             id: comment.id,
@@ -86,9 +86,9 @@ export class CommentProcessService {
     getProcessInstanceComments(processInstanceId: string): Observable<CommentModel[]> {
         return from(this.apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId))
             .pipe(
-                map((response: any) => {
+                map((response) => {
                     const comments: CommentModel[] = [];
-                    response.data.forEach((comment: CommentModel) => {
+                    response.data.forEach((comment) => {
                         const user = new UserProcessModel(comment.createdBy);
                         comments.push(new CommentModel({
                             id: comment.id,
@@ -113,7 +113,7 @@ export class CommentProcessService {
         return from(
             this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({ message: message }, processInstanceId)
         ).pipe(
-            map((response: CommentModel) => {
+            map((response) => {
                 return new CommentModel({
                     id: response.id,
                     message: response.message,

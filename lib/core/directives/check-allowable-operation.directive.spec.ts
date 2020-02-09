@@ -23,7 +23,8 @@ import { CoreModule } from '../core.module';
 import { TestBed } from '@angular/core/testing';
 
 @Component({
-    selector: 'adf-text-subject'
+    selector: 'adf-text-subject',
+    template: ''
 })
 class TestComponent implements NodeAllowableOperationSubject {
     disabled: boolean = false;

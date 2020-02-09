@@ -19,6 +19,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserProcessModel } from '../models/user-process.model';
 import { EcmUserModel } from '../models/ecm-user.model';
+import { IdentityUserModel } from '../models/identity-user.model';
 
 @Pipe({
     name: 'usernameInitials'
@@ -28,7 +29,7 @@ export class InitialUsernamePipe implements PipeTransform {
     constructor(private sanitized: DomSanitizer) {
     }
 
-    transform(user: UserProcessModel | EcmUserModel, className: string = '', delimiter: string = ''): SafeHtml {
+    transform(user: UserProcessModel | EcmUserModel | IdentityUserModel, className: string = '', delimiter: string = ''): SafeHtml {
         let safeHtml: SafeHtml = '';
         if (user) {
             const initialResult = this.getInitialUserName(user.firstName, user.lastName, delimiter);

@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 @mixin adf-card-view-textitem-theme($theme) {
     $foreground: map-get($theme, foreground);
     $outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;

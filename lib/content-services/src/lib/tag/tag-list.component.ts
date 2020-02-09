@@ -20,6 +20,7 @@ import { TagService } from './services/tag.service';
 import { PaginationModel } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TagEntry } from '@alfresco/js-api';
 
 /**
  * This component provide a list of all the tag inside the ECM
@@ -39,7 +40,7 @@ export class TagListComponent implements OnInit, OnDestroy {
     /**
      * Array of tags that are displayed
      */
-    tagsEntries: any = [];
+    tagsEntries: TagEntry[] = [];
 
     /**
      * Number of items per iteration
@@ -86,7 +87,7 @@ export class TagListComponent implements OnInit, OnDestroy {
     }
 
     refreshTag(opts?: any) {
-        this.tagService.getAllTheTags(opts).subscribe((tags: any) => {
+        this.tagService.getAllTheTags(opts).subscribe((tags) => {
             this.tagsEntries = this.tagsEntries.concat(tags.list.entries);
             this.pagination = tags.list.pagination;
             this.result.emit(this.tagsEntries);

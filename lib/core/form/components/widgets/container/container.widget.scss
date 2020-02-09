@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 
 @mixin adf-form-container-widget-theme($theme) {
     $primary: map-get($theme, primary);

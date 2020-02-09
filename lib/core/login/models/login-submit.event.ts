@@ -17,7 +17,7 @@
 
 export class LoginSubmitEvent {
 
-    private _values: any;
+    private readonly _values: any;
     private _defaultPrevented: boolean = false;
 
     get values(): any {

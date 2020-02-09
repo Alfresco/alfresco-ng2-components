@@ -21,6 +21,7 @@ import { CommentModel } from '../models/comment.model';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LogService } from '../services/log.service';
 import { map, catchError } from 'rxjs/operators';
+import { CommentEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -40,7 +41,7 @@ export class CommentContentService {
     addNodeComment(nodeId: string, message: string): Observable<CommentModel> {
         return from(this.apiService.getInstance().core.commentsApi.addComment(nodeId, {content: message}))
             .pipe(
-                map((response: any) => {
+                map((response: CommentEntry) => {
                     return new CommentModel({
                         id: response.entry.id,
                         message: response.entry.content,
@@ -60,7 +61,7 @@ export class CommentContentService {
     getNodeComments(nodeId: string): Observable<CommentModel[]> {
         return from(this.apiService.getInstance().core.commentsApi.getComments(nodeId))
             .pipe(
-                map((response: any) => {
+                map((response) => {
                     const comments: CommentModel[] = [];
                     response.list.entries.forEach((comment: any) => {
                         comments.push(new CommentModel({

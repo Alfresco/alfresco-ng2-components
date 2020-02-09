@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 @mixin adf-pdf-viewer-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
@@ -47,12 +49,12 @@
 
         &__container {
             display: flex;
- height: 100%;
+            height: 100%;
         }
 
         &__content {
             flex: 1 1 auto;
- position: relative;
+            position: relative;
         }
 
         .adf-loader-item {

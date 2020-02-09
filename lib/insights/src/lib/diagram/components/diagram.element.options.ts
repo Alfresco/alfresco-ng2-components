@@ -15,29 +15,10 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { FormOutcomeModel } from './form-outcome.model';
-
-export class FormOutcomeEvent {
-
-    private readonly _outcome: FormOutcomeModel;
-    private _defaultPrevented: boolean = false;
-
-    get outcome(): FormOutcomeModel {
-        return this._outcome;
-    }
-
-    get defaultPrevented() {
-        return this._defaultPrevented;
-    }
-
-    constructor(outcome: FormOutcomeModel) {
-        this._outcome = outcome;
-    }
-
-    preventDefault() {
-        this._defaultPrevented = true;
-    }
-
+export interface DiagramElementOptions {
+    stroke?: string;
+    fillColors?: string;
+    fillOpacity?: string;
+    strokeWidth?: number;
+    radius?: number;
 }

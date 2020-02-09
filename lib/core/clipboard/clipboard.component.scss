@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 @mixin adf-clipboard-theme($theme) {
     $primary: map-get($theme, primary);
     $config: mat-typography-config();

@@ -316,10 +316,10 @@ async function main(args: ConfigArgs) {
     });
 
     if (result.isValid) {
-        logger.error('The envirorment is up and running');
+        logger.error('The environment is up and running');
         await deployMissingApps();
     } else {
-        logger.error('The envirorment is not up');
+        logger.error('The environment is not up');
         process.exit(1);
     }
 

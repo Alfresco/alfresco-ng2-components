@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 @mixin adf-layout-container-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);

@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     isError: boolean = false;
     errorMsg: string;
     actualLoginStep: any = LoginSteps.Landing;
-    LoginSteps: any = LoginSteps;
+    LoginSteps = LoginSteps;
     rememberMe: boolean = true;
     formError: { [id: string]: string };
     minLength: number = 2;

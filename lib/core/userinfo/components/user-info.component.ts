@@ -24,7 +24,7 @@ import { BpmUserService } from '../../services/bpm-user.service';
 import { EcmUserService } from '../../services/ecm-user.service';
 import { IdentityUserService } from '../../services/identity-user.service';
 import { of, Observable } from 'rxjs';
-import { MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material';
 
 @Component({
     selector: 'adf-userinfo',
@@ -46,11 +46,11 @@ export class UserInfoComponent implements OnInit {
 
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
     @Input()
-    menuPositionX: string = 'after';
+    menuPositionX: MenuPositionX = 'after';
 
     /** Custom choice for opening the menu at the bottom. Can be `above` or `below`. */
     @Input()
-    menuPositionY: string = 'below';
+    menuPositionY: MenuPositionY = 'below';
 
     /** Shows/hides the username next to the user info button. */
     @Input()

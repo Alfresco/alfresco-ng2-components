@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 @import '../form';
 
 @mixin adf-dynamic-table-theme($theme) {
@@ -62,9 +63,7 @@
 
                     &:focus {
                         outline-offset: -1px;
-                        outline-width: 1px;
-                        outline-color: rgb(68, 138, 255);
-                        outline-style: solid;
+                        outline: rgb(68, 138, 255) solid 1px;
                     }
                 }
             }
