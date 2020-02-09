@@ -67,7 +67,11 @@ export class DataTableRowComponent implements FocusableOption {
         if (!this.row) {
             return null;
         }
-        return this.row.getValue('name') || '';
+        if (this.row.isSelected) {
+            return this.row.getValue('name') + ' selected' || '';
+        } else {
+            return this.row.getValue('name') || '';
+        }
     }
 
     @HostBinding('attr.tabindex')
