@@ -283,4 +283,25 @@ describe('CardViewDateItemComponent', () => {
             }
         );
     }));
+
+    it('should be possible update a date/date-time', async(() => {
+        component.editable = true;
+        component.property.editable = true;
+        component.property.default = 'Jul 10 2017';
+        component.property.key = 'fake-key';
+        component.property.value = 'Jul 10 2017';
+        const expectedDate = moment('Jul 10 2018', 'MMM DD YY');
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const element = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="card-date-value-fake-key"]');
+            expect(element).toBeDefined();
+            expect(element.innerText).toEqual('Jul 10, 2017');
+            component.onDateChanged({ value: expectedDate });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => expect(component.property.value).toEqual(expectedDate.toDate()));
+        });
+    }));
+
 });
