@@ -11,7 +11,7 @@
                   class="app-example-card-search-container">
           <ng-template let-data>
             <mat-card class="app-example-card"
-                 *ngFor="let item of data?.list?.entries; let idx = index" (click)="onClick(item)">
+                 *ngFor="let item of data?.list?.entries; let idx = index">
                 <mat-card-header>
                     <div mat-card-avatar class="app-example-header-image"></div>
                     <mat-card-title>{{ item?.entry.name }}</mat-card-title>
