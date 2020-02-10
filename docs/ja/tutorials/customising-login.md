@@ -20,7 +20,7 @@ Yeoman で作成された ADF アプリでは、`/src/app/login` パスに保存
 
 ## ヘッダーを変更する
 
-すべての通常の [Angular コンポーネント](https://angular.io/guide/architecture-components) と同様に、
+すべての通常の [Angular コンポーネント](https://angular.jp/guide/architecture-components) と同様に、
 CSS、HTML および Typescript を介して
 [Login コンポーネント](../core/components/login.component.md)をカスタマイズできます。
 この簡単な例では、ヘッダーをカスタマイズします 

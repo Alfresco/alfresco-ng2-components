@@ -7,7 +7,7 @@ Added: 2019-03-13
 
 Alfresco の Application Development Framework (ADF) を使用すると、既存の Alfresco サービスに独自のカスタムフロントエンドを追加できます。
 
-ADF は、[Angular](https://angular.io/) Web アプリケーションフレームワークに基づいたカスタム [TypeScript](https://www.typescriptlang.org/) クラスのセットです。
+ADF は、[Angular](https://angular.jp/) Web アプリケーションフレームワークに基づいたカスタム [TypeScript](https://www.typescriptlang.org/) クラスのセットです。
 最も重要なクラスは、対話型 UI 機能を実装する **コンポーネント** です。
 コンポーネントおよびその他のクラスは、
 Alfresco のメインバックエンド製品である [Content Services](https://www.alfresco.com/platform/content-services-ecm) 

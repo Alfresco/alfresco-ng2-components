@@ -357,7 +357,7 @@ export class DataTableDemo {
 | noPermission | `boolean` | FALSE | データテーブルは、「無断」テンプレートを表示するかどうかを示すフラグ。 |
 | resolverFn | `Function` | null | 動的な列オブジェクトを解析するために使用されるカスタムリゾルバ機能はresolverFnを構成する方法については、ドキュメントを参照してください。 |
 | rowMenuCacheEnabled | `boolean` | TRUE | 彼らが最初にロードされた後、行のアクションメニューの項目は、再利用のためにキャッシュされるべきか？ |
-| rowStyle | `string` | | インラインスタイルは、すべての行に適用します。詳細および使用例については、[NgStyle(https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html)ドキュメントを参照。 |
+| rowStyle | `string` | | インラインスタイルは、すべての行に適用します。詳細および使用例については、[NgStyle(https://angular.jp/docs/ts/latest/api/common/index/NgStyle-directive.html)ドキュメントを参照。 |
 | rowStyleClass | `string` | | すべての行に適用するCSSクラス。 |
 | rows | `any[]` | \\[] | 行は、データテーブルが表示されること。 |
 | selectionMode | `string` | single | 行選択モード。どれも `single` または `multiple` になることはできません。 `multiple`モードでは、あなたは、Cmdを(MacOSの)またはCtrlキー(ウィン)複数行のトグル選択に修飾キーを使用することができます。 |
@@ -369,11 +369,11 @@ export class DataTableDemo {
 
 | 名前 | タイプ | 説明 |
 | ---- | ---- | ----------- |
-| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/datatable/data-row-action.event.ts)`>` | ユーザが行アクションを実行する際に放出されました。 |
-| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | ユーザが行をクリックしたときに出射されます。 |
-| rowDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | ユーザが行をダブルクリックしたときに出射されます。 |
-| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | アクションメニューが行に表示される前に放出されます。 |
-| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | コンテキストメニューが行に表示される前に放出されます。 |
+| executeRowAction | [`EventEmitter`](https://angular.jp/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/datatable/data-row-action.event.ts)`>` | ユーザが行アクションを実行する際に放出されました。 |
+| rowClick | [`EventEmitter`](https://angular.jp/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | ユーザが行をクリックしたときに出射されます。 |
+| rowDblClick | [`EventEmitter`](https://angular.jp/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | ユーザが行をダブルクリックしたときに出射されます。 |
+| showRowActionsMenu | [`EventEmitter`](https://angular.jp/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | アクションメニューが行に表示される前に放出されます。 |
+| showRowContextMenu | [`EventEmitter`](https://angular.jp/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | コンテキストメニューが行に表示される前に放出されます。 |
 
 ## Details
 
