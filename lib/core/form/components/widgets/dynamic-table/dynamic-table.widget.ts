@@ -21,7 +21,7 @@ import { LogService } from '../../../../services/log.service';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
-import { baseHost, WidgetComponent } from './../widget.component';
+import { WidgetComponent } from './../widget.component';
 import { DynamicTableColumn } from './dynamic-table-column.model';
 import { DynamicTableRow } from './dynamic-table-row.model';
 import { DynamicTableModel } from './dynamic-table.widget.model';
@@ -30,7 +30,17 @@ import { DynamicTableModel } from './dynamic-table.widget.model';
     selector: 'dynamic-table-widget',
     templateUrl: './dynamic-table.widget.html',
     styleUrls: ['./dynamic-table.widget.scss'],
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {

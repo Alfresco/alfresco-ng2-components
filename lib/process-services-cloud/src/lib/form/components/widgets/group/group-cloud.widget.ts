@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { baseHost, WidgetComponent, IdentityGroupModel, FormService } from '@alfresco/adf-core';
+import { WidgetComponent, IdentityGroupModel, FormService } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -26,7 +26,17 @@ import { Subject } from 'rxjs';
 @Component({
     selector: 'group-cloud-widget',
     templateUrl: './group-cloud.widget.html',
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit {

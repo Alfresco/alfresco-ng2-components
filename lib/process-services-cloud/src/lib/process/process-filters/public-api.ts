@@ -17,6 +17,10 @@
 
 export * from './components/process-filters-cloud.component';
 export * from './components/edit-process-filter-cloud.component';
+export * from './components/process-filter-dialog-cloud.component';
+
 export * from './models/process-filter-cloud.model';
+
 export * from './services/process-filter-cloud.service';
+
 export * from './process-filters-cloud.module';

@@ -22,7 +22,7 @@ import { UserProcessModel } from '../../../../models';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
-import { baseHost, WidgetComponent } from './../widget.component';
+import { WidgetComponent } from './../widget.component';
 import { FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import {
@@ -37,7 +37,17 @@ import {
     selector: 'people-widget',
     templateUrl: './people.widget.html',
     styleUrls: ['./people.widget.scss'],
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleWidgetComponent extends WidgetComponent implements OnInit {

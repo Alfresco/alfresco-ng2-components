@@ -19,12 +19,22 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'checkbox-widget',
     templateUrl: './checkbox.widget.html',
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class CheckboxWidgetComponent extends WidgetComponent {

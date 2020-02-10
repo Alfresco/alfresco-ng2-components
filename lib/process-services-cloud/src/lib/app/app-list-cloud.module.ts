@@ -21,12 +21,11 @@ import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 import { AppDetailsCloudComponent } from './components/app-details-cloud.component';
 import { AppListCloudComponent } from './components/app-list-cloud.component';
-import { TemplateModule, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
         CommonModule,
-        TemplateModule,
         MaterialModule,
         FlexLayoutModule,
         CoreModule

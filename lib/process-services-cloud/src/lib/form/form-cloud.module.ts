@@ -18,7 +18,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TemplateModule, FormBaseModule, PipeModule, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
@@ -39,13 +39,10 @@ import { GroupCloudModule } from '../group/group-cloud.module';
 @NgModule({
     imports: [
         CommonModule,
-        PipeModule,
-        TemplateModule,
         FlexLayoutModule,
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        FormBaseModule,
         CoreModule,
         ContentNodeSelectorModule,
         PeopleCloudModule,
@@ -67,7 +64,9 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
         FormCustomOutcomesComponent,
+        DropdownCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
+        DateCloudWidgetComponent,
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent
     ]
