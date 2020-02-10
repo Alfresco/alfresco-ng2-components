@@ -53,7 +53,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     selectedRow: any;
     multiselect: boolean;
     selectionMode: string;
-    selectedRows: string[] = [];
+    selectedRows: any[] = [];
     testingMode: boolean;
     actionMenu: boolean;
     contextMenu: boolean;
