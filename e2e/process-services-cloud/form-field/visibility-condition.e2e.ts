@@ -21,7 +21,7 @@ import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
-import { multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
+import { multipleTextVisibilityFormJson, multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
 import { displayValueTextJson } from '../../resources/forms/displayValue-visibilityConditions';
 
 describe('Visibility conditions - cloud', () => {
@@ -203,7 +203,7 @@ describe('Visibility conditions - cloud', () => {
 
         await expect(text1).toEqual('aaa');
         await expect(text2).toEqual('');
-        await widget.textWidget().isWidgetVisible(widgets.checkboxBasicVariable);
+        await widget.checkboxWidget().isCheckboxDisplayed(widgets.checkboxBasicVariable);
 
         await widget.textWidget().setValue(widgets.textOneId, 'bbb');
         text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
@@ -211,7 +211,7 @@ describe('Visibility conditions - cloud', () => {
 
         await expect(text1).toEqual('bbb');
         await expect(text2).toEqual('');
-        await widget.textWidget().isWidgetVisible(widgets.checkboxBasicField);
+        await widget.checkboxWidget().isCheckboxHidden(widgets.checkboxBasicField);
 
         await widget.textWidget().setValue(widgets.textTwoId, 'aaa');
         text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
@@ -219,7 +219,7 @@ describe('Visibility conditions - cloud', () => {
 
         await expect(text1).toEqual('bbb');
         await expect(text2).toEqual('aaa');
-        await widget.textWidget().isWidgetNotVisible(widgets.checkboxBasicField);
+        await widget.checkboxWidget().isCheckboxHidden(widgets.checkboxBasicField);
 
         await widget.textWidget().setValue(widgets.textOneId, 'aaa');
         text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
@@ -227,11 +227,20 @@ describe('Visibility conditions - cloud', () => {
 
         await expect(text1).toEqual('aaa');
         await expect(text2).toEqual('aaa');
-        await widget.textWidget().isWidgetNotVisible(widgets.checkboxBasicField);
+        await widget.checkboxWidget().isCheckboxHidden(widgets.checkboxBasicField);
+
+        await widget.textWidget().setValue(widgets.textTwoId, 'bbb');
+        text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
+        text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
+
+        await expect(text1).toEqual('aaa');
+        await expect(text2).toEqual('bbb');
+
+        await widget.checkboxWidget().isCheckboxDisplayed(widgets.checkboxBasicField);
     });
 
-    it('[C312443] Should be able to see Checkbox widget when has multiple visibility conditions and OR NOT next condition operators', async () => {
-        await formCloudDemoPage.setConfigToEditor(multipleVisibilityFormJson);
+    it('[C312443] Should be able to see text widget when has multiple visibility conditions and OR NOT next condition operators', async () => {
+        await formCloudDemoPage.setConfigToEditor(multipleTextVisibilityFormJson);
 
         await widget.textWidget().setValue(widgets.textTwoId, 'test');
         await widget.textWidget().setValue(widgets.textThreeId, 'test');

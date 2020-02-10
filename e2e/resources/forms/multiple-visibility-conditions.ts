@@ -74,7 +74,23 @@
                                type: 'boolean',
                                required: false,
                                colspan: 1,
-                               visibilityCondition: null,
+                                visibilityCondition: {
+                                    leftType: 'field',
+                                    leftValue: 'textone',
+                                    operator: '==',
+                                    rightValue: 'aaa',
+                                    rightType: 'value',
+                                    nextConditionOperator: 'and-not',
+                                    nextCondition: {
+                                        leftType: 'field',
+                                        leftValue: 'texttwo',
+                                        operator: '==',
+                                        rightValue: 'aaa',
+                                        rightType: 'value',
+                                        nextConditionOperator: '',
+                                        nextCondition: null
+                                    }
+                                },
                                params: {
                                    existingColspan: 1,
                                    maxColspan: 2
@@ -464,6 +480,113 @@
                    value: '2019-05-10'
                 }
             ]
+        }
+    }
+};
+
+ export const multipleTextVisibilityFormJson = {
+    formRepresentation: {
+        id: 'form-1fc64874-5fa9-4eb0-be06-61abd51abef7',
+        name: 'form2',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: 'e6071f44-50cf-4b51-8b69-651df3ca4509',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
+                            {
+                                id: 'textOne',
+                                name: 'Text1',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: {
+                                    leftType: 'field',
+                                    leftValue: 'textTwo',
+                                    operator: '!=',
+                                    rightValue: 'test',
+                                    rightType: 'value',
+                                    nextConditionOperator: 'or-not',
+                                    nextCondition: {
+                                        leftType: 'field',
+                                        leftValue: 'textThree',
+                                        operator: '==',
+                                        rightValue: 'test',
+                                        rightType: 'value',
+                                        nextConditionOperator: '',
+                                        nextCondition: null
+                                    }
+                                },
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        2: [
+                            {
+                                id: 'textTwo',
+                                name: 'Text2',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: '4f086395-6f63-47c7-aeda-f315ae5b3891',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
+                            {
+                                id: 'textThree',
+                                name: 'Text3',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        2: []
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
         }
     }
 };
