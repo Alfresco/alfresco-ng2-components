@@ -51,10 +51,4 @@ export class ExtensionsModule {
             ]
         };
     }
-
-    static forChild(): ModuleWithProviders<ExtensionsModule> {
-        return {
-            ngModule: ExtensionsModule
-        };
-    }
 }
