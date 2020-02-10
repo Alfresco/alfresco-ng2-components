@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { baseHost, WidgetComponent, IdentityGroupModel } from '@alfresco/adf-core';
+import { baseHost, WidgetComponent, IdentityGroupModel, FormService } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -38,6 +38,10 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
     title: string;
     preSelectGroup: IdentityGroupModel[];
     search: FormControl;
+
+    constructor(formService: FormService) {
+        super(formService);
+    }
 
     ngOnInit() {
         if (this.field) {

@@ -67,7 +67,9 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
         FormCustomOutcomesComponent,
-        AttachFileCloudWidgetComponent
+        AttachFileCloudWidgetComponent,
+        PeopleCloudWidgetComponent,
+        GroupCloudWidgetComponent
     ]
 })
 export class FormCloudModule {

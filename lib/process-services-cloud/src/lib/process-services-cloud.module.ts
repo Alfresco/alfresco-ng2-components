@@ -22,13 +22,10 @@ import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
 import { GroupCloudModule } from './group/group-cloud.module';
 import { FormCloudModule } from './form/form-cloud.module';
-import { TaskFormModule } from './task/task-form/task-form.module';
-import {
-    LocalPreferenceCloudService,
-    PROCESS_FILTERS_SERVICE_TOKEN,
-    TASK_FILTERS_SERVICE_TOKEN
-} from './services/public-api';
 import { PeopleCloudModule } from './people/people-cloud.module';
+import { PROCESS_FILTERS_SERVICE_TOKEN, TASK_FILTERS_SERVICE_TOKEN } from './services/cloud-token.service';
+import { LocalPreferenceCloudService } from './services/local-preference-cloud.service';
+import { TaskFormModule } from './task/task-form/task-form.module';
 
 @NgModule({
     imports: [

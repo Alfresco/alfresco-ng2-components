@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { baseHost, WidgetComponent, IdentityUserModel } from '@alfresco/adf-core';
+import { baseHost, WidgetComponent, IdentityUserModel, FormService } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -39,6 +39,10 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     title: string;
     preSelectUsers: IdentityUserModel[];
     search: FormControl;
+
+    constructor(formService: FormService) {
+        super(formService);
+    }
 
     ngOnInit() {
         if (this.field) {

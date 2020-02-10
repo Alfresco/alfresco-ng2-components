@@ -38,7 +38,6 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
         MaterialModule,
         AppListCloudModule,
         CoreModule
-
     ],
     declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
     exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],

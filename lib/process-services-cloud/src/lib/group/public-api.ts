@@ -16,4 +16,5 @@
  */
 
 export * from './components/group-cloud.component';
+export * from './pipe/group-initial.pipe';
 export * from './group-cloud.module';
