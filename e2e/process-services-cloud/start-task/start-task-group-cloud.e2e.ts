@@ -122,17 +122,9 @@ describe('Start Task - Group Cloud Component', () => {
         await startTask.addName(oneGroupTaskName);
         await startTask.clickStartButton();
 
-        await navigationBarPage.clickLogoutButton();
-        await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
-        await navigationBarPage.navigateToProcessServicesCloudPage();
-        await appListCloudComponent.checkApsContainer();
-        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        await appListCloudComponent.goToApp(simpleApp);
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-
         await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
 
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(oneGroupTaskName);
@@ -154,17 +146,9 @@ describe('Start Task - Group Cloud Component', () => {
         await startTask.addName(bothGroupsTaskName);
         await startTask.clickStartButton();
 
-        await navigationBarPage.clickLogoutButton();
-        await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
-        await navigationBarPage.navigateToProcessServicesCloudPage();
-        await appListCloudComponent.checkApsContainer();
-        await appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        await appListCloudComponent.goToApp(simpleApp);
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-
         await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
 
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(bothGroupsTaskName);
