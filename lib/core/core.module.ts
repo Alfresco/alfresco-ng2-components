@@ -129,7 +129,7 @@ import { SearchTextModule } from './search-text/search-text-input.module';
     ]
 })
 export class CoreModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule,
             providers: [
@@ -154,7 +154,7 @@ export class CoreModule {
         };
     }
 
-    static forChild(): ModuleWithProviders {
+    static forChild(): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule
         };

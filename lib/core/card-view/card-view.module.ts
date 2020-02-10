@@ -50,7 +50,7 @@ import { CardViewArrayItemComponent } from './components/card-view-arrayitem/car
         CommonModule,
         FormsModule,
         FlexLayoutModule,
-        TranslateModule.forChild(),
+        TranslateModule,
         MatDatepickerModule,
         MatNativeDateModule,
         MatCheckboxModule,

@@ -34,7 +34,7 @@ describe('CompleteTaskDirective', () => {
         taskMock = 'test1234';
         appNameMock = 'simple-app';
 
-        @ViewChild(CompleteTaskDirective, { static: false })
+        @ViewChild(CompleteTaskDirective)
         completeTaskDirective: CompleteTaskDirective;
 
         onCompleteTask(event: any) {

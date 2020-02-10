@@ -551,7 +551,7 @@ describe('TaskListComponent', () => {
 
 class CustomTaskListComponent {
 
-    @ViewChild(TaskListComponent, { static: false })
+    @ViewChild(TaskListComponent)
     taskList: TaskListComponent;
 }
 

@@ -36,10 +36,10 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     @Input()
     processInstanceId: string;
 
-    @ViewChild('processInstanceHeader', { static: false })
+    @ViewChild('processInstanceHeader')
     processInstanceHeader: ProcessInstanceHeaderComponent;
 
-    @ViewChild('processInstanceTasks', { static: false })
+    @ViewChild('processInstanceTasks')
     tasksList: ProcessInstanceTasksComponent;
 
     /** Toggles whether to show or hide the title. */

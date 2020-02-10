@@ -16,7 +16,9 @@
  */
 
 import { CookieService } from '../services/cookie.service';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class CookieServiceMock extends CookieService {
 
     /** @override */

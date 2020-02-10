@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { EventEmitter, Input, OnChanges, Output, SimpleChanges, Directive } from '@angular/core';
 
+@Directive()
+// tslint:disable-next-line: directive-class-suffix
 export class WidgetComponent implements OnChanges {
 
     /** field. */

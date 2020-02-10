@@ -31,7 +31,7 @@ import { LoginComponent } from '../components/login.component';
 })
 export class LoginFooterDirective implements AfterContentInit {
 
-    @ContentChild(TemplateRef, { static: false })
+    @ContentChild(TemplateRef)
     template: any;
 
     constructor(

@@ -67,7 +67,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     @Output()
     formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
 
-    @ViewChild('outcomesContainer', { static: false })
+    @ViewChild('outcomesContainer')
     outcomesContainer: ElementRef = null;
 
     constructor(formService: FormService,

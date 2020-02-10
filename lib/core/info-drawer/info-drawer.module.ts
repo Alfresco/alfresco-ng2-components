@@ -38,7 +38,7 @@ export function declarations() {
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule.forChild()
+        TranslateModule
     ],
     declarations: declarations(),
     exports: declarations()

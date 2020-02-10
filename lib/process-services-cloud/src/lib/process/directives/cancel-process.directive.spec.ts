@@ -29,7 +29,7 @@ describe('CancelProcessDirective', () => {
     })
     class TestComponent {
 
-        @ViewChild(CancelProcessDirective, { static: false })
+        @ViewChild(CancelProcessDirective)
         cancelProcessDirective: CancelProcessDirective;
     }
 

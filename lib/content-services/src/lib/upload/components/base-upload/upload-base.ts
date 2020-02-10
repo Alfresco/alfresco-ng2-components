@@ -16,11 +16,13 @@
  */
 
 import { FileModel, FileInfo, UploadService, TranslationService } from '@alfresco/adf-core';
-import { EventEmitter, Input, Output, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { EventEmitter, Input, Output, OnInit, OnDestroy, NgZone, Directive } from '@angular/core';
 import { Subject } from 'rxjs';
 import { UploadFilesEvent } from '../upload-files.event';
 import { takeUntil } from 'rxjs/operators';
 
+@Directive()
+// tslint:disable-next-line: directive-class-suffix
 export abstract class UploadBase implements OnInit, OnDestroy {
 
     /** Sets a limit on the maximum size (in bytes) of a file to be uploaded.

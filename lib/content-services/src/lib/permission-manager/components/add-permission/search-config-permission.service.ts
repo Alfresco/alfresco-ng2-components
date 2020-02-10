@@ -17,7 +17,9 @@
 
 import { QueryBody } from '@alfresco/js-api';
 import { SearchConfigurationInterface } from '@alfresco/adf-core';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class SearchPermissionConfigurationService implements SearchConfigurationInterface {
 
     constructor() {

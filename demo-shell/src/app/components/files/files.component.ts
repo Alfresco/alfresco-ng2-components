@@ -181,13 +181,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('documentList', { static: true })
     documentList: DocumentListComponent;
 
-    @ViewChild('standardPagination', { static: false })
+    @ViewChild('standardPagination')
     standardPagination: PaginationComponent;
 
     @ViewChild(InfinitePaginationComponent, { static: true })
     infinitePaginationComponent: InfinitePaginationComponent;
 
-    @ViewChild(HighlightDirective, { static: false })
+    @ViewChild(HighlightDirective)
     highlighter: HighlightDirective;
 
     permissionsStyle: PermissionStyleModel[] = [];

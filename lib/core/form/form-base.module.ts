@@ -48,7 +48,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         DataTableModule,
         HttpClientModule,
         MaterialModule,
-        TranslateModule.forChild(),
+        TranslateModule,
         FormsModule,
         ReactiveFormsModule,
         DataColumnModule,

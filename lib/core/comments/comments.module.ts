@@ -36,7 +36,7 @@ import { CommentsComponent } from './comments.component';
         ReactiveFormsModule,
         MaterialModule,
         CommonModule,
-        TranslateModule.forChild()
+        TranslateModule
     ],
     declarations: [
         CommentListComponent,

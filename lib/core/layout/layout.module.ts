@@ -33,7 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
         CommonModule,
         MaterialModule,
         RouterModule,
-        TranslateModule.forChild()
+        TranslateModule
     ],
     exports: [
         SidenavLayoutHeaderDirective,

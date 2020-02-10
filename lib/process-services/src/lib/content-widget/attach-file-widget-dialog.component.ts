@@ -33,7 +33,7 @@ import { Node } from '@alfresco/js-api';
 })
 export class AttachFileWidgetDialogComponent {
 
-    @ViewChild('adfLoginPanel', { static: false })
+    @ViewChild('adfLoginPanel')
     loginPanel: LoginDialogPanelComponent;
 
     chosenNode: Node[];

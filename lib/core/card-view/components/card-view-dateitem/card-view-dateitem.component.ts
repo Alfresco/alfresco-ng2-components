@@ -55,7 +55,7 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
     @Input()
     displayClearAction: boolean = true;
 
-    @ViewChild('datetimePicker', { static: false })
+    @ViewChild('datetimePicker')
     public datepicker: MatDatetimepicker<any>;
 
     valueDate: Moment;
