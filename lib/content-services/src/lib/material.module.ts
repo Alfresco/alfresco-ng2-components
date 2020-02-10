@@ -36,8 +36,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTreeModule } from '@angular/material/tree';
 
-export function modules() {
-    return [
+@NgModule({
+    imports: [
         MatButtonModule,
         MatChipsModule,
         MatDialogModule,
@@ -58,11 +58,28 @@ export function modules() {
         MatRadioModule,
         MatSliderModule,
         MatTreeModule
-    ];
-}
-
-@NgModule({
-    imports: modules(),
-    exports: modules()
+    ],
+    exports: [
+        MatButtonModule,
+        MatChipsModule,
+        MatDialogModule,
+        MatIconModule,
+        MatCardModule,
+        MatInputModule,
+        MatListModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule,
+        MatRippleModule,
+        MatMenuModule,
+        MatOptionModule,
+        MatExpansionModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatSlideToggleModule,
+        MatRadioModule,
+        MatSliderModule,
+        MatTreeModule
+    ]
 })
 export class MaterialModule {}

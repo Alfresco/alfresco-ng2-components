@@ -44,8 +44,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
 
-export function modules() {
-    return [
+@NgModule({
+    providers: [
+        { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'never' } }
+    ],
+    imports: [
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
@@ -69,14 +72,31 @@ export function modules() {
         MatChipsModule,
         MatMenuModule,
         MatExpansionModule
-    ];
-}
-
-@NgModule({
-    providers: [
-        { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'never' } }
     ],
-    imports: modules(),
-    exports: modules()
+    exports: [
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatOptionModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTableModule,
+        MatTabsModule,
+        MatProgressSpinnerModule,
+        MatNativeDateModule,
+        MatRippleModule,
+        MatTooltipModule,
+        MatChipsModule,
+        MatMenuModule,
+        MatExpansionModule
+    ]
 })
 export class MaterialModule {}

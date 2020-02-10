@@ -29,23 +29,34 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 
-const MATERIAL_MODULES = [
-    MatSlideToggleModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDialogModule,
-    MatSidenavModule,
-    MatProgressBarModule,
-    MatCardModule,
-    MatListModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatSnackBarModule,
-    MatExpansionModule
-];
-
 @NgModule({
-    imports: MATERIAL_MODULES,
-    exports: MATERIAL_MODULES
+    imports: [
+        MatSlideToggleModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDialogModule,
+        MatSidenavModule,
+        MatProgressBarModule,
+        MatCardModule,
+        MatListModule,
+        MatMenuModule,
+        MatToolbarModule,
+        MatSnackBarModule,
+        MatExpansionModule
+    ],
+    exports: [
+        MatSlideToggleModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDialogModule,
+        MatSidenavModule,
+        MatProgressBarModule,
+        MatCardModule,
+        MatListModule,
+        MatMenuModule,
+        MatToolbarModule,
+        MatSnackBarModule,
+        MatExpansionModule
+    ]
 })
 export class MaterialModule {}
