@@ -51,4 +51,5 @@ export * from './events/index';
 export * from './mock/index';
 export * from './testing';
 
+export * from './material.module';
 export * from './core.module';
