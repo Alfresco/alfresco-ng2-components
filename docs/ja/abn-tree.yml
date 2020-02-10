@@ -1,0 +1,65 @@
+- tutorials:
+    title: チュートリアル
+    children:
+        - creating-your-first-adf-application.md: 'はじめての ADF アプリケーションを作成する'
+        - creating-the-app-using-yeoman.md: 'Yeoman を使用して ADF アプリケーションを作成する'
+        - creating-javascript-app-using-alfresco-js-api.md: 'alfresco-js-api を使用して JavaScript アプリケーションを作成する'
+        - new-component.md: '新しいコンポーネントを追加する'
+        - new-view.md: '新しいビューを追加する'
+        - using-components.md: 'コンポーネントを使用する'
+        - basic-theming.md: '基本的なテーマ'
+        - customising-login.md: 'Login コンポーネントのカスタマイズ'
+        - working-with-data-table.md: 'DataTable の使用'
+        - working-with-nodes-api-service.md: 'Nodes API サービスの使用'
+        - working-with-nodes-js-api.md: 'JS-APIを使用してノードを操作する'
+        - content-metadata-component.md: 'コンテンツメタデータコンポーネント'
+- user-guide: 'ユーザーガイド'
+- core:
+    title: 'Core API'
+    children:
+        - components: 'コンポーネント'
+        - directives: 'ディレクティブ'
+        - interfaces: 'インターフェース'
+        - models: 'モデル'
+        - pipes: 'パイプ'
+        - services: 'サービス'
+        - widgets: 'ウィジェット'
+- content-services:
+    title: 'Content Services API'
+    children:
+        - components: 'コンポーネント'
+        - dialogs: 'ダイアログ'
+        - directives: 'ディレクティブ'
+        - interfaces: 'インターフェース'
+        - models: 'モデル'
+        - pipes: 'パイプ'
+        - services: 'サービス'
+- process-services:
+    title: 'Process Services API'
+    children:
+        - components: 'コンポーネント'
+        - directives: 'ディレクティブ'
+        - services: 'サービス'
+- process-services-cloud:
+    title: 'Process Services Cloud API'
+    children:
+        - components: 'コンポーネント'
+        - directives: 'ディレクティブ'
+        - pipes: 'パイプ'
+        - services: 'サービス'
+- extensions:
+    title: 'Extensions API'
+    children:
+        - components: 'コンポーネント'
+        - services: 'サービス'
+- insights:
+    title: 'Insights API'
+    children:
+        - components: 'コンポーネント'
+- roadmap.md: 'ロードマップ'
+- versionIndex.md: 'バージョンインデックス'
+- compatibility.md: 'バージョン互換性'
+- release-notes: 'リリースノート'
+- upgrade-guide: 'アップグレードガイド'
+- vulnerability: '脆弱性'
+- license-info: 'ライセンス情報'
