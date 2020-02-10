@@ -22,7 +22,7 @@ import { AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRowEve
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { fakeGlobalTask, fakeCustomSchema, fakeEmptyTask } from '../../mock';
+import { fakeGlobalTask, fakeCustomSchema, fakeEmptyTask, paginatedTask } from '../../mock';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { TaskListModule } from '../task-list.module';
@@ -33,6 +33,7 @@ describe('TaskListComponent', () => {
     let component: TaskListComponent;
     let fixture: ComponentFixture<TaskListComponent>;
     let appConfig: AppConfigService;
+    let taskListService: TaskListService;
 
     setupTestBed({
         imports: [
@@ -46,6 +47,7 @@ describe('TaskListComponent', () => {
 
         fixture = TestBed.createComponent(TaskListComponent);
         component = fixture.componentInstance;
+        taskListService = TestBed.get(TaskListService);
 
         appConfig.config = Object.assign(appConfig.config, {
             'adf-task-list': {
@@ -532,6 +534,28 @@ describe('TaskListComponent', () => {
             });
         });
     });
+
+    it('should show the updated list when pagination changes', async(() => {
+        spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask), of(paginatedTask));
+        const state = new SimpleChange(null, 'open', true);
+        const processDefinitionKey = new SimpleChange(null, null, true);
+        const assignment = new SimpleChange(null, 'fake-assignee', true);
+        component.ngAfterContentInit();
+        component.ngOnChanges({ 'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment });
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            let rows =  Array.from(fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-body adf-datatable-row'));
+            expect(rows.length).toEqual(2);
+            component.updatePagination({ skipCount: 0, maxItems: 5 });
+            fixture.detectChanges();
+            rows =  Array.from(fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-body adf-datatable-row'));
+            expect(rows.length).toEqual(5);
+            expect(taskListService.findTasksByState).toHaveBeenCalledTimes(2);
+        });
+
+    }));
+
 });
 
 @Component({
