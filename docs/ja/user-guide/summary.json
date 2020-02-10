@@ -1,0 +1,27 @@
+[
+    { "title": "Angular Material Design", "file": "angular-material-design.md" },
+    { "title": "フォームの拡張とカスタマイズ", "file": "extensibility.md" },
+    { "title": "ADF の国際化", "file": "internationalization.md" },
+    { "title": "ADF のローカライズ", "file": "localization.md" },
+    { "title": "テーマ", "file": "theming.md" },
+    { "title": "トランスクルージョン", "file": "transclusion.md" },
+    { "title": "タイポグラフィ", "file": "typography.md" },
+    { "title": "ウォークスルー - インジケーターを追加してノードに関する情報を強調する", "file": "metadata-indicators.md" },
+    { "title": "チュートリアル", "file": "tutorialIndex.md",
+        "children": [
+            { "title": "はじめての ADF アプリケーションを作成する", "file": "creating-your-first-adf-application.md"},
+            { "title": "Yeoman を使用して ADF アプリケーションを作成する", "file": "creating-the-app-using-yeoman.md"},
+            { "title": "alfresco-js-api を使用した Alfresco JavaScript アプリケーションの作成", "file": "creating-javascript-app-using-alfresco-js-api.md"},
+            { "title": "新しいコンポーネントを追加する", "file": "new-component.md"},
+            { "title": "新しいビューを追加する", "file": "new-view.md"},
+            { "title": "コンポーネントの使用", "file": "using-components.md"},
+            { "title": "基本的なテーマ", "file": "basic-theming.md"},
+            { "title": "Login コンポーネントのカスタマイズ", "file": "customising-login.md"},
+            { "title": "DataTable の使用", "file": "working-with-data-table.md"},
+            { "title": "Nodes API サービスの使用", "file": "working-with-nodes-api-service.md"},
+            { "title": "JS API を使用してノードを操作する", "file": "working-with-nodes-js-api.md"},
+            { "title": "Content metadata コンポーネント", "file": "content-metadata-component.md"},
+            { "title": "Activiti 7 と ADF", "file": "activiti-7-and-adf.md" }
+        ]
+    }
+]
