@@ -18,6 +18,95 @@
 export * from './components/diagram-sequence-flow.component';
 export * from './components/diagram.component';
 
+export * from './components/activities/diagram-alfresco-publish-task.component';
+export * from './components/activities/diagram-box-publish-task.component';
+export * from './components/activities/diagram-business-rule-task.component';
+export * from './components/activities/diagram-camel-task.component';
+export * from './components/activities/diagram-container-service-task.component';
+export * from './components/activities/diagram-google-drive-publish-task.component';
+export * from './components/activities/diagram-manual-task.component';
+export * from './components/activities/diagram-mule-task.component';
+export * from './components/activities/diagram-receive-task.component';
+export * from './components/activities/diagram-rest-call-task.component';
+export * from './components/activities/diagram-script-task.component';
+export * from './components/activities/diagram-send-task.component';
+export * from './components/activities/diagram-service-task.component';
+export * from './components/activities/diagram-task.component';
+export * from './components/activities/diagram-user-task.component';
+
+export * from './components/boundary-events/diagram-boundary-event.component';
+export * from './components/boundary-events/diagram-throw-event.component';
+export * from './components/events/diagram-end-event.component';
+export * from './components/events/diagram-event.component';
+export * from './components/events/diagram-start-event.component';
+export * from './components/gateways/diagram-event-gateway.component';
+export * from './components/gateways/diagram-exclusive-gateway.component';
+export * from './components/gateways/diagram-gateway.component';
+export * from './components/gateways/diagram-inclusive-gateway.component';
+export * from './components/gateways/diagram-parallel-gateway.component';
+
+export * from './components/icons/diagram-container-icon-event.component';
+export * from './components/icons/diagram-icon-alfresco-publish-task.component';
+export * from './components/icons/diagram-icon-box-publish-task.component';
+export * from './components/icons/diagram-icon-business-rule-task.component';
+export * from './components/icons/diagram-icon-camel-task.component';
+export * from './components/icons/diagram-icon-error.component';
+export * from './components/icons/diagram-icon-google-drive-publish-task.component';
+export * from './components/icons/diagram-icon-manual-task.component';
+export * from './components/icons/diagram-icon-message.component';
+export * from './components/icons/diagram-icon-mule-task.component';
+export * from './components/icons/diagram-icon-receive-task.component';
+export * from './components/icons/diagram-icon-rest-call-task.component';
+export * from './components/icons/diagram-icon-script-task.component';
+export * from './components/icons/diagram-icon-send-task.component';
+export * from './components/icons/diagram-icon-service-task.component';
+export * from './components/icons/diagram-icon-signal.component';
+export * from './components/icons/diagram-icon-timer.component';
+export * from './components/icons/diagram-icon-user-task.component';
+
+export * from './components/intermediate-catching-events/diagram-intermediate-catching-event.component';
+
+export * from './components/raphael/icons/raphael-icon-alfresco-publish.component';
+export * from './components/raphael/icons/raphael-icon-box-publish.component';
+export * from './components/raphael/icons/raphael-icon-business-rule.component';
+export * from './components/raphael/icons/raphael-icon-camel.component';
+export * from './components/raphael/icons/raphael-icon-error.component';
+export * from './components/raphael/icons/raphael-icon-google-drive-publish.component';
+export * from './components/raphael/icons/raphael-icon-manual.component';
+export * from './components/raphael/icons/raphael-icon-message.component';
+export * from './components/raphael/icons/raphael-icon-mule.component';
+export * from './components/raphael/icons/raphael-icon-receive.component';
+export * from './components/raphael/icons/raphael-icon-rest-call.component';
+export * from './components/raphael/icons/raphael-icon-script.component';
+export * from './components/raphael/icons/raphael-icon-send.component';
+export * from './components/raphael/icons/raphael-icon-service.component';
+export * from './components/raphael/icons/raphael-icon-signal.component';
+export * from './components/raphael/icons/raphael-icon-timer.component';
+export * from './components/raphael/icons/raphael-icon-user.component';
+
+export * from './components/raphael/anchor';
+export * from './components/raphael/polyline';
+export * from './components/raphael/raphael-base';
+export * from './components/raphael/raphael-circle.component';
+export * from './components/raphael/raphael-cross.component';
+export * from './components/raphael/raphael-flow-arrow.component';
+export * from './components/raphael/raphael-multiline-text.component';
+export * from './components/raphael/raphael-pentagon.component';
+export * from './components/raphael/raphael-plus.component';
+export * from './components/raphael/raphael-rect.component';
+export * from './components/raphael/raphael-rhombus.component';
+export * from './components/raphael/raphael-text.component';
+export * from './components/raphael/models/point';
+export * from './components/raphael/raphael.service';
+
+export * from './components/structural/diagram-event-subprocess.component';
+export * from './components/structural/diagram-subprocess.component';
+export * from './components/swimlanes/diagram-lane.component';
+export * from './components/swimlanes/diagram-lanes.component';
+export * from './components/swimlanes/diagram-pool.component';
+export * from './components/swimlanes/diagram-pools.component';
+export * from './components/tooltip/diagram-tooltip.component';
+
 export * from './services/diagram-color.service';
 export * from './services/diagrams.service';
 
