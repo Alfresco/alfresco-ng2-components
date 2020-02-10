@@ -44,9 +44,6 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
-    ],
-    entryComponents: [
-        TaskFilterDialogCloudComponent
     ]
 })
 export class TaskFiltersCloudModule { }

@@ -49,12 +49,6 @@ import { LibraryDialogComponent } from './library/library.dialog';
         NodeLockDialogComponent,
         ConfirmDialogComponent,
         LibraryDialogComponent
-    ],
-    entryComponents: [
-        FolderDialogComponent,
-        NodeLockDialogComponent,
-        ConfirmDialogComponent,
-        LibraryDialogComponent
     ]
 })
 export class DialogModule {}

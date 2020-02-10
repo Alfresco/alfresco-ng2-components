@@ -47,9 +47,10 @@
         "dist"
     ],
     "angularCompilerOptions": {
-        "strictMetadataEmit": false,
+        "strictMetadataEmit": true,
         "skipTemplateCodegen": true,
-        "preserveWhitespaces": false
+        "preserveWhitespaces": false,
+        "enableResourceInlining": true
     },
     "typedocOptions": {
         "json": "docs/docs.json",

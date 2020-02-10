@@ -35,9 +35,6 @@ import { PipeModule } from '../pipes/pipe.module';
     ],
     exports: [
         DownloadZipDialogComponent
-    ],
-    entryComponents: [
-        DownloadZipDialogComponent
     ]
 })
 export class DialogModule {}

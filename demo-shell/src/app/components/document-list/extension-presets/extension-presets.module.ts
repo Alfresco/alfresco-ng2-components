@@ -37,13 +37,10 @@ const routes: Routes = [
         CoreModule.forChild(),
         RouterModule.forChild(routes),
         ContentModule,
-        ExtensionsModule.forChild()
+        ExtensionsModule
     ],
     declarations: [
         ExtensionPresetsComponent,
-        NameColumnComponent
-    ],
-    entryComponents: [
         NameColumnComponent
     ]
 })

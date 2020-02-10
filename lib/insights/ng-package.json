@@ -2,7 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../dist/insights/",
   "lib": {
-    "languageLevel": [ "dom", "es2017" ],
     "entryFile": "src/public-api.ts",
     "flatModuleFile": "adf-insights",
     "umdModuleIds": {

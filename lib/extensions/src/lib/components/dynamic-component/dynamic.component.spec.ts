@@ -26,7 +26,6 @@ import {
 } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -59,10 +58,6 @@ describe('DynamicExtensionComponent', () => {
             imports: [HttpClientModule],
             declarations: [DynamicExtensionComponent, TestComponent],
             providers: [{ provide: ComponentRegisterService, useValue: componentRegister }]
-        });
-
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [TestComponent] }
         });
 
         TestBed.compileComponents();

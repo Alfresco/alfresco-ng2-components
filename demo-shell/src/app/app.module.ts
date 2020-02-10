@@ -213,10 +213,6 @@ registerLocaleData(localeSv);
             }
         }
     ],
-    entryComponents: [
-        VersionManagerDialogAdapterComponent,
-        MetadataDialogAdapterComponent
-    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

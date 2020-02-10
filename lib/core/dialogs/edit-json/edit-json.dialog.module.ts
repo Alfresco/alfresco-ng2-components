@@ -37,9 +37,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ],
     exports: [
         EditJsonDialogComponent
-    ],
-    entryComponents: [
-        EditJsonDialogComponent
     ]
 })
 export class EditJsonDialogModule {}

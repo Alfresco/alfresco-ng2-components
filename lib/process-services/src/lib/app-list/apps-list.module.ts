@@ -38,9 +38,6 @@ import { SelectAppsDialogComponent } from './select-apps-dialog.component';
     exports: [
         AppsListComponent,
         SelectAppsDialogComponent
-    ],
-    entryComponents: [
-        SelectAppsDialogComponent
     ]
 })
 export class AppsListModule {

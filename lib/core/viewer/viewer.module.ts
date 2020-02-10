@@ -46,7 +46,6 @@ import { A11yModule } from '@angular/cdk/a11y';
 
 @NgModule({
     imports: [
-        ExtensionsModule,
         CommonModule,
         MaterialModule,
         TranslateModule,
@@ -56,7 +55,8 @@ import { A11yModule } from '@angular/cdk/a11y';
         PipeModule,
         FlexLayoutModule,
         DirectiveModule,
-        A11yModule
+        A11yModule,
+        ExtensionsModule
     ],
     declarations: [
         PdfPasswordDialogComponent,
@@ -74,9 +74,6 @@ import { A11yModule } from '@angular/cdk/a11y';
         ViewerOpenWithComponent,
         ViewerMoreActionsComponent,
         ViewerToolbarActionsComponent
-    ],
-    entryComponents: [
-        PdfPasswordDialogComponent
     ],
     exports: [
         ViewerComponent,

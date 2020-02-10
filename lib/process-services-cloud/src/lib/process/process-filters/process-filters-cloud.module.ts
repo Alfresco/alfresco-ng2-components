@@ -42,7 +42,6 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
     ],
     declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
     exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
-    entryComponents: [ProcessFilterDialogCloudComponent],
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }

@@ -36,14 +36,6 @@ import { SearchCheckListComponent } from './components/search-check-list/search-
 import { SearchDateRangeComponent } from './components/search-date-range/search-date-range.component';
 import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
 
-export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
-    SearchComponent,
-    SearchControlComponent,
-    EmptySearchResultComponent,
-    SearchFilterComponent,
-    SearchChipListComponent
-];
-
 @NgModule({
     imports: [
         CommonModule,
@@ -53,7 +45,11 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
         CoreModule
     ],
     declarations: [
-        ...ALFRESCO_SEARCH_DIRECTIVES,
+        SearchComponent,
+        SearchControlComponent,
+        EmptySearchResultComponent,
+        SearchFilterComponent,
+        SearchChipListComponent,
         SearchWidgetContainerComponent,
         SearchTextComponent,
         SearchRadioComponent,
@@ -64,7 +60,11 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
         SearchSortingPickerComponent
     ],
     exports: [
-        ...ALFRESCO_SEARCH_DIRECTIVES,
+        SearchComponent,
+        SearchControlComponent,
+        EmptySearchResultComponent,
+        SearchFilterComponent,
+        SearchChipListComponent,
         SearchWidgetContainerComponent,
         SearchTextComponent,
         SearchRadioComponent,
@@ -73,15 +73,6 @@ export const ALFRESCO_SEARCH_DIRECTIVES: any[] = [
         SearchCheckListComponent,
         SearchDateRangeComponent,
         SearchSortingPickerComponent
-    ],
-    entryComponents: [
-        SearchWidgetContainerComponent,
-        SearchTextComponent,
-        SearchRadioComponent,
-        SearchSliderComponent,
-        SearchNumberRangeComponent,
-        SearchCheckListComponent,
-        SearchDateRangeComponent
     ]
 })
 export class SearchModule {}

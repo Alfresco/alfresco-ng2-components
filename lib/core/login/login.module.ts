@@ -44,7 +44,6 @@ import { LoginDialogPanelComponent } from './components/login-dialog-panel.compo
         LoginDialogComponent,
         LoginDialogPanelComponent
     ],
-    entryComponents: [LoginDialogComponent, LoginDialogPanelComponent],
     exports: [
         LoginComponent,
         LoginFooterDirective,

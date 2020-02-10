@@ -67,13 +67,6 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         ContentColumnListComponent,
         ContentActionComponent,
         ContentActionListComponent
-    ],
-    entryComponents: [
-        TrashcanNameColumnComponent,
-        LibraryStatusColumnComponent,
-        LibraryRoleColumnComponent,
-        LibraryNameColumnComponent,
-        NameColumnComponent
     ]
 })
 export class DocumentListModule {}
