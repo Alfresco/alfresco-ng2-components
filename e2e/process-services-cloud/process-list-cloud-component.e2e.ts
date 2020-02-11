@@ -75,10 +75,10 @@ describe('Process list cloud', () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(candidateBaseApp);
-            await processCloudDemoPage.clickOnProcessFilters();
-            await processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
-            await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
+            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed('running-processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('running-processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
 

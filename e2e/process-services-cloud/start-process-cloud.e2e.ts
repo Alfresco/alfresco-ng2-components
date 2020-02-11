@@ -104,10 +104,10 @@ describe('Start Process', () => {
         await startProcessPage.enterProcessName(processName);
         await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
         await startProcessPage.clickStartProcessButton();
-        await processCloudDemoPage.clickOnProcessFilters();
+        await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
 
-        await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-        await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+        await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('running-processes');
+        await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
    });
 });

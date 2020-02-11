@@ -73,7 +73,7 @@ describe('Task list cloud - selection', () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
-            await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed('my-tasks');
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();

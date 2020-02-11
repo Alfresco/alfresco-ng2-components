@@ -20,18 +20,12 @@ import { by, element, ElementFinder } from 'protractor';
 
 export class ProcessCloudDemoPage {
 
-    allProcesses: ElementFinder = element(by.css('span[data-automation-id="all-processes_filter"]'));
-    runningProcesses: ElementFinder = element(by.css('span[data-automation-id="running-processes_filter"]'));
-    completedProcesses: ElementFinder = element(by.css('span[data-automation-id="completed-processes_filter"]'));
-    activeFilter: ElementFinder = element(by.css("mat-list-item[class*='active'] span"));
-    processFilters: ElementFinder = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
-    processFiltersList: ElementFinder = element(by.css('adf-cloud-process-filters'));
-
     createButton: ElementFinder = element(by.css('button[data-automation-id="create-button"'));
     newProcessButton: ElementFinder = element(by.css('button[data-automation-id="btn-start-process"]'));
 
     processListCloud = new ProcessListCloudComponentPage();
     editProcessFilterCloud = new EditProcessFilterCloudComponentPage();
+    processFilterCloudComponent = new ProcessFiltersCloudComponentPage();
 
     editProcessFilterCloudComponent(): EditProcessFilterCloudComponentPage {
         return this.editProcessFilterCloud;
@@ -45,31 +39,6 @@ export class ProcessCloudDemoPage {
         return this.processListCloud.getAllRowsByColumn('Id');
     }
 
-    allProcessesFilter(): ProcessFiltersCloudComponentPage {
-        return new ProcessFiltersCloudComponentPage(this.allProcesses);
-    }
-
-    runningProcessesFilter(): ProcessFiltersCloudComponentPage {
-        return new ProcessFiltersCloudComponentPage(this.runningProcesses);
-    }
-
-    completedProcessesFilter(): ProcessFiltersCloudComponentPage {
-        return new ProcessFiltersCloudComponentPage(this.completedProcesses);
-    }
-
-    customProcessFilter(filterName): ProcessFiltersCloudComponentPage {
-        return new ProcessFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}_filter"]`)));
-    }
-
-    async getActiveFilterName(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
-        return BrowserActions.getText(this.activeFilter);
-    }
-
-    async clickOnProcessFilters(): Promise<void> {
-        await BrowserActions.click(this.processFilters);
-    }
-
     async openNewProcessForm(): Promise<void> {
         await this.clickOnCreateButton();
         await this.newProcessButtonIsDisplayed();
@@ -78,10 +47,6 @@ export class ProcessCloudDemoPage {
 
     async newProcessButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.newProcessButton);
-    }
-
-    async isProcessFiltersListVisible(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processFiltersList);
     }
 
     async clickOnCreateButton(): Promise<void> {

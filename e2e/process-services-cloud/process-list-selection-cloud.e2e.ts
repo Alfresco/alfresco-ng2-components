@@ -78,9 +78,9 @@ describe('Process list cloud', () => {
             await expect(processInstances.length).toEqual(noOfProcesses, 'Wrong preconditions');
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
-            await processCloudDemoPage.clickOnProcessFilters();
-            await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
+            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('running-processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayProcessDetails();
             await tasksCloudDemoPage.clickAppButton();
@@ -90,8 +90,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.selectSelectionMode('None');
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
+            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
 
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkNoRowIsSelected();
@@ -101,8 +101,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.selectSelectionMode('Single');
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
+            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
 
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsSelectedById(processInstances[0]);
@@ -116,8 +116,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.selectSelectionMode('Multiple');
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
+            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
 
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsSelectedById(processInstances[0]);
@@ -132,8 +132,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
+            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
 
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);
@@ -149,8 +149,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
+            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
 
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed();
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRows();
@@ -171,8 +171,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.enableTestingMode();
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
+            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
 
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);

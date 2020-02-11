@@ -117,7 +117,7 @@ describe('Process list cloud', () => {
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(candidateBaseApp);
             await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-            await processCloudDemoPage.clickOnProcessFilters();
+            await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         });
 
         it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
@@ -228,9 +228,9 @@ describe('Process list cloud', () => {
         });
 
         it('[C305054] Should display the actions filters Save, SaveAs and Delete', async () => {
-            await processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            await processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('all-processes');
+            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed('all-processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('All Processes');
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
 
             const editProcessFilterCloudComponent = processCloudDemoPage.editProcessFilterCloudComponent();
@@ -248,7 +248,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New');
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnSaveButton();
 
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('New');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('New');
 
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
             await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().numberOfRows()).toBe(1);
@@ -276,7 +276,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SavedFilter');
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnSaveButton();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('SavedFilter');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SavedFilter');
 
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
@@ -289,7 +289,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SwitchFilter');
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnSaveButton();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('SwitchFilter');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SwitchFilter');
 
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);
@@ -311,14 +311,14 @@ describe('Process list cloud', () => {
                 await appListCloudComponent.checkApsContainer();
                 await appListCloudComponent.goToApp(candidateBaseApp);
                 await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-                await processCloudDemoPage.clickOnProcessFilters();
+                await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
 
             });
 
             it('[C305054] Should display the actions filters Save and SaveAs, Delete button is not displayed', async () => {
-                await processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-                await processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
-                await expect(await processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
+                await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('all-processes');
+                await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed('all-processes');
+                await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('All Processes');
                 await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
                 await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed();
                 await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveAsButtonIsDisplayed();

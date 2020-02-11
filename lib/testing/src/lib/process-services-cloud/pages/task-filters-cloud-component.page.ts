@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, ElementFinder, Locator } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
@@ -23,33 +23,54 @@ export class TaskFiltersCloudComponentPage {
 
     filter: ElementFinder;
     taskIcon: Locator = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
+    taskFilters: ElementFinder = element(by.css(`mat-expansion-panel[data-automation-id='Task Filters']`));
 
-    constructor(filter: ElementFinder) {
-        this.filter = filter;
-    }
+    activeFilter: ElementFinder = element(by.css("mat-list-item[class*='active'] span"));
+    defaultActiveFilter: ElementFinder = element.all(by.css('.adf-filters__entry')).first();
 
-    async checkTaskFilterIsDisplayed(): Promise<void> {
+    async checkTaskFilterIsDisplayed(filterName: string): Promise<void> {
+        this.filter = this.getTaskFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
-    async getTaskFilterIcon(): Promise<string> {
+    async getTaskFilterIcon(filterName: string): Promise<string> {
+        this.filter = this.getTaskFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.taskIcon);
         return BrowserActions.getText(icon);
     }
 
-    async checkTaskFilterHasNoIcon(): Promise<void> {
+    async checkTaskFilterHasNoIcon(filterName: string): Promise<void> {
+        this.filter = this.getTaskFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.taskIcon));
     }
 
-    async clickTaskFilter(): Promise<void> {
+    async clickTaskFilter(filterName): Promise<void> {
+        this.filter = this.getTaskFilterLocatorByFilterName(filterName);
         await BrowserActions.click(this.filter);
-        await browser.driver.sleep(1000);
     }
 
-    async checkTaskFilterNotDisplayed(): Promise<void> {
+    async checkTaskFilterNotDisplayed(filterName: string): Promise<void> {
+        this.filter = this.getTaskFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
+    }
+
+    async clickOnTaskFilters(): Promise<void> {
+        await BrowserActions.click(this.taskFilters);
+    }
+
+    async getActiveFilterName(): Promise<string> {
+        return BrowserActions.getText(this.activeFilter);
+    }
+
+    async firstFilterIsActive(): Promise<boolean> {
+        const value = await this.defaultActiveFilter.getAttribute('class');
+        return value.includes('adf-active');
+    }
+
+    getTaskFilterLocatorByFilterName(filterName: string): ElementFinder {
+        return element(by.css(`span[data-automation-id="${filterName}-filter"]`));
     }
 
 }

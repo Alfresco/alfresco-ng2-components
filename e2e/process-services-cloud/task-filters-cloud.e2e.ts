@@ -33,6 +33,11 @@ describe('Task filters cloud', () => {
         let testUser, groupInfo;
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
+        const enum TASK_FILTERS {
+            COMPLETED_TASKS = 'completed-tasks',
+            MY_TASKS = 'my-tasks'
+        }
+
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
@@ -64,8 +69,8 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290011] Should display default filters when an app is deployed', async () => {
-            await tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            await tasksCloudDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
+            await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed(TASK_FILTERS.MY_TASKS);
+            await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed(TASK_FILTERS.COMPLETED_TASKS);
         });
 
         it('[C290009] Should display default filters and created task', async () => {
@@ -74,12 +79,14 @@ describe('Task filters cloud', () => {
             const task = await tasksService.createStandaloneTask(newTask, simpleApp);
             await tasksService.claimTask(task.entry.id, simpleApp);
 
-            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
+            await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed(TASK_FILTERS.COMPLETED_TASKS);
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(TASK_FILTERS.COMPLETED_TASKS);
+            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('Completed Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(newTask);
 
-            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed(TASK_FILTERS.MY_TASKS);
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(TASK_FILTERS.MY_TASKS);
+            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(newTask);
         });
@@ -91,19 +98,21 @@ describe('Task filters cloud', () => {
             await tasksService.claimTask(toBeCompletedTask.entry.id, simpleApp);
             await tasksService.completeTask(toBeCompletedTask.entry.id, simpleApp);
 
-            await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed(TASK_FILTERS.MY_TASKS);
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(TASK_FILTERS.MY_TASKS);
+            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTask);
 
-            await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
+            await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed(TASK_FILTERS.COMPLETED_TASKS);
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(TASK_FILTERS.COMPLETED_TASKS);
+            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('Completed Tasks');
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask);
         });
 
         it('[C291792] Should select the first task filter from the list as default', async () => {
 
-            await expect(await tasksCloudDemoPage.firstFilterIsActive()).toBe(true);
+            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.firstFilterIsActive()).toBe(true);
         });
    });
 });

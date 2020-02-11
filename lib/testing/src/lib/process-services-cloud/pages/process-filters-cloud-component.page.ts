@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, ElementFinder, Locator } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
@@ -24,32 +24,54 @@ export class ProcessFiltersCloudComponentPage {
     filter: ElementFinder;
     filterIcon: Locator = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
 
-    constructor(filter: ElementFinder) {
-        this.filter = filter;
-    }
+    processFilters: ElementFinder = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
 
-    async checkProcessFilterIsDisplayed(): Promise<void> {
+    activeFilter: ElementFinder = element(by.css("mat-list-item[class*='active'] span"));
+    processFiltersList: ElementFinder = element(by.css('adf-cloud-process-filters'));
+
+    async checkProcessFilterIsDisplayed(filterName: string): Promise<void> {
+        this.filter = this.getProcessFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
-    async getProcessFilterIcon(): Promise<string> {
+    async getProcessFilterIcon(filterName: string): Promise<string> {
+        this.filter = this.getProcessFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.filterIcon);
         await BrowserVisibility.waitUntilElementIsVisible(icon);
         return BrowserActions.getText(icon);
     }
 
-    async checkProcessFilterHasNoIcon(): Promise<void> {
+    async checkProcessFilterHasNoIcon(filterName: string): Promise<void> {
+        this.filter = this.getProcessFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.filterIcon));
     }
 
-    async clickProcessFilter(): Promise<void> {
+    async clickProcessFilter(filterName: string): Promise<void> {
+        this.filter = this.getProcessFilterLocatorByFilterName(filterName);
         await BrowserActions.click(this.filter);
     }
 
-    async checkProcessFilterNotDisplayed(): Promise<void> {
+    async checkProcessFilterNotDisplayed(filterName: string): Promise<void> {
+        this.filter = this.getProcessFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
     }
 
+    async clickOnProcessFilters(): Promise<void> {
+        await BrowserActions.click(this.processFilters);
+    }
+
+    async getActiveFilterName(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
+        return BrowserActions.getText(this.activeFilter);
+    }
+
+    async isProcessFiltersListVisible(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.processFiltersList);
+    }
+
+    getProcessFilterLocatorByFilterName(filterName: string): ElementFinder {
+        return element(by.css(`span[data-automation-id="${filterName}_filter"]`));
+    }
 }

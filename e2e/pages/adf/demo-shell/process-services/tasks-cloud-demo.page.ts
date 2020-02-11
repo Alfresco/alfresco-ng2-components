@@ -27,12 +27,6 @@ import {
 
 export class TasksCloudDemoPage {
 
-    myTasks: ElementFinder = element(by.css('span[data-automation-id="my-tasks-filter"]'));
-    completedTasks: ElementFinder = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
-    activeFilter: ElementFinder = element(by.css("mat-list-item[class*='active'] span"));
-
-    defaultActiveFilter: ElementFinder = element.all(by.css('.adf-filters__entry')).first();
-
     createButton: ElementFinder = element(by.css('button[data-automation-id="create-button"'));
     newTaskButton: ElementFinder = element(by.css('button[data-automation-id="btn-start-task"]'));
     settingsButton: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
@@ -54,11 +48,12 @@ export class TasksCloudDemoPage {
     addActionButton: ElementFinder = element(by.cssContainingText('button span', 'Add'));
     disableCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='disabled']`));
     visibleCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='visible']`));
-    filter: ElementFinder = element(by.css(`mat-expansion-panel[data-automation-id='Task Filters']`));
 
     formControllersPage: FormControllersPage = new FormControllersPage();
 
     editTaskFilterCloud: EditTaskFilterCloudComponentPage = new EditTaskFilterCloudComponentPage();
+
+    taskFilterCloudComponent = new TaskFiltersCloudComponentPage();
 
     async disableDisplayTaskDetails(): Promise<void> {
         await this.formControllersPage.disableToggle(this.displayTaskDetailsToggle);
@@ -84,10 +79,6 @@ export class TasksCloudDemoPage {
         await this.formControllersPage.enableToggle(this.testingModeToggle);
     }
 
-    async clickOnTaskFilter(): Promise<void> {
-        await BrowserActions.click(this.filter);
-    }
-
     taskListCloudComponent(): TaskListCloudComponentPage {
         return new TaskListCloudComponentPage();
     }
@@ -96,31 +87,9 @@ export class TasksCloudDemoPage {
         return this.editTaskFilterCloud;
     }
 
-    myTasksFilter(): TaskFiltersCloudComponentPage {
-        return new TaskFiltersCloudComponentPage(this.myTasks);
-    }
-
-    completedTasksFilter(): TaskFiltersCloudComponentPage {
-        return new TaskFiltersCloudComponentPage(this.completedTasks);
-    }
-
-    async getActiveFilterName(): Promise<string> {
-        await browser.sleep(500);
-        return BrowserActions.getText(this.activeFilter);
-    }
-
-    customTaskFilter(filterName): TaskFiltersCloudComponentPage {
-        return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
-    }
-
     async openNewTaskForm(): Promise<void> {
         await BrowserActions.click(this.createButton);
         await BrowserActions.clickExecuteScript('button[data-automation-id="btn-start-task"]');
-    }
-
-    async firstFilterIsActive(): Promise<boolean> {
-        const value = await this.defaultActiveFilter.getAttribute('class');
-        return value.includes('adf-active');
     }
 
     async clickSettingsButton(): Promise<void> {

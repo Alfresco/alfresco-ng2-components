@@ -92,7 +92,7 @@ describe('Form Field Component - Dropdown Widget', () => {
     });
 
     it('[C290069] Should be able to read rest service dropdown options, save and complete the task form', async () => {
-        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
@@ -105,11 +105,11 @@ describe('Form Field Component - Dropdown Widget', () => {
         await expect(await dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
         await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
         await taskFormCloudComponent.clickCompleteButton();
-        await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(task.entry.name);
         await notificationHistoryPage.checkNotifyContains('Task has been saved successfully');
 
-        await tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();

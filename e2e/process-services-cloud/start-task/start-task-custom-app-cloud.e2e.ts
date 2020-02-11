@@ -194,9 +194,9 @@ describe('Start Task', () => {
 
         await browser.driver.sleep(1000);
 
-        await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
 
-        await expect(await tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
     });
 
     it('[C291953] Assignee field should display the logged user as default', async () => {
