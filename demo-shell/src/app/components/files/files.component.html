@@ -197,13 +197,13 @@
                         <mat-icon>create</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}</span>
                     </button>
-                    <button mat-menu-item
+                    <!-- <button mat-menu-item
                             [disabled]="!hasSelection(documentList.selection)"
                             title="Download"
                             (click)="downloadNodes(documentList.selection)">
                         <mat-icon>get_app</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}</span>
-                    </button>
+                    </button> -->
                     <button mat-menu-item
                             adf-check-allowable-operation="delete"
                             [adf-nodes]="documentList.selection"
@@ -444,7 +444,7 @@
             <adf-infinite-pagination
                 [hidden]="!infiniteScrolling"
                 [target]="documentList"
-                [loading]="documentList.infiniteLoading">
+                [loading]="documentList.loading">
                 {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
             </adf-infinite-pagination>
         </adf-upload-drag-area>
