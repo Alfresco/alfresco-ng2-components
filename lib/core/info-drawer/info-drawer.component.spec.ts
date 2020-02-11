@@ -116,9 +116,11 @@ describe('Custom InfoDrawer', () => {
 
     it('should render the title', () => {
         fixture.detectChanges();
-        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
-        expect(title.length).toBe(1);
-        expect(title[0].nativeElement.innerText).toBe('Fake Title Custom');
+        fixture.whenStable().then(() => {
+            const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+            expect(title.length).toBe(1);
+            expect(title[0].nativeElement.innerText).toBe('Fake Title Custom');
+        });
     });
 
     it('should select the tab 1 (index 0) as default', () => {
