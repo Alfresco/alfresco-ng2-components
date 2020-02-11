@@ -48,7 +48,7 @@ import { A11yModule } from '@angular/cdk/a11y';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule,
         ToolbarModule,

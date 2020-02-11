@@ -25,7 +25,7 @@ import { TreeViewComponent } from './components/tree-view.component';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule.forChild()
     ],
     declarations: [
         TreeViewComponent

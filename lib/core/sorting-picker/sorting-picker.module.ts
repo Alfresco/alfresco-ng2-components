@@ -25,7 +25,7 @@ import { SortingPickerComponent } from './sorting-picker.component';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule.forChild()
     ],
     declarations: [
         SortingPickerComponent

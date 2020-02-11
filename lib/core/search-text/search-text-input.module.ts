@@ -30,7 +30,7 @@ import { SearchTriggerDirective } from './search-trigger.directive';
     ],
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         MaterialModule,
         FormsModule
     ],

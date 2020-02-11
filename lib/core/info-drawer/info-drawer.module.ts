@@ -23,24 +23,27 @@ import { InfoDrawerLayoutComponent, InfoDrawerTitleDirective, InfoDrawerButtonsD
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.component';
 import { TranslateModule } from '@ngx-translate/core';
 
-export function declarations() {
-    return [
+@NgModule({
+    imports: [
+        CommonModule,
+        MaterialModule,
+        TranslateModule.forChild()
+    ],
+    declarations: [
         InfoDrawerLayoutComponent,
         InfoDrawerTabComponent,
         InfoDrawerComponent,
         InfoDrawerTitleDirective,
         InfoDrawerButtonsDirective,
         InfoDrawerContentDirective
-    ];
-}
-
-@NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        TranslateModule
     ],
-    declarations: declarations(),
-    exports: declarations()
+    exports: [
+        InfoDrawerLayoutComponent,
+        InfoDrawerTabComponent,
+        InfoDrawerComponent,
+        InfoDrawerTitleDirective,
+        InfoDrawerButtonsDirective,
+        InfoDrawerContentDirective
+    ]
 })
 export class InfoDrawerModule {}

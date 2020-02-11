@@ -29,7 +29,7 @@ import { AboutGithubLinkComponent } from './about-github-link/about-github-link.
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         DataTableModule,
         DataColumnModule
     ],

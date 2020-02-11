@@ -27,7 +27,7 @@ import { NotificationIconPipe } from './pipes/notification-icon.pipe';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule.forChild()
     ],
     declarations: [
         NotificationHistoryComponent,

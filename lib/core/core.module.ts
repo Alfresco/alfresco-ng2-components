@@ -60,7 +60,7 @@ import { SearchTextModule } from './search-text/search-text-input.module';
 
 @NgModule({
     imports: [
-        TranslateModule,
+        TranslateModule.forChild(),
         ExtensionsModule,
         AboutModule,
         ViewerModule,
