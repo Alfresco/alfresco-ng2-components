@@ -31,7 +31,7 @@ import { UserPreferencesService } from '../../../services/user-preferences.servi
 import { CommonModule } from '@angular/common';
 import { Direction } from '@angular/cdk/bidi';
 import { of } from 'rxjs';
-import { setupTestBed } from "@alfresco/adf-core";
+import { setupTestBed } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-layout-container',
@@ -76,7 +76,6 @@ export class DummyLayoutContainerComponent {
 })
 export class SidenavLayoutTesterComponent {}
 
-
 describe('SidenavLayoutComponent', () => {
 
     let fixture: ComponentFixture<any>,
@@ -108,7 +107,7 @@ describe('SidenavLayoutComponent', () => {
         mediaQueryList = {
             mediaFn: null,
             matches: false,
-            addListener:  function (mediaFn) { this.mediaFn = mediaFn },
+            addListener:  function (mediaFn) { this.mediaFn = mediaFn; },
             removeListener: () => {}
         };
 
@@ -230,8 +229,8 @@ describe('SidenavLayoutComponent', () => {
 describe('Template transclusion', () => {
 
     let fixture: ComponentFixture<any>,
-        mediaMatcher: MediaMatcher,
-        mediaQueryList = {
+        mediaMatcher: MediaMatcher;
+    const mediaQueryList = {
             matches: false,
             addListener: () => {},
             removeListener: () => {}
@@ -335,4 +334,3 @@ describe('Template transclusion', () => {
         });
     });
 });
-
