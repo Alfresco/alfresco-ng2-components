@@ -190,7 +190,7 @@ describe('DropdownEditorComponent', () => {
         let dynamicTable: DynamicTableModel;
 
         function openSelect() {
-            const dropdown = fixture.debugElement.query(By.css('[class="mat-select-trigger"]'));
+            const dropdown = fixture.debugElement.query(By.css('.mat-select-trigger'));
             dropdown.triggerEventHandler('click', null);
             fixture.detectChanges();
         }
