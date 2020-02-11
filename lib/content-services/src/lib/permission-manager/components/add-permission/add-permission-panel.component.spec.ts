@@ -20,7 +20,7 @@ import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
 import { SearchService, setupTestBed, SearchConfigurationService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
-import { fakeAuthorityListResult } from '../../../mock/add-permission.component.mock';
+import { fakeAuthorityListResult, fakeNameListResult } from '../../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { DebugElement } from '@angular/core';
 
@@ -184,6 +184,24 @@ describe('AddPermissionPanelComponent', () => {
             expect(element.querySelector('#adf-add-permission-authority-results')).not.toBeNull();
             expect(element.querySelector('#adf-add-permission-group-everyone')).toBeDefined();
             expect(element.querySelector('#adf-add-permission-group-everyone')).not.toBeNull();
+        });
+    }));
+
+    it('should show first and last name of users', async(() => {
+        searchApiService = fixture.componentRef.injector.get(SearchService);
+        spyOn(searchApiService, 'search').and.returnValue(of(fakeNameListResult));
+        component.selectedItems.push(fakeNameListResult.list.entries[0]);
+        component.selectedItems.push(fakeNameListResult.list.entries[1]);
+
+        typeWordIntoSearchInput('a');
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#result_option_0 .mat-list-text')).not.toBeNull();
+            expect(element.querySelector('#result_option_0 .mat-list-text')).toBeDefined();
+            expect(element.querySelector('#result_option_1 .mat-list-text')).not.toBeNull();
+            expect(element.querySelector('#result_option_1 .mat-list-text')).toBeDefined();
+            expect(element.querySelector('#result_option_0 .mat-list-text').innerHTML).not.toEqual(element.querySelector('#result_option_1 .mat-list-text').innerHTML);
         });
     }));
 

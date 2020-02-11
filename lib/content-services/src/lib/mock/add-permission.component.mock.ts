@@ -141,15 +141,91 @@ export const fakeAuthorityResults: any[] = [{
 }];
 
 export const fakeAuthorityListResult: any = {
-'list': {
-'pagination': {
-    'count': 0,
-    'hasMoreItems': false,
-    'totalItems': 0,
-    'skipCount': 0,
-    'maxItems': 100
-},
-'context': {},
-'entries': fakeAuthorityResults
-}
+    'list': {
+        'pagination': {
+            'count': 0,
+            'hasMoreItems': false,
+            'totalItems': 0,
+            'skipCount': 0,
+            'maxItems': 100
+        },
+        'context': {},
+        'entries': fakeAuthorityResults
+    }
+};
+
+export const fakeNameListResult: any = {
+    'list': {
+        'pagination': {
+            'count': 2,
+            'hasMoreItems': false,
+            'totalItems': 2,
+            'skipCount': 0,
+            'maxItems': 20
+        },
+        'context': {
+            'consistency': {
+                'lastTxId': 5496
+            }
+        },
+        'entries': [{
+            'entry': {
+                'aspectNames': ['cm:ownable'],
+                'isFolder': false,
+                'search': {
+                    'score': 1.0
+                },
+                'isFile': false,
+                'name': '730cd9b0-5617-4865-aee8-90de1d596997',
+                'location': 'nodes',
+                'id': '730cd9b0-5617-4865-aee8-90de1d596997',
+                'nodeType': 'cm:person',
+                'properties': {
+                    'cm:homeFolderProvider': 'userHomesHomeFolderProvider',
+                    'cm:authorizationStatus': 'NEVER_AUTHORIZED',
+                    'cm:homeFolder': '277f505d-6526-45b1-a7b3-c9bdd66f17f6',
+                    'cm:userName': 'test1',
+                    'cm:lastName': 'lastName1',
+                    'cm:sizeCurrent': 0,
+                    'cm:email': 'test1@gmail.com',
+                    'cm:sizeQuota': 1073741824,
+                    'cm:firstName': 'firstName',
+                    'cm:owner': {
+                        'id': 'test1',
+                        'displayName': 'firstName lastName1'
+                    }
+                },
+                'parentId': '3e9ce910-a4a0-4531-8f80-7734bece6342'
+            }
+        }, {
+            'entry': {
+                'aspectNames': ['cm:ownable'],
+                'isFolder': false,
+                'search': {
+                    'score': 1.0
+                },
+                'isFile': false,
+                'name': '3d1e9e57-505f-431e-bb2b-38ad8d5d2d15',
+                'location': 'nodes',
+                'id': '3d1e9e57-505f-431e-bb2b-38ad8d5d2d15',
+                'nodeType': 'cm:person',
+                'properties': {
+                    'cm:homeFolderProvider': 'userHomesHomeFolderProvider',
+                    'cm:authorizationStatus': 'NEVER_AUTHORIZED',
+                    'cm:homeFolder': '81a07ff0-82fb-4bbb-b869-d5fd92e71e17',
+                    'cm:userName': 'test11',
+                    'cm:lastName': 'lastName2',
+                    'cm:sizeCurrent': 0,
+                    'cm:email': 'test2@gmail.com',
+                    'cm:sizeQuota': -1,
+                    'cm:firstName': 'firstName',
+                    'cm:owner': {
+                        'id': 'test11',
+                        'displayName': 'firstName lastName2'
+                    }
+                },
+                'parentId': '3e9ce910-a4a0-4531-8f80-7734bece6342'
+            }
+        }]
+    }
 };
