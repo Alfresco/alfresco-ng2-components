@@ -257,6 +257,7 @@
             },
             "assets": [
               "demo-shell/src/assets",
+              "demo-shell/src/favicon-96x96.png",
               "demo-shell/src/app.config.json",
               {
                 "glob": "**/*",
@@ -438,6 +439,7 @@
             ],
             "assets": [
               "demo-shell/src/assets",
+              "demo-shell/src/favicon-96x96.png",
               "demo-shell/src/app.config.json",
               {
                 "glob": "**/*",
