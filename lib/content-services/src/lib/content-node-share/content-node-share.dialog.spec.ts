@@ -174,7 +174,7 @@ describe('ShareDialogComponent', () => {
     });
 
     it('should unshare file when confirmation dialog returns true', fakeAsync(() => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClose: () => of(true) });
+        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(true) });
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
