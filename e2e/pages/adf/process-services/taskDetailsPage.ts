@@ -62,10 +62,11 @@ export class TaskDetailsPage {
     removeAttachForm: ElementFinder = element(by.id('adf-no-form-remove-button'));
     attachFormName: ElementFinder = element(by.css('span[class="adf-form-title ng-star-inserted"]'));
     emptyTaskDetails: ElementFinder = element(by.css('adf-task-details > div > div'));
+    priority: ElementFinder = element(by.css('span[data-automation-id*="priority"] span'));
+    editableAssignee = element(by.css('span[data-automation-id="card-textitem-value-assignee"][class*="clickable"]'));
 
     async checkEditableAssigneeIsNotDisplayed(): Promise<void> {
-        const editableAssignee = element(by.css('span[data-automation-id="card-textitem-value-assignee"][class*="clickable"]'));
-        await BrowserVisibility.waitUntilElementIsNotVisible(editableAssignee);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.editableAssignee);
     }
 
     async checkEditableFormIsNotDisplayed(): Promise<void> {
@@ -168,6 +169,10 @@ export class TaskDetailsPage {
         return BrowserActions.getText(this.assigneeField);
     }
 
+    isAssigneeClickable(): Promise<string> {
+        return BrowserVisibility.waitUntilElementIsVisible(this.editableAssignee);
+    }
+
     getStatus(): Promise<string> {
         return BrowserActions.getText(this.statusField);
     }
@@ -208,6 +213,38 @@ export class TaskDetailsPage {
         return BrowserActions.getText(this.dueDateField);
     }
 
+    getPriority(): Promise<string> {
+        return BrowserActions.getText(this.priority);
+    }
+
+    async updatePriority(priority?: string): Promise<void> {
+        await BrowserActions.click(this.priority);
+        await BrowserActions.clearSendKeys(element(by.css('input[data-automation-id="card-textitem-editinput-priority"]')), priority ? priority : ' ');
+        await BrowserActions.click(element(by.css('button[data-automation-id="card-textitem-update-priority"]')));
+    }
+
+    async updateDueDate(): Promise<void> {
+        await BrowserActions.click(this.dueDateField);
+        await BrowserActions.click(element(by.css('.mat-datetimepicker-calendar-body-cell')));
+    }
+
+    async updateDescription(description?: string): Promise<void> {
+        await BrowserActions.click(this.descriptionField);
+        const input = 'textarea[data-automation-id="card-textitem-edittextarea-description"]';
+        await BrowserActions.clearSendKeys(element(by.css(input)), description ? description : '');
+        if (!description) {
+            await browser.executeScript(`document.querySelector('${input}').dispatchEvent(new Event('input'))`);
+        }
+        await BrowserActions.click(element(by.css('button[data-automation-id="card-textitem-update-description"]')));
+    }
+
+    async updateAssignee(fullName: string): Promise<void> {
+        await BrowserActions.click(this.assigneeField);
+        await BrowserActions.clearSendKeys(element(by.css('[id="userSearchText"]')), fullName);
+        await BrowserActions.click(element(by.cssContainingText('.adf-people-full-name', fullName)));
+        await BrowserActions.click(element(by.css('button[id="add-people"]')));
+    }
+
     getTitle(): Promise<string> {
         return BrowserActions.getText(this.activitiesTitle);
     }
@@ -230,6 +267,11 @@ export class TaskDetailsPage {
     async checkCommentIsDisplayed(comment): Promise<void> {
         const row: ElementFinder = element(by.cssContainingText('div[id="comment-message"]', comment));
         await BrowserVisibility.waitUntilElementIsVisible(row);
+    }
+
+    async checkIsEmptyCommentListDisplayed(): Promise<void> {
+        const emptyList: ElementFinder = element(by.cssContainingText('div[id="comment-header"]', '(0)'));
+        await BrowserVisibility.waitUntilElementIsVisible(emptyList);
     }
 
     async clickInvolvePeopleButton(): Promise<void> {
@@ -341,6 +383,7 @@ export class TaskDetailsPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.idField);
         await BrowserVisibility.waitUntilElementIsVisible(this.descriptionField);
         await BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.priority);
         await BrowserVisibility.waitUntilElementIsVisible(this.activitiesTitle);
 
         return BrowserActions.getText(this.taskDetailsSection);
