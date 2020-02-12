@@ -17,7 +17,7 @@
 
 /*tslint:disable: ban*/
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { Component, Input } from '@angular/core';
@@ -31,6 +31,7 @@ import { UserPreferencesService } from '../../../services/user-preferences.servi
 import { CommonModule } from '@angular/common';
 import { Direction } from '@angular/cdk/bidi';
 import { of } from 'rxjs';
+import { setupTestBed } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-layout-container',
@@ -46,55 +47,12 @@ export class DummyLayoutContainerComponent {
     @Input() mediaQueryList: MediaQueryList;
     @Input() hideSidenav: boolean;
     @Input() expandedSidenav: boolean;
-    toggleMenu () {}
+    toggleMenu() {}
 }
 
-describe('SidenavLayoutComponent', () => {
-
-    let fixture: ComponentFixture<any>,
-        mediaMatcher: MediaMatcher,
-        mediaQueryList: any;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CommonModule,
-                PlatformModule,
-                LayoutModule,
-                MaterialModule
-            ],
-            declarations: [
-                DummyLayoutContainerComponent,
-                SidenavLayoutComponent,
-                SidenavLayoutContentDirective,
-                SidenavLayoutHeaderDirective,
-                SidenavLayoutNavigationDirective
-            ],
-            providers: [
-                MediaMatcher,
-                { provide: UserPreferencesService, useValue: { select: () => of()} }
-            ]
-        });
-    }));
-
-    beforeEach(() => {
-        mediaQueryList = {
-            matches: false,
-            addListener: () => {},
-            removeListener: () => {}
-        };
-    });
-
-    afterEach(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
-    });
-
-    describe('Template transclusion', () => {
-
-        @Component({
-            selector: 'adf-test-component-for-sidenav',
-            template: `
+@Component({
+    selector: 'adf-test-component-for-sidenav',
+    template: `
             <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
 
                 <adf-sidenav-layout-header>
@@ -115,109 +73,64 @@ describe('SidenavLayoutComponent', () => {
                     </ng-template>
                 </adf-sidenav-layout-content>
             </adf-sidenav-layout>`
-        })
-        class SidenavLayoutTesterComponent {}
+})
+export class SidenavLayoutTesterComponent {}
 
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({ declarations: [ SidenavLayoutTesterComponent ] }).compileComponents();
-        }));
+describe('SidenavLayoutComponent', () => {
 
-        beforeEach(() => {
-            mediaMatcher = TestBed.get(MediaMatcher);
-            spyOn(mediaMatcher, 'matchMedia').and.returnValue(mediaQueryList);
+    let fixture: ComponentFixture<any>,
+        mediaMatcher: MediaMatcher,
+        mediaQueryList: any,
+        component: SidenavLayoutComponent;
 
-            fixture = TestBed.createComponent(SidenavLayoutTesterComponent);
-            fixture.detectChanges();
+    setupTestBed({
+        imports: [
+            CommonModule,
+            PlatformModule,
+            LayoutModule,
+            MaterialModule
+        ],
+        declarations: [
+            DummyLayoutContainerComponent,
+            SidenavLayoutComponent,
+            SidenavLayoutContentDirective,
+            SidenavLayoutHeaderDirective,
+            SidenavLayoutNavigationDirective
+        ],
+        providers: [
+            MediaMatcher,
+            { provide: UserPreferencesService, useValue: { select: () => of() } }
+        ]
+    });
+
+    beforeEach(() => {
+        mediaQueryList = {
+            mediaFn: null,
+            matches: false,
+            addListener:  function (mediaFn) { this.mediaFn = mediaFn; },
+            removeListener: () => {}
+        };
+
+        mediaMatcher = TestBed.get(MediaMatcher);
+        spyOn(mediaMatcher, 'matchMedia').and.callFake((mediaQuery) => {
+            mediaQueryList.originalMediaQueryPassed = mediaQuery;
+            spyOn(mediaQueryList, 'addListener').and.callThrough();
+            spyOn(mediaQueryList, 'removeListener').and.stub();
+            return mediaQueryList;
         });
 
-        describe('adf-sidenav-layout-navigation', () => {
+        fixture = TestBed.createComponent(SidenavLayoutComponent);
+        component = fixture.componentInstance;
+    });
 
-            const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #nav-test');
-
-            it('should contain the transcluded side navigation template', () => {
-                const injectedElement = fixture.debugElement.query(injectedElementSelector);
-
-                expect(injectedElement === null).toBe(false);
-            });
-
-            it('should let the isMenuMinimized property of component to be accessed by the transcluded template', () => {
-                const injectedElement = fixture.debugElement.query(injectedElementSelector);
-
-                expect(injectedElement.nativeElement.innerText.trim()).toBe('variable-is-injected');
-            });
-        });
-
-        describe('adf-sidenav-layout-header', () => {
-
-            const outerHeaderSelector = By.css('.adf-sidenav-layout-full-space > #header-test');
-            const innerHeaderSelector = By.css('.adf-layout__content > #header-test');
-
-            it('should contain the transcluded header template outside of the layout-container', () => {
-                mediaQueryList.matches = false;
-                fixture.detectChanges();
-                const outerHeaderElement = fixture.debugElement.query(outerHeaderSelector);
-                const innerHeaderElement = fixture.debugElement.query(innerHeaderSelector);
-
-                expect(outerHeaderElement === null).toBe(false, 'Outer header should be shown');
-                expect(innerHeaderElement === null).toBe(true, 'Inner header should not be shown');
-            });
-
-            it('should contain the transcluded header template inside of the layout-container', () => {
-                mediaQueryList.matches = true;
-                fixture.detectChanges();
-                const outerHeaderElement = fixture.debugElement.query(outerHeaderSelector);
-                const innerHeaderElement = fixture.debugElement.query(innerHeaderSelector);
-
-                expect(outerHeaderElement === null).toBe(true, 'Outer header should not be shown');
-                expect(innerHeaderElement === null).toBe(false, 'Inner header should be shown');
-            });
-
-            it('should call through the layout container\'s toggleMenu method', () => {
-                mediaQueryList.matches = false;
-                fixture.detectChanges();
-                const layoutContainerComponent = fixture.debugElement.query(By.directive(DummyLayoutContainerComponent)).componentInstance;
-                spyOn(layoutContainerComponent, 'toggleMenu');
-
-                const outerHeaderElement = fixture.debugElement.query(outerHeaderSelector);
-                outerHeaderElement.triggerEventHandler('click', {});
-
-                expect(layoutContainerComponent.toggleMenu).toHaveBeenCalled();
-            });
-        });
-
-        describe('adf-sidenav-layout-content', () => {
-
-            const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #content-test');
-
-            it('should contain the transcluded content template', () => {
-                const injectedElement = fixture.debugElement.query(injectedElementSelector);
-
-                expect(injectedElement === null).toBe(false);
-            });
-        });
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
     });
 
     describe('General behaviour', () => {
 
-        let component: SidenavLayoutComponent;
-
-        beforeEach(async(() => {
-            TestBed.compileComponents();
-        }));
-
-        beforeEach(() => {
-            mediaMatcher = TestBed.get(MediaMatcher);
-            spyOn(mediaMatcher, 'matchMedia').and.callFake((mediaQuery) => {
-                mediaQueryList.originalMediaQueryPassed = mediaQuery;
-                spyOn(mediaQueryList, 'addListener').and.stub();
-                spyOn(mediaQueryList, 'removeListener').and.stub();
-                return mediaQueryList;
-            });
-
-            fixture = TestBed.createComponent(SidenavLayoutComponent);
-            component = fixture.componentInstance;
-            fixture.detectChanges();
-        });
+        beforeEach(() => fixture.detectChanges());
 
         it('should pass through input parameters', () => {
             component.sidenavMin = 1;
@@ -250,20 +163,7 @@ describe('SidenavLayoutComponent', () => {
 
     describe('toggleMenu', () => {
 
-        let component;
-
-        beforeEach(async(() => {
-            TestBed.compileComponents();
-        }));
-
-        beforeEach(() => {
-            mediaMatcher = TestBed.get(MediaMatcher);
-            spyOn(mediaMatcher, 'matchMedia').and.returnValue(mediaQueryList);
-
-            fixture = TestBed.createComponent(SidenavLayoutComponent);
-            component = fixture.componentInstance;
-            fixture.detectChanges();
-        });
+        beforeEach(() => fixture.detectChanges());
 
         it('should toggle the isMenuMinimized if the mediaQueryList.matches is false (we are on desktop)', () => {
             mediaQueryList.matches = false;
@@ -282,23 +182,16 @@ describe('SidenavLayoutComponent', () => {
 
             expect(component.isMenuMinimized).toBe(false);
         });
+
+        it('should expand nav bar when mobile view switched', () => {
+            mediaQueryList.matches = true;
+            component.isMenuMinimized = true;
+            component.expanded.subscribe((expanded) => expect(expanded).toBeTruthy());
+            mediaQueryList.mediaFn();
+        });
     });
 
     describe('menuOpenState', () => {
-
-        let component;
-
-        beforeEach(async(() => {
-            TestBed.compileComponents();
-        }));
-
-        beforeEach(() => {
-            mediaMatcher = TestBed.get(MediaMatcher);
-            spyOn(mediaMatcher, 'matchMedia').and.returnValue(mediaQueryList);
-
-            fixture = TestBed.createComponent(SidenavLayoutComponent);
-            component = fixture.componentInstance;
-        });
 
         it('should be true by default', (done) => {
             fixture.detectChanges();
@@ -329,6 +222,115 @@ describe('SidenavLayoutComponent', () => {
                 expect(value).toBe(true);
                 done();
             });
+        });
+    });
+});
+
+describe('Template transclusion', () => {
+
+    let fixture: ComponentFixture<any>,
+        mediaMatcher: MediaMatcher;
+    const mediaQueryList = {
+            matches: false,
+            addListener: () => {},
+            removeListener: () => {}
+        };
+
+    setupTestBed({
+        imports: [
+            CommonModule,
+            PlatformModule,
+            LayoutModule,
+            MaterialModule
+        ],
+        declarations: [
+            DummyLayoutContainerComponent,
+            SidenavLayoutTesterComponent,
+            SidenavLayoutComponent,
+            SidenavLayoutContentDirective,
+            SidenavLayoutHeaderDirective,
+            SidenavLayoutNavigationDirective
+        ],
+        providers: [
+            MediaMatcher,
+            { provide: UserPreferencesService, useValue: { select: () => of() } }
+        ]
+    });
+
+    beforeEach(() => {
+        mediaMatcher = TestBed.get(MediaMatcher);
+        spyOn(mediaMatcher, 'matchMedia').and.callFake(() => {
+            spyOn(mediaQueryList, 'addListener').and.stub();
+            spyOn(mediaQueryList, 'removeListener').and.stub();
+            return mediaQueryList;
+        });
+
+        fixture = TestBed.createComponent(SidenavLayoutTesterComponent);
+        fixture.detectChanges();
+    });
+
+    describe('adf-sidenav-layout-navigation', () => {
+
+        const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #nav-test');
+
+        it('should contain the transcluded side navigation template', () => {
+            const injectedElement = fixture.debugElement.query(injectedElementSelector);
+
+            expect(injectedElement === null).toBe(false);
+        });
+
+        it('should let the isMenuMinimized property of component to be accessed by the transcluded template', () => {
+            const injectedElement = fixture.debugElement.query(injectedElementSelector);
+
+            expect(injectedElement.nativeElement.innerText.trim()).toBe('variable-is-injected');
+        });
+    });
+
+    describe('adf-sidenav-layout-header', () => {
+
+        const outerHeaderSelector = By.css('.adf-sidenav-layout-full-space > #header-test');
+        const innerHeaderSelector = By.css('.adf-layout__content > #header-test');
+
+        it('should contain the transcluded header template outside of the layout-container', () => {
+            mediaQueryList.matches = false;
+            fixture.detectChanges();
+            const outerHeaderElement = fixture.debugElement.query(outerHeaderSelector);
+            const innerHeaderElement = fixture.debugElement.query(innerHeaderSelector);
+
+            expect(outerHeaderElement === null).toBe(false, 'Outer header should be shown');
+            expect(innerHeaderElement === null).toBe(true, 'Inner header should not be shown');
+        });
+
+        it('should contain the transcluded header template inside of the layout-container', () => {
+            mediaQueryList.matches = true;
+            fixture.detectChanges();
+            const outerHeaderElement = fixture.debugElement.query(outerHeaderSelector);
+            const innerHeaderElement = fixture.debugElement.query(innerHeaderSelector);
+
+            expect(outerHeaderElement === null).toBe(true, 'Outer header should not be shown');
+            expect(innerHeaderElement === null).toBe(false, 'Inner header should be shown');
+        });
+
+        it('should call through the layout container\'s toggleMenu method', () => {
+            mediaQueryList.matches = false;
+            fixture.detectChanges();
+            const layoutContainerComponent = fixture.debugElement.query(By.directive(DummyLayoutContainerComponent)).componentInstance;
+            spyOn(layoutContainerComponent, 'toggleMenu');
+
+            const outerHeaderElement = fixture.debugElement.query(outerHeaderSelector);
+            outerHeaderElement.triggerEventHandler('click', {});
+
+            expect(layoutContainerComponent.toggleMenu).toHaveBeenCalled();
+        });
+    });
+
+    describe('adf-sidenav-layout-content', () => {
+
+        const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #content-test');
+
+        it('should contain the transcluded content template', () => {
+            const injectedElement = fixture.debugElement.query(injectedElementSelector);
+            expect(injectedElement === null).toBe(false);
         });
     });
 });
