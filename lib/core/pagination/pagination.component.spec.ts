@@ -367,7 +367,7 @@ describe('PaginationComponent', () => {
             expect(component.range).toEqual([ 26, 50 ]);
         });
         it('cannot calculate number of pages', () => {
-            expect(component.pages).toEqual([1])
+            expect(component.pages).toEqual([1]);
         });
     });
 });

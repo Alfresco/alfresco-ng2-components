@@ -27,7 +27,7 @@ import { Subject } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 import { takeUntil } from 'rxjs/operators';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-pagination',
@@ -167,9 +167,9 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
         let start = 0;
         if (totalItems || totalItems !== 0) {
-           start = skipCount + 1;
-        } 
-        
+            start = skipCount + 1;
+        }
+
         const end = isLastPage ? totalItems : skipCount + maxItems;
 
         return [start, end];
@@ -188,7 +188,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
             total: this.pagination.totalItems
         });
         if (!this.pagination.totalItems) {
-            translation = translation.substr(0, translation.indexOf(rangeString) + rangeString.length)
+            translation = translation.substr(0, translation.indexOf(rangeString) + rangeString.length);
         }
         return translation;
     }
