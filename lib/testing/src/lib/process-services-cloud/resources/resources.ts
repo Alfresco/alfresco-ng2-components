@@ -82,7 +82,9 @@ export const ACTIVITI_CLOUD_APPS: any = {
             calledprocess: 'calledprocess',
             booleanvisibilityprocess: 'booleanvisibilityprocess',
             numbervisibilityprocess: 'numbervisibilityprocess',
-            processformoutcome: 'outcomebuttons'
+            processformoutcome: 'outcomebuttons',
+            uploadsinglemultiplefiles: 'upload-single-multiple-pro',
+            processdisplayrestjson: 'process-display-rest-json'
         },
         forms: {
             tabVisibilityFields: {
@@ -126,7 +128,17 @@ export const ACTIVITI_CLOUD_APPS: any = {
             },
             resultcollectionform: {
                 name: 'resultcollectionform'
+            },
+            uploadsinglemultiple: {
+                name: 'upload-single-multiple'
+            },
+            formwithjsonwidget: {
+                name: 'form-with-json-widget'
+            },
+            formwithallwidgets: {
+                name: 'form-with-all-widgets'
             }
+
         },
         tasks: {
             processstring: 'inputtask'
