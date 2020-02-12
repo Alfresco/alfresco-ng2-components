@@ -174,19 +174,10 @@ if $EXEC_VERSION_JSAPI == true; then
   npm install alfresco-js-api@${JSAPI_VERSION}
 fi
 
-if $EXEC_TEST == true; then
-  echo "====== Demo shell Test ====="
-  npm run test || exit 1
-  exit 0
-fi
-
-if $EXEC_E2E == true; then
-  echo "====== Demo shell e2e ====="
-  npm run e2e
-  exit 0
-fi
-
 if $EXEC_START == true; then
+    if [ -f "./.env" ]; then
+        export $(cat .env | xargs)
+    fi
     if $EXEC_DEVELOP == true; then
         echo "====== Start Demo shell dev mode ====="
         npm run start:dev
