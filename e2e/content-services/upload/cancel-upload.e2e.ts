@@ -16,14 +16,13 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Upload component', async () => {
 
@@ -36,17 +35,12 @@ describe('Upload component', async () => {
     const uploadToggles = new UploadToggles();
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
-    const navigationBarPage = new NavigationBarPage();
 
-    const firstPdfFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
-    });
     const pngFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
+
     const largeFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
         'location': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
@@ -54,31 +48,15 @@ describe('Upload component', async () => {
 
     beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        await contentServicesPage.goToDocumentList();
-
-        const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
-
-        Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
-
-    });
-
-    afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
-    });
-
-    beforeEach(async () => {
         await contentServicesPage.goToDocumentList();
     });
 
     it('[C272792] Should be possible to cancel upload of a big file using row cancel icon', async () => {
-        await browser.executeScript('setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 1000)');
+        await browser.executeScript('setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 750)');
 
         await contentServicesPage.uploadFile(largeFile.location);
 
@@ -90,23 +68,20 @@ describe('Upload component', async () => {
 
     it('[C287790] Should be possible to cancel upload of a big file through the cancel uploads button', async () => {
         await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)');
-
+            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 750)');
         await contentServicesPage.uploadFile(largeFile.location);
-
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
     });
 
-    // tslint:disable-next-line: ban
-    xit('[C272793] Should be able to cancel multiple files upload', async () => {
-        await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)');
-
+    it('[C272793] Should be able to cancel multiple files upload', async () => {
         await uploadToggles.enableMultipleFileUpload();
+        await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
+            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 750)');
         await contentServicesPage.uploadMultipleFile([pngFileModel.location, largeFile.location]);
+
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
@@ -117,7 +92,7 @@ describe('Upload component', async () => {
 
     it('[C315257] Should be able to cancel file in upload queue', async () => {
         await uploadToggles.enableMultipleFileUpload();
-        await browser.executeScript('setTimeout(() => {document.querySelector("button[data-automation-id=\'cancel-upload-queue\']").click();}, 500)');
+        await browser.executeScript('setTimeout(() => {document.querySelector("button[data-automation-id=\'cancel-upload-queue\']").click();}, 750)');
         await contentServicesPage.uploadMultipleFile([largeFile.location, pngFileModel.location]);
         await uploadDialog.fileIsCancelled(pngFileModel.name);
         await uploadDialog.clickOnCloseButton();
