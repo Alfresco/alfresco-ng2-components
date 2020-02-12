@@ -36,6 +36,7 @@ export class CardViewComponentPage {
     editableSwitch: ElementFinder = element(by.id('app-toggle-editable'));
     clearDateSwitch: ElementFinder = element(by.id('app-toggle-clear-date'));
     noneOptionSwitch: ElementFinder = element(by.id('app-toggle-none-option'));
+    clickableField: ElementFinder = element(by.css(`[data-automation-id="card-textitem-toggle-click"]`));
 
     async clickOnAddButton(): Promise<void> {
         await BrowserActions.click(this.addButton);
@@ -223,6 +224,27 @@ export class CardViewComponentPage {
             } catch {
             return false;
             }
+    }
+
+    async getClickableValue(): Promise<string> {
+        return this.clickableField.getText();
+    }
+
+    async updateClickableField(text: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.clickableField);
+        await BrowserActions.click(this.clickableField);
+        const inputField = element(by.css('input[data-automation-id="card-textitem-editinput-click"]'));
+        await BrowserVisibility.waitUntilElementIsPresent(inputField);
+        await BrowserActions.clearSendKeys(inputField, text);
+        const save = element(by.css('[data-automation-id="card-textitem-update-click"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(save);
+        await BrowserActions.click(save);
+    }
+
+    async hasCardViewConsoleLog(text: string): Promise<string> {
+        const cardViewConsole = element(by.cssContainingText('.app-console', text));
+        await BrowserVisibility.waitUntilElementIsVisible(cardViewConsole);
+        return cardViewConsole.getText();
     }
 
     async clearIntField(): Promise<void> {
