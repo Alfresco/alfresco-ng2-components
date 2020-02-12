@@ -53,6 +53,14 @@ class FakeDataRow implements DataRow {
     }
 }
 
+export function resolverFn(row: DataRow, col: DataColumn) {
+    const value = row.getValue(col.key);
+    if (col.key === 'name') {
+        return  `${row.getValue('firstName')} - ${row.getValue('lastName')}`;
+    }
+    return value;
+}
+
 describe('DataTable', () => {
 
     let fixture: ComponentFixture<DataTableComponent>;
@@ -1126,6 +1134,28 @@ describe('DataTable', () => {
         dataTable.noPermission = false;
         fixture.detectChanges();
         expect(element.querySelector('.adf-sticky-header')).toBeNull();
+    });
+
+    it('should be able to define values using the resolver function', () => {
+        dataTable.data = new ObjectDataTableAdapter([
+            { id: 1, firstName: 'foo', lastName: 'bar' },
+            { id: 2, firstName: 'bar', lastName: 'baz' }],
+            [new ObjectDataColumn({ key: 'id' }), new ObjectDataColumn({ key: 'name' })]
+        );
+        spyOn(dataTable, 'resolverFn').and.callFake(resolverFn);
+        fixture.detectChanges();
+
+        const id1 = element.querySelector('[data-automation-id="text_1');
+        const id2 = element.querySelector('[data-automation-id="text_2');
+        const names = element.querySelectorAll('[data-automation-id="text_undefined"]');
+
+        expect(id1.innerText).toEqual('1');
+        expect(names[0].innerText).toEqual('foo - bar');
+        expect(id2.innerText).toEqual('2');
+        expect(names[1].innerText).toEqual('bar - baz');
+
+        expect(dataTable.data.getRows().length).toEqual(2);
+        expect(dataTable.resolverFn).toHaveBeenCalledTimes(4);
     });
 });
 
