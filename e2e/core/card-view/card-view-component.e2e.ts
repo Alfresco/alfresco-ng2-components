@@ -286,6 +286,19 @@ describe('CardView Component', () => {
 
     });
 
+    it('[C306895] Should display the form field as editable and clickable depending on the \'Editable\' toggle mode.', async () => {
+        const message = 'clickable updated';
+        await cardViewPageComponent.clickOnResetButton();
+        await expect(await cardViewPageComponent.getClickableValue()).toContain('click here');
+
+        await cardViewPageComponent.updateClickableField(message);
+        await expect(await cardViewPageComponent.hasCardViewConsoleLog(message)).toContain(`[This is clickable ] - ${message}`);
+
+        await cardViewPageComponent.clickOnResetButton();
+        await cardViewPageComponent.updateClickableField('');
+        await expect(await cardViewPageComponent.hasCardViewConsoleLog('[This is clickable ] -' )).toContain('[This is clickable ] -');
+    });
+
     it('[C279936] Should not be possible edit any parameter when editable property is false', async () => {
         await cardViewPageComponent.disableEdit();
 
