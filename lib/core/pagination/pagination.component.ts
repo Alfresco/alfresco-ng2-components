@@ -27,6 +27,7 @@ import { Subject } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 import { takeUntil } from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-pagination',
@@ -85,7 +86,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService) {
+    constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService, private translate: TranslateService) {
     }
 
     ngOnInit() {
@@ -133,6 +134,9 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     }
 
     get isLastPage(): boolean {
+        if (!this.pagination.totalItems && this.pagination.hasMoreItems) {
+            return false;
+        }
         return this.current === this.lastPage;
     }
 
@@ -161,7 +165,11 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         const { skipCount, maxItems, totalItems } = this.pagination;
         const { isLastPage } = this;
 
-        const start = totalItems ? skipCount + 1 : 0;
+        let start = 0;
+        if (totalItems || totalItems !== 0) {
+           start = skipCount + 1;
+        } 
+        
         const end = isLastPage ? totalItems : skipCount + maxItems;
 
         return [start, end];
@@ -171,6 +179,18 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         return Array(this.lastPage)
             .fill('n')
             .map((_, index) => (index + 1));
+    }
+
+    get itemRangeText(): string {
+        const rangeString = this.range.join('-');
+        let translation = this.translate.instant('CORE.PAGINATION.ITEMS_RANGE', {
+            range: rangeString,
+            total: this.pagination.totalItems
+        });
+        if (!this.pagination.totalItems) {
+            translation = translation.substr(0, translation.indexOf(rangeString) + rangeString.length)
+        }
+        return translation;
     }
 
     goNext() {
