@@ -129,7 +129,7 @@ describe('DocumentList', () => {
     it('should add the custom columns', () => {
         fixture.detectChanges();
 
-        const column = <DataColumn>{
+        const column = <DataColumn> {
             title: 'title',
             key: 'source',
             cssClass: 'css',
@@ -993,7 +993,7 @@ describe('DocumentList', () => {
 
     it('should set row filter and reload contents if currentFolderId is set when setting rowFilter', () => {
         fixture.detectChanges();
-        const filter = <RowFilter>{};
+        const filter = <RowFilter> {};
         documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
 
@@ -1007,14 +1007,14 @@ describe('DocumentList', () => {
         spyFolder.calls.reset();
         documentList.currentFolderId = null;
 
-        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, <RowFilter>{}, true) });
+        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, <RowFilter> {}, true) });
 
         expect(spyFolder).not.toHaveBeenCalled();
     });
 
     it('should set image resolver for underlying adapter', () => {
         fixture.detectChanges();
-        const resolver = <ImageResolver>{};
+        const resolver = <ImageResolver> {};
         spyOn(documentList.data, 'setImageResolver').and.callThrough();
 
         documentList.ngOnChanges({ imageResolver: new SimpleChange(null, resolver, true) });
