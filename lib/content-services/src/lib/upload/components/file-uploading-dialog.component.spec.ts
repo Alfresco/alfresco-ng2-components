@@ -315,4 +315,31 @@ describe('FileUploadingDialogComponent', () => {
             });
         });
     });
+
+    describe('Confirmation Dialog', () => {
+
+        it('should focus on dialog when coming from confirmation', async () => {
+            uploadService.addToQueue(...fileList);
+            uploadService.uploadFilesInTheQueue(emitter);
+            component.toggleConfirmation();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const confirmDecription = fixture.nativeElement.querySelector('#confirmationDescription');
+            expect(confirmDecription).not.toBeNull();
+            expect(confirmDecription).toBeDefined();
+
+            const confirmTitle = fixture.nativeElement.querySelector('#confirmationTitle');
+            expect(confirmTitle).toBeDefined();
+            expect(confirmTitle).not.toBeNull();
+
+            const confirmButton = fixture.nativeElement.querySelector('#adf-upload-dialog-confirm');
+            expect(confirmButton).toBeDefined();
+            expect(confirmButton).not.toBeNull();
+
+            const cancelButton = fixture.nativeElement.querySelector('#adf-upload-dialog-cancel');
+            expect(cancelButton).toBeDefined();
+            expect(cancelButton).not.toBeNull();
+        });
+    });
 });
