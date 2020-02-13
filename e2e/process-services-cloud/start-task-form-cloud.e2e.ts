@@ -95,11 +95,6 @@ describe('Start Task Form', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
-    const enum PROCESS_FILTERS {
-        COMPLETED = 'completed-processes',
-        RUNNING = 'running-processes'
-    }
-
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
     const folderName = StringUtil.generateRandomString(5);
@@ -282,7 +277,7 @@ describe('Start Task Form', () => {
             await widget.numberWidget().setFieldValue('Number07vyx9', 100);
             await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
             await startProcessPage.clickStartProcessButton();
-            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter(PROCESS_FILTERS.RUNNING);
+            await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', startEventFormProcess);
@@ -305,11 +300,11 @@ describe('Start Task Form', () => {
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
 
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
-            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter(PROCESS_FILTERS.COMPLETED);
+            await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processId);
 
         });
@@ -323,7 +318,7 @@ describe('Start Task Form', () => {
             await appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
             await appListCloudComponent.goToApp(candidateBaseApp);
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
-            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter(PROCESS_FILTERS.RUNNING);
+            await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
         });
 
@@ -506,7 +501,7 @@ describe('Start Task Form', () => {
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
             await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(taskId);
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
@@ -540,7 +535,7 @@ describe('Start Task Form', () => {
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
             await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(taskId);
             await contentFileWidget.checkFileIsAttached(testFileModel.name);

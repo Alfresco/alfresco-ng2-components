@@ -36,11 +36,6 @@ describe('Edit process filters cloud', () => {
         let testUser, groupInfo;
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
-        const enum PROCESS_FILTERS {
-            ALL_PROCESSES = 'all-processes',
-            RUNNING_PROCESSES = 'running-processes'
-        }
-
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
@@ -67,11 +62,11 @@ describe('Edit process filters cloud', () => {
             const editProcessFilterCloud = processCloudDemoPage.editProcessFilterCloudComponent();
             await editProcessFilterCloud.openFilter();
             await editProcessFilterCloud.checkCustomiseFilterHeaderIsExpanded();
-            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter(PROCESS_FILTERS.ALL_PROCESSES);
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
         });
 
         it('[C291804] Delete Save and Save as actions should be displayed when clicking on custom filter header', async () => {
-            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed(PROCESS_FILTERS.ALL_PROCESSES);
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('All Processes');
             await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed();
             await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveAsButtonIsDisplayed();
@@ -84,7 +79,7 @@ describe('Edit process filters cloud', () => {
 
         it('[C291805] New process filter is added when clicking Save As button', async () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
-            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed(PROCESS_FILTERS.ALL_PROCESSES);
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
 
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New');
@@ -98,7 +93,7 @@ describe('Edit process filters cloud', () => {
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
-            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter(PROCESS_FILTERS.ALL_PROCESSES);
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('StartDate');
             await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('custom-new');
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
@@ -143,7 +138,7 @@ describe('Edit process filters cloud', () => {
 
         it('[C291807] A process filter is overrided when clicking on save button', async () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
-            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed(PROCESS_FILTERS.ALL_PROCESSES);
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New');
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnSaveButton();
@@ -169,7 +164,7 @@ describe('Edit process filters cloud', () => {
 
         it('[C291808] A process filter is deleted when clicking on delete button', async () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
-            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed(PROCESS_FILTERS.ALL_PROCESSES);
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New');
 
@@ -189,17 +184,17 @@ describe('Edit process filters cloud', () => {
 
         it('[C291810] Process filter should not be created when process filter dialog is closed', async () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
-            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed(PROCESS_FILTERS.ALL_PROCESSES);
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('Cancel');
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().getFilterName()).toEqual('Cancel');
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnCancelButton();
             await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterNotDisplayed('Cancel');
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('All Processes');
-            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter(PROCESS_FILTERS.RUNNING_PROCESSES);
+            await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter(PROCESS_FILTERS.ALL_PROCESSES);
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('All Processes');
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('StartDate');
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
@@ -207,7 +202,7 @@ describe('Edit process filters cloud', () => {
 
         it('[C291811] Save button of process filter dialog should be disabled when process name is empty', async () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
-            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed(PROCESS_FILTERS.ALL_PROCESSES);
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clearFilterName();
 
@@ -225,7 +220,7 @@ describe('Edit process filters cloud', () => {
 
         it('[C291809] Process filter dialog is displayed when clicking on Save As button', async () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Name');
-            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed(PROCESS_FILTERS.ALL_PROCESSES);
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().checkCancelButtonIsEnabled()).toEqual(true);
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().checkSaveButtonIsEnabled()).toEqual(true);

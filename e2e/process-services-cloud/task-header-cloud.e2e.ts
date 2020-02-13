@@ -64,11 +64,6 @@ describe('Task Header cloud component', () => {
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
 
-    const enum TASK_FILTERS {
-        MY_TASKS = 'my-tasks',
-        COMPLETED_TASKS = 'completed-tasks'
-    }
-
     beforeAll(async () => {
 
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
@@ -120,7 +115,7 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C291943] Should display task details for assigned task', async () => {
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(TASK_FILTERS.MY_TASKS);
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
         await expect(await taskHeaderCloudPage.getId()).toEqual(basicCreatedTask.entry.id);
@@ -139,8 +134,7 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C291944] Should display task details for completed task', async () => {
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(TASK_FILTERS.MY_TASKS);
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(TASK_FILTERS.COMPLETED_TASKS);
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
         await expect(await taskHeaderCloudPage.getId()).toEqual(completedTask.entry.id);
@@ -159,7 +153,7 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C291945] Should Parent Name and Parent Id not be empty in task details for sub task', async () => {
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(TASK_FILTERS.MY_TASKS);
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(subTask.entry.name);
         await expect(await taskHeaderCloudPage.getId()).toEqual(subTask.entry.id);
@@ -192,8 +186,7 @@ describe('Task Header cloud component', () => {
         });
 
         it('[C311280] Should pick up the default date format from the app configuration', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(TASK_FILTERS.MY_TASKS);
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(TASK_FILTERS.COMPLETED_TASKS);
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();

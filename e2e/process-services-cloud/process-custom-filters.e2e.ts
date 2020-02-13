@@ -228,8 +228,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C305054] Should display the actions filters Save, SaveAs and Delete', async () => {
-            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('all-processes');
-            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed('all-processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('All Processes');
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
 
@@ -316,8 +315,7 @@ describe('Process list cloud', () => {
             });
 
             it('[C305054] Should display the actions filters Save and SaveAs, Delete button is not displayed', async () => {
-                await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('all-processes');
-                await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed('all-processes');
+                await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
                 await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('All Processes');
                 await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
                 await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed();

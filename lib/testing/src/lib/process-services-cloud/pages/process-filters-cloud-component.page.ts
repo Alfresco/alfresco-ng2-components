@@ -50,7 +50,41 @@ export class ProcessFiltersCloudComponentPage {
 
     async clickProcessFilter(filterName: string): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName(filterName);
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
+    }
+
+    async clickAllProcessesFilter(): Promise<void> {
+        this.filter = this.getProcessFilterLocatorByFilterName('all-processes');
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
+        await BrowserActions.click(this.filter);
+    }
+
+    async clickCompletedProcessesFilter(): Promise<void> {
+        this.filter = this.getProcessFilterLocatorByFilterName('completed-processes');
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
+        await BrowserActions.click(this.filter);
+    }
+
+    async clickRunningProcessesFilter(): Promise<void> {
+        this.filter = this.getProcessFilterLocatorByFilterName('running-processes');
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
+        await BrowserActions.click(this.filter);
+    }
+
+    async checkAllProcessesFilterIsDisplayed(): Promise<void> {
+        this.filter = this.getProcessFilterLocatorByFilterName('all-processes');
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+    }
+
+    async checkCompletedProcessesFilterIsDisplayed(): Promise<void> {
+        this.filter = this.getProcessFilterLocatorByFilterName('completed-processes');
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+    }
+
+    async checkRunningProcessesFilterIsDisplayed(): Promise<void> {
+        this.filter = this.getProcessFilterLocatorByFilterName('running-processes');
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
     async checkProcessFilterNotDisplayed(filterName: string): Promise<void> {

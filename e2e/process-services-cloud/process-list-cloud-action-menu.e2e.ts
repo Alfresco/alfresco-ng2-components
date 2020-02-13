@@ -85,7 +85,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.actionAdded('invisibleaction');
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
-            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('running-processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
         });
 
         it('[C315236] Should be able to see and execute custom action menu', async () => {

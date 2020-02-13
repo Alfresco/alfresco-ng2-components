@@ -128,8 +128,7 @@ describe('Edit task filters and task list properties', () => {
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
             await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-            await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed('my-tasks');
-
+            await tasksCloudDemoPage.taskFilterCloudComponent.checkMyTasksFilterIsDisplayed();
         });
 
         it('[C306901] Should display tasks sorted by task name when taskName is selected from sort dropdown', async () => {
@@ -141,7 +140,6 @@ describe('Edit task filters and task list properties', () => {
 
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Name')).toBe(true);
-
         });
 
         it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', async () => {
@@ -153,7 +151,6 @@ describe('Edit task filters and task list properties', () => {
 
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Id')).toBe(true);
-
         });
 
         it('[C306903] Should display tasks sorted by processDefinitionId when processDefinitionId is selected from sort dropdown', async () => {
@@ -211,7 +208,6 @@ describe('Edit task filters and task list properties', () => {
 
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Priority')).toBe(true);
-
         });
 
         it('[C307115] Should display tasks sorted by owner when owner is selected from sort dropdown', async () => {

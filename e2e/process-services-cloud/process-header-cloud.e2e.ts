@@ -105,8 +105,7 @@ describe('Process Header cloud component', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
 
-            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed('running-processes');
-            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('running-processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcess.entry.name);
 
@@ -127,8 +126,7 @@ describe('Process Header cloud component', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
 
-            await processCloudDemoPage.processFilterCloudComponent.checkProcessFilterIsDisplayed('completed-processes');
-            await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('completed-processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(childCompleteProcess.entry.name);
 
