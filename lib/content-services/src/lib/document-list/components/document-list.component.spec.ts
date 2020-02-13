@@ -15,9 +15,18 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, QueryList } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, QueryList, Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { setupTestBed, AlfrescoApiService, DataColumnListComponent, DataColumnComponent, DataColumn, DataTableComponent } from '@alfresco/adf-core';
+import {
+    setupTestBed,
+    AlfrescoApiService,
+    DataColumnListComponent,
+    DataColumnComponent,
+    DataColumn,
+    DataTableComponent,
+    DataTableModule,
+    ObjectDataTableAdapter
+} from '@alfresco/adf-core';
 import { Subject, of, throwError } from 'rxjs';
 import {
     FileNode, FolderNode,
@@ -37,6 +46,7 @@ import { DocumentListComponent } from './document-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeEntry } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
+import { DocumentListModule } from '../document-list.module';
 
 describe('DocumentList', () => {
 
@@ -1354,5 +1364,100 @@ describe('DocumentList', () => {
             rootFolderId: 'folder-id',
             where: undefined
         }, undefined);
+    });
+});
+
+@Component({
+    template: `
+        <adf-document-list currentFolderId="-my-" #customDocumentList>
+            <adf-custom-loading-content-template>
+                <span id="custom-loading-template">This is a custom loading template</span>
+            </adf-custom-loading-content-template>
+            <adf-custom-empty-content-template>
+                <span id="custom-empty-template">This is a custom empty template</span>
+            </adf-custom-empty-content-template>
+            <adf-custom-no-permission-template>
+                <span id="custom-no-permission-template">This is a custom no permission template</span>
+            </adf-custom-no-permission-template>
+        </adf-document-list>
+    `
+})
+class CustomTemplateComponent {
+    @ViewChild('customDocumentList')
+    customDocumentList: DocumentListComponent;
+}
+
+describe('DocumentListComponent rendering', () => {
+    let fixture: ComponentFixture<CustomTemplateComponent>;
+    let component: CustomTemplateComponent;
+    let element: HTMLElement;
+
+    setupTestBed({
+        declarations: [CustomTemplateComponent],
+        imports: [
+            ContentTestingModule,
+            DataTableModule,
+            DocumentListModule
+        ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CustomTemplateComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should display custom loading template if defined', () => {
+        component.customDocumentList.dataTable.loading = true;
+        fixture.detectChanges();
+        element = fixture.nativeElement.querySelector('span[id="custom-loading-template"]');
+        expect(element).toBeDefined();
+        expect(element.innerText).toBe('This is a custom loading template');
+    });
+
+    it('should display custom empty template if defined', () => {
+        component.customDocumentList.dataTable.data = new ObjectDataTableAdapter();
+        fixture.detectChanges();
+        element = fixture.nativeElement.querySelector('span[id="custom-empty-template"]');
+        expect(element).toBeDefined();
+        expect(element.innerText).toBe('This is a custom empty template');
+    });
+
+    it('should display custom no permission template if defined', () => {
+        component.customDocumentList.dataTable.noPermission = true;
+        fixture.detectChanges();
+        element = fixture.nativeElement.querySelector('span[id="custom-no-permission-template"]');
+        expect(element).toBeDefined();
+        expect(element.innerText).toBe('This is a custom no permission template');
+    });
+
+    it('should display rows and columns correctly', () => {
+        const data = new ObjectDataTableAdapter(
+            [
+                { id: 1, name: 'Name 1' },
+                { id: 2, name: 'Name 2' },
+                { id: 3, name: 'Name 3' }
+            ],
+            [
+                { type: 'text', key: 'id', title: 'Id' },
+                { type: 'text', key: 'name', title: 'Name' }
+            ]
+        );
+
+        component.customDocumentList.dataTable.data = data;
+        fixture.detectChanges();
+        const rows = fixture.nativeElement.querySelectorAll('div[class="adf-datatable-body"] adf-datatable-row');
+        expect(rows).toBeDefined();
+        expect(rows.length).toBe(3);
+        const cell1 = fixture.nativeElement.querySelector('div[title="Name"][data-automation-id="Name 1"]');
+        expect(cell1.innerText).toBe('Name 1');
+        const cell2 = fixture.nativeElement.querySelector('div[title="Name"][data-automation-id="Name 2"]');
+        expect(cell2.innerText).toBe('Name 2');
+        const cell3 = fixture.nativeElement.querySelector('div[title="Id"][data-automation-id="Name 3"]');
+        expect(cell3.innerText).toBe('3');
     });
 });
