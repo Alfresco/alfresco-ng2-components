@@ -172,8 +172,8 @@ describe('Task form cloud component', () => {
 
         it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
             await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(candidateUsersTask.entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(candidateUsersTask.entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(candidateUsersTask.entry.id);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(candidateUsersTask.entry.id);
             await expect(await taskFormCloudComponent.getReleaseButtonText()).toBe('RELEASE');
         });
 
