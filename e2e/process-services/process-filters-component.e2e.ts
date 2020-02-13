@@ -23,12 +23,11 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/processFilters
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { ProcessListPage } from '../pages/adf/process-services/processListPage';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
+import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/processListDemoPage';
 
 describe('Process Filters Test', () => {
 
@@ -36,6 +35,7 @@ describe('Process Filters Test', () => {
     const processListPage = new ProcessListPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
+    const processListDemoPage = new ProcessListDemoPage();
     const startProcessPage = new StartProcessPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
@@ -46,7 +46,8 @@ describe('Process Filters Test', () => {
 
     const processTitle = {
         running: 'Test_running',
-        completed: 'Test_completed'
+        completed: 'Test_completed',
+        canceled: 'Test_canceled'
     };
     const processFilter = {
         running: 'Running',
@@ -163,4 +164,26 @@ describe('Process Filters Test', () => {
             await processFiltersPage.checkFilterIsHighlighted(filter.name);
         }
     });
+
+    it('[C260463] Should Cancel process be displayed in Completed process filters', async () => {
+        await processServicesPage.goToApp(app.title);
+        await processServiceTabBarPage.clickProcessButton();
+        await processListPage.checkProcessListIsDisplayed();
+
+        await processFiltersPage.clickCreateProcessButton();
+        await processFiltersPage.clickNewProcessDropdown();
+        await startProcessPage.enterProcessName(processTitle.canceled);
+        await startProcessPage.clickFormStartProcessButton();
+        await processListDemoPage.checkProcessIsDisplayed(processTitle.canceled);
+
+        await processDetailsPage.clickCancelProcessButton();
+        await processListDemoPage.checkProcessIsNotDisplayed(processTitle.canceled);
+
+        await processFiltersPage.clickCompletedFilterButton();
+        await processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
+        await processListDemoPage.checkProcessIsDisplayed(processTitle.canceled);
+        await processFiltersPage.selectFromProcessList(processTitle.canceled);
+        await processDetailsPage.checkProcessDetailsCard();
+    });
+
 });
