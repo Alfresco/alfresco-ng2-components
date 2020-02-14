@@ -52,7 +52,7 @@
 
                 mat-icon:not(.adf-button-disabled):hover {
                     color: mat-color($foreground, text);
-                    cursor: pointer !important;;
+                    cursor: pointer !important;
                 }
 
                 mat-form-field {
@@ -129,10 +129,24 @@
             margin-bottom: -8px;
         }
 
-        &-textitem-ellipsis {
-            overflow: hidden;
-            text-overflow: ellipsis;
+        &-textitem-scroll {
+            overflow-x: scroll;
             white-space: nowrap;
+            display: block;
+            margin-bottom: -5px;
+
+            &::-webkit-scrollbar {
+                height: 5px;
+            }
+
+            &:hover::-webkit-scrollbar-thumb {
+                display: block;
+                background-color: mat-color($foreground, text, 0.25);
+                border-radius: 2px;
+            }
+        }
+
+        &-textitem-multiline {
             display: block;
         }
     }
