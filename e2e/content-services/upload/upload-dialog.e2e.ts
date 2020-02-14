@@ -24,6 +24,8 @@ import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
+import { FolderModel } from '../../models/ACS/folder.model';
+
 
 describe('Upload component', () => {
 
@@ -62,6 +64,29 @@ describe('Upload component', () => {
     const filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
     const filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
 
+    const parentFolder = new FolderModel({
+        name: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_location
+    });
+
+    const fileInsideParentFolder = new FolderModel({
+        name: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_location
+    });
+    const subFolder = new FolderModel({
+        name: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_location
+    });
+
+    const fileInsideSubFolder = new FolderModel({
+        name: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_TWO.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_TWO.file_location
+    });
+
+    const adfBigFolder = new FolderModel({
+        name: browser.params.resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_location
+    });
     beforeAll(async () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -179,5 +204,42 @@ describe('Upload component', () => {
         await versionManagePage.closeVersionDialog();
         await uploadDialog.removeUploadedFile(pngFileModel.name);
         await contentServicesPage.checkContentIsDisplayed(pngFileModel.name);
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+    });
+
+    it('[C291893] Should enable folder upload in selected node', async () => {
+        await contentServicesPage.checkUploadButton();
+        await expect(await uploadToggles.checkFolderUploadToggleIsNotEnabled()).toBe(true);
+
+        await uploadToggles.enableFolderUpload();
+        await expect(await uploadToggles.checkFolderUploadToggleIsEnabled()).toBe(true);
+        await expect(await contentServicesPage.getFolderButtonTooltip()).toEqual('Custom tooltip');
+
+        await contentServicesPage.uploadFolder(parentFolder.location);
+        await uploadDialog.fileIsUploaded(fileInsideParentFolder.name);
+        await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+        await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+
+        await contentServicesPage.openFolder(parentFolder.name);
+        await expect(await uploadToggles.checkFolderUploadToggleIsNotEnabled()).toBe(true);
+        await uploadToggles.enableFolderUpload();
+        await expect(await uploadToggles.checkFolderUploadToggleIsEnabled()).toBe(true);
+        await contentServicesPage.uploadFolder(subFolder.location);
+        await uploadDialog.fileIsUploaded(fileInsideSubFolder.name);
+
+        await uploadToggles.enableFolderUpload();
+        await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
+            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 100)');
+
+        await contentServicesPage.uploadFolder(adfBigFolder.location);
+
+        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+        await contentServicesPage.openFolder(adfBigFolder.name);
+        await expect(contentServicesPage.numberOfResultsDisplayed()).toBe('0');
     });
 });

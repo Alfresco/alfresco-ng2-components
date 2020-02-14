@@ -36,6 +36,7 @@ export class UploadDialogPage {
     confirmationDialogNoButton: ElementFinder = element(by.partialButtonText('No'));
     confirmationDialogYesButton: ElementFinder = element(by.partialButtonText('Yes'));
     cancelUploadsElement: ElementFinder = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]')));
+    cancelUploadInProgressButton: ElementFinder = element(by.css('div[data-automation-id="cancel-upload-progress"]'));
 
     async clickOnCloseButton(): Promise<void> {
         await this.checkCloseButtonIsDisplayed();
@@ -89,6 +90,14 @@ export class UploadDialogPage {
 
     async cancelUploads(): Promise<void> {
         await BrowserActions.click(this.cancelUploadsElement);
+    }
+
+    async cancelProgress(): Promise<void> {
+        await BrowserActions.click(this.cancelUploadInProgressButton);
+    }
+
+    async checkCancelProgressIsVisible(): Promise<void> {
+            await BrowserVisibility.waitUntilElementIsVisible(this.cancelUploadInProgressButton);
     }
 
     async fileIsCancelled(content): Promise<void> {

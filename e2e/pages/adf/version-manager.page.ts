@@ -16,12 +16,12 @@
  */
 
 import path = require('path');
-import { BrowserActions, BrowserVisibility, FormControllersPage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, TogglePage } from '@alfresco/adf-testing';
 import { browser, by, element, ElementFinder } from 'protractor';
 
 export class VersionManagePage {
 
-    formControllersPage: FormControllersPage = new FormControllersPage();
+    togglePage: TogglePage = new TogglePage();
 
     showNewVersionButton: ElementFinder = element(by.id('adf-show-version-upload-button'));
     uploadNewVersionInput: ElementFinder = element(by.css('adf-upload-version-button input[data-automation-id="upload-single-file"]'));
@@ -92,28 +92,28 @@ export class VersionManagePage {
      * disables readOnly
      */
     async disableReadOnly(): Promise<void> {
-        await this.formControllersPage.disableToggle(this.readOnlySwitch);
+        await this.togglePage.disableToggle(this.readOnlySwitch);
     }
 
     /**
      * enables readOnly
      */
     async enableReadOnly(): Promise<void> {
-        await this.formControllersPage.enableToggle(this.readOnlySwitch);
+        await this.togglePage.enableToggle(this.readOnlySwitch);
     }
 
     /**
      * disables download
      */
     async disableDownload(): Promise<void> {
-        await this.formControllersPage.disableToggle(this.downloadSwitch);
+        await this.togglePage.disableToggle(this.downloadSwitch);
     }
 
     /**
      * enables download
      */
     async enableDownload(): Promise<void> {
-        await this.formControllersPage.enableToggle(this.downloadSwitch);
+        await this.togglePage.enableToggle(this.downloadSwitch);
     }
 
     /**
@@ -121,14 +121,14 @@ export class VersionManagePage {
      * disables comments
      */
     async disableComments(): Promise<void> {
-        await this.formControllersPage.disableToggle(this.commentsSwitch);
+        await this.togglePage.disableToggle(this.commentsSwitch);
     }
 
     /**
      * enables comments
      */
     async enableComments(): Promise<void> {
-        await this.formControllersPage.enableToggle(this.commentsSwitch);
+        await this.togglePage.enableToggle(this.commentsSwitch);
     }
 
     async clickActionButton(version): Promise<void> {
