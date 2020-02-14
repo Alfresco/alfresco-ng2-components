@@ -99,7 +99,7 @@ export class GroupCloudComponentPage {
 
     async checkNoResultsFoundError(): Promise<void> {
         const errorLocator = element(by.css('[data-automation-id="adf-cloud-group-no-results"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(errorLocator);
+        await BrowserVisibility.waitUntilElementIsVisible(errorLocator, 5000);
     }
 
 }
