@@ -2,9 +2,9 @@
 <div class="adf-property-value">
     <span *ngIf="!isEditable()">
         <span *ngIf="!isClickable(); else elseBlock" [attr.data-automation-id]="'card-textitem-value-' + property.key">
-            <div id="parent" *ngIf="showProperty()">
-                <span [ngClass]="property.multiline?'adf-textitem-multiline':'adf-textitem-scroll'">{{ property.displayValue }}</span>
-            </div>
+            <span *ngIf="showProperty()"
+                [ngClass]="property.multiline?'adf-textitem-multiline':'adf-textitem-scroll'">
+                {{ property.displayValue }}</span>
         </span>
         <ng-template #elseBlock>
             <div role="button" class="adf-textitem-clickable" [attr.data-automation-id]="'card-textitem-toggle-' + property.key" (click)="clicked()" fxLayout="row" fxLayoutAlign="space-between center">
