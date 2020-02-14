@@ -30,16 +30,28 @@
                           #auto="matAutocomplete"
                           (optionSelected)="onSelect($event.option.value)"
                           [displayWith]="getDisplayName">
+            <ng-container *ngIf="(searchUsers$ | async)?.length else noResults" >
             <mat-option *ngFor="let user of searchUsers$ | async; let i = index" [value]="user">
                 <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{i}}">
                     <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>
                     <span class="adf-people-label-name"> {{user | fullName}}</span>
                 </div>
             </mat-option>
+            </ng-container>
+            <ng-template #noResults>
+                <mat-option *ngIf="searchUserCtrl.hasError('searchTypingError') && !searchLoading" disabled
+                            class="adf-people-cloud-option-not-active"
+                            data-automation-id="adf-people-cloud-no-results">
+                    <mat-error>
+                    <mat-icon>error</mat-icon>
+                    <span> {{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : searchedValue } }}</span>
+                    </mat-error>
+                </mat-option>
+            </ng-template>
         </mat-autocomplete>
     </mat-form-field>
     <mat-progress-bar
-        *ngIf="isLoading"
+        *ngIf="validationLoading"
         mode="indeterminate">
     </mat-progress-bar>
 

@@ -138,7 +138,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     validateUsersMessage: string;
     searchedValue = '';
 
-    isLoading = false;
+    validationLoading = false;
+    searchLoading = false;
 
     constructor(
         private identityUserService: IdentityUserService,
@@ -183,6 +184,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     private initSearch(): void {
         this.searchUserCtrl.valueChanges.pipe(
             filter((value) => {
+                this.searchLoading = true;
                 return typeof value === 'string';
             }),
             tap((value: string) => {
@@ -207,6 +209,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 this.identityUserService.findUsersByName(search.trim())),
             mergeMap((users) => {
                 this.resetSearchUsers();
+                this.searchLoading = false;
                 return users;
             }),
             filter(user => !this.isUserAlreadySelected(user)),
@@ -283,9 +286,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
         this.userChipsCtrl.setValue(this.selectedUsers[0].username);
         if (this.isValidationEnabled()) {
-            this.isLoading = true;
+            this.validationLoading = true;
             await this.validatePreselectUsers();
-            this.isLoading = false;
+            this.validationLoading = false;
         }
     }
 
@@ -381,23 +384,25 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onSelect(user: IdentityUserModel): void {
-        this.selectUser.emit(user);
+        if (user) {
+            this.selectUser.emit(user);
 
-        if (this.isMultipleMode()) {
-            if (!this.isUserAlreadySelected(user)) {
-                this.selectedUsers.push(user);
+            if (this.isMultipleMode()) {
+                if (!this.isUserAlreadySelected(user)) {
+                    this.selectedUsers.push(user);
+                }
+            } else {
+                this.invalidUsers = [];
+                this.selectedUsers = [user];
             }
-        } else {
-            this.invalidUsers = [];
-            this.selectedUsers = [user];
+
+            this.userInput.nativeElement.value = '';
+            this.searchUserCtrl.setValue('');
+            this.userChipsCtrlValue(this.selectedUsers[0].username);
+
+            this.changedUsers.emit(this.selectedUsers);
+            this.resetSearchUsers();
         }
-
-        this.userInput.nativeElement.value = '';
-        this.searchUserCtrl.setValue('');
-        this.userChipsCtrlValue(this.selectedUsers[0].username);
-
-        this.changedUsers.emit(this.selectedUsers);
-        this.resetSearchUsers();
     }
 
     onRemove(userToRemove: IdentityUserModel): void {
@@ -522,7 +527,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     isValidationLoading(): boolean {
-        return this.isValidationEnabled() && this.isLoading;
+        return this.isValidationEnabled() && this.validationLoading;
     }
 
     setFocus(isFocused: boolean) {
