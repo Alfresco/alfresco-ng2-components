@@ -113,7 +113,7 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(3);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(3);
                 expect(findUsersByNameSpy).toHaveBeenCalled();
                 done();
             });
@@ -134,7 +134,7 @@ describe('PeopleCloudComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(2);
                 done();
             });
         });
@@ -190,7 +190,7 @@ describe('PeopleCloudComponent', () => {
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                expect(element.querySelector('mat-option')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-people-cloud-row"]')).toBeNull();
                 done();
             });
         });
@@ -330,7 +330,8 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(element.querySelectorAll('mat-option').length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-no-results"]')).length).toEqual(1);
                 done();
             });
         });
@@ -347,7 +348,7 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(3);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(3);
                 expect(checkUserHasAnyClientAppRoleSpy).toHaveBeenCalled();
                 done();
             });
@@ -366,7 +367,8 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-no-results"]')).length).toEqual(1);
                 expect(checkUserHasAnyClientAppRoleSpy).toHaveBeenCalled();
                 done();
             });
@@ -486,7 +488,7 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(3);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(3);
                 expect(checkUserHasRoleSpy).toHaveBeenCalledTimes(3);
                 done();
             });
@@ -504,7 +506,8 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(element.querySelectorAll('mat-option').length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-no-results"]')).length).toEqual(1);
                 expect(checkUserHasRoleSpy).toHaveBeenCalled();
                 done();
             });

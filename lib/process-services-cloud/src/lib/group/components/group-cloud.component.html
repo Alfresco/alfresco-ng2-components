@@ -38,6 +38,7 @@
                 <mat-option *ngFor="let group of searchGroups$ | async; let i = index" [value]="group"
                             [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name">
                     <div class="adf-cloud-group-row" id="adf-group-{{i}}" fxLayout="row" fxLayoutAlign="start center"
+                         data-automation-id="adf-cloud-group-row"
                          fxLayoutGap="20px">
                         <button class="adf-group-short-name" mat-fab>{{group | groupNameInitial }}</button>
                         <span>{{group.name}}</span>
