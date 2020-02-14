@@ -72,6 +72,7 @@ describe('ProcessInstanceDetailsComponent', () => {
 
     it('should set a placeholder message when processInstanceId not initialised', () => {
         fixture.detectChanges();
+        expect(component.processInstanceDetails).toBeFalsy();
         expect(fixture.nativeElement.innerText).toBe('ADF_PROCESS_LIST.DETAILS.MESSAGES.NONE');
     });
 

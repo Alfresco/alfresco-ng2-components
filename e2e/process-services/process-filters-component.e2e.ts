@@ -23,11 +23,12 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/processFilters
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { ProcessListPage } from '../pages/adf/process-services/processListPage';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/processListDemoPage';
+import CONSTANTS = require('../util/constants');
 
 describe('Process Filters Test', () => {
 
@@ -40,14 +41,16 @@ describe('Process Filters Test', () => {
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processDetailsPage = new ProcessDetailsPage();
-    let appModel;
+    let appModel, user;
 
     const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
 
     const processTitle = {
         running: 'Test_running',
         completed: 'Test_completed',
-        canceled: 'Test_canceled'
+        canceled: 'Test_canceled',
+        one: 'Test fake process one',
+        two: 'Test fake process two'
     };
     const processFilter = {
         running: 'Running',
@@ -65,15 +68,10 @@ describe('Process Filters Test', () => {
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        const user = await users.createTenantAndUser(this.alfrescoJsApi);
-
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
         await this.alfrescoJsApi.login(user.email, user.password);
-
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
-
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
     });
 
     beforeEach(async () => {
@@ -97,7 +95,6 @@ describe('Process Filters Test', () => {
         await navigationBarPage.navigateToProcessServicesPage();
 
         await processServicesPage.goToApp(app.title);
-
         await processServiceTabBarPage.clickProcessButton();
 
         await processFiltersPage.clickCreateProcessButton();
@@ -142,14 +139,11 @@ describe('Process Filters Test', () => {
         let deployedApp, processFilterUrl;
 
         const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
-
         deployedApp = appDefinitions.data.find((currentApp) => {
-
             return currentApp.modelId === appModel.id;
         });
 
         processFilterUrl = browser.params.testConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
-
         const taskAppFilters = await this.alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
 
         await processServicesPage.goToApp(app.title);
@@ -157,7 +151,6 @@ describe('Process Filters Test', () => {
         await processListPage.checkProcessListIsDisplayed();
 
         await expect(taskAppFilters.size).toBe(defaultFiltersNumber);
-
         for (const filter of taskAppFilters) {
             await BrowserActions.getUrl(processFilterUrl + filter.id);
             await processListPage.checkProcessListIsDisplayed();
@@ -185,5 +178,81 @@ describe('Process Filters Test', () => {
         await processFiltersPage.selectFromProcessList(processTitle.canceled);
         await processDetailsPage.checkProcessDetailsCard();
     });
+
+    it('[C213262] Default process filters', async () => {
+        await processServicesPage.goToApp(app.title);
+        await processServiceTabBarPage.clickProcessButton();
+        await processListPage.checkProcessListIsDisplayed();
+
+        await processFiltersPage.clickCreateProcessButton();
+        await processFiltersPage.clickNewProcessDropdown();
+        await startProcessPage.enterProcessName(processTitle.one);
+        await startProcessPage.clickFormStartProcessButton();
+        await processListPage.checkProcessListIsDisplayed();
+
+        await processListDemoPage.checkProcessIsDisplayed(processTitle.one);
+        await processFiltersPage.checkFilterIsHighlighted(processFilter.running);
+        await processDetailsPage.checkProcessDetailsCard();
+        await checkProcessInfoDrawer({  name: processTitle.one });
+
+        await processFiltersPage.clickCreateProcessButton();
+        await processFiltersPage.clickNewProcessDropdown();
+        await startProcessPage.enterProcessName(processTitle.two);
+        await startProcessPage.clickFormStartProcessButton();
+        await processListPage.checkProcessListIsDisplayed();
+
+        await processListDemoPage.checkProcessIsDisplayed(processTitle.one);
+        await processListDemoPage.checkProcessIsDisplayed(processTitle.two);
+
+        await processDetailsPage.clickCancelProcessButton();
+        await processListDemoPage.checkProcessIsNotDisplayed(processTitle.canceled);
+
+        await processFiltersPage.clickCompletedFilterButton();
+        await processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
+        await processListDemoPage.checkProcessIsDisplayed(processTitle.two);
+        await processFiltersPage.selectFromProcessList(processTitle.two);
+
+        await processFiltersPage.clickAllFilterButton();
+        await processFiltersPage.checkFilterIsHighlighted(processFilter.all);
+        await processListDemoPage.checkProcessIsDisplayed(processTitle.two);
+        await processFiltersPage.selectFromProcessList(processTitle.two);
+    });
+
+    it('[C260384] Edit default filter', async () => {
+        const runningFilter =  (await getFilter(this.alfrescoJsApi)).find(filter => filter.name === 'Running');
+        await this.alfrescoJsApi.activiti.userFiltersApi
+            .updateUserProcessInstanceFilter(runningFilter.id, { ...runningFilter, name: 'Edited Running' });
+
+        await processServicesPage.goToApp(app.title);
+        await processServiceTabBarPage.clickProcessButton();
+        await processFiltersPage.checkFilterIsNotDisplayed('Running');
+        await processFiltersPage.checkFilterIsDisplayed('Edited Running');
+    });
+
+    it('[C260385] Delete default filter', async () => {
+        const allFilter =  (await getFilter(this.alfrescoJsApi)).find(filter => filter.name === 'All');
+        await this.alfrescoJsApi.activiti.userFiltersApi.deleteUserProcessInstanceFilter(allFilter.id);
+
+        await processServicesPage.goToApp(app.title);
+        await processServiceTabBarPage.clickProcessButton();
+        await processFiltersPage.checkFilterIsNotDisplayed('All');
+    });
+
+    async function getFilter(alfrescoJsApi): Promise<UserProcessInstanceFilterRepresentation[]> {
+        const apps = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        const { id: appId = 0 } = apps.data.find((application) => application.name === appModel.name);
+        const filters = await alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({ appId });
+        return filters.data;
+    }
+
+    async function checkProcessInfoDrawer({ name }) {
+        await expect(await processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(name);
+        await expect(await processDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
+        await expect(await processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
+        await expect(await processDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESS_CATEGORY);
+        await expect(await processDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_BUSINESS_KEY);
+        await expect(await processDetailsPage.getCreatedBy()).toEqual(`${user.firstName} ${user.lastName}`);
+        await expect(await processDetailsPage.getProcessDescription()).toEqual(CONSTANTS.PROCESS_DESCRIPTION);
+    }
 
 });
