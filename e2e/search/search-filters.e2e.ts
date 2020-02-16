@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { SearchDialog } from '../pages/adf/dialog/searchDialog';
-import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
-import { SearchResultsPage } from '../pages/adf/searchResultsPage';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { FileModel } from '../models/ACS/fileModel';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
+import { SearchFiltersPage } from '../pages/adf/search-filters.page';
+import { SearchResultsPage } from '../pages/adf/search-results.page';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { FileModel } from '../models/ACS/file.model';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import {
     StringUtil,
     DocumentListPage,
@@ -37,7 +37,7 @@ import { SearchConfiguration } from './search.config';
 describe('Search Filters', () => {
 
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialog();
+    const searchDialog = new SearchDialogPage();
     const searchFiltersPage = new SearchFiltersPage();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',

@@ -20,7 +20,7 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { StorageService } from '../services/storage.service';
 

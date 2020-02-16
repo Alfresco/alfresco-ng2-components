@@ -23,7 +23,7 @@ import { DynamicTableColumn  } from './dynamic-table-column.model';
 import { DynamicTableRow  } from './dynamic-table-row.model';
 import { DynamicTableWidgetComponent } from './dynamic-table.widget';
 import { DynamicTableModel } from './dynamic-table.widget.model';
-import { setupTestBed } from '../../../../testing/setupTestBed';
+import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

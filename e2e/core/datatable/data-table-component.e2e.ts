@@ -19,10 +19,10 @@ import { LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { DropActions } from '../../actions/drop.actions';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
-import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
+import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Datatable component', () => {
 

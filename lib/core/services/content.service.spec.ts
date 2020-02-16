@@ -22,7 +22,7 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { StorageService } from './storage.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';

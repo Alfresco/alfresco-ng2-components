@@ -23,7 +23,7 @@ import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { ContainerWidgetComponent } from './container.widget';
 import { ContainerWidgetComponentModel } from './container.widget.model';
-import { setupTestBed } from '../../../../testing/setupTestBed';
+import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { BpmUserService } from '../services/bpm-user.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';

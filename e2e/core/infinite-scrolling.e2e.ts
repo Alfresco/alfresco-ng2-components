@@ -18,11 +18,11 @@
 import { LocalStorageUtil, LoginPage, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { FolderModel } from '../models/ACS/folderModel';
-import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import { InfinitePaginationPage } from '../pages/adf/core/infinitePaginationPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { FolderModel } from '../models/ACS/folder.model';
+import { ContentServicesPage } from '../pages/adf/content-services.page';
+import { InfinitePaginationPage } from '../pages/adf/core/infinite-pagination.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { Util } from '../util/util';
 
 describe('Enable infinite scrolling', () => {

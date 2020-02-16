@@ -186,6 +186,7 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
+    "file-name-casing": [true, "kebab-case"],
     "adf-file-name": true,
     "adf-class-name": true,
     "adf-prefix-name": true,

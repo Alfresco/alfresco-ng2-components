@@ -20,7 +20,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 import { Injector } from '@angular/core';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { TestBed } from '@angular/core/testing';
 
 describe('ContextMenuService', () => {

@@ -32,10 +32,10 @@ import {
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import moment from 'moment-es6';
-import { ParameterValueModel } from '../../diagram/models/report/parameterValue.model';
-import { ReportParameterDetailsModel } from '../../diagram/models/report/reportParameterDetails.model';
-import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
-import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
+import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
+import { ReportParameterDetailsModel } from '../../diagram/models/report/report-parameter-details.model';
+import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
+import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { AnalyticsService } from '../services/analytics.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

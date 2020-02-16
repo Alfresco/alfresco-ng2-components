@@ -24,7 +24,7 @@ import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetim
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { UserPreferencesService, UserPreferenceValues } from '../../../../services/user-preferences.service';
-import { MomentDateAdapter } from '../../../../utils/momentDateAdapter';
+import { MomentDateAdapter } from '../../../../utils/moment-date-adapter';
 import { MOMENT_DATE_FORMATS } from '../../../../utils/moment-date-formats.model';
 import { FormService } from './../../../services/form.service';
 import { WidgetComponent } from './../widget.component';

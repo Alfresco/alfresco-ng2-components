@@ -16,20 +16,20 @@
  */
 
 import { LoginPage, LocalStorageUtil, UploadActions, DataTableComponentPage } from '@alfresco/adf-testing';
-import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
+import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
+import { SearchResultsPage } from '../../pages/adf/search-results.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { SearchConfiguration } from '../search.config';
 
 describe('Search Slider Filter', () => {
 
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialog();
+    const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const sizeSliderFilter = searchFilters.sizeSliderFilterPage();
     const searchResults = new SearchResultsPage();

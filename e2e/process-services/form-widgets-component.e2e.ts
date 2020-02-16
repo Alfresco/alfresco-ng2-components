@@ -16,10 +16,10 @@
  */
 
 import { LoginPage, BrowserActions, Widget } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';

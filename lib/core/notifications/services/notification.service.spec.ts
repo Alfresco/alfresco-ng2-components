@@ -26,7 +26,7 @@ import { NotificationService } from './notification.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
 import { TranslationService } from '../../services/translation.service';
 import { HttpClientModule } from '@angular/common/http';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 
 @Component({
     template: '',

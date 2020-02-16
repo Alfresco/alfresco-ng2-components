@@ -22,11 +22,11 @@ import Task = require('../models/APS/Task');
 import TaskModel = require('../models/APS/TaskModel');
 import FormModel = require('../models/APS/FormModel');
 import { AppsActions } from '../actions/APS/apps.actions';
-import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
+import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
 import moment = require('moment');
 import { LoginPage, BrowserActions, StringUtil } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 
 describe('Task Details component', () => {

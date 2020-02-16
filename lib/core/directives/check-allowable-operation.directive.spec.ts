@@ -18,7 +18,7 @@
 import { ChangeDetectorRef, Component, ElementRef, SimpleChange } from '@angular/core';
 import { ContentService } from './../services/content.service';
 import { CheckAllowableOperationDirective, NodeAllowableOperationSubject } from './check-allowable-operation.directive';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreModule } from '../core.module';
 import { TestBed } from '@angular/core/testing';
 

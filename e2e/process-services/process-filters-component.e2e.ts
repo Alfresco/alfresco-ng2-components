@@ -16,18 +16,19 @@
  */
 
 import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
-import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
-import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
-import { ProcessListPage } from '../pages/adf/process-services/processListPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
+import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
+import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
+import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
+
 import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
-import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/processListDemoPage';
+import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Process Filters Test', () => {

@@ -19,7 +19,7 @@ import { Component, ViewChild, ViewEncapsulation, EventEmitter, Input, Output } 
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { PeopleProcessService, UserProcessModel, LogService, TranslationService } from '@alfresco/adf-core';
 import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
-import { getDisplayUser } from '../../helpers/getDisplayUser';
+import { getDisplayUser } from '../../helpers/get-display-user';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 

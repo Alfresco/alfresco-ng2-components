@@ -18,16 +18,16 @@
 import { DataTableComponentPage, DatePickerPage, DateUtil, LocalStorageUtil, LoginPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
+import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
+import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchConfiguration } from '../search.config';
 
 describe('Search Date Range Filter', () => {
 
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialog();
+    const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const dateRangeFilter = searchFilters.createdDateRangeFilterPage();
     const searchResults = new SearchResultsPage();

@@ -17,7 +17,7 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from './jwt-helper.service';

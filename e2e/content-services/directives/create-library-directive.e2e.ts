@@ -16,19 +16,19 @@
  */
 
 import { LoginPage, BrowserActions, StringUtil } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { CreateLibraryDialog } from '../../pages/adf/dialog/createLibraryDialog';
-import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { CreateLibraryDialogPage } from '../../pages/adf/dialog/create-library-dialog.page';
+import { CustomSources } from '../../pages/adf/demo-shell/custom-sources.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Create library directive', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const createLibraryDialog = new CreateLibraryDialog();
+    const createLibraryDialog = new CreateLibraryDialogPage();
     const customSourcesPage = new CustomSources();
     const navigationBarPage = new NavigationBarPage();
 

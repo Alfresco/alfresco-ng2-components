@@ -17,7 +17,7 @@
 
 import { JwtHelperService } from './jwt-helper.service';
 import { mockToken } from './../mock/jwt-helper.service.spec';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { TestBed } from '@angular/core/testing';
 
 describe('JwtHelperService', () => {

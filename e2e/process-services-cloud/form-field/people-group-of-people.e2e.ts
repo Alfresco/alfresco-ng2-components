@@ -32,7 +32,7 @@ import {
     peopleReadOnlyFormMock,
     groupReadOnlyFormMock
 } from '../../resources/forms/people-group-formwidget-mocks';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('People and Group of people Widgets', () => {

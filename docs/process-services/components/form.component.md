@@ -279,7 +279,7 @@ could use this, say, to provide two alternative ways of entering the same inform
 up default values that can be edited.
 
 You can implement this in ADF using the `formFieldValueChanged` event of the
-[Form service](../../core/services/form.service.md). For example, if you had a form with a [dropdown widget](../../../lib/testing/src/lib/core/pages/form/widgets/dropdownWidget.ts) (id: `type`)
+[Form service](../../core/services/form.service.md). For example, if you had a form with a [dropdown widget](../../../lib/testing/src/lib/core/pages/form/widgets/dropdown-widget.page.ts) (id: `type`)
 and a multiline text (id:`description`), you could synchronize their values as follows:
 
 ```ts

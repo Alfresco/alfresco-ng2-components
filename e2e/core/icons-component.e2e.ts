@@ -16,9 +16,9 @@
  */
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { IconsPage } from '../pages/adf/iconsPage';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { IconsPage } from '../pages/adf/icons.page';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
 
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';

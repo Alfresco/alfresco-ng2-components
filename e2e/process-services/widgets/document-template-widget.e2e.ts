@@ -19,7 +19,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../../actions/APS/apps.actions';
 import { UsersActions } from '../../actions/users.actions';
 import { LoginPage, BrowserActions, Widget } from '@alfresco/adf-testing';
-import { TasksPage } from '../../pages/adf/process-services/tasksPage';
+import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 

@@ -29,7 +29,7 @@ import { of, throwError } from 'rxjs';
 import { OauthConfigModel } from '../../models/oauth-config.model';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { Observable } from 'rxjs/index';
 

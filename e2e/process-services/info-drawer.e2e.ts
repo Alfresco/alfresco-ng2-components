@@ -24,13 +24,13 @@ import {
 import { browser, by, element } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { Tenant } from '../models/APS/tenant';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { AppsActions } from '../actions/APS/apps.actions';
 import CONSTANTS = require('../util/constants');
 import moment = require('moment');
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
-import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { infoDrawerConfiguration } from './config/task.config';
 
 describe('Info Drawer', () => {

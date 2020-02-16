@@ -1,2 +1,2 @@
 _theming.scss
-pdfViewerHost.component.scss
+lib/core/viewer/components/pdf-viewer-host.component.scss

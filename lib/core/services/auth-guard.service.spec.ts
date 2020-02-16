@@ -20,7 +20,7 @@ import { Router, RouterStateSnapshot } from '@angular/router';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from './authentication.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('AuthGuardService', () => {

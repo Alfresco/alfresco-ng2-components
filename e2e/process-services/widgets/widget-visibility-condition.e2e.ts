@@ -21,7 +21,7 @@ import { browser } from 'protractor';
 import { UsersActions } from '../../actions/users.actions';
 import CONSTANTS = require('../../util/constants');
 import { AppsActions } from '../../actions/APS/apps.actions';
-import { TasksPage } from '../../pages/adf/process-services/tasksPage';
+import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 
 const widgets = {
     textOneId: 'text1',

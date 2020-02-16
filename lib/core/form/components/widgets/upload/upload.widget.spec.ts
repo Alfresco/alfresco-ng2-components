@@ -25,7 +25,7 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
 import { UploadWidgetComponent } from './upload.widget';
-import { setupTestBed } from '../../../../testing/setupTestBed';
+import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

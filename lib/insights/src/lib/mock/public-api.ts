@@ -16,14 +16,14 @@
  */
 
 export * from './analytics/analytics.service.mock';
-export * from './analytics/analyticsComponent.mock';
-export * from './analytics/analyticsParamsReportComponent.mock';
+export * from './analytics/analytics-component.mock';
+export * from './analytics/analytics-params-report-component.mock';
 
-export * from './diagram/diagramActivities.mock';
-export * from './diagram/diagramBoundary.mock';
-export * from './diagram/diagramFlows.mock';
-export * from './diagram/diagramGateways.mock';
-export * from './diagram/diagramIntermediate.mock';
-export * from './diagram/diagramStructural.mock';
-export * from './diagram/diagramSwimlanes.mock';
-export * from './diagram/diagramThrow.mock';
+export * from './diagram/diagram-activities.mock';
+export * from './diagram/diagram-boundary.mock';
+export * from './diagram/diagram-flows.mock';
+export * from './diagram/diagram-gateways.mock';
+export * from './diagram/diagram-intermediate.mock';
+export * from './diagram/diagram-structural.mock';
+export * from './diagram/diagram-swimlanes.mock';
+export * from './diagram/diagram-throw.mock';

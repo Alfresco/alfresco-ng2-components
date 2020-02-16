@@ -16,12 +16,12 @@
  */
 
 import { LoginPage, Widget, ViewerPage } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
-import { FileModel } from '../models/ACS/fileModel';
+import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 

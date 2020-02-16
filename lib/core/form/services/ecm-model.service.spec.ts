@@ -18,7 +18,7 @@
 import { Observable } from 'rxjs';
 import { FormModel } from './../components/widgets/core/form.model';
 import { EcmModelService } from './ecm-model.service';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreModule } from '../../core.module';
 import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';

@@ -19,11 +19,11 @@ import { DateUtil, LoginPage, PaginationPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
-import { AppsRuntimeActions } from '../actions/APS/appsRuntime.actions';
+import { AppsRuntimeActions } from '../actions/APS/apps-runtime.actions';
 import { UsersActions } from '../actions/users.actions';
 import { Tenant } from '../models/APS/tenant';
-import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/taskListDemoPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/task-list-demo.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { Util } from '../util/util';
 import moment = require('moment');
 

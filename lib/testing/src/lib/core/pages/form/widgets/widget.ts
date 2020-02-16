@@ -15,106 +15,101 @@
  * limitations under the License.
  */
 
-import { MultilineTextWidget } from './multilineTextWidget';
-import { HeaderWidget } from './headerWidget';
-import { DisplayTextWidget } from './displayTextWidget';
-import { DisplayValueWidget } from './displayValueWidget';
-import { AttachFileWidget } from './attachFileWidget';
-import { RadioButtonsWidget } from './radioButtonsWidget';
-import { HyperlinkWidget } from './hyperlinkWidget';
-import { DropdownWidget } from './dropdownWidget';
-import { DynamicTableWidget } from './dynamicTableWidget';
-import { TextWidget } from './textWidget';
-import { CheckboxWidget } from './checkboxWidget';
-import { DateWidget } from './dateWidget';
-import { DateTimeWidget } from './dateTimeWidget';
-import { NumberWidget } from './numberWidget';
-import { AmountWidget } from './amountWidget';
-import { ContainerWidget } from './containerWidget';
-import { PeopleWidget } from './peopleWidget';
-import { Tab } from './tab';
-import { DocumentWidget } from './documentWidget';
-import { AttachFileWidgetCloud } from './attachFileWidgetCloud';
+import { MultilineTextWidgetPage } from './multiline-text-widget.page';
+import { HeaderWidgetPage } from './header-widget.page';
+import { DisplayTextWidgetPage } from './display-text-widget.page';
+import { DisplayValueWidgetPage } from './display-value-widget.page';
+import { AttachFileWidgetPage } from './attach-file-widget.page';
+import { RadioButtonsWidgetPage } from './radio-buttons-widget.page';
+import { HyperlinkWidgetPage } from './hyperlink-widget.page';
+import { DropdownWidgetPage } from './dropdown-widget.page';
+import { DynamicTableWidgetPage } from './dynamic-table-widget.page';
+import { TextWidgetPage } from './text-widget.page';
+import { CheckboxWidgetPage } from './checkbox-widget.page';
+import { DateWidgetPage } from './date-widget.page';
+import { DateTimeWidgetPage } from './date-time-widget.page';
+import { NumberWidgetPage } from './number-widget.page';
+import { AmountWidgetPage } from './amount-widget.page';
+import { ContainerWidgetPage } from './container-widget.page';
+import { PeopleWidgetPage } from './people-widget.page';
+import { TabPage } from './tab.page';
+import { DocumentWidgetPage } from './document-widget.page';
 
 export class Widget {
 
-    multilineTextWidget(): MultilineTextWidget {
-        return new MultilineTextWidget();
+    multilineTextWidget(): MultilineTextWidgetPage {
+        return new MultilineTextWidgetPage();
     }
 
-    headerWidget(): HeaderWidget {
-        return new HeaderWidget();
+    headerWidget(): HeaderWidgetPage {
+        return new HeaderWidgetPage();
     }
 
-    displayTextWidget(): DisplayTextWidget {
-        return new DisplayTextWidget();
+    displayTextWidget(): DisplayTextWidgetPage {
+        return new DisplayTextWidgetPage();
     }
 
-    attachFileWidget(): AttachFileWidget {
-        return new AttachFileWidget();
+    attachFileWidget(): AttachFileWidgetPage {
+        return new AttachFileWidgetPage();
     }
 
-    attachFileWidgetCloud(fieldId: string): AttachFileWidgetCloud {
-        return new AttachFileWidgetCloud(fieldId);
+    displayValueWidget(): DisplayValueWidgetPage {
+        return new DisplayValueWidgetPage();
     }
 
-    displayValueWidget(): DisplayValueWidget {
-        return new DisplayValueWidget();
+    radioWidget(): RadioButtonsWidgetPage {
+        return new RadioButtonsWidgetPage();
     }
 
-    radioWidget(): RadioButtonsWidget {
-        return new RadioButtonsWidget();
+    hyperlink(): HyperlinkWidgetPage {
+        return new HyperlinkWidgetPage();
     }
 
-    hyperlink(): HyperlinkWidget {
-        return new HyperlinkWidget();
+    dropdown(): DropdownWidgetPage {
+        return new DropdownWidgetPage();
     }
 
-    dropdown(): DropdownWidget {
-        return new DropdownWidget();
+    dynamicTable(): DynamicTableWidgetPage {
+        return new DynamicTableWidgetPage();
     }
 
-    dynamicTable(): DynamicTableWidget {
-        return new DynamicTableWidget();
+    textWidget(): TextWidgetPage {
+        return new TextWidgetPage();
     }
 
-    textWidget(): TextWidget {
-        return new TextWidget();
+    documentWidget(): DocumentWidgetPage {
+        return new DocumentWidgetPage();
     }
 
-    documentWidget(): DocumentWidget {
-        return new DocumentWidget();
+    checkboxWidget(): CheckboxWidgetPage {
+        return new CheckboxWidgetPage();
     }
 
-    checkboxWidget(): CheckboxWidget {
-        return new CheckboxWidget();
+    dateWidget(): DateWidgetPage {
+        return new DateWidgetPage();
     }
 
-    dateWidget(): DateWidget {
-        return new DateWidget();
+    dateTimeWidget(): DateTimeWidgetPage {
+        return new DateTimeWidgetPage();
     }
 
-    dateTimeWidget(): DateTimeWidget {
-        return new DateTimeWidget();
+    numberWidget(): NumberWidgetPage {
+        return new NumberWidgetPage();
     }
 
-    numberWidget(): NumberWidget {
-        return new NumberWidget();
+    amountWidget(): AmountWidgetPage {
+        return new AmountWidgetPage();
     }
 
-    amountWidget(): AmountWidget {
-        return new AmountWidget();
+    containerWidget(): ContainerWidgetPage {
+        return new ContainerWidgetPage();
     }
 
-    containerWidget(): ContainerWidget {
-        return new ContainerWidget();
+    peopleWidget(): PeopleWidgetPage {
+        return new PeopleWidgetPage();
     }
 
-    peopleWidget(): PeopleWidget {
-        return new PeopleWidget();
-    }
-
-    tab(): Tab {
-        return new Tab();
+    tab(): TabPage {
+        return new TabPage();
     }
 }

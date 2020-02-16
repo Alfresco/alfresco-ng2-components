@@ -22,7 +22,7 @@ import { CommentListComponent } from './comment-list.component';
 import { By } from '@angular/platform-browser';
 import { EcmUserService } from '../services/ecm-user.service';
 import { PeopleProcessService } from '../services/people-process.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
 const testUser: UserProcessModel = new UserProcessModel({

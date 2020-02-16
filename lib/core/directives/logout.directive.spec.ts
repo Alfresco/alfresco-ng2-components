@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { AuthenticationService } from '../services';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreModule } from '../core.module';
 import { LogoutDirective } from './logout.directive';
 

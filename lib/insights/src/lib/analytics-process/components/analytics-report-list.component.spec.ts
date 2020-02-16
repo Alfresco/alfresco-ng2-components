@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
-import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
+import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 

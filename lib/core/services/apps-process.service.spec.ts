@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { fakeApps } from '../mock/apps-service.mock';
 import { AppsProcessService } from './apps-process.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;

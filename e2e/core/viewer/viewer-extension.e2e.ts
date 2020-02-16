@@ -17,12 +17,12 @@
 
 import { browser } from 'protractor';
 import { LoginPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { MonacoExtensionPage } from '../../pages/adf/demo-shell/monacoExtensionPage';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { MonacoExtensionPage } from '../../pages/adf/demo-shell/monaco-extension.page';
 import CONSTANTS = require('../../util/constants');
-import { FileModel } from '../../models/ACS/fileModel';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/file.model';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Viewer', () => {

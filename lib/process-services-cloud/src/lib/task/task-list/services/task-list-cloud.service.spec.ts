@@ -17,7 +17,7 @@
 
 import { async } from '@angular/core/testing';
 import { setupTestBed, StorageService, AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
-import { fakeTaskCloudList } from '../mock/fakeTaskResponseMock';
+import { fakeTaskCloudList } from '../mock/fake-task-response.mock';
 import { TaskListCloudService } from './task-list-cloud.service';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 

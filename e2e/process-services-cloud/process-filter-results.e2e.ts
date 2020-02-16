@@ -30,10 +30,10 @@ import {
     TasksService
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessListPage } from '../pages/adf/process-services/processListPage';
+import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
+import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
 import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
 import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
 import moment = require('moment');

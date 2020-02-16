@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
-import { setupTestBed } from '../../../testing/setupTestBed';
+import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('CardViewMapItemComponent', () => {

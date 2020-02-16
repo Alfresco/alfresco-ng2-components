@@ -24,11 +24,11 @@ import {
     ErrorPage,
     UploadActions
 } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
@@ -46,7 +46,7 @@ describe('Unshare file', () => {
     const notificationHistoryPage = new NotificationHistoryPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const shareDialog = new ShareDialog();
+    const shareDialog = new ShareDialogPage();
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions(this.alfrescoJsApi);

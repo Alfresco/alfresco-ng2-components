@@ -21,7 +21,7 @@ import { ElementRef } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { ViewerComponent } from '../components/viewer.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreModule } from '../../core.module';
 import { RouterTestingModule } from '@angular/router/testing';
 

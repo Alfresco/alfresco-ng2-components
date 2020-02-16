@@ -20,12 +20,12 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
-import { FileModel } from '../models/ACS/fileModel';
+import { FileModel } from '../models/ACS/file.model';
 import { Tenant } from '../models/APS/tenant';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Custom App', () => {

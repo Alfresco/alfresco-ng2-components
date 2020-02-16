@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeRestoreDirective } from './node-restore.directive';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

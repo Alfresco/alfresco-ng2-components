@@ -18,12 +18,12 @@
 import { browser } from 'protractor';
 
 import { LoginPage, SettingsPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ProcessServicesPage } from '../../pages/adf/process-services/processServicesPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { LogoutPage } from '../../pages/adf/demo-shell/logoutPage';
+import { LogoutPage } from '../../pages/adf/demo-shell/logout.page';
 
 describe('Login component - Redirect', () => {
 

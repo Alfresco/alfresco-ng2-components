@@ -18,20 +18,20 @@
 import { element, by, browser } from 'protractor';
 
 import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
-import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
+import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { DropActions } from '../../actions/drop.actions';
 
 describe('Upload component', () => {
 
     const contentServicesPage = new ContentServicesPage();
-    const uploadDialog = new UploadDialog();
-    const uploadToggles = new UploadToggles();
+    const uploadDialog = new UploadDialogPage();
+    const uploadToggles = new UploadTogglesPage();
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({

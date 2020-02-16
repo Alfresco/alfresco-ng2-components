@@ -21,7 +21,7 @@ import { Pagination } from '@alfresco/js-api';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { PaginationModel } from '../models/pagination.model';

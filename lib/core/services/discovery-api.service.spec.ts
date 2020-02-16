@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AppConfigService } from '../app-config/app-config.service';
 import { DiscoveryApiService } from './discovery-api.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;

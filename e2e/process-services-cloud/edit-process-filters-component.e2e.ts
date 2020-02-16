@@ -17,9 +17,9 @@
 
 import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
+import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Edit process filters cloud', () => {
 

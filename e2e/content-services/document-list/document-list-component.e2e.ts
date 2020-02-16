@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
 import { LoginPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { FileModel } from '../../models/ACS/fileModel';
+import { FileModel } from '../../models/ACS/file.model';
 import moment from 'moment-es6';
 
 describe('Document List Component', () => {

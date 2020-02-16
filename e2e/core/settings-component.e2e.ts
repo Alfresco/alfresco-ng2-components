@@ -17,10 +17,10 @@
 
 import { BrowserActions, LoginPage, SettingsPage } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { ContentServicesPage } from '../pages/adf/content-services.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 
 describe('Settings component', () => {
 

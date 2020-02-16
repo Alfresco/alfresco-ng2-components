@@ -22,7 +22,7 @@ import { DynamicTableColumn  } from './../../dynamic-table-column.model';
 import { DynamicTableRow  } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
 import { DateTimeEditorComponent } from './datetime.editor';
-import { setupTestBed } from '../../../../../../testing/setupTestBed';
+import { setupTestBed } from '../../../../../../testing/setup-test-bed';
 import { CoreModule } from '../../../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

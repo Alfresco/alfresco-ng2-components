@@ -18,11 +18,11 @@
 import { LoginSSOPage, AppListCloudPage, IdentityService, GroupIdentityService, ApiService, StringUtil, StartTasksCloudPage, TaskFormCloudComponent } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { StartProcessPage } from '../../pages/adf/process-services/startProcessPage';
-import { ProcessCloudDemoPage } from '../../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { ProcessDetailsCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/processDetailsCloudDemoPage';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
+import { StartProcessPage } from '../../pages/adf/process-services/start-process.page';
+import { ProcessCloudDemoPage } from '../../pages/adf/demo-shell/process-services/process-cloud-demo.page';
+import { ProcessDetailsCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/process-details-cloud-demo.page';
 
 describe('Task cloud visibility', async () => {
 

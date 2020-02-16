@@ -17,7 +17,7 @@
 
 import { by, ElementFinder } from 'protractor';
 import { SearchTextPage } from './search-text.page';
-import { SearchCheckListPage } from './search-checkList.page';
+import { SearchCheckListPage } from './search-check-list.page';
 import { SearchRadioPage } from './search-radio.page';
 import { DateRangeFilterPage } from './date-range-filter.page';
 import { NumberRangeFilterPage } from './number-range-filter.page';

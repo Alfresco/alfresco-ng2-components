@@ -24,7 +24,7 @@ import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
-import { setupTestBed } from '../../../../testing/setupTestBed';
+import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

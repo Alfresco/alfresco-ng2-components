@@ -19,10 +19,10 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../../actions/APS/apps.actions';
 import { UsersActions } from '../../actions/users.actions';
 import { LoginPage, BrowserActions, Widget, FormPage } from '@alfresco/adf-testing';
-import { TasksPage } from '../../pages/adf/process-services/tasksPage';
+import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
-import { FormDemoPage } from '../../pages/adf/demo-shell/process-services/formDemoPage';
+import { FormDemoPage } from '../../pages/adf/demo-shell/process-services/form-demo.page';
 import { customDateFormAPS1 } from '../../resources/forms/custom-date-form';
 
 describe('Date widget', () => {

@@ -16,12 +16,12 @@
  */
 
 import { LoginPage, UploadActions, StringUtil, BrowserActions, ViewerPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
 import CONSTANTS = require('../../util/constants');
-import { FileModel } from '../../models/ACS/fileModel';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/file.model';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
@@ -40,7 +40,7 @@ describe('Viewer', () => {
     const acsUser = new AcsUserModel();
     let pngFileUploaded;
     const contentList = contentServicesPage.getDocumentList();
-    const shareDialog = new ShareDialog();
+    const shareDialog = new ShareDialogPage();
 
     const pngFileInfo = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,

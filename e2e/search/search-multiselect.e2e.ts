@@ -19,16 +19,16 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { StringUtil, UploadActions, LoginPage } from '@alfresco/adf-testing';
 import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
-import { SearchDialog } from '../pages/adf/dialog/searchDialog';
-import { SearchResultsPage } from '../pages/adf/searchResultsPage';
-import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { FileModel } from '../models/ACS/fileModel';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
+import { SearchResultsPage } from '../pages/adf/search-results.page';
+import { SearchFiltersPage } from '../pages/adf/search-filters.page';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { FileModel } from '../models/ACS/file.model';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Search Component - Multi-Select Facet', () => {
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialog();
+    const searchDialog = new SearchDialogPage();
     const searchResultsPage = new SearchResultsPage();
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',

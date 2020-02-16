@@ -19,9 +19,9 @@ import { LoginPage, UserInfoPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { FileModel } from '../models/ACS/fileModel';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { FileModel } from '../models/ACS/file.model';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import PeopleAPI = require('../restAPI/ACS/PeopleAPI');
 
 describe('User Info component', () => {

@@ -18,12 +18,12 @@
 import { BrowserActions, BrowserVisibility, FileBrowserUtil, LoginPage, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by, element } from 'protractor';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { VersionManagePage } from '../../pages/adf/versionManagerPage';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { VersionManagePage } from '../../pages/adf/version-manager.page';
 
 describe('Version component actions', () => {
 
@@ -31,7 +31,7 @@ describe('Version component actions', () => {
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
-    const uploadDialog = new UploadDialog();
+    const uploadDialog = new UploadDialogPage();
 
     const acsUser = new AcsUserModel();
 

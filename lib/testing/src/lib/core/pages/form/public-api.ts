@@ -17,5 +17,5 @@
 
 export * from './widgets/public-api';
 
-export * from './formFields';
-export * from './formPage';
+export * from './form-fields';
+export * from './form.page';

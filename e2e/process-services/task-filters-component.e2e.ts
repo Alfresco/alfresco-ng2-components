@@ -16,14 +16,14 @@
  */
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
-import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
-import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
-import { AppSettingsToggles } from '../pages/adf/process-services/dialog/appSettingsToggles';
-import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/taskFiltersDemoPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { TasksListPage } from '../pages/adf/process-services/tasks-list.page';
+import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
+import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/task-filters-demo.page';
 import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -190,7 +190,7 @@ describe('Task', () => {
         const navigationBarPage = new NavigationBarPage();
         const processServicesPage = new ProcessServicesPage();
         const processServiceTabBarPage = new ProcessServiceTabBarPage();
-        const appSettingsToggles = new AppSettingsToggles();
+        const appSettingsToggles = new AppSettingsTogglesPage();
         const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
         let user;

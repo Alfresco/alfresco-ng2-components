@@ -18,7 +18,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 
 @Component({

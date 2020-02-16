@@ -16,12 +16,12 @@
  */
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
-import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
-import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
-import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/taskFiltersDemoPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { TasksListPage } from '../pages/adf/process-services/tasks-list.page';
+import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
+import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/task-filters-demo.page';
 import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';

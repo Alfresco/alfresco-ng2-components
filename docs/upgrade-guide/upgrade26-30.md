@@ -465,21 +465,21 @@ These changes are noted with an arrow "->".
 
 -   `adf-full-width`
 
-#### [../../lib/core/viewer/components/imgViewer.component.scss](../../lib/core/viewer/components/imgViewer.component.scss)
+#### [../../lib/core/viewer/components/imgViewer.component.scss](../../lib/core/viewer/components/img-viewer.component.scss)
 
 -   `adf-image-container`
 
-#### [../../lib/core/viewer/components/pdfViewer-thumbnails.component.scss](../../lib/core/viewer/components/pdfViewer-thumbnails.component.scss)
+#### [../../lib/core/viewer/components/pdfViewer-thumbnails.component.scss](../../lib/core/viewer/components/pdf-viewer-thumbnails.component.scss)
 
 -   `adf-pdf-thumbnails`
 
-#### [../../lib/core/viewer/components/pdfViewer.component.scss](../../lib/core/viewer/components/pdfViewer.component.scss)
+#### [../../lib/core/viewer/components/pdfViewer.component.scss](../../lib/core/viewer/components/pdf-viewer.component.scss)
 
 -   `adf-loader-container`
 -   `adf-thumbnails-template`
 -   `adf-loader-item`
 
-#### [../../lib/core/viewer/components/pdfViewerHost.component.scss](../../lib/core/viewer/components/pdfViewerHost.component.scss)
+#### [../../lib/core/viewer/components/pdfViewerHost.component.scss](../../lib/core/viewer/components/pdf-viewer-host.component.scss)
 
 -   `adf-highlight`
 -   `adf-begin`

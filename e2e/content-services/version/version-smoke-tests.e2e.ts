@@ -17,12 +17,12 @@
 
 import { browser } from 'protractor';
 import { LoginPage, UploadActions, BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { VersionManagePage } from '../../pages/adf/versionManagerPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { VersionManagePage } from '../../pages/adf/version-manager.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Version component', () => {
 

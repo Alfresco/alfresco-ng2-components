@@ -17,12 +17,12 @@
 
 import { browser } from 'protractor';
 import { LoginPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
-import { ProcessListPage } from '../pages/adf/process-services/processListPage';
-import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
+import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
+import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
+import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
+import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';

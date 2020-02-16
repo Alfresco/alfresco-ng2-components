@@ -16,10 +16,10 @@
  */
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
-import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-import { ChecklistDialog } from '../pages/adf/process-services/dialog/createChecklistDialog';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
+import { ChecklistDialog } from '../pages/adf/process-services/dialog/create-checklist-dialog.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 import { Tenant } from '../models/APS/tenant';
 import { browser } from 'protractor';

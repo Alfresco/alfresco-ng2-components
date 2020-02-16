@@ -17,8 +17,8 @@
 
 import { ApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginSSOPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/people-group-cloud-component.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('People Groups Cloud Component', () => {
 

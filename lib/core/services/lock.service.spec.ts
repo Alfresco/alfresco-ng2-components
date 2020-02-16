@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { LockService } from './lock.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { Node } from '@alfresco/js-api';
 import { AlfrescoApiServiceMock } from 'core/mock';
 import { AlfrescoApiService } from './alfresco-api.service';

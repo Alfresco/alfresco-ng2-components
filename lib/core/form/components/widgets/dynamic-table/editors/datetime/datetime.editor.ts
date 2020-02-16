@@ -18,7 +18,7 @@
 /* tslint:disable:component-selector  */
 
 import { UserPreferencesService, UserPreferenceValues } from '../../../../../../services/user-preferences.service';
-import { MomentDateAdapter } from '../../../../../../utils/momentDateAdapter';
+import { MomentDateAdapter } from '../../../../../../utils/moment-date-adapter';
 import { MOMENT_DATE_FORMATS } from '../../../../../../utils/moment-date-formats.model';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';

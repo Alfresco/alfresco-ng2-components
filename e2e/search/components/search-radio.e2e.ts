@@ -16,11 +16,11 @@
  */
 
 import { LoginPage, BrowserActions, StringUtil, LocalStorageUtil, UploadActions } from '@alfresco/adf-testing';
-import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
+import { SearchResultsPage } from '../../pages/adf/search-results.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { SearchConfiguration } from '../search.config';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
@@ -30,7 +30,7 @@ describe('Search Radio Component', () => {
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
     const navigationBarPage = new NavigationBarPage();
-    const searchDialog = new SearchDialog();
+    const searchDialog = new SearchDialogPage();
     const searchResults = new SearchResultsPage();
 
     const acsUser = new AcsUserModel();

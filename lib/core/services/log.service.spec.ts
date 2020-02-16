@@ -22,7 +22,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LogService } from './log.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 
 @Component({
     template: '',

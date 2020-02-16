@@ -18,9 +18,9 @@
 import { browser } from 'protractor';
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
-import { CommentsPage } from '../pages/adf/commentsPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { CommentsPage } from '../pages/adf/comments.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';

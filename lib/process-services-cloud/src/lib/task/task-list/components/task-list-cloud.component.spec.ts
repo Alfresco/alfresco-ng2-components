@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, CoreModule, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
-import { fakeGlobalTask, fakeCustomSchema } from '../mock/fakeTaskResponseMock';
+import { fakeGlobalTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskListCloudModule } from '../task-list-cloud.module';

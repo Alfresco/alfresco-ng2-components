@@ -17,7 +17,7 @@
 
 import { LoginSSOPage, SettingsPage, LoginPage, BrowserVisibility } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../../../pages/adf/navigation-bar.page';
 
 describe('Login component - SSO', () => {
 
