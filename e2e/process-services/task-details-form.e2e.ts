@@ -65,41 +65,36 @@ describe('Task Details - Form', () => {
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         user = await users.createTenantAndUser(this.alfrescoJsApi);
-
         await this.alfrescoJsApi.login(user.email, user.password);
 
         attachedForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(attachedFormModel);
-
         newForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(newFormModel);
 
         const otherEmptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(otherTaskModel);
-
         otherAttachedForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(otherAttachedFormModel);
 
         await this.alfrescoJsApi.activiti.taskApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
-
         otherTask = await this.alfrescoJsApi.activiti.taskApi.getTask(otherEmptyTask.id);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
     });
 
+    afterAll( async () => {
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+    });
+
     beforeEach(async () => {
-        const taskModel = new StandaloneTask();
-
-        const emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
-
+        const emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(new StandaloneTask());
         await this.alfrescoJsApi.activiti.taskApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
-
         task = await this.alfrescoJsApi.activiti.taskApi.getTask(emptyTask.id);
 
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
         await tasksListPage.checkTaskListIsLoaded();
         await filtersPage.goToFilter('Involved Tasks');
         await tasksListPage.checkTaskListIsLoaded();
-
     });
 
     it('[C280018] Should be able to change the form in a task', async () => {

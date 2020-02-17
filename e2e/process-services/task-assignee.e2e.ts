@@ -27,8 +27,8 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
-import { User } from "../models/APS/user";
-import { TasksPage } from "../pages/adf/process-services/tasksPage";
+import { User } from '../models/APS/user';
+import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import CONSTANTS = require('../util/constants');
 
 describe('Task Assignee', () => {

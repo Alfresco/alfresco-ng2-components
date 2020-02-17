@@ -39,7 +39,6 @@ describe('Task Filters Sorting', () => {
 
     let user;
     let appId;
-    let importedApp;
 
     const app = browser.params.resources.Files.APP_WITH_PROCESSES;
 
@@ -61,74 +60,48 @@ describe('Task Filters Sorting', () => {
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(user.email, user.password);
-
-        importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
-
+        const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
-
-        appId = appDefinitions.data.find((currentApp) => {
-            return currentApp.modelId === importedApp.id;
-        }).id;
+        appId = appDefinitions.data.find((currentApp) => currentApp.modelId === importedApp.id).id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await processServicesPage.goToApp(app.title);
 
-        const task = await tasksPage.createNewTask();
-        await task.addName(tasks[0].name);
-        await task.addDueDate(tasks[0].dueDate);
-        await task.clickStartButton();
-
+        await tasksPage.createTask({name: tasks[0].name, dueDate: tasks[0].dueDate});
         await taskDetailsPage.clickCompleteTask();
 
-        const task2 = await tasksPage.createNewTask();
-
-        await task2.addName(tasks[1].name);
-        await task2.addDueDate(tasks[1].dueDate);
-        await task2.clickStartButton();
+        await tasksPage.createTask({name: tasks[1].name, dueDate: tasks[1].dueDate});
         await taskDetailsPage.clickCompleteTask();
 
-        const task3 = await tasksPage.createNewTask();
-        await task3.addName(tasks[2].name);
-        await task3.addDueDate(tasks[2].dueDate);
-        await task3.clickStartButton();
+        await tasksPage.createTask({name: tasks[2].name, dueDate: tasks[2].dueDate});
         await taskDetailsPage.clickCompleteTask();
 
-        const task4 = await tasksPage.createNewTask();
-        await task4.addName(tasks[3].name);
-        await task4.addDueDate(tasks[3].dueDate);
-        await task4.clickStartButton();
+        await tasksPage.createTask({name: tasks[3].name, dueDate: tasks[3].dueDate});
+        await tasksPage.createTask({name: tasks[4].name, dueDate: tasks[4].dueDate});
+        await tasksPage.createTask({name: tasks[5].name, dueDate: tasks[5].dueDate});
+    });
 
-        const task5 = await tasksPage.createNewTask();
-        await task5.addName(tasks[4].name);
-        await task5.addDueDate(tasks[4].dueDate);
-        await task5.clickStartButton();
-
-        const task6 = await tasksPage.createNewTask();
-        await task6.addName(tasks[5].name);
-        await task6.addDueDate(tasks[5].dueDate);
-        await task6.clickStartButton();
-
+    afterAll( async () => {
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     it('[C277254] Should display tasks under new filter from newest to oldest when they are completed', async () => {
-        const newFilter: any = new UserProcessInstanceFilterRepresentation();
-        newFilter.name = 'Newest first';
-        newFilter.appId = appId;
-        newFilter.icon = 'glyphicon-filter';
-        newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
-
+        const newFilter = new UserProcessInstanceFilterRepresentation({
+            appId,
+            name : 'Newest first',
+            icon: 'glyphicon-filter',
+            filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
+        });
         await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
-
-        await taskFiltersDemoPage.customTaskFilter('Newest first').clickTaskFilter();
+        await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
 
         await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
@@ -137,17 +110,16 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277255] Should display tasks under new filter from oldest to newest when they are completed', async () => {
-        const newFilter: any = new UserProcessInstanceFilterRepresentation();
-        newFilter.name = 'Newest last';
-        newFilter.appId = appId;
-        newFilter.icon = 'glyphicon-filter';
-        newFilter.filter = { sort: 'created-asc', state: 'completed', assignment: 'involved' };
-
+        const newFilter = new UserProcessInstanceFilterRepresentation({
+            appId,
+            name : 'Newest last',
+            icon: 'glyphicon-filter',
+            filter: { sort: 'created-asc', state: 'completed', assignment: 'involved' }
+        });
         await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
-
-        await taskFiltersDemoPage.customTaskFilter('Newest last').clickTaskFilter();
+        await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
 
         await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[0].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
@@ -155,17 +127,16 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277256] Should display tasks under new filter from closest due date to farthest when they are completed', async () => {
-        const newFilter: any = new UserProcessInstanceFilterRepresentation();
-        newFilter.name = 'Due first';
-        newFilter.appId = appId;
-        newFilter.icon = 'glyphicon-filter';
-        newFilter.filter = { sort: 'due-desc', state: 'completed', assignment: 'involved' };
-
+        const newFilter = new UserProcessInstanceFilterRepresentation({
+            appId,
+            name : 'Due first',
+            icon: 'glyphicon-filter',
+            filter: { sort: 'due-desc', state: 'completed', assignment: 'involved' }
+        });
         await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
-
-        await taskFiltersDemoPage.customTaskFilter('Due first').clickTaskFilter();
+        await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
 
         await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
@@ -173,17 +144,16 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277257] Should display tasks under new filter from farthest due date to closest when they are completed', async () => {
-        const newFilter: any = new UserProcessInstanceFilterRepresentation();
-        newFilter.name = 'Due last';
-        newFilter.appId = appId;
-        newFilter.icon = 'glyphicon-filter';
-        newFilter.filter = { sort: 'due-asc', state: 'completed', assignment: 'involved' };
-
+        const newFilter = new UserProcessInstanceFilterRepresentation({
+            appId,
+            name : 'Due last',
+            icon: 'glyphicon-filter',
+            filter: { sort: 'due-asc', state: 'completed', assignment: 'involved' }
+        });
         await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
-
-        await taskFiltersDemoPage.customTaskFilter('Due last').clickTaskFilter();
+        await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
 
         await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[0].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
@@ -191,17 +161,16 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277258] Should display tasks under new filter from newest to oldest when they are open  ', async () => {
-        const newFilter: any = new UserProcessInstanceFilterRepresentation();
-        newFilter.name = 'Newest first Open';
-        newFilter.appId = appId;
-        newFilter.icon = 'glyphicon-filter';
-        newFilter.filter = { sort: 'created-desc', state: 'open', assignment: 'involved' };
-
+        const newFilter = new UserProcessInstanceFilterRepresentation({
+            appId,
+            name : 'Newest first Open',
+            icon: 'glyphicon-filter',
+            filter: { sort: 'created-desc', state: 'open', assignment: 'involved' }
+        });
         await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
-
-        await taskFiltersDemoPage.customTaskFilter('Newest first Open').clickTaskFilter();
+        await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
 
         await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[5].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
@@ -209,17 +178,16 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277259] Should display tasks under new filter from oldest to newest when they are open', async () => {
-        const newFilter: any = new UserProcessInstanceFilterRepresentation();
-        newFilter.name = 'Newest last Open';
-        newFilter.appId = appId;
-        newFilter.icon = 'glyphicon-filter';
-        newFilter.filter = { sort: 'created-asc', state: 'open', assignment: 'involved' };
-
+        const newFilter = new UserProcessInstanceFilterRepresentation({
+            appId,
+            name : 'Newest last Open',
+            icon: 'glyphicon-filter',
+            filter: { sort: 'created-asc', state: 'open', assignment: 'involved' }
+        });
         await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
-
-        await taskFiltersDemoPage.customTaskFilter('Newest last Open').clickTaskFilter();
+        await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
 
         await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[3].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
@@ -227,17 +195,16 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277260] Should display tasks under new filter from closest due date to farthest when they are open', async () => {
-        const newFilter: any = new UserProcessInstanceFilterRepresentation();
-        newFilter.name = 'Due first Open';
-        newFilter.appId = appId;
-        newFilter.icon = 'glyphicon-filter';
-        newFilter.filter = { sort: 'due-desc', state: 'open', assignment: 'involved' };
-
+        const newFilter = new UserProcessInstanceFilterRepresentation({
+            appId,
+            name : 'Due first Open',
+            icon: 'glyphicon-filter',
+            filter: { sort: 'due-desc', state: 'open', assignment: 'involved' }
+        });
         await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
-
-        await taskFiltersDemoPage.customTaskFilter('Due first Open').clickTaskFilter();
+        await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
 
         await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[5].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
@@ -245,21 +212,19 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277261] Should display tasks under new filter from farthest due date to closest when they are open', async () => {
-        const newFilter: any = new UserProcessInstanceFilterRepresentation();
-        newFilter.name = 'Due last Open';
-        newFilter.appId = appId;
-        newFilter.icon = 'glyphicon-filter';
-        newFilter.filter = { sort: 'due-asc', state: 'open', assignment: 'involved' };
-
+        const newFilter = new UserProcessInstanceFilterRepresentation({
+            appId,
+            name : 'Due last Open',
+            icon: 'glyphicon-filter',
+            filter: { sort: 'due-asc', state: 'open', assignment: 'involved' }
+        });
         await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
-
-        await taskFiltersDemoPage.customTaskFilter('Due last Open').clickTaskFilter();
+        await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
 
         await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[3].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[5].name);
-
     });
 });

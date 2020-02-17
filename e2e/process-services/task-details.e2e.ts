@@ -28,6 +28,7 @@ import moment = require('moment');
 import { LoginPage, BrowserActions, StringUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { browser } from 'protractor';
+import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
 
 describe('Task Details component', () => {
 
@@ -59,17 +60,17 @@ describe('Task Details component', () => {
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
-
-        processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
+        const { id } = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        processUserModel = await users.createApsUser(this.alfrescoJsApi, id);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
-
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+    });
 
+    afterAll( async () => {
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {
@@ -80,12 +81,8 @@ describe('Task Details component', () => {
         await (await processServices.goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        const task = await taskPage.createNewTask();
-        await task.addName(tasks[1]);
-        await task.addDescription('Description');
-        await task.addForm(app.formName);
-        await task.clickStartButton();
 
+        await taskPage.createTask({name: tasks[1], description: 'Description', formName: app.formName});
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
@@ -114,12 +111,7 @@ describe('Task Details component', () => {
         await (await processServices.goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        const task = await taskPage.createNewTask();
-        await task.addName(tasks[1]);
-        await task.addDescription('Description');
-        await task.addForm(app.formName);
-        await task.clickStartButton();
-
+        await taskPage.createTask({name: tasks[1], description: 'Description', formName: app.formName});
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
@@ -185,13 +177,11 @@ describe('Task Details component', () => {
         await apps.startProcess(this.alfrescoJsApi, appModel);
 
         await (await processServices.goToTaskApp()).clickTasksButton();
-
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-
         const taskModel = new TaskModel(allTasks.data[0]);
 
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -291,8 +281,7 @@ describe('Task Details component', () => {
 
     it('[C286709] Should display task details for completed task - Task App', async () => {
         const taskName = 'TaskAppCompleted';
-        const taskId = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': taskName });
-
+        const taskId = await this.alfrescoJsApi.activiti.taskApi.createNewTask(<TaskRepresentation> { 'name': taskName });
         await (await processServices.goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);

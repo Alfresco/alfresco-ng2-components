@@ -332,5 +332,19 @@ describe('PaginationComponent', () => {
 
             expect(component.current).toBe(1);
         });
+
+        it('should not show pagination when external component count is zero', () => {
+            const pagination: Pagination = {};
+            const customComponent = <PaginatedComponent> {
+                pagination: new BehaviorSubject<Pagination>({ count: 0, maxItems: 5, totalItems: 5 })
+            };
+            component.target = customComponent;
+            component.ngOnInit();
+            customComponent.pagination.next(pagination);
+            fixture.detectChanges();
+
+            expect(fixture.debugElement.nativeElement.querySelector('.adf-pagination__block')).toBeNull();
+        });
+
     });
 });

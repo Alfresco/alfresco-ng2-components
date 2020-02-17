@@ -45,7 +45,7 @@ export class TasksPage {
         return new StartTaskDialog();
     }
 
-    async createTask({ name, description, dueDate, formName }): Promise<void> {
+    async createTask({ name, description = '', dueDate = '', formName = 'None'}): Promise<void> {
         await this.clickOnCreateButton();
         await BrowserActions.clickExecuteScript('button[data-automation-id="btn-start-task"]');
         const dialog =  new StartTaskDialog();

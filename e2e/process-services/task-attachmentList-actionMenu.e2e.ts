@@ -59,18 +59,14 @@ describe('Attachment list action menu for tasks', () => {
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         const user = await users.createTenantAndUser(this.alfrescoJsApi);
-
         tenantId = user.tenantId;
 
         await this.alfrescoJsApi.login(user.email, user.password);
-
-        const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
-        appId = importedApp.id;
+        const { id } = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        appId = id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
     });
 
     afterAll(async () => {
@@ -84,9 +80,7 @@ describe('Attachment list action menu for tasks', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        const task = await taskPage.createNewTask();
-        await task.addName(taskName.active);
-        await task.clickStartButton();
+        await taskPage.createTask({name: taskName.active});
 
         await attachmentListPage.clickAttachFileButton(pngFile.location);
         await attachmentListPage.viewFile(pngFile.name);
