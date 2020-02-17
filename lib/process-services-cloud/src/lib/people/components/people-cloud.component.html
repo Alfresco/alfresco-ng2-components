@@ -43,10 +43,7 @@
                 <mat-option *ngIf="searchUserCtrl.hasError('searchTypingError') && !searchLoading" disabled
                             class="adf-people-cloud-option-not-active"
                             data-automation-id="adf-people-cloud-no-results">
-                    <mat-error>
-                    <mat-icon>error</mat-icon>
-                    <span> {{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : searchedValue } }}</span>
-                    </mat-error>
+                    <span> {{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName: searchedValue } }}</span>
                 </mat-option>
             </ng-template>
         </mat-autocomplete>
