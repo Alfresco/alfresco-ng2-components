@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { throwError as observableThrowError, Observable, of } from 'rxjs';
+import { throwError as observableThrowError, Observable } from 'rxjs';
 import { Injectable, Injector } from '@angular/core';
 import {
   HttpHandler, HttpInterceptor, HttpRequest,
