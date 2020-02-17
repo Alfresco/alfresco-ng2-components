@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { throwError as observableThrowError, Observable } from 'rxjs';
+import { throwError as observableThrowError, Observable, of } from 'rxjs';
 import { Injectable, Injector } from '@angular/core';
 import {
   HttpHandler, HttpInterceptor, HttpRequest,
-  HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent
+  HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpHeaders
 } from '@angular/common/http';
-import { AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService } from './authentication.service';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
 
   constructor(private injector: Injector) { }
 
-  private loadExcludedUrlsRegex(): void {
+  private loadExcludedUrlsRegex() {
     const excludedUrls: string[] = this.authService.getBearerExcludedUrls();
     this.excludedUrlsRegex = excludedUrls.map((urlPattern) => new RegExp(urlPattern, 'gi')) || [];
 
@@ -64,14 +64,20 @@ export class AuthBearerInterceptor implements HttpInterceptor {
     return this.authService.addTokenToHeader(req.headers)
       .pipe(
         mergeMap((headersWithBearer) => {
-        const kcReq = req.clone({ headers: headersWithBearer });
-        return next.handle(kcReq)
-          .pipe(
-            catchError((error) => {
+          const headerWithContentType = this.appendJsonContentType(headersWithBearer);
+          const kcReq = req.clone({ headers: headerWithContentType});
+          return next.handle(kcReq)
+            .pipe(
+              catchError((error) => {
                 return observableThrowError(error);
-            })
-          );
+              })
+           );
       })
       );
   }
+
+  private appendJsonContentType(headers: HttpHeaders): HttpHeaders {
+    return headers.set('Content-Type', 'application/json;charset=UTF-8');
+  }
+
 }
