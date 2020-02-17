@@ -52,6 +52,14 @@ exports.Files = {
         processName: "Process3576"
     },
 
+    TEST_ASSIGNEE: {
+        file_location: "/resources/apps/Test Assignee.zip",
+        title: "Test Assignee",
+        description: "Description for app",
+        processName: "Sample",
+        userTasks: { one: 'Form1', two: 'Form2' }
+    },
+
     APP_WITH_USER_WIDGET: {
         file_location: "/resources/apps/appWithUser.zip",
         title: "appWithUser",

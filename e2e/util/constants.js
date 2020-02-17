@@ -74,6 +74,12 @@ exports.TASK_FILTERS = {
     COMPLETED_TASKS: 'Completed Tasks'
 };
 
+exports.PROCESS_FILTERS = {
+    RUNNING: 'Running',
+    COMPLETED: 'Completed',
+    ALL: 'All'
+};
+
 exports.TASK_DETAILS = {
     NO_FORM: 'No form',
     NO_PARENT: 'No parent',
