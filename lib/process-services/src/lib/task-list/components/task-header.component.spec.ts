@@ -301,7 +301,7 @@ describe('TaskHeaderComponent', () => {
             const clickableForm = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-clickable-value'));
             expect(clickableForm).toBeNull();
 
-            const readOnlyForm = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-ellipsis'));
+            const readOnlyForm = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-scroll'));
             expect(readOnlyForm.nativeElement.innerText).toBe('test form');
         });
     }));
