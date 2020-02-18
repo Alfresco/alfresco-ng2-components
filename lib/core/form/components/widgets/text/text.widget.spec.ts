@@ -105,17 +105,17 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 const textWidgetLabel = element.querySelector('label');
                 expect(textWidgetLabel.innerText).toBe('text-name*');
-                expect(widget.field.isValid).toBeFalsy();
+                expect(widget.field.isValid).toBe(false);
 
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
 
                 await fixture.whenStable();
-                expect(widget.field.isValid).toBeTruthy();
+                expect(widget.field.isValid).toBe(true);
 
                 enterValueInTextField(element.querySelector('#text-id'), '');
 
                 await fixture.whenStable();
-                expect(widget.field.isValid).toBeFalsy();
+                expect(widget.field.isValid).toBe(false);
             });
 
             it('should be able to set a placeholder for Text widget', () => {
@@ -145,15 +145,15 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
                 await fixture.whenStable();
-                expect(widget.field.isValid).toBeFalsy();
+                expect(widget.field.isValid).toBe(false);
 
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT VALUE');
                 await fixture.whenStable();
-                expect(widget.field.isValid).toBeTruthy();
+                expect(widget.field.isValid).toBe(true);
 
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT  VALUE TOO LONG');
                 await fixture.whenStable();
-                expect(widget.field.isValid).toBeFalsy();
+                expect(widget.field.isValid).toBe(false);
             });
 
             it('should be able to set regex pattern property for Text widget', async () => {
@@ -169,17 +169,17 @@ describe('TextWidgetComponent', () => {
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
 
                 await fixture.whenStable();
-                expect(widget.field.isValid).toBeFalsy();
+                expect(widget.field.isValid).toBe(false);
 
                 enterValueInTextField(element.querySelector('#text-id'), '8');
 
                 await fixture.whenStable();
-                expect(widget.field.isValid).toBeTruthy();
+                expect(widget.field.isValid).toBe(true);
 
                 enterValueInTextField(element.querySelector('#text-id'), '8XYZ');
 
                 await fixture.whenStable();
-                expect(widget.field.isValid).toBeFalsy();
+                expect(widget.field.isValid).toBe(false);
             });
 
         });
