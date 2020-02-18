@@ -56,7 +56,7 @@ describe('Upload component', async () => {
     });
 
     it('[C272792] Should be possible to cancel upload of a big file using row cancel icon', async () => {
-        await browser.executeScript('setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 750)');
+        await browser.executeScript('setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 1500)');
 
         await contentServicesPage.uploadFile(largeFile.location);
 
@@ -68,7 +68,7 @@ describe('Upload component', async () => {
 
     it('[C287790] Should be possible to cancel upload of a big file through the cancel uploads button', async () => {
         await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 750)');
+            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 1500)');
         await contentServicesPage.uploadFile(largeFile.location);
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
@@ -79,7 +79,7 @@ describe('Upload component', async () => {
     it('[C272793] Should be able to cancel multiple files upload', async () => {
         await uploadToggles.enableMultipleFileUpload();
         await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 750)');
+            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 1500)');
         await contentServicesPage.uploadMultipleFile([pngFileModel.location, largeFile.location]);
 
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
@@ -92,7 +92,7 @@ describe('Upload component', async () => {
 
     it('[C315257] Should be able to cancel file in upload queue', async () => {
         await uploadToggles.enableMultipleFileUpload();
-        await browser.executeScript('setTimeout(() => {document.querySelector("button[data-automation-id=\'cancel-upload-queue\']").click();}, 750)');
+        await browser.executeScript('setTimeout(() => {document.querySelector("button[data-automation-id=\'cancel-upload-queue\']").click();}, 1500)');
         await contentServicesPage.uploadMultipleFile([largeFile.location, pngFileModel.location]);
         await uploadDialog.fileIsCancelled(pngFileModel.name);
         await uploadDialog.clickOnCloseButton();
