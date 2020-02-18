@@ -20,11 +20,16 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { TextWidgetComponent } from './text.widget';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../core.module';
+import { setupTestBed } from '../../../../testing/setupTestBed';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslationMock } from '../../../../mock/translation.service.mock';
 import { TranslationService } from '../../../../services';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
+
+const enterValueInTextField = (element: HTMLInputElement, value: string) => {
+    element.value = value;
+    element.dispatchEvent(new Event('input'));
+};
 
 describe('TextWidgetComponent', () => {
 
@@ -35,7 +40,7 @@ describe('TextWidgetComponent', () => {
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: TranslationService, useClass: TranslationMock }
@@ -52,13 +57,6 @@ describe('TextWidgetComponent', () => {
 
         describe('and no mask is configured on text element', () => {
 
-            let inputElement: HTMLInputElement;
-
-            afterEach(() => {
-                fixture.destroy();
-                TestBed.resetTestingModule();
-            });
-
             it('should raise ngModelChange event', async(() => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
@@ -69,10 +67,9 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
-                inputElement.value = 'TEXT';
                 expect(widget.field.value).toBe('');
-                inputElement.dispatchEvent(new Event('input'));
+
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(widget.field).not.toBeNull();
@@ -110,14 +107,13 @@ describe('TextWidgetComponent', () => {
                 expect(textWidgetLabel.innerText).toBe('text-name*');
                 expect(widget.field.isValid).toBeFalsy();
 
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
-                inputElement.value = 'TEXT';
-                inputElement.dispatchEvent(new Event('input'));
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
+
                 await fixture.whenStable();
                 expect(widget.field.isValid).toBeTruthy();
 
-                inputElement.value = '';
-                inputElement.dispatchEvent(new Event('input'));
+                enterValueInTextField(element.querySelector('#text-id'), '');
+
                 await fixture.whenStable();
                 expect(widget.field.isValid).toBeFalsy();
             });
@@ -147,19 +143,15 @@ describe('TextWidgetComponent', () => {
                     maxLength: 10
                 });
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
-                inputElement.value = 'TEXT';
-                inputElement.dispatchEvent(new Event('input'));
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
                 await fixture.whenStable();
                 expect(widget.field.isValid).toBeFalsy();
 
-                inputElement.value = 'TEXT VALUE';
-                inputElement.dispatchEvent(new Event('input'));
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT VALUE');
                 await fixture.whenStable();
                 expect(widget.field.isValid).toBeTruthy();
 
-                inputElement.value = 'TEXT VALUE TOO LONG';
-                inputElement.dispatchEvent(new Event('input'));
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT  VALUE TOO LONG');
                 await fixture.whenStable();
                 expect(widget.field.isValid).toBeFalsy();
             });
@@ -174,19 +166,18 @@ describe('TextWidgetComponent', () => {
                     regexPattern: '[0-9]'
                 });
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
-                inputElement.value = 'TEXT';
-                inputElement.dispatchEvent(new Event('input'));
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
+
                 await fixture.whenStable();
                 expect(widget.field.isValid).toBeFalsy();
 
-                inputElement.value = '8';
-                inputElement.dispatchEvent(new Event('input'));
+                enterValueInTextField(element.querySelector('#text-id'), '8');
+
                 await fixture.whenStable();
                 expect(widget.field.isValid).toBeTruthy();
 
-                inputElement.value = '8EXT';
-                inputElement.dispatchEvent(new Event('input'));
+                enterValueInTextField(element.querySelector('#text-id'), '8XYZ');
+
                 await fixture.whenStable();
                 expect(widget.field.isValid).toBeFalsy();
             });
