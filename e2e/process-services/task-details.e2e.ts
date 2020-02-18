@@ -28,7 +28,6 @@ import moment = require('moment');
 import { LoginPage, BrowserActions, StringUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { browser } from 'protractor';
-import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
 
 describe('Task Details component', () => {
 
@@ -281,7 +280,7 @@ describe('Task Details component', () => {
 
     it('[C286709] Should display task details for completed task - Task App', async () => {
         const taskName = 'TaskAppCompleted';
-        const taskId = await this.alfrescoJsApi.activiti.taskApi.createNewTask(<TaskRepresentation> { 'name': taskName });
+        const taskId = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': taskName });
         await (await processServices.goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
