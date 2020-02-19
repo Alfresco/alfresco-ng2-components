@@ -88,34 +88,37 @@ describe('Task Candidate Assignee', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTaskName.candidateTask);
-        await expect(await taskPage.tasksListPage().getNoTasksFoundMessage()).toBe('No Tasks Found');
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTaskName.candidateTask);
-        await expect(await taskPage.tasksListPage().getNoTasksFoundMessage()).toBe('No Tasks Found');
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.QUE_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().checkContentIsDisplayed(app.userTaskName.candidateTask);
         await taskPage.tasksListPage().selectRow(app.userTaskName.candidateTask);
         await taskPage.taskDetails().claimTask();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().checkContentIsDisplayed(app.userTaskName.candidateTask);
         await taskPage.taskDetails().checkReleaseEnabled();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().checkContentIsDisplayed(app.userTaskName.candidateTask);
         await taskPage.taskDetails().checkReleaseEnabled();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.QUE_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTaskName.candidateTask);
-        await expect(await taskPage.tasksListPage().getNoTasksFoundMessage()).toBe('No Tasks Found');
 
         await loginPage.loginToProcessServicesUsingUserModel(candidate2);
         await navigationBarPage.navigateToProcessServicesPage();
@@ -125,7 +128,7 @@ describe('Task Candidate Assignee', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.QUE_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.QUE_TASKS);
-        await expect(await taskPage.tasksListPage().getNoTasksFoundMessage()).toBe('No Tasks Found');
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTaskName.candidateTask);
 
         await loginPage.loginToProcessServicesUsingUserModel(candidate1);
@@ -136,19 +139,20 @@ describe('Task Candidate Assignee', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().checkContentIsDisplayed(app.userTaskName.candidateTask);
         await taskPage.tasksListPage().selectRow(app.userTaskName.candidateTask);
         await taskPage.taskDetails().releaseTask();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTaskName.candidateTask);
-        await expect(await taskPage.tasksListPage().getNoTasksFoundMessage()).toBe('No Tasks Found');
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTaskName.candidateTask);
-        await expect(await taskPage.tasksListPage().getNoTasksFoundMessage()).toBe('No Tasks Found');
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.QUE_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.QUE_TASKS);
@@ -163,6 +167,7 @@ describe('Task Candidate Assignee', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.QUE_TASKS);
         await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().checkContentIsDisplayed(app.userTaskName.candidateTask);
         await taskPage.taskDetails().checkClaimEnabled();
     });
