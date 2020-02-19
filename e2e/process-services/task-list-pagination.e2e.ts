@@ -23,6 +23,7 @@ import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import CONSTANTS = require('../util/constants');
+import { User } from '../models/APS/user';
 
 describe('Task List Pagination', () => {
 
@@ -31,7 +32,7 @@ describe('Task List Pagination', () => {
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
 
-    let processUserModel, processUserModelEmpty;
+    let processUserModel: User;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let currentPage = 1;
     const nrOfTasks = 20;
@@ -59,12 +60,9 @@ describe('Task List Pagination', () => {
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
-        processUserModelEmpty = await users.createTenantAndUser(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-
         const resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         for (let i = 0; i < nrOfTasks; i++) {
@@ -72,7 +70,11 @@ describe('Task List Pagination', () => {
         }
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+    });
 
+    afterAll( async () => {
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C260301] Should display default pagination', async () => {
@@ -190,13 +192,6 @@ describe('Task List Pagination', () => {
         await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
-    });
-
-    it('Pagination in an empty task list', async () => {
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModelEmpty);
-
-        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
-        await paginationPage.checkPaginationIsNotDisplayed();
     });
 
 });

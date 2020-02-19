@@ -30,7 +30,7 @@ export class User {
     lastName = StringUtil.generateRandomString();
     password = StringUtil.generatePasswordString();
     type = 'enterprise';
-    tenantId = '1';
+    tenantId = 1;
     company = null;
 
     constructor(details?: any) {

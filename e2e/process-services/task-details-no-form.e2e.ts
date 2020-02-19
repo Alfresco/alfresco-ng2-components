@@ -38,26 +38,25 @@ describe('Task Details - No form', () => {
 
     beforeAll(async () => {
         const users = new UsersActions();
-
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
-
-        processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
+        const { id } = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        processUserModel = await users.createApsUser(this.alfrescoJsApi, id);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-
         importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
-
         await apps.startProcess(this.alfrescoJsApi, importedApp);
-
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
+    });
+
+    afterAll( async () => {
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C289311] Should attach form and complete buttons to be displayed when no form is attached', async () => {

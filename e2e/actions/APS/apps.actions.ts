@@ -49,8 +49,8 @@ export class AppsActions {
         return appDefinitionId;
     }
 
-    async importPublishDeployApp(alfrescoJsApi, appFileLocation) {
-        const appCreated = await this.importApp(alfrescoJsApi, appFileLocation);
+    async importPublishDeployApp(alfrescoJsApi, appFileLocation, option = {}) {
+        const appCreated = await this.importApp(alfrescoJsApi, appFileLocation, option);
 
         const publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
 
@@ -59,13 +59,13 @@ export class AppsActions {
         return appCreated;
     }
 
-    async importApp(alfrescoJsApi, appFileLocation) {
+    async importApp(alfrescoJsApi, appFileLocation, options = {}) {
         browser.setFileDetector(new remote.FileDetector());
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
         const file = fs.createReadStream(pathFile);
 
-        return alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+        return alfrescoJsApi.activiti.appsDefinitionApi.importAppDefinition(file, options);
     }
 
     async publishDeployApp(alfrescoJsApi, appId) {

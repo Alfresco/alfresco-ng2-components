@@ -138,4 +138,10 @@ export class StartProcessPage {
     formFields(): FormFields {
         return new FormFields();
     }
+
+    async startProcess({name, processName }) {
+        await this.enterProcessName(name);
+        await this.selectFromProcessDropdown(processName);
+        await this.clickStartProcessButton();
+    }
 }
