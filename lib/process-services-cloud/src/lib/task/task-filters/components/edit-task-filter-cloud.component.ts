@@ -107,9 +107,8 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         { label: 'DESC', value: 'DESC' }
     ];
 
-    applicationNames: any[] = [];
-    dateFilter: any[] = [];
-    formHasBeenChanged = false;
+    private applicationNames: any[] = [];
+    private formHasBeenChanged = false;
     editTaskFilterForm: FormGroup;
     taskFilterProperties: TaskFilterProperties[] = [];
     taskFilterActions: TaskFilterAction[] = [];

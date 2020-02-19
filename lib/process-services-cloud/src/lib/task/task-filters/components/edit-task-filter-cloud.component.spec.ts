@@ -92,8 +92,6 @@ describe('EditTaskFilterCloudComponent', () => {
         fixture.detectChanges();
         const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-task-filter-title-id');
         const subTitle = fixture.debugElement.nativeElement.querySelector('#adf-edit-task-filter-sub-title-id');
-        expect(title).toBeDefined();
-        expect(subTitle).toBeDefined();
         expect(title.innerText).toEqual('FakeInvolvedTasks');
         expect(subTitle.innerText.trim()).toEqual('ADF_CLOUD_EDIT_TASK_FILTER.TITLE');
     }));
@@ -108,8 +106,6 @@ describe('EditTaskFilterCloudComponent', () => {
 
         fixture.whenStable().then(() => {
             expect(matSpinnerElement).toBeNull();
-            expect(title).toBeDefined();
-            expect(subTitle).toBeDefined();
             expect(title.innerText).toEqual('FakeInvolvedTasks');
             expect(subTitle.innerText.trim()).toEqual('ADF_CLOUD_EDIT_TASK_FILTER.TITLE');
         });
@@ -148,11 +144,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 const orderController = component.editTaskFilterForm.get('order');
                 const assigneeController = component.editTaskFilterForm.get('assignee');
                 expect(component.editTaskFilterForm).toBeDefined();
-                expect(stateController).toBeDefined();
-                expect(sortController).toBeDefined();
-                expect(orderController).toBeDefined();
                 expect(assigneeController).toBeDefined();
-
                 expect(stateController.value).toBe('CREATED');
                 expect(sortController.value).toBe('id');
                 expect(orderController.value).toBe('ASC');
@@ -204,10 +196,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 const assigneeElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-assignee"]');
                 const sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"]');
                 const orderElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-order"]');
-                expect(stateElement).toBeDefined();
                 expect(assigneeElement).toBeDefined();
-                expect(sortElement).toBeDefined();
-                expect(orderElement).toBeDefined();
                 expect(stateElement.textContent.trim()).toBe('CREATED');
                 expect(sortElement.textContent.trim()).toBe('Id');
                 expect(orderElement.textContent.trim()).toBe('ASC');
@@ -272,12 +261,8 @@ describe('EditTaskFilterCloudComponent', () => {
             const orderController = component.editTaskFilterForm.get('order');
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(component.taskFilterProperties).toBeDefined();
                 expect(component.taskFilterProperties.length).toBe(4);
                 expect(component.editTaskFilterForm).toBeDefined();
-                expect(stateController).toBeDefined();
-                expect(sortController).toBeDefined();
-                expect(orderController).toBeDefined();
                 expect(stateController.value).toBe('CREATED');
                 expect(sortController.value).toBe('id');
                 expect(orderController.value).toBe('ASC');
@@ -314,7 +299,6 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.whenStable().then(() => {
                 const sortController = component.editTaskFilterForm.get('sort');
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(sortController).toBeDefined();
                 expect(sortController.value).toBe('id');
                 expect(sortOptions.length).toEqual(4);
             });
@@ -340,8 +324,6 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.whenStable().then(() => {
                 const sortController = component.editTaskFilterForm.get('sort');
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(sortController).toBeDefined();
-                expect(component.sortProperties).toBeDefined();
                 expect(component.sortProperties.length).toBe(3);
                 expect(sortController.value).toBe('my-custom-sort');
                 expect(sortOptions.length).toEqual(3);
@@ -363,7 +345,6 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.whenStable().then(() => {
                 const sortController = component.editTaskFilterForm.get('sort');
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(sortController).toBeDefined();
                 expect(sortController.value).toBe('id');
                 expect(sortOptions.length).toEqual(4);
             });
@@ -384,13 +365,10 @@ describe('EditTaskFilterCloudComponent', () => {
                 const saveAsButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
                 const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
                 const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
-                expect(component.taskFilterActions).toBeDefined();
+                expect(component.taskFilterActions.map(action => action.actionType)).toEqual(['save', 'saveAs', 'delete']);
                 expect(component.taskFilterActions.length).toBe(3);
-                expect(saveButton).toBeDefined();
-                expect(saveAsButton).toBeDefined();
-                expect(deleteButton).toBeDefined();
-                expect(saveButton.disabled).toBeTruthy();
-                expect(saveAsButton.disabled).toBeTruthy(false);
+                expect(saveButton.disabled).toBe(true);
+                expect(saveAsButton.disabled).toBe(true);
                 expect(deleteButton.disabled).toBe(false);
             });
         }));
@@ -408,34 +386,13 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-                expect(component.taskFilterActions).toBeDefined();
+                expect(component.taskFilterActions.map(action => action.actionType)).toEqual(['save']);
                 expect(component.taskFilterActions.length).toBe(1);
-                expect(saveButton).toBeDefined();
                 expect(saveButton.disabled).toBeTruthy();
-            });
-        }));
-
-        it('should display default filter actions if input is empty', async(() => {
-            component.toggleFilterActions = true;
-            component.actions = [];
-            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
-            fixture.detectChanges();
-            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
                 const saveAsButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
                 const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
-                expect(component.taskFilterActions).toBeDefined();
-                expect(component.taskFilterActions.length).toBe(3);
-                expect(saveButton).toBeDefined();
-                expect(saveAsButton).toBeDefined();
-                expect(deleteButton).toBeDefined();
-                expect(saveButton.disabled).toBeTruthy();
-                expect(saveAsButton.disabled).toBeTruthy(false);
-                expect(deleteButton.disabled).toBe(false);
+                expect(saveAsButton).toBeFalsy();
+                expect(deleteButton).toBeFalsy();
             });
         }));
 

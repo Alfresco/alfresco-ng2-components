@@ -49,8 +49,6 @@
                                 (dateChange)="onDateChanged($event.value, taskFilterProperty)"
                                 [matDatepicker]="dateController"
                                 placeholder="{{taskFilterProperty.label | translate}}"
-                                [(ngModel)]="dateFilter[taskFilterProperty.key]"
-                                [ngModelOptions]="{standalone: true}"
                                 [attr.data-automation-id]="'adf-cloud-edit-task-`perty-' + taskFilterProperty.key">
                         <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle-' + taskFilterProperty.key"></mat-datepicker-toggle>
                         <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker-' + taskFilterProperty.key"></mat-datepicker>
