@@ -70,10 +70,21 @@ export class InMemoryFormService extends FormService {
 
     parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
         if (json) {
-            const form = new FormModel(json, data, readOnly, this);
+            const flattenForm = {
+                ...json.formRepresentation,
+                ...json.formRepresentation.formDefinition
+            };
+            delete flattenForm.formDefinition;
+
+            const formValues: FormValues = {};
+            (data || []).forEach(variable => {
+                formValues[variable.name] = variable.value;
+            });
+
+            const form = new FormModel(flattenForm, formValues, readOnly);
             if (!json.fields) {
                 form.outcomes = [
-                    new FormOutcomeModel(form, {
+                    new FormOutcomeModel(<any> form, {
                         id: '$save',
                         name: FormOutcomeModel.SAVE_ACTION,
                         isSystem: true
