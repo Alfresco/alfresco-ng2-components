@@ -32,6 +32,7 @@ export class User {
     type = 'enterprise';
     tenantId = 1;
     company = null;
+    id = 0;
 
     constructor(details?: any) {
         Object.assign(this, details);

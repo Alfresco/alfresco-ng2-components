@@ -53,6 +53,23 @@ exports.Files = {
     },
 
     TEST_ASSIGNEE: {
+        file_location: "/resources/apps/Assignee.zip",
+        title: "Assignee",
+        description: "Description for app",
+        processNames: ["sample", "candidate-task"],
+        userTaskName: {
+            "sample": { one: 'Form1', two: 'Form2' },
+            "candidateTask":  "Human step"
+        },
+        candidateUsers: [
+            "candidate-user@activiti.com",
+        ],
+        candidateGroup: "candidates",
+        adminGroup: "admin",
+        adminCapabilities: ['tenant-admin']
+    },
+
+    TEST_ASSIGNEE: {
         file_location: "/resources/apps/Test Assignee.zip",
         title: "Test Assignee",
         description: "Description for app",
@@ -100,7 +117,6 @@ exports.Files = {
         file_location: "/resources/apps/Widgets smoke test.zip",
         title: "Widgets smoke test",
         formName: "Widgets smoke test",
-        title: "Widgets smoke test",
         form_fields: {
             text_id: "text",
             header_id: "header",

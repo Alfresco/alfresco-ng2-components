@@ -64,6 +64,8 @@ export class TaskDetailsPage {
     emptyTaskDetails: ElementFinder = element(by.css('adf-task-details > div > div'));
     priority: ElementFinder = element(by.css('span[data-automation-id*="priority"] span'));
     editableAssignee = element(by.css('span[data-automation-id="card-textitem-value-assignee"][class*="clickable"]'));
+    claimElement = element(by.css('[data-automation-id="header-claim-button"]'));
+    releaseElement = element(by.css('[data-automation-id="header-unclaim-button"]'));
 
     async checkEditableAssigneeIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.editableAssignee);
@@ -415,6 +417,22 @@ export class TaskDetailsPage {
 
     async isCompleteButtonWithFormEnabled(): Promise<boolean> {
         return this.completeFormTask.isEnabled();
+    }
+
+    async checkClaimEnabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.claimElement);
+    }
+
+    async checkReleaseEnabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.releaseElement);
+    }
+
+    async claimTask(): Promise<void> {
+        await BrowserActions.click(this.claimElement);
+    }
+
+    async releaseTask(): Promise<void> {
+        await BrowserActions.click(this.releaseElement);
     }
 
 }

@@ -29,17 +29,17 @@ export class UsersActions {
 
         const user = new User({ tenantId: newTenant.id });
 
-        await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
+        const { id } = await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
 
-        return user;
+        return { ...user, id };
     }
 
     async createApsUser(alfrescoJsApi, tenantId) {
         const user = new User({ tenantId });
 
-        await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
+        const { id } = await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
 
-        return user;
+        return { ...user, id };
     }
 
     async getApsUserByEmail(alfrescoJsApi, email) {
