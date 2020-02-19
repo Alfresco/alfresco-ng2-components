@@ -16,6 +16,7 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { setupTestBed } from '../../testing/setupTestBed';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormRendererComponent } from './form-renderer.component';
 import { FormBaseModule } from '../form-base.module';
@@ -24,7 +25,6 @@ import { TranslationService } from 'core/services';
 import { TranslationMock } from 'core/mock';
 import { TranslateStore } from '@ngx-translate/core';
 import { FormService } from '../services/form.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 
 function typeIntoInput(targetInput: HTMLInputElement, message: string ) {
     expect(targetInput).not.toBeNull();
