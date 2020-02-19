@@ -104,7 +104,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     directions = [{ label: 'ASC', value: 'ASC' }, { label: 'DESC', value: 'DESC' }];
     applicationNames: any[] = [];
     formHasBeenChanged = false;
-    dateFilter: any[] = [];
     editProcessFilterForm: FormGroup;
     processFilterProperties: ProcessFilterProperties[] = [];
     processFilterActions: ProcessFilterAction[] = [];
