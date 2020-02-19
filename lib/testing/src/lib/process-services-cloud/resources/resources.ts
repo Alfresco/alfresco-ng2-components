@@ -37,7 +37,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
             outputform: 'outputform'
         },
         security: [
-            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
+            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser', 'processadminuser'] },
             { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser', 'salesuser'] }
         ]
     },
@@ -142,7 +142,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
             processstring: 'inputtask'
         },
         security: [
-            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
+            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser', 'processadminuser'] },
             { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'sales', 'testgroup'], 'users': ['hruser'] }
         ],
         infrastructure: {connectors: {restconnector: {}}, bridges: {}}
