@@ -101,6 +101,15 @@
               "vendorChunk": true,
               "buildOptimizer": true,
               "verbose": false,
+              "budgets": [
+                {
+                  "type": "bundle",
+                  "name": "vendor",
+                  "baseline": "4.2MB",
+                  "warning": "4.5MB",
+                  "error": "5.0MB"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "demo-shell/src/environments/environment.ts",
