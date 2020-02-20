@@ -205,14 +205,6 @@ export class EditTaskFilterCloudComponentPage {
         await BrowserActions.click(appNameElement);
     }
 
-    async checkOptionIsVisibleInDropdown(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-option span', option)), 5000);
-    }
-
-    async checkOptionIsNotVisibleInDropdown(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-option span', option)), 5000);
-    }
-
     async getAppNameDropDownValue(): Promise<string> {
         const locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
         return BrowserActions.getText(locator);

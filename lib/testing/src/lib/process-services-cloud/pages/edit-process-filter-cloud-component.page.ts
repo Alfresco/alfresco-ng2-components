@@ -112,14 +112,6 @@ export class EditProcessFilterCloudComponentPage {
         return uniqueArray.length === appTextList.length;
     }
 
-    async checkOptionIsVisibleInDropdown(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-option span', option)), 5000);
-    }
-
-    async checkOptionIsNotVisibleInDropdown(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-option span', option)), 5000);
-    }
-
     async getNumberOfAppNameOptions(): Promise<number> {
         await this.clickOnDropDownArrow('appName');
         const dropdownOptions = element.all(by.css('.mat-select-panel mat-option'));
