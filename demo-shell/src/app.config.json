@@ -81,23 +81,23 @@
     },
     {
       "key": "cs",
-      "label": "Czech"
+      "label": "Čeština"
     },
     {
       "key": "pl",
-      "label": "Polish"
+      "label": "Polski"
     },
     {
       "key": "fi",
-      "label": "Finnish"
+      "label": "Suomi"
     },
     {
       "key": "da",
-      "label": "Danish"
+      "label": "Dansk"
     },
     {
       "key": "sv",
-      "label": "Swedish"
+      "label": "Svenska"
     }
   ],
   "search": {
