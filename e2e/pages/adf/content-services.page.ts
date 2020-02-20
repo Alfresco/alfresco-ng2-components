@@ -23,6 +23,7 @@ import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
 
 import path = require('path');
+import { DropdownPage } from '../../../lib/testing/src/lib/material/pages/dropdown.page';
 
 export class ContentServicesPage {
 
@@ -593,7 +594,7 @@ export class ContentServicesPage {
     }
 
     async selectSite(siteName: string): Promise<void> {
-        await BrowserActions.clickOnSelectDropdownOption(siteName, this.siteListDropdown);
+        await new DropdownPage(this.siteListDropdown).selectOption(siteName);
     }
 
     async clickDownloadButton(): Promise<void> {

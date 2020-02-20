@@ -112,17 +112,4 @@ export class BrowserActions {
         // if the opened menu has only disabled items, pressing escape to close it won't work
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
-
-    static async clickOnDropdownOption(option: string, dropDownElement: ElementFinder): Promise<void> {
-        await this.click(dropDownElement);
-        await BrowserVisibility.waitUntilElementIsVisible(element('div[class*="mat-menu-content"] button'));
-        const optionElement = element(by.cssContainingText('div[class*="mat-menu-content"] button', option));
-        await this.click(optionElement);
-    }
-
-    static async clickOnSelectDropdownOption(option: string, dropDownElement: ElementFinder): Promise<void> {
-        await this.click(dropDownElement);
-        const optionElement = element(by.cssContainingText('mat-option span.mat-option-text', option));
-        await this.click(optionElement);
-    }
 }
