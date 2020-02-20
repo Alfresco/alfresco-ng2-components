@@ -14,18 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
+import { TranslateModule, TranslateStore, TranslateService } from '@ngx-translate/core';
 import { WidgetComponent } from './../widget.component';
+import { TranslationService } from '../../../../services';
 import { HyperlinkWidgetComponent } from './hyperlink.widget';
+import { setupTestBed } from '../../../../testing/setupTestBed';
+import { TranslationMock } from '../../../../mock/translation.service.mock';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('HyperlinkWidgetComponent', () => {
 
     let widget: HyperlinkWidgetComponent;
+    let fixture: ComponentFixture<HyperlinkWidgetComponent>;
+    let element: HTMLElement;
+
+    setupTestBed({
+        imports: [
+            TranslateModule.forChild(),
+            HttpClientModule
+        ],
+        declarations: [
+            HyperlinkWidgetComponent
+        ],
+        providers: [
+            TranslateStore,
+            TranslateService,
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
-        widget = new HyperlinkWidgetComponent(null);
+        fixture = TestBed.createComponent(HyperlinkWidgetComponent);
+        widget = fixture.componentInstance;
+        element = fixture.nativeElement;
     });
 
     it('should get link text from field display text', () => {
@@ -104,4 +129,42 @@ describe('HyperlinkWidgetComponent', () => {
         expect(widget.linkUrl).toBe(url);
     });
 
+    it('should be able to set label property', () => {
+        const label = 'Label';
+        widget.field = new FormFieldModel(new FormModel(), {
+            name: label,
+            type: FormFieldTypes.HYPERLINK
+        });
+
+        fixture.detectChanges();
+        const hyperlinkWidgetLabel = element.querySelector('label');
+        expect(hyperlinkWidgetLabel.innerText).toBe(label);
+    });
+
+    it('should be able to set URL', () => {
+        const url = 'https://www.alfresco.com/';
+        widget.field = new FormFieldModel(new FormModel(), {
+            hyperlinkUrl: url,
+            type: FormFieldTypes.HYPERLINK
+        });
+
+        fixture.detectChanges();
+        const hyperlinkWidgetLink = element.querySelector('a');
+        expect(hyperlinkWidgetLink.href).toBe(url);
+    });
+
+    it('should be able to set display text', () => {
+        const displayText = 'displayText';
+        const url = 'https://www.alfresco.com/';
+        widget.field = new FormFieldModel(new FormModel(), {
+            hyperlinkUrl: url,
+            displayText: displayText,
+            type: FormFieldTypes.HYPERLINK
+        });
+
+        fixture.detectChanges();
+        const hyperlinkWidgetLink = element.querySelector('a');
+        expect(hyperlinkWidgetLink.href).toBe(url);
+        expect(hyperlinkWidgetLink.innerText).toBe(displayText);
+    });
 });
