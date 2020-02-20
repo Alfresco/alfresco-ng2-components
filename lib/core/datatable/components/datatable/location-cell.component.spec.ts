@@ -92,8 +92,7 @@ describe('LocationCellComponent', () => {
             expect(value).toBe('');
             done();
         });
-
-    });
+   });
 
     it('should not setup cell when path is missing required properties', (done) => {
         rowData.path = { someProp: '' };

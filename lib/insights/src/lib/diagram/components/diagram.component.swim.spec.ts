@@ -145,5 +145,4 @@ describe('Diagrams swim', () => {
             ajaxReply(resp);
         }));
     });
-
 });

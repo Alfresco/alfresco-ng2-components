@@ -181,5 +181,4 @@ describe('Auth Guard SSO role service', () => {
         expect(authGuard.canActivate(route)).toBeFalsy();
         expect(materialDialog.closeAll).toHaveBeenCalled();
     });
-
 });

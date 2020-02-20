@@ -70,8 +70,7 @@ describe('TaskFormCloudComponent', () => {
         fixture = TestBed.createComponent(TaskFormCloudComponent);
         debugElement = fixture.debugElement;
         component = fixture.componentInstance;
-
-    });
+   });
 
     it('should create TaskFormCloudComponent ', () => {
         expect(component instanceof TaskFormCloudComponent).toBe(true);
@@ -407,8 +406,7 @@ describe('TaskFormCloudComponent', () => {
 
             expect(loadingTemplate).toBeNull();
         });
-
-    });
+   });
 });
 
 @Component({

@@ -211,8 +211,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
         fixture.detectChanges();
         component.ngOnChanges({ 'appName': change });
-
-    });
+   });
 
     it('should select the filter based on the input by key param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
@@ -231,8 +230,7 @@ describe('ProcessFiltersCloudComponent', () => {
         });
 
         component.ngOnChanges({ 'appName': change });
-
-    });
+   });
 
     it('should select the default filter if filter input does not exist', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
@@ -252,8 +250,7 @@ describe('ProcessFiltersCloudComponent', () => {
         });
 
         component.ngOnChanges({ 'appName': change });
-
-    });
+   });
 
     it('should select the filter based on the input by index param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
@@ -272,8 +269,7 @@ describe('ProcessFiltersCloudComponent', () => {
         });
 
         component.ngOnChanges({ 'appName': change });
-
-    });
+   });
 
     it('should select the filter based on the input by id param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);

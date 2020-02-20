@@ -634,8 +634,7 @@ describe('DataTable', () => {
             dataTable.onRowClick(row, null);
         }
             , 240);
-
-    });
+   });
 
     it('should emit double click if there are more than two single click in 250ms', (done) => {
 
@@ -655,8 +654,7 @@ describe('DataTable', () => {
             dataTable.onRowClick(row, null);
         }
             , 240);
-
-    });
+   });
 
     it('should emit single click if there are two single click in more than 250ms', (done) => {
 
@@ -803,8 +801,7 @@ describe('DataTable', () => {
                 direction: 'asc'
             })
         );
-
-    });
+   });
 
     it('should indicate column that has sorting applied', () => {
         dataTable.data = new ObjectDataTableAdapter(

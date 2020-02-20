@@ -197,8 +197,7 @@ describe('FormFieldValidator', () => {
 
             expect(validator.validate(field)).toBeFalsy();
         });
-
-    });
+   });
 
     describe('NumberFieldValidator', () => {
 
@@ -262,8 +261,7 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-
-    });
+   });
 
     describe('MinLengthFieldValidator', () => {
 
@@ -315,8 +313,7 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-
-    });
+   });
 
     describe('MaxLengthFieldValidator', () => {
 
@@ -439,8 +436,7 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-
-    });
+   });
 
     describe('MaxValueFieldValidator', () => {
 
@@ -511,8 +507,7 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-
-    });
+   });
 
     describe('RegExFieldValidator', () => {
 
@@ -561,8 +556,7 @@ describe('FormFieldValidator', () => {
 
             expect(validator.validate(field)).toBeFalsy();
         });
-
-    });
+   });
 
     describe('FixedValueFieldValidator', () => {
 
@@ -614,8 +608,7 @@ describe('FormFieldValidator', () => {
 
             expect(validator.validate(field)).toBeFalsy();
         });
-
-    });
+   });
 
     describe('MaxDateTimeFieldValidator', () => {
 
@@ -741,8 +734,7 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-
-    });
+   });
 
     describe('MinDateTimeFieldValidator', () => {
 
@@ -868,8 +860,7 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-
-    });
+   });
 
     describe('MaxDateFieldValidator', () => {
 
@@ -962,8 +953,7 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-
-    });
+   });
 
     describe('MinDateFieldValidator', () => {
 
@@ -1056,6 +1046,5 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-
-    });
+   });
 });

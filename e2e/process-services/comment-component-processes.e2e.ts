@@ -58,14 +58,12 @@ describe('Comment component for Processes', () => {
         processInstanceId = processWithComment.id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
     });
 
     it('[C260464] Should be able to add a comment on APS and check on ADF', async () => {

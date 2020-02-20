@@ -211,5 +211,4 @@ describe('Diagrams structural', () => {
             ajaxReply(resp);
         }));
     });
-
 });

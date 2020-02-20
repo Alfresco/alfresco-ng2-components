@@ -418,7 +418,5 @@ describe('AttachFileWidgetComponent', () => {
             const showOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
             expect(showOption.disabled).toBeTruthy();
         }));
-
-    });
-
+   });
 });

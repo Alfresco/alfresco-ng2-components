@@ -81,8 +81,7 @@ describe('Document List - Pagination', () => {
         await uploadActions.createEmptyFiles(secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -92,8 +91,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.checkAcsContainer();
         await contentServicesPage.waitForTableBody();
-
-    });
+   });
 
     it('[C260062] Should use default pagination settings', async () => {
         await contentServicesPage.doubleClickRow(newFolderModel.name);

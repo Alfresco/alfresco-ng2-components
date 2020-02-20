@@ -510,7 +510,5 @@ describe('StartFormComponent', () => {
                 expect(component.hasStartForm()).toBe(true);
             });
         }));
-
-    });
-
+   });
 });

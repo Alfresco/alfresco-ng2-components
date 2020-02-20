@@ -48,14 +48,12 @@ describe('Applications list', () => {
         });
 
         await LocalStorageUtil.setConfigField('alfresco-deployed-apps', '[]');
-
-    });
+   });
 
     afterAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-
-    });
+   });
 
     it('[C310373] Should all the app with running state be displayed on dashboard when alfresco-deployed-apps is not used in config file', async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();

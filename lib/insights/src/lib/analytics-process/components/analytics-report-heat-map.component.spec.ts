@@ -110,7 +110,5 @@ describe('AnalyticsReportHeatMapComponent', () => {
             expect(component.currentMetric).toEqual(avgTimeValues);
             expect(component.currentMetricColors).toEqual(avgTimePercentages);
         }));
-
-    });
-
+   });
 });

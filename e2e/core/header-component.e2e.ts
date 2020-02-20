@@ -60,8 +60,7 @@ describe('Header Component', () => {
         await this.alfrescoJsApi.login(user.email, user.password);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
-    });
+   });
 
     beforeEach(async() => {
         await navigationBarPage.clickHeaderDataButton();
@@ -71,8 +70,7 @@ describe('Header Component', () => {
         await navigationBarPage.clickLogoutButton();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
-    });
+   });
 
     it('[C280002] Should be able to view Header component', async () => {
         await headerPage.checkShowMenuCheckBoxIsDisplayed();

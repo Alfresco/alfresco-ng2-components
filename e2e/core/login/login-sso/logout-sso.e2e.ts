@@ -38,5 +38,4 @@ describe('Logout component - SSO', () => {
         const actualUrl = await browser.getCurrentUrl();
         await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/login');
     });
-
 });

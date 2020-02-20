@@ -301,7 +301,5 @@ describe('DropdownEditorComponent', () => {
             }));
 
         });
-
-    });
-
+   });
 });

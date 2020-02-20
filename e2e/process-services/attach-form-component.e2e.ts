@@ -70,15 +70,13 @@ describe('Attach Form Component', () => {
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: testNames.taskName });
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
-    });
+   });
 
     it('[C280047] Should be able to view the attach-form component after creating a standalone task', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();

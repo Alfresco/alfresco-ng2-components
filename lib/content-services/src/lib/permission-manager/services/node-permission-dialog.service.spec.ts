@@ -117,6 +117,5 @@ describe('NodePermissionDialogService', () => {
                 done();
             });
         });
-
-    });
+   });
 });

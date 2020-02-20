@@ -75,14 +75,12 @@ describe('Trashcan - Pagination', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-
-    });
+   });
 
     afterEach(async () => {
         await browser.refresh();
         await trashcanPage.waitForTableBody();
-
-    });
+   });
 
     it('[C272811] Should be able to set Items per page to 20', async () => {
         await paginationPage.selectItemsPerPage(itemsPerPage.twenty);

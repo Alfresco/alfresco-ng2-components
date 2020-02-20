@@ -69,6 +69,5 @@ describe('Text View component', () => {
                 });
             });
         });
-
-    });
+   });
 });

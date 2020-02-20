@@ -105,7 +105,5 @@ describe('Task filters cloud', () => {
 
             await expect(await tasksCloudDemoPage.firstFilterIsActive()).toBe(true);
         });
-
-    });
-
+   });
 });

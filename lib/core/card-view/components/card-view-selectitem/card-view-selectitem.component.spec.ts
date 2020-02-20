@@ -92,6 +92,5 @@ describe('CardViewSelectItemComponent', () => {
             const label = fixture.debugElement.query(By.css('[data-automation-class="select-box"] .mat-form-field-label'));
             expect(label).toBeNull();
         });
-
-    });
+   });
 });

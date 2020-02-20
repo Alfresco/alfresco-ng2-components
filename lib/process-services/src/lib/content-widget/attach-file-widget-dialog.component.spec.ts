@@ -111,8 +111,7 @@ describe('AttachFileWidgetDialogComponent', () => {
                 done();
             });
         });
-
-    });
+   });
 
     describe('When is logged in', () => {
 
@@ -145,7 +144,5 @@ describe('AttachFileWidgetDialogComponent', () => {
                 chooseButton.click();
             });
         });
-
-    });
-
+   });
 });

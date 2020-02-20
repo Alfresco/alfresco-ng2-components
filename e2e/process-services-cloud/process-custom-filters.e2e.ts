@@ -326,7 +326,5 @@ describe('Process list cloud', () => {
             });
 
         });
-
-    });
-
+   });
 });

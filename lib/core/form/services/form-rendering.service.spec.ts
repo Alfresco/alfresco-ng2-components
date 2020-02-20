@@ -128,5 +128,4 @@ describe('FormRenderingService', () => {
         const type = resolver(null);
         expect(type).toBe(JsonWidgetComponent);
     });
-
 });

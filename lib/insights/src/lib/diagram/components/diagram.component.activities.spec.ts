@@ -364,8 +364,7 @@ describe('Diagrams activities', () => {
             const resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
             ajaxReply(resp);
         }));
-
-    });
+   });
 
     describe('Diagrams component Activities with process instance id: ', () => {
 
@@ -1268,7 +1267,5 @@ describe('Diagrams activities', () => {
             const resp = { elements: [diagramsActivitiesMock.businessRuleTaskCompleted] };
             ajaxReply(resp);
         }));
-
-    });
-
+   });
 });

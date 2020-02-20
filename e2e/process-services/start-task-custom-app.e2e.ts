@@ -71,8 +71,7 @@ describe('Start Task - Custom App', () => {
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     it('[C263942] Should be possible to modify a task', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
@@ -84,9 +83,7 @@ describe('Start Task - Custom App', () => {
         await task.addForm(app.formName);
         await task.clickStartButton();
 
-        await taskPage
-            .tasksListPage()
-            .checkContentIsDisplayed(tasks[0]);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
 
         const taskDetails = await taskPage.taskDetails();
 
@@ -108,12 +105,9 @@ describe('Start Task - Custom App', () => {
         await checklistDialog.addName(firstChecklist);
         await checklistDialog.clickCreateChecklistButton();
 
-        await taskPage
-            .checkChecklistIsDisplayed(firstChecklist);
+        await taskPage.checkChecklistIsDisplayed(firstChecklist);
 
-        await taskPage
-            .taskDetails()
-            .selectDetailsTab();
+        await taskPage.taskDetails().selectDetailsTab();
     });
 
     it('[C263947] Should be able to start a task without form', async () => {
@@ -121,22 +115,16 @@ describe('Start Task - Custom App', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        await taskPage
-            .filtersPage()
-            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         const task = await taskPage.createNewTask();
 
         await task.addName(tasks[2]);
         await task.clickStartButton();
 
-        await taskPage
-            .tasksListPage()
-            .checkContentIsDisplayed(tasks[2]);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
 
-        await taskPage
-            .formFields()
-            .noFormIsDisplayed();
+        await taskPage.formFields().noFormIsDisplayed();
 
         await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
@@ -158,8 +146,7 @@ describe('Start Task - Custom App', () => {
 
     it('[C263949] Should be possible to save filled form', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
-        await taskPage.filtersPage()
-            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         const task = await taskPage.createNewTask();
 
@@ -167,33 +154,21 @@ describe('Start Task - Custom App', () => {
         await task.addName(tasks[4]);
         await task.clickStartButton();
 
-        await taskPage
-            .tasksListPage()
-            .checkContentIsDisplayed(tasks[4]);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
 
-        await taskPage.formFields()
-            .setFieldValue(by.id, formTextField, formFieldValue);
+        await taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue);
 
-        await taskPage
-            .formFields()
-            .refreshForm();
+        await taskPage.formFields().refreshForm();
 
-        await taskPage
-            .formFields().checkFieldValue(by.id, formTextField, '');
+        await taskPage.formFields().checkFieldValue(by.id, formTextField, '');
 
-        await taskPage
-            .tasksListPage()
-            .checkContentIsDisplayed(tasks[4]);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
 
-        await taskPage
-            .formFields()
-            .setFieldValue(by.id, formTextField, formFieldValue);
+        await taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue);
 
         await taskPage.formFields().checkFieldValue(by.id, formTextField, formFieldValue);
 
-        await taskPage
-            .formFields()
-            .saveForm();
+        await taskPage.formFields().saveForm();
 
         await taskPage.formFields().checkFieldValue(by.id, formTextField, formFieldValue);
     });
@@ -207,19 +182,13 @@ describe('Start Task - Custom App', () => {
         await task.addAssignee(assigneeUserModel.firstName);
         await task.clickStartButton();
 
-        await taskPage
-            .tasksListPage()
-            .checkTaskListIsLoaded();
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
 
-        await taskPage
-            .tasksListPage()
-            .getDataTable().waitForTableBody();
+        await taskPage.tasksListPage().getDataTable().waitForTableBody();
 
-        await taskPage.filtersPage()
-            .goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
 
-        await taskPage.tasksListPage()
-            .checkContentIsDisplayed(tasks[5]);
+        await taskPage.tasksListPage().checkContentIsDisplayed(tasks[5]);
         await taskPage.tasksListPage().selectRow(tasks[5]);
 
         await taskPage.checkTaskTitle(tasks[5]);
@@ -258,5 +227,4 @@ describe('Start Task - Custom App', () => {
 
         await taskPage.taskDetails().taskInfoDrawerIsDisplayed();
     });
-
 });

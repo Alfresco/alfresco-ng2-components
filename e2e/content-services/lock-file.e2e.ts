@@ -165,8 +165,7 @@ describe('Lock File', () => {
 
             await contentServices.checkUnlockedIcon(pngFileModel.name);
         });
-
-    });
+   });
 
     describe('Locked file without owner permissions', () => {
 
@@ -252,8 +251,7 @@ describe('Lock File', () => {
                 await expect(error.status).toEqual(409);
             }
         });
-
-    });
+   });
 
     describe('Locked file with owner permissions', () => {
 
@@ -351,6 +349,5 @@ describe('Lock File', () => {
             await contentServices.deleteContent(pngFileToBeLocked.entry.name);
             await contentServices.checkContentIsNotDisplayed(pngFileToBeLocked.entry.name);
         });
-
-    });
+   });
 });

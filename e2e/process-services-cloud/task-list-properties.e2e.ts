@@ -364,6 +364,5 @@ describe('Edit task filters and task list properties', () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(afterDate);
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
-
-    });
+   });
 });

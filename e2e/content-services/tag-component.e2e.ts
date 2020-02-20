@@ -176,5 +176,4 @@ describe('Tag component', () => {
         await tagPage.checkTagListByNodeIdIsOrderedAscending();
         await tagPage.checkTagListContentServicesIsOrderedAscending();
     });
-
 });

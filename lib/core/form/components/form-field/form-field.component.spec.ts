@@ -144,5 +144,4 @@ describe('FormFieldComponent', () => {
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').hidden).toBeTruthy();
     });
-
 });

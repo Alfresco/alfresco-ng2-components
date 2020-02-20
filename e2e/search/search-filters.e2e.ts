@@ -252,8 +252,7 @@ describe('Search Filters', () => {
         await searchResults.checkContentIsDisplayed(fileTypeJpg.entry.name);
         await searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (2)');
         await searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('JPEG Image (1)');
-
-    });
+   });
 
     it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', async () => {
         await navigationBarPage.clickContentServicesButton();
@@ -269,5 +268,4 @@ describe('Search Filters', () => {
         await searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Types');
         await searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Sizes');
     });
-
 });

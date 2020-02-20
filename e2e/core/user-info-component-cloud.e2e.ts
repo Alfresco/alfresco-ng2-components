@@ -41,8 +41,7 @@ describe('User Info - SSO', () => {
         await loginSSOPage.clickOnSSOButton();
 
         await loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
-
-    });
+   });
 
     afterAll(async () => {
         if (identityService) {
@@ -58,5 +57,4 @@ describe('User Info - SSO', () => {
         await userInfoPage.closeUserProfile();
         await userInfoPage.dialogIsNotDisplayed();
     });
-
 });

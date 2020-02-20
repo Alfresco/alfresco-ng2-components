@@ -687,5 +687,4 @@ describe('Diagrams boundary', () => {
             ajaxReply(resp);
         }));
     });
-
 });

@@ -70,6 +70,5 @@ describe('CheckboxWidgetComponent', () => {
                 expect(element.querySelector('.adf-invalid')).not.toBeNull();
             });
         }));
-
-    });
+   });
 });

@@ -168,8 +168,7 @@ describe('SearchControlComponent', () => {
             const attr = element.querySelector('#adf-control-input').getAttribute('autocomplete');
             expect(attr).toBe('off');
         }));
-
-    });
+   });
 
     describe('autocomplete list', () => {
 
@@ -336,8 +335,7 @@ describe('SearchControlComponent', () => {
                 done();
             });
         });
-
-    });
+   });
 
     describe('option click', () => {
 

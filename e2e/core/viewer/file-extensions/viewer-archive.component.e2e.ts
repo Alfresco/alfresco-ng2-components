@@ -56,8 +56,7 @@ describe('Viewer', () => {
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -90,6 +89,5 @@ describe('Viewer', () => {
                 }
             }
         });
-
-    });
+   });
 });

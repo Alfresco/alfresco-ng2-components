@@ -190,8 +190,7 @@ describe('Form widgets', () => {
             await expect(await widget.dynamicTable().getColumnName(appFields.dynamicTable_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.dynamicTable_id).columnDefinitions[0].name);
         });
-
-    });
+   });
 
     describe('with fields involving other people', () => {
 

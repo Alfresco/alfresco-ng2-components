@@ -351,8 +351,7 @@ describe('ViewerComponent', () => {
                 done();
             });
         }, 25000);
-
-    });
+   });
 
     it('should change display name every time node changes', fakeAsync(() => {
         spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
@@ -919,8 +918,7 @@ describe('ViewerComponent', () => {
                 });
             });
         });
-
-    });
+   });
 
     describe('Viewer component - Full Screen Mode - Mocking fixture element', () => {
 
@@ -977,5 +975,4 @@ describe('ViewerComponent', () => {
             expect(domElement.msRequestFullscreen).toHaveBeenCalled();
         });
     });
-
 });

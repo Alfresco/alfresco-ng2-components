@@ -39,5 +39,4 @@ describe('NoTaskDetailsTemplateDirective', () => {
         component.ngAfterContentInit();
         expect(detailsComponent.noTaskDetailsTemplateComponent).toBe(testTemplate);
     });
-
 });

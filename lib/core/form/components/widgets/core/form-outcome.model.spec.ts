@@ -41,5 +41,4 @@ describe('FormOutcomeModel', () => {
         const model = new FormOutcomeModel(null, json);
         expect(model.json).toBe(json);
     });
-
 });

@@ -85,5 +85,4 @@ describe('DateTimeEditorComponent', () => {
 
         expect(table.flushValue).toHaveBeenCalled();
     });
-
 });

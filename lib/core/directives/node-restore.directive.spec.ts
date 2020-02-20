@@ -276,6 +276,5 @@ describe('NodeRestoreDirective', () => {
             element.triggerEventHandler('click', null);
 
         });
-
-    });
+   });
 });

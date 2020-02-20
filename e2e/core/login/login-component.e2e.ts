@@ -61,8 +61,7 @@ describe('Login component', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(userA);
         await this.alfrescoJsApi.core.peopleApi.addPerson(userB);
-
-    });
+   });
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {
         await loginPage.loginToContentServicesUsingUserModel(userA);
@@ -270,5 +269,4 @@ describe('Login component', () => {
         await expect(await loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
         await loginPage.login(adminUserModel.id, adminUserModel.password);
     });
-
 });

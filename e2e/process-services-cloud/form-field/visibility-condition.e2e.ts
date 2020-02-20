@@ -183,8 +183,7 @@ describe('Visibility conditions - cloud', () => {
 
         await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkbox1);
-
-    });
+   });
 
     it('[C309650] Should be able to see Checkbox widget when has multiple visibility conditions and next condition operators', async () => {
         let text1, text2;
@@ -266,8 +265,7 @@ describe('Visibility conditions - cloud', () => {
 
         const textDisplayWidgetNoCondition = await widget.displayValueWidget().getFieldValue(displayValueString.displayValueNoConditionField);
         await expect(textDisplayWidgetNoCondition).toEqual('No cats');
-
-    });
+   });
 
     it('[C309869] Should be able to see Display text widget when visibility condition refers to a form variable and a field', async () => {
         await formCloudDemoPage.setConfigToEditor(displayValueTextJson);
@@ -288,8 +286,7 @@ describe('Visibility conditions - cloud', () => {
         textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
         await expect(textOneField).toEqual('dog');
         await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueSingleConditionField);
-
-    });
+   });
     it('[C309871] Should be able to see Display text widget when has multiple visibility conditions and next condition operators', async () => {
         await formCloudDemoPage.setConfigToEditor(displayValueTextJson);
 
@@ -331,6 +328,5 @@ describe('Visibility conditions - cloud', () => {
         await expect(textTwoField).toEqual('dog');
         await widget.displayValueWidget().isDisplayValueWidgetVisible(displayValueString.displayValueMultipleConditionsField);
         await expect(textDisplayWidgetMultipleCondition).toEqual('more cats');
-
-    });
+   });
 });

@@ -284,7 +284,5 @@ describe('Edit task filters cloud', () => {
             await expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('My Tasks');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnCancelButton();
         });
-
-    });
-
+   });
 });

@@ -83,8 +83,7 @@ describe('Version component actions', () => {
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -134,5 +133,4 @@ describe('Version component actions', () => {
         await contentServicesPage.clickDownloadButton();
         await FileBrowserUtil.isFileDownloaded(txtFileComma.name);
     });
-
 });

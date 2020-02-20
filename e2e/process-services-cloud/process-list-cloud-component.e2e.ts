@@ -99,7 +99,5 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('processDefinitionKey');
 
         });
-
-    });
-
+   });
 });

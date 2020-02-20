@@ -26,5 +26,4 @@ describe('ContainerModel', () => {
         const model = new ContainerModel(new FormFieldModel(form));
         expect(model.form).toBe(form);
     });
-
 });

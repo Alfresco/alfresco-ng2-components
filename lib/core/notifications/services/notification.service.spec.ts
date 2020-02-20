@@ -189,5 +189,4 @@ describe('NotificationService', () => {
 
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
-
 });

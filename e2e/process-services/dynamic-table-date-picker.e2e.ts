@@ -48,15 +48,13 @@ describe('Dynamic Table', () => {
         user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         tenantId = user.tenantId;
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
-    });
+   });
 
     describe('Date Picker', () => {
         const app = browser.params.resources.Files.DYNAMIC_TABLE_APP;
@@ -171,5 +169,4 @@ describe('Dynamic Table', () => {
             await widget.dynamicTable().checkItemIsPresent(dropdownOption);
         });
     });
-
 });

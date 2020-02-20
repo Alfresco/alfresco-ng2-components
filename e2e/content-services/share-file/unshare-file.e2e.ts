@@ -106,8 +106,7 @@ describe('Unshare file', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navBar.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -115,8 +114,7 @@ describe('Unshare file', () => {
 
     afterEach(async () => {
         await browser.refresh();
-
-    });
+   });
 
     describe('with permission', () => {
         afterAll(async () => {

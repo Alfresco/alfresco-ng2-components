@@ -235,8 +235,7 @@ describe('Start Task Form', () => {
             await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.starteventform);
             await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
         });
-
-    });
+   });
 
     describe('Start a process with a start event form', async () => {
 
@@ -309,8 +308,7 @@ describe('Start Task Form', () => {
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processId);
 
         });
-
-    });
+   });
 
     describe('Attach content to process-cloud task form using upload widget', async () => {
 
@@ -544,6 +542,5 @@ describe('Start Task Form', () => {
             await contentFileWidget.downloadFile(testFileModel.name);
             await expect(await FileBrowserUtil.isFileDownloaded(testFileModel.name)).toBe(true);
         });
-
-    });
+   });
 });

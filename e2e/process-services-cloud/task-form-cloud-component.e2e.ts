@@ -290,5 +290,4 @@ describe('Task form cloud component', () => {
             await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
     });
-
 });

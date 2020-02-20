@@ -118,8 +118,7 @@ describe('ProcessService', () => {
                 }
             );
         }));
-
-    });
+   });
 
     describe('process instance', () => {
 
@@ -169,8 +168,7 @@ describe('ProcessService', () => {
                 }
             );
         }));
-
-    });
+   });
 
     describe('start process instance', () => {
 
@@ -233,8 +231,7 @@ describe('ProcessService', () => {
                 }
             );
         }));
-
-    });
+   });
 
     describe('cancel process instance', () => {
 
@@ -282,8 +279,7 @@ describe('ProcessService', () => {
                 }
             );
         }));
-
-    });
+   });
 
     describe('process definitions', () => {
 
@@ -344,8 +340,7 @@ describe('ProcessService', () => {
                 }
             );
         }));
-
-    });
+   });
 
     describe('process instance tasks', () => {
 
@@ -413,8 +408,7 @@ describe('ProcessService', () => {
                 }
             );
         }));
-
-    });
+   });
 
     describe('process variables', () => {
 
@@ -532,6 +526,5 @@ describe('ProcessService', () => {
             }));
 
         });
-
-    });
+   });
 });

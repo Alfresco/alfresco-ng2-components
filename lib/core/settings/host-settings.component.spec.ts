@@ -89,8 +89,7 @@ describe('HostSettingsComponent', () => {
                 done();
             });
         });
-
-    });
+   });
 
     describe('BPM ', () => {
 
@@ -143,8 +142,7 @@ describe('HostSettingsComponent', () => {
             expect(ecmUrlInput).toEqual(null);
             expect(bpmUrlInput).toBeDefined();
         });
-
-    });
+   });
 
     describe('ECM ', () => {
 
@@ -266,8 +264,7 @@ describe('HostSettingsComponent', () => {
             ecmUrlInput.value = url;
             bpmUrlInput.dispatchEvent(new Event('input'));
         });
-
-    });
+   });
 
     describe('OAUTH ', () => {
 
@@ -383,7 +380,5 @@ describe('HostSettingsComponent', () => {
             clientIdInput.value = '';
             clientIdInput.dispatchEvent(new Event('input'));
         });
-
-    });
-
+   });
 });

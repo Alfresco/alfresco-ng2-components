@@ -72,8 +72,7 @@ describe('Edit folder directive', () => {
             });
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -81,8 +80,7 @@ describe('Edit folder directive', () => {
         await uploadActions.deleteFileOrFolder(editFolder.entry.id);
         await uploadActions.deleteFileOrFolder(anotherFolder.entry.id);
         await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
-
-    });
+   });
 
     beforeEach(async () => {
         await navigationBarPage.clickHomeButton();
@@ -178,8 +176,7 @@ describe('Edit folder directive', () => {
         await editFolderDialog.checkCreateUpdateBtnIsEnabled();
         await editFolderDialog.clickOnCancelButton();
         await editFolderDialog.checkFolderDialogIsNotDisplayed();
-
-    });
+   });
 
     it('[C260166] Enable/Disable edit folder icon - when file selected', async () => {
         await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
@@ -188,8 +185,7 @@ describe('Edit folder directive', () => {
         await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', filePdfNode.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', filePdfNode.entry.name);
         await expect(await contentServicesPage.isEditFolderButtonEnabled()).toBe(false);
-
-    });
+   });
 
     it('[C260166] Enable/Disable edit folder icon - when multiple folders selected', async () => {
         await contentServicesPage.clickMultiSelectToggle();
@@ -241,7 +237,5 @@ describe('Edit folder directive', () => {
             await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', subFolder.entry.name);
             await expect(await contentServicesPage.isEditFolderButtonEnabled()).toBe(false);
         });
-
-    });
-
+   });
 });

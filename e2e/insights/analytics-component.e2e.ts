@@ -52,13 +52,11 @@ describe('Analytics Smoke Test', () => {
         await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
 
         await loginPage.loginToProcessServicesUsingUserModel(procUserModel);
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
-    });
+   });
 
     it('[C260346] Should be able to change title of a report', async () => {
         await navigationBarPage.navigateToProcessServicesPage();

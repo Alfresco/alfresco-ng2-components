@@ -750,5 +750,4 @@ describe('PeopleCloudComponent', () => {
         const duplicatedUsers = [{ id: mockUsers[0].id }, { id: mockUsers[0].id }];
         expect(component.removeDuplicatedUsers(duplicatedUsers)).toEqual([{ id: mockUsers[0].id }]);
     });
-
 });

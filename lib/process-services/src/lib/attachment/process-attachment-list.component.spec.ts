@@ -287,9 +287,7 @@ describe('ProcessAttachmentListComponent', () => {
         it('should display a dialog to the user when the Add button clicked', () => {
             expect(true).toBe(true);
         });
-
-    });
-
+   });
 });
 
 @Component({

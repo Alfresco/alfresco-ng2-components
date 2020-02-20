@@ -130,28 +130,6 @@ describe('Upload component', () => {
             await uploadDialog.dialogIsNotDisplayed();
         });
 
-        it('[C260143] Should be possible to maximize/minimize the upload dialog', async () => {
-            await contentServicesPage.uploadFile(docxFileModel.location);
-            await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
-
-            await uploadDialog.fileIsUploaded(docxFileModel.name);
-            await uploadDialog.checkCloseButtonIsDisplayed();
-            await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-            await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
-            await uploadDialog.minimizeUploadDialog();
-            await uploadDialog.dialogIsMinimized();
-            await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-            await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
-            await uploadDialog.maximizeUploadDialog();
-            await uploadDialog.dialogIsDisplayed();
-            await uploadDialog.fileIsUploaded(docxFileModel.name);
-            await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-            await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
-            await uploadDialog.checkCloseButtonIsDisplayed();
-            await uploadDialog.clickOnCloseButton();
-            await uploadDialog.dialogIsNotDisplayed();
-        });
-
         it('[C272794] Should display tooltip for uploading files', async () => {
             await uploadToggles.enableMultipleFileUpload();
             await uploadToggles.checkMultipleFileUploadToggleIsEnabled();
@@ -317,5 +295,4 @@ describe('Upload component', () => {
         await uploadDialog.displayTooltip();
         await expect(await uploadDialog.getTooltip()).toEqual('Upload location no longer exists [404]');
     });
-
 });

@@ -47,8 +47,7 @@ describe('Create folder directive', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await contentServicesPage.goToDocumentList();
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -56,13 +55,11 @@ describe('Create folder directive', () => {
 
     beforeEach(async () => {
         await browser.actions().sendKeys(Key.ESCAPE).perform();
-
-    });
+   });
 
     afterEach(async () => {
         await browser.actions().sendKeys(Key.ESCAPE).perform();
-
-    });
+   });
 
     it('[C260154] Should not create the folder if cancel button is clicked', async () => {
         const folderName = 'cancelFolder';

@@ -163,6 +163,5 @@ describe('PeopleProcessService', () => {
             spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('banana-user');
             expect(service.isLocked(nodeOwnerAllowedLockWithActiveExpiration)).toBeTruthy();
         });
-
-    });
+   });
 });

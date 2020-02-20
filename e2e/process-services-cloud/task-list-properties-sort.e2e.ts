@@ -226,5 +226,4 @@ describe('Edit task filters and task list properties', () => {
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Owner')).toBe(true);
         });
     });
-
 });

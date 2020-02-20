@@ -143,7 +143,5 @@ describe('DateEditorComponent', () => {
             const actual = row.value[column.id];
             expect(actual).toBe('');
         });
-
-    });
-
+   });
 });

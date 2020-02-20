@@ -129,5 +129,4 @@ describe('Activiti TaskList Cloud Service', () => {
             }
         );
     });
-
 });

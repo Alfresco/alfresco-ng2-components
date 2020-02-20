@@ -62,5 +62,4 @@ describe('AttachFileWidgetDialogService', () => {
         service.close();
         expect(materialDialog.closeAll).toHaveBeenCalled();
     });
-
 });

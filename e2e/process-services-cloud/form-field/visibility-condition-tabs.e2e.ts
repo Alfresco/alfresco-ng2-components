@@ -205,5 +205,4 @@ describe('Visibility conditions on tabs - cloud', () => {
         await widget.textWidget().setValue(widgets.textThreeId, value.notDisplayTab);
         await widget.tab().checkTabIsDisplayedByLabel(tab.tabNextOperators);
     });
-
 });

@@ -65,16 +65,12 @@ describe('Comment component for Processes', () => {
         appId = importedApp.id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
     });
 
     it('[C260237] Should not be able to add a comment on a completed task', async () => {

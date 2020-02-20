@@ -245,8 +245,7 @@ describe('Document List Component', () => {
         await contentServicesPage.doubleClickRow(folderName);
         await contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
         await contentServicesPage.checkEmptyFolderImageUrlToContain('/assets/images/empty_doc_lib.svg');
-
-    });
+   });
 
     it('[C272775] Should be able to upload a file in new folder', async () => {
         const testFile = new FileModel({
@@ -266,8 +265,7 @@ describe('Document List Component', () => {
         await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
         await contentServicesPage.uploadFile(testFile.location);
         await contentServicesPage.checkContentIsDisplayed(testFile.name);
-
-    });
+   });
 
     it('[C261997] Should be able to clean Recent Files history', async () => {
         acsUser = new AcsUserModel();
@@ -281,8 +279,7 @@ describe('Document List Component', () => {
         await contentServicesPage.expandRecentFiles();
         await contentServicesPage.checkEmptyRecentFileIsDisplayed();
         await contentServicesPage.closeRecentFiles();
-
-    });
+   });
 
     it('[C279970] Should display Islocked field for folders', async () => {
         acsUser = new AcsUserModel();
@@ -299,8 +296,7 @@ describe('Document List Component', () => {
         await contentServicesPage.checkContentIsDisplayed(folderNameB);
         await contentServicesPage.checkLockIsDisplayedForElement(folderNameA);
         await contentServicesPage.checkLockIsDisplayedForElement(folderNameB);
-
-    });
+   });
 
     it('[C269086] Should display Islocked field for files', async () => {
         const testFileA = new FileModel({
@@ -323,8 +319,7 @@ describe('Document List Component', () => {
         await contentServicesPage.checkContentIsDisplayed(testFileB.name);
         await contentServicesPage.checkLockIsDisplayedForElement(testFileA.name);
         await contentServicesPage.checkLockIsDisplayedForElement(testFileB.name);
-
-    });
+   });
 
     describe('Once uploaded 20 folders', () => {
 
@@ -357,8 +352,7 @@ describe('Document List Component', () => {
             await contentServicesPage.checkListIsSortedByNameColumn('asc');
 
         });
-
-    });
+   });
 
     describe('Column Template', () => {
 

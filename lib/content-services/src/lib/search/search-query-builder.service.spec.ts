@@ -475,8 +475,7 @@ describe('SearchQueryBuilder', () => {
         expect(compiled.facetIntervals.intervals[1].label).toEqual(noSpacesLabel.configValue);
 
         expect(compiled.facetIntervals.intervals[0].sets[0].label).toEqual(spacesLabelForSet.requestCompatibleValue);
-
-    });
+   });
 
     it('should build query with sorting', () => {
         const config: SearchConfiguration = {
@@ -619,5 +618,4 @@ describe('SearchQueryBuilder', () => {
 
         builder.execute();
     });
-
 });

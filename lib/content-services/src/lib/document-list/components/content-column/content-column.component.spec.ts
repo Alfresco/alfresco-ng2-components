@@ -78,5 +78,4 @@ describe('ContentColumn', () => {
         column = new ContentColumnComponent(null, logService);
         expect(column.register()).toBeFalsy();
     });
-
 });

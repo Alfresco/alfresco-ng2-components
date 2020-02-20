@@ -73,7 +73,6 @@ describe('Attachment list action menu for tasks', () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
     });
 
     it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', async () => {

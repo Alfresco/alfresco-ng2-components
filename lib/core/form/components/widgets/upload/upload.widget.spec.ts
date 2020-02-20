@@ -411,7 +411,5 @@ describe('UploadWidgetComponent', () => {
             });
 
         });
-
-    });
-
+   });
 });

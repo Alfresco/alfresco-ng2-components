@@ -163,5 +163,4 @@ describe('Task cloud visibility', async () => {
 
         await taskFormCloudComponent.clickCompleteButton();
     });
-
 });

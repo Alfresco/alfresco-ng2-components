@@ -31,5 +31,4 @@ describe('DataColumnListComponent', () => {
         const component = fixture.debugElement.componentInstance;
         expect(component).toBeTruthy();
     });
-
 });

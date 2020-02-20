@@ -314,8 +314,7 @@ describe('TaskListCloudComponent', () => {
             customCopyComponent.taskList.ngOnChanges({ 'appName': appName });
             copyFixture.detectChanges();
         }));
-
-    });
+   });
 
     describe('Creating an empty custom template - EmptyTemplateComponent', () => {
         let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
@@ -426,5 +425,4 @@ describe('TaskListCloudComponent', () => {
             component.ngAfterContentInit();
         }));
     });
-
 });

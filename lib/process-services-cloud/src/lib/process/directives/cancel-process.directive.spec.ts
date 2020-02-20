@@ -80,5 +80,4 @@ describe('CancelProcessDirective', () => {
         fixture.detectChanges();
         expect(component.cancelProcessDirective.checkCanCancelProcess()).toBeFalsy();
     });
-
 });

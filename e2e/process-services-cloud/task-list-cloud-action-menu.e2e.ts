@@ -111,7 +111,5 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.taskListCloudComponent().clickContextMenuActionNamed('delete');
             await tasksCloudDemoPage.checkActionExecuted(deleteTask.list.entries[0].entry.id, 'delete');
         });
-
-    });
-
+   });
 });

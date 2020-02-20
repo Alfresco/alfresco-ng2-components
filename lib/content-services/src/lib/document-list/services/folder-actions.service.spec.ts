@@ -103,8 +103,7 @@ describe('FolderActionsService', () => {
 
         const folder = new FolderNode();
         service.getHandler('delete')(folder);
-
-    });
+   });
 
     it('should delete the folder node if there is the delete permission', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => {
@@ -164,8 +163,7 @@ describe('FolderActionsService', () => {
                 done();
             }
         });
-
-    });
+   });
 
     it('should delete the folder node if there is the delete and others permission ', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => {

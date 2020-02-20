@@ -201,8 +201,7 @@ describe('AppsListComponent', () => {
             fixture.detectChanges();
             expect(debugElement.queryAll(By.css('h1')).length).toBe(1);
         });
-
-    });
+   });
 
     describe('select apps', () => {
 
@@ -235,9 +234,7 @@ describe('AppsListComponent', () => {
             const appEls = debugElement.queryAll(By.css('.adf-app-listgrid > div'));
             expect(appEls[1].query(By.css('.adf-app-listgrid-item-card-actions-icon'))).not.toBeNull();
         });
-
-    });
-
+   });
 });
 
 @Component({

@@ -93,5 +93,4 @@ describe('LoginDialogPanelComponent', () => {
         fixture.detectChanges();
         expect(component.isValid()).toBeTruthy();
     });
-
 });

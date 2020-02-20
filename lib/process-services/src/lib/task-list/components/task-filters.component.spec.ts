@@ -102,8 +102,7 @@ describe('TaskFiltersComponent', () => {
             expect(err).toBeDefined();
             done();
         });
-
-    });
+   });
 
     it('should return the filter task list', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
@@ -161,8 +160,7 @@ describe('TaskFiltersComponent', () => {
             expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
             done();
         });
-
-    });
+   });
 
     it('should be able to fetch and select the default if the input filter is not valid', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalEmptyFilterPromise));
@@ -195,8 +193,7 @@ describe('TaskFiltersComponent', () => {
             expect(component.currentFilter.name).toEqual('FakeMyTasks1');
             done();
         });
-
-    });
+   });
 
     it('should select the default task filter if filter input does not exist', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
@@ -215,8 +212,7 @@ describe('TaskFiltersComponent', () => {
             expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
             done();
         });
-
-    });
+   });
 
     it('should select the task filter based on the input by index param', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
@@ -235,8 +231,7 @@ describe('TaskFiltersComponent', () => {
             expect(component.currentFilter.name).toEqual('FakeMyTasks2');
             done();
         });
-
-    });
+   });
 
     it('should select the task filter based on the input by id param', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
@@ -255,8 +250,7 @@ describe('TaskFiltersComponent', () => {
             expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
             done();
         });
-
-    });
+   });
 
     it('should emit an event when a filter is selected', (done) => {
         const currentFilter = fakeGlobalFilter[0];

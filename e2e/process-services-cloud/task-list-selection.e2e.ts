@@ -176,7 +176,5 @@ describe('Task list cloud - selection', () => {
             await expect(await tasksCloudDemoPage.getSelectedTaskRowText('1')).toBe(tasks[0]);
             await expect(await tasksCloudDemoPage.getSelectedTaskRowText('2')).toBe(tasks[1]);
         });
-
-    });
-
+   });
 });

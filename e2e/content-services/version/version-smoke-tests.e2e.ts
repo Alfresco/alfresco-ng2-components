@@ -82,8 +82,7 @@ describe('Version component', () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
-
-    });
+   });
 
     it('[C272768] Should be visible the first file version when you upload a file', async () => {
         await versionManagePage.checkUploadNewVersionsButtonIsDisplayed();
@@ -156,5 +155,4 @@ describe('Version component', () => {
         await versionManagePage.checkFileVersionExist('2.1');
         await expect(await versionManagePage.getFileVersionName('2.1')).toEqual(fileModelVersionFive.name);
     });
-
 });

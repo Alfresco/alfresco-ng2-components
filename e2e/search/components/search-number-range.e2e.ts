@@ -72,8 +72,7 @@ describe('Search Number Range Filter', () => {
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter('*');
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -81,8 +80,7 @@ describe('Search Number Range Filter', () => {
         await uploadActions.deleteFileOrFolder(file0Bytes.entry.id);
 
         await navigationBarPage.clickLogoutButton();
-
-    });
+   });
 
     beforeEach(async () => {
         await searchFilters.checkSizeRangeFilterIsDisplayed();
@@ -92,8 +90,7 @@ describe('Search Number Range Filter', () => {
 
     afterEach(async () => {
         await browser.refresh();
-
-    });
+   });
 
     it('[C276921] Should display default values for Number Range widget', async () => {
         await sizeRangeFilter.checkFromFieldIsDisplayed();

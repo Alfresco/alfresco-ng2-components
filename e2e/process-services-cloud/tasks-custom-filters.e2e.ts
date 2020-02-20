@@ -185,6 +185,5 @@ describe('Task filters cloud', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskAssigned.list.entries[0].entry.name);
 
         });
-
-    });
+   });
 });

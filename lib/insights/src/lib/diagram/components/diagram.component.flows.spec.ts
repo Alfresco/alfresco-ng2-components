@@ -103,5 +103,4 @@ describe('Diagrams flows', () => {
             ajaxReply(resp);
         }));
     });
-
 });

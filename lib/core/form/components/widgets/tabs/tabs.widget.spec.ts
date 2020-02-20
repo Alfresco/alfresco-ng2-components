@@ -156,6 +156,5 @@ describe('TabsWidgetComponent', () => {
             });
             tabWidgetComponent.tabChanged(null);
         }));
-
-    });
+   });
 });

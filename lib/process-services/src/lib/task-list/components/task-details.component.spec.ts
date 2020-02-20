@@ -371,8 +371,7 @@ describe('TaskDetailsComponent', () => {
             component.onChecklistTaskCreated(mockTask);
             expect(emitSpy).toHaveBeenCalled();
         });
-
-    });
+   });
 
     describe('Comments', () => {
 
@@ -501,5 +500,4 @@ describe('TaskDetailsComponent', () => {
             expect(assignTaskSpy).toHaveBeenCalled();
         });
     });
-
 });

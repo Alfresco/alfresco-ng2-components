@@ -106,8 +106,7 @@ describe('Task Filters Sorting', () => {
         await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[0].name);
-
-    });
+   });
 
     it('[C277255] Should display tasks under new filter from oldest to newest when they are completed', async () => {
         const newFilter = new UserProcessInstanceFilterRepresentation({

@@ -37,8 +37,7 @@ describe('Error Component', () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -64,5 +63,4 @@ describe('Error Component', () => {
         await expect(await errorPage.getErrorTitle()).toBe('We hit a problem.');
         await expect(await errorPage.getErrorDescription()).toBe('Looks like something went wrong.');
     });
-
 });

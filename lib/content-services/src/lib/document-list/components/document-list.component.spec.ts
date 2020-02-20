@@ -156,8 +156,7 @@ describe('DocumentList', () => {
 
         documentList.executeContentAction(node, action);
         expect(action.handler).toHaveBeenCalledWith(node, documentList, undefined);
-
-    });
+   });
 
     it('should call action handler with node and permission', () => {
         const node = new FileNode();
@@ -336,8 +335,7 @@ describe('DocumentList', () => {
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBe(true);
-
-    });
+   });
 
     it('should not display hidden content actions', () => {
         documentList.actions = [
@@ -421,8 +419,7 @@ describe('DocumentList', () => {
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBeFalsy();
-
-    });
+   });
 
     it('should disable the action if there is no permission for the folder and disableWithNoPermission true', () => {
         const documentMenu = new ContentActionModel({
@@ -442,8 +439,7 @@ describe('DocumentList', () => {
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
         expect(actions[0].disabled).toBe(true);
-
-    });
+   });
 
     it('should not disable the action if there is the right permission for the file', () => {
         const documentMenu = new ContentActionModel({
@@ -707,8 +703,7 @@ describe('DocumentList', () => {
 
         documentList.onNodeClick(null);
         expect(documentList.loadFolder).not.toHaveBeenCalled();
-
-    });
+   });
 
     it('should display folder content only on folder node click', () => {
         expect(documentList.navigate).toBe(true);

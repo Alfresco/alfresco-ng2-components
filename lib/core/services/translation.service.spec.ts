@@ -98,5 +98,4 @@ describe('TranslationService', () => {
         expect(translationService.instant('')).toEqual('');
         expect(translationService.instant(undefined)).toEqual('');
     });
-
 });

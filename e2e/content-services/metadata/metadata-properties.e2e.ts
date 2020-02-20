@@ -74,8 +74,7 @@ describe('CardView Component - properties', () => {
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
-
-    });
+   });
 
     afterEach(async () => {
         await viewerPage.clickCloseButton();
@@ -142,8 +141,7 @@ describe('CardView Component - properties', () => {
 
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
-
-    });
+   });
 
     it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', async () => {
         await viewerPage.viewFile(pngFileModel.name);

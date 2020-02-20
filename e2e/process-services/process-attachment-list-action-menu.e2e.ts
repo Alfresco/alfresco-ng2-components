@@ -77,14 +77,12 @@ describe('Attachment list action menu for processes', () => {
         await apps.startProcess(this.alfrescoJsApi, 'Task App', processName.dragDrop);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
     });
 
     afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
     });
 
     it('[C260228] Should be able to access options of a file attached to an active process', async () => {
@@ -179,5 +177,4 @@ describe('Attachment list action menu for processes', () => {
         await attachmentListPage.checkFileIsRemoved(pngFile.name);
         await attachmentListPage.checkEmptyAttachmentList();
     });
-
 });

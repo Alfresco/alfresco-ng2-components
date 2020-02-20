@@ -66,8 +66,7 @@ describe('PeopleSearchComponent', () => {
             .then(() => {
                 expect(element.querySelector('#search-people-list')).toBeNull();
             });
-
-    });
+   });
 
     it('should show user which can be involved ', (done) => {
         peopleSearchComponent.results = of(userArray);

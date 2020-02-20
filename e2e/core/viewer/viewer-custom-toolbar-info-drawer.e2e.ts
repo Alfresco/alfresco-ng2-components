@@ -51,14 +51,12 @@ describe('Viewer', () => {
         txtFileUploaded = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-    });
+   });
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(txtFileUploaded.entry.id);
         await navigationBarPage.clickLogoutButton();
-
-    });
+   });
 
     beforeEach(async () => {
         await contentServicesPage.goToDocumentList();

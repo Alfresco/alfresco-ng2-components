@@ -65,18 +65,15 @@ describe('Upload component - Excluded Files', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await contentServicesPage.goToDocumentList();
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-
-    });
+   });
 
     afterEach(async () => {
         await contentServicesPage.goToDocumentList();
-
-    });
+   });
 
     it('[C279914] Should not allow upload default excluded files using D&D', async () => {
         await contentServicesPage.checkDragAndDropDIsDisplayed();

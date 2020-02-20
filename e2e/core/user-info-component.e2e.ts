@@ -62,8 +62,7 @@ describe('User Info component', () => {
         });
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(contentUserModel);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();

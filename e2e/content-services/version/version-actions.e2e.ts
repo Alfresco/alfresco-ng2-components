@@ -66,8 +66,7 @@ describe('Version component actions', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
-
-    });
+   });
 
     beforeEach(async () => {
         await contentServicesPage.versionManagerContent(txtFileModel.name);
@@ -165,5 +164,4 @@ describe('Version component actions', () => {
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
     });
-
 });

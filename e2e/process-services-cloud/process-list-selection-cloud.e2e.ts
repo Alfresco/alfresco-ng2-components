@@ -183,5 +183,4 @@ describe('Process list cloud', () => {
             await processDetailsCloudDemoPage.checkListedSelectedProcessInstance(processInstances[1]);
         });
     });
-
 });

@@ -59,8 +59,7 @@ describe('Viewer', () => {
         });
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -96,7 +95,5 @@ describe('Viewer', () => {
                 }
             }
         });
-
-    });
-
+   });
 });

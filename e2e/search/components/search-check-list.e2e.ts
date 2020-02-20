@@ -67,8 +67,7 @@ describe('Search Checklist Component', () => {
         await browser.sleep(15000);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-    });
+   });
 
     beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
@@ -82,8 +81,7 @@ describe('Search Checklist Component', () => {
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);
 
         await navigationBarPage.clickLogoutButton();
-
-    });
+   });
 
     it('[C276991] Should be able to click between options and Clear All button', async() => {
         await searchFiltersPage.checkCheckListFilterIsDisplayed();
@@ -273,8 +271,7 @@ describe('Search Checklist Component', () => {
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
         });
-
-    });
+   });
 
     describe('Properties', () => {
 
@@ -344,5 +341,4 @@ describe('Search Checklist Component', () => {
             await searchResults.checkContentIsDisplayed(nodeNames.document);
         });
     });
-
 });

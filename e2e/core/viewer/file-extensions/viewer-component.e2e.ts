@@ -68,7 +68,6 @@ describe('Viewer', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, site.entry.guid);
-
     });
 
     afterAll(async () => {
@@ -118,7 +117,5 @@ describe('Viewer', () => {
                 }
             }
         });
-
-    });
-
+   });
 });

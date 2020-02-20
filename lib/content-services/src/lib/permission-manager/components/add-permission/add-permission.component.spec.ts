@@ -125,5 +125,4 @@ describe('AddPermissionComponent', () => {
             addButton.click();
         });
     });
-
 });

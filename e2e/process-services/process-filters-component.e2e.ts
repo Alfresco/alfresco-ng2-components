@@ -255,5 +255,4 @@ describe('Process Filters Test', () => {
         await expect(await processDetailsPage.getCreatedBy()).toEqual(`${user.firstName} ${user.lastName}`);
         await expect(await processDetailsPage.getProcessDescription()).toEqual(CONSTANTS.PROCESS_DESCRIPTION);
     }
-
 });

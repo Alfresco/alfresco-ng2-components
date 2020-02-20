@@ -90,8 +90,7 @@ describe('JwtHelperService', () => {
             const result = jwtHelperService.hasRealmRoles(['role3', 'role2']);
             expect(result).toBeFalsy();
         });
-
-    });
+   });
 
     describe('ClientRole ', () => {
 
@@ -138,7 +137,5 @@ describe('JwtHelperService', () => {
             const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
             expect(result).toBeFalsy();
         });
-
-    });
-
+   });
 });

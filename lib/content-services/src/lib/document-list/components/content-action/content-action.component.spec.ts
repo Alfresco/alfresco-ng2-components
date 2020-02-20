@@ -249,8 +249,7 @@ describe('ContentAction', () => {
         expect(action.getSystemHandler('unknown', 'name')).toBeNull();
         expect(folderActions.getHandler).not.toHaveBeenCalled();
         expect(documentActions.getHandler).not.toHaveBeenCalled();
-
-    });
+   });
 
     it('should wire model with custom event handler', async(() => {
         const action = new ContentActionComponent(actionList, documentActions, folderActions);

@@ -285,5 +285,4 @@ describe('ChecklistComponent', () => {
             addButtonDialog.click();
         });
     });
-
 });

@@ -66,8 +66,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
         }
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     it('[C260306] Items per page set to 15 and adding of tasks', async () => {
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
@@ -94,5 +93,4 @@ describe('Items per page set to 15 and adding of tasks', () => {
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsEnabled();
     });
-
 });

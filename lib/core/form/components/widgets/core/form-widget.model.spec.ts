@@ -37,5 +37,4 @@ describe('FormWidgetModel', () => {
         const model = new FormWidgetModelMock(null, json);
         expect(model.json).toBe(json);
     });
-
 });

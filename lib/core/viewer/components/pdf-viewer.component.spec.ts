@@ -186,8 +186,7 @@ describe('Test PdfViewer component', () => {
                 component.ngOnChanges({ 'blobFile': change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
-
-    });
+   });
 
     describe('View with url file', () => {
 
@@ -676,8 +675,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
             }));
         });
-
-    });
+   });
 
     describe('Zoom customization', () => {
 

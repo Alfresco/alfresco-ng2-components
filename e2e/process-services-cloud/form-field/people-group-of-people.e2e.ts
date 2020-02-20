@@ -185,5 +185,4 @@ describe('People and Group of people Widgets', () => {
         await expect(await formPage.isSaveButtonDisabled()).toBe(false);
         await expect(await formPage.isValidationIconBlue()).toBe(true);
     });
-
 });

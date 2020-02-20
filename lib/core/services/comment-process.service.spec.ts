@@ -134,8 +134,7 @@ describe('Comment ProcessService Service', () => {
             }));
 
         });
-
-    });
+   });
 
     describe('Task  comments', () => {
 

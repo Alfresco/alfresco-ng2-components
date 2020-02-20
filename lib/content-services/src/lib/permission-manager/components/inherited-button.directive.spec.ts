@@ -110,5 +110,4 @@ describe('InheritPermissionDirective', () => {
             expect(spyUpdateNode).not.toHaveBeenCalled();
         });
     }));
-
 });

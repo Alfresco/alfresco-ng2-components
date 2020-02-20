@@ -64,7 +64,6 @@ describe('ClaimTaskDirective', () => {
         button.click();
         expect(taskCloudService.claimTask).toHaveBeenCalled();
     });
-
 });
 
 describe('Claim Task Directive validation errors', () => {

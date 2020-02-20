@@ -54,8 +54,7 @@ describe('FormCloudComponent', () => {
         formCloudService = new FormCloudService(null, new AppConfigService(null));
         formService = new FormService(null, null, logService);
         formComponent = new FormCloudComponent(formCloudService, formService, null, formRenderingService, visibilityService, appConfigService);
-
-    });
+   });
 
     it('should check form', () => {
         expect(formComponent.hasForm()).toBeFalsy();
@@ -69,8 +68,7 @@ describe('FormCloudComponent', () => {
 
         expect(formComponent.showTitle).toBeTruthy();
         expect(formComponent.isTitleEnabled()).toBeTruthy();
-
-    });
+   });
 
     it('should not allow title if showTitle is false', () => {
         const formModel = new FormModel();
@@ -812,8 +810,7 @@ describe('FormCloudComponent', () => {
         });
 
         formComponent.ngOnChanges({ 'data': change });
-
-    });
+   });
 
     it('should refresh radio buttons value when id is given to data', () => {
         formComponent.form = new FormModel(JSON.parse(JSON.stringify(cloudFormMock)));

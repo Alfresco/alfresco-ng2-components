@@ -88,8 +88,7 @@ describe('permissions', () => {
         });
 
         await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();

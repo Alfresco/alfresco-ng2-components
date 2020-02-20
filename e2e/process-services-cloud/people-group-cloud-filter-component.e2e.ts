@@ -138,7 +138,5 @@ describe('People Groups Cloud Component', () => {
             await groupCloudComponentPage.searchGroupsToExisting(groupNoRole.name);
             await groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
         });
-
-    });
-
+   });
 });

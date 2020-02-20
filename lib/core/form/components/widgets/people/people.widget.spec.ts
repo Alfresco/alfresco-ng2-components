@@ -270,5 +270,4 @@ describe('PeopleWidgetComponent', () => {
             });
         });
     });
-
 });

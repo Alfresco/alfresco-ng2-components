@@ -61,14 +61,12 @@ describe('Info Drawer', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, site.entry.guid);
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(pngFileUploaded.entry.id);
-
-    });
+   });
 
     beforeEach(async() => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);

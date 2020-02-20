@@ -40,5 +40,4 @@ describe('Search term validator', () => {
         const control = new FormControl('a ._-?b', SearchTermValidator.minAlphanumericChars(3));
         expect(control.valid).toBe(false);
     });
-
 });

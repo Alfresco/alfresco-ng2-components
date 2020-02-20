@@ -54,8 +54,7 @@ describe('WidgetComponent', () => {
 
             element.click();
         });
-
-    });
+   });
 
     it('should check field', () => {
         expect(widget.hasField()).toBeFalsy();
@@ -103,5 +102,4 @@ describe('WidgetComponent', () => {
         widget.field = new FormFieldModel(null, {required: true});
         expect(widget.isRequired()).toBeTruthy();
     });
-
 });

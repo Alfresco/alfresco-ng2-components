@@ -195,7 +195,5 @@ describe('Activiti Task filter Service', () => {
                 })
             });
         });
-
-    });
-
+   });
 });

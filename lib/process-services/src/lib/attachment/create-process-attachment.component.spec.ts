@@ -116,5 +116,4 @@ describe('CreateProcessAttachmentComponent', () => {
             responseText: JSON.stringify(fakeUploadResponse)
         });
     }));
-
 });

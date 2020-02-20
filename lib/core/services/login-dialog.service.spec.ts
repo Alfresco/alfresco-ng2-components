@@ -59,5 +59,4 @@ describe('LoginDialogService', () => {
         service.close();
         expect(materialDialog.closeAll).toHaveBeenCalled();
     });
-
 });

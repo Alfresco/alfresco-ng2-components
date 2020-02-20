@@ -312,8 +312,7 @@ describe('TaskAttachmentList', () => {
             fixture.detectChanges();
             expect(deleteContentSpy).toHaveBeenCalled();
         });
-
-    });
+   });
 });
 
 @Component({
