@@ -19,10 +19,10 @@ import { FormCloudComponentPage, LoginSSOPage, ProcessCloudWidgetPage } from '@a
 import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
 import { multipleTextVisibilityFormJson, multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
-import { displayValueTextJson } from '../../resources/forms/displayValue-visibilityConditions';
+import { displayValueTextJson } from '../../resources/forms/display-value-visibility-conditions';
 
 describe('Visibility conditions - cloud', () => {
 

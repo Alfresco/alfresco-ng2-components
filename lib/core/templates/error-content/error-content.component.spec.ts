@@ -20,7 +20,7 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { ErrorContentComponent } from './error-content.component';
 import { TranslationService } from '../../services/translation.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 

@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ObjectDataTableAdapter } from './../../data/object-datatable-adapter';
 import { ObjectDataColumn } from './../../data/object-datacolumn.model';
 
-import { setupTestBed } from '../../../testing/setupTestBed';
+import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { JsonCellComponent } from './json-cell.component';
 

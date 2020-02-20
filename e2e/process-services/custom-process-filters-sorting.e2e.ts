@@ -18,9 +18,9 @@
 import { browser } from 'protractor';
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { FiltersPage } from '../pages/adf/process-services/filtersPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
+import { FiltersPage } from '../pages/adf/process-services/filters.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';

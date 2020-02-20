@@ -20,7 +20,7 @@ import { ObjectDataTableAdapter } from './../../data/object-datatable-adapter';
 import { ObjectDataColumn } from './../../data/object-datacolumn.model';
 
 import { LocationCellComponent } from './location-cell.component';
-import { setupTestBed } from '../../../testing/setupTestBed';
+import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('LocationCellComponent', () => {

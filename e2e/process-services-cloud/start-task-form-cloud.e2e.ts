@@ -16,8 +16,8 @@
  */
 
 import { browser, protractor } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import {
     LoginSSOPage,
     AppListCloudPage,
@@ -40,12 +40,12 @@ import {
     FileBrowserUtil, ProcessCloudWidgetPage
 } from '@alfresco/adf-testing';
 import { StartProcessCloudConfiguration } from './config/start-process-cloud.config';
-import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/processDetailsCloudDemoPage';
-import { FileModel } from '../models/ACS/fileModel';
+import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
+import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/process-details-cloud-demo.page';
+import { FileModel } from '../models/ACS/file.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { BreadCrumbDropdownPage } from '../pages/adf/content-services/breadcrumb/breadCrumbDropdownPage';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { BreadCrumbDropdownPage } from '../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
 
 describe('Start Task Form', () => {
 

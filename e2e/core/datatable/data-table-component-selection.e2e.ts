@@ -18,9 +18,9 @@
 import { DataTableComponentPage, LoginPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Datatable component - selection', () => {
 

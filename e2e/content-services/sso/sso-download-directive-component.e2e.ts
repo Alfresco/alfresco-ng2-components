@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import {
     ApiService,
     LoginSSOPage,
@@ -29,7 +29,7 @@ import {
     FileBrowserUtil,
     ViewerPage
 } from '@alfresco/adf-testing';
-import { FileModel } from '../../models/ACS/fileModel';
+import { FileModel } from '../../models/ACS/file.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {

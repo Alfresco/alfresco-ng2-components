@@ -17,7 +17,7 @@
 
 import { ApiService, ApplicationsService, AppListCloudPage, IdentityService, LocalStorageUtil, LoginSSOPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Applications list', () => {
 

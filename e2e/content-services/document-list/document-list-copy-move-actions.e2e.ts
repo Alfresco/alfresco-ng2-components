@@ -23,11 +23,11 @@ import {
     ContentNodeSelectorDialogPage,
     NotificationHistoryPage, BrowserActions
 } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { FileModel } from '../../models/ACS/fileModel';
+import { FileModel } from '../../models/ACS/file.model';
 
 describe('Document List Component', () => {
 

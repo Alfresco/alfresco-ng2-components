@@ -24,7 +24,7 @@ import { DataSorting } from '../../data/data-sorting.model';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataTableComponent } from './datatable.component';
-import { setupTestBed } from '../../../testing/setupTestBed';
+import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../../data-column/data-column.component';

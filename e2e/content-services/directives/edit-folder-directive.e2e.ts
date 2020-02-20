@@ -16,19 +16,19 @@
  */
 
 import { BrowserActions, LoginPage, NotificationHistoryPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { FolderDialog } from '../../pages/adf/dialog/folderDialog';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, protractor } from 'protractor';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { FileModel } from '../../models/ACS/fileModel';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { FileModel } from '../../models/ACS/file.model';
 
 describe('Edit folder directive', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const editFolderDialog = new FolderDialog();
+    const editFolderDialog = new FolderDialogPage();
     const acsUser = new AcsUserModel();
     const anotherAcsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();

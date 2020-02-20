@@ -18,10 +18,10 @@
 import { LoginPage, PaginationPage, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { FolderModel } from '../models/ACS/folderModel';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TrashcanPage } from '../pages/adf/trashcanPage';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { FolderModel } from '../models/ACS/folder.model';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { TrashcanPage } from '../pages/adf/trashcan.page';
 import { Util } from '../util/util';
 
 describe('Trashcan - Pagination', () => {

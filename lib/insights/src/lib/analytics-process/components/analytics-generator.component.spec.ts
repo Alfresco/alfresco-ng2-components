@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Chart } from '../../diagram/models/chart/chart.model';
-import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
+import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import * as analyticMock from '../../mock';
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
 import { setupTestBed } from '@alfresco/adf-core';

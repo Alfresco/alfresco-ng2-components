@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
+import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import * as analyticParamsMock from '../../mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { setupTestBed } from '@alfresco/adf-core';

@@ -17,8 +17,8 @@
 
 import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LocalStorageUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
 
 describe('Process list cloud', () => {

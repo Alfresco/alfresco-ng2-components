@@ -18,6 +18,7 @@
 import { Widget } from '../../../../core/pages/form/widgets/widget';
 import { PeopleCloudComponentPage } from '../../people-cloud-component.page';
 import { GroupCloudComponentPage } from '../../group-cloud-component.page';
+import { AttachFileWidgetCloudPage } from './attach-file-widget-cloud.page';
 
 export class ProcessCloudWidgetPage extends Widget {
 
@@ -27,6 +28,10 @@ export class ProcessCloudWidgetPage extends Widget {
 
     groupCloudWidget(): GroupCloudComponentPage {
         return new GroupCloudComponentPage();
+    }
+
+    attachFileWidgetCloud(fieldId: string): AttachFileWidgetCloudPage {
+        return new AttachFileWidgetCloudPage(fieldId);
     }
 
 }

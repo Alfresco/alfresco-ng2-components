@@ -38,7 +38,7 @@ import {
     mockJoinGroupRequest
 } from 'core/mock/identity-user.service.mock';
 import { IdentityUserService } from '../services/identity-user.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';

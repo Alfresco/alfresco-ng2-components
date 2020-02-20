@@ -20,16 +20,16 @@ import { FileBrowserUtil, LoginPage, StartProcessDialog, StringUtil, Widget } fr
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
-import { FileModel } from '../models/ACS/fileModel';
+import { FileModel } from '../models/ACS/file.model';
 import { Tenant } from '../models/APS/tenant';
 import { User } from '../models/APS/user';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
-import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
-import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
-import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
+import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
+import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
+import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
 
 describe('Start Process Component', () => {
 

@@ -20,9 +20,9 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
-import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
+import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 
 describe('Process List - Pagination', () => {
 

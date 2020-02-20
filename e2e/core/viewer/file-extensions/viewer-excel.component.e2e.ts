@@ -17,10 +17,10 @@
 
 import { browser } from 'protractor';
 import { LoginPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../../pages/adf/contentServicesPage';
+import { ContentServicesPage } from '../../../pages/adf/content-services.page';
 import CONSTANTS = require('../../../util/constants');
-import { FolderModel } from '../../../models/ACS/folderModel';
-import { AcsUserModel } from '../../../models/ACS/acsUserModel';
+import { FolderModel } from '../../../models/ACS/folder.model';
+import { AcsUserModel } from '../../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Viewer', () => {

@@ -17,7 +17,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreModule } from '../core.module';
 import { ClipboardService } from './clipboard.service';
 import { ClipboardDirective } from './clipboard.directive';

@@ -17,10 +17,10 @@
 
 import { browser } from 'protractor';
 import { LoginPage, UploadActions, DataTableComponentPage, ViewerPage } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { FileModel } from '../../models/ACS/fileModel';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { FileModel } from '../../models/ACS/file.model';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Viewer - properties', () => {

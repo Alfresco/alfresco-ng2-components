@@ -18,8 +18,8 @@
 import { browser } from 'protractor';
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 import { Tenant } from '../models/APS/tenant';
 import Task = require('../models/APS/Task');

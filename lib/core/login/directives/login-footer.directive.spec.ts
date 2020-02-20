@@ -18,7 +18,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { LoginComponent } from '../components/login.component';
 import { LoginFooterDirective } from './login-footer.directive';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('LoginFooterDirective', () => {

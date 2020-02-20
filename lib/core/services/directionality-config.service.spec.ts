@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { DirectionalityConfigService } from './directionality-config.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { UserPreferencesService } from './user-preferences.service';
 
 describe('DirectionalityConfigService', () => {

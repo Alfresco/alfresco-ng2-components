@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService, UserPreferenceValues } from './user-preferences.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';

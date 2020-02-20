@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 import { of } from 'rxjs';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('LoginDialogPanelComponent', () => {

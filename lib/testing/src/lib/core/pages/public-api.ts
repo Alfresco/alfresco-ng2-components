@@ -28,5 +28,5 @@ export * from './login.page';
 export * from './notification-history.page';
 export * from './form/public-api';
 export * from './card-view/public-api';
-export * from './viewerPage';
+export * from './viewer.page';
 export * from './config-editor-page';

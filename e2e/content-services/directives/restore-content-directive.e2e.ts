@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
 
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { FileModel } from '../../models/ACS/fileModel';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { TrashcanPage } from '../../pages/adf/trashcanPage';
+import { FileModel } from '../../models/ACS/file.model';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { TrashcanPage } from '../../pages/adf/trashcan.page';
 import { LoginPage, NotificationHistoryPage, StringUtil, UploadActions, BrowserActions } from '@alfresco/adf-testing';
-import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
+import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/bread-crumb.page';
 
 describe('Restore content directive', () => {
 

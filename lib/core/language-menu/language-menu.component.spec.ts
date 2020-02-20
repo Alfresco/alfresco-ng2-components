@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LanguageMenuComponent } from './language-menu.component';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { UserPreferencesService } from '../services/user-preferences.service';
 

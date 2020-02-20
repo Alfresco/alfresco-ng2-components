@@ -16,13 +16,13 @@
  */
 
 import { LoginPage, UploadActions, LocalStorageUtil, ViewerPage } from '@alfresco/adf-testing';
-import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
+import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { check } from '../../util/material';
 
 describe('Aspect oriented config', () => {

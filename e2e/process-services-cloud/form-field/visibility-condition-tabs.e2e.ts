@@ -19,7 +19,7 @@ import { FormCloudComponentPage, LoginSSOPage, ProcessCloudWidgetPage } from '@a
 import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { tabFieldValueVisibilityJson, tabVarValueVisibilityJson, tabVarFieldVisibilityJson,
     tabFieldFieldVisibilityJson, tabFieldVarVisibilityJson, tabVarVarVisibilityJson,
     tabNextOperatorsVisibilityJson } from '../../resources/forms/tab-visibility-conditions';

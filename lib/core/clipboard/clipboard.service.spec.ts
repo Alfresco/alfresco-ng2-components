@@ -26,7 +26,7 @@ import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material';
 import { TranslationMock } from '@alfresco/adf-core';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 
 describe('ClipboardService', () => {
     let clipboardService: ClipboardService;

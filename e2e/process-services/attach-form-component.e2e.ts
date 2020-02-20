@@ -20,9 +20,9 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { AttachFormPage } from '../pages/adf/process-services/attachFormPage';
-import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Attach Form Component', () => {

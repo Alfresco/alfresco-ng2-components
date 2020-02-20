@@ -24,7 +24,7 @@ import { Moment } from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { UserPreferencesService, UserPreferenceValues } from '../../../services/user-preferences.service';
-import { MomentDateAdapter } from '../../../utils/momentDateAdapter';
+import { MomentDateAdapter } from '../../../utils/moment-date-adapter';
 import { MOMENT_DATE_FORMATS } from '../../../utils/moment-date-formats.model';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { Subject } from 'rxjs';

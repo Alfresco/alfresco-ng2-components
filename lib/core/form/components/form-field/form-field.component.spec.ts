@@ -20,7 +20,7 @@ import { FormRenderingService } from './../../services/form-rendering.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from './../widgets/core/index';
 import { TextWidgetComponent, CheckboxWidgetComponent } from '../widgets/index';
 import { FormFieldComponent } from './form-field.component';
-import { setupTestBed } from '../../../testing/setupTestBed';
+import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreModule } from '../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

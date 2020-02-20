@@ -21,7 +21,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
-import { getDisplayUser } from '../../helpers/getDisplayUser';
+import { getDisplayUser } from '../../helpers/get-display-user';
 
 @Component({
     selector: 'adf-people-search-field',

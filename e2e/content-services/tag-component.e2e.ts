@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { FileModel } from '../models/ACS/fileModel';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { FileModel } from '../models/ACS/file.model';
 import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
-import { TagPage } from '../pages/adf/tagPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { TagPage } from '../pages/adf/tag.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 

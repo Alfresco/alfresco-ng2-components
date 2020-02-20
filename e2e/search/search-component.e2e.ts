@@ -18,14 +18,14 @@
 import { browser } from 'protractor';
 
 import { LoginPage, UploadActions, StringUtil, LocalStorageUtil, BrowserActions, ViewerPage } from '@alfresco/adf-testing';
-import { SearchDialog } from '../pages/adf/dialog/searchDialog';
-import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import { SearchResultsPage } from '../pages/adf/searchResultsPage';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { FileModel } from '../models/ACS/fileModel';
-import { FolderModel } from '../models/ACS/folderModel';
+import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
+import { ContentServicesPage } from '../pages/adf/content-services.page';
+import { SearchResultsPage } from '../pages/adf/search-results.page';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { FileModel } from '../models/ACS/file.model';
+import { FolderModel } from '../models/ACS/folder.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { SearchConfiguration } from './search.config';
 
 describe('Search component - Search Bar', () => {
@@ -43,7 +43,7 @@ describe('Search component - Search Bar', () => {
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const searchDialog = new SearchDialog();
+    const searchDialog = new SearchDialogPage();
     const searchResultPage = new SearchResultsPage();
     const viewerPage = new ViewerPage();
 

@@ -16,19 +16,19 @@
  */
 
 import { LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { FolderDialog } from '../../pages/adf/dialog/folderDialog';
-import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
+import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, Key } from 'protractor';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Create folder directive', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const createFolderDialog = new FolderDialog();
+    const createFolderDialog = new FolderDialogPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const metadataViewPage = new MetadataViewPage();
     const acsUser = new AcsUserModel();

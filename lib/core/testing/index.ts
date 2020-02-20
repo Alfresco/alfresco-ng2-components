@@ -15,4 +15,4 @@
  * limitations under the License.
  */
 
-export * from './setupTestBed';
+export * from './setup-test-bed';

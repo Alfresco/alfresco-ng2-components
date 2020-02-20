@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { DataColumnComponent } from './data-column.component';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('DataColumnListComponent', () => {

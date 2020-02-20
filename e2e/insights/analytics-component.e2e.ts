@@ -16,10 +16,10 @@
  */
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { AnalyticsPage } from '../pages/adf/process-services/analyticsPage';
-import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { AnalyticsPage } from '../pages/adf/process-services/analytics.page';
+import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { browser } from 'protractor';
 import { Tenant } from '../models/APS/tenant';
 import { User } from '../models/APS/user';

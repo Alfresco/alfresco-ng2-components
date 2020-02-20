@@ -19,15 +19,15 @@ import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable, from, throwError, of } from 'rxjs';
-import { ParameterValueModel } from '../../diagram/models/report/parameterValue.model';
-import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';
-import { BarChart } from '../../diagram/models/chart/barChart.model';
+import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
+import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
+import { BarChart } from '../../diagram/models/chart/bar-chart.model';
 import { Chart } from '../../diagram/models/chart/chart.model';
-import { DetailsTableChart } from '../../diagram/models/chart/detailsTableChart.model';
-import { HeatMapChart } from '../../diagram/models/chart/heatMapChart.model';
-import { MultiBarChart } from '../../diagram/models/chart/multiBarChart.model';
-import { PieChart } from '../../diagram/models/chart/pieChart.model';
-import { TableChart } from '../../diagram/models/chart/tableChart.model';
+import { DetailsTableChart } from '../../diagram/models/chart/details-table-chart.model';
+import { HeatMapChart } from '../../diagram/models/chart/heat-map-chart.model';
+import { MultiBarChart } from '../../diagram/models/chart/multi-bar-chart.model';
+import { PieChart } from '../../diagram/models/chart/pie-chart.model';
+import { TableChart } from '../../diagram/models/chart/table-chart.model';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable()

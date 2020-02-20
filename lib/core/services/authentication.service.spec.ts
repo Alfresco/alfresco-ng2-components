@@ -20,7 +20,7 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { AppConfigService } from '../app-config/app-config.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { UserRepresentation } from '@alfresco/js-api';
 

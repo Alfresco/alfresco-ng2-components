@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import * as diagramsGatewaysMock from '../../mock/diagram/diagramGateways.mock';
+import * as diagramsGatewaysMock from '../../mock/diagram/diagram-gateways.mock';
 import { DiagramComponent } from './diagram.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';

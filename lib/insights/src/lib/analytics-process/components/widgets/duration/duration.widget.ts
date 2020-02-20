@@ -19,8 +19,8 @@
 
 import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ParameterValueModel } from '../../../../diagram/models/report/parameterValue.model';
-import { ReportParameterDetailsModel } from '../../../../diagram/models/report/reportParameterDetails.model';
+import { ParameterValueModel } from '../../../../diagram/models/report/parameter-value.model';
+import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
 import { NumberWidgetAnalyticsComponent } from './../number/number.widget';
 
 @Component({

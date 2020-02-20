@@ -24,7 +24,7 @@ import { of } from 'rxjs';
 import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../index';
 import { ContentWidgetComponent } from './content.widget';
-import { setupTestBed } from '../../../../testing/setupTestBed';
+import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslationMock } from '../../../../mock/translation.service.mock';

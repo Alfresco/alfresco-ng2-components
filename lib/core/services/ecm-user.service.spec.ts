@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { AuthenticationService, ContentService, AlfrescoApiService  } from '.';
 import { fakeEcmUser } from '../mock/ecm-user.service.mock';
 import { EcmUserService } from '../services/ecm-user.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 

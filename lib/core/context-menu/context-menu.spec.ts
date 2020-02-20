@@ -20,7 +20,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ContextMenuModule } from './context-menu.module';
 import { CoreModule } from '../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 
 @Component({
     selector: 'adf-test-component',

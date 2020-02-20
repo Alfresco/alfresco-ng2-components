@@ -16,10 +16,10 @@
  */
 
 import { LoginPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
-import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
+import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');

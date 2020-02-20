@@ -22,7 +22,7 @@ import { TranslateModule, TranslateStore, TranslateService } from '@ngx-translat
 import { WidgetComponent } from './../widget.component';
 import { TranslationService } from '../../../../services';
 import { HyperlinkWidgetComponent } from './hyperlink.widget';
-import { setupTestBed } from '../../../../testing/setupTestBed';
+import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { TranslationMock } from '../../../../mock/translation.service.mock';
 import { HttpClientModule } from '@angular/common/http';
 

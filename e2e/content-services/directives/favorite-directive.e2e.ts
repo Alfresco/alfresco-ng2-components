@@ -16,15 +16,15 @@
  */
 
 import { ContentNodeSelectorDialogPage, LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
 
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { FileModel } from '../../models/ACS/fileModel';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
-import { TrashcanPage } from '../../pages/adf/trashcanPage';
+import { FileModel } from '../../models/ACS/file.model';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { CustomSources } from '../../pages/adf/demo-shell/custom-sources.page';
+import { TrashcanPage } from '../../pages/adf/trashcan.page';
 
 describe('Favorite directive', () => {
 

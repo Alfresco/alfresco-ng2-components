@@ -20,7 +20,7 @@ import { searchMockApi, mockError, fakeSearch } from '../mock/search.service.moc
 import { CookieServiceMock } from './../mock/cookie.service.mock';
 import { CookieService } from './cookie.service';
 import { SearchService } from './search.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';

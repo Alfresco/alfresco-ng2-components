@@ -23,7 +23,7 @@ import { UploadService } from './upload.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { AssocChildBody, AssociationBody } from '@alfresco/js-api';
 

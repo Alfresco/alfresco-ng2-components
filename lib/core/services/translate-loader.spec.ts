@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslateLoaderService } from './translate-loader.service';
 import { TranslationService } from './translation.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreModule } from '../core.module';
 
 declare let jasmine: any;

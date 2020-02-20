@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../../material.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
-import { setupTestBed } from '../../../testing/setupTestBed';
+import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

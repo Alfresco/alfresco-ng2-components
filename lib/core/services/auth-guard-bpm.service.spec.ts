@@ -20,7 +20,7 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { AuthenticationService } from './authentication.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { MatDialog } from '@angular/material';
 

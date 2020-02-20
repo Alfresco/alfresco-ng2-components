@@ -16,10 +16,10 @@
  */
 
 import { LoginPage, ErrorPage, BrowserActions } from '@alfresco/adf-testing';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Error Component', () => {
 

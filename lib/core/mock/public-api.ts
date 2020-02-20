@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export * from './AlfrescoApi.mock';
+export * from './alfresco-api.mock';
 export * from './app-config.service.mock';
 export * from './apps-service.mock';
 export * from './authentication.service.mock';
@@ -24,15 +24,15 @@ export * from './comment-process-service.mock';
 export * from './cookie.service.mock';
 export * from './ecm-user.service.mock';
 export * from './event.mock';
-export * from './renditionsService.mock';
+export * from './renditions-service.mock';
 export * from './search.service.mock';
 export * from './translation.service.mock';
 export * from './alfresco-api.service.mock';
 
 export * from './form/form.component.mock';
-export * from './form/formDefinition.mock';
-export * from './form/formDefinitionReadonly.mock';
-export * from './form/formDefinitionVisibility.mock';
+export * from './form/form-definition.mock';
+export * from './form/form-definition-readonly.mock';
+export * from './form/form-definition-visibility.mock';
 export * from './form/start-form.component.mock';
 export * from './form/form.service.mock';
 export * from './form/widget-visibility.service.mock';

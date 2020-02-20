@@ -17,16 +17,16 @@
 
 import { browser } from 'protractor';
 
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FolderModel } from '../../models/ACS/folderModel';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FolderModel } from '../../models/ACS/folder.model';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 import { LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
-import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
-import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
+import { SearchResultsPage } from '../../pages/adf/search-results.page';
+import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 import { SearchConfiguration } from '../search.config';
 
@@ -36,7 +36,7 @@ describe('Search component - Text widget', () => {
     const searchFiltersPage = new SearchFiltersPage();
 
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialog();
+    const searchDialog = new SearchDialogPage();
     const searchResultPage = new SearchResultsPage();
 
     const acsUser = new AcsUserModel();

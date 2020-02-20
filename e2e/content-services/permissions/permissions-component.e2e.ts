@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { PermissionsPage } from '../../pages/adf/permissionsPage';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { PermissionsPage } from '../../pages/adf/permissions.page';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { FileModel } from '../../models/ACS/fileModel';
+import { FileModel } from '../../models/ACS/file.model';
 import { StringUtil, BrowserActions, NotificationHistoryPage, LoginPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { FolderModel } from '../../models/ACS/folderModel';
-import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
+import { FolderModel } from '../../models/ACS/folder.model';
+import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 
 describe('Permissions Component', () => {
 
@@ -43,7 +43,7 @@ describe('Permissions Component', () => {
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const notificationHistoryPage = new NotificationHistoryPage();
-    const uploadDialog = new UploadDialog();
+    const uploadDialog = new UploadDialogPage();
     let fileOwnerUser, filePermissionUser, file;
     const fileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,

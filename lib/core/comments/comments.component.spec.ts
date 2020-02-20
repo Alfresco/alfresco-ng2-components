@@ -21,7 +21,7 @@ import { of, throwError } from 'rxjs';
 import { CommentProcessService } from '../services/comment-process.service';
 import { CommentsComponent } from './comments.component';
 import { CommentContentService } from '../services/comment-content.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('CommentsComponent', () => {

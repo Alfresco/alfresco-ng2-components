@@ -16,9 +16,9 @@
  */
 
 import { LoginPage, Widget, DatePickerPage, DateUtil } from '@alfresco/adf-testing';
-import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';

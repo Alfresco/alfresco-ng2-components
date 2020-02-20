@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { NodeMetadata } from '../models/node-metadata.model';
 import { EcmModelService } from './ecm-model.service';
 import { NodeService } from './node.service';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreModule } from '../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';

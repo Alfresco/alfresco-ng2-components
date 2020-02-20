@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { DiagramElementModel } from './diagramElement.model';
-import { DiagramFlowElementModel } from './diagramFlowElement.model';
-import { DiagramPoolElementModel } from './diagramPoolElement.model';
+import { DiagramElementModel } from './diagram-element.model';
+import { DiagramFlowElementModel } from './diagram-flow-element.model';
+import { DiagramPoolElementModel } from './diagram-pool-element.model';
 
 export class DiagramModel {
     diagramBeginX: number;

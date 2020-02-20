@@ -17,18 +17,18 @@
 
 import { browser } from 'protractor';
 import { StringUtil, LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Upload - User permission', () => {
 
     const contentServicesPage = new ContentServicesPage();
-    const uploadDialog = new UploadDialog();
+    const uploadDialog = new UploadDialogPage();
     const loginPage = new LoginPage();
     let acsUser;
     let acsUserTwo;

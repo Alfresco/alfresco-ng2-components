@@ -16,11 +16,11 @@
  */
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NotificationPage } from '../pages/adf/notificationPage';
+import { NotificationPage } from '../pages/adf/notification.page';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Notifications Component', () => {
 

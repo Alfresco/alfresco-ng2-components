@@ -17,12 +17,12 @@
 
 import { element, by, browser } from 'protractor';
 import { LoginPage, BrowserActions, UploadActions, StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { VersionManagePage } from '../../pages/adf/versionManagerPage';
-import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { VersionManagePage } from '../../pages/adf/version-manager.page';
+import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NodeActions } from '../../actions/ACS/node.actions';
 import CONSTANTS = require('../../util/constants');
@@ -32,7 +32,7 @@ describe('Version component permissions', () => {
     const loginPage = new LoginPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
-    const uploadDialog = new UploadDialog();
+    const uploadDialog = new UploadDialogPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const contentServices = new ContentServicesPage();
     let site;

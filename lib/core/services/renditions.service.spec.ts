@@ -16,9 +16,9 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { fakeRendition, fakeRenditionCreated, fakeRenditionsList, fakeRenditionsListWithACreated } from '../mock/renditionsService.mock';
+import { fakeRendition, fakeRenditionCreated, fakeRenditionsList, fakeRenditionsListWithACreated } from '../mock/renditions-service.mock';
 import { RenditionsService } from './renditions.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';

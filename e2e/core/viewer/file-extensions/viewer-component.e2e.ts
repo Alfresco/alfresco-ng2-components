@@ -17,13 +17,13 @@
 
 import { browser } from 'protractor';
 import { LoginPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../../pages/adf/contentServicesPage';
+import { ContentServicesPage } from '../../../pages/adf/content-services.page';
 import CONSTANTS = require('../../../util/constants');
-import { FileModel } from '../../..//models/ACS/fileModel';
-import { FolderModel } from '../../../models/ACS/folderModel';
-import { AcsUserModel } from '../../../models/ACS/acsUserModel';
+import { FileModel } from '../../../models/ACS/file.model';
+import { FolderModel } from '../../../models/ACS/folder.model';
+import { AcsUserModel } from '../../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NavigationBarPage } from '../../..//pages/adf/navigationBarPage';
+import { NavigationBarPage } from '../../../pages/adf/navigation-bar.page';
 
 describe('Viewer', () => {
 

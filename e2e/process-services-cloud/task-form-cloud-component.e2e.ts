@@ -29,8 +29,8 @@ import {
     TaskHeaderCloudPage,
     TasksService
 } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { FormCloudService } from '../../lib/testing/src/lib/form-cloud/actions/form-cloud.service';
 
 describe('Task form cloud component', () => {

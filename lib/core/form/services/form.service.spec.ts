@@ -20,7 +20,7 @@ import { Response, ResponseOptions } from '@angular/http';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { formModelTabs, AlfrescoApiServiceMock } from '../../mock';
 import { FormService } from './form.service';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreModule } from '../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

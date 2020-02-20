@@ -28,7 +28,7 @@ import { BpmUserModel } from '../../models/bpm-user.model';
 import { EcmUserModel } from '../../models/ecm-user.model';
 import { UserInfoComponent } from './user-info.component';
 import { of } from 'rxjs';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 
 class FakeSanitizer extends DomSanitizer {

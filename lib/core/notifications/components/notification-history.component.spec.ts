@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { NotificationHistoryComponent } from './notification-history.component';
 import { OverlayContainer } from '@angular/cdk/overlay';

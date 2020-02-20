@@ -21,21 +21,21 @@ import {
     SearchSortingPickerPage,
     UploadActions
 } from '@alfresco/adf-testing';
-import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
+import { SearchResultsPage } from '../../pages/adf/search-results.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NodeActions } from '../../actions/ACS/node.actions';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
 import { SearchConfiguration } from '../search.config';
 
 describe('Search Sorting Picker', () => {
 
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialog();
+    const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const searchResults = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();

@@ -18,10 +18,10 @@
 import { browser } from 'protractor';
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
-import { AppSettingsToggles } from '../pages/adf/process-services/dialog/appSettingsToggles';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
@@ -31,7 +31,7 @@ describe('New Process Filters', () => {
     const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
-    const appSettingsToggles = new AppSettingsToggles();
+    const appSettingsToggles = new AppSettingsTogglesPage();
     const navigationBarPage = new NavigationBarPage();
 
     let tenantId, user, filterId, customProcessFilter;

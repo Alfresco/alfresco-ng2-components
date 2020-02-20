@@ -17,11 +17,11 @@
 
 import { browser } from 'protractor';
 import { LoginPage } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
-import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
+import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Upload component', async () => {
@@ -31,8 +31,8 @@ describe('Upload component', async () => {
         hostEcm: browser.params.testConfig.adf_acs.host
     });
     const contentServicesPage = new ContentServicesPage();
-    const uploadDialog = new UploadDialog();
-    const uploadToggles = new UploadToggles();
+    const uploadDialog = new UploadDialogPage();
+    const uploadToggles = new UploadTogglesPage();
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
 
@@ -56,7 +56,7 @@ describe('Upload component', async () => {
     });
 
     it('[C272792] Should be possible to cancel upload of a big file using row cancel icon', async () => {
-        await browser.executeScript('setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 750)');
+        await browser.executeScript('setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 1500)');
 
         await contentServicesPage.uploadFile(largeFile.location);
 
@@ -68,7 +68,7 @@ describe('Upload component', async () => {
 
     it('[C287790] Should be possible to cancel upload of a big file through the cancel uploads button', async () => {
         await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 750)');
+            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 1500)');
         await contentServicesPage.uploadFile(largeFile.location);
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
@@ -79,7 +79,7 @@ describe('Upload component', async () => {
     it('[C272793] Should be able to cancel multiple files upload', async () => {
         await uploadToggles.enableMultipleFileUpload();
         await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 750)');
+            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 1500)');
         await contentServicesPage.uploadMultipleFile([pngFileModel.location, largeFile.location]);
 
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
@@ -92,7 +92,7 @@ describe('Upload component', async () => {
 
     it('[C315257] Should be able to cancel file in upload queue', async () => {
         await uploadToggles.enableMultipleFileUpload();
-        await browser.executeScript('setTimeout(() => {document.querySelector("button[data-automation-id=\'cancel-upload-queue\']").click();}, 750)');
+        await browser.executeScript('setTimeout(() => {document.querySelector("button[data-automation-id=\'cancel-upload-queue\']").click();}, 1500)');
         await contentServicesPage.uploadMultipleFile([largeFile.location, pngFileModel.location]);
         await uploadDialog.fileIsCancelled(pngFileModel.name);
         await uploadDialog.clickOnCloseButton();

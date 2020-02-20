@@ -92,12 +92,20 @@ exports.config = {
                 'credentials_enable_service': false,
                 'download': {
                     'prompt_for_download': false,
+                    "directory_upgrade": true,
                     'default_directory': downloadFolder
+                },
+                "browser": {
+                    "setDownloadBehavior": {
+                        "behavior": "allow",
+                        "downloadPath": downloadFolder
+                    }
                 }
             },
             args: ['--incognito',
                 `--window-size=${width},${height}`,
                 '--disable-gpu',
+                '--no-sandbox',
                 '--disable-web-security',
                 '--disable-browser-side-navigation',
                 ...(BROWSER_RUN === true ? [] : ['--headless'])]
@@ -170,6 +178,11 @@ exports.config = {
             project: 'e2e/tsconfig.e2e.json',
             baseUrl: 'e2e/',
             paths: tsConfig.compilerOptions.paths
+        });
+
+        browser.driver.sendChromiumCommand('Page.setDownloadBehavior', {
+            behavior: 'allow',
+            downloadPath: downloadFolder
         });
 
         browser.manage().window().setSize(width, height);

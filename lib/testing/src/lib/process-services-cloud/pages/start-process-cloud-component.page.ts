@@ -18,7 +18,7 @@
 import { by, element, Key, protractor, browser, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { FormFields } from '../../core/pages/form/formFields';
+import { FormFields } from '../../core/pages/form/form-fields';
 
 export class StartProcessCloudPage {
 

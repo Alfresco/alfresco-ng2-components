@@ -20,7 +20,7 @@ import { TranslationService, TranslationMock } from '../../index';
 import { of } from 'rxjs';
 import { FormService } from '../services/form.service';
 import { FormListComponent } from './form-list.component';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreModule } from '../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

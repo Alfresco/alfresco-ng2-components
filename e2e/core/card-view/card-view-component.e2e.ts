@@ -17,9 +17,9 @@
 
 import { BrowserVisibility, LoginPage } from '@alfresco/adf-testing';
 import { browser, by, element } from 'protractor';
-import { CardViewComponentPage } from '../../pages/adf/cardViewComponentPage';
-import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { CardViewComponentPage } from '../../pages/adf/card-view-component.page';
+import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('CardView Component', () => {
     const loginPage = new LoginPage();

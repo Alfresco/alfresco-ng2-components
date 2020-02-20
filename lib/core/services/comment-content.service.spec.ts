@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { CommentModel } from '../models/comment.model';
 import { fakeContentComment, fakeContentComments } from '../mock/comment-content-service.mock';
 import { CommentContentService } from './comment-content.service';
-import { setupTestBed } from '../testing/setupTestBed';
+import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;

@@ -23,11 +23,11 @@ import {
     UploadActions,
     ViewerPage
 } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
@@ -40,7 +40,7 @@ describe('Share file', () => {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
-    const shareDialog = new ShareDialog();
+    const shareDialog = new ShareDialogPage();
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
     const notificationHistoryPage = new NotificationHistoryPage();

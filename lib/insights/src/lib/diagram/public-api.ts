@@ -22,28 +22,28 @@ export * from './services/diagram-color.service';
 export * from './services/diagrams.service';
 
 export * from './models/diagram/diagram.model';
-export * from './models/diagram/diagramElement.model';
-export * from './models/diagram/diagramElementProperty.model';
-export * from './models/diagram/diagramEventDefinition.model';
-export * from './models/diagram/diagramFlowElement.model';
-export * from './models/diagram/diagramLaneElement.model';
-export * from './models/diagram/diagramPoolElement.model';
-export * from './models/diagram/diagramWayPoint.model';
+export * from './models/diagram/diagram-element.model';
+export * from './models/diagram/diagram-element-property.model';
+export * from './models/diagram/diagram-event-definition.model';
+export * from './models/diagram/diagram-flow-element.model';
+export * from './models/diagram/diagram-lane-element.model';
+export * from './models/diagram/diagram-pool-element.model';
+export * from './models/diagram/diagram-way-point.model';
 
-export * from './models/chart/barChart.model';
+export * from './models/chart/bar-chart.model';
 export * from './models/chart/chart.model';
-export * from './models/chart/detailsTableChart.model';
-export * from './models/chart/heatMapChart.model';
-export * from './models/chart/lineChart.model';
-export * from './models/chart/multiBarChart.model';
-export * from './models/chart/pieChart.model';
-export * from './models/chart/tableChart.model';
+export * from './models/chart/details-table-chart.model';
+export * from './models/chart/heat-map-chart.model';
+export * from './models/chart/line-chart.model';
+export * from './models/chart/multi-bar-chart.model';
+export * from './models/chart/pie-chart.model';
+export * from './models/chart/table-chart.model';
 
-export * from './models/report/parameterValue.model';
-export * from './models/report/reportDateRange.model';
-export * from './models/report/reportDefinition.model';
-export * from './models/report/reportParameterDetails.model';
-export * from './models/report/reportParameters.model';
-export * from './models/report/reportQuery.model';
+export * from './models/report/parameter-value.model';
+export * from './models/report/report-date-range.model';
+export * from './models/report/report-definition.model';
+export * from './models/report/report-parameter-details.model';
+export * from './models/report/report-parameters.model';
+export * from './models/report/report-query.model';
 
 export * from './diagram.module';

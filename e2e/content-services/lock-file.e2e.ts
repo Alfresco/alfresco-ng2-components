@@ -16,11 +16,11 @@
  */
 
 import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import { LockFilePage } from '../pages/adf/lockFilePage';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import { FileModel } from '../models/ACS/fileModel';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ContentServicesPage } from '../pages/adf/content-services.page';
+import { LockFilePage } from '../pages/adf/lock-file.page';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { FileModel } from '../models/ACS/file.model';
 import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';

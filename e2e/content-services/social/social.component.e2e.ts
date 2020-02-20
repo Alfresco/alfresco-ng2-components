@@ -17,10 +17,10 @@
 
 import { LoginPage, LikePage, RatePage, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import { FileModel } from '../../models/ACS/fileModel';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { SocialPage } from '../../pages/adf/demo-shell/socialPage';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FileModel } from '../../models/ACS/file.model';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { SocialPage } from '../../pages/adf/demo-shell/social.page';
 import { browser } from 'protractor';
 
 describe('Social component', () => {

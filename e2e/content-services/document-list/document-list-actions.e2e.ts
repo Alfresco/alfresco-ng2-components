@@ -23,16 +23,16 @@ import {
     StringUtil,
     ContentNodeSelectorDialogPage
 } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { FileModel } from '../../models/ACS/fileModel';
+import { FileModel } from '../../models/ACS/file.model';
 import { Util } from '../../util/util';
-import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbDropdownPage';
-import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
-import { InfinitePaginationPage } from '../../pages/adf/core/infinitePaginationPage';
-import { FolderModel } from '../../models/ACS/folderModel';
+import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
+import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/bread-crumb.page';
+import { InfinitePaginationPage } from '../../pages/adf/core/infinite-pagination.page';
+import { FolderModel } from '../../models/ACS/folder.model';
 
 describe('Document List Component - Actions', () => {
 

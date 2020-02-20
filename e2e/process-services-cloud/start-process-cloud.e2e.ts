@@ -17,8 +17,8 @@
 
 import { ApiService, AppListCloudPage, BrowserActions, GroupIdentityService, IdentityService, LoginSSOPage, StartProcessCloudPage, StringUtil } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
-import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Start Process', () => {
 

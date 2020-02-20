@@ -22,8 +22,8 @@ import {
     LoginSSOPage, ApiService,
     AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService, DateUtil
 } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
+import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { TaskListCloudConfiguration } from './config/task-list-cloud.config';
 import moment = require('moment');
 

@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view-keyvaluepairs.model';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
-import { setupTestBed } from '../../../testing/setupTestBed';
+import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 
