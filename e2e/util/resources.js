@@ -56,25 +56,14 @@ exports.Files = {
         file_location: "/resources/apps/Assignee.zip",
         title: "Assignee",
         description: "Description for app",
-        processNames: ["sample", "candidate-task"],
-        userTaskName: {
-            "sample": { one: 'Form1', two: 'Form2' },
+        processNames: ["simple", "candidate-task"],
+        userTasks: {
+            "simple": { one: 'Candidate Task', two: 'User Task' },
             "candidateTask":  "Human step"
         },
-        candidateUsers: [
-            "candidate-user@activiti.com",
-        ],
         candidateGroup: "candidates",
         adminGroup: "admin",
         adminCapabilities: ['tenant-admin']
-    },
-
-    TEST_ASSIGNEE: {
-        file_location: "/resources/apps/Test Assignee.zip",
-        title: "Test Assignee",
-        description: "Description for app",
-        processName: "Sample",
-        userTasks: { one: 'Form1', two: 'Form2' }
     },
 
     APP_WITH_USER_WIDGET: {
