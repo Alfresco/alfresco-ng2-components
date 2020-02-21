@@ -23,12 +23,13 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
+import { FormFieldTypes } from '../core/form-field-types';
 import { DropdownWidgetComponent } from './dropdown.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
-describe('DropdownWidgetComponent', () => {
+/*tslint:disable*/
+fdescribe('DropdownWidgetComponent', () => {
 
     let formService: FormService;
     let widget: DropdownWidgetComponent;
@@ -121,6 +122,39 @@ describe('DropdownWidgetComponent', () => {
         expect(widget.field.options.length).toBe(2);
         expect(widget.field.options[0]).toBe(emptyOption);
         expect(widget.field.options[1]).toBe(restFieldValue);
+    });
+
+    describe('when is required', () => {
+
+        beforeEach(async(() => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DROPDOWN,
+                required: true
+            });
+        }));
+
+        it('should be able to display label with asterix', async(() => {
+            const label = "MyLabel123"
+            widget.field.name = label;
+            fixture.detectChanges();
+
+            expect(element.querySelector('label').innerText).toBe(label + "*");
+        }));
+
+        it('should be invalid if no default option', async(() => {
+            fixture.detectChanges();
+
+            expect(element.querySelector('.adf-invalid')).toBeDefined();
+            expect(element.querySelector('.adf-invalid')).not.toBeNull();
+        }));
+
+        it('should be valid if default option', async(() => {
+            widget.field.options = fakeOptionList;
+            widget.field.value = "opt_1";
+            fixture.detectChanges();
+
+            expect(element.querySelector('.adf-invalid')).toBeNull();
+        }));
     });
 
     describe('when template is ready', () => {
