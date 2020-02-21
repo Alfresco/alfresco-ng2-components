@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { AboutProductVersionComponent } from './about-product-version.component';
 import { DiscoveryApiService } from '../../services/discovery-api.service';
 import { AuthenticationService } from '../../services/authentication.service';

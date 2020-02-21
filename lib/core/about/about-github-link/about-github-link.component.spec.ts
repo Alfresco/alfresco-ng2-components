@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { AboutGithubLinkComponent } from './about-github-link.component';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { aboutGithubDetails } from '../about.mock';
