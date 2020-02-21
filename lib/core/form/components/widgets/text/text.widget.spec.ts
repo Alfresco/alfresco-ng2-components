@@ -20,11 +20,16 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { TextWidgetComponent } from './text.widget';
-import { setupTestBed } from '../../../../testing/setupTestBed';
+import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslationMock } from '../../../../mock/translation.service.mock';
 import { TranslationService } from '../../../../services';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule, TranslateStore, TranslateService } from '@ngx-translate/core';
+import { MatInputModule, MatIconModule } from '@angular/material';
+import { InputMaskDirective } from './text-mask.component';
+import { ErrorWidgetComponent } from '../error/error.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const enterValueInTextField = (element: HTMLInputElement, value: string) => {
     element.value = value;
@@ -36,13 +41,25 @@ describe('TextWidgetComponent', () => {
     let widget: TextWidgetComponent;
     let fixture: ComponentFixture<TextWidgetComponent>;
     let element: HTMLElement;
+    let errorWidget: HTMLElement;
 
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            CoreTestingModule
+            TranslateModule.forChild(),
+            MatInputModule,
+            FormsModule,
+            MatIconModule,
+            HttpClientModule
+        ],
+        declarations: [
+            TextWidgetComponent,
+            InputMaskDirective,
+            ErrorWidgetComponent
         ],
         providers: [
+            TranslateStore,
+            TranslateService,
             { provide: TranslationService, useClass: TranslationMock }
         ]
     });
@@ -57,7 +74,7 @@ describe('TextWidgetComponent', () => {
 
         describe('and no mask is configured on text element', () => {
 
-            it('should raise ngModelChange event', async(() => {
+            it('should raise ngModelChange event', async () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
@@ -70,13 +87,12 @@ describe('TextWidgetComponent', () => {
                 expect(widget.field.value).toBe('');
 
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(widget.field).not.toBeNull();
-                    expect(widget.field.value).not.toBeNull();
-                    expect(widget.field.value).toBe('TEXT');
-                });
-            }));
+                await fixture.whenStable();
+                fixture.detectChanges();
+                expect(widget.field).not.toBeNull();
+                expect(widget.field.value).not.toBeNull();
+                expect(widget.field.value).toBe('TEXT');
+            });
 
             it('should be able to set label property', () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
@@ -110,11 +126,12 @@ describe('TextWidgetComponent', () => {
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
 
                 await fixture.whenStable();
+                fixture.detectChanges();
                 expect(widget.field.isValid).toBe(true);
 
                 enterValueInTextField(element.querySelector('#text-id'), '');
-
                 await fixture.whenStable();
+                fixture.detectChanges();
                 expect(widget.field.isValid).toBe(false);
             });
 
@@ -145,15 +162,29 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
                 await fixture.whenStable();
+                fixture.detectChanges();
+                errorWidget = element.querySelector('error-widget div[class="adf-error-text"]');
+                expect(errorWidget).toBeDefined();
+                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.AT_LEAST_LONG');
+
                 expect(widget.field.isValid).toBe(false);
 
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT VALUE');
                 await fixture.whenStable();
+                fixture.detectChanges();
+                errorWidget = element.querySelector('error-widget div[class="adf-error-text"]');
+                expect(errorWidget).toBeNull();
+
                 expect(widget.field.isValid).toBe(true);
 
-                enterValueInTextField(element.querySelector('#text-id'), 'TEXT  VALUE TOO LONG');
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT VALUE TOO LONG');
                 await fixture.whenStable();
+                fixture.detectChanges();
+
                 expect(widget.field.isValid).toBe(false);
+                errorWidget = element.querySelector('error-widget div[class="adf-error-text"]');
+                expect(errorWidget).toBeDefined();
+                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
             });
 
             it('should be able to set regex pattern property for Text widget', async () => {
