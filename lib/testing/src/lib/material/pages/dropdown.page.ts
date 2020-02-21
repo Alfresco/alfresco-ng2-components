@@ -28,20 +28,23 @@ export class DropdownPage {
     }
 
     async checkOptionIsVisibleInDropdown(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.dropDownElement.element(by.cssContainingText('mat-option span', option)), 5000);
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-option span', option)), 5000);
     }
 
     async checkOptionIsNotVisible(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.dropDownElement.element(by.cssContainingText('mat-option span', option)), 5000);
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-option span', option)), 5000);
+    }
+
+    async clickDropdown(): Promise<void> {
+        await BrowserActions.click(this.dropDownElement);
     }
 
     async selectOption(option: string): Promise<void> {
-        await BrowserActions.click(this.dropDownElement);
-        const optionElement = this.dropDownElement.element(by.cssContainingText('mat-option span.mat-option-text', option));
+        const optionElement = element(by.cssContainingText('mat-option span.mat-option-text', option));
         await BrowserActions.click(optionElement);
     }
 
     async getValue(): Promise<string> {
-        return BrowserActions.getText(this.dropDownElement.element(by.css('mat-form-field span')));
+        return BrowserActions.getText(element(by.css('mat-form-field span')));
     }
 }
