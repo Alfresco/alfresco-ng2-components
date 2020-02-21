@@ -594,7 +594,9 @@ export class ContentServicesPage {
     }
 
     async selectSite(siteName: string): Promise<void> {
-        await new DropdownPage(this.siteListDropdown).selectOption(siteName);
+        const dropdownPage = new DropdownPage(this.siteListDropdown);
+        await dropdownPage.clickDropdown();
+        await dropdownPage.selectOption(siteName);
     }
 
     async clickDownloadButton(): Promise<void> {
