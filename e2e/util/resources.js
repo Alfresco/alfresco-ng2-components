@@ -53,11 +53,17 @@ exports.Files = {
     },
 
     TEST_ASSIGNEE: {
-        file_location: "/resources/apps/Test Assignee.zip",
-        title: "Test Assignee",
+        file_location: "/resources/apps/Assignee.zip",
+        title: "Assignee",
         description: "Description for app",
-        processName: "Sample",
-        userTasks: { one: 'Form1', two: 'Form2' }
+        processNames: ["simple", "candidate-task"],
+        userTasks: {
+            "simple": { one: 'Candidate Task', two: 'User Task' },
+            "candidateTask":  "Human step"
+        },
+        candidateGroup: "candidates",
+        adminGroup: "admin",
+        adminCapabilities: ['tenant-admin']
     },
 
     APP_WITH_USER_WIDGET: {
@@ -100,7 +106,6 @@ exports.Files = {
         file_location: "/resources/apps/Widgets smoke test.zip",
         title: "Widgets smoke test",
         formName: "Widgets smoke test",
-        title: "Widgets smoke test",
         form_fields: {
             text_id: "text",
             header_id: "header",

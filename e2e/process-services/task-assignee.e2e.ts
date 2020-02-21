@@ -32,77 +32,210 @@ import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Task Assignee', () => {
-
     const loginPage = new LoginPage();
-    const processListPage = new ProcessListPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
-    const startProcessPage = new StartProcessPage();
-    const processFiltersPage = new ProcessFiltersPage();
-    const processServiceTabBarPage = new ProcessServiceTabBarPage();
-    const processDetailsPage = new ProcessDetailsPage();
     const taskPage = new TasksPage();
+    const apps = new AppsActions();
+    const users = new UsersActions();
+
     const app = browser.params.resources.Files.TEST_ASSIGNEE;
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'BPM',
+        hostBpm: browser.params.testConfig.adf_aps.host
+    });
 
-    let user: User;
+    describe('Candidate User Assignee', () => {
+        const processListPage = new ProcessListPage();
+        const processFiltersPage = new ProcessFiltersPage();
+        const startProcessPage = new StartProcessPage();
+        const processServiceTabBarPage = new ProcessServiceTabBarPage();
+        const processDetailsPage = new ProcessDetailsPage();
 
-    beforeAll(async () => {
-        const apps = new AppsActions();
-        const users = new UsersActions();
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
+        let user: User;
+
+        beforeAll(async () => {
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            user = await users.createTenantAndUser(this.alfrescoJsApi);
+
+            await this.alfrescoJsApi.login(user.email, user.password);
+            await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location, { renewIdmEntries: true });
+            await loginPage.loginToProcessServicesUsingUserModel(user);
         });
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        afterAll(async () => {
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        });
 
-        await this.alfrescoJsApi.login(user.email, user.password);
-        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location, { renewIdmEntries: true  });
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        beforeEach(async () => {
+            await navigationBarPage.navigateToProcessServicesPage();
+            await processServicesPage.checkApsContainer();
+        });
+
+        it('[C260387] Should the running process be displayed when clicking on Running filter', async () => {
+            const name = 'sample-process-one';
+            await processServicesPage.goToApp(app.title);
+            await processServiceTabBarPage.clickProcessButton();
+            await processListPage.checkProcessListIsDisplayed();
+            await processFiltersPage.clickCreateProcessButton();
+            await processFiltersPage.clickNewProcessDropdown();
+            await startProcessPage.startProcess({ name , processName: app.processNames[0] });
+            await processFiltersPage.selectFromProcessList(name);
+            await processDetailsPage.clickOnActiveTask();
+
+            await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.simple.one);
+            await taskPage.tasksListPage().selectRow(app.userTasks.simple.one);
+            await taskPage.taskDetails().clickCompleteFormTask();
+            await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.simple.one);
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.simple.one);
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+            await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.simple.one);
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.taskDetails().clickCompleteFormTask();
+            await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.simple.two);
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+            await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.simple.two);
+        });
+
     });
 
-    afterAll( async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
-    });
+    describe('Candidate Group Assignee', () => {
+        let user: User;
+        let candidate1: User;
+        let candidate2: User;
 
-    beforeEach(async () => {
-        await navigationBarPage.navigateToProcessServicesPage();
-        await processServicesPage.checkApsContainer();
-    });
+        beforeAll(async () => {
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            user = await users.createTenantAndUser(this.alfrescoJsApi);
+            candidate1 = await users.createApsUser(this.alfrescoJsApi, user.tenantId);
+            candidate2 = await users.createApsUser(this.alfrescoJsApi, user.tenantId);
+            const adminGroup = await this.alfrescoJsApi.activiti.adminGroupsApi.createNewGroup(
+                { 'name': app.adminGroup, 'tenantId': user.tenantId }
+            );
+            await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(adminGroup.id, user.id);
+            await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupCapabilities(adminGroup.id, { capabilities: app.adminCapabilities });
 
-    it('[C260387] Should the running process be displayed when clicking on Running filter', async () => {
-        await processServicesPage.goToApp(app.title);
-        await processServiceTabBarPage.clickProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
-        await processFiltersPage.clickCreateProcessButton();
-        await processFiltersPage.clickNewProcessDropdown();
+            const candidateGroup = await this.alfrescoJsApi.activiti.adminGroupsApi.createNewGroup(
+                { 'name': app.candidateGroup, 'tenantId': user.tenantId, 'type': 1 }
+            );
+            await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate1.id);
+            await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
+            await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
 
-        await startProcessPage.startProcess({name: 'sample-process-one', processName: app.processName });
-        await processFiltersPage.selectFromProcessList('sample-process-one');
-        await processDetailsPage.clickOnActiveTask();
+            await this.alfrescoJsApi.login(user.email, user.password);
+            const appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location, { renewIdmEntries: true });
+            await apps.startProcess(this.alfrescoJsApi, appModel, app.processNames[1]);
+        });
 
-        await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.one);
-        await taskPage.tasksListPage().selectRow(app.userTasks.one);
-        await taskPage.taskDetails().clickCompleteFormTask();
-        await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.one);
+        afterAll(async () => {
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        });
 
-        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.one);
+        it('[C216430] Start Task - Claim and Requeue a task', async () => {
+            await loginPage.loginToProcessServicesUsingUserModel(candidate1);
+            await navigationBarPage.navigateToProcessServicesPage();
+            await processServicesPage.checkApsContainer();
+            await processServicesPage.goToApp('Task App');
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
 
-        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.one);
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.candidateTask);
+            await taskPage.tasksListPage().selectRow(app.userTasks.candidateTask);
+            await taskPage.taskDetails().checkClaimEnabled();
 
-        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        await taskPage.taskDetails().clickCompleteFormTask();
-        await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.two);
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.INV_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
 
-        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.two);
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
 
-        await processServiceTabBarPage.clickProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.candidateTask);
+            await taskPage.tasksListPage().selectRow(app.userTasks.candidateTask);
+            await taskPage.taskDetails().claimTask();
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.INV_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.candidateTask);
+            await taskPage.taskDetails().checkReleaseEnabled();
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.candidateTask);
+            await taskPage.taskDetails().checkReleaseEnabled();
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
+
+            await loginPage.loginToProcessServicesUsingUserModel(candidate2);
+            await navigationBarPage.navigateToProcessServicesPage();
+            await processServicesPage.checkApsContainer();
+            await processServicesPage.goToApp('Task App');
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
+
+            await loginPage.loginToProcessServicesUsingUserModel(candidate1);
+            await navigationBarPage.navigateToProcessServicesPage();
+            await processServicesPage.checkApsContainer();
+            await processServicesPage.goToApp('Task App');
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.candidateTask);
+            await taskPage.tasksListPage().selectRow(app.userTasks.candidateTask);
+            await taskPage.taskDetails().releaseTask();
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.INV_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.candidateTask);
+            await taskPage.taskDetails().checkClaimEnabled();
+
+            await loginPage.loginToProcessServicesUsingUserModel(candidate2);
+            await navigationBarPage.navigateToProcessServicesPage();
+            await processServicesPage.checkApsContainer();
+            await processServicesPage.goToApp('Task App');
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.filtersPage().checkFilterIsHighlighted(CONSTANTS.TASK_FILTERS.QUE_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.candidateTask);
+            await taskPage.taskDetails().checkClaimEnabled();
+        });
     });
 
 });

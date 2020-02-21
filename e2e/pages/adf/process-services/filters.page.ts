@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, DataTableComponentPage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
 import { by, element, ElementFinder } from 'protractor';
 
 export class FiltersPage {
@@ -40,4 +40,8 @@ export class FiltersPage {
         return this.dataTable.getAllRowsColumnValues('Name');
     }
 
+    async checkFilterIsHighlighted(filterName: string): Promise<void> {
+        const highlightedFilter: ElementFinder = element(by.css(`mat-list-item.adf-active span[data-automation-id='${filterName}_filter']`));
+        await BrowserVisibility.waitUntilElementIsVisible(highlightedFilter);
+    }
 }
