@@ -86,6 +86,7 @@ export class ContentServicesPage {
     markedFavorite: ElementFinder = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star'));
     notMarkedFavorite: ElementFinder = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star_border'));
     multiSelectToggle: ElementFinder = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
+    selectionModeDropdown: ElementFinder = element(by.css('.mat-select[aria-label="Selection Mode"]'));
 
     siteListDropdown = new DropdownPage(element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
     sortingDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="grid-view-sorting"]')));
@@ -258,6 +259,11 @@ export class ContentServicesPage {
         return BrowserActions.getText(this.recentFileIcon);
     }
 
+    async checkDocumentListElementsAreDisplayed(): Promise<void> {
+        await this.checkAcsContainer();
+        await this.waitForTableBody();
+    }
+
     async checkAcsContainer(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
     }
@@ -334,6 +340,10 @@ export class ContentServicesPage {
         await this.contentList.doubleClickRow(nodeName);
     }
 
+    async selectRow(nodeName): Promise<void> {
+        await this.contentList.selectRow(nodeName);
+    }
+
     async clickOnCreateNewFolder(): Promise<void> {
         await BrowserActions.click(this.createFolderButton);
     }
@@ -363,10 +373,21 @@ export class ContentServicesPage {
         await this.createLibraryDialog.waitForDialogToOpen();
     }
 
-    async createNewFolder(folder): Promise<void> {
+    async createNewFolder(folder: string): Promise<void> {
         await this.clickOnCreateNewFolder();
         await this.createFolderDialog.addFolderName(folder);
         await this.createFolderDialog.clickOnCreateUpdateButton();
+    }
+
+    async createAndOpenNewFolder(folderName: string): Promise<void> {
+        await this.createNewFolder(folderName);
+        await this.checkContentIsDisplayed(folderName);
+        await this.openFolder(folderName);
+    }
+
+    async openFolder(folderName: string): Promise<void> {
+        await this.doubleClickRow(folderName);
+        await this.checkDocumentListElementsAreDisplayed();
     }
 
     async checkContentIsDisplayed(content): Promise<void> {
@@ -381,6 +402,17 @@ export class ContentServicesPage {
 
     async checkContentIsNotDisplayed(content): Promise<void> {
         await this.contentList.dataTablePage().checkContentIsNotDisplayed(this.columns.name, content);
+    }
+
+    async deleteAndCheckFolderNotDisplayed(folderName: string): Promise<void> {
+        await this.deleteContent(folderName);
+        await this.checkContentIsNotDisplayed(folderName);
+    }
+
+    async deleteSubfolderUnderRoot(folderName: string, subFolderName: string): Promise<void> {
+        await this.goToDocumentList();
+        await this.openFolder(folderName);
+        await this.deleteAndCheckFolderNotDisplayed(subFolderName);
     }
 
     async getActiveBreadcrumb(): Promise<string> {
@@ -615,4 +647,21 @@ export class ContentServicesPage {
         return this.contentList.dataTable.getRow(this.columns.name, rowName);
     }
 
+    async selectFolder(folderName: string): Promise<void> {
+        const folderSelected: ElementFinder = element(by.css(`div[data-automation-id="${folderName}"] .adf-datatable-center-img-ie`));
+        await BrowserVisibility.waitUntilElementIsVisible(folderSelected);
+        await BrowserActions.click(folderSelected);
+    }
+
+    async selectFolderWithCommandKey(folderName: string): Promise<void> {
+        await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
+        await this.selectRow(folderName);
+        await browser.actions().sendKeys(protractor.Key.NULL).perform();
+    }
+
+    async openAndChooseSelectionMode(option: string): Promise<void> {
+        await BrowserActions.click(this.selectionModeDropdown);
+        const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', option));
+        await BrowserActions.click(selectProcessDropdown);
+    }
 }

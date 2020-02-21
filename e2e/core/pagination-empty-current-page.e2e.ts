@@ -90,17 +90,13 @@ describe('Pagination - returns to previous page when current is empty', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await contentServicesPage.goToDocumentList();
-   });
+    });
 
     it('[C274710] Should redirect to previous page when current is emptied', async () => {
-        await contentServicesPage.doubleClickRow(folderModel.name);
-        await contentServicesPage.checkAcsContainer();
-        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.openFolder(folderModel.name);
 
         await paginationPage.selectItemsPerPage(itemsPerPage.five);
-
-        await contentServicesPage.checkAcsContainer();
-        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkDocumentListElementsAreDisplayed();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
@@ -110,8 +106,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         await paginationPage.clickOnNextPage();
 
-        await contentServicesPage.checkAcsContainer();
-        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkDocumentListElementsAreDisplayed();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
@@ -126,26 +121,20 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         list = await contentServicesPage.getAllRowsNameColumn();
         await expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
-   });
+    });
 
     it('[C297494] Should display content when navigating to a non-empty folder not in the first page', async () => {
         await contentServicesPage.goToDocumentList();
-        await contentServicesPage.doubleClickRow(parentFolderModel.name);
-        await contentServicesPage.checkAcsContainer();
-        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.openFolder(parentFolderModel.name);
 
         await paginationPage.selectItemsPerPage(itemsPerPage.five);
-
-        await contentServicesPage.checkAcsContainer();
-        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkDocumentListElementsAreDisplayed();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
 
         await paginationPage.clickOnNextPage();
-
-        await contentServicesPage.checkAcsContainer();
-        await contentServicesPage.waitForTableBody();
+        await contentServicesPage.checkDocumentListElementsAreDisplayed();
 
         await contentServicesPage.doubleClickRow(lastFolderResponse.entry.name);
         await contentServicesPage.checkContentIsDisplayed(pngFileInfo.name);
