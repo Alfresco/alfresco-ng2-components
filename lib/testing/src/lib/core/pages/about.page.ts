@@ -15,117 +15,150 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser, ElementFinder } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
-import { BrowserActions } from '../utils/browser-actions';
+import { DataTableComponentPage } from './data-table-component.page';
 
 export class AboutPage {
 
-    checkBox: ElementFinder = element(by.cssContainingText('.mat-checkbox-label', 'Show menu button'));
-    headerColor: ElementFinder = element(by.css('option[value="primary"]'));
-    titleInput: ElementFinder = element(by.css('input[name="title"]'));
-    iconInput: ElementFinder = element(by.css('input[placeholder="URL path"]'));
-    hexColorInput: ElementFinder = element(by.css('input[placeholder="hex color code"]'));
-    logoHyperlinkInput: ElementFinder = element(by.css('input[placeholder="Redirect URL"]'));
-    logoTooltipInput: ElementFinder = element(by.css('input[placeholder="Tooltip text"]'));
-    positionStart: ElementFinder = element.all(by.css('mat-radio-button[value="start"]')).first();
-    positionEnd: ElementFinder = element.all(by.css('mat-radio-button[value="end"]')).first();
-    sideBarPositionRight: ElementFinder = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));
-    sideBarPositionLeft: ElementFinder = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
+    moduleColumns = {
+        id: 'id',
+        title: 'title',
+        installDate: 'installDate',
+        installState: 'installState',
+        versionMin: 'versionMin'
+    };
 
-    async checkShowMenuCheckBoxIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
+    licenseColumns = {
+        issuedAt: 'issuedAt',
+        expiresAt: 'expiresAt',
+        remainingDays: 'remainingDays',
+        holder: 'holder',
+        mode: 'mode'
+    };
+
+    statusColumns = {
+        isReadOnly: 'isReadOnly',
+        isAuditEnabled: 'isAuditEnabled'
+    };
+
+    packageColumns = {
+        name: 'name',
+        version: 'version'
+    };
+
+    appTitle: ElementFinder = element(by.css('[data-automation-id="adf-github-app-title"]'));
+    sourceCodeTitle: ElementFinder = element(by.css('[data-automation-id="adf-github-source-code-title"]'));
+    githubUrl: ElementFinder = element(by.css('[data-automation-id="adf-github-url"]'));
+    githubVersion: ElementFinder = element(by.css('[data-automation-id="adf-github-version"]'));
+    bpmHost: ElementFinder = element(by.css('[data-automation-id="adf-process-service-host"]'));
+    ecmHost: ElementFinder = element(by.css('[data-automation-id="adf-content-service-host"]'));
+    productVersionTitle: ElementFinder = element(by.css('[data-automation-id="adf-about-product-version-title"]'));
+    bpmEdition: ElementFinder = element(by.css('[data-automation-id="adf-about-bpm-edition"]'));
+    ecmEdition: ElementFinder = element(by.css('[data-automation-id="adf-about-ecm-edition"]'));
+    bpmVersion: ElementFinder = element(by.css('[data-automation-id="adf-about-bpm-version"]'));
+    ecmVersion: ElementFinder = element(by.css('[data-automation-id="adf-about-ecm-version"]'));
+    ecmStatusTitle: ElementFinder = element(by.css('[data-automation-id="adf-about-ecm-status-title"]'));
+    ecmLicenseTitle: ElementFinder = element(by.css('[data-automation-id="adf-about-ecm-license-title"]'));
+    ecmModulesTitle: ElementFinder = element(by.css('[data-automation-id="adf-about-ecm-modules-title"]'));
+    aboutModulesTitle: ElementFinder = element(by.css('[data-automation-id="adf-about-modules-title"]'));
+
+    dataTable: DataTableComponentPage = new DataTableComponentPage();
+
+    getDataTable(): DataTableComponentPage {
+        return this.dataTable;
     }
 
-    async checkChooseHeaderColourIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.headerColor);
+    async checkStatusColumnsIsDisplayed(): Promise<void> {
+        await  this.checkColumnIsDisplayed(this.statusColumns.isAuditEnabled);
+        await  this.checkColumnIsDisplayed(this.statusColumns.isReadOnly);
     }
 
-    async checkChangeTitleIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
+    async checkPackageColumnsIsDisplayed(): Promise<void> {
+        await  this.checkColumnIsDisplayed(this.packageColumns.name);
+        await  this.checkColumnIsDisplayed(this.packageColumns.version);
     }
 
-    async checkChangeUrlPathIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
+    async checkLicenseColumnsIsDisplayed(): Promise<void> {
+        await  this.checkColumnIsDisplayed(this.licenseColumns.expiresAt);
+        await  this.checkColumnIsDisplayed(this.licenseColumns.issuedAt);
+        await  this.checkColumnIsDisplayed(this.licenseColumns.remainingDays);
+        await  this.checkColumnIsDisplayed(this.licenseColumns.holder);
+        await  this.checkColumnIsDisplayed(this.licenseColumns.mode);
     }
 
-    async clickShowMenuButton(): Promise<void> {
-        const checkBox = element.all(by.css('mat-checkbox')).first();
-        await BrowserActions.click(checkBox);
+    async checkModulesColumnsIsDisplayed(): Promise<void> {
+        await  this.checkColumnIsDisplayed(this.moduleColumns.id);
+        await  this.checkColumnIsDisplayed(this.moduleColumns.installDate);
+        await  this.checkColumnIsDisplayed(this.moduleColumns.installState);
+        await  this.checkColumnIsDisplayed(this.moduleColumns.versionMin);
+        await  this.checkColumnIsDisplayed(this.moduleColumns.title);
     }
 
-    async changeHeaderColor(color): Promise<void> {
-        const headerColor = element(by.css('option[value="' + color + '"]'));
-        await BrowserActions.click(headerColor);
+    async checkAboutListIsLoaded() {
+        await this.dataTable.tableIsLoaded();
+        await this.dataTable.waitTillContentLoaded();
     }
 
-    async checkAppTitle(name): Promise<void> {
-        const title = element(by.cssContainingText('.adf-app-title', name));
-        await BrowserVisibility.waitUntilElementIsVisible(title);
+    async checkAppTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.appTitle);
     }
 
-    async addTitle(title): Promise<void> {
-        await BrowserActions.click(this.titleInput);
-        await BrowserActions.clearSendKeys(this.titleInput, title);
-        await this.titleInput.sendKeys(protractor.Key.ENTER);
+    async checkAboutModulesTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.aboutModulesTitle);
     }
 
-    async checkIconIsDisplayed(url): Promise<void> {
-        const icon = element(by.css('img[src="' + url + '"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(icon);
+    async checkSourceCodeTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.sourceCodeTitle);
     }
 
-    async addIcon(url): Promise<void> {
-        await BrowserActions.click(this.iconInput);
-        await BrowserActions.clearSendKeys(this.iconInput, url);
-        await this.iconInput.sendKeys(protractor.Key.ENTER);
+    async checkGithubUrlIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.githubUrl);
     }
 
-    async checkHexColorInputIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
+    async checkGithubVersionIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.githubVersion);
     }
 
-    async checkLogoHyperlinkInputIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
+    async checkBpmHostIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.githubUrl);
     }
 
-    async checkLogoTooltipInputIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
+    async checkEcmHostIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.githubVersion);
     }
 
-    async addHexCodeColor(hexCode): Promise<void> {
-        await BrowserActions.click(this.hexColorInput);
-        await BrowserActions.clearSendKeys(this.hexColorInput, hexCode);
-        await this.hexColorInput.sendKeys(protractor.Key.ENTER);
+    async checkProductVersionTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.productVersionTitle);
+    }
+    async checkBpmEditionIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmEdition);
     }
 
-    async addLogoHyperlink(hyperlink): Promise<void> {
-        await BrowserActions.click(this.logoHyperlinkInput);
-        await BrowserActions.clearSendKeys(this.logoHyperlinkInput, hyperlink);
-        await this.logoHyperlinkInput.sendKeys(protractor.Key.ENTER);
+    async checkEcmEditionIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmEdition);
     }
 
-    async addLogoTooltip(tooltip): Promise<void> {
-        await BrowserActions.click(this.logoTooltipInput);
-        await BrowserActions.clearSendKeys(this.logoTooltipInput, tooltip);
-        await this.logoTooltipInput.sendKeys(protractor.Key.ENTER);
+    async checkBpmVersionIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmVersion);
+    }
+    async checkEcmVersionIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmVersion);
+    }
+    async checkEcmStatusTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmStatusTitle);
     }
 
-    async sideBarPositionStart(): Promise<void> {
-        await BrowserActions.click(this.positionStart);
+    async checkEcmLicenseTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmLicenseTitle);
     }
 
-    async sideBarPositionEnd(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.positionEnd);
-        await BrowserActions.click(this.positionEnd);
+    async checkEcmModulesTitleIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmModulesTitle);
     }
 
-    async checkSidebarPositionStart(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
-    }
-
-    async checkSidebarPositionEnd(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
+    async checkColumnIsDisplayed(column: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_${column}"]`)));
     }
 
 }
