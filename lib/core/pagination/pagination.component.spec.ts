@@ -347,4 +347,27 @@ describe('PaginationComponent', () => {
         });
 
     });
+
+    describe('without total items', () => {
+        beforeEach(() => {
+            component.pagination = new FakePaginationInput(3, 2, 5);
+            component.pagination.hasMoreItems = true;
+            component.pagination.totalItems = undefined;
+        });
+
+        it('has the same, previous page', () => {
+            expect(component.previous).toBe(1);
+        });
+
+        it('has next page', () => {
+            expect(component.next).toBe(3);
+        });
+
+        it('has range', () => {
+            expect(component.range).toEqual([ 26, 50 ]);
+        });
+        it('cannot calculate number of pages', () => {
+            expect(component.pages).toEqual([1]);
+        });
+    });
 });
