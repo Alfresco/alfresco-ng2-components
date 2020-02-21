@@ -135,7 +135,7 @@ export class PeopleCloudComponentPage {
 
     async checkNoResultsFoundError(): Promise<void> {
         const errorLocator = element(by.css('[data-automation-id="adf-people-cloud-no-results"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(errorLocator, 5000);
+        await BrowserVisibility.waitUntilElementIsVisible(errorLocator);
     }
 
 }
