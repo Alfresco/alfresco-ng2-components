@@ -32,17 +32,11 @@ describe('About Process Services', () => {
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
         });
-
         const users = new UsersActions();
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         user = await users.createTenantAndUser(this.alfrescoJsApi);
-
         tenantId = user.tenantId;
-
         await this.alfrescoJsApi.login(user.email, user.password);
-
         await loginPage.loginToProcessServicesUsingUserModel(user);
         await navigationBarPage.clickAboutButton();
 
@@ -52,16 +46,13 @@ describe('About Process Services', () => {
         await navigationBarPage.clickLogoutButton();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
     });
 
     it('[C280002] Should be able to view about process services info', async () => {
         await aboutPage.checkAppTitleIsDisplayed();
         await aboutPage.checkSourceCodeTitleIsDisplayed();
-
         await aboutPage.checkGithubUrlIsDisplayed();
         await aboutPage.checkGithubVersionIsDisplayed();
-
         await aboutPage.checkBpmHostIsDisplayed();
         await aboutPage.checkBpmEditionIsDisplayed();
         await aboutPage.checkBpmVersionIsDisplayed();

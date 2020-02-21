@@ -24,7 +24,6 @@ describe('About Process Services Cloud', () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
-
     let identityService: IdentityService;
     let testUser;
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
@@ -33,7 +32,6 @@ describe('About Process Services Cloud', () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_DEVOPS]);
-
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await apiService.login(testUser.email, testUser.password);
         await navigationBarPage.clickAboutButton();
@@ -42,31 +40,22 @@ describe('About Process Services Cloud', () => {
     afterAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-
     });
 
     it('[C280002] Should be able to view about process services cloud info', async () => {
         await aboutPage.checkAppTitleIsDisplayed();
         await aboutPage.checkSourceCodeTitleIsDisplayed();
-
         await aboutPage.checkGithubUrlIsDisplayed();
         await aboutPage.checkGithubVersionIsDisplayed();
-
         await aboutPage.checkBpmHostIsDisplayed();
         await aboutPage.checkEcmHostIsDisplayed();
-
         await aboutPage.checkAboutListIsLoaded();
-
         await aboutPage.checkPackageColumnsIsDisplayed();
-
         await aboutPage.checkPackageColumnsIsDisplayed();
-
         await aboutPage.checkEcmStatusTitleIsDisplayed();
         await aboutPage.checkStatusColumnsIsDisplayed();
-
         await aboutPage.checkEcmLicenseTitleIsDisplayed();
         await aboutPage.checkLicenseColumnsIsDisplayed();
-
         await aboutPage.checkEcmModulesTitleIsDisplayed();
         await aboutPage.checkModulesColumnsIsDisplayed();
     });

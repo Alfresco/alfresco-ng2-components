@@ -34,15 +34,10 @@ describe('About Content Services', () => {
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         await navigationBarPage.clickAboutButton();
-
     });
 
     afterAll(async () => {
@@ -52,25 +47,17 @@ describe('About Content Services', () => {
     it('[C280002] Should be able to view about content services info', async () => {
         await aboutPage.checkAppTitleIsDisplayed();
         await aboutPage.checkSourceCodeTitleIsDisplayed();
-
         await aboutPage.checkGithubUrlIsDisplayed();
         await aboutPage.checkGithubVersionIsDisplayed();
-
         await aboutPage.checkEcmHostIsDisplayed();
-
         await aboutPage.checkEcmEditionIsDisplayed();
         await aboutPage.checkEcmVersionIsDisplayed();
-
         await aboutPage.checkAboutListIsLoaded();
-
         await aboutPage.checkPackageColumnsIsDisplayed();
-
         await aboutPage.checkEcmStatusTitleIsDisplayed();
         await aboutPage.checkStatusColumnsIsDisplayed();
-
         await aboutPage.checkEcmLicenseTitleIsDisplayed();
         await aboutPage.checkLicenseColumnsIsDisplayed();
-
         await aboutPage.checkEcmModulesTitleIsDisplayed();
         await aboutPage.checkModulesColumnsIsDisplayed();
     });
