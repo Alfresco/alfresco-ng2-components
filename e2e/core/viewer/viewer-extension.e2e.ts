@@ -66,8 +66,7 @@ describe('Viewer', () => {
         jsFileUploaded = await uploadActions.uploadFile(jsFileInfo.location, jsFileInfo.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);

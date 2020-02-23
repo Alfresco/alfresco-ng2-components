@@ -36,5 +36,4 @@ describe('Auth Guard SSO', () => {
         const error = await errorPage.getErrorCode();
         await expect(error).toBe('403');
     });
-
 });

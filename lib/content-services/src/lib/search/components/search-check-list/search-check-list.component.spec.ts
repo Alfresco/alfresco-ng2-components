@@ -115,5 +115,4 @@ describe('SearchCheckListComponent', () => {
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('');
     });
-
 });

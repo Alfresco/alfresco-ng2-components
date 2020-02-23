@@ -233,5 +233,4 @@ describe('Core Evaluators', () => {
             expect(result).toBeTruthy();
         });
     });
-
 });

@@ -329,5 +329,4 @@ describe('Task Details component', () => {
         await taskPage.taskDetails().checkEditPriorityButtonIsNotDisplayed();
         await taskPage.taskDetails().checkDueDatePickerButtonIsNotDisplayed();
     });
-
 });

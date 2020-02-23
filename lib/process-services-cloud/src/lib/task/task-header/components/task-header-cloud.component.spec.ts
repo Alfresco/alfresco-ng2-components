@@ -179,8 +179,7 @@ describe('TaskHeaderCloudComponent', () => {
                 expect(updateTaskSpy).toHaveBeenCalled();
             });
         }));
-
-    });
+   });
 
     describe('Task with parentTaskId', () => {
 

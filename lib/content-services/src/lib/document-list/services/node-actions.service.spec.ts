@@ -109,5 +109,4 @@ describe('NodeActionsService', () => {
             expect(error).toBe('FAKE-KO');
         });
     }));
-
 });

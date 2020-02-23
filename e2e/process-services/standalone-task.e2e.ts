@@ -60,14 +60,12 @@ describe('Start Task - Task App', () => {
         await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     beforeEach(async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-
-    });
+   });
 
     it('[C260421] Should a standalone task be displayed when creating a new task without form', async () => {
 
@@ -138,5 +136,4 @@ describe('Start Task - Task App', () => {
         await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
         await expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
     });
-
 });

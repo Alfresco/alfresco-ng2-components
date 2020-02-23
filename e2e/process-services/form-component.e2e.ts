@@ -100,6 +100,5 @@ describe('Form Component', () => {
         await formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
         await formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
         await formPage.checkErrorLogMessage(message.errorLabel);
-
-    });
+   });
 });

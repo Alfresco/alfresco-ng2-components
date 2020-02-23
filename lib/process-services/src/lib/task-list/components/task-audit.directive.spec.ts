@@ -153,5 +153,4 @@ describe('TaskAuditDirective', () => {
         button.click();
 
     }));
-
 });

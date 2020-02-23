@@ -70,5 +70,4 @@ describe('TabModel', () => {
         const model = new TabModel(null, json);
         expect(model.json).toBe(json);
     });
-
 });

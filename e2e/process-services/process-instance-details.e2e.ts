@@ -67,19 +67,16 @@ describe('Process Instance Details', () => {
         await processListPage.checkProcessListIsDisplayed();
 
         process = await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processModel.id);
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appModel.id);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
-
-    });
+   });
 
     it('[C307031] Should display the created date in the default format', async () => {
         await processDetailsPage.checkDetailsAreDisplayed();
         await expect(await processDetailsPage.getCreated()).toEqual(moment(process.started).format(PROCESS_DATE_FORMAT));
     });
-
 });

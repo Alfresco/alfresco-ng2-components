@@ -47,8 +47,7 @@ describe('Search Date Range Filter', () => {
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter('*');
-
-    });
+   });
 
     beforeEach(async () => {
         await searchFilters.checkCreatedRangeFilterIsDisplayed();
@@ -58,8 +57,7 @@ describe('Search Date Range Filter', () => {
 
     afterEach(async () => {
         await browser.refresh();
-
-    });
+   });
 
     it('[C277106] Should display default values for Date Range widget', async () => {
         await dateRangeFilter.checkFromFieldIsDisplayed();

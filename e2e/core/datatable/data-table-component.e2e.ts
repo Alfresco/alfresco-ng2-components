@@ -50,7 +50,6 @@ describe('Datatable component', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
     });
 
     afterAll(async () => {

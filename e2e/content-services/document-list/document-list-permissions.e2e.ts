@@ -85,7 +85,5 @@ describe('Document List Component', () => {
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             await expect(await errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
         });
-
-    });
-
+   });
 });

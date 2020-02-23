@@ -78,5 +78,4 @@ describe('RowEditorComponent', () => {
         component.onSaveChanges();
         expect(raised).toBeFalsy();
     });
-
 });

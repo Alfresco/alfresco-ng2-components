@@ -116,8 +116,7 @@ describe('AppListCloudComponent', () => {
             expect(errorSubtitle.innerText).toBe('ADF_CLOUD_TASK_LIST.APPS.ERROR.SUBTITLE');
             expect(getAppsSpy).toHaveBeenCalled();
         });
-
-    });
+   });
 
     describe('Grid Layout ', () => {
 

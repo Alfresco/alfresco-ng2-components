@@ -90,8 +90,7 @@ describe('Document List Component', () => {
             });
 
         await browser.driver.sleep(12000);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -101,8 +100,7 @@ describe('Document List Component', () => {
         await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
         await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
         await uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
-
-    });
+   });
 
     describe('Document List Component - Actions Move and Copy', () => {
 
@@ -177,8 +175,7 @@ describe('Document List Component', () => {
             await contentNodeSelector.clickMoveCopyButton();
             await notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
-
-    });
+   });
 
     describe('Document List actionns - Move, Copy on no permission folder', () => {
 
@@ -213,7 +210,5 @@ describe('Document List Component', () => {
             await contentNodeSelector.contentListPage().dataTablePage().waitTillContentLoaded();
             await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder2.entry.name);
         });
-
-    });
-
+   });
 });

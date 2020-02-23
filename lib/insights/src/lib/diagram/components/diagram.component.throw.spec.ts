@@ -670,5 +670,4 @@ describe('Diagrams throw', () => {
             ajaxReply(resp);
         }));
     });
-
 });

@@ -105,8 +105,7 @@ describe('Search component - Search Bar', () => {
         await browser.sleep(15000); // wait search index previous file/folder uploaded
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-    });
+   });
 
     afterAll(async () => {
         for (const currentNode of filesToDelete) {
@@ -118,8 +117,7 @@ describe('Search component - Search Bar', () => {
 
     afterEach(async () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url);
-
-    });
+   });
 
     it('[C272798] Search bar should be visible', async () => {
         await searchDialog.checkSearchBarIsNotVisible();

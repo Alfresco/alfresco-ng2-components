@@ -57,8 +57,7 @@ describe('Viewer', () => {
         });
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-    });
+   });
 
     describe('PowerPoint Folder Uploaded', () => {
 
@@ -91,7 +90,5 @@ describe('Viewer', () => {
                 }
             }
         });
-
-    });
-
+   });
 });

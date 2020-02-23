@@ -185,6 +185,5 @@ describe('ProcessInstanceHeaderComponent', () => {
                 expect(propertyList[2].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.CATEGORY');
             });
         }));
-
-    });
+   });
 });

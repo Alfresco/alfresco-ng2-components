@@ -77,8 +77,7 @@ describe('Viewer', () => {
         wordFileUploaded = await uploadActions.uploadFile(wordFileInfo.location, wordFileInfo.name, '-my-');
 
         pngFileShared = await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({ 'nodeId': pngFileUploaded.entry.id });
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);

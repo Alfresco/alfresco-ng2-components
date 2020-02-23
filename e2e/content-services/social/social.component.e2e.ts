@@ -79,14 +79,12 @@ describe('Social component', () => {
                     }]
                 }
             });
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
         await uploadActions.deleteFileOrFolder(emptyFile.entry.id);
-
-    });
+   });
 
     describe('User interaction on their own components', () => {
 
@@ -111,8 +109,7 @@ describe('Social component', () => {
             await likePage.removeHoverFromLikeButton();
             await expect(await likePage.getUnLikedIconColor()).toBe(greyLikeColor);
         });
-
-    });
+   });
 
     describe('User interaction on components that belong to other users', () => {
 
@@ -148,8 +145,7 @@ describe('Social component', () => {
             await expect(await ratePage.getRatingCounter()).toBe('0');
             await expect(await ratePage.isNotStarRated(4));
         });
-
-    });
+   });
 
     describe('Multiple Users interaction', () => {
 

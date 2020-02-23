@@ -30,8 +30,7 @@ describe('FullNamePipe', () => {
 
     beforeEach(() => {
         pipe = TestBed.get(MultiValuePipe);
-
-    });
+   });
 
     it('should add the separator when a list is provided', () => {
         const values = ['cat', 'house', 'dog'];

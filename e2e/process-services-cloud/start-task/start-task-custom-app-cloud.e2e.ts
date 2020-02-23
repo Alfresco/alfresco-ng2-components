@@ -92,8 +92,7 @@ describe('Start Task', () => {
         await identityService.deleteIdentityUser(activitiUser.idIdentityService);
         await identityService.deleteIdentityUser(apsUser.idIdentityService);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-
-    });
+   });
 
     beforeEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -230,5 +229,4 @@ describe('Start Task', () => {
 
         await expect(await taskHeaderCloudPage.getAssignee()).toBe(apsUser.username);
     });
-
 });

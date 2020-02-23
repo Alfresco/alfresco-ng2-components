@@ -36,5 +36,4 @@ describe('BooleanEditorComponent', () => {
         component.onValueChanged(row, column, event);
         expect(row.value[column.id]).toBeTruthy();
     });
-
 });

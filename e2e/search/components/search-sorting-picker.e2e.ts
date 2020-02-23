@@ -74,16 +74,14 @@ describe('Search Sorting Picker', () => {
         await browser.sleep(12000);
 
         await loginPage.loginToContentServices(acsUser.id, acsUser.password);
-
-    });
+   });
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(pngA.entry.id);
         await uploadActions.deleteFileOrFolder(pngD.entry.id);
 
         await navigationBarPage.clickLogoutButton();
-
-    });
+   });
 
     beforeEach(async () => {
         await searchDialog.clickOnSearchIcon();
@@ -223,5 +221,4 @@ describe('Search Sorting Picker', () => {
         }
         await expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
     });
-
 });

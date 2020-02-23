@@ -273,7 +273,5 @@ describe('Task', () => {
             await taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             await expect(await taskFiltersDemoPage.myTasksFilter().getTaskFilterIcon()).toEqual('inbox');
         });
-
-    });
-
+   });
 });

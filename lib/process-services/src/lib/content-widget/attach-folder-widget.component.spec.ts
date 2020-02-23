@@ -150,5 +150,4 @@ describe('AttachFolderWidgetComponent', () => {
             expect(element.querySelector('#folder-fake-widget')).toBeNull();
         });
     }));
-
 });

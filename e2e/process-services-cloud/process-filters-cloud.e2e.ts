@@ -129,5 +129,4 @@ describe('Process filters cloud', () => {
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
         });
     });
-
 });

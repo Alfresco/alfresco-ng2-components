@@ -87,5 +87,4 @@ describe('FileSizePipe', () => {
             expect(pipe.transform(size, precision)).toBe(expectancy);
         });
     });
-
 });

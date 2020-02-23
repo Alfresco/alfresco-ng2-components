@@ -67,8 +67,7 @@ describe('Version Properties', () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
-
-    });
+   });
 
     it('[C272817] Should NOT be present the download action when allowDownload property is false', async () => {
         await versionManagePage.disableDownload();
@@ -109,5 +108,4 @@ describe('Version Properties', () => {
         await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.showNewVersionButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
     });
-
 });

@@ -197,5 +197,4 @@ describe('AuthGuardService ECM', () => {
 
         expect(materialDialog.closeAll).toHaveBeenCalled();
     });
-
 });

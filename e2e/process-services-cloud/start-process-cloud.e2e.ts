@@ -54,14 +54,12 @@ describe('Start Process', () => {
 
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
-
-    });
+   });
 
     afterAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-
-    });
+   });
 
     afterEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -111,7 +109,5 @@ describe('Start Process', () => {
         await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
         await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
-
-    });
-
+   });
 });

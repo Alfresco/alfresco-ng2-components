@@ -251,8 +251,7 @@ describe('VersionListComponent', () => {
             component.downloadVersion('1.0');
             expect(spyOnDownload).not.toHaveBeenCalled();
         });
-
-    });
+   });
 
     describe('Version restoring', () => {
 
@@ -489,5 +488,4 @@ describe('VersionListComponent', () => {
             });
         });
     });
-
 });

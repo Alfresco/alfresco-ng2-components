@@ -160,5 +160,4 @@ describe('Dynamic Table widget ', () => {
             await widget.dynamicTable().checkTableRowIsNotVisible(1);
         });
     });
-
 });

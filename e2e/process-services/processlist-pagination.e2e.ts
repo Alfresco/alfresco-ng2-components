@@ -71,8 +71,7 @@ describe('Process List - Pagination', () => {
         deployedTestApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     describe('Empty processes', () => {
 

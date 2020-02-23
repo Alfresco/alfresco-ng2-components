@@ -54,5 +54,4 @@ describe('TranslateLoader', () => {
         customLoader.registerProvider('login', 'path/login');
         expect(customLoader.providerRegistered('login')).toBeTruthy();
     });
-
 });

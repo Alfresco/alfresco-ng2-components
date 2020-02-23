@@ -518,7 +518,5 @@ describe('ShareDataTableAdapter', () => {
 
             expect(row.isDropTarget).toBeFalsy();
         });
-
-    });
-
+   });
 });

@@ -184,7 +184,5 @@ describe('Document List Component', () => {
             await contentServicesPage.selectGridSortingFromDropdown(cardProperties.CREATED);
             await contentServicesPage.checkListIsSortedByCreatedColumn('asc');
         });
-
-    });
-
+   });
 });

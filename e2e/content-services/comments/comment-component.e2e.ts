@@ -61,8 +61,7 @@ describe('Comment Component', () => {
     beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -81,14 +80,12 @@ describe('Comment Component', () => {
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
-
-    });
+   });
 
     afterEach(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(nodeId);
-
-    });
+   });
 
     it('[C276947] Should be able to add a comment on ACS and view on ADF', async () => {
         await this.alfrescoJsApi.core.commentsApi.addComment(nodeId, { content: comments.test });
@@ -105,8 +102,7 @@ describe('Comment Component', () => {
         await expect(await commentsPage.getMessage(0)).toEqual(comments.test);
         await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
         await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
-
-    });
+   });
 
     it('[C276948] Should be able to add a comment on a file', async () => {
         await viewerPage.viewFile(pngFileModel.name);

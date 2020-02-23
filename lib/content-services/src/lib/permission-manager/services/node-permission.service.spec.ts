@@ -193,5 +193,4 @@ describe('NodePermissionService', () => {
                 expect(errorMessage).toBe('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION');
             });
     }));
-
 });

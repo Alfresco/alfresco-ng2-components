@@ -193,5 +193,4 @@ describe('Task List Pagination', () => {
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
     });
-
 });

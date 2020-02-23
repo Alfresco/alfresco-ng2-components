@@ -76,8 +76,7 @@ describe('Search Radio Component', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName);
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -86,8 +85,7 @@ describe('Search Radio Component', () => {
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);
 
         await navigationBarPage.clickLogoutButton();
-
-    });
+   });
 
     it('[C277039] Should be able to choose only one option at a time', async () => {
         await searchFiltersPage.checkTypeFilterIsDisplayed();
@@ -250,8 +248,7 @@ describe('Search Radio Component', () => {
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
         });
-
-    });
+   });
 
     describe('Properties', () => {
 
@@ -293,7 +290,5 @@ describe('Search Radio Component', () => {
             await searchResults.checkContentIsDisplayed(nodeNames.document);
             await searchResults.checkContentIsNotDisplayed(nodeNames.folder);
         });
-
-    });
-
+   });
 });

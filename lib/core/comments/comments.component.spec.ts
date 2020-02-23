@@ -295,8 +295,7 @@ describe('CommentsComponent', () => {
             component.add();
             expect(emitSpy).toHaveBeenCalled();
         });
-
-    });
+   });
 
     describe('Add comment node', () => {
 
@@ -383,7 +382,5 @@ describe('CommentsComponent', () => {
             component.add();
             expect(emitSpy).toHaveBeenCalled();
         });
-
-    });
-
+   });
 });

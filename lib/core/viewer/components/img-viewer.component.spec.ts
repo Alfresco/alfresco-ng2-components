@@ -350,7 +350,5 @@ describe('Test Img viewer component ', () => {
                 });
             });
         });
-
-    });
-
+   });
 });

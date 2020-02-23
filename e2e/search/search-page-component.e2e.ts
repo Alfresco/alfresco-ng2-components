@@ -93,8 +93,7 @@ describe('Search component - Search Page', () => {
         await browser.sleep(15000);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();

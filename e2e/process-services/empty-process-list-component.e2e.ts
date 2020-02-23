@@ -61,8 +61,7 @@ describe('Empty Process List Test', () => {
         await apps.importPublishDeployApp(this.alfrescoJsApi, appB.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
-    });
+   });
 
     it('[C260494] Should add process to list when a process is created', async () => {
         await navigationBarPage.navigateToProcessServicesPage();
@@ -93,5 +92,4 @@ describe('Empty Process List Test', () => {
 
         await processDetailsPage.checkProcessDetailsCard();
     });
-
 });

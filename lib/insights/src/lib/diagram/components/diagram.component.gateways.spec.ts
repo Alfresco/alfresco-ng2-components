@@ -443,5 +443,4 @@ describe('Diagrams gateways', () => {
             ajaxReply(resp);
         }));
     });
-
 });

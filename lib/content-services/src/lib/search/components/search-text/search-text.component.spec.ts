@@ -84,5 +84,4 @@ describe('SearchTextComponent', () => {
         expect(component.value).toBe('');
         expect(component.context.queryFragments[component.id]).toBe('');
     });
-
 });

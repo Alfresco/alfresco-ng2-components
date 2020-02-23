@@ -37,5 +37,4 @@ describe('TextEditorComponent', () => {
         editor.onValueChanged(row, column, event);
         expect(row.value[column.id]).toBe(value);
     });
-
 });

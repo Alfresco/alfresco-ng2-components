@@ -83,8 +83,7 @@ describe('Form Field Component - Dropdown Widget', () => {
     afterAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-
-    });
+   });
 
     beforeEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -118,5 +117,4 @@ describe('Form Field Component - Dropdown Widget', () => {
         await expect(await dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
         await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
     });
-
 });

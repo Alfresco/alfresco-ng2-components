@@ -173,5 +173,4 @@ describe('Discovery Api Service', () => {
             });
         });
     });
-
 });

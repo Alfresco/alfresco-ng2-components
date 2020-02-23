@@ -66,8 +66,7 @@ describe('Search Slider Filter', () => {
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter('*');
-
-    });
+   });
 
     afterAll(async () => {
         try {
@@ -77,8 +76,7 @@ describe('Search Slider Filter', () => {
         }
 
         await navigationBarPage.clickLogoutButton();
-
-    });
+   });
 
     afterEach(async () => {
         await browser.refresh();

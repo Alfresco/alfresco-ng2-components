@@ -113,8 +113,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
             expect(documentList).not.toBeNull('Document list should be shown');
             expect(documentList.componentInstance.imageResolver).toBe(data.imageResolver);
         });
-
-    });
+   });
 
     describe('Cancel button', () => {
 
@@ -156,7 +155,5 @@ describe('ContentNodeSelectorDialogComponent', () => {
             const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
             expect(actionButton.nativeElement.disabled).toBeFalsy();
         });
-
-    });
-
+   });
 });

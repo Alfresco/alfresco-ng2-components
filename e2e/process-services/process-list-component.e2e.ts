@@ -82,8 +82,7 @@ describe('Process List Test', () => {
         await this.alfrescoJsApi.activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.toString(), { values: { label: null } });
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appDateModel.id);
@@ -92,13 +91,11 @@ describe('Process List Test', () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
-
-    });
+   });
 
     beforeEach(async () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/process-list');
-
-    });
+   });
 
     it('[C286638] Should display all process by default', async () => {
         await processListDemoPage.checkAppIdFieldIsDisplayed();

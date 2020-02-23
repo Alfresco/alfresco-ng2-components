@@ -57,8 +57,7 @@ describe('Radio Buttons Widget', () => {
 
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
@@ -71,8 +70,7 @@ describe('Radio Buttons Widget', () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-
-    });
+   });
 
     it('[C277316] Should display empty radio buttons when no preselection is configured', async () => {
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);

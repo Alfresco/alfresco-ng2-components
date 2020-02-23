@@ -228,7 +228,5 @@ describe('Edit process filters cloud', () => {
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().getFilterName()).toEqual('All Processes');
             await processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnCancelButton();
         });
-
-    });
-
+   });
 });

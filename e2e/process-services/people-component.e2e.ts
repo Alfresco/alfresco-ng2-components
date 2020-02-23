@@ -69,8 +69,7 @@ describe('People component', () => {
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[2] });
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[3] });
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[4] });
-
-    });
+   });
 
     beforeEach(async () => {
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
@@ -78,8 +77,7 @@ describe('People component', () => {
         await navigationBarPage.navigateToProcessServicesPage();
         await (await processServices.goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-
-    });
+   });
 
     it('[C279989] Should no people be involved when no user is typed', async () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
@@ -231,5 +229,4 @@ describe('People component', () => {
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
     });
-
 });

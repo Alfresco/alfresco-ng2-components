@@ -62,8 +62,7 @@ describe('Favorite directive', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await contentServicesPage.goToDocumentList();
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -72,14 +71,12 @@ describe('Favorite directive', () => {
         await uploadActions.deleteFileOrFolder(testFolder2.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder3.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder4.entry.id);
-
-    });
+   });
 
     beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-
-    });
+   });
 
     it('[C260247] Should be able to mark a file as favorite', async () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
@@ -216,6 +213,5 @@ describe('Favorite directive', () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
         await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
         await contentServicesPage.checkIsMarkedFavorite();
-
-    });
+   });
 });

@@ -43,8 +43,7 @@ describe('Datatable component - selection', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await navigationBarPage.navigateToDatatable();
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();

@@ -134,6 +134,5 @@ describe('VersionManagerComponent', () => {
 
             expect(component.uploadState).toEqual('open');
         });
-
-    });
+   });
 });

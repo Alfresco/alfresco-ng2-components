@@ -237,5 +237,4 @@ describe('Task Assignee', () => {
             await taskPage.taskDetails().checkClaimEnabled();
         });
     });
-
 });

@@ -85,8 +85,7 @@ describe('Start Task - Group Cloud Component', () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(apsUser.idIdentityService);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-
-    });
+   });
 
     beforeEach(async () => {
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
@@ -178,5 +177,4 @@ describe('Start Task - Group Cloud Component', () => {
         await groupCloud.selectGroupFromList(testGroup.name);
         await groupCloud.checkSelectedGroup(testGroup.name);
     });
-
 });

@@ -167,5 +167,4 @@ describe('ProcessAuditDirective', () => {
         button.click();
 
     }));
-
 });

@@ -54,8 +54,7 @@ describe('Login component - SSO', () => {
             await browser.refresh();
             await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         });
-
-    });
+   });
 
     describe('Login component - SSO Grant type password (implicit flow false)', () => {
 

@@ -77,8 +77,7 @@ describe('Aspect oriented config', () => {
         aspects.entry.aspectNames.push(defaultModel.concat(':', defaultEmptyPropertiesAspect));
 
         await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, { aspectNames: aspects.entry.aspectNames });
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -87,8 +86,7 @@ describe('Aspect oriented config', () => {
     afterEach(async () => {
         await viewerPage.clickCloseButton();
         await contentServicesPage.checkAcsContainer();
-
-    });
+   });
 
     it('[C261117] Should be possible restrict the display properties of one an aspect', async () => {
 
@@ -240,8 +238,7 @@ describe('Aspect oriented config', () => {
 
         await expect(await metadataViewPage.getMetadataGroupTitle('GROUP-TITLE1-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION ONE');
         await expect(await metadataViewPage.getMetadataGroupTitle('GROUP-TITLE2-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION TWO');
-
-    });
+   });
 
     it('[C279968] Should be possible use a custom preset', async () => {
 

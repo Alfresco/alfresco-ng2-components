@@ -69,16 +69,14 @@ describe('Checklist component', () => {
         }
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     beforeEach(async () => {
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
         await (await processServices.goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-
-    });
+   });
 
     it('[C279976] Should no checklist be created when no title is typed', async () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
@@ -202,5 +200,4 @@ describe('Checklist component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(hierarchyChecklist[2]);
         await taskPage.tasksListPage().checkContentIsDisplayed(hierarchyChecklist[3]);
     });
-
 });

@@ -123,6 +123,5 @@ describe('ContentMetadataConfigFactory', () => {
                 expect(config).toEqual(jasmine.any(LayoutOrientedConfigService));
             }));
         });
-
-    });
+   });
 });

@@ -295,7 +295,6 @@ describe('ObjectDataTableAdapter', () => {
             })
         );
     });
-
 });
 
 describe('ObjectDataRow', () => {
@@ -364,5 +363,4 @@ describe('ObjectDataRow', () => {
         expect(schema[0].title).toBe('id');
         expect(schema[1].title).toBe('name');
     });
-
 });

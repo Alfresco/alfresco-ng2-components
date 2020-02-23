@@ -162,5 +162,4 @@ describe('Confirm Dialog Component', () => {
             expect(thirdOptionElement.nativeElement.innerText).toBe('YES ALL');
         });
     });
-
 });

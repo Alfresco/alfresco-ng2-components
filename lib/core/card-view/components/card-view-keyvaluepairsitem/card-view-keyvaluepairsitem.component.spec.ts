@@ -171,6 +171,5 @@ describe('CardViewKeyValuePairsItemComponent', () => {
                 expect(cardViewUpdateService.update).not.toHaveBeenCalled();
             });
         }));
-
-    });
+   });
 });

@@ -69,8 +69,7 @@ describe('Metadata component', () => {
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         Object.assign(pngFileModel, pngUploadedFile.entry);
         pngFileModel.update(pngUploadedFile.entry);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -237,8 +236,7 @@ describe('Metadata component', () => {
             await metadataViewPage.clickUpdatePropertyIcon('properties.exif:fNumber');
             await expect(await metadataViewPage.getPropertyText('properties.exif:fNumber')).toEqual('22');
         });
-
-    });
+   });
 
     describe('Folder metadata', () => {
 
@@ -279,8 +277,7 @@ describe('Metadata component', () => {
             await metadataViewPage.clickUpdatePropertyIcon('name');
             await expect(await metadataViewPage.getPropertyText('name')).toEqual(folderName);
         });
-
-    });
+   });
 
     it('[C279960] Should show the last username modifier when modify a File', async () => {
         await loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -316,5 +313,4 @@ describe('Metadata component', () => {
         await viewerPage.clickCloseButton();
         await contentServicesPage.waitForTableBody();
     });
-
 });

@@ -51,8 +51,7 @@ describe('Task Details - No form', () => {
         importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         await apps.startProcess(this.alfrescoJsApi, importedApp);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     afterAll( async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -71,7 +70,5 @@ describe('Task Details - No form', () => {
         await taskPage.taskDetails().checkAttachFormButtonIsNotDisplayed();
         await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
         await expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
-
-    });
-
+   });
 });

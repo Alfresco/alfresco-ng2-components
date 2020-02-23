@@ -627,5 +627,4 @@ describe('Diagrams events', () => {
             ajaxReply(resp);
         }));
     });
-
 });

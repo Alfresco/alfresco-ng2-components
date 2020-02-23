@@ -117,8 +117,7 @@ describe('DocumentActionsService', () => {
 
         const file = new FileNode();
         service.getHandler('delete')(file);
-
-    });
+   });
 
     it('should call the error on the returned Observable if there are no permissions', (done) => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
@@ -230,6 +229,5 @@ describe('DocumentActionsService', () => {
         const fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = [permission];
         service.getHandler('delete')(fileWithPermission, target, permission);
-
-    });
+   });
 });

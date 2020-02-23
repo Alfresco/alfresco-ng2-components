@@ -202,5 +202,4 @@ describe('ContentMetadataCardComponent', () => {
         component.ngOnChanges({ displayAspect });
         expect(component.expanded).toBeTruthy();
     });
-
 });

@@ -253,7 +253,5 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.checkSelectedPeople('TestFirstName3 TestLastName3');
 
         });
-
-    });
-
+   });
 });

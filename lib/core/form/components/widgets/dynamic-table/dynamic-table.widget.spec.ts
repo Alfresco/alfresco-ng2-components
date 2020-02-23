@@ -308,8 +308,7 @@ describe('DynamicTableWidgetComponent', () => {
         expect(widget.content.field.validate()).toBeTruthy();
         expect(widget.isValid()).toBe(widget.content.field.isValid);
         expect(widget.content.field.isValid).toBeTruthy();
-
-    });
+   });
 
     it('should prepend default currency for amount columns', () => {
         const row = <DynamicTableRow> {value: {key: '100'}};

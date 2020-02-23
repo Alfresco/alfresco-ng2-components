@@ -342,7 +342,5 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
         });
-
-    });
-
+   });
 });

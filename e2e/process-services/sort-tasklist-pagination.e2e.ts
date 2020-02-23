@@ -68,8 +68,7 @@ describe('Task List Pagination - Sorting', () => {
         }
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     it('[C260308] Should be possible to sort tasks by name', async () => {
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
@@ -88,5 +87,4 @@ describe('Task List Pagination - Sorting', () => {
             await expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
         });
     });
-
 });

@@ -533,8 +533,7 @@ describe('GroupCloudComponent', () => {
                 done();
             });
         });
-
-    });
+   });
 
     describe('Multiple Mode with read-only', () => {
 

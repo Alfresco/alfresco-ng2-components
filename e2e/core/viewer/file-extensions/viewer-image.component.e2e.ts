@@ -61,8 +61,7 @@ describe('Viewer', () => {
         });
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-    });
+   });
 
     describe('Image Folder Uploaded', () => {
 
@@ -106,7 +105,5 @@ describe('Viewer', () => {
                 }
             }
         });
-
-    });
-
+   });
 });

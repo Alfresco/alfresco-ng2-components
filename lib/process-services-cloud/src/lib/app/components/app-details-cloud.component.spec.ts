@@ -73,6 +73,5 @@ describe('AppDetailsCloudComponent', () => {
         fixture.detectChanges();
         const app = fixture.nativeElement.querySelector('.mat-card');
         expect(app).toBeTruthy();
-
-    });
+   });
 });

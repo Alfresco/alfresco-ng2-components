@@ -56,8 +56,7 @@ describe('Viewer', () => {
         });
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-    });
+   });
     describe('Excel Folder Uploaded', () => {
 
         let uploadedExcels;
@@ -88,7 +87,5 @@ describe('Viewer', () => {
                 }
             }
         });
-
-    });
-
+   });
 });

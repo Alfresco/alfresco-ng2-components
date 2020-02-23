@@ -204,5 +204,4 @@ describe('AddPermissionPanelComponent', () => {
             expect(element.querySelector('#result_option_0 .mat-list-text').innerHTML).not.toEqual(element.querySelector('#result_option_1 .mat-list-text').innerHTML);
         });
     }));
-
 });

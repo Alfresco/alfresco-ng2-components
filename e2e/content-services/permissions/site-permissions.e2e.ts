@@ -141,8 +141,7 @@ describe('Permissions Component', () => {
             });
 
         await uploadActions.uploadFile(fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -150,8 +149,7 @@ describe('Permissions Component', () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
-
-    });
+   });
 
     describe('Role Site Dropdown', () => {
 
@@ -195,8 +193,7 @@ describe('Permissions Component', () => {
             await expect(await BrowserActions.getText(roleDropdownOptions.get(2))).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
             await expect(await BrowserActions.getText(roleDropdownOptions.get(3))).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
         });
-
-    });
+   });
 
     describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', () => {
 
@@ -344,7 +341,5 @@ describe('Permissions Component', () => {
             await contentServicesPage.deleteContent('Site' + fileModel.name);
             await contentServicesPage.checkContentIsNotDisplayed('Site' + fileModel.name);
         });
-
-    });
-
+   });
 });

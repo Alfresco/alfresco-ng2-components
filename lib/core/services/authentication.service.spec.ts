@@ -501,5 +501,4 @@ describe('AuthenticationService', () => {
             expect(authService.isALLProvider()).toBe(true);
         });
     });
-
 });

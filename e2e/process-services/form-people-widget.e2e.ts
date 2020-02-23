@@ -59,16 +59,14 @@ describe('Form widgets - People', () => {
         appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, app.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     afterAll(async () => {
 
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-
-    });
+   });
 
     beforeEach(async () => {
         await (await (await new NavigationBarPage().navigateToProcessServicesPage()).goToApp(appModel.name)).clickProcessButton();

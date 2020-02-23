@@ -78,8 +78,7 @@ describe('Task Details - Form', () => {
         otherTask = await this.alfrescoJsApi.activiti.taskApi.getTask(otherEmptyTask.id);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
-    });
+   });
 
     afterAll( async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);

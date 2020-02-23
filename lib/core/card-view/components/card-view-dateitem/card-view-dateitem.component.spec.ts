@@ -303,5 +303,4 @@ describe('CardViewDateItemComponent', () => {
             fixture.whenStable().then(() => expect(component.property.value).toEqual(expectedDate.toDate()));
         });
     }));
-
 });

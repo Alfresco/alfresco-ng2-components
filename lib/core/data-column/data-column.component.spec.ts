@@ -39,5 +39,4 @@ describe('DataColumnListComponent', () => {
         component.ngOnInit();
         expect(component.srTitle).toBeTruthy();
     });
-
 });

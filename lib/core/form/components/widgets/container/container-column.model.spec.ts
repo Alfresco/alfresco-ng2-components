@@ -38,5 +38,4 @@ describe('ContainerColumnModel', () => {
         column.fields = [new FormFieldModel(new FormModel(), null)];
         expect(column.hasFields()).toBeTruthy();
     });
-
 });

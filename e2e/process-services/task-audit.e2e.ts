@@ -119,5 +119,4 @@ describe('Task Audit', () => {
         await taskPage.taskDetails().clickAuditLogButton();
         await expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
     });
-
 });

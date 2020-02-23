@@ -308,8 +308,7 @@ describe('User info component', () => {
                 });
             }));
         });
-
-    });
+   });
 
     describe('when user is logged on bpm', () => {
 

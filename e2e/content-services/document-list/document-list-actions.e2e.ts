@@ -381,6 +381,5 @@ describe('Document List Component - Actions', () => {
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
         });
-
-    });
+   });
 });

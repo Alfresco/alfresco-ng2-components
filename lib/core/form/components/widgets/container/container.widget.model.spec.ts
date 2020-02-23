@@ -73,5 +73,4 @@ describe('ContainerWidgetComponentModel', () => {
         }));
         expect(container.isCollapsedByDefault()).toBeTruthy();
     });
-
 });

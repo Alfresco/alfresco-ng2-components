@@ -132,8 +132,7 @@ describe('Process filters cloud', () => {
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
-
-    });
+   });
 
     afterAll(async () => {
         await processInstancesService.deleteProcessInstance(runningProcessInstance.entry.id, candidateBaseApp);
@@ -147,8 +146,7 @@ describe('Process filters cloud', () => {
 
         await identityService.deleteIdentityUser(testUser.idIdentityService);
         await identityService.deleteIdentityUser(anotherUser.idIdentityService);
-
-    });
+   });
 
     beforeEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();

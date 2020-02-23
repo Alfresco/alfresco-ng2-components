@@ -106,8 +106,7 @@ describe('Content Services Viewer', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await contentServicesPage.goToDocumentList();
-
-    });
+   });
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(pdfFile.getId());
@@ -118,8 +117,7 @@ describe('Content Services Viewer', () => {
         await uploadActions.deleteFileOrFolder(pptFile.getId());
         await uploadActions.deleteFileOrFolder(unsupportedFile.getId());
         await navigationBarPage.clickLogoutButton();
-
-    });
+   });
 
     it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', async () => {
         await contentServicesPage.checkAcsContainer();

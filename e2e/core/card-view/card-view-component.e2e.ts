@@ -30,8 +30,7 @@ describe('CardView Component', () => {
     beforeAll(async () => {
         await loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await navigationBarPage.clickCardViewButton();
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -233,8 +232,7 @@ describe('CardView Component', () => {
 
             await expect(await cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
         });
-
-    });
+   });
 
     describe('Boolean', () => {
 
@@ -283,8 +281,7 @@ describe('CardView Component', () => {
             await expect(cardViewPageComponent.getOutputText(1))
                 .toBe('[CardView Datetime Item] - null');
         });
-
-    });
+   });
 
     it('[C306895] Should display the form field as editable and clickable depending on the \'Editable\' toggle mode.', async () => {
         const message = 'clickable updated';

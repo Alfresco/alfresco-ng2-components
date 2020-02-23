@@ -53,8 +53,7 @@ describe('Sorting for process filters', () => {
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
         });
-
-    });
+   });
 
     beforeEach(async () => {
         const users = new UsersActions();
@@ -70,8 +69,7 @@ describe('Sorting for process filters', () => {
         appId = importedApp.id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
-    });
+   });
 
     afterEach(async () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
@@ -79,8 +77,7 @@ describe('Sorting for process filters', () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
-    });
+   });
 
     it('[C260476] Should be able to create a filter on APS for running processes - Oldest first and check on ADF', async () => {
         await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({

@@ -563,5 +563,4 @@ describe('Diagrams Catching', () => {
             ajaxReply(resp);
         }));
     });
-
 });

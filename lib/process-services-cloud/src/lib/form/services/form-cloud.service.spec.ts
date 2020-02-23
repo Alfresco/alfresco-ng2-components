@@ -222,6 +222,5 @@ describe('Form Cloud service', () => {
                 done();
             });
         });
-
-    });
+   });
 });

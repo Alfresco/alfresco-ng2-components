@@ -187,7 +187,5 @@ describe('PermissionDisplayComponent', () => {
                 });
             });
         }));
-
-    });
-
+   });
 });

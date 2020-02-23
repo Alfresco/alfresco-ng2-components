@@ -196,5 +196,4 @@ describe('SearchFilterList', () => {
 
         expect(list.filterText).toBe('');
     });
-
 });

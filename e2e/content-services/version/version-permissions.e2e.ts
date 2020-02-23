@@ -189,8 +189,7 @@ describe('Version component permissions', () => {
             await contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
             await expect(await contentServices.isContextActionEnabled('Manage versions')).toBe(false, 'Manage version is enabled');
         });
-
-    });
+   });
 
     describe('Contributor', () => {
         const sameCreatorFile = new FileModel({
@@ -317,5 +316,4 @@ describe('Version component permissions', () => {
             await expect(await contentServices.isContextActionEnabled('Manage versions')).toBe(false, 'Manage versions is enabled');
         });
     });
-
 });

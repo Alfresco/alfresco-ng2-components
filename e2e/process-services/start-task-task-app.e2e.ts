@@ -79,14 +79,12 @@ describe('Start Task - Task App', () => {
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: showHeaderTask });
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     beforeEach(async () => {
         await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-
-    });
+   });
 
     it('[C260383] Should be possible to modify a task', async () => {
         const task = await taskPage.createNewTask();
@@ -199,7 +197,5 @@ describe('Start Task - Task App', () => {
         await startDialog.blur(startDialog.name);
         await startDialog.checkValidationErrorIsDisplayed(lengthValidationError);
         await startDialog.checkStartButtonIsDisabled();
-
-    });
-
+   });
 });

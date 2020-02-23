@@ -144,7 +144,5 @@ describe('Process Header cloud component', () => {
             await expect(await processHeaderCloudPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_BUSINESS_KEY);
             await expect(await processHeaderCloudPage.getLastModified()).toEqual(completedCreatedDate);
         });
-
-    });
-
+   });
 });

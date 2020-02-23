@@ -136,5 +136,4 @@ describe('ButtonsMenuComponent', () => {
             });
         }));
     });
-
 });

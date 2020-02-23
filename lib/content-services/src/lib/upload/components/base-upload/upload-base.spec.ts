@@ -145,8 +145,7 @@ describe('UploadBase', () => {
                 done();
             });
         }));
-
-    });
+   });
 
     describe('fileSize', () => {
 

@@ -198,8 +198,7 @@ describe('AnalyticsReportListComponent', () => {
                 responseText: reportList
             });
         });
-
-    });
+   });
 
     describe('layout', () => {
 
@@ -223,5 +222,4 @@ describe('AnalyticsReportListComponent', () => {
             expect(component.isList()).toBe(true);
         });
     });
-
 });

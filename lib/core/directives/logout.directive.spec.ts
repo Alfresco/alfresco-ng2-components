@@ -80,8 +80,7 @@ describe('LogoutDirective', () => {
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['/login']);
         });
-
-    });
+   });
 
     describe('redirectUri', () => {
 
@@ -125,8 +124,7 @@ describe('LogoutDirective', () => {
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['/myCustomUri']);
         });
-
-    });
+   });
 
     describe('enableRedirect', () => {
 
@@ -170,5 +168,4 @@ describe('LogoutDirective', () => {
             expect(router.navigate).not.toHaveBeenCalled();
         });
     });
-
 });

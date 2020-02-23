@@ -158,8 +158,7 @@ describe('Permissions Component', () => {
         await uploadActions.uploadFile(fileModel.location, 'RoleCoordinator' + fileModel.name, roleCoordinatorFolder.entry.id);
         await uploadActions.uploadFile(fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
         await uploadActions.uploadFile(fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -238,8 +237,7 @@ describe('Permissions Component', () => {
             await permissionsPage.checkResultListIsDisplayed();
             await permissionsPage.checkUserOrGroupIsDisplayed('EVERYONE');
         });
-
-    });
+   });
 
     describe('Changing and duplicate Permissions', () => {
 
@@ -304,8 +302,7 @@ describe('Permissions Component', () => {
             await permissionsPage.clickDeletePermissionButton();
             await permissionsPage.checkUserOrGroupIsDeleted(filePermissionUser.getId());
         });
-
-    });
+   });
 
     describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor, No Permissions', () => {
 
@@ -438,7 +435,5 @@ describe('Permissions Component', () => {
             await permissionsPage.clickAddPermissionButton();
             await notificationHistoryPage.checkNotifyContains('You are not allowed to change permissions');
         });
-
-    });
-
+   });
 });

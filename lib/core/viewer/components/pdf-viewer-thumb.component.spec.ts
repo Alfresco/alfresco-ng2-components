@@ -64,5 +64,4 @@ describe('PdfThumbComponent', () => {
             done();
         });
     });
-
 });

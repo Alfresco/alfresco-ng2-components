@@ -127,5 +127,4 @@ describe('SearchSliderComponent', () => {
         expect(context.queryFragments['slider']).toBe('');
         expect(context.update).toHaveBeenCalled();
     });
-
 });

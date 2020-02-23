@@ -139,5 +139,4 @@ describe('Tree View Component', () => {
 
         await expect(await treeViewPage.getTotalNodes()).toEqual(1);
     });
-
 });

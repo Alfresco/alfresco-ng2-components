@@ -498,8 +498,7 @@ describe('LoginComponent', () => {
 
             loginWithCredentials('fake-username-ECM-access-error', 'fake-password');
         }));
-
-    });
+   });
 
     it('should trim the username value', () => {
         usernameInput.value = 'username ';
@@ -541,8 +540,7 @@ describe('LoginComponent', () => {
         });
 
         loginWithCredentials('fake-username', 'fake-password');
-
-    });
+   });
 
     it('should emit success event after the login has succeeded and discard password', async(() => {
         spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));

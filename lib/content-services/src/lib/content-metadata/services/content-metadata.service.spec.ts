@@ -126,8 +126,7 @@ describe('ContentMetaDataService', () => {
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
         });
-
-    });
+   });
 
     describe('LayoutOriented preset', () => {
 
@@ -244,6 +243,5 @@ describe('ContentMetaDataService', () => {
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
         });
-
-    });
+   });
 });

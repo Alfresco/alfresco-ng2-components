@@ -116,8 +116,7 @@ describe('Start Task - Custom App', () => {
         });
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     describe('', () => {
 
@@ -492,5 +491,4 @@ describe('Start Task - Custom App', () => {
 
         await expect(await taskListSinglePage.taskList().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
     });
-
 });

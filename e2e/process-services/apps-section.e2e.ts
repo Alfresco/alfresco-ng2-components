@@ -55,8 +55,7 @@ describe('Modify applications', () => {
         appVersionToBeDeleted = await apps.importPublishDeployApp(this.alfrescoJsApi, appToBeDeleted.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
-    });
+   });
 
     it('[C260198] Should the app be displayed on dashboard when is deployed on APS', async () => {
         await navigationBarPage.navigateToProcessServicesPage();
@@ -162,5 +161,4 @@ describe('Modify applications', () => {
         await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.RED);
         await expect(await processServicesPage.getAppIconType(appToBeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
     });
-
 });

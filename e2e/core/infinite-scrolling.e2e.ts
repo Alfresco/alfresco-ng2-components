@@ -74,8 +74,7 @@ describe('Enable infinite scrolling', () => {
         deleteUploaded = await uploadActions.createFolder('deleteFolder', '-my-');
 
         await uploadActions.createEmptyFiles(deleteFileNames, deleteUploaded.entry.id);
-
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -84,8 +83,7 @@ describe('Enable infinite scrolling', () => {
     beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.checkAcsContainer();
-
-    });
+   });
 
     it('[C260484] Should be possible to enable infinite scrolling', async () => {
         await contentServicesPage.doubleClickRow(folderModel.name);
@@ -150,5 +148,4 @@ describe('Enable infinite scrolling', () => {
 
         await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
     });
-
 });

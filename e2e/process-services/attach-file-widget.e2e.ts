@@ -56,8 +56,7 @@ describe('Start Task - Task App', () => {
         await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     afterAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -68,8 +67,7 @@ describe('Start Task - Task App', () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-
-    });
+   });
 
     it('[C274690] Should be able to open a file attached to a start form', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
@@ -90,5 +88,4 @@ describe('Start Task - Task App', () => {
         await viewerPage.clickCloseButton();
         await taskPage.tasksListPage().checkContentIsDisplayed('View file');
     });
-
 });

@@ -151,5 +151,4 @@ describe('SearchDateRangeComponent', () => {
             expect(context.update).toHaveBeenCalled();
         });
     });
-
 });

@@ -61,5 +61,4 @@ describe('ContentColumnList', () => {
         expect(result).toBeFalsy();
         expect(documentList.actions.push).not.toHaveBeenCalled();
     });
-
 });

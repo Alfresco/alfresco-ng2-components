@@ -64,5 +64,4 @@ describe('TreeViewService', () => {
             done();
         });
     });
-
 });

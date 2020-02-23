@@ -75,7 +75,6 @@ describe('AmountWidgetComponent', () => {
         widget.ngOnInit();
         expect(widget.placeholder).toBe('1234');
     });
-
 });
 
 describe('AmountWidgetComponent settings', () => {

@@ -325,5 +325,4 @@ describe('Restore content directive', () => {
             await contentServicesPage.checkContentIsDisplayed(pngFile.entry.name);
         });
     });
-
 });

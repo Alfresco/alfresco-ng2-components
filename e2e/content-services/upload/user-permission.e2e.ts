@@ -88,8 +88,7 @@ describe('Upload - User permission', () => {
             id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
-
-    });
+   });
 
     describe('Consumer permissions', () => {
 
@@ -129,8 +128,7 @@ describe('Upload - User permission', () => {
 
             await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
-
-    });
+   });
 
     describe('full permissions', () => {
 
@@ -146,8 +144,7 @@ describe('Upload - User permission', () => {
 
             await uploadDialog.fileIsUploaded(emptyFile.name);
         });
-
-    });
+   });
 
     describe('multiple users', () => {
 
@@ -184,5 +181,4 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(pdfFile.name);
         });
     });
-
 });

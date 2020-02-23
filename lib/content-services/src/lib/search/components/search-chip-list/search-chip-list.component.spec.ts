@@ -66,5 +66,4 @@ describe('SearchChipListComponent', () => {
 
         expect(component.searchFilter.unselectFacetBucket).toHaveBeenCalledWith(selectedBucket1.field, selectedBucket1.bucket);
     });
-
 });

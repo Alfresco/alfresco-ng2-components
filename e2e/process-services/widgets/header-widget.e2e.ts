@@ -56,8 +56,7 @@ describe('Header widget', async () => {
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-    });
+   });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
@@ -70,8 +69,7 @@ describe('Header widget', async () => {
         await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-
-    });
+   });
 
     it('[C276737] Should be able to set general and visibility properties for Header widget', async () => {
         await taskPage.formFields().checkWidgetIsHidden(app.FIELD.header_id);

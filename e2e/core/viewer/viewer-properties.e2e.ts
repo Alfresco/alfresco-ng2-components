@@ -70,14 +70,12 @@ describe('Viewer - properties', () => {
 
         await viewerPage.clickLeftSidebarButton();
         await viewerPage.checkLeftSideBarIsDisplayed();
-
-    });
+   });
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(pngFile.getId());
         await navigationBarPage.clickLogoutButton();
-
-    });
+   });
 
     it('[C260066] Should Show/Hide viewer toolbar when showToolbar is true/false', async () => {
         await viewerPage.checkToolbarIsDisplayed();

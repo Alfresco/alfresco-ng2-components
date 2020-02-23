@@ -64,14 +64,12 @@ describe('New Process Filters', () => {
         await this.alfrescoJsApi.login(user.email, user.password);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
-
-    });
+   });
 
     afterAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-
-    });
+   });
 
     it('[C279965] Should be able to view default filters on ADF', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
@@ -192,5 +190,4 @@ describe('New Process Filters', () => {
 
         await processFiltersPage.checkFilterIsNotDisplayed(processFilter.deleted);
     });
-
 });

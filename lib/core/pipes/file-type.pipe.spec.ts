@@ -30,5 +30,4 @@ describe('FileTypePipe', () => {
     it('should return file type from alt text', () => {
         expect(pipe.transform(altText)).toBe('word');
     });
-
 });

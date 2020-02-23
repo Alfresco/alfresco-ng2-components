@@ -44,5 +44,4 @@ describe('SortingPickerComponent', () => {
         });
         component.toggleSortDirection();
     });
-
 });

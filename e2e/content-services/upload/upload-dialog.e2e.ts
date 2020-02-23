@@ -71,8 +71,7 @@ describe('Upload component', () => {
         await contentServicesPage.goToDocumentList();
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
-
-    });
+   });
 
     beforeEach(async () => {
         await contentServicesPage.goToDocumentList();
