@@ -46,7 +46,7 @@ describe('Task form cloud component', () => {
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
 
-    let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, formTaskId, assigneeTaskId, assigneeReleaseTask;
+    let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, formTaskId, assigneeTaskId, assigneeReleaseTask, candidateUsersTask ;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
@@ -82,7 +82,11 @@ describe('Task form cloud component', () => {
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
 
         processInstancesService = new ProcessInstancesService(apiServiceHrUser);
-        await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+        const candidateUsersProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+
+        const processInstanceTasks = await queryService.getProcessInstanceTasks(candidateUsersProcessInstance.entry.id, candidateBaseApp);
+        candidateUsersTask = processInstanceTasks.list.entries[0];
+        await tasksService.claimTask(candidateUsersTask.entry.id, candidateBaseApp);
 
         processDefinition = await processDefinitionService
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
@@ -168,8 +172,8 @@ describe('Task form cloud component', () => {
 
         it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
             await tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(candidateUsersTask.entry.id);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(candidateUsersTask.entry.id);
             await expect(await taskFormCloudComponent.getReleaseButtonText()).toBe('RELEASE');
         });
 
