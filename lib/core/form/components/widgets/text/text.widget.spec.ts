@@ -21,25 +21,51 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { TextWidgetComponent } from './text.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslationMock } from '../../../../mock/translation.service.mock';
+import { TranslationService } from '../../../../services';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule, TranslateStore, TranslateService } from '@ngx-translate/core';
+import { MatInputModule, MatIconModule } from '@angular/material';
+import { InputMaskDirective } from './text-mask.component';
+import { ErrorWidgetComponent } from '../error/error.component';
+import { HttpClientModule } from '@angular/common/http';
+
+const enterValueInTextField = (element: HTMLInputElement, value: string) => {
+    element.value = value;
+    element.dispatchEvent(new Event('input'));
+};
 
 describe('TextWidgetComponent', () => {
 
     let widget: TextWidgetComponent;
     let fixture: ComponentFixture<TextWidgetComponent>;
     let element: HTMLElement;
+    let errorWidget: HTMLElement;
 
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            CoreModule.forRoot()
+            TranslateModule.forChild(),
+            MatInputModule,
+            FormsModule,
+            MatIconModule,
+            HttpClientModule
+        ],
+        declarations: [
+            TextWidgetComponent,
+            InputMaskDirective,
+            ErrorWidgetComponent
+        ],
+        providers: [
+            TranslateStore,
+            TranslateService,
+            { provide: TranslationService, useClass: TranslationMock }
         ]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TextWidgetComponent);
-
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
     });
@@ -48,10 +74,8 @@ describe('TextWidgetComponent', () => {
 
         describe('and no mask is configured on text element', () => {
 
-            let inputElement: HTMLInputElement;
-
-            beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+            it('should raise ngModelChange event', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -60,20 +84,134 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                expect(widget.field.value).toBe('');
+
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
+                await fixture.whenStable();
+                fixture.detectChanges();
+                expect(widget.field).not.toBeNull();
+                expect(widget.field.value).not.toBeNull();
+                expect(widget.field.value).toBe('TEXT');
             });
 
-            it('should raise ngModelChange event', async(() => {
-                inputElement.value = 'TEXT';
-                expect(widget.field.value).toBe('');
-                inputElement.dispatchEvent(new Event('input'));
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(widget.field).not.toBeNull();
-                    expect(widget.field.value).not.toBeNull();
-                    expect(widget.field.value).toBe('TEXT');
+            it('should be able to set label property', () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false
                 });
-            }));
+
+                fixture.detectChanges();
+                const textWidgetLabel = element.querySelector('label');
+                expect(textWidgetLabel.innerText).toBe('text-name');
+            });
+
+            it('should be able to set a Text Widget as required', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    required: true
+                });
+
+                fixture.detectChanges();
+                const textWidgetLabel = element.querySelector('label');
+                expect(textWidgetLabel.innerText).toBe('text-name*');
+                expect(widget.field.isValid).toBe(false);
+
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
+
+                await fixture.whenStable();
+                fixture.detectChanges();
+                expect(widget.field.isValid).toBe(true);
+
+                enterValueInTextField(element.querySelector('#text-id'), '');
+                await fixture.whenStable();
+                fixture.detectChanges();
+                expect(widget.field.isValid).toBe(false);
+            });
+
+            it('should be able to set a placeholder for Text widget', () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    placeholder: 'Your name here'
+                });
+                fixture.detectChanges();
+                const textWidgetLabel = element.querySelector('input');
+                expect(textWidgetLabel.getAttribute('placeholder')).toBe('Your name here');
+            });
+
+            it('should be able to set min/max length properties for Text widget', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    minLength: 5,
+                    maxLength: 10
+                });
+                fixture.detectChanges();
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
+                await fixture.whenStable();
+                fixture.detectChanges();
+                errorWidget = element.querySelector('error-widget div[class="adf-error-text"]');
+                expect(errorWidget).toBeDefined();
+                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.AT_LEAST_LONG');
+
+                expect(widget.field.isValid).toBe(false);
+
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT VALUE');
+                await fixture.whenStable();
+                fixture.detectChanges();
+                errorWidget = element.querySelector('error-widget div[class="adf-error-text"]');
+                expect(errorWidget).toBeNull();
+
+                expect(widget.field.isValid).toBe(true);
+
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT VALUE TOO LONG');
+                await fixture.whenStable();
+                fixture.detectChanges();
+
+                expect(widget.field.isValid).toBe(false);
+                errorWidget = element.querySelector('error-widget div[class="adf-error-text"]');
+                expect(errorWidget).toBeDefined();
+                expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+            });
+
+            it('should be able to set regex pattern property for Text widget', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    regexPattern: '[0-9]'
+                });
+                fixture.detectChanges();
+                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
+
+                await fixture.whenStable();
+                expect(widget.field.isValid).toBe(false);
+
+                enterValueInTextField(element.querySelector('#text-id'), '8');
+
+                await fixture.whenStable();
+                expect(widget.field.isValid).toBe(true);
+
+                enterValueInTextField(element.querySelector('#text-id'), '8XYZ');
+
+                await fixture.whenStable();
+                expect(widget.field.isValid).toBe(false);
+            });
 
         });
 
@@ -82,7 +220,7 @@ describe('TextWidgetComponent', () => {
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -110,11 +248,11 @@ describe('TextWidgetComponent', () => {
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
-                    params: {inputMask: '##-##0,00%'},
+                    params: { inputMask: '##-##0,00%' },
                     type: FormFieldTypes.TEXT,
                     readOnly: false,
                     placeholder: 'simple placeholder'
@@ -216,11 +354,11 @@ describe('TextWidgetComponent', () => {
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
-                    params: {existingColspan: 1, maxColspan: 2, inputMask: '#.##0,00%', inputMaskReversed: true},
+                    params: { existingColspan: 1, maxColspan: 2, inputMask: '#.##0,00%', inputMaskReversed: true },
                     type: FormFieldTypes.TEXT,
                     readOnly: false
                 });
@@ -256,11 +394,11 @@ describe('TextWidgetComponent', () => {
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
-                    params: {inputMask: '##-##0,00%', inputMaskPlaceholder: 'Phone : (__) ___-___'},
+                    params: { inputMask: '##-##0,00%', inputMaskPlaceholder: 'Phone : (__) ___-___' },
                     type: FormFieldTypes.TEXT,
                     readOnly: false,
                     placeholder: 'simple placeholder'
