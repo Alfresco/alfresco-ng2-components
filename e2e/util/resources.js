@@ -362,14 +362,7 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/b_file_supported.pdf",
             file_name: "b_file_supported.pdf"
         },
-        PDF_C: {
-            file_location: "/resources/adf/allFileTypes/c_file_supported.pdf",
-            file_name: "c_file_supported.pdf"
-        },
-        PDF_D: {
-            file_location: "/resources/adf/allFileTypes/d_file_supported.pdf",
-            file_name: "d_file_supported.pdf"
-        },
+
         PDF_ALL: {
             file_location: "/resources/adf/allFileTypes/pdf_all_properties.pdf",
             file_name: "pdf_all_properties.pdf"
@@ -431,6 +424,10 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/a_mp4_file.mp4",
             file_name: "a_mp4_file.mp4"
         },
+        MP4_B: {
+            file_location: "/resources/adf/allFileTypes/b_mp4_file.mp4",
+            file_name: "b_mp4_file.mp4"
+        },
         PNG: {
             file_location: "/resources/adf/allFileTypes/a_png_file.png",
             file_name: "a_png_file.png"
@@ -451,10 +448,6 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/a_ppt_file.pptx",
             file_name: "a_ppt_file.pptx",
             first_page_text: "PPTX test file"
-        },
-        PPT_B: {
-            file_location: "/resources/adf/allFileTypes/b_ppt_file.pptx",
-            file_name: "b_ppt_file.pptx"
         },
         TEST: {
             file_location: "/resources/adf/allFileTypes/testExtension.test",
