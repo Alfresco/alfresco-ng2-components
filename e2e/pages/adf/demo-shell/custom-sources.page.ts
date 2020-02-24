@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
 import { by, element, ElementFinder } from 'protractor';
 import { NavigationBarPage } from '../navigation-bar.page';
 
@@ -35,17 +35,12 @@ const column = {
     status: 'Status'
 };
 
-export class CustomSources {
-
+export class CustomSourcesPage {
     dataTable: DataTableComponentPage = new DataTableComponentPage();
     navigationBarPage: NavigationBarPage = new NavigationBarPage();
 
     toolbar: ElementFinder = element(by.css('app-custom-sources .adf-toolbar-title'));
-    sourceTypeDropdown: ElementFinder = element(by.css('div[class*="select-arrow"]>div'));
-
-    getSourceType(option): ElementFinder {
-        return element(by.cssContainingText('.cdk-overlay-pane span', `${option}`));
-    }
+    selectModeDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="custom-sources-select"]')));
 
     async waitForToolbarToBeVisible(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.toolbar);
@@ -56,18 +51,19 @@ export class CustomSources {
         await this.waitForToolbarToBeVisible();
     }
 
-    async clickOnSourceType(): Promise<void> {
-        await BrowserActions.click(this.sourceTypeDropdown);
-    }
-
     async selectMySitesSourceType(): Promise<void> {
-        await this.clickOnSourceType();
-        await BrowserActions.click(this.getSourceType(source.mySites));
+        await this.selectModeDropdown.clickDropdown();
+        await this.selectModeDropdown.selectOption(source.mySites);
     }
 
     async selectFavoritesSourceType(): Promise<void> {
-        await this.clickOnSourceType();
-        await BrowserActions.click(this.getSourceType(source.favorites));
+        await this.selectModeDropdown.clickDropdown();
+        await this.selectModeDropdown.selectOption(source.favorites);
+    }
+
+    async selectSharedLinksSourceType(): Promise<void> {
+        await this.selectModeDropdown.clickDropdown();
+        await this.selectModeDropdown.selectOption(source.sharedLinks);
     }
 
     checkRowIsDisplayed(rowName): Promise<void> {

@@ -30,6 +30,7 @@ import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
 
 describe('Share file', () => {
 
@@ -42,6 +43,7 @@ describe('Share file', () => {
     const contentListPage = contentServicesPage.getDocumentList();
     const shareDialog = new ShareDialogPage();
     const navigationBarPage = new NavigationBarPage();
+    const customSourcesPage = new CustomSourcesPage();
     const viewerPage = new ViewerPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const acsUser = new AcsUserModel();
@@ -198,6 +200,20 @@ describe('Share file', () => {
             await navigationBarPage.clickLogoutButton();
             await BrowserActions.getUrl(sharedLink);
             await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+        });
+
+        it('[C260153] Should shared files listed in share files custom resources', async () => {
+            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickShareLinkButton();
+
+            await BrowserActions.closeMenuAndDialogs();
+            await browser.sleep(30000); // it get really long to update the shared link file list
+
+            await customSourcesPage.navigateToCustomSources();
+            await customSourcesPage.selectSharedLinksSourceType();
+            await customSourcesPage.checkRowIsDisplayed(pngFileModel.name);
         });
     });
 });

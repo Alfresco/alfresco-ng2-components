@@ -23,7 +23,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { CustomSources } from '../../pages/adf/demo-shell/custom-sources.page';
+import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
 import { TrashcanPage } from '../../pages/adf/trashcan.page';
 
 describe('Favorite directive', () => {
@@ -32,7 +32,7 @@ describe('Favorite directive', () => {
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const acsUser = new AcsUserModel();
-    const customSourcesPage = new CustomSources();
+    const customSourcesPage = new CustomSourcesPage();
     const trashcanPage = new TrashcanPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
