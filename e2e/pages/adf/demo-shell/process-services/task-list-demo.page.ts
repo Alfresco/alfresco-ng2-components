@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, PaginationPage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DropdownPage, PaginationPage } from '@alfresco/adf-testing';
 import { by, element, ElementFinder } from 'protractor';
 import { TasksListPage } from '../../process-services/tasks-list.page';
 
@@ -34,8 +34,9 @@ export class TaskListDemoPage {
     dueBefore: ElementFinder = element(by.css("input[data-automation-id='due before']"));
     dueAfter: ElementFinder = element(by.css("input[data-automation-id='due after']"));
     taskId: ElementFinder = element(by.css("input[data-automation-id='task id']"));
+
     stateDropDownArrow: ElementFinder = element(by.css("mat-form-field[data-automation-id='state'] div[class*='arrow']"));
-    stateSelector: ElementFinder = element(by.css("div[class*='mat-select-panel']"));
+    stateDropdown = new DropdownPage(this.stateDropDownArrow);
 
     taskList(): TasksListPage {
         return this.taskListPage;
@@ -138,15 +139,9 @@ export class TaskListDemoPage {
     }
 
     async selectState(state): Promise<void> {
-        await this.clickOnStateDropDownArrow();
-
-        const stateElement: ElementFinder = element.all(by.cssContainingText('mat-option span', state)).first();
-        await BrowserActions.click(stateElement);
-    }
-
-    async clickOnStateDropDownArrow(): Promise<void> {
-        await BrowserActions.click(this.stateDropDownArrow);
-        await BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
+        await this.stateDropdown.clickDropdown();
+        await this.stateDropdown.checkOptionsPanelIsDisplayed();
+        await this.stateDropdown.selectOption(state);
     }
 
     getAllProcessDefinitionIds(): Promise<any> {

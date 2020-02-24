@@ -61,7 +61,7 @@ describe('Settings component', () => {
         });
 
         it('[C291949] Should have field validation for Content Services Url', async () => {
-            await settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
+            await settingsPage.setProvider('ALL');
             await settingsPage.clearContentServicesURL();
             await settingsPage.ecmText.sendKeys(protractor.Key.TAB);
             await settingsPage.checkValidationMessageIsDisplayed();
@@ -69,7 +69,7 @@ describe('Settings component', () => {
         });
 
         it('[C291950] Should have field validation for Process Services Url', async () => {
-            await settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
+            await settingsPage.setProvider('ALL');
             await settingsPage.clearProcessServicesURL();
             await settingsPage.bpmText.sendKeys(protractor.Key.TAB);
             await settingsPage.checkValidationMessageIsDisplayed();
@@ -77,7 +77,7 @@ describe('Settings component', () => {
         });
 
         it('[C291951] Should not be able to sign in with invalid Content Services Url', async () => {
-            await settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
+            await settingsPage.setProvider('ECM');
             await settingsPage.setContentServicesURL('http://localhost:7070');
             await settingsPage.clickApply();
             await loginPage.waitForElements();
@@ -88,7 +88,7 @@ describe('Settings component', () => {
         });
 
         it('[C291952] Should not be able to sign in with invalid Process Services Url', async () => {
-            await settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
+            await settingsPage.setProvider('BPM');
             await settingsPage.setProcessServicesURL('http://localhost:7070');
             await settingsPage.clickApply();
             await loginPage.waitForElements();
@@ -102,7 +102,7 @@ describe('Settings component', () => {
     describe('Settings Component - Basic Authentication', () => {
         beforeAll(async () => {
             await settingsPage.goToSettingsPage();
-            await settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
+            await settingsPage.setProvider('ALL');
             await settingsPage.setContentServicesURL(browser.params.testConfig.adf_acs.host);
             await settingsPage.setProcessServicesURL(browser.params.testConfig.adf_aps.host);
             await settingsPage.clickApply();
@@ -126,7 +126,7 @@ describe('Settings component', () => {
             await loginPage.goToLoginPage();
             await loginPage.clickSettingsIcon();
             await settingsPage.checkProviderDropdownIsDisplayed();
-            await settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
+            await settingsPage.setProvider('BPM');
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
             await loginPage.clickSettingsIcon();
@@ -156,7 +156,7 @@ describe('Settings component', () => {
         });
 
         it('[C277752] Should allow the User to login to Content Services using the ECM selection on Settings page', async () => {
-            await settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
+            await settingsPage.setProvider('ECM');
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
             await loginPage.clickSettingsIcon();
@@ -183,7 +183,7 @@ describe('Settings component', () => {
         });
 
         it('[C277753] Should allow the User to login to both Process Services and Content Services using the ALL selection on Settings Page', async () => {
-            await settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
+            await settingsPage.setProvider('ALL');
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
             await loginPage.clickSettingsIcon();

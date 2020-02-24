@@ -81,12 +81,14 @@ export class ContentServicesPage {
     copyContentElement: ElementFinder = element(by.css('button[data-automation-id*="COPY"]'));
     lockContentElement: ElementFinder = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
     downloadContent: ElementFinder = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
-    siteListDropdown: ElementFinder = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
     downloadButton: ElementFinder = element(by.css('button[title="Download"]'));
     favoriteButton: ElementFinder = element(by.css('button[data-automation-id="favorite"]'));
     markedFavorite: ElementFinder = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star'));
     notMarkedFavorite: ElementFinder = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star_border'));
     multiSelectToggle: ElementFinder = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
+
+    siteListDropdown = new DropdownPage(element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
+    sortingDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="grid-view-sorting"]')));
 
     async pressContextMenuActionNamed(actionName): Promise<void> {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
@@ -577,11 +579,9 @@ export class ContentServicesPage {
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    async selectGridSortingFromDropdown(sortingChosen): Promise<void> {
-        const sortingDropdown: ElementFinder = element(by.css('mat-select[data-automation-id="grid-view-sorting"]'));
-        await BrowserActions.click(sortingDropdown);
-        const optionToClick: ElementFinder = element(by.css(`mat-option[data-automation-id="grid-view-sorting-${sortingChosen}"]`));
-        await BrowserActions.click(optionToClick);
+    async selectGridSortingFromDropdown(sortingOption): Promise<void> {
+        await this.sortingDropdown.clickDropdown();
+        await this.sortingDropdown.selectOption(sortingOption);
     }
 
     async checkRowIsDisplayed(rowName): Promise<void> {
@@ -595,13 +595,11 @@ export class ContentServicesPage {
     }
 
     async checkSelectedSiteIsDisplayed(siteName): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
+        await this.siteListDropdown.checkSelectedOptionIsDisplayed(siteName);
     }
 
     async selectSite(siteName: string): Promise<void> {
-        const dropdownPage = new DropdownPage(this.siteListDropdown);
-        await dropdownPage.clickDropdown();
-        await dropdownPage.selectOption(siteName);
+        await this.siteListDropdown.selectOption(siteName);
     }
 
     async clickDownloadButton(): Promise<void> {

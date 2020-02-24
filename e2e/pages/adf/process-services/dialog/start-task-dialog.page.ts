@@ -16,7 +16,7 @@
  */
 
 import { element, by, Key, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, DropdownPage } from '@alfresco/adf-testing';
 
 export class StartTaskDialogPage {
 
@@ -27,7 +27,9 @@ export class StartTaskDialogPage {
     startButton: ElementFinder = element(by.css('button[id="button-start"]'));
     startButtonEnabled: ElementFinder = element(by.css('button[id="button-start"]:not(disabled)'));
     cancelButton: ElementFinder = element(by.css('button[id="button-cancel"]'));
-    formDropDown: ElementFinder = element(by.css('mat-select[id="form_id"]'));
+
+    selectFormDropdown = new DropdownPage(element(by.css('mat-select[id="form_id"]')));
+    selectAssigneeDropdown = new DropdownPage();
 
     async addName(userName): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.name);
@@ -52,9 +54,7 @@ export class StartTaskDialogPage {
     }
 
     async selectAssigneeFromList(name): Promise<void> {
-        const assigneeRow: ElementFinder = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        await BrowserActions.click(assigneeRow);
-        await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
+        await this.selectAssigneeDropdown.selectOption(name);
     }
 
     async getAssignee(): Promise<string> {
@@ -62,14 +62,9 @@ export class StartTaskDialogPage {
         return this.assignee.getAttribute('placeholder');
     }
 
-    async addForm(form): Promise<void> {
-        await BrowserActions.click(this.formDropDown);
-        return this.selectForm(form);
-    }
-
     async selectForm(form): Promise<void> {
-        const option: ElementFinder = element(by.cssContainingText('span[class*="mat-option-text"]', form));
-        await BrowserActions.click(option);
+        await this.selectFormDropdown.clickDropdown();
+        await this.selectFormDropdown.selectOption(form);
     }
 
     async clickStartButton(): Promise<void> {

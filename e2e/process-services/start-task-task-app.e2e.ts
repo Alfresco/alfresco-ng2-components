@@ -89,7 +89,7 @@ describe('Start Task - Task App', () => {
     it('[C260383] Should be possible to modify a task', async () => {
         const task = await taskPage.createNewTask();
         await task.addName(tasks[0]);
-        await task.addForm(app.formName);
+        await task.selectForm(app.formName);
         await task.clickStartButton();
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         const taskDetails = await taskPage.taskDetails();
@@ -129,7 +129,7 @@ describe('Start Task - Task App', () => {
 
     it('[C260423] Should be possible to save filled form', async () => {
         const task = await taskPage.createNewTask();
-        await task.addForm(app.formName);
+        await task.selectForm(app.formName);
         await task.addName(tasks[4]);
         await task.clickStartButton();
 

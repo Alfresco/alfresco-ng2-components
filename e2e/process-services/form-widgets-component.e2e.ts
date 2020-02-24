@@ -65,7 +65,7 @@ describe('Form widgets', () => {
             const task = await taskPage.createNewTask();
             await task.addName(newTask);
             await task.addDescription('Description');
-            await task.addForm(app.formName);
+            await task.selectForm(app.formName);
             await task.clickStartButton();
 
             await taskPage.tasksListPage().checkContentIsDisplayed(newTask);

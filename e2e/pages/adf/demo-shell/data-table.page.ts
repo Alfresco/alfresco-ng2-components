@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
 import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
 
 export class DataTablePage {
@@ -44,6 +44,8 @@ export class DataTablePage {
     createdOnColumn: ElementFinder = element(by.css(`div[data-automation-id='auto_id_createdOn']`));
     idColumnHeader: ElementFinder = element(by.css(`div[data-automation-id='auto_id_id']`));
     pasteClipboardInput: ElementFinder = element(by.css(`input[data-automation-id='paste clipboard input']`));
+
+    selectModeDropdown = new DropdownPage(element(by.css(`mat-select[data-automation-id='datatable-selection-mode']`)));
 
     constructor(data?) {
         if (this.data[data]) {
@@ -127,9 +129,8 @@ export class DataTablePage {
     }
 
     async selectSelectionMode(selectionMode): Promise<void> {
-        const selectMode: ElementFinder = element(by.cssContainingText(`span[class='mat-option-text']`, selectionMode));
-        await BrowserActions.clickExecuteScript('div[class="mat-select-arrow"]');
-        await BrowserActions.click(selectMode);
+        await this.selectModeDropdown.clickDropdown();
+        await this.selectModeDropdown.selectOption(selectionMode);
     }
 
     getRowCheckbox(rowNumber: string): ElementFinder {

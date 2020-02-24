@@ -22,7 +22,7 @@ import {
     EditTaskFilterCloudComponentPage,
     BrowserVisibility,
     TaskListCloudComponentPage,
-    BrowserActions
+    BrowserActions, DropdownPage
 } from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
@@ -31,8 +31,6 @@ export class TasksCloudDemoPage {
     newTaskButton: ElementFinder = element(by.css('button[data-automation-id="btn-start-task"]'));
     settingsButton: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
     appButton: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'App')).first();
-    modeDropDownArrow: ElementFinder = element(by.css('mat-form-field[data-automation-id="selectionMode"] div[class*="arrow-wrapper"]'));
-    modeSelector: ElementFinder = element(by.css("div[class*='mat-select-panel']"));
     displayTaskDetailsToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
     displayProcessDetailsToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="processDetailsRedirection"]'));
     actionMenuToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="actionmenu"]'));
@@ -48,6 +46,8 @@ export class TasksCloudDemoPage {
     addActionButton: ElementFinder = element(by.cssContainingText('button span', 'Add'));
     disableCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='disabled']`));
     visibleCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='visible']`));
+
+    modeDropdown = new DropdownPage(element(by.css('mat-form-field[data-automation-id="selectionMode"] div[class*="arrow-wrapper"]')));
 
     formControllersPage: FormControllersPage = new FormControllersPage();
 
@@ -96,7 +96,7 @@ export class TasksCloudDemoPage {
         await BrowserActions.click(this.settingsButton);
         await browser.sleep(400);
         await BrowserVisibility.waitUntilElementIsVisible(this.multiSelectionToggle);
-        await BrowserVisibility.waitUntilElementIsClickable(this.modeDropDownArrow);
+        await this.modeDropdown.checkDropdownIsClickable();
     }
 
     async clickAppButton(): Promise<void> {
@@ -104,15 +104,8 @@ export class TasksCloudDemoPage {
     }
 
     async selectSelectionMode(mode): Promise<void> {
-        await this.clickOnSelectionModeDropDownArrow();
-
-        const modeElement: ElementFinder = element.all(by.cssContainingText('mat-option span', mode)).first();
-        await BrowserActions.click(modeElement);
-    }
-
-    async clickOnSelectionModeDropDownArrow(): Promise<void> {
-        await BrowserActions.click(this.modeDropDownArrow);
-        await BrowserVisibility.waitUntilElementIsVisible(this.modeSelector);
+        await this.modeDropdown.clickDropdown();
+        await this.modeDropdown.selectOption(mode);
     }
 
     async checkSelectedRowsIsDisplayed(): Promise<void> {

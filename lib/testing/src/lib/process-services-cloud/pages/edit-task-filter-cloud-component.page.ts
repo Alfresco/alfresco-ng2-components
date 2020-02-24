@@ -19,11 +19,11 @@ import { browser, by, element, protractor, ElementFinder } from 'protractor';
 import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { DropdownPage } from '../../material/pages/dropdown.page';
 
 export class EditTaskFilterCloudComponentPage {
 
     customiseFilter: ElementFinder = element(by.id('adf-edit-task-filter-title-id'));
-    selectedOption: ElementFinder = element.all(by.css('mat-option[class*="mat-selected"]')).first();
     assignee: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
     priority: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
     taskName: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
@@ -38,6 +38,16 @@ export class EditTaskFilterCloudComponentPage {
     saveAsButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
     deleteButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
     filter: ElementFinder = element(by.css(`adf-cloud-edit-task-filter mat-expansion-panel-header`));
+
+    private locatorAppNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-appName']`));
+    private locatorStatusDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-status']`));
+    private locatorSortDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-sort']`));
+    private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`));
+
+    private appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
+    private statusDropdown = new DropdownPage(this.locatorStatusDropdown);
+    private sortDropdown = new DropdownPage(this.locatorSortDropdown);
+    private orderDropdown = new DropdownPage(this.locatorOrderDropdown);
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
 
@@ -55,44 +65,31 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setStatusFilterDropDown(option: string): Promise<void> {
-        await this.clickOnDropDownArrow('status');
-
-        const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        await BrowserActions.click(statusElement);
+        await this.statusDropdown.clickDropdown();
+        await this.statusDropdown.selectOption(option);
     }
 
     async getStatusFilterDropDownValue(): Promise<string> {
-        return BrowserActions.getText(element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-status'] span")).first());
+        return this.statusDropdown.getSelectedOptionText();
     }
 
-    async setSortFilterDropDown(option): Promise<void> {
-        await this.clickOnDropDownArrow('sort');
-
-        const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        await BrowserActions.click(sortElement);
+    async setSortFilterDropDown(option: string): Promise<void> {
+        await this.sortDropdown.clickDropdown();
+        await this.sortDropdown.selectOption(option);
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
-        const elementSort = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span")).first();
-        return BrowserActions.getText(elementSort);
+        return this.sortDropdown.getSelectedOptionText();
     }
 
     async setOrderFilterDropDown(option: string): Promise<void> {
-        await this.clickOnDropDownArrow('order');
-
-        const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        await BrowserActions.click(orderElement);
+        await this.orderDropdown.clickDropdown();
+        await this.orderDropdown.selectOption(option);
         await browser.sleep(1500);
     }
 
-    getOrderFilterDropDownValue(): Promise<string> {
-        return BrowserActions.getText(element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-order'] span")).first());
-    }
-
-    async clickOnDropDownArrow(option: string): Promise<void> {
-        const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
-        await BrowserActions.click(dropDownArrow);
-        await BrowserVisibility.waitUntilElementIsVisible(this.selectedOption);
+    async getOrderFilterDropDownValue(): Promise<string> {
+        return this.orderDropdown.getSelectedOptionText();
     }
 
     async setAssignee(option: string): Promise<void> {
@@ -199,15 +196,12 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setAppNameDropDown(option: string): Promise<void> {
-        await this.clickOnDropDownArrow('appName');
-
-        const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        await BrowserActions.click(appNameElement);
+        await this.appNameDropdown.clickDropdown();
+        await this.appNameDropdown.selectOption(option);
     }
 
     async getAppNameDropDownValue(): Promise<string> {
-        const locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
-        return BrowserActions.getText(locator);
+        return this.appNameDropdown.getSelectedOptionText();
     }
 
     async setId(option): Promise<void> {

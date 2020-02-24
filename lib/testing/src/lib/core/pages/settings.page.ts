@@ -18,28 +18,11 @@
 import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
+import { DropdownPage } from '../../material/pages/dropdown.page';
 
 export class SettingsPage {
 
     settingsURL: string = browser.baseUrl + '/settings';
-    providerDropdown = element(by.css('mat-select[id="adf-provider-selector"] div[class="mat-select-arrow-wrapper"]'));
-    ecmAndBpm = {
-        option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"ALL")]')),
-        text: 'ALL'
-    };
-    bpm = {
-        option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"BPM") and not (contains(text(),"and"))]')),
-        text: 'BPM'
-    };
-    ecm = {
-        option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"ECM") and not (contains(text(),"and"))]')),
-        text: 'ECM'
-    };
-    oauth = {
-        option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"OAUTH")]')),
-        text: 'OAUTH'
-    };
-    selectedOption: ElementFinder = element(by.css('span[class*="mat-select-value-text"]'));
     ecmText: ElementFinder = element(by.css('input[data-automation-id*="ecmHost"]'));
     bpmText: ElementFinder = element(by.css('input[data-automation-id*="bpmHost"]'));
     clientIdText: ElementFinder = element(by.css('input[id="clientId"]'));
@@ -56,20 +39,21 @@ export class SettingsPage {
     backButton: ElementFinder = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
     validationMessage: ElementFinder = element(by.cssContainingText('mat-error', 'This field is required'));
 
+    providerDropdown = new DropdownPage(element(by.css('mat-select[id="adf-provider-selector"] div[class="mat-select-arrow-wrapper"]')));
+
     async goToSettingsPage(): Promise<void> {
         await browser.get(this.settingsURL);
-        await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
+        await this.providerDropdown.checkDropdownIsVisible();
     }
 
-    async setProvider(option, selected): Promise<void> {
-        await BrowserActions.click(this.providerDropdown);
-        await BrowserActions.click(option);
-        const selectedOptionText = await BrowserActions.getText(this.selectedOption);
-        await expect(selectedOptionText).toEqual(selected);
+    async setProvider(option): Promise<void> {
+        await this.providerDropdown.clickDropdown();
+        await this.providerDropdown.selectOption(option);
+        await this.providerDropdown.checkSelectedOptionIsDisplayed(option);
     }
 
     async getSelectedOptionText(): Promise<string> {
-        return BrowserActions.getText(this.selectedOption);
+        return this.providerDropdown.getSelectedOptionText();
     }
 
     async getBpmHostUrl() {
@@ -80,36 +64,24 @@ export class SettingsPage {
         return this.ecmText.getAttribute('value');
     }
 
-    getBpmOption() {
-        return this.bpm.option;
-    }
-
-    getEcmOption() {
-        return this.ecm.option;
-    }
-
-    getEcmAndBpmOption() {
-        return this.ecmAndBpm.option;
-    }
-
     async setProviderEcmBpm() {
-        await this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
+        await this.setProvider('ALL');
         await this.clickApply();
     }
 
     async setProviderBpm() {
-        await this.setProvider(this.bpm.option, this.bpm.text);
+        await this.setProvider('BPM');
         await this.clickApply();
     }
 
     async setProviderEcm() {
-        await this.setProvider(this.ecm.option, this.ecm.text);
+        await this.setProvider('ECM');
         await this.clickApply();
     }
 
     async setProviderOauth() {
         await this.goToSettingsPage();
-        await this.setProvider(this.oauth.option, this.oauth.text);
+        await this.setProvider('OAUTH');
         await this.clickApply();
     }
 
@@ -123,7 +95,7 @@ export class SettingsPage {
 
     async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUrl: string = '/logout') {
         await this.goToSettingsPage();
-        await this.setProvider(this.ecm.option, this.ecm.text);
+        await this.setProvider('ECM');
         await this.clickSsoRadioButton();
         await this.setContentServicesURL(contentServiceURL);
         await this.setAuthHost(authHost);
@@ -138,7 +110,7 @@ export class SettingsPage {
 
     async setProviderBpmSso(processServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true) {
         await this.goToSettingsPage();
-        await this.setProvider(this.bpm.option, this.bpm.text);
+        await this.setProvider('BPM');
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.ecmText);
         await this.clickSsoRadioButton();
@@ -154,7 +126,7 @@ export class SettingsPage {
 
     async setProviderEcmBpmSso(contentServicesURL: string, processServiceURL, authHost, identityHost, clientId: string, silentLogin = true, implicitFlow = true) {
         await this.goToSettingsPage();
-        await this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
+        await this.setProvider('ALL');
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         await this.clickSsoRadioButton();
@@ -231,7 +203,7 @@ export class SettingsPage {
     }
 
     async checkProviderDropdownIsDisplayed() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
+        await this.providerDropdown.checkDropdownIsVisible();
     }
 
     async checkValidationMessageIsDisplayed() {
@@ -239,10 +211,10 @@ export class SettingsPage {
     }
 
     async checkProviderOptions() {
-        await BrowserActions.click(this.providerDropdown);
-        await BrowserVisibility.waitUntilElementIsVisible(this.ecmAndBpm.option);
-        await BrowserVisibility.waitUntilElementIsVisible(this.ecm.option);
-        await BrowserVisibility.waitUntilElementIsVisible(this.bpm.option);
+        await this.providerDropdown.clickDropdown();
+        await this.providerDropdown.checkOptionIsDisplayed('ALL');
+        await this.providerDropdown.checkOptionIsDisplayed('ECM');
+        await this.providerDropdown.checkOptionIsDisplayed('BPM');
     }
 
     getBasicAuthRadioButton() {

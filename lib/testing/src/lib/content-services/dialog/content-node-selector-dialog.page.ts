@@ -19,17 +19,19 @@ import { by, element, ElementFinder } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { DropdownPage } from '../../material/pages/dropdown.page';
 
 export class ContentNodeSelectorDialogPage {
     dialog: ElementFinder = element(by.css(`adf-content-node-selector`));
     header: ElementFinder = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
     searchInputElement: ElementFinder = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
     searchLabel: ElementFinder = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
-    siteListDropdown: ElementFinder = this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
     selectedRow: ElementFinder = this.dialog.element(by.css(`adf-datatable-row[class*="adf-is-selected"]`));
     cancelButton: ElementFinder = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
     moveCopyButton: ElementFinder = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
+
     contentList: DocumentListPage = new DocumentListPage(this.dialog);
+    siteListDropdown = new DropdownPage(this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
 
     async checkDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
@@ -52,7 +54,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async checkSelectedSiteIsDisplayed(siteName): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
+        await this.siteListDropdown.checkSelectedOptionIsDisplayed(siteName);
     }
 
     async checkSelectedFolder(folderName: string): Promise<void> {

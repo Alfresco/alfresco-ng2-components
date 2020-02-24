@@ -52,7 +52,7 @@ export class TasksPage {
         await dialog.addName(name);
         await dialog.addDescription(description);
         await dialog.addDueDate(dueDate);
-        await dialog.addForm(formName);
+        await dialog.selectForm(formName);
         await dialog.clickStartButton();
     }
 

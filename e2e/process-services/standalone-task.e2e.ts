@@ -119,7 +119,7 @@ describe('Start Task - Task App', () => {
     it('[C268912] Should a standalone task be displayed when removing the form from APS', async () => {
         const task = await taskPage.createNewTask();
         await task.addName(tasks[3]);
-        await task.addForm(app.formName);
+        await task.selectForm(app.formName);
         await task.clickStartButton();
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);

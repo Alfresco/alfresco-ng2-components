@@ -49,7 +49,7 @@
 <div>
     <p>{{ 'DATATABLE.MULTISELECT_DESCRIPTION'| translate }}</p>
     <mat-form-field>
-        <mat-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
+        <mat-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food" data-automation-id="datatable-selection-mode">
             <mat-option *ngFor="let mode of selectionModes" [value]="mode.value">
                 {{mode.viewValue}}
             </mat-option>

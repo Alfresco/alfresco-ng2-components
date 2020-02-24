@@ -16,21 +16,21 @@
  */
 
 import { element, by, browser, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, DropdownPage } from '@alfresco/adf-testing';
 
 export class NotificationPage {
 
     messageField: ElementFinder = element(by.css('input[data-automation-id="notification-message"]'));
-    horizontalPosition: ElementFinder = element(by.css('mat-select[data-automation-id="notification-horizontal-position"]'));
-    verticalPosition: ElementFinder = element(by.css('mat-select[data-automation-id="notification-vertical-position"]'));
     durationField: ElementFinder = element(by.css('input[data-automation-id="notification-duration"]'));
-    direction: ElementFinder = element(by.css('mat-select[data-automation-id="notification-direction"]'));
     actionToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="notification-action-toggle"]'));
     notificationSnackBar: ElementFinder = element.all(by.css('simple-snack-bar')).first();
     actionOutput: ElementFinder = element(by.css('div[data-automation-id="notification-action-output"]'));
-    selectionDropDown: ElementFinder = element.all(by.css('.mat-select-panel')).first();
     notificationsPage: ElementFinder = element(by.css('.app-sidenav-link[data-automation-id="Notifications"]'));
     notificationConfig: ElementFinder = element(by.css('p[data-automation-id="notification-custom-object"]'));
+
+    horizontalPositionDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="notification-horizontal-position"]')));
+    verticalPositionDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="notification-vertical-position"]')));
+    directionDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="notification-direction"]')));
 
     async checkNotifyContains(message): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('simple-snack-bar', message)).first());
@@ -65,25 +65,19 @@ export class NotificationPage {
         await BrowserActions.clearSendKeys(this.durationField, time);
     }
 
-    async selectHorizontalPosition(selectedItem): Promise<void> {
-        const selectItem: ElementFinder = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
-        await BrowserActions.click(this.horizontalPosition);
-        await BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
-        await BrowserActions.click(selectItem);
+    async selectHorizontalPosition(selectItem): Promise<void> {
+        await this.horizontalPositionDropdown.clickDropdown();
+        await this.horizontalPositionDropdown.selectOption(selectItem);
     }
 
-    async selectVerticalPosition(selectedItem): Promise<void> {
-        const selectItem: ElementFinder = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
-        await BrowserActions.click(this.verticalPosition);
-        await BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
-        await BrowserActions.click(selectItem);
+    async selectVerticalPosition(selectItem): Promise<void> {
+        await this.verticalPositionDropdown.clickDropdown();
+        await this.verticalPositionDropdown.selectOption(selectItem);
     }
 
-    async selectDirection(selectedItem): Promise<void> {
-        const selectItem: ElementFinder = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
-        await BrowserActions.click(this.direction);
-        await BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
-        await BrowserActions.click(selectItem);
+    async selectDirection(selectItem): Promise<void> {
+        await this.directionDropdown.clickDropdown();
+        await this.directionDropdown.selectOption(selectItem);
     }
 
     async clickNotificationButton(): Promise<void> {

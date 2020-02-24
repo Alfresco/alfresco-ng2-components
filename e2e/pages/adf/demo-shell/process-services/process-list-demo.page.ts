@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
 import { by, element, ElementFinder, protractor } from 'protractor';
 
 export class ProcessListDemoPage {
@@ -25,8 +25,9 @@ export class ProcessListDemoPage {
     emptyProcessContent: ElementFinder = element(by.css('div[class="adf-empty-content"]'));
     processDefinitionInput: ElementFinder = element(by.css('input[data-automation-id="process-definition-id"]'));
     processInstanceInput: ElementFinder = element(by.css('input[data-automation-id="process-instance-id"]'));
-    stateSelector: ElementFinder = element(by.css('mat-select[data-automation-id="state"'));
-    sortSelector: ElementFinder = element(by.css('mat-select[data-automation-id="sort"'));
+
+    stateDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="state"')));
+    sortDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="sort"')));
 
     dataTable: DataTableComponentPage = new DataTableComponentPage();
 
@@ -34,16 +35,14 @@ export class ProcessListDemoPage {
         return this.dataTable.getAllRowsColumnValues('Name');
     }
 
-    async selectSorting(sort): Promise<void> {
-        await BrowserActions.click(this.sortSelector);
-        const sortLocator: ElementFinder = element(by.cssContainingText('mat-option span', sort));
-        await BrowserActions.click(sortLocator);
+    async selectSorting(sortingOption: string): Promise<void> {
+        await this.sortDropdown.clickDropdown();
+        await this.sortDropdown.selectOption(sortingOption);
     }
 
-    async selectStateFilter(state): Promise<void> {
-        await BrowserActions.click(this.stateSelector);
-        const stateLocator: ElementFinder = element(by.cssContainingText('mat-option span', state));
-        await BrowserActions.click(stateLocator);
+    async selectStateFilter(stateOption: string): Promise<void> {
+        await this.stateDropdown.clickDropdown();
+        await this.stateDropdown.selectOption(stateOption);
     }
 
     async addAppId(appId): Promise<void> {
@@ -82,12 +81,12 @@ export class ProcessListDemoPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceInput);
     }
 
-    async checkStateFieldIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
+    async checkStateDropdownIsDisplayed(): Promise<void> {
+        await this.stateDropdown.checkDropdownIsVisible();
     }
 
-    async checkSortFieldIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.sortSelector);
+    async checkSortDropdownIsDisplayed(): Promise<void> {
+        await this.sortDropdown.checkDropdownIsVisible();
     }
 
     async addProcessDefinitionId(procDefinitionId): Promise<void> {

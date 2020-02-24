@@ -17,6 +17,7 @@
 
 import { by, element, Locator, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../utils/public-api';
+import { DropdownPage } from '../../../material/pages/dropdown.page';
 
 export class FormFields {
 
@@ -28,10 +29,10 @@ export class FormFields {
     noFormMessage: ElementFinder = element(by.css('span[id*="no-form-message"]'));
     completedTaskNoFormMessage: ElementFinder = element(by.css('div[id*="completed-form-message"] p'));
     attachFormButton: ElementFinder = element(by.id('adf-no-form-attach-form-button'));
-    selectFormDropDownArrow: ElementFinder = element.all(by.css('adf-attach-form div[class*="mat-select-arrow"]')).first();
-    selectFormContent: ElementFinder = element(by.css('div[class*="mat-select-panel"]'));
     completeButton: ElementFinder = element(by.id('adf-form-complete'));
     errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
+
+    selectFormDropdown = new DropdownPage(element.all(by.css('adf-attach-form div[class*="mat-select-arrow"]')).first());
 
     async setFieldValue(locator, field, value): Promise<void> {
         const fieldElement = element(locator(field));
@@ -124,9 +125,9 @@ export class FormFields {
     }
 
     async selectForm(formName): Promise<void> {
-        await BrowserActions.click(this.selectFormDropDownArrow);
-        await BrowserVisibility.waitUntilElementIsVisible(this.selectFormContent);
-        await this.selectFormFromDropDown(formName);
+        await this.selectFormDropdown.clickDropdown();
+        await this.selectFormDropdown.checkOptionsPanelIsDisplayed();
+        await this.selectFormDropdown.selectOption(formName);
     }
 
     async selectFormFromDropDown(formName): Promise<void> {

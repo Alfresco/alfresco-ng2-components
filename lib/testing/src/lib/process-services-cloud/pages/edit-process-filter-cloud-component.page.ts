@@ -18,15 +18,25 @@ import { browser, by, element, protractor, ElementFinder } from 'protractor';
 import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { DropdownPage } from '../../material/pages/dropdown.page';
 
 export class EditProcessFilterCloudComponentPage {
 
     customiseFilter: ElementFinder = element(by.id('adf-edit-process-filter-title-id'));
-    selectedOption: ElementFinder = element.all(by.css('mat-option[class*="mat-selected"]')).first();
     saveButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-save"]'));
     saveAsButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-saveAs"]'));
     deleteButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-delete"]'));
     filter: ElementFinder = element(by.css(`adf-cloud-edit-process-filter mat-expansion-panel-header`));
+
+    private locatorAppNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-appName']`));
+    private locatorStatusDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-status']`));
+    private locatorSortDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`));
+    private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`));
+
+    private appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
+    private statusDropdown = new DropdownPage(this.locatorStatusDropdown);
+    private sortDropdown = new DropdownPage(this.locatorSortDropdown);
+    private orderDropdown = new DropdownPage(this.locatorOrderDropdown);
 
     editProcessFilterDialogPage = new EditProcessFilterDialogPage();
 
@@ -51,10 +61,8 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setStatusFilterDropDown(option: string): Promise<void> {
-        await this.clickOnDropDownArrow('status');
-
-        const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        await BrowserActions.click(statusElement);
+        await this.statusDropdown.clickDropdown();
+        await this.statusDropdown.selectOption(option);
     }
 
     async getStateFilterDropDownValue(): Promise<string> {
@@ -62,10 +70,8 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setSortFilterDropDown(option): Promise<void> {
-        await this.clickOnDropDownArrow('sort');
-
-        const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        await BrowserActions.click(sortElement);
+        await this.sortDropdown.clickDropdown();
+        await this.sortDropdown.selectOption(option);
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
@@ -74,10 +80,8 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setOrderFilterDropDown(option): Promise<void> {
-        await this.clickOnDropDownArrow('order');
-
-        const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        await BrowserActions.click(orderElement);
+        await this.orderDropdown.clickDropdown();
+        await this.orderDropdown.selectOption(option);
         await browser.sleep(1500);
     }
 
@@ -85,16 +89,9 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='order'] span")));
     }
 
-    async clickOnDropDownArrow(option): Promise<void> {
-        const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class='mat-select-arrow-wrapper']")).first();
-        await BrowserActions.click(dropDownArrow);
-    }
-
     async setAppNameDropDown(option: string): Promise<void> {
-        await this.clickOnDropDownArrow('appName');
-
-        const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        await BrowserActions.click(appNameElement);
+        await this.appNameDropdown.clickDropdown();
+        await this.appNameDropdown.selectOption(option);
     }
 
     async getApplicationSelected(): Promise<string> {
@@ -113,9 +110,8 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async getNumberOfAppNameOptions(): Promise<number> {
-        await this.clickOnDropDownArrow('appName');
-        const dropdownOptions = element.all(by.css('.mat-select-panel mat-option'));
-        return dropdownOptions.count();
+        await this.appNameDropdown.clickDropdown();
+        return this.appNameDropdown.getNumberOfOptions();
     }
 
     async isApplicationListLoaded(): Promise<boolean> {

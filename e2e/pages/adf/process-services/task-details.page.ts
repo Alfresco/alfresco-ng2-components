@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, TabsPage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
 import { browser, by, element, ElementFinder } from 'protractor';
 import { AppSettingsTogglesPage } from './dialog/app-settings-toggles.page';
 
@@ -55,7 +55,6 @@ export class TaskDetailsPage {
     involvePeopleHeader: ElementFinder = element(by.css('div[class="adf-search-text-header"]'));
     removeInvolvedPeople: ElementFinder = element(by.css('button[data-automation-id="Remove"]'));
     peopleTitle: ElementFinder = element(by.id('people-title'));
-    attachFormDropdown: ElementFinder = element(by.css('div[class="adf-attach-form-row"]'));
     cancelAttachForm: ElementFinder = element(by.id('adf-no-form-cancel-button'));
     attachFormButton: ElementFinder = element(by.id('adf-no-form-attach-form-button'));
     disabledAttachFormButton: ElementFinder = element(by.css('button[id="adf-no-form-attach-form-button"][disabled]'));
@@ -66,6 +65,8 @@ export class TaskDetailsPage {
     editableAssignee = element(by.css('span[data-automation-id="card-textitem-value-assignee"][class*="clickable"]'));
     claimElement = element(by.css('[data-automation-id="header-claim-button"]'));
     releaseElement = element(by.css('[data-automation-id="header-unclaim-button"]'));
+
+    attachFormDropdown = new DropdownPage(element(by.css('div[class="adf-attach-form-row"]')));
 
     async checkEditableAssigneeIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.editableAssignee);
@@ -109,16 +110,15 @@ export class TaskDetailsPage {
     }
 
     async checkAttachFormDropdownIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.attachFormDropdown);
+        await this.attachFormDropdown.checkDropdownIsVisible();
     }
 
     async clickAttachFormDropdown(): Promise<void> {
-        await BrowserActions.click(this.attachFormDropdown);
+        await this.attachFormDropdown.clickDropdown();
     }
 
     async selectAttachFormOption(option): Promise<void> {
-        const selectedOption: ElementFinder = element(by.cssContainingText('mat-option[role="option"]', option));
-        await BrowserActions.click(selectedOption);
+        await this.attachFormDropdown.selectOption(option);
     }
 
     async checkCancelAttachFormIsDisplayed(): Promise<void> {
