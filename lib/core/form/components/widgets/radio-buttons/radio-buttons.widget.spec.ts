@@ -25,8 +25,15 @@ import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule, TranslateStore, TranslateService } from '@ngx-translate/core';
+import { MatIconModule, MatRadioModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ErrorWidgetComponent } from '../error/error.component';
+import { TranslationService } from '../../../../services';
+import { TranslationMock } from '../../../../mock/translation.service.mock';
+import { DisplayTextWidgetComponent } from '../display-text/display-text.widget';
 
 describe('RadioButtonsWidgetComponent', () => {
 
@@ -36,7 +43,21 @@ describe('RadioButtonsWidgetComponent', () => {
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            CoreModule.forRoot()
+            TranslateModule.forChild(),
+            MatRadioModule,
+            FormsModule,
+            MatIconModule,
+            HttpClientModule
+        ],
+        declarations: [
+            RadioButtonsWidgetComponent,
+            ErrorWidgetComponent,
+            DisplayTextWidgetComponent
+        ],
+        providers: [
+            TranslateStore,
+            TranslateService,
+            { provide: TranslationService, useClass: TranslationMock }
         ]
     });
 
@@ -148,16 +169,85 @@ describe('RadioButtonsWidgetComponent', () => {
             fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
             radioButtonWidget = fixture.componentInstance;
             element = fixture.nativeElement;
+            stubFormService = fixture.debugElement.injector.get(FormService);
         }));
 
-        afterEach(() => {
-            fixture.destroy();
+        it('should show radio buttons as text when is readonly', async () => {
+            radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+                id: 'radio-id',
+                name: 'radio-name',
+                type: FormFieldTypes.RADIO_BUTTONS,
+                readOnly: true
+            });
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(element.querySelector('display-text-widget')).toBeDefined();
+        });
+
+        it('should be able to set label property for Radio Button widget', () => {
+            radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+                id: 'radio-id',
+                name: 'radio-name-label',
+                type: FormFieldTypes.RADIO_BUTTONS,
+                readOnly: true
+            });
+            fixture.detectChanges();
+            expect(element.querySelector('label').innerText).toBe('radio-name-label');
+        });
+
+        it('should be able to set a Radio Button widget as required', async () => {
+            radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+                id: 'radio-id',
+                name: 'radio-name-label',
+                type: FormFieldTypes.RADIO_BUTTONS,
+                readOnly: false,
+                required: true,
+                optionType: 'manual',
+                options: restOption,
+                restUrl: null
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+            const widgetLabel = element.querySelector('label');
+            expect(widgetLabel.innerText).toBe('radio-name-label*');
+            expect(radioButtonWidget.field.isValid).toBe(false);
+
+            const option: HTMLElement = <HTMLElement> element.querySelector('#radio-id-opt-1 label');
+            option.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+            const selectedOption: HTMLElement = <HTMLElement> element.querySelector('[class*="mat-radio-checked"]');
+            expect(selectedOption.innerText).toBe('opt-name-1');
+            expect(radioButtonWidget.field.isValid).toBe(true);
+        });
+
+        it('should be able to set a Radio Button widget as required', () => {
+            radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+                id: 'radio-id',
+                name: 'radio-name-label',
+                type: FormFieldTypes.RADIO_BUTTONS,
+                readOnly: false,
+                required: true,
+                optionType: 'manual',
+                options: restOption,
+                restUrl: null,
+                value: 'opt-name-2'
+            });
+
+            fixture.detectChanges();
+            const selectedOption: HTMLElement = <HTMLElement> element.querySelector('[class*="mat-radio-checked"]');
+            expect(selectedOption.innerText).toBe('opt-name-2');
+            expect(radioButtonWidget.field.isValid).toBe(true);
         });
 
         describe('and radioButton is populated via taskId', () => {
 
             beforeEach(async(() => {
-                stubFormService = fixture.debugElement.injector.get(FormService);
                 spyOn(stubFormService, 'getRestFieldValues').and.returnValue(of(restOption));
                 radioButtonWidget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }), {
                     id: 'radio-id',
@@ -227,7 +317,6 @@ describe('RadioButtonsWidgetComponent', () => {
                     type: FormFieldTypes.RADIO_BUTTONS,
                     restUrl: 'rest-url'
                 });
-                stubFormService = fixture.debugElement.injector.get(FormService);
                 spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(of(restOption));
                 radioButtonWidget.field.isVisible = true;
                 fixture.detectChanges();
