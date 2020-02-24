@@ -356,21 +356,26 @@ describe('AttachFileWidgetComponent', () => {
             });
         }));
 
-        it('should raise formContentClicked event when show file is clicked', async(() => {
+        it('should raise formContentClicked event when show file is clicked', async() => {
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
             formService.formContentClicked.subscribe((file) => {
                 expect(file).not.toBeNull();
                 expect(file.id).toBe(1155);
             });
+            fixture.detectChanges();
+            await fixture.whenStable();
             const menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
             expect(menuButton).not.toBeNull();
             menuButton.click();
             fixture.detectChanges();
+            await fixture.whenStable();
             const showOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
             showOption.click();
-        }));
+            fixture.detectChanges();
+            await fixture.whenStable();
+        });
 
-        it('should not display the show button file when is an external file', async(() => {
+        it('should not display the show button file when is an external file', async() => {
             fakePngAnswer.isExternal = true;
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
 
@@ -378,11 +383,12 @@ describe('AttachFileWidgetComponent', () => {
             expect(menuButton).not.toBeNull();
             menuButton.click();
             fixture.detectChanges();
+            await fixture.whenStable();
             const showOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
             expect(showOption.disabled).toBeTruthy();
-        }));
+        });
 
-        it('should not display the download button file when is an external file', async(() => {
+        it('should not display the download button file when is an external file', async() => {
             fakePngAnswer.isExternal = true;
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
 
@@ -390,11 +396,12 @@ describe('AttachFileWidgetComponent', () => {
             expect(menuButton).not.toBeNull();
             menuButton.click();
             fixture.detectChanges();
+            await fixture.whenStable();
             const downloadOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
             expect(downloadOption.disabled).toBeTruthy();
-        }));
+        });
 
-        it('should  display the download button file when is an internal file', async(() => {
+        it('should  display the download button file when is an internal file', async() => {
             fakePngAnswer.isExternal = false;
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
 
@@ -402,12 +409,13 @@ describe('AttachFileWidgetComponent', () => {
             expect(menuButton).not.toBeNull();
             menuButton.click();
             fixture.detectChanges();
+            await fixture.whenStable();
             const downloadOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
             expect(downloadOption.disabled).toBeFalsy();
 
-        }));
+        });
 
-        it('should not display the show button file when there is no contentAvailable', async(() => {
+        it('should not display the show button file when there is no contentAvailable', async() => {
             fakePngAnswer.contentAvailable = false;
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
 
@@ -415,8 +423,9 @@ describe('AttachFileWidgetComponent', () => {
             expect(menuButton).not.toBeNull();
             menuButton.click();
             fixture.detectChanges();
+            await fixture.whenStable();
             const showOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
             expect(showOption.disabled).toBeTruthy();
-        }));
+        });
    });
 });
