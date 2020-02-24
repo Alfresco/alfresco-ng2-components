@@ -185,8 +185,6 @@ describe('RadioButtonsWidgetComponent', () => {
             expect(element.querySelector('display-text-widget')).toBeDefined();
         });
 
-<<<<<<< Updated upstream
-=======
         it('should be able to set label property for Radio Button widget', () => {
             radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
                 id: 'radio-id',
@@ -247,7 +245,6 @@ describe('RadioButtonsWidgetComponent', () => {
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
 
->>>>>>> Stashed changes
         describe('and radioButton is populated via taskId', () => {
 
             beforeEach(async(() => {
