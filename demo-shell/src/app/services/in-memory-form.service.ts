@@ -81,7 +81,7 @@ export class InMemoryFormService extends FormService {
                 formValues[variable.name] = variable.value;
             });
 
-            const form = new FormModel(flattenForm, formValues, readOnly);
+            const form = new FormModel(flattenForm, formValues, readOnly, this);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(<any> form, {
