@@ -28,6 +28,7 @@ export interface PublishArgs {
     loginPassword?: string;
     loginRepo?: string;
     dockerRepo?: string;
+    buildArgs?: string;
     dockerTags?: string;
     pathProject: string;
 }
@@ -40,7 +41,7 @@ function loginPerform(args: PublishArgs) {
 
 function buildImagePerform(args: PublishArgs, tag: string) {
     logger.info(`Perform docker build...${args.dockerRepo}:${tag}`);
-    const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, args.pathProject], {});
+    const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, `--build-arg=${args.buildArgs}`, args.pathProject], {});
     logger.info(response);
 }
 
