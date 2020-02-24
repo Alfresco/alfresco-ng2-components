@@ -2,14 +2,14 @@
  * @license
  * Copyright 2019 Alfresco Software, Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an 'AS IS' BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -19,8 +19,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel } from './../core/form-field.model';
 import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormBaseModule } from '../../../form-base.module';
+import { TranslateStore } from '@ngx-translate/core';
+import { TranslationService } from '../../../../services/translation.service';
+import { TranslationMock } from '../../../../mock/translation.service.mock';
+import { FormModel } from '../core';
 
 describe('AmountWidgetComponent', () => {
 
@@ -30,7 +34,11 @@ describe('AmountWidgetComponent', () => {
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            CoreModule.forRoot()
+            FormBaseModule
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock },
+            TranslateStore
         ]
     });
 
@@ -77,6 +85,78 @@ describe('AmountWidgetComponent', () => {
     });
 });
 
+
+describe('AmountWidgetComponent - rendering', () => {
+
+    let widget: AmountWidgetComponent;
+    let fixture: ComponentFixture<AmountWidgetComponent>;
+
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            FormBaseModule
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock },
+            TranslateStore
+        ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AmountWidgetComponent);
+        widget = fixture.componentInstance;
+    });
+
+    it('[C309692] - Should be possible to set the General Properties for Amount Widget', async () =>{
+        widget.field = new FormFieldModel(new FormModel(), {
+            id: 'TestAmount1',
+            name: 'Test Amount',
+            type: 'amount',
+            required: true,
+            colspan: 2,
+            placeholder: 'Check Placeholder Text',
+            minValue: null,
+            maxValue: null,
+            visibilityCondition: null,
+            params: {
+                existingColspan: 1,
+                maxColspan: 2
+            },
+            enableFractions: false,
+            currency: '$'
+        });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const requiredAsteriscElement = fixture.nativeElement.querySelector('.mat-placeholder-required');
+        expect(requiredAsteriscElement.textContent).toContain('*');
+        const widgetPlaceholder = fixture.nativeElement.querySelector('label.mat-form-field-label');
+        expect(widgetPlaceholder.textContent).toBe('Check Placeholder Text *');
+        const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
+        expect(widgetLabel.textContent).toBe('Test Amount*');
+        const widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
+        expect(widgetPrefix.textContent).toBe('$');
+        expect(widget.field.isValid).toBe(false);
+        const widgetById: HTMLInputElement = fixture.nativeElement.querySelector('#TestAmount1');
+        expect(widgetById).toBeDefined();
+        expect(widgetById).not.toBeNull();
+
+        widgetById.value = '90';
+        widgetById.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(widget.field.isValid).toBe(true, 'amount widget with a valid field');
+
+        widgetById.value = 'gdfgdf';
+        widgetById.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(widget.field.isValid).toBe(false, 'amount widget with an invalid field');
+        const errorWidget = fixture.nativeElement.querySelector('error-widget .adf-error-text');
+        expect(errorWidget.textContent).toBe('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
+    });
+});
+
 describe('AmountWidgetComponent settings', () => {
     let widget: AmountWidgetComponent;
     let fixture: ComponentFixture<AmountWidgetComponent>;
@@ -84,9 +164,11 @@ describe('AmountWidgetComponent settings', () => {
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            CoreModule.forRoot()
+            FormBaseModule
         ],
         providers: [
+            { provide: TranslationService, useClass: TranslationMock },
+            TranslateStore,
             {
                 provide: ADF_AMOUNT_SETTINGS,
                 useValue: {
