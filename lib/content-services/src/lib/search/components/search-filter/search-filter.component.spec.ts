@@ -17,88 +17,48 @@
 
 import { SearchFilterComponent } from './search-filter.component';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
-import { AppConfigService, TranslationMock, CoreModule, TranslationService, SearchService } from '@alfresco/adf-core';
+import { AppConfigService, SearchService, setupTestBed, TranslationMock, TranslationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 import { FacetField } from '../../facet-field.interface';
 import { SearchFilterList } from './models/search-filter-list.model';
-import { TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { disabledCategories, expandedCategories, simpleCategories } from './search-filter-mock';
 
 describe('SearchFilterComponent', () => {
-
+    let fixture: ComponentFixture<SearchFilterComponent>;
     let component: SearchFilterComponent;
     let queryBuilder: SearchQueryBuilderService;
-    let appConfig: AppConfigService;
+    let appConfigService: AppConfigService;
     const translationMock = new TranslationMock();
+    const searchMock: any = {
+        dataLoaded: new Subject()
+    };
+    translationMock.instant = (key) => `${key}_translated`;
 
-    beforeEach(() => {
-        const searchMock: any = {
-            dataLoaded: new Subject()
-        };
-        translationMock.instant = (key) => `${key}_translated`;
-
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot(),
-                HttpClientModule,
-                NoopAnimationsModule
-            ],
-            declarations: [SearchFilterComponent],
-            providers: [
-                { provide: SearchService, useValue: searchMock },
-                { provide: TranslationService, useValue: translationMock }
-            ],
-            schemas: [ NO_ERRORS_SCHEMA ]
-        });
-
-        appConfig = TestBed.get(AppConfigService);
-        appConfig.config.search = {};
-
-        queryBuilder = TestBed.get(SearchQueryBuilderService);
-
-        component = new SearchFilterComponent(queryBuilder, searchMock, translationMock);
-        component.ngOnInit();
+    setupTestBed({
+        imports: [
+            ContentTestingModule
+        ],
+        providers: [
+            { provide: SearchService, useValue: searchMock },
+            { provide: TranslationService, useValue: translationMock }
+        ]
     });
 
-    it('should have expandable categories', async(() => {
-        queryBuilder.categories = [
-            {
-                id: 'cat-1',
-                name: 'category-1',
-                expanded: false,
-                enabled: false,
-                component: {
-                    selector: 'cat-1-component',
-                    settings: null
-                }
-            }
-        ];
-
-        const fixture = TestBed.createComponent(SearchFilterComponent);
+    beforeEach(() => {
+        queryBuilder = TestBed.get(SearchQueryBuilderService);
+        fixture = TestBed.createComponent(SearchFilterComponent);
+        appConfigService = TestBed.get(AppConfigService);
+        component = fixture.componentInstance;
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
-            expect(panels.length).toBe(1);
-
-            const element: HTMLElement = panels[0].nativeElement;
-
-            (element.childNodes[0] as HTMLElement).click();
-            fixture.detectChanges();
-            expect(element.classList.contains('mat-expanded')).toBeTruthy();
-
-            (element.childNodes[0] as HTMLElement).click();
-            fixture.detectChanges();
-            expect(element.classList.contains('mat-expanded')).toBeFalsy();
-        });
-    }));
+    });
 
     it('should subscribe to query builder executed event', () => {
         spyOn(component, 'onDataLoaded').and.stub();
-        const data = {};
+        const data = { list: {} };
         queryBuilder.executed.next(data);
 
         expect(component.onDataLoaded).toHaveBeenCalledWith(data);
@@ -733,5 +693,84 @@ describe('SearchFilterComponent', () => {
         expect(component.responseFacets.length).toBe(2);
         expect(component.responseFacets[0].buckets.length).toEqual(1);
         expect(component.responseFacets[1].buckets.length).toEqual(0);
+    });
+
+    describe('widget', () => {
+        it('should have expandable categories', async(() => {
+            queryBuilder.categories = [
+                {
+                    id: 'cat-1',
+                    name: 'category-1',
+                    expanded: false,
+                    enabled: false,
+                    component: {
+                        selector: 'cat-1-component',
+                        settings: null
+                    }
+                }
+            ];
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
+                expect(panels.length).toBe(1);
+
+                const element: HTMLElement = panels[0].nativeElement;
+
+                (element.childNodes[0] as HTMLElement).click();
+                fixture.detectChanges();
+                expect(element.classList.contains('mat-expanded')).toBeTruthy();
+
+                (element.childNodes[0] as HTMLElement).click();
+                fixture.detectChanges();
+                expect(element.classList.contains('mat-expanded')).toBeFalsy();
+            });
+        }));
+
+        it('should not show the disabled widget', async(() => {
+            appConfigService.config.search = { categories: disabledCategories };
+            queryBuilder.resetToDefaults();
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
+                expect(panels.length).toBe(0);
+            });
+        }));
+
+        it('should show the widget in expanded mode', async(() => {
+            appConfigService.config.search = { categories: expandedCategories };
+            queryBuilder.resetToDefaults();
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
+                expect(panels.length).toBe(1);
+
+                const title = fixture.debugElement.query(By.css('.mat-expansion-panel-header-title'));
+                expect(title.nativeElement.innerText.trim()).toBe('Type');
+
+                const element: HTMLElement = panels[0].nativeElement;
+                expect(element.classList.contains('mat-expanded')).toBeTruthy();
+
+                (element.childNodes[0] as HTMLElement).click();
+                fixture.detectChanges();
+                expect(element.classList.contains('mat-expanded')).toBeFalsy();
+            });
+        }));
+
+        it('should show the widgets', async(() => {
+            appConfigService.config.search = { categories: simpleCategories };
+            queryBuilder.resetToDefaults();
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
+                expect(panels.length).toBe(2);
+
+                const titleElements = fixture.debugElement.queryAll(By.css('.mat-expansion-panel-header-title'));
+                expect(titleElements.map(title => title.nativeElement.innerText.trim())).toEqual(['Name', 'Type']);
+            });
+        }));
     });
 });

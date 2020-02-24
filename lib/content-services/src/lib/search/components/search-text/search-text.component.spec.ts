@@ -16,9 +16,9 @@
  */
 
 import { SearchTextComponent } from './search-text.component';
-import { setupTestBed } from "@alfresco/adf-core";
-import { ContentTestingModule } from "../../../testing/content.testing.module";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { setupTestBed } from '@alfresco/adf-core';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 describe('SearchTextComponent', () => {
     let fixture: ComponentFixture<SearchTextComponent>;
@@ -93,11 +93,24 @@ describe('SearchTextComponent', () => {
         expect(component.context.queryFragments[component.id]).toBe('');
     });
 
-    it('should show the custom name', () => {
+    it('should show the custom name', async(() => {
         component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
         fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(component.value).toEqual('secret.pdf');
+            const input = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix input');
+            expect(input.value).toEqual('secret.pdf');
+        });
+    }));
 
-        expect(component.value).toEqual('secret.pdf');
-    });
-
+    it('should be able to reset the query',  async(() => {
+        component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const clearElement = fixture.debugElement.nativeElement.querySelector('button');
+            clearElement.click();
+            expect(component.value).toBe('');
+            expect(component.context.queryFragments[component.id]).toBe('');
+        });
+    }));
 });
