@@ -129,7 +129,8 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     validateGroupsMessage: string;
     searchedValue = '';
 
-    isLoading = false;
+    validationLoading = false;
+    searchLoading = false;
 
     constructor(
         private identityGroupService: IdentityGroupService,
@@ -178,6 +179,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     initSearch(): void {
         this.searchGroupsControl.valueChanges.pipe(
             filter((value) => {
+                this.searchLoading = true;
                 return typeof value === 'string';
             }),
             tap((value: string) => {
@@ -201,6 +203,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             ),
             mergeMap((groups) => {
                 this.resetSearchGroups();
+                this.searchLoading = false;
                 return groups;
             }),
             filter(group => !this.isGroupAlreadySelected(group)),
@@ -308,9 +311,9 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
         this.groupChipsCtrl.setValue(this.selectedGroups[0].name);
         if (this.isValidationEnabled()) {
-            this.isLoading = true;
+            this.validationLoading = true;
             await this.validatePreselectGroups();
-            this.isLoading = false;
+            this.validationLoading = false;
         }
     }
 
@@ -322,23 +325,25 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onSelect(group: IdentityGroupModel): void {
-        this.selectGroup.emit(group);
+        if (group) {
+            this.selectGroup.emit(group);
 
-        if (this.isMultipleMode()) {
-            if (!this.isGroupAlreadySelected(group)) {
-                this.selectedGroups.push(group);
+            if (this.isMultipleMode()) {
+                if (!this.isGroupAlreadySelected(group)) {
+                    this.selectedGroups.push(group);
+                }
+            } else {
+                this.invalidGroups = [];
+                this.selectedGroups = [group];
             }
-        } else {
-            this.invalidGroups = [];
-            this.selectedGroups = [group];
+
+            this.groupInput.nativeElement.value = '';
+            this.searchGroupsControl.setValue('');
+            this.groupChipsCtrlValue(this.selectedGroups[0].name);
+
+            this.changedGroups.emit(this.selectedGroups);
+            this.resetSearchGroups();
         }
-
-        this.groupInput.nativeElement.value = '';
-        this.searchGroupsControl.setValue('');
-        this.groupChipsCtrlValue(this.selectedGroups[0].name);
-
-        this.changedGroups.emit(this.selectedGroups);
-        this.resetSearchGroups();
     }
 
     onRemove(groupToRemove: IdentityGroupModel): void {
@@ -474,7 +479,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     isValidationLoading(): boolean {
-        return this.isValidationEnabled() && this.isLoading;
+        return this.isValidationEnabled() && this.validationLoading;
     }
 
     setFocus(isFocused: boolean) {

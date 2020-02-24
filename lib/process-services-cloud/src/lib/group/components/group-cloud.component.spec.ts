@@ -97,7 +97,7 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(5);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-row"]')).length).toEqual(5);
                 expect(findGroupsByNameSpy).toHaveBeenCalled();
                 done();
             });
@@ -118,7 +118,7 @@ describe('GroupCloudComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(4);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-row"]')).length).toEqual(4);
                 done();
             });
         });
@@ -134,7 +134,7 @@ describe('GroupCloudComponent', () => {
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                expect(element.querySelector('mat-option')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-cloud-group-row"]')).toBeNull();
                 done();
             });
         });
@@ -257,7 +257,7 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(5);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-row"]')).length).toEqual(5);
                 done();
             });
         });
@@ -275,7 +275,8 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(element.querySelectorAll('mat-option').length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-row"]')).length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-no-results"]')).length).toEqual(1);
                 done();
             });
         });
@@ -292,7 +293,7 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(5);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-row"]')).length).toEqual(5);
                 expect(checkGroupHasAnyClientAppRoleSpy).toHaveBeenCalled();
                 done();
             });
@@ -311,7 +312,8 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-row"]')).length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-no-results"]')).length).toEqual(1);
                 expect(checkGroupHasAnyClientAppRoleSpy).toHaveBeenCalled();
                 done();
             });
@@ -433,7 +435,7 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(5);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-row"]')).length).toEqual(5);
                 expect(checkGroupHasRoleSpy).toHaveBeenCalledTimes(5);
                 done();
             });
@@ -451,7 +453,8 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(element.querySelectorAll('mat-option').length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-row"]')).length).toEqual(0);
+                expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-no-results"]')).length).toEqual(1);
                 expect(checkGroupHasRoleSpy).toHaveBeenCalled();
                 done();
             });
