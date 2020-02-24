@@ -154,28 +154,6 @@ describe('RadioButtonsWidgetComponent', () => {
             fixture.destroy();
         });
 
-        describe('and radioButton is readonly', () => {
-
-            beforeEach(async(() => {
-                stubFormService = fixture.debugElement.injector.get(FormService);
-                radioButtonWidget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }), {
-                    id: 'radio-id',
-                    name: 'radio-name',
-                    type: FormFieldTypes.RADIO_BUTTONS,
-                    readOnly: true
-                });
-                radioButtonWidget.field.isVisible = true;
-                const fakeContainer = new ContainerModel(radioButtonWidget.field);
-                radioButtonWidget.field.form.fields.push(fakeContainer);
-                fixture.detectChanges();
-            }));
-
-            it('should show radio buttons as text when is readonly', async(() => {
-                expect(element.querySelector('display-text-widget')).toBeDefined();
-            }));
-
-        });
-
         describe('and radioButton is populated via taskId', () => {
 
             beforeEach(async(() => {
@@ -211,6 +189,33 @@ describe('RadioButtonsWidgetComponent', () => {
                     expect(element.querySelector('#radio-id-opt-1-input')).toBeNull();
                 });
             }));
+
+            describe('and radioButton is readonly', () => {
+
+                beforeEach(async(() => {
+                    radioButtonWidget.field.readOnly = true;
+                    fixture.detectChanges();
+                }));
+
+                it('should show radio buttons disabled', async(() => {
+                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-1"]')).toBeDefined();
+                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-1"]')).not.toBeNull();
+                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-2"]')).toBeDefined();
+                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-2"]')).not.toBeNull();
+                }));
+
+                describe('and a value is selected', () => {
+
+                    beforeEach(async(() => {
+                        radioButtonWidget.field.value = restOption[0].id;
+                        fixture.detectChanges();
+                    }));
+
+                    it('should check the selected value', async(() => {
+                        expect(element.querySelector('.mat-radio-checked')).toBe(element.querySelector('mat-radio-button[ng-reflect-id="radio-id-opt-1"]'));
+                    }));
+                });
+            });
         });
 
         describe('and radioButton is populated via processDefinitionId', () => {
