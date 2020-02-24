@@ -57,12 +57,8 @@ export class AttachFormPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
 
-    async clickAttachFormDropdown(): Promise<void> {
-        await this.attachFormDropdown.clickDropdown();
-    }
-
     async selectAttachFormOption(option): Promise<void> {
-        await this.attachFormDropdown.selectOption(option);
+        await this.attachFormDropdown.clickDropdownWithOption(option);
     }
 
     async clickCancelButton(): Promise<void> {

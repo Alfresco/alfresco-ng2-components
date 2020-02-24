@@ -580,8 +580,7 @@ export class ContentServicesPage {
     }
 
     async selectGridSortingFromDropdown(sortingOption): Promise<void> {
-        await this.sortingDropdown.clickDropdown();
-        await this.sortingDropdown.selectOption(sortingOption);
+        await this.sortingDropdown.clickDropdownWithOption(sortingOption);
     }
 
     async checkRowIsDisplayed(rowName): Promise<void> {

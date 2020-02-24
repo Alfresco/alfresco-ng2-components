@@ -97,8 +97,7 @@ export class TaskDetailsPage {
     }
 
     async checkSelectedForm(formName): Promise<void> {
-        const text = await BrowserActions.getText(this.attachFormName);
-        await expect(formName).toEqual(text);
+        await this.attachFormDropdown.checkOptionIsSelected(formName);
     }
 
     async checkAttachFormButtonIsDisabled(): Promise<void> {
@@ -113,12 +112,8 @@ export class TaskDetailsPage {
         await this.attachFormDropdown.checkDropdownIsVisible();
     }
 
-    async clickAttachFormDropdown(): Promise<void> {
-        await this.attachFormDropdown.clickDropdown();
-    }
-
     async selectAttachFormOption(option): Promise<void> {
-        await this.attachFormDropdown.selectOption(option);
+        await this.attachFormDropdown.clickDropdownWithOption(option);
     }
 
     async checkCancelAttachFormIsDisplayed(): Promise<void> {

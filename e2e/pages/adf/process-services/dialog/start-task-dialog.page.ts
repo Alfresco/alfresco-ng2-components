@@ -63,8 +63,7 @@ export class StartTaskDialogPage {
     }
 
     async selectForm(form): Promise<void> {
-        await this.selectFormDropdown.clickDropdown();
-        await this.selectFormDropdown.selectOption(form);
+        await this.selectFormDropdown.clickDropdownWithOption(form);
     }
 
     async clickStartButton(): Promise<void> {

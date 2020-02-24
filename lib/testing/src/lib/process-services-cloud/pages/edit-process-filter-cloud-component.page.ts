@@ -33,10 +33,10 @@ export class EditProcessFilterCloudComponentPage {
     private locatorSortDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`));
     private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`));
 
-    private appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
-    private statusDropdown = new DropdownPage(this.locatorStatusDropdown);
-    private sortDropdown = new DropdownPage(this.locatorSortDropdown);
-    private orderDropdown = new DropdownPage(this.locatorOrderDropdown);
+    appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
+    statusDropdown = new DropdownPage(this.locatorStatusDropdown);
+    sortDropdown = new DropdownPage(this.locatorSortDropdown);
+    orderDropdown = new DropdownPage(this.locatorOrderDropdown);
 
     editProcessFilterDialogPage = new EditProcessFilterDialogPage();
 
@@ -61,8 +61,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setStatusFilterDropDown(option: string): Promise<void> {
-        await this.statusDropdown.clickDropdown();
-        await this.statusDropdown.selectOption(option);
+        await this.statusDropdown.clickDropdownWithOption(option);
     }
 
     async getStateFilterDropDownValue(): Promise<string> {
@@ -70,8 +69,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setSortFilterDropDown(option): Promise<void> {
-        await this.sortDropdown.clickDropdown();
-        await this.sortDropdown.selectOption(option);
+        await this.sortDropdown.clickDropdownWithOption(option);
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
@@ -80,8 +78,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setOrderFilterDropDown(option): Promise<void> {
-        await this.orderDropdown.clickDropdown();
-        await this.orderDropdown.selectOption(option);
+        await this.orderDropdown.clickDropdownWithOption(option);
         await browser.sleep(1500);
     }
 
@@ -90,8 +87,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setAppNameDropDown(option: string): Promise<void> {
-        await this.appNameDropdown.clickDropdown();
-        await this.appNameDropdown.selectOption(option);
+        await this.appNameDropdown.clickDropdownWithOption(option);
     }
 
     async getApplicationSelected(): Promise<string> {

@@ -103,8 +103,6 @@ describe('Task Details - Form', () => {
         await taskDetailsPage.checkAttachFormDropdownIsDisplayed();
         await taskDetailsPage.checkAttachFormButtonIsDisabled();
 
-        await taskDetailsPage.clickAttachFormDropdown();
-
         await taskDetailsPage.selectAttachFormOption(newForm.name);
         await taskDetailsPage.checkSelectedForm(newForm.name);
         await taskDetailsPage.checkAttachFormButtonIsEnabled();
@@ -117,8 +115,6 @@ describe('Task Details - Form', () => {
         await taskDetailsPage.clickForm();
 
         await taskDetailsPage.checkAttachFormDropdownIsDisplayed();
-        await taskDetailsPage.clickAttachFormDropdown();
-
         await taskDetailsPage.selectAttachFormOption(newForm.name);
 
         await taskDetailsPage.checkAttachFormButtonIsDisplayed();

@@ -22,7 +22,6 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class DropdownPage {
 
     dropDownElement: ElementFinder;
-    private selectedOption: ElementFinder = element(by.css('span[class*="mat-select-value-text"]'));
 
     constructor(dropDownElement: ElementFinder = element.all(by.css('div[class="mat-select-arrow-wrapper"]')).first()) {
         this.dropDownElement = dropDownElement;
@@ -55,7 +54,7 @@ export class DropdownPage {
     }
 
     async checkOptionIsSelected(option: string): Promise<void> {
-        const selectedOption = element(by.cssContainingText('.mat-select-value-text span', option));
+        const selectedOption = this.dropDownElement.element(by.cssContainingText('.mat-select-value-text span', option));
         await BrowserVisibility.waitUntilElementIsVisible(selectedOption);
     }
 
@@ -69,7 +68,8 @@ export class DropdownPage {
     }
 
     async getSelectedOptionText(): Promise<string> {
-        return BrowserActions.getText(this.selectedOption);
+        const selectedOption = this.dropDownElement.element(by.css('.mat-select-value-text span'));
+        return BrowserActions.getText(selectedOption);
     }
 
     async checkOptionIsDisplayed(option: string): Promise <void> {
@@ -78,5 +78,10 @@ export class DropdownPage {
 
     async checkOptionIsNotDisplayed(option: string): Promise <void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-option span.mat-option-text', option)));
+    }
+
+    async clickDropdownWithOption(option: string): Promise<void> {
+        await this.clickDropdown();
+        await this.selectOption(option);
     }
 }

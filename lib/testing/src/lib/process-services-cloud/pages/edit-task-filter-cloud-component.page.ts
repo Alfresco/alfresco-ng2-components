@@ -44,10 +44,10 @@ export class EditTaskFilterCloudComponentPage {
     private locatorSortDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-sort']`));
     private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`));
 
-    private appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
-    private statusDropdown = new DropdownPage(this.locatorStatusDropdown);
-    private sortDropdown = new DropdownPage(this.locatorSortDropdown);
-    private orderDropdown = new DropdownPage(this.locatorOrderDropdown);
+    appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
+    statusDropdown = new DropdownPage(this.locatorStatusDropdown);
+    sortDropdown = new DropdownPage(this.locatorSortDropdown);
+    orderDropdown = new DropdownPage(this.locatorOrderDropdown);
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
 
@@ -65,8 +65,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setStatusFilterDropDown(option: string): Promise<void> {
-        await this.statusDropdown.clickDropdown();
-        await this.statusDropdown.selectOption(option);
+        await this.statusDropdown.clickDropdownWithOption(option);
     }
 
     async getStatusFilterDropDownValue(): Promise<string> {
@@ -74,8 +73,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setSortFilterDropDown(option: string): Promise<void> {
-        await this.sortDropdown.clickDropdown();
-        await this.sortDropdown.selectOption(option);
+        await this.sortDropdown.clickDropdownWithOption(option);
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
@@ -83,8 +81,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setOrderFilterDropDown(option: string): Promise<void> {
-        await this.orderDropdown.clickDropdown();
-        await this.orderDropdown.selectOption(option);
+        await this.orderDropdown.clickDropdownWithOption(option);
         await browser.sleep(1500);
     }
 
@@ -196,8 +193,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setAppNameDropDown(option: string): Promise<void> {
-        await this.appNameDropdown.clickDropdown();
-        await this.appNameDropdown.selectOption(option);
+        await this.appNameDropdown.clickDropdownWithOption(option);
     }
 
     async getAppNameDropDownValue(): Promise<string> {

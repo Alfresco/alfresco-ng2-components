@@ -139,9 +139,7 @@ export class TaskListDemoPage {
     }
 
     async selectState(state): Promise<void> {
-        await this.stateDropdown.clickDropdown();
-        await this.stateDropdown.checkOptionsPanelIsDisplayed();
-        await this.stateDropdown.selectOption(state);
+        await this.stateDropdown.clickDropdownWithOption(state);
     }
 
     getAllProcessDefinitionIds(): Promise<any> {
