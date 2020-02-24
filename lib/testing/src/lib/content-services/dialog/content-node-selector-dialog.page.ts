@@ -54,7 +54,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async checkSelectedSiteIsDisplayed(siteName): Promise<void> {
-        await this.siteListDropdown.checkSelectedOptionIsDisplayed(siteName);
+        await this.siteListDropdown.checkOptionIsSelected(siteName);
     }
 
     async checkSelectedFolder(folderName: string): Promise<void> {

@@ -54,7 +54,7 @@ export class DropdownPage {
         await BrowserVisibility.waitUntilElementIsClickable(this.dropDownElement);
     }
 
-    async checkSelectedOptionIsDisplayed(option: string): Promise<void> {
+    async checkOptionIsSelected(option: string): Promise<void> {
         const selectedOption = element(by.cssContainingText('.mat-select-value-text span', option));
         await BrowserVisibility.waitUntilElementIsVisible(selectedOption);
     }
