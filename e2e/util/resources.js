@@ -395,10 +395,6 @@ exports.Files = {
             last_page_text: "and provide feedback. The main advantages being the readability of the te",
             last_page_number: "8"
         },
-        DOCX: {
-            file_location: "/resources/adf/allFileTypes/a_file_unsupported.docx",
-            file_name: "a_file_unsupported.docx"
-        },
         FOLDER_ONE: {
             folder_location: "/resources/adf/folderOne",
             folder_name: "folderOne"
