@@ -198,8 +198,10 @@ describe('RadioButtonsWidgetComponent', () => {
                 }));
 
                 it('should show radio buttons disabled', async(() => {
-                    expect(element.querySelector('.adf-readonly')).toBeDefined();
-                    expect(element.querySelector('.adf-readonly')).not.toBeNull();
+                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-1"]')).toBeDefined();
+                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-1"]')).not.toBeNull();
+                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-2"]')).toBeDefined();
+                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-2"]')).not.toBeNull();
                 }));
 
                 describe('and a value is selected', () => {
@@ -210,8 +212,6 @@ describe('RadioButtonsWidgetComponent', () => {
                     }));
 
                     it('should check the selected value', async(() => {
-                        expect(element.querySelector('.mat-radio-checked')).toBeDefined();
-                        expect(element.querySelector('.mat-radio-checked')).not.toBeNull();
                         expect(element.querySelector('.mat-radio-checked')).toBe(element.querySelector('mat-radio-button[ng-reflect-id="radio-id-opt-1"]'));
                     }));
                 });
