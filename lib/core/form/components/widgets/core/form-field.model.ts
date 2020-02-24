@@ -142,7 +142,6 @@ export class FormFieldModel extends FormWidgetModel {
             this.name = json.name;
             this.type = json.type;
             this.roles = json.roles;
-            this.optionType = json.optionType;
             this._required = <boolean> json.required;
             this._readOnly = <boolean> json.readOnly || json.type === 'readonly';
             this.overrideId = <boolean> json.overrideId;
