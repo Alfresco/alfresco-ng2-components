@@ -17,13 +17,25 @@
 
 import { MatSliderChange } from '@angular/material';
 import { SearchSliderComponent } from './search-slider.component';
+import { setupTestBed } from '@alfresco/adf-core';
+import { CoreTestingModule } from '../../../../../../core/testing/core.testing.module';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 describe('SearchSliderComponent', () => {
-
+    let fixture: ComponentFixture<SearchSliderComponent>;
     let component: SearchSliderComponent;
 
+    setupTestBed({
+        imports: [
+            CoreTestingModule,
+            ContentTestingModule
+        ]
+    });
+
     beforeEach(() => {
-        component = new SearchSliderComponent();
+        fixture = TestBed.createComponent(SearchSliderComponent);
+        component = fixture.componentInstance;
     });
 
     it('should setup slider from settings', () => {
@@ -35,7 +47,7 @@ describe('SearchSliderComponent', () => {
         };
 
         component.settings = settings;
-        component.ngOnInit();
+        fixture.detectChanges();
 
         expect(component.min).toEqual(settings.min);
         expect(component.max).toEqual(settings.max);
@@ -64,10 +76,13 @@ describe('SearchSliderComponent', () => {
         component.settings = { field: 'cm:content.size' };
 
         component.onChangedHandler(<MatSliderChange> { value: 10 });
-
-        const expectedQuery = 'cm:content.size:[0 TO 10]';
-        expect(context.queryFragments[component.id]).toEqual(expectedQuery);
+        fixture.detectChanges();
+        expect(context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 10]');
         expect(context.update).toHaveBeenCalled();
+
+        component.onChangedHandler(<MatSliderChange> { value: 20 });
+        fixture.detectChanges();
+        expect(context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 20]');
     });
 
     it('should reset the value for query builder', () => {
@@ -88,14 +103,13 @@ describe('SearchSliderComponent', () => {
         component.context = context;
         component.value = 20;
         component.id = 'slider';
-        component.ngOnInit();
-
         spyOn(context, 'update').and.stub();
+        fixture.detectChanges();
 
         component.reset();
 
         expect(component.value).toBe(settings.min);
-        expect(context.queryFragments['slider']).toBe('');
+        expect(context.queryFragments[component.id]).toBe('');
         expect(context.update).toHaveBeenCalled();
     });
 
@@ -117,9 +131,8 @@ describe('SearchSliderComponent', () => {
         component.context = context;
         component.value = 20;
         component.id = 'slider';
-        component.ngOnInit();
-
         spyOn(context, 'update').and.stub();
+        fixture.detectChanges();
 
         component.reset();
 

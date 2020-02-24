@@ -16,44 +16,44 @@
  */
 
 import { SearchDateRangeComponent } from './search-date-range.component';
-import { of } from 'rxjs';
-import { MomentDateAdapter } from '@alfresco/adf-core';
+import { MomentDateAdapter, setupTestBed } from '@alfresco/adf-core';
+import { DateAdapter } from '@angular/material/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoreTestingModule } from '../../../../../../core/testing/core.testing.module';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 declare let moment: any;
 
 describe('SearchDateRangeComponent', () => {
-    describe('component class', () => {
-
+        let fixture: ComponentFixture<SearchDateRangeComponent>;
         let component: SearchDateRangeComponent;
+        let adapter: MomentDateAdapter;
         const fromDate = '2016-10-16';
         const toDate = '2017-10-16';
-        const localeFixture = 'it';
         const dateFormatFixture = 'DD-MMM-YY';
 
-        const buildAdapter = (): MomentDateAdapter => {
-            const dateAdapter = new MomentDateAdapter();
-            dateAdapter.overrideDisplayFormat = null;
-            return dateAdapter;
-        };
-
-        const buildUserPreferences = (): any => {
-            const userPreferences = {
-                userPreferenceStatus: { LOCALE: localeFixture },
-                select: (property) => {
-                    return of(userPreferences.userPreferenceStatus[property]);
-                }
-            };
-            return userPreferences;
-        };
-
-        const theDateAdapter = <any> buildAdapter();
+        setupTestBed({
+            imports: [
+                CoreTestingModule,
+                ContentTestingModule
+            ]
+        });
 
         beforeEach(() => {
-            component = new SearchDateRangeComponent(theDateAdapter, buildUserPreferences());
+            fixture = TestBed.createComponent(SearchDateRangeComponent);
+            adapter = fixture.debugElement.injector.get(DateAdapter);
+            component = fixture.componentInstance;
+        });
+
+        afterEach(() => fixture.destroy());
+
+        it('should use moment adapter', () => {
+            expect(adapter instanceof  MomentDateAdapter).toBe(true);
+            expect(component.datePickerDateFormat).toBe('DD/MM/YYYY');
         });
 
         it('should setup form elements on init', () => {
-            component.ngOnInit();
+            fixture.detectChanges();
             expect(component.from).toBeDefined();
             expect(component.to).toBeDefined();
             expect(component.form).toBeDefined();
@@ -61,13 +61,13 @@ describe('SearchDateRangeComponent', () => {
 
         it('should setup the format of the date from configuration', () => {
             component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
-            component.ngOnInit();
-            expect(theDateAdapter.overrideDisplayFormat).toBe(dateFormatFixture);
+            fixture.detectChanges();
+            expect(adapter.overrideDisplayFormat).toBe(dateFormatFixture);
         });
 
         it('should setup form control with formatted valid date on change', () => {
             component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
-            component.ngOnInit();
+            fixture.detectChanges();
 
             const inputString = '20-feb-18';
             const momentFromInput = moment(inputString, dateFormatFixture);
@@ -79,7 +79,7 @@ describe('SearchDateRangeComponent', () => {
 
         it('should NOT setup form control with invalid date on change', () => {
             component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
-            component.ngOnInit();
+            fixture.detectChanges();
 
             const inputString = '20.f.18';
             const momentFromInput = moment(inputString, dateFormatFixture);
@@ -90,7 +90,7 @@ describe('SearchDateRangeComponent', () => {
         });
 
         it('should reset form', () => {
-            component.ngOnInit();
+            fixture.detectChanges();
             component.form.setValue({ from: fromDate, to: toDate });
 
             expect(component.from.value).toEqual(fromDate);
@@ -117,7 +117,7 @@ describe('SearchDateRangeComponent', () => {
 
             spyOn(context, 'update').and.stub();
 
-            component.ngOnInit();
+            fixture.detectChanges();
             component.reset();
 
             expect(context.queryFragments.createdDateRange).toEqual('');
@@ -137,7 +137,7 @@ describe('SearchDateRangeComponent', () => {
 
             spyOn(context, 'update').and.stub();
 
-            component.ngOnInit();
+            fixture.detectChanges();
             component.apply({
                 from: fromDate,
                 to: toDate
@@ -150,5 +150,27 @@ describe('SearchDateRangeComponent', () => {
             expect(context.queryFragments[component.id]).toEqual(expectedQuery);
             expect(context.update).toHaveBeenCalled();
         });
-    });
+
+        it('should show date-format error when Invalid found', async(() => {
+            fixture.detectChanges();
+            const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"');
+            input.value = '10-05-18';
+            input.dispatchEvent(new Event('focusout'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(component.getFromValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.INVALID-DATE');
+            });
+        }));
+
+        it('should not show date-format error when valid found', async(() => {
+            fixture.detectChanges();
+            const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"');
+            input.value = '10/10/2018';
+            input.dispatchEvent(new Event('focusout'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(component.getFromValidationMessage()).toBeFalsy();
+            });
+        }));
 });
