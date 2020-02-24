@@ -362,7 +362,6 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/b_file_supported.pdf",
             file_name: "b_file_supported.pdf"
         },
-
         PDF_ALL: {
             file_location: "/resources/adf/allFileTypes/pdf_all_properties.pdf",
             file_name: "pdf_all_properties.pdf"
@@ -379,6 +378,10 @@ exports.Files = {
         LARGE_FILE: {
             file_location: "/resources/adf/BigFile.zip",
             file_name: "BigFile.zip"
+        },
+        MEDIUM_FILE: {
+            file_location: "/resources/adf/MediumFile.zip",
+            file_name: "MediumFile.zip"
         },
         EXCEL: {
             file_location: "/resources/adf/allFileTypes/a_excel_file.xlsx",
@@ -464,10 +467,6 @@ exports.Files = {
         TXT_0B: {
             file_location: "/resources/adf/allFileTypes/zeroBytesFile.txt",
             file_name: "zeroBytesFile.txt"
-        },
-        ZIP: {
-            file_location: "/resources/adf/allFileTypes/a_zip_file.mp4.zip",
-            file_name: "a_zip_file.mp4.zip"
         },
         PAGES: {
             file_location: "/resources/adf/allFileTypes/file_unsupported.pages",
