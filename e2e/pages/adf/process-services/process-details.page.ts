@@ -41,6 +41,7 @@ export class ProcessDetailsPage {
     commentInput: ElementFinder = element(by.id('comment-input'));
     // Audit Log
     auditLogButton: ElementFinder = element(by.css('button[adf-process-audit]'));
+    auditLogEmptyListMessage: ElementFinder = element(by.css('.app-empty-list-header'));
     // Cancel Process button
     cancelProcessButton: ElementFinder = element(by.css('div[data-automation-id="header-status"] > button'));
     // Tasks
@@ -129,6 +130,10 @@ export class ProcessDetailsPage {
 
     async clickAuditLogButton(): Promise<void> {
         await BrowserActions.click(this.auditLogButton);
+    }
+
+    getEmptyMessage(): Promise<string> {
+        return BrowserActions.getText(this.auditLogEmptyListMessage);
     }
 
     async clickCancelProcessButton(): Promise<void> {

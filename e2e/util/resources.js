@@ -51,6 +51,12 @@ exports.Files = {
         description: "Description for app",
         processName: "Process3576"
     },
+    START_PROCESS_ATTACH_FILE: {
+        file_location: "/resources/apps/Start_process_attach_file.zip",
+        title: "start process app",
+        description: "Description for app",
+        processName: "start process file"
+    },
 
     TEST_ASSIGNEE: {
         file_location: "/resources/apps/Assignee.zip",
