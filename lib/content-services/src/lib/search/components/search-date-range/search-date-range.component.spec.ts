@@ -19,7 +19,6 @@ import { SearchDateRangeComponent } from './search-date-range.component';
 import { MomentDateAdapter, setupTestBed } from '@alfresco/adf-core';
 import { DateAdapter } from '@angular/material/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../../../../../core/testing/core.testing.module';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 declare let moment: any;
@@ -34,7 +33,6 @@ describe('SearchDateRangeComponent', () => {
 
         setupTestBed({
             imports: [
-                CoreTestingModule,
                 ContentTestingModule
             ]
         });

@@ -18,7 +18,6 @@
 import { MatSliderChange } from '@angular/material';
 import { SearchSliderComponent } from './search-slider.component';
 import { setupTestBed } from '@alfresco/adf-core';
-import { CoreTestingModule } from '../../../../../../core/testing/core.testing.module';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -28,7 +27,6 @@ describe('SearchSliderComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreTestingModule,
             ContentTestingModule
         ]
     });
