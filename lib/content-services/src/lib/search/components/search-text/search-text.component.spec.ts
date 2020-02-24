@@ -16,13 +16,21 @@
  */
 
 import { SearchTextComponent } from './search-text.component';
+import { setupTestBed } from "@alfresco/adf-core";
+import { ContentTestingModule } from "../../../testing/content.testing.module";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 describe('SearchTextComponent', () => {
-
+    let fixture: ComponentFixture<SearchTextComponent>;
     let component: SearchTextComponent;
 
+    setupTestBed({
+        imports: [ ContentTestingModule ]
+    });
+
     beforeEach(() => {
-        component = new SearchTextComponent();
+        fixture = TestBed.createComponent(SearchTextComponent);
+        component = fixture.componentInstance;
         component.id = 'text';
         component.settings = {
             'pattern': "cm:name:'(.*?)'",
@@ -38,7 +46,7 @@ describe('SearchTextComponent', () => {
 
     it('should parse value from the context at startup', () => {
         component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
-        component.ngOnInit();
+        fixture.detectChanges();
 
         expect(component.value).toEqual('secret.pdf');
     });
@@ -46,7 +54,7 @@ describe('SearchTextComponent', () => {
     it('should not parse value when pattern not defined', () => {
         component.settings.pattern = null;
         component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
-        component.ngOnInit();
+        fixture.detectChanges();
 
         expect(component.value).toEqual('');
     });
@@ -84,4 +92,12 @@ describe('SearchTextComponent', () => {
         expect(component.value).toBe('');
         expect(component.context.queryFragments[component.id]).toBe('');
     });
+
+    it('should show the custom name', () => {
+        component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
+        fixture.detectChanges();
+
+        expect(component.value).toEqual('secret.pdf');
+    });
+
 });
