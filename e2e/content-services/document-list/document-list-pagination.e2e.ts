@@ -374,7 +374,7 @@ describe('Document List - Pagination', () => {
         }
         await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + numberOfSubfolders);
 
-        await contentServicesPage.openAndChooseSelectionMode('Single');
+        await contentServicesPage.chooseSelectionMode('Single');
 
         await contentServicesPage.selectFolder('subfolder1');
         await paginationPage.clickOnNextPage();

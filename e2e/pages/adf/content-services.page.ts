@@ -659,9 +659,9 @@ export class ContentServicesPage {
         await browser.actions().sendKeys(protractor.Key.NULL).perform();
     }
 
-    async openAndChooseSelectionMode(option: string): Promise<void> {
-        await BrowserActions.click(this.selectionModeDropdown);
-        const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', option));
-        await BrowserActions.click(selectProcessDropdown);
+    async chooseSelectionMode(option: string): Promise<void> {
+        const dropdownPage = new DropdownPage(this.selectionModeDropdown);
+        await dropdownPage.clickDropdown();
+        await dropdownPage.selectOption(option);
     }
 }
