@@ -48,8 +48,8 @@ describe('Viewer', () => {
     });
 
     const wordFileInfo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_location
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
 
     let pngFileShared, wordFileUploaded;

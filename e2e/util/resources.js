@@ -387,7 +387,7 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/a_excel_file.xlsx",
             file_name: "a_excel_file.xlsx"
         },
-        DOCX_SUPPORTED: {
+        DOCX: {
             file_location: "/resources/adf/allFileTypes/a_file_supported.docx",
             file_name: "a_file_supported.docx",
             first_page_text: "A Journey into Test Frameworks",

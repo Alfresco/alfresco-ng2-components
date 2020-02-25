@@ -47,9 +47,9 @@ describe('Content Services Viewer', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_location
     });
     const docxFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_location,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_name,
-        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.first_page_text
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location,
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.first_page_text
     });
     const jpgFile = new FileModel({
         'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
