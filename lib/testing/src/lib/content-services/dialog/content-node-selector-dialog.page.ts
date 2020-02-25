@@ -26,6 +26,7 @@ export class ContentNodeSelectorDialogPage {
     searchInputElement: ElementFinder = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
     searchLabel: ElementFinder = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
     siteListDropdown: ElementFinder = this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
+    selectedRow: ElementFinder = this.dialog.element(by.css(`adf-datatable-row[class*="adf-is-selected"]`));
     cancelButton: ElementFinder = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
     moveCopyButton: ElementFinder = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
     contentList: DocumentListPage = new DocumentListPage(this.dialog);
@@ -52,6 +53,10 @@ export class ContentNodeSelectorDialogPage {
 
     async checkSelectedSiteIsDisplayed(siteName): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
+    }
+
+    async checkSelectedFolder(folderName: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectedRow.element(by.cssContainingText('adf-name-location-cell', folderName)));
     }
 
     async checkCancelButtonIsDisplayed(): Promise<void> {
@@ -93,6 +98,14 @@ export class ContentNodeSelectorDialogPage {
 
     async clickContentNodeSelectorResult(name): Promise<void> {
         await this.contentList.dataTablePage().clickRowByContent(name);
+    }
+
+    async doubleClickContentNodeSelectorResult(name): Promise<void> {
+        await this.contentList.dataTablePage().doubleClickRowByContent(name);
+    }
+
+    async doubleClickContentNodeFolder(name): Promise<void> {
+        await this.doubleClickContentNodeSelectorResult(name);
     }
 
     contentListPage(): DocumentListPage {
