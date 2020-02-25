@@ -23,7 +23,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
 import { multipleTextVisibilityFormJson, multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
 import { displayValueTextJson } from '../../resources/forms/display-value-visibility-conditions';
-import { dropdownVisibilityFormJson } from '../../resources/forms/dropdown-visibility-condition';
+import { dropdownVisibilityFormFieldJson, dropdownVisibilityFormVariableJson } from '../../resources/forms/dropdown-visibility-condition';
 
 describe('Visibility conditions - cloud', () => {
 
@@ -349,18 +349,24 @@ describe('Visibility conditions - cloud', () => {
         await expect(textDisplayWidgetMultipleCondition).toEqual('more cats');
    });
 
-    it('[C309680] Should be able to see dropdown widget when has multiple visibility conditions and next condition operators', async () => {
-        await formCloudDemoPage.setConfigToEditor(dropdownVisibilityFormJson);
+    it('[C309680] Should be able to see dropdown widget when has multiple Visibility Conditions set on Form Fields', async () => {
+        await formCloudDemoPage.setConfigToEditor(dropdownVisibilityFormFieldJson);
 
-        await widget.dropdown().isWidgetNotVisible(dropdownVisibilityTest.widgets.dropdownId);
+        await widget.dropdown().isWidgetHidden(dropdownVisibilityTest.widgets.dropdownId);
 
         await widget.textWidget().setValue(dropdownVisibilityTest.widgets.textId, dropdownVisibilityTest.displayValue.text);
-        await widget.dropdown().isWidgetNotVisible(dropdownVisibilityTest.widgets.dropdownId);
+        await widget.dropdown().isWidgetHidden(dropdownVisibilityTest.widgets.dropdownId);
 
         await widget.numberWidget().setFieldValue(dropdownVisibilityTest.widgets.numberId, dropdownVisibilityTest.displayValue.number);
         await widget.dropdown().isWidgetVisible(dropdownVisibilityTest.widgets.dropdownId);
 
         await widget.amountWidget().setFieldValue(dropdownVisibilityTest.widgets.amountId, dropdownVisibilityTest.notDisplayValue.amount);
-        await widget.dropdown().isWidgetNotVisible(dropdownVisibilityTest.widgets.dropdownId);
+        await widget.dropdown().isWidgetHidden(dropdownVisibilityTest.widgets.dropdownId);
+   });
+
+    it('[C309682] Should be able to see dropdown widget when has multiple Visibility Conditions set on Form Variables', async () => {
+        await formCloudDemoPage.setConfigToEditor(dropdownVisibilityFormVariableJson);
+
+        await widget.dropdown().isWidgetVisible(dropdownVisibilityTest.widgets.dropdownId);
    });
 });

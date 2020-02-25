@@ -48,7 +48,7 @@ export class DropdownWidgetPage {
         await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    async isWidgetNotVisible(fieldId): Promise<void> {
+    async isWidgetHidden(fieldId): Promise<void> {
         await this.formFields.checkWidgetIsHidden(fieldId);
     }
 }
