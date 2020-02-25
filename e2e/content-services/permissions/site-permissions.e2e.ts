@@ -26,6 +26,7 @@ import CONSTANTS = require('../../util/constants');
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { VersionManagePage } from '../../pages/adf/version-manager.page';
 
 describe('Permissions Component', () => {
 
@@ -45,6 +46,7 @@ describe('Permissions Component', () => {
     const metadataViewPage = new MetadataViewPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const uploadDialog = new UploadDialogPage();
+    const versionManagePage = new VersionManagePage();
 
     let folderOwnerUser, consumerUser, siteConsumerUser, contributorUser, managerUser, collaboratorUser;
 
@@ -63,6 +65,11 @@ describe('Permissions Component', () => {
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+    });
+
+    const newVersionFile = new FileModel({
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
     let siteFolder, privateSiteFile;
@@ -126,7 +133,6 @@ describe('Permissions Component', () => {
         });
 
         siteFolder = await uploadActions.createFolder(folderName, publicSite.entry.guid);
-
         privateSiteFile = await uploadActions.uploadFile(fileModel.location, 'privateSite' + fileModel.name, privateSite.entry.guid);
 
         await this.alfrescoJsApi.core.nodesApi.updateNode(privateSiteFile.entry.id,
@@ -141,7 +147,7 @@ describe('Permissions Component', () => {
             });
 
         await uploadActions.uploadFile(fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
-   });
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -149,7 +155,7 @@ describe('Permissions Component', () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
-   });
+    });
 
     describe('Role Site Dropdown', () => {
 
@@ -193,16 +199,13 @@ describe('Permissions Component', () => {
             await expect(await BrowserActions.getText(roleDropdownOptions.get(2))).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
             await expect(await BrowserActions.getText(roleDropdownOptions.get(3))).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
         });
-   });
+    });
 
     describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', () => {
 
         it('[C276994] Role SiteConsumer', async () => {
-
             await loginPage.loginToContentServicesUsingUserModel(siteConsumerUser);
-
             await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
-
             await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
             await contentList.doubleClickRow('Site' + fileModel.name);
@@ -230,9 +233,7 @@ describe('Permissions Component', () => {
 
         it('[C276997] Role SiteContributor', async () => {
             await loginPage.loginToContentServicesUsingUserModel(contributorUser);
-
             await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
-
             await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
             await contentList.doubleClickRow('Site' + fileModel.name);
@@ -264,9 +265,7 @@ describe('Permissions Component', () => {
         it('[C277005] Role SiteCollaborator', async () => {
 
             await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
-
             await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
-
             await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
             await contentList.doubleClickRow('Site' + fileModel.name);
@@ -341,5 +340,20 @@ describe('Permissions Component', () => {
             await contentServicesPage.deleteContent('Site' + fileModel.name);
             await contentServicesPage.checkContentIsNotDisplayed('Site' + fileModel.name);
         });
-   });
+    });
+
+    describe('Roles: Private site and Manager User', () => {
+
+        it('[C277196] should a user with Manager permissions be able to upload a new version for the created file', async () => {
+            await loginPage.loginToContentServicesUsingUserModel(managerUser);
+            await navigationBarPage.openContentServicesFolder(privateSite.entry.guid);
+
+            await contentServicesPage.versionManagerContent('privateSite' + fileModel.name);
+            await BrowserActions.click(versionManagePage.showNewVersionButton);
+            await versionManagePage.uploadNewVersionFile(newVersionFile.location);
+
+            await versionManagePage.checkFileVersionExist('1.1');
+            await expect(await versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
+        });
+    });
 });
