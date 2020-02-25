@@ -598,7 +598,7 @@ export class ContentServicesPage {
     }
 
     async selectSite(siteName: string): Promise<void> {
-        await this.siteListDropdown.selectOption(siteName);
+        await this.siteListDropdown.clickDropdownWithOption(siteName);
     }
 
     async clickDownloadButton(): Promise<void> {

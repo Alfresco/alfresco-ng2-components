@@ -57,7 +57,6 @@ describe('Settings component', () => {
             await expect(await settingsPage.getSelectedOptionText()).toEqual('ALL', 'The Settings changes are not saved');
             await expect(await settingsPage.getBpmHostUrl()).toEqual(browser.params.testConfig.adf_aps.host, 'The BPM Settings changes are not saved');
             await expect(await settingsPage.getEcmHostUrl()).toEqual(browser.params.testConfig.adf_acs.host, 'The ECM Settings changes are not saved');
-
         });
 
         it('[C291949] Should have field validation for Content Services Url', async () => {

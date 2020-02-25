@@ -47,7 +47,7 @@ export class TasksCloudDemoPage {
     disableCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='disabled']`));
     visibleCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='visible']`));
 
-    modeDropdown = new DropdownPage(element(by.css('mat-form-field[data-automation-id="selectionMode"] div[class*="arrow-wrapper"]')));
+    modeDropdown = new DropdownPage(element(by.css('mat-form-field[data-automation-id="selectionMode"]')));
 
     formControllersPage: FormControllersPage = new FormControllersPage();
 

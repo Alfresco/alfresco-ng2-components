@@ -35,7 +35,7 @@ export class TaskListDemoPage {
     dueAfter: ElementFinder = element(by.css("input[data-automation-id='due after']"));
     taskId: ElementFinder = element(by.css("input[data-automation-id='task id']"));
 
-    stateDropDownArrow: ElementFinder = element(by.css("mat-form-field[data-automation-id='state'] div[class*='arrow']"));
+    stateDropDownArrow: ElementFinder = element(by.css("mat-form-field[data-automation-id='state']"));
     stateDropdown = new DropdownPage(this.stateDropDownArrow);
 
     taskList(): TasksListPage {

@@ -39,7 +39,7 @@ export class SettingsPage {
     backButton: ElementFinder = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
     validationMessage: ElementFinder = element(by.cssContainingText('mat-error', 'This field is required'));
 
-    providerDropdown = new DropdownPage(element(by.css('mat-select[id="adf-provider-selector"] div[class="mat-select-arrow-wrapper"]')));
+    providerDropdown = new DropdownPage(element(by.css('mat-select[id="adf-provider-selector"]')));
 
     async goToSettingsPage(): Promise<void> {
         await browser.get(this.settingsURL);
