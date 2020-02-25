@@ -21,7 +21,7 @@ else if [ ! -d "./lib/dist" ];
 fi
 
 cp -R ./lib/cli/dist lib/dist/cli/
-exit 0
+
 echo "====== Move to node_modules ======"
 rm -rf ./node_modules/@alfresco/adf-cli/ && \
 mkdir -p ./node_modules/@alfresco/adf-cli/ && \
