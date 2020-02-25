@@ -95,6 +95,14 @@ describe('Upload component', async () => {
     });
 
     it('[C272793] Should be able to cancel multiple files upload', async () => {
+
+        (browser.driver as any).setNetworkConditions({
+            offline: false,
+            latency: 150,
+            download_throughput: 450 * 1024,
+            upload_throughput: 100 * 1024
+        });
+
         await uploadToggles.enableMultipleFileUpload();
 
         await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
