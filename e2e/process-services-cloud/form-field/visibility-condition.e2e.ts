@@ -23,6 +23,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
 import { multipleTextVisibilityFormJson, multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
 import { displayValueTextJson } from '../../resources/forms/display-value-visibility-conditions';
+import { dropdownVisibilityFormJson } from '../../resources/forms/dropdown-visibility-condition';
 
 describe('Visibility conditions - cloud', () => {
 
@@ -58,10 +59,27 @@ describe('Visibility conditions - cloud', () => {
         checkboxVariableVariable: 'CheckboxVariableVariable',
         checkbox1: 'Checkbox1'
     };
+
     const displayValueString = {
         displayValueNoConditionField: 'DisplayValueNoCondition',
         displayValueSingleConditionField: 'DisplayValueSingleCondition',
         displayValueMultipleConditionsField: 'DisplayValueMultipleCondition'
+    };
+
+    const dropdownVisibilityTest = {
+        widgets: {
+            textId: 'textFour',
+            numberId: 'numberOne',
+            amountId: 'amountOne',
+            dropdownId: 'dropdownOne'
+        },
+        displayValue: {
+            text: 'text1',
+            number: '11'
+        },
+        notDisplayValue: {
+            amount: '90'
+        }
     };
 
     beforeAll(async () => {
@@ -287,6 +305,7 @@ describe('Visibility conditions - cloud', () => {
         await expect(textOneField).toEqual('dog');
         await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueSingleConditionField);
    });
+
     it('[C309871] Should be able to see Display text widget when has multiple visibility conditions and next condition operators', async () => {
         await formCloudDemoPage.setConfigToEditor(displayValueTextJson);
 
@@ -328,5 +347,20 @@ describe('Visibility conditions - cloud', () => {
         await expect(textTwoField).toEqual('dog');
         await widget.displayValueWidget().isDisplayValueWidgetVisible(displayValueString.displayValueMultipleConditionsField);
         await expect(textDisplayWidgetMultipleCondition).toEqual('more cats');
+   });
+
+    it('[C309680] Should be able to see dropdown widget when has multiple visibility conditions and next condition operators', async () => {
+        await formCloudDemoPage.setConfigToEditor(dropdownVisibilityFormJson);
+
+        await widget.dropdown().isWidgetNotVisible(dropdownVisibilityTest.widgets.dropdownId);
+
+        await widget.textWidget().setValue(dropdownVisibilityTest.widgets.textId, dropdownVisibilityTest.displayValue.text);
+        await widget.dropdown().isWidgetNotVisible(dropdownVisibilityTest.widgets.dropdownId);
+
+        await widget.numberWidget().setFieldValue(dropdownVisibilityTest.widgets.numberId, dropdownVisibilityTest.displayValue.number);
+        await widget.dropdown().isWidgetVisible(dropdownVisibilityTest.widgets.dropdownId);
+
+        await widget.amountWidget().setFieldValue(dropdownVisibilityTest.widgets.amountId, dropdownVisibilityTest.notDisplayValue.amount);
+        await widget.dropdown().isWidgetNotVisible(dropdownVisibilityTest.widgets.dropdownId);
    });
 });

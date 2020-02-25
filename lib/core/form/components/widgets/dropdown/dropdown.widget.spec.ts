@@ -28,8 +28,8 @@ import { DropdownWidgetComponent } from './dropdown.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-/*tslint:disable*/
-fdescribe('DropdownWidgetComponent', () => {
+
+describe('DropdownWidgetComponent', () => {
 
     let formService: FormService;
     let widget: DropdownWidgetComponent;
@@ -134,11 +134,11 @@ fdescribe('DropdownWidgetComponent', () => {
         }));
 
         it('should be able to display label with asterix', async(() => {
-            const label = "MyLabel123"
+            const label = 'MyLabel123';
             widget.field.name = label;
             fixture.detectChanges();
 
-            expect(element.querySelector('label').innerText).toBe(label + "*");
+            expect(element.querySelector('label').innerText).toBe(label + '*');
         }));
 
         it('should be invalid if no default option', async(() => {
@@ -150,7 +150,7 @@ fdescribe('DropdownWidgetComponent', () => {
 
         it('should be valid if default option', async(() => {
             widget.field.options = fakeOptionList;
-            widget.field.value = "opt_1";
+            widget.field.value = fakeOptionList[0].id;
             fixture.detectChanges();
 
             expect(element.querySelector('.adf-invalid')).toBeNull();
