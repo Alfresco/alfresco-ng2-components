@@ -63,7 +63,7 @@ describe('Document List - Pagination', () => {
     const secondSetNumber = 25;
     const folderTwoModel = new FolderModel({ name: 'folderTwo' });
     const folderThreeModel = new FolderModel({ name: 'folderThree' });
-    const numberOfSubfolders = 6;
+    const numberOfSubFolders = 6;
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -265,7 +265,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
         await contentServicesPage.checkPaginationIsNotDisplayed();
 
-        await contentServicesPage.deleteSubfolderUnderRoot(newFolderModel.name, folderTwoModel.name);
+        await contentServicesPage.deleteSubFolderUnderRoot(newFolderModel.name, folderTwoModel.name);
     });
 
     it('[C260071] Should be able to change pagination when having 25 files', async () => {
@@ -345,23 +345,23 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
 
-        for (let i = 0; i < numberOfSubfolders; i++) {
+        for (let i = 0; i < numberOfSubFolders; i++) {
             await contentServicesPage.createNewFolder('subfolder' + (i + 1));
         }
 
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + numberOfSubfolders);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + numberOfSubFolders);
 
         await paginationPage.clickOnNextPage();
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + numberOfSubfolders + ' of ' + numberOfSubfolders);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + numberOfSubFolders + ' of ' + numberOfSubFolders);
         await contentServicesPage.openFolder('subfolder6');
-        for (let i = 0; i < numberOfSubfolders; i++) {
+        for (let i = 0; i < numberOfSubFolders; i++) {
             await contentServicesPage.createNewFolder('subfolder' + (i + 1));
         }
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + numberOfSubfolders);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + numberOfSubFolders);
         await expect(await paginationPage.getCurrentPage()).toEqual('Page 1');
         await expect(await paginationPage.getTotalPages()).toEqual('of 2');
 
-        await contentServicesPage.deleteSubfolderUnderRoot(newFolderModel.name, folderTwoModel.name);
+        await contentServicesPage.deleteSubFolderUnderRoot(newFolderModel.name, folderTwoModel.name);
     });
 
     it('[C260064] Should download only the last selection when changing pages in Single mode', async () => {
@@ -369,23 +369,23 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.openFolder(newFolderModel.name);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
-        for (let i = 0; i < numberOfSubfolders; i++) {
+        for (let i = 0; i < numberOfSubFolders; i++) {
             await contentServicesPage.createNewFolder('subfolder' + (i + 1));
         }
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + numberOfSubfolders);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + numberOfSubFolders);
 
         await contentServicesPage.chooseSelectionMode('Single');
 
         await contentServicesPage.selectFolder('subfolder1');
         await paginationPage.clickOnNextPage();
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + numberOfSubfolders + ' of ' + numberOfSubfolders);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + numberOfSubFolders + ' of ' + numberOfSubFolders);
         await contentServicesPage.selectFolderWithCommandKey('subfolder6');
         await contentServicesPage.clickDownloadButton();
 
         await expect(await FileBrowserUtil.isFileDownloaded('subfolder6.zip')
         ).toBe(true, `subfolder6 not downloaded`);
 
-        await contentServicesPage.deleteSubfolderUnderRoot(newFolderModel.name, folderTwoModel.name);
+        await contentServicesPage.deleteSubFolderUnderRoot(newFolderModel.name, folderTwoModel.name);
     });
 
 });

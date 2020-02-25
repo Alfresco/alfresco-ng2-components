@@ -409,7 +409,7 @@ export class ContentServicesPage {
         await this.checkContentIsNotDisplayed(folderName);
     }
 
-    async deleteSubfolderUnderRoot(folderName: string, subFolderName: string): Promise<void> {
+    async deleteSubFolderUnderRoot(folderName: string, subFolderName: string): Promise<void> {
         await this.goToDocumentList();
         await this.openFolder(folderName);
         await this.deleteAndCheckFolderNotDisplayed(subFolderName);
