@@ -49,14 +49,5 @@ describe('About Process Services Cloud', () => {
         await aboutPage.checkGithubVersionIsDisplayed();
         await aboutPage.checkBpmHostIsDisplayed();
         await aboutPage.checkEcmHostIsDisplayed();
-        await aboutPage.checkAboutListIsLoaded();
-        await aboutPage.checkPackageColumnsIsDisplayed();
-        await aboutPage.checkPackageColumnsIsDisplayed();
-        await aboutPage.checkEcmStatusTitleIsDisplayed();
-        await aboutPage.checkStatusColumnsIsDisplayed();
-        await aboutPage.checkEcmLicenseTitleIsDisplayed();
-        await aboutPage.checkLicenseColumnsIsDisplayed();
-        await aboutPage.checkEcmModulesTitleIsDisplayed();
-        await aboutPage.checkModulesColumnsIsDisplayed();
     });
 });
