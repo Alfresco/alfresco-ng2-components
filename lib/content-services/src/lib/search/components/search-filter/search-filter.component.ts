@@ -397,12 +397,12 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         });
     }
 
-    private getBucketFilterFunction(bucketList) {
+    protected getBucketFilterFunction(bucketList) {
         return (bucket: FacetFieldBucket): boolean => {
             if (bucket && bucketList.filterText) {
                 const pattern = (bucketList.filterText || '').toLowerCase();
                 const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
-                return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
+                return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.includes(pattern);
             }
             return true;
         };
