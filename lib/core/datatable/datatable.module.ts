@@ -44,13 +44,15 @@ import { CustomNoPermissionTemplateDirective } from './directives/custom-no-perm
 import { JsonCellComponent } from './components/datatable/json-cell.component';
 import { ClipboardModule } from '../clipboard/clipboard.module';
 import { DropZoneDirective } from './components/datatable/drop-zone.directive';
+import { DataColumnModule } from '../data-column';
 
 @NgModule({
     imports: [
         RouterModule,
         MaterialModule,
         CommonModule,
-        TranslateModule.forChild(),
+        TranslateModule,
+        DataColumnModule,
         ContextMenuModule,
         PipeModule,
         DirectiveModule,

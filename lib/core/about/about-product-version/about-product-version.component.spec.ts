@@ -22,7 +22,6 @@ import { AboutProductVersionComponent } from './about-product-version.component'
 import { DiscoveryApiService } from '../../services/discovery-api.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { of } from 'rxjs';
-import { DataColumnModule } from '../../data-column/data-column.module';
 import { DataTableModule } from '../../datatable/datatable.module';
 import { MatCardModule } from '@angular/material';
 import { aboutAPSMockDetails, mockModules } from '../about.mock';
@@ -33,7 +32,7 @@ describe('AboutProductVersionComponent', () => {
     let discoveryApiService:  DiscoveryApiService;
 
     setupTestBed({
-        imports: [CoreTestingModule, DataColumnModule, DataTableModule, MatCardModule]
+        imports: [CoreTestingModule, DataTableModule, MatCardModule]
     });
 
     beforeEach(() => {
