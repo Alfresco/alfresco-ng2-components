@@ -65,10 +65,7 @@ describe('SearchFilterComponent', () => {
         component = fixture.componentInstance;
     });
 
-    afterEach(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
-    });
+    afterEach(() => fixture.destroy());
 
     describe('component', () => {
         beforeEach(() => fixture.detectChanges());
@@ -120,7 +117,7 @@ describe('SearchFilterComponent', () => {
 
             component.onToggleBucket(event, <any> field, <any> query);
 
-            expect(query.checked).toBeFalsy();
+            expect(query.checked).toEqual(false);
             expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(field, query);
             expect(queryBuilder.update).toHaveBeenCalled();
         });
@@ -561,7 +558,7 @@ describe('SearchFilterComponent', () => {
                 buckets: new SearchFilterList<FacetFieldBucket>(buckets)
             };
 
-            expect(component.canResetSelectedBuckets(field)).toBeFalsy();
+            expect(component.canResetSelectedBuckets(field)).toEqual(false);
         });
 
         it('should reset selected buckets', () => {
@@ -579,8 +576,8 @@ describe('SearchFilterComponent', () => {
 
             component.resetSelectedBuckets(field);
 
-            expect(buckets[0].checked).toBeFalsy();
-            expect(buckets[1].checked).toBeFalsy();
+            expect(buckets[0].checked).toEqual(false);
+            expect(buckets[1].checked).toEqual(false);
         });
 
         it('should update query builder upon resetting buckets', () => {
@@ -620,7 +617,7 @@ describe('SearchFilterComponent', () => {
             expect(queryBuilder.update).toHaveBeenCalled();
 
             for (const entry of component.responseFacets[0].buckets.items) {
-                expect(entry.checked).toBeFalsy();
+                expect(entry.checked).toEqual(false);
             }
         });
 
@@ -732,7 +729,7 @@ describe('SearchFilterComponent', () => {
 
                 (element.childNodes[0] as HTMLElement).click();
                 fixture.detectChanges();
-                expect(element.classList.contains('mat-expanded')).toBeFalsy();
+                expect(element.classList.contains('mat-expanded')).toEqual(false);
             });
         }));
 
@@ -764,7 +761,7 @@ describe('SearchFilterComponent', () => {
 
                 (element.childNodes[0] as HTMLElement).click();
                 fixture.detectChanges();
-                expect(element.classList.contains('mat-expanded')).toBeFalsy();
+                expect(element.classList.contains('mat-expanded')).toEqual(false);
             });
         }));
 
@@ -818,7 +815,7 @@ describe('SearchFilterComponent', () => {
             let moreButton = fixture.debugElement.query(By.css(`${panel} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             let lessButton = fixture.debugElement.query(By.css(`${panel} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
 
-            expect(lessButton).toBeFalsy();
+            expect(lessButton).toEqual(null);
             expect(moreButton).toBeDefined();
 
             moreButton.triggerEventHandler('click', {});
@@ -841,7 +838,7 @@ describe('SearchFilterComponent', () => {
             moreButton = fixture.debugElement.query(By.css(`${panel} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             lessButton = fixture.debugElement.query(By.css(`${panel} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
             expect(lessButton).toBeDefined();
-            expect(moreButton).toBeFalsy();
+            expect(moreButton).toEqual(null);
 
             lessButton.triggerEventHandler('click', {});
             fixture.detectChanges();
@@ -862,8 +859,38 @@ describe('SearchFilterComponent', () => {
 
             moreButton = fixture.debugElement.query(By.css(`${panel} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             lessButton = fixture.debugElement.query(By.css(`${panel} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
-            expect(lessButton).toBeFalsy();
+            expect(lessButton).toEqual(null);
             expect(moreButton).toBeDefined();
+        });
+
+        it('should not show facets if filter is not available', () => {
+            const panel = '[data-automation-id="expansion-panel-Size facet queries"]';
+            const filter = { ...searchFilter };
+            delete filter.facetQueries;
+            appConfigService.config.search = filter;
+            queryBuilder.resetToDefaults();
+
+            fixture.detectChanges();
+            queryBuilder.executed.next(<any> mockSearchResult);
+            fixture.detectChanges();
+
+            const facetElement = fixture.debugElement.query(By.css(panel));
+            expect(facetElement).toEqual(null);
+        });
+
+        it('should toggle the search result if checkbox updated', () => {
+            const panel = '[data-automation-id="expansion-panel-Size facet queries"]';
+            appConfigService.config.search = searchFilter;
+            queryBuilder.resetToDefaults();
+            fixture.detectChanges();
+            queryBuilder.executed.next(<any> mockSearchResult);
+            fixture.detectChanges();
+            spyOn(component, 'selectFacetBucket').and.stub();
+            spyOn(component, 'onToggleBucket').and.callThrough();
+            const firstOption = fixture.debugElement.query(By.css(`${panel} mat-checkbox`));
+            firstOption.triggerEventHandler('change', { checked: true });
+            expect(component.onToggleBucket).toHaveBeenCalled();
+            expect(component.selectFacetBucket).toHaveBeenCalled();
         });
     });
 });
