@@ -57,9 +57,19 @@ describe('Task Assignee', () => {
         beforeAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             user = await users.createTenantAndUser(this.alfrescoJsApi);
+            try {// creates user and group if not available
+                await users.createApsUserWithName(this.alfrescoJsApi, user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
+            } catch (e) {}
+            try {// creates group if not available
+                await this.alfrescoJsApi.activiti.adminGroupsApi.createNewGroup({ 'name': app.candidateGroup, 'tenantId': user.tenantId, 'type': 1 });
+            } catch (e) {}
 
             await this.alfrescoJsApi.login(user.email, user.password);
-            await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location, { renewIdmEntries: true });
+            try {
+                await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location, { renewIdmEntries: true });
+            } catch (e) {
+                console.error(`failed to publish the application`);
+            }
             await loginPage.loginToProcessServicesUsingUserModel(user);
         });
 
@@ -127,6 +137,10 @@ describe('Task Assignee', () => {
             await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate1.id);
             await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
             await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
+
+            try {// for creates user if not available
+                await users.createApsUserWithName(this.alfrescoJsApi, user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
+            } catch (e) {}
 
             await this.alfrescoJsApi.login(user.email, user.password);
             const appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location, { renewIdmEntries: true });
