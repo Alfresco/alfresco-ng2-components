@@ -20,7 +20,6 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { AboutApplicationModulesComponent } from './about-application-modules.component';
 import { MatTableModule } from '@angular/material/table';
-import { DataColumnModule } from '../../data-column/data-column.module';
 import { DataTableModule } from '../../datatable/datatable.module';
 import { mockDependencies, mockPlugins } from '../about.mock';
 
@@ -29,7 +28,7 @@ describe('AboutApplicationModulesComponent', () => {
     let component: AboutApplicationModulesComponent;
 
     setupTestBed({
-        imports: [CoreTestingModule, MatTableModule, DataColumnModule, DataTableModule]
+        imports: [CoreTestingModule, MatTableModule, DataTableModule]
     });
 
     beforeEach(() => {

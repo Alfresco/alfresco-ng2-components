@@ -20,7 +20,6 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { DataTableModule } from '../datatable/datatable.module';
-import { DataColumnModule } from '../data-column/data-column.module';
 import { AboutApplicationModulesComponent } from './about-application-modules/about-application-modules.component';
 import { AboutProductVersionComponent } from './about-product-version/about-product-version.component';
 import { AboutGithubLinkComponent } from './about-github-link/about-github-link.component';
@@ -29,9 +28,8 @@ import { AboutGithubLinkComponent } from './about-github-link/about-github-link.
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule.forChild(),
-        DataTableModule,
-        DataColumnModule
+        TranslateModule,
+        DataTableModule
     ],
     declarations: [
         AboutApplicationModulesComponent,
