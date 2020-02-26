@@ -261,7 +261,6 @@ describe('Document List Component', () => {
             await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
             await contentNodeSelector.typeIntoNodeSelectorSearchField(site.entry.title);
             await contentNodeSelector.doubleClickContentNodeSelectorResult(site.entry.id);
-            await contentNodeSelector.doubleClickContentNodeFolder(site.entry.id);
             await contentNodeSelector.clickContentNodeSelectorResult('documentLibrary');
             await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
             await contentNodeSelector.clickCancelButton();
