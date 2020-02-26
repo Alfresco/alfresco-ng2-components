@@ -362,14 +362,6 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/b_file_supported.pdf",
             file_name: "b_file_supported.pdf"
         },
-        PDF_C: {
-            file_location: "/resources/adf/allFileTypes/c_file_supported.pdf",
-            file_name: "c_file_supported.pdf"
-        },
-        PDF_D: {
-            file_location: "/resources/adf/allFileTypes/d_file_supported.pdf",
-            file_name: "d_file_supported.pdf"
-        },
         PDF_ALL: {
             file_location: "/resources/adf/allFileTypes/pdf_all_properties.pdf",
             file_name: "pdf_all_properties.pdf"
@@ -387,21 +379,21 @@ exports.Files = {
             file_location: "/resources/adf/BigFile.zip",
             file_name: "BigFile.zip"
         },
+        MEDIUM_FILE: {
+            file_location: "/resources/adf/MediumFile.zip",
+            file_name: "MediumFile.zip"
+        },
         EXCEL: {
             file_location: "/resources/adf/allFileTypes/a_excel_file.xlsx",
             file_name: "a_excel_file.xlsx"
         },
-        DOCX_SUPPORTED: {
+        DOCX: {
             file_location: "/resources/adf/allFileTypes/a_file_supported.docx",
             file_name: "a_file_supported.docx",
             first_page_text: "A Journey into Test Frameworks",
             second_page_text: "After looking into Spock’s GitHub",
             last_page_text: "and provide feedback. The main advantages being the readability of the te",
             last_page_number: "8"
-        },
-        DOCX: {
-            file_location: "/resources/adf/allFileTypes/a_file_unsupported.docx",
-            file_name: "a_file_unsupported.docx"
         },
         FOLDER_ONE: {
             folder_location: "/resources/adf/folderOne",
@@ -431,6 +423,10 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/a_mp4_file.mp4",
             file_name: "a_mp4_file.mp4"
         },
+        MP4_B: {
+            file_location: "/resources/adf/allFileTypes/b_mp4_file.mp4",
+            file_name: "b_mp4_file.mp4"
+        },
         PNG: {
             file_location: "/resources/adf/allFileTypes/a_png_file.png",
             file_name: "a_png_file.png"
@@ -452,10 +448,6 @@ exports.Files = {
             file_name: "a_ppt_file.pptx",
             first_page_text: "PPTX test file"
         },
-        PPT_B: {
-            file_location: "/resources/adf/allFileTypes/b_ppt_file.pptx",
-            file_name: "b_ppt_file.pptx"
-        },
         TEST: {
             file_location: "/resources/adf/allFileTypes/testExtension.test",
             file_name: "testExtension.test"
@@ -471,10 +463,6 @@ exports.Files = {
         TXT_0B: {
             file_location: "/resources/adf/allFileTypes/zeroBytesFile.txt",
             file_name: "zeroBytesFile.txt"
-        },
-        ZIP: {
-            file_location: "/resources/adf/allFileTypes/a_zip_file.mp4.zip",
-            file_name: "a_zip_file.mp4.zip"
         },
         PAGES: {
             file_location: "/resources/adf/allFileTypes/file_unsupported.pages",

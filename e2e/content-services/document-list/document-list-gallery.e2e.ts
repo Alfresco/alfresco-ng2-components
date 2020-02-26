@@ -141,7 +141,7 @@ describe('Document List Component', () => {
             await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.DISPLAY_NAME)).toBe(docxFile.name);
-            await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`81.05 KB`);
+            await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`11.81 KB`);
             await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY))
                 .toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 

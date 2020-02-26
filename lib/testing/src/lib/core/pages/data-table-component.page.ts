@@ -172,12 +172,19 @@ export class DataTableComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(this.rows).first());
     }
 
-    async getAllRowsColumnValues(column: string) {
+    async getAllRowsColumnValues(column: string): Promise<string[]> {
+        let columnValues: string[] = [];
         const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title='" + column + "'] span");
-        await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first());
-        return element.all(columnLocator)
-            .filter(async (el) => el.isPresent())
-            .map(async (el) => el.getText());
+
+        try {
+            await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first(), 1000);
+            columnValues = <string[]> await element.all(columnLocator)
+                .filter(async (el) => el.isPresent())
+                .map(async (el) => el.getText());
+        } catch (error) {
+        }
+
+        return columnValues;
     }
 
     async getRowsWithSameColumnValues(columnName: string, columnValue: string) {
