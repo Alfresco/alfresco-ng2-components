@@ -85,12 +85,12 @@ describe('Upload component', async () => {
 
     it('[C287790] Should be possible to cancel upload of a big file through the cancel uploads button', async () => {
         await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 4000)');
-        await contentServicesPage.uploadFile(mediumFile.location);
+            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 3000)');
+        await contentServicesPage.uploadFile(largeFile.location);
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
-        await contentServicesPage.checkContentIsNotDisplayed(mediumFile.name);
+        await contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
     });
 
     it('[C272793] Should be able to cancel multiple files upload', async () => {
