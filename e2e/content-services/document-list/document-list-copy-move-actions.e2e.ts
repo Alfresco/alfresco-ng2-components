@@ -28,6 +28,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
+import CONSTANTS = require('../../util/constants');
 
 describe('Document List Component', () => {
 
@@ -46,7 +47,7 @@ describe('Document List Component', () => {
     let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFolder2, copyFolder, subFile,
         duplicateFolderName;
     let acsUser = null, anotherAcsUser: AcsUserModel;
-    let folderName, sameNameFolder;
+    let folderName, sameNameFolder, site;
 
     const pdfFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -66,6 +67,14 @@ describe('Document List Component', () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.core.peopleApi.addPerson(anotherAcsUser);
+        site = await this.alfrescoJsApi.core.sitesApi.createSite({
+            title: StringUtil.generateRandomString(8),
+            visibility: 'PUBLIC'
+        });
+        await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+            id: anotherAcsUser.getId(),
+            role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
+        });
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         destinationFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -76,9 +85,9 @@ describe('Document List Component', () => {
         duplicateFolderName = await uploadActions.createFolder(sameNameFolder, '-my-');
         subFile = await uploadActions.uploadFile(testFileModel.location, testFileModel.name, subFolder.entry.id);
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
+        await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, sourceFolder.entry.id);
         uploadedFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
         await this.alfrescoJsApi.core.nodesApi.updateNode(sourceFolder.entry.id,
-
             {
                 permissions: {
                     locallySet: [{
@@ -90,7 +99,7 @@ describe('Document List Component', () => {
             });
 
         await browser.driver.sleep(12000);
-   });
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -100,7 +109,8 @@ describe('Document List Component', () => {
         await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
         await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
         await uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
-   });
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+    });
 
     describe('Document List Component - Actions Move and Copy', () => {
 
@@ -175,7 +185,28 @@ describe('Document List Component', () => {
             await contentNodeSelector.clickMoveCopyButton();
             await notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
         });
-   });
+
+        it('[C260124] should be able to move file using action menu and content node selector', async () => {
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+            await contentServicesPage.moveContent(pdfFileModel.name);
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await expect(await contentNodeSelector.getDialogHeaderText()).toBe(`Move '${pdfFileModel.name}' to...`);
+            await contentNodeSelector.clickContentNodeSelectorResult(destinationFolder.entry.name);
+            await contentNodeSelector.checkSelectedFolder(destinationFolder.entry.name);
+            await contentNodeSelector.checkCopyMoveButtonIsEnabled();
+            await contentNodeSelector.clickCancelButton();
+            await contentNodeSelector.checkDialogIsNotDisplayed();
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+
+            await contentServicesPage.moveContent(pdfFileModel.name);
+            await contentNodeSelector.clickContentNodeSelectorResult(destinationFolder.entry.name);
+            await contentNodeSelector.checkSelectedFolder(destinationFolder.entry.name);
+            await contentNodeSelector.checkCopyMoveButtonIsEnabled();
+            await contentNodeSelector.clickMoveCopyButton();
+            await contentNodeSelector.checkDialogIsNotDisplayed();
+            await contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
+        });
+    });
 
     describe('Document List actionns - Move, Copy on no permission folder', () => {
 
@@ -210,5 +241,44 @@ describe('Document List Component', () => {
             await contentNodeSelector.contentListPage().dataTablePage().waitTillContentLoaded();
             await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(subFolder2.entry.name);
         });
-   });
+
+        it('[C261160] should disable copy/move button when user is not allowed in a specific folder', async () => {
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+            await contentServicesPage.copyContent(pdfFileModel.name);
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await contentNodeSelector.clickContentNodeSelectorResult(subFolder.entry.name);
+            await contentNodeSelector.checkSelectedFolder(subFolder.entry.name);
+            await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
+            await contentNodeSelector.clickCancelButton();
+            await contentNodeSelector.checkDialogIsNotDisplayed();
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+        });
+
+        it('[C261990] should enable copy/move button when user selects own site\'s documentLibrary', async () => {
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+            await contentServicesPage.copyContent(pdfFileModel.name);
+            await contentNodeSelector.checkDialogIsDisplayed();
+            await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
+            await contentNodeSelector.typeIntoNodeSelectorSearchField(site.entry.title);
+            await contentNodeSelector.doubleClickContentNodeSelectorResult(site.entry.id);
+            await contentNodeSelector.clickContentNodeSelectorResult('documentLibrary');
+            await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
+            await contentNodeSelector.clickCancelButton();
+            await contentNodeSelector.checkDialogIsNotDisplayed();
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+        });
+
+        it('[C260137] should disable delete action when user has no permission', async () => {
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+            await contentServicesPage.checkDeleteIsDisabled(pdfFileModel.name);
+
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${sourceFolder.entry.id}`);
+            await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+
+            await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+            await contentServicesPage.deleteContent(pdfFileModel.name);
+            await contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
+        });
+    });
 });

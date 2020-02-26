@@ -149,6 +149,11 @@ export class ContentServicesPage {
         await BrowserActions.click(this.copyContentElement);
     }
 
+    async moveContent(content): Promise<void> {
+        await this.contentList.clickOnActionMenu(content);
+        await BrowserActions.click(this.moveContentElement);
+    }
+
     async lockContent(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.lockContentElement);
