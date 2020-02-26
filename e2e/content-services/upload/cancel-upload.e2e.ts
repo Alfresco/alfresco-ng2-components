@@ -85,7 +85,8 @@ describe('Upload component', async () => {
 
     it('[C287790] Should be possible to cancel upload of a big file through the cancel uploads button', async () => {
         await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 3000)');
+            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 2500)');
+
         await contentServicesPage.uploadFile(largeFile.location);
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
@@ -95,8 +96,10 @@ describe('Upload component', async () => {
 
     it('[C272793] Should be able to cancel multiple files upload', async () => {
         await uploadToggles.enableMultipleFileUpload();
+
         await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 3000)');
+            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 2500)');
+
         await contentServicesPage.uploadMultipleFile([pngFile.location, largeFile.location]);
 
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
@@ -109,7 +112,9 @@ describe('Upload component', async () => {
 
     it('[C315257] Should be able to cancel file in upload queue', async () => {
         await uploadToggles.enableMultipleFileUpload();
+
         await browser.executeScript(`setTimeout(() => {document.querySelector('button[data-automation-id="cancel-upload-queue"]').click();}, 2500)`);
+
         await contentServicesPage.uploadMultipleFile([mediumFile.location, pngFile.location]);
         await uploadDialog.fileIsCancelled(pngFile.name);
         await uploadDialog.clickOnCloseButton();
