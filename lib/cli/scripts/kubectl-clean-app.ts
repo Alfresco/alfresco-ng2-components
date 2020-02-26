@@ -40,6 +40,9 @@ export interface ConfigArgs {
     host: string;
     oauth: string;
     identityHost: boolean;
+    enableLike: boolean;
+    intervalTime: string;
+
 }
 
 function getAlfrescoJsApiInstance(args: ConfigArgs) {
@@ -172,9 +175,14 @@ function useContext(args: ConfigArgs) {
     logger.info(response);
 }
 
-function createTmpTable(podName: string, appName: string) {
+function createTmpTable(podName: string, appName: string, enableLike: boolean = false, intervalTime: string = '20 min') {
     logger.info('Perform create tmp table...');
-    const query = `select project_id into query_table from release where name = '${appName}'`;
+    let whereCondition = `where name = '${appName}'`;
+    let query = `select project_id into query_table from release `;
+    if (enableLike) {
+        whereCondition = `where name like '${appName}%' and creation_date < NOW() - '${intervalTime}'::INTERVAL `;
+    }
+    query = query + whereCondition;
     const response = exec('kubectl', [`exec`, `${podName}`, `--`,  `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`, `${query}` ], {});
     logger.info(response);
 }
@@ -214,15 +222,30 @@ function deleteInvolvedUsersRelease(podName: string) {
     logger.info(response);
 }
 
-function deleteAllReleases(podName: string, appName: string) {
+function deleteAllReleases(podName: string, appName: string, enableLike: boolean = false, intervalTime: string = '20 min') {
     logger.info(podName, appName);
     dropTmpTable(podName);
-    createTmpTable(podName, appName);
+    createTmpTable(podName, appName, enableLike, intervalTime);
     deleteLatestRelease(podName);
     deleteInvolvedGroupsRelease(podName);
     deleteInvolvedUsersRelease(podName);
     deleteRelease(podName);
     dropTmpTable(podName);
+}
+
+function getProjectWithLike(podName, appName, intervalTime = '20 min') {
+    logger.info('Perform get project with like...');
+    let query = `select name from release `;
+    const whereCondition = `where name like '${appName}%' and creation_date < NOW() - '${intervalTime}'::INTERVAL `;
+    query = query + whereCondition;
+    const response = exec('kubectl', [`exec`, `${podName}`, `--`, `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`, `${query}`], {});
+    const responseToArray = convertSQLStringIntoArray(response);
+    logger.info(response);
+    return responseToArray;
+}
+
+function convertSQLStringIntoArray(response: string): string [] {
+    return response.split('\n').filter( (text) => (!text.includes(' name ') && !text.includes('------') && !text.includes('rows)') && !text.includes('row)') && text !== '')).map( (value) => value.trim());
 }
 
 function getPodName(args: ConfigArgs): string {
@@ -249,6 +272,8 @@ async function main(args) {
         .option('--devopsPassword [type]', 'password of user with ACTIVITI_DEVOPS role')
         .option('--rancherUsername [type]', 'rancher username')
         .option('--rancherPassword [type]', 'rancher password')
+        .option('--enableLike [boolean]', 'Enable the like for app name')
+        .option('--intervalTime [string]', 'In case of enableLike it specify the time related to the createDate')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -272,10 +297,20 @@ async function main(args) {
 
         for (let i = 0; i < applications.length;  i++ ) {
             logger.info(`Perform action on app: ${applications[i]}`);
-            deleteAllReleases(podName, applications[i]);
-            await undeployApplication(args, alfrescoJsApiDevops, applications[i]);
-            await deleteDescriptor(args, alfrescoJsApiDevops, applications[i]);
-            await deleteProjectByName(args, alfrescoJsApiModeler, applications[i]);
+            if (args.enableLike) {
+                const projectWithLike = getProjectWithLike(podName, applications[i], args.intervalTime);
+                deleteAllReleases(podName, applications[i], args.enableLike, args.intervalTime);
+                for (let y = 0; y < projectWithLike.length;  y++ ) {
+                    await undeployApplication(args, alfrescoJsApiDevops, projectWithLike[y]);
+                    await deleteDescriptor(args, alfrescoJsApiDevops, projectWithLike[y]);
+                    await deleteProjectByName(args, alfrescoJsApiModeler, projectWithLike[y]);
+                }
+            } else {
+                deleteAllReleases(podName, applications[i]);
+                await undeployApplication(args, alfrescoJsApiDevops, applications[i]);
+                await deleteDescriptor(args, alfrescoJsApiDevops, applications[i]);
+                await deleteProjectByName(args, alfrescoJsApiModeler, applications[i]);
+            }
         }
     }
 
