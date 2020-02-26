@@ -93,7 +93,7 @@ describe('SearchTextComponent', () => {
         expect(component.context.queryFragments[component.id]).toBe('');
     });
 
-    it('should show the custom name', async(() => {
+    it('should show the custom/default name', async(() => {
         component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -103,7 +103,7 @@ describe('SearchTextComponent', () => {
         });
     }));
 
-    it('should be able to reset the query',  async(() => {
+    it('should be able to reset by clicking clear button',  async(() => {
         component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
         fixture.detectChanges();
         fixture.whenStable().then(() => {

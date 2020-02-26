@@ -127,7 +127,7 @@ describe('SearchCheckListComponent', () => {
     });
 
     describe('Pagination', () => {
-        it('should show 5 items when pagination not defined', () => {
+        it('should show 5 items when pageSize not defined', () => {
             component.id = 'checklist';
             component.context = <any> {
                 queryFragments: {

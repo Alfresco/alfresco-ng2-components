@@ -779,7 +779,7 @@ describe('SearchFilterComponent', () => {
             });
         }));
 
-        it('should be able to search content on name change', async( async () => {
+        it('should be update the search query when name changed', async( async () => {
             spyOn(queryBuilder, 'update').and.stub();
             appConfigService.config.search = searchFilter;
             queryBuilder.resetToDefaults();
@@ -800,7 +800,7 @@ describe('SearchFilterComponent', () => {
             expect(panels.length).toBe(16);
         }));
 
-        it('should see the long list facet with pagination', () => {
+        it('should show the long facet options list with pagination', () => {
             const panel = '[data-automation-id="expansion-panel-Size facet queries"]';
             appConfigService.config.search = searchFilter;
             queryBuilder.resetToDefaults();
@@ -867,6 +867,7 @@ describe('SearchFilterComponent', () => {
             const panel = '[data-automation-id="expansion-panel-Size facet queries"]';
             const filter = { ...searchFilter };
             delete filter.facetQueries;
+
             appConfigService.config.search = filter;
             queryBuilder.resetToDefaults();
 
@@ -878,13 +879,14 @@ describe('SearchFilterComponent', () => {
             expect(facetElement).toEqual(null);
         });
 
-        it('should toggle the search result if checkbox updated', () => {
+        it('should search the facets options and select it', () => {
             const panel = '[data-automation-id="expansion-panel-Size facet queries"]';
             appConfigService.config.search = searchFilter;
             queryBuilder.resetToDefaults();
             fixture.detectChanges();
             queryBuilder.executed.next(<any> mockSearchResult);
             fixture.detectChanges();
+
             spyOn(queryBuilder, 'update').and.stub();
             spyOn(component, 'selectFacetBucket').and.callThrough();
             spyOn(component, 'onToggleBucket').and.callThrough();
@@ -922,7 +924,7 @@ describe('SearchFilterComponent', () => {
             expect(component.selectFacetBucket).toHaveBeenCalledTimes(1);
         });
 
-        it('should preserve the filter if other fields edited', () => {
+        it('should preserve the filter state if other fields edited', () => {
             const panel1 = '[data-automation-id="expansion-panel-Size facet queries"]';
             const panel2 = '[data-automation-id="expansion-panel-Type facet queries"]';
             appConfigService.config.search = searchFilter;
