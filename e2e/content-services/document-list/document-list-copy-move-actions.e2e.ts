@@ -254,7 +254,7 @@ describe('Document List Component', () => {
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
         });
 
-        it('[C261160] should enable copy/move button when user selects own site\'s documentLibrary', async () => {
+        it('[C261990] should enable copy/move button when user selects own site\'s documentLibrary', async () => {
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             await contentServicesPage.copyContent(pdfFileModel.name);
             await contentNodeSelector.checkDialogIsDisplayed();
