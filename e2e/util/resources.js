@@ -63,7 +63,8 @@ exports.Files = {
         },
         candidateGroup: "candidates",
         adminGroup: "admin",
-        adminCapabilities: ['tenant-admin']
+        adminCapabilities: ['tenant-admin'],
+        candidate: { firstName: 'Candidate', lastName: 'User', email: 'candidateuser@actviti.com' }
     },
 
     APP_WITH_USER_WIDGET: {
