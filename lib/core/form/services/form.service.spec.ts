@@ -396,7 +396,7 @@ describe('Form service', () => {
         });
 
         it('should parse a Form Definition with tabs', () => {
-            expect(formModelTabs.formDefinition).toBeDefined();
+            expect(formModelTabs.formRepresentation.formDefinition).toBeDefined();
             const formParsed = service.parseForm(formModelTabs);
             expect(formParsed).toBeDefined();
         });
