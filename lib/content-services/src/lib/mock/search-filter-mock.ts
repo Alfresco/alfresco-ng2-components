@@ -181,7 +181,7 @@ export const searchFilter = {
             },
             {
                 'query': 'content.size:[0 TO 10240]',
-                'label': 'SEARCH.FACET_QUERIES.XTRASMALL',
+                'label': 'Extra Small',
                 'group': 'Size facet queries'
             },
             {
@@ -463,7 +463,7 @@ export const mockSearchResult = {
                             'filterQuery': 'content.size:[1048576 TO 16777216]',
                             'metrics': [{ 'type': 'count', 'value': { 'count': 23 } }]
                         }, {
-                            'label': 'SEARCH.FACET_QUERIES.XTRASMALL',
+                            'label': 'Extra Small',
                             'filterQuery': 'content.size:[0 TO 10240]',
                             'metrics': [{ 'type': 'count', 'value': { 'count': 10239 } }]
                         }]
@@ -511,7 +511,7 @@ export const mockSearchResult = {
 };
 
 export const stepOne = [
-    'SEARCH.FACET_QUERIES.XTRASMALL (10239)',
+    'Extra Small (10239)',
     'SEARCH.FACET_QUERIES.SMALL (526)',
     'SEARCH.FACET_QUERIES.MEDIUM (630)',
     'SEARCH.FACET_QUERIES.LARGE (23)',
@@ -519,7 +519,7 @@ export const stepOne = [
 ];
 
 export const stepTwo = [
-    'SEARCH.FACET_QUERIES.XTRASMALL (10239)',
+    'Extra Small (10239)',
     'SEARCH.FACET_QUERIES.SMALL (526)',
     'SEARCH.FACET_QUERIES.MEDIUM (630)',
     'SEARCH.FACET_QUERIES.LARGE (23)',
@@ -532,7 +532,7 @@ export const stepTwo = [
 ];
 
 export const stepThree = [
-    'SEARCH.FACET_QUERIES.XTRASMALL (10239)',
+    'Extra Small (10239)',
     'SEARCH.FACET_QUERIES.SMALL (526)',
     'SEARCH.FACET_QUERIES.MEDIUM (630)',
     'SEARCH.FACET_QUERIES.LARGE (23)',
@@ -549,8 +549,8 @@ export const stepThree = [
 
 export const sizeOptions = [
     {
-        'name': 'SEARCH.FACET_QUERIES.XTRASMALL (10239)',
-        'value': 'SEARCH.FACET_QUERIES.XTRASMALL (10239)'
+        'name': 'Extra Small (10239)',
+        'value': 'Extra Small (10239)'
     },
     {
         'name': 'SEARCH.FACET_QUERIES.SMALL (526)',
@@ -600,4 +600,12 @@ export const sizeOptions = [
         'name': 'my8 (641)',
         'value': 'my8 (641)'
     }
+];
+
+export const filteredResult = [
+    'my1 (806)',
+    'my2 (691)',
+    'my3 (669)',
+    'my4 (665)',
+    'my5 (1866)'
 ];

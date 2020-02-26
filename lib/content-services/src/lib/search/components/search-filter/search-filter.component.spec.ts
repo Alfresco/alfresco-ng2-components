@@ -17,7 +17,7 @@
 
 import { SearchFilterComponent } from './search-filter.component';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
-import { AppConfigService, SearchService, setupTestBed, TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { AppConfigService, SearchService, setupTestBed, TranslationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 import { FacetField } from '../../facet-field.interface';
@@ -29,6 +29,7 @@ import {
     disabledCategories,
     expandableCategories,
     expandedCategories,
+    filteredResult,
     mockSearchResult,
     searchFilter,
     simpleCategories,
@@ -42,19 +43,16 @@ describe('SearchFilterComponent', () => {
     let component: SearchFilterComponent;
     let queryBuilder: SearchQueryBuilderService;
     let appConfigService: AppConfigService;
-    const translationMock = new TranslationMock();
     const searchMock: any = {
         dataLoaded: new Subject()
     };
-    translationMock.instant = (key) => `${key}_translated`;
 
     setupTestBed({
         imports: [
             ContentTestingModule
         ],
         providers: [
-            { provide: SearchService, useValue: searchMock },
-            { provide: TranslationService, useValue: translationMock }
+            { provide: SearchService, useValue: searchMock }
         ]
     });
 
@@ -62,6 +60,8 @@ describe('SearchFilterComponent', () => {
         queryBuilder = TestBed.get(SearchQueryBuilderService);
         fixture = TestBed.createComponent(SearchFilterComponent);
         appConfigService = TestBed.get(AppConfigService);
+        const translationService = fixture.debugElement.injector.get(TranslationService);
+        spyOn(translationService, 'instant').and.callFake((key) => key ? `${key}_translated` : null);
         component = fixture.componentInstance;
     });
 
@@ -885,13 +885,87 @@ describe('SearchFilterComponent', () => {
             fixture.detectChanges();
             queryBuilder.executed.next(<any> mockSearchResult);
             fixture.detectChanges();
-            spyOn(component, 'selectFacetBucket').and.stub();
+            spyOn(queryBuilder, 'update').and.stub();
+            spyOn(component, 'selectFacetBucket').and.callThrough();
             spyOn(component, 'onToggleBucket').and.callThrough();
+
+            const inputElement = fixture.debugElement.query(By.css(`${panel} input`));
+            inputElement.nativeElement.value = 'Extra';
+            inputElement.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            let filteredMenu = getAllMenus(`${panel} mat-checkbox`, fixture);
+            expect(filteredMenu).toEqual(['Extra Small (10239)']);
+
+            inputElement.nativeElement.value = 'my';
+            inputElement.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            filteredMenu = getAllMenus(`${panel} mat-checkbox`, fixture);
+            expect(filteredMenu).toEqual(filteredResult);
+
+            const clearButton = fixture.debugElement.query(By.css(`${panel} button`));
+            clearButton.triggerEventHandler('click', {});
+            fixture.detectChanges();
+
+            filteredMenu = getAllMenus(`${panel} mat-checkbox`, fixture);
+            expect(filteredMenu).toEqual(stepOne);
+
             const firstOption = fixture.debugElement.query(By.css(`${panel} mat-checkbox`));
             firstOption.triggerEventHandler('change', { checked: true });
-            expect(component.onToggleBucket).toHaveBeenCalled();
-            expect(component.selectFacetBucket).toHaveBeenCalled();
+            fixture.detectChanges();
+
+            const checkedOption = fixture.debugElement.query(By.css(`${panel} mat-checkbox.mat-checkbox-checked`));
+            expect(checkedOption.nativeElement.innerText).toEqual('Extra Small (10239)');
+
+            expect(component.onToggleBucket).toHaveBeenCalledTimes(1);
+            expect(component.selectFacetBucket).toHaveBeenCalledTimes(1);
         });
+
+        it('should preserve the filter if other fields edited', () => {
+            const panel1 = '[data-automation-id="expansion-panel-Size facet queries"]';
+            const panel2 = '[data-automation-id="expansion-panel-Type facet queries"]';
+            appConfigService.config.search = searchFilter;
+            queryBuilder.resetToDefaults();
+            fixture.detectChanges();
+            queryBuilder.executed.next(<any> mockSearchResult);
+            fixture.detectChanges();
+            spyOn(queryBuilder, 'update').and.stub();
+            spyOn(component, 'selectFacetBucket').and.callThrough();
+            spyOn(component, 'onToggleBucket').and.callThrough();
+
+            const inputElement = fixture.debugElement.query(By.css(`${panel1} input`));
+            inputElement.nativeElement.value = 'my';
+            inputElement.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            let filteredMenu = getAllMenus(`${panel1} mat-checkbox`, fixture);
+            expect(filteredMenu).toEqual(filteredResult);
+
+            const firstOption = fixture.debugElement.query(By.css(`${panel1} mat-checkbox`));
+            firstOption.triggerEventHandler('change', { checked: true });
+            fixture.detectChanges();
+
+            let panel1CheckedOption = fixture.debugElement.query(By.css(`${panel1} mat-checkbox.mat-checkbox-checked`));
+            expect(panel1CheckedOption.nativeElement.innerText).toEqual('my1 (806)');
+
+            const panel2Options = fixture.debugElement.query(By.css(`${panel2} mat-checkbox`));
+            panel2Options.triggerEventHandler('change', { checked: true });
+            fixture.detectChanges();
+
+            const panel2CheckedOption = fixture.debugElement.query(By.css(`${panel2} mat-checkbox.mat-checkbox-checked`));
+            expect(panel2CheckedOption.nativeElement.innerText).toEqual('SEARCH.FACET_QUERIES.MIMETYPE (13)');
+
+            filteredMenu = getAllMenus(`${panel1} mat-checkbox`, fixture);
+            expect(filteredMenu).toEqual(filteredResult);
+
+            panel1CheckedOption = fixture.debugElement.query(By.css(`${panel1} mat-checkbox.mat-checkbox-checked`));
+            expect(panel1CheckedOption.nativeElement.innerText).toEqual('my1 (806)');
+
+            expect(component.onToggleBucket).toHaveBeenCalledTimes(2);
+            expect(component.selectFacetBucket).toHaveBeenCalledTimes(2);
+        });
+
     });
 });
 
