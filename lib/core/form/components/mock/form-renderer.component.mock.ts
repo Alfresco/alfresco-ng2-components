@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-export const formDisplayValueVisibility = {formRepresentation: {
+export const formDisplayValueVisibility = {
+    formRepresentation: {
          id: 'form-3175b074-53c6-4b5b-92df-246b62108db3',
          name: 'displayValueVisibility',
          description: '',
