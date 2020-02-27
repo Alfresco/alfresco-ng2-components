@@ -153,7 +153,7 @@ describe('Process filters cloud', () => {
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(candidateBaseApp);
         await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-        await processCloudDemoPage.clickOnProcessFilters();
+        await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
     });
 
     it('[C306887] Should be able to filter by appName', async () => {

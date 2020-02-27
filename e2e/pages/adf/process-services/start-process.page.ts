@@ -16,7 +16,7 @@
  */
 
 import { by, element, Key, protractor, browser, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions, FormFields } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, FormFields, DropdownPage } from '@alfresco/adf-testing';
 
 export class StartProcessPage {
 
@@ -29,6 +29,8 @@ export class StartProcessPage {
     noProcess: ElementFinder = element(by.id('no-process-message'));
     processDefinition: ElementFinder = element(by.css('input[id="processDefinitionName"]'));
     processDefinitionOptionsPanel: ElementFinder = element(by.css('div[class*="processDefinitionOptions"]'));
+
+    dropdownPage = new DropdownPage();
 
     async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
@@ -67,19 +69,15 @@ export class StartProcessPage {
     }
 
     async checkOptionIsDisplayed(name): Promise<void> {
-        const selectProcessDropdown: ElementFinder = element(by.cssContainingText('.mat-option-text', name));
-        await BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
-        await BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
+        await this.dropdownPage.checkOptionIsDisplayed(name);
     }
 
     async checkOptionIsNotDisplayed(name): Promise<void> {
-        const selectProcessDropdown: ElementFinder = element(by.cssContainingText('.mat-option-text', name));
-        await BrowserVisibility.waitUntilElementIsNotVisible(selectProcessDropdown);
+        await this.dropdownPage.checkOptionIsNotDisplayed(name);
     }
 
     async selectOption(name): Promise<void> {
-        const selectProcessDropdown: ElementFinder = element(by.xpath(`//mat-option/child::span [text() = ' ${name} ']`));
-        await BrowserActions.click(selectProcessDropdown);
+        await this.dropdownPage.selectOption(name);
     }
 
     async typeProcessDefinition(name): Promise<void> {

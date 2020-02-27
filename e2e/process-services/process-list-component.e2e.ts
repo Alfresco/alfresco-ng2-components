@@ -101,8 +101,8 @@ describe('Process List Test', () => {
         await processListDemoPage.checkAppIdFieldIsDisplayed();
         await processListDemoPage.checkProcessInstanceIdFieldIsDisplayed();
         await processListDemoPage.checkProcessInstanceIdFieldIsDisplayed();
-        await processListDemoPage.checkSortFieldIsDisplayed();
-        await processListDemoPage.checkStateFieldIsDisplayed();
+        await processListDemoPage.checkSortDropdownIsDisplayed();
+        await processListDemoPage.checkStateDropdownIsDisplayed();
     });
 
     it('[C282006] Should be able to filter processes with App ID', async () => {

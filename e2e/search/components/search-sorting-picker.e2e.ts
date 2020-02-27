@@ -93,7 +93,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it(`[C277269] Should see the "sort by" option when search results are displayed in search results page`, async () => {
-        await searchSortingPicker.checkSortingSelectorIsDisplayed();
+        await searchSortingPicker.checkSortingDropdownIsDisplayed();
     });
 
     it(`[C277270] Should see the icon for ASC and DESC sort when search results are displayed in the search results page`, async () => {
@@ -116,8 +116,8 @@ describe('Search Sorting Picker', () => {
         await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter(search);
 
-        await searchSortingPicker.checkSortingSelectorIsDisplayed();
-        await searchSortingPicker.clickSortingSelector();
+        await searchSortingPicker.checkSortingDropdownIsDisplayed();
+        await searchSortingPicker.clickSortingDropdown();
         await searchSortingPicker.checkOptionsDropdownIsDisplayed();
         await searchSortingPicker.checkOptionIsDisplayed('Modifier');
     });
@@ -132,8 +132,8 @@ describe('Search Sorting Picker', () => {
         await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter(search);
 
-        await searchSortingPicker.checkSortingSelectorIsDisplayed();
-        await searchSortingPicker.clickSortingSelector();
+        await searchSortingPicker.checkSortingDropdownIsDisplayed();
+        await searchSortingPicker.clickSortingDropdown();
         await searchSortingPicker.checkOptionsDropdownIsDisplayed();
         await searchSortingPicker.checkOptionIsNotDisplayed(removedOption[0].label);
     });
@@ -157,8 +157,8 @@ describe('Search Sorting Picker', () => {
         await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter(search);
 
-        await searchSortingPicker.checkSortingSelectorIsDisplayed();
-        await searchSortingPicker.clickSortingSelector();
+        await searchSortingPicker.checkSortingDropdownIsDisplayed();
+        await searchSortingPicker.clickSortingDropdown();
         await searchSortingPicker.checkOptionIsDisplayed('Name');
         await searchSortingPicker.clickSortingOption('Name');
         await expect(await searchSortingPicker.checkOrderArrowIsDownward()).toBe(true);
@@ -208,7 +208,7 @@ describe('Search Sorting Picker', () => {
         await searchDialog.clickOnSearchIcon();
         await searchDialog.enterTextAndPressEnter(search);
 
-        await searchSortingPicker.checkSortingSelectorIsDisplayed();
+        await searchSortingPicker.checkSortingDropdownIsDisplayed();
         await searchSortingPicker.sortBy('ASC', 'Modified Date');
 
         const idList = await contentServices.getElementsDisplayedId();

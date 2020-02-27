@@ -76,7 +76,7 @@ describe('Start Task - Task App', () => {
 
         const newTask = await taskPage.createNewTask();
         await newTask.addName('View file');
-        await newTask.addForm(app.formName);
+        await newTask.selectForm(app.formName);
         await newTask.clickStartButton();
 
         await widget.attachFileWidget().attachFile(appFields.attachFile_id, browser.params.testConfig.main.rootPath + pdfFile.location);

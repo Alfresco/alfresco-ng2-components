@@ -85,7 +85,7 @@ describe('Process filters cloud', () => {
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(simpleApp);
         await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-        await processCloudDemoPage.clickOnProcessFilters();
+        await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
     });
 
     it('[C290041] Should be displayed the "No Process Found" message when the process list is empty', async () => {
@@ -124,7 +124,7 @@ describe('Process filters cloud', () => {
         await processDetailsCloudDemoPage.checkTaskIsDisplayed(taskName);
         await browser.navigate().back();
 
-        await tasksCloudDemoPage.clickOnTaskFilter();
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickOnTaskFilters();
         await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskAssigned[0].entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskAssigned[0].entry.name);

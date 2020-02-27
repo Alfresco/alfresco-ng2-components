@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
 import { by, element, ElementFinder } from 'protractor';
 
 const column = {
@@ -120,8 +120,7 @@ export class PermissionsPage {
     }
 
     async selectOption(name): Promise<void> {
-        const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
-        await BrowserActions.click(selectProcessDropdown);
+        await new DropdownPage().selectOption(name);
     }
 
     async checkPermissionContainerIsDisplayed(): Promise<void> {

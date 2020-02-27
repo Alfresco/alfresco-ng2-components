@@ -100,7 +100,6 @@ describe('Attach Form Component', () => {
         await attachFormPage.checkFormDropdownIsDisplayed();
         await attachFormPage.checkCancelButtonIsDisplayed();
         await attachFormPage.checkAttachFormButtonIsDisabled();
-        await attachFormPage.clickAttachFormDropdown();
         await attachFormPage.selectAttachFormOption(testNames.formName);
 
         await formFields.checkWidgetIsReadOnlyMode(testNames.widgetTitle);
@@ -116,7 +115,6 @@ describe('Attach Form Component', () => {
         await taskPage.tasksListPage().selectRow(testNames.taskName);
 
         await attachFormPage.clickAttachFormButton();
-        await attachFormPage.clickAttachFormDropdown();
         await attachFormPage.selectAttachFormOption(testNames.formName);
         await attachFormPage.clickAttachFormButton();
 

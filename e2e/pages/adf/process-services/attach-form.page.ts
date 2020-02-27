@@ -16,7 +16,7 @@
  */
 
 import { element, by, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, DropdownPage } from '@alfresco/adf-testing';
 
 export class AttachFormPage {
 
@@ -26,7 +26,7 @@ export class AttachFormPage {
     formDropdown: ElementFinder = element(by.id('form_id'));
     cancelButton: ElementFinder = element(by.id('adf-no-form-cancel-button'));
     defaultTitle: ElementFinder = element(by.css('mat-card-title[class="mat-card-title mat-card-title"]'));
-    attachFormDropdown: ElementFinder = element(by.css("div[class='adf-attach-form-row']"));
+    attachFormDropdown = new DropdownPage(element(by.css("div[class='adf-attach-form-row']")));
 
     async checkNoFormMessageIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noFormMessage);
@@ -57,12 +57,8 @@ export class AttachFormPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
 
-    async clickAttachFormDropdown(): Promise<void> {
-        await BrowserActions.click(this.attachFormDropdown);
-    }
-
     async selectAttachFormOption(option): Promise<void> {
-        await BrowserActions.click(element(by.cssContainingText("mat-option[role='option']", option)));
+        await this.attachFormDropdown.clickDropdownWithOption(option);
     }
 
     async clickCancelButton(): Promise<void> {

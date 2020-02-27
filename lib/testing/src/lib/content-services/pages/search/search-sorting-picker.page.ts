@@ -18,15 +18,15 @@
 import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
+import { DropdownPage } from '../../../material/pages/dropdown.page';
 
 export class SearchSortingPickerPage {
 
-    sortingSelector: ElementFinder = element(by.css('adf-sorting-picker div[class="mat-select-arrow"]'));
+    sortingDropdown = new DropdownPage(element(by.css('adf-sorting-picker div[class="mat-select-arrow"]')));
     orderArrow: ElementFinder = element(by.css('adf-sorting-picker button mat-icon'));
-    optionsDropdown: ElementFinder = element(by.css('div .mat-select-panel'));
 
     async sortBy(sortOrder: string, sortType: string | RegExp): Promise<void> {
-        await BrowserActions.click(this.sortingSelector);
+        await this.sortingDropdown.clickDropdown();
         const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
         await BrowserActions.click(selectedSortingOption);
         await this.sortByOrder(sortOrder);
@@ -52,31 +52,29 @@ export class SearchSortingPickerPage {
         }
     }
 
-    async clickSortingOption(option): Promise<void> {
+    async clickSortingOption(option: string): Promise<void> {
         const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', option));
         await BrowserActions.click(selectedSortingOption);
     }
 
-    async clickSortingSelector(): Promise<void> {
-        await BrowserActions.click(this.sortingSelector);
+    async checkOptionIsDisplayed(option: string): Promise<void> {
+        await this.sortingDropdown.checkOptionIsDisplayed(option);
     }
 
-    async checkOptionIsDisplayed(option): Promise<void> {
-        const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
-        await BrowserVisibility.waitUntilElementIsVisible(optionSelector);
-    }
-
-    async checkOptionIsNotDisplayed(option): Promise<void> {
-        const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
-        await BrowserVisibility.waitUntilElementIsNotVisible(optionSelector);
+    async checkOptionIsNotDisplayed(option: string): Promise<void> {
+        await this.sortingDropdown.checkOptionIsNotDisplayed(option);
     }
 
     async checkOptionsDropdownIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.optionsDropdown);
+        await this.sortingDropdown.checkOptionsPanelIsDisplayed();
     }
 
-    async checkSortingSelectorIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.sortingSelector);
+    async checkSortingDropdownIsDisplayed(): Promise<void> {
+        await this.sortingDropdown.checkDropdownIsVisible();
+    }
+
+    async clickSortingDropdown(): Promise<void> {
+        await this.sortingDropdown.clickDropdown();
     }
 
     async checkOrderArrowIsDownward(): Promise<boolean> {

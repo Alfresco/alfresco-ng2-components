@@ -85,47 +85,41 @@ describe('Process filters cloud', () => {
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(candidateBaseApp);
             await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-            await processCloudDemoPage.clickOnProcessFilters();
+            await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
 
         });
 
         it('[C290021] Should be able to view default filters', async () => {
-            await processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
-            await processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
-            await processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
+            await processCloudDemoPage.processFilterCloudComponent.checkCompletedProcessesFilterIsDisplayed();
+            await processCloudDemoPage.processFilterCloudComponent.checkRunningProcessesFilterIsDisplayed();
+            await processCloudDemoPage.processFilterCloudComponent.checkAllProcessesFilterIsDisplayed();
         });
 
         it('[C290043] Should display process in Running Processes List when process is started', async () => {
-            await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-            await processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
 
-            await processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
-            await processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Completed Processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedById(runningProcess.entry.id);
 
-            await processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            await processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('All Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
         });
 
         it('[C290044] Should display process in Completed Processes List when process is completed', async () => {
-            await processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-            await processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedById(completedProcess.entry.id);
 
-            await processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
-            await processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('Completed Processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
 
-            await processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            await processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
-            await expect(await processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('All Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
         });
     });

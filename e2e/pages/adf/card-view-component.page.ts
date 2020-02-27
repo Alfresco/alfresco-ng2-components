@@ -16,12 +16,11 @@
  */
 
 import { by, element, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions, CardTextItemPage } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, CardTextItemPage, DropdownPage } from '@alfresco/adf-testing';
 
 export class CardViewComponentPage {
 
     addButton: ElementFinder = element(by.className('adf-card-view__key-value-pairs__add-btn'));
-    selectValue = 'mat-option';
     nameCardTextItem: CardTextItemPage = new CardTextItemPage('name');
     intField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-int']`));
     floatField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
@@ -29,14 +28,14 @@ export class CardViewComponentPage {
     nameInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Name']`));
     consoleLog: ElementFinder = element(by.className('app-console'));
     deleteButton: ElementFinder = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
-    select: ElementFinder = element(by.css('mat-select[data-automation-class="select-box"]'));
     checkbox: ElementFinder = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));
     resetButton: ElementFinder = element(by.css(`#adf-reset-card-log`));
-    listContent: ElementFinder = element(by.css('.mat-select-panel'));
     editableSwitch: ElementFinder = element(by.id('app-toggle-editable'));
     clearDateSwitch: ElementFinder = element(by.id('app-toggle-clear-date'));
     noneOptionSwitch: ElementFinder = element(by.id('app-toggle-none-option'));
     clickableField: ElementFinder = element(by.css(`[data-automation-id="card-textitem-toggle-click"]`));
+
+    selectDropdown = new DropdownPage(element(by.css('mat-select[data-automation-class="select-box"]')));
 
     async clickOnAddButton(): Promise<void> {
         await BrowserActions.click(this.addButton);
@@ -151,8 +150,8 @@ export class CardViewComponentPage {
     }
 
     async clickSelectBox(): Promise<void> {
-        await BrowserActions.click(this.select);
-        await BrowserVisibility.waitUntilElementIsVisible(this.listContent);
+        await this.selectDropdown.clickDropdown();
+        await this.selectDropdown.checkOptionsPanelIsDisplayed();
     }
 
     async checkboxClick(): Promise<void> {
@@ -160,8 +159,7 @@ export class CardViewComponentPage {
     }
 
     async selectValueFromComboBox(index): Promise<void> {
-        const value: ElementFinder = element.all(by.className(this.selectValue)).get(index);
-        await BrowserActions.click(value);
+        await this.selectDropdown.selectOptionFromIndex(index);
     }
 
     async disableEdit(): Promise<void> {
