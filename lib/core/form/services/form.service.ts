@@ -102,12 +102,7 @@ export class FormService {
      */
     parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
         if (json) {
-            const formValues: FormValues = {};
-            (data || []).forEach(variable => {
-                formValues[variable.name] = variable.value;
-            });
-
-            const form = new FormModel(json, formValues, readOnly);
+            const form = new FormModel(json, data, readOnly, this);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(<any> form, {
