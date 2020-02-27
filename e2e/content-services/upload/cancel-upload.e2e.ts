@@ -100,12 +100,12 @@ describe('Upload component', async () => {
         await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
             'document.querySelector("#adf-upload-dialog-cancel").click();  }, 2500)');
 
-        await contentServicesPage.uploadMultipleFile([pngFile.location, largeFile.location]);
+        await contentServicesPage.uploadMultipleFile([mediumFile.location, largeFile.location]);
 
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
-        await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
+        await contentServicesPage.checkContentIsNotDisplayed(mediumFile.name);
         await contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
         await uploadToggles.disableMultipleFileUpload();
     });
