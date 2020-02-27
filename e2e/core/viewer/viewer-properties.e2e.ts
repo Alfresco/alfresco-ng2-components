@@ -99,7 +99,7 @@ describe('Viewer - properties', () => {
     });
 
     it('[C260079] Should Show/Hide download button when allowDownload is true/false', async () => {
-        await viewerPage.checkDownloadButtonDisplayed();
+        await viewerPage.checkDownloadButtonIsDisplayed();
         await viewerPage.disableDownload();
         await viewerPage.checkDownloadButtonIsNotDisplayed();
         await viewerPage.enableDownload();

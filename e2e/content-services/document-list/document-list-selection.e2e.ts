@@ -1,0 +1,145 @@
+/*!
+ * @license
+ * Copyright 2019 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { LoginPage, PaginationPage } from '@alfresco/adf-testing';
+import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { FolderModel } from '../../models/ACS/folder.model';
+import { browser } from 'protractor';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { FileModel } from '../../models/ACS/file.model';
+import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
+
+describe('Document List - Selection', () => {
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const navigationBarPage = new NavigationBarPage();
+    const uploadDialog = new UploadDialogPage();
+    const paginationPage = new PaginationPage();
+    const acsUser = new AcsUserModel();
+    const folderModel = new FolderModel({ name: 'folder' });
+    const docxFileModel = new FileModel({
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
+    });
+
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+
+    beforeAll(async () => {
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.createNewFolder(folderModel.name);
+        await contentServicesPage.uploadFile(docxFileModel.location);
+        await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+    });
+
+    afterAll(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
+    it('[C274696] Should be able to select and unselect a file or folder', async () => {
+        await contentServicesPage.selectRow(docxFileModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', docxFileModel.name);
+
+        await paginationPage.clickItemsPerPageDropdown();
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', docxFileModel.name);
+
+        await contentServicesPage.selectRow(docxFileModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', docxFileModel.name);
+
+        await contentServicesPage.selectRow(folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
+
+        await paginationPage.clickItemsPerPageDropdown();
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
+
+        await contentServicesPage.selectRow(folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', folderModel.name);
+    });
+
+    it('[C260057] Should be able to choose between the Selection Mode options and select items accordingly', async () => {
+        let list;
+        await contentServicesPage.chooseSelectionMode('None');
+
+        await contentServicesPage.selectRow(docxFileModel.name);
+        await contentServicesPage.selectFolderWithCommandKey(folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', docxFileModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', folderModel.name);
+        list = await contentServicesPage.getItemSelected();
+
+        await expect(JSON.stringify(list)).toEqual('[]');
+
+        await contentServicesPage.chooseSelectionMode('Single');
+
+        await contentServicesPage.selectRow(docxFileModel.name);
+        await contentServicesPage.selectFolderWithCommandKey(folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', docxFileModel.name );
+        list = await contentServicesPage.getItemSelected();
+
+        await expect(JSON.stringify(list)).toEqual('[\"' + folderModel.name + '\"]');
+
+        await contentServicesPage.chooseSelectionMode('Multiple');
+
+        await contentServicesPage.selectRow(docxFileModel.name);
+        await contentServicesPage.selectFolderWithCommandKey(folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', docxFileModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
+        list = await contentServicesPage.getItemSelected();
+
+        await expect(JSON.stringify(list)).toEqual('[\"' + docxFileModel.name + '","' + folderModel.name + '\"]');
+    });
+
+    it('[C212928] Should be able to enable the Multiselect (with checkboxes) toggle and select items accordingly', async () => {
+        let list;
+        await contentServicesPage.chooseSelectionMode('Multiple');
+        await contentServicesPage.clickMultiSelectToggle();
+        await expect(await contentServicesPage.multiSelectToggleIsEnabled()).toBe(true);
+        list = await contentServicesPage.getItemSelected();
+        await expect(JSON.stringify(list)).toEqual('[]');
+
+        await contentServicesPage.selectItemWithCheckbox(docxFileModel.name);
+        await contentServicesPage.selectItemWithCheckbox(folderModel.name);
+        list = await contentServicesPage.getItemSelected();
+        await expect(JSON.stringify(list)).toEqual('[\"' + docxFileModel.name + '","' + folderModel.name + '\"]');
+
+        await contentServicesPage.unSelectItemWithCheckbox(docxFileModel.name);
+
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', docxFileModel.name );
+
+        await contentServicesPage.clickSelectAllCheckbox();
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', docxFileModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
+
+        list = await contentServicesPage.getItemSelected();
+        await expect(JSON.stringify(list)).toEqual('[\"' + folderModel.name + '","' + docxFileModel.name + '\"]');
+    });
+
+});

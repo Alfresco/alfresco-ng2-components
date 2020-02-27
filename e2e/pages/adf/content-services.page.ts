@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DateUtil, DocumentListPage, FormControllersPage } from '@alfresco/adf-testing';
-import { $$, browser, by, element, ElementFinder, protractor } from 'protractor';
+import { $$, browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
 import { DropActions } from '../../actions/drop.actions';
 import { CreateLibraryDialogPage } from './dialog/create-library-dialog.page';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
@@ -86,7 +86,9 @@ export class ContentServicesPage {
     markedFavorite: ElementFinder = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star'));
     notMarkedFavorite: ElementFinder = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star_border'));
     multiSelectToggle: ElementFinder = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
+    selectAllCheckbox: ElementFinder = element(by.css('.adf-checkbox-sr-only'));
     selectionModeDropdown: ElementFinder = element(by.css('.mat-select[aria-label="Selection Mode"]'));
+    selectedNodesList: ElementArrayFinder = element.all(by.css('.app-content-service-settings li'));
 
     siteListDropdown = new DropdownPage(element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
     sortingDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="grid-view-sorting"]')));
@@ -642,6 +644,12 @@ export class ContentServicesPage {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(this.multiSelectToggle);
     }
+    async multiSelectToggleIsEnabled(): Promise<boolean> {
+        return this.multiSelectToggle.isEnabled();
+    }
+    async clickSelectAllCheckbox(): Promise<void> {
+        await BrowserActions.click(this.selectAllCheckbox);
+    }
 
     getRowByName(rowName): ElementFinder {
         return this.contentList.dataTable.getRow(this.columns.name, rowName);
@@ -664,4 +672,21 @@ export class ContentServicesPage {
         await dropdownPage.clickDropdown();
         await dropdownPage.selectOption(option);
     }
+
+    async getItemSelected(): Promise<string> {
+        return BrowserActions.getArrayText(this.selectedNodesList);
+    }
+
+    async selectItemWithCheckbox(itemName: string): Promise<void> {
+        const item: ElementFinder = element(by.css(`adf-datatable-row[aria-label="${itemName}"] mat-checkbox .mat-checkbox-input`));
+        await BrowserVisibility.waitUntilElementIsVisible(item);
+        await BrowserActions.click(item);
+    }
+
+    async unSelectItemWithCheckbox(itemName: string): Promise<void> {
+        const item: ElementFinder = element(by.css(`adf-datatable-row[aria-label="${itemName} selected"] mat-checkbox .mat-checkbox-input`));
+        await BrowserVisibility.waitUntilElementIsVisible(item);
+        await BrowserActions.click(item);
+    }
+
 }

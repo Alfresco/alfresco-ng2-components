@@ -550,7 +550,6 @@ describe('Start Process Component', () => {
             await processFiltersPage.clickCompletedFilterButton();
             await processFiltersPage.selectFromProcessList('Test Process');
             await expect(await processDetailsPage.getEmptyMessage()).toBe('This list is empty');
-
         });
     });
 

@@ -21,7 +21,7 @@ import {
     PaginationPage,
     UploadActions,
     StringUtil,
-    ContentNodeSelectorDialogPage
+    ContentNodeSelectorDialogPage, ViewerPage
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -44,6 +44,7 @@ describe('Document List Component - Actions', () => {
     const paginationPage = new PaginationPage();
     const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
     const breadCrumbPage = new BreadCrumbPage();
+    const viewerPage = new ViewerPage();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf_acs.host
@@ -91,7 +92,6 @@ describe('Document List Component - Actions', () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             await browser.sleep(10000);
-
         });
 
         afterAll(async () => {
@@ -203,6 +203,12 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.closeActionContext();
             });
 
+            it('[C260060] Should be able to open a file/folder through double click action - file', async () => {
+                await contentServicesPage.doubleClickRow(pdfFileModel.name);
+                await expect(await viewerPage.getDisplayedFileName()).toEqual(pdfFileModel.name);
+                await viewerPage.checkPreviewFileDefaultOptionsAreDisplayed();
+                await viewerPage.clickCloseButton();
+            });
         });
 
         describe('Folder Actions', () => {
@@ -216,6 +222,16 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.checkContentIsDisplayed(folderName);
                 await contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
                 await contentServicesPage.checkContentIsDisplayed(folderName);
+            });
+
+            it('[C260060] Should be able to open a file/folder through double click action - folder', async () => {
+                const folderTwoModel = new FolderModel({ name: 'folderTwo' });
+                const numberOfSubFolders = 3;
+                await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
+                for (let i = 0; i < numberOfSubFolders; i++) {
+                    await contentServicesPage.createNewFolder('subFolder' + (i + 1));
+                }
+                await contentServicesPage.checkContentsAreDisplayed(numberOfSubFolders);
             });
 
             it('[C260123] Should be able to delete a folder using context menu', async () => {
@@ -253,7 +269,6 @@ describe('Document List Component - Actions', () => {
         const contentServicesUser = new AcsUserModel();
 
         beforeAll(async () => {
-
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.peopleApi.addPerson(contentServicesUser);
             await this.alfrescoJsApi.login(contentServicesUser.id, contentServicesUser.password);
@@ -283,7 +298,6 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C260132] Move action on folder with - Load more', async () => {
-
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
 
@@ -339,7 +353,6 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C305051] Copy action on folder with - Load more', async () => {
-
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
