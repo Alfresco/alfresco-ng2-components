@@ -54,10 +54,6 @@ describe('CardViewArrayItemComponent', () => {
         component.property = new CardViewArrayItemModel(mockDefaultProps);
     });
 
-    it('should create CardViewArrayItemComponent', () => {
-        expect(component instanceof CardViewArrayItemComponent).toBeTruthy();
-    });
-
     describe('Rendering', () => {
         it('should render the label', () => {
             fixture.detectChanges();

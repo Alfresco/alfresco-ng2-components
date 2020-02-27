@@ -87,10 +87,6 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture.destroy();
     });
 
-    it('should create EditProcessFilterCloudComponent', () => {
-        expect(component instanceof EditProcessFilterCloudComponent).toBeTruthy();
-    });
-
     it('should fetch process instance filter by id', async(() => {
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
         component.ngOnChanges({ 'id': processFilterIdChange });

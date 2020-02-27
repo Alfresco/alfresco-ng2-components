@@ -56,10 +56,6 @@ describe('DateEditorComponent', () => {
         component.column = column;
     });
 
-    it('should create instance of DateEditorComponent', () => {
-        expect(fixture.componentInstance instanceof DateEditorComponent).toBe(true, 'should create DateEditorComponent');
-    });
-
     describe('using Date Piker', () => {
         it('should update row value on change', () => {
             const input = <MatDatepickerInputEvent<any>> {value: '14-03-2016' };

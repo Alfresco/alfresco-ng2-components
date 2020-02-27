@@ -74,10 +74,6 @@ describe('StartProcessCloudComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should create instance of StartProcessInstanceComponent', () => {
-        expect(fixture.componentInstance instanceof StartProcessCloudComponent).toBe(true, 'should create StartProcessInstanceComponent');
-    });
-
     describe('start a process without start form', () => {
 
         it('should be able to start a process with a valid process name and process definition', async(() => {

@@ -81,10 +81,6 @@ describe('TaskFilterCloudService', () => {
         getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
-    it('should be able to use UserPreferenceCloudService', () => {
-        expect(preferenceCloudService instanceof UserPreferenceCloudService).toBeTruthy();
-    });
-
     it('should create task filter key by using appName and the username', (done) => {
         service.getTaskListFilters('fakeAppName').subscribe((res: any) => {
             expect(res).toBeDefined();
@@ -259,10 +255,6 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
         identityUserService = TestBed.get(IdentityUserService);
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of([]));
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
-    });
-
-    it('should be able to inject LocalPreferenceCloudService when you override with user preference service', () => {
-        expect(preferenceCloudService instanceof LocalPreferenceCloudService).toBeTruthy();
     });
 
     it('should create default task filters if there are no task filter preferences', (done) => {

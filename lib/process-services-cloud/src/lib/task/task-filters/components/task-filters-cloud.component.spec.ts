@@ -68,14 +68,6 @@ describe('TaskFiltersCloudComponent', () => {
         taskFilterService = TestBed.get(TaskFilterCloudService);
     });
 
-    it('should create TaskFiltersCloudComponent instance', () => {
-        expect(component instanceof TaskFiltersCloudComponent).toBeDefined();
-    });
-
-    it('should be able to use LocalPreferenceCloudService', () => {
-        expect(taskFilterService.preferenceService instanceof LocalPreferenceCloudService).toBeTruthy();
-    });
-
     it('should attach specific icon for each filter if hasIcon is true', async(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
         const change = new SimpleChange(undefined, 'my-app-1', true);
@@ -340,35 +332,5 @@ describe('TaskFiltersCloudComponent', () => {
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter(filter);
         expect(component.getCurrentFilter()).toBe(fakeGlobalFilter[0]);
-    });
-});
-
-describe('Set UserPreferenceService', () => {
-
-    let component: TaskFiltersCloudComponent;
-    let taskFilterService: TaskFilterCloudService;
-    let fixture: ComponentFixture<TaskFiltersCloudComponent>;
-
-    setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
-        providers: [
-            TaskFilterCloudService,
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
-        ]
-    });
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TaskFiltersCloudComponent);
-        component = fixture.componentInstance;
-
-        taskFilterService = TestBed.get(TaskFilterCloudService);
-    });
-
-    it('should create TaskFiltersCloudComponent instance', () => {
-        expect(component instanceof TaskFiltersCloudComponent).toBeDefined();
-    });
-
-    it('should be able to inject UserPreferenceCloudService when you override with user preferece service', () => {
-        expect(taskFilterService.preferenceService instanceof UserPreferenceCloudService).toBeTruthy();
     });
 });

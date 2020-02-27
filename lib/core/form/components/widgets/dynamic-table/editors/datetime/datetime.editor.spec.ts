@@ -55,10 +55,6 @@ describe('DateTimeEditorComponent', () => {
         component.column = column;
     });
 
-    it('should create instance of DateTimeEditorComponent', () => {
-        expect(fixture.componentInstance instanceof DateTimeEditorComponent).toBe(true, 'should create DateTimeEditorComponent');
-    });
-
     it('should update fow value on change', () => {
         component.ngOnInit();
         const newDate = moment('22-6-2018 04:20 AM', 'D-M-YYYY hh:mm A');

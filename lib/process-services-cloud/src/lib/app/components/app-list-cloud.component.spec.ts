@@ -58,10 +58,6 @@ describe('AppListCloudComponent', () => {
         getAppsSpy = spyOn(appsProcessCloudService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
     });
 
-    it('should create AppListCloudComponent ', async(() => {
-        expect(component instanceof AppListCloudComponent).toBe(true);
-    }));
-
     it('should define layoutType with the default value', () => {
         component.layoutType = '';
         fixture.detectChanges();

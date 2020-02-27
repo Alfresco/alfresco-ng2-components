@@ -39,10 +39,6 @@ describe('AppDetailsCloudComponent', () => {
         component.applicationInstance = fakeApplicationInstance[0];
     });
 
-    it('should create AppDetailsCloudComponent ', async(() => {
-        expect(component instanceof AppDetailsCloudComponent).toBe(true);
-    }));
-
     it('should display application name', () => {
         fixture.detectChanges();
         const appName = fixture.nativeElement.querySelector('.adf-app-listgrid-item-card-title');

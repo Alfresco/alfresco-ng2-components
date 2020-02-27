@@ -66,14 +66,6 @@ describe('ProcessFilterCloudService', () => {
         getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     }));
 
-    it('should create ProcessFilterCloudService instance', () => {
-        expect(service).toBeDefined();
-    });
-
-    it('should be able to use LocalPreferenceCloudService', () => {
-        expect(preferenceCloudService instanceof LocalPreferenceCloudService).toBeTruthy();
-    });
-
     it('should create processfilter key by using appName and the username', (done) => {
         service.getProcessFilters('mock-appName').subscribe((res: any) => {
             expect(res).toBeDefined();
@@ -246,12 +238,4 @@ describe('Inject [UserPreferenceCloudService] into the ProcessFilterCloudService
         identityUserService = TestBed.get(IdentityUserService);
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     }));
-
-    it('should create ProcessFilterCloudService instance', () => {
-        expect(service).toBeDefined();
-    });
-
-    it('should be able to inject UserPreferenceCloudService when you override with user preferece service', () => {
-        expect(preferenceCloudService instanceof UserPreferenceCloudService).toBeTruthy();
-    });
 });
