@@ -384,7 +384,7 @@ describe('DocumentList', () => {
             new ContentActionModel({
                 target: 'document',
                 title: 'Action1',
-                disabled: (): boolean => true
+                disabled: (node): boolean => node.entry.name === 'custom'
             }),
             new ContentActionModel({
                 target: 'document',
@@ -393,12 +393,17 @@ describe('DocumentList', () => {
             })
         ];
 
-        const nodeFile = { entry: { isFile: true, name: 'xyz' } };
-        const actions = documentList.getNodeActions(nodeFile);
+        let actions = documentList.getNodeActions({ entry: { id: 1, isFile: true, name: 'xyz' } });
 
         expect(actions.length).toBe(2);
-        expect(actions[0].disabled).toBeTruthy();
-        expect(actions[1].disabled).toBeFalsy();
+        expect(actions[0].disabled).toBe(false);
+        expect(actions[1].disabled).toBe(false);
+
+        actions = documentList.getNodeActions({ entry: { id: 2, isFile: true, name: 'custom' } });
+
+        expect(actions.length).toBe(2);
+        expect(actions[0].disabled).toBe(true);
+        expect(actions[1].disabled).toBe(false);
     });
 
     it('should not disable the action if there is copy permission', () => {
