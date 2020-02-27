@@ -74,7 +74,7 @@ describe('Form Renderer Component', () => {
     });
 
     it('Should be able to see Display value widget when visibility condition refers to another field with specific value', async () => {
-        formRendererComponent.formDefinition = formService.parseForm(formDisplayValueVisibility);
+        formRendererComponent.formDefinition = formService.parseForm(formDisplayValueVisibility.formRepresentation.formDefinition);
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -92,7 +92,7 @@ describe('Form Renderer Component', () => {
     });
 
     it('Should be able to see Display value widget when visibility condition refers to a form variable and a field', async () => {
-        formRendererComponent.formDefinition = formService.parseForm(formDisplayValueForm);
+        formRendererComponent.formDefinition = formService.parseForm(formDisplayValueForm.formRepresentation.formDefinition);
         fixture.detectChanges();
         await fixture.whenStable();
         let displayValueElementContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-DisplayValueOne-container');
@@ -116,7 +116,7 @@ describe('Form Renderer Component', () => {
     });
 
     it('Should be able to see Display value widget when visibility condition refers to another field and form variable', async () => {
-        formRendererComponent.formDefinition = formService.parseForm(formDisplayValueForm);
+        formRendererComponent.formDefinition = formService.parseForm(formDisplayValueForm.formRepresentation.formDefinition);
         fixture.detectChanges();
         await fixture.whenStable();
         let displayValueElementContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-DisplayValueVariableField-container');
@@ -140,7 +140,7 @@ describe('Form Renderer Component', () => {
     });
 
     it('Should be able to see Display value widget when has multiple visibility conditions and next condition operators', async () => {
-        formRendererComponent.formDefinition = formService.parseForm(formDisplayValueCombinedVisibility);
+        formRendererComponent.formDefinition = formService.parseForm(formDisplayValueCombinedVisibility.formRepresentation.formDefinition);
         fixture.detectChanges();
         await fixture.whenStable();
         const textInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#Text0bq3ar');
