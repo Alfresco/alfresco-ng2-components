@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
 import { DataColumnComponent } from './data-column.component';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
@@ -24,12 +23,6 @@ describe('DataColumnListComponent', () => {
 
     setupTestBed({
         imports: [CoreTestingModule]
-    });
-
-    it('should create the component', () => {
-        const fixture = TestBed.createComponent(DataColumnComponent);
-        const component = fixture.debugElement.componentInstance;
-        expect(component).toBeTruthy();
     });
 
     it('should setup screen reader title for thumbnails', () => {
