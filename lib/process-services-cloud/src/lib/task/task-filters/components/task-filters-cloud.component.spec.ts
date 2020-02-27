@@ -28,7 +28,6 @@ import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
 import { fakeGlobalFilter } from '../mock/task-filters-cloud.mock';
-import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 
 describe('TaskFiltersCloudComponent', () => {
 

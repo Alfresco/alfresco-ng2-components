@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 
 import { fakeApplicationInstance } from '../mock/app-model.mock';

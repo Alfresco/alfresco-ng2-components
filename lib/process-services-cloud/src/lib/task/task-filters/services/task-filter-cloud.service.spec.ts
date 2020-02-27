@@ -44,8 +44,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
-    let preferenceCloudService: PreferenceCloudServiceInterface;
-    let identityUserService: IdentityUserService;
+
     let getPreferencesSpy: jasmine.Spy;
     let getPreferenceByKeySpy: jasmine.Spy;
     let createPreferenceSpy: jasmine.Spy;
@@ -72,12 +71,14 @@ describe('TaskFilterCloudService', () => {
 
     beforeEach(() => {
         service = TestBed.get(TaskFilterCloudService);
-        preferenceCloudService = service.preferenceService;
-        identityUserService = TestBed.get(IdentityUserService);
+
+        const preferenceCloudService = service.preferenceService;
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeTaskCloudFilters));
         updatePreferenceSpy = spyOn(preferenceCloudService, 'updatePreference').and.returnValue(of(fakeTaskCloudFilters));
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of(fakeTaskCloudPreferenceList));
         getPreferenceByKeySpy = spyOn(preferenceCloudService, 'getPreferenceByKey').and.returnValue(of(fakeTaskCloudFilters));
+
+        const identityUserService = TestBed.get(IdentityUserService);
         getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
