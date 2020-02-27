@@ -54,10 +54,6 @@ describe('NodePermissionDialogService', () => {
         });
     });
 
-    it('should be able to create the service', () => {
-        expect(service).not.toBeNull();
-    });
-
     describe('when node has permission to update permissions', () => {
 
         let fakePermissionNode = new Node({});

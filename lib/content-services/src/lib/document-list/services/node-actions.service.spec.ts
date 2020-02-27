@@ -60,10 +60,6 @@ describe('NodeActionsService', () => {
         contentDialogService = TestBed.get(ContentNodeDialogService);
     });
 
-    it('should be able to create the service', () => {
-        expect(service).not.toBeNull();
-    });
-
     it('should be able to copy content', async(() => {
         spyOn(documentListService, 'copyNode').and.returnValue(of('FAKE-OK'));
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
