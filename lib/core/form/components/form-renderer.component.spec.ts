@@ -16,7 +16,7 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { setupTestBed } from '../../testing/setupTestBed';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormRendererComponent } from './form-renderer.component';
 import { FormBaseModule } from '../form-base.module';
