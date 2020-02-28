@@ -98,7 +98,7 @@ describe('Form Renderer Component', () => {
 
     describe('Display Value Widget', () => {
         it('[C309862] - Should be able to see Display value widget when visibility condition refers to another field with specific value', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(formDisplayValueVisibility);
+            formRendererComponent.formDefinition = formService.parseForm(formDisplayValueVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -116,7 +116,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C309863] - Should be able to see Display value widget when visibility condition refers to a form variable and a field', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(formDisplayValueForm);
+            formRendererComponent.formDefinition = formService.parseForm(formDisplayValueForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
             let displayValueElementContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-DisplayValueOne-container');
@@ -140,7 +140,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C309864] - Should be able to see Display value widget when visibility condition refers to another field and form variable', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(formDisplayValueForm);
+            formRendererComponent.formDefinition = formService.parseForm(formDisplayValueForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
             let displayValueElementContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-DisplayValueVariableField-container');
@@ -164,7 +164,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C309865] - Should be able to see Display value widget when has multiple visibility conditions and next condition operators', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(formDisplayValueCombinedVisibility);
+            formRendererComponent.formDefinition = formService.parseForm(formDisplayValueCombinedVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
             const textInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#Text0bq3ar');
@@ -219,7 +219,7 @@ describe('Form Renderer Component', () => {
     describe('Number widget', () => {
 
         it('[C315169] - Should be able to complete a task with a form with number widgets', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(formNumberWidgetVisibility);
+            formRendererComponent.formDefinition = formService.parseForm(formNumberWidgetVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -251,7 +251,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C309663] - Should be able to see Number widget when visibility condition refers to another field with specific value', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(formNumberTextJson);
+            formRendererComponent.formDefinition = formService.parseForm(formNumberTextJson.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -274,7 +274,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C315170] - Should be able to complete a task with a form with required number widgets', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(formRequiredNumberWidget);
+            formRendererComponent.formDefinition = formService.parseForm(formRequiredNumberWidget.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -300,7 +300,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C309653] - Should disable the save button when Number widget is required', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(formNumberTextJson);
+            formRendererComponent.formDefinition = formService.parseForm(formNumberTextJson.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
             const numberRequired: HTMLInputElement = fixture.nativeElement.querySelector('#NumberReq');
@@ -322,7 +322,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C309654] - Should display Number widget spans on 2 columns when colspan is set to 2', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(colspanForm);
+            formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
             const formSizedElement = fixture.nativeElement.querySelector('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section.adf-grid-list');
@@ -337,7 +337,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C309655] - Should display validation error message when Number widget has invalid value', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(numberNotRequiredForm);
+            formRendererComponent.formDefinition = formService.parseForm(numberNotRequiredForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -373,7 +373,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C309660] - Should display validation error message when Number widget value is not respecting min max interval', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(numberMinMaxForm);
+            formRendererComponent.formDefinition = formService.parseForm(numberMinMaxForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
             const numberInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#Number0him2z');
