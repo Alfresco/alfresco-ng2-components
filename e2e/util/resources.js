@@ -98,9 +98,11 @@ exports.Files = {
             form_fieldId: "textfield",
             text_field_value: "Hi tester, from Rest call"
         },
-        visibilityTabForm: {
-            formName: "visibilityTabWithFields"
-        },
+        visibilityProcess: {
+            name: 'VisibilityProcess',
+            formName: "visibilityTabWithFields",
+            taskName: 'No name'
+        }
     },
 
     WIDGETS_SMOKE_TEST: {
