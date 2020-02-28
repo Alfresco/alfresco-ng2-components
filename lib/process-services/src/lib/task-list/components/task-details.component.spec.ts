@@ -75,7 +75,7 @@ describe('TaskDetailsComponent', () => {
             NoopAnimationsModule,
             TaskListModule
         ],
-        providers:[
+        providers: [
             { provide: TranslationService, useClass: TranslationMock },
             TranslateStore],
         schemas: [NO_ERRORS_SCHEMA]
