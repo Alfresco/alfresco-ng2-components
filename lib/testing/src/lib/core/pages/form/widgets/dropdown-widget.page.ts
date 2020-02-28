@@ -43,4 +43,12 @@ export class DropdownWidgetPage {
         const dropdown = element(by.css(`${locator}`));
         await BrowserVisibility.waitUntilElementIsVisible(dropdown);
     }
+
+    async isWidgetVisible(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsVisible(fieldId);
+    }
+
+    async isWidgetHidden(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsHidden(fieldId);
+    }
 }
