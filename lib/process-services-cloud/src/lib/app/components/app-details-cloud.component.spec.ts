@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 
 import { fakeApplicationInstance } from '../mock/app-model.mock';
@@ -38,10 +38,6 @@ describe('AppDetailsCloudComponent', () => {
         component = fixture.componentInstance;
         component.applicationInstance = fakeApplicationInstance[0];
     });
-
-    it('should create AppDetailsCloudComponent ', async(() => {
-        expect(component instanceof AppDetailsCloudComponent).toBe(true);
-    }));
 
     it('should display application name', () => {
         fixture.detectChanges();

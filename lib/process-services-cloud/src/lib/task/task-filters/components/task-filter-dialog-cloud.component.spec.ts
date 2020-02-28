@@ -48,10 +48,6 @@ describe('TaskFilterDialogCloudComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('should create TaskFilterDialogCloudComponent', () => {
-        expect(component instanceof TaskFilterDialogCloudComponent).toBeTruthy();
-    });
-
     it('should get data from MAT_DIALOG_DATA as an input to the dialog', () => {
         fixture.detectChanges();
         const mockData = component.data;

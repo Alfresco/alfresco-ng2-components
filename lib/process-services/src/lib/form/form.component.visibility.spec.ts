@@ -68,10 +68,6 @@ describe('FormComponent UI and visibility', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should create instance of FormComponent', () => {
-        expect(fixture.componentInstance instanceof FormComponent).toBe(true, 'should create FormComponent');
-    });
-
     describe('Validation icon', () => {
 
         it('should display valid icon for valid form', () => {

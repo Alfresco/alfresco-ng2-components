@@ -70,10 +70,6 @@ describe('StartFormComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should create instance of StartProcessInstanceComponent', () => {
-        expect(fixture.componentInstance instanceof StartProcessInstanceComponent).toBe(true, 'should create StartProcessInstanceComponent');
-    });
-
     describe('first step', () => {
 
         describe('without start form', () => {

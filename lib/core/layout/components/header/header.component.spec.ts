@@ -43,10 +43,6 @@ describe('HeaderLayoutComponent', () => {
             fixture.destroy();
         });
 
-        it('should create instance of HeaderLayoutComponent', () => {
-            expect(fixture.componentInstance instanceof HeaderLayoutComponent).toBe(true, 'should create HeaderLayoutComponent');
-        });
-
         it('title element should been displayed', () => {
             const titleElement = fixture.debugElement.query(By.css('.adf-app-title'));
             expect(titleElement === null).toBeFalsy();

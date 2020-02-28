@@ -62,10 +62,6 @@ describe('PreferenceService', () => {
     getInstanceSpy = spyOn(alfrescoApiMock, 'getInstance').and.returnValue(apiMock(mockPreferences));
   }));
 
-  it('should create UserPreferenceCloudService instance', () => {
-    expect(service).toBeTruthy();
-  });
-
   it('should return the preferences', (done) => {
     service.getPreferences('mock-app-name').subscribe((res: any) => {
       expect(res).toBeDefined();

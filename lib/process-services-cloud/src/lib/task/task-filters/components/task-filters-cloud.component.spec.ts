@@ -28,7 +28,6 @@ import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
 import { fakeGlobalFilter } from '../mock/task-filters-cloud.mock';
-import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 
 describe('TaskFiltersCloudComponent', () => {
 
@@ -66,14 +65,6 @@ describe('TaskFiltersCloudComponent', () => {
         component = fixture.componentInstance;
 
         taskFilterService = TestBed.get(TaskFilterCloudService);
-    });
-
-    it('should create TaskFiltersCloudComponent instance', () => {
-        expect(component instanceof TaskFiltersCloudComponent).toBeDefined();
-    });
-
-    it('should be able to use LocalPreferenceCloudService', () => {
-        expect(taskFilterService.preferenceService instanceof LocalPreferenceCloudService).toBeTruthy();
     });
 
     it('should attach specific icon for each filter if hasIcon is true', async(() => {
@@ -340,35 +331,5 @@ describe('TaskFiltersCloudComponent', () => {
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter(filter);
         expect(component.getCurrentFilter()).toBe(fakeGlobalFilter[0]);
-    });
-});
-
-describe('Set UserPreferenceService', () => {
-
-    let component: TaskFiltersCloudComponent;
-    let taskFilterService: TaskFilterCloudService;
-    let fixture: ComponentFixture<TaskFiltersCloudComponent>;
-
-    setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
-        providers: [
-            TaskFilterCloudService,
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
-        ]
-    });
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TaskFiltersCloudComponent);
-        component = fixture.componentInstance;
-
-        taskFilterService = TestBed.get(TaskFilterCloudService);
-    });
-
-    it('should create TaskFiltersCloudComponent instance', () => {
-        expect(component instanceof TaskFiltersCloudComponent).toBeDefined();
-    });
-
-    it('should be able to inject UserPreferenceCloudService when you override with user preferece service', () => {
-        expect(taskFilterService.preferenceService instanceof UserPreferenceCloudService).toBeTruthy();
     });
 });

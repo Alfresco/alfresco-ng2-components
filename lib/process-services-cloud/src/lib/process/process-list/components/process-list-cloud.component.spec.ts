@@ -224,10 +224,6 @@ describe('ProcessListCloudComponent', () => {
             fixtureCustom.destroy();
         });
 
-        it('should create instance of CustomTaskListComponent', () => {
-            expect(componentCustom instanceof CustomTaskListComponent).toBe(true, 'should create CustomTaskListComponent');
-        });
-
         it('should fetch custom schemaColumn from html', () => {
             fixture.detectChanges();
             expect(componentCustom.processListCloud.columnList).toBeDefined();

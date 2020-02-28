@@ -72,10 +72,6 @@ describe('TaskFormCloudComponent', () => {
         component = fixture.componentInstance;
    });
 
-    it('should create TaskFormCloudComponent ', () => {
-        expect(component instanceof TaskFormCloudComponent).toBe(true);
-    });
-
     describe('Complete button', () => {
 
         it('should show complete button when status is ASSIGNED', async(() => {
@@ -465,10 +461,6 @@ describe('TaskFormWithCustomOutComesComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-    });
-
-    it('should create instance of TaskFormWithCustomOutComesComponent', () => {
-        expect(component instanceof TaskFormWithCustomOutComesComponent).toBe(true, 'should create TaskFormWithCustomOutComesComponent');
     });
 
     it('should be able to display and click on cancel button', () => {

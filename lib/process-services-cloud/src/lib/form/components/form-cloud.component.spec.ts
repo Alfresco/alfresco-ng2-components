@@ -872,10 +872,6 @@ describe('FormCloudWithCustomOutComesComponent', () => {
         fixture.destroy();
     });
 
-    it('should create instance of FormCloudWithCustomOutComesComponent', () => {
-        expect(component instanceof FormCloudWithCustomOutComesComponent).toBe(true, 'should create FormCloudWithCustomOutComesComponent');
-    });
-
     it('should be able to inject custom outcomes and click on custom outcomes', () => {
         fixture.detectChanges();
         const cancelSpy = spyOn(component, 'onButtonClick').and.callThrough();

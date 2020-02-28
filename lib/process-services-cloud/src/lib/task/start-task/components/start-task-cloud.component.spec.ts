@@ -84,10 +84,6 @@ describe('StartTaskCloudComponent', () => {
         fixture.detectChanges();
     }));
 
-    it('should create instance of StartTaskCloudComponent', () => {
-        expect(component instanceof StartTaskCloudComponent).toBe(true, 'should create StartTaskCloudComponent');
-    });
-
     describe('create task', () => {
 
         it('should create new task when start button is clicked', async(() => {

@@ -25,8 +25,6 @@ import { UploadModule } from '../upload/upload.module';
 
 import { ContentActionListComponent } from './components/content-action/content-action-list.component';
 import { ContentActionComponent } from './components/content-action/content-action.component';
-import { ContentColumnListComponent } from './components/content-column/content-column-list.component';
-import { ContentColumnComponent } from './components/content-column/content-column.component';
 import { DocumentListComponent } from './components/document-list.component';
 
 import { TrashcanNameColumnComponent } from './components/trashcan-name-column/trashcan-name-column.component';
@@ -46,25 +44,21 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
     ],
     declarations: [
         DocumentListComponent,
-        ContentColumnComponent,
         TrashcanNameColumnComponent,
         LibraryStatusColumnComponent,
         LibraryRoleColumnComponent,
         LibraryNameColumnComponent,
         NameColumnComponent,
-        ContentColumnListComponent,
         ContentActionComponent,
         ContentActionListComponent
     ],
     exports: [
         DocumentListComponent,
-        ContentColumnComponent,
         TrashcanNameColumnComponent,
         LibraryStatusColumnComponent,
         LibraryRoleColumnComponent,
         LibraryNameColumnComponent,
         NameColumnComponent,
-        ContentColumnListComponent,
         ContentActionComponent,
         ContentActionListComponent
     ],

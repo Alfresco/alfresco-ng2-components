@@ -49,10 +49,6 @@ describe('ProcessFilterDialogCloudComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create ProcessFilterDialogCloudComponent', () => {
-        expect(component instanceof ProcessFilterDialogCloudComponent).toBeTruthy();
-    });
-
     it('should get data from MAT_DIALOG_DATA as an input to the dialog', () => {
         fixture.detectChanges();
         const mockData = component.data;

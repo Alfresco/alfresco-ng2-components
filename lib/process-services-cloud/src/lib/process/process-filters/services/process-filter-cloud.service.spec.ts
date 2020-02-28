@@ -26,15 +26,11 @@ import {
     fakeProcessCloudFilterWithDifferentEntries,
     fakeProcessFilter
 } from '../mock/process-filters.cloud.mock';
-import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
-import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
-    let preferenceCloudService: PreferenceCloudServiceInterface;
-    let identityUserService: IdentityUserService;
     let getPreferencesSpy: jasmine.Spy;
     let getPreferenceByKeySpy: jasmine.Spy;
     let updatePreferenceSpy: jasmine.Spy;
@@ -57,22 +53,16 @@ describe('ProcessFilterCloudService', () => {
 
     beforeEach(async(() => {
         service = TestBed.get(ProcessFilterCloudService);
-        preferenceCloudService = service.preferenceService;
-        identityUserService = TestBed.get(IdentityUserService);
+
+        const preferenceCloudService = service.preferenceService;
+        const identityUserService = TestBed.get(IdentityUserService);
+
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeProcessCloudFilters));
         updatePreferenceSpy = spyOn(preferenceCloudService, 'updatePreference').and.returnValue(of(fakeProcessCloudFilters));
         getPreferenceByKeySpy = spyOn(preferenceCloudService, 'getPreferenceByKey').and.returnValue(of(fakeProcessCloudFilters));
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of(fakeProcessCloudFilterEntries));
         getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     }));
-
-    it('should create ProcessFilterCloudService instance', () => {
-        expect(service).toBeDefined();
-    });
-
-    it('should be able to use LocalPreferenceCloudService', () => {
-        expect(preferenceCloudService instanceof LocalPreferenceCloudService).toBeTruthy();
-    });
 
     it('should create processfilter key by using appName and the username', (done) => {
         service.getProcessFilters('mock-appName').subscribe((res: any) => {
@@ -218,40 +208,5 @@ describe('ProcessFilterCloudService', () => {
             done();
         });
         expect(updatePreferenceSpy).toHaveBeenCalled();
-    });
-});
-
-describe('Inject [UserPreferenceCloudService] into the ProcessFilterCloudService', () => {
-    let service: ProcessFilterCloudService;
-    let preferenceCloudService: PreferenceCloudServiceInterface;
-    let identityUserService: IdentityUserService;
-
-    const identityUserMock = { username: 'mock-username', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
-
-    setupTestBed({
-        imports: [
-            CoreModule.forRoot()
-        ],
-        providers: [
-            ProcessFilterCloudService,
-            IdentityUserService,
-            UserPreferenceCloudService,
-            { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
-        ]
-    });
-
-    beforeEach(async(() => {
-        service = TestBed.get(ProcessFilterCloudService);
-        preferenceCloudService = service.preferenceService;
-        identityUserService = TestBed.get(IdentityUserService);
-        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
-    }));
-
-    it('should create ProcessFilterCloudService instance', () => {
-        expect(service).toBeDefined();
-    });
-
-    it('should be able to inject UserPreferenceCloudService when you override with user preferece service', () => {
-        expect(preferenceCloudService instanceof UserPreferenceCloudService).toBeTruthy();
     });
 });

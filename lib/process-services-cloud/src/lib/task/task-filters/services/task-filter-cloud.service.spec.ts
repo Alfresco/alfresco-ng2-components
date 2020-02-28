@@ -44,8 +44,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
-    let preferenceCloudService: PreferenceCloudServiceInterface;
-    let identityUserService: IdentityUserService;
+
     let getPreferencesSpy: jasmine.Spy;
     let getPreferenceByKeySpy: jasmine.Spy;
     let createPreferenceSpy: jasmine.Spy;
@@ -72,17 +71,15 @@ describe('TaskFilterCloudService', () => {
 
     beforeEach(() => {
         service = TestBed.get(TaskFilterCloudService);
-        preferenceCloudService = service.preferenceService;
-        identityUserService = TestBed.get(IdentityUserService);
+
+        const preferenceCloudService = service.preferenceService;
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeTaskCloudFilters));
         updatePreferenceSpy = spyOn(preferenceCloudService, 'updatePreference').and.returnValue(of(fakeTaskCloudFilters));
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of(fakeTaskCloudPreferenceList));
         getPreferenceByKeySpy = spyOn(preferenceCloudService, 'getPreferenceByKey').and.returnValue(of(fakeTaskCloudFilters));
-        getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
-    });
 
-    it('should be able to use UserPreferenceCloudService', () => {
-        expect(preferenceCloudService instanceof UserPreferenceCloudService).toBeTruthy();
+        const identityUserService = TestBed.get(IdentityUserService);
+        getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
     it('should create task filter key by using appName and the username', (done) => {
@@ -259,10 +256,6 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
         identityUserService = TestBed.get(IdentityUserService);
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of([]));
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
-    });
-
-    it('should be able to inject LocalPreferenceCloudService when you override with user preference service', () => {
-        expect(preferenceCloudService instanceof LocalPreferenceCloudService).toBeTruthy();
     });
 
     it('should create default task filters if there are no task filter preferences', (done) => {

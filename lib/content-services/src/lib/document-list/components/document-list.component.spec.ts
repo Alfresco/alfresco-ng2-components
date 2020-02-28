@@ -104,6 +104,123 @@ describe('DocumentList', () => {
         fixture.destroy();
     });
 
+    describe('presets', () => {
+
+        const validatePreset = (keys: string[]) => {
+            const columns = documentList.data.getColumns();
+            expect(columns.length).toBe(keys.length);
+
+            keys.forEach((key, index) => {
+                expect(columns[index].key).toBe(key);
+            });
+        };
+
+        it('should load -trashcan- preset', async () => {
+            documentList.currentFolderId = '-trashcan-';
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            validatePreset([
+                '$thumbnail',
+                'name',
+                'path',
+                'content.sizeInBytes',
+                'archivedAt',
+                'archivedByUser.displayName'
+            ]);
+        });
+
+        it('should load -sites- preset', async () => {
+            documentList.currentFolderId = '-sites-';
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            validatePreset([
+                '$thumbnail',
+                'title',
+                'visibility'
+            ]);
+        });
+
+        it('shuld load -mysites- preset', async () => {
+            documentList.currentFolderId = '-mysites-';
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            validatePreset([
+                '$thumbnail',
+                'title',
+                'visibility'
+            ]);
+        });
+
+        it('should load -favorites- preset', async () => {
+            documentList.currentFolderId = '-favorites-';
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            validatePreset([
+                '$thumbnail',
+                'name',
+                'path',
+                'content.sizeInBytes',
+                'modifiedAt',
+                'modifiedByUser.displayName'
+            ]);
+        });
+
+        it('should load -recent- preset', async () => {
+            documentList.currentFolderId = '-recent-';
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            validatePreset([
+                '$thumbnail',
+                'name',
+                'path',
+                'content.sizeInBytes',
+                'modifiedAt'
+            ]);
+        });
+
+        it('should load -sharedlinks- preset', async () => {
+            documentList.currentFolderId = '-sharedlinks-';
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            validatePreset([
+                '$thumbnail',
+                'name',
+                'path',
+                'content.sizeInBytes',
+                'modifiedAt',
+                'modifiedByUser.displayName',
+                'sharedByUser.displayName'
+            ]);
+        });
+
+        it('should load default preset', async () => {
+            documentList.currentFolderId = 'f5dacdb9-6d07-4fe9-9f2a-dedc21bae603';
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            validatePreset([
+                '$thumbnail',
+                'name',
+                'content.sizeInBytes',
+                'modifiedAt',
+                'modifiedByUser.displayName'
+            ]);
+        });
+    });
+
     it('should update schema if columns change', fakeAsync(() => {
         documentList.columnList = new DataColumnListComponent();
         documentList.columnList.columns = new QueryList<DataColumnComponent>();

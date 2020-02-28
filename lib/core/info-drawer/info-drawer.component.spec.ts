@@ -48,10 +48,6 @@ describe('InfoDrawerComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('should create instance of InfoDrawerComponent', () => {
-        expect(fixture.componentInstance instanceof InfoDrawerComponent).toBe(true, 'should create InfoDrawerComponent');
-    });
-
     it('should define InfoDrawerTabLayout', () => {
         const infoDrawerTabLayout = element.querySelector('adf-info-drawer-layout');
         expect(infoDrawerTabLayout).toBeDefined();

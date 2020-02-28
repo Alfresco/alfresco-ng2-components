@@ -47,11 +47,6 @@ describe('AttachFileWidgetDialogService', () => {
         });
     });
 
-    it('should be able to create the service', () => {
-        expect(service).not.toBeNull();
-        expect(service).toBeDefined();
-    });
-
     it('should be able to open the dialog when node has permission', () => {
         service.openLogin('fake-title', 'fake-action');
         expect(spyOnDialogOpen).toHaveBeenCalled();

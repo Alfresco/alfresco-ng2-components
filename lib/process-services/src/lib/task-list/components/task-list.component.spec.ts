@@ -752,10 +752,6 @@ describe('CustomTaskListComponent', () => {
         fixture.destroy();
     });
 
-    it('should create instance of CustomTaskListComponent', () => {
-        expect(component instanceof CustomTaskListComponent).toBe(true, 'should create CustomTaskListComponent');
-    });
-
     it('should fetch custom schemaColumn from html', () => {
         fixture.detectChanges();
         expect(component.taskList.columnList).toBeDefined();

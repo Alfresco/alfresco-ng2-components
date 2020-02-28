@@ -476,10 +476,6 @@ describe('CustomProcessListComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('should create instance of CustomProcessListComponent', () => {
-        expect(component instanceof CustomProcessListComponent).toBe(true, 'should create CustomProcessListComponent');
-    });
-
     it('should fetch custom schemaColumn from html', () => {
         fixture.detectChanges();
         expect(component.processList.columns).toBeDefined();
