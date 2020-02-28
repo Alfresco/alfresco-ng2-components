@@ -14,21 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { async, TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreModule, IdentityUserService } from '@alfresco/adf-core';
+
+import { TestBed } from '@angular/core/testing';
+import {
+    AlfrescoApiService,
+    AlfrescoApiServiceMock,
+    AppConfigService,
+    AppConfigServiceMock,
+    IdentityUserService,
+    JwtHelperService,
+    LogService,
+    setupTestBed,
+    StorageService
+} from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { TaskFilterCloudService } from './task-filter-cloud.service';
 import {
-    fakeTaskCloudPreferenceList,
-    fakeTaskCloudFilters,
     fakeEmptyTaskCloudPreferenceList,
     fakePreferenceWithNoTaskFilterPreference,
+    fakeTaskCloudFilters,
+    fakeTaskCloudPreferenceList,
     fakeTaskFilter
 } from '../mock/task-filters-cloud.mock';
 import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -44,17 +56,21 @@ describe('TaskFilterCloudService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+          HttpClientTestingModule
         ],
         providers: [
             TaskFilterCloudService,
-            LocalPreferenceCloudService,
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
-            IdentityUserService
+            IdentityUserService,
+            LogService,
+            JwtHelperService,
+            StorageService,
+            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: AppConfigService, useClass: AppConfigServiceMock }
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         service = TestBed.get(TaskFilterCloudService);
         preferenceCloudService = service.preferenceService;
         identityUserService = TestBed.get(IdentityUserService);
@@ -63,14 +79,10 @@ describe('TaskFilterCloudService', () => {
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of(fakeTaskCloudPreferenceList));
         getPreferenceByKeySpy = spyOn(preferenceCloudService, 'getPreferenceByKey').and.returnValue(of(fakeTaskCloudFilters));
         getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
-    }));
-
-    it('should create TaskFilterCloudService instance', () => {
-        expect(service).toBeDefined();
     });
 
-    it('should be able to use LocalPreferenceCloudService', () => {
-        expect(preferenceCloudService instanceof LocalPreferenceCloudService).toBeTruthy();
+    it('should be able to use UserPreferenceCloudService', () => {
+        expect(preferenceCloudService instanceof UserPreferenceCloudService).toBeTruthy();
     });
 
     it('should create task filter key by using appName and the username', (done) => {
@@ -221,37 +233,73 @@ describe('TaskFilterCloudService', () => {
     });
 });
 
-describe('Inject [UserPreferenceCloudService] into the TaskFilterCloudService', () => {
+describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
     let preferenceCloudService: PreferenceCloudServiceInterface;
     let identityUserService: IdentityUserService;
+    let getPreferencesSpy: jasmine.Spy;
 
     const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            HttpClientTestingModule
         ],
         providers: [
             TaskFilterCloudService,
-            LocalPreferenceCloudService,
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
-            IdentityUserService
+            IdentityUserService,
+            StorageService,
+            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         service = TestBed.get(TaskFilterCloudService);
         preferenceCloudService = service.preferenceService;
         identityUserService = TestBed.get(IdentityUserService);
+        getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of([]));
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
-    }));
-
-    it('should create TaskFilterCloudService instance', () => {
-        expect(service).toBeDefined();
     });
 
-    it('should be able to inject UserPreferenceCloudService when you override with user preferece service', () => {
-        expect(preferenceCloudService instanceof UserPreferenceCloudService).toBeTruthy();
+    it('should be able to inject LocalPreferenceCloudService when you override with user preference service', () => {
+        expect(preferenceCloudService instanceof LocalPreferenceCloudService).toBeTruthy();
+    });
+
+    it('should create default task filters if there are no task filter preferences', (done) => {
+        const appName = 'fakeAppName';
+        service.getTaskListFilters(appName).subscribe((res) => {
+            expect(res.length).toEqual(2);
+
+            expect(res[0].name).toEqual('ADF_CLOUD_TASK_FILTERS.MY_TASKS');
+            expect(res[0].key).toEqual('my-tasks');
+            expect(res[0].appName).toEqual(appName);
+            expect(res[0].icon).toEqual('inbox');
+            expect(res[0].status).toEqual('ASSIGNED');
+            expect(res[0].assignee).toEqual(identityUserMock.username);
+
+            expect(res[1].name).toEqual('ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS');
+            expect(res[1].key).toEqual('completed-tasks');
+            expect(res[1].appName).toEqual(appName);
+            expect(res[1].icon).toEqual('done');
+            expect(res[1].status).toEqual('COMPLETED');
+            done();
+        });
+        expect(getPreferencesSpy).toHaveBeenCalled();
+
+        const localData = JSON.parse(localStorage.getItem(`task-filters-${appName}-${identityUserMock.username}`));
+        expect(localData.length).toEqual(2);
+
+        expect(localData[0].name).toEqual('ADF_CLOUD_TASK_FILTERS.MY_TASKS');
+        expect(localData[0].key).toEqual('my-tasks');
+        expect(localData[0].appName).toEqual(appName);
+        expect(localData[0].icon).toEqual('inbox');
+        expect(localData[0].status).toEqual('ASSIGNED');
+        expect(localData[0].assignee).toEqual(identityUserMock.username);
+
+        expect(localData[1].name).toEqual('ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS');
+        expect(localData[1].key).toEqual('completed-tasks');
+        expect(localData[1].appName).toEqual(appName);
+        expect(localData[1].icon).toEqual('done');
+        expect(localData[1].status).toEqual('COMPLETED');
     });
 });
