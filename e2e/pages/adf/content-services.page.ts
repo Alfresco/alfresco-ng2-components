@@ -375,9 +375,9 @@ export class ContentServicesPage {
         await this.createLibraryDialog.waitForDialogToOpen();
     }
 
-    async createNewFolder(folder: string): Promise<void> {
+    async createNewFolder(folderName: string): Promise<void> {
         await this.clickOnCreateNewFolder();
-        await this.createFolderDialog.addFolderName(folder);
+        await this.createFolderDialog.addFolderName(folderName);
         await this.createFolderDialog.clickOnCreateUpdateButton();
     }
 
@@ -438,9 +438,9 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
     }
 
-    async uploadFolder(folder): Promise<void> {
+    async uploadFolder(folderName): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
-        await this.uploadFolderButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, folder)));
+        await this.uploadFolderButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, folderName)));
         await BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
     }
 
@@ -526,9 +526,9 @@ export class ContentServicesPage {
         await this.dragAndDropAction.dropFile(this.dragAndDrop, file);
     }
 
-    async dragAndDropFolder(folder): Promise<void> {
+    async dragAndDropFolder(folderName): Promise<void> {
         await this.checkDragAndDropDIsDisplayed();
-        await this.dragAndDropAction.dropFolder(this.dragAndDrop, folder);
+        await this.dragAndDropAction.dropFolder(this.dragAndDrop, folderName);
     }
 
     async checkLockIsDisplayedForElement(name): Promise<void> {
@@ -669,8 +669,7 @@ export class ContentServicesPage {
 
     async chooseSelectionMode(option: string): Promise<void> {
         const dropdownPage = new DropdownPage(this.selectionModeDropdown);
-        await dropdownPage.clickDropdown();
-        await dropdownPage.selectOption(option);
+        await dropdownPage.clickDropdownWithOption(option);
     }
 
     async getItemSelected(): Promise<string> {

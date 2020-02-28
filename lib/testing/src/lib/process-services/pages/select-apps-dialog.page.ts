@@ -18,33 +18,32 @@
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { DropdownPage } from '../../material/pages/dropdown.page';
 
 export class SelectAppsDialog {
 
     selectAppsDialog: ElementFinder = element(by.css('mat-dialog-container[aria-labelledby="adf-select-app-dialog-title"]'));
     title: ElementFinder = element(by.id('adf-select-app-dialog-title'));
-    dropdownAppsButton: ElementFinder = element(by.id('adf-select-app-dialog-dropdown'));
-    appsOption: ElementFinder = element(by.css('.mat-option span'));
+    appsDropdown = new DropdownPage(element(by.id('adf-select-app-dialog-dropdown')));
     continueButton: ElementFinder = element(by.css('adf-select-apps-dialog .mat-button-wrapper'));
 
     async checkSelectAppsDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.selectAppsDialog);
     }
 
+    async selectApp(appName: string): Promise<void> {
+       await this.appsDropdown.clickDropdownWithOption(appName);
+    }
     async getTitle(): Promise<string> {
         return BrowserActions.getText(this.title);
     }
 
-    async clickDropdownAppsButton(): Promise<void> {
-        await BrowserActions.click(this.dropdownAppsButton);
+    async clickAppsDropdown(): Promise<void> {
+        await this.appsDropdown.clickDropdown();
     }
 
     async clickContinueButton(): Promise<void> {
         await BrowserActions.click(this.continueButton);
-    }
-
-    async clickAppsOption(): Promise<void> {
-        await BrowserActions.click(this.appsOption);
     }
 
     async checkSelectAppsDialogIsNotDisplayed(): Promise<void> {

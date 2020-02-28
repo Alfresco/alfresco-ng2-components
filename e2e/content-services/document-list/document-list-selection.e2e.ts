@@ -37,6 +37,7 @@ describe('Document List - Selection', () => {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
         'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
+    const displayColumnName = 'Display name';
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -65,22 +66,22 @@ describe('Document List - Selection', () => {
 
     it('[C274696] Should be able to select and unselect a file or folder', async () => {
         await contentServicesPage.selectRow(docxFileModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', docxFileModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected(displayColumnName, docxFileModel.name);
 
         await paginationPage.clickItemsPerPageDropdown();
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', docxFileModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected(displayColumnName, docxFileModel.name);
 
         await contentServicesPage.selectRow(docxFileModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', docxFileModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected(displayColumnName, docxFileModel.name);
 
         await contentServicesPage.selectRow(folderModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected(displayColumnName, folderModel.name);
 
         await paginationPage.clickItemsPerPageDropdown();
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected(displayColumnName, folderModel.name);
 
         await contentServicesPage.selectRow(folderModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected(displayColumnName, folderModel.name);
     });
 
     it('[C260057] Should be able to choose between the Selection Mode options and select items accordingly', async () => {
@@ -89,8 +90,8 @@ describe('Document List - Selection', () => {
 
         await contentServicesPage.selectRow(docxFileModel.name);
         await contentServicesPage.selectFolderWithCommandKey(folderModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', docxFileModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected(displayColumnName, docxFileModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected(displayColumnName, folderModel.name);
         list = await contentServicesPage.getItemSelected();
 
         await expect(JSON.stringify(list)).toEqual('[]');
@@ -99,8 +100,8 @@ describe('Document List - Selection', () => {
 
         await contentServicesPage.selectRow(docxFileModel.name);
         await contentServicesPage.selectFolderWithCommandKey(folderModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', docxFileModel.name );
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected(displayColumnName, folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected(displayColumnName, docxFileModel.name );
         list = await contentServicesPage.getItemSelected();
 
         await expect(JSON.stringify(list)).toEqual('[\"' + folderModel.name + '\"]');
@@ -109,8 +110,8 @@ describe('Document List - Selection', () => {
 
         await contentServicesPage.selectRow(docxFileModel.name);
         await contentServicesPage.selectFolderWithCommandKey(folderModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', docxFileModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected(displayColumnName, docxFileModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected(displayColumnName, folderModel.name);
         list = await contentServicesPage.getItemSelected();
 
         await expect(JSON.stringify(list)).toEqual('[\"' + docxFileModel.name + '","' + folderModel.name + '\"]');
@@ -131,12 +132,12 @@ describe('Document List - Selection', () => {
 
         await contentServicesPage.unSelectItemWithCheckbox(docxFileModel.name);
 
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected('Display name', docxFileModel.name );
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected(displayColumnName, folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsNotSelected(displayColumnName, docxFileModel.name );
 
         await contentServicesPage.clickSelectAllCheckbox();
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', docxFileModel.name);
-        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', folderModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected(displayColumnName, docxFileModel.name);
+        await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected(displayColumnName, folderModel.name);
 
         list = await contentServicesPage.getItemSelected();
         await expect(JSON.stringify(list)).toEqual('[\"' + folderModel.name + '","' + docxFileModel.name + '\"]');

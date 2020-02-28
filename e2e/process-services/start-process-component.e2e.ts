@@ -75,6 +75,7 @@ describe('Start Process Component', () => {
     describe('Provider: BPM', () => {
 
         beforeAll(async () => {
+            try {
             this.alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
                 hostBpm: browser.params.testConfig.adf_aps.host
@@ -105,6 +106,9 @@ describe('Start Process Component', () => {
             dateFormAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, dateFormApp.file_location);
 
             appId = appCreated.id;
+            } catch (error) {
+                throw new Error(`API call failed in beforeEach: ${error}`);
+            }
         });
 
         afterAll(async () => {
@@ -535,8 +539,7 @@ describe('Start Process Component', () => {
             await contentServicesPage.checkContextActionIsVisible('Start Process');
             await contentServicesPage.pressContextMenuActionNamed('Start Process');
             await selectAppsDialog.checkSelectAppsDialogIsDisplayed();
-            await selectAppsDialog.clickDropdownAppsButton();
-            await selectAppsDialog.clickAppsOption();
+            await selectAppsDialog.selectApp('start process app');
             await selectAppsDialog.clickContinueButton();
             await startProcessPage.enterProcessName('Test Process');
 
