@@ -54,7 +54,6 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
-    maxDate: any;
     datePickerDateFormat = DEFAULT_FORMAT_DATE;
 
     private onDestroy$ = new Subject<boolean>();
@@ -101,8 +100,6 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             from: this.from,
             to: this.to
         });
-
-        this.maxDate = this.dateAdapter.today().startOf('day');
     }
 
     ngOnDestroy() {
