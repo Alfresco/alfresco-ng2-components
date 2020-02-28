@@ -20,8 +20,8 @@ export class StringUtil {
     static generatePasswordString(length: number = 8): string {
         let text = '';
         const lowerCaseLimit = Math.floor(length / 2);
-        text += this.generateRandomCharset(lowerCaseLimit, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-        text += this.generateRandomCharset(length - lowerCaseLimit, 'abcdefghijklmnopqrstuvwxyz');
+        text += StringUtil.generateRandomCharset(lowerCaseLimit, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        text += StringUtil.generateRandomCharset(length - lowerCaseLimit, 'abcdefghijklmnopqrstuvwxyz');
 
         return text;
     }
@@ -30,10 +30,9 @@ export class StringUtil {
      * Generates a random string.
      *
      * @param length If this parameter is not provided the length is set to 8 by default.
-     * @method generateRandomString
      */
     static generateRandomString(length: number = 8): string {
-        return this.generateRandomCharset(length, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
+        return StringUtil.generateRandomCharset(length, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
     }
 
     /**
@@ -41,10 +40,9 @@ export class StringUtil {
      *
      * @param domain
      * @param length
-     * @method generateRandomEmail
      */
     static generateRandomEmail(domain: string, length: number = 5): string {
-        let email = this.generateRandomCharset(length, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
+        let email = StringUtil.generateRandomCharset(length, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
         email += domain;
         return email.toLowerCase();
     }
@@ -53,20 +51,18 @@ export class StringUtil {
      * Generates a random string - digits only.
      *
      * @param length {int} If this parameter is not provided the length is set to 8 by default.
-     * @method generateRandomString
      */
     static generateRandomStringDigits(length: number = 8): string {
-        return this.generateRandomCharset(length, '0123456789');
+        return StringUtil.generateRandomCharset(length, '0123456789');
     }
 
     /**
      * Generates a random string - non-latin characters only.
      *
      * @param length {int} If this parameter is not provided the length is set to 3 by default.
-     * @method generateRandomString
      */
     static generateRandomStringNonLatin(length: number = 3): string {
-        return this.generateRandomCharset(length,  '密码你好𠮷');
+        return StringUtil.generateRandomCharset(length,  '密码你好𠮷');
     }
 
     /**
@@ -74,7 +70,6 @@ export class StringUtil {
      *
      * @param length If this parameter is not provided the length is set to 8 by default.
      * @param charSet to use
-     * @method generateRandomString
      */
     static generateRandomCharset(length: number = 8, charSet: string): string {
         let text = '';
