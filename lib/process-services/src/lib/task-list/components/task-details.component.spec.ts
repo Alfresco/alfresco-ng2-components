@@ -54,8 +54,8 @@ const fakeUser: UserProcessModel = new UserProcessModel({
     lastName: 'fake-last',
     email: 'fake@mail.com'
 });
-/*tslint:disable*/
-fdescribe('TaskDetailsComponent', () => {
+
+describe('TaskDetailsComponent', () => {
 
     let service: TaskListService;
     let formService: FormService;
