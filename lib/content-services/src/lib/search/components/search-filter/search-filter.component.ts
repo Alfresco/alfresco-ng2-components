@@ -26,6 +26,11 @@ import { takeUntil } from 'rxjs/operators';
 import { GenericBucket, GenericFacetResponse, ResultSetContext, ResultSetPaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 
+export interface SelectedBucket {
+    field: FacetField;
+    bucket: FacetFieldBucket;
+}
+
 @Component({
     selector: 'adf-search-filter',
     templateUrl: './search-filter.component.html',
@@ -49,7 +54,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         'default': false
     };
     displayResetButton: boolean;
-    selectedBuckets: Array<{ field: FacetField, bucket: FacetFieldBucket }> = [];
+    selectedBuckets: SelectedBucket[] = [];
 
     private onDestroy$ = new Subject<boolean>();
 
