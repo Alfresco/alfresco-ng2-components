@@ -2,14 +2,14 @@
  * @license
  * Copyright 2019 Alfresco Software, Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the 'License');
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an 'AS IS' BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -85,7 +85,6 @@ describe('AmountWidgetComponent', () => {
     });
 });
 
-
 describe('AmountWidgetComponent - rendering', () => {
 
     let widget: AmountWidgetComponent;
@@ -107,7 +106,7 @@ describe('AmountWidgetComponent - rendering', () => {
         widget = fixture.componentInstance;
     });
 
-    it('[C309692] - Should be possible to set the General Properties for Amount Widget', async () =>{
+    it('[C309692] - Should be possible to set the General Properties for Amount Widget', async () => {
         widget.field = new FormFieldModel(new FormModel(), {
             id: 'TestAmount1',
             name: 'Test Amount',
