@@ -73,15 +73,6 @@ describe('Process List - Pagination', () => {
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
    });
 
-    describe('Empty processes', () => {
-
-        it('[C280015] Should show empty content message an no pagination when no process are present',  async() => {
-            await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
-            await processFiltersPage.checkNoContentMessage();
-            await paginationPage.checkPaginationIsNotDisplayed();
-        });
-    });
-
     describe('With processes Pagination', () => {
 
         beforeAll(async () => {

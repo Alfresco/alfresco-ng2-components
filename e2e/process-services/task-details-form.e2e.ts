@@ -92,7 +92,7 @@ describe('Task Details - Form', () => {
 
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
         await tasksListPage.checkTaskListIsLoaded();
-        await filtersPage.goToFilter('Involved Tasks');
+        await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await tasksListPage.checkTaskListIsLoaded();
     });
 
@@ -168,22 +168,22 @@ describe('Task Details - Form', () => {
         };
 
         const formActions = new FormModelActions();
+        let app, appActions: AppsActions;
 
         beforeAll(async () => {
-            const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-            const apps = new AppsActions();
-            await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+            app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+            appActions = new AppsActions();
+            await appActions.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         });
 
         beforeEach(async () => {
             newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: StringUtil.generateRandomString() });
-            const form = await formActions.getFormByName(this.alfrescoJsApi,
-                browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM.visibilityTabForm.formName);
+            const form = await formActions.getFormByName(this.alfrescoJsApi, app.visibilityProcess.formName);
             await this.alfrescoJsApi.activiti.taskApi.attachForm(newTask.id, { 'formId': form.id });
 
             await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
             await tasksListPage.checkTaskListIsLoaded();
-            await filtersPage.goToFilter('Involved Tasks');
+            await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
             await tasksListPage.checkTaskListIsLoaded();
         });
 
@@ -204,7 +204,7 @@ describe('Task Details - Form', () => {
             await tasksListPage.checkContentIsNotDisplayed(newTask.name);
 
             await tasksListPage.checkTaskListIsLoaded();
-            await filtersPage.goToFilter('Completed Tasks');
+            await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
             await tasksListPage.checkTaskListIsLoaded();
             await tasksListPage.checkContentIsDisplayed(newTask.name);
             await tasksListPage.selectRow(newTask.name);
@@ -225,7 +225,7 @@ describe('Task Details - Form', () => {
             await tasksListPage.checkContentIsNotDisplayed(newTask.name);
 
             await tasksListPage.checkTaskListIsLoaded();
-            await filtersPage.goToFilter('Completed Tasks');
+            await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
             await tasksListPage.checkTaskListIsLoaded();
             await tasksListPage.checkContentIsDisplayed(newTask.name);
             await tasksListPage.selectRow(newTask.name);
@@ -274,7 +274,7 @@ describe('Task Details - Form', () => {
             await tasksListPage.checkContentIsNotDisplayed(newTask.name);
 
             await tasksListPage.checkTaskListIsLoaded();
-            await filtersPage.goToFilter('Completed Tasks');
+            await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
             await tasksListPage.checkTaskListIsLoaded();
             await tasksListPage.checkContentIsDisplayed(newTask.name);
             await tasksListPage.selectRow(newTask.name);
@@ -305,7 +305,7 @@ describe('Task Details - Form', () => {
             await tasksListPage.checkContentIsNotDisplayed(newTask.name);
 
             await tasksListPage.checkTaskListIsLoaded();
-            await filtersPage.goToFilter('Completed Tasks');
+            await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
             await tasksListPage.checkTaskListIsLoaded();
             await tasksListPage.checkContentIsDisplayed(newTask.name);
             await tasksListPage.selectRow(newTask.name);
@@ -332,10 +332,44 @@ describe('Task Details - Form', () => {
             await tasksListPage.checkContentIsNotDisplayed(newTask.name);
 
             await tasksListPage.checkTaskListIsLoaded();
-            await filtersPage.goToFilter('Completed Tasks');
+            await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
             await tasksListPage.checkTaskListIsLoaded();
             await tasksListPage.checkContentIsDisplayed(newTask.name);
             await tasksListPage.selectRow(newTask.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
+        });
+
+        it('[C315197] Should be able to complete a process task with visible tab with empty value for field', async () => {
+            await appActions.startProcess(this.alfrescoJsApi, app, app.visibilityProcess.name);
+
+            await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await tasksListPage.checkTaskListIsLoaded();
+
+            await tasksListPage.selectRow(app.visibilityProcess.taskName);
+            await expect(await taskDetailsPage.getParentName()).toEqual(app.visibilityProcess.name);
+
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
+
+            await widget.textWidget().isWidgetVisible(widgets.textOneId);
+            await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
+            await widget.textWidget().setValue(widgets.textTwoId, value.displayTab);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
+
+            await widget.tab().clickTabByLabel(tab.tabFieldField);
+            await widget.textWidget().setValue(widgets.numberOneId, '123');
+
+            await taskDetailsPage.checkCompleteFormButtonIsDisplayed();
+            await taskDetailsPage.clickCompleteFormTask();
+            await tasksListPage.checkContentIsNotDisplayed(app.visibilityProcess.taskName);
+
+            await tasksListPage.checkTaskListIsLoaded();
+            await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+            await tasksListPage.checkTaskListIsLoaded();
+            await tasksListPage.checkContentIsDisplayed(app.visibilityProcess.taskName);
+            await tasksListPage.selectRow(app.visibilityProcess.taskName);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
         });
