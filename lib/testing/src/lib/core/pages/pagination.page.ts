@@ -24,6 +24,8 @@ export class PaginationPage {
     pageSelectorDropDown: ElementFinder = element(by.css('div[class*="adf-pagination__page-selector"]'));
     pageSelectorArrow: ElementFinder = element(by.css('button[data-automation-id="page-selector"]'));
     itemsPerPage: ElementFinder = element(by.css('span[class="adf-pagination__max-items"]'));
+    itemsPerPageOpenDropdown: ElementFinder = element(by.css('.adf-pagination__perpage-block button'));
+    itemsPerPageOptions: Locator = by.css('.adf-pagination__page-selector .mat-menu-item');
     currentPage: ElementFinder = element(by.css('span[class="adf-pagination__current-page"]'));
     totalPages: ElementFinder = element(by.css('span[class="adf-pagination__total-pages"]'));
     paginationRange: ElementFinder = element(by.css('span[class="adf-pagination__range"]'));
@@ -51,6 +53,10 @@ export class PaginationPage {
 
     async checkPageSelectorIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorArrow);
+    }
+
+    async clickItemsPerPageDropdown(): Promise<void> {
+        await BrowserActions.click(this.itemsPerPageOpenDropdown);
     }
 
     async checkPaginationIsNotDisplayed() {
@@ -91,6 +97,18 @@ export class PaginationPage {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const initialList = [];
         await element.all(this.pageDropDownOptions).each(async (currentOption) => {
+            const text = await BrowserActions.getText(currentOption);
+            if (text !== '') {
+                initialList.push(text);
+            }
+        });
+        return initialList;
+    }
+
+    async getItemsPerPageDropdownOptions() {
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(this.itemsPerPageOptions).first());
+        const initialList = [];
+        await element.all(this.itemsPerPageOptions).each(async (currentOption) => {
             const text = await BrowserActions.getText(currentOption);
             if (text !== '') {
                 initialList.push(text);

@@ -17,3 +17,4 @@
 
 export * from './form-fields.page';
 export * from './start-process-dialog.page';
+export * from './select-apps-dialog.page';

@@ -264,7 +264,6 @@ describe('Document List Component - Actions', () => {
             folder5 = await uploadActions.createFolder('E' + folderModel5.name, '-my-');
             folder6 = await uploadActions.createFolder('F' + folderModel6.name, '-my-');
             folders = [folder1, folder2, folder3, folder4, folder5, folder6];
-
         });
 
         beforeEach(async () => {
@@ -274,7 +273,6 @@ describe('Document List Component - Actions', () => {
             await paginationPage.selectItemsPerPage('5');
             await contentServicesPage.checkAcsContainer();
             await contentListPage.waitForTableBody();
-
         });
 
         afterAll(async () => {
@@ -282,7 +280,6 @@ describe('Document List Component - Actions', () => {
             for (const folder of folders) {
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
             }
-
         });
 
         it('[C260132] Move action on folder with - Load more', async () => {
@@ -379,7 +376,6 @@ describe('Document List Component - Actions', () => {
             await contentServicesPage.getDocumentList().waitForTableBody();
             await contentServicesPage.doubleClickRow('F' + folderModel6.name);
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
-
         });
    });
 });
