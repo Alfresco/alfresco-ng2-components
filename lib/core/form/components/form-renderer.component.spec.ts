@@ -28,7 +28,10 @@ import { formDisplayValueVisibility,
          formRequiredNumberWidget,
          colspanForm,
          numberNotRequiredForm,
-         numberMinMaxForm } from './mock/form-renderer.component.mock';
+         numberMinMaxForm,
+         textWidgetVisibility,
+         numberWidgetVisibilityForm,
+         radioWidgetVisibiltyForm} from './mock/form-renderer.component.mock';
 import { TranslationService } from 'core/services';
 import { TranslationMock } from 'core/mock';
 import { TranslateStore } from '@ngx-translate/core';
@@ -409,6 +412,155 @@ describe('Form Renderer Component', () => {
             errorWidgetText = fixture.nativeElement.querySelector('#field-Number0him2z-container error-widget .adf-error-text');
             expect(errorWidgetText.textContent).toBe(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without valid field');
+        });
+
+        it('[C309664] - Should be able to see Number widget when visibility condition refers to a form variable and a field', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(formNumberTextJson.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const inputText: HTMLInputElement = fixture.nativeElement.querySelector('#Text');
+            expect(inputText).not.toBeNull();
+            let numberFieldValueContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-NumberFieldValue-container');
+            expectElementToBeHidden(numberFieldValueContainer);
+
+            typeIntoInput(inputText, 'aaa');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            numberFieldValueContainer = fixture.nativeElement.querySelector('#field-NumberFieldValue-container');
+            expectElementToBeVisible(numberFieldValueContainer);
+
+            typeIntoInput(inputText, 'bbb');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            numberFieldValueContainer = fixture.nativeElement.querySelector('#field-NumberFieldValue-container');
+            expectElementToBeHidden(numberFieldValueContainer);
+        });
+
+        it('[C309665] - Should be able to see Number widget when visibility condition refers to another field and form variable', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(formNumberTextJson.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const inputText: HTMLInputElement = fixture.nativeElement.querySelector('#Text');
+            expect(inputText).not.toBeNull();
+            let numberFieldVariableContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-NumberFieldVariable-container');
+            expectElementToBeHidden(numberFieldVariableContainer);
+
+            typeIntoInput(inputText, 'aaa');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            numberFieldVariableContainer = fixture.nativeElement.querySelector('#field-NumberFieldVariable-container');
+            expectElementToBeVisible(numberFieldVariableContainer);
+
+            typeIntoInput(inputText, 'bbb');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            numberFieldVariableContainer = fixture.nativeElement.querySelector('#field-NumberFieldVariable-container');
+            expectElementToBeHidden(numberFieldVariableContainer);
+        });
+
+        it('[C309666] - Should be able to see Number widget when has multiple visibility conditions and next condition operators', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(numberWidgetVisibilityForm.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+            let numberFieldContainer = fixture.nativeElement.querySelector('#field-Number0wxaur-container');
+            let testOneInput: HTMLInputElement = fixture.nativeElement.querySelector('#Text0hs0gt');
+            let testTwoInput: HTMLInputElement = fixture.nativeElement.querySelector('#Text0cuqet');
+            expect(testOneInput).not.toBeNull();
+            expect(testTwoInput).not.toBeNull();
+            expectElementToBeHidden(numberFieldContainer);
+
+            typeIntoInput(testOneInput, 'aaa');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            numberFieldContainer = fixture.nativeElement.querySelector('#field-Number0wxaur-container');
+            expectElementToBeVisible(numberFieldContainer);
+
+            typeIntoInput(testOneInput, 'bbb');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            numberFieldContainer = fixture.nativeElement.querySelector('#field-Number0wxaur-container');
+            expectElementToBeHidden(numberFieldContainer);
+
+            typeIntoInput(testTwoInput, 'aaa');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            numberFieldContainer = fixture.nativeElement.querySelector('#field-Number0wxaur-container');
+            testOneInput = fixture.nativeElement.querySelector('#Text0hs0gt');
+            expectElementToBeHidden(numberFieldContainer);
+            expectInputElementValueIs(testOneInput, 'bbb');
+
+            typeIntoInput(testOneInput, 'aaa');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            numberFieldContainer = fixture.nativeElement.querySelector('#field-Number0wxaur-container');
+            testOneInput = fixture.nativeElement.querySelector('#Text0hs0gt');
+            testTwoInput = fixture.nativeElement.querySelector('#Text0cuqet');
+            expectInputElementValueIs(testOneInput, 'aaa');
+            expectInputElementValueIs(testTwoInput, 'aaa');
+            expectElementToBeHidden(numberFieldContainer);
+        });
+
+    });
+
+    describe('Text widget', () => {
+
+        it('[C309669] - Should be able to set visibility conditions for Text widget', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(textWidgetVisibility.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const inputElementTestOne: HTMLInputElement = fixture.nativeElement.querySelector('#1');
+            const inputElementTestTwo: HTMLInputElement = fixture.nativeElement.querySelector('#2');
+            expectElementToBeVisible(inputElementTestOne);
+            expectElementToBeVisible(inputElementTestTwo);
+            let elementThreeContainer = fixture.nativeElement.querySelector('#field-3-container');
+            let elementFourContainer = fixture.nativeElement.querySelector('#field-4-container');
+            expectElementToBeHidden(elementThreeContainer);
+            expectElementToBeHidden(elementFourContainer);
+
+            typeIntoInput(inputElementTestOne, 'Test');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            let containerInputOne = fixture.nativeElement.querySelector('#field-1-container');
+            let containerInputTwo = fixture.nativeElement.querySelector('#field-2-container');
+            elementThreeContainer = fixture.nativeElement.querySelector('#field-3-container');
+            elementFourContainer = fixture.nativeElement.querySelector('#field-4-container');
+            expectElementToBeVisible(containerInputOne);
+            expectElementToBeVisible(containerInputTwo);
+            expectElementToBeVisible(elementThreeContainer);
+            expectElementToBeHidden(elementFourContainer);
+
+            typeIntoInput(inputElementTestTwo, 'Test');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            containerInputOne = fixture.nativeElement.querySelector('#field-1-container');
+            containerInputTwo = fixture.nativeElement.querySelector('#field-2-container');
+            elementThreeContainer = fixture.nativeElement.querySelector('#field-3-container');
+            elementFourContainer = fixture.nativeElement.querySelector('#field-4-container');
+            expectElementToBeVisible(containerInputOne);
+            expectElementToBeVisible(containerInputTwo);
+            expectElementToBeVisible(elementFourContainer);
+            expectElementToBeHidden(elementThreeContainer);
+        });
+
+    });
+
+    describe('Radio widget', () => {
+
+        it('[C310352] - Should be able to set visibility conditions for Radio Button widget', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(radioWidgetVisibiltyForm.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const textInputElement = fixture.nativeElement.querySelector('#Text0cee7g');
+            const textInputContainer = fixture.nativeElement.querySelector('#field-Text0cee7g-container');
+            let radioButtonContainer = fixture.nativeElement.querySelector('#field-Radiobuttons03rkbo-container');
+            expectElementToBeVisible(textInputContainer);
+            expectElementToBeHidden(radioButtonContainer);
+
+            typeIntoInput(textInputElement, 'Radio');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            radioButtonContainer = fixture.nativeElement.querySelector('#field-Radiobuttons03rkbo-container');
+            expectElementToBeVisible(radioButtonContainer);
         });
 
     });
