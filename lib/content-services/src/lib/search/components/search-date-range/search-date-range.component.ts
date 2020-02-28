@@ -55,7 +55,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     datePickerDateFormat = DEFAULT_FORMAT_DATE;
-
+    maxDate: any;
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private dateAdapter: DateAdapter<Moment>,
@@ -100,6 +100,14 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             from: this.from,
             to: this.to
         });
+
+        if (this.settings && this.settings.maxDate) {
+            if (this.settings.maxDate === 'today') {
+                this.maxDate = this.dateAdapter.today().endOf('day');
+            } else {
+                this.maxDate = moment(this.settings.maxDate).endOf('day');
+            }
+        }
     }
 
     ngOnDestroy() {
@@ -158,4 +166,17 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         event.srcElement.click();
     }
 
+    getFromMaxDate(): any {
+        let maxDate: string;
+        if (!this.to.value || this.maxDate && (moment(this.maxDate).isBefore(this.to.value))) {
+            maxDate = this.maxDate;
+        } else {
+            maxDate = moment(this.to.value);
+        }
+        return maxDate;
+    }
+
+    getToMaxDate(): any {
+        return this.maxDate;
+    }
 }
