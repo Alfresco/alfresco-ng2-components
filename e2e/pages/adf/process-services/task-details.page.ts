@@ -113,7 +113,7 @@ export class TaskDetailsPage {
     }
 
     async selectAttachFormOption(option): Promise<void> {
-        await this.attachFormDropdown.clickDropdownWithOption(option);
+        await this.attachFormDropdown.selectDropdownOption(option);
     }
 
     async checkCancelAttachFormIsDisplayed(): Promise<void> {

@@ -21,7 +21,7 @@ import {
     LocalStorageUtil,
     NotificationHistoryPage,
     UploadActions,
-    ViewerPage
+    ViewerPage, ApiUtil
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -29,7 +29,7 @@ import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AlfrescoApiCompatibility as AlfrescoApi, SharedLinkEntry, SharedLinkPaging } from '@alfresco/js-api';
 import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
 
 describe('Share file', () => {
@@ -54,6 +54,20 @@ describe('Share file', () => {
     });
 
     let nodeId;
+
+    const waitForShareLink = async (nodeIdSharedFile: string) => {
+        const predicate = (sharedLinkPaging: SharedLinkPaging) => {
+            const sharedLink = sharedLinkPaging.list.entries.find((sharedLinkEntry: SharedLinkEntry) => {
+                return sharedLinkEntry.entry.nodeId === nodeIdSharedFile;
+            });
+
+            return sharedLink !== null;
+        };
+
+        const apiCall = async () => this.alfrescoJsApi.core.sharedlinksApi.findSharedLinks();
+
+        return ApiUtil.waitForApi(apiCall, predicate);
+    };
 
     beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -209,7 +223,8 @@ describe('Share file', () => {
             await shareDialog.clickShareLinkButton();
 
             await BrowserActions.closeMenuAndDialogs();
-            await browser.sleep(30000); // it get really long to update the shared link file list
+
+            await waitForShareLink(nodeId);
 
             await customSourcesPage.navigateToCustomSources();
             await customSourcesPage.selectSharedLinksSourceType();

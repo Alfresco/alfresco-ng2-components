@@ -36,11 +36,11 @@ export class ProcessListDemoPage {
     }
 
     async selectSorting(sortingOption: string): Promise<void> {
-        await this.sortDropdown.clickDropdownWithOption(sortingOption);
+        await this.sortDropdown.selectDropdownOption(sortingOption);
     }
 
     async selectStateFilter(stateOption: string): Promise<void> {
-        await this.stateDropdown.clickDropdownWithOption(stateOption);
+        await this.stateDropdown.selectDropdownOption(stateOption);
     }
 
     async addAppId(appId): Promise<void> {

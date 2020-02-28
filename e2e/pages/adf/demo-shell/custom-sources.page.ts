@@ -52,18 +52,15 @@ export class CustomSourcesPage {
     }
 
     async selectMySitesSourceType(): Promise<void> {
-        await this.selectModeDropdown.clickDropdown();
-        await this.selectModeDropdown.selectOption(source.mySites);
+        await this.selectModeDropdown.selectDropdownOption(source.mySites);
     }
 
     async selectFavoritesSourceType(): Promise<void> {
-        await this.selectModeDropdown.clickDropdown();
-        await this.selectModeDropdown.selectOption(source.favorites);
+        await this.selectModeDropdown.selectDropdownOption(source.favorites);
     }
 
     async selectSharedLinksSourceType(): Promise<void> {
-        await this.selectModeDropdown.clickDropdown();
-        await this.selectModeDropdown.selectOption(source.sharedLinks);
+        await this.selectModeDropdown.selectDropdownOption(source.sharedLinks);
     }
 
     checkRowIsDisplayed(rowName): Promise<void> {

@@ -125,7 +125,7 @@ export class FormFields {
     }
 
     async selectForm(formName): Promise<void> {
-        await this.selectFormDropdown.clickDropdownWithOption(formName);
+        await this.selectFormDropdown.selectDropdownOption(formName);
     }
 
     async selectFormFromDropDown(formName): Promise<void> {

@@ -612,7 +612,7 @@ export class ContentServicesPage {
     }
 
     async selectGridSortingFromDropdown(sortingOption): Promise<void> {
-        await this.sortingDropdown.clickDropdownWithOption(sortingOption);
+        await this.sortingDropdown.selectDropdownOption(sortingOption);
     }
 
     async checkRowIsDisplayed(rowName): Promise<void> {
@@ -630,7 +630,7 @@ export class ContentServicesPage {
     }
 
     async selectSite(siteName: string): Promise<void> {
-        await this.siteListDropdown.clickDropdownWithOption(siteName);
+        await this.siteListDropdown.selectDropdownOption(siteName);
     }
 
     async clickDownloadButton(): Promise<void> {

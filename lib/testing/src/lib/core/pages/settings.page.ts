@@ -47,7 +47,7 @@ export class SettingsPage {
     }
 
     async setProvider(option): Promise<void> {
-        await this.providerDropdown.clickDropdownWithOption(option);
+        await this.providerDropdown.selectDropdownOption(option);
         await this.providerDropdown.checkOptionIsSelected(option);
     }
 

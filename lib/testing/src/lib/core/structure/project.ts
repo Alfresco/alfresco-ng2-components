@@ -18,7 +18,7 @@
 import { browser } from 'protractor';
 import { ModelingAPI } from './modeling-api';
 import { NodeEntry, ResultSetPaging } from '@alfresco/js-api';
-import { UtilApi } from './utilapi';
+import { ApiUtil } from './api.util';
 import { E2eRequestApiHelper, E2eRequestApiHelperOptions } from './e2e-request-api.helper';
 import * as fs from 'fs';
 import { StringUtil } from '../utils/string.util';
@@ -123,7 +123,7 @@ export class Project {
     };
     const apiCall = () => this.searchProjects();
 
-    return UtilApi.waitForApi(apiCall, predicate);
+    return ApiUtil.waitForApi(apiCall, predicate);
   }
 
   private getRandomName(): string {

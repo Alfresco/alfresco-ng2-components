@@ -129,7 +129,7 @@ export class DataTablePage {
     }
 
     async selectSelectionMode(selectionMode): Promise<void> {
-        await this.selectModeDropdown.clickDropdownWithOption(selectionMode);
+        await this.selectModeDropdown.selectDropdownOption(selectionMode);
     }
 
     getRowCheckbox(rowNumber: string): ElementFinder {

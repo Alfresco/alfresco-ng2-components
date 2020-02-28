@@ -65,7 +65,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setStatusFilterDropDown(option: string): Promise<void> {
-        await this.statusDropdown.clickDropdownWithOption(option);
+        await this.statusDropdown.selectDropdownOption(option);
     }
 
     async getStatusFilterDropDownValue(): Promise<string> {
@@ -73,7 +73,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setSortFilterDropDown(option: string): Promise<void> {
-        await this.sortDropdown.clickDropdownWithOption(option);
+        await this.sortDropdown.selectDropdownOption(option);
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
@@ -81,7 +81,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setOrderFilterDropDown(option: string): Promise<void> {
-        await this.orderDropdown.clickDropdownWithOption(option);
+        await this.orderDropdown.selectDropdownOption(option);
         await browser.sleep(1500);
     }
 
@@ -193,7 +193,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setAppNameDropDown(option: string): Promise<void> {
-        await this.appNameDropdown.clickDropdownWithOption(option);
+        await this.appNameDropdown.selectDropdownOption(option);
     }
 
     async getAppNameDropDownValue(): Promise<string> {
