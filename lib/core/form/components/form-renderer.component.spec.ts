@@ -31,7 +31,7 @@ import { formDisplayValueVisibility,
          numberMinMaxForm,
          textWidgetVisibility,
          numberWidgetVisibilityForm,
-         radioWidgetVisibiltyForm} from './mock/form-renderer.component.mock';
+         radioWidgetVisibiltyForm } from './mock/form-renderer.component.mock';
 import { TranslationService } from 'core/services';
 import { TranslationMock } from 'core/mock';
 import { TranslateStore } from '@ngx-translate/core';
