@@ -27,7 +27,7 @@ export type ApiResultPredicate<T> = (result: T) => boolean;
 export type ApiCall<T> = () => Promise<T>;
 
 export class ApiUtil {
-    static async waitForApi<T>(apiCall: ApiCall<T>, predicate: ApiResultPredicate<T>) {
+    static async waitForApi<T>(apiCall: ApiCall<T>, predicate: ApiResultPredicate<T>, retry: number = 30, delay: number = 1000) {
         const apiCallWithPredicateChecking = async () => {
             const apiCallResult = await apiCall();
             if (predicate(apiCallResult)) {
@@ -37,7 +37,7 @@ export class ApiUtil {
             }
         };
 
-        return ApiUtil.retryCall(apiCallWithPredicateChecking);
+        return ApiUtil.retryCall(apiCallWithPredicateChecking, retry, delay);
     }
 
     static retryCall(fn: () => Promise<any>, retry: number = 30, delay: number = 1000): Promise<any> {
