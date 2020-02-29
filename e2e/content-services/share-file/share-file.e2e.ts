@@ -64,7 +64,10 @@ describe('Share file', () => {
             return sharedLink !== null;
         };
 
-        const apiCall = async () => this.alfrescoJsApi.core.sharedlinksApi.findSharedLinks();
+        const apiCall = async () => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            return await this.alfrescoJsApi.core.sharedlinksApi.findSharedLinks();
+        };
 
         return ApiUtil.waitForApi(apiCall, predicate, 10, 2000);
     };
