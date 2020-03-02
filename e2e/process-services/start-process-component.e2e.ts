@@ -328,7 +328,7 @@ describe('Start Process Component', () => {
                 await processFiltersPage.selectFromProcessList('Audit Log');
                 await processDetailsPage.clickAuditLogButton();
 
-                await expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
+                await FileBrowserUtil.isFileDownloaded(auditLogFile);
             });
 
             it('Should be able to attach a file using the button', async () => {

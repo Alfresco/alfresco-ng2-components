@@ -528,7 +528,7 @@ describe('Start Task Form', () => {
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
 
             await contentFileWidget.downloadFile(testFileModel.name);
-            await expect(await FileBrowserUtil.isFileDownloaded(testFileModel.name)).toBe(true);
+            await FileBrowserUtil.isFileDownloaded(testFileModel.name);
 
             const taskId = await taskHeaderCloudPage.getId();
             await taskFormCloudComponent.clickCompleteButton();
@@ -540,7 +540,7 @@ describe('Start Task Form', () => {
             await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(taskId);
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
             await contentFileWidget.downloadFile(testFileModel.name);
-            await expect(await FileBrowserUtil.isFileDownloaded(testFileModel.name)).toBe(true);
+            await FileBrowserUtil.isFileDownloaded(testFileModel.name);
         });
    });
 });

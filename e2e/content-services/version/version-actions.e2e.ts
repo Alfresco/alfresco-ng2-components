@@ -107,9 +107,9 @@ describe('Version component actions', () => {
 
     it('[C269081] Should be possible download all the version of a file', async () => {
         await versionManagePage.downloadFileVersion('1.0');
-        await expect(await FileBrowserUtil.isFileDownloaded(txtFileModel.name)).toBe(true, `${txtFileModel.name} not downloaded`);
+        await FileBrowserUtil.isFileDownloaded(txtFileModel.name);
         await versionManagePage.downloadFileVersion('1.1');
-        await expect(await FileBrowserUtil.isFileDownloaded(fileModelVersionTwo.name)).toBe(true, `${fileModelVersionTwo.name} not downloaded`);
+        await FileBrowserUtil.isFileDownloaded(fileModelVersionTwo.name);
     });
 
     it('[C272819] Should be possible delete a version when click on delete version action', async () => {
