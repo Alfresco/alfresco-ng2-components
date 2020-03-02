@@ -45,19 +45,23 @@ describe('Document List - Selection', () => {
     });
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        try {
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        await contentServicesPage.goToDocumentList();
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
-        await contentServicesPage.createNewFolder(folderModel.name);
-        await contentServicesPage.uploadFile(docxFileModel.location);
-        await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
-        await uploadDialog.clickOnCloseButton();
-        await uploadDialog.dialogIsNotDisplayed();
+            await contentServicesPage.goToDocumentList();
+            await contentServicesPage.checkDocumentListElementsAreDisplayed();
+            await contentServicesPage.createNewFolder(folderModel.name);
+            await contentServicesPage.uploadFile(docxFileModel.location);
+            await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+            await uploadDialog.clickOnCloseButton();
+            await uploadDialog.dialogIsNotDisplayed();
+        } catch (error) {
+            throw new Error(`API call failed in beforeAll: ${error}`);
+        }
     });
 
     afterAll(async () => {

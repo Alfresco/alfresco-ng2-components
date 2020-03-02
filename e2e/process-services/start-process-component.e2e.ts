@@ -76,38 +76,38 @@ describe('Start Process Component', () => {
 
         beforeAll(async () => {
             try {
-            this.alfrescoJsApi = new AlfrescoApi({
-                provider: 'BPM',
-                hostBpm: browser.params.testConfig.adf_aps.host
-            });
+                this.alfrescoJsApi = new AlfrescoApi({
+                    provider: 'BPM',
+                    hostBpm: browser.params.testConfig.adf_aps.host
+                });
 
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+                await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-            const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+                const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
-            tenantId = newTenant.id;
-            procUserModel = new User({ tenantId: tenantId });
-            secondProcUserModel = new User({ tenantId: tenantId });
+                tenantId = newTenant.id;
+                procUserModel = new User({tenantId: tenantId});
+                secondProcUserModel = new User({tenantId: tenantId});
 
-            await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
-            await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(secondProcUserModel);
+                await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
+                await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(secondProcUserModel);
 
-            this.alfrescoJsApiUserTwo = new AlfrescoApi({
-                provider: 'BPM',
-                hostBpm: browser.params.testConfig.adf_aps.host
-            });
+                this.alfrescoJsApiUserTwo = new AlfrescoApi({
+                    provider: 'BPM',
+                    hostBpm: browser.params.testConfig.adf_aps.host
+                });
 
-            await this.alfrescoJsApiUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
+                await this.alfrescoJsApiUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
 
-            const appCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, app.file_location);
+                const appCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, app.file_location);
 
-            simpleAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, simpleApp.file_location);
+                simpleAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, simpleApp.file_location);
 
-            dateFormAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, dateFormApp.file_location);
+                dateFormAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, dateFormApp.file_location);
 
-            appId = appCreated.id;
+                appId = appCreated.id;
             } catch (error) {
-                throw new Error(`API call failed in beforeEach: ${error}`);
+                throw new Error(`API call failed in beforeAll: ${error}`);
             }
         });
 
