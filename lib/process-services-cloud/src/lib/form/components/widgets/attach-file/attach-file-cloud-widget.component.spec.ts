@@ -269,14 +269,14 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
             expect(element.querySelector('#file-1155-icon')).toBeDefined();
             let name: HTMLElement = element.querySelector('span[id="file-1155"]');
-            expect(name.innerText).toEqual("a_png_file.png");
+            expect(name.innerText).toEqual('a_png_file.png');
             inputDebugElement.triggerEventHandler('change', {
                 target: { files: [ files[1] ] }
             });
             fixture.detectChanges();
             expect(element.querySelector('#file-1166-icon')).toBeDefined();
             name = element.querySelector('span[id="file-1166"]');
-            expect(name.innerText).toEqual("second_png_file.png");
+            expect(name.innerText).toEqual('second_png_file.png');
         });
     }));
 
