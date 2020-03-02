@@ -234,6 +234,52 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
     }));
 
+    it('should be able to set label property for Attach File widget', () => {
+        widget.field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.UPLOAD,
+            readOnly: true,
+            id: 'attach-file',
+            name: 'Label',
+            params: onlyLocalParams
+        });
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(element.querySelector('label').innerText).toEqual('Label');
+        });
+    });
+
+    it('should be able to enable multiple file upload', async(() => {
+        const files = [fakeLocalPngAnswer, { ...fakeLocalPngAnswer, id: 1166, nodeId: 1166, name: 'second_png_file.png' }];
+        widget.field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.UPLOAD,
+            id: 'attach-file',
+            name: 'Upload',
+            value: [],
+            params: { onlyLocalParams, multiple: true }
+        });
+        spyOn(processCloudContentService, 'createTemporaryRawRelatedContent')
+            .and.returnValues(of(files[0]), of(files[1]));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const inputDebugElement = fixture.debugElement.query(By.css('#attach-file'));
+            expect(inputDebugElement.nativeElement.multiple).toBe(true);
+            inputDebugElement.triggerEventHandler('change', {
+                target: { files: [ files[0] ] }
+            });
+            fixture.detectChanges();
+            expect(element.querySelector('#file-1155-icon')).toBeDefined();
+            let name: HTMLElement = element.querySelector('span[id="file-1155"]');
+            expect(name.innerText).toEqual('a_png_file.png');
+            inputDebugElement.triggerEventHandler('change', {
+                target: { files: [ files[1] ] }
+            });
+            fixture.detectChanges();
+            expect(element.querySelector('#file-1166-icon')).toBeDefined();
+            name = element.querySelector('span[id="file-1166"]');
+            expect(name.innerText).toEqual('second_png_file.png');
+        });
+    }));
+
     describe('when is readonly', () => {
 
         it('should show empty list message when there are no file', async(() => {

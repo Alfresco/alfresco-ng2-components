@@ -15,45 +15,64 @@
  * limitations under the License.
  */
 
-import { SimpleChange, DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import {
-    FormFieldModel, FormFieldTypes, FormService, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService,
-    setupTestBed, AppConfigService, FormRenderingService, FormModel
+    AppConfigService,
+    FormFieldModel,
+    FormFieldTypes,
+    FormModel,
+    FormOutcomeEvent,
+    FormOutcomeModel,
+    FormRenderingService,
+    setupTestBed,
+    TranslationMock,
+    TranslationService,
+    WidgetVisibilityService
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudComponent } from './form-cloud.component';
-import { cloudFormMock, emptyFormRepresentationJSON, fakeCloudForm } from '../mocks/cloud-form.mock';
+import {
+    cloudFormMock,
+    conditionalUploadWidgetsMock,
+    emptyFormRepresentationJSON,
+    fakeCloudForm
+} from '../mocks/cloud-form.mock';
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
+import { FormCloudModule } from '../form-cloud.module';
 
 describe('FormCloudComponent', () => {
 
     let formCloudService: FormCloudService;
-    let formService: FormService;
+    let fixture: ComponentFixture<FormCloudComponent>;
     let formComponent: FormCloudComponent;
     let visibilityService: WidgetVisibilityService;
-    let logService: LogService;
     let formRenderingService: FormRenderingService;
-    let appConfigService: AppConfigService;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule]
+        imports: [
+            ProcessServiceCloudTestingModule,
+            FormCloudModule
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
     });
 
     beforeEach(() => {
-        logService = new LogService(null);
         formRenderingService = TestBed.get(FormRenderingService);
-        visibilityService = new WidgetVisibilityService(null, logService);
-        spyOn(visibilityService, 'refreshVisibility').and.stub();
-        appConfigService = TestBed.get(AppConfigService);
+        formCloudService = TestBed.get(FormCloudService);
+        visibilityService = TestBed.get(WidgetVisibilityService);
+        spyOn(visibilityService, 'refreshVisibility').and.callThrough();
+        const appConfigService = TestBed.get(AppConfigService);
         spyOn(appConfigService, 'get').and.returnValue([]);
         spyOn(formRenderingService, 'setComponentTypeResolver').and.returnValue(true);
-        formCloudService = new FormCloudService(null, new AppConfigService(null));
-        formService = new FormService(null, null, logService);
-        formComponent = new FormCloudComponent(formCloudService, formService, null, formRenderingService, visibilityService, appConfigService);
+        fixture = TestBed.createComponent(FormCloudComponent);
+        formComponent = fixture.componentInstance;
+        fixture.detectChanges();
    });
 
     it('should check form', () => {
@@ -826,6 +845,32 @@ describe('FormCloudComponent', () => {
         formFields = formComponent.form.getFormFields();
         radioFieldById = formFields.find((field) => field.id === 'radiobuttons1');
         expect(radioFieldById.value).toBe('option_2');
+    });
+
+    describe('form validations', () => {
+
+        it('should be able to set visibility conditions for Attach File widget', async () => {
+            spyOn(formCloudService, 'getForm').and.returnValue(of(conditionalUploadWidgetsMock));
+            const formId = '123';
+            const appName = 'test-app';
+            formComponent.formId = formId;
+            formComponent.appVersion = 1;
+
+            formComponent.ngOnChanges({ 'appName': new SimpleChange(null, appName, true) });
+            expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId, 1);
+
+            fixture.detectChanges();
+            const inputElement = fixture.debugElement.query(By.css('[id="field-Text0xlk8n-container"] input'));
+            inputElement.nativeElement.value = 'Attach';
+            inputElement.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            const container = '[id="field-Attachfile0h9fr1-container"]';
+            const uploadElement = fixture.debugElement.query(By.css(container));
+            expect(uploadElement).toBeDefined();
+            const label = fixture.debugElement.query(By.css(`${container} label`));
+            expect(label.nativeElement.innerText).toEqual('Attach file');
+        });
+
     });
 });
 

@@ -758,3 +758,77 @@ export const emptyFormRepresentationJSON = {
     'variables': [],
     'version': 0
 };
+
+export const conditionalUploadWidgetsMock = {
+    'formRepresentation': {
+        'id': 'form-fb7858f7-5cf6-4afe-b462-c15a5dc0c34c',
+        'name': 'AttachVisibility',
+        'description': '',
+        'version': 0,
+        'formDefinition': {
+            'tabs': [],
+            'fields': [
+                {
+                    'id': '1dc63387-aa9d-4f06-adfa-37817e8fd394',
+                    'name': 'Label',
+                    'type': 'container',
+                    'tab': null,
+                    'numberOfColumns': 2,
+                    'fields': {
+                        '1': [
+                            {
+                                'id': 'Text0xlk8n',
+                                'name': 'Text',
+                                'type': 'text',
+                                'required': false,
+                                'colspan': 1,
+                                'placeholder': null,
+                                'minLength': 0,
+                                'maxLength': 0,
+                                'regexPattern': null,
+                                'visibilityCondition': null,
+                                'params': {
+                                    'existingColspan': 1,
+                                    'maxColspan': 2
+                                }
+                            }
+                        ],
+                        '2': [
+                            {
+                                'id': 'Attachfile0h9fr1',
+                                'name': 'Attach file',
+                                'type': 'upload',
+                                'required': false,
+                                'colspan': 1,
+                                'visibilityCondition': {
+                                    'leftFormFieldId': 'Text0xlk8n',
+                                    'leftRestResponseId': '',
+                                    'operator': '==',
+                                    'rightValue': 'Attach',
+                                    'rightType': null,
+                                    'rightFormFieldId': '',
+                                    'rightRestResponseId': '',
+                                    'nextConditionOperator': '',
+                                    'nextCondition': null
+                                },
+                                'params': {
+                                    'existingColspan': 1,
+                                    'maxColspan': 2,
+                                    'fileSource': {
+                                        'serviceId': 'alfresco-content',
+                                        'name': 'Alfresco Content'
+                                    },
+                                    'multiple': false,
+                                    'link': false
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            'outcomes': [],
+            'metadata': {},
+            'variables': []
+        }
+    }
+};
