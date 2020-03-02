@@ -29,6 +29,7 @@ describe('SearchDateRangeComponent', () => {
         let adapter: MomentDateAdapter;
         const fromDate = '2016-10-16';
         const toDate = '2017-10-16';
+        const maxDate = '10-Mar-20';
         const dateFormatFixture = 'DD-MMM-YY';
 
         setupTestBed({
@@ -170,5 +171,16 @@ describe('SearchDateRangeComponent', () => {
                 fixture.detectChanges();
                 expect(component.getFromValidationMessage()).toBeFalsy();
             });
+        }));
+
+        it('should be able to set a maximum date', async(() => {
+            component.settings = { field: 'cm:created', dateFormat: dateFormatFixture, maxDate: maxDate };
+            fixture.detectChanges();
+
+            const inputs = fixture.debugElement.nativeElement.querySelectorAll('[ng-reflect-max="Tue Mar 10 2020 23:59:59 GMT+0"]');
+            expect(inputs[0]).toBeDefined();
+            expect(inputs[0]).not.toBeNull();
+            expect(inputs[1]).toBeDefined();
+            expect(inputs[1]).not.toBeNull();
         }));
 });

@@ -175,8 +175,4 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         }
         return maxDate;
     }
-
-    getToMaxDate(): any {
-        return this.maxDate;
-    }
 }
