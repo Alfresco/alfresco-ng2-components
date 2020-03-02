@@ -759,7 +759,7 @@ export const emptyFormRepresentationJSON = {
     'version': 0
 };
 
-export const condiditionalUploadWidgetsMock = {
+export const conditionalUploadWidgetsMock = {
     'formRepresentation': {
         'id': 'form-fb7858f7-5cf6-4afe-b462-c15a5dc0c34c',
         'name': 'AttachVisibility',

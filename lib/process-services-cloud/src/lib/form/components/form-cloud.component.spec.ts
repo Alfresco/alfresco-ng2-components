@@ -37,7 +37,7 @@ import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudComponent } from './form-cloud.component';
 import {
     cloudFormMock,
-    condiditionalUploadWidgetsMock,
+    conditionalUploadWidgetsMock,
     emptyFormRepresentationJSON,
     fakeCloudForm
 } from '../mocks/cloud-form.mock';
@@ -850,7 +850,7 @@ describe('FormCloudComponent', () => {
     describe('form validations', () => {
 
         it('should be able to set visibility conditions for Attach File widget', async () => {
-            spyOn(formCloudService, 'getForm').and.returnValue(of(condiditionalUploadWidgetsMock));
+            spyOn(formCloudService, 'getForm').and.returnValue(of(conditionalUploadWidgetsMock));
             const formId = '123';
             const appName = 'test-app';
             formComponent.formId = formId;
