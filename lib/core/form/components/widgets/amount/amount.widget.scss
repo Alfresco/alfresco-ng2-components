@@ -16,13 +16,22 @@
         right: 12px;
     }
 
-    &-amount-widget__input .mat-focused {
-        transition: none;
+    &-amount-widget__input {
+
+        .mat-focused {
+            transition: none;
+        }
+
+        &:not(.mat-focused) {
+            .adf-amount-widget__prefix-spacing {
+                color: rgba(0, 0, 0, 0.54);
+            }
+        }
     }
 
     &-amount-widget__prefix-spacing {
         position: absolute;
-        top: 12px;
+        top: 11px;
     }
 }
 
