@@ -669,7 +669,7 @@ export class ContentServicesPage {
 
     async chooseSelectionMode(option: string): Promise<void> {
         const dropdownPage = new DropdownPage(this.selectionModeDropdown);
-        await dropdownPage.clickDropdownWithOption(option);
+        await dropdownPage.selectDropdownOption(option);
     }
 
     async getItemSelected(): Promise<string> {
