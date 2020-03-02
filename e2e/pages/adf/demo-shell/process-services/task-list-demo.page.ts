@@ -139,7 +139,7 @@ export class TaskListDemoPage {
     }
 
     async selectState(state): Promise<void> {
-        await this.stateDropdown.clickDropdownWithOption(state);
+        await this.stateDropdown.selectDropdownOption(state);
     }
 
     getAllProcessDefinitionIds(): Promise<any> {

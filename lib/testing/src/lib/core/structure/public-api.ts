@@ -16,6 +16,6 @@
  */
 
 export * from './api';
-export * from './utilapi';
+export * from './api.util';
 export * from './deployment-api';
 export * from './modeling-api';

@@ -58,7 +58,7 @@ export class AttachFormPage {
     }
 
     async selectAttachFormOption(option): Promise<void> {
-        await this.attachFormDropdown.clickDropdownWithOption(option);
+        await this.attachFormDropdown.selectDropdownOption(option);
     }
 
     async clickCancelButton(): Promise<void> {

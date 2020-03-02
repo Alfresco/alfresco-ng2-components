@@ -21,7 +21,7 @@ import {
     LocalStorageUtil,
     NotificationHistoryPage,
     UploadActions,
-    ViewerPage
+    ViewerPage, ApiUtil
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -29,7 +29,8 @@ import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AlfrescoApiCompatibility as AlfrescoApi, SharedLinkEntry, SharedLinkPaging } from '@alfresco/js-api';
+import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
 
 describe('Share file', () => {
 
@@ -42,6 +43,7 @@ describe('Share file', () => {
     const contentListPage = contentServicesPage.getDocumentList();
     const shareDialog = new ShareDialogPage();
     const navigationBarPage = new NavigationBarPage();
+    const customSourcesPage = new CustomSourcesPage();
     const viewerPage = new ViewerPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const acsUser = new AcsUserModel();
@@ -52,6 +54,23 @@ describe('Share file', () => {
     });
 
     let nodeId;
+
+    const waitForShareLink = async (nodeIdSharedFile: string) => {
+        const predicate = (sharedLinkPaging: SharedLinkPaging) => {
+            const sharedLink = sharedLinkPaging.list.entries.find((sharedLinkEntry: SharedLinkEntry) => {
+                return sharedLinkEntry.entry.nodeId === nodeIdSharedFile;
+            });
+
+            return sharedLink !== null;
+        };
+
+        const apiCall = async () => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            return this.alfrescoJsApi.core.sharedlinksApi.findSharedLinks();
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate, 10, 2000);
+    };
 
     beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -198,6 +217,21 @@ describe('Share file', () => {
             await navigationBarPage.clickLogoutButton();
             await BrowserActions.getUrl(sharedLink);
             await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+        });
+
+        it('[C260153] Should shared files listed in share files custom resources', async () => {
+            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickShareLinkButton();
+
+            await BrowserActions.closeMenuAndDialogs();
+
+            await waitForShareLink(nodeId);
+
+            await customSourcesPage.navigateToCustomSources();
+            await customSourcesPage.selectSharedLinksSourceType();
+            await customSourcesPage.checkRowIsDisplayed(pngFileModel.name);
         });
     });
 });

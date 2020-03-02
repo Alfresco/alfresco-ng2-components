@@ -66,15 +66,15 @@ export class NotificationPage {
     }
 
     async selectHorizontalPosition(selectItem): Promise<void> {
-        await this.horizontalPositionDropdown.clickDropdownWithOption(selectItem);
+        await this.horizontalPositionDropdown.selectDropdownOption(selectItem);
     }
 
     async selectVerticalPosition(selectItem): Promise<void> {
-        await this.verticalPositionDropdown.clickDropdownWithOption(selectItem);
+        await this.verticalPositionDropdown.selectDropdownOption(selectItem);
     }
 
     async selectDirection(selectItem): Promise<void> {
-        await this.directionDropdown.clickDropdownWithOption(selectItem);
+        await this.directionDropdown.selectDropdownOption(selectItem);
     }
 
     async clickNotificationButton(): Promise<void> {

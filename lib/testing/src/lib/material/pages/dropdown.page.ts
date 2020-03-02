@@ -80,7 +80,7 @@ export class DropdownPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-option span.mat-option-text', option)));
     }
 
-    async clickDropdownWithOption(option: string): Promise<void> {
+    async selectDropdownOption(option: string): Promise<void> {
         await this.clickDropdown();
         await this.selectOption(option);
     }

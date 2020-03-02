@@ -19,17 +19,9 @@ export class StringUtil {
 
     static generatePasswordString(length: number = 8): string {
         let text = '';
-        const possibleUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const possibleLowerCase = 'abcdefghijklmnopqrstuvwxyz';
         const lowerCaseLimit = Math.floor(length / 2);
-
-        for (let i = 0; i < lowerCaseLimit; i++) {
-            text += possibleLowerCase.charAt(Math.floor(Math.random() * possibleLowerCase.length));
-        }
-
-        for (let i = 0; i < length - lowerCaseLimit; i++) {
-            text += possibleUpperCase.charAt(Math.floor(Math.random() * possibleUpperCase.length));
-        }
+        text += StringUtil.generateRandomCharset(lowerCaseLimit, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        text += StringUtil.generateRandomCharset(length - lowerCaseLimit, 'abcdefghijklmnopqrstuvwxyz');
 
         return text;
     }
@@ -38,17 +30,9 @@ export class StringUtil {
      * Generates a random string.
      *
      * @param length If this parameter is not provided the length is set to 8 by default.
-     * @method generateRandomString
      */
     static generateRandomString(length: number = 8): string {
-        let text = '';
-        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-        for (let i = 0; i < length; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-
-        return text;
+        return StringUtil.generateRandomCharset(length, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
     }
 
     /**
@@ -56,16 +40,9 @@ export class StringUtil {
      *
      * @param domain
      * @param length
-     * @method generateRandomEmail
      */
     static generateRandomEmail(domain: string, length: number = 5): string {
-        let email = '';
-        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-        for (let i = 0; i < length; i++) {
-            email += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-
+        let email = StringUtil.generateRandomCharset(length, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
         email += domain;
         return email.toLowerCase();
     }
@@ -74,33 +51,34 @@ export class StringUtil {
      * Generates a random string - digits only.
      *
      * @param length {int} If this parameter is not provided the length is set to 8 by default.
-     * @method generateRandomString
      */
     static generateRandomStringDigits(length: number = 8): string {
-        let text = '';
-        const possible = '0123456789';
-
-        for (let i = 0; i < length; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-
-        return text;
+        return StringUtil.generateRandomCharset(length, '0123456789');
     }
 
     /**
      * Generates a random string - non-latin characters only.
      *
      * @param length {int} If this parameter is not provided the length is set to 3 by default.
-     * @method generateRandomString
      */
     static generateRandomStringNonLatin(length: number = 3): string {
+        return StringUtil.generateRandomCharset(length,  '密码你好𠮷');
+    }
+
+    /**
+     * Generates a random string.
+     *
+     * @param length If this parameter is not provided the length is set to 8 by default.
+     * @param charSet to use
+     */
+    static generateRandomCharset(length: number = 8, charSet: string): string {
         let text = '';
-        const possible = '密码你好𠮷';
 
         for (let i = 0; i < length; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
+            text += charSet.charAt(Math.floor(Math.random() * charSet.length));
         }
 
         return text;
     }
+
 }

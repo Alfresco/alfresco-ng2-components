@@ -1,7 +1,7 @@
 <adf-toolbar>
     <adf-toolbar-title>
         <mat-form-field>
-            <mat-select [(ngModel)]="selectedSource">
+            <mat-select [(ngModel)]="selectedSource" data-automation-id="custom-sources-select">
                 <mat-option *ngFor="let source of sources" [value]="source.value">
                     {{ source.title }}
                 </mat-option>
