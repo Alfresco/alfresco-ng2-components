@@ -849,7 +849,7 @@ describe('FormCloudComponent', () => {
 
     describe('form validations', () => {
 
-        it('should refresh radio buttons value when id is given to data', async () => {
+        it('should be able to set visibility conditions for Attach File widget', async () => {
             spyOn(formCloudService, 'getForm').and.returnValue(of(condiditionalUploadWidgetsMock));
             const formId = '123';
             const appName = 'test-app';

@@ -234,6 +234,44 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
     }));
 
+    it('should be able to set label property for Attach File widget', () => {
+        widget.field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.UPLOAD,
+            readOnly: true,
+            id: 'attach-file',
+            name: 'Label',
+            params: onlyLocalParams
+        });
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(element.querySelector('label').innerText).toEqual('Label');
+        });
+    });
+
+    it('should be able to enable multiple file upload', async(() => {
+        const files = [fakeLocalPngAnswer, { ...fakeLocalPngAnswer, id: 1166, nodeId: 1166 }];
+        widget.field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.UPLOAD,
+            id: 'attach-file',
+            name: 'Upload',
+            value: [],
+            params: { onlyLocalParams, multiple: true }
+        });
+        spyOn(processCloudContentService, 'createTemporaryRawRelatedContent')
+            .and.returnValues(of(files[0]), of(files[1]));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const inputDebugElement = fixture.debugElement.query(By.css('#attach-file'));
+            expect(inputDebugElement.nativeElement.multiple).toBe(true);
+            inputDebugElement.triggerEventHandler('change', {
+                target: { files }
+            });
+            fixture.detectChanges();
+            expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+            expect(element.querySelector('#file-1166-icon')).not.toBeNull();
+        });
+    }));
+
     describe('when is readonly', () => {
 
         it('should show empty list message when there are no file', async(() => {
