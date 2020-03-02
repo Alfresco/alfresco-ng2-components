@@ -32,7 +32,7 @@ export class SelectAppsDialog {
     }
 
     async selectApp(appName: string): Promise<void> {
-       await this.appsDropdown.clickDropdownWithOption(appName);
+       await this.appsDropdown.selectDropdownOption(appName);
     }
     async getTitle(): Promise<string> {
         return BrowserActions.getText(this.title);
