@@ -96,7 +96,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await browser.sleep(1000);
 
-        await expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true);
+        await FileBrowserUtil.isFileDownloaded(downloadedPngFile);
 
         await attachmentListPage.removeFile(pngFile.name);
         await attachmentListPage.checkFileIsRemoved(pngFile.name);
@@ -127,7 +127,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await browser.sleep(1000);
 
-        await expect(await FileBrowserUtil.isFileDownloaded(downloadedPngFile)).toBe(true);
+        await FileBrowserUtil.isFileDownloaded(downloadedPngFile);
 
         await attachmentListPage.removeFile(pngFile.name);
         await attachmentListPage.checkFileIsRemoved(pngFile.name);

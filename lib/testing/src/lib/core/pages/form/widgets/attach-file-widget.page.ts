@@ -26,6 +26,12 @@ export class AttachFileWidgetPage {
     uploadLocator = by.css('button[id="attachfile"]');
     localStorageButton: ElementFinder = element(by.css('input[id="attachfile"]'));
     filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
+    attachFileWidget: ElementFinder = element(by.css('#attachfile'));
+    attachedFileMenu: ElementFinder = element(by.css('mat-list-item button'));
+    attachedFileOptions: ElementFinder = element(by.css('.mat-menu-panel .mat-menu-content'));
+    viewFileOptionButton: ElementFinder = element(by.css(`.mat-menu-panel .mat-menu-content button[id$="show-file"]`));
+    downloadFileOptionButton: ElementFinder = element(by.css(`.mat-menu-panel .mat-menu-content button[id$="download-file"]`));
+    removeFileOptionButton: ElementFinder = element(by.css(`.mat-menu-panel .mat-menu-content button[id$="remove"]`));
 
     async attachFile(fieldId, fileLocation): Promise<void> {
         browser.setFileDetector(new remote.FileDetector());
@@ -46,5 +52,39 @@ export class AttachFileWidgetPage {
         const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
         await BrowserActions.click(fileView);
         await browser.actions().doubleClick(fileView).perform();
+    }
+
+    async attachFileWidgetDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.attachFileWidget);
+    }
+
+    async toggleAttachedFileMenu(): Promise<void> {
+        await BrowserActions.click(this.attachedFileMenu);
+    }
+
+    async checkAttachFileOptionsActiveForm(): Promise <void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.attachedFileOptions);
+        await BrowserVisibility.waitUntilElementIsVisible(this.viewFileOptionButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.downloadFileOptionButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.removeFileOptionButton);
+    }
+
+    async checkAttachFileOptionsCompletedForm(): Promise <void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.attachedFileOptions);
+        await BrowserVisibility.waitUntilElementIsVisible(this.viewFileOptionButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.downloadFileOptionButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.removeFileOptionButton);
+    }
+
+    async viewAttachedFile(): Promise<void> {
+        await BrowserActions.click(this.viewFileOptionButton);
+    }
+
+    async downloadFile(): Promise<void> {
+        await BrowserActions.click(this.downloadFileOptionButton);
+    }
+
+    async removeAttachedFile(): Promise<void> {
+        await BrowserActions.click(this.removeFileOptionButton);
     }
 }

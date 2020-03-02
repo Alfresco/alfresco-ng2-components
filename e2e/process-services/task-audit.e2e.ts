@@ -73,7 +73,7 @@ describe('Task Audit', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(taskTaskApp);
 
         await taskPage.taskDetails().clickAuditLogButton();
-        await expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
+        await FileBrowserUtil.isFileDownloaded(auditLogFile);
     });
 
     it('[C260389] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone completed task', async () => {
@@ -88,7 +88,7 @@ describe('Task Audit', () => {
         await expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskTaskApp + ' completed');
 
         await taskPage.taskDetails().clickAuditLogButton();
-        await expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
+        await FileBrowserUtil.isFileDownloaded(auditLogFile);
     });
 
     it('[C263944] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone completed task', async () => {
@@ -105,7 +105,7 @@ describe('Task Audit', () => {
         await expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskCompleteCustomApp + ' completed');
 
         await taskPage.taskDetails().clickAuditLogButton();
-        await expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
+        await FileBrowserUtil.isFileDownloaded(auditLogFile);
     });
 
     it('[C263943] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone running task', async () => {
@@ -117,6 +117,6 @@ describe('Task Audit', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(taskCustomApp);
 
         await taskPage.taskDetails().clickAuditLogButton();
-        await expect(await FileBrowserUtil.isFileDownloaded(auditLogFile)).toBe(true);
+        await FileBrowserUtil.isFileDownloaded(auditLogFile);
     });
 });

@@ -382,8 +382,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.selectFolderWithCommandKey('subfolder6');
         await contentServicesPage.clickDownloadButton();
 
-        await expect(await FileBrowserUtil.isFileDownloaded('subfolder6.zip')
-        ).toBe(true, `subfolder6 not downloaded`);
+        await FileBrowserUtil.isFileDownloaded('subfolder6.zip');
 
         await contentServicesPage.deleteSubFolderUnderRoot(newFolderModel.name, folderTwoModel.name);
     });
