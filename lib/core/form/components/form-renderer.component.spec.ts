@@ -512,7 +512,7 @@ describe('Form Renderer Component', () => {
             const inputElementTestTwo: HTMLInputElement = fixture.nativeElement.querySelector('#textTwo');
             expectElementToBeVisible(inputElementTestOne);
             let elementThreeContainer = fixture.nativeElement.querySelector('#field-textThree-container');
-            let elementTwoContainer = fixture.nativeElement.querySelector('#field-textTwo-container');
+            const elementTwoContainer = fixture.nativeElement.querySelector('#field-textTwo-container');
             let elementFourContainer = fixture.nativeElement.querySelector('#field-textFour-container');
             expectElementToBeHidden(elementThreeContainer);
             expectElementToBeHidden(elementTwoContainer);
