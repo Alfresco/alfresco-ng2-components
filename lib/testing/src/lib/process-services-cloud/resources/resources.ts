@@ -27,7 +27,22 @@ export const ACTIVITI_CLOUD_APPS: any = {
             uploadFileProcess: 'uploadfileprocess',
             processwithstarteventform: 'processwithstarteventform',
             processwithjsonfilemapping: 'processwithjsonfilemapping',
-            assigneeProcess: 'assigneeprocess'
+            assigneeProcess: 'assigneeprocess',
+            errorStartEventProcess: {
+                process_name: 'errorstartevent',
+                error_id: 'Error_END_EVENT',
+                error_code: '123'
+            },
+            errorBoundaryEventProcess: {
+                process_name: 'errorboundaryevent',
+                error_id: 'Error_END_EVENT',
+                error_code: '567'
+            },
+            errorExclusiveGateProcess: {
+                process_name: 'errorexclusivegate',
+                error_id: 'Error_OK',
+                error_code: '200'
+            }
         },
         forms: {
             starteventform: 'starteventform',
