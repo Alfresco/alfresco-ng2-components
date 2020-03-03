@@ -68,8 +68,6 @@ describe('TaskFiltersComponent', () => {
         error: 'wrong request'
     };
 
-    const mockErrorFilterPromise = Promise.reject(mockErrorFilterList);
-
     let component: TaskFiltersComponent;
     let fixture: ComponentFixture<TaskFiltersComponent>;
 
@@ -92,6 +90,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
+        const mockErrorFilterPromise = Promise.reject(mockErrorFilterList);
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(mockErrorFilterPromise));
 
         const appId = '1';

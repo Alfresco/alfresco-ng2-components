@@ -21,8 +21,11 @@ import { FormFieldModel, FormFieldTypes, FormModel } from './../widgets/core/ind
 import { TextWidgetComponent, CheckboxWidgetComponent } from '../widgets/index';
 import { FormFieldComponent } from './form-field.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
-import { CoreModule } from '../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormBaseModule } from '../../form-base.module';
+import { TranslationService } from '../../../services/translation.service';
+import { TranslationMock } from '../../../mock/translation.service.mock';
+import { TranslateStore } from '@ngx-translate/core';
 
 describe('FormFieldComponent', () => {
 
@@ -35,7 +38,11 @@ describe('FormFieldComponent', () => {
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            CoreModule.forRoot()
+            FormBaseModule
+        ],
+        providers: [
+            { provide: TranslationService, useClass: TranslationMock },
+            TranslateStore
         ]
     });
 
@@ -143,5 +150,58 @@ describe('FormFieldComponent', () => {
         component.field.isVisible = false;
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').hidden).toBeTruthy();
+    });
+
+    it('[C213878] - Should fields be correctly rendered when filled with process variables', async () => {
+        const field = new FormFieldModel(form, {
+            fieldType: 'HyperlinkRepresentation',
+            id: 'label2',
+            name: 'Label2',
+            type: 'hyperlink',
+            value: null,
+            required: false,
+            readOnly: false,
+            overrideId: false,
+            colspan: 1,
+            placeholder: null,
+            minLength: 0,
+            maxLength: 0,
+            minValue: null,
+            maxValue: null,
+            regexPattern: null,
+            optionType: null,
+            hasEmptyValue: null,
+            options: null,
+            restUrl: null,
+            restResponsePath: null,
+            restIdProperty: null,
+            restLabelProperty: null,
+            tab: null,
+            className: null,
+            params: {
+                existingColspan: 1,
+                maxColspan: 2
+            },
+            dateDisplayFormat: null,
+            layout: {
+                row: -1,
+                column: -1,
+                colspan: 1
+            },
+            sizeX: 1,
+            sizeY: 1,
+            row: -1,
+            col: -1,
+            visibilityCondition: null,
+            hyperlinkUrl: 'testtest',
+            displayText: null
+        });
+
+        component.field = field;
+        fixture.detectChanges();
+        const hyperlink: HTMLLinkElement = fixture.nativeElement.querySelector('#field-label2-container hyperlink-widget a');
+        expect(hyperlink).not.toBeNull();
+        expect(hyperlink.href).toBe('http://testtest/');
+        expect(hyperlink.textContent).toBe('testtest');
     });
 });
