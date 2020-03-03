@@ -28,6 +28,9 @@ import {
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 
+const MIN_CANCELLABLE_FILE_SIZE = 1000000;
+const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
+
 @Injectable({
     providedIn: 'root'
 })
@@ -343,6 +346,6 @@ export class UploadService {
     }
 
     private isSaveToAbortFile(file: FileModel): boolean {
-        return file.size > 1000000 && file.progress.percent < 50;
+        return file.size > MIN_CANCELLABLE_FILE_SIZE && file.progress.percent < MAX_CANCELLABLE_FILE_PERCENTAGE;
     }
 }
