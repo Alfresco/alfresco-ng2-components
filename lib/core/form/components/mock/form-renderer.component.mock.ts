@@ -1026,3 +1026,311 @@ export const numberMinMaxForm = {
                }
            }
 };
+
+export const textWidgetVisibility = {
+    formRepresentation: {
+        id: 'form-2604b12b-f0b9-4633-9eae-aa24b659f98e',
+        name: 'TextVisibility',
+        description: '',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: 'c5fa3358-c6b6-46b1-81cf-c8909150ed4c',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'textOne',
+                                name: 'textOne',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: {},
+                                params: { existingColspan: 1, maxColspan: 2 }
+                            }
+                        ],
+                        '2': [
+                            {
+                                id: 'textTwo',
+                                name: 'textTwo',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: {
+                                    leftFormFieldId: 'textOne',
+                                    leftRestResponseId: '',
+                                    operator: '==',
+                                    rightValue: 'Test',
+                                    rightType: null,
+                                    rightFormFieldId: '',
+                                    rightRestResponseId: '',
+                                    nextConditionOperator: ''
+                                },
+                                params: { existingColspan: 1, maxColspan: 2 }
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: '7a7734e1-af6c-4ea4-adcb-76725c0544db',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'textThree',
+                                name: 'textThree',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: {
+                                    leftFormFieldId: 'textOne',
+                                    leftRestResponseId: '',
+                                    operator: '==',
+                                    rightValue: 'Test',
+                                    rightType: null,
+                                    rightFormFieldId: '',
+                                    rightRestResponseId: '',
+                                    nextConditionOperator: 'and',
+                                    nextCondition: {
+                                        leftFormFieldId: 'textTwo',
+                                        leftRestResponseId: '',
+                                        operator: 'empty',
+                                        rightValue: '',
+                                        rightType: null,
+                                        rightFormFieldId: '',
+                                        rightRestResponseId: '',
+                                        nextConditionOperator: ''
+                                    }
+                                },
+                                params: { existingColspan: 1, maxColspan: 2 }
+                            }
+                        ],
+                        '2': [
+                            {
+                                id: 'textFour',
+                                name: 'textFour',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: {
+                                    leftFormFieldId: 'textOne',
+                                    leftRestResponseId: '',
+                                    operator: 'empty',
+                                    rightValue: '',
+                                    rightType: null,
+                                    rightFormFieldId: '',
+                                    rightRestResponseId: '',
+                                    nextConditionOperator: 'or',
+                                    nextCondition: {
+                                        leftFormFieldId: 'textTwo',
+                                        leftRestResponseId: '',
+                                        operator: '==',
+                                        rightValue: '',
+                                        rightType: null,
+                                        rightFormFieldId: 'textOne',
+                                        rightRestResponseId: '',
+                                        nextConditionOperator: '',
+                                        nextCondition: null
+                                    }
+                                },
+                                params: { existingColspan: 1, maxColspan: 2 }
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};
+
+export const numberWidgetVisibilityForm = {
+    formRepresentation: {
+        id: 'form-22c19b74-c954-43d7-9fbb-6a6d03a4bce0',
+        name: 'numbervisb',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: '78728404-ebab-4507-8986-c7f64e4b4d2a',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'Text0hs0gt',
+                                name: 'TextOne',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            },
+                            {
+                                id: 'Number0wxaur',
+                                name: 'Number',
+                                type: 'integer',
+                                colspan: 2,
+                                placeholder: null,
+                                minValue: null,
+                                maxValue: null,
+                                required: false,
+                                visibilityCondition: {
+                                    leftType: 'field',
+                                    leftValue: 'Text0hs0gt',
+                                    operator: '==',
+                                    rightValue: 'aaa',
+                                    rightType: 'value',
+                                    nextConditionOperator: 'and',
+                                    nextCondition: {
+                                        leftType: 'field',
+                                        leftValue: 'Text0cuqet',
+                                        operator: '!=',
+                                        rightValue: 'aaa',
+                                        rightType: 'value',
+                                        nextConditionOperator: '',
+                                        nextCondition: null
+                                    }
+                                },
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        '2': [
+                            {
+                                id: 'Text0cuqet',
+                                name: 'TextTwo',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};
+
+export const radioWidgetVisibiltyForm = {
+    formRepresentation: {
+        id: 'form-e0d77062-9b04-40d6-beed-6b63045f63b4',
+        name: 'RadioVisibility',
+        description: '',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: 'dd7c7415-2f00-4a91-a2b9-c4afcd8a4a8a',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'Text0cee7g',
+                                name: 'Text',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: { existingColspan: 1, maxColspan: 2 }
+                            }
+                        ],
+                        '2': [
+                            {
+                                id: 'Radiobuttons03rkbo',
+                                name: 'Radio buttons',
+                                type: 'radio-buttons',
+                                required: false,
+                                colspan: 1,
+                                optionType: 'manual',
+                                options: [
+                                    { id: 'option_1', name: 'Option 1' },
+                                    { id: 'option_2', name: 'Option 2' }
+                                ],
+                                restUrl: null,
+                                restResponsePath: null,
+                                restIdProperty: null,
+                                restLabelProperty: null,
+                                visibilityCondition: {
+                                    leftFormFieldId: 'Text0cee7g',
+                                    leftRestResponseId: '',
+                                    operator: '==',
+                                    rightValue: 'Radio',
+                                    rightType: null,
+                                    rightFormFieldId: '',
+                                    rightRestResponseId: '',
+                                    nextConditionOperator: '',
+                                    nextCondition: null
+                                },
+                                params: { existingColspan: 1, maxColspan: 2 }
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};
