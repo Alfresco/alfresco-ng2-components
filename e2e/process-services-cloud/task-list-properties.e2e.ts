@@ -26,6 +26,7 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { TaskListCloudConfiguration } from './config/task-list-cloud.config';
 import moment = require('moment');
+import { taskFilterConfiguration } from './config/task-filter.config';
 
 describe('Edit task filters and task list properties', () => {
 
@@ -94,42 +95,7 @@ describe('Edit task filters and task list properties', () => {
 
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
-        await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
-            'filterProperties': [
-                'taskId',
-                'appName',
-                'status',
-                'assignee',
-                'taskName',
-                'parentTaskId',
-                'priority',
-                'standalone',
-                'owner',
-                'processDefinitionId',
-                'processInstanceId',
-                'lastModified',
-                'sort',
-                'order'
-            ],
-            'sortProperties': [
-                'id',
-                'name',
-                'createdDate',
-                'priority',
-                'processDefinitionId',
-                'processInstanceId',
-                'parentTaskId',
-                'priority',
-                'standalone',
-                'owner',
-                'assignee'
-            ],
-            'actions': [
-                'save',
-                'saveAs',
-                'delete'
-            ]
-        }));
+        await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify(taskFilterConfiguration));
     }, 5 * 60 * 1000);
 
     afterAll(async (done) => {

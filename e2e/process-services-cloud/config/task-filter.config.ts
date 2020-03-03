@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 export const taskFilterConfiguration =  {
     'filterProperties': [
         'taskId',
