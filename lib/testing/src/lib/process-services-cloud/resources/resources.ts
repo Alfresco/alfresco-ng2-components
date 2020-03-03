@@ -54,7 +54,11 @@ export const ACTIVITI_CLOUD_APPS: any = {
         security: [
             { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser', 'processadminuser'] },
             { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser', 'salesuser'] }
-        ]
+        ],
+        tasks: {
+            uploadFileTask: 'UploadFileTask',
+            candidateUserTask: 'candidateUserTask'
+        }
     },
     SIMPLE_APP: {
         name: 'simpleapp',

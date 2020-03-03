@@ -116,6 +116,18 @@ describe('TaskFormCloudComponent', () => {
 
     describe('Claim/Unclaim buttons', () => {
 
+        it('should not show release button for standalone task', async(() => {
+            component.taskId = 'task1';
+            component.loadTask();
+            fixture.detectChanges();
+            getTaskSpy.and.returnValue(of(taskDetails));
+
+            fixture.whenStable().then(() => {
+                const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
+                expect(unclaimBtn).toBeNull();
+            });
+        }));
+
         it('should show release button when task has candidate users and is assigned to one of these users', async(() => {
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
 
