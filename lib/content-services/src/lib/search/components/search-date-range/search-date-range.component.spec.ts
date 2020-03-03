@@ -152,7 +152,7 @@ describe('SearchDateRangeComponent', () => {
 
         it('should show date-format error when Invalid found', async(() => {
             fixture.detectChanges();
-            const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"');
+            const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
             input.value = '10-05-18';
             input.dispatchEvent(new Event('focusout'));
             fixture.detectChanges();
@@ -163,7 +163,7 @@ describe('SearchDateRangeComponent', () => {
 
         it('should not show date-format error when valid found', async(() => {
             fixture.detectChanges();
-            const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"');
+            const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
             input.value = '10/10/2018';
             input.dispatchEvent(new Event('focusout'));
             fixture.detectChanges();
@@ -173,11 +173,29 @@ describe('SearchDateRangeComponent', () => {
             });
         }));
 
-        it('should be able to set a maximum date', async(() => {
+        it('should have no maximum date by default', async(() => {
+            fixture.detectChanges();
+
+            expect(fixture.debugElement.nativeElement.querySelector('input[ng-reflect-max]')).toBeNull();
+        }));
+
+        it('should be able to set a fixed maximum date', async(() => {
             component.settings = { field: 'cm:created', dateFormat: dateFormatFixture, maxDate: maxDate };
             fixture.detectChanges();
 
-            const inputs = fixture.debugElement.nativeElement.querySelectorAll('[ng-reflect-max="Tue Mar 10 2020 23:59:59 GMT+0"]');
+            const inputs = fixture.debugElement.nativeElement.querySelectorAll('input[ng-reflect-max="Tue Mar 10 2020 23:59:59 GMT+0"]');
+            expect(inputs[0]).toBeDefined();
+            expect(inputs[0]).not.toBeNull();
+            expect(inputs[1]).toBeDefined();
+            expect(inputs[1]).not.toBeNull();
+        }));
+
+        it('should be able to set the maximum date to today', async(() => {
+            component.settings = { field: 'cm:created', dateFormat: dateFormatFixture, maxDate: 'today' };
+            fixture.detectChanges();
+            const today = adapter.today().endOf('day').toString().slice(0,-3);
+
+            const inputs = fixture.debugElement.nativeElement.querySelectorAll('input[ng-reflect-max="' + today + '"]');
             expect(inputs[0]).toBeDefined();
             expect(inputs[0]).not.toBeNull();
             expect(inputs[1]).toBeDefined();
