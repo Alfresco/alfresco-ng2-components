@@ -42,7 +42,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
                 process_name: 'errorexclusivegate',
                 error_id: 'Error_OK',
                 error_code: '200'
-            }  
+            }
         },
         forms: {
             starteventform: 'starteventform',
