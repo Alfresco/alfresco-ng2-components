@@ -73,8 +73,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         private uploadService: UploadService,
         private changeDetector: ChangeDetectorRef,
         private userPreferencesService: UserPreferencesService,
-        private elementRef: ElementRef
-        ) {
+        private elementRef: ElementRef) {
     }
 
     ngOnInit() {
@@ -104,9 +103,9 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             });
 
         this.counterSubscription = merge(
-                this.uploadService.fileUploadComplete,
-                this.uploadService.fileUploadDeleted
-            )
+            this.uploadService.fileUploadComplete,
+            this.uploadService.fileUploadDeleted
+        )
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(event => {
                 this.totalCompleted = event.totalComplete;
@@ -130,11 +129,11 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(objId => {
                 if (this.filesUploadingList) {
-                    const file = this.filesUploadingList.find((item) => {
-                        return item.data.entry.id === objId;
+                    const uploadedFile = this.filesUploadingList.find((file) => {
+                        return file.data ? file.data.entry.id === objId : false;
                     });
-                    if (file) {
-                        file.status = FileUploadStatus.Cancelled;
+                    if (uploadedFile) {
+                        uploadedFile.status = FileUploadStatus.Cancelled;
                         this.changeDetector.detectChanges();
                     }
                 }

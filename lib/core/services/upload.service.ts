@@ -28,6 +28,9 @@ import {
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 
+const MIN_CANCELLABLE_FILE_SIZE = 1000000;
+const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
+
 @Injectable({
     providedIn: 'root'
 })
@@ -39,6 +42,7 @@ export class UploadService {
     private totalError: number = 0;
     private excludedFileList: string[] = [];
     private matchingOptions: any = null;
+    private abortedFile: string;
 
     activeTask: Promise<any> = null;
     queue: FileModel[] = [];
@@ -113,7 +117,7 @@ export class UploadService {
 
                 const promise = this.beginUpload(file, emitter);
                 this.activeTask = promise;
-                this.cache[file.id] = promise;
+                this.cache[file.name] = promise;
 
                 const next = () => {
                     this.activeTask = null;
@@ -132,15 +136,21 @@ export class UploadService {
 
     /**
      * Cancels uploading of files.
+     * If the file is smaller than 1 MB the file will be uploaded and then the node deleted
+     * to prevent having files that were aborted but still uploaded.
      * @param files One or more separate parameters or an array of files specifying uploads to cancel
      */
     cancelUpload(...files: FileModel[]) {
         files.forEach((file) => {
-            const promise = this.cache[file.id];
-
+            const promise = this.cache[file.name];
             if (promise) {
-                promise.abort();
-                delete this.cache[file.id];
+                if (this.isSaveToAbortFile(file)) {
+                    promise.abort();
+                }
+                this.abortedFile = file.name;
+                delete this.cache[file.name];
+                promise.next();
+
             } else {
                 const performAction = this.getAction(file);
                 performAction();
@@ -200,7 +210,6 @@ export class UploadService {
     private beginUpload(file: FileModel, emitter: EventEmitter<any>): any {
 
         const promise = this.getUploadPromise(file);
-
         promise.on('progress', (progress: FileUploadProgress) => {
             this.onUploadProgress(file, progress);
         })
@@ -217,12 +226,20 @@ export class UploadService {
                 }
             })
             .on('success', (data) => {
-                this.onUploadComplete(file, data);
-                if (emitter) {
-                    emitter.emit({ value: data });
+                if (this.abortedFile === file.name) {
+                    this.onUploadAborted(file);
+                    this.deleteAbortedNode(data.entry.id);
+                    if (emitter) {
+                        emitter.emit({ value: 'File deleted' });
+                    }
+                } else {
+                    this.onUploadComplete(file, data);
+                    if (emitter) {
+                        emitter.emit({ value: data });
+                    }
                 }
             })
-            .catch(() => {});
+            .catch(() => { });
 
         return promise;
     }
@@ -249,13 +266,13 @@ export class UploadService {
 
     private onUploadError(file: FileModel, error: any): void {
         if (file) {
-            file.errorCode = ( error || {} ).status;
+            file.errorCode = (error || {}).status;
             file.status = FileUploadStatus.Error;
             this.totalError++;
 
-            const promise = this.cache[file.id];
+            const promise = this.cache[file.name];
             if (promise) {
-                delete this.cache[file.id];
+                delete this.cache[file.name];
             }
 
             const event = new FileUploadErrorEvent(file, error, this.totalError);
@@ -269,10 +286,9 @@ export class UploadService {
             file.status = FileUploadStatus.Complete;
             file.data = data;
             this.totalComplete++;
-
-            const promise = this.cache[file.id];
+            const promise = this.cache[file.name];
             if (promise) {
-                delete this.cache[file.id];
+                delete this.cache[file.name];
             }
 
             const event = new FileUploadCompleteEvent(file, this.totalComplete, data, this.totalAborted);
@@ -286,15 +302,9 @@ export class UploadService {
             file.status = FileUploadStatus.Aborted;
             this.totalAborted++;
 
-            const promise = this.cache[file.id];
-            if (promise) {
-                delete this.cache[file.id];
-            }
-
             const event = new FileUploadEvent(file, FileUploadStatus.Aborted);
             this.fileUpload.next(event);
             this.fileUploadAborted.next(event);
-            promise.next();
         }
     }
 
@@ -319,7 +329,7 @@ export class UploadService {
         }
     }
 
-    private getAction(file) {
+    private getAction(file: FileModel) {
         const actions = {
             [FileUploadStatus.Pending]: () => this.onUploadCancelled(file),
             [FileUploadStatus.Deleted]: () => this.onUploadDeleted(file),
@@ -327,5 +337,15 @@ export class UploadService {
         };
 
         return actions[file.status];
+    }
+
+    private deleteAbortedNode(nodeId: string) {
+        this.apiService.getInstance().core.nodesApi.deleteNode(nodeId, { permanent: true })
+            .then(() => this.abortedFile = undefined);
+
+    }
+
+    private isSaveToAbortFile(file: FileModel): boolean {
+        return file.size > MIN_CANCELLABLE_FILE_SIZE && file.progress.percent < MAX_CANCELLABLE_FILE_PERCENTAGE;
     }
 }
