@@ -438,7 +438,7 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
     }
 
-    async uploadFolder(folderName): Promise<void> {
+    async uploadFolder(folderName: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
         await this.uploadFolderButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, folderName)));
         await BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
@@ -521,12 +521,12 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.dragAndDrop);
     }
 
-    async dragAndDropFile(file): Promise<void> {
+    async dragAndDropFile(file: string): Promise<void> {
         await this.checkDragAndDropDIsDisplayed();
         await this.dragAndDropAction.dropFile(this.dragAndDrop, file);
     }
 
-    async dragAndDropFolder(folderName): Promise<void> {
+    async dragAndDropFolder(folderName: string): Promise<void> {
         await this.checkDragAndDropDIsDisplayed();
         await this.dragAndDropAction.dropFolder(this.dragAndDrop, folderName);
     }
