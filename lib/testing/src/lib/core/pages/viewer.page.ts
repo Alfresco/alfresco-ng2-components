@@ -499,10 +499,6 @@ export class ViewerPage {
         await this.formControllersPage.enableToggle(this.showTabWithIconAndLabelSwitch);
     }
 
-    async checkDownloadButtonDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
-    }
-
     async checkDownloadButtonIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.downloadButton);
     }
@@ -542,6 +538,16 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.bugButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.timeButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.uploadButton);
+    }
+
+    async checkPreviewFileDefaultOptionsAreDisplayed(): Promise<void> {
+        await this.checkToolbarIsDisplayed();
+        await this.checkMoreActionsDisplayed();
+        await this.checkPrintButtonIsDisplayed();
+        await this.checkDownloadButtonIsDisplayed();
+        await this.checkFullScreenButtonIsDisplayed();
+        await this.checkLeftSideBarButtonIsDisplayed();
+        await this.checkInfoButtonIsDisplayed();
     }
 
     async disableMoreActions(): Promise<void> {

@@ -19,8 +19,6 @@ import { by, element, ElementFinder, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ProcessDetailsPage {
-
-    // Process Details
     processTitle: ElementFinder = element(by.css('mat-card-title[class="mat-card-title"]'));
     processDetailsMessage: ElementFinder = element(by.css('adf-process-instance-details div[class="ng-star-inserted"]'));
     processStatusField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-status"]'));
@@ -33,18 +31,13 @@ export class ProcessDetailsPage {
     processDescription: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-description"]'));
     showDiagramButtonDisabled: ElementFinder = element(by.css('button[id="show-diagram-button"][disabled]'));
     propertiesList: ElementFinder = element(by.css('div[class="adf-property-list"]'));
-    // Show Diagram
     showDiagramButton: ElementFinder = element(by.id('show-diagram-button'));
     diagramCanvas: ElementFinder = element(by.css('svg[xmlns="http://www.w3.org/2000/svg"]'));
     backButton: ElementFinder = element(by.css('app-show-diagram button[class="mat-mini-fab mat-accent"]'));
-    // Comments
     commentInput: ElementFinder = element(by.id('comment-input'));
-    // Audit Log
     auditLogButton: ElementFinder = element(by.css('button[adf-process-audit]'));
     auditLogEmptyListMessage: ElementFinder = element(by.css('.app-empty-list-header'));
-    // Cancel Process button
     cancelProcessButton: ElementFinder = element(by.css('div[data-automation-id="header-status"] > button'));
-    // Tasks
     activeTask: ElementFinder = element(by.css('div[data-automation-id="active-tasks"]'));
     startForm: ElementFinder = element(by.css('div[data-automation-id="start-form"]'));
     completedTask: ElementFinder = element(by.css('div[data-automation-id="completed-tasks"]'));
