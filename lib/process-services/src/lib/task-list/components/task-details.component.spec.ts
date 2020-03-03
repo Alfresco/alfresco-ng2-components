@@ -234,6 +234,8 @@ describe('TaskDetailsComponent', () => {
         beforeEach(async () => {
             component.taskId = '123';
             spyOn(formService, 'completeTaskForm').and.returnValue(of({}));
+            taskDetailsMock.formKey = '4';
+            getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
             fixture.detectChanges();
             await fixture.whenStable();
         });
