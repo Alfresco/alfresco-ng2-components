@@ -146,12 +146,39 @@ describe('UploadService', () => {
         });
     });
 
-    it('should make XHR abort request after the xhr abort is called', (done) => {
+    it('should abort file only if it\'s safe to abort', (done) => {
         const emitter = new EventEmitter();
 
-        const emitterDisposable = emitter.subscribe((e) => {
-            expect(e.value).toEqual('File aborted');
+        const emitterDisposable = emitter.subscribe((event) => {
+            expect(event.value).toEqual('File aborted');
             emitterDisposable.unsubscribe();
+            done();
+        });
+
+        const fileFake = new FileModel(<File> { name: 'fake-name', size: 10000000 });
+        service.addToQueue(fileFake);
+        service.uploadFilesInTheQueue(emitter);
+
+        const file = service.getQueue();
+        service.cancelUpload(...file);
+    });
+
+    it('should let file complete and then delete node if it\'s not safe to abort', (done) => {
+        const emitter = new EventEmitter();
+
+        const emitterDisposable = emitter.subscribe((event) => {
+            expect(event.value).toEqual('File deleted');
+            emitterDisposable.unsubscribe();
+
+            const deleteRequest = jasmine.Ajax.requests.mostRecent();
+            expect(deleteRequest.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/myNodeId?permanent=true');
+            expect(deleteRequest.method).toBe('DELETE');
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'text/plain',
+                responseText: 'File deleted'
+        });
             done();
         });
 
@@ -161,6 +188,20 @@ describe('UploadService', () => {
 
         const file = service.getQueue();
         service.cancelUpload(...file);
+
+        const request = jasmine.Ajax.requests.mostRecent();
+        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
+        expect(request.method).toBe('POST');
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'json',
+            responseText: {
+                entry: {
+                    id: 'myNodeId'
+                }
+            }
+        });
     });
 
     it('If newVersion is set, name should be a param', () => {
@@ -196,7 +237,7 @@ describe('UploadService', () => {
             done();
         });
         const filesFake = new FileModel(
-            <File> { name: 'fake-name', size: 10 },
+            <File> { name: 'fake-file-name', size: 10 },
             <FileUploadOptions> { parentId: '123', path: 'fake-dir' }
         );
         service.addToQueue(filesFake);

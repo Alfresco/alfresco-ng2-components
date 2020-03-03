@@ -54,8 +54,8 @@ export class FileUploadingListComponent {
     constructor(
         private uploadService: UploadService,
         private nodesApi: NodesApiService,
-        private translateService: TranslationService
-    ) {}
+        private translateService: TranslationService) {
+    }
 
     /**
      * Cancel file upload
@@ -91,16 +91,18 @@ export class FileUploadingListComponent {
     }
 
     /**
-     * Call the appropriate method for each file, depending on state
+     * Calls the appropriate methods for each file, depending on state
      */
     cancelAllFiles(): void {
-        this.getUploadingFiles().forEach((file) =>
-            this.uploadService.cancelUpload(file)
-        );
+        const deletedFiles: Observable<FileModel>[] = [];
 
-        const deletedFiles = this.files
-            .filter((file) => file.status === FileUploadStatus.Complete)
-            .map((file) => this.deleteNode(file));
+        this.files.forEach((file) => {
+            if (this.isUploadingFile(file)) {
+                this.uploadService.cancelUpload(file);
+            } else if (file.status === FileUploadStatus.Complete) {
+                deletedFiles.push(this.deleteNode(file));
+            }
+        });
 
         forkJoin(...deletedFiles).subscribe((files: FileModel[]) => {
             const errors = files.filter(
@@ -192,12 +194,9 @@ export class FileUploadingListComponent {
         this.error.emit(messageError);
     }
 
-    private getUploadingFiles(): FileModel[] {
-        return this.files.filter(
-            item =>
-                item.status === FileUploadStatus.Pending ||
-                item.status === FileUploadStatus.Progress ||
-                item.status === FileUploadStatus.Starting
-        );
+    private isUploadingFile(file: FileModel): boolean {
+        return file.status === FileUploadStatus.Pending ||
+            file.status === FileUploadStatus.Starting ||
+            file.status === FileUploadStatus.Progress;
     }
 }
