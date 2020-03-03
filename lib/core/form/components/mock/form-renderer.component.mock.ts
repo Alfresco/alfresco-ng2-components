@@ -1045,8 +1045,8 @@ export const textWidgetVisibility = {
                     fields: {
                         '1': [
                             {
-                                id: '1',
-                                name: '1',
+                                id: 'textOne',
+                                name: 'textOne',
                                 type: 'text',
                                 required: false,
                                 colspan: 1,
@@ -1060,8 +1060,8 @@ export const textWidgetVisibility = {
                         ],
                         '2': [
                             {
-                                id: '2',
-                                name: '2',
+                                id: 'textTwo',
+                                name: 'textTwo',
                                 type: 'text',
                                 required: false,
                                 colspan: 1,
@@ -1070,7 +1070,7 @@ export const textWidgetVisibility = {
                                 maxLength: 0,
                                 regexPattern: null,
                                 visibilityCondition: {
-                                    leftFormFieldId: '1',
+                                    leftFormFieldId: 'textOne',
                                     leftRestResponseId: '',
                                     operator: '==',
                                     rightValue: 'Test',
@@ -1093,8 +1093,8 @@ export const textWidgetVisibility = {
                     fields: {
                         '1': [
                             {
-                                id: '3',
-                                name: '3',
+                                id: 'textThree',
+                                name: 'textThree',
                                 type: 'text',
                                 required: false,
                                 colspan: 1,
@@ -1103,7 +1103,7 @@ export const textWidgetVisibility = {
                                 maxLength: 0,
                                 regexPattern: null,
                                 visibilityCondition: {
-                                    leftFormFieldId: '1',
+                                    leftFormFieldId: 'textOne',
                                     leftRestResponseId: '',
                                     operator: '==',
                                     rightValue: 'Test',
@@ -1112,7 +1112,7 @@ export const textWidgetVisibility = {
                                     rightRestResponseId: '',
                                     nextConditionOperator: 'and',
                                     nextCondition: {
-                                        leftFormFieldId: '2',
+                                        leftFormFieldId: 'textTwo',
                                         leftRestResponseId: '',
                                         operator: 'empty',
                                         rightValue: '',
@@ -1127,8 +1127,8 @@ export const textWidgetVisibility = {
                         ],
                         '2': [
                             {
-                                id: '4',
-                                name: '4',
+                                id: 'textFour',
+                                name: 'textFour',
                                 type: 'text',
                                 required: false,
                                 colspan: 1,
@@ -1137,7 +1137,7 @@ export const textWidgetVisibility = {
                                 maxLength: 0,
                                 regexPattern: null,
                                 visibilityCondition: {
-                                    leftFormFieldId: '1',
+                                    leftFormFieldId: 'textOne',
                                     leftRestResponseId: '',
                                     operator: 'empty',
                                     rightValue: '',
@@ -1146,12 +1146,12 @@ export const textWidgetVisibility = {
                                     rightRestResponseId: '',
                                     nextConditionOperator: 'or',
                                     nextCondition: {
-                                        leftFormFieldId: '2',
+                                        leftFormFieldId: 'textTwo',
                                         leftRestResponseId: '',
                                         operator: '==',
                                         rightValue: '',
                                         rightType: null,
-                                        rightFormFieldId: '1',
+                                        rightFormFieldId: 'textOne',
                                         rightRestResponseId: '',
                                         nextConditionOperator: '',
                                         nextCondition: null
