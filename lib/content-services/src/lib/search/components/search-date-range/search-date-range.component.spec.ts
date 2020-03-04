@@ -193,7 +193,7 @@ describe('SearchDateRangeComponent', () => {
         it('should be able to set the maximum date to today', async(() => {
             component.settings = { field: 'cm:created', dateFormat: dateFormatFixture, maxDate: 'today' };
             fixture.detectChanges();
-            const today = adapter.today().endOf('day').toString().slice(0,-3);
+            const today = adapter.today().endOf('day').toString().slice(0, -3);
 
             const inputs = fixture.debugElement.nativeElement.querySelectorAll('input[ng-reflect-max="' + today + '"]');
             expect(inputs[0]).toBeDefined();

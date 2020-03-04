@@ -379,7 +379,7 @@
           "settings": {
             "field": "cm:created",
             "dateFormat": "DD-MMM-YY",
-            "maxDate": "10-Mar-20"
+            "maxDate": "today"
           }
         }
       },
