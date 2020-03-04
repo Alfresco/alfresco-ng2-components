@@ -39,6 +39,7 @@ Implements a date range [widget](../../../lib/testing/src/lib/core/pages/form/wi
 | ---- | ---- | ----------- |
 | field | string | Field to apply the query to. Required value |
 | dateFormat | string | Date format. Dates used by the datepicker are [Moment.js](https://momentjs.com/docs/#/parsing/string-format/) instances, so you can use any date format supported by Moment. Default is 'DD/MM/YYYY'. |
+| maxDate | string | A fixed date or the string `"today"` that will set the maximum searchable date. Default is no maximum. |
 
 ## Details
 
@@ -50,7 +51,7 @@ in a search query.
 
 You can set the date range picker to work with any date format your app requires. You can use
 any date format supported by [Moment.js](https://momentjs.com/docs/#/parsing/string-format/)
-in the `dateFormat` setting:
+in the `dateFormat` and in the `maxDate` setting:
 
 ```json
 {
@@ -64,7 +65,8 @@ in the `dateFormat` setting:
                     "selector": "date-range",
                     "settings": {
                         "field": "cm:created",
-                        "dateFormat": "DD-MMM-YY"
+                        "dateFormat": "DD-MMM-YY",
+                        "maxDate": "02-Mar-20"
                     }
                 }
             }

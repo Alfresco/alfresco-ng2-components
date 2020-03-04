@@ -378,7 +378,8 @@
           "selector": "date-range",
           "settings": {
             "field": "cm:created",
-            "dateFormat": "DD-MMM-YY"
+            "dateFormat": "DD-MMM-YY",
+            "maxDate": "today"
           }
         }
       },

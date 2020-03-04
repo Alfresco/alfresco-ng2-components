@@ -6,7 +6,7 @@
                 [errorStateMatcher]="matcher"
                 placeholder="{{ 'SEARCH.FILTER.RANGE.FROM-DATE' | translate }}"
                 [matDatepicker]="fromDatepicker"
-                [max]="maxDate"
+                [max]="getFromMaxDate()"
                 (focusout)="onChangedHandler($event, from)"
                 data-automation-id="date-range-from-input">
         <mat-datepicker-toggle matSuffix [for]="fromDatepicker" data-automation-id="date-range-from-date-toggle"></mat-datepicker-toggle>
