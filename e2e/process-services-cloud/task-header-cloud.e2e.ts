@@ -25,7 +25,9 @@ import {
     LoginSSOPage,
     StringUtil,
     TaskHeaderCloudPage,
-    TasksService
+    TasksService,
+    StartTasksCloudPage,
+    PeopleCloudComponentPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
@@ -35,6 +37,7 @@ import moment = require('moment');
 describe('Task Header cloud component', () => {
     const basicCreatedTaskName = StringUtil.generateRandomString();
     const completedTaskName = StringUtil.generateRandomString();
+    const unclaimedTaskName = StringUtil.generateRandomString();
     let basicCreatedTask: any;
     let basicCreatedDate: any;
     let completedTask: any;
@@ -46,6 +49,7 @@ describe('Task Header cloud component', () => {
     let defaultDate: string;
     let groupInfo: any;
     let testUser: any;
+    let unclaimedTask: any;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const priority = 30;
     const description = 'descriptionTask';
@@ -59,6 +63,8 @@ describe('Task Header cloud component', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const startTaskCloudPage = new StartTasksCloudPage();
+    const peopleCloudComponentPage = new PeopleCloudComponentPage();
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
     let tasksService: TasksService;
     let identityService: IdentityService;
@@ -78,6 +84,7 @@ describe('Task Header cloud component', () => {
         tasksService = new TasksService(apiService);
 
         const createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
+        unclaimedTask = await tasksService.createStandaloneTask(unclaimedTaskName, simpleApp);
 
         await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
 
@@ -171,6 +178,55 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getParentName()).toEqual(basicCreatedTask.entry.name);
         await expect(await taskHeaderCloudPage.getParentTaskId())
             .toEqual(subTask.entry.parentTaskId === null ? '' : subTask.entry.parentTaskId);
+    });
+
+    it('[C309698] - Should validate the Priority field', async () => {
+        const myTaskName = `Test_C309698_${StringUtil.generateRandomString()}`;
+        await tasksCloudDemoPage.clickStartNewTaskButton();
+        await startTaskCloudPage.addName(myTaskName);
+        await startTaskCloudPage.typePriorityOf('50');
+        await startTaskCloudPage.clickStartButton();
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(myTaskName);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow(myTaskName);
+        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+
+        await taskHeaderCloudPage.priorityCardTextItem.clickOnEditButton();
+        await taskHeaderCloudPage.priorityCardTextItem.enterTextField('$$%£W21');
+        await taskHeaderCloudPage.priorityCardTextItem.clickOnSaveButton();
+        const errorMessage = await taskHeaderCloudPage.priorityCardTextItem.getErrorMessage();
+        await expect(errorMessage).toBe('Enter a different value');
+
+        await taskHeaderCloudPage.priorityCardTextItem.enterTextField('600');
+        await taskHeaderCloudPage.priorityCardTextItem.clickOnSaveButton();
+        const currentValue = await taskHeaderCloudPage.priorityCardTextItem.getFieldValue();
+        await expect(currentValue).toBe('600');
+    });
+
+    it('[C309698] - Should validate the Priority field', async () => {
+        await tasksCloudDemoPage.editTaskFilterCloud.openFilter();
+        await tasksCloudDemoPage.editTaskFilterCloud.setStatusFilterDropDown('ALL');
+        await tasksCloudDemoPage.editTaskFilterCloud.clearAssignee();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unclaimedTask.entry.name);
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow(unclaimedTask.entry.name);
+        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+        const currentAssignee = await taskHeaderCloudPage.assigneeCardTextItem.getFieldValue();
+        await expect(currentAssignee).toBe('No assignee');
+        await taskHeaderCloudPage.priorityCardTextItem.checkElementIsReadonly();
+        await taskHeaderCloudPage.statusCardTextItem.checkElementIsReadonly();
+    });
+
+    it('[C291991] - Should be able to assign a task only to the users that have access to the selected app', async () => {
+        await tasksCloudDemoPage.clickStartNewTaskButton();
+        const currentAssignee = await peopleCloudComponentPage.getChipAssignee();
+        await expect(currentAssignee).toContain(testUser.firstName, 'Invalid Assignee first name set for the new task');
+        await expect(currentAssignee).toContain(testUser.lastName, 'Invalid Assignee last name set for the new task');
+        await peopleCloudComponentPage.searchAssignee('hrUser');
+        await peopleCloudComponentPage.checkUserIsDisplayed('HR User');
+        await peopleCloudComponentPage.searchAssignee('processAdmin');
+        await peopleCloudComponentPage.checkUserIsDisplayed('Process Admin User');
+        await peopleCloudComponentPage.searchAssignee('modeler');
+        await peopleCloudComponentPage.checkOptionIsNotDisplayed();
     });
 
     describe('Default Date format', () => {

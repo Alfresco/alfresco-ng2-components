@@ -160,4 +160,12 @@ export class TasksCloudDemoPage {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Task ID: ' + taskId)));
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Action Type: ' + action)));
     }
+
+    async clickStartNewTaskButton() {
+        await BrowserVisibility.waitUntilElementIsClickable(this.createButton);
+        await BrowserActions.click(this.createButton);
+        await BrowserVisibility.waitUntilElementIsClickable(this.newTaskButton);
+        await BrowserActions.click(this.newTaskButton);
+    }
+
 }
