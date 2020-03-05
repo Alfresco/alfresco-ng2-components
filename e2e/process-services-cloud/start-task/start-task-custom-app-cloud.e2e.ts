@@ -199,13 +199,6 @@ describe('Start Task', () => {
         await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
     });
 
-    it('[C291953] Assignee field should display the logged user as default', async () => {
-        await tasksCloudDemoPage.openNewTaskForm();
-        await startTask.checkFormIsDisplayed();
-        await expect(await peopleCloudComponent.checkSelectedPeople(testUser.firstName));
-        await startTask.clickCancelButton();
-    });
-
     it('[C305050] Should be able to reassign the removed user when starting a new task', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();

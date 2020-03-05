@@ -66,12 +66,14 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             component.property = new CardViewKeyValuePairsItemModel({
                 label: 'Key Value Pairs',
                 value: mockData,
-                key: 'key-value-pairs'
+                key: 'key-value-pairs',
+                editable: false
             });
 
             component.ngOnChanges();
             fixture.detectChanges();
 
+            expect(component.isEditable()).toBe(false);
             const table = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__read-only'));
             const form = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs'));
 
@@ -96,7 +98,6 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             const valueInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-value-input-0"]`));
             expect(nameInput).not.toBeNull();
             expect(valueInput).not.toBeNull();
-
         });
 
         it('should remove an item from list on REMOVE button click', () => {

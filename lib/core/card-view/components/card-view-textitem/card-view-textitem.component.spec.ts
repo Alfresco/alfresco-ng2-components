@@ -22,11 +22,13 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { CardViewItemFloatValidator, CardViewItemIntValidator } from '@alfresco/adf-core';
 
 describe('CardViewTextItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
+    const mouseEvent = new MouseEvent('click');
 
     setupTestBed({
         imports: [CoreTestingModule]
@@ -109,128 +111,6 @@ describe('CardViewTextItemComponent', () => {
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
         });
 
-        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: false
-            });
-            component.displayEmpty = true;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
-        });
-
-        it('should render the default as value if the value is empty and clickable true', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true
-            });
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
-        });
-
-        it('should not render the edit icon in case of clickable true but edit false', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true
-            });
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
-            expect(value).toBeNull();
-        });
-
-        it('should not render the clickable icon in case editable set to false', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true,
-                icon: 'create'
-            });
-            component.editable = false;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
-            expect(value).toBeNull('icon should NOT be shown');
-        });
-
-        it('should render the defined clickable icon in case of clickable true and editable input set to true', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true,
-                icon: 'FAKE_ICON'
-            });
-            component.editable = true;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText).toBe('FAKE_ICON');
-        });
-
-        it('should not render clickable icon in case of clickable true and icon undefined', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true
-            });
-            component.editable = true;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
-            expect(value).toBeNull('icon should NOT be shown');
-        });
-
-        it('should not render the edit icon in case of clickable true and icon undefined', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true
-            });
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
-            expect(value).toBeNull('Edit icon should NOT be shown');
-        });
-
-        it('should not render the edit icon in case of clickable false and icon defined', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: false,
-                icon: 'FAKE-ICON'
-            });
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
-            expect(value).toBeNull('Edit icon should NOT be shown');
-        });
-
         it('should render value when editable:true', () => {
             component.editable = true;
             component.property.editable = true;
@@ -266,6 +146,142 @@ describe('CardViewTextItemComponent', () => {
             const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
             expect(editIcon).toBeNull('Edit icon should NOT be shown');
         });
+    });
+
+    describe('clickable', () => {
+        beforeEach(() => {
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY'
+            });
+        });
+
+        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', () => {
+            component.property.clickable = false;
+            component.displayEmpty = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+        });
+
+        it('should render the default as value if the value is empty and clickable true', () => {
+            component.property.clickable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+        });
+
+        it('should not render the edit icon in case of clickable true but edit false', () => {
+            component.property.clickable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            expect(value).toBeNull();
+        });
+
+        it('should not render the clickable icon in case editable set to false', () => {
+            component.property.clickable = true;
+            component.property.icon = 'create';
+            component.editable = false;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            expect(value).toBeNull('icon should NOT be shown');
+        });
+
+        it('should render the defined clickable icon in case of clickable true and editable input set to true', () => {
+            component.property.clickable = true;
+            component.property.icon = 'FAKE_ICON';
+            component.editable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText).toBe('FAKE_ICON');
+        });
+
+        it('should not render clickable icon in case of clickable true and icon undefined', () => {
+            component.property.clickable = true;
+            component.editable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            expect(value).toBeNull('icon should NOT be shown');
+        });
+
+        it('should not render the edit icon in case of clickable false and icon defined', () => {
+            component.property.clickable = false;
+            component.property.icon = 'FAKE_ICON';
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            expect(value).toBeNull('Edit icon should NOT be shown');
+        });
+
+        it('should call back function when clickable property enabled', () => {
+            const callBackSpy = jasmine.createSpy('callBack');
+            component.property.clickable = true;
+            component.property.icon = 'FAKE_ICON';
+            component.property.clickCallBack = callBackSpy;
+            component.editable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            expect(value.nativeElement.innerText).toBe('FAKE_ICON');
+            value.nativeElement.click();
+            expect(callBackSpy).toHaveBeenCalled();
+        });
+
+        it('should click event to the event stream when clickable property enabled', () => {
+            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            spyOn(cardViewUpdateService, 'clicked').and.stub();
+
+            component.property.clickable = true;
+            component.property.icon = 'FAKE_ICON';
+            component.editable = false;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${component.property.key}"]`));
+            value.nativeElement.click();
+            expect(cardViewUpdateService.clicked).toHaveBeenCalled();
+        });
+
+        it('should update input the value on click of save', () => {
+            component.property.clickable = true;
+
+            component.property.editable = true;
+            component.editable = true;
+            component.editedValue = 'updated-value';
+            component.property.isValid = () => true;
+            const expectedText = 'changed text';
+            spyOn(component, 'update').and.callThrough();
+            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            fixture.detectChanges();
+
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
+                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.changed).toEqual({ textkey: expectedText });
+                disposableUpdate.unsubscribe();
+            });
+
+            updateTextField(component.property.key, expectedText);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+
+            expect(component.update).toHaveBeenCalled();
+            fixture.detectChanges();
+
+            expect(getFieldValue(component.property.key)).toEqual(expectedText);
+            expect(component.property.value).toBe(expectedText);
+        });
+
     });
 
     describe('Update', () => {
@@ -416,7 +432,7 @@ describe('CardViewTextItemComponent', () => {
             editInput.nativeElement.dispatchEvent(enterKeyboardEvent);
             fixture.detectChanges();
 
-            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-textkey"]`));
+            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(textItemReadOnly.nativeElement.textContent).toEqual(expectedText);
             expect(component.property.value).toBe(expectedText);
         }));
@@ -439,9 +455,294 @@ describe('CardViewTextItemComponent', () => {
             editInput.nativeElement.dispatchEvent(enterKeyboardEvent);
             fixture.detectChanges();
 
-            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-textkey"]`));
+            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(textItemReadOnly.nativeElement.textContent).toEqual('Lorem ipsum');
             expect(component.property.value).toBe('Lorem ipsum');
         }));
+
+        it('should reset the value onclick of clear button', () => {
+            component.inEdit = false;
+            component.property.isValid = () => true;
+            spyOn(component, 'reset').and.callThrough();
+            fixture.detectChanges();
+
+            updateTextField(component.property.key, 'changed text');
+
+            const clearButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-reset-${component.property.key}"]`));
+            clearButton.nativeElement.click();
+            expect(component.reset).toHaveBeenCalled();
+
+            fixture.detectChanges();
+
+            expect(getFieldValue(component.property.key)).toEqual('Lorem ipsum');
+            expect(component.property.value).toBe('Lorem ipsum');
+        });
+
+        it('should update multiline input the value on click of save', () => {
+            component.inEdit = false;
+            component.property.isValid = () => true;
+            component.property.multiline = true;
+            const expectedText = 'changed text';
+            spyOn(component, 'update').and.callThrough();
+            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            fixture.detectChanges();
+
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
+                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.changed).toEqual({ textkey: expectedText });
+                disposableUpdate.unsubscribe();
+            });
+
+            updateTextArea(component.property.key, expectedText);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+
+            expect(component.update).toHaveBeenCalled();
+            fixture.detectChanges();
+
+            expect(getFieldValue(component.property.key)).toEqual(expectedText);
+            expect(component.property.value).toBe(expectedText);
+        });
     });
+
+    describe('number', () => {
+        let cardViewUpdateService: CardViewUpdateService;
+
+        beforeEach(() => {
+            component.property.editable = true;
+            component.editable = true;
+            component.inEdit = false;
+            component.property.value = 10;
+            component.property.validators.push(new CardViewItemIntValidator());
+            component.ngOnChanges();
+            fixture.detectChanges();
+            cardViewUpdateService = TestBed.get(CardViewUpdateService);
+        });
+
+        it('should show validation error when string passed', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, 'update number');
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            fixture.detectChanges();
+            expect(component.update).toHaveBeenCalled();
+
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+            expect(component.property.value).toBe(10);
+        });
+
+        it('should show validation error for empty string', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, ' ');
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+
+            expect(component.property.value).toBe(10);
+        });
+
+        it('should show validation error for float number', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, 0.024);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+
+            expect(component.property.value).toBe(10);
+        });
+
+        it('should show validation error for exceed the number limit (2147483648)', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, 2147483648);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+
+            expect(component.property.value).toBe(10);
+        });
+
+        it('should not show validation error for below the number limit (2147483647)', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, 2147483647);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
+            expect(error).toBeFalsy();
+
+            expect(component.property.value).toBe('2147483647');
+        });
+
+        it('should reset the value onclick of clear button', () => {
+            spyOn(component, 'reset').and.callThrough();
+            fixture.detectChanges();
+
+            updateTextField(component.property.key, 20);
+
+            const clearButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-reset-${component.property.key}"]`));
+            clearButton.nativeElement.click();
+            expect(component.reset).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
+            expect(error).toBeFalsy();
+
+            expect(getFieldValue(component.property.key)).toEqual('10');
+            expect(component.property.value).toBe(10);
+        });
+
+        it('should update input the value on click of save', () => {
+            component.property.multiline = true;
+            const expectedNumber = 2020;
+            spyOn(component, 'update').and.callThrough();
+            fixture.detectChanges();
+            expect(component.property.value).not.toEqual(expectedNumber);
+
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
+                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.changed).toEqual({ textkey: expectedNumber.toString() });
+                disposableUpdate.unsubscribe();
+            });
+
+            updateTextArea(component.property.key, expectedNumber);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
+            expect(error).toBeFalsy();
+
+            expect(getFieldValue(component.property.key)).toEqual(expectedNumber.toString());
+            expect(component.property.value).toBe(expectedNumber.toString());
+        });
+    });
+
+    describe('float', () => {
+        let cardViewUpdateService: CardViewUpdateService;
+        const floatValue = 77.33;
+
+        beforeEach(() => {
+            component.property.editable = true;
+            component.editable = true;
+            component.inEdit = false;
+            component.property.value = floatValue;
+            component.property.validators.push(new CardViewItemFloatValidator());
+            component.ngOnChanges();
+            fixture.detectChanges();
+            cardViewUpdateService = TestBed.get(CardViewUpdateService);
+        });
+
+        it('should show validation error when string passed', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, ' ');
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
+
+            expect(component.property.value).toBe(floatValue);
+        });
+
+        it('should show validation error for empty string', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, ' ');
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
+
+            expect(component.property.value).toBe(floatValue);
+        });
+
+        it('should update input the value on click of save', () => {
+            component.property.multiline = true;
+            const expectedFloat = 88.44;
+            spyOn(component, 'update').and.callThrough();
+            fixture.detectChanges();
+
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
+                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.changed).toEqual({ textkey: expectedFloat.toString() });
+                disposableUpdate.unsubscribe();
+            });
+
+            updateTextArea(component.property.key, expectedFloat);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
+            expect(error).toBeFalsy();
+
+            expect(getFieldValue(component.property.key)).toEqual(expectedFloat.toString());
+            expect(component.property.value).toBe(expectedFloat.toString());
+        });
+    });
+
+    function updateTextField(key, value) {
+        const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${key}"]`));
+        editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
+        fixture.detectChanges();
+
+        const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${key}"]`));
+        editInput.nativeElement.value = value;
+        editInput.nativeElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+    }
+
+    function updateTextArea(key, value) {
+        const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${key}"]`));
+        editIcon.nativeElement.dispatchEvent(mouseEvent);
+        fixture.detectChanges();
+
+        const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edittextarea-${key}"]`));
+        editInput.nativeElement.value = value;
+        editInput.nativeElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+    }
+
+    function getFieldValue(key): string {
+        const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
+        return textItemReadOnly.nativeElement.textContent;
+    }
 });

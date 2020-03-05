@@ -16,6 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { By } from '@angular/platform-browser';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
@@ -27,6 +28,7 @@ describe('CardViewSelectItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewSelectItemComponent>;
     let component: CardViewSelectItemComponent;
+    let overlayContainer: OverlayContainer;
     const mockData = [{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }, { key: 'three', label: 'Three' }];
     const mockDefaultProps = {
         label: 'Select box label',
@@ -43,6 +45,7 @@ describe('CardViewSelectItemComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewSelectItemComponent);
         component = fixture.componentInstance;
+        overlayContainer = TestBed.get(OverlayContainer);
         component.property = new CardViewSelectItemModel(mockDefaultProps);
     });
 
@@ -73,6 +76,50 @@ describe('CardViewSelectItemComponent', () => {
 
             expect(readOnly).not.toBeNull();
             expect(selectBox).toBeNull();
+        });
+
+        it('should be possible edit selectBox item', () => {
+            component.property = new CardViewSelectItemModel({
+                ...mockDefaultProps,
+                editable: true
+            });
+            component.editable = true;
+            component.displayNoneOption = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            expect(component.value).toEqual('two');
+            expect(component.isEditable()).toBe(true);
+            const selectBox = fixture.debugElement.query(By.css('.mat-select-trigger'));
+            selectBox.triggerEventHandler('click', {});
+
+            fixture.detectChanges();
+            const optionsElement = Array.from(overlayContainer.getContainerElement().querySelectorAll('mat-option'));
+            expect(optionsElement.length).toEqual(4);
+            optionsElement[1].dispatchEvent(new Event('click'));
+            fixture.detectChanges();
+
+            expect(component.value).toEqual('one');
+        });
+
+        it('should be able to enable None option', () => {
+            component.property = new CardViewSelectItemModel({
+                ...mockDefaultProps,
+                editable: true
+            });
+            component.editable = true;
+            component.displayNoneOption = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            expect(component.isEditable()).toBe(true);
+            const selectBox = fixture.debugElement.query(By.css('.mat-select-trigger'));
+            selectBox.triggerEventHandler('click', {});
+
+            fixture.detectChanges();
+            const noneElement: HTMLElement = overlayContainer.getContainerElement().querySelector('mat-option');
+            expect(noneElement).toBeDefined();
+            expect(noneElement.innerText).toEqual('CORE.CARDVIEW.NONE');
         });
 
         it('should render select box if editable property is TRUE', () => {

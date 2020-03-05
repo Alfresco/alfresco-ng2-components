@@ -63,11 +63,6 @@ describe('Task filters cloud', () => {
             await appListCloudComponent.goToApp(simpleApp);
         });
 
-        it('[C290011] Should display default filters when an app is deployed', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.checkMyTasksFilterIsDisplayed();
-            await tasksCloudDemoPage.taskFilterCloudComponent.checkCompletedTasksFilterIsDisplayed();
-        });
-
         it('[C290009] Should display default filters and created task', async () => {
             tasksService = new TasksService(apiService);
 
@@ -101,9 +96,5 @@ describe('Task filters cloud', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask);
         });
 
-        it('[C291792] Should select the first task filter from the list as default', async () => {
-
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.firstFilterIsActive()).toBe(true);
-        });
    });
 });

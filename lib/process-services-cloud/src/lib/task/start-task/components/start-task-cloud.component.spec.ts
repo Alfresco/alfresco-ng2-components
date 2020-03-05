@@ -166,10 +166,11 @@ describe('StartTaskCloudComponent', () => {
         });
     });
 
-    it('should select logged in user as assignee by default', () => {
+    it('should show logged in user as assignee by default', () => {
         fixture.detectChanges();
-        const assignee = fixture.nativeElement.querySelector('[data-automation-id="adf-people-cloud-search-input"]');
+        const assignee = fixture.nativeElement.querySelector('[data-automation-id="adf-people-cloud-chip-currentUser"]');
         expect(assignee).toBeDefined();
+        expect(assignee.innerText).toContain('Test User');
     });
 
     it('should show start task button', () => {

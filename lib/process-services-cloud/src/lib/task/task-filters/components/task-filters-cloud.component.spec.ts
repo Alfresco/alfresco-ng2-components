@@ -67,6 +67,21 @@ describe('TaskFiltersCloudComponent', () => {
         taskFilterService = TestBed.get(TaskFilterCloudService);
     });
 
+    it('should the first element active', async(() => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        const change = new SimpleChange(undefined, 'my-app-1', true);
+        component.ngOnChanges({'appName': change});
+        fixture.detectChanges();
+        component.showIcons = true;
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const activeElement = fixture.debugElement.nativeElement.querySelector('.adf-active span');
+            expect(activeElement).toBeDefined();
+            expect(activeElement.innerText).toEqual(fakeGlobalFilter[0].name);
+        });
+    }));
+
     it('should attach specific icon for each filter if hasIcon is true', async(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
         const change = new SimpleChange(undefined, 'my-app-1', true);

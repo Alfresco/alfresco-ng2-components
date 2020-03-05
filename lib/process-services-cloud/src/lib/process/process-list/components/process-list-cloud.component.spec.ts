@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    CoreModule,
+    DataRowEvent,
+    DataTableModule,
+    ObjectDataRow,
+    setupTestBed
+} from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
-import { fakeProcessCloudList, fakeCustomSchema } from '../mock/process-list-service.mock';
+import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '../mock/process-list-service.mock';
 import { of } from 'rxjs';
 import { ProcessListCloudTestingModule } from '../testing/process-list.testing.module';
 import { ProcessListCloudModule } from '../process-list-cloud.module';
@@ -65,7 +72,8 @@ describe('ProcessListCloudComponent', () => {
 
     setupTestBed({
         imports: [
-            ProcessListCloudTestingModule, ProcessListCloudModule
+            ProcessListCloudTestingModule,
+            ProcessListCloudModule
         ],
         providers: [ProcessListCloudService]
     });
@@ -97,14 +105,57 @@ describe('ProcessListCloudComponent', () => {
         });
     });
 
-    afterEach(() => {
-        fixture.destroy();
+    afterEach(() => fixture.destroy());
+
+    it('should use the default schemaColumn', () => {
+        appConfig.config = Object.assign(appConfig.config, { 'adf-cloud-process-list': processListSchemaMock });
+        component.ngAfterContentInit();
+        fixture.detectChanges();
+
+        expect(component.columns).toBeDefined();
+        expect(component.columns.length).toEqual(10);
     });
 
-    it('should use the default schemaColumn as default', () => {
-        component.ngAfterContentInit();
-        expect(component.columns).toBeDefined();
-        expect(component.columns.length).toEqual(2);
+    it('should display empty content when process list is empty', () => {
+        const emptyList = {list: {entries: []}};
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
+
+        fixture.detectChanges();
+        expect(component.isLoading).toBe(true);
+        let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
+        expect(loadingContent.nativeElement).toBeDefined();
+
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
+        fixture.detectChanges();
+
+        loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
+        expect(loadingContent).toBeFalsy();
+
+        const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
+        expect(emptyContent.nativeElement).toBeDefined();
+    });
+
+    it('should load spinner and show the content', () => {
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+
+        fixture.detectChanges();
+        expect(component.isLoading).toBe(true);
+        let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
+        expect(loadingContent.nativeElement).toBeDefined();
+
+        component.ngOnChanges({ appName });
+        fixture.detectChanges();
+
+        expect(component.isLoading).toBe(false);
+        loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
+        expect(loadingContent).toBeFalsy();
+
+        const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
+        expect(emptyContent).toBeFalsy();
+
+        expect(component.rows.length).toEqual(3);
     });
 
     it('should use the custom schemaColumn from app.config.json', () => {
