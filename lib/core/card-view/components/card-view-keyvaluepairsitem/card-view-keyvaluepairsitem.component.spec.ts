@@ -96,7 +96,6 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             const valueInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-value-input-0"]`));
             expect(nameInput).not.toBeNull();
             expect(valueInput).not.toBeNull();
-
         });
 
         it('should remove an item from list on REMOVE button click', () => {

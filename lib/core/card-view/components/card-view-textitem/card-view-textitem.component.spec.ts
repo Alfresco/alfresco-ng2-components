@@ -22,11 +22,13 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { CardViewItemFloatValidator, CardViewItemIntValidator } from '@alfresco/adf-core';
 
 describe('CardViewTextItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
+    const mouseEvent = new MouseEvent('click');
 
     setupTestBed({
         imports: [CoreTestingModule]
@@ -443,5 +445,308 @@ describe('CardViewTextItemComponent', () => {
             expect(textItemReadOnly.nativeElement.textContent).toEqual('Lorem ipsum');
             expect(component.property.value).toBe('Lorem ipsum');
         }));
+
+        it('should reset the value onclick of clear button', () => {
+            component.inEdit = false;
+            component.property.isValid = () => true;
+            spyOn(component, 'reset').and.callThrough();
+            fixture.detectChanges();
+
+            updateTextField(component.property.key, 'changed text');
+
+            const clearButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-reset-${component.property.key}"]`));
+            clearButton.nativeElement.click();
+            expect(component.reset).toHaveBeenCalled();
+
+            fixture.detectChanges();
+
+            expect(getDomValue(component.property.key)).toEqual('Lorem ipsum');
+            expect(component.property.value).toBe('Lorem ipsum');
+        });
+
+        it('should update multiline input the value on click of save', () => {
+            component.inEdit = false;
+            component.property.isValid = () => true;
+            component.property.multiline = true;
+            const expectedText = 'changed text';
+            spyOn(component, 'update').and.callThrough();
+            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            fixture.detectChanges();
+
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
+                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.changed).toEqual({ textkey: expectedText });
+                disposableUpdate.unsubscribe();
+            });
+
+            updateTextArea(component.property.key, expectedText);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+
+            expect(component.update).toHaveBeenCalled();
+            fixture.detectChanges();
+
+            expect(getDomValue(component.property.key)).toEqual(expectedText);
+            expect(component.property.value).toBe(expectedText);
+        });
     });
+
+    describe('number', () => {
+        let cardViewUpdateService: CardViewUpdateService;
+
+        beforeEach(() => {
+            component.property.editable = true;
+            component.editable = true;
+            component.inEdit = false;
+            component.property.value = 10;
+            component.property.validators.push(new CardViewItemIntValidator());
+            component.ngOnChanges();
+            fixture.detectChanges();
+            cardViewUpdateService = TestBed.get(CardViewUpdateService);
+        });
+
+        it('should show validation error when string passed', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, 'update number');
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            fixture.detectChanges();
+            expect(component.update).toHaveBeenCalled();
+
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+            expect(component.property.value).toBe(10);
+        });
+
+        it('should show validation error for empty string', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, ' ');
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+
+            expect(component.property.value).toBe(10);
+        });
+
+        it('should show validation error for float number', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, 0.024);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+
+            expect(component.property.value).toBe(10);
+        });
+
+        it('should show validation error for exceed the number limit (2147483648)', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, 2147483648);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+
+            expect(component.property.value).toBe(10);
+        });
+
+        it('should not show validation error for below the number limit (2147483647)', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, 2147483647);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            expect(error).toBeFalsy();
+
+            expect(component.property.value).toBe('2147483647');
+        });
+
+        it('should reset the value onclick of clear button', () => {
+            spyOn(component, 'reset').and.callThrough();
+            fixture.detectChanges();
+
+            updateTextField(component.property.key, 20);
+
+            const clearButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-reset-${component.property.key}"]`));
+            clearButton.nativeElement.click();
+            expect(component.reset).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            expect(error).toBeFalsy();
+
+            expect(getDomValue(component.property.key)).toEqual('10');
+            expect(component.property.value).toBe(10);
+        });
+
+        it('should update input the value on click of save', () => {
+            component.property.multiline = true;
+            const expectedNumber = 2020;
+            spyOn(component, 'update').and.callThrough();
+            fixture.detectChanges();
+            expect(component.property.value).not.toEqual(expectedNumber);
+
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
+                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.changed).toEqual({ textkey: expectedNumber.toString() });
+                disposableUpdate.unsubscribe();
+            });
+
+            updateTextArea(component.property.key, expectedNumber);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            expect(error).toBeFalsy();
+
+            expect(getDomValue(component.property.key)).toEqual(expectedNumber.toString());
+            expect(component.property.value).toBe(expectedNumber.toString());
+        });
+    });
+
+    describe('float', () => {
+        let cardViewUpdateService: CardViewUpdateService;
+        const floatValue = 77.33;
+
+        beforeEach(() => {
+            component.property.editable = true;
+            component.editable = true;
+            component.inEdit = false;
+            component.property.value = floatValue;
+            component.property.validators.push(new CardViewItemFloatValidator());
+            component.ngOnChanges();
+            fixture.detectChanges();
+            cardViewUpdateService = TestBed.get(CardViewUpdateService);
+        });
+
+        it('should show validation error when string passed', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, ' ');
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
+
+            expect(component.property.value).toBe(floatValue);
+        });
+
+        it('should show validation error for empty string', () => {
+            spyOn(component, 'update').and.callThrough();
+
+            updateTextField(component.property.key, ' ');
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
+
+            expect(component.property.value).toBe(floatValue);
+        });
+
+        it('should reset the value onclick of clear button', () => {
+            spyOn(component, 'reset').and.callThrough();
+            fixture.detectChanges();
+
+            updateTextField(component.property.key, floatValue);
+
+            const clearButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-reset-${component.property.key}"]`));
+            clearButton.nativeElement.click();
+            expect(component.reset).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            expect(error).toBeFalsy();
+
+            expect(getDomValue(component.property.key)).toEqual(floatValue.toString());
+            expect(component.property.value).toBe(floatValue);
+        });
+
+        it('should update input the value on click of save', () => {
+            component.property.multiline = true;
+            const expectedFloat = 88.44;
+            spyOn(component, 'update').and.callThrough();
+            fixture.detectChanges();
+
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
+                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.changed).toEqual({ textkey: expectedFloat.toString() });
+                disposableUpdate.unsubscribe();
+            });
+
+            updateTextArea(component.property.key, expectedFloat);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+            expect(component.update).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            expect(error).toBeFalsy();
+
+            expect(getDomValue(component.property.key)).toEqual(expectedFloat.toString());
+            expect(component.property.value).toBe(expectedFloat.toString());
+        });
+    });
+
+    function updateTextField(key, value) {
+        const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${key}"]`));
+        editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
+        fixture.detectChanges();
+
+        const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${key}"]`));
+        editInput.nativeElement.value = value;
+        editInput.nativeElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+    }
+
+    function updateTextArea(key, value) {
+        const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${key}"]`));
+        editIcon.nativeElement.dispatchEvent(mouseEvent);
+        fixture.detectChanges();
+
+        const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edittextarea-${key}"]`));
+        editInput.nativeElement.value = value;
+        editInput.nativeElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+    }
+
+    function getDomValue(key): string {
+        const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
+        return textItemReadOnly.nativeElement.textContent;
+    }
 });

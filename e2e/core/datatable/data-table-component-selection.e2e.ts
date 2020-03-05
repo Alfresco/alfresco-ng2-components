@@ -69,33 +69,4 @@ describe('Datatable component - selection', () => {
         await dataTablePage.checkNoRowIsSelected();
     });
 
-    it('[C260059] Should be possible select multiple row when multiselect is true', async () => {
-        await dataTablePage.clickMultiSelect();
-        await dataTablePage.clickCheckbox('1');
-        await dataTablePage.checkRowIsChecked('1');
-        await dataTablePage.clickCheckbox('3');
-        await dataTablePage.checkRowIsChecked('3');
-        await dataTablePage.checkRowIsNotChecked('2');
-        await dataTablePage.checkRowIsNotChecked('4');
-        await dataTablePage.clickCheckbox('3');
-        await dataTablePage.checkRowIsNotChecked('3');
-        await dataTablePage.checkRowIsChecked('1');
-    });
-
-    it('[C260058] Should be possible select all the rows when multiselect is true', async () => {
-        await dataTablePage.checkAllRows();
-        await dataTablePage.checkRowIsChecked('1');
-        await dataTablePage.checkRowIsChecked('2');
-        await dataTablePage.checkRowIsChecked('3');
-        await dataTablePage.checkRowIsChecked('4');
-    });
-
-    it('[C277262] Should be possible reset the selected row when click on the reset button', async () => {
-        await dataTablePage.checkRowIsChecked('1');
-        await dataTablePage.checkRowIsChecked('2');
-        await dataTablePage.checkRowIsChecked('3');
-        await dataTablePage.checkRowIsChecked('4');
-        await dataTablePage.clickReset();
-        await dataTablePage.checkNoRowIsSelected();
-    });
 });

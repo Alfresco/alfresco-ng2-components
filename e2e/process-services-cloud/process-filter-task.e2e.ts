@@ -31,10 +31,13 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/process-details-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
 import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
 import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
-import { ProcessDefinitionCloud, ProcessInstanceCloud, StartTaskCloudResponseModel } from '@alfresco/adf-process-services-cloud';
+import {
+    ProcessDefinitionCloud,
+    ProcessInstanceCloud,
+    StartTaskCloudResponseModel
+} from '@alfresco/adf-process-services-cloud';
 
 describe('Process filters cloud', () => {
     const loginSSOPage = new LoginSSOPage();
@@ -45,7 +48,6 @@ describe('Process filters cloud', () => {
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
-    const processListPage = new ProcessListPage();
     const apiService = new ApiService(
         browser.params.config.oauth2.clientId,
         browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -86,30 +88,6 @@ describe('Process filters cloud', () => {
         await appListCloudComponent.goToApp(simpleApp);
         await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
-    });
-
-    it('[C290041] Should be displayed the "No Process Found" message when the process list is empty', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(simpleApp);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('COMPLETED');
-
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().contents.count()).toBeGreaterThan(0);
-
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', 'i_am_fake_id');
-        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
-    });
-
-    it('[C315296] Should NOT display "No Process Found" before displaying the process list', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(simpleApp);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('COMPLETED');
-
-        await expect(await processListPage.titleNotPresent()).toBeTruthy();
-        await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().contents.count()).toBeGreaterThan(0);
-
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', 'i_am_fake_id');
-        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 
     it('[C290040] Should be able to open the Task Details page by clicking on the process name', async () => {

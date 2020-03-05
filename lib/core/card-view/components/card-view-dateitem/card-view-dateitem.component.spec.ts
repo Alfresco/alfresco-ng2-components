@@ -23,17 +23,26 @@ import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { AppConfigService } from '@alfresco/adf-core';
 
 describe('CardViewDateItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewDateItemComponent>;
     let component: CardViewDateItemComponent;
+    let appConfigService: AppConfigService;
 
     setupTestBed({
         imports: [CoreTestingModule]
     });
 
     beforeEach(() => {
+        appConfigService = TestBed.get(AppConfigService);
+        appConfigService.config.dateValues = {
+            defaultDateFormat: 'shortDate',
+            defaultDateTimeFormat: 'M/d/yy, h:mm a',
+            defaultLocale: 'uk'
+        };
+
         fixture = TestBed.createComponent(CardViewDateItemComponent);
         component = fixture.componentInstance;
         component.property = new CardViewDateItemModel({
@@ -46,8 +55,10 @@ describe('CardViewDateItemComponent', () => {
         });
     });
 
-    afterEach(() => {
-        fixture.destroy();
+    afterEach(() => fixture.destroy());
+
+    it('should pick date format from appConfigService', () => {
+        expect(component.dateFormat).toEqual('shortDate');
     });
 
     it('should render the label and value', () => {
@@ -284,23 +295,24 @@ describe('CardViewDateItemComponent', () => {
         );
     }));
 
-    it('should be possible update a date/date-time', async(() => {
+    it('should be possible update a date-time', async () => {
         component.editable = true;
         component.property.editable = true;
-        component.property.default = 'Jul 10 2017';
+        component.property.default = 'Jul 10 2017 00:01:00';
         component.property.key = 'fake-key';
-        component.property.value = 'Jul 10 2017';
-        const expectedDate = moment('Jul 10 2018', 'MMM DD YY');
+        component.dateFormat = 'M/d/yy, h:mm a';
+        component.property.value = 'Jul 10 2017 00:01:00';
+        const expectedDate = moment('Jul 10 2018', 'MMM DD YY h:m:s');
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const element = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="card-date-value-fake-key"]');
-            expect(element).toBeDefined();
-            expect(element.innerText).toEqual('Jul 10, 2017');
-            component.onDateChanged({ value: expectedDate });
-            fixture.detectChanges();
-            fixture.whenStable().then(() => expect(component.property.value).toEqual(expectedDate.toDate()));
-        });
-    }));
+        await fixture.whenStable();
+        fixture.detectChanges();
+        const element = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="card-date-value-fake-key"]');
+        expect(element).toBeDefined();
+        expect(element.innerText).toEqual('Jul 10, 2017');
+        component.onDateChanged({ value: expectedDate });
+
+        fixture.detectChanges();
+        expect(component.property.value).toEqual(expectedDate.toDate());
+    });
 });

@@ -890,6 +890,25 @@ describe('DataTable', () => {
         expect(dataTable.isSelectAllChecked).toBe(true);
     });
 
+    it('should allow select row when multi-select enabled', () => {
+        const data = new ObjectDataTableAdapter([{}, {}], []);
+        const rows = data.getRows();
+
+        dataTable.multiselect = true;
+        dataTable.ngOnChanges({ 'data': new SimpleChange('123', data, true) });
+
+        expect(rows[0].isSelected).toBe(false);
+        expect(rows[1].isSelected).toBe(false);
+
+        dataTable.onCheckboxChange(rows[1], <MatCheckboxChange> { checked: true });
+        expect(rows[0].isSelected).toBe(false);
+        expect(rows[1].isSelected).toBe(true);
+
+        dataTable.onCheckboxChange(rows[0], <MatCheckboxChange> { checked: true });
+        expect(rows[0].isSelected).toBe(true);
+        expect(rows[1].isSelected).toBe(true);
+    });
+
     it('should require multiselect option to toggle row state', () => {
         const data = new ObjectDataTableAdapter([{}, {}, {}], []);
         const rows = data.getRows();

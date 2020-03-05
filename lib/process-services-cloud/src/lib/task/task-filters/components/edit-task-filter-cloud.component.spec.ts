@@ -58,11 +58,11 @@ describe('EditTaskFilterCloudComponent', () => {
         service = TestBed.get(TaskFilterCloudService);
         appsService = TestBed.get(AppsProcessCloudService);
         dialog = TestBed.get(MatDialog);
-        spyOn(dialog, 'open').and.returnValue({ afterClosed() { return of({
+        spyOn(dialog, 'open').and.returnValue({ afterClosed: of({
             action: TaskFilterDialogCloudComponent.ACTION_SAVE,
             icon: 'icon',
             name: 'fake-name'
-        }); }});
+        }) });
         getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(of(fakeFilter));
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         fixture.detectChanges();
