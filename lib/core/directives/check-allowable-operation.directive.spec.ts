@@ -43,18 +43,6 @@ describe('CheckAllowableOperationDirective', () => {
     });
 
     describe('HTML nativeElement as subject', () => {
-
-        it('updates element once it is loaded', () => {
-            const directive = new CheckAllowableOperationDirective(null, null, null, changeDetectorMock);
-            spyOn(directive, 'updateElement').and.stub();
-
-            const nodes = [{}, {}];
-            const change = new SimpleChange([], nodes, false);
-            directive.ngOnChanges({ nodes: change });
-
-            expect(directive.updateElement).toHaveBeenCalled();
-        });
-
         it('updates element on nodes change', () => {
             const directive = new CheckAllowableOperationDirective(null, null, null, changeDetectorMock);
             spyOn(directive, 'updateElement').and.stub();
