@@ -67,7 +67,7 @@ describe('TaskFiltersCloudComponent', () => {
         taskFilterService = TestBed.get(TaskFilterCloudService);
     });
 
-    it('should attach specific icon for each filter if hasIcon is true', async(() => {
+    it('should the first element active', async(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({'appName': change});
