@@ -17,7 +17,6 @@
 
 import { element, by, ElementFinder, Locator } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
-
 export class CardTextItemPage {
 
     rootElement: ElementFinder;
@@ -27,6 +26,9 @@ export class CardTextItemPage {
     field: Locator = by.css('span[data-automation-id*="card-textitem-value"] span');
     labelLocator: Locator = by.css('div[data-automation-id*="card-textitem-label"]');
     toggle: Locator = by.css('div[data-automation-id*="card-textitem-toggle"]');
+    editButton: Locator = by.css('button.adf-textitem-action[title*=Edit]');
+    errorMessage: Locator = by.css('.adf-textitem-editable-error');
+    clickableElement: Locator = by.css('.adf-textitem-clickable');
 
     constructor(label: string = 'assignee') {
         this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-textitem`));
@@ -58,5 +60,19 @@ export class CardTextItemPage {
 
     async clickOnClearButton(): Promise<void> {
         await BrowserActions.click(this.rootElement.element(this.clearButton));
+    }
+
+    async clickOnEditButton(): Promise<void> {
+        await BrowserActions.click(this.rootElement.element(this.editButton));
+    }
+
+    async getErrorMessage(): Promise<string> {
+        const errorField = this.rootElement.element(this.errorMessage);
+        return BrowserActions.getText(errorField);
+    }
+
+    async checkElementIsReadonly(): Promise <void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(this.clickableElement));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(this.editButton));
     }
 }

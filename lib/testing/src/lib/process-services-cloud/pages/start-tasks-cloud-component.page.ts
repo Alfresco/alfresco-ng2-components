@@ -30,6 +30,7 @@ export class StartTasksCloudPage {
     cancelButton: ElementFinder = element(by.css('button[id="button-cancel"]'));
     form: ElementFinder = element.all(by.css('adf-cloud-start-task form')).first();
     formDefinitionSelector: ElementFinder = element(by.css('.adf-form-definition-selector'));
+    priorityStartTaskField: ElementFinder = element(by.css('input[formControlName="priority"]'));
 
     async checkFormIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.form);
@@ -104,5 +105,10 @@ export class StartTasksCloudPage {
         const row = element(by.cssContainingText('mat-option span', option));
         await BrowserVisibility.waitUntilElementIsNotVisible(row);
         await BrowserActions.closeMenuAndDialogs();
+    }
+
+    async typePriorityOf(priorityValue: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.priorityStartTaskField);
+        await BrowserActions.clearSendKeys(this.priorityStartTaskField, priorityValue);
     }
 }

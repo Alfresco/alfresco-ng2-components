@@ -27,6 +27,7 @@ export class PeopleCloudComponentPage {
     formFields: FormFields = new FormFields();
     labelLocator: Locator = by.css("label[class*='adf-label']");
     inputLocator: Locator = by.css('input');
+    assigneeChipList: ElementFinder = element(by.css('mat-chip-list[data-automation-id="adf-cloud-people-chip-list"]'));
 
     async clearAssignee(): Promise<void> {
         await BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
@@ -62,6 +63,11 @@ export class PeopleCloudComponentPage {
         return this.peopleCloudSearch.getAttribute('value');
     }
 
+    async getChipAssignee(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.assigneeChipList);
+        return this.assigneeChipList.all(by.css('mat-chip')).first().getText();
+    }
+
     async checkUserIsDisplayed(name: string): Promise<void> {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         await BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
@@ -70,6 +76,16 @@ export class PeopleCloudComponentPage {
     async checkUserIsNotDisplayed(name: string): Promise<void> {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
+    }
+
+    async checkOptionIsDisplayed(): Promise <void> {
+        const optionList = element(by.css('.adf-people-cloud-list'));
+        await BrowserVisibility.waitUntilElementIsVisible(optionList);
+    }
+
+    async checkOptionIsNotDisplayed(): Promise <void> {
+        const optionList = element(by.css('.adf-people-cloud-list'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(optionList);
     }
 
     async checkSelectedPeople(person: string): Promise<void> {

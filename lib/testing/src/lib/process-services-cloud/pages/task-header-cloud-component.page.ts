@@ -86,5 +86,4 @@ export class TaskHeaderCloudPage {
     async checkTaskPropertyListIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.taskPropertyList);
     }
-
 }
