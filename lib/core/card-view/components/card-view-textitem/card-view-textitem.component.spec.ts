@@ -215,14 +215,6 @@ describe('CardViewTextItemComponent', () => {
             expect(value).toBeNull('icon should NOT be shown');
         });
 
-        it('should not render the edit icon in case of clickable true and icon undefined', () => {
-            component.property.clickable = true;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
-            expect(value).toBeNull('Edit icon should NOT be shown');
-        });
-
         it('should not render the edit icon in case of clickable false and icon defined', () => {
             component.property.clickable = false;
             component.property.icon = 'FAKE_ICON';
@@ -440,7 +432,7 @@ describe('CardViewTextItemComponent', () => {
             editInput.nativeElement.dispatchEvent(enterKeyboardEvent);
             fixture.detectChanges();
 
-            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-textkey"]`));
+            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(textItemReadOnly.nativeElement.textContent).toEqual(expectedText);
             expect(component.property.value).toBe(expectedText);
         }));
@@ -463,7 +455,7 @@ describe('CardViewTextItemComponent', () => {
             editInput.nativeElement.dispatchEvent(enterKeyboardEvent);
             fixture.detectChanges();
 
-            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-textkey"]`));
+            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(textItemReadOnly.nativeElement.textContent).toEqual('Lorem ipsum');
             expect(component.property.value).toBe('Lorem ipsum');
         }));
@@ -538,7 +530,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             expect(component.update).toHaveBeenCalled();
 
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
             expect(component.property.value).toBe(10);
         });
@@ -553,7 +545,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.update).toHaveBeenCalled();
 
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
 
             expect(component.property.value).toBe(10);
@@ -569,7 +561,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.update).toHaveBeenCalled();
 
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
 
             expect(component.property.value).toBe(10);
@@ -585,7 +577,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.update).toHaveBeenCalled();
 
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
 
             expect(component.property.value).toBe(10);
@@ -601,7 +593,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.update).toHaveBeenCalled();
 
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error).toBeFalsy();
 
             expect(component.property.value).toBe('2147483647');
@@ -618,7 +610,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.reset).toHaveBeenCalled();
 
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error).toBeFalsy();
 
             expect(getFieldValue(component.property.key)).toEqual('10');
@@ -645,7 +637,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.update).toHaveBeenCalled();
 
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error).toBeFalsy();
 
             expect(getFieldValue(component.property.key)).toEqual(expectedNumber.toString());
@@ -678,7 +670,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.update).toHaveBeenCalled();
 
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
 
             expect(component.property.value).toBe(floatValue);
@@ -694,27 +686,9 @@ describe('CardViewTextItemComponent', () => {
             expect(component.update).toHaveBeenCalled();
 
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
 
-            expect(component.property.value).toBe(floatValue);
-        });
-
-        it('should reset the value onclick of clear button', () => {
-            spyOn(component, 'reset').and.callThrough();
-            fixture.detectChanges();
-
-            updateTextField(component.property.key, floatValue);
-
-            const clearButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-reset-${component.property.key}"]`));
-            clearButton.nativeElement.click();
-            expect(component.reset).toHaveBeenCalled();
-
-            fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
-            expect(error).toBeFalsy();
-
-            expect(getFieldValue(component.property.key)).toEqual(floatValue.toString());
             expect(component.property.value).toBe(floatValue);
         });
 
@@ -737,7 +711,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.update).toHaveBeenCalled();
 
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
+            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error).toBeFalsy();
 
             expect(getFieldValue(component.property.key)).toEqual(expectedFloat.toString());

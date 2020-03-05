@@ -184,14 +184,6 @@ describe('Process filters cloud', () => {
         await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(differentAppUserProcessInstance.entry.name);
     });
 
-    it('[C306891] Should be able to see "No process found" when providing an initiator whitout processes', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', anotherUser.username);
-
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
-    });
-
     it('[C311315] Should be able to filter by process definition id', async () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processDefinitionId', processDefinition.entry.id);
