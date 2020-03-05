@@ -16,19 +16,19 @@
  */
 
 import { by, element, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions, CardTextItemPage, DropdownPage } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, CardTextItemPage, DropdownPage, CardBooleanItemPage } from '@alfresco/adf-testing';
 
 export class CardViewComponentPage {
 
     addButton: ElementFinder = element(by.className('adf-card-view__key-value-pairs__add-btn'));
     nameCardTextItem: CardTextItemPage = new CardTextItemPage('name');
+    booleanCardBooleanItem: CardBooleanItemPage = new CardBooleanItemPage('boolean');
     intField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-int']`));
     floatField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
     valueInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Value']`));
     nameInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Name']`));
     consoleLog: ElementFinder = element(by.className('app-console'));
     deleteButton: ElementFinder = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
-    checkbox: ElementFinder = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));
     resetButton: ElementFinder = element(by.css(`#adf-reset-card-log`));
     editableSwitch: ElementFinder = element(by.id('app-toggle-editable'));
     clearDateSwitch: ElementFinder = element(by.id('app-toggle-clear-date'));
@@ -155,7 +155,11 @@ export class CardViewComponentPage {
     }
 
     async checkboxClick(): Promise<void> {
-        await BrowserActions.click(this.checkbox);
+        await this.booleanCardBooleanItem.checkboxClick();
+    }
+
+    async checkBooleanLabelIsPresent(): Promise<void> {
+        await this.booleanCardBooleanItem.checkLabelIsPresent();
     }
 
     async selectValueFromComboBox(index): Promise<void> {
